@@ -1,0 +1,27 @@
+{
+  "name": "vscode-react-ui",
+  "version": "1.0.0",
+  "description": "it's a mock vscode ui buit by react. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "keywords": [
+    "vscode",
+    "react",
+    "ui"
+  ],
+  "author": "Ziv",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "7.8.7",
+    "@storybook/addon-actions": "5.3.17",
+    "@storybook/addon-links": "5.3.17",
+    "@storybook/addons": "5.3.17",
+    "@storybook/react": "5.3.17",
+    "babel-loader": "8.0.6"
+  }
+}

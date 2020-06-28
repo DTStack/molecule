@@ -1,5 +1,10 @@
-const SideBar = (a) => {
+import * as React from 'react';
 
-}
-
-export default SideBar;
+const Sidebar: React.SFC = () => {
+    return (
+        <div>
+            Sidebar
+        </div>
+    );
+};
+export default Sidebar;

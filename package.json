@@ -1,12 +1,14 @@
 {
   "name": "vscode-react-ui",
   "version": "1.0.0",
-  "description": "it's a mock vscode ui buit by react. ",
+  "description": "it's a mock vscode ui built by react. ",
   "main": "index.js",
   "scripts": {
     "test": "test",
+    "dev": "npm run storybook",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "eslint": "npx eslint ./src/**/*.ts ./src/**/*.tsx"
   },
   "keywords": [
     "vscode",
@@ -15,13 +17,29 @@
   ],
   "author": "Ziv",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@types/react": "^16.9.35",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
   "devDependencies": {
     "@babel/core": "7.8.7",
     "@storybook/addon-actions": "5.3.17",
+    "@storybook/addon-info": "^5.3.19",
     "@storybook/addon-links": "5.3.17",
     "@storybook/addons": "5.3.17",
     "@storybook/react": "5.3.17",
-    "babel-loader": "8.0.6"
+    "@types/jest": "^26.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.1.0",
+    "@typescript-eslint/parser": "^3.1.0",
+    "babel-loader": "8.0.6",
+    "eslint": "^7.1.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.20.0",
+    "jest": "^26.0.1",
+    "react-docgen-typescript-loader": "^3.7.2",
+    "ts-jest": "^26.1.0",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5"
   }
 }

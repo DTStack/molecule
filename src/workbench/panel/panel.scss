@@ -1,0 +1,8 @@
+@import '@/style/const.scss';
+
+.#{$prefix}-panel {
+    position: absolute;
+
+    // TODO just for development, this attribute should be controlled by themeService
+    border-top-color: rgb(65, 67, 57);
+}

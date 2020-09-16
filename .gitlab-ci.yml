@@ -1,0 +1,46 @@
+# Read more: https://docs.gitlab.com/12.7/ee/ci/yaml/README.html
+
+cache:
+    paths:
+      - .npm/
+  
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+  
+  stages:
+    - eslint
+    - check-types
+    - lint-docs
+    - test
+    - release
+  
+  static-check: 
+    stage: eslint
+    script: 
+      - npm run eslint
+      - npm run check-types
+    only:
+      - merge_requests
+
+  docs-check:
+    stage: lint-docs
+    script: 
+      - npm run lint-doc
+    only:
+      - /doc(s)|release|master/
+
+  test:
+    stage: test
+    script: 
+      - npm run test
+    only:
+      - merge_requests
+      - dev
+
+  release:
+    stage: release
+    script: 
+      - npm run release
+    only:
+      - master
+  

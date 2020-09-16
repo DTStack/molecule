@@ -1,0 +1,10 @@
+@import '@/style/const.scss';
+
+.#{$prefix}-activityBar {
+    position: absolute;
+    width: 48px;
+    height: 100%;
+    z-index: 1;
+    // TODO temp style, just for development
+    background-color: rgb(51, 51, 51);
+}

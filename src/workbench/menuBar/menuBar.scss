@@ -1,0 +1,10 @@
+@import '@/style/const.scss';
+
+.#{$prefix}-menuBar {
+    position: absolute;
+
+    .left {
+        width: 48px;
+        height: 35px;
+    }
+}

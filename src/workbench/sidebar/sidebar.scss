@@ -1,0 +1,12 @@
+@import '@/style/const.scss';
+
+.#{$prefix}-sidebar {
+    position: relative;
+    left: 0;
+    min-width: 246px;
+    width: 100%;
+    height: 100%;
+    // TODO temp style, just for development
+    background-color: rgb(37, 37, 38);
+    outline-color: rgba(83, 89, 93, 0.5);
+}

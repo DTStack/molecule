@@ -3,7 +3,7 @@
  * https://code.visualstudio.com/api/references/theme-color
  */
 
-import { IExtension } from '@/common/extension';
+import { IExtension } from '@/core/extension';
 // import { ITheme } from '@/common/theme';
 
 /**

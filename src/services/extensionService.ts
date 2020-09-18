@@ -1,4 +1,4 @@
-import { IExtension, IExtensionType } from '@/common/extension';
+import { IExtension, IExtensionType } from '@/core/extension';
 import { defaultExtensions } from '@/extensions';
 
 // import { ThemeService } from './themeServices';

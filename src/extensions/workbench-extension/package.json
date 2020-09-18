@@ -1,5 +1,5 @@
 {
-	"name": "ui-extension",
+	"name": "data-sync-ext",
 	"displayName": "Test extension",
 	"description": "This is a test ",
 	"version": "1.0.0",
@@ -8,6 +8,7 @@
 	"engines": {
 		"vscode": "*"
 	},
+	"kindOf": ["ui"],
 	"contributes": {
 		"themes": [
 			{

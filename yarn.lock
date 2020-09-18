@@ -11756,6 +11756,13 @@ tsutils@^3.17.1:
   dependencies:
     tslib "^1.8.1"
 
+tsyringe@^4.3.0:
+  version "4.3.0"
+  resolved "http://registry.npm.dtstack.com/tsyringe/-/tsyringe-4.3.0.tgz#50ce2ec56c83569a2dfafb7233a5265a2a10bde4"
+  integrity sha1-UM4uxWyDVpot+vtyM6UmWioQveQ=
+  dependencies:
+    tslib "^1.9.3"
+
 tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"

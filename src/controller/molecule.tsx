@@ -1,75 +1,30 @@
 import * as React from 'react';
-import { IExtension } from '@/common/extension';
-import { ILocalization } from '@/common/localization';
+import { IExtension } from '@/core/extension';
+import { IMolecule } from '@/core/molecule';
+import { ILocalization } from '@/core/localization';
 import { ExtensionService } from '@/services/extensionService';
+import { ActivityBarService } from '@/services/activityBarService';
+import { MoleculeService } from '@/services/moleculeService';
+
+// TODO This way just for development
+import CustomizedActivityBar from '@/extensions/workbench-extension/src/app';
 
 interface IMoleculeProps {
     extensions: IExtension[];
     locales: ILocalization[];
 }
 
-interface IMoleculeState {
-    /**
-     * Workbench's status
-     */
-    workbench: object;
-    /**
-     * Loaded extensions
-     */
-    extensions: IExtension[];
-    /**
-     * Default user's setting
-     */
-    settings: object;
-     /**
-     * The current theme status
-     */
-    theme: string;
-    /**
-     * The icon theme for workbench
-     */
-    iconTheme: string;
-    /**
-     * Molecule's language
-     */
-    local: string;
-    /**
-     * IDE shortcut keys
-     */
-    shortcutKeys: object;
-}
+// const DEFAULT_COLOR_THEME = 'light-vs';
+// const DEFAULT_LOCALE_LANG = 'en-us';
 
-const DEFAULT_COLOR_THEME = 'light-vs';
-const DEFAULT_LOCALE_LANG = 'en-us';
+const initialState: IMolecule = new MoleculeService(
+    new ActivityBarService(),
+);
 
-const initialState: IMoleculeState = {
+export const MoleculeCtx = React.createContext(initialState);
 
-    workbench: {
-        editor: {
-            value: '',
-        },
-        panels: [],
-        terminal: null,
-    },
-
-    extensions: [],
-
-    settings: {},
-
-    theme: DEFAULT_COLOR_THEME,
-
-    iconTheme: '',
-
-    local: DEFAULT_LOCALE_LANG,
-
-    shortcutKeys: {},
-};
-
-const MoleculeCtx = React.createContext(initialState);
-
-export class MoleculeProvider
-    extends React.Component<IMoleculeProps, IMoleculeState> {
-    public state = initialState;
+export class MoleculeProvider extends React.Component<IMoleculeProps> {
+    public state: IMolecule = initialState;
 
     private extensionService: ExtensionService;
 
@@ -79,10 +34,9 @@ export class MoleculeProvider
         const { extensions, locales } = this.props;
         this.loadExtensions(extensions);
         this.loadLocales(locales);
-    }
-
-    public componentDidMount() {
-        console.log('Molecule componentDidMount.');
+        const ext = new CustomizedActivityBar();
+        ext.active(this.state);
+        console.log('Molecule constructed.');
     }
 
     public initMolecule() {
@@ -92,9 +46,10 @@ export class MoleculeProvider
     public loadExtensions(extensions: IExtension[]) {
         if (extensions) {
             // TODO register extension to memory, and
-            this.setState({
-                extensions: this.extensionService.getAll(extensions),
-            });
+            this.extensionService.getAll(extensions);
+            // this.setState({
+            //     extensions: this.extensionService.getAll(extensions),
+            // });
         }
     }
 

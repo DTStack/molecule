@@ -11,7 +11,14 @@ import StatusBar from './statusBar';
 import Editor from './editor';
 import Panel from './panel';
 
+import { IMolecule } from '@/core/molecule';
+
 import './workbench.scss';
+import { MoleculeCtx } from '@/controller/molecule';
+
+export interface IWorkbenchProps {
+
+}
 
 const MainBench: React.FunctionComponent = function(props: any) {
     return (
@@ -19,12 +26,15 @@ const MainBench: React.FunctionComponent = function(props: any) {
     );
 };
 
-export const Workbench: React.FunctionComponent = function() {
+export const Workbench: React.FunctionComponent<IWorkbenchProps> = function(props: IWorkbenchProps) {
+    const moleculeCtx: IMolecule = React.useContext(MoleculeCtx);
+    const { activityBar } = moleculeCtx;
+
     return (
         <div className={APP_PREFIX + ' center'}>
             <div className={prefixClaName('workbench')}>
                 <MenuBar />
-                <ActivityBar />
+                <ActivityBar activityBar={activityBar}/>
                 <MainBench>
                     <SplitPane
                         split={'vertical'}

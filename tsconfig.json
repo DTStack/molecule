@@ -24,10 +24,14 @@
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "resolveJsonModule": true,
+      "downlevelIteration": true,
 			"paths": {
 				"@/*": [
 					"./src/*"
-				]
+        ],
+        "@stories": [
+          "./stories/*"
+        ]
       },
       "typeRoots": [
         "node",

@@ -4,7 +4,7 @@
  */
 
 import { IExtension } from '@/core/extension';
-// import { ITheme } from '@/common/theme';
+import { ITheme, ThemeColor, TokenColor } from '@/core/theme';
 
 /**
  * Apply css content to workbench
@@ -24,7 +24,27 @@ function _applyRules(styleSheetContent: string, rulesClassName: string) {
     }
 }
 
-export class ThemeService {
+export class ThemeService implements ITheme {
+    id: string;
+    name: string;
+    colors: ThemeColor;
+    tokenColors: TokenColor[];
+    semanticHighlighting: boolean;
+
+    constructor(
+        id: string,
+        name: string,
+        colors: ThemeColor = [],
+        tokenColors: TokenColor[] = [],
+        semanticHighlighting: boolean = true,
+    ) {
+        this.id = id;
+        this.name = name;
+        this.colors = colors;
+        this.tokenColors = tokenColors;
+        this.semanticHighlighting = semanticHighlighting;
+    }
+
     public load(extension: IExtension): void {
         // const theme = this.parse(extension);
     }

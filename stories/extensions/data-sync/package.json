@@ -1,5 +1,5 @@
 {
-	"name": "data-sync-ext",
+	"name": "data-test-ext",
 	"displayName": "Test extension",
 	"description": "This is a test ",
 	"version": "1.0.0",
@@ -9,13 +9,5 @@
 		"vscode": "*"
 	},
 	"kindOf": ["ui"],
-	"contributes": {
-		"themes": [
-			{
-				"label": "Monokai",
-				"uiTheme": "vs-dark",
-				"path": "./themes/monokai-color-theme.json"
-			}
-		]
-	}
+	"main": "./src/index"
 }

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import SplitPane from 'react-split-pane';
+import classNames from 'classnames';
+import { Utils } from 'dt-utils';
 
 import { prefixClaName } from '@/common/className';
 import { APP_PREFIX } from '@/common/const';
@@ -12,9 +14,12 @@ import Editor from './editor';
 import Panel from './panel';
 
 import { IMolecule } from '@/core/molecule';
+import { MoleculeCtx } from '@/provider/molecule';
 
 import './workbench.scss';
-import { MoleculeCtx } from '@/controller/molecule';
+import '@/style/main.scss';
+import 'vscode-codicons/dist/codicon.css';
+
 
 export interface IWorkbenchProps {
 
@@ -28,17 +33,17 @@ const MainBench: React.FunctionComponent = function(props: any) {
 
 export const Workbench: React.FunctionComponent<IWorkbenchProps> = function(props: IWorkbenchProps) {
     const moleculeCtx: IMolecule = React.useContext(MoleculeCtx);
-    const { activityBar } = moleculeCtx;
-
+    console.log('Workbench render:', moleculeCtx);
     return (
-        <div className={APP_PREFIX + ' center'}>
+        <div className={classNames(APP_PREFIX + ' center', Utils.isMacOs() ? 'mac' : '' )}>
             <div className={prefixClaName('workbench')}>
                 <MenuBar />
-                <ActivityBar activityBar={activityBar}/>
+                <ActivityBar />
                 <MainBench>
                     <SplitPane
                         split={'vertical'}
-                        minSize={246}
+                        minSize={170}
+                        defaultSize={300}
                         maxSize={-246}
                         primary="first"
                         allowResize={true}
@@ -51,7 +56,7 @@ export const Workbench: React.FunctionComponent<IWorkbenchProps> = function(prop
                             maxSize={-1}
                             allowResize={true}
                         >
-                            <Editor />
+                            <Editor {...moleculeCtx.editor}/>
                             <Panel/>
                         </SplitPane>
                     </SplitPane>

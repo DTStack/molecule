@@ -1,11 +1,11 @@
 {
   "name": "molecule",
   "version": "0.9.0",
-  "description": "A Web IDE UI library built by React.js, inspired by VSCode. ",
+  "description": "A Web IDE UI Framework built by React.js, inspired by VSCode.",
   "main": "lib/core/index.js",
   "scripts": {
     "test": "jest --coverage",
-    "dev": "start-storybook -p 6006",
+    "dev": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
     "check-types": "tsc --skipLibCheck",
     "eslint": "npx eslint ./src/**/*.ts ./src/**/*.tsx",
@@ -21,10 +21,17 @@
   "license": "ISC",
   "dependencies": {
     "@types/react": "^16.9.35",
+    "classnames": "^2.2.6",
+    "dt-react-monaco-editor": "^0.0.6",
+    "dt-utils": "^1.0.1",
+    "loadsh": "^0.0.4",
+    "rc-collapse": "^2.0.1",
+    "rc-tree": "^3.10.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-split-pane": "^0.1.92",
-    "tsyringe": "^4.3.0"
+    "tsyringe": "^4.3.0",
+    "vscode-codicons": "^0.0.10"
   },
   "devDependencies": {
     "@babel/core": "7.8.7",

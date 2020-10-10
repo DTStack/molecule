@@ -1,12 +1,12 @@
 
 export interface ThemeColor extends Object {
-    id: string;
+    id?: string;
 }
 
-interface TokenColor extends Object {
+export interface TokenColor extends Object {
     name?: string;
-    scope: string | string[];
-    settings: object;
+    scope?: string | string[];
+    settings?: object;
 }
 
 export interface ITheme {
@@ -15,13 +15,13 @@ export interface ITheme {
      */
     id: string;
     name: string;
-    colors: ThemeColor;
-    tokenColors: TokenColor[];
+    colors?: ThemeColor;
+    tokenColors?: TokenColor[];
     /**
      * The semanticTokenColors mappings as well as
      * the semanticHighlighting setting
      * allow to enhance the highlighting in the editor
      * More info visit: https://code.visualstudio.com/api/language-extensions/semantic-highlight-guide
      */
-    semanticHighlighting: boolean;
+    semanticHighlighting?: boolean;
 }

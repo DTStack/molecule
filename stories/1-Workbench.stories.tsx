@@ -1,17 +1,16 @@
 import * as React from 'react';
 
-import { MoleculeProvider } from '@/controller/molecule';
+import { MoleculeProvider } from '@/provider/molecule';
 import { Workbench } from '@/workbench';
-import * as themeMonokai from '@/extensions/theme-monokai/package.json';
+import { customExtensions } from './extensions';
+
+// import * as UIExt from './extensions/data-sync/package.json';
 
 import './demo.scss';
 
 export const IDEDemo = () => (
-
     <MoleculeProvider
-        extensions={[
-            themeMonokai as any,
-        ]}
+        extensionEntry={customExtensions}
         locales={[
         ]}
     >
@@ -20,11 +19,11 @@ export const IDEDemo = () => (
 );
 
 IDEDemo.story = {
-    name: 'VSCode',
+    name: 'Workbench',
 };
 
 export default {
-    title: 'VSCode',
+    title: 'Workbench',
     component: IDEDemo,
 };
 

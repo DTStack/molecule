@@ -7,7 +7,7 @@ import './menuBar.scss';
 export const MenuBar: React.FunctionComponent = function() {
     return (
         <div className={prefixClaName('menuBar')}>
-            MenuBar
+            <a className="menu-title codicon codicon-menu"></a>
         </div>
     );
 };

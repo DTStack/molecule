@@ -1,5 +1,4 @@
 @import '@/style/const.scss';
-@import '@/style/main.scss';
 
 .#{$prefix}-workbench {
     position: absolute;
@@ -9,9 +8,6 @@
     left: 0;
     z-index: 1;
     padding-bottom: 22px;
-    // TODO temp style, just for development
-    background-color: #252526;
-    color: #ccc;
 }
 
 .#{$prefix}-mainBench {

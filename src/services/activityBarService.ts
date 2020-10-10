@@ -1,18 +1,27 @@
-import { IActivityBar, IActivityBarData } from '@/core/activityBar';
+import { IActivityBar, IActivityBarItem } from '@/core/activityBar';
 
 export class ActivityBarService implements IActivityBar {
-    public readonly data: IActivityBarData[];
+    public data: IActivityBarItem[];
+    public selected: string;
 
-    constructor(data: IActivityBarData[] = []) {
+    constructor(data: IActivityBarItem[] = [], selected: string = '') {
         this.data = data;
+        this.selected = selected;
     }
-    public onSelect(key: string, item: IActivityBarData) {
+    public onSelect(key: string, item?: IActivityBarItem) {
+        this.selected = key;
     }
-    public onClick(event: React.MouseEvent, item: IActivityBarData) {
+    public onClick(event: React.MouseEvent, item: IActivityBarItem) {
 
     }
-    public push(data: IActivityBarData) {
-        this.data.push(data);
+    public push(data: IActivityBarItem | IActivityBarItem[]) {
+        if (Array.isArray(data)) {
+            this.data = this.data.concat(data);
+            // this.data = [...this.data, ...data];
+        } else {
+            this.data.push(data);
+            // this.data = [...this.data, data];
+        }
     }
     public remove(index: number) {
         this.data.splice(index, 1);

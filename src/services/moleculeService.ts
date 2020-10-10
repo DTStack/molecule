@@ -1,41 +1,45 @@
+import { IEditor } from '@/core/editor';
 import { IActivityBar } from '@/core/activityBar';
+import { ITheme } from '@/core/theme';
+import { ISidebar } from '@/core/sidebar';
+
 
 export class MoleculeService {
-    // public sidebar: Sidebar;
     // public menuBar: MenuBar;
     // public statusBar: StatusBar;
     public activityBar: IActivityBar;
     // public panel: Panel;
-    // public editor: Editor;
+    public editor: IEditor;
     // public layout: Layout;
-    // public theme: Theme;
+    public theme: ITheme;
+    public sidebar: ISidebar;
     // public iconTheme: IconTheme;
     // public settings: Settings;
     // public local: Local;
     // public shortcutKeys: ShortcutKeys;
 
     constructor(
-        // sidebar: Sidebar,
         // menuBar: MenuBar,
         // statusBar: StatusBar,
         activityBar: IActivityBar,
-        // editor: Editor,
+        editor: IEditor,
         // panel: Panel,
         // layout: Layout,
-        // theme: Theme,
+        theme: ITheme,
+        sidebar: ISidebar,
         // iconTheme: IconTheme,
         // settings: Settings,
         // local: Local,
         // shortcutKeys: ShortcutKeys,
     ) {
-        // this.sidebar = sidebar;
         // this.menuBar = menuBar;
         // this.statusBar = statusBar;
         this.activityBar = activityBar;
         // this.panel = panel;
-        // this.editor = editor;
+        this.editor = editor;
         // this.layout = layout;
-        // this.theme = theme;
+        this.theme = theme;
+        this.sidebar = sidebar;
         // this.iconTheme = iconTheme;
         // this.settings = settings;
         // this.local = local;

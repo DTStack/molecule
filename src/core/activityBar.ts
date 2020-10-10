@@ -1,19 +1,23 @@
 // import { ReactType } from '@/typings';
 import * as React from 'react';
 
-export interface IActivityBarData {
-    id: string;
+export interface IActivityBarItem {
+    id?: string;
     name?: string;
     data?: any;
+    iconName?: string;
+    checked?: boolean;
     // render?: <T>() => T;
     render?: () => any;
+    onClick?:(e: React.MouseEvent, option: IActivityBarItem) => any;
 }
 
 export interface IActivityBar {
-    readonly data: IActivityBarData[];
-    onSelect: (key: string, item: IActivityBarData) => void;
-    onClick: (event: React.MouseEvent, item: IActivityBarData) => void;
-    push: (data: IActivityBarData) => void;
+    data: IActivityBarItem[];
+    selected: string;
+    onSelect: (key: string, item?: IActivityBarItem) => void;
+    onClick: (event: React.MouseEvent, item: IActivityBarItem) => void;
+    push: (data: IActivityBarItem | IActivityBarItem []) => void;
     remove: (index: number) => void;
     update: () => void;
     get: (id: string) => void;

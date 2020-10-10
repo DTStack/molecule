@@ -1,0 +1,49 @@
+@import '@/style/const.scss';
+
+// Workbench
+.#{$prefix}-workbench {
+    background-color: #252526;
+    color: #ccc;
+}
+
+.#{$prefix}-sidebar {
+    // TODO temp style, just for development
+    background-color: rgb(37, 37, 38);
+    outline-color: rgba(83, 89, 93, 0.5);
+
+    .sidebar-pane .pane-title h2 {
+        color: rgb(187, 187, 187);
+    }
+}
+
+// Editor
+.#{$prefix}-editor {
+    background-color: #1e1e1e;
+}
+
+// Menu bar
+.#{$prefix}-menuBar {
+    background-color: rgb(51, 51, 51);
+}
+
+// Activity bar
+.#{$prefix}-#{$activityBar} {
+    background-color: rgb(51, 51, 51);
+
+    .active-item-indicator {
+        background: #fff;
+    }
+
+    .checked {
+        color: rgb(255, 255, 255);
+    }
+}
+
+// Common
+.#{$activityBar}-item, .#{$prefix}-menuBar {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.#{$activityBar}-item:hover, .#{$prefix}-menuBar:hover {
+    color: #fff;
+}

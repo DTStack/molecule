@@ -4,8 +4,9 @@ import { prefixClaName } from '@/common/className';
 
 export const Panel: React.FunctionComponent = function() {
     return (
-        <div className={prefixClaName('panel')}>
+        <div className={prefixClaName('settings')}>
             Panel
+            <a className='codicon codicon-settings-gear'></a>
         </div>
     );
 };

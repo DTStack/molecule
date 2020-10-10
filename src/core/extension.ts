@@ -1,7 +1,8 @@
-import { Molecule } from './molecule';
+import { IMolecule } from './molecule';
 
-export interface Extension {
-    active(molecule: Molecule);
+export interface IExtensionEntry {
+    location?: any;
+    extensions?: IExtension[];
 }
 
 /**
@@ -10,18 +11,24 @@ export interface Extension {
 export enum IExtensionType {
     Theme = 'themes',
     Normal = 'normal',
-    Languages = 'languages',
     Settings = 'settings',
     Locals = 'locals',
     Menus = 'menus',
-    Commands = 'commands',
     Workbench = 'workbench'
 }
 
-export interface IContribute extends Object{
-    [IExtensionType.Theme]: {
+export enum IContributeType {
+    Languages = 'languages',
+    Commands = 'commands',
+    Configuration = 'configuration',
+    Grammar = 'grammars'
+}
 
-    }
+export interface IContribute extends Object{
+    [IContributeType.Languages ]: any;
+    [IContributeType.Commands ]: any;
+    [IContributeType.Configuration ]: any;
+    [IContributeType.Grammar ]: any;
 }
 
 /**
@@ -32,34 +39,54 @@ export interface IExtension extends Object {
     /**
      * The name of extension
      */
-    name: string;
+    name?: string;
     /**
      * The display name of extension
      */
-    displayName: string;
+    displayName?: string;
     /**
      * The version of extension
      */
-    version: string;
+    version?: string;
     /**
      * The categories of extension
      */
-    categories: IExtensionType[],
+    categories?: IExtensionType[];
+    /**
+     * The kind of extension
+     */
+    extensionKind?: IExtensionType[];
     /**
      * The main file path of extension
      * Extension system will load the extension by this file
      */
-    contributes: IContribute,
+    contributes?: IContribute;
     /**
      * The entry of extension
      */
-    main: string,
+    main?: string;
+    /**
+     * The Icon of extension
+     */
+    icon: string;
     /**
      * The description of extension
      */
-    description: string,
+    description?: string;
+    /**
+     * The publisher of extension
+     */
+    publisher?: string;
+    /**
+     * The path of extension
+     */
+    path?: string;
     /**
      * Whether disable current extension, the extension default status is enable
      */
-    disable: boolean;
+    disable?: boolean;
+    /**
+     * Activate current extension
+     */
+    activate?: (moleculeCtx: IMolecule) => void;
 }

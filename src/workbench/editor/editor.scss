@@ -4,6 +4,28 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    // TODO temp style, just for development
-    background-color: #1e1e1e;
+    display: flex;
+
+    .#{$prefix}-editor-group {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .group-header {
+        position: relative;
+
+        .group-tabs {
+            height: 35px;
+        }
+    }
+
+    .group-container {
+        height: auto;
+        position: absolute;
+        bottom: 0;
+        top: 35px;
+        left: 0;
+        right: 0;
+    }
 }

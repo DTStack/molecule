@@ -1,4 +1,5 @@
-@import 'const.scss';
+@import './const.scss';
+@import './theme.scss';
 
 .#{$prefix} {
     position: fixed;

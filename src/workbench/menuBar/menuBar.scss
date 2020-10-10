@@ -2,9 +2,21 @@
 
 .#{$prefix}-menuBar {
     position: absolute;
+    width: 48px;
+    height: 35px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 
     .left {
-        width: 48px;
-        height: 35px;
+        left: 0;
+        top: 0;
     }
+
+    // .menu-title {
+    //     // // TODO temp style, just for development
+    //     // color: rgba(255, 255, 255, 0.4);
+    // }
 }

@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { memo } from 'react';
 
 import { prefixClaName } from '@/common/className';
 
 import './menuBar.scss';
 
-export const MenuBar: React.FunctionComponent = function() {
+function MenuBar() {
     return (
         <div className={prefixClaName('menuBar')}>
             <a className="menu-title codicon codicon-menu"></a>
@@ -12,4 +13,4 @@ export const MenuBar: React.FunctionComponent = function() {
     );
 };
 
-export default MenuBar;
+export default memo(MenuBar);

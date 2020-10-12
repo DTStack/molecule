@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { memo } from 'react';
 
 import { prefixClaName } from '@/common/className';
 
 import './panel.scss';
 
-export const Panel: React.FunctionComponent = function() {
+function Panel(props) {
+    console.log('Panel render:', props);
+
     return (
         <div className={prefixClaName('panel')}>
             Panel
@@ -12,4 +15,4 @@ export const Panel: React.FunctionComponent = function() {
     );
 };
 
-export default Panel;
+export default memo(Panel);

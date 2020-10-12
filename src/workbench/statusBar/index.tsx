@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { memo } from 'react';
 
 import { prefixClaName } from '@/common/className';
 
 import './statusBar.scss';
 
-export const StatusBar: React.FunctionComponent = function() {
+function StatusBar() {
     return (
         <div className={prefixClaName('statusBar')}>
             StatusBar
@@ -12,4 +13,4 @@ export const StatusBar: React.FunctionComponent = function() {
     );
 };
 
-export default StatusBar;
+export default memo(StatusBar);

@@ -1,5 +1,5 @@
-export interface IObservable<T = any> {
-    observe: (handler: (nextObject: T) => void) => void;
+export interface IObservable {
+    observe: (handler: (target, property, value) => void) => void;
 }
 
 export function observable<T>(object, callback?): IObservable & T {
@@ -36,7 +36,7 @@ export function observable<T>(object, callback?): IObservable & T {
                 callback(target, property, value);
             }
             if (object.handlers) {
-                object.handlers.forEach((handler) => handler(nextTarget));
+                object.handlers.forEach((hand) => hand(target, property, value));
             }
             return nextTarget;
         },

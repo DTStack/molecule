@@ -1,11 +1,13 @@
 import * as React from 'react';
-import classNames from 'classnames';
+import { memo } from 'react';
 
 import { IMolecule } from '@/core/molecule';
 import { MoleculeCtx } from '@/provider/molecule';
 
 import { prefixClaName } from '@/common/className';
 import { IActivityBarItem } from '@/core/activityBar';
+
+import ActivityBarItem from './activityBarItem';
 
 import './activityBar.scss';
 
@@ -14,27 +16,7 @@ export interface IActivityBarProps {
 
 export const ROOT_CLASS_NAME = 'activityBar';
 
-export const ActivityBarItem = React.memo(function FnActivityBarItem(props: IActivityBarItem) {
-    const { checked = false, name = '', data = {}, render, iconName = '' } = props;
-    let content = '';
-    if (render) {
-        content = render();
-    }
-
-    return (
-        <li
-            className={classNames(prefixClaName('item', ROOT_CLASS_NAME), checked ? 'checked' : '')}
-            data-id={data.id}
-        >
-            <a title={name} className={classNames('item-label', 'codicon', iconName)}>
-                {content}
-            </a>
-            { checked ? <div className="active-item-indicator"></div> : null }
-        </li>
-    );
-});
-
-export const ActivityBar = React.memo(function FnActivityBar(props: IActivityBarProps) {
+function ActivityBar(props: IActivityBarProps) {
     const moleculeCtx: IMolecule = React.useContext(MoleculeCtx);
     const { activityBar } = moleculeCtx;
 
@@ -58,6 +40,6 @@ export const ActivityBar = React.memo(function FnActivityBar(props: IActivityBar
             </ul>
         </div>
     );
-});
+};
 
-export default ActivityBar;
+export default memo(ActivityBar);

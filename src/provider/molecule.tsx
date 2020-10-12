@@ -10,7 +10,7 @@ import { EditorInstService } from '@/services/editor/instanceService';
 import { ITab } from '@/components/tabs';
 import { ThemeService } from '@/services/themeServices';
 import { SidebarBarService } from '@/services/sidebarService';
-import { observable } from '@/common/observable';
+import { IObservable, observable } from '@/common/observable';
 
 interface IMoleculeProps {
     extensionEntry?: IExtensionEntry;
@@ -70,7 +70,7 @@ const editorInstance2 = new EditorInstService(
     null,
 );
 
-const initialState = observable<IMolecule>(new MoleculeService(
+const initialState = new MoleculeService(
     new ActivityBarService(),
     new EditorService(
         editorInstance,
@@ -78,39 +78,38 @@ const initialState = observable<IMolecule>(new MoleculeService(
     ),
     new ThemeService('vs-dark', 'vs-dark'),
     new SidebarBarService(),
-));
+);
 
 // https://medium.com/dev-genius/reactjs-manage-your-state-nicely-with-context-1ed3090a6a46
 
 export const MoleculeCtx = React.createContext<IMolecule>(initialState);
 
 export class MoleculeProvider extends React.Component<IMoleculeProps> {
-    public state: IMolecule = initialState;
+    public state: IMolecule & IObservable;
 
     private extensionService: ExtensionService;
 
     constructor(props) {
         super(props);
-        // this.state = observe(initialState, this.changed);
-        // initialState = observable<IMolecule>(initialState, this.changed);
         const { extensionEntry, locales } = this.props;
-        this.changed = this.changed.bind(this);
-        this.extensionService = new ExtensionService(extensionEntry, this.state);
+        this.state = observable<IMolecule>(initialState);
+
         this.loadLocales(locales);
+        this.extensionService = new ExtensionService(extensionEntry, this.state);
+        this.stateChanged = this.stateChanged.bind(this);
         console.log('Molecule constructed.');
     }
 
     componentDidMount() {
         console.log('nextState', this.state);
-
-        initialState.observe(this.changed);
-        // this.setState(observe(initialState, this.changed));
+        this.state.observe(this.stateChanged);
     }
 
-    changed(nextState) {
-        console.log('state eq:', nextState === this.state, nextState);
+    stateChanged() {
+        console.log('state eq:', this.state === initialState);
         // TODO 目前是很粗粒度的更新 state 对象
-        this.setState( { ...nextState } );
+        // this.setState( { ...nextState } );
+        this.setState(Object.assign({}, this.state));
     }
 
     public initMolecule() {

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { memo } from 'react';
+
 import MonacoEditor from 'dt-react-monaco-editor';
 import SplitPane from 'react-split-pane';
 
@@ -15,7 +17,7 @@ import './editor.scss';
 import Tabs from '@/components/tabs';
 import { IMolecule } from '@/core/molecule';
 
-const renderEditorGroup = function(group: IEditorInstance) {
+function renderEditorGroup(group: IEditorInstance) {
     const moleculeCtx: IMolecule = React.useContext(MoleculeCtx);
 
     const editor = group.activeTab;
@@ -46,7 +48,7 @@ const renderEditorGroup = function(group: IEditorInstance) {
     );
 };
 
-const renderGroup = function(group: IEditorInstance[]) {
+export function renderGroup(group: IEditorInstance[]) {
     if (group.length === 1) {
         return renderEditorGroup(group[0]);
     } else if (group.length > 1) {
@@ -55,7 +57,6 @@ const renderGroup = function(group: IEditorInstance[]) {
             <SplitPane
                 split={'vertical'}
                 defaultSize={`${averageNum}%`}
-                // minSize={220}
                 primary="first"
                 allowResize={true}
             >
@@ -66,8 +67,10 @@ const renderGroup = function(group: IEditorInstance[]) {
     return null;
 };
 
-export const Editor = function(editor: IEditorProps) {
+export function Editor(editor: IEditorProps) {
     const { group } = editor;
+    console.log('Editor render:', editor);
+
     return (
         <div className={prefixClaName('editor')}>
             { editor.render ? editor.render() : renderGroup(group) }
@@ -75,4 +78,9 @@ export const Editor = function(editor: IEditorProps) {
     );
 };
 
-export default Editor;
+export default memo(Editor, (prevProps: IEditorProps, nextProps: IEditorProps) => {
+    // return prevProps !== nextProps;
+    return prevProps.group !== nextProps.group ||
+    prevProps.render !== nextProps.render ||
+    prevProps.current !== nextProps.current;
+});

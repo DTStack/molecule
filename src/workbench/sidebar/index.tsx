@@ -1,16 +1,19 @@
 import './sidebar.scss';
 import * as React from 'react';
 import { prefixClaName } from '@/common/className';
-import { MoleculeCtx } from '@/provider/molecule';
-import { IMolecule } from '@/core/molecule';
-import { ISidebarPane } from '@/core/sidebar';
+import { ISidebar, ISidebarPane } from '@/core/sidebar';
+import { memo } from 'react';
 
-const Sidebar: React.FunctionComponent = () => {
-    const moleculeCtx: IMolecule = React.useContext(MoleculeCtx);
-    const { sidebar } = moleculeCtx;
+interface ISidebarProps extends ISidebar {
+    // sidebar: ISidebar;
+}
 
-    let sidebarPane: React.ReactElement | React.ReactElement[] = sidebar
-        .panes?.map((pane: ISidebarPane) => {
+function Sidebar(props: ISidebarProps) {
+    const { panes = [], render } = props;
+    console.log('Sidebar render:', props);
+
+    let sidebarPane: React.ReactElement | React.ReactElement[] = panes?.map(
+        (pane: ISidebarPane) => {
             return (
                 <div key={pane.id} data-id={pane.id} className={prefixClaName('pane', 'sidebar')}>
                     <header className={'pane-header'}>
@@ -28,11 +31,9 @@ const Sidebar: React.FunctionComponent = () => {
             );
         });
 
-    if (sidebar.render) {
-        sidebarPane = sidebar.render();
+    if (render) {
+        sidebarPane = render();
     }
-
-    console.log('Sidebar render:', moleculeCtx);
 
     return (
         <div className={prefixClaName('sidebar')}>
@@ -40,4 +41,7 @@ const Sidebar: React.FunctionComponent = () => {
         </div>
     );
 };
-export default Sidebar;
+
+export default memo(Sidebar, (prevProps: ISidebarProps, nextProps: ISidebarProps) => {
+    return prevProps !== nextProps;
+});

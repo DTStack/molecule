@@ -1,6 +1,6 @@
 import { ITab } from '@/components/tabs';
 
-export interface IEditorInstance<E = any> {
+export interface IEditorGroup<E = any> {
     id: number;
     activeTab: ITab;
     tabs: ITab[];
@@ -11,9 +11,14 @@ export interface IEditorInstance<E = any> {
 }
 
 export interface IEditor<T = any> {
-    current: IEditorInstance | null;
-    group: IEditorInstance [];
-    open: (tab: ITab<T>, instanceId: number) => void;
+    current: IEditorGroup | null;
+    groups: IEditorGroup [];
+    /**
+     * Open a new tab in indicated group instance
+     * @param tab Tab data
+     * @param groupId group ID
+     */
+    open: (tab: ITab<T>, groupId?: number) => void;
     close?: (index: number, callback: () => void) => void;
     closeAll?: () => void;
     onClose?: () => void;

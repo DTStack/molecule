@@ -1,7 +1,7 @@
-import { IEditorInstance } from '@/core/editor';
+import { IEditorGroup } from '@/core/editor';
 import { ITab } from '@/components/tabs';
 
-export class EditorInstService<E = any> implements IEditorInstance {
+export class EditorGroupService<E = any> implements IEditorGroup {
     id: number;
     activeTab: ITab;
     tabs: ITab[];

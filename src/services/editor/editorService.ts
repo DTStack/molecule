@@ -1,23 +1,23 @@
 import { ITab } from '@/components/tabs';
-import { IEditor, IEditorInstance } from '@/core/editor';
+import { IEditor, IEditorGroup } from '@/core/editor';
 
 export class EditorService<T = any> implements IEditor<T> {
-    public current: IEditorInstance;
-    public group: IEditorInstance[];
+    public current: IEditorGroup;
+    public groups: IEditorGroup[];
 
-    constructor(current: IEditorInstance, group: IEditorInstance[] = []) {
+    constructor(current: IEditorGroup, groups: IEditorGroup[] = []) {
         this.current = current;
-        this.group = group;
+        this.groups = groups;
     }
 
-    public open(tab: ITab<T>, instanceId: number) {
-        // const editorInstance = this.group.find((item: IEditorInstance) => {
-        //     return item.id === instanceId;
-        // });
-        const editorInstance = this.current;
-        if (editorInstance) {
-            editorInstance.tabs.push(tab);
-            editorInstance.activeTab = tab;
+    public open(tab: ITab<T>, groupId?: number) {
+        let group: IEditorGroup | undefined = this.current;
+        if (groupId) {
+            group = this.groups.find((group: IEditorGroup) => group.id === groupId);
+        }
+        if (group) {
+            group.tabs.push(tab);
+            group.activeTab = tab;
         }
     }
 

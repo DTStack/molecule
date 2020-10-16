@@ -8,5 +8,6 @@ node_modules
 .gitignore
 .gitlab-ci.yml
 commitlint.config.js
+tsconfig.build.json
+tsconfig.base.json
 jest.config.js
-tsconfig.json

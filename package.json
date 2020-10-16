@@ -8,6 +8,7 @@
     "dev": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
     "check-types": "tsc --skipLibCheck",
+    "build": "tsc --project tsconfig.build.json",
     "eslint": "npx eslint ./src/**/*.ts ./src/**/*.tsx",
     "style-lint": "npx stylelint ./src/**/*.scss"
   },

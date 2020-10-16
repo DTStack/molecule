@@ -20,12 +20,22 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
         });
     };
 
+    const NewEditor = function() {
+        const id = Math.random() * 10 + 1;
+        moleculeCtx.editor.open({
+            id: id,
+            name: 'test-tab1',
+            value: 'just test tab data',
+        }, 1);
+    };
+
     return (
         <div className={prefixClaName('explorer', 'sidebar')}>
             <Collapse className="dee">
                 <Panel header="OPEN EDITORS">
                     OPEN EDITORS
                     <button onClick={AddABar}>Add Bar</button>
+                    <button onClick={NewEditor}>New Editor</button>
                 </Panel>
                 <Panel header="Sample-Folder"></Panel>
                 <Panel header="OUTLINE">

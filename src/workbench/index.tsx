@@ -13,6 +13,7 @@ import ActivityBar from './activityBar';
 import StatusBar from './statusBar';
 import Editor from './editor';
 import Panel from './panel';
+import SettingsBar from './settings';
 
 import { IMolecule } from '@/core/molecule';
 import { MoleculeCtx } from '@/provider/molecule';
@@ -21,13 +22,12 @@ import './workbench.scss';
 import '@/style/main.scss';
 import 'vscode-codicons/dist/codicon.css';
 
-
 export interface IWorkbenchProps {
 
 }
 
 const MainBench = memo(function MainBenchFC(props: any) {
-    const { sidebar, editor } = props;
+    const { sidebar, editor, theme } = props;
     return (
         <div className={prefixClaName('mainBench')}>
             <SplitPane
@@ -46,7 +46,7 @@ const MainBench = memo(function MainBenchFC(props: any) {
                     maxSize={-1}
                     allowResize={true}
                 >
-                    <Editor {...editor}/>
+                    <Editor {...editor} theme={theme}/>
                     <Panel/>
                 </SplitPane>
             </SplitPane>
@@ -56,14 +56,15 @@ const MainBench = memo(function MainBenchFC(props: any) {
 
 export const Workbench: React.FunctionComponent<IWorkbenchProps> = function(props: IWorkbenchProps) {
     const moleculeCtx: IMolecule = React.useContext(MoleculeCtx);
-    const { sidebar, activityBar, editor } = moleculeCtx;
+    const { sidebar, activityBar, editor, theme } = moleculeCtx;
     console.log('Workbench render:', moleculeCtx);
     return (
         <div className={classNames(APP_PREFIX + ' center', Utils.isMacOs() ? 'mac' : '' )}>
             <div className={prefixClaName('workbench')}>
                 <MenuBar />
                 <ActivityBar {...activityBar} />
-                <MainBench sidebar={sidebar} editor={editor} />
+                <SettingsBar />
+                <MainBench sidebar={sidebar} editor={editor} theme={theme}/>
             </div>
             <StatusBar />
         </div>

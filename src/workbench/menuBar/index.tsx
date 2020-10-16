@@ -8,7 +8,7 @@ import './menuBar.scss';
 function MenuBar() {
     return (
         <div className={prefixClaName('menuBar')}>
-            <a className="menu-title codicon codicon-menu"></a>
+            <a className="menu-action codicon codicon-menu"></a>
         </div>
     );
 };

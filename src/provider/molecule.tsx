@@ -6,7 +6,7 @@ import { ExtensionService } from '@/services/extensionService';
 import { EditorService } from '@/services/editor/editorService';
 import { ActivityBarService } from '@/services/activityBarService';
 import { MoleculeService } from '@/services/moleculeService';
-import { EditorInstService } from '@/services/editor/instanceService';
+import { EditorGroupService } from '@/services/editor/groupService';
 import { ITab } from '@/components/tabs';
 import { ThemeService } from '@/services/themeServices';
 import { SidebarBarService } from '@/services/sidebarService';
@@ -40,7 +40,7 @@ const tab2: ITab = {
     value: 'select * from test',
 };
 
-const editorInstance = new EditorInstService(
+const editorGroup0 = new EditorGroupService(
     1,
     tab,
     [tab],
@@ -50,7 +50,7 @@ const editorInstance = new EditorInstService(
     null,
 );
 
-const editorInstance1 = new EditorInstService(
+const editorGroup1 = new EditorGroupService(
     1,
     tab1,
     [tab1],
@@ -60,7 +60,7 @@ const editorInstance1 = new EditorInstService(
     null,
 );
 
-const editorInstance2 = new EditorInstService(
+const editorGroup2 = new EditorGroupService(
     1,
     tab2,
     [tab2],
@@ -73,8 +73,11 @@ const editorInstance2 = new EditorInstService(
 const initialState = new MoleculeService(
     new ActivityBarService(),
     new EditorService(
-        editorInstance,
-        [editorInstance, editorInstance1, editorInstance2],
+        editorGroup0,
+        [
+            editorGroup0,
+            editorGroup1, editorGroup2,
+        ],
     ),
     new ThemeService('vs-dark', 'vs-dark'),
     new SidebarBarService(),
@@ -123,7 +126,6 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
     public getValue(): any {
         return this.state;
     }
-
 
     public render() {
         return (

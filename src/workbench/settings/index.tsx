@@ -1,14 +1,15 @@
 import * as React from 'react';
+import { memo } from 'react';
 
 import { prefixClaName } from '@/common/className';
+import './settings.scss';
 
-export const Panel: React.FunctionComponent = function() {
+export function SettingBar() {
     return (
         <div className={prefixClaName('settings')}>
-            Panel
-            <a className='codicon codicon-settings-gear'></a>
+            <a className='settings-action codicon codicon-settings-gear'></a>
         </div>
     );
 };
 
-export default Panel;
+export default memo(SettingBar);

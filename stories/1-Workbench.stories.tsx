@@ -4,8 +4,6 @@ import { MoleculeProvider } from '@/provider/molecule';
 import { Workbench } from '@/workbench';
 import { customExtensions } from './extensions';
 
-// import * as UIExt from './extensions/data-sync/package.json';
-
 import './demo.scss';
 
 export const IDEDemo = () => (

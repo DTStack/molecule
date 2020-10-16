@@ -1,6 +1,6 @@
 @import '@/style/const.scss';
 
-// Workbench
+// =============== Workbench =============== //
 .#{$prefix}-workbench {
     background-color: #252526;
     color: #ccc;
@@ -16,17 +16,17 @@
     }
 }
 
-// Editor
+// =============== Editor =============== //
 .#{$prefix}-editor {
     background-color: #1e1e1e;
 }
 
-// Menu bar
+// =============== Menu bar =============== //
 .#{$prefix}-menuBar {
     background-color: rgb(51, 51, 51);
 }
 
-// Activity bar
+// =============== Activity bar =============== //
 .#{$prefix}-#{$activityBar} {
     background-color: rgb(51, 51, 51);
 
@@ -39,7 +39,12 @@
     }
 }
 
-// Common
+// =============== Settings =============== //
+.#{$prefix}-#{$settings} {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+// =============== Common =============== //
 .#{$activityBar}-item, .#{$prefix}-menuBar {
     color: rgba(255, 255, 255, 0.4);
 }
@@ -47,3 +52,6 @@
 .#{$activityBar}-item:hover, .#{$prefix}-menuBar:hover {
     color: #fff;
 }
+
+// .monaco-workbench .codicon {
+// }

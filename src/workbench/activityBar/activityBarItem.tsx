@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import { prefixClaName } from '@/common/className';
 import { IActivityBarItem } from '@/core/activityBar';
 
-import './activityBar.scss';
 import { ROOT_CLASS_NAME } from './index';
 
 function ActivityBarItem(props: IActivityBarItem) {

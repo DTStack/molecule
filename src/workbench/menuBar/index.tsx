@@ -1,9 +1,8 @@
+import '@/workbench/menuBar/style.scss';
 import * as React from 'react';
 import { memo } from 'react';
 
 import { prefixClaName } from '@/common/className';
-
-import './menuBar.scss';
 
 function MenuBar() {
     return (

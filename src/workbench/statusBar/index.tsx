@@ -1,9 +1,9 @@
+import '@/workbench/statusBar/style.scss';
+
 import * as React from 'react';
 import { memo } from 'react';
 
 import { prefixClaName } from '@/common/className';
-
-import './statusBar.scss';
 
 function StatusBar() {
     return (

@@ -104,15 +104,14 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
     }
 
     componentDidMount() {
-        console.log('nextState', this.state);
         this.state.observe(this.stateChanged);
     }
 
     stateChanged() {
         console.log('state eq:', this.state === initialState);
         // TODO 目前是很粗粒度的更新 state 对象
-        // this.setState( { ...nextState } );
-        this.setState(Object.assign({}, this.state));
+        this.setState( { ...this.state } );
+        // this.setState(Object.assign({}, this.state));
     }
 
     public initMolecule() {

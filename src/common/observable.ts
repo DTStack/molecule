@@ -20,7 +20,6 @@ export function observable<T>(object, callback?): IObservable & T {
             return Reflect.get(target, property, receiver);
         },
         set: function(target, property, value, receiver) {
-            console.log('set value:', target, property, value, receiver);
             let nextTarget = target;
             if (target.hasOwnProperty(property)) {
                 try {

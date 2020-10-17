@@ -1,6 +1,5 @@
-import './editor.scss';
+import '@/workbench/editor/style.scss';
 import * as React from 'react';
-import { memo } from 'react';
 
 import MonacoEditor from 'dt-react-monaco-editor';
 import SplitPane from 'react-split-pane';
@@ -77,8 +76,4 @@ export function Editor(props: IEditorProps) {
     );
 };
 
-export default memo(Editor, (prevProps: IEditorProps, nextProps: IEditorProps) => {
-    return prevProps.groups !== nextProps.groups ||
-    prevProps.render !== nextProps.render ||
-    prevProps.current !== nextProps.current;
-});
+export default Editor;

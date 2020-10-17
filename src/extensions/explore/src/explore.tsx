@@ -22,11 +22,13 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
 
     const NewEditor = function() {
         const id = Math.random() * 10 + 1;
-        moleculeCtx.editor.open({
+        const tabData = {
             id: id,
             name: 'test-tab1',
             value: 'just test tab data',
-        }, 1);
+        };
+        console.log('open editor:', tabData);
+        moleculeCtx.editor.open(tabData, 1);
     };
 
     return (

@@ -1,4 +1,4 @@
-import './sidebar.scss';
+import '@/workbench/sidebar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from '@/common/className';
 import { ISidebar, ISidebarPane } from '@/core/sidebar';
@@ -42,6 +42,4 @@ function Sidebar(props: ISidebarProps) {
     );
 };
 
-export default memo(Sidebar, (prevProps: ISidebarProps, nextProps: ISidebarProps) => {
-    return prevProps !== nextProps;
-});
+export default memo(Sidebar);

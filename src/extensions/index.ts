@@ -15,11 +15,14 @@ ExploreBar.activate = require('./explore/src/index').activate;
 const SearchBar: IExtension = SearchBarPkg as any; // require('./search/package.json');
 SearchBar.activate = require('./search/src/index').activate;
 
+const Themes = require('./theme-defaults/package.json');
+
 export const defaultExtensions: IExtensionEntry = {
     location: requireContext,
     extensions: [
         ExploreBar,
         SearchBar,
+        Themes,
         // 'theme-defaults',
         // 'theme-monokai',
     ],

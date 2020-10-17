@@ -1,9 +1,8 @@
+import '@/workbench/panel/style.scss';
 import * as React from 'react';
 import { memo } from 'react';
 
 import { prefixClaName } from '@/common/className';
-
-import './panel.scss';
 
 function Panel(props) {
     console.log('Panel render:', props);

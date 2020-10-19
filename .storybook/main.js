@@ -45,7 +45,7 @@ module.exports = {
     );
 
     config.resolve.alias = {
-      "@": path.resolve(__dirname, "../src"),
+      "mo": path.resolve(__dirname, "../src"),
       "@stories": path.resolve(__dirname, "../stories"),
     };
     config.resolve.extensions.push(".ts", ".tsx", ".js", ".jsx", ".json");

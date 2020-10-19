@@ -7,6 +7,6 @@ import { APP_PREFIX } from 'mo/common/const';
  * @param name Default class name
  * @param prefix The prefix of class name you want to append
  */
-export function prefixClaName(name: string | Symbol, prefix: string | Symbol = APP_PREFIX ) {
+export function prefixClaName(name: string, prefix: string = APP_PREFIX ) {
     return name ? `${prefix}-${name}` : '';
 }

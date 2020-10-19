@@ -10,7 +10,8 @@
     "check-types": "tsc --skipLibCheck",
     "build": "tsc --project tsconfig.build.json",
     "eslint": "npx eslint ./src/**/*.ts ./src/**/*.tsx",
-    "style-lint": "npx stylelint ./src/**/*.scss"
+    "style-lint": "npx stylelint ./src/**/*.scss",
+    "release": "standard-version"
   },
   "keywords": [
     "react.js",
@@ -31,6 +32,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-split-pane": "^0.1.92",
+    "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.3.0",
     "vscode-codicons": "^0.0.10"
   },
@@ -53,6 +55,7 @@
     "react-docgen-typescript-loader": "^3.7.2",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.2",
+    "standard-version": "^9.0.0",
     "style-loader": "^1.2.1",
     "stylelint": "^13.7.1",
     "stylelint-config-standard": "^20.0.0",

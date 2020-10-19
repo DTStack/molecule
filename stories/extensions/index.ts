@@ -1,4 +1,4 @@
-import { IExtension, IExtensionEntry } from '@/core/extension';
+import { IExtension, IExtensionEntry } from 'mo/core/extension';
 
 import * as DataSyncPkg from './data-sync/package.json';
 

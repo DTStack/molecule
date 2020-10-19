@@ -1,4 +1,4 @@
-import { IMolecule } from '@/core/molecule';
+import { IMolecule } from 'mo/core/molecule';
 
 import * as React from 'react';
 

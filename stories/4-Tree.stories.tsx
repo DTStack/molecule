@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Tree, { ITree } from '@/components/tree';
+import Tree, { ITree } from 'mo/components/tree';
 
 export default {
     title: 'Tree',

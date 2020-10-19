@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Tabs, { ITab } from '@/components/tabs';
+import Tabs, { ITab } from 'mo/components/tabs';
 
 export default {
     title: 'Tabs',

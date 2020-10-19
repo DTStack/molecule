@@ -2,7 +2,7 @@
  * Default extensions
  */
 
-import { IExtension, IExtensionEntry } from '@/core/extension';
+import { IExtension, IExtensionEntry } from 'mo/core/extension';
 import * as ExploreBarPkg from './explore/package.json';
 import * as SearchBarPkg from './search/package.json';
 

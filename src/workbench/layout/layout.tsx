@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { prefixClaName } from '@/common/className';
+import { prefixClaName } from 'mo/common/className';
 
 import './workbench.scss';
 

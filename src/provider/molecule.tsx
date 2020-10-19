@@ -1,16 +1,16 @@
+import 'reflect-metadata';
 import * as React from 'react';
-import { IExtensionEntry } from '@/core/extension';
-import { IMolecule } from '@/core/molecule';
-import { ILocalization } from '@/core/localization';
-import { ExtensionService } from '@/services/extensionService';
-import { EditorService } from '@/services/editor/editorService';
-import { ActivityBarService } from '@/services/activityBarService';
-import { MoleculeService } from '@/services/moleculeService';
-import { EditorGroupService } from '@/services/editor/groupService';
-import { ITab } from '@/components/tabs';
-import { ThemeService } from '@/services/themeServices';
-import { SidebarBarService } from '@/services/sidebarService';
-import { IObservable, observable } from '@/common/observable';
+import { IExtensionEntry } from 'mo/core/extension';
+import { IMolecule } from 'mo/core/molecule';
+import { ILocalization } from 'mo/core/localization';
+import { ExtensionService } from 'mo/services/extensionService';
+import { EditorService } from 'mo/services/editor/editorService';
+import { ActivityBarService } from 'mo/services/activityBarService';
+import { MoleculeService } from 'mo/services/moleculeService';
+import { EditorGroupService } from 'mo/services/editor/groupService';
+import { ITab } from 'mo/components/tabs';
+import { ThemeService } from 'mo/services/themeServices';
+import { SidebarBarService } from 'mo/services/sidebarService';
 
 interface IMoleculeProps {
     extensionEntry?: IExtensionEntry;
@@ -70,7 +70,7 @@ const editorGroup2 = new EditorGroupService(
     null,
 );
 
-const initialState = new MoleculeService(
+export const Molecule = new MoleculeService(
     new ActivityBarService(),
     new EditorService(
         editorGroup0,
@@ -85,17 +85,17 @@ const initialState = new MoleculeService(
 
 // https://medium.com/dev-genius/reactjs-manage-your-state-nicely-with-context-1ed3090a6a46
 
-export const MoleculeCtx = React.createContext<IMolecule>(initialState);
+export const MoleculeCtx = React.createContext<IMolecule>(Molecule);
 
 export class MoleculeProvider extends React.Component<IMoleculeProps> {
-    public state: IMolecule & IObservable;
+    public state: IMolecule;
 
     private extensionService: ExtensionService;
 
     constructor(props) {
         super(props);
         const { extensionEntry, locales } = this.props;
-        this.state = observable<IMolecule>(initialState);
+        this.state = Molecule; // observable<IMolecule>(Molecule);
 
         this.loadLocales(locales);
         this.extensionService = new ExtensionService(extensionEntry, this.state);
@@ -104,11 +104,11 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
     }
 
     componentDidMount() {
-        this.state.observe(this.stateChanged);
+        // this.state.observe(this.stateChanged);
     }
 
     stateChanged() {
-        console.log('state eq:', this.state === initialState);
+        console.log('state eq:', this.state === Molecule);
         // TODO 目前是很粗粒度的更新 state 对象
         this.setState( { ...this.state } );
         // this.setState(Object.assign({}, this.state));

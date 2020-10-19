@@ -10,8 +10,8 @@ export class ActivityBarProvider extends BaseProvider<any, IActivityBar> {
     constructor(props) {
         super(props);
         this.events = [
-            ActivityBarEvent.SELECTED,
-            ActivityBarEvent.DATA_CHANGE,
+            ActivityBarEvent.Selected,
+            ActivityBarEvent.DataChanged,
         ];
         this.state = Molecule.activityBar;
     }

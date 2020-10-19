@@ -3,8 +3,8 @@
  * https://code.visualstudio.com/api/references/theme-color
  */
 
-import { IExtension } from '@/core/extension';
-import { ITheme, ThemeColor, TokenColor } from '@/core/theme';
+import { IExtension } from 'mo/core/extension';
+import { ITheme, ThemeColor, TokenColor } from 'mo/core/theme';
 
 /**
  * Apply css content to workbench

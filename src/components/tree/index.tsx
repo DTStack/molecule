@@ -3,7 +3,7 @@ import RcTree from 'rc-tree';
 import classNames from 'classnames';
 
 import './style.scss';
-import { prefixClaName } from '@/common/className';
+import { prefixClaName } from 'mo/common/className';
 
 export interface ITree {
 

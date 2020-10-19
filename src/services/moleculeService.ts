@@ -1,7 +1,7 @@
-import { IEditor } from '@/core/editor';
-import { IActivityBar } from '@/core/activityBar';
-import { ITheme } from '@/core/theme';
-import { ISidebar } from '@/core/sidebar';
+import { IEditor } from 'mo/core/editor';
+import { IActivityBar } from 'mo/core/activityBar';
+import { ITheme } from 'mo/core/theme';
+import { ISidebar } from 'mo/core/sidebar';
 
 
 export class MoleculeService {

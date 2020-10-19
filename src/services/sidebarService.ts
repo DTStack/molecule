@@ -1,4 +1,4 @@
-import { ISidebar, ISidebarPane } from '@/core/sidebar';
+import { ISidebar, ISidebarPane } from 'mo/core/sidebar';
 
 export class SidebarBarService implements ISidebar {
     selected: string;

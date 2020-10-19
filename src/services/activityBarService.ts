@@ -10,7 +10,7 @@ export class ActivityBarService implements IActivityBar {
         this.selected = selected;
     }
 
-    @emitter(ActivityBarEvent.SELECTED)
+    @emitter(ActivityBarEvent.Selected)
     public onSelect(key: string, item?: IActivityBarItem) {
         this.selected = key;
     }
@@ -19,7 +19,7 @@ export class ActivityBarService implements IActivityBar {
 
     }
 
-    @emitter(ActivityBarEvent.DATA_CHANGE)
+    @emitter(ActivityBarEvent.DataChanged)
     public push(data: IActivityBarItem | IActivityBarItem[]) {
         if (Array.isArray(data)) {
             this.data = this.data.concat(data);

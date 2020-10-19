@@ -1,5 +1,5 @@
-import { IEditorGroup } from '@/core/editor';
-import { ITab } from '@/components/tabs';
+import { IEditorGroup } from 'mo/core/editor';
+import { ITab } from 'mo/components/tabs';
 
 export class EditorGroupService<E = any> implements IEditorGroup {
     id: number;

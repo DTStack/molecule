@@ -1,4 +1,9 @@
-import { ITab } from '@/components/tabs';
+import { ITab } from 'mo/components/tabs';
+
+export enum EditorEvent {
+    OpenTab = 'editor.openTab',
+    CloseTab = 'editor.close',
+}
 
 export interface IEditorGroup<E = any> {
     id: number;

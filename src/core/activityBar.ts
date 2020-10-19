@@ -1,5 +1,20 @@
-// import { ReactType } from '@/typings';
 import * as React from 'react';
+
+export const SYMBOL_ACTIVITY_BAR = 'activityBar';
+
+/**
+ * The activity bar event definition
+ */
+export enum ActivityBarEvent {
+    /**
+     * Selected an activity bar
+     */
+    Selected = 'activityBar.selected',
+    /**
+     * Activity bar data changed
+     */
+    DataChanged = 'activityBar.data',
+}
 
 export interface IActivityBarItem {
     id?: string;
@@ -7,8 +22,7 @@ export interface IActivityBarItem {
     data?: any;
     iconName?: string;
     checked?: boolean;
-    // render?: <T>() => T;
-    render?: () => any;
+    render?: () => React.ReactNode | JSX.Element;
     onClick?:(e: React.MouseEvent, option: IActivityBarItem) => any;
 }
 
@@ -21,7 +35,6 @@ export interface IActivityBar {
     remove: (index: number) => void;
     update: () => void;
     get: (id: string) => void;
-    // render?: <T>() => T;
-    render?: () => any;
+    render?: () => React.ReactNode | JSX.Element;
 
 }

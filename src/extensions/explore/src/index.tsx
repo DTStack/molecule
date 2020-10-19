@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IActivityBarItem } from '@/core/activityBar';
-import { IMolecule } from '@/core/molecule';
+import { IActivityBarItem } from 'mo/core/activityBar';
+import { IMolecule } from 'mo/core/molecule';
 
 import { Explorer } from './explore';
 
@@ -16,7 +16,6 @@ function initActivityBar(moleculeCtx: IMolecule) {
 
     moleculeCtx.activityBar.push([folderFeat]);
     moleculeCtx.activityBar.onSelect('folder');
-
 
     moleculeCtx.activityBar.onClick = (e: React.MouseEvent) => {
         console.log('moleculeCtx onClick ', e);

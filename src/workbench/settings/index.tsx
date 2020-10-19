@@ -1,8 +1,8 @@
-import '@/workbench/settings/style.scss';
+import 'mo/workbench/settings/style.scss';
 import * as React from 'react';
 import { memo } from 'react';
 
-import { prefixClaName } from '@/common/className';
+import { prefixClaName } from 'mo/common/className';
 
 export function SettingBar() {
     return (

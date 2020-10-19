@@ -1,5 +1,5 @@
-// import { IActivityBarItem } from '@/core/activityBar';
-import { IMolecule } from '@/core/molecule';
+// import { IActivityBarItem } from 'mo/core/activityBar';
+import { IMolecule } from 'mo/core/molecule';
 
 import * as React from 'react';
 

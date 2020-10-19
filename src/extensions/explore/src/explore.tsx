@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Collapse, { Panel } from '@/components/collapse';
-import { prefixClaName } from '@/common/className';
-import { MoleculeCtx } from '@/provider/molecule';
-import { IMolecule } from '@/core/molecule';
+import Collapse, { Panel } from 'mo/components/collapse';
+import { IMolecule } from 'mo/core/molecule';
+import { MoleculeCtx } from 'mo/provider/molecule';
+import { prefixClaName } from 'mo/common/className';
 
 interface IExplorerProps {
 

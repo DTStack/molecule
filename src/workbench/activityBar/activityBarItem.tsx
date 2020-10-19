@@ -4,20 +4,18 @@ import { memo } from 'react';
 import classNames from 'classnames';
 
 import { prefixClaName } from 'mo/common/className';
-import { IActivityBarItem } from 'mo/core/activityBar';
-
-import { ROOT_CLASS_NAME } from './activityBar';
+import { IActivityBarItem, SYMBOL_ACTIVITY_BAR } from 'mo/core/activityBar';
 
 function ActivityBarItem(props: IActivityBarItem) {
     const { checked = false, name = '', data = {}, render, iconName = '' } = props;
-    let content = '';
+    let content: React.ReactNode = '';
     if (render) {
         content = render();
     }
 
     return (
         <li
-            className={classNames(prefixClaName('item', ROOT_CLASS_NAME), checked ? 'checked' : '')}
+            className={classNames(prefixClaName('item', SYMBOL_ACTIVITY_BAR), checked ? 'checked' : '')}
             data-id={data.id}
         >
             <a title={name} className={classNames('item-label', 'codicon', iconName)}>

@@ -1,7 +1,7 @@
-import { ErrorMsg } from '@/common/error';
-import { IContribute, IContributeType, IExtension, IExtensionEntry } from '@/core/extension';
-import { IMolecule } from '@/core/molecule';
-import { defaultExtensions } from '@/extensions';
+import { ErrorMsg } from 'mo/common/error';
+import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/core/extension';
+import { IMolecule } from 'mo/core/molecule';
+import { defaultExtensions } from 'mo/extensions';
 
 export class ExtensionService {
     public extensions: IExtension[] = [];

@@ -3,10 +3,10 @@ import { memo } from 'react';
 
 import classNames from 'classnames';
 
-import { prefixClaName } from '@/common/className';
-import { IActivityBarItem } from '@/core/activityBar';
+import { prefixClaName } from 'mo/common/className';
+import { IActivityBarItem } from 'mo/core/activityBar';
 
-import { ROOT_CLASS_NAME } from './index';
+import { ROOT_CLASS_NAME } from './activityBar';
 
 function ActivityBarItem(props: IActivityBarItem) {
     const { checked = false, name = '', data = {}, render, iconName = '' } = props;

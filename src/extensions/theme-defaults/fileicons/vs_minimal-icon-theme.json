@@ -38,13 +38,13 @@
 	"rootFolderExpanded": "_root_folder_open_dark",
 	"rootFolder": "_root_folder_dark",
 	"fileExtensions": {
-		// icons by file extension
+		
 	},
 	"fileNames": {
-		// icons by file name
+		
 	},
 	"languageIds": {
-		// icons by language id
+		
 	},
 	"light": {
 		"folderExpanded": "_folder_open_light",
@@ -53,16 +53,16 @@
 		"rootFolder": "_root_folder",
 		"file": "_file_light",
 		"fileExtensions": {
-			// icons by file extension
+			
 		},
 		"fileNames": {
-			// icons by file name
+			
 		},
 		"languageIds": {
-			// icons by language id
+			
 		}
 	},
 	"highContrast": {
-		// overrides for high contrast
+		
 	}
 }

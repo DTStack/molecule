@@ -32,7 +32,7 @@ export default class EventEmitter {
  * it's going to emit event
  * @param name Event name
  */
-export function emitter(name: string) {
+export function emit(name: string) {
     return function(
         target,
         property: string,

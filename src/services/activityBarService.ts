@@ -1,5 +1,5 @@
 import { ActivityBarEvent, IActivityBar, IActivityBarItem } from 'mo/core/activityBar';
-import { emitter } from 'mo/common/eventEmitter';
+import { emit } from 'mo/common/eventEmitter';
 
 export class ActivityBarService implements IActivityBar {
     data: IActivityBarItem[];
@@ -10,7 +10,7 @@ export class ActivityBarService implements IActivityBar {
         this.selected = selected;
     }
 
-    @emitter(ActivityBarEvent.Selected)
+    @emit(ActivityBarEvent.Selected)
     public onSelect(key: string, item?: IActivityBarItem) {
         this.selected = key;
     }
@@ -19,7 +19,7 @@ export class ActivityBarService implements IActivityBar {
 
     }
 
-    @emitter(ActivityBarEvent.DataChanged)
+    @emit(ActivityBarEvent.DataChanged)
     public push(data: IActivityBarItem | IActivityBarItem[]) {
         if (Array.isArray(data)) {
             this.data = this.data.concat(data);

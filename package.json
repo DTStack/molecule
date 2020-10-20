@@ -11,7 +11,8 @@
     "build": "tsc --project tsconfig.build.json",
     "eslint": "npx eslint ./src/**/*.ts ./src/**/*.tsx",
     "style-lint": "npx stylelint ./src/**/*.scss",
-    "release": "standard-version"
+    "release": "standard-version",
+    "web": "webpack serve --config ./build/web.js"
   },
   "keywords": [
     "react.js",
@@ -24,9 +25,9 @@
   "dependencies": {
     "@types/react": "^16.9.35",
     "classnames": "^2.2.6",
-    "dt-react-monaco-editor": "^0.0.6",
     "dt-utils": "^1.0.1",
     "loadsh": "^0.0.4",
+    "monaco-editor": "^0.21.2",
     "rc-collapse": "^2.0.1",
     "rc-tree": "^3.10.0",
     "react": "^16.13.1",
@@ -53,6 +54,7 @@
     "eslint-plugin-react": "^7.20.0",
     "husky": "^4.3.0",
     "jest": "^26.0.1",
+    "monaco-editor-webpack-plugin": "^2.0.0",
     "react-docgen-typescript-loader": "^3.7.2",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.2",
@@ -62,7 +64,10 @@
     "stylelint-config-standard": "^20.0.0",
     "ts-jest": "^26.1.0",
     "ts-loader": "^7.0.5",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.2.0"
   },
   "husky": {
     "hooks": {

@@ -1,10 +1,10 @@
 /**
  * Default App prefix
  */
-export const APP_PREFIX = 'molecule';
+export const APP_PREFIX = 'mo';
 
 export default {
     app: {
-        prefix: 'molecule',
+        prefix: 'mo',
     },
 };

@@ -18,10 +18,15 @@
         .group-tabs {
             height: 35px;
         }
+
+        .group-breadcrumbs {
+            height: 22px;
+        }
     }
 
     .group-container {
         height: auto;
+        width: 100%;
         position: relative;
         bottom: 0;
         // top: 35px;

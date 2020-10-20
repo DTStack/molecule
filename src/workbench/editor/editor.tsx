@@ -1,9 +1,8 @@
 import 'mo/workbench/editor/style.scss';
 import * as React from 'react';
-
-import MonacoEditor from 'dt-react-monaco-editor';
 import SplitPane from 'react-split-pane';
 
+import MonacoEditor from 'mo/components/monaco-editor';
 import { prefixClaName } from 'mo/common/className';
 import { IEditor } from 'mo/core/editor';
 import { IEditorGroup } from 'mo/core/editor';
@@ -18,7 +17,7 @@ interface IEditorProps extends IEditor {
 function renderEditorGroup(group: IEditorGroup, theme: ITheme) {
     const editor = group.activeTab;
     return (
-        <div className={prefixClaName('editor-group')} key={group.id}>
+        <div className={prefixClaName('editor-group')} key={`group-${group.id}`}>
             <div className="group-header">
                 <div className="group-tabs">
                     <Tabs data={group.tabs} />
@@ -31,14 +30,16 @@ function renderEditorGroup(group: IEditorGroup, theme: ITheme) {
                     editor.renderPane ?
                         editor.renderPane() :
                         <MonacoEditor
-                            value={editor.value}
-                            language={editor.mode}
+                            options={{
+                                value: editor.value,
+                                language: editor.mode,
+                                theme: theme.id,
+                                automaticLayout: true,
+                            }}
                             editorInstanceRef={(editorInstance) => {
                                 // This assignment will trigger moleculeCtx update, and subNodes update
                                 group.editorInstance = editorInstance;
                             } }
-                            theme={theme.id}
-                            options={editor.options}
                         />
                 }
             </div>

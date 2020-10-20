@@ -1,3 +1,5 @@
+import { Molecule } from 'mo/provider/molecule';
+
 export default class EventEmitter {
     private static _events = new Map();
 
@@ -6,6 +8,9 @@ export default class EventEmitter {
         if (callEvent) {
             console.log('event emit:', name, args);
             callEvent(args);
+            // The below are just for development mode
+            console.group('Next Molecule', Molecule);
+            console.groupEnd();
         }
     }
 

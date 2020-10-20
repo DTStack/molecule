@@ -1,14 +1,16 @@
 import * as React from 'react';
 
-import MonacoEditor from 'dt-react-monaco-editor';
+import MonacoEditor from 'mo/components/monaco-editor';
 
 import './demo.scss';
 
 export const MonacoDemo = () => (
     <div>
         <MonacoEditor
-            value={`select * from abc`}
-            language={'dtsql'}
+            options={{
+                value: `select * from abc`,
+                language: 'sql',
+            }}
         />
     </div>
 );

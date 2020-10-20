@@ -32,7 +32,6 @@ export interface IMainBenchProps {
 }
 
 export function MainBench(props: IMainBenchProps) {
-    console.log('MainBench:', props);
     const { sidebar, theme } = props;
     return (
         <div className={prefixClaName('mainBench')}>
@@ -65,10 +64,9 @@ export function MainBench(props: IMainBenchProps) {
 export const Workbench: React.FunctionComponent<IWorkbenchProps> = function(props: IWorkbenchProps) {
     const moleculeCtx: IMolecule = React.useContext(MoleculeCtx);
     const { sidebar, editor, theme } = moleculeCtx;
-    console.log('Workbench render:', moleculeCtx);
 
     return (
-        <div className={classNames(APP_PREFIX + ' center', Utils.isMacOs() ? 'mac' : '' )}>
+        <div className={classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '' )}>
             <div className={prefixClaName('workbench')}>
                 <MenuBar />
                 <ActivityBarProvider>

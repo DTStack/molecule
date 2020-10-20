@@ -1,7 +1,6 @@
 import 'mo/workbench/panel/style.scss';
 import * as React from 'react';
 import { memo } from 'react';
-
 import { prefixClaName } from 'mo/common/className';
 
 function Panel(props) {

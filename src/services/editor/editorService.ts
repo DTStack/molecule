@@ -1,12 +1,13 @@
 import { ITab } from 'mo/components/tabs';
-import { EditorEvent, IEditor, IEditorGroup } from 'mo/core/editor';
-import { emit } from 'mo/common/eventEmitter';
+import { EditorEvent, IEditor, IEditorGroup } from 'mo/core/workbench/editor';
+import { emit } from 'mo/services/eventService';
+import { EditorGroupService } from './groupService';
 
 export class EditorService<T = any> implements IEditor<T> {
-    public current: IEditorGroup;
-    public groups: IEditorGroup[];
+    public current: IEditorGroup | undefined;
+    public groups!: IEditorGroup[];
 
-    constructor(current: IEditorGroup, groups: IEditorGroup[] = []) {
+    constructor(current?: IEditorGroup, groups: IEditorGroup[] = []) {
         this.current = current;
         this.groups = groups;
     }
@@ -20,6 +21,14 @@ export class EditorService<T = any> implements IEditor<T> {
         if (group) {
             group.tabs.push(tab);
             group.activeTab = tab;
+        } else {
+            group = new EditorGroupService(
+                this.groups.length + 1,
+                tab,
+                [tab],
+            );
+            this.current = group;
+            this.groups.push(group);
         }
     }
 

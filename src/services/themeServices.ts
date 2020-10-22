@@ -5,6 +5,7 @@
 
 import { IExtension } from 'mo/core/extension';
 import { ITheme, ThemeColor, TokenColor } from 'mo/core/theme';
+import { singleton } from 'tsyringe';
 
 /**
  * Apply css content to workbench
@@ -24,6 +25,7 @@ function _applyRules(styleSheetContent: string, rulesClassName: string) {
     }
 }
 
+@singleton()
 export class ThemeService implements ITheme {
     id: string;
     name: string;

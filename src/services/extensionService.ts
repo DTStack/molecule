@@ -1,7 +1,6 @@
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/core/extension';
 import { IMolecule } from 'mo/core/molecule';
-import { defaultExtensions } from 'mo/extensions';
 
 export class ExtensionService {
     public extensions: IExtension[] = [];
@@ -9,8 +8,7 @@ export class ExtensionService {
 
     constructor(extensionEntry: IExtensionEntry = {}, moleculeCtx: IMolecule) {
         this.moleculeCtx = moleculeCtx;
-        this.load(defaultExtensions, moleculeCtx);
-        this.load(extensionEntry, moleculeCtx);
+        this.load(extensionEntry);
     }
 
     /**
@@ -18,7 +16,7 @@ export class ExtensionService {
      * @param param0 extensionEntry object
      * @param moleculeCtx the context object of molecule
      */
-    public load({ location, extensions = [] }: IExtensionEntry, moleculeCtx: IMolecule) {
+    public load({ location, extensions = [] }: IExtensionEntry) {
         try {
             if (extensions?.length === 0) return;
             this.extensions = this.extensions.concat(extensions || []);
@@ -26,7 +24,7 @@ export class ExtensionService {
             extensions?.forEach((extension: IExtension, index: number) => {
                 if (extension.main) {
                     if (extension.activate) {
-                        extension.activate(moleculeCtx);
+                        extension.activate(this.moleculeCtx);
                     } else {
                         throw new Error(ErrorMsg.NotFoundActivate);
                     }
@@ -51,7 +49,7 @@ export class ExtensionService {
         });
     }
 
-    unload(id: string) {
-        console.log('unload extension:', id);
+    unload(extension: IExtension) {
+        console.log('unload extension:', extension.name);
     }
 }

@@ -1,6 +1,8 @@
-import { ISidebar, ISidebarPane } from 'mo/core/sidebar';
+import { ISidebar, ISidebarPane } from 'mo/core/workbench/sidebar';
+import { singleton } from 'tsyringe';
 
-export class SidebarBarService implements ISidebar {
+@singleton()
+export class SidebarService implements ISidebar {
     selected: string;
     panes: ISidebarPane[];
 
@@ -12,12 +14,4 @@ export class SidebarBarService implements ISidebar {
     onSelect(key: string) {
         this.selected = key;
     }
-
-    // getSelected() {
-    //     return this.selected;
-    // }
-
-    // getPanes() {
-    //     return this.panes;
-    // }
 }

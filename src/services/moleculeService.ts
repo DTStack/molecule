@@ -1,11 +1,13 @@
-import { IEditor } from 'mo/core/editor';
-import { IActivityBar } from 'mo/core/activityBar';
+import { IEditor } from 'mo/core/workbench/editor';
+import { IActivityBar } from 'mo/core/workbench/activityBar';
 import { ITheme } from 'mo/core/theme';
-import { ISidebar } from 'mo/core/sidebar';
-
-
-export class MoleculeService {
-    // public menuBar: MenuBar;
+import { ISidebar } from 'mo/core/workbench/sidebar';
+import { IMenuBar } from 'mo/core/workbench/menuBar';
+import { IMolecule } from 'mo/core/molecule';
+import { singleton } from 'tsyringe';
+@singleton()
+export class MoleculeService implements IMolecule {
+    public menuBar: IMenuBar;
     // public statusBar: StatusBar;
     public activityBar: IActivityBar;
     // public panel: Panel;
@@ -19,20 +21,20 @@ export class MoleculeService {
     // public shortcutKeys: ShortcutKeys;
 
     constructor(
-        // menuBar: MenuBar,
+        menuBar: IMenuBar,
         // statusBar: StatusBar,
         activityBar: IActivityBar,
         editor: IEditor,
+        sidebar: ISidebar,
         // panel: Panel,
         // layout: Layout,
         theme: ITheme,
-        sidebar: ISidebar,
         // iconTheme: IconTheme,
         // settings: Settings,
         // local: Local,
         // shortcutKeys: ShortcutKeys,
     ) {
-        // this.menuBar = menuBar;
+        this.menuBar = menuBar;
         // this.statusBar = statusBar;
         this.activityBar = activityBar;
         // this.panel = panel;
@@ -46,5 +48,3 @@ export class MoleculeService {
         // this.shortcutKeys = shortcutKeys;
     }
 };
-
-// // TODO

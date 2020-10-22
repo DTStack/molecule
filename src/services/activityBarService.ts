@@ -1,20 +1,32 @@
-import { ActivityBarEvent, IActivityBar, IActivityBarItem } from 'mo/core/activityBar';
-import { emit } from 'mo/common/eventEmitter';
+import { ActivityBarEvent, IActivityBar, IActivityBarItem } from 'mo/core/workbench/activityBar';
+import { emit, EventService } from 'mo/services/eventService';
+import { injectable, inject } from 'tsyringe';
+import { BaseService } from './baseService';
 
-export class ActivityBarService implements IActivityBar {
-    data: IActivityBarItem[];
+@injectable()
+export class ActivityBarService extends BaseService implements IActivityBar {
+    public data: IActivityBarItem[];
     public selected: string;
 
-    constructor(data: IActivityBarItem[] = [], selected: string = '') {
+    constructor(
+        @inject('IActivityBarItem') data: IActivityBarItem[] = [],
+        selected: string = '',
+    ) {
+        super();
         this.data = data;
         this.selected = selected;
     }
 
+    public subscribe(name: ActivityBarEvent, callback: Function) {
+        EventService.subscribe(name, callback);
+    }
+
     @emit(ActivityBarEvent.Selected)
-    public onSelect(key: string, item?: IActivityBarItem) {
+    public onSelect(key: string, item?: IActivityBarItem | undefined) {
         this.selected = key;
     }
 
+    @emit(ActivityBarEvent.OnClick)
     public onClick(event: React.MouseEvent, item: IActivityBarItem) {
 
     }
@@ -39,4 +51,8 @@ export class ActivityBarService implements IActivityBar {
     public get(id: string) {
 
     }
+
+    // public subscribe(name: ActivityBarEvent | ActivityBarEvent[], callback: CallbackEvent) {
+    //     EventService.subscribe(name, callback);
+    // }
 }

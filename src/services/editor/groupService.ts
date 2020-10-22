@@ -1,23 +1,23 @@
-import { IEditorGroup } from 'mo/core/editor';
+import { IEditorGroup } from 'mo/core/workbench/editor';
 import { ITab } from 'mo/components/tabs';
 
-export class EditorGroupService<E = any> implements IEditorGroup {
+export class EditorGroupService implements IEditorGroup {
     id: number;
     activeTab: ITab;
     tabs: ITab[];
     breadcrumb: any[];
     actions: any[];
     menu: any[];
-    editorInstance: E;
+    editorInstance: any;
 
     constructor(
         id: number,
         activeTab: ITab,
         tabs: ITab[],
-        breadcrumb: any[],
-        actions: any[],
-        menu: any[],
-        editorInstance: E,
+        breadcrumb: any[] = [],
+        actions: any[] = [],
+        menu: any[] = [],
+        editorInstance?: any,
     ) {
         this.id = id;
         this.tabs = tabs;

@@ -1,0 +1,9 @@
+@import 'mo/style/const';
+
+#{prefix('welcome')} {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}

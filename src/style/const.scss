@@ -6,3 +6,7 @@ $menuBar: 'menuBar';
 $settings: 'settings';
 $panel: 'panel';
 $statusBar: 'statusBar';
+
+@function prefix($name) {
+    @return '.' + $prefix + '-' + $name;
+}

@@ -1,16 +1,16 @@
 @import 'mo/style/const.scss';
 
 .#{$prefix}-#{$settings} {
-    display: flex;
-    position: absolute;
-    left: 0;
-    bottom: 26px;
-    width: 48px;
-    height: 48px;
     align-items: center;
-    justify-content: center;
-    z-index: 2;
+    bottom: 26px;
     cursor: pointer;
+    display: flex;
+    height: 48px;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    width: 48px;
+    z-index: 2;
 
     .#{$settings}-action.codicon {
         font-size: 24px;

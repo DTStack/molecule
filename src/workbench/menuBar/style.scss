@@ -1,14 +1,14 @@
-@import 'mo/style/const.scss';
+@import 'mo/style/const';
 
-.#{$prefix}-menuBar {
+#{prefix($menuBar)} {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 13px;
+    height: 35px;
+    justify-content: center;
     position: absolute;
     width: 48px;
-    height: 35px;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
 
     .left {
         left: 0;

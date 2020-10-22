@@ -1,52 +1,52 @@
 @import 'mo/style/const.scss';
 
 .#{$prefix}-#{$sidebar} {
-    position: relative;
-    left: 0;
-    width: 100%;
     height: 100%;
+    left: 0;
+    position: relative;
+    width: 100%;
 
     .#{$sidebar}-pane {
+        height: 100%;
         position: relative;
         width: 100%;
-        height: 100%;
 
         .pane-header {
+            align-items: center;
+            box-sizing: border-box;
             display: flex;
-            position: relative;
+            height: 35px;
+            overflow: hidden;
             padding-left: 8px;
             padding-right: 8px;
-            height: 35px;
-            box-sizing: border-box;
-            overflow: hidden;
-            align-items: center;
+            position: relative;
         }
 
         .pane-title {
-            padding-left: 12px;
             line-height: 35px;
-            white-space: nowrap;
             overflow: hidden;
+            padding-left: 12px;
             text-overflow: ellipsis;
+            white-space: nowrap;
 
             h2 {
-                text-transform: uppercase;
-                font-size: 11px;
                 cursor: default;
+                font-size: 11px;
                 font-weight: normal;
                 margin: 0;
                 overflow: hidden;
-                white-space: nowrap;
                 text-overflow: ellipsis;
+                text-transform: uppercase;
+                white-space: nowrap;
             }
         }
 
         .pane-content {
-            position: relative;
-            top: 0;
             bottom: 0;
             left: 0;
+            position: relative;
             right: 0;
+            top: 0;
         }
     }
 }

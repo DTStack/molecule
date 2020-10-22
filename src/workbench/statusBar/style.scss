@@ -1,10 +1,10 @@
 @import 'mo/style/const.scss';
 
 .#{$prefix}-statusBar {
+    bottom: 0;
+    height: 22px;
     position: absolute;
     text-align: center;
-    height: 22px;
     width: 100%;
-    bottom: 0;
     z-index: 1;
 }

@@ -1,36 +1,35 @@
-@import 'mo/style/const.scss';
+@import 'mo/style/const';
 
-.#{$prefix}-editor {
+#{prefix($editor)} {
+    display: flex;
+    height: 100%;
     position: relative;
     width: 100%;
-    height: 100%;
-    display: flex;
 
-    .#{$prefix}-editor-group {
+    .editor-group {
+        height: 100%;
         position: relative;
         width: 100%;
-        height: 100%;
     }
 
     .group-header {
         position: relative;
+    }
 
-        .group-tabs {
-            height: 35px;
-        }
+    .group-tabs {
+        height: 35px;
+    }
 
-        .group-breadcrumbs {
-            height: 22px;
-        }
+    .group-breadcrumbs {
+        height: 22px;
     }
 
     .group-container {
-        height: auto;
-        width: 100%;
-        position: relative;
         bottom: 0;
-        // top: 35px;
+        height: auto;
         left: 0;
+        position: relative;
         right: 0;
+        width: 100%;
     }
 }

@@ -1,20 +1,20 @@
-@import './const.scss';
-@import './theme.scss';
+@import './const';
+@import './theme';
 
 .#{$prefix} {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-size: 13px;
-    overflow: hidden;
-    top: 0;
-    left: 0;
     bottom: 0;
+    font-size: 13px;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
     right: 0;
+    top: 0;
     user-select: none;
-    -webkit-user-select: none;
+    user-select: none;
+    width: 100%;
 }
 
 .mac {

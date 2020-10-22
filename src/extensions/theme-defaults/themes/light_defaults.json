@@ -10,7 +10,7 @@
 		"editor.selectionHighlightBackground": "#ADD6FF80",
 		"editorSuggestWidget.background": "#F3F3F3",
 		"activityBarBadge.background": "#007ACC",
-		"sideBarTitle.foreground": "#6F6F6F",
+		"sidebarTitle.foreground": "#6F6F6F",
 		"list.hoverBackground": "#E8E8E8",
 		"input.placeholderForeground": "#767676",
 		"searchEditor.textInputBorder": "#CECECE",
@@ -18,8 +18,8 @@
 		"settings.numberInputBorder": "#CECECE",
 		"statusBarItem.remoteForeground": "#FFF",
 		"statusBarItem.remoteBackground": "#16825D",
-		"sideBarSectionHeader.background": "#0000",
-		"sideBarSectionHeader.border": "#61616130"
+		"sidebarSectionHeader.background": "#0000",
+		"sidebarSectionHeader.border": "#61616130"
 	},
 	"semanticHighlighting": true
 }

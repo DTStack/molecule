@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { ActivityBarCtx } from 'mo/provider/activityBar';
-import ActivityBar from 'mo/workbench/activityBar/activityBar';
+import ActivityBar from './activityBar';
 
-export default function ActivityBarView(props) {
+function ActivityBarView(props) {
     const activityBar = React.useContext(ActivityBarCtx);
     return (
         <ActivityBar {...props} {...activityBar}/>
     );
 }
 
-export { ActivityBar };
+export {
+    ActivityBar,
+    ActivityBarView,
+};

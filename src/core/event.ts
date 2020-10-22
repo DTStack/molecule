@@ -1,4 +1,4 @@
-import { ActivityBarEvent } from './activityBar';
+import { ActivityBarEvent } from './workbench/activityBar';
 
 export default {
     ActivityBarEvent,

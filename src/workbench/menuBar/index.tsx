@@ -1,15 +1,16 @@
 import 'mo/workbench/menuBar/style.scss';
 import * as React from 'react';
-import { memo } from 'react';
+import MenuBar from './menuBar';
+import { MenuBarCtx } from 'mo/provider/menuBar';
 
-import { prefixClaName } from 'mo/common/className';
-
-function MenuBar() {
+function MenuBarView(props) {
+    const menuBar = React.useContext(MenuBarCtx);
     return (
-        <div className={prefixClaName('menuBar')}>
-            <a className="menu-action codicon codicon-menu"></a>
-        </div>
+        <MenuBar {...props} {...menuBar} />
     );
 };
 
-export default memo(MenuBar);
+export {
+    MenuBar,
+    MenuBarView,
+};

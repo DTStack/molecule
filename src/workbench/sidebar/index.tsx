@@ -1,9 +1,8 @@
 import 'mo/workbench/sidebar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
-import { ISidebar, ISidebarPane } from 'mo/core/sidebar';
+import { ISidebar, ISidebarPane } from 'mo/core/workbench/sidebar';
 import { memo } from 'react';
-
 interface ISidebarProps extends ISidebar {
     // sidebar: ISidebar;
 }

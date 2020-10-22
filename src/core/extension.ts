@@ -31,6 +31,7 @@ export interface IContribute extends Object{
     [IContributeType.Grammar ]: any;
 }
 
+
 /**
  * The interface of extension,
  * there need every extension to implement this interface
@@ -84,9 +85,24 @@ export interface IExtension extends Object {
     /**
      * Whether disable current extension, the extension default status is enable
      */
-    disable?: boolean;
+    disable?: boolean
     /**
      * Activate current extension
      */
     activate?: (moleculeCtx: IMolecule) => void;
+}
+
+export interface IExtensionService {
+    /**
+     * The extensions
+     */
+    extensions?: IExtension[];
+    /**
+     * Load extensions
+     * @param extensionEntry
+     * @param moleculeCtx
+     */
+    load(extensionEntry: IExtensionEntry);
+    loadContributes(contributes: IContribute);
+    unload(extension: IExtension);
 }

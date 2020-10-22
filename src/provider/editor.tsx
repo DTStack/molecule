@@ -1,18 +1,23 @@
 import * as React from 'react';
-import { Molecule } from 'mo/provider/molecule';
-import { IEditor, EditorEvent } from 'mo/core/editor';
+import { EditorEvent } from 'mo/core/workbench/editor';
 import { BaseProvider } from 'mo/provider/base';
+import { moleculeService } from 'mo/main';
 
-export const EditorCtx = React.createContext<IEditor>(Molecule.editor);
+const initialState = {
+    editor: moleculeService.editor,
+};
 
-export class EditorProvider extends BaseProvider<any, IEditor> {
+type IEditorState = typeof initialState;
+
+export const EditorCtx = React.createContext<IEditorState>(initialState);
+
+export class EditorProvider extends BaseProvider<any, IEditorState> {
     constructor(props) {
         super(props);
-        this.events = [
-            EditorEvent.CloseTab,
+        this.register([
             EditorEvent.OpenTab,
-        ];
-        this.state = Molecule.editor;
+        ]);
+        this.state = initialState;
     }
 
     public render() {

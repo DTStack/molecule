@@ -4,20 +4,22 @@ import SplitPane from 'react-split-pane';
 
 import MonacoEditor from 'mo/components/monaco-editor';
 import { prefixClaName } from 'mo/common/className';
-import { IEditor } from 'mo/core/editor';
-import { IEditorGroup } from 'mo/core/editor';
+import { IEditor } from 'mo/core/workbench/editor';
+import { IEditorGroup } from 'mo/core/workbench/editor';
 
 import Tabs from 'mo/components/tabs';
 import { ITheme } from 'mo/core/theme';
+import Welcome from './welcome';
 
-interface IEditorProps extends IEditor {
-    theme: ITheme
+interface IEditorProps {
+    theme: ITheme;
+    editor: IEditor;
 }
 
 function renderEditorGroup(group: IEditorGroup, theme: ITheme) {
     const editor = group.activeTab;
     return (
-        <div className={prefixClaName('editor-group')} key={`group-${group.id}`}>
+        <div className={`editor-group`} key={`group-${group.id}`}>
             <div className="group-header">
                 <div className="group-tabs">
                     <Tabs data={group.tabs} />
@@ -32,7 +34,7 @@ function renderEditorGroup(group: IEditorGroup, theme: ITheme) {
                         <MonacoEditor
                             options={{
                                 value: editor.value,
-                                language: editor.mode,
+                                language: editor.mode || 'sql',
                                 theme: theme.id,
                                 automaticLayout: true,
                             }}
@@ -67,12 +69,17 @@ export function renderGroups(groups: IEditorGroup[], theme: ITheme) {
 };
 
 export function Editor(props: IEditorProps) {
-    const { groups, theme } = props;
+    const { editor, theme } = props;
+    const { groups, render } = editor;
     console.log('Editor render:', props);
+    let content: React.ReactNode = <Welcome />;
+    if (editor.current) {
+        content = render ? render() : renderGroups(groups, theme);
+    }
 
     return (
         <div className={prefixClaName('editor')}>
-            { props.render ? props.render() : renderGroups(groups, theme) }
+            { content }
         </div>
     );
 };

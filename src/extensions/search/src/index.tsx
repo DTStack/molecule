@@ -1,7 +1,7 @@
 // import { IActivityBarItem } from 'mo/core/activityBar';
 import { IMolecule } from 'mo/core/molecule';
 
-import * as React from 'react';
+// import * as React from 'react';
 
 // const BarB: React.FunctionComponent = (props) => {
 //     return (<div>affefefe</div>);
@@ -15,11 +15,11 @@ export function activate(moleculeCtx: IMolecule) {
     };
 
     moleculeCtx.activityBar.push([searchFeat]);
-    moleculeCtx.activityBar.onSelect('folder');
+    // moleculeCtx.activityBar.onSelect('folder');
 
-    moleculeCtx.activityBar.onClick = (e: React.MouseEvent) => {
-        console.log('moleculeCtx onClick ', e);
-    };
+    // moleculeCtx.activityBar.onClick = (e: React.MouseEvent) => {
+    //     console.log('moleculeCtx onClick ', e);
+    // };
 
     // moleculeCtx.sidebar;
 

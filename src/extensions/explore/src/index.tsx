@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { IActivityBarItem } from 'mo/core/activityBar';
+import { ActivityBarEvent, IActivityBarItem } from 'mo/core/workbench/activityBar';
 import { IMolecule } from 'mo/core/molecule';
+import { activityBarService } from 'mo/main';
 
 import { Explorer } from './explore';
 
@@ -14,15 +15,14 @@ function initActivityBar(moleculeCtx: IMolecule) {
         },
     };
 
-    moleculeCtx.activityBar.push([folderFeat]);
-    moleculeCtx.activityBar.onSelect('folder');
+    activityBarService.push([folderFeat]);
 
-    moleculeCtx.activityBar.onClick = (e: React.MouseEvent) => {
-        console.log('moleculeCtx onClick ', e);
-    };
+    activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
+        console.log('Explore activityBar subscribe onClick:', data);
+    });
 }
 
-function initSideBar(moleculeCtx: IMolecule) {
+function initSidebar(moleculeCtx: IMolecule) {
     moleculeCtx.sidebar.panes.push({
         id: 'explore',
         name: 'EXPLORER',
@@ -35,5 +35,5 @@ function initSideBar(moleculeCtx: IMolecule) {
 
 export function activate(moleculeCtx: IMolecule) {
     initActivityBar(moleculeCtx);
-    initSideBar(moleculeCtx);
+    initSidebar(moleculeCtx);
 }

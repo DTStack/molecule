@@ -1,19 +1,15 @@
 import * as React from 'react';
 import Collapse, { Panel } from 'mo/components/collapse';
-import { IMolecule } from 'mo/core/molecule';
-import { MoleculeCtx } from 'mo/provider/molecule';
 import { prefixClaName } from 'mo/common/className';
+import { activityBarService, moleculeService, ActivityBarEvent } from 'mo/main';
 
 interface IExplorerProps {
-
 }
 
 export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps) => {
-    const moleculeCtx: IMolecule = React.useContext(MoleculeCtx);
-
     const AddABar = function() {
         const id = Math.random() * 10 + 1;
-        moleculeCtx.activityBar.push({
+        moleculeService.activityBar.push({
             id: id + '',
             name: 'folder' + id,
             iconName: 'codicon-edit',
@@ -28,8 +24,12 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
             value: 'just test tab data',
         };
         console.log('open editor:', tabData);
-        moleculeCtx.editor.open(tabData, 1);
+        moleculeService.editor.open(tabData, 1);
     };
+
+    activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
+        console.log('Explore activityBar subscribe onClick:', data);
+    });
 
     return (
         <div className={prefixClaName('explorer', 'sidebar')}>

@@ -1,21 +1,17 @@
-import { IMolecule } from 'mo/core/molecule';
+import { moleculeService } from 'mo/main';
 
-import * as React from 'react';
+// import * as React from 'react';
 
 // const BarB: React.FunctionComponent = () => {
 //     return (<div>affefefe</div>);
 // };
 
-export function activate(moleculeCtx: IMolecule) {
-    moleculeCtx.activityBar.push({
+export function activate() {
+    moleculeService.activityBar.push({
         id: '3333',
         iconName: 'codicon-sync',
         name: '数据同步',
     });
-
-    moleculeCtx.activityBar.onClick = (e: React.MouseEvent) => {
-        console.log('moleculeCtx onClick ', e);
-    };
 
     // moleculeCtx.a.components.push();
 

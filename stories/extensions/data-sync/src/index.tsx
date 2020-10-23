@@ -1,4 +1,4 @@
-import { moleculeService } from 'mo/main';
+import { activityBarService } from 'mo/main';
 
 // import * as React from 'react';
 
@@ -7,7 +7,7 @@ import { moleculeService } from 'mo/main';
 // };
 
 export function activate() {
-    moleculeService.activityBar.push({
+    activityBarService.push({
         id: '3333',
         iconName: 'codicon-sync',
         name: '数据同步',

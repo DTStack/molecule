@@ -8,15 +8,9 @@ import { IEditor } from 'mo/core/workbench/editor';
 import { IEditorGroup } from 'mo/core/workbench/editor';
 
 import Tabs from 'mo/components/tabs';
-import { ITheme } from 'mo/core/theme';
 import Welcome from './welcome';
 
-interface IEditorProps {
-    theme: ITheme;
-    editor: IEditor;
-}
-
-function renderEditorGroup(group: IEditorGroup, theme: ITheme) {
+function renderEditorGroup(group: IEditorGroup) {
     const editor = group.activeTab;
     return (
         <div className={`editor-group`} key={`group-${group.id}`}>
@@ -35,7 +29,6 @@ function renderEditorGroup(group: IEditorGroup, theme: ITheme) {
                             options={{
                                 value: editor.value,
                                 language: editor.mode || 'sql',
-                                theme: theme.id,
                                 automaticLayout: true,
                             }}
                             editorInstanceRef={(editorInstance) => {
@@ -49,9 +42,9 @@ function renderEditorGroup(group: IEditorGroup, theme: ITheme) {
     );
 };
 
-export function renderGroups(groups: IEditorGroup[], theme: ITheme) {
+export function renderGroups(groups: IEditorGroup[]) {
     if (groups.length === 1) {
-        return renderEditorGroup(groups[0], theme);
+        return renderEditorGroup(groups[0]);
     } else if (groups.length > 1) {
         const averageNum = Math.round(100 / groups.length);
         return (
@@ -61,20 +54,19 @@ export function renderGroups(groups: IEditorGroup[], theme: ITheme) {
                 primary="first"
                 allowResize={true}
             >
-                {groups.map((g: IEditorGroup) => renderEditorGroup(g, theme))}
+                {groups.map((g: IEditorGroup) => renderEditorGroup(g))}
             </SplitPane>
         );
     }
     return null;
 };
 
-export function Editor(props: IEditorProps) {
-    const { editor, theme } = props;
-    const { groups, render } = editor;
+export function Editor(props: IEditor) {
+    const { groups, render, current } = props;
     console.log('Editor render:', props);
     let content: React.ReactNode = <Welcome />;
-    if (editor.current) {
-        content = render ? render() : renderGroups(groups, theme);
+    if (current) {
+        content = render ? render() : renderGroups(groups);
     }
 
     return (

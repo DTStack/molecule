@@ -1,7 +1,9 @@
 const path = require('path');
+const webpack = require('webpack');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     resolve: {
         extensions: ['.js', '.jsx', '.tsx', '.ts'],
@@ -39,6 +41,9 @@ module.exports = {
     plugins: [
         new MonacoWebpackPlugin({
             languages: ['html', 'typescript', 'javascript', 'css'],
+        }),
+        new webpack.DefinePlugin({
+            __DEVELOPMENT__: true,
         }),
     ],
 };

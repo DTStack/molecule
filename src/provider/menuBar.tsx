@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { IMenuBar, MenuBarEvent } from 'mo/core/workbench/menuBar';
 import { BaseProvider } from './base';
-import { moleculeService } from 'mo/main';
+import { menuBarService } from 'mo/main';
 import { cloneInstance } from 'mo/common/utils';
 
-const initialState = cloneInstance(moleculeService.menuBar);
-
+const initialState = cloneInstance(menuBarService);
 export const MenuBarCtx = React.createContext<IMenuBar>(initialState);
 
 export class MenuBarProvider extends BaseProvider<any, IMenuBar> {

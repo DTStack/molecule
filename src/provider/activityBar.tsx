@@ -1,23 +1,19 @@
 import * as React from 'react';
 import { ActivityBarEvent, IActivityBar } from 'mo/core/workbench/activityBar';
 import { BaseProvider } from './base';
-import { moleculeService } from 'mo/main';
+import { activityBarService } from 'mo/main';
+import { cloneInstance } from 'mo/common/utils';
 
-// const initialState = {
-//     activityBar: moleculeService.activityBar,
-// };
-// type IActivityBarState = typeof initialState;
-
-const initialState = moleculeService.activityBar;
+const initialState = cloneInstance(activityBarService);
 export const ActivityBarCtx = React.createContext<IActivityBar>(initialState);
 
 export class ActivityBarProvider extends BaseProvider<any, IActivityBar> {
     state: IActivityBar;
     constructor(props) {
         super(props);
-        this.events = [
+        this.register([
             ActivityBarEvent.DataChanged,
-        ];
+        ]);
         this.state = initialState;
     }
     public render() {

@@ -2,7 +2,7 @@
   "name": "molecule",
   "version": "0.9.0",
   "description": "A Web IDE UI Framework built by React.js, inspired by VSCode.",
-  "main": "dist/index.js",
+  "main": "dist/main.js",
   "scripts": {
     "test": "jest --coverage",
     "dev": "start-storybook -s ./public -p 6006",
@@ -12,7 +12,7 @@
     "eslint": "npx eslint ./src/**/*.ts ./src/**/*.tsx",
     "style-lint": "npx stylelint ./src/**/*.scss",
     "release": "standard-version",
-    "web": "webpack serve --config ./build/web.js"
+    "web": "webpack serve --env prod --config ./build/web.js"
   },
   "keywords": [
     "react.js",

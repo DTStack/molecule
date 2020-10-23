@@ -1,13 +1,10 @@
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/core/extension';
-import { IMolecule } from 'mo/core/molecule';
 
 export class ExtensionService {
     public extensions: IExtension[] = [];
-    public moleculeCtx: IMolecule;
 
-    constructor(extensionEntry: IExtensionEntry = {}, moleculeCtx: IMolecule) {
-        this.moleculeCtx = moleculeCtx;
+    constructor(extensionEntry: IExtensionEntry = {}) {
         this.load(extensionEntry);
     }
 
@@ -20,11 +17,12 @@ export class ExtensionService {
         try {
             if (extensions?.length === 0) return;
             this.extensions = this.extensions.concat(extensions || []);
+            const ctx = this;
 
             extensions?.forEach((extension: IExtension, index: number) => {
                 if (extension.main) {
                     if (extension.activate) {
-                        extension.activate(this.moleculeCtx);
+                        extension.activate(ctx);
                     } else {
                         throw new Error(ErrorMsg.NotFoundActivate);
                     }

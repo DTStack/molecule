@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { EventService } from 'mo/services/eventService';
 import { cloneInstance } from 'mo/common/utils';
+import Logger from 'mo/common/logger';
 
 export interface IBaseProviderState {
     lastUpdated: number;
@@ -26,11 +27,7 @@ export class BaseProvider<IProps = {}, IState = {}>
 
     updateState(eventData) {
         const nextState = cloneInstance(this.state);
-        // The blow codes just for development
-        // if (__DEVELOPMENT__) {
-        // }
-        console.group(`Update State:`, nextState, this._count++);
-        console.groupEnd();
+        Logger.info(nextState);
         this.setState(nextState);
     }
 }

@@ -1,17 +1,13 @@
 import * as React from 'react';
-import { EditorEvent } from 'mo/core/workbench/editor';
+import { EditorEvent, IEditor } from 'mo/core/workbench/editor';
 import { BaseProvider } from 'mo/provider/base';
-import { moleculeService } from 'mo/main';
+import { editorService } from 'mo/main';
+import { cloneInstance } from 'mo/common/utils';
 
-const initialState = {
-    editor: moleculeService.editor,
-};
+const initialState = cloneInstance(editorService);
+export const EditorCtx = React.createContext<IEditor>(initialState);
 
-type IEditorState = typeof initialState;
-
-export const EditorCtx = React.createContext<IEditorState>(initialState);
-
-export class EditorProvider extends BaseProvider<any, IEditorState> {
+export class EditorProvider extends BaseProvider<any, IEditor> {
     constructor(props) {
         super(props);
         this.register([

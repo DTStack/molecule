@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { ActivityBarEvent, IActivityBarItem } from 'mo/core/workbench/activityBar';
-import { IMolecule } from 'mo/core/molecule';
-import { activityBarService } from 'mo/main';
+import { activityBarService, sidebarService } from 'mo/main';
 
 import { Explorer } from './explore';
+import { ExtensionService } from 'mo/services/extensionService';
 
-function initActivityBar(moleculeCtx: IMolecule) {
+function initActivityBar(extensionCtx: ExtensionService) {
     const folderFeat: IActivityBarItem = {
         id: 'active-explorer',
         name: 'Explore',
@@ -22,8 +22,8 @@ function initActivityBar(moleculeCtx: IMolecule) {
     });
 }
 
-function initSidebar(moleculeCtx: IMolecule) {
-    moleculeCtx.sidebar.panes.push({
+function initSidebar(extensionCtx: ExtensionService) {
+    sidebarService.panes.push({
         id: 'explore',
         name: 'EXPLORER',
         render() {
@@ -33,7 +33,7 @@ function initSidebar(moleculeCtx: IMolecule) {
 }
 
 
-export function activate(moleculeCtx: IMolecule) {
-    initActivityBar(moleculeCtx);
-    initSidebar(moleculeCtx);
+export function activate(extensionCtx: ExtensionService) {
+    initActivityBar(extensionCtx);
+    initSidebar(extensionCtx);
 }

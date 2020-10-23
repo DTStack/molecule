@@ -5,9 +5,9 @@ import { EditorCtx } from 'mo/provider/editor';
 import { Editor } from './editor';
 
 function EditorView(props) {
-    const { editor } = React.useContext(EditorCtx);
+    const editor = React.useContext(EditorCtx);
     return (
-        <Editor {...props} editor={editor}/>
+        <Editor {...props} {...editor} />
     );
 }
 

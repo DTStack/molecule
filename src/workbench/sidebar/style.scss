@@ -1,52 +1,52 @@
-@import 'mo/style/const.scss';
+@import 'mo/style/const';
 
 .#{$prefix}-#{$sidebar} {
     height: 100%;
     left: 0;
     position: relative;
     width: 100%;
+}
 
-    .#{$sidebar}-pane {
-        height: 100%;
+.#{$prefix}-#{$sidebar} .#{$sidebar}-pane {
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    .pane-header {
+        align-items: center;
+        box-sizing: border-box;
+        display: flex;
+        height: 35px;
+        overflow: hidden;
+        padding-left: 8px;
+        padding-right: 8px;
         position: relative;
-        width: 100%;
+    }
 
-        .pane-header {
-            align-items: center;
-            box-sizing: border-box;
-            display: flex;
-            height: 35px;
-            overflow: hidden;
-            padding-left: 8px;
-            padding-right: 8px;
-            position: relative;
-        }
+    .pane-title {
+        line-height: 35px;
+        overflow: hidden;
+        padding-left: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-        .pane-title {
-            line-height: 35px;
-            overflow: hidden;
-            padding-left: 12px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+    h2 {
+        cursor: default;
+        font-size: 11px;
+        font-weight: normal;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
 
-            h2 {
-                cursor: default;
-                font-size: 11px;
-                font-weight: normal;
-                margin: 0;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                text-transform: uppercase;
-                white-space: nowrap;
-            }
-        }
-
-        .pane-content {
-            bottom: 0;
-            left: 0;
-            position: relative;
-            right: 0;
-            top: 0;
-        }
+    .pane-content {
+        bottom: 0;
+        left: 0;
+        position: relative;
+        right: 0;
+        top: 0;
     }
 }

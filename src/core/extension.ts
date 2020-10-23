@@ -1,5 +1,3 @@
-import { IMolecule } from './molecule';
-
 export interface IExtensionEntry {
     location?: any;
     extensions?: IExtension[];
@@ -89,7 +87,7 @@ export interface IExtension extends Object {
     /**
      * Activate current extension
      */
-    activate?: (moleculeCtx: IMolecule) => void;
+    activate?: (extensionCtx: IExtensionService) => void;
 }
 
 export interface IExtensionService {

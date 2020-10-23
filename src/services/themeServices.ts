@@ -6,6 +6,7 @@
 import { IExtension } from 'mo/core/extension';
 import { ITheme, ThemeColor, TokenColor } from 'mo/core/theme';
 import { singleton } from 'tsyringe';
+import * as monaco from 'monaco-editor';
 
 /**
  * Apply css content to workbench
@@ -45,6 +46,11 @@ export class ThemeService implements ITheme {
         this.colors = colors;
         this.tokenColors = tokenColors;
         this.semanticHighlighting = semanticHighlighting;
+        this.init();
+    }
+
+    public init() {
+        monaco.editor.setTheme(this.id);
     }
 
     public load(extension: IExtension): void {

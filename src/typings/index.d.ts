@@ -1,1 +1,1 @@
-export type ReactType = React.PureComponent | React.ReactElement | React.Component | React.FunctionComponent | null;
+export type ReactNode = React.ReactNode;

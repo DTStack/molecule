@@ -2,15 +2,14 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { IExtensionEntry } from 'mo/core/extension';
 import { ILocalization } from 'mo/core/localization';
-import { extensionService, moleculeService } from 'mo/main';
-import { IMolecule } from 'mo/core/molecule';
+import { extensionService } from 'mo/main';
 
 interface IMoleculeProps {
     extensionEntry?: IExtensionEntry;
     locales?: ILocalization[];
 }
 
-export const MoleculeCtx = React.createContext<IMolecule>(moleculeService);
+export const MoleculeCtx = React.createContext({});
 
 export class MoleculeProvider extends React.Component<IMoleculeProps> {
     constructor(props) {
@@ -25,8 +24,7 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
 
     public render() {
         return (
-            <MoleculeCtx.Provider
-                value={moleculeService}>
+            <MoleculeCtx.Provider value={{}}>
                 { this.props.children }
             </MoleculeCtx.Provider>
         );

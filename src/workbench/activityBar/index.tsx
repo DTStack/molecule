@@ -1,13 +1,10 @@
-import * as React from 'react';
-import { ActivityBarCtx } from 'mo/provider/activityBar';
 import ActivityBar from './activityBar';
+import { activityBar, mapState } from 'mo/services';
+import { ActivityBarEvent } from 'mo/core';
 
-function ActivityBarView(props) {
-    const activityBar = React.useContext(ActivityBarCtx);
-    return (
-        <ActivityBar {...props} {...activityBar}/>
-    );
-}
+const ActivityBarView = mapState(ActivityBar, activityBar, [
+    ActivityBarEvent.DataChanged, ActivityBarEvent.Selected,
+]);
 
 export {
     ActivityBar,

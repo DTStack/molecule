@@ -1,14 +1,11 @@
 import 'mo/workbench/menuBar/style.scss';
-import * as React from 'react';
 import MenuBar from './menuBar';
-import { MenuBarCtx } from 'mo/provider/menuBar';
+import { MenuBarEvent } from 'mo/core';
+import { mapState, menuBar } from 'mo/services';
 
-function MenuBarView(props) {
-    const menuBar = React.useContext(MenuBarCtx);
-    return (
-        <MenuBar {...props} {...menuBar} />
-    );
-};
+const MenuBarView = mapState(MenuBar, menuBar, [
+    MenuBarEvent.DataChanged,
+]);
 
 export {
     MenuBar,

@@ -8,6 +8,7 @@ export * from './sidebarService';
 export * from './themeService';
 export * from './moleculeService';
 export * from './editor/editorService';
+export * from './stateService';
 
 import { container } from 'tsyringe';
 import { ActivityBarService } from './activityBarService';

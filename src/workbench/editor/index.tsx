@@ -1,15 +1,11 @@
 import 'mo/workbench/editor/style.scss';
-import * as React from 'react';
-
-import { EditorCtx } from 'mo/provider/editor';
 import { Editor } from './editor';
+import { editor, mapState } from 'mo/services';
+import { EditorEvent } from 'mo/core';
 
-function EditorView(props) {
-    const editor = React.useContext(EditorCtx);
-    return (
-        <Editor {...props} {...editor} />
-    );
-}
+const EditorView = mapState(Editor, editor, [
+    EditorEvent.OpenTab,
+]);
 
 export {
     Editor,

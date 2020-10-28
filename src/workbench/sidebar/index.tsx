@@ -1,14 +1,11 @@
 import 'mo/workbench/menuBar/style.scss';
-import * as React from 'react';
 import Sidebar from './sidebar';
-import { SidebarCtx } from 'mo/provider/sidebar';
+import { mapState, sidebar } from 'mo/services';
+import { SideBarEvent } from 'mo/core';
 
-function SidebarView(props) {
-    const sidebar = React.useContext(SidebarCtx);
-    return (
-        <Sidebar {...props} {...sidebar} />
-    );
-};
+const SidebarView = mapState(Sidebar, sidebar, [
+    SideBarEvent.DataChanged,
+]);
 
 export {
     Sidebar,

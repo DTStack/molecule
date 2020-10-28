@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest --coverage",
-    "dev": "start-storybook -s ./public -p 6006",
+    "dev": "tsc --skipLibCheck && start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
     "check-types": "tsc --skipLibCheck",
     "build": "tsc --project tsconfig.build.json",

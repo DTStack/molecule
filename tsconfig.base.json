@@ -24,6 +24,9 @@
       "resolveJsonModule": true,
       "downlevelIteration": true,
 			"paths": {
+        "mo": [
+					"./src/index.ts"
+        ],
 				"mo/*": [
 					"./src/*"
         ],

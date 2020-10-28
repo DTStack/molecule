@@ -3,8 +3,13 @@
  * @param origin Original object instance
  */
 export function cloneInstance<T>(origin: T) {
-    return {
-        ...origin,
-        ...Object.getPrototypeOf(origin),
-    };
+    try {
+        const prototypes = Object.getPrototypeOf(origin) || {};
+        return {
+            ...origin,
+            ...prototypes,
+        };
+    } catch (e) {
+        console.error('cloneInstance error:', e);
+    }
 }

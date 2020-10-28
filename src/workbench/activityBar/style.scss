@@ -18,7 +18,10 @@
 }
 
 .#{$activityBar}-container {
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    justify-content: space-between;
     position: relative;
     width: 100%;
     
@@ -27,11 +30,10 @@
         padding: 0;
     }
 
-    .global-items {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
+    .normal-items {
+        margin-bottom: auto;
+        overflow: hidden;
+        overflow-y: auto;
     }
 }
 

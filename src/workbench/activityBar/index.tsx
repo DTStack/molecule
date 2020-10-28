@@ -1,12 +1,9 @@
 import ActivityBar from './activityBar';
-import { activityBar, mapState } from 'mo/services';
-import { ActivityBarEvent } from 'mo/core';
+import { ActivityBarEvent, activityBar, mapState, ActivityBarService } from 'mo/services';
 
-const ActivityBarView = mapState(ActivityBar, activityBar, [
+export * from './activityBar';
+export * from './activityBarItem';
+
+export const ActivityBarView = mapState<ActivityBarService>(ActivityBar, activityBar, [
     ActivityBarEvent.DataChanged, ActivityBarEvent.Selected,
 ]);
-
-export {
-    ActivityBar,
-    ActivityBarView,
-};

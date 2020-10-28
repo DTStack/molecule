@@ -1,12 +1,20 @@
 import 'mo/workbench/sidebar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
-import { ISidebar, ISidebarPane } from 'mo/core/workbench/sidebar';
-interface ISidebarProps extends ISidebar {
-    // sidebar: ISidebar;
+
+export interface ISidebarPane {
+    id?: string;
+    name?: string;
+    render?: () => React.ReactElement | undefined;
 }
 
-function Sidebar(props: ISidebarProps) {
+export interface ISidebar {
+    selected: string;
+    panes: ISidebarPane[];
+    render?: () => React.ReactElement;
+}
+
+function Sidebar(props: ISidebar) {
     const { panes = [], render } = props;
     console.log('Sidebar render:', props, panes);
 

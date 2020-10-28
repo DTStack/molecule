@@ -1,7 +1,6 @@
 import 'mo/workbench/menuBar/style.scss';
 import Sidebar from './sidebar';
-import { mapState, sidebar } from 'mo/services';
-import { SideBarEvent } from 'mo/core';
+import { mapState, sidebar, SideBarEvent } from 'mo/services';
 
 const SidebarView = mapState(Sidebar, sidebar, [
     SideBarEvent.DataChanged,

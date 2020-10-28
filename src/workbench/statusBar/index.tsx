@@ -1,16 +1,8 @@
-import 'mo/workbench/statusBar/style.scss';
+import 'mo/workbench/menuBar/style.scss';
+import { mapState, statusBar, StatusBarEvent } from 'mo/services';
+import StatusBar from './statusBar';
+export * from './statusBar';
 
-import * as React from 'react';
-import { memo } from 'react';
-
-import { prefixClaName } from 'mo/common/className';
-
-function StatusBar() {
-    return (
-        <div className={prefixClaName('statusBar')}>
-            StatusBar
-        </div>
-    );
-};
-
-export default memo(StatusBar);
+export const StatusBarView = mapState(StatusBar, statusBar, [
+    StatusBarEvent.DataChanged,
+]);

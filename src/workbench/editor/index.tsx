@@ -1,7 +1,6 @@
 import 'mo/workbench/editor/style.scss';
 import { Editor } from './editor';
-import { editor, mapState } from 'mo/services';
-import { EditorEvent } from 'mo/core';
+import { editor, EditorEvent, mapState } from 'mo/services';
 
 const EditorView = mapState(Editor, editor, [
     EditorEvent.OpenTab,

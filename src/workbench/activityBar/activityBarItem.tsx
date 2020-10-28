@@ -4,7 +4,18 @@ import { memo } from 'react';
 import classNames from 'classnames';
 
 import { prefixClaName } from 'mo/common/className';
-import { IActivityBarItem, SYMBOL_ACTIVITY_BAR } from 'mo/core/workbench/activityBar';
+import { ID_ACTIVITY_BAR } from 'mo/common/id';
+
+export interface IActivityBarItem {
+    id?: string;
+    name?: string;
+    data?: any;
+    iconName?: string;
+    checked?: boolean;
+    type?: 'normal' | 'global';
+    render?: () => React.ReactNode | JSX.Element;
+    onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
+}
 
 function ActivityBarItem(props: IActivityBarItem) {
     const { checked = false, name = '', data = {}, render, iconName = '', onClick } = props;
@@ -22,7 +33,7 @@ function ActivityBarItem(props: IActivityBarItem) {
     return (
         <li
             onClick={onClickItem}
-            className={classNames(prefixClaName('item', SYMBOL_ACTIVITY_BAR), checked ? 'checked' : '')}
+            className={classNames(prefixClaName('item', ID_ACTIVITY_BAR), checked ? 'checked' : '')}
             data-id={data.id}
         >
             <a title={name} className={classNames('item-label', 'codicon', iconName)}>

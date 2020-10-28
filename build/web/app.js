@@ -1,8 +1,7 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Workbench } from 'mo/workbench';
-import { MoleculeProvider } from 'mo/provider/molecule';
+import { Workbench, MoleculeProvider } from 'mo';
 
 ReactDOM.render(
     <React.StrictMode>

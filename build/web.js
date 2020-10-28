@@ -8,6 +8,7 @@ module.exports = function(env) {
         devServer: {
             progress: false,
             hot: true,
+            port: 8888,
         },
         entry: {
             'app': path.resolve(__dirname, './web/app.js'),

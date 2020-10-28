@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export const SYMBOL_ACTIVITY_BAR = 'menuBar';
+export const SYMBOL_MENU_BAR = 'menuBar';
 
 /**
  * The activity bar event definition

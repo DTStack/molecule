@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { ActivityBarEvent, IActivityBarItem } from 'mo/core/workbench/activityBar';
-import { activityBar, sidebar } from 'mo/index';
+import { activityBar, ActivityBarEvent, IActivityBarItem, sidebar } from 'mo/index';
 
 import { Explorer } from './explore';
 import { ExtensionService } from 'mo/services/extensionService';

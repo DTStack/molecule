@@ -15,7 +15,7 @@ export function mapState<S>(WrappedComponent: React.ComponentType<any>, state: S
         constructor(props) {
             super(props);
             this.onChange = this.onChange.bind(this);
-            this.state = cloneInstance(state);
+            this.state = state;
         }
 
         componentDidMount() {

@@ -1,8 +1,13 @@
-export abstract class BaseService {
+import { EventService } from './eventService';
+
+export abstract class BaseService<S = any> {
+    public abstract getState(): S;
     /**
      * Subscribe the service event
      * @param name Event name
      * @param callback Callback function
      */
-    public abstract subscribe(name: string | string [], callback: Function);
+    public subscribe(name: string | string [], callback: Function) {
+        EventService.subscribe(name, callback);
+    }
 }

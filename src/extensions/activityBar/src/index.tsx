@@ -1,5 +1,4 @@
-import { activityBar } from 'mo/index';
-import { ActivityBarEvent, IActivityBarItem } from 'mo/core/workbench/activityBar';
+import { activityBar, ActivityBarEvent, IActivityBarItem } from 'mo/index';
 import { ExtensionService } from 'mo/services/extensionService';
 
 function initActivityBar(extensionCtx: ExtensionService) {

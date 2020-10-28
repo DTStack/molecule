@@ -1,7 +1,7 @@
 import 'mo/workbench/activityBar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
-import { IActivityBar, IActivityBarItem, SYMBOL_ACTIVITY_BAR } from 'mo/core/workbench/activityBar';
+import { IActivityBar, IActivityBarItem, SYMBOL_ACTIVITY_BAR } from 'mo/core/workbench';
 import ActivityBarItem from 'mo/workbench/activityBar/activityBarItem';
 
 export interface IActivityBarProps {

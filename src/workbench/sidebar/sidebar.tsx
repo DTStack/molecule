@@ -2,17 +2,17 @@ import 'mo/workbench/sidebar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
 import { ISidebar, ISidebarPane } from 'mo/core/workbench/sidebar';
-import { memo } from 'react';
 interface ISidebarProps extends ISidebar {
     // sidebar: ISidebar;
 }
 
 function Sidebar(props: ISidebarProps) {
     const { panes = [], render } = props;
-    console.log('Sidebar render:', props);
+    console.log('Sidebar render:', props, panes);
 
-    let sidebarPane: React.ReactElement | React.ReactElement[] = panes?.map(
+    let sidebarPane: React.ReactNode = panes?.map(
         (pane: ISidebarPane) => {
+            console.log('Sidebar pane:', pane);
             return (
                 <div key={pane.id} data-id={pane.id} className={prefixClaName('pane', 'sidebar')}>
                     <header className={'pane-header'}>
@@ -23,7 +23,7 @@ function Sidebar(props: ISidebarProps) {
                     </header>
                     <div className="pane-content">
                         {
-                            pane.render()
+                            pane.render ? pane.render() : null
                         }
                     </div>
                 </div>
@@ -41,4 +41,4 @@ function Sidebar(props: ISidebarProps) {
     );
 };
 
-export default memo(Sidebar);
+export default Sidebar;

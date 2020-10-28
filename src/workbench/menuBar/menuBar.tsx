@@ -8,7 +8,6 @@ export interface IMenuBarProps {
 }
 
 function MenuBar(props: IMenuBar) {
-    // const { menuBar } = props;
     const menuBar = props;
     console.log('menubar:', props);
     const click = function(e) {

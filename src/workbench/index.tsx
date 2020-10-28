@@ -1,4 +1,4 @@
-import 'mo/workbench/style.scss';
+import './style.scss';
 import * as React from 'react';
 import classNames from 'classnames';
 import { Utils } from 'dt-utils';

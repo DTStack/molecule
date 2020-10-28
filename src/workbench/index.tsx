@@ -16,7 +16,6 @@ import { SidebarView } from 'mo/workbench/sidebar';
 import { MenuBarView } from 'mo/workbench/menuBar';
 import { ActivityBarView } from 'mo/workbench/activityBar';
 import StatusBar from 'mo/workbench/statusBar';
-import SettingsBar from 'mo/workbench/settings';
 import Panel from 'mo/workbench/panel';
 
 export interface IWorkbenchProps {
@@ -66,7 +65,6 @@ export function Workbench(props: IWorkbenchProps) {
                 <ActivityBarProvider>
                     <ActivityBarView />
                 </ActivityBarProvider>
-                <SettingsBar />
                 <MainBench/>
             </div>
             <StatusBar />

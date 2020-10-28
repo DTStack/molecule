@@ -14,7 +14,6 @@ function initActivityBar(extensionCtx: ExtensionService) {
 
         },
     };
-
     activityBar.push([folderFeat]);
 
     activityBar.subscribe(ActivityBarEvent.OnClick, (data) => {

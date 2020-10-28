@@ -8,20 +8,30 @@
     width: 48px;
     z-index: 1;
 
-    .#{$activityBar}-container {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        width: 100%;
-    }
-
     .active-item-indicator {
         height: 100%;
         left: 0;
         position: absolute;
         top: 0;
         width: 2px;
+    }
+}
+
+.#{$activityBar}-container {
+    height: 100%;
+    position: relative;
+    width: 100%;
+    
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .global-items {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
     }
 }
 

@@ -23,6 +23,7 @@ export interface IActivityBarItem {
     data?: any;
     iconName?: string;
     checked?: boolean;
+    type?: 'normal' | 'global';
     render?: () => React.ReactNode | JSX.Element;
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
 }

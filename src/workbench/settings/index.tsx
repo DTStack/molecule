@@ -4,12 +4,12 @@ import { memo } from 'react';
 
 import { prefixClaName } from 'mo/common/className';
 
-export function SettingBar() {
+export function Settings() {
     return (
         <div className={prefixClaName('settings')}>
-            <a className='settings-action codicon codicon-settings-gear'></a>
+            Settings
         </div>
     );
 };
 
-export default memo(SettingBar);
+export default memo(Settings);

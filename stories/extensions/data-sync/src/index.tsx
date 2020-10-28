@@ -1,4 +1,4 @@
-import { activityBarService } from 'mo/main';
+import { activityBar } from 'mo/index';
 
 // import * as React from 'react';
 
@@ -7,7 +7,7 @@ import { activityBarService } from 'mo/main';
 // };
 
 export function activate() {
-    activityBarService.push({
+    activityBar.push({
         id: '3333',
         iconName: 'codicon-sync',
         name: '数据同步',

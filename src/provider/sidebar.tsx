@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { BaseProvider } from './base';
-import { sidebarService } from 'mo/main';
-import { cloneInstance } from 'mo/common/utils';
+import { sidebar } from 'mo/services';
 import { ISidebar, SideBarEvent } from 'mo/core/workbench/sidebar';
 
-const initialState = cloneInstance(sidebarService);
+const initialState = sidebar;
 export const SidebarCtx = React.createContext<ISidebar>(initialState);
 
 export class SidebarProvider extends BaseProvider<any, ISidebar> {

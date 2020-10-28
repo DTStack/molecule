@@ -1,16 +1,16 @@
 import { ActivityBarEvent, IActivityBar, IActivityBarItem } from 'mo/core/workbench/activityBar';
 import { emit, EventService } from 'mo/services/eventService';
-import { injectable, inject } from 'tsyringe';
+import { singleton, inject, container } from 'tsyringe';
 import { BaseService } from './baseService';
 
-@injectable()
+@singleton()
 export class ActivityBarService extends BaseService implements IActivityBar {
     public data: IActivityBarItem[];
     public selected: string;
 
     constructor(
-        @inject('IActivityBarItem') data: IActivityBarItem[] = [],
-        selected: string = '',
+        @inject('ActivityBarItem') data: IActivityBarItem[] = [],
+        @inject('Selected') selected: string = '',
     ) {
         super();
         this.data = data;
@@ -51,8 +51,7 @@ export class ActivityBarService extends BaseService implements IActivityBar {
     public get(id: string) {
 
     }
-
-    // public subscribe(name: ActivityBarEvent | ActivityBarEvent[], callback: CallbackEvent) {
-    //     EventService.subscribe(name, callback);
-    // }
 }
+
+container.register('ActivityBarItem', { useValue: [] });
+container.register('Selected', { useValue: '' });

@@ -1,13 +1,18 @@
 import { ITab } from 'mo/components/tabs';
 import { EditorEvent, IEditor, IEditorGroup } from 'mo/core/workbench/editor';
 import { emit } from 'mo/services/eventService';
+import { singleton, inject, container } from 'tsyringe';
 import { EditorGroupService } from './groupService';
 
+@singleton()
 export class EditorService<T = any> implements IEditor<T> {
     public current: IEditorGroup | undefined;
     public groups!: IEditorGroup[];
 
-    constructor(current?: IEditorGroup, groups: IEditorGroup[] = []) {
+    constructor(
+        @inject('CurrentEditorGroup') current?: IEditorGroup,
+            @inject('EditorGroup') groups: IEditorGroup[] = [],
+    ) {
         this.current = current;
         this.groups = groups;
     }
@@ -45,3 +50,6 @@ export class EditorService<T = any> implements IEditor<T> {
 
     }
 }
+
+container.register('CurrentEditorGroup', { useValue: '' });
+container.register('EditorGroup', { useValue: [] });

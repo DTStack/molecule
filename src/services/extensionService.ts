@@ -1,10 +1,14 @@
+import { singleton, inject, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/core/extension';
 
+@singleton()
 export class ExtensionService {
     public extensions: IExtension[] = [];
 
-    constructor(extensionEntry: IExtensionEntry = {}) {
+    constructor(
+        @inject('ExtensionEntry') extensionEntry: IExtensionEntry = {},
+    ) {
         this.load(extensionEntry);
     }
 
@@ -14,6 +18,7 @@ export class ExtensionService {
      * @param moleculeCtx the context object of molecule
      */
     public load({ location, extensions = [] }: IExtensionEntry) {
+        console.log('-----ExtensionService.load-----');
         try {
             if (extensions?.length === 0) return;
             this.extensions = this.extensions.concat(extensions || []);
@@ -51,3 +56,5 @@ export class ExtensionService {
         console.log('unload extension:', extension.name);
     }
 }
+
+container.register('ExtensionEntry', { useValue: {} });

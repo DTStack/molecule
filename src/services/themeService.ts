@@ -5,7 +5,7 @@
 
 import { IExtension } from 'mo/core/extension';
 import { ITheme, ThemeColor, TokenColor } from 'mo/core/theme';
-import { singleton } from 'tsyringe';
+import { container, inject, singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
 
 /**
@@ -35,11 +35,11 @@ export class ThemeService implements ITheme {
     semanticHighlighting: boolean;
 
     constructor(
-        id: string,
-        name: string,
-        colors: ThemeColor = [],
-        tokenColors: TokenColor[] = [],
-        semanticHighlighting: boolean = true,
+        @inject('ThemeID') id: string,
+        @inject('ThemeName') name: string,
+            @inject('ThemeColor') colors: ThemeColor = [],
+            @inject('TokenColor') tokenColors: TokenColor[] = [],
+            @inject('SemanticHighLighting') semanticHighlighting: boolean = true,
     ) {
         this.id = id;
         this.name = name;
@@ -66,5 +66,8 @@ export class ThemeService implements ITheme {
     }
 }
 
-export const themeService = new ThemeService('vs-dark', 'vs-dark');
-
+container.register('ThemeID', { useValue: 'vs-dark' });
+container.register('ThemeName', { useValue: 'vs-dark' });
+container.register('ThemeColor', { useValue: [] });
+container.register('TokenColor', { useValue: [] });
+container.register('SemanticHighLighting', { useValue: true });

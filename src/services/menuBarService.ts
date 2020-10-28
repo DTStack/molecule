@@ -1,12 +1,13 @@
 import { MenuBarEvent, IMenuBar, IMenuBarItem } from 'mo/core/workbench/menuBar';
 import { emit } from 'mo/services/eventService';
-import { singleton } from 'tsyringe';
+import { container, injectAll, singleton } from 'tsyringe';
 
 @singleton()
 export class MenuBarService implements IMenuBar {
     data: IMenuBarItem[];
 
-    constructor(data: IMenuBarItem[] = []) {
+    constructor(
+        @injectAll('MenuBarItem') data: IMenuBarItem[] = []) {
         this.data = data;
     }
 
@@ -32,3 +33,5 @@ export class MenuBarService implements IMenuBar {
         // this.data.
     }
 }
+
+container.register('MenuBarItem', { useValue: [] });

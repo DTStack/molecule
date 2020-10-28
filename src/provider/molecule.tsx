@@ -1,8 +1,12 @@
-import 'reflect-metadata';
+import 'mo/style/main.scss';
+import 'vscode-codicons/dist/codicon.css';
+
 import * as React from 'react';
-import { IExtensionEntry } from 'mo/core/extension';
+import { IExtensionEntry, IExtensionService } from 'mo/core/extension';
 import { ILocalization } from 'mo/core/localization';
-import { extensionService } from 'mo/main';
+import { container } from 'tsyringe';
+import { ExtensionService } from 'mo/services/extensionService';
+import { defaultExtensions } from 'mo/extensions';
 
 interface IMoleculeProps {
     extensionEntry?: IExtensionEntry;
@@ -10,8 +14,8 @@ interface IMoleculeProps {
 }
 
 export const MoleculeCtx = React.createContext({});
-
 export class MoleculeProvider extends React.Component<IMoleculeProps> {
+    private extensionService!: IExtensionService;
     constructor(props) {
         super(props);
         console.log('Molecule constructed.');
@@ -19,7 +23,9 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
 
     componentDidMount() {
         const { extensionEntry = {} } = this.props;
-        extensionService.load(extensionEntry);
+        this.extensionService = container.resolve(ExtensionService);
+        this.extensionService.load(defaultExtensions);
+        this.extensionService.load(extensionEntry);
     }
 
     public render() {

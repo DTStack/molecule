@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { MoleculeProvider } from 'mo/provider/molecule';
-import { Workbench } from 'mo/workbench';
+import { MoleculeProvider, Workbench } from 'mo/index';
 import { customExtensions } from './extensions';
 
 import './demo.scss';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ActivityBarEvent, IActivityBarItem } from 'mo/core/workbench/activityBar';
-import { activityBarService, sidebarService } from 'mo/main';
+import { activityBar, sidebar } from 'mo/index';
 
 import { Explorer } from './explore';
 import { ExtensionService } from 'mo/services/extensionService';
@@ -15,15 +15,15 @@ function initActivityBar(extensionCtx: ExtensionService) {
         },
     };
 
-    activityBarService.push([folderFeat]);
+    activityBar.push([folderFeat]);
 
-    activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
+    activityBar.subscribe(ActivityBarEvent.OnClick, (data) => {
         console.log('Explore activityBar subscribe onClick:', data);
     });
 }
 
 function initSidebar(extensionCtx: ExtensionService) {
-    sidebarService.panes.push({
+    sidebar.push({
         id: 'explore',
         name: 'EXPLORER',
         render() {

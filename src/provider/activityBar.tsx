@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { ActivityBarEvent, IActivityBar } from 'mo/core/workbench/activityBar';
 import { BaseProvider } from './base';
-import { activityBarService } from 'mo/main';
-import { cloneInstance } from 'mo/common/utils';
+import { activityBar } from 'mo/services';
 
-const initialState = cloneInstance(activityBarService);
+const initialState = activityBar;
 export const ActivityBarCtx = React.createContext<IActivityBar>(initialState);
 
 export class ActivityBarProvider extends BaseProvider<any, IActivityBar> {

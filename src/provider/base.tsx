@@ -11,7 +11,6 @@ export class BaseProvider<IProps = {}, IState = {}>
     extends React.Component<IProps, IState | IBaseProviderState> {
     public state;
     public events: string | string[] = [];
-    _count = 0;
     constructor(props) {
         super(props);
         this.updateState = this.updateState.bind(this);

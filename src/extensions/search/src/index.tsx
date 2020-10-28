@@ -1,12 +1,12 @@
-import { activityBarService } from 'mo/main';
-import { ExtensionService } from 'mo/services/extensionService';
+import { IExtensionService } from 'mo/core/extension';
+import { activityBar } from 'mo/index';
 
-export function activate(extensionCtx: ExtensionService) {
+export function activate(extensionCtx: IExtensionService) {
     const searchFeat = {
         id: 'search',
         name: 'Search',
         iconName: 'codicon-search',
     };
 
-    activityBarService.push([searchFeat]);
+    activityBar.push([searchFeat]);
 }

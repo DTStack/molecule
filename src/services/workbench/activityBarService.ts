@@ -18,7 +18,7 @@ export enum ActivityBarEvent {
     DataChanged = 'activityBar.data',
 }
 
-export interface IActivityBarService {
+export interface IActivityBarService extends BaseService {
     reset: () => void;
     push: (data: IActivityBarItem | IActivityBarItem []) => void;
     remove: (index: number) => void;

@@ -2,7 +2,6 @@ import { singleton, inject, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/core/extension';
 
-
 export interface IExtensionService {
     /**
      * The extensions

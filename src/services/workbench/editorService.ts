@@ -9,7 +9,7 @@ export enum EditorEvent {
     CloseTab = 'editor.close',
 }
 
-export interface IEditorService<T> {
+export interface IEditorService<T = any> {
      /**
      * Open a new tab in indicated group instance
      * @param tab Tab data

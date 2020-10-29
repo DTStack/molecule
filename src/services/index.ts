@@ -11,22 +11,22 @@ export * from './stateService';
 export * from './workbench/statusBarService';
 
 import { container } from 'tsyringe';
-import { ActivityBarService } from './workbench/activityBarService';
-import { ExtensionService } from './extensionService';
-import { SidebarService } from './workbench/sidebarService';
-import { MenuBarService } from './workbench/menuBarService';
+import { ActivityBarService, IActivityBarService } from './workbench/activityBarService';
+import { ExtensionService, IExtensionService } from './extensionService';
+import { ISidebarService, SidebarService } from './workbench/sidebarService';
+import { IMenuBarService, MenuBarService } from './workbench/menuBarService';
 import { ThemeService } from './themeService';
-import { EditorService } from './workbench/editorService';
-import { StatusBarService } from './workbench/statusBarService';
+import { EditorService, IEditorService } from './workbench/editorService';
+import { IStatusBarService, StatusBarService } from './workbench/statusBarService';
 
 /**
  * The Services of Workbench
  */
-const activityBar = container.resolve(ActivityBarService);
-const sidebar = container.resolve(SidebarService);
-const menuBar = container.resolve(MenuBarService);
-const editor = container.resolve(EditorService);
-const statusBar = container.resolve(StatusBarService);
+const activityBar = container.resolve<IActivityBarService>(ActivityBarService);
+const sidebar = container.resolve<ISidebarService>(SidebarService);
+const menuBar = container.resolve<IMenuBarService>(MenuBarService);
+const editor = container.resolve<IEditorService>(EditorService);
+const statusBar = container.resolve<IStatusBarService>(StatusBarService);
 
 /**
  * The theme service,
@@ -38,7 +38,7 @@ const theme = container.resolve(ThemeService);
  * Note: The extension service depends on other workbench services,
  * So it need initialized be last one.
  */
-const extension = container.resolve(ExtensionService);
+const extension = container.resolve<IExtensionService>(ExtensionService);
 
 export {
     activityBar,

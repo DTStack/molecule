@@ -2,8 +2,24 @@ import { singleton, inject, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/core/extension';
 
+
+export interface IExtensionService {
+    /**
+     * The extensions
+     */
+    extensions?: IExtension[];
+    /**
+     * Load extensions
+     * @param extensionEntry
+     * @param moleculeCtx
+     */
+    load(extensionEntry: IExtensionEntry);
+    loadContributes(contributes: IContribute);
+    unload(extension: IExtension);
+}
+
 @singleton()
-export class ExtensionService {
+export class ExtensionService implements IExtensionService {
     public extensions: IExtension[] = [];
 
     constructor(

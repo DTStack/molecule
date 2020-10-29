@@ -1,3 +1,5 @@
+import { IExtensionService } from 'mo/services';
+
 export interface IExtensionEntry {
     location?: any;
     extensions?: IExtension[];
@@ -88,19 +90,4 @@ export interface IExtension extends Object {
      * Activate current extension
      */
     activate?: (extensionCtx: IExtensionService) => void;
-}
-
-export interface IExtensionService {
-    /**
-     * The extensions
-     */
-    extensions?: IExtension[];
-    /**
-     * Load extensions
-     * @param extensionEntry
-     * @param moleculeCtx
-     */
-    load(extensionEntry: IExtensionEntry);
-    loadContributes(contributes: IContribute);
-    unload(extension: IExtension);
 }

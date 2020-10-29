@@ -15,8 +15,8 @@ export interface IEditorService<T = any> {
      * @param tab Tab data
      * @param groupId group ID
      */
-    open: (tab: ITab<T>, groupId?: number) => void;
-    close?: (index: number, callback: () => void) => void;
+    open(tab: ITab<T>, groupId?: number): void;
+    close(index: number, callback: () => void): void;
 }
 
 @singleton()

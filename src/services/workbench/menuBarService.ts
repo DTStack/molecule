@@ -3,9 +3,9 @@ import { IMenuBarItem } from 'mo/workbench/menuBar/menuBar';
 import { container, injectAll, singleton } from 'tsyringe';
 
 export interface IMenuBarService {
-    push: (data: IMenuBarItem | IMenuBarItem []) => void;
-    remove: (index: number) => void;
-    update: () => void;
+    push(data: IMenuBarItem | IMenuBarItem []): void;
+    remove(index: number): void;
+    update(): void;
 }
 
 /**

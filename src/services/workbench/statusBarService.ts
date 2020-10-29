@@ -4,8 +4,8 @@ import { IStatusBarItems } from 'mo/workbench/statusBar';
 import { container, injectAll, singleton } from 'tsyringe';
 
 export interface IStatusBarService {
-    push: (data: IMenuBarItem | IMenuBarItem []) => void;
-    remove: (index: number) => void;
+    push(data: IMenuBarItem | IMenuBarItem []): void;
+    remove(index: number): void;
 }
 
 /**

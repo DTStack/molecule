@@ -1,5 +1,4 @@
-import { IExtensionService } from 'mo/core/extension';
-import { activityBar } from 'mo/index';
+import { activityBar, IExtensionService } from 'mo/index';
 
 export function activate(extensionCtx: IExtensionService) {
     const searchFeat = {

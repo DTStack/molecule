@@ -1,7 +1,7 @@
 import { emit } from 'mo/services/eventService';
 import { IActivityBar, IActivityBarItem } from 'mo/workbench';
 import { singleton, inject, container } from 'tsyringe';
-import { BaseService } from '../baseService';
+import { BaseService } from './baseService';
 
 /**
  * The activity bar event definition
@@ -19,9 +19,9 @@ export enum ActivityBarEvent {
 }
 
 export interface IActivityBarService extends BaseService {
-    reset: () => void;
-    push: (data: IActivityBarItem | IActivityBarItem []) => void;
-    remove: (index: number) => void;
+    reset(): void;
+    push(data: IActivityBarItem | IActivityBarItem []): void;
+    remove(index: number) : void;
 }
 
 @singleton()

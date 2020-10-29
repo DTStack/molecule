@@ -17,7 +17,7 @@ export enum SideBarEvent {
 }
 
 export interface ISidebarService {
-    push: (data: ISidebarPane | ISidebarPane[] ) => void;
+    push(data: ISidebarPane | ISidebarPane[] ): void;
 }
 
 @singleton()

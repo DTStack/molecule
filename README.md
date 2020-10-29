@@ -4,7 +4,7 @@ A Web IDE UI library built by React.js, inspired by VSCode.
 
 ## Root Directory
 
-So we abbreviated the **molecule** to **mo** that we assign the root directory to 'mo'.
+Unify the root path name from **molecule** to **mo**.
 
 ## vscode codicons online address
 

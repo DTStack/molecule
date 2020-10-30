@@ -1,6 +1,6 @@
 import { EventService } from '../eventService';
 
-export abstract class BaseService<S> {
+export abstract class BaseService<S = any> {
     public abstract getState(): S;
     /**
      * Subscribe the service event

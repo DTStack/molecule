@@ -27,6 +27,10 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
         editor.open(tabData, 1);
     };
 
+    const OpenCommand = function() {
+        // MonacoEditor.editor.getModel().
+    };
+
     activityBar.subscribe(ActivityBarEvent.OnClick, (data) => {
         console.log('Explore activityBar subscribe onClick:', data);
     });
@@ -38,6 +42,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
                     OPEN EDITORS
                     <button onClick={AddABar}>Add Bar</button>
                     <button onClick={NewEditor}>New Editor</button>
+                    <button onClick={OpenCommand}>Command Palette</button>
                 </Panel>
                 <Panel header="Sample-Folder"></Panel>
                 <Panel header="OUTLINE">

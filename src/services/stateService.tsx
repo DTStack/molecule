@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { EventService } from 'mo/services/eventService';
-import { cloneInstance } from 'mo/common/utils';
 import Logger from 'mo/common/logger';
 
 /**
@@ -11,11 +10,13 @@ import Logger from 'mo/common/logger';
  */
 export function mapState<S>(WrappedComponent: React.ComponentType<any>, state: S, events: string | string []) {
     return class StateProvider extends React.Component {
-        state: S;
+        state: any;
         constructor(props) {
             super(props);
             this.onChange = this.onChange.bind(this);
-            this.state = state;
+            this.state = {
+                lastUpdated: Date.now(),
+            };
         }
 
         componentDidMount() {
@@ -23,14 +24,15 @@ export function mapState<S>(WrappedComponent: React.ComponentType<any>, state: S
         }
 
         onChange() {
-            const nextState = cloneInstance(state);
-            Logger.info(nextState);
-            this.setState(nextState);
+            Logger.info(state);
+            this.setState({
+                lastUpdated: Date.now(),
+            });
         }
 
         render() {
             return (
-                <WrappedComponent {...this.state} {...this.props} />
+                <WrappedComponent {...this.state} { ...state } {...this.props} />
             );
         }
     };

@@ -1,6 +1,6 @@
 import { EventService } from '../eventService';
 
-export abstract class BaseService<S = any> {
+export abstract class BaseService<S> {
     public abstract getState(): S;
     /**
      * Subscribe the service event
@@ -9,5 +9,14 @@ export abstract class BaseService<S = any> {
      */
     public subscribe(name: string | string [], callback: Function) {
         EventService.subscribe(name, callback);
+    }
+
+    /**
+     * Emit the service event
+     * @param name Event name
+     * @param args Arguments
+     */
+    public emit(name: string, ...args: any) {
+        EventService.emit(name, args);
     }
 }

@@ -5,26 +5,10 @@ import SplitPane from 'react-split-pane';
 import MonacoEditor from 'mo/components/monaco-editor';
 import { prefixClaName } from 'mo/common/className';
 
-import Tabs, { ITab } from 'mo/components/tabs';
+import Tabs from 'mo/components/tabs';
 import Welcome from './welcome';
+import { IEditor, IEditorGroup } from 'mo/model/editor';
 
-export interface IEditor {
-    current: IEditorGroup | undefined;
-    groups: IEditorGroup [];
-    closeAll?: () => void;
-    onClose?: () => void;
-    render?:() => React.ReactElement;
-}
-
-export interface IEditorGroup<E = any> {
-    id: number;
-    activeTab: ITab;
-    tabs: ITab[];
-    breadcrumb: any[];
-    actions: any[];
-    menu: any[];
-    editorInstance?: E | null;
-}
 function renderEditorGroup(group: IEditorGroup) {
     const editor = group.activeTab;
     return (

@@ -1,6 +1,7 @@
-import { ISidebarPane } from 'mo/workbench/sidebar/sidebar';
-import { singleton, inject, container } from 'tsyringe';
+import { Component } from 'mo/services/react';
+import { singleton, container } from 'tsyringe';
 import { emit } from '../eventService';
+import { ISidebar, ISidebarPane, SidebarModel } from 'mo/model/sidebar';
 
 /**
  * The Sidebar event definition
@@ -16,35 +17,27 @@ export enum SideBarEvent {
     DataChanged = 'sidebar.data',
 }
 
-export interface ISidebarService {
+export interface ISidebarService extends Component<ISidebar> {
     push(data: ISidebarPane | ISidebarPane[] ): void;
 }
 
 @singleton()
-export class SidebarService implements ISidebarService {
-    selected: string;
-    panes: ISidebarPane[];
+export class SidebarService extends Component<ISidebar> implements ISidebarService {
+    protected state: ISidebar;
 
-    constructor(
-        @inject('SidebarPane') panes: ISidebarPane[] = [],
-        @inject('Selected') selected: string = '',
-    ) {
-        this.panes = panes;
-        this.selected = selected;
+    constructor() {
+        super();
+        this.state = container.resolve(SidebarModel);
     }
 
     @emit(SideBarEvent.DataChanged)
     public push(data: ISidebarPane | ISidebarPane[] ) {
+        let original = this.state.panes;
         if (Array.isArray(data)) {
-            this.panes = this.panes.concat(data);
+            // The concat will lost proxy object info
+            original = original.concat(data);
         } else {
-            this.panes.push(data);
+            original.push(data);
         }
     }
-
-    onSelect(key: string) {
-        this.selected = key;
-    }
 }
-container.register('SidebarPane', { useValue: [] });
-container.register('Selected', { useValue: '' });

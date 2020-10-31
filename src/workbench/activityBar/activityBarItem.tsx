@@ -1,21 +1,10 @@
 import * as React from 'react';
 import { memo } from 'react';
-
 import classNames from 'classnames';
 
 import { prefixClaName } from 'mo/common/className';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
-
-export interface IActivityBarItem {
-    id?: string;
-    name?: string;
-    data?: any;
-    iconName?: string;
-    checked?: boolean;
-    type?: 'normal' | 'global';
-    render?: () => React.ReactNode | JSX.Element;
-    onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
-}
+import { IActivityBarItem } from 'mo/model/activityBar';
 
 function ActivityBarItem(props: IActivityBarItem) {
     const { checked = false, name = '', data = {}, render, iconName = '', onClick } = props;

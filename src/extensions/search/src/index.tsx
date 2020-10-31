@@ -7,5 +7,5 @@ export function activate(extensionCtx: IExtensionService) {
         iconName: 'codicon-search',
     };
 
-    activityBar.push([searchFeat]);
+    activityBar.push(searchFeat);
 }

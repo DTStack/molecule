@@ -1,12 +1,7 @@
-import { emit } from 'mo/services/eventService';
-import { IMenuBarItem } from 'mo/workbench/menuBar/menuBar';
-import { container, injectAll, singleton } from 'tsyringe';
-
-export interface IMenuBarService {
-    push(data: IMenuBarItem | IMenuBarItem []): void;
-    remove(index: number): void;
-    update(): void;
-}
+import { IMenuBar, IMenuBarItem, MenuBarModel } from 'mo/model/menuBar';
+import { Component } from 'mo/services/react';
+import { singleton, container } from 'tsyringe';
+import { emit } from '../eventService';
 
 /**
  * The activity bar event definition
@@ -22,36 +17,32 @@ export enum MenuBarEvent {
     DataChanged = 'menuBar.data',
 }
 
+export interface IMenuBarService extends Component<IMenuBar> {
+    push(data: IMenuBarItem | IMenuBarItem []): void;
+    remove(index: number): void;
+    getState(): IMenuBar;
+}
+
 @singleton()
-export class MenuBarService implements IMenuBarService {
-    private data: IMenuBarItem[];
+export class MenuBarService extends Component<IMenuBar> implements IMenuBarService {
+    protected state: IMenuBar;
 
-    constructor(
-        @injectAll('MenuBarItem') data: IMenuBarItem[] = []) {
-        this.data = data;
-    }
-
-    @emit(MenuBarEvent.onClick)
-    public onClick(event: React.MouseEvent, item: IMenuBarItem) {
-        console.log('onClick:', this.data);
+    constructor() {
+        super();
+        this.state = container.resolve(MenuBarModel);
     }
 
     @emit(MenuBarEvent.DataChanged)
-    public push(data: IMenuBarItem | IMenuBarItem[]) {
-        if (Array.isArray(data)) {
-            this.data = this.data.concat(data);
+    public push(item: IMenuBarItem | IMenuBarItem[]) {
+        let original = this.state.data || [];
+        if (Array.isArray(item)) {
+            original = original.concat(item);
         } else {
-            this.data.push(data);
+            original.push(item);
         }
     }
 
     public remove(index: number) {
-        this.data.splice(index, 1);
-    }
-
-    public update() {
-        // this.data.
+        this.state.data.splice(index, 1);
     }
 }
-
-container.register('MenuBarItem', { useValue: [] });

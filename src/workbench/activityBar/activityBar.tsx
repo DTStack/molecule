@@ -1,16 +1,10 @@
 import 'mo/workbench/activityBar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
-import ActivityBarItem, { IActivityBarItem } from 'mo/workbench/activityBar/activityBarItem';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
+import { IActivityBar, IActivityBarItem } from 'mo/model/activityBar';
 
-export interface IActivityBar {
-    data?: IActivityBarItem[];
-    selected?: string;
-    onSelect?: (key: string, item?: IActivityBarItem) => void;
-    onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
-    render?: () => React.ReactNode;
-}
+import ActivityBarItem from './activityBarItem';
 
 export function ActivityBar(props: IActivityBar) {
     const { data = [], render, selected, onClick } = props;

@@ -7,8 +7,9 @@ export * from './workbench/menuBarService';
 export * from './workbench/sidebarService';
 export * from './themeService';
 export * from './workbench/editorService';
-export * from './stateService';
+export * from './react/mapState';
 export * from './workbench/statusBarService';
+export * from './react';
 
 import { container } from 'tsyringe';
 import { ActivityBarService, IActivityBarService } from './workbench/activityBarService';

@@ -1,12 +1,7 @@
+import { IStatusBar, IStatusBarItem, StatusBarModel } from 'mo/model/statusBar';
+import { Component } from 'mo/services/react';
 import { emit } from 'mo/services/eventService';
-import { IMenuBarItem } from 'mo/workbench/menuBar/menuBar';
-import { IStatusBarItems } from 'mo/workbench/statusBar';
-import { container, injectAll, singleton } from 'tsyringe';
-
-export interface IStatusBarService {
-    push(data: IMenuBarItem | IMenuBarItem []): void;
-    remove(index: number): void;
-}
+import { container, singleton } from 'tsyringe';
 
 /**
  * The activity bar event definition
@@ -22,32 +17,31 @@ export enum StatusBarEvent {
     DataChanged = 'statusBar.data',
 }
 
+export interface IStatusBarService extends Component<IStatusBar> {
+    push(data: IStatusBarItem | IStatusBarItem []): void;
+    remove(index: number): void;
+}
+
 @singleton()
-export class StatusBarService implements IStatusBarService {
-    private data: IStatusBarItems[];
+export class StatusBarService extends Component<IStatusBar> implements IStatusBarService {
+    protected state: IStatusBar;
 
-    constructor(
-        @injectAll('StatusBarItems') data: IStatusBarItems[] = []) {
-        this.data = data;
-    }
-
-    @emit(StatusBarEvent.onClick)
-    public onClick(event: React.MouseEvent, item: IStatusBarItems) {
-        console.log('onClick:', this.data);
+    constructor() {
+        super();
+        this.state = container.resolve(StatusBarModel);
     }
 
     @emit(StatusBarEvent.DataChanged)
-    public push(data: IStatusBarItems | IStatusBarItems[]) {
+    public push(data: IStatusBarItem | IStatusBarItem[]) {
+        let original = this.state.data;
         if (Array.isArray(data)) {
-            this.data = this.data.concat(data);
+            original = original.concat(data);
         } else {
-            this.data.push(data);
+            original.push(data);
         }
     }
 
     public remove(index: number) {
-        this.data.splice(index, 1);
+        this.state.data.splice(index, 1);
     }
 }
-
-container.register('StatusBarItems', { useValue: [] });

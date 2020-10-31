@@ -33,7 +33,6 @@ export class ExtensionService implements IExtensionService {
      * @param moleculeCtx the context object of molecule
      */
     public load({ location, extensions = [] }: IExtensionEntry) {
-        console.log('-----ExtensionService.load-----');
         try {
             if (extensions?.length === 0) return;
             this.extensions = this.extensions.concat(extensions || []);

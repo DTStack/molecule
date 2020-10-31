@@ -1,8 +1,6 @@
-/* eslint-disable no-invalid-this */
-import { emit } from 'mo/services/eventService';
-import { IActivityBar, IActivityBarItem } from 'mo/workbench';
-import { singleton, inject, container } from 'tsyringe';
-import { BaseService } from './baseService';
+import { singleton, container } from 'tsyringe';
+import { Component } from 'mo/services/react/component';
+import { ActivityBarModel, IActivityBar, IActivityBarItem } from 'mo/model/activityBar';
 
 /**
  * The activity bar event definition
@@ -20,70 +18,50 @@ export enum ActivityBarEvent {
     ReRender = 'activityBar.reRender',
 }
 
-export interface IActivityBarService extends BaseService {
+export interface IActivityBarService extends Component<IActivityBar> {
     reset(): void;
-    push(data: IActivityBarItem | IActivityBarItem []): void;
+    push(data: IActivityBarItem): void;
     remove(index: number) : void;
 }
 
 @singleton()
-export class ActivityBarService extends BaseService<IActivityBar> implements IActivityBarService {
-    private data: IActivityBarItem[];
-    private selected: string = '';
+export class ActivityBarService extends Component<IActivityBar> implements IActivityBarService {
+    protected state: IActivityBar;
 
-    constructor(
-        @inject('ActivityBarData') data: IActivityBarItem[],
-        @inject('ActivityBarSelected') selected: string,
-    ) {
+    constructor() {
         super();
-        this.data = data;
-        this.selected = selected;
-    }
-
-    public render!: () => React.ReactNode;
-
-    public readonly onSelect = (key: string, item?: IActivityBarItem | undefined) => {
-        this.selected = key;
-        this.emit(ActivityBarEvent.Selected, key, item);
-    }
-
-    public readonly onClick = (event: React.MouseEvent, item: IActivityBarItem) => {
-        this.emit(ActivityBarEvent.OnClick, event, item);
+        this.state = container.resolve(ActivityBarModel);
     }
 
     public reset() {
-        this.data = [];
-        this.selected = '';
+        this.updateState({
+            data: [],
+            selected: '',
+        });
     }
 
-    @emit(ActivityBarEvent.DataChanged)
-    public push(data: IActivityBarItem | IActivityBarItem[]) {
-        const original = this.data || [];
-        if (Array.isArray(data)) {
-            this.data = original.concat(data);
-        } else {
-            original.push(data);
-        }
+    public push(data: IActivityBarItem) {
+        const original = this.state.data;
+        original.push(data);
+        console.log('ac push:', original);
     }
 
     public remove(index: number) {
-        if (this.data) {
-            this.data.splice(index, 1);
+        if (this.state.data) {
+            const data = this.state.data;
+            data.splice(index, 1);
         }
     }
 
-    @emit(ActivityBarEvent.ReRender)
     public setRenderer(renderer: () => React.ReactNode) {
-        this.render = renderer;
+        // this.updateState(Object.assign(this.state, {
+        //     render: renderer,
+        // }));
+        // eslint-disable-next-line react/no-direct-mutation-state
+        this.state.render = renderer;
     }
 
-    public getState() {
-        return {
-            selected: this.selected,
-            data: this.data,
-        };
+    public onClick(callback: Function) {
+        this.subscribe(ActivityBarEvent.OnClick, callback);
     }
 }
-
-container.register('ActivityBarData', { useValue: [] });
-container.register('ActivityBarSelected', { useValue: '' });

@@ -1,4 +1,4 @@
-import { activityBar, ActivityBarEvent, IActivityBarItem } from 'mo/index';
+import { activityBar, ActivityBarEvent, IActivityBarItem } from 'mo';
 import { ExtensionService } from 'mo/services/extensionService';
 
 function initActivityBar(extensionCtx: ExtensionService) {
@@ -22,7 +22,8 @@ function initActivityBar(extensionCtx: ExtensionService) {
         },
     };
 
-    activityBar.push([globalUserAccount, globalSettings]);
+    activityBar.push(globalUserAccount);
+    activityBar.push(globalSettings);
 
     activityBar.subscribe(ActivityBarEvent.OnClick, (data) => {
         console.log('Explore activityBar subscribe onClick:', data);

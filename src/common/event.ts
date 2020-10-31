@@ -5,7 +5,6 @@ export class EventEmitter {
         const events = this._events.get(name);
         if (events && events.length > 0) {
             // The log for development
-            console.log('event emit:', name, args);
             events.forEach((callEvent) => {
                 callEvent(args);
             });
@@ -20,8 +19,6 @@ export class EventEmitter {
         } else {
             this.assignEvent(name, callback);
         }
-        // The log for development
-        console.log('event on:', name);
     }
 
     // TODO

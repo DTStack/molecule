@@ -1,10 +1,8 @@
 import 'mo/workbench/menuBar/style.scss';
 import Sidebar from './sidebar';
-import { mapState, sidebar, SideBarEvent } from 'mo/services';
+import { mapState, sidebar } from 'mo/services';
 
-const SidebarView = mapState(Sidebar, sidebar, [
-    SideBarEvent.DataChanged,
-]);
+const SidebarView = mapState(Sidebar, sidebar.getState());
 
 export {
     Sidebar,

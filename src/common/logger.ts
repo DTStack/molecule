@@ -1,11 +1,15 @@
 declare let __DEVELOPMENT__: boolean;
 
 export default {
-    info(content: any) {
+    info(...args) {
         // The blow codes just for development
         if (__DEVELOPMENT__) {
-            console.group(`Logger.info:`, content);
+            console.group(`Logger.info:`, args);
             console.groupEnd();
         }
+    },
+
+    error(...args) {
+        console.error(args);
     },
 };

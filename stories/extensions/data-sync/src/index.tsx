@@ -1,29 +1,11 @@
-import { activityBar } from 'mo/index';
-
-// import * as React from 'react';
-
-// const BarB: React.FunctionComponent = () => {
-//     return (<div>affefefe</div>);
-// };
+import { activityBar } from 'mo';
 
 export function activate() {
-    activityBar.push({
+    const newItem = {
         id: '3333',
         iconName: 'codicon-sync',
         name: '数据同步',
-    });
-
-    // moleculeCtx.a.components.push();
-
-    // moleculeCtx.sidebar.components.push();
-
-    // moleculeCtx.activityBar.onSelect = function(key, options) {
-    //     moleculeCtx.sidebar.render();
-    // };
-
-    // moleculeCtx.sidebar.onSelect = function(key, options) {
-    //     moleculeCtx.sidebar.render('fafa', callback);
-    // };
-
-    // moleculeCtx.editor.open(title, content, options, callback);
+    };
+    console.log('extend a new activity bar item:', newItem);
+    activityBar.push(newItem);
 }

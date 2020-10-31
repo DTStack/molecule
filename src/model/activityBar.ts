@@ -1,6 +1,6 @@
 /* eslint-disable no-invalid-this */
 import { observable } from 'mo/common/observable';
-import { ActivityBarEvent, EventService } from 'mo/services';
+import { ActivityBarEvent, EventBus } from 'mo/services';
 import { container, inject, injectable } from 'tsyringe';
 
 
@@ -41,11 +41,11 @@ export class ActivityBarModel implements IActivityBar {
 
     public readonly onSelect = (key: string, item?: IActivityBarItem | undefined) => {
         this.selected = key;
-        EventService.emit(ActivityBarEvent.Selected, key, item);
+        EventBus.emit(ActivityBarEvent.Selected, key, item);
     }
 
     public readonly onClick = (event: React.MouseEvent, item: IActivityBarItem) => {
-        EventService.emit(ActivityBarEvent.OnClick, event, item);
+        EventBus.emit(ActivityBarEvent.OnClick, event, item);
     }
 }
 

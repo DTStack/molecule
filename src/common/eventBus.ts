@@ -1,6 +1,6 @@
 import { EventEmitter } from 'mo/common/event';
 
-export const EventService = new EventEmitter();
+export const EventBus = new EventEmitter();
 
 /**
  * Emit decorator, when the function be called,
@@ -18,7 +18,7 @@ export function emit(name: string) {
             descriptor.value = function(...args) {
                 try {
                     const result = original.apply(this, args);
-                    EventService.emit(name, args);
+                    EventBus.emit(name, args);
                     return result;
                 } catch (e) {
                     throw e;
@@ -42,7 +42,7 @@ export function subscribe(name: string | string []) {
     ) {
         const original = descriptor.value;
         if (typeof original === 'function') {
-            EventService.subscribe(name, original);
+            EventBus.subscribe(name, original);
         }
         return descriptor;
     };

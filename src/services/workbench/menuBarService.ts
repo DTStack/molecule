@@ -1,7 +1,7 @@
 import { IMenuBar, IMenuBarItem, MenuBarModel } from 'mo/model/menuBar';
 import { Component } from 'mo/services/react';
 import { singleton, container } from 'tsyringe';
-import { emit } from '../eventService';
+import { emit } from '../../common/eventBus';
 
 /**
  * The activity bar event definition

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-export * from './eventService';
+export * from '../common/eventBus';
 export * from './workbench/activityBarService';
-export * from './eventService';
+export * from '../common/eventBus';
 export * from './extensionService';
 export * from './workbench/menuBarService';
 export * from './workbench/sidebarService';

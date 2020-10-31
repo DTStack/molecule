@@ -1,4 +1,4 @@
-import { EventService } from './eventService';
+import { EventBus } from '../common/eventBus';
 
 export abstract class BaseService<S = any> {
     /**
@@ -7,7 +7,7 @@ export abstract class BaseService<S = any> {
      * @param callback Callback function
      */
     public subscribe(name: string | string [], callback: Function) {
-        EventService.subscribe(name, callback);
+        EventBus.subscribe(name, callback);
     }
 
     /**
@@ -16,6 +16,6 @@ export abstract class BaseService<S = any> {
      * @param args Arguments
      */
     public emit(name: string, ...args: any) {
-        EventService.emit(name, args);
+        EventBus.emit(name, args);
     }
 }

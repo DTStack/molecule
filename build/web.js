@@ -5,6 +5,7 @@ const webpackConf = require('./webpack.base');
 
 module.exports = function(env) {
     return merge(webpackConf, {
+        devtool: 'eval-source-map',
         devServer: {
             progress: false,
             hot: true,

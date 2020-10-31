@@ -1,12 +1,22 @@
 export interface IObservable {
-    observe: (handler: (target, property, value) => void) => void;
+    /**
+     * The onChange of observed object
+     */
+    observe: (onChange: (target, property, value) => void) => void;
 }
 
-export function observable<T>(object, callback?): IObservable & T {
-    object.handlers = [];
-    object.observe = function(handler: Function) {
-        object.handlers.push(handler);
-    };
+/**
+ * Wrap an object to an observable object
+ * @param object target object
+ * @param callback callback when target observed
+ */
+export function observableWrapper<T>(object, callback?): IObservable & T {
+    Object.setPrototypeOf(object, {
+        handlers: [],
+        observe: function(onChange: Function) {
+            object.handlers.push(onChange);
+        },
+    });
 
     const handler = {
         get(target, property, receiver) {
@@ -41,4 +51,39 @@ export function observable<T>(object, callback?): IObservable & T {
         },
     };
     return new Proxy(object, handler);
+}
+
+/**
+ * Observable decorator
+ * @param target observable target object
+ * @param name
+ * @param descriptor
+ */
+export function observable(): any {
+    return function(
+        target,
+        property: string,
+        descriptor: PropertyDescriptor,
+    ) {
+        try {
+            const Original = target;
+
+            const decoratedConstructor = function(...args: any[]): void {
+                const Obj: any = function() {
+                    return new Original(args);
+                };
+
+                Obj.prototype = Original.prototype;
+                const result = new Obj();
+
+                return observableWrapper(result);
+            };
+
+            decoratedConstructor.prototype = Original.prototype;
+            return decoratedConstructor;
+        } catch (e) {
+            console.error('observable error:', e);
+            return target;
+        }
+    };
 }

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { memo } from 'react';
 
 import { prefixClaName } from 'mo/common/className';
-import { IStatusBar } from 'mo/model/statusBar';
+import { IStatusBar } from 'mo/model/workbench/statusBar';
 
 function StatusBar(props: IStatusBar) {
     return (

@@ -2,7 +2,7 @@ import 'mo/workbench/activityBar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
-import { IActivityBar, IActivityBarItem } from 'mo/model/activityBar';
+import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
 import ActivityBarItem from './activityBarItem';
 

@@ -7,7 +7,7 @@ import { prefixClaName } from 'mo/common/className';
 
 import Tabs from 'mo/components/tabs';
 import Welcome from './welcome';
-import { IEditor, IEditorGroup } from 'mo/model/editor';
+import { IEditor, IEditorGroup } from 'mo/model';
 
 function renderEditorGroup(group: IEditorGroup) {
     const editor = group.activeTab;

@@ -2,7 +2,7 @@ import { Component } from 'mo/react';
 import { ITab } from 'mo/components/tabs';
 import { emit } from 'mo/common/event';
 import { singleton, container } from 'tsyringe';
-import { EditorModel, EditorGroupModel, IEditor, IEditorGroup } from 'mo/model/editor';
+import { EditorModel, EditorGroupModel, IEditor, IEditorGroup } from 'mo/model';
 
 export enum EditorEvent {
     OpenTab = 'editor.openTab',

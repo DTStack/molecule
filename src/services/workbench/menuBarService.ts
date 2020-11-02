@@ -1,4 +1,4 @@
-import { IMenuBar, IMenuBarItem, MenuBarModel } from 'mo/model/menuBar';
+import { IMenuBar, IMenuBarItem, MenuBarModel } from 'mo/model/workbench/menuBar';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { emit } from '../../common/event';

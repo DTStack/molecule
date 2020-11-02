@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { prefixClaName } from 'mo/common/className';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
-import { IActivityBarItem } from 'mo/model/activityBar';
+import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 
 function ActivityBarItem(props: IActivityBarItem) {
     const { checked = false, name = '', data = {}, render, iconName = '', onClick } = props;

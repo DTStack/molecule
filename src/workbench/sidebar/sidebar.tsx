@@ -1,7 +1,7 @@
 import 'mo/workbench/sidebar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
-import { ISidebar, ISidebarPane } from 'mo/model/sidebar';
+import { ISidebar, ISidebarPane } from 'mo/model/workbench/sidebar';
 
 function Sidebar(props: ISidebar) {
     const { panes = [], render } = props;

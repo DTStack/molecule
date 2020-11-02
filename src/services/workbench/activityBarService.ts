@@ -1,6 +1,6 @@
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
-import { ActivityBarModel, IActivityBar, IActivityBarItem } from 'mo/model/activityBar';
+import { ActivityBarModel, IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
 /**
  * The activity bar event definition

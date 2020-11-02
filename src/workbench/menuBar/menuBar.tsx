@@ -1,7 +1,7 @@
 import 'mo/workbench/menuBar/style.scss';
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
-import { IMenuBar } from 'mo/model/menuBar';
+import { IMenuBar } from 'mo/model/workbench/menuBar';
 
 export interface IMenuBarProps {
     // menuBar: IMenuBar;

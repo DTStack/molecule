@@ -1,4 +1,4 @@
-import { Component } from 'mo/services/react';
+import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { emit } from '../../common/event';
 import { ISidebar, ISidebarPane, SidebarModel } from 'mo/model/sidebar';

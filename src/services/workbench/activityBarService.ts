@@ -1,5 +1,5 @@
 import { singleton, container } from 'tsyringe';
-import { Component } from 'mo/services/react/component';
+import { Component } from 'mo/react/component';
 import { ActivityBarModel, IActivityBar, IActivityBarItem } from 'mo/model/activityBar';
 
 /**

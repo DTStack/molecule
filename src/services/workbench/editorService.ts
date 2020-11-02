@@ -1,4 +1,4 @@
-import { Component } from 'mo/services/react';
+import { Component } from 'mo/react';
 import { ITab } from 'mo/components/tabs';
 import { emit } from 'mo/common/event';
 import { singleton, container } from 'tsyringe';

@@ -1,5 +1,5 @@
 import { IStatusBar, IStatusBarItem, StatusBarModel } from 'mo/model/statusBar';
-import { Component } from 'mo/services/react';
+import { Component } from 'mo/react';
 import { emit } from 'mo/common/event';
 import { container, singleton } from 'tsyringe';
 

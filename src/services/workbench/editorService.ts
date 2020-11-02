@@ -1,6 +1,6 @@
 import { Component } from 'mo/services/react';
 import { ITab } from 'mo/components/tabs';
-import { emit } from 'mo/common/eventBus';
+import { emit } from 'mo/common/event';
 import { singleton, container } from 'tsyringe';
 import { EditorModel, EditorGroupModel, IEditor, IEditorGroup } from 'mo/model/editor';
 

@@ -1,6 +1,6 @@
-import { BaseService } from 'mo/services/baseService';
+import { GlobalEvent } from 'mo/common/event';
 
-export abstract class Component<S> extends BaseService {
+export abstract class Component<S> extends GlobalEvent {
     protected abstract state: S;
 
     public updateState(nextState: S) {

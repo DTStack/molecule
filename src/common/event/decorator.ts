@@ -1,6 +1,4 @@
-import { EventEmitter } from 'mo/common/event';
-
-export const EventBus = new EventEmitter();
+import { EventBus } from './eventBus';
 
 /**
  * Emit decorator, when the function be called,
@@ -28,7 +26,6 @@ export function emit(name: string) {
         return descriptor;
     };
 }
-
 
 /**
  * When the event emitted, it's going to call target function

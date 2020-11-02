@@ -1,4 +1,4 @@
-import { activityBar } from 'mo';
+import { activityBarService } from 'mo';
 
 export function activate() {
     const newItem = {
@@ -7,5 +7,5 @@ export function activate() {
         name: '数据同步',
     };
     console.log('extend a new activity bar item:', newItem);
-    activityBar.push(newItem);
+    activityBarService.push(newItem);
 }

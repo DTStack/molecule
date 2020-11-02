@@ -18,30 +18,30 @@ import {
 /**
  * The Services of Workbench
  */
-const activityBar = container.resolve<IActivityBarService>(ActivityBarService);
-const sidebar = container.resolve<ISidebarService>(SidebarService);
-const menuBar = container.resolve<IMenuBarService>(MenuBarService);
-const editor = container.resolve<IEditorService>(EditorService);
-const statusBar = container.resolve<IStatusBarService>(StatusBarService);
+const activityBarService = container.resolve<IActivityBarService>(ActivityBarService);
+const sidebarService = container.resolve<ISidebarService>(SidebarService);
+const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
+const editorService = container.resolve<IEditorService>(EditorService);
+const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
 
 /**
  * The theme service,
  * TODO: think about break themeService into ColorTheme and IconTheme
  */
-const theme = container.resolve(ThemeService);
+const themeService = container.resolve(ThemeService);
 
 /**
  * Note: The extension service depends on other workbench services,
  * So it need initialized be last one.
  */
-const extension = container.resolve<IExtensionService>(ExtensionService);
+const extensionService = container.resolve<IExtensionService>(ExtensionService);
 
 export {
-    activityBar,
-    sidebar,
-    menuBar,
-    statusBar,
-    editor,
-    extension,
-    theme,
+    activityBarService,
+    sidebarService,
+    menuBarService,
+    statusBarService,
+    editorService,
+    extensionService,
+    themeService,
 };

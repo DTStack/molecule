@@ -1,4 +1,4 @@
-import { activityBar, IExtensionService } from 'mo/index';
+import { activityBarService, IExtensionService } from 'mo';
 
 export function activate(extensionCtx: IExtensionService) {
     const searchFeat = {
@@ -7,5 +7,5 @@ export function activate(extensionCtx: IExtensionService) {
         iconName: 'codicon-search',
     };
 
-    activityBar.push(searchFeat);
+    activityBarService.push(searchFeat);
 }

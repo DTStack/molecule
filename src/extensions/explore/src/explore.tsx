@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Collapse, { Panel } from 'mo/components/collapse';
 import { prefixClaName } from 'mo/common/className';
-import { activityBar, editor, ActivityBarEvent } from 'mo/index';
+import { activityBarService, editorService, ActivityBarEvent } from 'mo/index';
 
 interface IExplorerProps {
 }
@@ -9,7 +9,7 @@ interface IExplorerProps {
 export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps) => {
     const AddABar = function() {
         const id = Math.random() * 10 + 1;
-        activityBar.push({
+        activityBarService.push({
             id: id + '',
             name: 'folder' + id,
             iconName: 'codicon-edit',
@@ -24,14 +24,14 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
             value: 'just test tab data',
         };
         console.log('open editor:', tabData);
-        editor.open(tabData, 1);
+        editorService.open(tabData, 1);
     };
 
     const OpenCommand = function() {
         // MonacoEditor.editor.getModel().
     };
 
-    activityBar.subscribe(ActivityBarEvent.OnClick, (data) => {
+    activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
         console.log('Explore activityBar subscribe onClick:', data);
     });
 

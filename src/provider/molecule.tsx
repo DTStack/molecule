@@ -2,11 +2,11 @@ import 'mo/style/main.scss';
 import 'vscode-codicons/dist/codicon.css';
 
 import * as React from 'react';
-import { ILocalization } from 'mo/base/localization';
+import { ILocalization } from 'mo/model/localization';
 import { container } from 'tsyringe';
 import { ExtensionService, IExtensionService } from 'mo/services/extensionService';
 import { defaultExtensions } from 'mo/extensions';
-import { IExtensionEntry } from 'mo/base/extension';
+import { IExtensionEntry } from 'mo/model/extension';
 
 interface IMoleculeProps {
     extensionEntry?: IExtensionEntry;

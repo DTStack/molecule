@@ -3,8 +3,8 @@
  * https://code.visualstudio.com/api/references/theme-color
  */
 
-import { IExtension } from 'mo/base/extension';
-import { ITheme, ThemeColor, TokenColor } from 'mo/base/theme';
+import { IExtension } from 'mo/model/extension';
+import { ITheme, ThemeColor, TokenColor } from 'mo/model/theme';
 import { container, inject, singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
 

@@ -1,6 +1,7 @@
 /* eslint-disable no-invalid-this */
+import { EventBus } from 'mo/common/event';
 import { observable } from 'mo/common/observable';
-import { ActivityBarEvent, EventBus } from 'mo/services';
+import { ActivityBarEvent } from 'mo/services';
 import { container, inject, injectable } from 'tsyringe';
 
 

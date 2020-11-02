@@ -1,6 +1,6 @@
 import { singleton, inject, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
-import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/base/extension';
+import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/model/extension';
 
 export interface IExtensionService {
     /**

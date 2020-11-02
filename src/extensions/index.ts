@@ -1,4 +1,4 @@
-import { IExtension, IExtensionEntry } from 'mo/base/extension';
+import { IExtension, IExtensionEntry } from 'mo/model/extension';
 import * as ExploreBarPkg from './explore/package.json';
 import * as SearchBarPkg from './search/package.json';
 import * as ActivityBarPkg from './activityBar/package.json';

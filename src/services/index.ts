@@ -1,24 +1,19 @@
 import 'reflect-metadata';
-export * from '../common/event/eventBus';
-export * from './workbench/activityBarService';
-export * from '../common/event/eventBus';
-export * from './extensionService';
-export * from './workbench/menuBarService';
-export * from './workbench/sidebarService';
-export * from './themeService';
-export * from './workbench/editorService';
-export * from './react/mapState';
-export * from './workbench/statusBarService';
-export * from './react';
-
 import { container } from 'tsyringe';
-import { ActivityBarService, IActivityBarService } from './workbench/activityBarService';
-import { ExtensionService, IExtensionService } from './extensionService';
-import { ISidebarService, SidebarService } from './workbench/sidebarService';
-import { IMenuBarService, MenuBarService } from './workbench/menuBarService';
+
+export * from './extensionService';
+export * from './themeService';
+export * from './workbench';
+
 import { ThemeService } from './themeService';
-import { EditorService, IEditorService } from './workbench/editorService';
-import { IStatusBarService, StatusBarService } from './workbench/statusBarService';
+import { ExtensionService, IExtensionService } from './extensionService';
+import {
+    ActivityBarService, IActivityBarService,
+    ISidebarService, SidebarService,
+    IMenuBarService, MenuBarService,
+    IStatusBarService, StatusBarService,
+    EditorService, IEditorService,
+} from './workbench';
 
 /**
  * The Services of Workbench

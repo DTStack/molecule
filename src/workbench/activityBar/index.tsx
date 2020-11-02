@@ -1,5 +1,6 @@
 import ActivityBar from './activityBar';
-import { activityBar, mapState } from 'mo/services';
+import { activityBar } from 'mo/services';
+import { mapState } from 'mo/react';
 
 export * from './activityBar';
 export { default as ActivityBarItem } from './activityBarItem';

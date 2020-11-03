@@ -3,6 +3,7 @@ import { activityBarService, ActivityBarEvent, IActivityBarItem, sidebarService 
 
 import { Explorer } from './explore';
 import { ExtensionService } from 'mo/services/extensionService';
+import { IExtension } from 'mo/model/extension';
 
 function initActivityBar(extensionCtx: ExtensionService) {
     const folderFeat: IActivityBarItem = {
@@ -31,7 +32,10 @@ function initSidebar(extensionCtx: ExtensionService) {
 }
 
 
-export function activate(extensionCtx: ExtensionService) {
-    initActivityBar(extensionCtx);
-    initSidebar(extensionCtx);
-}
+export const ExtendExplore: IExtension = {
+    activate: function(extensionCtx: ExtensionService) {
+        initActivityBar(extensionCtx);
+        initSidebar(extensionCtx);
+    },
+};
+

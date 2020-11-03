@@ -1,10 +1,5 @@
 import { IExtensionService } from 'mo/services';
 
-export interface IExtensionEntry {
-    location?: any;
-    extensions?: IExtension[];
-}
-
 /**
  * Defines extension types
  */
@@ -24,7 +19,7 @@ export enum IContributeType {
     Grammar = 'grammars'
 }
 
-export interface IContribute extends Object{
+export interface IContribute {
     [IContributeType.Languages ]: any;
     [IContributeType.Commands ]: any;
     [IContributeType.Configuration ]: any;
@@ -36,7 +31,7 @@ export interface IContribute extends Object{
  * The interface of extension,
  * there need every extension to implement this interface
  */
-export interface IExtension extends Object {
+export interface IExtension {
     /**
      * The name of extension
      */
@@ -69,7 +64,7 @@ export interface IExtension extends Object {
     /**
      * The Icon of extension
      */
-    icon: string;
+    icon?: string;
     /**
      * The description of extension
      */
@@ -85,9 +80,9 @@ export interface IExtension extends Object {
     /**
      * Whether disable current extension, the extension default status is enable
      */
-    disable?: boolean
+    disable?: boolean,
     /**
      * Activate current extension
-     */
-    activate?: (extensionCtx: IExtensionService) => void;
+    */
+    activate(extensionCtx: IExtensionService): void;
 }

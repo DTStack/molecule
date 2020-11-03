@@ -1,7 +1,10 @@
-import { activityBarService, ActivityBarEvent, IActivityBarItem } from 'mo';
-import { ExtensionService } from 'mo/services/extensionService';
+import {
+    IExtensionService, activityBarService,
+    ActivityBarEvent, IActivityBarItem,
+} from 'mo';
+import { IExtension } from 'mo/model/extension';
 
-function initActivityBar(extensionCtx: ExtensionService) {
+function initActivityBar(extensionCtx: IExtensionService) {
     const globalSettings: IActivityBarItem = {
         id: 'global-settings',
         name: 'Settings',
@@ -30,6 +33,8 @@ function initActivityBar(extensionCtx: ExtensionService) {
     });
 }
 
-export function activate(extensionCtx: ExtensionService) {
-    initActivityBar(extensionCtx);
-}
+export const ExtendActivityBar: IExtension = {
+    activate: function(extensionCtx: IExtensionService) {
+        initActivityBar(extensionCtx);
+    },
+};

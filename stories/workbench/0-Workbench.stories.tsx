@@ -2,12 +2,11 @@ import * as React from 'react';
 
 import { MoleculeProvider, Workbench } from 'mo/index';
 import { customExtensions } from '../extensions';
-
 import '../demo.scss';
 
 export const IDEDemo = () => (
     <MoleculeProvider
-        extensionEntry={customExtensions}
+        extensions={customExtensions}
         locales={[
         ]}
     >

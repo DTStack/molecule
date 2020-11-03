@@ -1,22 +1,6 @@
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
-import { ActivityBarModel, IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
-
-/**
- * The activity bar event definition
- */
-export enum ActivityBarEvent {
-    /**
-     * Selected an activity bar
-     */
-    Selected = 'activityBar.selected',
-    OnClick = 'activityBar.onClick',
-    /**
-     * Activity bar data changed
-     */
-    DataChanged = 'activityBar.data',
-    ReRender = 'activityBar.reRender',
-}
+import { ActivityBarModel, ActivityBarEvent, IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
 export interface IActivityBarService extends Component<IActivityBar> {
     reset(): void;

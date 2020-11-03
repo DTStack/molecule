@@ -1,9 +1,24 @@
 /* eslint-disable no-invalid-this */
+import 'reflect-metadata';
 import { EventBus } from 'mo/common/event';
 import { observable } from 'mo/common/observable';
-import { ActivityBarEvent } from 'mo/services';
 import { container, inject, injectable } from 'tsyringe';
 
+/**
+ * The activity bar event definition
+ */
+export enum ActivityBarEvent {
+    /**
+     * Selected an activity bar
+     */
+    Selected = 'activityBar.selected',
+    OnClick = 'activityBar.onClick',
+    /**
+     * Activity bar data changed
+     */
+    DataChanged = 'activityBar.data',
+    ReRender = 'activityBar.reRender',
+}
 
 export interface IActivityBarItem {
     id?: string;

@@ -14,12 +14,13 @@ export interface ITab<T = any, K = any> {
 
 interface ITabsProps {
     data: ITab[];
+    onClose?: (item: ITab, index: number) => void;
 }
 
 const Tabs: React.FunctionComponent<ITabsProps> = (props: ITabsProps) => {
-    const { data } = props;
-    const tabs = data.map((tab: ITab) => {
-        return (<a key={tab.id}>{tab.name}</a>);
+    const { data, onClose } = props;
+    const tabs = data.map((tab: ITab, index: number) => {
+        return (<a key={tab.id}>{tab.name} <button onClick={(e) => onClose!(tab, index)}>Close</button></a>);
     });
     return (
         <div className={prefixClaName('tabs')}>

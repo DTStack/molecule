@@ -5,15 +5,15 @@ const webpackConf = require('./webpack.base');
 
 module.exports = function(env) {
     return merge(webpackConf, {
-        devtool: 'eval-source-map',
+        devtool: 'inline-source-map',
         devServer: {
             progress: false,
             hot: true,
             port: 8888,
         },
-        entry: {
-            'app': path.resolve(__dirname, './web/app.js'),
-        },
+        entry: [
+            path.resolve(__dirname, './web/app.js'),
+        ],
         module: {
             rules: [
                 {

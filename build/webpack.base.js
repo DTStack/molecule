@@ -13,6 +13,7 @@ module.exports = {
         },
     },
     output: {
+        pathinfo: false,
         globalObject: 'self',
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, '../dist'),
@@ -25,6 +26,9 @@ module.exports = {
                 use: [
                     {
                         loader: require.resolve('ts-loader'),
+                        options: {
+                            transpileOnly: true,
+                        },
                     },
                     // Optional
                     {

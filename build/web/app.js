@@ -1,13 +1,17 @@
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Workbench, MoleculeProvider } from 'mo';
 
-ReactDOM.render(
+const App = () => (
     <React.StrictMode>
         <MoleculeProvider>
             <Workbench />
         </MoleculeProvider>
-    </React.StrictMode>,
+    </React.StrictMode>
+);
+
+ReactDOM.render(
+    <App />,
     document.getElementById('root'),
 );
+

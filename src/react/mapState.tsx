@@ -21,12 +21,12 @@ export function mapState<S>(WrappedComponent: React.ComponentType<S>, state: S) 
         _count = 0;
 
         componentDidMount() {
-            // There is no declare state argument as IObservable type, so must convert to any type.
+            // There is no declare state parameter as IObservable type, so must convert to any type.
             if ((state as any).observe) {
                 console.log('mapState:', this._count++);
                 (state as any).observe(this.onChange);
             } else {
-                Logger.error('The state argument of mapState must be an observable object.');
+                Logger.error('The state parameter of mapState must be an observable object.');
             }
         }
         /**

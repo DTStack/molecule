@@ -1,6 +1,6 @@
 import { singleton, inject, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
-import { IContribute, IContributeType, IExtension, IExtensionEntry } from 'mo/model/extension';
+import { IContribute, IContributeType, IExtension } from 'mo/model/extension';
 
 export interface IExtensionService {
     /**
@@ -12,7 +12,7 @@ export interface IExtensionService {
      * @param extensionEntry
      * @param moleculeCtx
      */
-    load(extensionEntry: IExtensionEntry);
+    load(extensions: IExtension[]);
     loadContributes(contributes: IContribute);
     unload(extension: IExtension);
 }
@@ -22,9 +22,9 @@ export class ExtensionService implements IExtensionService {
     public extensions: IExtension[] = [];
 
     constructor(
-        @inject('ExtensionEntry') extensionEntry: IExtensionEntry = {},
+        @inject('Extensions') extensions: IExtension[] = [],
     ) {
-        this.load(extensionEntry);
+        this.load(extensions);
     }
 
     /**
@@ -32,19 +32,18 @@ export class ExtensionService implements IExtensionService {
      * @param param0 extensionEntry object
      * @param moleculeCtx the context object of molecule
      */
-    public load({ location, extensions = [] }: IExtensionEntry) {
+    public load(extensions: IExtension[] = []) {
         try {
             if (extensions?.length === 0) return;
-            this.extensions = this.extensions.concat(extensions || []);
+            this.extensions = this.extensions.concat(extensions);
             const ctx = this;
 
             extensions?.forEach((extension: IExtension, index: number) => {
-                if (extension.main) {
-                    if (extension.activate) {
-                        extension.activate(ctx);
-                    } else {
-                        throw new Error(ErrorMsg.NotFoundActivate);
-                    }
+                if (extension.activate) {
+                    extension.activate(ctx);
+                } else {
+                    // TODO: different kind of extension ,different hand
+                    // throw new Error(ErrorMsg.NotFoundActivateMethod);
                 }
                 if (extension.contributes) {
                     this.loadContributes(extension.contributes);
@@ -71,4 +70,4 @@ export class ExtensionService implements IExtensionService {
     }
 }
 
-container.register('ExtensionEntry', { useValue: {} });
+container.register('Extensions', { useValue: [] });

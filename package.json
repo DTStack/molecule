@@ -26,6 +26,7 @@
     "dependencies": {
         "@types/react": "^16.9.35",
         "@types/react-dom": "^16.9.9",
+        "core-js": "^3.6.5",
         "dt-utils": "^1.0.1",
         "loadsh": "^0.0.4",
         "monaco-editor": "^0.21.2",
@@ -39,6 +40,7 @@
         "vscode-codicons": "^0.0.10"
     },
     "devDependencies": {
+        "@babel/core": "^7.12.3",
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
         "@storybook/addon-actions": "6.0.28",
@@ -77,6 +79,11 @@
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
             "pre-push": "prettier --ignore-unknown --write ."
+        }
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
         }
     }
 }

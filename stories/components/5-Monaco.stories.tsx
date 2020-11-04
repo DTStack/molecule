@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import MonacoEditor from 'mo/components/monaco-editor';
 
-import './demo.scss';
+import '../demo.scss';
 
 export const MonacoDemo = () => (
     <div>

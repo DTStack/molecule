@@ -6,15 +6,19 @@ import { ExtensionService } from 'mo/services/extensionService';
 import { IExtension } from 'mo/model/extension';
 
 function initActivityBar(extensionCtx: ExtensionService) {
+    const activeId = 'active-explorer';
+    const state = activityBarService.getState();
     const folderFeat: IActivityBarItem = {
-        id: 'active-explorer',
+        id: activeId,
         name: 'Explore',
         iconName: 'codicon-files',
-        onClick: function(e, options) {
-
-        },
     };
-    activityBarService.push(folderFeat);
+    // activityBarService.push(folderFeat);
+    // state.data?.push(folderFeat);
+    // state.selected = activeId;
+    activityBarService.updateState({
+        selected: activeId, data: [...state.data, folderFeat],
+    });
 
     activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
         console.log('Explore activityBar subscribe onClick:', data);

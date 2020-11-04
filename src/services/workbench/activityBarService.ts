@@ -6,6 +6,12 @@ export interface IActivityBarService extends Component<IActivityBar> {
     reset(): void;
     push(data: IActivityBarItem): void;
     remove(index: number) : void;
+    /**
+     * Add click event listener
+     * @param callback
+     */
+    onClick(callback: Function);
+    onSelect(callback: Function);
 }
 
 @singleton()
@@ -26,7 +32,7 @@ export class ActivityBarService extends Component<IActivityBar> implements IActi
 
     public push(data: IActivityBarItem) {
         const original = this.state.data;
-        original.push(data);
+        original?.push(data);
         console.log('ac push:', original);
     }
 
@@ -38,14 +44,24 @@ export class ActivityBarService extends Component<IActivityBar> implements IActi
     }
 
     public setRenderer(renderer: () => React.ReactNode) {
-        // this.updateState(Object.assign(this.state, {
-        //     render: renderer,
-        // }));
         // eslint-disable-next-line react/no-direct-mutation-state
         this.state.render = renderer;
     }
 
     public onClick(callback: Function) {
         this.subscribe(ActivityBarEvent.OnClick, callback);
+    }
+
+    public onSelect(callback: Function) {
+        this.subscribe(ActivityBarEvent.Selected, (args) => {
+            const key = args[0];
+            const item: IActivityBarItem = args[1];
+            if (item.type !== 'global') {
+                this.updateState({
+                    selected: key,
+                });
+            }
+            if (callback) callback(key, item);
+        });
     }
 }

@@ -32,7 +32,7 @@ export interface IActivityBarItem {
 }
 
 export interface IActivityBar {
-    data: IActivityBarItem[];
+    data?: IActivityBarItem[];
     selected?: string;
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
@@ -56,7 +56,6 @@ export class ActivityBarModel implements IActivityBar {
     public render!: () => React.ReactNode;
 
     public readonly onSelect = (key: string, item?: IActivityBarItem | undefined) => {
-        this.selected = key;
         EventBus.emit(ActivityBarEvent.Selected, key, item);
     }
 

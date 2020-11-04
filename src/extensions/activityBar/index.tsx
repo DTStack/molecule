@@ -1,6 +1,6 @@
 import {
     IExtensionService, activityBarService,
-    ActivityBarEvent, IActivityBarItem,
+    IActivityBarItem,
 } from 'mo';
 import { IExtension } from 'mo/model/extension';
 
@@ -10,9 +10,6 @@ function initActivityBar(extensionCtx: IExtensionService) {
         name: 'Settings',
         iconName: 'codicon-settings-gear',
         type: 'global',
-        onClick: function(e, options) {
-
-        },
     };
 
     const globalUserAccount: IActivityBarItem = {
@@ -20,16 +17,20 @@ function initActivityBar(extensionCtx: IExtensionService) {
         name: 'Account',
         iconName: 'codicon-account',
         type: 'global',
-        onClick: function(e, options) {
-
-        },
     };
 
     activityBarService.push(globalUserAccount);
     activityBarService.push(globalSettings);
 
-    activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
-        console.log('Explore activityBar subscribe onClick:', data);
+    activityBarService.onClick((data) => {
+        const target = data[0].target;
+        // activityBarService.updateState({ selected: 'search' });
+        console.log('activityBar onClick:', data, target);
+    });
+
+    activityBarService.onSelect((data) => {
+        const target = data[0].target;
+        console.log('activityBar onSelect:', data, target);
     });
 }
 

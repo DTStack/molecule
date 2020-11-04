@@ -7,7 +7,7 @@ import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 import ActivityBarItem from './activityBarItem';
 
 export function ActivityBar(props: IActivityBar) {
-    const { data = [], render, selected, onClick } = props;
+    const { data = [], render, selected, onClick, onSelect } = props;
 
     if (render) {
         return (
@@ -17,20 +17,25 @@ export function ActivityBar(props: IActivityBar) {
         );
     }
 
+    const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
+        console.log('ActivityBar onClick:', e);
+        if (onClick) onClick(e, item);
+        if (onSelect) {
+            onSelect(item.id || '', item);
+        }
+    };
+
     const normalBarItems = data?.filter((item: IActivityBarItem) => !item.type || item.type === 'normal') || [];
     const globalBarItems = data?.filter((item: IActivityBarItem) => item.type && item.type === 'global') || [];
 
-    const renderItems = (item: IActivityBarItem, index: number) => (
-        <ActivityBarItem key={item.id} {...item} data-index={index} checked={selected === item.id}/>
-    );
-
-    const click = (e: React.MouseEvent) => {
-        console.log('ActivityBar onClick:', e);
-        if (onClick) onClick(e, {} as any );
+    const renderItems = (item: IActivityBarItem, index: number) => {
+        return (
+            <ActivityBarItem key={item.id} {...item} onClick={onClickBar} data-index={index} checked={selected === item.id}/>
+        );
     };
 
     return (
-        <div className={prefixClaName(ID_ACTIVITY_BAR)} id={ID_ACTIVITY_BAR} onClick={click}>
+        <div className={prefixClaName(ID_ACTIVITY_BAR)} id={ID_ACTIVITY_BAR}>
             <div className={prefixClaName('container', ID_ACTIVITY_BAR)}>
                 <ul className={'normal-items'}>
                     {normalBarItems.map(renderItems)}

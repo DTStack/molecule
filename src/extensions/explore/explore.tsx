@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Collapse, { Panel } from 'mo/components/collapse';
 import { prefixClaName } from 'mo/common/className';
-import { activityBarService, editorService, ActivityBarEvent } from 'mo/index';
+import { activityBarService, editorService } from 'mo';
 
 interface IExplorerProps {
 }
@@ -30,11 +30,6 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
     const OpenCommand = function() {
         // MonacoEditor.editor.getModel().
     };
-
-    activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
-        console.log('Explore activityBar subscribe onClick:', data);
-    });
-
     return (
         <div className={prefixClaName('explorer', 'sidebar')}>
             <Collapse className="dee">

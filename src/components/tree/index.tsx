@@ -1,9 +1,8 @@
 import * as React from 'react';
 import RcTree from 'rc-tree';
-import classNames from 'classnames';
 
 import './style.scss';
-import { prefixClaName } from 'mo/common/className';
+import { prefixClaName, classNames } from 'mo/common/className';
 
 export interface ITree {
 

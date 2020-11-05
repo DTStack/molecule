@@ -1,9 +1,8 @@
 import * as React from 'react';
 import RcCollapse from 'rc-collapse';
-import classNames from 'classnames';
 
 import './style.scss';
-import { prefixClaName } from 'mo/common/className';
+import { prefixClaName, classNames } from 'mo/common/className';
 
 interface ICollapseProps {
     className?: string;

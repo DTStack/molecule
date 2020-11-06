@@ -16,13 +16,12 @@ function ExploreActionItem(props: IExplorerFileActionItem) {
             onClick(event, props);
         }
     };
-
     return (
         <a className={classNames('codicon', iconName)}
             onClick={onClickItem}
             title={name}
             data-id={id}
-        ></a>
+        >{content}</a>
     );
 };
 

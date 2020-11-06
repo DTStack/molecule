@@ -1,5 +1,57 @@
 @import 'mo/style/const.scss';
-
-.#{prefix}-collapse {
+.#{$prefix}-collapse {
     font-size: 13px;
+    .rc-collapse {
+        background-color: inherit;
+    }
+    .rc-collapse-anim-active {
+        transition: height 0.2s ease-out;
+    }
+    .rc-collapse > .rc-collapse-item:first-child {
+        border-top: none;
+    }
+    .rc-collapse > .rc-collapse-item > .rc-collapse-header {
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        color: #bbbbbb;
+        cursor: pointer;
+        outline: none;
+        &:focus {
+            border: 1px solid #bbb;
+        }
+        &:active {
+            border: 1px solid #bbb;
+        }
+    }
+    .rc-collapse > .rc-collapse-item > .rc-collapse-header .rc-collapse-extra {
+        margin: 0 16px 0 auto;
+    }
+    .rc-collapse > .rc-collapse-item .rc-collapse-header-collapsable-only {
+        cursor: default;
+    }
+    .rc-collapse > .rc-collapse-item .rc-collapse-header-collapsable-only .rc-collapse-header-text {
+        cursor: pointer;
+    }
+    .rc-collapse > .rc-collapse-item-disabled > .rc-collapse-header {
+        cursor: not-allowed;
+        color: #bbbbbb;
+    }
+    .rc-collapse-content {
+        overflow: hidden;
+        color: #bbbbbb;
+        padding: 0 16px;
+    }
+    .rc-collapse-content > .rc-collapse-content-box {
+        font-size: 12px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    .rc-collapse-content-inactive {
+        display: none;
+    }
+    .rc-collapse-item:last-child > .rc-collapse-content {
+        border-radius: 0 0 3px 3px;
+    }
 }
+

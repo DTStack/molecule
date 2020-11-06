@@ -1,20 +1,18 @@
 import * as React from 'react';
 import RcCollapse from 'rc-collapse';
 import classNames from 'classnames';
-
-import './style.scss';
+import { CollapseProps } from 'rc-collapse/lib/interface';
 import { prefixClaName } from 'mo/common/className';
+import './style.scss';
 
-interface ICollapseProps {
-    className?: string;
-}
-
-export const Collapse: React.FunctionComponent<ICollapseProps> = (props: ICollapseProps) => {
+export const Collapse: React.FunctionComponent<CollapseProps> = (props: CollapseProps) => {
+    const { className, ...others } = props;
     return (
-        <RcCollapse
-            className={classNames(prefixClaName('collapse'), props.className)}
-            {...props}
-        />
+        <div className={classNames(prefixClaName('collapse'), className)}>
+            <RcCollapse
+                {...others}
+            />
+        </div>
     );
 };
 

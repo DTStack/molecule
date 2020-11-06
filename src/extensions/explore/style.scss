@@ -1,0 +1,12 @@
+@import 'mo/style/const.scss';
+.#{$sidebar}-explorer {
+    &-item {
+        width: 100%;
+        span:nth-child(2) {
+            float: right;
+            a {
+                margin-left: 5px;
+            }
+        }
+    }
+}

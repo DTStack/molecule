@@ -44,8 +44,9 @@ export class ActivityBarService extends Component<IActivityBar> implements IActi
     }
 
     public setRenderer(renderer: () => React.ReactNode) {
-        // eslint-disable-next-line react/no-direct-mutation-state
-        this.state.render = renderer;
+        this.updateState({
+            render: renderer,
+        });
     }
 
     public onClick(callback: Function) {

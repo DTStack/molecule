@@ -3,7 +3,7 @@ import Collapse, { Panel } from 'mo/components/collapse';
 import ExploreActionItem from './exploreActionItem';
 import { prefixClaName } from 'mo/common/className';
 import { activityBarService, editorService } from 'mo';
-import classNames from 'classnames';
+import { classNames } from 'mo/common/className';
 import './style.scss';
 interface IExplorerProps {
 }

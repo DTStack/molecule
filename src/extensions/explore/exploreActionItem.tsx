@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { memo } from 'react';
-import classNames from 'classnames';
+import { classNames } from 'mo/common/className';
 
 import { IExplorerFileActionItem } from 'mo/model/workbench/exolorer';
 function ExploreActionItem(props: IExplorerFileActionItem) {

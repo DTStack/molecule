@@ -1,24 +1,36 @@
-// import * as React from 'react';
-// import { prefixClaName } from 'mo/common/className';
-// import { ContextView } from 'monaco-editor/esm/vs/base/browser/ui/contextview/contextview';
-// import { StandardMouseEvent } from 'monaco-editor/esm/vs/base/browser/mouseEvent';
+import * as React from 'react';
+import { HTMLElementType } from 'mo/common/dom';
+import { useContextView } from 'mo/components/contextview';
+import './style.scss';
 
-// export interface IContextMenuProps {
+export interface IContextMenu {
+    anchor: HTMLElementType;
+    render: () => React.ReactNode
+}
 
-// }
+export function useContextMenu(props: IContextMenu) {
+    const { anchor, render } = props;
 
-// const ContextMenu: React.FunctionComponent = function(props) {
-//     const view = new ContextView();
+    if (!anchor) {
+        return;
+    }
 
-//     return (
-//         <div className={`${prefixClaName('contextmenu')}`} >
-//             {
-//                 props.children
-//             }
-//         </div>
-//     );
-// }
+    const contextView = useContextView();
 
-// export {
-//     ContextMenu
-// }
+    const onContextMenu = (e: MouseEvent) => {
+        e.preventDefault();
+        contextView!.show({
+            x: e.clientX,
+            y: e.clientY,
+        }, render);
+    };
+
+    anchor.addEventListener('contextmenu', onContextMenu);
+
+    const dispose = () => {
+        contextView!.hide();
+        anchor.removeEventListener('contextmenu', onContextMenu);
+    };
+
+    return { contextView, dispose };
+}

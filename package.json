@@ -24,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/react": "^16.9.35",
-    "classnames": "^2.2.6",
+    "@types/react-dom": "^16.9.9",
     "dt-utils": "^1.0.1",
     "loadsh": "^0.0.4",
     "monaco-editor": "^0.21.2",
@@ -42,6 +42,7 @@
     "@commitlint/config-conventional": "^11.0.0",
     "@storybook/addon-actions": "6.0.21",
     "@storybook/addon-info": "^5.3.21",
+    "@storybook/addon-knobs": "^6.0.28",
     "@storybook/addon-links": "6.0.21",
     "@storybook/addons": "6.0.21",
     "@storybook/react": "6.0.21",

@@ -10,3 +10,7 @@ import { APP_PREFIX } from 'mo/common/const';
 export function prefixClaName(name: string, prefix: string = APP_PREFIX ) {
     return name ? `${prefix}-${name}` : '';
 }
+
+export function classNames(...names) {
+    return names.filter((name) => !!name).join(' ');
+}

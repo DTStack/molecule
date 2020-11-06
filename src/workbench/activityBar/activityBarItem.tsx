@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
-import classNames from 'classnames';
 
-import { prefixClaName } from 'mo/common/className';
+import { prefixClaName, classNames } from 'mo/common/className';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 

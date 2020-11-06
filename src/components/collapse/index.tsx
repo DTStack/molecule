@@ -1,8 +1,7 @@
 import * as React from 'react';
 import RcCollapse from 'rc-collapse';
-import classNames from 'classnames';
 import { CollapseProps } from 'rc-collapse/lib/interface';
-import { prefixClaName } from 'mo/common/className';
+import { prefixClaName, classNames } from 'mo/common/className';
 import './style.scss';
 
 export const Collapse: React.FunctionComponent<CollapseProps> = (props: CollapseProps) => {

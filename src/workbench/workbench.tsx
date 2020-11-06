@@ -1,9 +1,8 @@
 import './style.scss';
 import * as React from 'react';
-import classNames from 'classnames';
 import { Utils } from 'dt-utils';
 import SplitPane from 'react-split-pane';
-import { prefixClaName } from 'mo/common/className';
+import { classNames, prefixClaName } from 'mo/common/className';
 import { APP_PREFIX } from 'mo/common/const';
 
 import { EditorView } from 'mo/workbench/editor';

@@ -2,6 +2,7 @@
 cache:
     paths:
         - .yarn
+        - node_modules/
 
 before_script:
     - yarn install --cache-folder .yarn

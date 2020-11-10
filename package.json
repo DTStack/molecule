@@ -9,9 +9,9 @@
         "build-storybook": "build-storybook",
         "check-types": "tsc --skipLibCheck",
         "build": "tsc --project tsconfig.build.json",
-        "eslint": "npx eslint ./src/**/*.ts ./src/**/*.tsx",
-        "stylelint": "npx stylelint ./src/**/*.scss",
-        "prettier": "npx prettier --ignore-unknown --check . ",
+        "eslint": "eslint ./src/**/*.ts ./src/**/*.tsx",
+        "stylelint": "stylelint ./src/**/*.scss",
+        "prettier": "prettier --ignore-unknown --check . ",
         "release": "standard-version",
         "web": "webpack serve --env prod --config ./build/web.js"
     },
@@ -58,6 +58,7 @@
         "husky": "^4.3.0",
         "jest": "^26.0.1",
         "monaco-editor-webpack-plugin": "^2.0.0",
+        "prettier": "^2.1.2",
         "react-docgen-typescript-loader": "^3.7.2",
         "sass": "^1.26.10",
         "sass-loader": "^10.0.2",
@@ -75,7 +76,7 @@
     "husky": {
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-            "pre-push": "npx prettier --ignore-unknown --write ."
+            "pre-push": "prettier --ignore-unknown --write ."
         }
     }
 }

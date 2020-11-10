@@ -1,8 +1,6 @@
 {
     "git.ignoreLimitWarning": true,
-    "markdownlint.ignore": [
-        "**/*.md"
-    ],
+    "markdownlint.ignore": ["**/*.md"],
     "editor.codeActionsOnSave": {
         "source.fixAll": true,
         "source.fixAll.eslint": true,

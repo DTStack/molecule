@@ -11,7 +11,7 @@
         "build": "tsc --project tsconfig.build.json",
         "lint": "npx eslint ./src/**/*.ts ./src/**/*.tsx",
         "style-lint": "npx stylelint ./src/**/*.scss",
-        "prettier": "npx prettier --write .",
+        "prettier": "npx prettier --ignore-unknown --write . ",
         "release": "standard-version",
         "web": "webpack serve --env prod --config ./build/web.js"
     },

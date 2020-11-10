@@ -1,11 +1,16 @@
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
-import { ActivityBarModel, ActivityBarEvent, IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
+import {
+    ActivityBarModel,
+    ActivityBarEvent,
+    IActivityBar,
+    IActivityBarItem,
+} from 'mo/model/workbench/activityBar';
 
 export interface IActivityBarService extends Component<IActivityBar> {
     reset(): void;
     push(data: IActivityBarItem): void;
-    remove(index: number) : void;
+    remove(index: number): void;
     /**
      * Add click event listener
      * @param callback
@@ -15,7 +20,9 @@ export interface IActivityBarService extends Component<IActivityBar> {
 }
 
 @singleton()
-export class ActivityBarService extends Component<IActivityBar> implements IActivityBarService {
+export class ActivityBarService
+    extends Component<IActivityBar>
+    implements IActivityBarService {
     protected state: IActivityBar;
 
     constructor() {

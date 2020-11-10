@@ -20,13 +20,14 @@ interface ITabsProps {
 const Tabs: React.FunctionComponent<ITabsProps> = (props: ITabsProps) => {
     const { data, onClose } = props;
     const tabs = data.map((tab: ITab, index: number) => {
-        return (<a key={tab.id}>{tab.name} <button onClick={(e) => onClose!(tab, index)}>Close</button></a>);
+        return (
+            <a key={tab.id}>
+                {tab.name}{' '}
+                <button onClick={(e) => onClose!(tab, index)}>Close</button>
+            </a>
+        );
     });
-    return (
-        <div className={prefixClaName('tabs')}>
-            {tabs}
-        </div>
-    );
+    return <div className={prefixClaName('tabs')}>{tabs}</div>;
 };
 
 export default Tabs;

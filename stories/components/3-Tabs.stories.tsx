@@ -8,9 +8,8 @@ export default {
 
 const data: ITab[] = [
     {
-        id: 1, name: 'test',
+        id: 1,
+        name: 'test',
     },
 ];
-export const Basic = () => (
-    <Tabs data={data}/>
-);
+export const Basic = () => <Tabs data={data} />;

@@ -1,7 +1,4 @@
-
 /**
  * File icons for Molecule
  */
-export interface IIconTheme {
-
-}
+export interface IIconTheme {}

@@ -22,8 +22,9 @@ function renderEditorGroup(group: IEditorGroup) {
             <div className="group-container">
                 {
                     // Default we use monaco editor, but also you can customize by renderPane() function
-                    editor.renderPane ?
-                        editor.renderPane() :
+                    editor.renderPane ? (
+                        editor.renderPane()
+                    ) : (
                         <MonacoEditor
                             options={{
                                 value: editor.value,
@@ -33,13 +34,14 @@ function renderEditorGroup(group: IEditorGroup) {
                             editorInstanceRef={(editorInstance) => {
                                 // This assignment will trigger moleculeCtx update, and subNodes update
                                 group.editorInstance = editorInstance;
-                            } }
+                            }}
                         />
+                    )
                 }
             </div>
         </div>
     );
-};
+}
 
 export function renderGroups(groups: IEditorGroup[]) {
     if (groups.length === 1) {
@@ -58,7 +60,7 @@ export function renderGroups(groups: IEditorGroup[]) {
         );
     }
     return null;
-};
+}
 
 export function Editor(props: IEditor) {
     const { groups, render, current } = props;
@@ -68,11 +70,7 @@ export function Editor(props: IEditor) {
         content = render ? render() : renderGroups(groups);
     }
 
-    return (
-        <div className={prefixClaName('editor')}>
-            { content }
-        </div>
-    );
-};
+    return <div className={prefixClaName('editor')}>{content}</div>;
+}
 
 export default Editor;

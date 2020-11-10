@@ -5,7 +5,4 @@ import { mapState } from 'mo/react';
 
 const SidebarView = mapState(Sidebar, sidebarService.getState());
 
-export {
-    Sidebar,
-    SidebarView,
-};
+export { Sidebar, SidebarView };

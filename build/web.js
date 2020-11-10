@@ -3,7 +3,7 @@ const { merge } = require('webpack-merge');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const webpackConf = require('./webpack.base');
 
-module.exports = function(env) {
+module.exports = function (env) {
     return merge(webpackConf, {
         devtool: 'inline-source-map',
         devServer: {
@@ -11,9 +11,7 @@ module.exports = function(env) {
             hot: true,
             port: 8888,
         },
-        entry: [
-            path.resolve(__dirname, './web/app.js'),
-        ],
+        entry: [path.resolve(__dirname, './web/app.js')],
         module: {
             rules: [
                 {

@@ -21,7 +21,7 @@ export class SidebarModel implements ISidebar {
 
     constructor(
         @inject('SidebarPane') panes: ISidebarPane[] = [],
-        @inject('Selected') selected: string = '',
+        @inject('Selected') selected: string = ''
     ) {
         this.panes = panes;
         this.selected = selected;

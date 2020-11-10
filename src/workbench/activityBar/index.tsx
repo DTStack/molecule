@@ -5,4 +5,7 @@ import { mapState } from 'mo/react';
 export * from './activityBar';
 export { default as ActivityBarItem } from './activityBarItem';
 
-export const ActivityBarView = mapState(ActivityBar, activityBarService.getState());
+export const ActivityBarView = mapState(
+    ActivityBar,
+    activityBarService.getState()
+);

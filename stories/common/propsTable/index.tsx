@@ -9,17 +9,23 @@ export function propsTable(props: any) {
                 <tr key={property}>
                     <td>
                         {property}
-                        {required ? <span style={{
-                            color: '#ff3348',
-                            marginLeft: '5px',
-                        }}>*</span> : null}
+                        {required ? (
+                            <span
+                                style={{
+                                    color: '#ff3348',
+                                    marginLeft: '5px',
+                                }}
+                            >
+                                *
+                            </span>
+                        ) : null}
                     </td>
                     <td>{description}</td>
                     <td>{propType}</td>
                     <td>{defaultValue}</td>
                 </tr>
             );
-        },
+        }
     );
 
     return (

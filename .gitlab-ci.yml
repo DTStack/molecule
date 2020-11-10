@@ -2,45 +2,44 @@
 
 cache:
     paths:
-      - .npm/
-  
-  before_script:
+        - .npm/
+
+before_script:
     - npm ci --cache .npm --prefer-offline
-  
-  stages:
+
+stages:
     - eslint
     - check-types
     - lint-docs
     - test
     - release
-  
-  static-check: 
+
+static-check:
     stage: eslint
-    script: 
-      - npm run eslint
-      - npm run check-types
+    script:
+        - npm run eslint
+        - npm run check-types
     only:
-      - merge_requests
+        - merge_requests
 
-  docs-check:
+docs-check:
     stage: lint-docs
-    script: 
-      - npm run lint-doc
+    script:
+        - npm run lint-doc
     only:
-      - /doc(s)|release|master/
+        - /doc(s)|release|master/
 
-  test:
+test:
     stage: test
-    script: 
-      - npm run test
+    script:
+        - npm run test
     only:
-      - merge_requests
-      - dev
+        - merge_requests
+        - dev
 
-  release:
+release:
     stage: release
-    script: 
-      - npm run release
+    script:
+        - npm run release
     only:
-      - master
-  
+        - master

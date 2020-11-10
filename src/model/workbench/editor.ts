@@ -3,13 +3,12 @@ import { observable } from 'mo/common/observable';
 import { ITab } from 'mo/components/tabs';
 import { container, inject, injectable } from 'tsyringe';
 
-
 export interface IEditor {
     current: IEditorGroup | undefined;
-    groups: IEditorGroup [];
+    groups: IEditorGroup[];
     closeAll?: () => void;
     onClose?: () => void;
-    render?:() => React.ReactNode;
+    render?: () => React.ReactNode;
 }
 
 export interface IEditorGroup<E = any> {
@@ -38,7 +37,7 @@ export class EditorGroupModel implements IEditorGroup {
         breadcrumb: any[] = [],
         actions: any[] = [],
         menu: any[] = [],
-        editorInstance?: any,
+        editorInstance?: any
     ) {
         this.id = id;
         this.tabs = tabs;
@@ -58,7 +57,7 @@ export class EditorModel implements IEditor {
 
     constructor(
         @inject('CurrentEditorGroup') current?: IEditorGroup,
-            @inject('EditorGroup') groups: IEditorGroup[] = [],
+        @inject('EditorGroup') groups: IEditorGroup[] = []
     ) {
         this.current = current;
         this.groups = groups;

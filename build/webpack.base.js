@@ -8,7 +8,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.tsx', '.ts'],
         alias: {
-            'mo': path.resolve(__dirname, '../src'),
+            mo: path.resolve(__dirname, '../src'),
             '@stories': path.resolve(__dirname, '../stories'),
         },
     },
@@ -32,7 +32,9 @@ module.exports = {
                     },
                     // Optional
                     {
-                        loader: require.resolve('react-docgen-typescript-loader'),
+                        loader: require.resolve(
+                            'react-docgen-typescript-loader'
+                        ),
                     },
                 ],
             },

@@ -8,9 +8,8 @@ export default {
 
 const data: ITree = [
     {
-        id: 1, name: 'test',
+        id: 1,
+        name: 'test',
     },
 ];
-export const Basic = () => (
-    <Tree data={data}/>
-);
+export const Basic = () => <Tree data={data} />;

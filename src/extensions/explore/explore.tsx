@@ -3,11 +3,12 @@ import Collapse, { Panel } from 'mo/components/collapse';
 import { prefixClaName } from 'mo/common/className';
 import { activityBarService, editorService } from 'mo';
 
-interface IExplorerProps {
-}
+interface IExplorerProps {}
 
-export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps) => {
-    const AddABar = function() {
+export const Explorer: React.FunctionComponent<IExplorerProps> = (
+    IExplorerProps
+) => {
+    const AddABar = function () {
         const id = Math.random() * 10 + 1;
         activityBarService.push({
             id: id + '',
@@ -16,7 +17,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
         });
     };
 
-    const NewEditor = function() {
+    const NewEditor = function () {
         const id = Math.random() * 10 + 1;
         const tabData = {
             id: id,
@@ -27,7 +28,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
         editorService.open(tabData, 1);
     };
 
-    const OpenCommand = function() {
+    const OpenCommand = function () {
         // MonacoEditor.editor.getModel().
     };
     return (
@@ -40,9 +41,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
                     <button onClick={OpenCommand}>Command Palette</button>
                 </Panel>
                 <Panel header="Sample-Folder"></Panel>
-                <Panel header="OUTLINE">
-                    OUTLINE
-                </Panel>
+                <Panel header="OUTLINE">OUTLINE</Panel>
             </Collapse>
         </div>
     );

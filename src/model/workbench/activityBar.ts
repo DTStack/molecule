@@ -47,7 +47,7 @@ export class ActivityBarModel implements IActivityBar {
 
     constructor(
         @inject('ActivityBarData') data: IActivityBarItem[] = [],
-        @inject('ActivityBarSelected') selected: string = '',
+        @inject('ActivityBarSelected') selected: string = ''
     ) {
         this.data = data;
         this.selected = selected;
@@ -55,13 +55,19 @@ export class ActivityBarModel implements IActivityBar {
 
     public render!: () => React.ReactNode;
 
-    public readonly onSelect = (key: string, item?: IActivityBarItem | undefined) => {
+    public readonly onSelect = (
+        key: string,
+        item?: IActivityBarItem | undefined
+    ) => {
         EventBus.emit(ActivityBarEvent.Selected, key, item);
-    }
+    };
 
-    public readonly onClick = (event: React.MouseEvent, item: IActivityBarItem) => {
+    public readonly onClick = (
+        event: React.MouseEvent,
+        item: IActivityBarItem
+    ) => {
         EventBus.emit(ActivityBarEvent.OnClick, event, item);
-    }
+    };
 }
 
 container.register('ActivityBarData', { useValue: [] });

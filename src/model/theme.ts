@@ -1,4 +1,3 @@
-
 export interface ThemeColor extends Object {
     id?: string;
 }

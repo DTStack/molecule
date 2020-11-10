@@ -1,11 +1,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { prefixClaName, classNames } from 'mo/common/className';
-import { getRelativePosition, select, HTMLElementType, IPosition } from 'mo/common/dom';
+import {
+    getRelativePosition,
+    select,
+    HTMLElementType,
+    IPosition,
+} from 'mo/common/dom';
 import './style.scss';
 
 export interface IContextViewProps {
-    render?: () => React.ReactNode
+    render?: () => React.ReactNode;
 }
 
 export interface IContextView {
@@ -24,10 +29,11 @@ export function useContextView(props?: IContextViewProps): IContextView {
     const show = (anchorPos: IPosition, render?: () => React.ReactNode) => {
         const content = select(contentClass);
         const renderContent = render || props?.render;
-        if (!renderContent) throw Error('ContextView show Error: the render parameter not allowed be null!');
-        ReactDOM.render(<>
-            { renderContent() }
-        </>, content, () => {
+        if (!renderContent)
+            throw Error(
+                'ContextView show Error: the render parameter not allowed be null!'
+            );
+        ReactDOM.render(<>{renderContent()}</>, content, () => {
             // Notice: if want to get the computed offsetHeight of contextView,
             // must display contextView ahead.
             contextView!.style.display = 'block';
@@ -58,11 +64,18 @@ export function useContextView(props?: IContextViewProps): IContextView {
         contextView.style.display = 'none';
         document.body.appendChild(contextView);
 
-        ReactDOM.render(<>
-            <div className="context-view-block" onClick={onMaskClick} onContextMenu={onMaskClick}></div>
-            <div className="context-view-content"></div>
-        </>, contextView);
+        ReactDOM.render(
+            <>
+                <div
+                    className="context-view-block"
+                    onClick={onMaskClick}
+                    onContextMenu={onMaskClick}
+                ></div>
+                <div className="context-view-content"></div>
+            </>,
+            contextView
+        );
     }
 
     return { contextView, show, hide };
-};
+}

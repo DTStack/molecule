@@ -10,11 +10,7 @@ export function ActivityBar(props: IActivityBar) {
     const { data = [], render, selected, onClick, onSelect } = props;
 
     if (render) {
-        return (
-            <div className={prefixClaName(ID_ACTIVITY_BAR)}>
-                {render()}
-            </div>
-        );
+        return <div className={prefixClaName(ID_ACTIVITY_BAR)}>{render()}</div>;
     }
 
     const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
@@ -25,12 +21,24 @@ export function ActivityBar(props: IActivityBar) {
         }
     };
 
-    const normalBarItems = data?.filter((item: IActivityBarItem) => !item.type || item.type === 'normal') || [];
-    const globalBarItems = data?.filter((item: IActivityBarItem) => item.type && item.type === 'global') || [];
+    const normalBarItems =
+        data?.filter(
+            (item: IActivityBarItem) => !item.type || item.type === 'normal'
+        ) || [];
+    const globalBarItems =
+        data?.filter(
+            (item: IActivityBarItem) => item.type && item.type === 'global'
+        ) || [];
 
     const renderItems = (item: IActivityBarItem, index: number) => {
         return (
-            <ActivityBarItem key={item.id} {...item} onClick={onClickBar} data-index={index} checked={selected === item.id}/>
+            <ActivityBarItem
+                key={item.id}
+                {...item}
+                onClick={onClickBar}
+                data-index={index}
+                checked={selected === item.id}
+            />
         );
     };
 
@@ -46,6 +54,6 @@ export function ActivityBar(props: IActivityBar) {
             </div>
         </div>
     );
-};
+}
 
 export default ActivityBar;

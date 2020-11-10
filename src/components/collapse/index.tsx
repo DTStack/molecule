@@ -8,7 +8,9 @@ interface ICollapseProps {
     className?: string;
 }
 
-export const Collapse: React.FunctionComponent<ICollapseProps> = (props: ICollapseProps) => {
+export const Collapse: React.FunctionComponent<ICollapseProps> = (
+    props: ICollapseProps
+) => {
     return (
         <RcCollapse
             className={classNames(prefixClaName('collapse'), props.className)}

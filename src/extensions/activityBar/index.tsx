@@ -1,7 +1,4 @@
-import {
-    IExtensionService, activityBarService,
-    IActivityBarItem,
-} from 'mo';
+import { IExtensionService, activityBarService, IActivityBarItem } from 'mo';
 import { IExtension } from 'mo/model/extension';
 
 function initActivityBar(extensionCtx: IExtensionService) {
@@ -35,7 +32,7 @@ function initActivityBar(extensionCtx: IExtensionService) {
 }
 
 export const ExtendActivityBar: IExtension = {
-    activate: function(extensionCtx: IExtensionService) {
+    activate: function (extensionCtx: IExtensionService) {
         initActivityBar(extensionCtx);
     },
 };

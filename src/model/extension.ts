@@ -9,23 +9,22 @@ export enum IExtensionType {
     Settings = 'settings',
     Locals = 'locals',
     Menus = 'menus',
-    Workbench = 'workbench'
+    Workbench = 'workbench',
 }
 
 export enum IContributeType {
     Languages = 'languages',
     Commands = 'commands',
     Configuration = 'configuration',
-    Grammar = 'grammars'
+    Grammar = 'grammars',
 }
 
 export interface IContribute {
-    [IContributeType.Languages ]: any;
-    [IContributeType.Commands ]: any;
-    [IContributeType.Configuration ]: any;
-    [IContributeType.Grammar ]: any;
+    [IContributeType.Languages]: any;
+    [IContributeType.Commands]: any;
+    [IContributeType.Configuration]: any;
+    [IContributeType.Grammar]: any;
 }
-
 
 /**
  * The interface of extension,
@@ -80,9 +79,9 @@ export interface IExtension {
     /**
      * Whether disable current extension, the extension default status is enable
      */
-    disable?: boolean,
+    disable?: boolean;
     /**
      * Activate current extension
-    */
+     */
     activate(extensionCtx: IExtensionService): void;
 }

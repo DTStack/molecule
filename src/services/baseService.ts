@@ -1,2 +1,1 @@
-export abstract class BaseService<S = any> {
-}
+export abstract class BaseService<S = any> {}

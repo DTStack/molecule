@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { activityBarService, ActivityBarEvent, IActivityBarItem, sidebarService } from 'mo';
+import {
+    activityBarService,
+    ActivityBarEvent,
+    IActivityBarItem,
+    sidebarService,
+} from 'mo';
 
 import { Explorer } from './explore';
 import { ExtensionService } from 'mo/services/extensionService';
@@ -17,7 +22,8 @@ function initActivityBar(extensionCtx: ExtensionService) {
     // state.data?.push(folderFeat);
     // state.selected = activeId;
     activityBarService.updateState({
-        selected: activeId, data: [...state.data, folderFeat],
+        selected: activeId,
+        data: [...state.data, folderFeat],
     });
 
     activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
@@ -35,11 +41,9 @@ function initSidebar(extensionCtx: ExtensionService) {
     });
 }
 
-
 export const ExtendExplore: IExtension = {
-    activate: function(extensionCtx: ExtensionService) {
+    activate: function (extensionCtx: ExtensionService) {
         initActivityBar(extensionCtx);
         initSidebar(extensionCtx);
     },
 };
-

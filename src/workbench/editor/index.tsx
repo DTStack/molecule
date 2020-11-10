@@ -5,7 +5,4 @@ import { mapState } from 'mo/react';
 
 const EditorView = mapState(Editor, editorService.getState());
 
-export {
-    Editor,
-    EditorView,
-};
+export { Editor, EditorView };

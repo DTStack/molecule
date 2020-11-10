@@ -14,6 +14,6 @@ A Web IDE UI library built by React.js, inspired by VSCode.
 
 Unify the root path name from **molecule** to **mo**.
 
-## vscode codicons online address
+## References
 
-<https://microsoft.github.io/vscode-codicons/dist/codicon.html>
+- [vscode codicons online address](https://microsoft.github.io/vscode-codicons/dist/codicon.html)

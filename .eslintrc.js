@@ -3,12 +3,7 @@ module.exports = {
         browser: true,
         es6: true,
     },
-    extends: [
-        'plugin:react/recommended',
-        'google',
-        'prettier',
-        'prettier/react',
-    ],
+    extends: ['plugin:react/recommended', 'google', 'prettier', 'prettier/react'],
     globals: {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
@@ -29,7 +24,6 @@ module.exports = {
         },
     },
     rules: {
-        indent: ['error', 4],
         'object-curly-spacing': ['error', 'always'],
         'max-len': ['error', { ignoreComments: true }, { code: 180 }],
         'require-jsdoc': 0,

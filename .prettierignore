@@ -3,3 +3,4 @@ dist
 .history
 node_modules
 yarn.lock
+coverage

@@ -1,0 +1,42 @@
+@import 'mo/style/const';
+$menu: 'menu';
+
+#{prefix($menu)} {
+    margin: 0;
+    min-width: 130px;
+    padding: 0;
+
+    #{prefix('action-bar')} {
+        padding: 0.5em 0;
+    }
+
+    .action-bar-container {
+        display: block;
+    }
+
+    .action-item {
+        border: thin solid transparent;
+        display: flex;
+        overflow: visible;
+        position: static;
+        text-indent: 1em;
+        transform: none;
+    }
+
+    .action-label {
+        font-size: 13px;
+        height: 1.8em;
+    }
+
+    .action-label.codicon {
+        line-height: 1.8em;
+    }
+
+    .disabled {
+        cursor: default;
+        opacity: 0.4;
+        pointer-events: none;
+    }
+}
+
+

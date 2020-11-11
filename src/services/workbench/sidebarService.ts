@@ -1,6 +1,5 @@
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
-import { emit } from '../../common/event';
 import {
     ISidebar,
     ISidebarPane,
@@ -22,7 +21,7 @@ export enum SideBarEvent {
 }
 
 export interface ISidebarService extends Component<ISidebar> {
-    push(data: ISidebarPane | ISidebarPane[]): void;
+    push(data: ISidebarPane): void;
 }
 
 @singleton()
@@ -36,14 +35,8 @@ export class SidebarService
         this.state = container.resolve(SidebarModel);
     }
 
-    @emit(SideBarEvent.DataChanged)
-    public push(data: ISidebarPane | ISidebarPane[]) {
-        let original = this.state.panes;
-        if (Array.isArray(data)) {
-            // The concat will lost proxy object info
-            original = original.concat(data);
-        } else {
-            original.push(data);
-        }
+    public push(data: ISidebarPane) {
+        const original = this.state.panes;
+        original?.push(data);
     }
 }

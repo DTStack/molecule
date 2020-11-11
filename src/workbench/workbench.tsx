@@ -45,7 +45,7 @@ export function MainBench(props: IMainBench) {
 
 export function Workbench(props: IWorkbench) {
     return (
-        <div className={classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '')}>
+        <div id="molecule" className={classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '')}>
             <div className={prefixClaName('workbench')}>
                 <MenuBarView />
                 <ActivityBarView />

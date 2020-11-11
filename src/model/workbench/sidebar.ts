@@ -2,21 +2,21 @@ import { observable } from 'mo/common/observable';
 import { container, inject, injectable } from 'tsyringe';
 
 export interface ISidebarPane {
-    id?: string;
-    name?: string;
-    render?: () => React.ReactElement | undefined;
+    id: string;
+    title?: string;
+    render?: () => React.ReactNode;
 }
 
 export interface ISidebar {
-    selected: string;
-    panes: ISidebarPane[];
+    current: string;
+    panes?: ISidebarPane[];
     render?: () => React.ReactNode;
 }
 
 @observable()
 @injectable()
 export class SidebarModel implements ISidebar {
-    public selected: string;
+    public current: string;
     public panes: ISidebarPane[];
 
     constructor(
@@ -24,7 +24,7 @@ export class SidebarModel implements ISidebar {
         @inject('Selected') selected: string = ''
     ) {
         this.panes = panes;
-        this.selected = selected;
+        this.current = selected;
     }
 
     public render!: () => React.ReactNode;

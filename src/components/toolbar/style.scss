@@ -1,0 +1,6 @@
+@import 'mo/style/const';
+$toolBar: 'tool-bar';
+
+#{prefix($toolBar)} {
+    color: inherit;
+}

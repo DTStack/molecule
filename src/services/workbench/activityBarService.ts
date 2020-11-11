@@ -15,8 +15,8 @@ export interface IActivityBarService extends Component<IActivityBar> {
      * Add click event listener
      * @param callback
      */
-    onClick(callback: Function);
-    onSelect(callback: Function);
+    onClick(callback: (key: React.MouseEvent) => void);
+    onSelect(callback: (key: React.MouseEvent, item: IActivityBarItem) => void);
 }
 
 @singleton()
@@ -60,7 +60,7 @@ export class ActivityBarService
         this.subscribe(ActivityBarEvent.OnClick, callback);
     }
 
-    public onSelect(callback: Function) {
+    public onSelect(callback: (key: React.MouseEvent, item: IActivityBarItem) => void) {
         this.subscribe(ActivityBarEvent.Selected, (args) => {
             const key = args[0];
             const item: IActivityBarItem = args[1];

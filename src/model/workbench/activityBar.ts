@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { EventBus } from 'mo/common/event';
 import { observable } from 'mo/common/observable';
 import { container, inject, injectable } from 'tsyringe';
+import { IMenuItem } from 'mo/components/menu';
 
 /**
  * The activity bar event definition
@@ -21,12 +22,13 @@ export enum ActivityBarEvent {
 }
 
 export interface IActivityBarItem {
-    id?: string;
+    id: string;
     name?: string;
     data?: any;
     iconName?: string;
     checked?: boolean;
     type?: 'normal' | 'global';
+    contextMenu?: IMenuItem[];
     render?: () => React.ReactNode | JSX.Element;
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
 }

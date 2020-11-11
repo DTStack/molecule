@@ -15,7 +15,9 @@ export function useContextMenu(props: IContextMenu) {
         return;
     }
 
-    const contextView = useContextView();
+    const contextView = useContextView({
+        render
+    });
 
     const onContextMenu = (e: MouseEvent) => {
         e.preventDefault();
@@ -35,5 +37,5 @@ export function useContextMenu(props: IContextMenu) {
         anchor.removeEventListener('contextmenu', onContextMenu);
     };
 
-    return { contextView, dispose };
+    return { ...contextView, dispose };
 }

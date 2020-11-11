@@ -3,7 +3,6 @@ import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
-
 import ActivityBarItem from './activityBarItem';
 
 export function ActivityBar(props: IActivityBar) {
@@ -14,7 +13,6 @@ export function ActivityBar(props: IActivityBar) {
     }
 
     const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
-        console.log('ActivityBar onClick:', e);
         if (onClick) onClick(e, item);
         if (onSelect) {
             onSelect(item.id || '', item);
@@ -31,6 +29,7 @@ export function ActivityBar(props: IActivityBar) {
         ) || [];
 
     const renderItems = (item: IActivityBarItem, index: number) => {
+       
         return (
             <ActivityBarItem
                 key={item.id}

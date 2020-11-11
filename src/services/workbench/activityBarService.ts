@@ -60,7 +60,9 @@ export class ActivityBarService
         this.subscribe(ActivityBarEvent.OnClick, callback);
     }
 
-    public onSelect(callback: (key: React.MouseEvent, item: IActivityBarItem) => void) {
+    public onSelect(
+        callback: (key: React.MouseEvent, item: IActivityBarItem) => void
+    ) {
         this.subscribe(ActivityBarEvent.Selected, (args) => {
             const key = args[0];
             const item: IActivityBarItem = args[1];

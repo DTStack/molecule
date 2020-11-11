@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { activityBarService, sidebarService, IExtensionService, IActivityBarItem } from 'mo';
+import {
+    activityBarService,
+    sidebarService,
+    IExtensionService,
+    IActivityBarItem,
+} from 'mo';
 import { IExtension } from 'mo/model/extension';
 import SearchPane from './searchPane';
 
@@ -8,11 +13,11 @@ function init() {
         id: 'searchPane',
         title: 'SEARCH',
         render() {
-            return <SearchPane />
-        }
+            return <SearchPane />;
+        },
     };
 
-    sidebarService.push(searchSidePane)
+    sidebarService.push(searchSidePane);
 
     const searchActivityItem = {
         id: 'search',
@@ -22,17 +27,17 @@ function init() {
 
     activityBarService.push(searchActivityItem);
 
-    activityBarService.onSelect((e, item: IActivityBarItem) =>  {
+    activityBarService.onSelect((e, item: IActivityBarItem) => {
         if (item.id === searchActivityItem.id) {
             sidebarService.updateState({
-                current: searchSidePane.id
-            })
+                current: searchSidePane.id,
+            });
         }
-    })
+    });
 }
 
 export const ExtendSearch: IExtension = {
     activate(extensionCtx: IExtensionService) {
-       init();
+        init();
     },
 };

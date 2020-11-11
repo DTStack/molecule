@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {
-    activityBarService,
-    IActivityBarItem,
-    sidebarService,
-} from 'mo';
+import { activityBarService, IActivityBarItem, sidebarService } from 'mo';
 
 import { Explorer } from './explore';
 import { ExtensionService } from 'mo/services/extensionService';
@@ -35,17 +31,17 @@ function init(extensionCtx: ExtensionService) {
     // sidebarService.push(explorePane);
     sidebarService.updateState({
         current: explorePane.id,
-        panes: [...sideBarState.panes, explorePane]
-    })
+        panes: [...sideBarState.panes, explorePane],
+    });
 
-    activityBarService.onSelect((e, item: IActivityBarItem) =>  {
+    activityBarService.onSelect((e, item: IActivityBarItem) => {
         console.log('Search Pane onClick:', e, item);
         if (item.id === exploreActiveItem.id) {
             sidebarService.updateState({
-                current: explorePane.id
-            })
+                current: explorePane.id,
+            });
         }
-    })
+    });
 }
 
 export const ExtendExplore: IExtension = {

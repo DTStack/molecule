@@ -27,28 +27,41 @@ export function ActionBarItem(props: IActionBarItem) {
         if (onClick) {
             onClick(e, props);
         }
-    }
+    };
     const disabled = props.disabled ? 'disabled' : null;
-    const claNames = classNames('action-label', 'codicon', props.iconName, disabled);
+    const claNames = classNames(
+        'action-label',
+        'codicon',
+        props.iconName,
+        disabled
+    );
     return (
-        <li className={classNames('action-item', disabled)} onClick={click} key={`${id}`}>
-            <a className={claNames} title={title}>{name}</a>
+        <li
+            className={classNames('action-item', disabled)}
+            onClick={click}
+            key={`${id}`}
+        >
+            <a className={claNames} title={title}>
+                {name}
+            </a>
         </li>
-    )
+    );
 }
 
 export default function ActionBar<T = any>(props: IActionBar<T>) {
     const { data = [], onClick, className, ...others } = props;
 
     const claNames = classNames(prefixClaName(rootClassName), className);
-   
-    const items = data.map((item: IActionBarItem<T>) => <ActionBarItem key={item.id} {...item} />)
-    
+
+    const items = data.map((item: IActionBarItem<T>) => (
+        <ActionBarItem key={item.id} {...item} />
+    ));
+
     return (
         <div className={claNames} {...others}>
             <ul className={prefixClaName('container', rootClassName)}>
-                { items }
+                {items}
             </ul>
         </div>
-    )
+    );
 }

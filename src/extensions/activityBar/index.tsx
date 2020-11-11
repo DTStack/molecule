@@ -7,19 +7,23 @@ function initActivityBar(extensionCtx: IExtensionService) {
         name: 'Settings',
         iconName: 'codicon-settings-gear',
         type: 'global',
-        contextMenu: [{
-            id: 'CommandPalette',
-            name: 'Command Palette...',
-            title: 'Command Palette'
-        }, {
-            id: 'Settings',
-            name: 'Settings',
-            title: 'Settings'
-        }, {
-            id: 'ColorTheme',
-            name: 'Color Theme',
-            title: 'Color Theme'
-        }]
+        contextMenu: [
+            {
+                id: 'CommandPalette',
+                name: 'Command Palette...',
+                title: 'Command Palette',
+            },
+            {
+                id: 'Settings',
+                name: 'Settings',
+                title: 'Settings',
+            },
+            {
+                id: 'ColorTheme',
+                name: 'Color Theme',
+                title: 'Color Theme',
+            },
+        ],
     };
 
     const globalUserAccount: IActivityBarItem = {
@@ -42,7 +46,6 @@ function initActivityBar(extensionCtx: IExtensionService) {
         const target = data[0].target;
         console.log('activityBar onSelect:', data, target);
     });
-    
 }
 
 export const ExtendActivityBar: IExtension = {

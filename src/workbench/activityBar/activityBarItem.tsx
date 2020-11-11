@@ -24,14 +24,14 @@ function ActivityBarItem(props: IActivityBarItem) {
         content = render();
     }
 
-    const renderContextMenu = () => <Menu data={contextMenu}/>;
+    const renderContextMenu = () => <Menu data={contextMenu} />;
     let contextViewMenu;
 
     useEffect(() => {
         if (contextMenu.length > 0) {
             contextViewMenu = useContextMenu({
                 anchor: select(`#${id}`),
-                render: renderContextMenu
+                render: renderContextMenu,
             });
         }
         return function cleanup() {

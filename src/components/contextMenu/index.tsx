@@ -16,7 +16,7 @@ export function useContextMenu(props: IContextMenu) {
     }
 
     const contextView = useContextView({
-        render
+        render,
     });
 
     const onContextMenu = (e: MouseEvent) => {

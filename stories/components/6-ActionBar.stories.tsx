@@ -21,23 +21,27 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
-        const data: IActionBarItem<any>[] = [{
-            id: '1',
-            name: 'bar1',
-            iconName: 'codicon-add'
-        }, {
-            id: '2',
-            name: 'bar2',
-            iconName: 'codicon-chrome-restore'
-        }, {
-            id: '3',
-            name: 'bar3',
-            iconName: 'codicon-check'
-        }];
+        const data: IActionBarItem<any>[] = [
+            {
+                id: '1',
+                name: 'bar1',
+                iconName: 'codicon-add',
+            },
+            {
+                id: '2',
+                name: 'bar2',
+                iconName: 'codicon-chrome-restore',
+            },
+            {
+                id: '3',
+                name: 'bar3',
+                iconName: 'codicon-check',
+            },
+        ];
 
         const onClick = (e, item) => {
-            console.log('onClick:', e, item );
-        }
+            console.log('onClick:', e, item);
+        };
 
         return (
             <div>
@@ -47,11 +51,14 @@ stories.add(
                     组件主要是提供了一个可根据指定锚点位置、渲染内容的视图容器。
                 </p>
                 <h2>示例</h2>
-                <div className="toolbar" style={{ 
+                <div
+                    className="toolbar"
+                    style={{
                         width: 200,
-                        border: '1px solid #222' 
-                    }}>
-                    <ActionBar data={data} onClick={onClick}/>
+                        border: '1px solid #222',
+                    }}
+                >
+                    <ActionBar data={data} onClick={onClick} />
                 </div>
             </div>
         );

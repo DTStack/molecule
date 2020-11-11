@@ -15,19 +15,13 @@ export const Header = memo<IHeaderProps>(function Header(props: IHeaderProps) {
             <div className={'pane-title'}>
                 <h2>{props.title}</h2>
             </div>
-            <div className={'pane-toolbar'}>
-                { props.toolbar || null }
-            </div>
+            <div className={'pane-toolbar'}>{props.toolbar || null}</div>
         </header>
-    )
+    );
 });
 
 export function Content(props: React.ComponentProps<any>) {
-    return (
-        <div className="pane-content">
-            {props.children}
-        </div>
-    )
+    return <div className="pane-content">{props.children}</div>;
 }
 
 export function Sidebar(props: ISidebar) {
@@ -41,7 +35,7 @@ export function Sidebar(props: ISidebar) {
                 style={{ display: pane.id === current ? 'block' : 'none' }}
                 className={prefixClaName('pane', 'sidebar')}
             >
-                { pane.render ? pane.render() : null }
+                {pane.render ? pane.render() : null}
             </div>
         );
     });

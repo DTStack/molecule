@@ -29,7 +29,6 @@ export function ActivityBar(props: IActivityBar) {
         ) || [];
 
     const renderItems = (item: IActivityBarItem, index: number) => {
-       
         return (
             <ActivityBarItem
                 key={item.id}

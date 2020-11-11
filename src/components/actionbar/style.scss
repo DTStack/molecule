@@ -1,0 +1,46 @@
+@import 'mo/style/const';
+$actionBar: 'action-bar';
+
+#{prefix($actionBar)} {
+    overflow: hidden;
+    text-align: right;
+    white-space: nowrap;
+
+    .#{$actionBar}-container {
+        display: flex;
+        justify-content: flex-end;
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
+    }
+
+    .action-item {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: transform 50ms ease;
+    }
+
+    .action-label {
+        align-items: center;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        height: 35px;
+        justify-content: center;
+        margin-right: 4px;
+        min-width: 28px;
+        text-decoration: none;
+    }
+
+    .action-label.codicon {
+        color: inherit;
+        line-height: 35px;
+    }
+
+    .disabled {
+        cursor: default;
+        opacity: 0.4;
+        pointer-events: none;
+    }
+}

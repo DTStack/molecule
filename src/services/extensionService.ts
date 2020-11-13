@@ -21,9 +21,7 @@ export interface IExtensionService {
 export class ExtensionService implements IExtensionService {
     public extensions: IExtension[] = [];
 
-    constructor(
-        @inject('Extensions') extensions: IExtension[] = [],
-    ) {
+    constructor(@inject('Extensions') extensions: IExtension[] = []) {
         this.load(extensions);
     }
 

@@ -8,17 +8,24 @@ export * from './workbench';
 import { ThemeService } from './themeService';
 import { ExtensionService, IExtensionService } from './extensionService';
 import {
-    ActivityBarService, IActivityBarService,
-    ISidebarService, SidebarService,
-    IMenuBarService, MenuBarService,
-    IStatusBarService, StatusBarService,
-    EditorService, IEditorService,
+    ActivityBarService,
+    IActivityBarService,
+    ISidebarService,
+    SidebarService,
+    IMenuBarService,
+    MenuBarService,
+    IStatusBarService,
+    StatusBarService,
+    EditorService,
+    IEditorService,
 } from './workbench';
 
 /**
  * The Services of Workbench
  */
-const activityBarService = container.resolve<IActivityBarService>(ActivityBarService);
+const activityBarService = container.resolve<IActivityBarService>(
+    ActivityBarService
+);
 const sidebarService = container.resolve<ISidebarService>(SidebarService);
 const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
 const editorService = container.resolve<IEditorService>(EditorService);

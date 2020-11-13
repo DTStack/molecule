@@ -13,7 +13,7 @@ export interface IObservable {
 export function observableWrapper<T>(object, callback?): IObservable & T {
     Object.setPrototypeOf(object, {
         handlers: [],
-        observe: function(onChange: Function) {
+        observe: function (onChange: Function) {
             object.handlers.push(onChange);
         },
     });
@@ -29,7 +29,7 @@ export function observableWrapper<T>(object, callback?): IObservable & T {
             }
             return Reflect.get(target, property, receiver);
         },
-        set: function(target, property, value, receiver) {
+        set: function (target, property, value, receiver) {
             let nextTarget = target;
             if (target.hasOwnProperty(property)) {
                 try {
@@ -45,7 +45,9 @@ export function observableWrapper<T>(object, callback?): IObservable & T {
                 callback(target, property, value);
             }
             if (object.handlers) {
-                object.handlers.forEach((hand) => hand(target, property, value));
+                object.handlers.forEach((hand) =>
+                    hand(target, property, value)
+                );
             }
             return nextTarget;
         },
@@ -60,16 +62,12 @@ export function observableWrapper<T>(object, callback?): IObservable & T {
  * @param descriptor
  */
 export function observable(): any {
-    return function(
-        target,
-        property: string,
-        descriptor: PropertyDescriptor,
-    ) {
+    return function (target, property: string, descriptor: PropertyDescriptor) {
         try {
             const Original = target;
 
-            const decoratedConstructor = function(...args: any[]): void {
-                const Obj: any = function() {
+            const decoratedConstructor = function (...args: any[]): void {
+                const Obj: any = function () {
                     return new Original(args);
                 };
 

@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { useEffect } from 'react';
@@ -73,62 +72,61 @@ export const ContextMenuDemo = () => {
 
     return (
         <div className="story-wrapper">
-            <div id="topLeft"
-                style={
-                    {
-                        position: 'absolute',
-                        width: 200,
-                        height: 200,
-                        top: 0,
-                        left: 0,
-                        background: '#dddddd',
-                    }
-                }>
-                    Right Click me!
+            <div
+                id="topLeft"
+                style={{
+                    position: 'absolute',
+                    width: 200,
+                    height: 200,
+                    top: 0,
+                    left: 0,
+                    background: '#dddddd',
+                }}
+            >
+                Right Click me!
             </div>
-            <div id="topRight"
-                style={
-                    {
-                        position: 'absolute',
-                        width: 200,
-                        height: 200,
-                        top: 0,
-                        right: 0,
-                        background: '#dddddd',
-                    }
-                }>
-                    Right Click me!
+            <div
+                id="topRight"
+                style={{
+                    position: 'absolute',
+                    width: 200,
+                    height: 200,
+                    top: 0,
+                    right: 0,
+                    background: '#dddddd',
+                }}
+            >
+                Right Click me!
             </div>
-            <div id="bottomLeft"
-                style={
-                    {
-                        position: 'absolute',
-                        width: 200,
-                        height: 200,
-                        left: 0,
-                        bottom: 10,
-                        background: '#dddddd',
-                    }
-                }>
-                    Right Click me!
+            <div
+                id="bottomLeft"
+                style={{
+                    position: 'absolute',
+                    width: 200,
+                    height: 200,
+                    left: 0,
+                    bottom: 10,
+                    background: '#dddddd',
+                }}
+            >
+                Right Click me!
             </div>
-            <div id="bottomRight"
-                style={
-                    {
-                        position: 'absolute',
-                        width: 200,
-                        height: 200,
-                        right: 0,
-                        bottom: 10,
-                        background: '#dddddd',
-                    }
-                }>
-                    Right Click me!
+            <div
+                id="bottomRight"
+                style={{
+                    position: 'absolute',
+                    width: 200,
+                    height: 200,
+                    right: 0,
+                    bottom: 10,
+                    background: '#dddddd',
+                }}
+            >
+                Right Click me!
             </div>
         </div>
     );
 };
-
 
 ContextMenuDemo.story = {
     name: 'Basic Demo',

@@ -8,8 +8,10 @@ import './style.scss';
 interface IExplorerProps {
 }
 
-export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps) => {
-    const AddABar = function() {
+export const Explorer: React.FunctionComponent<IExplorerProps> = (
+    IExplorerProps
+) => {
+    const AddABar = function () {
         const id = Math.random() * 10 + 1;
         activityBarService.push({
             id: id + '',
@@ -18,7 +20,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
         });
     };
 
-    const NewEditor = function() {
+    const NewEditor = function () {
         const id = Math.random() * 10 + 1;
         const tabData = {
             id: id,
@@ -29,7 +31,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
         editorService.open(tabData, 1);
     };
 
-    const OpenCommand = function() {
+    const OpenCommand = function () {
         // MonacoEditor.editor.getModel().
     };
     /**
@@ -73,12 +75,8 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (IExplorerProps
                     <button onClick={NewEditor}>New Editor</button>
                     <button onClick={OpenCommand}>Command Palette</button>
                 </Panel>
-                <Panel header="Sample-Folder" key='Sample-Folder'>
-                    文件夹
-                </Panel>
-                <Panel header="OUTLINE" key='OUTLINE'>
-                    时间线
-                </Panel>
+                <Panel header="Sample-Folder"></Panel>
+                <Panel header="OUTLINE">OUTLINE</Panel>
             </Collapse>
         </div>
     );

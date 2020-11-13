@@ -12,4 +12,3 @@ export const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;
 ToStorybook.story = {
     name: 'to Storybook',
 };
-

@@ -1,4 +1,3 @@
-
 # Icon Preview
 
 The available icons are listed in

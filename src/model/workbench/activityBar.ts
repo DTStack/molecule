@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { EventBus } from 'mo/common/event';
 import { observable } from 'mo/common/observable';
 import { container, inject, injectable } from 'tsyringe';
+import { IMenuItem } from 'mo/components/menu';
 
 /**
  * The activity bar event definition
@@ -21,12 +22,13 @@ export enum ActivityBarEvent {
 }
 
 export interface IActivityBarItem {
-    id?: string;
+    id: string;
     name?: string;
     data?: any;
     iconName?: string;
     checked?: boolean;
     type?: 'normal' | 'global';
+    contextMenu?: IMenuItem[];
     render?: () => React.ReactNode | JSX.Element;
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
 }
@@ -47,7 +49,7 @@ export class ActivityBarModel implements IActivityBar {
 
     constructor(
         @inject('ActivityBarData') data: IActivityBarItem[] = [],
-        @inject('ActivityBarSelected') selected: string = '',
+        @inject('ActivityBarSelected') selected: string = ''
     ) {
         this.data = data;
         this.selected = selected;
@@ -55,13 +57,19 @@ export class ActivityBarModel implements IActivityBar {
 
     public render!: () => React.ReactNode;
 
-    public readonly onSelect = (key: string, item?: IActivityBarItem | undefined) => {
+    public readonly onSelect = (
+        key: string,
+        item?: IActivityBarItem | undefined
+    ) => {
         EventBus.emit(ActivityBarEvent.Selected, key, item);
-    }
+    };
 
-    public readonly onClick = (event: React.MouseEvent, item: IActivityBarItem) => {
+    public readonly onClick = (
+        event: React.MouseEvent,
+        item: IActivityBarItem
+    ) => {
         EventBus.emit(ActivityBarEvent.OnClick, event, item);
-    }
+    };
 }
 
 container.register('ActivityBarData', { useValue: [] });

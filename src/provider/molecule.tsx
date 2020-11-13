@@ -6,7 +6,10 @@ import { ITheme } from 'mo/model/theme';
 import { defaultExtensions } from 'mo/extensions';
 import { IExtension } from 'mo/model/extension';
 import { ILocalization } from 'mo/model/localization';
-import { ExtensionService, IExtensionService } from 'mo/services/extensionService';
+import {
+    ExtensionService,
+    IExtensionService,
+} from 'mo/services/extensionService';
 
 interface Props {
     extensions?: IExtension[];
@@ -32,7 +35,7 @@ export class MoleculeProvider extends React.Component<Props> {
     public render() {
         return (
             <MoleculeCtx.Provider value={{}}>
-                { this.props.children }
+                {this.props.children}
             </MoleculeCtx.Provider>
         );
     }

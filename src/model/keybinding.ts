@@ -1,3 +1,1 @@
-export interface IKeybinding {
-
-}
+export interface IKeybinding {}

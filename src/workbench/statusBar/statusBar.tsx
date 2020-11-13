@@ -7,11 +7,7 @@ import { prefixClaName } from 'mo/common/className';
 import { IStatusBar } from 'mo/model/workbench/statusBar';
 
 function StatusBar(props: IStatusBar) {
-    return (
-        <div className={prefixClaName('statusBar')}>
-            StatusBar
-        </div>
-    );
-};
+    return <div className={prefixClaName('statusBar')}>StatusBar</div>;
+}
 
 export default memo(StatusBar);

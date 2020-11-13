@@ -7,7 +7,10 @@ import Logger from 'mo/common/logger';
  * @param state The state you want to injected, notice the state must be an observable object
  * @param subscribes The events of your subscribe, it used to trigger the state re render
  */
-export function mapState<S>(WrappedComponent: React.ComponentType<S>, state: S) {
+export function mapState<S>(
+    WrappedComponent: React.ComponentType<S>,
+    state: S
+) {
     return class StateProvider extends React.Component {
         state: { lastUpdated: number };
         constructor(props) {
@@ -26,7 +29,9 @@ export function mapState<S>(WrappedComponent: React.ComponentType<S>, state: S) 
                 console.log('mapState:', this._count++);
                 (state as any).observe(this.onChange);
             } else {
-                Logger.error('The state parameter of mapState must be an observable object.');
+                Logger.error(
+                    'The state parameter of mapState must be an observable object.'
+                );
             }
         }
         /**
@@ -43,7 +48,7 @@ export function mapState<S>(WrappedComponent: React.ComponentType<S>, state: S) 
 
         render() {
             return (
-                <WrappedComponent {...this.state} { ...state} {...this.props} />
+                <WrappedComponent {...this.state} {...state} {...this.props} />
             );
         }
     };

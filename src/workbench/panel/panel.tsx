@@ -6,11 +6,7 @@ import { prefixClaName } from 'mo/common/className';
 function Panel(props) {
     console.log('Panel render:', props);
 
-    return (
-        <div className={prefixClaName('panel')}>
-            Panel
-        </div>
-    );
-};
+    return <div className={prefixClaName('panel')}>Panel</div>;
+}
 
 export default memo(Panel);

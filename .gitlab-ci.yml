@@ -1,46 +1,47 @@
 # Read more: https://docs.gitlab.com/12.7/ee/ci/yaml/README.html
-
 cache:
     paths:
-      - .npm/
-  
-  before_script:
-    - npm ci --cache .npm --prefer-offline
-  
-  stages:
-    - eslint
-    - check-types
-    - lint-docs
-    - test
-    - release
-  
-  static-check: 
-    stage: eslint
-    script: 
-      - npm run eslint
-      - npm run check-types
-    only:
-      - merge_requests
+        - .yarn
+        - node_modules/
 
-  docs-check:
-    stage: lint-docs
-    script: 
-      - npm run lint-doc
-    only:
-      - /doc(s)|release|master/
+before_script:
+    - yarn install --cache-folder .yarn
 
-  test:
-    stage: test
-    script: 
-      - npm run test
-    only:
-      - merge_requests
-      - dev
+stages:
+    - static-checking
+    - type-checking
+    # - test
+    - build
 
-  release:
-    stage: release
-    script: 
-      - npm run release
+static-checking:
+    stage: static-checking
+    script:
+        - yarn eslint
+        - yarn prettier
+        - yarn stylelint
     only:
-      - master
-  
+        - merge_requests
+        - dev
+
+type-checking:
+    stage: type-checking
+    script:
+        - yarn check-types
+    only:
+        - merge_requests
+        - dev
+
+# test:
+#     stage: test
+#     script:
+#         - yarn test
+#     only:
+#         - merge_requests
+#         - dev
+
+build:
+    stage: build
+    script:
+        - yarn build
+    only:
+        - dev

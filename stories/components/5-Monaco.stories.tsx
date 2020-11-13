@@ -23,4 +23,3 @@ export default {
     title: 'Monaco Editor',
     component: MonacoDemo,
 };
-

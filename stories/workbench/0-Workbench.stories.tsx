@@ -5,11 +5,7 @@ import { customExtensions } from '../extensions';
 import '../demo.scss';
 
 export const IDEDemo = () => (
-    <MoleculeProvider
-        extensions={customExtensions}
-        locales={[
-        ]}
-    >
+    <MoleculeProvider extensions={customExtensions} locales={[]}>
         <Workbench />
     </MoleculeProvider>
 );
@@ -22,4 +18,3 @@ export default {
     title: 'Workbench',
     component: IDEDemo,
 };
-

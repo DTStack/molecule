@@ -37,7 +37,11 @@ export default class MonacoEditor extends Component<IMonacoEditorProps> {
 
     componentDidMount() {
         const { options = {}, override, editorInstanceRef } = this.props;
-        this.monacoInstance = monaco.editor.create(this.monacoDom, options, override);
+        this.monacoInstance = monaco.editor.create(
+            this.monacoDom,
+            options,
+            override
+        );
         if (editorInstanceRef) {
             editorInstanceRef(this.monacoInstance);
         }

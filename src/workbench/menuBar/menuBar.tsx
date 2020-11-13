@@ -9,7 +9,7 @@ export interface IMenuBarProps {
 
 function MenuBar(props: IMenuBar) {
     const menuBar = props;
-    const click = function(e) {
+    const click = function (e) {
         menuBar.onClick(e, {
             name: 'test',
         });
@@ -19,6 +19,6 @@ function MenuBar(props: IMenuBar) {
             <a className="menu-action codicon codicon-menu" onClick={click}></a>
         </div>
     );
-};
+}
 
 export default MenuBar;

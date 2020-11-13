@@ -1,7 +1,4 @@
-import {
-    IExtensionService, activityBarService,
-    IActivityBarItem,
-} from 'mo';
+import { IExtensionService, activityBarService, IActivityBarItem } from 'mo';
 import { IExtension } from 'mo/model/extension';
 
 function initActivityBar(extensionCtx: IExtensionService) {
@@ -10,6 +7,23 @@ function initActivityBar(extensionCtx: IExtensionService) {
         name: 'Settings',
         iconName: 'codicon-settings-gear',
         type: 'global',
+        contextMenu: [
+            {
+                id: 'CommandPalette',
+                name: 'Command Palette...',
+                title: 'Command Palette',
+            },
+            {
+                id: 'Settings',
+                name: 'Settings',
+                title: 'Settings',
+            },
+            {
+                id: 'ColorTheme',
+                name: 'Color Theme',
+                title: 'Color Theme',
+            },
+        ],
     };
 
     const globalUserAccount: IActivityBarItem = {
@@ -35,7 +49,7 @@ function initActivityBar(extensionCtx: IExtensionService) {
 }
 
 export const ExtendActivityBar: IExtension = {
-    activate: function(extensionCtx: IExtensionService) {
+    activate: function (extensionCtx: IExtensionService) {
         initActivityBar(extensionCtx);
     },
 };

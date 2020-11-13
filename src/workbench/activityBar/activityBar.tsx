@@ -3,34 +3,40 @@ import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
-
 import ActivityBarItem from './activityBarItem';
 
 export function ActivityBar(props: IActivityBar) {
     const { data = [], render, selected, onClick, onSelect } = props;
 
     if (render) {
-        return (
-            <div className={prefixClaName(ID_ACTIVITY_BAR)}>
-                {render()}
-            </div>
-        );
+        return <div className={prefixClaName(ID_ACTIVITY_BAR)}>{render()}</div>;
     }
 
     const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
-        console.log('ActivityBar onClick:', e);
         if (onClick) onClick(e, item);
         if (onSelect) {
             onSelect(item.id || '', item);
         }
     };
 
-    const normalBarItems = data?.filter((item: IActivityBarItem) => !item.type || item.type === 'normal') || [];
-    const globalBarItems = data?.filter((item: IActivityBarItem) => item.type && item.type === 'global') || [];
+    const normalBarItems =
+        data?.filter(
+            (item: IActivityBarItem) => !item.type || item.type === 'normal'
+        ) || [];
+    const globalBarItems =
+        data?.filter(
+            (item: IActivityBarItem) => item.type && item.type === 'global'
+        ) || [];
 
     const renderItems = (item: IActivityBarItem, index: number) => {
         return (
-            <ActivityBarItem key={item.id} {...item} onClick={onClickBar} data-index={index} checked={selected === item.id}/>
+            <ActivityBarItem
+                key={item.id}
+                {...item}
+                onClick={onClickBar}
+                data-index={index}
+                checked={selected === item.id}
+            />
         );
     };
 
@@ -46,6 +52,6 @@ export function ActivityBar(props: IActivityBar) {
             </div>
         </div>
     );
-};
+}
 
 export default ActivityBar;

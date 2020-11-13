@@ -1,4 +1,8 @@
-import { IStatusBar, IStatusBarItem, StatusBarModel } from 'mo/model/workbench/statusBar';
+import {
+    IStatusBar,
+    IStatusBarItem,
+    StatusBarModel,
+} from 'mo/model/workbench/statusBar';
 import { Component } from 'mo/react';
 import { emit } from 'mo/common/event';
 import { container, singleton } from 'tsyringe';
@@ -18,12 +22,14 @@ export enum StatusBarEvent {
 }
 
 export interface IStatusBarService extends Component<IStatusBar> {
-    push(data: IStatusBarItem | IStatusBarItem []): void;
+    push(data: IStatusBarItem | IStatusBarItem[]): void;
     remove(index: number): void;
 }
 
 @singleton()
-export class StatusBarService extends Component<IStatusBar> implements IStatusBarService {
+export class StatusBarService
+    extends Component<IStatusBar>
+    implements IStatusBarService {
     protected state: IStatusBar;
 
     constructor() {

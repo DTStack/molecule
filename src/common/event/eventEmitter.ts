@@ -11,7 +11,7 @@ export class EventEmitter {
         }
     }
 
-    public subscribe(name: string | string[], callback: Function ) {
+    public subscribe(name: string | string[], callback: Function) {
         if (Array.isArray(name)) {
             name.forEach((key: string) => {
                 this.assignEvent(key, callback);
@@ -22,16 +22,14 @@ export class EventEmitter {
     }
 
     // TODO
-    public unsubscribe() {
-
-    }
+    public unsubscribe() {}
 
     public assignEvent<T>(name: string, callback: Function) {
         const event = this._events.get(name);
         if (event) {
             event.push(callback);
         } else {
-            this._events.set(name, [callback] );
+            this._events.set(name, [callback]);
         }
     }
 }

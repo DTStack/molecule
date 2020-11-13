@@ -10,7 +10,7 @@ export enum EditorEvent {
 }
 
 export interface IEditorService extends Component<IEditor> {
-     /**
+    /**
      * Open a new tab in indicated group instance
      * @param tab Tab data
      * @param groupId group ID
@@ -20,7 +20,9 @@ export interface IEditorService extends Component<IEditor> {
 }
 
 @singleton()
-export class EditorService extends Component<IEditor> implements IEditorService {
+export class EditorService
+    extends Component<IEditor>
+    implements IEditorService {
     protected state: IEditor;
     constructor() {
         super();
@@ -38,26 +40,16 @@ export class EditorService extends Component<IEditor> implements IEditorService 
             group.tabs.push(tab);
             group.activeTab = tab;
         } else {
-            group = new EditorGroupModel(
-                groups.length + 1,
-                tab,
-                [tab],
-            );
+            group = new EditorGroupModel(groups.length + 1, tab, [tab]);
             groups.push(group);
             current = group;
         }
     }
 
-    public closeAll() {
-
-    }
+    public closeAll() {}
 
     @emit(EditorEvent.CloseTab)
-    public onClose() {
+    public onClose() {}
 
-    }
-
-    public close(index: number, callback: () => void) {
-
-    }
+    public close(index: number, callback: () => void) {}
 }

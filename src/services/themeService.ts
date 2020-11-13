@@ -37,9 +37,9 @@ export class ThemeService implements ITheme {
     constructor(
         @inject('ThemeID') id: string,
         @inject('ThemeName') name: string,
-            @inject('ThemeColor') colors: ThemeColor = [],
-            @inject('TokenColor') tokenColors: TokenColor[] = [],
-            @inject('SemanticHighLighting') semanticHighlighting: boolean = true,
+        @inject('ThemeColor') colors: ThemeColor = [],
+        @inject('TokenColor') tokenColors: TokenColor[] = [],
+        @inject('SemanticHighLighting') semanticHighlighting: boolean = true
     ) {
         this.id = id;
         this.name = name;
@@ -57,9 +57,7 @@ export class ThemeService implements ITheme {
         // const theme = this.parse(extension);
     }
 
-    public getThemeById(themeId: string, extension: IExtension) {
-
-    }
+    public getThemeById(themeId: string, extension: IExtension) {}
 
     public applyTheme() {
         _applyRules('', '');

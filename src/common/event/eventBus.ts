@@ -8,7 +8,7 @@ export abstract class GlobalEvent {
      * @param name Event name
      * @param callback Callback function
      */
-    public subscribe(name: string | string [], callback: Function) {
+    public subscribe(name: string | string[], callback: Function) {
         EventBus.subscribe(name, callback);
     }
 
@@ -21,4 +21,3 @@ export abstract class GlobalEvent {
         EventBus.emit(name, args);
     }
 }
-

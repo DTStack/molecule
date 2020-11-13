@@ -12,7 +12,6 @@
     // TODO temp style, just for development
     background-color: rgb(37, 37, 38);
     outline-color: rgba(83, 89, 93, 0.5);
-
 }
 
 .sidebar-pane .pane-title h2 {
@@ -54,13 +53,20 @@
 }
 
 // =============== Common =============== //
-.#{$activityBar}-item, .#{$prefix}-#{$menuBar} {
+.#{$activityBar}-item,
+.#{$prefix}-#{$menuBar} {
     color: rgba(255, 255, 255, 0.4);
 }
 
-.#{$activityBar}-item:hover, .#{$prefix}-#{$menuBar}:hover {
+.#{$activityBar}-item:hover,
+.#{$prefix}-#{$menuBar}:hover {
     color: #fff;
 }
 
 // .monaco-workbench .codicon {
 // }
+
+#{prefix('action-bar')} {
+    background-color: rgb(37, 37, 38);
+    color: rgb(204, 204, 204);
+}

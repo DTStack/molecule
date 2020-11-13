@@ -5,7 +5,7 @@ import './style.scss';
 
 export interface IContextMenu {
     anchor: HTMLElementType;
-    render: () => React.ReactNode
+    render: () => React.ReactNode;
 }
 
 export function useContextMenu(props: IContextMenu) {
@@ -15,14 +15,19 @@ export function useContextMenu(props: IContextMenu) {
         return;
     }
 
-    const contextView = useContextView();
+    const contextView = useContextView({
+        render,
+    });
 
     const onContextMenu = (e: MouseEvent) => {
         e.preventDefault();
-        contextView!.show({
-            x: e.clientX,
-            y: e.clientY,
-        }, render);
+        contextView!.show(
+            {
+                x: e.clientX,
+                y: e.clientY,
+            },
+            render
+        );
     };
 
     anchor.addEventListener('contextmenu', onContextMenu);
@@ -32,5 +37,5 @@ export function useContextMenu(props: IContextMenu) {
         anchor.removeEventListener('contextmenu', onContextMenu);
     };
 
-    return { contextView, dispose };
+    return { ...contextView, dispose };
 }

@@ -1,4 +1,8 @@
-import { IMenuBar, IMenuBarItem, MenuBarModel } from 'mo/model/workbench/menuBar';
+import {
+    IMenuBar,
+    IMenuBarItem,
+    MenuBarModel,
+} from 'mo/model/workbench/menuBar';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { emit } from '../../common/event';
@@ -18,13 +22,15 @@ export enum MenuBarEvent {
 }
 
 export interface IMenuBarService extends Component<IMenuBar> {
-    push(data: IMenuBarItem | IMenuBarItem []): void;
+    push(data: IMenuBarItem | IMenuBarItem[]): void;
     remove(index: number): void;
     getState(): IMenuBar;
 }
 
 @singleton()
-export class MenuBarService extends Component<IMenuBar> implements IMenuBarService {
+export class MenuBarService
+    extends Component<IMenuBar>
+    implements IMenuBarService {
     protected state: IMenuBar;
 
     constructor() {

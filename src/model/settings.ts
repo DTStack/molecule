@@ -1,3 +1,1 @@
-export interface ISettings {
-
-}
+export interface ISettings {}

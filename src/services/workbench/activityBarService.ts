@@ -1,21 +1,28 @@
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
-import { ActivityBarModel, ActivityBarEvent, IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
+import {
+    ActivityBarModel,
+    ActivityBarEvent,
+    IActivityBar,
+    IActivityBarItem,
+} from 'mo/model/workbench/activityBar';
 
 export interface IActivityBarService extends Component<IActivityBar> {
     reset(): void;
     push(data: IActivityBarItem): void;
-    remove(index: number) : void;
+    remove(index: number): void;
     /**
      * Add click event listener
      * @param callback
      */
-    onClick(callback: Function);
-    onSelect(callback: Function);
+    onClick(callback: (key: React.MouseEvent) => void);
+    onSelect(callback: (key: React.MouseEvent, item: IActivityBarItem) => void);
 }
 
 @singleton()
-export class ActivityBarService extends Component<IActivityBar> implements IActivityBarService {
+export class ActivityBarService
+    extends Component<IActivityBar>
+    implements IActivityBarService {
     protected state: IActivityBar;
 
     constructor() {
@@ -44,15 +51,18 @@ export class ActivityBarService extends Component<IActivityBar> implements IActi
     }
 
     public setRenderer(renderer: () => React.ReactNode) {
-        // eslint-disable-next-line react/no-direct-mutation-state
-        this.state.render = renderer;
+        this.updateState({
+            render: renderer,
+        });
     }
 
     public onClick(callback: Function) {
         this.subscribe(ActivityBarEvent.OnClick, callback);
     }
 
-    public onSelect(callback: Function) {
+    public onSelect(
+        callback: (key: React.MouseEvent, item: IActivityBarItem) => void
+    ) {
         this.subscribe(ActivityBarEvent.Selected, (args) => {
             const key = args[0];
             const item: IActivityBarItem = args[1];

@@ -1,45 +1,51 @@
 import * as React from 'react';
-import { activityBarService, ActivityBarEvent, IActivityBarItem, sidebarService } from 'mo';
+import { activityBarService, IActivityBarItem, sidebarService } from 'mo';
 
 import { Explorer } from './explore';
 import { ExtensionService } from 'mo/services/extensionService';
 import { IExtension } from 'mo/model/extension';
 
-function initActivityBar(extensionCtx: ExtensionService) {
-    const activeId = 'active-explorer';
+function init(extensionCtx: ExtensionService) {
     const state = activityBarService.getState();
-    const folderFeat: IActivityBarItem = {
-        id: activeId,
+    const sideBarState = sidebarService.getState();
+
+    const exploreActiveItem = {
+        id: 'active-explorer',
         name: 'Explore',
         iconName: 'codicon-files',
     };
-    // activityBarService.push(folderFeat);
-    // state.data?.push(folderFeat);
-    // state.selected = activeId;
+
     activityBarService.updateState({
-        selected: activeId, data: [...state.data, folderFeat],
+        selected: exploreActiveItem.id,
+        data: [...state.data, exploreActiveItem],
     });
 
-    activityBarService.subscribe(ActivityBarEvent.OnClick, (data) => {
-        console.log('Explore activityBar subscribe onClick:', data);
-    });
-}
-
-function initSidebar(extensionCtx: ExtensionService) {
-    sidebarService.push({
+    const explorePane = {
         id: 'explore',
-        name: 'EXPLORER',
+        title: 'EXPLORER',
         render() {
             return <Explorer />;
         },
+    };
+
+    // sidebarService.push(explorePane);
+    sidebarService.updateState({
+        current: explorePane.id,
+        panes: [...sideBarState.panes, explorePane],
+    });
+
+    activityBarService.onSelect((e, item: IActivityBarItem) => {
+        console.log('Search Pane onClick:', e, item);
+        if (item.id === exploreActiveItem.id) {
+            sidebarService.updateState({
+                current: explorePane.id,
+            });
+        }
     });
 }
 
-
 export const ExtendExplore: IExtension = {
-    activate: function(extensionCtx: ExtensionService) {
-        initActivityBar(extensionCtx);
-        initSidebar(extensionCtx);
+    activate: function (extensionCtx: ExtensionService) {
+        init(extensionCtx);
     },
 };
-

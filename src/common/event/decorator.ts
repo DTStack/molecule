@@ -6,14 +6,10 @@ import { EventBus } from './eventBus';
  * @param name Event name
  */
 export function emit(name: string) {
-    return function(
-        target,
-        property: string,
-        descriptor: PropertyDescriptor,
-    ) {
+    return function (target, property: string, descriptor: PropertyDescriptor) {
         const original = descriptor.value;
         if (typeof original === 'function') {
-            descriptor.value = function(...args) {
+            descriptor.value = function (...args) {
                 try {
                     const result = original.apply(this, args);
                     EventBus.emit(name, args);
@@ -31,12 +27,8 @@ export function emit(name: string) {
  * When the event emitted, it's going to call target function
  * @param name Event name
  */
-export function subscribe(name: string | string []) {
-    return function(
-        target,
-        property: string,
-        descriptor: PropertyDescriptor,
-    ) {
+export function subscribe(name: string | string[]) {
+    return function (target, property: string, descriptor: PropertyDescriptor) {
         const original = descriptor.value;
         if (typeof original === 'function') {
             EventBus.subscribe(name, original);

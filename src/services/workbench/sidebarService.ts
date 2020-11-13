@@ -1,7 +1,10 @@
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
-import { emit } from '../../common/event';
-import { ISidebar, ISidebarPane, SidebarModel } from 'mo/model/workbench/sidebar';
+import {
+    ISidebar,
+    ISidebarPane,
+    SidebarModel,
+} from 'mo/model/workbench/sidebar';
 
 /**
  * The Sidebar event definition
@@ -18,11 +21,13 @@ export enum SideBarEvent {
 }
 
 export interface ISidebarService extends Component<ISidebar> {
-    push(data: ISidebarPane | ISidebarPane[] ): void;
+    push(data: ISidebarPane): void;
 }
 
 @singleton()
-export class SidebarService extends Component<ISidebar> implements ISidebarService {
+export class SidebarService
+    extends Component<ISidebar>
+    implements ISidebarService {
     protected state: ISidebar;
 
     constructor() {
@@ -30,14 +35,8 @@ export class SidebarService extends Component<ISidebar> implements ISidebarServi
         this.state = container.resolve(SidebarModel);
     }
 
-    @emit(SideBarEvent.DataChanged)
-    public push(data: ISidebarPane | ISidebarPane[] ) {
-        let original = this.state.panes;
-        if (Array.isArray(data)) {
-            // The concat will lost proxy object info
-            original = original.concat(data);
-        } else {
-            original.push(data);
-        }
+    public push(data: ISidebarPane) {
+        const original = this.state.panes;
+        original?.push(data);
     }
 }

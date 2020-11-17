@@ -21,7 +21,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
         const id = Math.random() * 10 + 1;
         const tabData = {
             id: id,
-            name: 'test-tab1',
+            name: `test-tab${id.toFixed(2)}`,
             value: 'just test tab data',
         };
         console.log('open editor:', tabData);

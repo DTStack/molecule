@@ -1,82 +1,136 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Collapse, { Panel } from 'mo/components/collapse';
-import ExploreActionItem from './exploreActionItem';
+import Toolbar from 'mo/components/toolbar';
+import { IActionBarItem } from 'mo/components/actionbar';
 import { prefixClaName } from 'mo/common/className';
-import { activityBarService, editorService } from 'mo';
+// import { editorService } from 'mo';
 import { classNames } from 'mo/common/className';
 import './style.scss';
 interface IExplorerProps {
+    isActive?: boolean;
 }
 
+export interface IPanelItem extends IActionBarItem {
+    renderPanel?: () => React.ReactNode | JSX.Element;
+}
+interface IState {
+    activePanelKey: React.Key | React.Key[];
+    panelSet: IPanelItem[];
+}
+
+const initState = {
+    activePanelKey: '',
+    panelSet: [
+        {
+            id: 'editors',
+            name: 'OPEN EDITORS',
+            toolbar: [
+                {
+                    id: 'toggle',
+                    title: 'Toggle Vertical',
+                    disabled: true,
+                    iconName: 'codicon-editor-layout',
+                },
+                {
+                    id: 'save',
+                    title: 'Save All',
+                    disabled: true,
+                    iconName: 'codicon-save-all',
+                },
+                {
+                    id: 'close',
+                    title: 'Close All Editors',
+                    iconName: 'codicon-close-all',
+                },
+            ],
+            renderPanel: () => {
+                return <span>editors</span>
+            }
+        },
+        {
+            id: 'sample_folder',
+            name: 'Sample Folder',
+            toolbar: [
+                {
+                    id: 'new_file',
+                    title: 'New File',
+                    iconName: 'codicon-new-file',
+                },
+                {
+                    id: 'new_folder',
+                    title: 'New Folder',
+                    iconName: 'codicon-new-folder',
+                },
+                {
+                    id: 'refresh',
+                    title: 'Refresh Explorer',
+                    iconName: 'codicon-refresh',
+                },
+                {
+                    id: 'collapse',
+                    title: 'Collapse Folders in Explorer',
+                    iconName: 'codicon-collapse-all',
+                },
+            ],
+            renderPanel: () => {
+                return <span>sample_folder</span>
+            }
+        },
+        {
+            id: 'outline',
+            name: 'OUTLINE',
+            toolbar: [
+                {
+                    id: 'outline-collapse',
+                    title: 'Collapse All',
+                    iconName: 'codicon-collapse-all',
+                },
+                {
+                    id: 'outline-more',
+                    title: 'More Actions...',
+                    iconName: 'codicon-ellipsis',
+                },
+            ]
+        }
+    ]
+}
 export const Explorer: React.FunctionComponent<IExplorerProps> = (
     IExplorerProps
 ) => {
-    const AddABar = function () {
-        const id = Math.random() * 10 + 1;
-        activityBarService.push({
-            id: id + '',
-            name: 'folder' + id,
-            iconName: 'codicon-edit',
-        });
+    const [state, setState] = useState<IState>(initState)
+    const onChangeCallback = (key: React.Key | React.Key[]) => {
+        setState((state: IState) => ({ ...state, activePanelKey: key }))
+    }
+    const onClick = (e, item) => {
+        e.stopPropagation()
+        console.log('onClick:', e, item);
     };
-
-    const NewEditor = function () {
-        const id = Math.random() * 10 + 1;
-        const tabData = {
-            id: id,
-            name: 'test-tab1',
-            value: 'just test tab data',
-        };
-        console.log('open editor:', tabData);
-        editorService.open(tabData, 1);
-    };
-
-    const OpenCommand = function () {
-        // MonacoEditor.editor.getModel().
-    };
-    /**
-     * waiting service
-     * Temporarily use mock data
-     */
-    const renderFileItems = () => {
-        const data = [{
-            id: 1,
-            iconName: 'codicon-new-file',
-            name: 'New File',
-        }, {
-            id: 2,
-            iconName: 'codicon-new-folder',
-            name: 'New Folder',
-        }, {
-            id: 3,
-            iconName: 'codicon-refresh',
-            name: 'Refresh Explorer',
-        }, {
-            id: 4,
-            iconName: 'codicon-collapse-all',
-            name: 'Collapse Folders in Explorer',
-        }];
-        return data.map((item: any) => <ExploreActionItem key={item.id} {...item} />);
-    };
+    const render = (render) => {
+        if (render) {
+            return render()
+        } else {
+            return 'cannot provide...'
+        }
+    }
+    const { panelSet, activePanelKey } = state;
     return (
         <div className={prefixClaName('explorer', 'sidebar')}>
             <Collapse
                 accordion={true}
-                expandIcon={({ isActive }: any) => <a className={classNames('codicon', isActive ? 'codicon-chevron-down' : 'codicon-chevron-right')}></a>}
+                activeKey={activePanelKey}
+                onChange={(activeKey: React.Key | React.Key[]) => { onChangeCallback(activeKey) }}
+                expandIcon={({ isActive }: IExplorerProps) => <a className={classNames('codicon', isActive ? 'codicon-chevron-down' : 'codicon-chevron-right')}></a>}
             >
-                <Panel header={<div className={prefixClaName('explorer-item', 'sidebar')}>
-                    <span>OPEN EDITORS</span>
-                    <span>
-                        {renderFileItems()}
-                    </span>
-                </div>} key='OPEN EDITORS'>
-                    OPEN EDITORS
-                    <button onClick={AddABar}>Add Bar</button>
-                    <button onClick={NewEditor}>New Editor</button>
-                    <button onClick={OpenCommand}>Command Palette</button>
-                </Panel>
-                <Panel header="Sample-Folder"></Panel>
-                <Panel header="OUTLINE">OUTLINE</Panel>
+                {
+                    panelSet.map((panel: IPanelItem) =><Panel
+                        key={panel.id}
+                        header={panel.name}
+                        extra={activePanelKey === panel.id && <Toolbar key={Math.random()} data={panel.toolbar} onClick={onClick} />}
+                    >
+                        {render(panel.renderPanel)}
+                    </Panel>)
+                }
             </Collapse>
         </div>
     );

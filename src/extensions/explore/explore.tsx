@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Collapse, { Panel } from 'mo/components/collapse';
+import { TreeView } from './tree';
 import Toolbar from 'mo/components/toolbar';
 import { IActionBarItem } from 'mo/components/actionbar';
 import { prefixClaName } from 'mo/common/className';
-// import { editorService } from 'mo';
-import { classNames } from 'mo/common/className';
-import './style.scss';
+import { Header, Content } from 'mo/workbench/sidebar';
+import { codIcon } from 'mo/common/className';
 interface IExplorerProps {
     isActive?: boolean;
 }
@@ -17,10 +17,18 @@ export interface IPanelItem extends IActionBarItem {
 interface IState {
     activePanelKey: React.Key | React.Key[];
     panelSet: IPanelItem[];
+    explorerToolbar: IActionBarItem[];
 }
 
 const initState = {
     activePanelKey: '',
+    explorerToolbar: [
+        {
+            id: 'explorer-more',
+            title: 'View and More Actions...',
+            iconName: 'codicon-ellipsis',
+        }
+    ],
     panelSet: [
         {
             id: 'editors',
@@ -74,7 +82,7 @@ const initState = {
                 },
             ],
             renderPanel: () => {
-                return <span>sample_folder</span>
+                return <TreeView />
             }
         },
         {
@@ -113,25 +121,32 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
             return 'cannot provide...'
         }
     }
-    const { panelSet, activePanelKey } = state;
+    const { panelSet, explorerToolbar, activePanelKey } = state;
     return (
         <div className={prefixClaName('explorer', 'sidebar')}>
-            <Collapse
-                accordion={true}
-                activeKey={activePanelKey}
-                onChange={(activeKey: React.Key | React.Key[]) => { onChangeCallback(activeKey) }}
-                expandIcon={({ isActive }: IExplorerProps) => <a className={classNames('codicon', isActive ? 'codicon-chevron-down' : 'codicon-chevron-right')}></a>}
-            >
-                {
-                    panelSet.map((panel: IPanelItem) =><Panel
-                        key={panel.id}
-                        header={panel.name}
-                        extra={activePanelKey === panel.id && <Toolbar key={Math.random()} data={panel.toolbar} onClick={onClick} />}
-                    >
-                        {render(panel.renderPanel)}
-                    </Panel>)
-                }
-            </Collapse>
+            <Header
+                title={'Explorer'}
+                toolbar={<Toolbar data={explorerToolbar} onClick={onClick} />}
+            />
+            <Content>
+                <Collapse
+                    accordion={true}
+                    activeKey={activePanelKey}
+                    onChange={(activeKey: React.Key | React.Key[]) => { onChangeCallback(activeKey) }}
+                    expandIcon={({ isActive }: IExplorerProps) =>
+                        codIcon(isActive ? 'codicon-chevron-down' : 'codicon-chevron-right')}
+                >
+                    {
+                        panelSet.map((panel: IPanelItem) => <Panel
+                            key={panel.id}
+                            header={panel.name}
+                            extra={activePanelKey === panel.id && <Toolbar key={panel.id} data={panel.toolbar} onClick={onClick} />}
+                        >
+                            {render(panel.renderPanel)}
+                        </Panel>)
+                    }
+                </Collapse>
+            </Content>
         </div>
     );
 };

@@ -1,15 +1,29 @@
 import * as React from 'react';
-
-import Tree, { ITree } from 'mo/components/tree';
-
+import Tree, { TreeNode } from 'mo/components/tree';
+import { codIcon } from 'mo/common/className';
 export default {
     title: 'Tree',
 };
 
-const data: ITree = [
-    {
-        id: 1,
-        name: 'test',
-    },
-];
-export const Basic = () => <Tree data={data} />;
+export const Basic = () => (
+    <Tree
+        prefixCls='rc-tree'
+        draggable
+        /**
+         * TODO: 精灵图...
+         */
+        // showLine
+        showIcon
+        switcherIcon={codIcon('codicon-chevron-right')}
+    >
+        <TreeNode title='parent' key='parent'>
+            <TreeNode title='child' key='child'>
+                <TreeNode title='child3' key='child3'>
+                    <TreeNode icon={({ selected }) => codIcon('codicon-symbol-file')} title='child5' key='child5'></TreeNode>
+                </TreeNode>
+                <TreeNode title='child4' key='child4'></TreeNode>
+            </TreeNode>
+            <TreeNode title='child1' key='child1'></TreeNode>
+        </TreeNode>
+    </Tree>
+);

@@ -1,5 +1,153 @@
 @import 'mo/style/const.scss';
 
-.#{prefix}-tree {
+.#{$prefix}-tree {
     font-size: 13px;
+    .rc-tree {
+        margin: 0;
+        border: 1px solid transparent;
+    }
+    .rc-tree-focused:not(.rc-tree-active-focused) {
+        border-color: cyan;
+    }
+    .rc-tree .rc-tree-treenode {
+        margin: 0;
+        padding: 0 0 0 8px;
+        line-height: 22px;
+        // border: 1px solid red;
+        height: 22px;
+        white-space: nowrap;
+        list-style: none;
+        outline: 0;
+        cursor: pointer;
+        &:hover {
+            background-color: #333333;
+        }
+    }
+    .rc-tree .rc-tree-treenode .draggable {
+        color: inherit;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        /* Required to make elements draggable in old WebKit */
+        -khtml-user-drag: element;
+        -webkit-user-drag: element;
+    }
+    .rc-tree .rc-tree-treenode.drag-over > .draggable {
+        color: inherit;
+        background-color: #316ac5;
+        border: 1px #316ac5 solid;
+        opacity: 0.8;
+    }
+    .rc-tree .rc-tree-treenode.drag-over-gap-top > .draggable {
+        border-top: 2px blue solid;
+    }
+    .rc-tree .rc-tree-treenode.drag-over-gap-bottom > .draggable {
+        border-bottom: 2px blue solid;
+    }
+    .rc-tree .rc-tree-treenode.filter-node > .rc-tree-node-content-wrapper {
+        color: #a60000 !important;
+        font-weight: bold !important;
+    }
+    .rc-tree .rc-tree-treenode ul {
+        margin: 0;
+        padding: 0 0 0 18px;
+    }
+    .rc-tree .rc-tree-treenode .rc-tree-node-content-wrapper {
+        display: inline-block;
+        height: 22px;
+        margin: 0;
+        // padding: 1px 3px 0 0;
+        text-decoration: none;
+        vertical-align: top;
+        cursor: pointer;
+    }
+    .rc-tree .rc-tree-treenode span.rc-tree-switcher,
+    .rc-tree .rc-tree-treenode span.rc-tree-checkbox {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 2px;
+        line-height: 16px;
+        vertical-align: middle;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        border: 0 none;
+        outline: none;
+        cursor: pointer;
+    }
+    .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-icon__customize,
+    .rc-tree .rc-tree-treenode span.rc-tree-checkbox.rc-tree-icon__customize,
+    .rc-tree .rc-tree-treenode span.rc-tree-iconEle.rc-tree-icon__customize {
+        background-image: none;
+        .codicon {
+            margin-top: 3px;
+        }
+    }
+    .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher-noop {
+        cursor: auto;
+        display: none;
+    }
+    .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher_open {
+        transform: rotate(90deg);
+    }
+    .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher_close {
+    }
+    .rc-tree:not(.rc-tree-show-line) .rc-tree-treenode .rc-tree-switcher-noop {
+        background: none;
+    }
+    .rc-tree.rc-tree-show-line .rc-tree-treenode:not(:last-child) > ul {
+        background: url('data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7') 0 0 repeat-y;
+    }
+    .rc-tree.rc-tree-show-line .rc-tree-treenode:not(:last-child) > .rc-tree-switcher-noop {
+        background-position: -56px -18px;
+    }
+    .rc-tree.rc-tree-show-line .rc-tree-treenode:last-child > .rc-tree-switcher-noop {
+        background-position: -56px -36px;
+    }
+    .rc-tree-child-tree {
+        display: none;
+    }
+    .rc-tree-child-tree-open {
+        display: block;
+    }
+    .rc-tree-treenode-disabled > span:not(.rc-tree-switcher),
+    .rc-tree-treenode-disabled > a,
+    .rc-tree-treenode-disabled > a span {
+        color: #767676;
+        cursor: not-allowed;
+    }
+    .rc-tree-treenode-active {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    .rc-tree-node-selected {
+        background-color: #ffe6b0;
+        border: 1px #ffb951 solid;
+        opacity: 0.8;
+    }
+    .rc-tree-icon__open {
+        margin-right: 2px;
+        vertical-align: top;
+        background-position: -110px -16px;
+    }
+    .rc-tree-icon__close {
+        margin-right: 2px;
+        vertical-align: top;
+        background-position: -110px 0;
+    }
+    .rc-tree-icon__docu {
+        margin-right: 2px;
+        vertical-align: top;
+        background-position: -110px -32px;
+    }
+    .rc-tree-icon__customize {
+        margin-right: 2px;
+        vertical-align: top;
+    }
+    .rc-tree-indent-unit {
+        width: 0;
+        display: inline-block;
+        padding-left: 7px;
+    }
 }

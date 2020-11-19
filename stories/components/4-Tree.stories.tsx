@@ -10,7 +10,7 @@ export const Basic = () => (
         prefixCls='rc-tree'
         draggable
         /**
-         * TODO: 精灵图...
+         * TODO: antd 用的精灵图...
          */
         // showLine
         showIcon

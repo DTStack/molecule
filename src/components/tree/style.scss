@@ -13,7 +13,6 @@
         margin: 0;
         padding: 0 0 0 8px;
         line-height: 22px;
-        // border: 1px solid red;
         height: 22px;
         white-space: nowrap;
         list-style: none;
@@ -57,7 +56,6 @@
         display: inline-block;
         height: 22px;
         margin: 0;
-        // padding: 1px 3px 0 0;
         text-decoration: none;
         vertical-align: top;
         cursor: pointer;
@@ -82,7 +80,8 @@
     .rc-tree .rc-tree-treenode span.rc-tree-iconEle.rc-tree-icon__customize {
         background-image: none;
         .codicon {
-            margin-top: 3px;
+            margin-top: 4px;
+            transform: scale(0.8);
         }
     }
     .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher-noop {
@@ -91,20 +90,12 @@
     }
     .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher_open {
         transform: rotate(90deg);
+        margin-top: -2px;
     }
     .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher_close {
     }
     .rc-tree:not(.rc-tree-show-line) .rc-tree-treenode .rc-tree-switcher-noop {
         background: none;
-    }
-    .rc-tree.rc-tree-show-line .rc-tree-treenode:not(:last-child) > ul {
-        background: url('data:image/gif;base64,R0lGODlhCQACAIAAAMzMzP///yH5BAEAAAEALAAAAAAJAAIAAAIEjI9pUAA7') 0 0 repeat-y;
-    }
-    .rc-tree.rc-tree-show-line .rc-tree-treenode:not(:last-child) > .rc-tree-switcher-noop {
-        background-position: -56px -18px;
-    }
-    .rc-tree.rc-tree-show-line .rc-tree-treenode:last-child > .rc-tree-switcher-noop {
-        background-position: -56px -36px;
     }
     .rc-tree-child-tree {
         display: none;
@@ -121,11 +112,6 @@
     .rc-tree-treenode-active {
         background: rgba(0, 0, 0, 0.1);
     }
-    .rc-tree-node-selected {
-        background-color: #ffe6b0;
-        border: 1px #ffb951 solid;
-        opacity: 0.8;
-    }
     .rc-tree-icon__open {
         margin-right: 2px;
         vertical-align: top;
@@ -134,12 +120,10 @@
     .rc-tree-icon__close {
         margin-right: 2px;
         vertical-align: top;
-        background-position: -110px 0;
     }
     .rc-tree-icon__docu {
         margin-right: 2px;
         vertical-align: top;
-        background-position: -110px -32px;
     }
     .rc-tree-icon__customize {
         margin-right: 2px;

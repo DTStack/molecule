@@ -1,35 +1,120 @@
 import * as React from 'react';
-// import { useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Tree, { TreeNode } from 'mo/components/tree';
-import { prefixClaName } from 'mo/common/className';
-import { codIcon } from 'mo/common/className';
+import { IMenuItem } from 'mo/components/menu';
+import { prefixClaName, codIcon } from 'mo/common/className';
 import './style.scss';
-interface ITreeProps {
-    isActive?: boolean;
-}
 
-// const initState = {
-// }
-export const TreeView: React.FunctionComponent<ITreeProps> = (
-    ITreeProps
+export interface ITreeNodeItem {
+    title?: string;
+    key?: string;
+    type?: string;
+    contextMenu?: IMenuItem[]
+    children?: ITreeNodeItem[]
+    readonly id?: string;
+    icon?: string | React.ReactNode;
+}
+interface ITreeProps {
+    data: ITreeNodeItem[]
+}
+const TreeView: React.FunctionComponent<ITreeProps> = (
+    props: ITreeProps
 ) => {
+    const {
+        data,
+    } = props;
+    const [treeData, setTreeData] = useState<ITreeNodeItem[]>(data)
+
+    /**
+     * Refer to antd for details
+     */
+    const onDrop = info => {
+        console.log(info);
+        const dropKey = info.node.props.eventKey;
+        const dragKey = info.dragNode.props.eventKey;
+        const dropPos = info.node.props.pos.split('-');
+        const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
+
+        const loopTree = (data, key, callback) => {
+            data.forEach((item, index, arr) => {
+                if (item.key === key) {
+                    return callback(item, index, arr);
+                }
+                if (item.children) {
+                    return loopTree(item.children, key, callback);
+                }
+            });
+        };
+        const data = [...treeData];
+
+        // Find dragObject
+        let dragObj;
+        loopTree(data, dragKey, (item, index, arr) => {
+            arr.splice(index, 1);
+            dragObj = item;
+        });
+
+        if (!info.dropToGap) {
+            // Drop on the content
+            loopTree(data, dropKey, item => {
+                item.children = item.children || [];
+                item.children.push(dragObj);
+            });
+        } else if (
+            (info.node.props.children || []).length > 0 &&
+            info.node.props.expanded &&
+            dropPosition === 1
+        ) {
+            loopTree(data, dropKey, item => {
+                item.children = item.children || [];
+                item.children.unshift(dragObj);
+            });
+        } else {
+            let ar, i;
+            loopTree(data, dropKey, (item, index, arr) => {
+                ar = arr; i = index;
+            });
+            if (dropPosition === -1) {
+                ar.splice(i, 0, dragObj);
+            } else {
+                ar.splice(i + 1, 0, dragObj);
+            }
+        }
+        console.log('data', data)
+        setTreeData(data);
+    };
+
+    useEffect(() => {
+        return () => {
+            console.log('clean effect')
+        }
+    }, data)
+
+    const renderTreeNodes = data =>
+        data?.map(item => {
+            return <TreeNode data={item} title={item.title} key={item.key} icon={codIcon(item.icon)}>
+                {item.children && renderTreeNodes(item.children)}
+            </TreeNode>
+        });
     return (
+        /**
+         *  TODO: contextMenu、line
+         */
         <div className={prefixClaName('tree', 'sidebar')}>
             <Tree
                 prefixCls='rc-tree'
                 draggable
+                onDrop={onDrop}
                 switcherIcon={codIcon('codicon-chevron-right')}
+                onRightClick={({ event, node }) => {
+                    console.log('onRightClick', event, node)
+                }}
+            // onSelect={onClickItem}
             >
-                <TreeNode title='parent' key='parent'>
-                    <TreeNode title='child' key='child'>
-                        <TreeNode title='child3' key='child3'>
-                            <TreeNode icon={({ selected }) => codIcon('codicon-symbol-file')} title='child5' key='child5'></TreeNode>
-                        </TreeNode>
-                        <TreeNode title='child4' key='child4'></TreeNode>
-                    </TreeNode>
-                    <TreeNode title='child1' key='child1'></TreeNode>
-                </TreeNode>
+                {renderTreeNodes(treeData)}
             </Tree>
         </div>
     );
 };
+
+export default memo(TreeView)

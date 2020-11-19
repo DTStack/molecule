@@ -7,7 +7,6 @@ import { prefixClaName, classNames } from 'mo/common/className';
 export interface ITree {}
 
 interface ITreeProps extends TreeProps {
-    prefixCls: any;
 }
 
 export const Tree: React.FunctionComponent<ITreeProps> = (

@@ -48,12 +48,10 @@
         cursor: not-allowed;
     }
     .rc-collapse-content {
-        overflow: hidden;
-        // padding: 0 16px;
+        overflow: auto;
     }
     .rc-collapse-content > .rc-collapse-content-box {
         font-size: 12px;
-        margin-top: 8px;
         margin-bottom: 8px;
     }
     .rc-collapse-content-inactive {

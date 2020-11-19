@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Collapse, { Panel } from 'mo/components/collapse';
-import { TreeView } from './tree';
+import TreeView from './tree';
 import Toolbar from 'mo/components/toolbar';
 import { IActionBarItem } from 'mo/components/actionbar';
-import { prefixClaName } from 'mo/common/className';
+import { prefixClaName, codIcon } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
-import { codIcon } from 'mo/common/className';
+import { data } from './treeMock'
 interface IExplorerProps {
     isActive?: boolean;
 }
@@ -82,7 +82,7 @@ const initState = {
                 },
             ],
             renderPanel: () => {
-                return <TreeView />
+                return <TreeView data={data}/>
             }
         },
         {

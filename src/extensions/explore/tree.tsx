@@ -70,7 +70,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
                 item.children.unshift(dragObj);
             });
         } else {
-            let ar, i;
+            let ar; let i;
             loopTree(data, dropKey, (item, index, arr) => {
                 ar = arr; i = index;
             });

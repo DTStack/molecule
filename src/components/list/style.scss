@@ -1,0 +1,36 @@
+@import 'mo/style/const';
+$list: 'list';
+
+#{prefix($list)} {
+    display: flex;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+
+    .list-item {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: left;
+        list-style: none;
+        position: relative;
+    }
+
+    &.vertical {
+        flex-direction: column;
+    }
+
+    &.horizontal {
+        flex-direction: row;
+    }
+
+    .list-label {
+        align-items: center;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        display: flex;
+        justify-content: left;
+        text-decoration: none;
+    }
+}

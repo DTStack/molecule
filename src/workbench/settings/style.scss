@@ -1,4 +1,5 @@
-@import 'mo/style/const.scss';
+@import 'mo/style/common';
+$settings: 'settings';
 
 .#{$prefix}-#{$settings} {
     align-items: center;

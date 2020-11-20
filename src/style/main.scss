@@ -1,26 +1,3 @@
-@import './const';
+@import './common';
 @import './theme';
 @import './animation';
-
-.#{$prefix} {
-    bottom: 0;
-    font-size: 13px;
-    height: 100%;
-    left: 0;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    user-select: none;
-    width: 100%;
-}
-
-.mac {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.center {
-    text-align: center;
-}

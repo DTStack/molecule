@@ -1,5 +1,7 @@
-@import 'mo/style/const';
+@import 'mo/style/common';
 $menu: 'menu';
+$subMenu: 'sub-menu';
+$menuItem: 'menu-item';
 
 #{prefix($menu)} {
     display: flex;
@@ -12,7 +14,7 @@ $menu: 'menu';
         flex-direction: column;
         padding: 0.5em 0;
 
-        #{prefix('menu-item')} {
+        #{prefix($menuItem)} {
             min-width: 120px;
         }
 
@@ -27,7 +29,7 @@ $menu: 'menu';
     &.horizontal {
         flex-direction: row;
 
-        #{prefix('menu-item')} {
+        #{prefix($menuItem)} {
             min-width: 120px;
         }
     }
@@ -80,11 +82,11 @@ $menu: 'menu';
     }
 }
 
-#{prefix('menu-item')} {
+#{prefix($menuItem)} {
     font-size: 13px;
 }
 
-#{prefix('sub-menu')} {
+#{prefix($subMenu)} {
     display: block;
     font-size: 13px;
     position: fixed;

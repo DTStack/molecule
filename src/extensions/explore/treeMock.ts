@@ -27,9 +27,9 @@ export const data = [
                     }
                 ],
                 children: [
-                    { title: 'test.txt', key: 'test.txt', type: 'file', icon: 'codicon-symbol-file' },
-                    { title: 'test.js', key: 'test.js', type: 'file', icon: 'codicon-file-binary' },
-                    { title: 'test.html', key: 'test.html', type: 'file', icon: 'codicon-file-code' },
+                    { title: 'test.txt', key: 'test.txt', type: 'file', icon: 'symbol-file' },
+                    { title: 'test.js', key: 'test.js', type: 'file', icon: 'file-binary' },
+                    { title: 'test.html', key: 'test.html', type: 'file', icon: 'file-code' },
                 ],
             },
             {
@@ -37,9 +37,9 @@ export const data = [
                 key: 'xyz',
                 type: 'folder',
                 children: [
-                    { title: 'test.pdf', key: 'test.pdf', type: 'file', icon: 'codicon-file-pdf' },
-                    { title: 'test.media', key: 'test.media', type: 'file', icon: 'codicon-file-media' },
-                    { title: 'test.zip', key: 'test.zip', type: 'file', icon: 'codicon-file-zip' },
+                    { title: 'test.pdf', key: 'test.pdf', type: 'file', icon: 'file-pdf' },
+                    { title: 'test.media', key: 'test.media', type: 'file', icon: 'file-media' },
+                    { title: 'test.zip', key: 'test.zip', type: 'file', icon: 'file-zip' },
                 ],
             },
             {

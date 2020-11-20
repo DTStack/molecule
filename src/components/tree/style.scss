@@ -1,13 +1,11 @@
 @import 'mo/style/const.scss';
+$tree: 'tree';
 
-.#{$prefix}-tree {
+#{prefix($tree)} {
     font-size: 13px;
     .rc-tree {
         margin: 0;
         border: 1px solid transparent;
-    }
-    .rc-tree-focused:not(.rc-tree-active-focused) {
-        border-color: cyan;
     }
     .rc-tree .rc-tree-treenode {
         margin: 0;
@@ -18,12 +16,8 @@
         list-style: none;
         outline: 0;
         cursor: pointer;
-        &:hover {
-            background-color: #333333;
-        }
     }
     .rc-tree .rc-tree-treenode .draggable {
-        color: inherit;
         -moz-user-select: none;
         -khtml-user-select: none;
         -webkit-user-select: none;
@@ -33,16 +27,7 @@
         -webkit-user-drag: element;
     }
     .rc-tree .rc-tree-treenode.drag-over > .draggable {
-        color: inherit;
-        background-color: #316ac5;
-        border: 1px #316ac5 solid;
         opacity: 0.8;
-    }
-    .rc-tree .rc-tree-treenode.drag-over-gap-top > .draggable {
-        border-top: 2px blue solid;
-    }
-    .rc-tree .rc-tree-treenode.drag-over-gap-bottom > .draggable {
-        border-bottom: 2px blue solid;
     }
     .rc-tree .rc-tree-treenode.filter-node > .rc-tree-node-content-wrapper {
         color: #a60000 !important;
@@ -92,8 +77,6 @@
         transform: rotate(90deg);
         margin-top: -2px;
     }
-    .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher_close {
-    }
     .rc-tree:not(.rc-tree-show-line) .rc-tree-treenode .rc-tree-switcher-noop {
         background: none;
     }
@@ -108,9 +91,6 @@
     .rc-tree-treenode-disabled > a span {
         color: #767676;
         cursor: not-allowed;
-    }
-    .rc-tree-treenode-active {
-        background: rgba(0, 0, 0, 0.1);
     }
     .rc-tree-icon__open {
         margin-right: 2px;

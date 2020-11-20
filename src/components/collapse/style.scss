@@ -1,38 +1,26 @@
-@import 'mo/style/const.scss';
-@mixin header_border {
-    border: 1px solid rgba(97, 97, 97, 0.19);
-}
-.#{$prefix}-collapse {
+@import 'mo/style/const';
+$collapse: 'collapse';
+
+#{prefix($collapse)} {
     font-size: 13px;
-    .rc-collapse {
-        background-color: inherit;
-    }
     .rc-collapse-anim-active {
         transition: height 0.2s ease-out;
     }
     .rc-collapse > .rc-collapse-item {
         border-top: none;
-        color: #bbbbbb;
+        color: inherit;
     }
     .rc-collapse > .rc-collapse-item > .rc-collapse-header {
         display: flex;
         align-items: center;
         padding: 1px 5px;
-        background: #333333;
         cursor: pointer;
         outline: none;
         height: 22px;
         font-weight: bold;
-        &:focus {
-            @include header_border;
-        }
-        &:active {
-            @include header_border;
-        }
     }
     .rc-collapse > .rc-collapse-item > .rc-collapse-header .rc-collapse-extra {
         margin: 0 0 0 auto;
-        background-color: inherit;
        .action-label.codicon {
             height: inherit;
             line-height: inherit;

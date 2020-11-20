@@ -3,16 +3,18 @@ import { useState } from 'react';
 import Collapse, { Panel } from 'mo/components/collapse';
 import TreeView from './tree';
 import Toolbar from 'mo/components/toolbar';
+import { Icon } from 'mo/components/icon';
 import { IActionBarItem } from 'mo/components/actionbar';
-import { prefixClaName, codIcon } from 'mo/common/className';
+import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { data } from './treeMock'
 interface IExplorerProps {
     isActive?: boolean;
 }
 
-export interface IPanelItem extends IActionBarItem {
+export interface IPanelItem<T=any> extends IActionBarItem {
     renderPanel?: () => React.ReactNode | JSX.Element;
+    toolbar?: T;
 }
 interface IState {
     activePanelKey: React.Key | React.Key[];
@@ -134,7 +136,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
                     activeKey={activePanelKey}
                     onChange={(activeKey: React.Key | React.Key[]) => { onChangeCallback(activeKey) }}
                     expandIcon={({ isActive }: IExplorerProps) =>
-                        codIcon(isActive ? 'codicon-chevron-down' : 'codicon-chevron-right')}
+                        <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />}
                 >
                     {
                         panelSet.map((panel: IPanelItem) => <Panel

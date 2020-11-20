@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Tree, { TreeNode } from 'mo/components/tree';
-import { codIcon } from 'mo/common/className';
+import { Icon } from 'mo/components/icon';
 export default {
     title: 'Tree',
 };
@@ -14,12 +14,12 @@ export const Basic = () => (
          */
         // showLine
         showIcon
-        switcherIcon={codIcon('codicon-chevron-right')}
+        switcherIcon={<Icon type='chevron-right' />}
     >
         <TreeNode title='parent' key='parent'>
             <TreeNode title='child' key='child'>
                 <TreeNode title='child3' key='child3'>
-                    <TreeNode icon={({ selected }) => codIcon('codicon-symbol-file')} title='child5' key='child5'></TreeNode>
+                    <TreeNode icon={({ selected }) => <Icon type='symbol-file' />} title='child5' key='child5'></TreeNode>
                 </TreeNode>
                 <TreeNode title='child4' key='child4'></TreeNode>
             </TreeNode>

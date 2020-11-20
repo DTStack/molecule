@@ -7,12 +7,12 @@ import { Icon } from 'mo/components/icon';
 import { IActionBarItem } from 'mo/components/actionbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
-import { data } from './treeMock'
+import { data } from './treeMock';
 interface IExplorerProps {
     isActive?: boolean;
 }
 
-export interface IPanelItem<T=any> extends IActionBarItem {
+export interface IPanelItem<T = any> extends IActionBarItem {
     renderPanel?: () => React.ReactNode | JSX.Element;
     toolbar?: T;
 }
@@ -29,7 +29,7 @@ const initState = {
             id: 'explorer-more',
             title: 'View and More Actions...',
             iconName: 'codicon-ellipsis',
-        }
+        },
     ],
     panelSet: [
         {
@@ -55,8 +55,8 @@ const initState = {
                 },
             ],
             renderPanel: () => {
-                return <span>editors</span>
-            }
+                return <span>editors</span>;
+            },
         },
         {
             id: 'sample_folder',
@@ -84,8 +84,8 @@ const initState = {
                 },
             ],
             renderPanel: () => {
-                return <TreeView data={data}/>
-            }
+                return <TreeView data={data} />;
+            },
         },
         {
             id: 'outline',
@@ -101,19 +101,19 @@ const initState = {
                     title: 'More Actions...',
                     iconName: 'codicon-ellipsis',
                 },
-            ]
-        }
-    ]
-}
+            ],
+        },
+    ],
+};
 export const Explorer: React.FunctionComponent<IExplorerProps> = (
     IExplorerProps
 ) => {
-    const [state, setState] = useState<IState>(initState)
+    const [state, setState] = useState<IState>(initState);
     const onChangeCallback = (key: React.Key | React.Key[]) => {
-        setState((state: IState) => ({ ...state, activePanelKey: key }))
-    }
+        setState((state: IState) => ({ ...state, activePanelKey: key }));
+    };
     const onClick = (e, item) => {
-        e.stopPropagation()
+        e.stopPropagation();
         console.log('onClick:', e, item);
     };
     /**
@@ -121,11 +121,11 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
      */
     const render = (render) => {
         if (render) {
-            return render()
+            return render();
         } else {
-            return 'Cannot provide...'
+            return 'Cannot provide...';
         }
-    }
+    };
     const { panelSet, explorerToolbar, activePanelKey } = state;
     return (
         <div className={prefixClaName('explorer', 'sidebar')}>
@@ -137,19 +137,32 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
                 <Collapse
                     accordion={true}
                     activeKey={activePanelKey}
-                    onChange={(activeKey: React.Key | React.Key[]) => { onChangeCallback(activeKey) }}
-                    expandIcon={({ isActive }: IExplorerProps) =>
-                        <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />}
+                    onChange={(activeKey: React.Key | React.Key[]) => {
+                        onChangeCallback(activeKey);
+                    }}
+                    expandIcon={({ isActive }: IExplorerProps) => (
+                        <Icon
+                            type={isActive ? 'chevron-down' : 'chevron-right'}
+                        />
+                    )}
                 >
-                    {
-                        panelSet.map((panel: IPanelItem) => <Panel
+                    {panelSet.map((panel: IPanelItem) => (
+                        <Panel
                             key={panel.id}
                             header={panel.name}
-                            extra={activePanelKey === panel.id && <Toolbar key={panel.id} data={panel.toolbar} onClick={onClick} />}
+                            extra={
+                                activePanelKey === panel.id && (
+                                    <Toolbar
+                                        key={panel.id}
+                                        data={panel.toolbar}
+                                        onClick={onClick}
+                                    />
+                                )
+                            }
                         >
                             {render(panel.renderPanel)}
-                        </Panel>)
-                    }
+                        </Panel>
+                    ))}
                 </Collapse>
             </Content>
         </div>

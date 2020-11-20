@@ -66,7 +66,6 @@ export default class SearchPane extends React.Component<
         });
     };
 
-
     render() {
         const { toolbar } = this.state;
 

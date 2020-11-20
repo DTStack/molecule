@@ -9,7 +9,7 @@ export enum EditorEvent {
     CloseTab = 'editor.close',
     ChangeTab = 'editor.changeTab',
     OpenTab = 'editor.openTab',
-    SelectTab = 'editor.selectTab'
+    SelectTab = 'editor.selectTab',
 }
 export interface IEditor {
     current: IEditorGroup | undefined;
@@ -77,13 +77,10 @@ export class EditorModel implements IEditor {
 
     public readonly selectTab = (tab: ITab) => {
         EventBus.emit(EditorEvent.ChangeTab, tab);
-    }
-    public readonly changeTab = (
-        updateTabs: ITab[],
-        groupId?: number
-    ) => {
+    };
+    public readonly changeTab = (updateTabs: ITab[], groupId?: number) => {
         EventBus.emit(EditorEvent.ChangeTab, updateTabs, groupId);
-    }
+    };
 }
 
 container.register('CurrentEditorGroup', { useValue: '' });

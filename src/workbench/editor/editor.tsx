@@ -15,7 +15,11 @@ function renderEditorGroup(group: IEditorGroup, changeTab, selectTab) {
         <div className={`editor-group`} key={`group-${group.id}`}>
             <div className="group-header">
                 <div className="group-tabs">
-                    <Tabs data={group.tabs} changeTab={changeTab} selectTab={selectTab}/>
+                    <Tabs
+                        data={group.tabs}
+                        changeTab={changeTab}
+                        selectTab={selectTab}
+                    />
                 </div>
                 <div className="group-breadcrumbs"></div>
             </div>
@@ -55,7 +59,9 @@ export function renderGroups(groups: IEditorGroup[], changeTab, selectTab) {
                 primary="first"
                 allowResize={true}
             >
-                {groups.map((g: IEditorGroup) => renderEditorGroup(g, changeTab, selectTab))}
+                {groups.map((g: IEditorGroup) =>
+                    renderEditorGroup(g, changeTab, selectTab)
+                )}
             </SplitPane>
         );
     }
@@ -67,7 +73,9 @@ export function Editor(props: IEditor) {
     console.log('Editor render:', props);
     let content: React.ReactNode = <Welcome />;
     if (current) {
-        content = render ? render() : renderGroups(groups, (tabs) => changeTab(tabs, 1), selectTab);
+        content = render
+            ? render()
+            : renderGroups(groups, (tabs) => changeTab(tabs, 1), selectTab);
     }
 
     return <div className={prefixClaName('editor')}>{content}</div>;

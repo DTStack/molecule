@@ -36,12 +36,12 @@ function init() {
         }
     });
 
-    editorService.changeTab((data ) => {
-        console.log(data)
-    })
-    editorService.selectTab(tab =>{
-        console.log(`selected tabs${tab}`)
-    })
+    editorService.changeTab((data) => {
+        console.log(data);
+    });
+    editorService.selectTab((tab) => {
+        console.log(`selected tabs${tab}`);
+    });
 }
 
 export const ExtendSearch: IExtension = {

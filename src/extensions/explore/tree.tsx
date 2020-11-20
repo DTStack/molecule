@@ -10,32 +10,29 @@ export interface ITreeNodeItem {
     title?: string;
     key?: string;
     type?: string;
-    contextMenu?: IMenuItem[]
-    children?: ITreeNodeItem[]
+    contextMenu?: IMenuItem[];
+    children?: ITreeNodeItem[];
     readonly id?: string;
     icon?: string | React.ReactNode;
 }
 interface ITreeProps {
-    data: ITreeNodeItem[]
+    data: ITreeNodeItem[];
 }
-const TreeView: React.FunctionComponent<ITreeProps> = (
-    props: ITreeProps
-) => {
-    const {
-        data,
-    } = props;
-    const [treeData, setTreeData] = useState<ITreeNodeItem[]>(data)
+const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
+    const { data } = props;
+    const [treeData, setTreeData] = useState<ITreeNodeItem[]>(data);
 
     /**
      * Refer to antd for details
      * TODO: move component
      */
-    const onDrop = info => {
+    const onDrop = (info) => {
         console.log(info);
         const dropKey = info.node.props.eventKey;
         const dragKey = info.dragNode.props.eventKey;
         const dropPos = info.node.props.pos.split('-');
-        const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
+        const dropPosition =
+            info.dropPosition - Number(dropPos[dropPos.length - 1]);
 
         const loopTree = (data, key, callback) => {
             data.forEach((item, index, arr) => {
@@ -58,7 +55,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
 
         if (!info.dropToGap) {
             // Drop on the content
-            loopTree(data, dropKey, item => {
+            loopTree(data, dropKey, (item) => {
                 item.children = item.children || [];
                 item.children.push(dragObj);
             });
@@ -67,14 +64,16 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
             info.node.props.expanded &&
             dropPosition === 1
         ) {
-            loopTree(data, dropKey, item => {
+            loopTree(data, dropKey, (item) => {
                 item.children = item.children || [];
                 item.children.unshift(dragObj);
             });
         } else {
-            let ar; let i;
+            let ar;
+            let i;
             loopTree(data, dropKey, (item, index, arr) => {
-                ar = arr; i = index;
+                ar = arr;
+                i = index;
             });
             if (dropPosition === -1) {
                 ar.splice(i, 0, dragObj);
@@ -82,21 +81,28 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
                 ar.splice(i + 1, 0, dragObj);
             }
         }
-        console.log('data', data)
+        console.log('data', data);
         setTreeData(data);
     };
 
     useEffect(() => {
         return () => {
-            console.log('clean effect')
-        }
-    }, data)
+            console.log('clean effect');
+        };
+    }, data);
 
-    const renderTreeNodes = data =>
-        data?.map(item => {
-            return <TreeNode data={item} title={item.title} key={item.key} icon={<Icon type={item.icon} />}>
-                {item.children && renderTreeNodes(item.children)}
-            </TreeNode>
+    const renderTreeNodes = (data) =>
+        data?.map((item) => {
+            return (
+                <TreeNode
+                    data={item}
+                    title={item.title}
+                    key={item.key}
+                    icon={<Icon type={item.icon} />}
+                >
+                    {item.children && renderTreeNodes(item.children)}
+                </TreeNode>
+            );
         });
     return (
         /**
@@ -104,14 +110,14 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
          */
         <div className={prefixClaName('tree', 'sidebar')}>
             <Tree
-                prefixCls='rc-tree'
+                prefixCls="rc-tree"
                 draggable
                 onDrop={onDrop}
-                switcherIcon={<Icon type='chevron-right' />}
+                switcherIcon={<Icon type="chevron-right" />}
                 onRightClick={({ event, node }) => {
-                    console.log('onRightClick', event, node)
+                    console.log('onRightClick', event, node);
                 }}
-            // onSelect={onClickItem}
+                // onSelect={onClickItem}
             >
                 {renderTreeNodes(treeData)}
             </Tree>
@@ -119,4 +125,4 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
     );
 };
 
-export default memo(TreeView)
+export default memo(TreeView);

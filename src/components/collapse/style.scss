@@ -54,7 +54,10 @@ $collapse: 'collapse';
         cursor: default;
     }
 
-    .rc-collapse > .rc-collapse-item .rc-collapse-header-collapsable-only .rc-collapse-header-text {
+    .rc-collapse
+        > .rc-collapse-item
+        .rc-collapse-header-collapsable-only
+        .rc-collapse-header-text {
         cursor: pointer;
     }
 
@@ -79,4 +82,3 @@ $collapse: 'collapse';
         border-radius: 0 0 3px 3px;
     }
 }
-

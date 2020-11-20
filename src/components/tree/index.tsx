@@ -6,8 +6,7 @@ import { prefixClaName, classNames } from 'mo/common/className';
 
 export interface ITree {}
 
-interface ITreeProps extends TreeProps {
-}
+interface ITreeProps extends TreeProps {}
 
 export const Tree: React.FunctionComponent<ITreeProps> = (
     props: ITreeProps
@@ -15,9 +14,7 @@ export const Tree: React.FunctionComponent<ITreeProps> = (
     const { className, ...others } = props;
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
-            <RcTree
-                {...others}
-            />
+            <RcTree {...others} />
         </div>
     );
 };

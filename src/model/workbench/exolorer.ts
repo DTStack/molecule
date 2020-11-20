@@ -1,4 +1,3 @@
-
 export interface IExplorerFileActionItem {
     id?: string;
     name?: string;

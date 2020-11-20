@@ -1,6 +1,7 @@
-@import 'mo/style/const';
+@import 'mo/style/common';
+$workbench: 'workbench';
 
-#{prefix('workbench')} {
+#{prefix($workbench)} {
     bottom: 0;
     left: 0;
     padding-bottom: 22px;

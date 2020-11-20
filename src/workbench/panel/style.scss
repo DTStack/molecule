@@ -1,8 +1,7 @@
-@import 'mo/style/const.scss';
+@import 'mo/style/common';
+$panel: 'panel';
 
-.#{$prefix}-panel {
-    // TODO just for development, this attribute should be controlled by themeService
-    border-top-color: rgb(65, 67, 57);
+#{prefix($panel)} {
     height: 100%;
     position: relative;
     width: 100%;

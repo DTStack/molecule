@@ -2,6 +2,7 @@ import * as React from 'react';
 import Toolbar from 'mo/components/toolbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
+import { activityBarService, editorService } from 'mo';
 
 interface ISearchPaneToolBar {}
 
@@ -65,8 +66,33 @@ export default class SearchPane extends React.Component<
         });
     };
 
+
     render() {
         const { toolbar } = this.state;
+
+        const addABar = function () {
+            const id = Math.random() * 10 + 1;
+            activityBarService.push({
+                id: id + '',
+                name: 'folder' + id,
+                iconName: 'codicon-edit',
+            });
+        };
+
+        const newEditor = function () {
+            const id = Math.random() * 10 + 1;
+            const tabData = {
+                id: id,
+                name: `test-tab${id.toFixed(2)}`,
+                value: 'just test tab data',
+            };
+            console.log('open editor:', tabData);
+            editorService.open(tabData, 1);
+        };
+
+        const openCommand = function () {
+            // MonacoEditor.editor.getModel().
+        };
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header
@@ -77,6 +103,12 @@ export default class SearchPane extends React.Component<
                     <h1>Search Pane</h1>
                     <p>{this.state.input}</p>
                     <input onInput={this.onInput} />
+                    <hr></hr>
+                    <div>
+                        <button onClick={addABar}>Add Bar</button>
+                        <button onClick={newEditor}>New Editor</button>
+                        <button onClick={openCommand}>Command Palette</button>
+                    </div>
                 </Content>
             </div>
         );

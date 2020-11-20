@@ -5,7 +5,7 @@ $collapse: 'collapse';
     border: 1px solid rgba(97, 97, 97, 0.19);
 }
 
-.#{prefix($collapse)} {
+#{prefix($collapse)} {
     font-size: 13px;
 
     .rc-collapse {
@@ -30,6 +30,7 @@ $collapse: 'collapse';
         height: 22px;
         outline: none;
         padding: 1px 5px;
+        padding: 1px 5px;
 
         &:focus {
             @include header_border;
@@ -41,7 +42,6 @@ $collapse: 'collapse';
     }
 
     .rc-collapse > .rc-collapse-item > .rc-collapse-header .rc-collapse-extra {
-        background-color: inherit;
         margin: 0 0 0 auto;
 
         .action-label.codicon {

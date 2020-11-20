@@ -4,6 +4,7 @@ import {
     sidebarService,
     IExtensionService,
     IActivityBarItem,
+    editorService,
 } from 'mo';
 import { IExtension } from 'mo/model/extension';
 import SearchPane from './searchPane';
@@ -34,6 +35,13 @@ function init() {
             });
         }
     });
+
+    editorService.changeTab((data ) => {
+        console.log(data)
+    })
+    editorService.selectTab(tab =>{
+        console.log(`selected tabs${tab}`)
+    })
 }
 
 export const ExtendSearch: IExtension = {

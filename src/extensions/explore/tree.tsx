@@ -2,7 +2,8 @@ import * as React from 'react';
 import { memo, useEffect, useState } from 'react';
 import Tree, { TreeNode } from 'mo/components/tree';
 import { IMenuItem } from 'mo/components/menu';
-import { prefixClaName, codIcon } from 'mo/common/className';
+import { Icon } from 'mo/components/icon';
+import { prefixClaName } from 'mo/common/className';
 import './style.scss';
 
 export interface ITreeNodeItem {
@@ -27,6 +28,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
 
     /**
      * Refer to antd for details
+     * TODO: move component
      */
     const onDrop = info => {
         console.log(info);
@@ -92,7 +94,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
 
     const renderTreeNodes = data =>
         data?.map(item => {
-            return <TreeNode data={item} title={item.title} key={item.key} icon={codIcon(item.icon)}>
+            return <TreeNode data={item} title={item.title} key={item.key} icon={<Icon type={item.icon} />}>
                 {item.children && renderTreeNodes(item.children)}
             </TreeNode>
         });
@@ -105,7 +107,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
                 prefixCls='rc-tree'
                 draggable
                 onDrop={onDrop}
-                switcherIcon={codIcon('codicon-chevron-right')}
+                switcherIcon={<Icon type='chevron-right' />}
                 onRightClick={({ event, node }) => {
                     console.log('onRightClick', event, node)
                 }}

@@ -61,7 +61,10 @@ export function useContextView(props?: IContextViewProps): IContextView {
 
     if (!contextView) {
         contextView = document.createElement('div');
-        contextView.className = classNames(claName, Utils.isMacOs() ? 'mac' : null);
+        contextView.className = classNames(
+            claName,
+            Utils.isMacOs() ? 'mac' : null
+        );
         contextView.style.display = 'none';
         const root = document.getElementById('molecule');
         if (!root) {

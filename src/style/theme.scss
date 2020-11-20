@@ -83,7 +83,8 @@
     }
 }
 
-#{prefix($menu)}, #{prefix('sub-menu')} {
+#{prefix($menu)},
+#{prefix('sub-menu')} {
     background-color: rgb(37, 37, 38);
     box-shadow: #000 0 2px 4px;
     color: rgb(204, 204, 204);

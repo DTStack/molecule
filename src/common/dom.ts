@@ -68,8 +68,8 @@ export function getRelativePosition(
 export function getEventPosition(e: React.MouseEvent) {
     return {
         x: e.clientX,
-        y: e.clientY
-    }
+        y: e.clientY,
+    };
 }
 
 export function findParentByClassName<T>(element, className): T | null {

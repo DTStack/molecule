@@ -116,11 +116,14 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
         e.stopPropagation()
         console.log('onClick:', e, item);
     };
+    /**
+     * TODO: withdraw and log
+     */
     const render = (render) => {
         if (render) {
             return render()
         } else {
-            return 'cannot provide...'
+            return 'Cannot provide...'
         }
     }
     const { panelSet, explorerToolbar, activePanelKey } = state;

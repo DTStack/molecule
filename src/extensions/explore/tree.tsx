@@ -28,6 +28,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (
 
     /**
      * Refer to antd for details
+     * TODO: move component
      */
     const onDrop = info => {
         console.log(info);

@@ -11,17 +11,14 @@ function initActivityBar(extensionCtx: IExtensionService) {
             {
                 id: 'CommandPalette',
                 name: 'Command Palette...',
-                title: 'Command Palette',
             },
             {
                 id: 'Settings',
                 name: 'Settings',
-                title: 'Settings',
             },
             {
                 id: 'ColorTheme',
                 name: 'Color Theme',
-                title: 'Color Theme',
             },
         ],
     };

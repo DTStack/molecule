@@ -8,6 +8,7 @@ import {
     IPosition,
 } from 'mo/common/dom';
 import './style.scss';
+import { Utils } from 'dt-utils/lib';
 
 export interface IContextViewProps {
     render?: () => React.ReactNode;
@@ -60,9 +61,17 @@ export function useContextView(props?: IContextViewProps): IContextView {
 
     if (!contextView) {
         contextView = document.createElement('div');
-        contextView.className = claName;
+        contextView.className = classNames(
+            claName,
+            Utils.isMacOs() ? 'mac' : null
+        );
         contextView.style.display = 'none';
-        document.body.appendChild(contextView);
+        const root = document.getElementById('molecule');
+        if (!root) {
+            document.body.appendChild(contextView);
+        } else {
+            root.appendChild(contextView);
+        }
 
         ReactDOM.render(
             <>

@@ -2,7 +2,7 @@ import './style.scss';
 import * as React from 'react';
 import { prefixClaName, classNames } from 'mo/common/className';
 
-export interface IActionBarItem<T = any> extends React.ComponentProps<any> {
+export interface IActionBarItem<T = any> {
     id: string;
     name?: string;
     title?: string;

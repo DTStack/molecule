@@ -11,6 +11,7 @@ import { MenuBarView } from 'mo/workbench/menuBar';
 import { ActivityBarView } from 'mo/workbench/activityBar';
 import { StatusBarView } from 'mo/workbench/statusBar';
 import Panel from 'mo/workbench/panel';
+import { ID_APP } from 'mo/common/id';
 
 export interface IWorkbench {}
 
@@ -46,7 +47,7 @@ export function MainBench(props: IMainBench) {
 export function Workbench(props: IWorkbench) {
     return (
         <div
-            id="molecule"
+            id={ID_APP}
             className={classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '')}
         >
             <div className={prefixClaName('workbench')}>

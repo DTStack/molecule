@@ -24,17 +24,17 @@ stories.add(
         const data: IActionBarItem<any>[] = [
             {
                 id: '1',
-                name: 'bar1',
+                title: 'bar1',
                 iconName: 'codicon-add',
             },
             {
                 id: '2',
-                name: 'bar2',
+                title: 'bar2',
                 iconName: 'codicon-chrome-restore',
             },
             {
                 id: '3',
-                name: 'bar3',
+                title: 'bar3',
                 iconName: 'codicon-check',
             },
         ];

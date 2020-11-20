@@ -1,4 +1,6 @@
 @import 'mo/style/const';
+@import 'mo/components/actionbar/style';
+@import 'mo/components/menu/style';
 
 // =============== Workbench =============== //
 .#{$prefix}-workbench {
@@ -7,7 +9,6 @@
 }
 
 // =============== Sidebar =============== //
-
 .#{$prefix}-sidebar {
     // TODO temp style, just for development
     background-color: rgb(37, 37, 38);
@@ -63,10 +64,28 @@
     color: #fff;
 }
 
-// .monaco-workbench .codicon {
-// }
+// =============== Action Bar =============== //
 
 #{prefix('action-bar')} {
     background-color: inherit;
+    color: rgb(204, 204, 204);
+}
+
+// =============== Menu =============== //
+#{prefix($menu)} {
+    .mo-menu-item {
+        color: rgb(204, 204, 204);
+    }
+
+    .mo-menu-item:hover {
+        background-color: rgb(9, 71, 113);
+        color: rgb(255, 255, 255);
+    }
+}
+
+#{prefix($menu)},
+#{prefix('sub-menu')} {
+    background-color: rgb(37, 37, 38);
+    box-shadow: #000 0 2px 4px;
     color: rgb(204, 204, 204);
 }

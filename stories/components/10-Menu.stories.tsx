@@ -20,83 +20,110 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
-        const menuData = [{
-            id: 'File',
-            name: 'File',
-            data: [{
-                id: 'New File',
-                name: 'New File'
-            }, {
-                id: 'OpenFile',
-                name: 'Open'
-            }]
-        }, {
-            id: 'Edit',
-            name: 'Edit',
-            data: [{
-                id: 'Undo',
-                name: 'Undo'
-            }, {
-                id: 'Redo',
-                name: 'Redo'
-            }]
-        }, {
-            id: 'Selection',
-            name: 'Selection',
-            data: [{
-                id: 'SelectAll',
-                name: 'Select All'
-            }, {
-                id: 'CopyLineUp',
-                name: 'Copy Line Up'
-            }]
-        }, {
-            id: 'View',
-            name: 'View',
-            data: [{
-                id: 'Command Palette',
-                name: 'Command Palette'
-            }, {
-                id: 'OpenView',
-                name: 'Open View'
-            }, {
-                id: 'Appearance',
-                name: 'Appearance',
-                data: [{
-                    icon: 'check',
-                    id: 'ShowMenuBar',
-                    name: 'Show Menu Bar'
-                },{
-                    icon: 'check',
-                    id: 'ShowSideBar',
-                    name: 'Show Side Bar'
-                },{
-                    icon: 'check',
-                    id: 'ShowStatusBar',
-                    name: 'Show Status Bar'
-                },{
-                    icon: 'check',
-                    id: 'ShowActivityBar',
-                    name: 'Show Activity Bar'
-                }]
-            }]
-        }, {
-            id: 'Run',
-            name: 'Run',
-            data: [{
-                id: 'RunTask',
-                name: 'Run Task'
-            }]
-        }, {
-            id: 'Help',
-            name: 'Help',
-            data: [
-                {
-                    id: 'About',
-                    name: 'About'
-                }
-            ]
-        }];
+        const menuData = [
+            {
+                id: 'File',
+                name: 'File',
+                data: [
+                    {
+                        id: 'New File',
+                        name: 'New File',
+                    },
+                    {
+                        id: 'OpenFile',
+                        name: 'Open',
+                    },
+                ],
+            },
+            {
+                id: 'Edit',
+                name: 'Edit',
+                data: [
+                    {
+                        id: 'Undo',
+                        name: 'Undo',
+                    },
+                    {
+                        id: 'Redo',
+                        name: 'Redo',
+                    },
+                ],
+            },
+            {
+                id: 'Selection',
+                name: 'Selection',
+                data: [
+                    {
+                        id: 'SelectAll',
+                        name: 'Select All',
+                    },
+                    {
+                        id: 'CopyLineUp',
+                        name: 'Copy Line Up',
+                    },
+                ],
+            },
+            {
+                id: 'View',
+                name: 'View',
+                data: [
+                    {
+                        id: 'Command Palette',
+                        name: 'Command Palette',
+                    },
+                    {
+                        id: 'OpenView',
+                        name: 'Open View',
+                    },
+                    {
+                        id: 'Appearance',
+                        name: 'Appearance',
+                        data: [
+                            {
+                                icon: 'check',
+                                id: 'ShowMenuBar',
+                                name: 'Show Menu Bar',
+                            },
+                            {
+                                icon: 'check',
+                                id: 'ShowSideBar',
+                                name: 'Show Side Bar',
+                            },
+                            {
+                                icon: 'check',
+                                id: 'ShowStatusBar',
+                                name: 'Show Status Bar',
+                            },
+                            {
+                                icon: 'check',
+                                id: 'ShowActivityBar',
+                                name: 'Show Activity Bar',
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                id: 'Run',
+                name: 'Run',
+                data: [
+                    {
+                        id: 'RunTask',
+                        name: 'Run Task',
+                    },
+                ],
+            },
+            {
+                id: 'Help',
+                name: 'Help',
+                data: [
+                    {
+                        id: 'About',
+                        name: 'About',
+                    },
+                ],
+            },
+        ];
 
         return (
             <div>
@@ -106,7 +133,7 @@ stories.add(
                     组件主要是提供了一个可根据指定锚点位置、渲染内容的视图容器。
                 </p>
                 <div>
-                <h3>使用示例 1 - 基本使用</h3>
+                    <h3>使用示例 1 - 基本使用</h3>
                     <Menu mode={MenuMode.Horizontal}>
                         <MenuItem>menuItem1</MenuItem>
                         <MenuItem>menuItem2</MenuItem>
@@ -125,7 +152,11 @@ stories.add(
                 </div>
                 <div>
                     <h3>使用示例 3 - vertical</h3>
-                    <Menu style={{ width: 200 }} data={menuData} mode={MenuMode.Vertical} />
+                    <Menu
+                        style={{ width: 200 }}
+                        data={menuData}
+                        mode={MenuMode.Vertical}
+                    />
                 </div>
             </div>
         );

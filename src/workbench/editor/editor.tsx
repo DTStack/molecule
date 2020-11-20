@@ -9,13 +9,13 @@ import Tabs from 'mo/components/tabs';
 import Welcome from './welcome';
 import { IEditor, IEditorGroup } from 'mo/model';
 
-function renderEditorGroup(group: IEditorGroup) {
+function renderEditorGroup(group: IEditorGroup, changeTab, selectTab) {
     const editor = group.activeTab;
     return (
         <div className={`editor-group`} key={`group-${group.id}`}>
             <div className="group-header">
                 <div className="group-tabs">
-                    <Tabs data={group.tabs} />
+                    <Tabs data={group.tabs} changeTab={changeTab} selectTab={selectTab}/>
                 </div>
                 <div className="group-breadcrumbs"></div>
             </div>
@@ -43,9 +43,9 @@ function renderEditorGroup(group: IEditorGroup) {
     );
 }
 
-export function renderGroups(groups: IEditorGroup[]) {
+export function renderGroups(groups: IEditorGroup[], changeTab, selectTab) {
     if (groups.length === 1) {
-        return renderEditorGroup(groups[0]);
+        return renderEditorGroup(groups[0], changeTab, selectTab);
     } else if (groups.length > 1) {
         const averageNum = Math.round(100 / groups.length);
         return (
@@ -55,7 +55,7 @@ export function renderGroups(groups: IEditorGroup[]) {
                 primary="first"
                 allowResize={true}
             >
-                {groups.map((g: IEditorGroup) => renderEditorGroup(g))}
+                {groups.map((g: IEditorGroup) => renderEditorGroup(g, changeTab, selectTab))}
             </SplitPane>
         );
     }
@@ -63,11 +63,11 @@ export function renderGroups(groups: IEditorGroup[]) {
 }
 
 export function Editor(props: IEditor) {
-    const { groups, render, current } = props;
+    const { groups, render, current, changeTab, selectTab } = props;
     console.log('Editor render:', props);
     let content: React.ReactNode = <Welcome />;
     if (current) {
-        content = render ? render() : renderGroups(groups);
+        content = render ? render() : renderGroups(groups, (tabs) => changeTab(tabs, 1), selectTab);
     }
 
     return <div className={prefixClaName('editor')}>{content}</div>;

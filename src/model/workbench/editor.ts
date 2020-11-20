@@ -1,14 +1,24 @@
 /* eslint-disable no-invalid-this */
+import 'reflect-metadata';
+import { EventBus } from 'mo/common/event';
 import { observable } from 'mo/common/observable';
 import { ITab } from 'mo/components/tabs';
 import { container, inject, injectable } from 'tsyringe';
 
+export enum EditorEvent {
+    CloseTab = 'editor.close',
+    ChangeTab = 'editor.changeTab',
+    OpenTab = 'editor.openTab',
+    SelectTab = 'editor.selectTab'
+}
 export interface IEditor {
     current: IEditorGroup | undefined;
     groups: IEditorGroup[];
     closeAll?: () => void;
     onClose?: () => void;
     render?: () => React.ReactNode;
+    changeTab: (tabs: ITab[], group?: number) => void;
+    selectTab: (tab: ITab) => void;
 }
 
 export interface IEditorGroup<E = any> {
@@ -64,6 +74,16 @@ export class EditorModel implements IEditor {
     }
 
     public render!: () => React.ReactNode;
+
+    public readonly selectTab = (tab: ITab) => {
+        EventBus.emit(EditorEvent.ChangeTab, tab);
+    }
+    public readonly changeTab = (
+        updateTabs: ITab[],
+        groupId?: number
+    ) => {
+        EventBus.emit(EditorEvent.ChangeTab, updateTabs, groupId);
+    }
 }
 
 container.register('CurrentEditorGroup', { useValue: '' });

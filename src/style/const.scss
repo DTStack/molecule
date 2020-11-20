@@ -1,0 +1,16 @@
+// TODO Refactor the class name to camel style
+$prefix: 'mo';
+$activityBar: 'activityBar';
+$sidebar: 'sidebar';
+$editor: 'editor';
+$menuBar: 'menuBar';
+$settings: 'settings';
+$panel: 'panel';
+$statusBar: 'statusBar';
+
+// Component parts below
+$dropDown: 'drop-down';
+
+@function prefix($name) {
+    @return '.' + $prefix + '-' + $name;
+}

@@ -40,7 +40,7 @@ export function getDocumentRect() {
 /**
  * Returns the position of element relative to element position
  * @param element target element
- * @param relatedPos the relative element position
+ * @param relativePos the relative element position
  */
 export function getRelativePosition(
     element: HTMLElement,

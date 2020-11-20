@@ -2,39 +2,92 @@
 $menu: 'menu';
 
 #{prefix($menu)} {
+    display: flex;
+    list-style: none;
     margin: 0;
-    min-width: 130px;
+    min-width: 200px;
     padding: 0;
 
-    #{prefix('action-bar')} {
+    &.vertical {
+        flex-direction: column;
         padding: 0.5em 0;
+
+        #{prefix('menu-item')} {
+            min-width: 120px;
+        }
+
+        .menu-item-indicator {
+            &.codicon::before {
+                margin-left: auto;
+                margin-right: -20px;
+            }
+        }
     }
 
-    .action-bar-container {
-        display: block;
+    &.horizontal {
+        flex-direction: row;
+
+        #{prefix('menu-item')} {
+            min-width: 120px;
+        }
     }
 
-    .action-item {
-        border: thin solid transparent;
-        display: flex;
-        overflow: visible;
-        position: static;
-        text-indent: 1em;
-        transform: none;
-    }
-
-    .action-label {
-        font-size: 13px;
-        height: 1.8em;
-    }
-
-    .action-label.codicon {
-        line-height: 1.8em;
-    }
-
-    .disabled {
+    .menu-item-container {
+        align-items: center;
         cursor: default;
-        opacity: 0.4;
-        pointer-events: none;
+        display: flex;
+        flex: 1 1 auto;
+        font-size: inherit;
+        height: 2em;
+        position: relative;
+        transition: transform 50ms ease;
+
+        .menu-item-check {
+            font-size: inherit;
+            height: 100%;
+            height: 100%;
+            position: absolute;
+            width: 2em;
+        }
+
+        .codicon {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
     }
+
+    .menu-item-indicator {
+        padding: 0 1.8em;
+
+        &.codicon {
+            align-items: center;
+            display: flex;
+            font-size: 16px;
+        }
+    }
+
+    .menu-item-label {
+        align-items: center;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        flex: auto;
+        font-size: inherit;
+        justify-content: center;
+        padding: 0 2em;
+        text-decoration: none;
+    }
+}
+
+#{prefix('menu-item')} {
+    font-size: 13px;
+}
+
+#{prefix('sub-menu')} {
+    display: block;
+    font-size: 13px;
+    position: fixed;
+    // transition-delay: 0.2s; Bug 
+    z-index: 1;
 }

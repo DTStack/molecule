@@ -1,5 +1,6 @@
 export type HTMLElementType = HTMLElement | null;
 export type TriggerEvent = 'click' | 'contextmenu' | 'hover';
+export type PlacementType = 'top' | 'right' | 'bottom' | 'left';
 export const select = document.querySelector.bind(document);
 export const selectAll = document.querySelectorAll.bind(document);
 
@@ -100,3 +101,26 @@ export function triggerEvent(trigger: TriggerEvent) {
         }
     }
 }
+
+/**
+ * Get the element position by placement and DOMRect
+ * @param placement top | right | bottom | left
+ * @param domRect Dom rect info, normally get it from getBoundingClientRect function
+ */
+export function getPositionByPlacement(placement: PlacementType, domRect: DOMRect): IPosition {
+    let x = domRect.x; // Initial placement is top
+    let y = domRect.y;
+
+    if (placement === 'top') {
+        y = domRect.y - domRect.height;
+    } else if (placement === 'right') {
+        x = domRect.x + domRect.width;
+    } else if (placement === 'bottom') {
+        y = domRect.y + domRect.height;
+    } else if (placement === 'left') {
+        x = domRect.x - domRect.width;
+    }
+    console.log('getPositionByPlacement', x, y)
+    return { x, y };
+}
+

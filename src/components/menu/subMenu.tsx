@@ -177,8 +177,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
             />
         ) : (
             <Menu className={cNames} style={{ visibility: 'hidden' }}>
-                {' '}
-                {children}{' '}
+                {children}
             </Menu>
         );
 

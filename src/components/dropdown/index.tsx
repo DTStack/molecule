@@ -2,12 +2,12 @@ import './style.scss';
 import * as React from 'react';
 import { classNames, prefixClaName } from 'mo/common/className';
 import { useContextView } from '../contextview';
-import { triggerEvent, TriggerEvent } from 'mo/common/dom';
+import { triggerEvent, TriggerEvent, PlacementType, getPositionByPlacement } from 'mo/common/dom';
 
 export interface IDropDown extends HTMLElementProps {
     overlay: ReactNode;
     trigger?: TriggerEvent;
-    placement?: 'top' | 'right' | 'bottom' | 'left';
+    placement?: PlacementType;
 }
 
 export const defaultDropDownClassName = 'drop-down';
@@ -17,7 +17,7 @@ export function DropDown(props: React.PropsWithChildren<IDropDown>) {
         className,
         overlay,
         children,
-        placement = 'bottom',
+        placement = 'right',
         trigger = 'click',
         ...others
     } = props;
@@ -34,10 +34,17 @@ export function DropDown(props: React.PropsWithChildren<IDropDown>) {
         [triggerEvent(trigger)]: function (e: React.MouseEvent) {
             const target = e.currentTarget;
             const rect = target.getBoundingClientRect();
-            contextView.show({
-                x: rect.x + rect.width,
-                y: rect.y,
-            });
+            let position = getPositionByPlacement(placement, rect);
+            contextView.show(position);
+            // If placement is left or top,
+            // need re calculate the position by menu size  
+            if (placement === 'left' || placement === 'top') {
+                const overlay = contextView.view!.getBoundingClientRect();
+                overlay.x = rect.x;
+                overlay.y = rect.y;
+                position = getPositionByPlacement(placement, overlay);
+                contextView.show(position);
+            }
         },
     };
 

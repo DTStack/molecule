@@ -1,0 +1,15 @@
+@import 'mo/style/common';
+@import 'mo/workbench/sidebar/style';
+.#{$sidebar}-explorer {
+    &-item {
+        width: 100%;
+
+        span:nth-child(2) {
+            float: right;
+
+            a {
+                margin-left: 5px;
+            }
+        }
+    }
+}

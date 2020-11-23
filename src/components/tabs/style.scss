@@ -1,4 +1,77 @@
-.scroll {
-    pointer-events: none;
-    width: 10px;
+.mo-tabs-container {
+    display: flex;
+    overflow: hidden;
+    font-size: 14px;
+    box-sizing: border-box;
+    .rc-tabs-nav {
+        display: flex;
+        align-items: center;
+        .rc-tabs-nav-wrap {
+            position: relative;
+            display: inline-block;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-flex: 1;
+            -ms-flex: auto;
+            flex: auto;
+            -ms-flex-item-align: stretch;
+            align-self: stretch;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .rc-tabs-nav-operations {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-item-align: stretch;
+            align-self: stretch;
+        }
+    }
+}
+.rc-tabs-nav-list {
+    height: 35px;
+    background-color: #001f27;
+    border-color: #002b36;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+.rc-tabs-tab {
+    position: relative;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 0 32px 0 0;
+    padding: 12px 0;
+    font-size: 14px;
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    &:hover {
+        .rc-tabs-tab-remove {
+            visibility: visible;
+        }
+    }
+}
+.rc-tabs-tab-btn {
+    outline: none;
+}
+.rc-tabs-tab-remove {
+    margin-right: -4px;
+    margin-left: 8px;
+    color: #999999;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    visibility: hidden;
 }

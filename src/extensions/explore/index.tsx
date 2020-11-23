@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { activityBarService, IActivityBarItem, sidebarService } from 'mo';
+import {
+    activityBarService,
+    IActivityBarItem,
+    sidebarService,
+    editorService,
+} from 'mo';
 
 import { Explorer } from './explore';
 import { ExtensionService } from 'mo/services/extensionService';
@@ -19,7 +24,12 @@ function init(extensionCtx: ExtensionService) {
         selected: exploreActiveItem.id,
         data: [...state.data, exploreActiveItem],
     });
-
+    editorService.changeTab((data) => {
+        console.log(data);
+    });
+    editorService.selectTab((tab) => {
+        console.log(`selected tabs${tab}`);
+    });
     const explorePane = {
         id: 'explore',
         title: 'EXPLORER',

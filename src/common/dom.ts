@@ -107,7 +107,10 @@ export function triggerEvent(trigger: TriggerEvent) {
  * @param placement top | right | bottom | left
  * @param domRect Dom rect info, normally get it from getBoundingClientRect function
  */
-export function getPositionByPlacement(placement: PlacementType, domRect: DOMRect): IPosition {
+export function getPositionByPlacement(
+    placement: PlacementType,
+    domRect: DOMRect
+): IPosition {
     let x = domRect.x; // Initial placement is top
     let y = domRect.y;
 
@@ -120,7 +123,6 @@ export function getPositionByPlacement(placement: PlacementType, domRect: DOMRec
     } else if (placement === 'left') {
         x = domRect.x - domRect.width;
     }
-    console.log('getPositionByPlacement', x, y)
+    console.log('getPositionByPlacement', x, y);
     return { x, y };
 }
-

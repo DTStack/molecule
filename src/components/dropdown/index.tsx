@@ -2,7 +2,12 @@ import './style.scss';
 import * as React from 'react';
 import { classNames, prefixClaName } from 'mo/common/className';
 import { useContextView } from '../contextview';
-import { triggerEvent, TriggerEvent, PlacementType, getPositionByPlacement } from 'mo/common/dom';
+import {
+    triggerEvent,
+    TriggerEvent,
+    PlacementType,
+    getPositionByPlacement,
+} from 'mo/common/dom';
 
 export interface IDropDown extends HTMLElementProps {
     overlay: ReactNode;
@@ -37,7 +42,7 @@ export function DropDown(props: React.PropsWithChildren<IDropDown>) {
             let position = getPositionByPlacement(placement, rect);
             contextView.show(position);
             // If placement is left or top,
-            // need re calculate the position by menu size  
+            // need re calculate the position by menu size
             if (placement === 'left' || placement === 'top') {
                 const overlay = contextView.view!.getBoundingClientRect();
                 overlay.x = rect.x;

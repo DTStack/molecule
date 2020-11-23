@@ -130,13 +130,13 @@ stories.add(
             },
         ];
 
-        const [ placement, setPlacement ] = useState<PlacementType>('right');
+        const [placement, setPlacement] = useState<PlacementType>('right');
 
         const onSelectPlacement = (e) => {
             const value = e.target.value;
             console.log('onSelectPlacement:', value);
             setPlacement(value);
-        }
+        };
 
         return (
             <div>
@@ -184,8 +184,10 @@ stories.add(
                 <div>
                     <h3>
                         使用示例 3 - Custom Placement
-
-                        <select onChange={onSelectPlacement} defaultValue="right">
+                        <select
+                            onChange={onSelectPlacement}
+                            defaultValue="right"
+                        >
                             <option value="top">Top</option>
                             <option value="right">Right</option>
                             <option value="bottom">Bottom</option>

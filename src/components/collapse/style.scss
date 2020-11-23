@@ -1,5 +1,84 @@
-@import 'mo/style/const.scss';
+@import 'mo/style/common';
+$collapse: 'collapse';
 
-.#{prefix}-collapse {
+@mixin header_border {
+    border: 1px solid rgba(97, 97, 97, 0.19);
+}
+
+#{prefix($collapse)} {
     font-size: 13px;
+
+    .rc-collapse {
+        background-color: inherit;
+    }
+
+    .rc-collapse-anim-active {
+        transition: height 0.2s ease-out;
+    }
+
+    .rc-collapse > .rc-collapse-item {
+        border-top: 0;
+        color: #bbb;
+    }
+
+    .rc-collapse > .rc-collapse-item > .rc-collapse-header {
+        align-items: center;
+        background: #333;
+        cursor: pointer;
+        display: flex;
+        font-weight: bold;
+        height: 22px;
+        outline: none;
+        padding: 1px 5px;
+        padding: 1px 5px;
+
+        &:focus {
+            @include header_border;
+        }
+
+        &:active {
+            @include header_border;
+        }
+    }
+
+    .rc-collapse > .rc-collapse-item > .rc-collapse-header .rc-collapse-extra {
+        margin: 0 0 0 auto;
+
+        .action-label.codicon {
+            height: inherit;
+            line-height: inherit;
+        }
+    }
+
+    .rc-collapse > .rc-collapse-item .rc-collapse-header-collapsable-only {
+        cursor: default;
+    }
+
+    .rc-collapse
+    > .rc-collapse-item
+    .rc-collapse-header-collapsable-only
+    .rc-collapse-header-text {
+        cursor: pointer;
+    }
+
+    .rc-collapse > .rc-collapse-item-disabled > .rc-collapse-header {
+        cursor: not-allowed;
+    }
+
+    .rc-collapse-content {
+        overflow: auto;
+    }
+
+    .rc-collapse-content > .rc-collapse-content-box {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .rc-collapse-content-inactive {
+        display: none;
+    }
+
+    .rc-collapse-item:last-child > .rc-collapse-content {
+        border-radius: 0 0 3px 3px;
+    }
 }

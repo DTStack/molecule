@@ -54,7 +54,7 @@ export default function ActionBar<T = any>(props: IActionBar<T>) {
     const claNames = classNames(prefixClaName(rootClassName), className);
 
     const items = data.map((item: IActionBarItem<T>) => (
-        <ActionBarItem key={item.id} {...item} />
+        <ActionBarItem key={item.id} onClick={onClick} {...item} />
     ));
 
     return (

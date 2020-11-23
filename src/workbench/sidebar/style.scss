@@ -1,13 +1,14 @@
-@import 'mo/style/const';
+@import 'mo/style/common';
+$sidebar: 'sidebar';
 
-.#{$prefix}-#{$sidebar} {
+#{prefix($sidebar)} {
     height: 100%;
     left: 0;
     position: relative;
     width: 100%;
 }
 
-.#{$prefix}-#{$sidebar} .#{$sidebar}-pane {
+#{prefix($sidebar)}.#{$sidebar}-pane {
     height: 100%;
     position: relative;
     width: 100%;

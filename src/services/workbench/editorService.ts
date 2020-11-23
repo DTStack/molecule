@@ -3,7 +3,13 @@ import { Component } from 'mo/react';
 import { ITab } from 'mo/components/tabs';
 import { emit } from 'mo/common/event';
 import { singleton, container } from 'tsyringe';
-import { EditorEvent, EditorModel, EditorGroupModel, IEditor, IEditorGroup } from 'mo/model';
+import {
+    EditorEvent,
+    EditorModel,
+    EditorGroupModel,
+    IEditor,
+    IEditorGroup,
+} from 'mo/model';
 
 export interface IEditorService extends Component<IEditor> {
     /**
@@ -14,7 +20,7 @@ export interface IEditorService extends Component<IEditor> {
     open<T = any>(tab: ITab, groupId?: number): void;
     close(index: number, callback: () => void): void;
     changeTab(callback: (tabs: ITab[]) => void);
-    selectTab(callback: (tab: ITab) => void)
+    selectTab(callback: (tab: ITab) => void);
 }
 
 @singleton()
@@ -42,18 +48,16 @@ export class EditorService
             current = group;
         }
     }
-    public changeTab(
-        callback: (data) => void
-    ) {
-            this.subscribe(EditorEvent.ChangeTab, (args) => {
-                let { groups } = this.state;
-                let group
-                if (!args?.[1]) return
-                const groupId = args?.[1]
-                group = groups?.find((group: IEditorGroup) => group.id === groupId)
-                group.tabs = args?.[0]
-                callback?.(args?.[0])
-            })
+    public changeTab(callback: (data) => void) {
+        this.subscribe(EditorEvent.ChangeTab, (args) => {
+            let { groups } = this.state;
+            let group;
+            if (!args?.[1]) return;
+            const groupId = args?.[1];
+            group = groups?.find((group: IEditorGroup) => group.id === groupId);
+            group.tabs = args?.[0];
+            callback?.(args?.[0]);
+        });
     }
     public selectTab(callback: Function) {
         this.subscribe(EditorEvent.SelectTab, callback);

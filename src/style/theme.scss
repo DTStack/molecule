@@ -1,15 +1,35 @@
-@import 'mo/style/const';
+@import 'mo/style/common';
+
+// Workbench
+@import 'mo/workbench/style';
+@import 'mo/workbench/editor/style';
+@import 'mo/workbench/menuBar/style';
+@import 'mo/workbench/panel/style';
+@import 'mo/workbench/settings/style';
+@import 'mo/workbench/sidebar/style';
+@import 'mo/workbench/statusBar/style';
+@import 'mo/workbench/activityBar/style';
+
+// Workbench parts
 @import 'mo/components/actionbar/style';
 @import 'mo/components/menu/style';
+@import 'mo/components/collapse/style';
+@import 'mo/components/contextMenu/style';
+@import 'mo/components/contextView/style';
+@import 'mo/components/dropdown/style';
+@import 'mo/components/list/style';
+@import 'mo/components/menu/style';
+@import 'mo/components/toolbar/style';
+@import 'mo/components/tree/style';
 
 // =============== Workbench =============== //
-.#{$prefix}-workbench {
+#{prefix($workbench)} {
     background-color: #252526;
     color: #ccc;
 }
 
 // =============== Sidebar =============== //
-.#{$prefix}-sidebar {
+#{prefix($sidebar)} {
     // TODO temp style, just for development
     background-color: rgb(37, 37, 38);
     outline-color: rgba(83, 89, 93, 0.5);
@@ -20,17 +40,17 @@
 }
 
 // =============== Editor =============== //
-.#{$prefix}-editor {
+#{prefix($editor)} {
     background-color: #1e1e1e;
 }
 
 // =============== MenuBar =============== //
-.#{$prefix}-menuBar {
+#{prefix($menuBar)} {
     background-color: rgb(51, 51, 51);
 }
 
 // =============== activityBar =============== //
-.#{$prefix}-#{$activityBar} {
+#{prefix($activityBar)} {
     background-color: rgb(51, 51, 51);
 
     .active-item-indicator {
@@ -43,30 +63,34 @@
 }
 
 // =============== Settings =============== //
-.#{$prefix}-#{$settings} {
+#{prefix($settings)} {
     color: rgba(255, 255, 255, 0.4);
 }
 
-// =============== statusbar =============== //
-.#{$prefix}-#{$statusBar} {
+// =============== Status Bar =============== //
+#{prefix($statusBar)} {
     background-color: rgb(0, 122, 204);
     color: rgb(255, 255, 255);
 }
 
+// =============== Panel =============== //
+#{prefix($panel)} {
+    border-top-color: rgb(65, 67, 57);
+}
+
 // =============== Common =============== //
 .#{$activityBar}-item,
-.#{$prefix}-#{$menuBar} {
+#{prefix($menuBar)} {
     color: rgba(255, 255, 255, 0.4);
 }
 
 .#{$activityBar}-item:hover,
-.#{$prefix}-#{$menuBar}:hover {
+#{prefix($menuBar)}:hover {
     color: #fff;
 }
 
 // =============== Action Bar =============== //
-
-#{prefix('action-bar')} {
+#{prefix($actionBar)} {
     background-color: rgb(37, 37, 38);
     color: rgb(204, 204, 204);
 }
@@ -77,15 +101,69 @@
         color: rgb(204, 204, 204);
     }
 
-    .mo-menu-item:hover {
+    #{prefix($menuItem)}:hover {
         background-color: rgb(9, 71, 113);
         color: rgb(255, 255, 255);
     }
 }
 
 #{prefix($menu)},
-#{prefix('sub-menu')} {
+#{prefix($subMenu)} {
     background-color: rgb(37, 37, 38);
     box-shadow: #000 0 2px 4px;
     color: rgb(204, 204, 204);
+}
+
+// =============== Collapse =============== //
+@mixin borderColor($color) {
+    border: 1px solid $color;
+}
+#{prefix($collapse)} {
+    background-color: #252526;
+
+    .rc-collapse-header {
+        background: #333;
+
+        &:focus,
+        &:active {
+            @include borderColor(rgba(97, 97, 97, 0.19));
+        }
+
+        .rc-collapse-extra {
+            #{prefix('action-bar')} {
+                background: #333;
+            }
+        }
+    }
+}
+
+// =============== Tree =============== //
+#{prefix($tree)} {
+    .rc-tree-treenode {
+        &:hover {
+            background-color: #333;
+        }
+
+        .draggable {
+            color: #bbb;
+        }
+    }
+
+    .rc-tree-treenode.drag-over > .draggable {
+        @include borderColor(#316ac5);
+        background-color: #316ac5;
+        color: #bbb;
+    }
+
+    .rc-tree-treenode.drag-over-gap-top > .draggable {
+        border-top: 2px rgb(0, 122, 204) solid;
+    }
+
+    .rc-tree-treenode.drag-over-gap-bottom > .draggable {
+        border-bottom: 2px rgb(0, 122, 204) solid;
+    }
+
+    .rc-tree-treenode-active {
+        background: rgba(0, 0, 0, 0.1);
+    }
 }

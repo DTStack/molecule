@@ -4,6 +4,7 @@ import {
     sidebarService,
     IExtensionService,
     IActivityBarItem,
+    editorService,
 } from 'mo';
 import { IExtension } from 'mo/model/extension';
 import SearchPane from './searchPane';
@@ -33,6 +34,13 @@ function init() {
                 current: searchSidePane.id,
             });
         }
+    });
+
+    editorService.changeTab((data) => {
+        console.log(data);
+    });
+    editorService.selectTab((tab) => {
+        console.log(`selected tabs${tab}`);
     });
 }
 

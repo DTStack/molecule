@@ -82,5 +82,10 @@
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
             "pre-push": "prettier --ignore-unknown --write ."
         }
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
     }
 }

@@ -115,7 +115,7 @@
 }
 
 // =============== Collapse =============== //
-@mixin borderColor($color) {
+@mixin border-color($color) {
     border: 1px solid $color;
 }
 #{prefix($collapse)} {
@@ -126,7 +126,7 @@
 
         &:focus,
         &:active {
-            @include borderColor(rgba(97, 97, 97, 0.19));
+            @include border-color(rgba(97, 97, 97, 0.19));
         }
 
         .rc-collapse-extra {
@@ -150,7 +150,7 @@
     }
 
     .rc-tree-treenode.drag-over > .draggable {
-        @include borderColor(#316ac5);
+        @include border-color(#316ac5);
         background-color: #316ac5;
         color: #bbb;
     }

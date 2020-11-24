@@ -24,7 +24,6 @@ export function isHorizontal(mode: MenuMode) {
 export function isVertical(mode: MenuMode) {
     return mode === MenuMode.Horizontal;
 }
-
 export interface ISubMenu extends IMenuItem {
     /**
      * The event of show subMenu, default value is 'hover'
@@ -57,7 +56,7 @@ const hideAfterLeftWindow = () => {
     }
 };
 
-let timer;
+// let timer;
 
 export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
     const {
@@ -75,7 +74,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
 
     const events = {
         onMouseOver: (event: React.MouseEvent<any, any>) => {
-            clearTimeout(timer);
+            // clearTimeout(timer);
 
             const nextMenuItem = findParentByClassName<HTMLLIElement>(
                 event.target,
@@ -95,9 +94,14 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
             );
 
             if (
-                prevMenuItem &&
-                prevSubMenu &&
-                !prevMenuItem.contains(nextMenuItem)
+                (
+                    prevMenuItem &&
+                    prevSubMenu &&
+                    !prevMenuItem.contains(nextMenuItem)
+                ) ||
+                (
+                    !prevMenuItem && !prevSubMenu
+                )
             ) {
                 hideAll();
             }
@@ -147,7 +151,6 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
                 !prevMenuItem.contains(nextMenuItem)
             ) {
                 hideAll();
-                // delayHide(prevMenuItem);
             }
         },
         onClick: function (event: React.MouseEvent) {
@@ -163,7 +166,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
             document.removeEventListener('contextmenu', hideAll);
             window.removeEventListener('click', hideAll);
             window.removeEventListener('visibilitychange', hideAfterLeftWindow);
-            clearTimeout(timer);
+            // clearTimeout(timer);
         };
     }, []);
 

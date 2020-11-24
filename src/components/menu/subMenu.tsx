@@ -94,14 +94,10 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
             );
 
             if (
-                (
-                    prevMenuItem &&
+                (prevMenuItem &&
                     prevSubMenu &&
-                    !prevMenuItem.contains(nextMenuItem)
-                ) ||
-                (
-                    !prevMenuItem && !prevSubMenu
-                )
+                    !prevMenuItem.contains(nextMenuItem)) ||
+                (!prevMenuItem && !prevSubMenu)
             ) {
                 hideAll();
             }

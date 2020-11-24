@@ -24,14 +24,16 @@ stories.add(
     () => {
         const items: any[] = [];
         for (let i = 0; i < 100; i++) {
-            items.push(<MenuItem key={i}>{i}</MenuItem>)
+            items.push(<MenuItem key={i}>{i}</MenuItem>);
         }
         return (
             <div>
                 <h2>简述</h2>
                 <p>
-                    Scrollable, custom scrollbar component based on [react-scrollbars-custom](https://xobotyi.github.io/react-scrollbars-custom/),
-                    More usage, please [visit](https://github.com/xobotyi/react-scrollbars-custom).
+                    Scrollable, custom scrollbar component based on
+                    [react-scrollbars-custom](https://xobotyi.github.io/react-scrollbars-custom/),
+                    More usage, please
+                    [visit](https://github.com/xobotyi/react-scrollbars-custom).
                 </p>
                 <div>
                     <h3>使用示例 1</h3>
@@ -43,9 +45,7 @@ stories.add(
                             background: '#252526',
                         }}
                     >
-                        <Scrollable>
-                            { items }
-                        </Scrollable>
+                        <Scrollable>{items}</Scrollable>
                     </Menu>
                 </div>
             </div>

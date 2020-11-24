@@ -46,9 +46,7 @@ export function ActivityBar(props: IActivityBar) {
         <div className={prefixClaName(ID_ACTIVITY_BAR)} id={ID_ACTIVITY_BAR}>
             <div className={prefixClaName('container', ID_ACTIVITY_BAR)}>
                 <Scrollable className={'normal-items'}>
-                    <ul>
-                        {normalBarItems.map(renderItems)}
-                    </ul>
+                    <ul>{normalBarItems.map(renderItems)}</ul>
                 </Scrollable>
                 <ul className={'global-items'}>
                     {globalBarItems.map(renderItems)}

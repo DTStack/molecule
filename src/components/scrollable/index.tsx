@@ -40,27 +40,37 @@ export function Scrollable(props: IScrollbar) {
         setIsMouseOver(false);
     }, []);
 
-    const trackProps = useMemo(() => ({
-        renderer: ({ elementRef, style, ...restProps }: any) => (
-            <span
-                {...restProps}
-                ref={elementRef}
-                style={{
-                    ...style, opacity: isShow ? 1 : 0,
-                    transition: "opacity 0.4s ease-in-out", 
-                }}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}/>
-            )
-    }), [isShow, onMouseEnter, onMouseLeave]);
+    const trackProps = useMemo(
+        () => ({
+            renderer: ({ elementRef, style, ...restProps }: any) => (
+                <span
+                    {...restProps}
+                    ref={elementRef}
+                    style={{
+                        ...style,
+                        opacity: isShow ? 1 : 0,
+                        transition: 'opacity 0.4s ease-in-out',
+                    }}
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                />
+            ),
+        }),
+        [isShow, onMouseEnter, onMouseLeave]
+    );
 
     return (
-        <Scrollbar 
-            className={claNames} {...custom as any}
+        <Scrollbar
+            className={claNames}
+            {...(custom as any)}
             wrapperProps={{
-            renderer: ({ elementRef, style, ...restProps }: any) => (
-                <div {...restProps} ref={elementRef} style={{ ...style, right: 0 }} />
-            ),
+                renderer: ({ elementRef, style, ...restProps }: any) => (
+                    <div
+                        {...restProps}
+                        ref={elementRef}
+                        style={{ ...style, right: 0 }}
+                    />
+                ),
             }}
             trackXProps={trackProps}
             trackYProps={trackProps}
@@ -68,7 +78,7 @@ export function Scrollable(props: IScrollbar) {
             onScrollStop={onScrollStop}
             scrollDetectionThreshold={500} // ms
         >
-            { children }
+            {children}
         </Scrollbar>
-    )
+    );
 }

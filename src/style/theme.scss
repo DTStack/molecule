@@ -21,6 +21,7 @@
 @import 'mo/components/menu/style';
 @import 'mo/components/toolbar/style';
 @import 'mo/components/tree/style';
+@import 'mo/components/button/style';
 
 // =============== Workbench =============== //
 #{prefix($workbench)} {
@@ -166,4 +167,10 @@
     .rc-tree-treenode-active {
         background: rgba(0, 0, 0, 0.1);
     }
+}
+
+// =============== Button =============== //
+#{prefix($btn)} {
+    background-color: #316ac5;
+    color: rgb(255, 255, 255);
 }

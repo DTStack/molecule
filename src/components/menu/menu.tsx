@@ -4,7 +4,6 @@ import { classNames, prefixClaName } from 'mo/common/className';
 import { MenuItem } from './menuItem';
 import { ISubMenu, MenuMode, SubMenu } from './subMenu';
 
-
 export interface IMenu extends ISubMenu {}
 
 export const defaultMenuClassName = 'menu';

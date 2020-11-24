@@ -4369,6 +4369,11 @@ clone-regexp@^2.1.0:
   dependencies:
     is-regexp "^2.0.0"
 
+cnbuilder@^2.5.0:
+  version "2.6.0"
+  resolved "http://registry.npm.dtstack.com/cnbuilder/-/cnbuilder-2.6.0.tgz#309b4f34371be80ad5452f983b7bac1af4f09ac8"
+  integrity sha1-MJtPNDcb6ArVRS+YO3usGvTwmsg=
+
 co@^4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.dtstack.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -11122,7 +11127,7 @@ react-dom@^16.13.1, react-dom@^16.8.3:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-draggable@^4.0.3:
+react-draggable@^4.0.3, react-draggable@^4.4.2:
   version "4.4.3"
   resolved "http://registry.npm.dtstack.com/react-draggable/-/react-draggable-4.4.3.tgz#0727f2cae5813e36b0e4962bf11b2f9ef2b406f3"
   integrity sha1-ByfyyuWBPjaw5JYr8RsvnvK0BvM=
@@ -11243,6 +11248,15 @@ react-refresh@^0.8.3:
   version "0.8.3"
   resolved "http://registry.npm.dtstack.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
   integrity sha1-ch1GV2ctQAxePHXQY8SoX7LV1o8=
+
+react-scrollbars-custom@^4.0.25:
+  version "4.0.25"
+  resolved "http://registry.npm.dtstack.com/react-scrollbars-custom/-/react-scrollbars-custom-4.0.25.tgz#64c1390fc04fe2b90373d5d142bd129a3d46e394"
+  integrity sha1-ZME5D8BP4rkDc9XRQr0Smj1G45Q=
+  dependencies:
+    cnbuilder "^2.5.0"
+    react-draggable "^4.4.2"
+    zoom-level "^2.5.0"
 
 react-select@^3.0.8:
   version "3.1.0"
@@ -14241,6 +14255,11 @@ yargs@^15.1.0, yargs@^15.3.1, yargs@^15.4.1:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
+
+zoom-level@^2.5.0:
+  version "2.5.0"
+  resolved "http://registry.npm.dtstack.com/zoom-level/-/zoom-level-2.5.0.tgz#286ec16f247b8bb7a900df6612567688eeef498a"
+  integrity sha1-KG7BbyR7i7epAN9mElZ2iO7vSYo=
 
 zwitch@^1.0.0:
   version "1.0.5"

@@ -11,23 +11,25 @@ export interface IList<T = any> extends ComponentProps<any> {
      */
     mode?: 'horizontal' | 'vertical';
     /**
-     * Current active 
+     * Current active
      */
     active?: string;
     onClick?(event: React.MouseEvent, item?: IItem): void;
 }
 
 export function List<T = any>(props: React.PropsWithChildren<IList<T>>) {
-    const { children, active, onClick, className, mode = 'vertical', ...others } = props;
+    const {
+        children,
+        active,
+        onClick,
+        className,
+        mode = 'vertical',
+        ...others
+    } = props;
     const claNames = classNames(prefixClaName('list'), className, mode);
     return (
-        <ul
-            {...others}
-            className={claNames}
-        >
-            {
-                cloneReactChildren<IList>(children, { active, onClick })
-            }
+        <ul {...others} className={claNames}>
+            {cloneReactChildren<IList>(children, { active, onClick })}
         </ul>
     );
 }

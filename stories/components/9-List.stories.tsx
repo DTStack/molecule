@@ -22,30 +22,32 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
-
         const [active, setActive] = useState('1');
 
         const click = (e, item) => {
             console.log('item.', e, item);
             setActive(item.id);
-        }
+        };
 
         const itemStyle = {
             width: 100,
             height: 50,
             marginRight: 10,
-        }
+        };
 
         return (
             <div>
                 <h2>简述</h2>
-                <p>
-                    List component.
-                </p>
+                <p>List component.</p>
                 <h2>使用示例</h2>
                 <div>
                     <h3>Mode - vertical</h3>
-                    <List className="custom-list-1" mode="vertical" onClick={click} active={active}>
+                    <List
+                        className="custom-list-1"
+                        mode="vertical"
+                        onClick={click}
+                        active={active}
+                    >
                         <Item id="1">Item 1</Item>
                         <Item id="2">Item 1</Item>
                         <Item id="3">Item 1</Item>

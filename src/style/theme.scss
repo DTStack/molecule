@@ -174,3 +174,15 @@
     background-color: #316ac5;
     color: rgb(255, 255, 255);
 }
+
+// =============== List =============== //
+#{prefix($list)} {
+    .list-item {
+        background-color: #252526;
+        color: #bbb;
+
+        &.active {
+            background-color: #316ac5;
+        }
+    }
+}

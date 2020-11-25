@@ -71,6 +71,9 @@ export class EditorModel implements IEditor {
         this.current = current;
         this.groups = groups;
     }
+    closeAll?: (() => void) | undefined;
+    onClose?: (() => void) | undefined;
+    onMoveTab: (tabs: ITab[], group?: number | undefined) => void;
 
     public render!: () => React.ReactNode;
 

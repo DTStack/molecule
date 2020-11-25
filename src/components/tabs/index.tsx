@@ -14,23 +14,24 @@ export interface ITab {
     name?: string; // fileName
     activeTab?: number; // activeTab
     modified?: boolean; // modify file
+    renderPane?: () => React.ReactNode;
+    value?: string;
 }
 export interface ITabsProps {
     data: ITab[];
     closeTab?: (item: ITab) => void;
     onMoveTab?: (tabs: ITab[]) => void;
     selectTab?: (index: number) => void;
-    // onMoveTab: (dragIndex?: number, hoverIndex?: number | string) => void;
     onTabChange: (index: number) => void;
 }
 
 const DraggleTabs = (props: ITabsProps) => {
-    const { data, onMoveTab, selectTab } = props;
+    const { data, selectTab } = props;
 
     const onMoveTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
-            onMoveTab?.(
+            props.onMoveTab?.(
                 update(data, {
                     $splice: [
                         [dragIndex, 1],

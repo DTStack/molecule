@@ -167,3 +167,16 @@
         background: rgba(0, 0, 0, 0.1);
     }
 }
+
+// =============== List =============== //
+
+#{prefix($list)} {
+    .list-item {
+        background-color: #252526;
+        color: #bbb;
+
+        &.active {
+            background-color: #316ac5;
+        }
+    }
+}

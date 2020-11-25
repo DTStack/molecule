@@ -4,6 +4,7 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
 import { List, Item } from 'mo/components/list';
+import { useState } from 'react';
 
 const stories = storiesOf('List', module);
 stories.addDecorator(withKnobs);
@@ -21,25 +22,32 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
+
+        const [active, setActive] = useState('1');
+
+        const click = (e, item) => {
+            console.log('item.', e, item);
+            setActive(item.id);
+        }
+
         return (
             <div>
                 <h2>简述</h2>
                 <p>
-                    ContextView
-                    组件主要是提供了一个可根据指定锚点位置、渲染内容的视图容器。
+                    List component.
                 </p>
                 <h2>使用示例</h2>
                 <div>
                     <h3>Direction - vertical</h3>
-                    <List direction="vertical">
-                        <Item>Item 1</Item>
-                        <Item>Item 1</Item>
-                        <Item>Item 1</Item>
+                    <List className="custom-list-1" mode="vertical" onClick={click} active={active}>
+                        <Item id="1">Item 1</Item>
+                        <Item id="2">Item 1</Item>
+                        <Item id="3">Item 1</Item>
                     </List>
                 </div>
                 <div>
                     <h3>Direction - horizontal</h3>
-                    <List direction="horizontal">
+                    <List className="custom-list-2" mode="horizontal">
                         <Item>Item 1</Item>
                         <Item>Item 1</Item>
                         <Item>Item 1</Item>

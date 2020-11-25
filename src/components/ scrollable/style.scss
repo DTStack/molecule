@@ -1,0 +1,52 @@
+.spui-scroller {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    &__container {
+        display: inline-block;
+        position: relative;
+    }
+
+    &__bar {
+        display: none;
+        position: absolute;
+    }
+
+    &__bar--active {
+        display: block;
+    }
+
+    &__indicator {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    &__indicator--active {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &&--horizontal &__container {
+        height: 100%;
+    }
+
+    &&--horizontal &__bar {
+        bottom: 0;
+        height: 6px;
+        left: 0;
+        width: 100%;
+    }
+
+    &&--vertical &__container {
+        width: 100%;
+    }
+
+    &&--vertical &__bar {
+        bottom: 0;
+        height: 100%;
+        right: 0;
+        width: 6px;
+    }
+}

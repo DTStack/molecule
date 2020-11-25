@@ -1,77 +1,84 @@
 .mo-tabs-container {
-    display: flex;
-    overflow: hidden;
-    font-size: 14px;
     box-sizing: border-box;
+    display: flex;
+    font-size: 14px;
+    overflow: hidden;
+
     .rc-tabs-nav {
-        display: flex;
         align-items: center;
+        display: flex;
+
         .rc-tabs-nav-wrap {
-            position: relative;
-            display: inline-block;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-flex: 1;
-            -ms-flex: auto;
-            flex: auto;
-            -ms-flex-item-align: stretch;
             align-self: stretch;
+            box-flex: 1;
+            display: inline-block;
+            display: box;
+            display: flexbox;
+            display: flex;
+            flex: auto;
+            flex: auto;
+            flex-item-align: stretch;
             overflow: hidden;
+            position: relative;
             white-space: nowrap;
         }
+
         .rc-tabs-nav-operations {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-item-align: stretch;
             align-self: stretch;
+            display: box;
+            display: flexbox;
+            display: flex;
+            flex-item-align: stretch;
         }
     }
 }
+
 .rc-tabs-nav-list {
-    height: 35px;
+    align-items: center;
     background-color: #001f27;
     border-color: #002b36;
     display: flex;
     flex-flow: row nowrap;
+    height: 35px;
     justify-content: flex-start;
-    align-items: center;
     overflow: hidden;
 }
 
 .rc-tabs-tab {
-    position: relative;
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    margin: 0 32px 0 0;
-    padding: 12px 0;
-    font-size: 14px;
     background: transparent;
     border: 0;
-    outline: none;
+    box-align: center;
     cursor: pointer;
+    display: inline-box;
+    display: inline-flexbox;
+    display: inline-flex;
+    flex-align: center;
+    font-size: 14px;
+    margin: 0 32px 0 0;
+    outline: none;
+    padding: 12px 0;
+    position: relative;
+
     &:hover {
         .rc-tabs-tab-remove {
             visibility: visible;
         }
     }
 }
+
 .rc-tabs-tab-btn {
     outline: none;
 }
+
 .rc-tabs-tab-remove {
-    margin-right: -4px;
-    margin-left: 8px;
-    color: #999999;
-    font-size: 16px;
     background: transparent;
     border: none;
-    outline: none;
+    color: #999;
     cursor: pointer;
+    font-size: 16px;
+    margin-left: 8px;
+    margin-right: -4px;
+    outline: none;
     visibility: hidden;
 }

@@ -17,14 +17,14 @@ export interface ITab {
     mode?: string;
     data?: [];
     value?: string;
-    renderPane?: string | React.ReactNode;
+    renderPane?: () => React.ReactNode;
 }
 interface ITabsProps {
     data: ITab[];
     closeTab?: (index: number) => void;
     changeTab?: (tabs: ITab[]) => void;
-    selectTab: (index: number) => void;
-    children: React.ReactNode | JSX.Element;
+    selectTab?: (index: number) => void;
+    children?: React.ReactNode;
 }
 
 const DraggleTabs: React.FC<ITabsProps> = (props: ITabsProps) => {
@@ -47,7 +47,7 @@ const DraggleTabs: React.FC<ITabsProps> = (props: ITabsProps) => {
 
     const onTabClick = (key) => {
         console.log(`onTabClick ${key}`);
-        selectTab(key);
+        if (selectTab) selectTab(key);
     };
 
     const renderTabBar = (props, DefaultTabBar) => {

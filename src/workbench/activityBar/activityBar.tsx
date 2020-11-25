@@ -3,7 +3,9 @@ import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
+
 import ActivityBarItem from './activityBarItem';
+import { Scrollable } from 'mo/components/scrollable';
 
 export function ActivityBar(props: IActivityBar) {
     const { data = [], render, selected, onClick, onSelect } = props;
@@ -43,9 +45,9 @@ export function ActivityBar(props: IActivityBar) {
     return (
         <div className={prefixClaName(ID_ACTIVITY_BAR)} id={ID_ACTIVITY_BAR}>
             <div className={prefixClaName('container', ID_ACTIVITY_BAR)}>
-                <ul className={'normal-items'}>
-                    {normalBarItems.map(renderItems)}
-                </ul>
+                <Scrollable className={'normal-items'}>
+                    <ul>{normalBarItems.map(renderItems)}</ul>
+                </Scrollable>
                 <ul className={'global-items'}>
                     {globalBarItems.map(renderItems)}
                 </ul>

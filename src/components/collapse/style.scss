@@ -55,9 +55,9 @@ $collapse: 'collapse';
     }
 
     .rc-collapse
-    > .rc-collapse-item
-    .rc-collapse-header-collapsable-only
-    .rc-collapse-header-text {
+        > .rc-collapse-item
+        .rc-collapse-header-collapsable-only
+        .rc-collapse-header-text {
         cursor: pointer;
     }
 

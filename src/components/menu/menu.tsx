@@ -28,7 +28,7 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
             return menus.map((item: IMenu) => {
                 if (item.data && item.data.length > 0) {
                     return (
-                        <SubMenu mode={mode} {...item}>
+                        <SubMenu key={item.id} mode={mode} {...item}>
                             {renderMenusByData(item.data)}
                         </SubMenu>
                     );

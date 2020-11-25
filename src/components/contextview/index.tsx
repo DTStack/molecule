@@ -15,7 +15,7 @@ export interface IContextViewProps {
 }
 
 export interface IContextView {
-    contextView: HTMLElementType;
+    view: HTMLElementType;
     show(anchorPos: IPosition, render?: () => React.ReactNode): void;
     hide(): void;
 }
@@ -37,7 +37,7 @@ export function useContextView(props?: IContextViewProps): IContextView {
         ReactDOM.render(<>{renderContent()}</>, content, () => {
             // Notice: if want to get the computed offsetHeight of contextView,
             // must display contextView ahead.
-            contextView!.style.display = 'block';
+            contextView!.style.display = 'visible';
             const position = getRelativePosition(contextView!, anchorPos);
             contextView!.style.cssText = `
                 top: ${position.y}px;
@@ -48,7 +48,7 @@ export function useContextView(props?: IContextViewProps): IContextView {
 
     const hide = () => {
         if (contextView) {
-            contextView.style.display = 'none';
+            contextView.style.visibility = 'hidden';
             ReactDOM.unmountComponentAtNode(select(contentClass)!);
         }
     };
@@ -65,7 +65,7 @@ export function useContextView(props?: IContextViewProps): IContextView {
             claName,
             Utils.isMacOs() ? 'mac' : null
         );
-        contextView.style.display = 'none';
+        contextView.style.visibility = 'hidden';
         const root = document.getElementById('molecule');
         if (!root) {
             document.body.appendChild(contextView);
@@ -86,5 +86,5 @@ export function useContextView(props?: IContextViewProps): IContextView {
         );
     }
 
-    return { contextView, show, hide };
+    return { view: contextView, show, hide };
 }

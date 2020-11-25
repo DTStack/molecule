@@ -6,6 +6,8 @@ import { propsTable } from '../common/propsTable';
 import { Menu } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { DropDown } from 'mo/components/dropdown';
+import { useState } from 'react';
+import { PlacementType } from 'mo/common/dom';
 
 const stories = storiesOf('DropDown', module);
 stories.addDecorator(withKnobs);
@@ -128,6 +130,14 @@ stories.add(
             },
         ];
 
+        const [placement, setPlacement] = useState<PlacementType>('right');
+
+        const onSelectPlacement = (e) => {
+            const value = e.target.value;
+            console.log('onSelectPlacement:', value);
+            setPlacement(value);
+        };
+
         return (
             <div>
                 <h2>简述</h2>
@@ -154,7 +164,7 @@ stories.add(
                     </DropDown>
                 </div>
                 <div>
-                    <h3>使用示例 1 - Click me!</h3>
+                    <h3>使用示例 2 - Click me!</h3>
                     <DropDown
                         style={{
                             width: 45,
@@ -164,6 +174,35 @@ stories.add(
                         }}
                         trigger="click"
                         placement="right"
+                        overlay={
+                            <Menu style={{ width: 200 }} data={menuData} />
+                        }
+                    >
+                        <Icon type="menu" />
+                    </DropDown>
+                </div>
+                <div>
+                    <h3>
+                        使用示例 3 - Custom Placement
+                        <select
+                            onChange={onSelectPlacement}
+                            defaultValue="right"
+                        >
+                            <option value="top">Top</option>
+                            <option value="right">Right</option>
+                            <option value="bottom">Bottom</option>
+                            <option value="left">Left</option>
+                        </select>
+                    </h3>
+                    <DropDown
+                        style={{
+                            width: 45,
+                            height: 45,
+                            color: 'rgba(255, 255, 255, 0.4)',
+                            background: '#252526',
+                        }}
+                        trigger="click"
+                        placement={placement}
                         overlay={
                             <Menu style={{ width: 200 }} data={menuData} />
                         }

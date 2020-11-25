@@ -24,7 +24,7 @@ function init(extensionCtx: ExtensionService) {
         selected: exploreActiveItem.id,
         data: [...state.data, exploreActiveItem],
     });
-    editorService.changeTab((data) => {
+    editorService.onMoveTab((data) => {
         console.log(data);
     });
     editorService.selectTab((tab) => {

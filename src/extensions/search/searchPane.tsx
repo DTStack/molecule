@@ -81,9 +81,11 @@ export default class SearchPane extends React.Component<
         const newEditor = function () {
             const id = Math.random() * 10 + 1;
             const tabData = {
+                activeTab: 0,
                 id: id,
                 name: `test-tab${id.toFixed(2)}`,
-                value: 'just test tab data',
+                modified: true,
+                value: 'hello javascript',
             };
             console.log('open editor:', tabData);
             editorService.open(tabData, 1);

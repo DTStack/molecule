@@ -1,84 +1,90 @@
-.mo-tabs-container {
-    box-sizing: border-box;
-    display: flex;
-    font-size: 14px;
-    overflow: hidden;
+@import 'mo/style/common';
+$tabSwitcher: 'tab-switcher';
 
-    .rc-tabs-nav {
-        align-items: center;
-        display: flex;
-
-        .rc-tabs-nav-wrap {
-            align-self: stretch;
-            box-flex: 1;
-            display: inline-block;
-            display: box;
-            display: flexbox;
-            display: flex;
-            flex: auto;
-            flex: auto;
-            flex-item-align: stretch;
-            overflow: hidden;
-            position: relative;
-            white-space: nowrap;
-        }
-
-        .rc-tabs-nav-operations {
-            align-self: stretch;
-            display: box;
-            display: flexbox;
-            display: flex;
-            flex-item-align: stretch;
-        }
-    }
-}
-
-.rc-tabs-nav-list {
-    align-items: center;
-    background-color: #001f27;
-    border-color: #002b36;
+#{prefix($tabSwitcher)} {
     display: flex;
     flex-flow: row nowrap;
     height: 35px;
-    justify-content: flex-start;
-    overflow: hidden;
+    width: 100%;
 }
 
-.rc-tabs-tab {
+.tab-button {
     align-items: center;
-    background: transparent;
-    border: 0;
-    box-align: center;
+    color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    display: inline-box;
-    display: inline-flexbox;
     display: inline-flex;
-    flex-align: center;
-    font-size: 14px;
-    margin: 0 32px 0 0;
-    outline: none;
-    padding: 12px 0;
+    height: 100%;
+    padding: 0 14px;
     position: relative;
+    user-select: none;
+    width: 150px;
 
-    &:hover {
-        .rc-tabs-tab-remove {
-            visibility: visible;
+    &__name {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+
+    &__op {
+        align-items: center;
+        display: inline-flex;
+        line-height: 1;
+        margin-left: 10px;
+    }
+
+    &__dot {
+        display: block;
+        height: 18px;
+        position: relative;
+        width: 18px;
+
+        &::after {
+            background-color: #fff;
+            border-radius: 50%;
+            content: '';
+            display: block;
+            height: 9px;
+            left: 5px;
+            position: relative;
+            top: 5px;
+            width: 9px;
         }
+    }
+
+    &__close {
+        cursor: pointer;
+        display: block;
+        fill: rgba(255, 255, 255, 1);
+        font-weight: 500;
+        height: 18px;
+        width: 18px;
+    }
+
+    &__svg {
+        height: 100%;
+        width: 100%;
+    }
+
+    &__placeholder {
+        display: block;
+        height: 18px;
+        width: 18px;
+    }
+
+    .tab-button--active::after {
+        bottom: 0;
+        content: '';
+        height: 1px;
+        left: 0;
+        position: absolute;
+        width: 100%;
     }
 }
 
-.rc-tabs-tab-btn {
-    outline: none;
-}
+.tab-item {
+    display: none;
+    height: 100%;
 
-.rc-tabs-tab-remove {
-    background: transparent;
-    border: none;
-    color: #999;
-    cursor: pointer;
-    font-size: 16px;
-    margin-left: 8px;
-    margin-right: -4px;
-    outline: none;
-    visibility: hidden;
+    .tab-item--active {
+        display: block;
+    }
 }

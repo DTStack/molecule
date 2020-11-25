@@ -19,7 +19,7 @@ export interface IEditorService extends Component<IEditor> {
      */
     open<T = any>(tab: ITab, groupId?: number): void;
     close(index: number, callback: () => void): void;
-    changeTab(callback: (tabs: ITab[]) => void);
+    onMoveTab(callback: (tabs: ITab[]) => void);
     selectTab(callback: (tab: ITab) => void);
 }
 
@@ -48,8 +48,8 @@ export class EditorService
             current = group;
         }
     }
-    public changeTab(callback: (data) => void) {
-        this.subscribe(EditorEvent.ChangeTab, (args) => {
+    public onMoveTab(callback: (data) => void) {
+        this.subscribe(EditorEvent.onMoveTab, (args) => {
             let { groups } = this.state;
             let group;
             if (!args?.[1]) return;

@@ -36,7 +36,7 @@ function init() {
         }
     });
 
-    editorService.changeTab((data) => {
+    editorService.onMoveTab((data) => {
         console.log(data);
     });
     editorService.selectTab((tab) => {

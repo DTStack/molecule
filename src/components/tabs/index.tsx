@@ -4,36 +4,33 @@ import update from 'immutability-helper';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import Tabs, { TabPane } from 'rc-tabs';
-
-import WrapTabNode from './Tab';
-import { prefixClaName } from 'mo/common/className';
+import { Scrollable } from 'mo/components/scrollable';
+import { TabSwicher, Tab } from './tab';
+import TabButton from './tabButton';
 import './style.scss';
 
 export interface ITab {
-    active?: string;
-    id?: number;
-    name?: string;
-    mode?: string;
-    data?: [];
-    value?: string;
-    renderPane?: () => React.ReactNode;
+    id?: number | string;
+    name?: string; // fileName
+    activeTab?: number; // activeTab
+    modified?: boolean; // modify file
 }
-interface ITabsProps {
+export interface ITabsProps {
     data: ITab[];
-    closeTab?: (index: number) => void;
-    changeTab?: (tabs: ITab[]) => void;
+    closeTab?: (item: ITab) => void;
+    onMoveTab?: (tabs: ITab[]) => void;
     selectTab?: (index: number) => void;
-    children?: React.ReactNode;
+    // onMoveTab: (dragIndex?: number, hoverIndex?: number | string) => void;
+    onTabChange: (index: number) => void;
 }
 
-const DraggleTabs: React.FC<ITabsProps> = (props: ITabsProps) => {
-    const { data, changeTab, selectTab } = props;
+const DraggleTabs = (props: ITabsProps) => {
+    const { data, onMoveTab, selectTab } = props;
 
-    const moveTab = useCallback(
+    const onMoveTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
-            changeTab?.(
+            onMoveTab?.(
                 update(data, {
                     $splice: [
                         [dragIndex, 1],
@@ -47,46 +44,34 @@ const DraggleTabs: React.FC<ITabsProps> = (props: ITabsProps) => {
 
     const onTabClick = (key) => {
         console.log(`onTabClick ${key}`);
-        if (selectTab) selectTab(key);
+        selectTab?.(key);
     };
 
-    const renderTabBar = (props, DefaultTabBar) => {
-        return (
-            <DefaultTabBar {...props}>
-                {(node) => {
-                    return (
-                        <WrapTabNode
-                            key={node.key}
-                            index={node.key}
-                            moveTab={moveTab}
-                        >
-                            {node}
-                        </WrapTabNode>
-                    );
-                }}
-            </DefaultTabBar>
-        );
-    };
-
+    const onTabClose = (item: ITab) => {};
     return (
-        <div className={prefixClaName('tabs-container')}>
-            <DndProvider backend={HTML5Backend}>
-                <Tabs
-                    renderTabBar={renderTabBar}
-                    onChange={onTabClick}
-                    editable={{
-                        showAdd: false,
-                        onEdit: () => {
-                            console.log(1);
-                        },
-                    }}
-                >
-                    {data?.map(({ active, id, name }: ITab, index) => {
-                        return <TabPane tab={`${name}`} key={index} />;
-                    })}
-                </Tabs>
-            </DndProvider>
-        </div>
+        <DndProvider backend={HTML5Backend}>
+            <Scrollable>
+                <TabSwicher className="tab-switcher">
+                    {data?.map((item: ITab, index: number) => (
+                        <Tab
+                            onMoveTab={onMoveTab}
+                            onTabChange={onTabClick}
+                            index={index}
+                            id={item.id}
+                        >
+                            <TabButton
+                                key={item.id}
+                                name={item.name}
+                                modified={item.modified}
+                                active={item.activeTab === index}
+                                onClose={() => onTabClose(item)}
+                                className={'tab-button'}
+                            />
+                        </Tab>
+                    ))}
+                </TabSwicher>
+            </Scrollable>
+        </DndProvider>
     );
 };
 

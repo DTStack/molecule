@@ -25,7 +25,7 @@ stories.add(
             {
                 id: '1',
                 title: 'bar1',
-                iconName: 'codicon-add',
+                iconName: 'codicon-close',
             },
             {
                 id: '2',

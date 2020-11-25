@@ -1,4 +1,3 @@
-/* eslint-disable no-invalid-this */
 import 'reflect-metadata';
 import { EventBus } from 'mo/common/event';
 import { observable } from 'mo/common/observable';
@@ -7,7 +6,7 @@ import { container, inject, injectable } from 'tsyringe';
 
 export enum EditorEvent {
     CloseTab = 'editor.close',
-    ChangeTab = 'editor.changeTab',
+    onMoveTab = 'editor.moveTab',
     OpenTab = 'editor.openTab',
     SelectTab = 'editor.selectTab',
 }
@@ -17,7 +16,7 @@ export interface IEditor {
     closeAll?: () => void;
     onClose?: () => void;
     render?: () => React.ReactNode;
-    changeTab: (tabs: ITab[], group?: number) => void;
+    onMoveTab: (tabs: ITab[], group?: number) => void;
     selectTab: (tab: ITab) => void;
 }
 
@@ -76,10 +75,10 @@ export class EditorModel implements IEditor {
     public render!: () => React.ReactNode;
 
     public readonly selectTab = (tab: ITab) => {
-        EventBus.emit(EditorEvent.ChangeTab, tab);
+        EventBus.emit(EditorEvent.onMoveTab, tab);
     };
     public readonly changeTab = (updateTabs: ITab[], groupId?: number) => {
-        EventBus.emit(EditorEvent.ChangeTab, updateTabs, groupId);
+        EventBus.emit(EditorEvent.onMoveTab, updateTabs, groupId);
     };
 }
 

@@ -1,0 +1,11 @@
+@import 'mo/style/common';
+$fileIcon: 'file-icon';
+
+#{prefix($fileIcon)} {
+    background-position: center center;
+    background-size: contain;
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+}

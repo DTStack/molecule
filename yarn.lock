@@ -2386,6 +2386,11 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
+"@types/jasmine@^3.3.8":
+  version "3.6.2"
+  resolved "https://registry.npm.taobao.org/@types/jasmine/download/@types/jasmine-3.6.2.tgz#02f64450016f7de70f145d698be311136d7c6374"
+  integrity sha1-AvZEUAFvfecPFF1pi+MRE218Y3Q=
+
 "@types/jest@26.x", "@types/jest@^26.0.0":
   version "26.0.15"
   resolved "http://registry.npm.dtstack.com/@types%2fjest/-/jest-26.0.15.tgz#12e02c0372ad0548e07b9f4e19132b834cb1effe"
@@ -13750,6 +13755,13 @@ vscode-codicons@^0.0.10:
   version "0.0.10"
   resolved "http://registry.npm.dtstack.com/vscode-codicons/-/vscode-codicons-0.0.10.tgz#51d1d34d852fc7696fd732b6eaad49f5b57b4e79"
   integrity sha1-UdHTTYUvx2lv1zK26q1J9bV7Tnk=
+
+vscode-icons-js@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.npm.taobao.org/vscode-icons-js/download/vscode-icons-js-11.0.0.tgz#7986d9eb8e5f39b1125de8a142e68526e72ecff8"
+  integrity sha1-eYbZ645fObESXeihQuaFJucuz/g=
+  dependencies:
+    "@types/jasmine" "^3.3.8"
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"

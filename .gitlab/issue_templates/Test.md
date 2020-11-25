@@ -39,7 +39,7 @@ test plan](https://testing.googleblog.com/2011/09/10-minute-test-plan.html) and
 model](https://code.google.com/archive/p/test-analytics/wikis/AccExplained.wiki). -->
 
 |            | Secure | Responsive | Intuitive | Reliable |
-|------------|:------:|:----------:|:---------:|:--------:|
+| ---------- | :----: | :--------: | :-------: | :------: |
 | Admin      |        |            |           |          |
 | Groups     |        |            |           |          |
 | Project    |        |            |           |          |

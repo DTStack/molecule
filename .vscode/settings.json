@@ -6,5 +6,6 @@
         "source.fixAll.eslint": true,
         "source.fixAll.markdownlint": false,
         "source.fixAll.stylelint": true
-    }
+    },
+    "markdownlint.ignore": ["**/*.md"]
 }

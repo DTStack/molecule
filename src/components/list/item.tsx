@@ -20,8 +20,9 @@ export function Item(props: React.PropsWithChildren<IItem>) {
         <li
             className={claNames}
             key={`${id}`}
+            {...others as any}
         >
-            <a className={'item-container'} onClick={click} {...others as any}>
+            <a className={'item-container'} onClick={click}>
                 {children}
             </a>
         </li>

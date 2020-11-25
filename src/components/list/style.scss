@@ -15,10 +15,6 @@ $list: 'list';
         justify-content: left;
         list-style: none;
         position: relative;
-
-        // &.active {
-            
-        // }
     }
 
     .list-item:hover {
@@ -36,10 +32,6 @@ $list: 'list';
 
     &.horizontal {
         flex-direction: row;
-
-        .list-item {
-            margin-left: 10px;
-        }
     }
 
     .item-container {
@@ -49,7 +41,7 @@ $list: 'list';
         background-size: 16px;
         display: flex;
         height: 100%;
-        justify-content: left;
+        justify-content: center;
         text-decoration: none;
         width: 100%;
     }

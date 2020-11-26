@@ -47,6 +47,8 @@ All reviewers can help ensure accuracy, clarity, completeness, and adherence to 
 
 -   [ ] Review by a code reviewer or other selected colleague to confirm accuracy, clarity, and completeness. This can be skipped for minor fixes without substantive content changes.
 
+-   [] Review CSS whether using BEM standard.
+
 **2. Technical Writer**
 
 -   [ ] Technical writer review. If not requested for this MR, must be scheduled post-merge. To request for this MR, assign the writer listed for the applicable [DevOps stage](https://about.gitlab.com/handbook/product/product-categories/#devops-stages).

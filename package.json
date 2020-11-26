@@ -26,6 +26,7 @@
     "dependencies": {
         "@types/react": "^16.9.35",
         "@types/react-dom": "^16.9.9",
+        "copy-webpack-plugin": "^6.3.2",
         "dt-utils": "^1.0.1",
         "immutability-helper": "^3.1.1",
         "loadsh": "^0.0.4",

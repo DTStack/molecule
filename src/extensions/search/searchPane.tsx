@@ -83,7 +83,7 @@ export default class SearchPane extends React.Component<
             const tabData = {
                 activeTab: 0,
                 id: id,
-                name: `test-tab${id.toFixed(2)}`,
+                name: `editor.js`,
                 modified: true,
                 value: 'hello javascript',
             };

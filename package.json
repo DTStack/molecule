@@ -4,6 +4,7 @@
     "description": "A Web IDE UI Framework built by React.js, inspired by VSCode.",
     "main": "dist/index.js",
     "scripts": {
+        "preinstall": "node ./build/preinstall.js",
         "test": "jest --coverage",
         "dev": "start-storybook -s ./dist -p 6006",
         "build-storybook": "build-storybook",

@@ -7,7 +7,7 @@ import {
 } from 'vscode-icons-js';
 import { prefixClaName, classNames } from 'mo/common/className';
 
-const ICON_BASE_PATH = './src/static/fileIcons/';
+const ICON_BASE_PATH = '/static/fileIcons/';
 
 export interface Props {
     fileName: string;

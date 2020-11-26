@@ -5,7 +5,7 @@ import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import { Scrollable } from 'mo/components/scrollable';
-import { TabSwicher, Tab } from './tab';
+import { TabSwicher, Tab } from './Tab';
 import TabButton from './tabButton';
 import './style.scss';
 

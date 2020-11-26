@@ -19,10 +19,12 @@ module.exports = {
         path: path.resolve(__dirname, '../dist'),
     },
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.(js|jsx|tsx|ts)$/,
                 exclude: /node_modules/,
-                use: [{
+                use: [
+                    {
                         loader: require.resolve('ts-loader'),
                         options: {
                             transpileOnly: true,
@@ -48,6 +50,6 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             __DEVELOPMENT__: true,
-        })
+        }),
     ],
 };

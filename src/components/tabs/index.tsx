@@ -51,7 +51,7 @@ const DraggleTabs = (props: ITabsProps) => {
     const onTabClose = (item: ITab) => {};
     return (
         <DndProvider backend={HTML5Backend}>
-            <Scrollable>
+            <Scrollable className={'normal-items'}>
                 <TabSwicher className="tab-switcher">
                     {data?.map((item: ITab, index: number) => (
                         <Tab

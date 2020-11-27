@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
-import FileIcon from '../fileIcon';
 import { classNames } from 'mo/common/className';
 import TabDot from './tabDot';
+import { Icon } from '../icon';
 
 export interface TabButtonProps {
     name?: string;
@@ -44,16 +44,14 @@ export default function TabButton({
         <div
             className={classNames(
                 'tab-button',
-                {
-                    'tab-button--active': active,
-                },
+                active ? 'tab-button--active' : '',
                 className
             )}
             onClick={handleClick}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
-            <FileIcon type="file" fileName={name} />
+            <Icon type="new-file" />
             <span className="tab-button__name">{name}</span>
             <TabDot
                 modified={modified}

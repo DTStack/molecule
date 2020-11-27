@@ -2386,11 +2386,6 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jasmine@^3.3.8":
-  version "3.6.2"
-  resolved "https://registry.npm.taobao.org/@types/jasmine/download/@types/jasmine-3.6.2.tgz#02f64450016f7de70f145d698be311136d7c6374"
-  integrity sha1-AvZEUAFvfecPFF1pi+MRE218Y3Q=
-
 "@types/jest@26.x", "@types/jest@^26.0.0":
   version "26.0.15"
   resolved "http://registry.npm.dtstack.com/@types%2fjest/-/jest-26.0.15.tgz#12e02c0372ad0548e07b9f4e19132b834cb1effe"
@@ -4808,23 +4803,6 @@ copy-to-clipboard@^3.0.8:
   dependencies:
     toggle-selection "^1.0.6"
 
-copy-webpack-plugin@^6.3.2:
-  version "6.3.2"
-  resolved "https://registry.npm.taobao.org/copy-webpack-plugin/download/copy-webpack-plugin-6.3.2.tgz?cache=0&sync_timestamp=1605800705546&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcopy-webpack-plugin%2Fdownload%2Fcopy-webpack-plugin-6.3.2.tgz#0e920a6c181a5052aa6e2861b164bda03f83afeb"
-  integrity sha1-DpIKbBgaUFKqbihhsWS9oD+Dr+s=
-  dependencies:
-    cacache "^15.0.5"
-    fast-glob "^3.2.4"
-    find-cache-dir "^3.3.1"
-    glob-parent "^5.1.1"
-    globby "^11.0.1"
-    loader-utils "^2.0.0"
-    normalize-path "^3.0.0"
-    p-limit "^3.0.2"
-    schema-utils "^3.0.0"
-    serialize-javascript "^5.0.1"
-    webpack-sources "^1.4.3"
-
 core-js-compat@^3.7.0:
   version "3.7.0"
   resolved "http://registry.npm.dtstack.com/core-js-compat/-/core-js-compat-3.7.0.tgz#8479c5d3d672d83f1f5ab94cf353e57113e065ed"
@@ -6900,7 +6878,7 @@ glob-parent@^3.1.0:
     is-glob "^3.1.0"
     path-dirname "^1.0.0"
 
-glob-parent@^5.0.0, glob-parent@^5.1.0, glob-parent@^5.1.1, glob-parent@~5.1.0:
+glob-parent@^5.0.0, glob-parent@^5.1.0, glob-parent@~5.1.0:
   version "5.1.1"
   resolved "http://registry.npm.dtstack.com/glob-parent/-/glob-parent-5.1.1.tgz#b6c1ef417c4e5663ea498f1c45afac6916bbc229"
   integrity sha1-tsHvQXxOVmPqSY8cRa+saRa7wik=
@@ -11987,13 +11965,6 @@ serialize-javascript@^4.0.0:
   dependencies:
     randombytes "^2.1.0"
 
-serialize-javascript@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.npm.taobao.org/serialize-javascript/download/serialize-javascript-5.0.1.tgz?cache=0&sync_timestamp=1599740668657&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fserialize-javascript%2Fdownload%2Fserialize-javascript-5.0.1.tgz#7886ec848049a462467a97d3d918ebb2aaf934f4"
-  integrity sha1-eIbshIBJpGJGepfT2Rjrsqr5NPQ=
-  dependencies:
-    randombytes "^2.1.0"
-
 serve-favicon@^2.5.0:
   version "2.5.0"
   resolved "http://registry.npm.dtstack.com/serve-favicon/-/serve-favicon-2.5.0.tgz#935d240cdfe0f5805307fdfe967d88942a2cbcf0"
@@ -13702,13 +13673,6 @@ vscode-codicons@^0.0.10:
   version "0.0.10"
   resolved "http://registry.npm.dtstack.com/vscode-codicons/-/vscode-codicons-0.0.10.tgz#51d1d34d852fc7696fd732b6eaad49f5b57b4e79"
   integrity sha1-UdHTTYUvx2lv1zK26q1J9bV7Tnk=
-
-vscode-icons-js@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.npm.taobao.org/vscode-icons-js/download/vscode-icons-js-11.0.0.tgz#7986d9eb8e5f39b1125de8a142e68526e72ecff8"
-  integrity sha1-eYbZ645fObESXeihQuaFJucuz/g=
-  dependencies:
-    "@types/jasmine" "^3.3.8"
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"

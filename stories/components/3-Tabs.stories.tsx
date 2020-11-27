@@ -25,8 +25,14 @@ stories.add('Basic Usage', () => {
         {
             modified: false,
             id: 3,
-            name: 'editor.tsx',
-            value: 'hello tsx',
+            name: 'editor.python',
+            value: 'hello python',
+        },
+        {
+            modified: true,
+            id: 1,
+            name: 'editor.md',
+            value: 'hello markdown',
         },
     ];
     const [tabs, setTabs] = useState(data);
@@ -36,7 +42,7 @@ stories.add('Basic Usage', () => {
             <p>Tab 提供组件多tab切换；拖拽</p>
             <div>
                 <h3>使用示例 1 - 基本使用</h3>
-                <div style={{ height: 200 }}>
+                <div style={{ height: 35 }}>
                     <Tabs
                         data={tabs}
                         onMoveTab={onMoveTab}

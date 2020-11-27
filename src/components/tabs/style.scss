@@ -5,7 +5,6 @@ $tabSwitcher: 'tab-switcher';
     display: flex;
     flex-flow: row nowrap;
     height: 35px;
-    width: 100%;
 }
 
 .tab-button {
@@ -87,4 +86,10 @@ $tabSwitcher: 'tab-switcher';
     .tab-item--active {
         display: block;
     }
+}
+
+.normal-items {
+    margin-bottom: auto;
+    overflow: hidden;
+    overflow-y: auto;
 }

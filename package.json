@@ -39,8 +39,7 @@
         "react-scrollbars-custom": "^4.0.25",
         "react-split-pane": "^0.1.92",
         "reflect-metadata": "^0.1.13",
-        "tsyringe": "^4.3.0",
-        "vscode-codicons": "^0.0.10"
+        "tsyringe": "^4.3.0"
     },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",

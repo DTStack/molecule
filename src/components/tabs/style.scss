@@ -9,7 +9,6 @@ $tabSwitcher: 'tab-switcher';
 
 .tab-button {
     align-items: center;
-    color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     display: inline-flex;
     height: 100%;
@@ -37,7 +36,6 @@ $tabSwitcher: 'tab-switcher';
         width: 18px;
 
         &::after {
-            background-color: #fff;
             border-radius: 50%;
             content: '';
             display: block;
@@ -52,7 +50,6 @@ $tabSwitcher: 'tab-switcher';
     &__close {
         cursor: pointer;
         display: block;
-        fill: rgba(255, 255, 255, 1);
         font-weight: 500;
         height: 18px;
         width: 18px;

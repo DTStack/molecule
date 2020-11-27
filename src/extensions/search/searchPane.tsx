@@ -3,6 +3,7 @@ import Toolbar from 'mo/components/toolbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { activityBarService, editorService } from 'mo';
+import { Button } from 'mo/components/button';
 
 interface ISearchPaneToolBar {}
 
@@ -104,9 +105,9 @@ export default class SearchPane extends React.Component<
                     <input onInput={this.onInput} />
                     <hr></hr>
                     <div>
-                        <button onClick={addABar}>Add Bar</button>
-                        <button onClick={newEditor}>New Editor</button>
-                        <button onClick={openCommand}>Command Palette</button>
+                        <Button onClick={addABar}>Add Bar</Button>
+                        <Button onClick={newEditor}>New Editor</Button>
+                        <Button onClick={openCommand}>Command Palette</Button>
                     </div>
                 </Content>
             </div>

@@ -13669,10 +13669,10 @@ vm-browserify@^1.0.1:
   resolved "http://registry.npm.dtstack.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
 
-vscode-codicons@^0.0.10:
-  version "0.0.10"
-  resolved "http://registry.npm.dtstack.com/vscode-codicons/-/vscode-codicons-0.0.10.tgz#51d1d34d852fc7696fd732b6eaad49f5b57b4e79"
-  integrity sha1-UdHTTYUvx2lv1zK26q1J9bV7Tnk=
+vscode-codicons@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.npm.taobao.org/vscode-codicons/download/vscode-codicons-0.0.12.tgz#94b867156f3e3a6a4cf7661e9bf2bd0060042390"
+  integrity sha1-lLhnFW8+OmpM92Yem/K9AGAEI5A=
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"

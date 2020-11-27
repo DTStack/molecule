@@ -4,14 +4,15 @@
     "description": "A Web IDE UI Framework built by React.js, inspired by VSCode.",
     "main": "dist/index.js",
     "scripts": {
+        "preinstall": "node ./build/preinstall.js",
         "test": "jest --coverage",
         "dev": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
-        "check-types": "tsc --skipLibCheck",
+        "check-types": "tsc",
         "build": "tsc --project tsconfig.build.json",
         "eslint": "eslint ./src/**/*.ts ./src/**/*.tsx",
         "stylelint": "stylelint ./src/**/*.scss",
-        "prettier": "prettier --ignore-unknown --check . ",
+        "prettier": "prettier --ignore-unknown --write . ",
         "release": "standard-version",
         "web": "webpack serve --env prod --config ./build/web.js"
     },
@@ -80,7 +81,7 @@
     "husky": {
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-            "pre-push": "prettier --ignore-unknown --write ."
+            "pre-push": "prettier --ignore-unknown --check ."
         }
     },
     "config": {

@@ -22,6 +22,7 @@
 @import 'mo/components/toolbar/style';
 @import 'mo/components/tree/style';
 @import 'mo/components/tabs/style';
+@import 'mo/components/button/style';
 
 // =============== Workbench =============== //
 #{prefix($workbench)} {
@@ -151,17 +152,17 @@
         }
     }
 
-    .rc-tree-treenode.drag-over > .draggable {
+    .rc-tree-treenode.drag-over>.draggable {
         @include border-color(#316ac5);
         background-color: #316ac5;
         color: #bbb;
     }
 
-    .rc-tree-treenode.drag-over-gap-top > .draggable {
+    .rc-tree-treenode.drag-over-gap-top>.draggable {
         border-top: 2px rgb(0, 122, 204) solid;
     }
 
-    .rc-tree-treenode.drag-over-gap-bottom > .draggable {
+    .rc-tree-treenode.drag-over-gap-bottom>.draggable {
         border-bottom: 2px rgb(0, 122, 204) solid;
     }
 
@@ -173,4 +174,22 @@
 // =============== Tab =============== //
 #{prefix($tabSwitcher)} {
     background-color: rgb(37, 37, 38);
+}
+
+// =============== Button =============== //
+#{prefix($btn)} {
+    background-color: #316ac5;
+    color: rgb(255, 255, 255);
+}
+
+// =============== List =============== //
+#{prefix($list)} {
+    .list-item {
+        background-color: #252526;
+        color: #bbb;
+
+        &.active {
+            background-color: #316ac5;
+        }
+    }
 }

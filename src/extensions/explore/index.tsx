@@ -27,8 +27,8 @@ function init(extensionCtx: ExtensionService) {
     editorService.onMoveTab((data) => {
         console.log(data);
     });
-    editorService.selectTab((tab) => {
-        console.log(`selected tabs${tab}`);
+    editorService.onSelectTab((tabKey) => {
+        console.log(`selected tabKey${tabKey}`);
     });
     const explorePane = {
         id: 'explore',

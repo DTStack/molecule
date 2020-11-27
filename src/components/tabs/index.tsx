@@ -11,22 +11,23 @@ import './style.scss';
 
 export interface ITab {
     id?: number | string;
-    name?: string; // fileName
-    activeTab?: number; // activeTab
-    modified?: boolean; // modify file
+    name?: string;
+    activeTab?: number;
+    modified?: boolean;
     renderPane?: () => React.ReactNode;
     value?: string;
+    mode?: string | undefined;
 }
 export interface ITabsProps {
     data: ITab[];
     closeTab?: (item: ITab) => void;
     onMoveTab?: (tabs: ITab[]) => void;
-    selectTab?: (index: number) => void;
+    onSelectTab?: (index: number) => void;
     onTabChange: (index: number) => void;
 }
 
 const DraggleTabs = (props: ITabsProps) => {
-    const { data, selectTab } = props;
+    const { data, onSelectTab } = props;
 
     const onMoveTab = useCallback(
         (dragIndex, hoverIndex) => {
@@ -45,7 +46,7 @@ const DraggleTabs = (props: ITabsProps) => {
 
     const onTabClick = (key) => {
         console.log(`onTabClick ${key}`);
-        selectTab?.(key);
+        onSelectTab?.(key);
     };
 
     const onTabClose = (item: ITab) => {};

@@ -24,11 +24,11 @@ function init(extensionCtx: ExtensionService) {
         selected: exploreActiveItem.id,
         data: [...state.data, exploreActiveItem],
     });
-    editorService.changeTab((data) => {
+    editorService.onMoveTab((data) => {
         console.log(data);
     });
-    editorService.selectTab((tab) => {
-        console.log(`selected tabs${tab}`);
+    editorService.onSelectTab((tabKey) => {
+        console.log(`selected tabKey${tabKey}`);
     });
     const explorePane = {
         id: 'explore',

@@ -9,7 +9,7 @@ import Tabs from 'mo/components/tabs';
 import Welcome from './welcome';
 import { IEditor, IEditorGroup } from 'mo/model';
 
-function renderEditorGroup(group: IEditorGroup, changeTab, selectTab) {
+function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
     const editor = group.activeTab;
     return (
         <div className={`editor-group`} key={`group-${group.id}`}>
@@ -17,8 +17,8 @@ function renderEditorGroup(group: IEditorGroup, changeTab, selectTab) {
                 <div className="group-tabs">
                     <Tabs
                         data={group.tabs}
-                        changeTab={changeTab}
-                        selectTab={selectTab}
+                        onMoveTab={onMoveTab}
+                        onTabChange={onSelectTab}
                     />
                 </div>
                 <div className="group-breadcrumbs"></div>
@@ -47,9 +47,9 @@ function renderEditorGroup(group: IEditorGroup, changeTab, selectTab) {
     );
 }
 
-export function renderGroups(groups: IEditorGroup[], changeTab, selectTab) {
+export function renderGroups(groups: IEditorGroup[], onMoveTab, onSelectTab) {
     if (groups.length === 1) {
-        return renderEditorGroup(groups[0], changeTab, selectTab);
+        return renderEditorGroup(groups[0], onMoveTab, onSelectTab);
     } else if (groups.length > 1) {
         const averageNum = Math.round(100 / groups.length);
         return (
@@ -60,7 +60,7 @@ export function renderGroups(groups: IEditorGroup[], changeTab, selectTab) {
                 allowResize={true}
             >
                 {groups.map((g: IEditorGroup) =>
-                    renderEditorGroup(g, changeTab, selectTab)
+                    renderEditorGroup(g, onMoveTab, onSelectTab)
                 )}
             </SplitPane>
         );
@@ -69,13 +69,13 @@ export function renderGroups(groups: IEditorGroup[], changeTab, selectTab) {
 }
 
 export function Editor(props: IEditor) {
-    const { groups, render, current, changeTab, selectTab } = props;
+    const { groups, render, current, onMoveTab, onSelectTab } = props;
     console.log('Editor render:', props);
     let content: React.ReactNode = <Welcome />;
     if (current) {
         content = render
             ? render()
-            : renderGroups(groups, (tabs) => changeTab(tabs, 1), selectTab);
+            : renderGroups(groups, (tabs) => onMoveTab?.(tabs, 1), onSelectTab);
     }
 
     return <div className={prefixClaName('editor')}>{content}</div>;

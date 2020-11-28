@@ -6,7 +6,7 @@
     "scripts": {
         "preinstall": "node ./build/preinstall.js",
         "test": "jest --coverage",
-        "dev": "start-storybook -s ./dist -p 6006",
+        "dev": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
         "check-types": "tsc",
         "build": "tsc --project tsconfig.build.json",
@@ -32,7 +32,6 @@
         "loadsh": "^0.0.4",
         "monaco-editor": "^0.21.2",
         "rc-collapse": "^2.0.1",
-        "rc-tabs": "11.7.0",
         "rc-tree": "^3.10.0",
         "react": "^16.13.1",
         "react-dnd": "^9.3.4",
@@ -42,7 +41,7 @@
         "react-split-pane": "^0.1.92",
         "reflect-metadata": "^0.1.13",
         "tsyringe": "^4.3.0",
-        "vscode-codicons": "^0.0.10"
+        "vscode-codicons": "^0.0.12"
     },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",

@@ -21,6 +21,7 @@
 @import 'mo/components/menu/style';
 @import 'mo/components/toolbar/style';
 @import 'mo/components/tree/style';
+@import 'mo/components/tabs/style';
 @import 'mo/components/button/style';
 
 // =============== Workbench =============== //
@@ -119,6 +120,7 @@
 @mixin border-color($color) {
     border: 1px solid $color;
 }
+
 #{prefix($collapse)} {
     background-color: #252526;
 
@@ -166,6 +168,25 @@
 
     .rc-tree-treenode-active {
         background: rgba(0, 0, 0, 0.1);
+    }
+}
+
+// =============== Tab =============== //
+#{prefix($tabSwitcher)} {
+    background-color: rgb(37, 37, 38);
+
+    .tab-button {
+        color: rgba(255, 255, 255, 0.6);
+
+        &__dot {
+            &::after {
+                background-color: #fff;
+            }
+        }
+
+        &__close {
+            fill: rgba(255, 255, 255, 1);
+        }
     }
 }
 

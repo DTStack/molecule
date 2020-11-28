@@ -19,8 +19,8 @@ export interface IEditorService extends Component<IEditor> {
      */
     open<T = any>(tab: ITab, groupId?: number): void;
     close(index: number, callback: () => void): void;
-    changeTab(callback: (tabs: ITab[]) => void);
-    selectTab(callback: (tab: ITab) => void);
+    onMoveTab(callback: (tabs: ITab[]) => void);
+    onSelectTab(callback: (tabKey: number) => void);
 }
 
 @singleton()
@@ -32,6 +32,12 @@ export class EditorService
         super();
         this.state = container.resolve(EditorModel);
     }
+    onSelectTab(callback: (tabKey: number) => void) {
+        this.subscribe(EditorEvent.OnSelectTab, (args) => {
+            callback?.(args?.[0]);
+        });
+    }
+
     @emit(EditorEvent.OpenTab)
     public open<T>(tab: ITab, groupId?: number) {
         let { current, groups } = this.state;
@@ -48,8 +54,8 @@ export class EditorService
             current = group;
         }
     }
-    public changeTab(callback: (data) => void) {
-        this.subscribe(EditorEvent.ChangeTab, (args) => {
+    public onMoveTab(callback: (data) => void) {
+        this.subscribe(EditorEvent.OnMoveTab, (args) => {
             let { groups } = this.state;
             let group;
             if (!args?.[1]) return;
@@ -58,9 +64,6 @@ export class EditorService
             group.tabs = args?.[0];
             callback?.(args?.[0]);
         });
-    }
-    public selectTab(callback: Function) {
-        this.subscribe(EditorEvent.SelectTab, callback);
     }
     public closeAll() {}
 

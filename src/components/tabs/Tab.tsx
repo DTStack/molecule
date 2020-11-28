@@ -8,17 +8,22 @@ import {
     useDrop,
 } from 'react-dnd';
 
-interface ITabProps {
-    active?: string;
-    content?: React.ReactNode;
-    index?: number;
-    id?: number | string;
-    name?: any;
-    moveTab: (dragIndex?: number, hoverIndex?: number | string) => void;
+import { prefixClaName, classNames } from 'mo/common/className';
+export interface TabSwicherProps {
+    children: any;
+    className?: string;
 }
 
-const WrapTabNode: React.FC<ITabProps> = (props) => {
-    const { id, index, moveTab, children } = props;
+export function TabSwicher({ children, className }: TabSwicherProps) {
+    return (
+        <div className={classNames(prefixClaName('tab-switcher'), className)}>
+            {children}
+        </div>
+    );
+}
+
+export const Tab = (props) => {
+    const { id, index, children, onMoveTab, onTabChange } = props;
     const ref = useRef<HTMLDivElement>(null);
 
     const [, drag] = useDrag({
@@ -34,7 +39,6 @@ const WrapTabNode: React.FC<ITabProps> = (props) => {
             item: { type: string; index: number },
             monitor: DropTargetMonitor
         ) {
-            debugger;
             if (!ref.current) return;
             let hoverIndex;
             const component = ref.current;
@@ -61,13 +65,21 @@ const WrapTabNode: React.FC<ITabProps> = (props) => {
             if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
                 return;
             }
-            moveTab(dragIndex, hoverIndex);
+            onMoveTab(dragIndex, hoverIndex);
             monitor.getItem().index = hoverIndex;
         },
     });
+
     drag(drop(ref));
 
-    return <div ref={ref}>{children}</div>;
+    return (
+        <div
+            ref={ref}
+            onClick={(event: React.MouseEvent) => onTabChange(props.index)}
+        >
+            {children}
+        </div>
+    );
 };
 
-export default WrapTabNode;
+export default Tab;

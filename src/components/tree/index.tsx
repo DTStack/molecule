@@ -20,6 +20,7 @@ export function generateTreeId(id?: string): string {
 export interface ITreeNodeItem {
     key?: string | number;
     title?: React.ReactNode | string;
+    name?: string;
     type?: 'folder' | 'file';
     contextMenu?: IMenuItem[];
     children?: ITreeNodeItem[];
@@ -29,6 +30,7 @@ export interface ITreeNodeItem {
 }
 export interface ITreeProps extends TreeProps {
     data: ITreeNodeItem[];
+    onSelectFile?: (IMenuItem) => void
     className?: string;
 }
 const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
@@ -156,7 +158,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 <TreeNode
                     data-id={generateTreeId(item.id)}
                     data={item}
-                    title={item.title}
+                    title={item.name}
                     key={item.key}
                     icon={<Icon type={item.icon} />}
                 >
@@ -175,7 +177,13 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     onRightClick={({ event, node }: any) => {
                         setActiveData(node.data)
                     }}
-                    onSelect={(selectedKeys, e) => { console.log('select', selectedKeys, e) }}
+                    onSelect={(selectedKeys, e: any) => {
+                        console.log('select', selectedKeys, e)
+                        const isFile = e.node.data.type === 'file';
+                        if (isFile && props.onSelectFile) {
+                            props.onSelectFile(e.node.data)
+                        }
+                    }}
                 >
                     {renderTreeNodes(treeData)}
                 </Tree>

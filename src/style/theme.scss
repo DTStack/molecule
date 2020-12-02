@@ -230,7 +230,6 @@
 #{$select} {
     &__container {
         background-color: rgb(60, 60, 60);
-        // border-color: rgb(60, 60, 60);
         border-top: 0;
         color: rgb(240, 240, 240);
     }
@@ -240,5 +239,13 @@
             background-color: rgba(14, 99, 156, 0.8);
             color: rgb(240, 240, 240);
         }
+    }
+
+    &--active {
+        border-color: rgba(14, 99, 156, 0.8);
+    }
+
+    &__descriptor {
+        border-top-color: rgba(255, 255, 255, 0.4);
     }
 }

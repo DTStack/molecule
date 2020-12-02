@@ -13,7 +13,7 @@ $select: prefix('select');
     width: initial;
 
     &--active {
-        border: 1px solid rgba(14, 99, 156, 0.8);
+        border: 1px solid;
     }
 
     &__input {
@@ -64,7 +64,7 @@ $select: prefix('select');
     }
 
     &__descriptor {
-        border-top: 1px solid rgb(60, 60, 60);
+        border-top: 1px solid;
         height: 26px;
         line-height: 26px;
         overflow: hidden;

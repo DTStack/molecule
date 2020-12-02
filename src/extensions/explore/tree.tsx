@@ -1,9 +1,9 @@
 
 import * as React from 'react';
 import { memo } from 'react';
-import { activityBarService, editorService } from 'mo';
+import { editorService } from 'mo';
 import Tree from 'mo/components/tree';
-// service
+
 const onSelectFile = function (fileData) {
     const tabData = {
         ...fileData,
@@ -13,9 +13,10 @@ const onSelectFile = function (fileData) {
     editorService.open(tabData, tabData.activeTab);
 };
 const TreeView: React.FunctionComponent<any> = (props: any) => {
+    const { data } = props;
     return <Tree
         prefixCls="rc-tree"
-        data={props.data}
+        data={data}
         onSelectFile={onSelectFile}
     />
 }

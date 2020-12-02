@@ -1,19 +1,86 @@
 import * as React from 'react';
-import RcCollapse from 'rc-collapse';
+import { useState } from 'react';
+import RcCollapse, { Panel } from 'rc-collapse';
 import { CollapseProps } from 'rc-collapse/lib/interface';
+import Toolbar from 'mo/components/toolbar';
+import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
-import './style.scss';
+import { IPanelItem } from 'mo/model/workbench/explorer'
 
-export const Collapse: React.FunctionComponent<CollapseProps> = (
-    props: CollapseProps
+interface IExpandProps {
+    isActive?: boolean;
+}
+interface ICollapseProps extends CollapseProps {
+    data?: IPanelItem[];
+    className?: string;
+}
+
+interface IState {
+    activePanelKey: React.Key | React.Key[];
+}
+
+const initState = {
+    activePanelKey: ''
+};
+const Collapse: React.FunctionComponent<ICollapseProps> = (
+    props: ICollapseProps
 ) => {
-    const { className, ...others } = props;
+    const [state, setState] = useState<IState>(initState);
+    const { className, data = [], ...others } = props;
+    const onChangeCallback = (key: React.Key | React.Key[]) => {
+        setState((state: IState) => ({ ...state, activePanelKey: key }));
+    };
+    const onClick = (e, item) => {
+        e.stopPropagation();
+        console.log('onClick:', e, item);
+    };
+    const render = (render) => {
+        if (render) {
+            return render();
+        } else {
+            return 'Cannot provide...';
+        }
+    };
+    const { activePanelKey } = state;
     return (
         <div className={classNames(prefixClaName('collapse'), className)}>
-            <RcCollapse {...others} />
+            <RcCollapse
+                {...others}
+                accordion={true}
+                activeKey={activePanelKey}
+                onChange={(activeKey: React.Key | React.Key[]) => {
+                    onChangeCallback(activeKey);
+                }}
+                expandIcon={({ isActive }: IExpandProps) => (
+                    <Icon
+                        type={isActive ? 'chevron-down' : 'chevron-right'}
+                    />
+                )}
+            >
+                {data.map((panel: IPanelItem) => (
+                    <Panel
+                        key={panel.id}
+                        header={panel.name}
+                        extra={
+                            activePanelKey === panel.id && (
+                                <Toolbar
+                                    key={panel.id}
+                                    data={panel.toolbar}
+                                    onClick={onClick}
+                                />
+                            )
+                        }
+                    >
+                        {render(panel.renderPanel)}
+                    </Panel>
+                ))}
+            </RcCollapse>
         </div>
     );
 };
 
-export const Panel = RcCollapse.Panel;
+export { Panel };
 export default Collapse;
+
+
+

@@ -10,6 +10,8 @@ import { ExtensionService, IExtensionService } from './extensionService';
 import {
     ActivityBarService,
     IActivityBarService,
+    ExplorerService,
+    IExplorerService,
     ISidebarService,
     SidebarService,
     IMenuBarService,
@@ -25,6 +27,10 @@ import {
  */
 const activityBarService = container.resolve<IActivityBarService>(
     ActivityBarService
+);
+// explorer service
+const explorerService = container.resolve<IExplorerService>(
+    ExplorerService
 );
 const sidebarService = container.resolve<ISidebarService>(SidebarService);
 const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
@@ -45,6 +51,7 @@ const extensionService = container.resolve<IExtensionService>(ExtensionService);
 
 export {
     activityBarService,
+    explorerService,
     sidebarService,
     menuBarService,
     statusBarService,

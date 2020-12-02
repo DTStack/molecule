@@ -11,6 +11,7 @@ stories.add('Basic Usage', () => {
         {
             id: '1',
             title: 'folder',
+            name: 'folder',
             key: 'folder',
             type: 'folder',
             contextMenu: [
@@ -24,12 +25,14 @@ stories.add('Basic Usage', () => {
                 {
                     id: '2',
                     title: 'abccccccccc',
+                    name: 'abccccccccc',
                     key: 'abccccccccc',
                     type: 'folder',
                     children: [
                         {
                             id: '3',
                             title: 'test.txt',
+                            name: 'test.txt',
                             key: 'test.txt',
                             type: 'file',
                             icon: 'symbol-file'
@@ -39,12 +42,14 @@ stories.add('Basic Usage', () => {
                 {
                     id: '6',
                     title: 'xyz',
+                    name: 'xyz',
                     key: 'xyz',
                     type: 'folder',
                     children: [
                         {
                             id: '7',
                             title: 'test.pdf',
+                            name: 'test.pdf',
                             key: 'test.pdf',
                             type: 'file',
                             icon: 'file-pdf',
@@ -54,6 +59,7 @@ stories.add('Basic Usage', () => {
                 {
                     id: '10',
                     title: 'file.yaml',
+                    name: 'file.yaml',
                     key: 'file.yaml',
                     type: 'file',
                 },

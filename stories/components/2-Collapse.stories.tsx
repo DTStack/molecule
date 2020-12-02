@@ -30,7 +30,7 @@ const editorPanel = {
     renderPanel: () => {
         return <span>editors</span>;
     },
-}
+};
 const sampleFolderPanel = {
     id: 'sample_folder',
     name: 'Sample Folder',
@@ -59,8 +59,6 @@ const sampleFolderPanel = {
     renderPanel: () => {
         return "hello i'm tree~~~";
     },
-}
+};
 
-export const Basic = () => (
-    <Collapse data={[editorPanel, sampleFolderPanel]} />
-);
+export const Basic = () => <Collapse data={[editorPanel, sampleFolderPanel]} />;

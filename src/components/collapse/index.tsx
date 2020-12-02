@@ -5,7 +5,7 @@ import { CollapseProps } from 'rc-collapse/lib/interface';
 import Toolbar from 'mo/components/toolbar';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
-import { IPanelItem } from 'mo/model/workbench/explorer'
+import { IPanelItem } from 'mo/model/workbench/explorer';
 
 interface IExpandProps {
     isActive?: boolean;
@@ -20,7 +20,7 @@ interface IState {
 }
 
 const initState = {
-    activePanelKey: ''
+    activePanelKey: '',
 };
 const Collapse: React.FunctionComponent<ICollapseProps> = (
     props: ICollapseProps
@@ -52,9 +52,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
                     onChangeCallback(activeKey);
                 }}
                 expandIcon={({ isActive }: IExpandProps) => (
-                    <Icon
-                        type={isActive ? 'chevron-down' : 'chevron-right'}
-                    />
+                    <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
                 )}
             >
                 {data.map((panel: IPanelItem) => (
@@ -81,6 +79,3 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
 
 export { Panel };
 export default Collapse;
-
-
-

@@ -18,7 +18,9 @@ stories.add('Basic Usage', () => {
                 {
                     id: 'custom',
                     name: 'Custom ContextMenu',
-                    onClick: () => { console.log("i'm custom contextMenu") }
+                    onClick: () => {
+                        console.log("i'm custom contextMenu");
+                    },
                 },
             ],
             children: [
@@ -35,7 +37,7 @@ stories.add('Basic Usage', () => {
                             name: 'test.txt',
                             key: 'test.txt',
                             type: 'file',
-                            icon: 'symbol-file'
+                            icon: 'symbol-file',
                         },
                     ],
                 },
@@ -70,10 +72,7 @@ stories.add('Basic Usage', () => {
     const [treeData, setTreeData] = useState<any>(data);
     return (
         <div>
-            <Tree
-                prefixCls='rc-tree'
-                data={treeData}
-            />
+            <Tree prefixCls="rc-tree" data={treeData} />
         </div>
     );
 });

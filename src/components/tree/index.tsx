@@ -11,10 +11,10 @@ import { HTMLElementType } from 'mo/common/dom';
 import './style.scss';
 
 export function getElementByCustomAttr(id: string): HTMLElementType {
-    return document.querySelector(`div[data-id=${id}]`)
-};
+    return document.querySelector(`div[data-id=${id}]`);
+}
 export function generateTreeId(id?: string): string {
-    return `mo_treeNode_${id}`
+    return `mo_treeNode_${id}`;
 }
 
 export interface ITreeNodeItem {
@@ -30,7 +30,7 @@ export interface ITreeNodeItem {
 }
 export interface ITreeProps extends TreeProps {
     data: ITreeNodeItem[];
-    onSelectFile?: (IMenuItem) => void
+    onSelectFile?: (IMenuItem) => void;
     className?: string;
 }
 const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
@@ -45,42 +45,45 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 {
                     id: 'newFile',
                     name: 'New File',
-                    onClick: (e, active) => { console.log('New File Click', active) }
+                    onClick: (e, active) => {
+                        console.log('New File Click', active);
+                    },
                 },
                 {
                     id: 'newFolder',
-                    name: 'New Folder'
+                    name: 'New Folder',
                 },
                 {
                     id: 'rename',
-                    name: 'Rename'
+                    name: 'Rename',
                 },
                 {
                     id: 'delete',
-                    name: 'Delete'
-                }
-            ]
+                    name: 'Delete',
+                },
+            ];
         } else if (type === 'file') {
             contextMenu = [
                 {
                     id: 'openToSide',
-                    name: 'Open to the side'
+                    name: 'Open to the side',
                 },
                 {
                     id: 'rename',
-                    name: 'Rename'
+                    name: 'Rename',
                 },
                 {
                     id: 'delete',
-                    name: 'Delete'
-                }
-            ]
+                    name: 'Delete',
+                },
+            ];
         }
-        return contextMenu
-    }
+        return contextMenu;
+    };
     useEffect(() => {
         const { contextMenu, id, type } = activeData;
-        const moContextMenu: IMenuItem[] = contextMenu || getContextMenuList(type);
+        const moContextMenu: IMenuItem[] =
+            contextMenu || getContextMenuList(type);
         const renderContextMenu = () => <Menu data={moContextMenu} />;
         let contextViewMenu;
         if (moContextMenu && moContextMenu.length > 0) {
@@ -90,7 +93,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
             });
         }
         return function cleanup() {
-            console.log('cleanup')
+            console.log('cleanup');
             contextViewMenu?.dispose();
         };
     }, [data, activeData]);
@@ -175,13 +178,13 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
                     onRightClick={({ event, node }: any) => {
-                        setActiveData(node.data)
+                        setActiveData(node.data);
                     }}
                     onSelect={(selectedKeys, e: any) => {
-                        console.log('select', selectedKeys, e)
+                        console.log('select', selectedKeys, e);
                         const isFile = e.node.data.type === 'file';
                         if (isFile && props.onSelectFile) {
-                            props.onSelectFile(e.node.data)
+                            props.onSelectFile(e.node.data);
                         }
                     }}
                 >
@@ -193,4 +196,3 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
 };
 
 export default memo(TreeView);
-

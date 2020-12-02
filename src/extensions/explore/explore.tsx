@@ -6,7 +6,7 @@ import { IActionBarItem } from 'mo/components/actionbar';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { prefixClaName } from 'mo/common/className';
 import { explorerService } from 'mo/services';
-import { IExpolorer } from 'mo/model/workbench/explorer'
+import { IExpolorer } from 'mo/model/workbench/explorer';
 
 const explorerToolbar: IActionBarItem[] = [
     {
@@ -16,9 +16,7 @@ const explorerToolbar: IActionBarItem[] = [
     },
 ];
 
-const Explorer: React.FunctionComponent<IExpolorer> = (
-    props: IExpolorer
-) => {
+const Explorer: React.FunctionComponent<IExpolorer> = (props: IExpolorer) => {
     const { data = [] } = props;
     const onClick = (e, item) => {
         e.stopPropagation();
@@ -38,8 +36,4 @@ const Explorer: React.FunctionComponent<IExpolorer> = (
     );
 };
 
-export const ExplorerView = mapState(
-    Explorer,
-    explorerService.getState()
-);
-
+export const ExplorerView = mapState(Explorer, explorerService.getState());

@@ -9,7 +9,9 @@ export const data = [
             {
                 id: 'custom',
                 name: 'Custom ContextMenu',
-                onClick: () => { console.log("i'm custom contextMenu") }
+                onClick: () => {
+                    console.log("i'm custom contextMenu");
+                },
             },
         ],
         children: [
@@ -35,7 +37,7 @@ export const data = [
     ,order_status        bigint comment '订单状态'
     ,pay_date            bigint comment '支付日期'
 
-)comment '销售订单明细表'`
+)comment '销售订单明细表'`,
                     },
                     {
                         id: '4',
@@ -61,7 +63,7 @@ export const data = [
 				initializeProperties(constructor.prototype, arguments[i]);
 			}
 			return constructor;
-		}`
+		}`,
                     },
                     {
                         id: '5',
@@ -89,7 +91,7 @@ export const data = [
 <body>
 </body>
 </html>
-`
+`,
                     },
                 ],
             },

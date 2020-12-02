@@ -3,7 +3,7 @@ import {
     activityBarService,
     IActivityBarItem,
     sidebarService,
-    explorerService
+    explorerService,
 } from 'mo';
 
 import { ExplorerView } from './explore';
@@ -78,7 +78,7 @@ function init(extensionCtx: ExtensionService) {
         renderPanel: () => {
             return <span>editors</span>;
         },
-    }
+    };
     const sampleFolderPanel = {
         id: 'sample_folder',
         name: 'Sample Folder',
@@ -107,7 +107,7 @@ function init(extensionCtx: ExtensionService) {
         renderPanel: () => {
             return <TreeView data={data} />;
         },
-    }
+    };
     const outlinePanel = {
         id: 'outline',
         name: 'OUTLINE',
@@ -123,11 +123,10 @@ function init(extensionCtx: ExtensionService) {
                 iconName: 'codicon-ellipsis',
             },
         ],
-    }
+    };
     explorerService.push(editorPanel);
     explorerService.push(sampleFolderPanel);
     explorerService.push(outlinePanel);
-
 }
 
 export const ExtendExplore: IExtension = {

@@ -3,7 +3,7 @@ import { Component } from 'mo/react/component';
 import {
     IExpolorerModel,
     IExpolorer,
-    IPanelItem
+    IPanelItem,
 } from 'mo/model/workbench/explorer';
 
 export interface IExplorerService extends Component<IExpolorer> {
@@ -24,5 +24,4 @@ export class ExplorerService
         const original = this.state.data;
         original?.push(data);
     }
-
 }

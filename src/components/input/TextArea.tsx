@@ -55,7 +55,10 @@ const TextArea = ({
         <RcTextArea
             {...props}
             maxLength={maxLength}
-            className={classNames(!bordered ? [`${prefixCls}--borderless`] : '', className && !showCount ? [className!] : '')}
+            className={classNames(
+                !bordered ? [`${prefixCls}--borderless`] : '',
+                className && !showCount ? [className!] : ''
+            )}
             style={showCount ? {} : style}
             prefixCls={prefixCls}
             onChange={handleChange}

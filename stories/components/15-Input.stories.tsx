@@ -15,7 +15,12 @@ stories.add('Basic Usage', () => {
             <h3>使用示例 1 - Input</h3>
             <Input placeholder="Search" />
             <h3>使用示例 2 - TextArea</h3>
-            <TextArea placeholder="replace" maxLength={100} showCount={true} style={{ marginTop: 10 }} />
+            <TextArea
+                placeholder="replace"
+                maxLength={100}
+                showCount={true}
+                style={{ marginTop: 10 }}
+            />
         </>
-    )
+    );
 });

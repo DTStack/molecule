@@ -21,8 +21,15 @@ export class EventEmitter {
         }
     }
 
-    // TODO
-    public unsubscribe() {}
+    public unsubscribe(name: string | string[]) {
+        if (Array.isArray(name)) {
+            name.forEach((key: string) => {
+                this._events.delete(key);
+            });
+        } else {
+            this._events.delete(name);
+        }
+    }
 
     public assignEvent<T>(name: string, callback: Function) {
         const event = this._events.get(name);

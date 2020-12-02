@@ -16,17 +16,17 @@ $InputBox: 'inputbox';
         border: 1px solid transparent;
     }
 
-    >.wrapper>.input,
-    >.wrapper>.mirror {
+    > .wrapper > .input,
+    > .wrapper > .mirror {
         padding: 4px;
     }
 
-    >.wrapper {
+    > .wrapper {
         height: 100%;
         position: relative;
         width: 100%;
 
-        >.input {
+        > .input {
             background-color: inherit;
             border: 1px solid transparent;
             box-sizing: border-box;
@@ -47,11 +47,11 @@ $InputBox: 'inputbox';
         }
     }
 
-    >input {
+    > input {
         text-overflow: ellipsis;
     }
 
-    >textarea.input {
+    > textarea.input {
         background-color: inherit;
         color: rgb(204, 204, 204);
         display: block;
@@ -63,16 +63,16 @@ $InputBox: 'inputbox';
         }
     }
 
-    >textarea.input::-webkit-scrollbar {
+    > textarea.input::-webkit-scrollbar {
         display: none;
         /* Chrome + Safari: hide scrollbar */
     }
 
-    >textarea.input.empty {
+    > textarea.input.empty {
         white-space: nowrap;
     }
 
-    >.mirror {
+    > .mirror {
         box-sizing: border-box;
         display: inline-block;
         left: 0;

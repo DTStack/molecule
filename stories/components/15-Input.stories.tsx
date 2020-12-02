@@ -20,10 +20,7 @@ stories.add('Basic Usage', () => {
             <h3>使用示例 1 - 基本使用</h3>
             <div style={styled}>
                 <Input placeholder="Search" />
-                <TextArea
-                    placeholder="replace"
-                    style={{ marginTop: 10 }}
-                />
+                <TextArea placeholder="replace" style={{ marginTop: 10 }} />
             </div>
         </>
     );

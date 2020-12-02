@@ -3,7 +3,6 @@ import * as React from 'react';
 import { classNames, prefixClaName } from 'mo/common/className';
 
 import TextArea from './TextArea';
-import { LiteralUnion } from 'mo/common/type';
 
 type SizeType = 'normal' | 'large';
 export interface InputProps {

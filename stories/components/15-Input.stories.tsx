@@ -1,7 +1,9 @@
 import * as React from 'react';
-import InpuxBox from 'mo/components/inputBox';
+import Input from 'mo/components/input';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
+
+const TextArea = Input.TextArea;
 const stories = storiesOf('InpuxBox', module);
 stories.addDecorator(withKnobs);
 
@@ -17,10 +19,9 @@ stories.add('Basic Usage', () => {
             <p>Inputbox</p>
             <h3>使用示例 1 - 基本使用</h3>
             <div style={styled}>
-                <InpuxBox placeholder="Search" />
-                <InpuxBox
+                <Input placeholder="Search" />
+                <TextArea
                     placeholder="replace"
-                    flexibleHeight={true}
                     style={{ marginTop: 10 }}
                 />
             </div>

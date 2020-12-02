@@ -23,6 +23,7 @@
 @import 'mo/components/tree/style';
 @import 'mo/components/tabs/style';
 @import 'mo/components/button/style';
+@import 'mo/components/input/style';
 
 // =============== Workbench =============== //
 #{prefix($workbench)} {
@@ -204,6 +205,17 @@
 
         &.active {
             background-color: #316ac5;
+        }
+    }
+}
+// =============== Input =============== //
+#{prefix($Input)} {
+    border: 1px solid transparent;
+    color: rgb(204, 204, 204);
+
+    &-textarea {
+        &--show-count::after {
+            color: rgba(0, 0, 0, 0.45);
         }
     }
 }

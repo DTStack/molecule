@@ -1,86 +1,24 @@
 @import 'mo/style/common';
-$InputBox: 'inputbox';
+$Input: 'input';
 
-#{prefix($InputBox)} {
+#{prefix($Input)} {
     background-color: rgb(60, 60, 60);
-    box-sizing: border-box;
+    border: 1px solid transparent;
     color: rgb(204, 204, 204);
-    display: block;
-    /* Customizable */
-    font-size: inherit;
-    overflow: hidden;
-    padding: 0;
+    display: inline-block;
+    font-size: 13px;
+    min-width: 0;
+    padding: 4px 11px;
     position: relative;
+    transition: all 0.3s;
+    width: calc(100% - 16px);
 
-    .idle {
-        border: 1px solid transparent;
-    }
-
-    > .wrapper > .input,
-    > .wrapper > .mirror {
-        padding: 4px;
-    }
-
-    > .wrapper {
-        height: 100%;
-        position: relative;
-        width: 100%;
-
-        > .input {
-            background-color: inherit;
-            border: 1px solid transparent;
-            box-sizing: border-box;
-            color: inherit;
-            color: rgb(204, 204, 204);
-            display: inline-block;
-            font-family: inherit;
-            font-size: inherit;
-            height: 100%;
-            line-height: inherit;
-            padding-right: 66px;
-            resize: none;
-            width: 100%;
-
-            &:focus {
-                outline-color: #007fd4;
-            }
+    &-textarea {
+        &--show-count::after {
+            color: rgba(0, 0, 0, 0.45);
+            content: attr(data-count);
+            display: block;
+            text-align: right;
         }
-    }
-
-    > input {
-        text-overflow: ellipsis;
-    }
-
-    > textarea.input {
-        background-color: inherit;
-        color: rgb(204, 204, 204);
-        display: block;
-        -ms-overflow-style: none;
-        padding-right: 66px;
-
-        &:focus {
-            outline-color: #007fd4;
-        }
-    }
-
-    > textarea.input::-webkit-scrollbar {
-        display: none;
-        /* Chrome + Safari: hide scrollbar */
-    }
-
-    > textarea.input.empty {
-        white-space: nowrap;
-    }
-
-    > .mirror {
-        box-sizing: border-box;
-        display: inline-block;
-        left: 0;
-        position: absolute;
-        top: 0;
-        visibility: hidden;
-        white-space: pre-wrap;
-        width: 100%;
-        word-wrap: break-word;
     }
 }

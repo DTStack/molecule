@@ -49,16 +49,13 @@ const TextArea = ({
         resolveOnChange(innerRef.current!, e, onChange);
     };
 
-    const prefixCls = prefixClaName('mo-input');
+    const prefixCls = prefixClaName('input');
 
     const textArea = (
         <RcTextArea
             {...props}
             maxLength={maxLength}
-            className={classNames({
-                [`${prefixCls}-textarea--borderless`]: !bordered,
-                [className!]: className && !showCount,
-            })}
+            className={classNames(!bordered ? [`${prefixCls}--borderless`] : '', className && !showCount ? [className!] : '')}
             style={showCount ? {} : style}
             prefixCls={prefixCls}
             onChange={handleChange}

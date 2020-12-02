@@ -9889,7 +9889,7 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "http://registry.npm.dtstack.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha1-Cb6jND1BhZ69RGKS0RydTbYZCE4=
 
-omit.js@^2.0.0, omit.js@^2.0.2:
+omit.js@^2.0.0:
   version "2.0.2"
   resolved "https://registry.npm.taobao.org/omit.js/download/omit.js-2.0.2.tgz#dd9b8436fab947a5f3ff214cb2538631e313ec2f"
   integrity sha1-3ZuENvq5R6Xz/yFMslOGMeMT7C8=
@@ -10930,17 +10930,9 @@ rc-util@^4.15.3:
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.1.0"
 
-rc-util@^5.0.0, rc-util@^5.0.7, rc-util@^5.2.1:
+rc-util@^5.0.0, rc-util@^5.0.7, rc-util@^5.2.1, rc-util@^5.5.0:
   version "5.5.0"
   resolved "http://registry.npm.dtstack.com/rc-util/-/rc-util-5.5.0.tgz#76321bcb5c12f01f42bff9b971f170ff19506e5a"
-  integrity sha1-djIby1wS8B9Cv/m5cfFw/xlQblo=
-  dependencies:
-    react-is "^16.12.0"
-    shallowequal "^1.1.0"
-
-rc-util@^5.5.0:
-  version "5.5.0"
-  resolved "https://registry.npm.taobao.org/rc-util/download/rc-util-5.5.0.tgz?cache=0&sync_timestamp=1604410065948&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-util%2Fdownload%2Frc-util-5.5.0.tgz#76321bcb5c12f01f42bff9b971f170ff19506e5a"
   integrity sha1-djIby1wS8B9Cv/m5cfFw/xlQblo=
   dependencies:
     react-is "^16.12.0"

@@ -20,7 +20,6 @@ export interface ISelect {
     className?: string;
     defaultValue?: string;
     placeholder?: string;
-    prefix?: ReactNode;
     showArrow?: boolean;
     children?: ReactNode;
     onSelect?(e: React.MouseEvent, selectedOption?: ISelectOption): void;

@@ -1,3 +1,4 @@
+import { isEmpty } from 'loadsh';
 import { APP_PREFIX } from 'mo/common/const';
 /**
  * This function help you prefix a css class name, default is molecule.
@@ -10,10 +11,30 @@ export function prefixClaName(name: string, prefix: string = APP_PREFIX) {
     return name ? `${prefix}-${name}` : '';
 }
 
-export function classNames(...names) {
-    return names.filter((name) => !!name).join(' ');
+export function classNames(...args) {
+    if (isEmpty(args)) return;
+    let classList: string[] = [];
+    for (let arg of args) {
+        if (!arg) continue;
+        let argType = typeof arg;
+        if (argType === 'string' || argType === 'number') {
+            classList.push(arg);
+            continue;
+        }
+        if (argType === 'object') {
+            if (arg.toString !== Object.prototype.toString) {
+                classList.push(arg.toString());
+                continue;
+            }
+            for (let key in arg) {
+                if (Object.hasOwnProperty.call(arg, key) && arg[key]) {
+                    classList.push(key);
+                }
+            }
+        }
+    }
+    return classList.join(' ');
 }
-
 /**
  * Element names may consist of Latin letters, digits, dashes and underscores.
  * CSS class is formed as block name plus two underscores plus element name: .block__elem

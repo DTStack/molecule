@@ -35,7 +35,7 @@ const TextArea = ({
         }
     }, [props.value, prevValue.current]);
 
-    const handleSetValue = (val: string,) => {
+    const handleSetValue = (val: string) => {
         if (props.value === undefined) {
             setValue(val);
         }
@@ -54,9 +54,7 @@ const TextArea = ({
             {...props}
             value={value}
             maxLength={maxLength}
-            className={classNames(
-                className && !showCount ? [className!] : ''
-            )}
+            className={classNames(className && !showCount ? [className!] : '')}
             style={showCount ? {} : style}
             prefixCls={inputClassName}
             onChange={handleChange}
@@ -77,7 +75,11 @@ const TextArea = ({
 
         return (
             <div
-                className={classNames(className, textAreaClassName, showCountClassName)}
+                className={classNames(
+                    className,
+                    textAreaClassName,
+                    showCountClassName
+                )}
                 style={style}
                 data-count={dataCount}
             >

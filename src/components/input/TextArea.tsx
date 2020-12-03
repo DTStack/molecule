@@ -52,7 +52,6 @@ const TextArea = ({
     const textArea = (
         <RcTextArea
             {...props}
-            value={value}
             maxLength={maxLength}
             className={classNames(className && !showCount ? [className!] : '')}
             style={showCount ? {} : style}

@@ -12,7 +12,7 @@ export function prefixClaName(name: string, prefix: string = APP_PREFIX) {
 }
 
 export function classNames(...args) {
-    if (isEmpty(args)) return
+    if (isEmpty(args)) return;
     let classList: string[] = [];
     for (let arg of args) {
         if (!arg) continue;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import RcTextArea, { TextAreaProps as RcTextAreaProps } from 'rc-textarea';
 import { useEffect, useRef } from 'react';
+import omit from 'omit.js';
 
 import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
@@ -48,10 +49,12 @@ const TextArea = ({
 
     const textAreaClassName = getBEMElement(inputClassName, 'textarea');
     const showCountClassName = getBEMModifier(textAreaClassName, 'show-count');
+    const otherProps = omit(props, ['value']);
 
     const textArea = (
         <RcTextArea
-            {...props}
+            {...otherProps}
+            value={value}
             maxLength={maxLength}
             className={classNames(className && !showCount ? [className!] : '')}
             style={showCount ? {} : style}

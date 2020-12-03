@@ -10,6 +10,12 @@ $Input: 'input';
     transition: all 0.3s;
     width: calc(100% - 16px);
 
+    &--lg {
+        font-size: 16px;
+        height: 40px;
+        padding: 6px 11px;
+    }
+
     &__textarea {
         &--show-count::after {
             color: rgba(0, 0, 0, 0.45);

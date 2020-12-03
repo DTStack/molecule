@@ -1,8 +1,8 @@
 import './style.scss';
 import * as React from 'react';
-import { classNames, prefixClaName } from 'mo/common/className';
-import { KeyCodes } from 'mo/common/keyCodes';
 
+import { classNames, prefixClaName, getBEMModifier } from 'mo/common/className';
+import { KeyCodes } from 'mo/common/keyCodes';
 import TextArea from './TextArea';
 
 type SizeType = 'normal' | 'large';
@@ -14,8 +14,9 @@ export interface InputProps {
         string
     >;
     placeholder?: string;
-    value?: string;
-    readonly defaultValue?: string;
+    value?: any;
+    style?: React.CSSProperties;
+    readonly defaultValue?: any;
     readonly className?: string;
     onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -56,9 +57,9 @@ export function getInputClassName(
 ) {
     return classNames(
         prefixCls,
-        size === 'normal' ? [`${prefixCls}--normal`] : '',
-        size === 'large' ? [`${prefixCls}--lg`] : '',
-        disabled ? [`${prefixCls}--disabled`] : ''
+        {[getBEMModifier(prefixCls, 'normal')]: size === 'normal'},
+        {[getBEMModifier(prefixCls, 'lg')]: size === 'large'},
+        {[getBEMModifier(prefixCls, 'disabled')]: disabled}
     );
 }
 
@@ -124,6 +125,7 @@ class Input extends React.Component<InputProps, InputState> {
     };
 
     render() {
+        const { value } = this.state;
         const {
             className,
             size = 'normal',
@@ -131,9 +133,12 @@ class Input extends React.Component<InputProps, InputState> {
             placeholder,
             onFocus,
             onBlur,
+            style
         } = this.props;
         return (
             <input
+                value={value}
+                style={style}
                 placeholder={placeholder}
                 onChange={this.handleChange}
                 onFocus={(e) => onFocus?.(e)}

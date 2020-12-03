@@ -10,7 +10,7 @@ $Input: 'input';
     transition: all 0.3s;
     width: calc(100% - 16px);
 
-    &-textarea {
+    &__textarea {
         &--show-count::after {
             color: rgba(0, 0, 0, 0.45);
             content: attr(data-count);

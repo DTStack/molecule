@@ -2,19 +2,17 @@ import * as React from 'react';
 import RcTextArea, { TextAreaProps as RcTextAreaProps } from 'rc-textarea';
 import { useEffect, useRef } from 'react';
 
-import { classNames, prefixClaName } from 'mo/common/className';
+import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
-import { fixControlledValue, resolveOnChange } from './input';
+import { fixControlledValue, inputClassName, resolveOnChange } from './input';
 
 export interface TextAreaProps extends RcTextAreaProps {
-    bordered?: boolean;
     showCount?: boolean;
     maxLength?: number;
     onChange?: (e) => void;
 }
 
 const TextArea = ({
-    bordered = true,
     showCount = false,
     maxLength,
     className,
@@ -37,10 +35,9 @@ const TextArea = ({
         }
     }, [props.value, prevValue.current]);
 
-    const handleSetValue = (val: string, callback?: () => void) => {
+    const handleSetValue = (val: string,) => {
         if (props.value === undefined) {
             setValue(val);
-            callback?.();
         }
     };
 
@@ -49,18 +46,19 @@ const TextArea = ({
         resolveOnChange(innerRef.current!, e, onChange);
     };
 
-    const prefixCls = prefixClaName('input');
+    const textAreaClassName = getBEMElement(inputClassName, 'textarea');
+    const showCountClassName = getBEMModifier(textAreaClassName, 'show-count');
 
     const textArea = (
         <RcTextArea
             {...props}
+            value={value}
             maxLength={maxLength}
             className={classNames(
-                !bordered ? [`${prefixCls}--borderless`] : '',
                 className && !showCount ? [className!] : ''
             )}
             style={showCount ? {} : style}
-            prefixCls={prefixCls}
+            prefixCls={inputClassName}
             onChange={handleChange}
             ref={innerRef}
         />
@@ -79,11 +77,7 @@ const TextArea = ({
 
         return (
             <div
-                className={classNames(
-                    `${prefixCls}-textarea`,
-                    `${prefixCls}-textarea--show-count`,
-                    className
-                )}
+                className={classNames(className, textAreaClassName, showCountClassName)}
                 style={style}
                 data-count={dataCount}
             >

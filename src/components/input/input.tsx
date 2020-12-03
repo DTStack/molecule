@@ -22,6 +22,7 @@ export interface InputProps {
     readonly onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     readonly onChange?: (e: any) => void;
 }
+export const inputClassName = prefixClaName('input');
 
 export function fixControlledValue<T>(value: T) {
     if (typeof value === 'undefined' || value === null) return '';
@@ -39,22 +40,6 @@ export function resolveOnChange(
 ) {
     if (onChange) {
         let event = e;
-        if (e.type === 'click') {
-            event = Object.create(e);
-            event.target = target;
-            event.currentTarget = target;
-            const originalInputValue = target.value;
-            // change target ref value cause e.target.value should be '' when clear input
-            target.value = '';
-            onChange(
-                event as React.ChangeEvent<
-                    HTMLInputElement | HTMLTextAreaElement
-                >
-            );
-            // reset target ref value
-            target.value = originalInputValue;
-            return;
-        }
         onChange(
             event as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
         );
@@ -116,11 +101,9 @@ class Input extends React.Component<InputProps, InputState> {
         this.input = input;
     };
 
-    setValue(value: string, callback?: () => void) {
+    setValue(value: string) {
         if (this.props.value === undefined) {
-            this.setState({ value }, callback);
-        } else {
-            callback?.();
+            this.setState({ value });
         }
     }
 
@@ -131,6 +114,7 @@ class Input extends React.Component<InputProps, InputState> {
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const { onPressEnter, onKeyDown } = this.props;
+        // todo
         if (e.keyCode === 13 && onPressEnter) {
             onPressEnter(e);
         }
@@ -155,7 +139,7 @@ class Input extends React.Component<InputProps, InputState> {
                 onKeyDown={this.handleKeyDown}
                 className={classNames(
                     className,
-                    getInputClassName(prefixClaName('input'), size, disabled)
+                    getInputClassName(inputClassName, size, disabled)
                 )}
                 ref={this.saveInput}
             />

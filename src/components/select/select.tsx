@@ -1,6 +1,12 @@
 import './style.scss';
 import * as React from 'react';
-import { useRef, useState, Children, isValidElement, useEffect } from 'react';
+import {
+    Children,
+    PureComponent,
+    isValidElement,
+    RefObject,
+    ComponentProps,
+} from 'react';
 import {
     prefixClaName,
     classNames,
@@ -8,14 +14,14 @@ import {
     getBEMModifier,
 } from 'mo/common/className';
 import { cloneReactChildren } from 'mo/react';
-import { useContextView } from 'mo/components/contextview';
+import { getAttr } from 'mo/common/dom';
+import { IContextView, useContextView } from 'mo/components/contextview';
 
 import { ISelectOption } from './option';
 import { Icon } from '../icon';
 
-export interface ISelect {
+export interface ISelect extends ComponentProps<any> {
     value?: string;
-    title?: string;
     style?: React.CSSProperties;
     className?: string;
     defaultValue?: string;
@@ -25,6 +31,21 @@ export interface ISelect {
     onSelect?(e: React.MouseEvent, selectedOption?: ISelectOption): void;
 }
 
+const initialValue = {
+    isOpen: false,
+    option: {
+        title: '',
+        value: '',
+        description: '',
+    },
+};
+
+type IState = {
+    isOpen: boolean;
+    lastUpdate?: number;
+    option: ISelectOption;
+};
+
 export const selectClassName = prefixClaName('select');
 const containerClassName = getBEMElement(selectClassName, 'container');
 const selectOptionsClassName = getBEMElement(selectClassName, 'options');
@@ -33,61 +54,80 @@ const inputClassName = getBEMElement(selectClassName, 'input');
 const selectActiveClassName = getBEMModifier(selectClassName, 'active');
 const selectArrowClassName = getBEMElement(selectClassName, 'arrow');
 
-export function Select(props: ISelect) {
-    const {
-        className,
-        children,
-        defaultValue = '',
-        placeholder,
-        value,
-        title,
-        onSelect,
-        ...custom
-    } = props;
+export class Select extends PureComponent<ISelect, IState> {
+    private contextView: IContextView;
+    public state: IState;
+    private selectElm: RefObject<HTMLDivElement>;
+    private selectInput: RefObject<HTMLInputElement>;
 
-    const contextView = useContextView({
-        shadowOutline: false,
-    });
-
-    const defaultSelectedOption: ISelectOption = {};
-    const options = Children.toArray(children);
-    for (const option of options) {
-        if (isValidElement(option)) {
-            const optionProps = option.props as ISelectOption;
-            if (optionProps.value && optionProps.value === defaultValue) {
-                defaultSelectedOption.title = optionProps.children as string;
-                defaultSelectedOption.value = optionProps.value;
-                break;
-            }
-        }
+    constructor(props) {
+        super(props);
+        this.contextView = useContextView({
+            shadowOutline: false,
+        });
+        this.state = this.getDefaultState();
+        this.selectElm = React.createRef();
+        this.selectInput = React.createRef();
     }
 
-    const selectElm = useRef<HTMLDivElement>(null);
-    const selectInput = useRef<HTMLInputElement>(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [inputValue, setInputValue] = useState(defaultSelectedOption);
+    public componentDidMount() {
+        this.contextView.onHide(() => {
+            if (this.state.isOpen) {
+                this.setState({
+                    isOpen: false,
+                });
+            }
+        });
+    }
 
-    const handleOnClickOption = (e: React.MouseEvent) => {
+    public getDefaultState() {
+        const defaultSelectedOption: ISelectOption = {};
+        const options = Children.toArray(this.props.children);
+        for (const option of options) {
+            if (isValidElement(option)) {
+                const optionProps = option.props as ISelectOption;
+                if (
+                    optionProps.value &&
+                    optionProps.value === this.props.defaultValue
+                ) {
+                    defaultSelectedOption.title = optionProps.children as string;
+                    defaultSelectedOption.value = optionProps.value;
+                    break;
+                }
+            }
+        }
+        return {
+            ...initialValue,
+            option: defaultSelectedOption,
+        };
+    }
+
+    public handleOnClickOption = (e: React.MouseEvent) => {
         const option = e.target as HTMLDivElement;
-        const value = option.getAttribute('data-value');
-        const title = option.getAttribute('title');
-        const desc = option.getAttribute('data-desc');
-        const optionItem = {
-            value: value!,
-            title: title!,
-            description: desc!,
+        const value = getAttr(option, 'data-value');
+        const title = getAttr(option, 'title');
+        const desc = getAttr(option, 'data-desc');
+        const optionItem: ISelectOption = {
+            value: value,
+            title: title,
+            description: desc,
         };
 
-        setInputValue(optionItem);
-        onSelect?.(e, optionItem);
-        setIsOpen(false);
-        contextView.hide();
+        this.setState(
+            {
+                option: optionItem,
+            },
+            () => {
+                this.props.onSelect?.(e, optionItem);
+                this.contextView.hide();
+            }
+        );
     };
 
-    const handOnHoverOption = (e: React.MouseEvent) => {
+    public handleOnHoverOption = (e: React.MouseEvent) => {
         const option = e.target as HTMLDivElement;
-        const desc = option.getAttribute('data-desc');
-        const descriptor = contextView.view!.querySelector(
+        const desc = getAttr(option, 'data-desc');
+        const descriptor = this.contextView.view!.querySelector(
             '.' + selectDescriptorClassName
         );
         if (descriptor) {
@@ -97,70 +137,68 @@ export function Select(props: ISelect) {
         }
     };
 
-    const events = {
-        onClick: (e: React.MouseEvent) => {
-            const select = selectElm.current;
-            if (select) {
-                const selectRect = select?.getBoundingClientRect();
-                selectRect.y = selectRect.y + selectRect.height;
-                setIsOpen(true);
+    public handleOnClickSelect = (e: React.MouseEvent) => {
+        const select = this.selectElm.current;
+        const { children } = this.props;
+        if (select) {
+            const selectRect = select?.getBoundingClientRect();
+            selectRect.y = selectRect.y + selectRect.height;
+            this.setState({ isOpen: true });
 
-                contextView.show(selectRect, () => {
-                    return (
-                        <div
-                            style={{
-                                width: selectRect.width,
-                            }}
-                            className={classNames(
-                                containerClassName,
-                                selectActiveClassName
-                            )}
-                            onMouseOver={handOnHoverOption}
-                        >
-                            <div className={selectOptionsClassName}>
-                                {cloneReactChildren<ISelectOption>(children, {
-                                    onClick: handleOnClickOption,
-                                })}
-                            </div>
-                            <div className={selectDescriptorClassName}>
-                                None
-                            </div>
+            this.contextView.show(selectRect, () => {
+                return (
+                    <div
+                        style={{
+                            width: selectRect.width,
+                        }}
+                        className={classNames(
+                            containerClassName,
+                            selectActiveClassName
+                        )}
+                        onMouseOver={this.handleOnHoverOption}
+                    >
+                        <div className={selectOptionsClassName}>
+                            {cloneReactChildren<ISelectOption>(children, {
+                                onClick: this.handleOnClickOption,
+                            })}
                         </div>
-                    );
-                });
-            }
-        },
+                        <div className={selectDescriptorClassName}>None</div>
+                    </div>
+                );
+            });
+        }
     };
 
-    const selectActive = isOpen ? selectActiveClassName : '';
-    const claNames = classNames(selectClassName, className, selectActive);
+    public render() {
+        const { option, isOpen } = this.state;
+        const {
+            className,
+            children,
+            defaultValue = '',
+            placeholder,
+            value,
+            onSelect,
+            ...custom
+        } = this.props;
 
-    useEffect(() => {
-        contextView.onHide(() => {
-            setIsOpen(false);
-        });
+        const selectActive = isOpen ? selectActiveClassName : '';
+        const claNames = classNames(selectClassName, className, selectActive);
 
-        return () => {
-            contextView.dispose();
-        };
-    }, [isOpen, inputValue]);
-
-    return (
-        <div ref={selectElm} className={claNames} {...(custom as any)}>
-            <input
-                {...events}
-                ref={selectInput}
-                autoComplete="off"
-                placeholder={placeholder}
-                className={inputClassName}
-                value={inputValue.title}
-                readOnly
-            >
-                {title}
-            </input>
-            <span className={selectArrowClassName}>
-                <Icon type={'chevron-down'} />
-            </span>
-        </div>
-    );
+        return (
+            <div ref={this.selectElm} className={claNames} {...(custom as any)}>
+                <input
+                    onClick={this.handleOnClickSelect}
+                    ref={this.selectInput}
+                    autoComplete="off"
+                    placeholder={placeholder}
+                    className={inputClassName}
+                    value={option.title}
+                    readOnly
+                />
+                <span className={selectArrowClassName}>
+                    <Icon type={'chevron-down'} />
+                </span>
+            </div>
+        );
+    }
 }

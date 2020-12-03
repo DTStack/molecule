@@ -37,12 +37,34 @@ stories.add(
                 <div>
                     <h3>使用示例 1</h3>
                     <Select
+                        id="demo1"
+                        key="demo1"
                         defaultValue="1"
                         style={{
                             width: 200,
                             color: 'rgba(255, 255, 255, 0.4)',
                             background: '#252526',
                         }}
+                        onSelect={onSelectOption}
+                    >
+                        <Option value="1">option - 1</Option>
+                        <Option value="2">option - 2</Option>
+                        <Option value="3">option - 3</Option>
+                        <Option value="4" description="Test option one">
+                            option - 4
+                        </Option>
+                    </Select>
+
+                    <h3>使用示例 2</h3>
+                    <Select
+                        id="demo2"
+                        key="demo2"
+                        style={{
+                            width: 200,
+                            color: 'rgba(255, 255, 255, 0.4)',
+                            background: '#252526',
+                        }}
+                        placeholder="请选择"
                         onSelect={onSelectOption}
                     >
                         <Option value="1">option - 1</Option>

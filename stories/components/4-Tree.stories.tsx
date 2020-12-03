@@ -1,19 +1,20 @@
 import * as React from 'react';
 import { useState } from 'react';
-import Tree from 'mo/components/tree';
+import Tree, { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 const stories = storiesOf('Tree', module);
 stories.addDecorator(withKnobs);
 
+const folder = FileTypes.FOLDER as FileType;
+const file = FileTypes.FILE as FileType;
+
 stories.add('Basic Usage', () => {
     const data = [
         {
             id: '1',
-            title: 'folder',
-            name: 'folder',
-            key: 'folder',
-            type: 'folder',
+            name: folder,
+            type: folder,
             contextMenu: [
                 {
                     id: 'custom',
@@ -26,52 +27,48 @@ stories.add('Basic Usage', () => {
             children: [
                 {
                     id: '2',
-                    title: 'abccccccccc',
-                    name: 'abccccccccc',
-                    key: 'abccccccccc',
-                    type: 'folder',
+                    name: 'abc',
+                    type: folder,
                     children: [
                         {
                             id: '3',
-                            title: 'test.txt',
                             name: 'test.txt',
-                            key: 'test.txt',
-                            type: 'file',
+                            type: file,
                             icon: 'symbol-file',
                         },
                     ],
                 },
                 {
                     id: '6',
-                    title: 'xyz',
                     name: 'xyz',
-                    key: 'xyz',
-                    type: 'folder',
+                    type: folder,
                     children: [
                         {
                             id: '7',
-                            title: 'test.pdf',
                             name: 'test.pdf',
-                            key: 'test.pdf',
-                            type: 'file',
+                            type: file,
                             icon: 'file-pdf',
                         },
                     ],
                 },
                 {
                     id: '10',
-                    title: 'file.yaml',
                     name: 'file.yaml',
-                    key: 'file.yaml',
-                    type: 'file',
+                    type: file,
                 },
             ],
         },
     ];
 
-    const [treeData, setTreeData] = useState<any>(data);
+    const [treeData, setTreeData] = useState<ITreeNodeItem[]>(data);
     return (
         <div>
+            <h2>简述</h2>
+            <p>
+                Tree
+                多层次的结构列表。实现组件拖拽、右键面板等简单功能
+            </p>
+            <h3>使用示例 尝试点击面板或者右键看看～</h3>
             <Tree prefixCls="rc-tree" data={treeData} />
         </div>
     );

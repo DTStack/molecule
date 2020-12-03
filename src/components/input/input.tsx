@@ -16,8 +16,8 @@ export interface InputProps {
     placeholder?: string;
     value?: any;
     style?: React.CSSProperties;
-    readonly defaultValue?: any;
-    readonly className?: string;
+    defaultValue?: any;
+    className?: string;
     onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;

@@ -172,6 +172,11 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         console.log('treeData', treeData);
         onDropTree && onDropTree(treeData)
     };
+    const onEnter = (e, file, index) => {
+        if (e.keyCode === 13) {
+            updateFile && updateFile(file, e.target.value, index)
+        }
+    }
     const renderTreeNodes = (data) =>
         data?.map((item, index) => {
             const {
@@ -182,6 +187,8 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     data-id={generateTreeId(id)}
                     data={item}
                     title={modify ? <input
+                        type='text'
+                        onKeyDown={(e: any) => { onEnter(e, item, index) }}
                         autoComplete='off'
                         onBlur={(e) => {
                             updateFile && updateFile(item, e.target.value, index)

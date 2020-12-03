@@ -92,8 +92,10 @@ export class ExplorerService
         const update = (tree) => {
             const rootNode = tree[0];
             if (rootNode.id === fileData.id) {
-                rootNode.name = newName;
-                rootNode.modify = false;
+                if (newName) {
+                    rootNode.name = newName;
+                    rootNode.modify = false;
+                }
                 return tree
             }
             const loopById = (file, id) => {

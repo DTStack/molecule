@@ -1,3 +1,3 @@
 export const enum KeyCodes {
-    ENTER = "Enter"
+    ENTER = 'Enter',
 }

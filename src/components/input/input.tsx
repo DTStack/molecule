@@ -1,7 +1,7 @@
 import './style.scss';
 import * as React from 'react';
 import { classNames, prefixClaName } from 'mo/common/className';
-import { KeyCodes } from 'mo/common/keyCodes'
+import { KeyCodes } from 'mo/common/keyCodes';
 
 import TextArea from './TextArea';
 
@@ -21,7 +21,9 @@ export interface InputProps {
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onChange?: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => void;
 }
 export const inputClassName = prefixClaName('input');
 
@@ -108,7 +110,7 @@ class Input extends React.Component<InputProps, InputState> {
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { onChange } = this.props
+        const { onChange } = this.props;
         this.setValue(e.target.value);
         resolveOnChange(this.input, e, onChange);
     };

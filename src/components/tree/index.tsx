@@ -18,8 +18,8 @@ export function generateTreeId(id?: string): string {
 }
 export const FileTypes = {
     FILE: 'file',
-    FOLDER: 'folder'
-}
+    FOLDER: 'folder',
+};
 export type FileType = 'file' | 'folder';
 
 export interface ITreeNodeItem {
@@ -42,10 +42,15 @@ export interface ITreeProps extends TreeProps {
     className?: string;
 }
 const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
-    const { className, data,
-        newFileItem, updateFile, reName,
+    const {
+        className,
+        data,
+        newFileItem,
+        updateFile,
+        reName,
         onDropTree,
-        ...others } = props;
+        ...others
+    } = props;
     const [activeData, setActiveData] = useState<ITreeNodeItem>({});
     // const [value, setValue] = useState<string>('')
     const getContextMenuList = (type?: FileType) => {
@@ -56,21 +61,26 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     id: 'newFile',
                     name: 'New File',
                     onClick: (e, active) => {
-                        newFileItem && newFileItem(activeData, FileTypes.FILE as FileType)
+                        newFileItem &&
+                            newFileItem(activeData, FileTypes.FILE as FileType);
                     },
                 },
                 {
                     id: 'newFolder',
                     name: 'New Folder',
                     onClick: (e, active) => {
-                        newFileItem && newFileItem(activeData, FileTypes.FOLDER as FileType)
+                        newFileItem &&
+                            newFileItem(
+                                activeData,
+                                FileTypes.FOLDER as FileType
+                            );
                     },
                 },
                 {
                     id: 'rename',
                     name: 'Rename',
                     onClick: (e, active) => {
-                        reName && reName(activeData)
+                        reName && reName(activeData);
                     },
                 },
                 {
@@ -88,7 +98,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     id: 'rename',
                     name: 'Rename',
                     onClick: (e, active) => {
-                        reName && reName(activeData)
+                        reName && reName(activeData);
                     },
                 },
                 {
@@ -170,32 +180,38 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
             }
         }
         console.log('treeData', treeData);
-        onDropTree && onDropTree(treeData)
+        onDropTree && onDropTree(treeData);
     };
     const onEnter = (e, file, index) => {
         if (e.keyCode === 13) {
-            updateFile && updateFile(file, e.target.value, index)
+            updateFile && updateFile(file, e.target.value, index);
         }
-    }
+    };
     const renderTreeNodes = (data) =>
         data?.map((item, index) => {
-            const {
-                modify, name, id, icon, children
-            } = item;
+            const { modify, name, id, icon, children } = item;
             return (
                 <TreeNode
                     data-id={generateTreeId(id)}
                     data={item}
-                    title={modify ? <input
-                        type='text'
-                        onKeyDown={(e: any) => { onEnter(e, item, index) }}
-                        autoComplete='off'
-                        onBlur={(e) => {
-                            updateFile && updateFile(item, e.target.value, index)
-                        }}
-                        onChange={(e) => {
-                        }}
-                    /> : name}
+                    title={
+                        modify ? (
+                            <input
+                                type="text"
+                                onKeyDown={(e: any) => {
+                                    onEnter(e, item, index);
+                                }}
+                                autoComplete="off"
+                                onBlur={(e) => {
+                                    updateFile &&
+                                        updateFile(item, e.target.value, index);
+                                }}
+                                onChange={(e) => {}}
+                            />
+                        ) : (
+                            name
+                        )
+                    }
                     key={id}
                     icon={modify ? '' : <Icon type={icon} />}
                 >

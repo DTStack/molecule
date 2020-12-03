@@ -7,7 +7,7 @@ import {
     getFileIconByName,
     generateFileTemplate,
     findParentNodeId,
-    getPrevParentNode
+    getPrevParentNode,
 } from 'mo/model/workbench/explorer';
 import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
 export interface IExplorerService extends Component<IExpolorer> {
@@ -35,7 +35,7 @@ export class ExplorerService
 
     public reset() {
         this.updateState({
-            data: []
+            data: [],
         });
     }
 
@@ -47,9 +47,9 @@ export class ExplorerService
     }
 
     /**
-     * 
+     *
      * @param fileData treeNode ite
-     * @param type new type 
+     * @param type new type
      */
     public newFileItem(fileData: ITreeNodeItem, type: FileType) {
         const original = this.state.treeData;
@@ -59,14 +59,14 @@ export class ExplorerService
                     if (!item.children) item.children = [];
                     item.children.push({
                         ...generateFileTemplate(),
-                        type
-                    })
+                        type,
+                    });
                 }
                 if (item.children) {
-                    loop(item.children)
+                    loop(item.children);
                 }
             }
-        }
+        };
         loop(original as any);
 
         /**
@@ -76,7 +76,7 @@ export class ExplorerService
          */
         if (type === 'folder') {
             if (!original?.length) {
-                original?.push(fileData)
+                original?.push(fileData);
             }
         }
     }
@@ -88,7 +88,10 @@ export class ExplorerService
         const original = this.state.treeData;
         const parentIds: string[] = findParentNodeId(original, fileData.id);
         const prevPatentNodeId = parentIds.slice(-2)[0]; // prevParentNode Id
-        const prevParentNode: ITreeNodeItem = getPrevParentNode(original, prevPatentNodeId);
+        const prevParentNode: ITreeNodeItem = getPrevParentNode(
+            original,
+            prevPatentNodeId
+        );
         const update = (tree) => {
             const rootNode = tree[0];
             if (rootNode.id === fileData.id) {
@@ -96,7 +99,7 @@ export class ExplorerService
                     rootNode.name = newName;
                     rootNode.modify = false;
                 }
-                return tree
+                return tree;
             }
             const loopById = (file, id) => {
                 for (const item of file) {
@@ -105,53 +108,57 @@ export class ExplorerService
                             ...item,
                             name: newName,
                             modify: false,
-                            icon: fileData.type === FileTypes.FILE ? getFileIconByName(newName) : ''
-                        }
-                        if (!prevParentNode.children) prevParentNode.children = [];
+                            icon:
+                                fileData.type === FileTypes.FILE
+                                    ? getFileIconByName(newName)
+                                    : '',
+                        };
+                        if (!prevParentNode.children)
+                            prevParentNode.children = [];
                         if (newName) {
-                            prevParentNode.children.splice(index, 1, newItem)
+                            prevParentNode.children.splice(index, 1, newItem);
                         } else {
-                            prevParentNode.children.splice(index, 1)
+                            prevParentNode.children.splice(index, 1);
                         }
                     }
                     if (item.children) {
-                        loopById(item.children, id)
+                        loopById(item.children, id);
                     }
                 }
-            }
-            loopById(tree[0]?.children, fileData.id)
-        }
-        update(original)
+            };
+            loopById(tree[0]?.children, fileData.id);
+        };
+        update(original);
     }
 
     public reName(fileData: ITreeNodeItem) {
-        const original = this.state.treeData
+        const original = this.state.treeData;
         const updateName = (tree, id) => {
             const rootNode = tree[0];
             if (rootNode.id === id) {
-                rootNode.modify = true
-                return tree
+                rootNode.modify = true;
+                return tree;
             }
             const traverseModfyCol = (file, id) => {
                 for (const item of file) {
                     if (item.id === id) {
-                        item.modify = true
-                        return
+                        item.modify = true;
+                        return;
                     }
                     if (item.children) {
-                        traverseModfyCol(item.children, id)
+                        traverseModfyCol(item.children, id);
                     }
                 }
-            }
-            traverseModfyCol(tree[0]?.children, id)
-            return tree
-        }
-        updateName(original, fileData.id)
+            };
+            traverseModfyCol(tree[0]?.children, id);
+            return tree;
+        };
+        updateName(original, fileData.id);
     }
 
     public onDropTree = (treeData: ITreeNodeItem[]) => {
         this.updateState({
-            treeData
-        })
-    }
+            treeData,
+        });
+    };
 }

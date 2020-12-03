@@ -64,10 +64,7 @@ stories.add('Basic Usage', () => {
     return (
         <div>
             <h2>简述</h2>
-            <p>
-                Tree
-                多层次的结构列表。实现组件拖拽、右键面板等简单功能
-            </p>
+            <p>Tree 多层次的结构列表。实现组件拖拽、右键面板等简单功能</p>
             <h3>使用示例 尝试点击面板或者右键看看～</h3>
             <Tree prefixCls="rc-tree" data={treeData} />
         </div>

@@ -6,7 +6,7 @@ import { IActionBarItem } from 'mo/components/actionbar';
 import { ITreeNodeItem } from 'mo/components/tree';
 
 /**
- * 
+ *
  * @param treeData tree Data
  * @param id match by ID
  */
@@ -15,50 +15,50 @@ export const findParentNodeId = (treeData, id) => {
     let isContinue = true;
     const traverse = function (treeData, id) {
         treeData.forEach((item: ITreeNodeItem) => {
-            if (!isContinue) return
-            parentIds.push(item.id)
+            if (!isContinue) return;
+            parentIds.push(item.id);
             if (item.id == id) {
-                isContinue = false
+                isContinue = false;
             } else if (item.children) {
-                traverse(item.children, id)
+                traverse(item.children, id);
             } else {
-                parentIds.pop()
+                parentIds.pop();
             }
-        })
-        if (isContinue) parentIds.pop()
-    }
+        });
+        if (isContinue) parentIds.pop();
+    };
     traverse(treeData, id);
-    return parentIds
-}
+    return parentIds;
+};
 
 /**
- * 
+ *
  * @param tree tree Data
  * @param id prevParentNode ID
  */
 export const getPrevParentNode = (tree, id) => {
-    let prevParentNode = {}
+    let prevParentNode = {};
     const loop = (data: any) => {
         for (const item of data) {
             if (item.id === id) {
-                prevParentNode = item
+                prevParentNode = item;
             }
             if (item.children) {
-                loop(item.children)
+                loop(item.children);
             }
         }
         return prevParentNode;
-    }
+    };
     loop(tree);
-    return prevParentNode
-}
+    return prevParentNode;
+};
 /**
  * 生成规则：
  * id不能带 querySelector 非法字符（小数点、_、数字开头..）
  */
 export const generateRandomId = () => {
     return Math.random().toString().split('.')[1];
-}
+};
 /**
  * file item template
  */
@@ -66,9 +66,9 @@ export const generateFileTemplate = () => {
     return {
         id: `${generateRandomId()}`,
         name: '',
-        modify: true
-    }
-}
+        modify: true,
+    };
+};
 /**
  * match icon by file name extension
  * @param name fileName
@@ -93,12 +93,13 @@ export const getFileIconByName = (name: string): string => {
             icon = 'file-zip';
             break;
         }
-        default: icon;
+        default:
+            icon;
     }
-    return icon
-}
+    return icon;
+};
 
-export enum ExplorerEvent { }
+export enum ExplorerEvent {}
 export interface IPanelItem<T = any> extends IActionBarItem {
     renderPanel?: (props) => React.ReactNode | JSX.Element;
     toolbar?: T;

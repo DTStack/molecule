@@ -23,13 +23,10 @@ const serviceProps = {
     },
     onDropTree: function (treeNode) {
         explorerService.onDropTree(treeNode);
-    }
-}
+    },
+};
 const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     const { data } = props;
-    return <Tree prefixCls="rc-tree"
-        data={data}
-        {...serviceProps}
-    />;
+    return <Tree prefixCls="rc-tree" data={data} {...serviceProps} />;
 };
 export default memo(TreeView);

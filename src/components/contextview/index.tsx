@@ -27,12 +27,16 @@ export interface IContextView {
     dispose(): void;
 }
 
+enum ContextViewEvent {
+    onHide = 'onHide',
+}
+
 const contextViewClass = prefixClaName('context-view');
 const contentClass = '.context-view-content';
+const emitter = new EventEmitter();
 
 export function useContextView(props?: IContextViewProps): IContextView {
     const claName = classNames(contextViewClass, 'fade-in');
-    const emitter = new EventEmitter();
     let contextView: HTMLElementType = select('.' + contextViewClass); // Singleton contextView dom
 
     const show = (anchorPos: IPosition, render?: () => React.ReactNode) => {
@@ -58,12 +62,12 @@ export function useContextView(props?: IContextViewProps): IContextView {
         if (contextView) {
             contextView.style.visibility = 'hidden';
             ReactDOM.unmountComponentAtNode(select(contentClass)!);
-            emitter.emit('onHide');
+            emitter.emit(ContextViewEvent.onHide);
         }
     };
 
     const onHide = (callback: Function) => {
-        emitter.subscribe('onHide', callback);
+        emitter.subscribe(ContextViewEvent.onHide, callback);
     };
 
     const onMaskClick = (e: React.MouseEvent) => {
@@ -73,7 +77,7 @@ export function useContextView(props?: IContextViewProps): IContextView {
     };
 
     const dispose = () => {
-        emitter.unsubscribe('onHide');
+        emitter.unsubscribe(ContextViewEvent.onHide);
     };
 
     if (!contextView) {

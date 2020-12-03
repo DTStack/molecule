@@ -1,6 +1,7 @@
 import './style.scss';
 import * as React from 'react';
 import { classNames, prefixClaName } from 'mo/common/className';
+import { KeyCodes } from 'mo/common/keyCodes'
 
 import TextArea from './TextArea';
 
@@ -16,11 +17,11 @@ export interface InputProps {
     value?: string;
     readonly defaultValue?: string;
     readonly className?: string;
-    readonly onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-    readonly onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-    readonly onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
-    readonly onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    readonly onChange?: (e: any) => void;
+    onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 export const inputClassName = prefixClaName('input');
 
@@ -65,7 +66,6 @@ export interface InputState {
 }
 
 class Input extends React.Component<InputProps, InputState> {
-    //   static Search: typeof Search;
     static TextArea: typeof TextArea;
 
     static defaultProps = {
@@ -108,15 +108,15 @@ class Input extends React.Component<InputProps, InputState> {
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { onChange } = this.props
         this.setValue(e.target.value);
-        resolveOnChange(this.input, e, this.props.onChange);
+        resolveOnChange(this.input, e, onChange);
     };
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const { onPressEnter, onKeyDown } = this.props;
-        // todo
-        if (e.keyCode === 13 && onPressEnter) {
-            onPressEnter(e);
+        if (e.key === KeyCodes.ENTER) {
+            onPressEnter?.(e);
         }
         onKeyDown?.(e);
     };

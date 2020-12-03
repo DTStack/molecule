@@ -55,7 +55,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     // const [value, setValue] = useState<string>('')
     const getContextMenuList = (type?: FileType) => {
         let contextMenu: IMenuItem[] = [];
-        if (type === 'folder') {
+        if (type === FileTypes.FOLDER) {
             contextMenu = [
                 {
                     id: 'newFile',
@@ -88,7 +88,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     name: 'Delete',
                 },
             ];
-        } else if (type === 'file') {
+        } else if (type === FileTypes.FILE) {
             contextMenu = [
                 {
                     id: 'openToSide',
@@ -206,11 +206,11 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                     updateFile &&
                                         updateFile(item, e.target.value, index);
                                 }}
-                                onChange={(e) => {}}
+                                onChange={(e) => { }}
                             />
                         ) : (
-                            name
-                        )
+                                name
+                            )
                     }
                     key={id}
                     icon={modify ? '' : <Icon type={icon} />}

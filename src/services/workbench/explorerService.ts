@@ -74,7 +74,7 @@ export class ExplorerService
          * + 支持工作空间/多目录结构
          * + 支持本地文件导入
          */
-        if (type === 'folder') {
+        if (type === FileTypes.FOLDER) {
             if (!original?.length) {
                 original?.push(fileData);
             }

@@ -17,12 +17,12 @@ export function classNames(...args) {
         let argType = typeof arg;
         if (argType === 'string' || argType === 'number') {
             classList.push(arg);
-            continue
+            continue;
         }
         if (argType === 'object') {
             if (arg.toString !== Object.prototype.toString) {
                 classList.push(arg.toString());
-                continue
+                continue;
             }
             for (let key in arg) {
                 if (Object.hasOwnProperty.call(arg, key) && arg[key]) {

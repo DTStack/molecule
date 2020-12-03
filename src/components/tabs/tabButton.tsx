@@ -44,7 +44,7 @@ export default function TabButton({
         <div
             className={classNames(
                 'tab-button',
-                { 'tab-button--active': true },
+                { 'tab-button--active': active },
                 className
             )}
             onClick={handleClick}

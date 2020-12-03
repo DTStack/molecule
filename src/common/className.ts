@@ -1,3 +1,4 @@
+import { isEmpty } from 'loadsh';
 import { APP_PREFIX } from 'mo/common/const';
 /**
  * This function help you prefix a css class name, default is molecule.
@@ -11,6 +12,7 @@ export function prefixClaName(name: string, prefix: string = APP_PREFIX) {
 }
 
 export function classNames(...args) {
+    if (isEmpty(args)) return
     let classList: string[] = [];
     for (let arg of args) {
         if (!arg) continue;

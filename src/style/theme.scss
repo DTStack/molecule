@@ -25,6 +25,7 @@
 @import 'mo/components/button/style';
 @import 'mo/components/input/style';
 @import 'mo/components/select/style';
+@import 'mo/components/checkbox/style';
 
 // =============== Workbench =============== //
 #{prefix($workbench)} {
@@ -249,5 +250,22 @@
 
     &__descriptor {
         border-top-color: rgba(255, 255, 255, 0.4);
+    }
+}
+
+// =============== Checkbox =============== //
+
+#{$checkbox} {
+    &--focus + label::before {
+        outline-color: rgba(14, 99, 156, 0.8);
+    }
+
+    &__label {
+        color: #f0f0f0;
+
+        &::before {
+            background-color: #3c3c3c;
+            border-color: #3c3c3c;
+        }
     }
 }

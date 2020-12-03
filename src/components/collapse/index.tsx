@@ -38,7 +38,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
         if (render) {
             return render();
         } else {
-            return 'Cannot provide...';
+            return <span className='content-box__padding'>Cannot provide...</span>
         }
     };
     const { activePanelKey } = state;

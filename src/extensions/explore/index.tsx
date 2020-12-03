@@ -5,17 +5,17 @@ import {
     sidebarService,
     explorerService,
 } from 'mo';
-
+import { Button } from 'mo/components/button'
 import { ExplorerView } from './explore';
 import TreeView from './tree';
 import { ExtensionService } from 'mo/services/extensionService';
 import { IExtension } from 'mo/model/extension';
-import { data } from './treeMock';
+import { FileTypes, FileType } from 'mo/components/tree'
 
 function init(extensionCtx: ExtensionService) {
     const state = activityBarService.getState();
     const sideBarState = sidebarService.getState();
-
+    const explorerState = explorerService.getState();
     const exploreActiveItem = {
         id: 'active-explorer',
         name: 'Explore',
@@ -76,7 +76,7 @@ function init(extensionCtx: ExtensionService) {
             },
         ],
         renderPanel: () => {
-            return <span>editors</span>;
+            return <span className='content-box__padding'>editors</span>;
         },
     };
     const sampleFolderPanel = {
@@ -87,6 +87,8 @@ function init(extensionCtx: ExtensionService) {
                 id: 'new_file',
                 title: 'New File',
                 iconName: 'codicon-new-file',
+                onClick: () => {
+                }
             },
             {
                 id: 'new_folder',
@@ -105,7 +107,24 @@ function init(extensionCtx: ExtensionService) {
             },
         ],
         renderPanel: () => {
-            return <TreeView data={data} />;
+            return <>
+                {
+                    explorerState.treeData?.length ?
+                        <TreeView prefixCls="rc-tree" data={explorerState.treeData} /> :
+                        <span className='content-box__padding'>
+                            you have not yet opened a folder
+                            <Button onClick={() => {
+                                // test service
+                                explorerService.newFileItem({
+                                    id: '1',
+                                    name: '',
+                                    type: 'folder',
+                                    modify: true
+                                }, FileTypes.FOLDER as FileType);
+                            }}>New Folder</Button>
+                        </span>
+                }
+            </>;
         },
     };
     const outlinePanel = {
@@ -127,6 +146,7 @@ function init(extensionCtx: ExtensionService) {
     explorerService.push(editorPanel);
     explorerService.push(sampleFolderPanel);
     explorerService.push(outlinePanel);
+
 }
 
 export const ExtendExplore: IExtension = {

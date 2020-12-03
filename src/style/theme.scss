@@ -169,6 +169,13 @@
     .rc-tree-treenode-active {
         background: rgba(0, 0, 0, 0.1);
     }
+
+    input {
+        background: #252526;
+        border: 1px solid rgb(56, 56, 243);
+        color: #bbb;
+        outline: none;
+    }
 }
 
 // =============== Tab =============== //

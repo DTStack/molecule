@@ -16,29 +16,39 @@ export function getElementByCustomAttr(id: string): HTMLElementType {
 export function generateTreeId(id?: string): string {
     return `mo_treeNode_${id}`;
 }
+export const FileTypes = {
+    FILE: 'file',
+    FOLDER: 'folder'
+}
+export type FileType = 'file' | 'folder';
 
 export interface ITreeNodeItem {
-    key?: string | number;
-    title?: React.ReactNode | string;
     name?: string;
-    type?: 'folder' | 'file';
-    contextMenu?: IMenuItem[];
+    type?: FileType;
+    contextMenu?: IMenuItem[]; // custom contextMenu
     children?: ITreeNodeItem[];
     readonly id?: string;
     icon?: string | React.ReactNode;
+    modify?: boolean; // Edit status
     className?: string;
 }
 export interface ITreeProps extends TreeProps {
     data: ITreeNodeItem[];
     onSelectFile?: (IMenuItem) => void;
+    newFileItem?: (fileData: ITreeNodeItem, type: FileType) => void;
+    updateFile?(fileData: ITreeNodeItem, newName: string, index: number): void;
+    reName?(fileData: ITreeNodeItem): void;
+    onDropTree?(treeNode): void;
     className?: string;
 }
 const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
-    const { className, data, ...others } = props;
-    const [treeData, setTreeData] = useState<ITreeNodeItem[]>(data);
+    const { className, data,
+        newFileItem, updateFile, reName,
+        onDropTree,
+        ...others } = props;
     const [activeData, setActiveData] = useState<ITreeNodeItem>({});
-
-    const getContextMenuList = (type?: 'folder' | 'file') => {
+    // const [value, setValue] = useState<string>('')
+    const getContextMenuList = (type?: FileType) => {
         let contextMenu: IMenuItem[] = [];
         if (type === 'folder') {
             contextMenu = [
@@ -46,16 +56,22 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     id: 'newFile',
                     name: 'New File',
                     onClick: (e, active) => {
-                        console.log('New File Click', active);
+                        newFileItem && newFileItem(activeData, FileTypes.FILE as FileType)
                     },
                 },
                 {
                     id: 'newFolder',
                     name: 'New Folder',
+                    onClick: (e, active) => {
+                        newFileItem && newFileItem(activeData, FileTypes.FOLDER as FileType)
+                    },
                 },
                 {
                     id: 'rename',
                     name: 'Rename',
+                    onClick: (e, active) => {
+                        reName && reName(activeData)
+                    },
                 },
                 {
                     id: 'delete',
@@ -71,6 +87,9 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 {
                     id: 'rename',
                     name: 'Rename',
+                    onClick: (e, active) => {
+                        reName && reName(activeData)
+                    },
                 },
                 {
                     id: 'delete',
@@ -93,7 +112,6 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
             });
         }
         return function cleanup() {
-            console.log('cleanup');
             contextViewMenu?.dispose();
         };
     }, [data, activeData]);
@@ -116,16 +134,16 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 }
             });
         };
-        const data = [...treeData];
+        const treeData = [...data];
 
         let dragObj;
-        loopTree(data, dragKey, (item, index, arr) => {
+        loopTree(treeData, dragKey, (item, index, arr) => {
             arr.splice(index, 1);
             dragObj = item;
         });
 
         if (!info.dropToGap) {
-            loopTree(data, dropKey, (item) => {
+            loopTree(treeData, dropKey, (item) => {
                 item.children = item.children || [];
                 item.children.push(dragObj);
             });
@@ -134,14 +152,14 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
             info.node.props.expanded &&
             dropPosition === 1
         ) {
-            loopTree(data, dropKey, (item) => {
+            loopTree(treeData, dropKey, (item) => {
                 item.children = item.children || [];
                 item.children.unshift(dragObj);
             });
         } else {
             let ar;
             let i;
-            loopTree(data, dropKey, (item, index, arr) => {
+            loopTree(treeData, dropKey, (item, index, arr) => {
                 ar = arr;
                 i = index;
             });
@@ -151,24 +169,34 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 ar.splice(i + 1, 0, dragObj);
             }
         }
-        console.log('data', data);
-        setTreeData(data);
+        console.log('treeData', treeData);
+        onDropTree && onDropTree(treeData)
     };
-
     const renderTreeNodes = (data) =>
-        data?.map((item) => {
+        data?.map((item, index) => {
+            const {
+                modify, name, id, icon, children
+            } = item;
             return (
                 <TreeNode
-                    data-id={generateTreeId(item.id)}
+                    data-id={generateTreeId(id)}
                     data={item}
-                    title={item.name}
-                    key={item.key}
-                    icon={<Icon type={item.icon} />}
+                    title={modify ? <input
+                        autoComplete='off'
+                        onBlur={(e) => {
+                            updateFile && updateFile(item, e.target.value, index)
+                        }}
+                        onChange={(e) => {
+                        }}
+                    /> : name}
+                    key={id}
+                    icon={modify ? '' : <Icon type={icon} />}
                 >
-                    {item.children && renderTreeNodes(item.children)}
+                    {children && renderTreeNodes(children)}
                 </TreeNode>
             );
         });
+
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
@@ -181,14 +209,14 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                         setActiveData(node.data);
                     }}
                     onSelect={(selectedKeys, e: any) => {
-                        console.log('select', selectedKeys, e);
-                        const isFile = e.node.data.type === 'file';
-                        if (isFile && props.onSelectFile) {
+                        const isFile = e.node.data.type === FileTypes.FILE;
+                        const idModify = e.node.data.modify;
+                        if (isFile && !idModify && props.onSelectFile) {
                             props.onSelectFile(e.node.data);
                         }
                     }}
                 >
-                    {renderTreeNodes(treeData)}
+                    {renderTreeNodes(data)}
                 </Tree>
             </div>
         </div>

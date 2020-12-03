@@ -66,15 +66,11 @@ const propDefinitions = [
 const renderMultipeTextArea = () => {
     const [value, setValue] = useState(10);
     const [size, setSize] = useState({ width: 0, height: 0 });
-    const onChange = useCallback((e) => setValue(e.target.value), [
-        value,
-    ]);
+    const onChange = useCallback((e) => setValue(e.target.value), [value]);
     const onPressEnter = (e) => console.log(`enter key is pressed`);
     const onResize = useCallback(
         ({ width, height }) => {
-            console.log(
-                `size is changed, width:${width} height:${height}`
-            );
+            console.log(`size is changed, width:${width} height:${height}`);
             setSize((resize) => ({ ...size, width, height }));
         },
         [size.width, size.height]
@@ -107,8 +103,11 @@ const renderMultipeTextArea = () => {
 stories.add(
     'Basic Usage',
     () => {
-        const [inputValue, setInputValue] = useState("")
-        const handleInputChange = useCallback((e) => setInputValue(e.target.value), [inputValue])
+        const [inputValue, setInputValue] = useState('');
+        const handleInputChange = useCallback(
+            (e) => setInputValue(e.target.value),
+            [inputValue]
+        );
 
         return (
             <>
@@ -117,10 +116,22 @@ stories.add(
                 <h3>使用示例 1 - Input基本使用</h3>
                 <Input placeholder="basic usage" />
                 <h3>使用示例 2 - Input默认值</h3>
-                <Input placeholder="input default value" defaultValue="default value"/>
-                <h3>使用示例 3 - 输入框定义了三种尺寸（大、默认），高度分别为 40px、32px</h3>
-                <Input size="large" placeholder="please input large size"  />
-                <Input placeholder="input default size" value={inputValue} style={{ marginTop: 10 }} onChange={handleInputChange} onPressEnter={e => console.log('enter key is pressed')}/>
+                <Input
+                    placeholder="input default value"
+                    defaultValue="default value"
+                />
+                <h3>
+                    使用示例 3 - 输入框定义了三种尺寸（大、默认），高度分别为
+                    40px、32px
+                </h3>
+                <Input size="large" placeholder="please input large size" />
+                <Input
+                    placeholder="input default size"
+                    value={inputValue}
+                    style={{ marginTop: 10 }}
+                    onChange={handleInputChange}
+                    onPressEnter={(e) => console.log('enter key is pressed')}
+                />
                 <h3>使用示例 4 - 带字数提示的文本域</h3>
                 <TextArea
                     placeholder="replace"
@@ -129,7 +140,11 @@ stories.add(
                     style={{ marginTop: 10 }}
                 />
                 <h3>使用示例 5 - 用于多行输入</h3>
-                <TextArea rows={4} placeholder="input multipe line" defaultValue="hi textarea"/>
+                <TextArea
+                    rows={4}
+                    placeholder="input multipe line"
+                    defaultValue="hi textarea"
+                />
                 <h3>
                     使用示例 6 - autoSize 属性适用于 textarea
                     节点，并且只有高度会自动变化。另外 autoSize

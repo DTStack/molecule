@@ -57,9 +57,9 @@ export function getInputClassName(
 ) {
     return classNames(
         prefixCls,
-        {[getBEMModifier(prefixCls, 'normal')]: size === 'normal'},
-        {[getBEMModifier(prefixCls, 'lg')]: size === 'large'},
-        {[getBEMModifier(prefixCls, 'disabled')]: disabled}
+        { [getBEMModifier(prefixCls, 'normal')]: size === 'normal' },
+        { [getBEMModifier(prefixCls, 'lg')]: size === 'large' },
+        { [getBEMModifier(prefixCls, 'disabled')]: disabled }
     );
 }
 
@@ -133,7 +133,7 @@ class Input extends React.Component<InputProps, InputState> {
             placeholder,
             onFocus,
             onBlur,
-            style
+            style,
         } = this.props;
         return (
             <input

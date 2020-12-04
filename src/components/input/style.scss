@@ -16,6 +16,10 @@ $Input: 'input';
         padding: 6px 11px;
     }
 
+    &--disabled {
+        cursor: not-allowed;
+    }
+
     &__textarea {
         &--show-count::after {
             color: rgba(0, 0, 0, 0.45);

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import RcTextArea, { TextAreaProps as RcTextAreaProps } from 'rc-textarea';
 import { useEffect, useRef } from 'react';
-import { omit } from 'loadsh'
+import { omit } from 'loadsh';
 
 import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';

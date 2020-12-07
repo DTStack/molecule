@@ -34,7 +34,7 @@ export interface ISelect extends ComponentProps<any> {
 const initialValue = {
     isOpen: false,
     option: {
-        title: '',
+        name: '',
         value: '',
         description: '',
     },
@@ -42,7 +42,6 @@ const initialValue = {
 
 type IState = {
     isOpen: boolean;
-    lastUpdate?: number;
     option: ISelectOption;
 };
 
@@ -65,7 +64,7 @@ export class Select extends PureComponent<ISelect, IState> {
         this.contextView = useContextView({
             shadowOutline: false,
         });
-        this.state = this.getDefaultState();
+        this.state = this.getDefaultState(this.props);
         this.selectElm = React.createRef();
         this.selectInput = React.createRef();
     }
@@ -80,48 +79,50 @@ export class Select extends PureComponent<ISelect, IState> {
         });
     }
 
-    public getDefaultState() {
-        const defaultSelectedOption: ISelectOption = {};
-        const options = Children.toArray(this.props.children);
+    public getDefaultState(props) {
+        let defaultSelectedOption: ISelectOption = {};
+        const defaultValue = props.value || props.defaultValue;
+        const options = Children.toArray(props.children);
         for (const option of options) {
             if (isValidElement(option)) {
                 const optionProps = option.props as ISelectOption;
                 if (
                     optionProps.value &&
-                    optionProps.value === this.props.defaultValue
+                    optionProps.value === defaultValue
                 ) {
-                    defaultSelectedOption.title = optionProps.children as string;
-                    defaultSelectedOption.value = optionProps.value;
+                    defaultSelectedOption = { ...optionProps, name: optionProps.name || optionProps.children as string };
                     break;
                 }
             }
         }
         return {
             ...initialValue,
-            option: defaultSelectedOption,
+            option: { ...defaultSelectedOption },
         };
     }
 
     public handleOnClickOption = (e: React.MouseEvent) => {
         const option = e.target as HTMLDivElement;
         const value = getAttr(option, 'data-value');
-        const title = getAttr(option, 'title');
+        const name = getAttr(option, 'data-name');
         const desc = getAttr(option, 'data-desc');
-        const optionItem: ISelectOption = {
-            value: value,
-            title: title,
-            description: desc,
-        };
+        if (name) {
+            const optionItem: ISelectOption = {
+                value: value,
+                name: name,
+                description: desc,
+            };
 
-        this.setState(
-            {
-                option: optionItem,
-            },
-            () => {
-                this.props.onSelect?.(e, optionItem);
-                this.contextView.hide();
-            }
-        );
+            this.setState(
+                {
+                    option: optionItem,
+                },
+                () => {
+                    this.props.onSelect?.(e, optionItem);
+                    this.contextView.hide();
+                }
+            );
+        }
     };
 
     public handleOnHoverOption = (e: React.MouseEvent) => {
@@ -173,11 +174,7 @@ export class Select extends PureComponent<ISelect, IState> {
         const { option, isOpen } = this.state;
         const {
             className,
-            children,
-            defaultValue = '',
             placeholder,
-            value,
-            onSelect,
             ...custom
         } = this.props;
 
@@ -192,7 +189,7 @@ export class Select extends PureComponent<ISelect, IState> {
                     autoComplete="off"
                     placeholder={placeholder}
                     className={inputClassName}
-                    value={option.title}
+                    value={option.name}
                     readOnly
                 />
                 <span className={selectArrowClassName}>

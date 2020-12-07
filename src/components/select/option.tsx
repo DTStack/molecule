@@ -7,7 +7,7 @@ import { selectClassName } from './select';
 
 export interface ISelectOption extends ComponentProps<'option'> {
     value?: string;
-    title?: string;
+    name?: string;
     description?: string;
     disabled?: boolean;
 }
@@ -23,6 +23,7 @@ export function Option(props: ISelectOption) {
         className,
         value,
         title,
+        name,
         description,
         disabled,
         children,
@@ -34,16 +35,16 @@ export function Option(props: ISelectOption) {
         className,
         disabled ? selectOptionDisabledClassName : ''
     );
-    const content = children || title;
     return (
         <div
             className={claNames}
-            title={content}
+            title={title}
+            data-name={name || children}
             data-value={value}
             data-desc={description}
             {...(custom as any)}
         >
-            {content}
+            {children}
         </div>
     );
 }

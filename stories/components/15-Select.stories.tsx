@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 import { Select, Option } from 'mo/components/select';
+import { useState } from 'react';
 
 const stories = storiesOf('Select', module);
 stories.addDecorator(withKnobs);
@@ -20,9 +21,14 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
+        const [selectedVal3, setSelectedVal3] = useState('');
         const onSelectOption = (e, option) => {
             console.log('onSelectOption', e, option);
+            if (option) {
+                setSelectedVal3(option.value)
+            }
         };
+
         return (
             <div
                 style={{
@@ -65,6 +71,28 @@ stories.add(
                             background: '#252526',
                         }}
                         placeholder="请选择"
+                        onSelect={onSelectOption}
+                    >
+                        <Option value="1">option - 1</Option>
+                        <Option value="2">option - 2</Option>
+                        <Option value="3">option - 3</Option>
+                        <Option value="4" description="Test option one">
+                            option - 4
+                        </Option>
+                    </Select>
+
+                    <h3>使用示例 - 3 Change Select Value</h3>
+                    <Select
+                        id="demo3"
+                        style={{
+                            width: 200,
+                            color: 'rgba(255, 255, 255, 0.4)',
+                            background: '#252526',
+                        }}
+                        placeholder="请选择"
+                        value={selectedVal3}
+                        key={`demo3-${selectedVal3}`}
+                        defaultValue={"1"}
                         onSelect={onSelectOption}
                     >
                         <Option value="1">option - 1</Option>

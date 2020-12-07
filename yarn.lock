@@ -10900,7 +10900,7 @@ rc-resize-observer@^0.2.3:
 
 rc-textarea@^0.3.1:
   version "0.3.1"
-  resolved "https://registry.npm.taobao.org/rc-textarea/download/rc-textarea-0.3.1.tgz#e81e1ef6f0e29729f9f80bb266cf6769dd7ab69a"
+  resolved "http://registry.npm.dtstack.com/rc-textarea/-/rc-textarea-0.3.1.tgz#e81e1ef6f0e29729f9f80bb266cf6769dd7ab69a"
   integrity sha1-6B4e9vDilyn5+AuyZs9nad16tpo=
   dependencies:
     "@babel/runtime" "^7.10.1"

@@ -10,7 +10,7 @@
         "build-storybook": "build-storybook",
         "check-types": "tsc",
         "build": "tsc --project tsconfig.build.json",
-        "eslint": "eslint ./src/**/*.ts ./src/**/*.tsx",
+        "eslint": "./node_modules/.bin/eslint ./src/**/*.ts ./src/**/*.tsx",
         "stylelint": "stylelint ./src/**/*.scss",
         "prettier": "prettier --ignore-unknown --write . ",
         "release": "standard-version",

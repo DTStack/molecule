@@ -86,11 +86,13 @@ export class Select extends PureComponent<ISelect, IState> {
         for (const option of options) {
             if (isValidElement(option)) {
                 const optionProps = option.props as ISelectOption;
-                if (
-                    optionProps.value &&
-                    optionProps.value === defaultValue
-                ) {
-                    defaultSelectedOption = { ...optionProps, name: optionProps.name || optionProps.children as string };
+                if (optionProps.value && optionProps.value === defaultValue) {
+                    defaultSelectedOption = {
+                        ...optionProps,
+                        name:
+                            optionProps.name ||
+                            (optionProps.children as string),
+                    };
                     break;
                 }
             }
@@ -172,11 +174,7 @@ export class Select extends PureComponent<ISelect, IState> {
 
     public render() {
         const { option, isOpen } = this.state;
-        const {
-            className,
-            placeholder,
-            ...custom
-        } = this.props;
+        const { className, placeholder, ...custom } = this.props;
 
         const selectActive = isOpen ? selectActiveClassName : '';
         const claNames = classNames(selectClassName, className, selectActive);

@@ -25,7 +25,7 @@ stories.add(
         const onSelectOption = (e, option) => {
             console.log('onSelectOption', e, option);
             if (option) {
-                setSelectedVal3(option.value)
+                setSelectedVal3(option.value);
             }
         };
 
@@ -92,7 +92,7 @@ stories.add(
                         placeholder="请选择"
                         value={selectedVal3}
                         key={`demo3-${selectedVal3}`}
-                        defaultValue={"1"}
+                        defaultValue={'1'}
                         onSelect={onSelectOption}
                     >
                         <Option value="1">option - 1</Option>

@@ -13,12 +13,12 @@ export function prefixClaName(name: string, prefix: string = APP_PREFIX) {
 
 export function classNames(...args) {
     if (isEmpty(args)) return;
-    let classList: string[] = [];
-    for (let arg of args) {
+    let classList: string [] = [];
+    for (const arg of args) {
         if (!arg) continue;
-        let argType = typeof arg;
+        const argType = typeof arg;
         if (argType === 'string' || argType === 'number') {
-            classList.push(arg);
+            classList.push(`${arg}`);
             continue;
         }
         if (argType === 'object') {
@@ -26,7 +26,7 @@ export function classNames(...args) {
                 classList.push(arg.toString());
                 continue;
             }
-            for (let key in arg) {
+            for (const key in arg) {
                 if (Object.hasOwnProperty.call(arg, key) && arg[key]) {
                     classList.push(key);
                 }

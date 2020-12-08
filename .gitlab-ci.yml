@@ -17,7 +17,7 @@ static-checking:
     stage: static-checking
     script:
         - yarn eslint
-        - yarn prettier
+        - yarn prettier --write
         - yarn stylelint
     only:
         - merge_requests

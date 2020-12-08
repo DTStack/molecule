@@ -6,6 +6,16 @@ $prefix: 'mo';
     @return '.' + $prefix + '-' + $name;
 }
 
+// The Naming of BEM Element
+@function bem-ele($block, $element) {
+    @return $block + '__' + $element;
+}
+
+// The Naming of BEM Modifier
+@function bem-mod($blockOrElement, $modifier) {
+    @return $blockOrElement + '--' + $modifier;
+}
+
 .#{$prefix} {
     bottom: 0;
     font-size: 13px;

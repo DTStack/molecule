@@ -10900,7 +10900,7 @@ rc-resize-observer@^0.2.3:
 
 rc-textarea@^0.3.1:
   version "0.3.1"
-  resolved "https://registry.npm.taobao.org/rc-textarea/download/rc-textarea-0.3.1.tgz#e81e1ef6f0e29729f9f80bb266cf6769dd7ab69a"
+  resolved "http://registry.npm.dtstack.com/rc-textarea/-/rc-textarea-0.3.1.tgz#e81e1ef6f0e29729f9f80bb266cf6769dd7ab69a"
   integrity sha1-6B4e9vDilyn5+AuyZs9nad16tpo=
   dependencies:
     "@babel/runtime" "^7.10.1"
@@ -13350,10 +13350,10 @@ typedarray@^0.0.6:
   resolved "http://registry.npm.dtstack.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.9.5:
-  version "3.9.7"
-  resolved "http://registry.npm.dtstack.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
-  integrity sha1-mNYApevcOPQMsndSLxLcgA6eJfo=
+typescript@^4.0.5:
+  version "4.0.5"
+  resolved "http://registry.npm.dtstack.com/typescript/-/typescript-4.0.5.tgz#ae9dddfd1069f1cb5beb3ef3b2170dd7c1332389"
+  integrity sha1-rp3d/RBp8ctb6z7zshcN18EzI4k=
 
 typical@^5.0.0, typical@^5.2.0:
   version "5.2.0"

@@ -126,3 +126,7 @@ export function getPositionByPlacement(
     console.log('getPositionByPlacement', x, y);
     return { x, y };
 }
+
+export function getAttr(domElement: HTMLElement, attr) {
+    return domElement.getAttribute(attr) || '';
+}

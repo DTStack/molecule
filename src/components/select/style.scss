@@ -1,0 +1,85 @@
+@import 'mo/style/common';
+$select: prefix('select');
+
+#{$select} {
+    align-items: center;
+    border: 1px solid;
+    box-sizing: border-box;
+    display: flex;
+    font: inherit;
+    height: 26px;
+    justify-content: left;
+    position: relative;
+    width: initial;
+
+    &--active {
+        border: 1px solid;
+    }
+
+    &__input {
+        appearance: none;
+        background: inherit;
+        border: 0;
+        color: inherit;
+        cursor: default;
+        font: inherit;
+        font-size: inherit;
+        height: 100%;
+        margin: 0;
+        outline: 0;
+        padding: 0 8px;
+        width: 100%;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__arrow {
+        bottom: 0;
+        font-size: 14px;
+        height: 14px;
+        line-height: 14px;
+        margin: auto;
+        pointer-events: none;
+        position: absolute;
+        right: 6px;
+        top: 0;
+        width: 14px;
+    }
+
+    &__container {
+        align-items: center;
+        appearance: none;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        font-size: 13px;
+    }
+
+    &__options,
+    &__descriptor {
+        text-indent: 6px;
+        width: 100%;
+    }
+
+    &__descriptor {
+        border-top: 1px solid;
+        height: 26px;
+        line-height: 26px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+    }
+
+    &__option {
+        cursor: pointer;
+        height: 20px;
+        line-height: 20px;
+        width: 100%;
+
+        &--disabled {
+            cursor: not-allowed;
+        }
+    }
+}

@@ -10,7 +10,7 @@
         "build-storybook": "build-storybook",
         "check-types": "tsc",
         "build": "tsc --project tsconfig.build.json",
-        "eslint": "./node_modules/.bin/eslint ./src/**/*.ts ./src/**/*.tsx",
+        "eslint": "eslint ./src/**/*.ts ./src/**/*.tsx",
         "stylelint": "stylelint ./src/**/*.scss",
         "prettier": "prettier --ignore-unknown --write . ",
         "release": "standard-version",
@@ -75,7 +75,7 @@
         "stylelint-config-sass-guidelines": "^7.1.0",
         "ts-jest": "^26.1.0",
         "ts-loader": "^7.0.5",
-        "typescript": "^3.9.5",
+        "typescript": "^4.0.5",
         "webpack-cli": "^4.0.0",
         "webpack-dev-server": "^3.11.0",
         "webpack-merge": "^5.2.0"

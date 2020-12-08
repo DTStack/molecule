@@ -730,13 +730,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-transform-react-constant-elements@^7.12.1":
-  version "7.12.1"
-  resolved "http://registry.npm.dtstack.com/@babel%2fplugin-transform-react-constant-elements/-/plugin-transform-react-constant-elements-7.12.1.tgz#4471f0851feec3231cc9aaa0dccde39947c1ac1e"
-  integrity sha1-RHHwhR/uwyMcyaqg3M3jmUfBrB4=
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-
 "@babel/plugin-transform-react-display-name@^7.12.1":
   version "7.12.1"
   resolved "http://registry.npm.dtstack.com/@babel%2fplugin-transform-react-display-name/-/plugin-transform-react-display-name-7.12.1.tgz#1cbcd0c3b1d6648c55374a22fc9b6b7e5341c00d"
@@ -950,7 +943,7 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
-"@babel/preset-react@^7.12.1", "@babel/preset-react@^7.12.5":
+"@babel/preset-react@^7.12.1":
   version "7.12.7"
   resolved "http://registry.npm.dtstack.com/@babel%2fpreset-react/-/preset-react-7.12.7.tgz#36d61d83223b07b6ac4ec55cf016abb0f70be83b"
   integrity sha1-NtYdgyI7B7asTsVc8BarsPcL6Ds=
@@ -1014,7 +1007,7 @@
     globals "^11.1.0"
     lodash "^4.17.19"
 
-"@babel/types@^7.0.0", "@babel/types@^7.10.4", "@babel/types@^7.10.5", "@babel/types@^7.11.0", "@babel/types@^7.12.1", "@babel/types@^7.12.5", "@babel/types@^7.12.6", "@babel/types@^7.12.7", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
+"@babel/types@^7.0.0", "@babel/types@^7.10.4", "@babel/types@^7.10.5", "@babel/types@^7.11.0", "@babel/types@^7.12.1", "@babel/types@^7.12.5", "@babel/types@^7.12.7", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
   version "7.12.7"
   resolved "http://registry.npm.dtstack.com/@babel%2ftypes/-/types-7.12.7.tgz#6039ff1e242640a29452c9ae572162ec9a8f5d13"
   integrity sha1-YDn/HiQmQKKUUsmuVyFi7JqPXRM=
@@ -1550,18 +1543,6 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@sindresorhus/df@^1.0.1":
-  version "1.0.1"
-  resolved "http://registry.npm.dtstack.com/@sindresorhus%2fdf/-/df-1.0.1.tgz#c69b66f52f6fcdd287c807df210305dbaf78500d"
-  integrity sha1-xptm9S9vzdKHyAffIQMF2694UA0=
-
-"@sindresorhus/df@^2.1.0":
-  version "2.1.0"
-  resolved "http://registry.npm.dtstack.com/@sindresorhus%2fdf/-/df-2.1.0.tgz#d208cf27e06f0bb476d14d7deccd7d726e9aa389"
-  integrity sha1-0gjPJ+BvC7R20U197M19cm6ao4k=
-  dependencies:
-    execa "^0.2.2"
-
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
   resolved "http://registry.npm.dtstack.com/@sinonjs%2fcommons/-/commons-1.8.1.tgz#e7df00f98a203324f6dc7cc606cad9d4a8ab2217"
@@ -1576,17 +1557,17 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@storybook/addon-actions@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2faddon-actions/-/addon-actions-6.1.2.tgz#6df92f5ac4ed5a5d56c5ff2f52de47cf43e3c42b"
-  integrity sha1-bfkvWsTtWl1Wxf8vUt5Hz0PjxCs=
+"@storybook/addon-actions@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2faddon-actions/-/addon-actions-6.1.10.tgz#3742c316e914e2aef661a132e4d7e6c334e89997"
+  integrity sha512-fbt1v9Ms8g/gQC8cQ7p5qZdR5vrc3qv6el/x7M6xUhq4lBjw4NOHIhBBDhaPgS3tFY/sP/wEXR2q0iirfO9OEg==
   dependencies:
-    "@storybook/addons" "6.1.2"
-    "@storybook/api" "6.1.2"
-    "@storybook/client-api" "6.1.2"
-    "@storybook/components" "6.1.2"
-    "@storybook/core-events" "6.1.2"
-    "@storybook/theming" "6.1.2"
+    "@storybook/addons" "6.1.10"
+    "@storybook/api" "6.1.10"
+    "@storybook/client-api" "6.1.10"
+    "@storybook/components" "6.1.10"
+    "@storybook/core-events" "6.1.10"
+    "@storybook/theming" "6.1.10"
     core-js "^3.0.1"
     fast-deep-equal "^3.1.1"
     global "^4.3.2"
@@ -1599,18 +1580,18 @@
     util-deprecate "^1.0.2"
     uuid "^8.0.0"
 
-"@storybook/addon-knobs@^6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2faddon-knobs/-/addon-knobs-6.1.2.tgz#6daf89fd4fdf6830ca0546b22f448ade3f49b10f"
-  integrity sha1-ba+J/U/faDDKBUayL0SK3j9JsQ8=
+"@storybook/addon-knobs@^6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2faddon-knobs/-/addon-knobs-6.1.10.tgz#cac21ce6e73fbaaac95c648de3354b30c0cb9511"
+  integrity sha1-ysIc5uc/uqrJXGSN4zVLMMDLlRE=
   dependencies:
-    "@storybook/addons" "6.1.2"
-    "@storybook/api" "6.1.2"
-    "@storybook/channels" "6.1.2"
-    "@storybook/client-api" "6.1.2"
-    "@storybook/components" "6.1.2"
-    "@storybook/core-events" "6.1.2"
-    "@storybook/theming" "6.1.2"
+    "@storybook/addons" "6.1.10"
+    "@storybook/api" "6.1.10"
+    "@storybook/channels" "6.1.10"
+    "@storybook/client-api" "6.1.10"
+    "@storybook/components" "6.1.10"
+    "@storybook/core-events" "6.1.10"
+    "@storybook/theming" "6.1.10"
     copy-to-clipboard "^3.0.8"
     core-js "^3.0.1"
     escape-html "^1.0.3"
@@ -1624,16 +1605,16 @@
     react-select "^3.0.8"
     regenerator-runtime "^0.13.7"
 
-"@storybook/addon-links@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2faddon-links/-/addon-links-6.1.2.tgz#4e0cda342838c79579311f1566bd92847018ecd8"
-  integrity sha1-TgzaNCg4x5V5MR8VZr2ShHAY7Ng=
+"@storybook/addon-links@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2faddon-links/-/addon-links-6.1.10.tgz#7aeaa9467527e3ef294efc5b27f22bf3ff05a4bd"
+  integrity sha1-euqpRnUn4+8pTvxbJ/Ir8/8FpL0=
   dependencies:
-    "@storybook/addons" "6.1.2"
-    "@storybook/client-logger" "6.1.2"
-    "@storybook/core-events" "6.1.2"
+    "@storybook/addons" "6.1.10"
+    "@storybook/client-logger" "6.1.10"
+    "@storybook/core-events" "6.1.10"
     "@storybook/csf" "0.0.1"
-    "@storybook/router" "6.1.2"
+    "@storybook/router" "6.1.10"
     "@types/qs" "^6.9.0"
     core-js "^3.0.1"
     global "^4.3.2"
@@ -1674,17 +1655,17 @@
     global "^4.3.2"
     util-deprecate "^1.0.2"
 
-"@storybook/addons@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2faddons/-/addons-6.1.2.tgz#e073d4d930d84cb5d54cef5bd4376724369b56de"
-  integrity sha1-4HPU2TDYTLXVTO9b1DdnJDabVt4=
+"@storybook/addons@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2faddons/-/addons-6.1.10.tgz#3219134bb57d26b97c1d36c0eca3649a7f952d82"
+  integrity sha1-MhkTS7V9Jrl8HTbA7KNkmn+VLYI=
   dependencies:
-    "@storybook/api" "6.1.2"
-    "@storybook/channels" "6.1.2"
-    "@storybook/client-logger" "6.1.2"
-    "@storybook/core-events" "6.1.2"
-    "@storybook/router" "6.1.2"
-    "@storybook/theming" "6.1.2"
+    "@storybook/api" "6.1.10"
+    "@storybook/channels" "6.1.10"
+    "@storybook/client-logger" "6.1.10"
+    "@storybook/core-events" "6.1.10"
+    "@storybook/router" "6.1.10"
+    "@storybook/theming" "6.1.10"
     core-js "^3.0.1"
     global "^4.3.2"
     regenerator-runtime "^0.13.7"
@@ -1715,19 +1696,19 @@
     telejson "^3.2.0"
     util-deprecate "^1.0.2"
 
-"@storybook/api@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fapi/-/api-6.1.2.tgz#d941f4b6d449e204d8bb42e251a92b62274451f3"
-  integrity sha1-2UH0ttRJ4gTYu0LiUakrYidEUfM=
+"@storybook/api@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fapi/-/api-6.1.10.tgz#7261c43ace576201945bbbc8289b7e0adc174a57"
+  integrity sha1-cmHEOs5XYgGUW7vIKJt+CtwXSlc=
   dependencies:
     "@reach/router" "^1.3.3"
-    "@storybook/channels" "6.1.2"
-    "@storybook/client-logger" "6.1.2"
-    "@storybook/core-events" "6.1.2"
+    "@storybook/channels" "6.1.10"
+    "@storybook/client-logger" "6.1.10"
+    "@storybook/core-events" "6.1.10"
     "@storybook/csf" "0.0.1"
-    "@storybook/router" "6.1.2"
+    "@storybook/router" "6.1.10"
     "@storybook/semver" "^7.3.2"
-    "@storybook/theming" "6.1.2"
+    "@storybook/theming" "6.1.10"
     "@types/reach__router" "^1.3.5"
     core-js "^3.0.1"
     fast-deep-equal "^3.1.1"
@@ -1740,14 +1721,14 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/channel-postmessage@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fchannel-postmessage/-/channel-postmessage-6.1.2.tgz#92205f381059d4d155679aba4a1d89d2f438f9b5"
-  integrity sha1-kiBfOBBZ1NFVZ5q6Sh2J0vQ4+bU=
+"@storybook/channel-postmessage@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fchannel-postmessage/-/channel-postmessage-6.1.10.tgz#570f70c6999ae8cb8957b9990e1a402ff11f74da"
+  integrity sha1-Vw9wxpma6MuJV7mZDhpAL/EfdNo=
   dependencies:
-    "@storybook/channels" "6.1.2"
-    "@storybook/client-logger" "6.1.2"
-    "@storybook/core-events" "6.1.2"
+    "@storybook/channels" "6.1.10"
+    "@storybook/client-logger" "6.1.10"
+    "@storybook/core-events" "6.1.10"
     core-js "^3.0.1"
     global "^4.3.2"
     qs "^6.6.0"
@@ -1760,25 +1741,25 @@
   dependencies:
     core-js "^3.0.1"
 
-"@storybook/channels@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fchannels/-/channels-6.1.2.tgz#e42b2cb3502291cfde36082b4844bd6de839ce86"
-  integrity sha1-5Csss1Aikc/eNggrSES9beg5zoY=
+"@storybook/channels@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fchannels/-/channels-6.1.10.tgz#31da5d78052532171846e3e0465832111b65f315"
+  integrity sha1-MdpdeAUlMhcYRuPgRlgyERtl8xU=
   dependencies:
     core-js "^3.0.1"
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/client-api@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fclient-api/-/client-api-6.1.2.tgz#52fc44883ad6004ace16638ec9837e841ae38c47"
-  integrity sha1-UvxEiDrWAErOFmOOyYN+hBrjjEc=
+"@storybook/client-api@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fclient-api/-/client-api-6.1.10.tgz#de243900d71c34b93a0714acd268ecba199d255a"
+  integrity sha1-3iQ5ANccNLk6BxSs0mjsuhmdJVo=
   dependencies:
-    "@storybook/addons" "6.1.2"
-    "@storybook/channel-postmessage" "6.1.2"
-    "@storybook/channels" "6.1.2"
-    "@storybook/client-logger" "6.1.2"
-    "@storybook/core-events" "6.1.2"
+    "@storybook/addons" "6.1.10"
+    "@storybook/channel-postmessage" "6.1.10"
+    "@storybook/channels" "6.1.10"
+    "@storybook/client-logger" "6.1.10"
+    "@storybook/core-events" "6.1.10"
     "@storybook/csf" "0.0.1"
     "@types/qs" "^6.9.0"
     "@types/webpack-env" "^1.15.3"
@@ -1800,10 +1781,10 @@
   dependencies:
     core-js "^3.0.1"
 
-"@storybook/client-logger@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fclient-logger/-/client-logger-6.1.2.tgz#4036d6fdd8d8865da17c4da3dd8e23322c89140b"
-  integrity sha1-QDbW/djYhl2hfE2j3Y4jMiyJFAs=
+"@storybook/client-logger@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fclient-logger/-/client-logger-6.1.10.tgz#491d960387ab336408f596c22f171c19247a1236"
+  integrity sha512-06EnESLaNCeHSzsZEEMiy9QtyucTy2BvQ2Z0yPnZLuXTXZNgI6aOtftpehwKSYXdudaIvLkb6xfNvix0BBgHhw==
   dependencies:
     core-js "^3.0.1"
     global "^4.3.2"
@@ -1835,15 +1816,15 @@
     simplebar-react "^1.0.0-alpha.6"
     ts-dedent "^1.1.0"
 
-"@storybook/components@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fcomponents/-/components-6.1.2.tgz#8d543206a662d0ca95ce47c1ab912523a7b487d4"
-  integrity sha1-jVQyBqZi0MqVzkfBq5ElI6e0h9Q=
+"@storybook/components@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fcomponents/-/components-6.1.10.tgz#1c82504ebdb24c317168745600fb5264f572694e"
+  integrity sha1-HIJQTr2yTDFxaHRWAPtSZPVyaU4=
   dependencies:
     "@popperjs/core" "^2.4.4"
-    "@storybook/client-logger" "6.1.2"
+    "@storybook/client-logger" "6.1.10"
     "@storybook/csf" "0.0.1"
-    "@storybook/theming" "6.1.2"
+    "@storybook/theming" "6.1.10"
     "@types/overlayscrollbars" "^1.9.0"
     "@types/react-color" "^3.0.1"
     "@types/react-syntax-highlighter" "11.0.4"
@@ -1868,17 +1849,17 @@
   dependencies:
     core-js "^3.0.1"
 
-"@storybook/core-events@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fcore-events/-/core-events-6.1.2.tgz#d29e9a8c7ef6bb41135282f4da8027bb6f399545"
-  integrity sha1-0p6ajH72u0ETUoL02oAnu285lUU=
+"@storybook/core-events@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fcore-events/-/core-events-6.1.10.tgz#e7eff165753c50c2f92adb8cd1576d3799d94e4c"
+  integrity sha512-Xv56iXXSf53xiBDW0XEKypfw+1HZw7BN38AISQdbEX5+0y+VLHdWe6vdXIeoXz6ja0lP0Dnrjn4g8usenJzgmA==
   dependencies:
     core-js "^3.0.1"
 
-"@storybook/core@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fcore/-/core-6.1.2.tgz#999f80da29f7e476a51a34e953c837278917aeb0"
-  integrity sha1-mZ+A2in35HalGjTpU8g3J4kXrrA=
+"@storybook/core@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fcore/-/core-6.1.10.tgz#c86819dab3710fa52c3744aa4a8050eec6833ffe"
+  integrity sha1-yGgZ2rNxD6UsN0SqSoBQ7saDP/4=
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/plugin-proposal-class-properties" "^7.12.1"
@@ -1902,20 +1883,20 @@
     "@babel/preset-react" "^7.12.1"
     "@babel/preset-typescript" "^7.12.1"
     "@babel/register" "^7.12.1"
-    "@storybook/addons" "6.1.2"
-    "@storybook/api" "6.1.2"
-    "@storybook/channel-postmessage" "6.1.2"
-    "@storybook/channels" "6.1.2"
-    "@storybook/client-api" "6.1.2"
-    "@storybook/client-logger" "6.1.2"
-    "@storybook/components" "6.1.2"
-    "@storybook/core-events" "6.1.2"
+    "@storybook/addons" "6.1.10"
+    "@storybook/api" "6.1.10"
+    "@storybook/channel-postmessage" "6.1.10"
+    "@storybook/channels" "6.1.10"
+    "@storybook/client-api" "6.1.10"
+    "@storybook/client-logger" "6.1.10"
+    "@storybook/components" "6.1.10"
+    "@storybook/core-events" "6.1.10"
     "@storybook/csf" "0.0.1"
-    "@storybook/node-logger" "6.1.2"
-    "@storybook/router" "6.1.2"
+    "@storybook/node-logger" "6.1.10"
+    "@storybook/router" "6.1.10"
     "@storybook/semver" "^7.3.2"
-    "@storybook/theming" "6.1.2"
-    "@storybook/ui" "6.1.2"
+    "@storybook/theming" "6.1.10"
+    "@storybook/ui" "6.1.10"
     "@types/glob-base" "^0.3.0"
     "@types/micromatch" "^4.0.1"
     "@types/node-fetch" "^2.5.4"
@@ -1972,7 +1953,6 @@
     style-loader "^1.2.1"
     telejson "^5.0.2"
     terser-webpack-plugin "^3.0.0"
-    trash "^6.1.1"
     ts-dedent "^2.0.0"
     unfetch "^4.1.0"
     url-loader "^4.0.0"
@@ -1990,10 +1970,10 @@
   dependencies:
     lodash "^4.17.15"
 
-"@storybook/node-logger@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fnode-logger/-/node-logger-6.1.2.tgz#fed92ebd537f9e5888e42cc46f393936fcd382ae"
-  integrity sha1-/tkuvVN/nliI5CzEbzk5NvzTgq4=
+"@storybook/node-logger@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fnode-logger/-/node-logger-6.1.10.tgz#0d69f30cf4c798919d2e467fad11d95273265ec7"
+  integrity sha1-DWnzDPTHmJGdLkZ/rRHZUnMmXsc=
   dependencies:
     "@types/npmlog" "^4.1.2"
     chalk "^4.0.0"
@@ -2001,19 +1981,18 @@
     npmlog "^4.1.2"
     pretty-hrtime "^1.0.3"
 
-"@storybook/react@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2freact/-/react-6.1.2.tgz#863662543a18c3a2ecea7a5646ec711c29163b05"
-  integrity sha1-hjZiVDoYw6Ls6npWRuxxHCkWOwU=
+"@storybook/react@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2freact/-/react-6.1.10.tgz#bd1883e4c82370dd7180e80f7e006ea1dda3a91d"
+  integrity sha1-vRiD5MgjcN1xgOgPfgBuod2jqR0=
   dependencies:
     "@babel/preset-flow" "^7.12.1"
     "@babel/preset-react" "^7.12.1"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.4.2"
-    "@storybook/addons" "6.1.2"
-    "@storybook/core" "6.1.2"
-    "@storybook/node-logger" "6.1.2"
+    "@storybook/addons" "6.1.10"
+    "@storybook/core" "6.1.10"
+    "@storybook/node-logger" "6.1.10"
     "@storybook/semver" "^7.3.2"
-    "@svgr/webpack" "^5.4.0"
     "@types/webpack-env" "^1.15.3"
     babel-plugin-add-react-displayname "^0.0.5"
     babel-plugin-named-asset-import "^0.3.1"
@@ -2044,10 +2023,10 @@
     qs "^6.6.0"
     util-deprecate "^1.0.2"
 
-"@storybook/router@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2frouter/-/router-6.1.2.tgz#606790a89e5f25d9bd808de765e9292b609ad191"
-  integrity sha1-YGeQqJ5fJdm9gI3nZekpK2Ca0ZE=
+"@storybook/router@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2frouter/-/router-6.1.10.tgz#c6d6fe8bc0e767bdbbd95750799de12f56603ff1"
+  integrity sha1-xtb+i8DnZ7272VdQeZ3hL1ZgP/E=
   dependencies:
     "@reach/router" "^1.3.3"
     "@types/reach__router" "^1.3.5"
@@ -2082,15 +2061,15 @@
     resolve-from "^5.0.0"
     ts-dedent "^1.1.0"
 
-"@storybook/theming@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2ftheming/-/theming-6.1.2.tgz#55fb60017acdf952450cc0cb9b530d36aa039178"
-  integrity sha1-VftgAXrN+VJFDMDLm1MNNqoDkXg=
+"@storybook/theming@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2ftheming/-/theming-6.1.10.tgz#f41f23c9ac8602eac48a62c69ad24137381d2247"
+  integrity sha1-9B8jyayGAurEimLGmtJBNzgdIkc=
   dependencies:
     "@emotion/core" "^10.1.1"
     "@emotion/is-prop-valid" "^0.8.6"
     "@emotion/styled" "^10.0.23"
-    "@storybook/client-logger" "6.1.2"
+    "@storybook/client-logger" "6.1.10"
     core-js "^3.0.1"
     deep-object-diff "^1.1.0"
     emotion-theming "^10.0.19"
@@ -2100,21 +2079,21 @@
     resolve-from "^5.0.0"
     ts-dedent "^2.0.0"
 
-"@storybook/ui@6.1.2":
-  version "6.1.2"
-  resolved "http://registry.npm.dtstack.com/@storybook%2fui/-/ui-6.1.2.tgz#ee288141b70f908a8dcea646cb2ec52cf69a2483"
-  integrity sha1-7iiBQbcPkIqNzqZGyy7FLPaaJIM=
+"@storybook/ui@6.1.10":
+  version "6.1.10"
+  resolved "http://registry.npm.dtstack.com/@storybook%2fui/-/ui-6.1.10.tgz#7967765decb2d5816c61633712eb3f55d57249df"
+  integrity sha1-eWd2Xeyy1YFsYWM3Eus/VdVySd8=
   dependencies:
     "@emotion/core" "^10.1.1"
-    "@storybook/addons" "6.1.2"
-    "@storybook/api" "6.1.2"
-    "@storybook/channels" "6.1.2"
-    "@storybook/client-logger" "6.1.2"
-    "@storybook/components" "6.1.2"
-    "@storybook/core-events" "6.1.2"
-    "@storybook/router" "6.1.2"
+    "@storybook/addons" "6.1.10"
+    "@storybook/api" "6.1.10"
+    "@storybook/channels" "6.1.10"
+    "@storybook/client-logger" "6.1.10"
+    "@storybook/components" "6.1.10"
+    "@storybook/core-events" "6.1.10"
+    "@storybook/router" "6.1.10"
     "@storybook/semver" "^7.3.2"
-    "@storybook/theming" "6.1.2"
+    "@storybook/theming" "6.1.10"
     "@types/markdown-to-jsx" "^6.11.0"
     copy-to-clipboard "^3.0.8"
     core-js "^3.0.1"
@@ -2136,11 +2115,6 @@
     resolve-from "^5.0.0"
     store2 "^2.7.1"
 
-"@stroncium/procfs@^1.0.0":
-  version "1.2.1"
-  resolved "http://registry.npm.dtstack.com/@stroncium%2fprocfs/-/procfs-1.2.1.tgz#6b9be6fd20fb0a4c20e99a8695e083c699bb2b45"
-  integrity sha1-a5vm/SD7Ckwg6ZqGleCDxpm7K0U=
-
 "@stylelint/postcss-css-in-js@^0.37.2":
   version "0.37.2"
   resolved "http://registry.npm.dtstack.com/@stylelint%2fpostcss-css-in-js/-/postcss-css-in-js-0.37.2.tgz#7e5a84ad181f4234a2480803422a47b8749af3d2"
@@ -2155,109 +2129,6 @@
   dependencies:
     remark "^13.0.0"
     unist-util-find-all-after "^3.0.2"
-
-"@svgr/babel-plugin-add-jsx-attribute@^5.4.0":
-  version "5.4.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-5.4.0.tgz#81ef61947bb268eb9d50523446f9c638fb355906"
-  integrity sha1-ge9hlHuyaOudUFI0RvnGOPs1WQY=
-
-"@svgr/babel-plugin-remove-jsx-attribute@^5.4.0":
-  version "5.4.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-plugin-remove-jsx-attribute/-/babel-plugin-remove-jsx-attribute-5.4.0.tgz#6b2c770c95c874654fd5e1d5ef475b78a0a962ef"
-  integrity sha1-ayx3DJXIdGVP1eHV70dbeKCpYu8=
-
-"@svgr/babel-plugin-remove-jsx-empty-expression@^5.0.1":
-  version "5.0.1"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-plugin-remove-jsx-empty-expression/-/babel-plugin-remove-jsx-empty-expression-5.0.1.tgz#25621a8915ed7ad70da6cea3d0a6dbc2ea933efd"
-  integrity sha1-JWIaiRXtetcNps6j0KbbwuqTPv0=
-
-"@svgr/babel-plugin-replace-jsx-attribute-value@^5.0.1":
-  version "5.0.1"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-plugin-replace-jsx-attribute-value/-/babel-plugin-replace-jsx-attribute-value-5.0.1.tgz#0b221fc57f9fcd10e91fe219e2cd0dd03145a897"
-  integrity sha1-CyIfxX+fzRDpH+IZ4s0N0DFFqJc=
-
-"@svgr/babel-plugin-svg-dynamic-title@^5.4.0":
-  version "5.4.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-plugin-svg-dynamic-title/-/babel-plugin-svg-dynamic-title-5.4.0.tgz#139b546dd0c3186b6e5db4fefc26cb0baea729d7"
-  integrity sha1-E5tUbdDDGGtuXbT+/CbLC66nKdc=
-
-"@svgr/babel-plugin-svg-em-dimensions@^5.4.0":
-  version "5.4.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-plugin-svg-em-dimensions/-/babel-plugin-svg-em-dimensions-5.4.0.tgz#6543f69526632a133ce5cabab965deeaea2234a0"
-  integrity sha1-ZUP2lSZjKhM85cq6uWXe6uoiNKA=
-
-"@svgr/babel-plugin-transform-react-native-svg@^5.4.0":
-  version "5.4.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-plugin-transform-react-native-svg/-/babel-plugin-transform-react-native-svg-5.4.0.tgz#00bf9a7a73f1cad3948cdab1f8dfb774750f8c80"
-  integrity sha1-AL+aenPxytOUjNqx+N+3dHUPjIA=
-
-"@svgr/babel-plugin-transform-svg-component@^5.5.0":
-  version "5.5.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-plugin-transform-svg-component/-/babel-plugin-transform-svg-component-5.5.0.tgz#583a5e2a193e214da2f3afeb0b9e8d3250126b4a"
-  integrity sha1-WDpeKhk+IU2i86/rC56NMlASa0o=
-
-"@svgr/babel-preset@^5.5.0":
-  version "5.5.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fbabel-preset/-/babel-preset-5.5.0.tgz#8af54f3e0a8add7b1e2b0fcd5a882c55393df327"
-  integrity sha1-ivVPPgqK3XseKw/NWogsVTk98yc=
-  dependencies:
-    "@svgr/babel-plugin-add-jsx-attribute" "^5.4.0"
-    "@svgr/babel-plugin-remove-jsx-attribute" "^5.4.0"
-    "@svgr/babel-plugin-remove-jsx-empty-expression" "^5.0.1"
-    "@svgr/babel-plugin-replace-jsx-attribute-value" "^5.0.1"
-    "@svgr/babel-plugin-svg-dynamic-title" "^5.4.0"
-    "@svgr/babel-plugin-svg-em-dimensions" "^5.4.0"
-    "@svgr/babel-plugin-transform-react-native-svg" "^5.4.0"
-    "@svgr/babel-plugin-transform-svg-component" "^5.5.0"
-
-"@svgr/core@^5.5.0":
-  version "5.5.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fcore/-/core-5.5.0.tgz#82e826b8715d71083120fe8f2492ec7d7874a579"
-  integrity sha1-gugmuHFdcQgxIP6PJJLsfXh0pXk=
-  dependencies:
-    "@svgr/plugin-jsx" "^5.5.0"
-    camelcase "^6.2.0"
-    cosmiconfig "^7.0.0"
-
-"@svgr/hast-util-to-babel-ast@^5.5.0":
-  version "5.5.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fhast-util-to-babel-ast/-/hast-util-to-babel-ast-5.5.0.tgz#5ee52a9c2533f73e63f8f22b779f93cd432a5461"
-  integrity sha1-XuUqnCUz9z5j+PIrd5+TzUMqVGE=
-  dependencies:
-    "@babel/types" "^7.12.6"
-
-"@svgr/plugin-jsx@^5.5.0":
-  version "5.5.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fplugin-jsx/-/plugin-jsx-5.5.0.tgz#1aa8cd798a1db7173ac043466d7b52236b369000"
-  integrity sha1-GqjNeYodtxc6wENGbXtSI2s2kAA=
-  dependencies:
-    "@babel/core" "^7.12.3"
-    "@svgr/babel-preset" "^5.5.0"
-    "@svgr/hast-util-to-babel-ast" "^5.5.0"
-    svg-parser "^2.0.2"
-
-"@svgr/plugin-svgo@^5.5.0":
-  version "5.5.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fplugin-svgo/-/plugin-svgo-5.5.0.tgz#02da55d85320549324e201c7b2e53bf431fcc246"
-  integrity sha1-AtpV2FMgVJMk4gHHsuU79DH8wkY=
-  dependencies:
-    cosmiconfig "^7.0.0"
-    deepmerge "^4.2.2"
-    svgo "^1.2.2"
-
-"@svgr/webpack@^5.4.0":
-  version "5.5.0"
-  resolved "http://registry.npm.dtstack.com/@svgr%2fwebpack/-/webpack-5.5.0.tgz#aae858ee579f5fa8ce6c3166ef56c6a1b381b640"
-  integrity sha1-quhY7lefX6jObDFm71bGobOBtkA=
-  dependencies:
-    "@babel/core" "^7.12.3"
-    "@babel/plugin-transform-react-constant-elements" "^7.12.1"
-    "@babel/preset-env" "^7.12.1"
-    "@babel/preset-react" "^7.12.5"
-    "@svgr/core" "^5.5.0"
-    "@svgr/plugin-jsx" "^5.5.0"
-    "@svgr/plugin-svgo" "^5.5.0"
-    loader-utils "^2.0.0"
 
 "@types/anymatch@*":
   version "1.3.1"
@@ -2472,11 +2343,6 @@
   version "15.7.3"
   resolved "http://registry.npm.dtstack.com/@types%2fprop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha1-KrDV2i5YFflLC51LldHl8kOrLKc=
-
-"@types/q@^1.5.1":
-  version "1.5.4"
-  resolved "http://registry.npm.dtstack.com/@types%2fq/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
-  integrity sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
 
 "@types/qs@^6.9.0":
   version "6.9.5"
@@ -3765,7 +3631,7 @@ bonjour@^3.5.0:
     multicast-dns "^6.0.1"
     multicast-dns-service-types "^1.1.0"
 
-boolbase@^1.0.0, boolbase@~1.0.0:
+boolbase@~1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.dtstack.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
@@ -4105,7 +3971,7 @@ camelcase@^5.0.0, camelcase@^5.3.1:
   resolved "http://registry.npm.dtstack.com/camelcase/-/camelcase-5.3.1.tgz#e3c9b31569e106811df242f715725a1f4c494320"
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
-camelcase@^6.0.0, camelcase@^6.2.0:
+camelcase@^6.0.0:
   version "6.2.0"
   resolved "http://registry.npm.dtstack.com/camelcase/-/camelcase-6.2.0.tgz#924af881c9d525ac9d87f40d964e5cea982a1809"
   integrity sha1-kkr4gcnVJaydh/QNlk5c6pgqGAk=
@@ -4378,15 +4244,6 @@ co@^4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.dtstack.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
-
-coa@^2.0.2:
-  version "2.0.2"
-  resolved "http://registry.npm.dtstack.com/coa/-/coa-2.0.2.tgz#43f6c21151b4ef2bf57187db0d73de229e3e7ec3"
-  integrity sha1-Q/bCEVG07yv1cYfbDXPeIp4+fsM=
-  dependencies:
-    "@types/q" "^1.5.1"
-    chalk "^2.4.1"
-    q "^1.1.2"
 
 code-point-at@^1.0.0:
   version "1.1.0"
@@ -4858,17 +4715,6 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-cp-file@^6.1.0:
-  version "6.2.0"
-  resolved "http://registry.npm.dtstack.com/cp-file/-/cp-file-6.2.0.tgz#40d5ea4a1def2a9acdd07ba5c0b0246ef73dc10d"
-  integrity sha512-fmvV4caBnofhPe8kOcitBwSn2f39QLjnAnGq3gO9dfd75mUytzKNZB1hde6QHunW2Rt+OwuBOMc3i1tNElbszA==
-  dependencies:
-    graceful-fs "^4.1.2"
-    make-dir "^2.0.0"
-    nested-error-stacks "^2.0.0"
-    pify "^4.0.1"
-    safe-buffer "^5.0.1"
-
 cp-file@^7.0.0:
   version "7.0.0"
   resolved "http://registry.npm.dtstack.com/cp-file/-/cp-file-7.0.0.tgz#b9454cfd07fe3b974ab9ea0e5f29655791a9b8cd"
@@ -4932,14 +4778,6 @@ create-react-context@0.3.0, create-react-context@^0.3.0:
   dependencies:
     gud "^1.0.0"
     warning "^4.0.3"
-
-cross-spawn-async@^2.1.1:
-  version "2.2.5"
-  resolved "http://registry.npm.dtstack.com/cross-spawn-async/-/cross-spawn-async-2.2.5.tgz#845ff0c0834a3ded9d160daca6d390906bb288cc"
-  integrity sha1-hF/wwINKPe2dFg2sptOQkGuyiMw=
-  dependencies:
-    lru-cache "^4.0.0"
-    which "^1.2.8"
 
 cross-spawn@7.0.1:
   version "7.0.1"
@@ -5024,11 +4862,6 @@ css-loader@^4.3.0:
     schema-utils "^2.7.1"
     semver "^7.3.2"
 
-css-select-base-adapter@^0.1.1:
-  version "0.1.1"
-  resolved "http://registry.npm.dtstack.com/css-select-base-adapter/-/css-select-base-adapter-0.1.1.tgz#3b2ff4972cc362ab88561507a95408a1432135d7"
-  integrity sha1-Oy/0lyzDYquIVhUHqVQIoUMhNdc=
-
 css-select@^1.1.0:
   version "1.2.0"
   resolved "http://registry.npm.dtstack.com/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
@@ -5039,53 +4872,15 @@ css-select@^1.1.0:
     domutils "1.5.1"
     nth-check "~1.0.1"
 
-css-select@^2.0.0:
-  version "2.1.0"
-  resolved "http://registry.npm.dtstack.com/css-select/-/css-select-2.1.0.tgz#6a34653356635934a81baca68d0255432105dbef"
-  integrity sha1-ajRlM1ZjWTSoG6ymjQJVQyEF2+8=
-  dependencies:
-    boolbase "^1.0.0"
-    css-what "^3.2.1"
-    domutils "^1.7.0"
-    nth-check "^1.0.2"
-
-css-tree@1.0.0-alpha.37:
-  version "1.0.0-alpha.37"
-  resolved "http://registry.npm.dtstack.com/css-tree/-/css-tree-1.0.0-alpha.37.tgz#98bebd62c4c1d9f960ec340cf9f7522e30709a22"
-  integrity sha1-mL69YsTB2flg7DQM+fdSLjBwmiI=
-  dependencies:
-    mdn-data "2.0.4"
-    source-map "^0.6.1"
-
-css-tree@^1.0.0:
-  version "1.1.1"
-  resolved "http://registry.npm.dtstack.com/css-tree/-/css-tree-1.1.1.tgz#30b8c0161d9fb4e9e2141d762589b6ec2faebd2e"
-  integrity sha1-MLjAFh2ftOniFB12JYm27C+uvS4=
-  dependencies:
-    mdn-data "2.0.14"
-    source-map "^0.6.1"
-
 css-what@2.1:
   version "2.1.3"
   resolved "http://registry.npm.dtstack.com/css-what/-/css-what-2.1.3.tgz#a6d7604573365fe74686c3f311c56513d88285f2"
   integrity sha1-ptdgRXM2X+dGhsPzEcVlE9iChfI=
 
-css-what@^3.2.1:
-  version "3.4.2"
-  resolved "http://registry.npm.dtstack.com/css-what/-/css-what-3.4.2.tgz#ea7026fcb01777edbde52124e21f327e7ae950e4"
-  integrity sha1-6nAm/LAXd+295SEk4h8yfnrpUOQ=
-
 cssesc@^3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.dtstack.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
-
-csso@^4.0.2:
-  version "4.1.1"
-  resolved "http://registry.npm.dtstack.com/csso/-/csso-4.1.1.tgz#e0cb02d6eb3af1df719222048e4359efd662af13"
-  integrity sha1-4MsC1us68d9xkiIEjkNZ79ZirxM=
-  dependencies:
-    css-tree "^1.0.0"
 
 cssom@^0.4.4:
   version "0.4.4"
@@ -5389,7 +5184,7 @@ dir-glob@2.0.0:
     arrify "^1.0.1"
     path-type "^3.0.0"
 
-dir-glob@^2.0.0, dir-glob@^2.2.2:
+dir-glob@^2.2.2:
   version "2.2.2"
   resolved "http://registry.npm.dtstack.com/dir-glob/-/dir-glob-2.2.2.tgz#fa09f0694153c8918b18ba0deafae94769fc50c4"
   integrity sha1-+gnwaUFTyJGLGLoN6vrpR2n8UMQ=
@@ -5513,7 +5308,7 @@ domutils@1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
-domutils@^1.5.1, domutils@^1.7.0:
+domutils@^1.5.1:
   version "1.7.0"
   resolved "http://registry.npm.dtstack.com/domutils/-/domutils-1.7.0.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"
   integrity sha1-Vuo0HoNOBuZ0ivehyyXaZ+qfjCo=
@@ -5758,7 +5553,7 @@ error-stack-parser@^2.0.6:
   dependencies:
     stackframe "^1.1.1"
 
-es-abstract@^1.17.0, es-abstract@^1.17.0-next.0, es-abstract@^1.17.0-next.1, es-abstract@^1.17.2, es-abstract@^1.17.5:
+es-abstract@^1.17.0, es-abstract@^1.17.0-next.0, es-abstract@^1.17.0-next.1, es-abstract@^1.17.5:
   version "1.17.7"
   resolved "http://registry.npm.dtstack.com/es-abstract/-/es-abstract-1.17.7.tgz#a4de61b2f66989fc7421676c1cb9787573ace54c"
   integrity sha1-pN5hsvZpifx0IWdsHLl4dXOs5Uw=
@@ -6071,17 +5866,6 @@ exec-sh@^0.3.2:
   version "0.3.4"
   resolved "http://registry.npm.dtstack.com/exec-sh/-/exec-sh-0.3.4.tgz#3a018ceb526cc6f6df2bb504b2bfe8e3a4934ec5"
   integrity sha1-OgGM61JsxvbfK7UEsr/o46STTsU=
-
-execa@^0.2.2:
-  version "0.2.2"
-  resolved "http://registry.npm.dtstack.com/execa/-/execa-0.2.2.tgz#e2ead472c2c31aad6f73f1ac956eef45e12320cb"
-  integrity sha1-4urUcsLDGq1vc/GslW7vReEjIMs=
-  dependencies:
-    cross-spawn-async "^2.1.1"
-    npm-run-path "^1.0.0"
-    object-assign "^4.0.1"
-    path-key "^1.0.0"
-    strip-eof "^1.0.0"
 
 execa@^1.0.0:
   version "1.0.0"
@@ -6994,18 +6778,6 @@ globby@^6.1.0:
     object-assign "^4.0.1"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
-
-globby@^7.1.1:
-  version "7.1.1"
-  resolved "http://registry.npm.dtstack.com/globby/-/globby-7.1.1.tgz#fb2ccff9401f8600945dfada97440cca972b8680"
-  integrity sha1-+yzP+UAfhgCUXfral0QMypcrhoA=
-  dependencies:
-    array-union "^1.0.1"
-    dir-glob "^2.0.0"
-    glob "^7.1.2"
-    ignore "^3.3.5"
-    pify "^3.0.0"
-    slash "^1.0.0"
 
 globby@^9.2.0:
   version "9.2.0"
@@ -7946,11 +7718,6 @@ is-path-inside@^2.1.0:
   integrity sha1-fJgQWH1lmkDSe8201WFuqwWUlLI=
   dependencies:
     path-is-inside "^1.0.2"
-
-is-path-inside@^3.0.2:
-  version "3.0.2"
-  resolved "http://registry.npm.dtstack.com/is-path-inside/-/is-path-inside-3.0.2.tgz#f5220fc82a3e233757291dddc9c5877f2a1f3017"
-  integrity sha1-9SIPyCo+IzdXKR3dycWHfyofMBc=
 
 is-plain-obj@^1.1.0:
   version "1.1.0"
@@ -8990,14 +8757,6 @@ lowlight@~1.11.0:
     fault "^1.0.2"
     highlight.js "~9.13.0"
 
-lru-cache@^4.0.0:
-  version "4.1.5"
-  resolved "http://registry.npm.dtstack.com/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
-  integrity sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==
-  dependencies:
-    pseudomap "^1.0.2"
-    yallist "^2.1.2"
-
 lru-cache@^5.1.1:
   version "5.1.1"
   resolved "http://registry.npm.dtstack.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
@@ -9124,16 +8883,6 @@ mdast-util-to-string@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npm.dtstack.com/mdast-util-to-string/-/mdast-util-to-string-1.1.0.tgz#27055500103f51637bd07d01da01eb1967a43527"
   integrity sha1-JwVVABA/UWN70H0B2gHrGWekNSc=
-
-mdn-data@2.0.14:
-  version "2.0.14"
-  resolved "http://registry.npm.dtstack.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"
-  integrity sha1-cRP8QoGRfWPOKbQ0RvcB5owlulA=
-
-mdn-data@2.0.4:
-  version "2.0.4"
-  resolved "http://registry.npm.dtstack.com/mdn-data/-/mdn-data-2.0.4.tgz#699b3c38ac6f1d728091a64650b65d388502fd5b"
-  integrity sha1-aZs8OKxvHXKAkaZGULZdOIUC/Vs=
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -9449,7 +9198,7 @@ mkdirp@1.x, mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "http://registry.npm.dtstack.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.1:
+mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5:
   version "0.5.5"
   resolved "http://registry.npm.dtstack.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
@@ -9478,15 +9227,6 @@ monaco-editor@^0.21.2:
   resolved "http://registry.npm.dtstack.com/monaco-editor/-/monaco-editor-0.21.2.tgz#37054e63e480d51a2dd17d609dcfb192304d5605"
   integrity sha1-NwVOY+SA1Rot0X1gnc+xkjBNVgU=
 
-mount-point@^3.0.0:
-  version "3.0.0"
-  resolved "http://registry.npm.dtstack.com/mount-point/-/mount-point-3.0.0.tgz#665cb9edebe80d110e658db56c31d0aef51a8f97"
-  integrity sha1-Zly57evoDREOZY21bDHQrvUaj5c=
-  dependencies:
-    "@sindresorhus/df" "^1.0.1"
-    pify "^2.3.0"
-    pinkie-promise "^2.0.1"
-
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.dtstack.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -9498,15 +9238,6 @@ move-concurrently@^1.0.1:
     mkdirp "^0.5.1"
     rimraf "^2.5.4"
     run-queue "^1.0.3"
-
-move-file@^1.1.0:
-  version "1.2.0"
-  resolved "http://registry.npm.dtstack.com/move-file/-/move-file-1.2.0.tgz#789f92d276c62511d214b1b285aa16e015c2f2fc"
-  integrity sha1-eJ+S0nbGJRHSFLGyhaoW4BXC8vw=
-  dependencies:
-    cp-file "^6.1.0"
-    make-dir "^3.0.0"
-    path-exists "^3.0.0"
 
 ms@2.0.0:
   version "2.0.0"
@@ -9723,13 +9454,6 @@ normalize-selector@^0.2.0:
   resolved "http://registry.npm.dtstack.com/normalize-selector/-/normalize-selector-0.2.0.tgz#d0b145eb691189c63a78d201dc4fdb1293ef0c03"
   integrity sha1-0LFF62kRicY6eNIB3E/bEpPvDAM=
 
-npm-run-path@^1.0.0:
-  version "1.0.0"
-  resolved "http://registry.npm.dtstack.com/npm-run-path/-/npm-run-path-1.0.0.tgz#f5c32bf595fe81ae927daec52e82f8b000ac3c8f"
-  integrity sha1-9cMr9ZX+ga6Sfa7FLoL4sACsPI8=
-  dependencies:
-    path-key "^1.0.0"
-
 npm-run-path@^2.0.0:
   version "2.0.2"
   resolved "http://registry.npm.dtstack.com/npm-run-path/-/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
@@ -9754,7 +9478,7 @@ npmlog@^4.1.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-nth-check@^1.0.2, nth-check@~1.0.1:
+nth-check@~1.0.1:
   version "1.0.2"
   resolved "http://registry.npm.dtstack.com/nth-check/-/nth-check-1.0.2.tgz#b2bd295c37e3dd58a3bf0700376663ba4d9cf05c"
   integrity sha1-sr0pXDfj3VijvwcAN2Zjuk2c8Fw=
@@ -9854,7 +9578,7 @@ object.entries@^1.1.0, object.entries@^1.1.2:
     function-bind "^1.1.1"
     has "^1.0.3"
 
-object.getownpropertydescriptors@^2.0.3, object.getownpropertydescriptors@^2.1.0:
+object.getownpropertydescriptors@^2.0.3:
   version "2.1.0"
   resolved "http://registry.npm.dtstack.com/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.1.0.tgz#369bf1f9592d8ab89d712dced5cb81c7c5352649"
   integrity sha1-Npvx+VktiridcS3O1cuBx8U1Jkk=
@@ -9975,11 +9699,6 @@ os-browserify@^0.3.0:
   version "0.3.0"
   resolved "http://registry.npm.dtstack.com/os-browserify/-/os-browserify-0.3.0.tgz#854373c7f5c2315914fc9bfc6bd8238fdda1ec27"
   integrity sha1-hUNzx/XCMVkU/Jv8a9gjj92h7Cc=
-
-os-homedir@^1.0.0:
-  version "1.0.2"
-  resolved "http://registry.npm.dtstack.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
-  integrity sha1-/7xJiDNuDoM94MFox+8VISGqf7M=
 
 os-tmpdir@~1.0.2:
   version "1.0.2"
@@ -10109,7 +9828,7 @@ p-try@^1.0.0:
   resolved "http://registry.npm.dtstack.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
   integrity sha1-y8ec26+P1CKOE/Yh8rGiN8GyB7M=
 
-p-try@^2.0.0, p-try@^2.2.0:
+p-try@^2.0.0:
   version "2.2.0"
   resolved "http://registry.npm.dtstack.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
@@ -10268,11 +9987,6 @@ path-is-inside@^1.0.2:
   resolved "http://registry.npm.dtstack.com/path-is-inside/-/path-is-inside-1.0.2.tgz#365417dede44430d1c11af61027facf074bdfc53"
   integrity sha1-NlQX3t5EQw0cEa9hAn+s8HS9/FM=
 
-path-key@^1.0.0:
-  version "1.0.0"
-  resolved "http://registry.npm.dtstack.com/path-key/-/path-key-1.0.0.tgz#5d53d578019646c0d68800db4e146e6bdc2ac7af"
-  integrity sha1-XVPVeAGWRsDWiADbThRua9wqx68=
-
 path-key@^2.0.0, path-key@^2.0.1:
   version "2.0.1"
   resolved "http://registry.npm.dtstack.com/path-key/-/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
@@ -10335,7 +10049,7 @@ picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1:
   resolved "http://registry.npm.dtstack.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha1-IfMz6ba46v8CRo9RRupAbTRfTa0=
 
-pify@^2.0.0, pify@^2.2.0, pify@^2.3.0:
+pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"
   resolved "http://registry.npm.dtstack.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
@@ -10350,7 +10064,7 @@ pify@^4.0.1:
   resolved "http://registry.npm.dtstack.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-pinkie-promise@^2.0.0, pinkie-promise@^2.0.1:
+pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "http://registry.npm.dtstack.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
   integrity sha1-ITXW36ejWMBprJsXh3YogihFD/o=
@@ -10700,11 +10414,6 @@ prr@~1.0.1:
   resolved "http://registry.npm.dtstack.com/prr/-/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
   integrity sha1-0/wRS6BplaRexok/SEzrHXj19HY=
 
-pseudomap@^1.0.2:
-  version "1.0.2"
-  resolved "http://registry.npm.dtstack.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
-  integrity sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
-
 psl@^1.1.28:
   version "1.8.0"
   resolved "http://registry.npm.dtstack.com/psl/-/psl-1.8.0.tgz#9326f8bcfb013adcc005fdff056acce020e51c24"
@@ -10762,7 +10471,7 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "http://registry.npm.dtstack.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-q@^1.1.2, q@^1.5.1:
+q@^1.5.1:
   version "1.5.1"
   resolved "http://registry.npm.dtstack.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
@@ -11860,11 +11569,6 @@ sass@^1.26.10:
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
-sax@~1.2.4:
-  version "1.2.4"
-  resolved "http://registry.npm.dtstack.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
-  integrity sha1-KBYjTiN4vdxOU1T6tcqold9xANk=
-
 saxes@^5.0.0:
   version "5.0.1"
   resolved "http://registry.npm.dtstack.com/saxes/-/saxes-5.0.1.tgz#eebab953fa3b7608dbe94e5dadb15c888fa6696d"
@@ -12809,34 +12513,10 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
-svg-parser@^2.0.2:
-  version "2.0.4"
-  resolved "http://registry.npm.dtstack.com/svg-parser/-/svg-parser-2.0.4.tgz#fdc2e29e13951736140b76cb122c8ee6630eb6b5"
-  integrity sha1-/cLinhOVFzYUC3bLEiyO5mMOtrU=
-
 svg-tags@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.dtstack.com/svg-tags/-/svg-tags-1.0.0.tgz#58f71cee3bd519b59d4b2a843b6c7de64ac04764"
   integrity sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q=
-
-svgo@^1.2.2:
-  version "1.3.2"
-  resolved "http://registry.npm.dtstack.com/svgo/-/svgo-1.3.2.tgz#b6dc511c063346c9e415b81e43401145b96d4167"
-  integrity sha1-ttxRHAYzRsnkFbgeQ0ARRbltQWc=
-  dependencies:
-    chalk "^2.4.1"
-    coa "^2.0.2"
-    css-select "^2.0.0"
-    css-select-base-adapter "^0.1.1"
-    css-tree "1.0.0-alpha.37"
-    csso "^4.0.2"
-    js-yaml "^3.13.1"
-    mkdirp "~0.5.1"
-    object.values "^1.1.0"
-    sax "~1.2.4"
-    stable "^0.1.8"
-    unquote "~1.1.1"
-    util.promisify "~1.0.0"
 
 symbol-observable@^1.2.0:
   version "1.2.0"
@@ -13141,21 +12821,6 @@ tr46@^2.0.2:
   integrity sha1-Ayc1ht7xWVrgj+2zjXczzukdJHk=
   dependencies:
     punycode "^2.1.1"
-
-trash@^6.1.1:
-  version "6.1.1"
-  resolved "http://registry.npm.dtstack.com/trash/-/trash-6.1.1.tgz#8fb863421b31f32571f2650b53534934d5e63025"
-  integrity sha1-j7hjQhsx8yVx8mULU1NJNNXmMCU=
-  dependencies:
-    "@stroncium/procfs" "^1.0.0"
-    globby "^7.1.1"
-    is-path-inside "^3.0.2"
-    make-dir "^3.0.0"
-    move-file "^1.1.0"
-    p-map "^3.0.0"
-    p-try "^2.2.0"
-    uuid "^3.3.2"
-    xdg-trashdir "^2.1.1"
 
 trim-newlines@^1.0.0:
   version "1.0.0"
@@ -13468,7 +13133,7 @@ unpipe@1.0.0, unpipe@~1.0.0:
   resolved "http://registry.npm.dtstack.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
 
-unquote@^1.1.0, unquote@~1.1.1:
+unquote@^1.1.0:
   version "1.1.1"
   resolved "http://registry.npm.dtstack.com/unquote/-/unquote-1.1.1.tgz#8fded7324ec6e88a0ff8b905e7c098cdc086d544"
   integrity sha1-j97XMk7G6IoP+LkF58CYzcCG1UQ=
@@ -13560,13 +13225,6 @@ use@^3.1.0:
   resolved "http://registry.npm.dtstack.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha1-1QyMrHmhn7wg8pEfVuuXP04QBw8=
 
-user-home@^2.0.0:
-  version "2.0.0"
-  resolved "http://registry.npm.dtstack.com/user-home/-/user-home-2.0.0.tgz#9c70bfd8169bc1dcbf48604e0f04b8b49cde9e9f"
-  integrity sha1-nHC/2Babwdy/SGBODwS4tJzenp8=
-  dependencies:
-    os-homedir "^1.0.0"
-
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "http://registry.npm.dtstack.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
@@ -13579,16 +13237,6 @@ util.promisify@1.0.0:
   dependencies:
     define-properties "^1.1.2"
     object.getownpropertydescriptors "^2.0.3"
-
-util.promisify@~1.0.0:
-  version "1.0.1"
-  resolved "http://registry.npm.dtstack.com/util.promisify/-/util.promisify-1.0.1.tgz#6baf7774b80eeb0f7520d8b81d07982a59abbaee"
-  integrity sha512-g9JpC/3He3bm38zsLupWryXHoEcS22YHthuPQSJdMy6KNrzIRzWqcsHzD/WUnqe45whVou4VIsPew37DoXWNrA==
-  dependencies:
-    define-properties "^1.1.3"
-    es-abstract "^1.17.2"
-    has-symbols "^1.0.1"
-    object.getownpropertydescriptors "^2.1.0"
 
 util@0.10.3:
   version "0.10.3"
@@ -13965,7 +13613,7 @@ which-pm-runs@^1.0.0:
   resolved "http://registry.npm.dtstack.com/which-pm-runs/-/which-pm-runs-1.0.0.tgz#670b3afbc552e0b55df6b7780ca74615f23ad1cb"
   integrity sha1-Zws6+8VS4LVd9rd4DKdGFfI60cs=
 
-which@^1.2.8, which@^1.2.9, which@^1.3.1:
+which@^1.2.9, which@^1.3.1:
   version "1.3.1"
   resolved "http://registry.npm.dtstack.com/which/-/which-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
   integrity sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
@@ -14082,24 +13730,6 @@ ws@^7.2.3:
   resolved "http://registry.npm.dtstack.com/ws/-/ws-7.4.0.tgz#a5dd76a24197940d4a8bb9e0e152bb4503764da7"
   integrity sha1-pd12okGXlA1Ki7ng4VK7RQN2Tac=
 
-xdg-basedir@^2.0.0:
-  version "2.0.0"
-  resolved "http://registry.npm.dtstack.com/xdg-basedir/-/xdg-basedir-2.0.0.tgz#edbc903cc385fc04523d966a335504b5504d1bd2"
-  integrity sha1-7byQPMOF/ARSPZZqM1UEtVBNG9I=
-  dependencies:
-    os-homedir "^1.0.0"
-
-xdg-trashdir@^2.1.1:
-  version "2.1.1"
-  resolved "http://registry.npm.dtstack.com/xdg-trashdir/-/xdg-trashdir-2.1.1.tgz#59a60aaf8e6f9240c1daed9a0944b2f514c27d8e"
-  integrity sha1-WaYKr45vkkDB2u2aCUSy9RTCfY4=
-  dependencies:
-    "@sindresorhus/df" "^2.1.0"
-    mount-point "^3.0.0"
-    pify "^2.2.0"
-    user-home "^2.0.0"
-    xdg-basedir "^2.0.0"
-
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.dtstack.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
@@ -14119,11 +13749,6 @@ y18n@^4.0.0:
   version "4.0.0"
   resolved "http://registry.npm.dtstack.com/y18n/-/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
   integrity sha512-r9S/ZyXu/Xu9q1tYlpsLIsa3EeLXXk0VwlxqTcFRfg9EhMW+17kbt9G0NrgCmhGb5vT2hyhJZLfDGx+7+5Uj/w==
-
-yallist@^2.1.2:
-  version "2.1.2"
-  resolved "http://registry.npm.dtstack.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
-  integrity sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=
 
 yallist@^3.0.2:
   version "3.1.1"

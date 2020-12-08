@@ -12,7 +12,7 @@
         "build": "tsc --project tsconfig.build.json",
         "eslint": "eslint ./src/**/*.ts ./src/**/*.tsx",
         "stylelint": "stylelint ./src/**/*.scss",
-        "prettier": "prettier --ignore-unknown --write . ",
+        "prettier": "prettier --ignore-unknown .",
         "release": "standard-version",
         "web": "webpack serve --env prod --config ./build/web.js"
     },
@@ -83,7 +83,7 @@
     "husky": {
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-            "pre-push": "prettier --ignore-unknown --check ."
+            "pre-push": "yarn prettier --write"
         }
     },
     "config": {

@@ -18,6 +18,7 @@ $prefix: 'mo';
 
 .#{$prefix} {
     bottom: 0;
+    box-sizing: border-box;
     font-size: 13px;
     height: 100%;
     left: 0;

@@ -6,77 +6,79 @@ import { IModalFuncProps, destroyFns } from './Modal';
 import ConfirmDialog from './ConfirmDialog';
 
 export type ModalFunc = (
-  props: IModalFuncProps,
+    props: IModalFuncProps
 ) => {
-  destroy: () => void;
+    destroy: () => void;
 };
 
 export interface ModalStaticFunctions {
-  warn: ModalFunc;
-  warning: ModalFunc;
-  confirm: ModalFunc;
+    warn: ModalFunc;
+    warning: ModalFunc;
+    confirm: ModalFunc;
 }
 
 export default function confirm(config: IModalFuncProps) {
-  const div = document.createElement('div');
-  document.body.appendChild(div);
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  let currentConfig = { ...config, close, visible: true } as any;
+    const div = document.createElement('div');
+    document.body.appendChild(div);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    let currentConfig = { ...config, close, visible: true } as any;
 
-  function destroy(...args: any[]) {
-    const unmountResult = ReactDOM.unmountComponentAtNode(div);
-    if (unmountResult && div.parentNode) {
-      div.parentNode.removeChild(div);
+    function destroy(...args: any[]) {
+        const unmountResult = ReactDOM.unmountComponentAtNode(div);
+        if (unmountResult && div.parentNode) {
+            div.parentNode.removeChild(div);
+        }
+        const triggerCancel = args.some(
+            (param) => param && param.triggerCancel
+        );
+        if (config.onCancel && triggerCancel) {
+            config.onCancel(...args);
+        }
+        for (let i = 0; i < destroyFns.length; i++) {
+            const fn = destroyFns[i];
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            if (fn === close) {
+                destroyFns.splice(i, 1);
+                break;
+            }
+        }
     }
-    const triggerCancel = args.some(param => param && param.triggerCancel);
-    if (config.onCancel && triggerCancel) {
-      config.onCancel(...args);
-    }
-    for (let i = 0; i < destroyFns.length; i++) {
-      const fn = destroyFns[i];
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      if (fn === close) {
-        destroyFns.splice(i, 1);
-        break;
-      }
-    }
-  }
 
-  function render({ okText, cancelText, prefixCls, ...props }: any) {
-    ReactDOM.render(
-        <ConfirmDialog
-          {...props}
-          prefixCls={prefixCls}
-          okText={okText}
-          cancelText={cancelText}
-        />,
-        div,
-      );
-  }
+    function render({ okText, cancelText, prefixCls, ...props }: any) {
+        ReactDOM.render(
+            <ConfirmDialog
+                {...props}
+                prefixCls={prefixCls}
+                okText={okText}
+                cancelText={cancelText}
+            />,
+            div
+        );
+    }
 
-  function close(...args: any[]) {
-    currentConfig = {
-      ...currentConfig,
-      visible: false,
-      afterClose: destroy.bind(this, ...args),
-    };
+    function close(...args: any[]) {
+        currentConfig = {
+            ...currentConfig,
+            visible: false,
+            afterClose: destroy.bind(this, ...args),
+        };
+        render(currentConfig);
+    }
+
     render(currentConfig);
-  }
 
-  render(currentConfig);
+    destroyFns.push(close);
 
-  destroyFns.push(close);
-
-  return {
-    destroy: close,
-  };
+    return {
+        destroy: close,
+    };
 }
 
 export function withWarn(props: IModalFuncProps): IModalFuncProps {
-  return {
-    type: 'warning',
-    icon: <Icon type="warning"/>,
-    okCancel: false,
-    ...props,
-  };
+    return {
+        type: 'warning',
+        icon: <Icon type="warning" />,
+        okCancel: false,
+        ...props,
+    };
 }

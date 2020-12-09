@@ -6,7 +6,7 @@ import { classNames, prefixClaName } from 'mo/common/className';
 
 import { Button, IButton } from 'mo/components/button';
 
-let mousePosition
+let mousePosition;
 
 const getClickPosition = (e: MouseEvent) => {
     mousePosition = {

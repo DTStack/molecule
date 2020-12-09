@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { memo, useEffect } from 'react';
-
-import { prefixClaName, classNames } from 'mo/common/className';
-import { ID_ACTIVITY_BAR } from 'mo/common/id';
+import { classNames } from 'mo/common/className';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { select } from 'mo/common/dom';
 import { Menu } from 'mo/components/menu';
+
+import { indicatorClassName, labelClassName, itemClassName, itemCheckedClassName } from './base';
 
 function ActivityBarItem(props: IActivityBarItem) {
     const {
@@ -56,18 +56,18 @@ function ActivityBarItem(props: IActivityBarItem) {
             id={id}
             onClick={onClickItem}
             className={classNames(
-                prefixClaName('item', ID_ACTIVITY_BAR),
-                checked ? 'checked' : ''
+                itemClassName,
+                checked ? itemCheckedClassName : ''
             )}
             data-id={data.id}
         >
             <a
                 title={name}
-                className={classNames('item-label', 'codicon', iconName)}
+                className={classNames(labelClassName, 'codicon', iconName)}
             >
                 {content}
             </a>
-            {checked ? <div className="active-item-indicator"></div> : null}
+            {checked ? <div className={indicatorClassName}></div> : null}
         </li>
     );
 }

@@ -8,11 +8,6 @@ $name: 'context-view';
     width: initial;
     z-index: 2500;
 
-    .context-view-content {
-        box-shadow: rgb(0, 0, 0) 0 2px 4px;
-        overflow: hidden;
-    }
-
     .#{$name}-block {
         bottom: 0;
         height: 100%;
@@ -24,4 +19,12 @@ $name: 'context-view';
         width: 100%;
         z-index: -1;
     }
+}
+
+.context-view-content {
+    overflow: hidden;
+}
+
+.context-view--shadow {
+    box-shadow: rgb(0, 0, 0) 0 2px 4px;
 }

@@ -7,24 +7,7 @@ import { IExtension } from 'mo/model/extension';
 import { ITheme, ThemeColor, TokenColor } from 'mo/model/theme';
 import { container, inject, singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
-
-/**
- * Apply css content to workbench
- * @param styleSheetContent CSS sheet content
- * @param rulesClassName Style tag class Name
- */
-function _applyRules(styleSheetContent: string, rulesClassName: string) {
-    const themeStyles = document.head.getElementsByClassName(rulesClassName);
-    if (themeStyles.length === 0) {
-        const elStyle = document.createElement('style');
-        elStyle.type = 'text/css';
-        elStyle.className = rulesClassName;
-        elStyle.innerHTML = styleSheetContent;
-        document.head.appendChild(elStyle);
-    } else {
-        (<HTMLStyleElement>themeStyles[0]).innerHTML = styleSheetContent;
-    }
-}
+import { applyStyleSheetRules } from 'mo/common/css';
 
 @singleton()
 export class ThemeService implements ITheme {
@@ -60,7 +43,7 @@ export class ThemeService implements ITheme {
     public getThemeById(themeId: string, extension: IExtension) {}
 
     public applyTheme() {
-        _applyRules('', '');
+        applyStyleSheetRules('', '');
     }
 }
 

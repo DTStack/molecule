@@ -32,6 +32,7 @@
         "loadsh": "^0.0.4",
         "monaco-editor": "^0.21.2",
         "rc-collapse": "^2.0.1",
+        "rc-dialog": "^8.4.5",
         "rc-tree": "^3.10.0",
         "react": "^16.13.1",
         "react-dnd": "^9.3.4",

@@ -22,6 +22,10 @@ $btn: 'btn';
         padding: 8px;
     }
 
+    &.disabled {
+        cursor: not-allowed;
+    }
+
     &:hover {
         opacity: 0.9;
     }

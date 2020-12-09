@@ -10874,7 +10874,17 @@ rc-collapse@^2.0.1:
     rc-util "^5.2.1"
     shallowequal "^1.1.0"
 
-rc-motion@^2.0.1:
+rc-dialog@^8.4.5:
+  version "8.4.5"
+  resolved "https://registry.npm.taobao.org/rc-dialog/download/rc-dialog-8.4.5.tgz?cache=0&sync_timestamp=1607323383644&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-dialog%2Fdownload%2Frc-dialog-8.4.5.tgz#6791de01578dfdba8ff6959ddd2ed18bf322d052"
+  integrity sha1-Z5HeAVeN/bqP9pWd3S7Ri/Mi0FI=
+  dependencies:
+    "@babel/runtime" "^7.10.1"
+    classnames "^2.2.6"
+    rc-motion "^2.3.0"
+    rc-util "^5.0.1"
+
+rc-motion@^2.0.1, rc-motion@^2.3.0:
   version "2.4.1"
   resolved "http://registry.npm.dtstack.com/rc-motion/-/rc-motion-2.4.1.tgz#323f47c8635e6b2bc0cba2dfad25fc415b58e1dc"
   integrity sha1-Mj9HyGNeayvAy6LfrSX8QVtY4dw=
@@ -10919,6 +10929,14 @@ rc-util@^5.0.0, rc-util@^5.0.7, rc-util@^5.2.1:
   version "5.5.0"
   resolved "http://registry.npm.dtstack.com/rc-util/-/rc-util-5.5.0.tgz#76321bcb5c12f01f42bff9b971f170ff19506e5a"
   integrity sha1-djIby1wS8B9Cv/m5cfFw/xlQblo=
+  dependencies:
+    react-is "^16.12.0"
+    shallowequal "^1.1.0"
+
+rc-util@^5.0.1:
+  version "5.5.1"
+  resolved "https://registry.npm.taobao.org/rc-util/download/rc-util-5.5.1.tgz?cache=0&sync_timestamp=1607394295584&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-util%2Fdownload%2Frc-util-5.5.1.tgz#8c75a115c09bd9b80ce17eb3457c9b221df6f526"
+  integrity sha1-jHWhFcCb2bgM4X6zRXybIh329SY=
   dependencies:
     react-is "^16.12.0"
     shallowequal "^1.1.0"

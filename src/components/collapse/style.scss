@@ -8,6 +8,10 @@ $collapse: 'collapse';
 #{prefix($collapse)} {
     font-size: 13px;
 
+    .content-box__padding {
+        padding: 10px;
+    }
+
     .rc-collapse {
         background-color: inherit;
     }

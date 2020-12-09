@@ -49,7 +49,7 @@
 }
 
 // =============== MenuBar =============== //
-#{prefix($menuBar)} {
+#{$menuBar} {
     background-color: rgb(51, 51, 51);
 }
 
@@ -86,12 +86,12 @@
 
 // =============== Common =============== //
 #{$activityBar}__item,
-#{prefix($menuBar)} {
+#{$menuBar} {
     color: rgba(255, 255, 255, 0.4);
 }
 
 #{$activityBar}__item:hover,
-#{prefix($menuBar)}:hover {
+#{$menuBar}:hover {
     color: #fff;
 }
 

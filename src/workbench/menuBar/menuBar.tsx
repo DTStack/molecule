@@ -1,6 +1,6 @@
 import 'mo/workbench/menuBar/style.scss';
 import * as React from 'react';
-import { prefixClaName } from 'mo/common/className';
+import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IMenuBar } from 'mo/model/workbench/menuBar';
 import { Menu } from 'mo/components/menu';
 import { DropDown } from 'mo/components/dropdown';
@@ -115,6 +115,9 @@ const initialMenuData = [
     },
 ];
 
+const defaultClassName = prefixClaName('menuBar');
+const actionClassName = getBEMElement(defaultClassName, 'action');
+
 function MenuBar(props: IMenuBar) {
     const menuBar = props;
     const click = function (e) {
@@ -126,8 +129,8 @@ function MenuBar(props: IMenuBar) {
         <Menu onClick={click} style={{ width: 200 }} data={initialMenuData} />
     );
     return (
-        <div className={prefixClaName('menuBar')}>
-            <DropDown className="menu-action" placement="right" overlay={menu}>
+        <div className={defaultClassName}>
+            <DropDown className={actionClassName} placement="right" overlay={menu}>
                 <Icon type="menu" />
             </DropDown>
         </div>

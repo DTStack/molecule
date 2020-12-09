@@ -33,14 +33,14 @@
 }
 
 // =============== Sidebar =============== //
-#{prefix($sidebar)} {
+#{$sidebar} {
     // TODO temp style, just for development
     background-color: rgb(37, 37, 38);
     outline-color: rgba(83, 89, 93, 0.5);
-}
 
-.sidebar-pane .pane-title h2 {
-    color: rgb(187, 187, 187);
+    &__title h2 {
+        color: rgb(187, 187, 187);
+    }
 }
 
 // =============== Editor =============== //

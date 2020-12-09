@@ -1,36 +1,11 @@
 @import 'mo/style/common';
-$sidebar: 'sidebar';
+$sidebar: prefix('sidebar');
 
-#{prefix($sidebar)} {
+#{$sidebar} {
     height: 100%;
     left: 0;
     position: relative;
     width: 100%;
-}
-
-#{prefix($sidebar)}.#{$sidebar}-pane {
-    height: 100%;
-    position: relative;
-    width: 100%;
-
-    .pane-header {
-        align-items: center;
-        box-sizing: border-box;
-        display: flex;
-        height: 35px;
-        overflow: hidden;
-        padding-left: 8px;
-        padding-right: 8px;
-        position: relative;
-    }
-
-    .pane-title {
-        line-height: 35px;
-        overflow: hidden;
-        padding-left: 12px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
 
     h2 {
         cursor: default;
@@ -43,7 +18,32 @@ $sidebar: 'sidebar';
         white-space: nowrap;
     }
 
-    .pane-content {
+    &__pane {
+        height: 100%;
+        position: relative;
+        width: 100%;
+    }
+
+    &__header {
+        align-items: center;
+        box-sizing: border-box;
+        display: flex;
+        height: 35px;
+        overflow: hidden;
+        padding-left: 8px;
+        padding-right: 8px;
+        position: relative;
+    }
+
+    &__title {
+        line-height: 35px;
+        overflow: hidden;
+        padding-left: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__content {
         bottom: 0;
         left: 0;
         position: relative;
@@ -51,7 +51,8 @@ $sidebar: 'sidebar';
         top: 0;
     }
 
-    .pane-toolbar {
+    &__toolbar {
+
         flex: 1;
         padding-left: 5px;
     }

@@ -1,36 +1,36 @@
 @import 'mo/style/common';
-$editor: 'editor';
+$editor: prefix('editor');
 
-#{prefix($editor)} {
+#{$editor} {
     display: flex;
     height: 100%;
     position: relative;
     width: 100%;
 
-    .editor-group {
+    &__group {
         height: 100%;
         position: relative;
         width: 100%;
     }
 
-    .group-header {
-        position: relative;
-    }
-
-    .group-tabs {
-        height: 35px;
-    }
-
-    .group-breadcrumbs {
-        height: 22px;
-    }
-
-    .group-container {
+    &__group-container {
         bottom: 0;
         height: auto;
         left: 0;
         position: relative;
         right: 0;
         width: 100%;
+    }
+
+    &__group-header {
+        position: relative;
+    }
+
+    &__group-tabs {
+        height: 35px;
+    }
+
+    &__group-breadcrumbs {
+        height: 22px;
     }
 }

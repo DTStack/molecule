@@ -1,0 +1,44 @@
+@import 'mo/style/common';
+$checkbox: prefix('checkbox');
+
+#{$checkbox} {
+    user-select: none;
+
+    &__input {
+        height: 0;
+        visibility: hidden;
+        width: 0;
+
+        &[type='checkbox']:checked + label::before {
+            content: '\eab2';
+        }
+    }
+
+    &__label {
+        cursor: pointer;
+        outline: none;
+        padding-left: 26px;
+        position: relative;
+
+        &::before {
+            border: 1px solid transparent;
+            border-radius: 3px;
+            box-sizing: border-box;
+            content: ' ';
+            display: inline-block;
+            font: normal normal normal 16px/1 codicon;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            height: 18px;
+            left: 0;
+            outline: 1px solid transparent;
+            position: absolute;
+            text-align: center;
+            text-decoration: none;
+            text-rendering: auto;
+            top: 0;
+            user-select: none;
+            width: 18px;
+        }
+    }
+}

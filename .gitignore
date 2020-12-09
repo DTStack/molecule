@@ -4,3 +4,4 @@ dist
 coverage
 .DS_Store
 storybook-static
+.yarn-error.log

@@ -9,8 +9,13 @@ import {
 } from 'mo/common/dom';
 import './style.scss';
 import { Utils } from 'dt-utils/lib';
+import { EventEmitter } from 'mo/common/event';
 
 export interface IContextViewProps {
+    /**
+     * Default true
+     */
+    shadowOutline?: boolean;
     render?: () => React.ReactNode;
 }
 
@@ -18,10 +23,17 @@ export interface IContextView {
     view: HTMLElementType;
     show(anchorPos: IPosition, render?: () => React.ReactNode): void;
     hide(): void;
+    onHide(callback?: Function): void;
+    dispose(): void;
+}
+
+enum ContextViewEvent {
+    onHide = 'onHide',
 }
 
 const contextViewClass = prefixClaName('context-view');
 const contentClass = '.context-view-content';
+const emitter = new EventEmitter();
 
 export function useContextView(props?: IContextViewProps): IContextView {
     const claName = classNames(contextViewClass, 'fade-in');
@@ -50,7 +62,12 @@ export function useContextView(props?: IContextViewProps): IContextView {
         if (contextView) {
             contextView.style.visibility = 'hidden';
             ReactDOM.unmountComponentAtNode(select(contentClass)!);
+            emitter.emit(ContextViewEvent.onHide);
         }
+    };
+
+    const onHide = (callback: Function) => {
+        emitter.subscribe(ContextViewEvent.onHide, callback);
     };
 
     const onMaskClick = (e: React.MouseEvent) => {
@@ -59,12 +76,16 @@ export function useContextView(props?: IContextViewProps): IContextView {
         hide();
     };
 
+    const dispose = () => {
+        emitter.unsubscribe(ContextViewEvent.onHide);
+    };
+
     if (!contextView) {
         contextView = document.createElement('div');
         contextView.className = classNames(
             claName,
             Utils.isMacOs() ? 'mac' : null
-        );
+        )!;
         contextView.style.visibility = 'hidden';
         const root = document.getElementById('molecule');
         if (!root) {
@@ -72,6 +93,7 @@ export function useContextView(props?: IContextViewProps): IContextView {
         } else {
             root.appendChild(contextView);
         }
+        const shadowClass = !props?.shadowOutline ? '' : 'context-view--shadow';
 
         ReactDOM.render(
             <>
@@ -80,11 +102,13 @@ export function useContextView(props?: IContextViewProps): IContextView {
                     onClick={onMaskClick}
                     onContextMenu={onMaskClick}
                 ></div>
-                <div className="context-view-content"></div>
+                <div
+                    className={classNames('context-view-content', shadowClass)}
+                ></div>
             </>,
             contextView
         );
     }
 
-    return { view: contextView, show, hide };
+    return { view: contextView, show, hide, onHide, dispose };
 }

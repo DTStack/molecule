@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { Select, Option } from 'mo/components/select';
-import { useContextView } from 'mo/components/contextview';
-import { Menu, MenuMode, MenuItem, SubMenu } from 'mo/components/menu';
-
 import { propsTable } from '../common/propsTable';
+import { Select, Option } from 'mo/components/select';
+import { useState } from 'react';
 
-const stories = storiesOf('ContextView', module);
+const stories = storiesOf('Select', module);
 stories.addDecorator(withKnobs);
 
 const propDefinitions = [
@@ -23,50 +21,47 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
-        const contextView = useContextView();
-
-        const show = (event: React.MouseEvent): void => {
-            const x = event.clientX;
-            const y = event.clientY;
-            console.log('x, y:', x, y);
-            contextView.show(
-                {
-                    x: x,
-                    y: y,
-                },
-                () => {
-                    return (
-                        <div>
-                            <h1>Hello World: </h1>
-                            <p>x: {x}</p>
-                            <p>y: {y}</p>
-                        </div>
-                    );
-                }
-            );
-        };
-
-        const styled: React.CSSProperties = {
-            position: 'relative',
-            width: 200,
-            height: 200,
-            margin: 'auto',
-            background: '#dddddd',
+        const [selectedVal3, setSelectedVal3] = useState('');
+        const onSelectOption = (e, option) => {
+            console.log('onSelectOption', e, option);
+            if (option) {
+                setSelectedVal3(option.value);
+            }
         };
 
         return (
-            <div>
+            <div
+                style={{
+                    backgroundColor: 'rgb(37, 37, 38)',
+                    color: 'rgb(240, 240, 240)',
+                    height: 500,
+                    padding: 20,
+                }}
+            >
                 <h2>简述</h2>
-                <p>
-                    ContextView
-                    组件主要是提供了一个可根据指定锚点位置、渲染内容的视图容器。
-                </p>
-                <h2>使用示例 - 1</h2>
-                <div id="topLeft" onClick={show} style={styled}>
-                    Click me!
-                </div>
+                <p>Select component.</p>
                 <div>
-                    <h2>使用示例 - 2</h2>
+                    <h3>使用示例 1</h3>
+                    <Select
+                        id="demo1"
+                        key="demo1"
+                        defaultValue="1"
+                        style={{
+                            width: 200,
+                            color: 'rgba(255, 255, 255, 0.4)',
+                            background: '#252526',
+                        }}
+                        onSelect={onSelectOption}
+                    >
+                        <Option value="1">option - 1</Option>
+                        <Option value="2">option - 2</Option>
+                        <Option value="3">option - 3</Option>
+                        <Option value="4" description="Test option one">
+                            option - 4
+                        </Option>
+                    </Select>
+
+                    <h3>使用示例 2</h3>
                     <Select
                         id="demo2"
                         key="demo2"
@@ -76,6 +71,7 @@ stories.add(
                             background: '#252526',
                         }}
                         placeholder="请选择"
+                        onSelect={onSelectOption}
                     >
                         <Option value="1">option - 1</Option>
                         <Option value="2">option - 2</Option>
@@ -84,20 +80,28 @@ stories.add(
                             option - 4
                         </Option>
                     </Select>
-                </div>
-                <div>
-                    <h2>使用示例 - 3</h2>
-                    <Menu style={{ width: 200 }}>
-                        <MenuItem>menuItem1</MenuItem>
-                        <MenuItem>menuItem2</MenuItem>
-                        <MenuItem>menuItem3</MenuItem>
-                        <SubMenu mode={MenuMode.Vertical} name={'menuItem4'}>
-                            <MenuItem>subMenuItem1</MenuItem>
-                            <MenuItem>subMenuItem2</MenuItem>
-                            <MenuItem>subMenuItem3</MenuItem>
-                            <MenuItem>subMenuItem4</MenuItem>
-                        </SubMenu>
-                    </Menu>
+
+                    <h3>使用示例 - 3 Change Select Value</h3>
+                    <Select
+                        id="demo3"
+                        style={{
+                            width: 200,
+                            color: 'rgba(255, 255, 255, 0.4)',
+                            background: '#252526',
+                        }}
+                        placeholder="请选择"
+                        value={selectedVal3}
+                        key={`demo3-${selectedVal3}`}
+                        defaultValue={'1'}
+                        onSelect={onSelectOption}
+                    >
+                        <Option value="1">option - 1</Option>
+                        <Option value="2">option - 2</Option>
+                        <Option value="3">option - 3</Option>
+                        <Option value="4" description="Test option one">
+                            option - 4
+                        </Option>
+                    </Select>
                 </div>
             </div>
         );

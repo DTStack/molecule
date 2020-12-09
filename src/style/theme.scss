@@ -27,7 +27,7 @@
 @import 'mo/components/checkbox/style';
 
 // =============== Workbench =============== //
-#{prefix($workbench)} {
+#{$workbench} {
     background-color: #252526;
     color: #ccc;
 }

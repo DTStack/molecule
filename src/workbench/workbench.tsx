@@ -13,13 +13,16 @@ import { StatusBarView } from 'mo/workbench/statusBar';
 import Panel from 'mo/workbench/panel';
 import { ID_APP } from 'mo/common/id';
 
-export interface IWorkbench {}
+export interface IWorkbench { }
 
-export interface IMainBench {}
+export interface IMainBench { }
+
+const mainBenchClassName = prefixClaName('mainBench');
+const workbenchClassName = prefixClaName('workbench');
 
 export function MainBench(props: IMainBench) {
     return (
-        <div className={prefixClaName('mainBench')}>
+        <div className={mainBenchClassName}>
             <SplitPane
                 split={'vertical'}
                 minSize={170}
@@ -50,7 +53,7 @@ export function Workbench(props: IWorkbench) {
             id={ID_APP}
             className={classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '')}
         >
-            <div className={prefixClaName('workbench')}>
+            <div className={workbenchClassName}>
                 <MenuBarView />
                 <ActivityBarView />
                 <MainBench />

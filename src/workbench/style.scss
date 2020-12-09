@@ -1,7 +1,8 @@
 @import 'mo/style/common';
-$workbench: 'workbench';
+$workbench: prefix('workbench');
+$mainBench: prefix('mainBench');
 
-#{prefix($workbench)} {
+#{$workbench} {
     bottom: 0;
     left: 0;
     padding-bottom: 22px;
@@ -11,7 +12,7 @@ $workbench: 'workbench';
     z-index: 1;
 }
 
-#{prefix('mainBench')} {
+#{$mainBench} {
     bottom: 22px;
     height: auto;
     left: 48px;

@@ -1,7 +1,7 @@
 @import 'mo/style/common';
-$statusBar: 'statusBar';
+$statusBar: prefix('statusBar');
 
-#{prefix($statusBar)} {
+#{$statusBar} {
     bottom: 0;
     height: 22px;
     position: absolute;

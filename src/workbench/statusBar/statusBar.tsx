@@ -6,8 +6,10 @@ import { memo } from 'react';
 import { prefixClaName } from 'mo/common/className';
 import { IStatusBar } from 'mo/model/workbench/statusBar';
 
+const defaultClassName = prefixClaName('statusBar');
+
 function StatusBar(props: IStatusBar) {
-    return <div className={prefixClaName('statusBar')}>StatusBar</div>;
+    return <div className={defaultClassName}>StatusBar</div>;
 }
 
 export default memo(StatusBar);

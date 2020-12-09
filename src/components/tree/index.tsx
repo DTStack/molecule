@@ -22,7 +22,6 @@ export const FileTypes = {
 };
 export type FileType = 'file' | 'folder';
 
-<<<<<<< HEAD
 export interface ITreeNodeItem {
     name?: string;
     type?: FileType;
@@ -207,11 +206,11 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                     updateFile &&
                                         updateFile(item, e.target.value, index);
                                 }}
-                                onChange={(e) => {}}
+                                onChange={(e) => { }}
                             />
                         ) : (
-                            name
-                        )
+                                name
+                            )
                     }
                     key={id}
                     icon={modify ? '' : <Icon type={icon} />}
@@ -243,21 +242,6 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     {renderTreeNodes(data)}
                 </Tree>
             </div>
-=======
-export interface ITree { }
-
-interface ITreeProps extends TreeProps { }
-
-const defaultTreeClassName = prefixClaName('tree');
-
-export const Tree: React.FunctionComponent<ITreeProps> = (
-    props: ITreeProps
-) => {
-    const { className, ...custom } = props;
-    return (
-        <div className={classNames(defaultTreeClassName, className)}>
-            <RcTree {...custom} />
->>>>>>> refactor(tree): convert the naming to BEM standard
         </div>
     );
 };

@@ -1,6 +1,6 @@
 @import 'mo/style/common';
-$toolBar: 'tool-bar';
+$toolBar: prefix('tool-bar');
 
-#{prefix($toolBar)} {
+#{$toolBar} {
     color: inherit;
 }

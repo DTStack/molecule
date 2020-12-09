@@ -1,12 +1,10 @@
-import './style.scss';
 import * as React from 'react';
-import { classNames, prefixClaName } from 'mo/common/className';
+import { classNames } from 'mo/common/className';
 import { MenuItem } from './menuItem';
 import { ISubMenu, MenuMode, SubMenu } from './subMenu';
+import { defaultMenuClassName, horizontalMenuClassName, verticalMenuClassName } from './base';
 
-export interface IMenu extends ISubMenu {}
-
-export const defaultMenuClassName = 'menu';
+export interface IMenu extends ISubMenu { }
 
 export function Menu(props: React.PropsWithChildren<IMenu>) {
     const {
@@ -14,12 +12,14 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
         mode = MenuMode.Vertical,
         data = [],
         children,
-        ...others
+        ...custom
     } = props;
     let content = children;
+
+    const modeClassName = mode === MenuMode.Horizontal ? horizontalMenuClassName : verticalMenuClassName;
     const claNames = classNames(
-        prefixClaName(defaultMenuClassName),
-        mode,
+        defaultMenuClassName,
+        modeClassName,
         className
     );
 
@@ -44,7 +44,7 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
     }
 
     return (
-        <ul className={claNames} {...others}>
+        <ul className={claNames} {...custom}>
             {content}
         </ul>
     );

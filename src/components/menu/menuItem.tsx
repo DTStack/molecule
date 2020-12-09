@@ -1,9 +1,7 @@
-import './style.scss';
 import * as React from 'react';
-import { classNames, prefixClaName } from 'mo/common/className';
+import { classNames } from 'mo/common/className';
 import { Icon } from '../icon';
-
-export const defaultMenuItemClassName = prefixClaName('menu-item');
+import { checkClassName, defaultMenuItemClassName, keybindingClassName, labelClassName, menuContentClassName } from './base';
 
 export interface IMenuItem extends HTMLElementProps {
     /**
@@ -36,6 +34,7 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItem>) {
         render,
         children,
         name,
+        ...custom
     } = props;
     const events = {
         onClick: function (e: React.MouseEvent) {
@@ -48,14 +47,15 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItem>) {
         <li
             className={classNames(defaultMenuItemClassName, className)}
             {...events}
+            {...custom}
         >
-            <a className="menu-item-container">
-                <Icon className="menu-item-check" type={icon || ''} />
-                <span className="menu-item-label" title={name as string}>
+            <a className={menuContentClassName}>
+                <Icon className={checkClassName} type={icon || ''} />
+                <span className={labelClassName} title={name as string}>
                     {render ? render(props) : children}
                 </span>
                 {keybinding ? (
-                    <span className="keybinding">{keybinding}</span>
+                    <span className={keybindingClassName}>{keybinding}</span>
                 ) : null}
             </a>
         </li>

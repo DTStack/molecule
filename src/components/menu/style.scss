@@ -1,24 +1,23 @@
 @import 'mo/style/common';
-$menu: 'menu';
-$subMenu: 'sub-menu';
-$menuItem: 'menu-item';
+$menu: prefix('menu');
+$subMenu: prefix('sub-menu');
 
-#{prefix($menu)} {
+#{$menu}, #{$subMenu} {
+    font-size: 13px;
+}
+
+#{$menu} {
     display: flex;
     list-style: none;
     margin: 0;
     min-width: 200px;
     padding: 0;
 
-    &.vertical {
+    &--vertical {
         flex-direction: column;
         padding: 0.5em 0;
 
-        #{prefix($menuItem)} {
-            min-width: 120px;
-        }
-
-        .menu-item-indicator {
+        #{$menu}__item--indicator {
             &.codicon::before {
                 margin-left: auto;
                 margin-right: -20px;
@@ -26,15 +25,15 @@ $menuItem: 'menu-item';
         }
     }
 
-    &.horizontal {
+    &--horizontal {
         flex-direction: row;
-
-        #{prefix($menuItem)} {
-            min-width: 120px;
-        }
     }
 
-    .menu-item-container {
+    &__item {
+        min-width: 120px;
+    }
+
+    &__content {
         align-items: center;
         cursor: default;
         display: flex;
@@ -43,33 +42,9 @@ $menuItem: 'menu-item';
         height: 2em;
         position: relative;
         transition: transform 50ms ease;
-
-        .menu-item-check {
-            font-size: inherit;
-            height: 100%;
-            height: 100%;
-            position: absolute;
-            width: 2em;
-        }
-
-        .codicon {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
     }
 
-    .menu-item-indicator {
-        padding: 0 1.8em;
-
-        &.codicon {
-            align-items: center;
-            display: flex;
-            font-size: 16px;
-        }
-    }
-
-    .menu-item-label {
+    &__label {
         align-items: center;
         background-position: center center;
         background-repeat: no-repeat;
@@ -79,17 +54,35 @@ $menuItem: 'menu-item';
         justify-content: center;
         padding: 0 2em;
         text-decoration: none;
+
+        &.codicon {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    &__check {
+        font-size: inherit;
+        height: 100%;
+        height: 100%;
+        position: absolute;
+        width: 2em;
+    }
+
+    &__indicator {
+        padding: 0 1.8em;
+
+        &.codicon {
+            align-items: center;
+            display: flex;
+            font-size: 16px;
+        }
     }
 }
 
-#{prefix($menuItem)} {
-    font-size: 13px;
-}
-
-#{prefix($subMenu)} {
+#{$subMenu} {
     display: block;
-    font-size: 13px;
     position: fixed;
-    // transition-delay: 0.2s; Bug
     z-index: 1;
 }

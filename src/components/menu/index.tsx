@@ -1,3 +1,4 @@
+import './style.scss';
 export * from './menu';
-export * from './menuItem';
+export { MenuItem } from './menuItem';
 export * from './subMenu';

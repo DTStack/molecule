@@ -8,7 +8,7 @@ interface IScrollbar extends ScrollbarProps {
     autoHideThumb?: boolean;
 }
 
-const defaultSrollableClassName = 'scrollable';
+const defaultSrollableClassName = prefixClaName('scrollable');
 
 /**
  * The react-scrollbars-custom component default not supports auto hide thumb option,
@@ -23,7 +23,7 @@ export function Scrollable(props: IScrollbar) {
     const isShow = isScrolling || isMouseOver;
 
     const claNames = classNames(
-        prefixClaName(defaultSrollableClassName),
+        defaultSrollableClassName,
         className
     );
 

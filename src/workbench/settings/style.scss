@@ -1,7 +1,7 @@
 @import 'mo/style/common';
-$settings: 'settings';
+$settings: prefix('settings');
 
-.#{$prefix}-#{$settings} {
+#{$settings} {
     align-items: center;
     bottom: 26px;
     cursor: pointer;
@@ -13,7 +13,10 @@ $settings: 'settings';
     width: 48px;
     z-index: 2;
 
-    .#{$settings}-action.codicon {
-        font-size: 24px;
+    &__action {
+        &.codicon {
+            font-size: 24px;
+
+        }
     }
 }

@@ -69,7 +69,7 @@
 }
 
 // =============== Settings =============== //
-#{prefix($settings)} {
+#{$settings} {
     color: rgba(255, 255, 255, 0.4);
 }
 

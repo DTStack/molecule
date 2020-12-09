@@ -1,7 +1,7 @@
 @import 'mo/style/common';
-$tree: 'tree';
+$tree: prefix('tree');
 
-#{prefix($tree)} {
+#{$tree} {
     font-size: 13px;
 
     .rc-tree {

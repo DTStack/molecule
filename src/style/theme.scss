@@ -143,7 +143,7 @@
 }
 
 // =============== Tree =============== //
-#{prefix($tree)} {
+#{$tree} {
     .rc-tree-treenode {
         &:hover {
             background-color: #333;

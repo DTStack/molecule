@@ -130,7 +130,11 @@ function MenuBar(props: IMenuBar) {
     );
     return (
         <div className={defaultClassName}>
-            <DropDown className={actionClassName} placement="right" overlay={menu}>
+            <DropDown
+                className={actionClassName}
+                placement="right"
+                overlay={menu}
+            >
                 <Icon type="menu" />
             </DropDown>
         </div>

@@ -13,9 +13,9 @@ import { StatusBarView } from 'mo/workbench/statusBar';
 import Panel from 'mo/workbench/panel';
 import { ID_APP } from 'mo/common/id';
 
-export interface IWorkbench { }
+export interface IWorkbench {}
 
-export interface IMainBench { }
+export interface IMainBench {}
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');

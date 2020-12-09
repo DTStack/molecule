@@ -5,7 +5,12 @@ import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
 import ActivityBarItem from './activityBarItem';
 import { Scrollable } from 'mo/components/scrollable';
-import { containerClassName, defaultClassName, globalItemsClassName, normalItemsClassName } from './base';
+import {
+    containerClassName,
+    defaultClassName,
+    globalItemsClassName,
+    normalItemsClassName,
+} from './base';
 
 export function ActivityBar(props: IActivityBar) {
     const { data = [], render, selected, onClick, onSelect } = props;

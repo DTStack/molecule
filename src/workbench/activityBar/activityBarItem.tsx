@@ -6,7 +6,12 @@ import { useContextMenu } from 'mo/components/contextMenu';
 import { select } from 'mo/common/dom';
 import { Menu } from 'mo/components/menu';
 
-import { indicatorClassName, labelClassName, itemClassName, itemCheckedClassName } from './base';
+import {
+    indicatorClassName,
+    labelClassName,
+    itemClassName,
+    itemCheckedClassName,
+} from './base';
 
 function ActivityBarItem(props: IActivityBarItem) {
     const {

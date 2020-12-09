@@ -22,10 +22,7 @@ export function Scrollable(props: IScrollbar) {
     const [isMouseOver, setIsMouseOver] = useState(false);
     const isShow = isScrolling || isMouseOver;
 
-    const claNames = classNames(
-        defaultSrollableClassName,
-        className
-    );
+    const claNames = classNames(defaultSrollableClassName, className);
 
     const onScrollStart = useCallback(() => {
         setIsScrolling(true);

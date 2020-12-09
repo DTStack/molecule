@@ -2,7 +2,8 @@
 $menu: prefix('menu');
 $subMenu: prefix('sub-menu');
 
-#{$menu}, #{$subMenu} {
+#{$menu},
+#{$subMenu} {
     font-size: 13px;
 }
 

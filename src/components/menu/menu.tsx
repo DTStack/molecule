@@ -2,9 +2,13 @@ import * as React from 'react';
 import { classNames } from 'mo/common/className';
 import { MenuItem } from './menuItem';
 import { ISubMenu, MenuMode, SubMenu } from './subMenu';
-import { defaultMenuClassName, horizontalMenuClassName, verticalMenuClassName } from './base';
+import {
+    defaultMenuClassName,
+    horizontalMenuClassName,
+    verticalMenuClassName,
+} from './base';
 
-export interface IMenu extends ISubMenu { }
+export interface IMenu extends ISubMenu {}
 
 export function Menu(props: React.PropsWithChildren<IMenu>) {
     const {
@@ -16,12 +20,11 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
     } = props;
     let content = children;
 
-    const modeClassName = mode === MenuMode.Horizontal ? horizontalMenuClassName : verticalMenuClassName;
-    const claNames = classNames(
-        defaultMenuClassName,
-        modeClassName,
-        className
-    );
+    const modeClassName =
+        mode === MenuMode.Horizontal
+            ? horizontalMenuClassName
+            : verticalMenuClassName;
+    const claNames = classNames(defaultMenuClassName, modeClassName, className);
 
     if (data.length > 0) {
         const renderMenusByData = (menus: IMenu[]) => {

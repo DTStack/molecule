@@ -11,7 +11,14 @@ import { Icon } from 'mo/components/icon';
 
 import { Menu } from './menu';
 import { IMenuItem } from './menuItem';
-import { checkClassName, defaultMenuItemClassName, defaultSubMenuClassName, indicatorClassName, labelClassName, menuContentClassName } from './base';
+import {
+    checkClassName,
+    defaultMenuItemClassName,
+    defaultSubMenuClassName,
+    indicatorClassName,
+    labelClassName,
+    menuContentClassName,
+} from './base';
 
 export enum MenuMode {
     Vertical = 'vertical',
@@ -72,7 +79,6 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
 
     const events = {
         onMouseOver: (event: React.MouseEvent<any, any>) => {
-
             const nextMenuItem = findParentByClassName<HTMLLIElement>(
                 event.target,
                 defaultMenuItemClassName
@@ -171,10 +177,10 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
                 data={data}
             />
         ) : (
-                <Menu className={cNames} style={{ visibility: 'hidden' }}>
-                    {children}
-                </Menu>
-            );
+            <Menu className={cNames} style={{ visibility: 'hidden' }}>
+                {children}
+            </Menu>
+        );
 
     return (
         <li className={defaultMenuItemClassName} {...events} {...custom}>

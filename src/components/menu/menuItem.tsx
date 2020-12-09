@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { classNames } from 'mo/common/className';
 import { Icon } from '../icon';
-import { checkClassName, defaultMenuItemClassName, keybindingClassName, labelClassName, menuContentClassName } from './base';
+import {
+    checkClassName,
+    defaultMenuItemClassName,
+    keybindingClassName,
+    labelClassName,
+    menuContentClassName,
+} from './base';
 
 export interface IMenuItem extends HTMLElementProps {
     /**

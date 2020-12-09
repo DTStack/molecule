@@ -11,10 +11,16 @@ import { IEditor, IEditorGroup } from 'mo/model';
 
 const defaultEditorClassName = prefixClaName('editor');
 const groupClassName = getBEMElement(defaultEditorClassName, 'group');
-const groupContainerClassName = getBEMElement(defaultEditorClassName, 'group-container');
+const groupContainerClassName = getBEMElement(
+    defaultEditorClassName,
+    'group-container'
+);
 const groupHeaderClassName = getBEMElement(defaultEditorClassName, 'header');
 const groupTabsClassName = getBEMElement(defaultEditorClassName, 'tabs');
-const groupBreadcrumbsClassName = getBEMElement(defaultEditorClassName, 'breadcrumbs');
+const groupBreadcrumbsClassName = getBEMElement(
+    defaultEditorClassName,
+    'breadcrumbs'
+);
 
 function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
     const editor = group.activeTab;
@@ -36,18 +42,18 @@ function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
                     editor.renderPane ? (
                         editor.renderPane()
                     ) : (
-                            <MonacoEditor
-                                options={{
-                                    value: editor.value,
-                                    language: editor.mode || 'sql',
-                                    automaticLayout: true,
-                                }}
-                                editorInstanceRef={(editorInstance) => {
-                                    // This assignment will trigger moleculeCtx update, and subNodes update
-                                    group.editorInstance = editorInstance;
-                                }}
-                            />
-                        )
+                        <MonacoEditor
+                            options={{
+                                value: editor.value,
+                                language: editor.mode || 'sql',
+                                automaticLayout: true,
+                            }}
+                            editorInstanceRef={(editorInstance) => {
+                                // This assignment will trigger moleculeCtx update, and subNodes update
+                                group.editorInstance = editorInstance;
+                            }}
+                        />
+                    )
                 }
             </div>
         </div>

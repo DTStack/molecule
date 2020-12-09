@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { prefixClaName, classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
+import {
+    prefixClaName,
+    classNames,
+    getBEMElement,
+    getBEMModifier,
+} from 'mo/common/className';
 
 export interface IActionBarItem<T = any> {
     id: string;
@@ -19,7 +24,10 @@ export interface IActionBar<T = any> {
 }
 
 const defaultActionBarClassName = prefixClaName('action-bar');
-const containerClassName = getBEMElement(defaultActionBarClassName, 'container');
+const containerClassName = getBEMElement(
+    defaultActionBarClassName,
+    'container'
+);
 const itemClassName = getBEMElement(defaultActionBarClassName, 'item');
 const itemDisabledClassName = getBEMModifier(itemClassName, 'disabled');
 const labelClassName = getBEMElement(defaultActionBarClassName, 'label');
@@ -62,9 +70,7 @@ export default function ActionBar<T = any>(props: IActionBar<T>) {
 
     return (
         <div className={claNames} {...custom}>
-            <ul className={containerClassName}>
-                {items}
-            </ul>
+            <ul className={containerClassName}>{items}</ul>
         </div>
     );
 }

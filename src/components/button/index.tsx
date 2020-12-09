@@ -17,7 +17,8 @@ const largeButtonClassName = getBEMModifier(defaultButtonClassName, 'large');
 export function Button(props: React.PropsWithChildren<IButton>) {
     const { className, children, size = 'normal', ...custom } = props;
 
-    const sizeClassName = size === 'large' ? largeButtonClassName : normalButtonClassName;
+    const sizeClassName =
+        size === 'large' ? largeButtonClassName : normalButtonClassName;
 
     const claNames = classNames(
         defaultButtonClassName,

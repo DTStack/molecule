@@ -206,11 +206,11 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                     updateFile &&
                                         updateFile(item, e.target.value, index);
                                 }}
-                                onChange={(e) => { }}
+                                onChange={(e) => {}}
                             />
                         ) : (
-                                name
-                            )
+                            name
+                        )
                     }
                     key={id}
                     icon={modify ? '' : <Icon type={icon} />}

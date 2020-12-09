@@ -1,7 +1,12 @@
 import './style.scss';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { prefixClaName, classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
+import {
+    prefixClaName,
+    classNames,
+    getBEMElement,
+    getBEMModifier,
+} from 'mo/common/className';
 import {
     getRelativePosition,
     select,

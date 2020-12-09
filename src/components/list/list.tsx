@@ -1,9 +1,8 @@
-import './style.scss';
 import * as React from 'react';
-import { prefixClaName, classNames } from 'mo/common/className';
+import { prefixClaName, classNames, getBEMModifier } from 'mo/common/className';
 import { ComponentProps } from 'react';
-import { IItem } from './item';
 import { cloneReactChildren } from 'mo/react';
+import { IItem } from './item';
 
 export interface IList<T = any> extends ComponentProps<any> {
     /**
@@ -17,6 +16,10 @@ export interface IList<T = any> extends ComponentProps<any> {
     onClick?(event: React.MouseEvent, item?: IItem): void;
 }
 
+export const defaultListClassName = prefixClaName('list');
+export const verticalClassName = getBEMModifier(defaultListClassName, 'vertical');
+export const horizontalClassName = prefixClaName(defaultListClassName, 'horizontal');
+
 export function List<T = any>(props: React.PropsWithChildren<IList<T>>) {
     const {
         children,
@@ -26,7 +29,8 @@ export function List<T = any>(props: React.PropsWithChildren<IList<T>>) {
         mode = 'vertical',
         ...others
     } = props;
-    const claNames = classNames(prefixClaName('list'), className, mode);
+    const modeClassName = mode === 'horizontal' ? horizontalClassName : verticalClassName;
+    const claNames = classNames(defaultListClassName, className, modeClassName);
     return (
         <ul {...others} className={claNames}>
             {cloneReactChildren<IList>(children, { active, onClick })}

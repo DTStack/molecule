@@ -1,12 +1,17 @@
 import * as React from 'react';
-import { classNames } from 'mo/common/className';
-import { IList } from './list';
+import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
+import { defaultListClassName, IList } from './list';
 
 export interface IItem<T = any> extends IList {
     icon?: string;
     disabled?: boolean;
     data?: T;
 }
+
+const itemClassName = getBEMElement(defaultListClassName, 'item');
+const labelClassName = getBEMElement(defaultListClassName, 'label');
+const itemActiveClassName = getBEMModifier(itemClassName, 'active');
+const itemDisabledClassName = getBEMModifier(itemClassName, 'disabled');
 
 export function Item(props: React.PropsWithChildren<IItem>) {
     const {
@@ -24,14 +29,14 @@ export function Item(props: React.PropsWithChildren<IItem>) {
         }
     };
     const claNames = classNames(
-        'list-item',
+        itemClassName,
         className,
-        disabled,
-        active === id ? 'active' : ''
+        disabled ? itemDisabledClassName : '',
+        active === id ? itemActiveClassName : ''
     );
     return (
         <li className={claNames} key={`${id}`} {...(others as any)}>
-            <a className={'item-container'} onClick={click}>
+            <a className={labelClassName} onClick={click}>
                 {children}
             </a>
         </li>

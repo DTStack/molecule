@@ -206,12 +206,12 @@
 }
 
 // =============== List =============== //
-#{prefix($list)} {
-    .list-item {
+#{$list} {
+    &__item {
         background-color: #252526;
         color: #bbb;
 
-        &.active {
+        &--active {
             background-color: #316ac5;
         }
     }

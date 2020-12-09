@@ -1,6 +1,5 @@
-import './style.scss';
 import * as React from 'react';
-import { prefixClaName, classNames } from 'mo/common/className';
+import { prefixClaName, classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
 
 export interface IActionBarItem<T = any> {
     id: string;
@@ -19,7 +18,11 @@ export interface IActionBar<T = any> {
     onClick?(event: React.MouseEvent, item: IActionBarItem): void;
 }
 
-const rootClassName = 'action-bar';
+const defaultActionBarClassName = prefixClaName('action-bar');
+const containerClassName = getBEMElement(defaultActionBarClassName, 'container');
+const itemClassName = getBEMElement(defaultActionBarClassName, 'item');
+const itemDisabledClassName = getBEMModifier(itemClassName, 'disabled');
+const labelClassName = getBEMElement(defaultActionBarClassName, 'label');
 
 export function ActionBarItem(props: IActionBarItem) {
     const { id, title, name, onClick } = props;
@@ -28,16 +31,16 @@ export function ActionBarItem(props: IActionBarItem) {
             onClick(e, props);
         }
     };
-    const disabled = props.disabled ? 'disabled' : null;
+    const disabled = props.disabled ? itemDisabledClassName : null;
     const claNames = classNames(
-        'action-label',
+        labelClassName,
         'codicon',
         props.iconName,
         disabled
     );
     return (
         <li
-            className={classNames('action-item', disabled)}
+            className={classNames(itemClassName, disabled)}
             onClick={click}
             key={`${id}`}
         >
@@ -49,17 +52,17 @@ export function ActionBarItem(props: IActionBarItem) {
 }
 
 export default function ActionBar<T = any>(props: IActionBar<T>) {
-    const { data = [], onClick, className, ...others } = props;
+    const { data = [], onClick, className, ...custom } = props;
 
-    const claNames = classNames(prefixClaName(rootClassName), className);
+    const claNames = classNames(defaultActionBarClassName, className);
 
     const items = data.map((item: IActionBarItem<T>) => (
         <ActionBarItem key={item.id} onClick={onClick} {...item} />
     ));
 
     return (
-        <div className={claNames} {...others}>
-            <ul className={prefixClaName('container', rootClassName)}>
+        <div className={claNames} {...custom}>
+            <ul className={containerClassName}>
                 {items}
             </ul>
         </div>

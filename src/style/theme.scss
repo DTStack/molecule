@@ -26,7 +26,7 @@
 @import 'mo/components/input/style';
 @import 'mo/components/select/style';
 @import 'mo/components/checkbox/style';
-@import 'mo/components/dialog';
+@import 'mo/components/dialog/style';
 
 // =============== Workbench =============== //
 #{prefix($workbench)} {
@@ -271,12 +271,11 @@
     }
 }
 
-#{$modal} {
+#{prefix($modal)} {
     color: #fff;
 
     &-mask {
         background-color: rgba(0, 0, 0, 0.45);
-
     }
 
     &-content {
@@ -291,19 +290,20 @@
     }
 
     &-close {
+        background: 0 0;
+        border: 0;
         color: #fff;
-
     }
 }
 
-#{$confirm} {
-    &__indicator { 
+#{prefix($confirm)} {
+    &__indicator {
         .codicon-warning {
             color: rgb(204, 167, 0);
         }
     }
-    
-    &__message { 
+
+    &__message {
         &--detail {
             color: rgb(187, 187, 187);
         }

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
-import Modal from 'mo/components/Modal';
+import Modal from 'mo/components/dialog';
 import { Button } from 'mo/components/button';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
 const confirm = Modal.confirm;
-const stories = storiesOf('Dialog', module);
+const stories = storiesOf('dialog', module);
 stories.addDecorator(withKnobs);
 
 stories.add('Basic Usage', () => {
@@ -26,18 +26,17 @@ stories.add('Basic Usage', () => {
 
     function showConfirm() {
         confirm({
-          title: 'Are you sure you want to permanently delete ?',
-          content: 'This action is irreversible!',
-          onOk() {
-            console.log('OK');
-          },
-          onCancel() {
-            console.log('Cancel');
-          },
+            title: 'Are you sure you want to permanently delete ?',
+            content: 'This action is irreversible!',
+            onOk() {
+                console.log('OK');
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
         });
-      }
+    }
 
-      
     return (
         <>
             <h2>简述</h2>

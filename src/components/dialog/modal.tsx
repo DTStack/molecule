@@ -2,7 +2,12 @@ import * as React from 'react';
 import Dialog from 'rc-dialog';
 import { IDialogPropTypes } from 'rc-dialog/lib/IDialogPropTypes';
 
-import { classNames, prefixClaName, getBEMElement ,getBEMModifier} from 'mo/common/className';
+import {
+    classNames,
+    prefixClaName,
+    getBEMElement,
+    getBEMModifier,
+} from 'mo/common/className';
 import { Icon } from 'mo/components/icon';
 import { Button, IButton } from 'mo/components/button';
 
@@ -25,7 +30,6 @@ if (typeof window !== 'undefined' && window.document?.documentElement) {
 export const destroyFns: Array<() => void> = [];
 
 export const modalClassName = prefixClaName('modal');
-
 
 export interface IModalProps extends IDialogPropTypes {
     onOk?: (e: React.MouseEvent<HTMLElement>) => void;
@@ -82,23 +86,25 @@ const Modal: React.FC<IModalProps> = (props) => {
     const closeDescriptorClassName = getBEMModifier(`${closeClassName}`, 'x');
 
     const closeIconToRender = (
-        <span className={closeDescriptorClassName}><Icon type="close"/></span>
+        <span className={closeDescriptorClassName}>
+            <Icon type="close" />
+        </span>
     );
 
     const renderFooter = () => {
-        const { footer, cancelButtonProps, okButtonProps } = props
-        if (footer !== undefined) return footer
+        const { footer, cancelButtonProps, okButtonProps } = props;
+        if (footer !== undefined) return footer;
         return (
             <>
-                <Button onClick={handleCancel} {...cancelButtonProps }>
+                <Button onClick={handleCancel} {...cancelButtonProps}>
                     {cancelText}
                 </Button>
-                <Button onClick={handleOk} {...okButtonProps }>
+                <Button onClick={handleOk} {...okButtonProps}>
                     {okText}
                 </Button>
             </>
-        )
-    }
+        );
+    };
     return (
         <Dialog
             {...restProps}

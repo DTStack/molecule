@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { classNames, getBEMElement, getBEMModifier, prefixClaName } from 'mo/common/className';
+import {
+    classNames,
+    getBEMElement,
+    getBEMModifier,
+    prefixClaName,
+} from 'mo/common/className';
 import Dialog, { IModalFuncProps } from './modal';
 import ActionButton from './actionButton';
 
@@ -42,28 +47,31 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         maskTransitionName = 'fade',
     } = props;
 
-    const confirmDescriperClassName = getBEMElement(confirmClassName, `${props.type}`)
+    const confirmDescriperClassName = getBEMElement(
+        confirmClassName,
+        `${props.type}`
+    );
     const containerClassName = getBEMElement(confirmClassName, 'container');
     const indicatorClassName = getBEMElement(confirmClassName, 'indicator');
-    const contentClassName =  getBEMElement(confirmClassName, 'content');
-    const messageClassName =  getBEMElement(confirmClassName, 'message');
+    const contentClassName = getBEMElement(confirmClassName, 'content');
+    const messageClassName = getBEMElement(confirmClassName, 'message');
     const btnsClassName = getBEMElement(confirmClassName, 'btns');
 
     const classString = classNames(
         confirmClassName,
         confirmDescriperClassName,
-        className,
+        className
     );
 
     const cancelButton = okCancel && (
         <ActionButton
-          actionFn={onCancel}
-          closeModal={close}
-          buttonProps={cancelButtonProps}
+            actionFn={onCancel}
+            closeModal={close}
+            buttonProps={cancelButtonProps}
         >
-          {cancelText}
+            {cancelText}
         </ActionButton>
-      );
+    );
 
     return (
         <Dialog
@@ -96,31 +104,42 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                     <div className={indicatorClassName}> {icon} </div>
                     <div className={messageClassName}>
                         {props.title !== undefined && (
-                            <span className={getBEMModifier(messageClassName, 'text')}>
+                            <span
+                                className={getBEMModifier(
+                                    messageClassName,
+                                    'text'
+                                )}
+                            >
                                 {props.title}
                             </span>
                         )}
-                        <div className={`${getBEMModifier(messageClassName, 'detail')}`}>
+                        <div
+                            className={`${getBEMModifier(
+                                messageClassName,
+                                'detail'
+                            )}`}
+                        >
                             {props.content}
                         </div>
                     </div>
                 </div>
                 <div className={btnsClassName}>
-                {
-                    actions === undefined ? (
+                    {actions === undefined ? (
                         <>
                             {cancelButton}
-                            {<ActionButton
-                                actionFn={onOk}
-                                closeModal={close}
-                                buttonProps={okButtonProps}
-                            >
-                                {okText}
-                            </ActionButton>
-                        }
+                            {
+                                <ActionButton
+                                    actionFn={onOk}
+                                    closeModal={close}
+                                    buttonProps={okButtonProps}
+                                >
+                                    {okText}
+                                </ActionButton>
+                            }
                         </>
-                    ) : actions
-                }
+                    ) : (
+                        actions
+                    )}
                 </div>
             </div>
         </Dialog>

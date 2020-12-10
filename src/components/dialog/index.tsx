@@ -1,6 +1,10 @@
-import './style.scss'
+import './style.scss';
 import OriginModal, { IModalFuncProps, destroyFns } from './modal';
-import confirm, { withWarn, withConfirm, ModalStaticFunctions } from './confirm';
+import confirm, {
+    withWarn,
+    withConfirm,
+    ModalStaticFunctions,
+} from './confirm';
 
 function modalWarn(props: IModalFuncProps) {
     return confirm(withWarn(props));
@@ -18,7 +22,7 @@ Modal.warn = modalWarn;
 Modal.confirm = function confirmFn(props: IModalFuncProps) {
     return confirm(withConfirm(props));
 };
-  
+
 Modal.destroyAll = function destroyAllFn() {
     while (destroyFns.length) {
         const close = destroyFns.pop();

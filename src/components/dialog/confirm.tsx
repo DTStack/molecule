@@ -52,8 +52,8 @@ export default function confirm(config: IModalFuncProps) {
                     okText={okText}
                     cancelText={cancelText}
                 />,
-                div,
-            )
+                div
+            );
         });
     }
 
@@ -79,16 +79,16 @@ export function withWarn(props: IModalFuncProps): IModalFuncProps {
     return {
         type: 'warning',
         okCancel: false,
-        icon: <Icon type="warning"/>,
+        icon: <Icon type="warning" />,
         ...props,
     };
 }
 
 export function withConfirm(props: IModalFuncProps): IModalFuncProps {
     return {
-      type: 'confirm',
-      okCancel: true,
-      icon: <Icon type="warning"/>,
-      ...props,
+        type: 'confirm',
+        okCancel: true,
+        icon: <Icon type="warning" />,
+        ...props,
     };
 }

@@ -93,7 +93,6 @@ $confirm: 'confirm';
             width: 40px;
         }
     }
-
 }
 
 #{prefix($confirm)} {
@@ -101,7 +100,7 @@ $confirm: 'confirm';
         display: flex;
         flex-flow: column wrap;
         font-size: 14px;
-        padding: 25px 10px 10px 10;
+        padding: 25px 10px 10px;
     }
 
     &__indicator {

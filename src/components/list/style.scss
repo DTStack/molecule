@@ -1,40 +1,43 @@
 @import 'mo/style/common';
-$list: 'list';
 
-#{prefix($list)} {
+#{$list} {
     display: flex;
     height: 100%;
     margin: 0 auto;
     padding: 0;
     width: 100%;
 
-    .list-item {
+    &--vertical {
+        flex-direction: column;
+
+        #{$list}__item {
+            height: 50px;
+            width: 100%;
+        }
+    }
+
+    &--horizontal {
+        flex-direction: row;
+    }
+
+    &__item {
         align-items: center;
         cursor: pointer;
         display: flex;
         justify-content: left;
         list-style: none;
         position: relative;
-    }
 
-    .list-item:hover {
-        opacity: 0.8;
-    }
+        &:hover {
+            opacity: 0.8;
+        }
 
-    &.vertical {
-        flex-direction: column;
-
-        .list-item {
-            height: 50px;
-            width: 100%;
+        &--disabled {
+            cursor: not-allowed;
         }
     }
 
-    &.horizontal {
-        flex-direction: row;
-    }
-
-    .item-container {
+    &__label {
         align-items: center;
         background-position: center center;
         background-repeat: no-repeat;

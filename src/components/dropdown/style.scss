@@ -1,7 +1,6 @@
 @import 'mo/style/common';
-$dropDown: 'drop-down';
 
-#{prefix($dropDown)} {
+#{$dropDown} {
     align-items: center;
     display: flex;
     height: 100%;

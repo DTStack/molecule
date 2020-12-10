@@ -1,6 +1,6 @@
 import './style.scss';
 import * as React from 'react';
-import { classNames, prefixClaName } from 'mo/common/className';
+import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 import { useContextView } from '../contextview';
 import {
     triggerEvent,
@@ -15,7 +15,7 @@ export interface IDropDown extends HTMLElementProps {
     placement?: PlacementType;
 }
 
-export const defaultDropDownClassName = 'drop-down';
+const defaultDropDownClassName = prefixClaName('drop-down');
 
 export function DropDown(props: React.PropsWithChildren<IDropDown>) {
     const {
@@ -31,8 +31,8 @@ export function DropDown(props: React.PropsWithChildren<IDropDown>) {
     });
 
     const claNames = classNames(
-        prefixClaName(defaultDropDownClassName),
-        placement,
+        defaultDropDownClassName,
+        getBEMModifier(defaultDropDownClassName, placement),
         className
     );
     const events = {

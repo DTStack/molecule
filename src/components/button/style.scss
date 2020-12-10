@@ -1,7 +1,6 @@
 @import 'mo/style/common';
-$btn: 'btn';
 
-#{prefix($btn)} {
+#{$btn} {
     align-items: center;
     border: 0;
     box-sizing: border-box;
@@ -13,11 +12,11 @@ $btn: 'btn';
     padding: 4px 10px;
     text-align: center;
 
-    &.normal {
+    &--normal {
         padding: 4px 15px;
     }
 
-    &.large {
+    &--large {
         font-size: 16px;
         padding: 8px 15px;
     }

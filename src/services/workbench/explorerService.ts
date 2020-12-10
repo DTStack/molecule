@@ -53,7 +53,7 @@ export class ExplorerService
      */
     public newFileItem(fileData: ITreeNodeItem, type: FileType) {
         const original = this.state.treeData;
-        const loop = (data: ITreeNodeItem) => {
+        const loop = (data: ITreeNodeItem[]) => {
             for (const item of data) {
                 if (item.id === fileData.id) {
                     if (!item.children) item.children = [];

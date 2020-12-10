@@ -1,6 +1,6 @@
 import './style.scss';
 import * as React from 'react';
-import { classNames, prefixClaName } from 'mo/common/className';
+import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 
 type BtnSizeType = 'normal' | 'large';
 export interface IButton extends React.ComponentProps<'a'> {
@@ -9,21 +9,29 @@ export interface IButton extends React.ComponentProps<'a'> {
     onClick?(event: React.MouseEvent): void;
 }
 
-export const defaultButtonClassName = 'btn';
+const defaultButtonClassName = prefixClaName('btn');
+const normalButtonClassName = getBEMModifier(defaultButtonClassName, 'normal');
+const largeButtonClassName = getBEMModifier(defaultButtonClassName, 'large');
 
 export function Button(props: React.PropsWithChildren<IButton>) {
-    const { className, children, size = 'normal', onClick, ...others } = props;
+    const { className, children, size = 'normal', onClick, ...custom } = props;
+
     const disabled = props.disabled ? 'disabled' : null;
     const click = (e: React.MouseEvent) => onClick?.(e);
+
+    const sizeClassName =
+        size === 'large' ? largeButtonClassName : normalButtonClassName;
+        
+
     const claNames = classNames(
-        prefixClaName(defaultButtonClassName),
-        size,
+        defaultButtonClassName,
+        sizeClassName,
         className,
         disabled
     );
 
     return (
-        <a className={claNames} {...others} onClick={click}>
+        <a className={claNames} {...custom} onClick={click}>
             {children}
         </a>
     );

@@ -1,7 +1,6 @@
 @import 'mo/style/common';
-$Input: 'input';
 
-#{prefix($Input)} {
+#{$input} {
     display: inline-block;
     font-size: 13px;
     min-width: 0;

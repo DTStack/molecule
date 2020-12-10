@@ -8,11 +8,11 @@ export interface IToolBar<T = any> extends IActionBar {}
 const rootClassName = 'tool-bar';
 
 export default function ToolBar<T = any>(props: IToolBar<T>) {
-    const { className, ...others } = props;
+    const { className, ...custom } = props;
 
     return (
         <div className={classNames(prefixClaName(rootClassName), className)}>
-            <ActionBar {...others} />
+            <ActionBar {...custom} />
         </div>
     );
 }

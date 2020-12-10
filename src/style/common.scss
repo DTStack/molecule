@@ -1,10 +1,38 @@
-// TODO Refactor the class name to camel style
 $prefix: 'mo';
 
-// Component parts below
 @function prefix($name) {
     @return '.' + $prefix + '-' + $name;
 }
+
+// ============= The Workbench parts =============
+$actionBar: prefix('action-bar');
+$btn: prefix('btn');
+$checkbox: prefix('checkbox');
+$collapse: prefix('collapse');
+$name: prefix('context-view');
+$dropDown: prefix('drop-down');
+$input: prefix('input');
+$list: prefix('list');
+$menu: prefix('menu');
+$subMenu: prefix('sub-menu');
+$scrollbar: 'scrollbar';
+$select: prefix('select');
+$tabSwitcher: 'tab-switcher';
+$toolBar: prefix('tool-bar');
+$tree: prefix('tree');
+$modal: prefix('modal');
+$confirm: prefix('confirm');
+
+// ============= The Workbench core component =============
+$activityBar: prefix('activityBar');
+$editor: prefix('editor');
+$menuBar: prefix('menuBar');
+$panel: prefix('panel');
+$settings: prefix('settings');
+$sidebar: prefix('sidebar');
+$statusBar: prefix('statusBar');
+$workbench: prefix('workbench');
+$mainBench: prefix('mainBench');
 
 // The Naming of BEM Element
 @function bem-ele($block, $element) {
@@ -14,28 +42,4 @@ $prefix: 'mo';
 // The Naming of BEM Modifier
 @function bem-mod($blockOrElement, $modifier) {
     @return $blockOrElement + '--' + $modifier;
-}
-
-.#{$prefix} {
-    bottom: 0;
-    box-sizing: border-box;
-    font-size: 13px;
-    height: 100%;
-    left: 0;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    user-select: none;
-    width: 100%;
-}
-
-.mac {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.center {
-    text-align: center;
 }

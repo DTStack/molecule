@@ -11,7 +11,7 @@
         "check-types": "tsc",
         "build": "tsc --project tsconfig.build.json",
         "eslint": "eslint ./src/**/*.ts ./src/**/*.tsx",
-        "stylelint": "stylelint ./src/**/*.scss",
+        "stylelint": "stylelint **/*.{css,scss,sass}",
         "prettier": "prettier --ignore-unknown .",
         "release": "standard-version",
         "web": "webpack serve --env prod --config ./build/web.js"

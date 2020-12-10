@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { HTMLElementType } from 'mo/common/dom';
 import { useContextView } from 'mo/components/contextview';
-import './style.scss';
 
 export interface IContextMenu {
     anchor: HTMLElementType;

@@ -73,8 +73,8 @@ const Modal: React.FC<IModalProps> = (props) => {
         centered,
         getContainer,
         closeIcon,
-        cancelText = 'Ok',
-        okText = 'Save',
+        cancelText = 'cancel',
+        okText = 'ok',
         ...restProps
     } = props;
 

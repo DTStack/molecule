@@ -30,9 +30,9 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         centered,
         getContainer,
         maskStyle,
-        okText = 'Ok',
+        okText = 'delete',
         okButtonProps,
-        cancelText = 'Cancel',
+        cancelText = 'cancel',
         cancelButtonProps,
         bodyStyle,
         closable = true,
@@ -78,7 +78,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
             prefixCls={confirmClassName}
             className={classString}
             wrapClassName={classNames({
-                [getBEMModifier(confirmClassName, 'centered')]: !!props.centered,
+                [getBEMModifier(
+                    confirmClassName,
+                    'centered'
+                )]: !!props.centered,
             })}
             onCancel={() => close({ triggerCancel: true })}
             visible={visible}

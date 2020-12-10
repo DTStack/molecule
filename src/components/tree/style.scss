@@ -1,5 +1,4 @@
 @import 'mo/style/common';
-$tree: prefix('tree');
 
 #{$tree} {
     font-size: 13px;
@@ -19,7 +18,8 @@ $tree: prefix('tree');
         padding: 0 0 0 8px;
         white-space: nowrap;
     }
-
+    
+    /* stylelint-disable */
     .rc-tree .rc-tree-treenode .draggable {
         /* Required to make elements draggable in old WebKit */
         -khtml-user-drag: element;

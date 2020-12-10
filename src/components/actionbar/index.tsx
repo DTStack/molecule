@@ -1,3 +1,4 @@
+import './style.scss';
 import * as React from 'react';
 import {
     prefixClaName,

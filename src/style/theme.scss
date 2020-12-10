@@ -1,31 +1,5 @@
 @import 'mo/style/common';
 
-// Workbench
-@import 'mo/workbench/style';
-@import 'mo/workbench/editor/style';
-@import 'mo/workbench/menuBar/style';
-@import 'mo/workbench/panel/style';
-@import 'mo/workbench/settings/style';
-@import 'mo/workbench/sidebar/style';
-@import 'mo/workbench/statusBar/style';
-@import 'mo/workbench/activityBar/style';
-
-// Workbench parts
-@import 'mo/components/actionbar/style';
-@import 'mo/components/menu/style';
-@import 'mo/components/collapse/style';
-@import 'mo/components/contextView/style';
-@import 'mo/components/dropdown/style';
-@import 'mo/components/list/style';
-@import 'mo/components/menu/style';
-@import 'mo/components/toolbar/style';
-@import 'mo/components/tree/style';
-@import 'mo/components/tabs/style';
-@import 'mo/components/button/style';
-@import 'mo/components/input/style';
-@import 'mo/components/select/style';
-@import 'mo/components/checkbox/style';
-
 // =============== Workbench =============== //
 #{$workbench} {
     background-color: #252526;
@@ -219,7 +193,7 @@
     }
 }
 // =============== Input =============== //
-#{prefix($Input)} {
+#{prefix($input)} {
     background-color: #1e1e1e;
     border: 1px solid transparent;
     color: rgb(204, 204, 204);

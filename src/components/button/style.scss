@@ -8,18 +8,18 @@ $btn: 'btn';
     cursor: pointer;
     display: flex;
     justify-content: center;
-    margin: 10px;
+    margin: 4px 5px;
     outline-offset: 2px;
+    padding: 4px 10px;
     text-align: center;
-    width: 100%;
 
     &.normal {
-        padding: 4px;
+        padding: 4px 15px;
     }
 
     &.large {
         font-size: 16px;
-        padding: 8px;
+        padding: 8px 15px;
     }
 
     &.disabled {

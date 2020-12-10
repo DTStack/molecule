@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Icon } from 'mo/components/icon';
-import { IModalFuncProps, destroyFns } from './Modal';
+import { prefixClaName } from 'mo/common/className';
+import { IModalFuncProps, destroyFns } from './modal';
 import ConfirmDialog from './ConfirmDialog';
 
 export type ModalFunc = (
@@ -44,16 +44,18 @@ export default function confirm(config: IModalFuncProps) {
         }
     }
 
-    function render({ okText, cancelText, prefixCls, ...props }: any) {
-        ReactDOM.render(
-            <ConfirmDialog
-                {...props}
-                prefixCls={prefixCls}
-                okText={okText}
-                cancelText={cancelText}
-            />,
-            div
-        );
+    function render({ okText, cancelText, ...props }: any) {
+        setTimeout(() => {
+            ReactDOM.render(
+                <ConfirmDialog
+                    {...props}
+                    prefixCls={prefixClaName('modal')}
+                    okText={okText}
+                    cancelText={cancelText}
+                />,
+                div,
+            )
+        });
     }
 
     function close(...args: any[]) {
@@ -77,8 +79,15 @@ export default function confirm(config: IModalFuncProps) {
 export function withWarn(props: IModalFuncProps): IModalFuncProps {
     return {
         type: 'warning',
-        icon: <Icon type="warning" />,
         okCancel: false,
         ...props,
+    };
+}
+
+export function withConfirm(props: IModalFuncProps): IModalFuncProps {
+    return {
+      type: 'confirm',
+      okCancel: true,
+      ...props,
     };
 }

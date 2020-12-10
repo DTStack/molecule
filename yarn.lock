@@ -10588,17 +10588,16 @@ rc-collapse@^2.0.1:
     rc-util "^5.2.1"
     shallowequal "^1.1.0"
 
-rc-dialog@^8.4.5:
-  version "8.4.5"
-  resolved "https://registry.npm.taobao.org/rc-dialog/download/rc-dialog-8.4.5.tgz?cache=0&sync_timestamp=1607323383644&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-dialog%2Fdownload%2Frc-dialog-8.4.5.tgz#6791de01578dfdba8ff6959ddd2ed18bf322d052"
-  integrity sha1-Z5HeAVeN/bqP9pWd3S7Ri/Mi0FI=
+rc-dialog@8.2.1:
+  version "8.2.1"
+  resolved "https://registry.npm.taobao.org/rc-dialog/download/rc-dialog-8.2.1.tgz?cache=0&sync_timestamp=1607323383644&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-dialog%2Fdownload%2Frc-dialog-8.2.1.tgz#342adb6f308013b989258b16a3cdd500ffb35e31"
+  integrity sha1-NCrbbzCAE7mJJYsWo83VAP+zXjE=
   dependencies:
     "@babel/runtime" "^7.10.1"
-    classnames "^2.2.6"
-    rc-motion "^2.3.0"
+    rc-animate "3.x"
     rc-util "^5.0.1"
 
-rc-motion@^2.0.1, rc-motion@^2.3.0:
+rc-motion@^2.0.1:
   version "2.4.1"
   resolved "http://registry.npm.dtstack.com/rc-motion/-/rc-motion-2.4.1.tgz#323f47c8635e6b2bc0cba2dfad25fc415b58e1dc"
   integrity sha1-Mj9HyGNeayvAy6LfrSX8QVtY4dw=
@@ -10617,10 +10616,10 @@ rc-resize-observer@^0.2.3:
     rc-util "^5.0.0"
     resize-observer-polyfill "^1.5.1"
 
-rc-textarea@^0.3.1:
-  version "0.3.1"
-  resolved "http://registry.npm.dtstack.com/rc-textarea/-/rc-textarea-0.3.1.tgz#e81e1ef6f0e29729f9f80bb266cf6769dd7ab69a"
-  integrity sha1-6B4e9vDilyn5+AuyZs9nad16tpo=
+rc-textarea@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npm.taobao.org/rc-textarea/download/rc-textarea-0.3.0.tgz#9860ef797e00717d8227d1ef4ee7895dd9358ddf"
+  integrity sha1-mGDveX4AcX2CJ9HvTueJXdk1jd8=
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.1"

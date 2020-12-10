@@ -1,16 +1,17 @@
 import * as React from 'react';
-import classNames from 'classnames';
-import Dialog, { IModalFuncProps } from './Modal';
-import ActionButton from './ActionButton';
+import { classNames, prefixClaName } from 'mo/common/className';
+import Dialog, { IModalFuncProps } from './modal';
+import ActionButton from './actionButton';
 
 interface ConfirmDialogProps extends IModalFuncProps {
     afterClose?: () => void;
     close: (...args: any[]) => void;
-    autoFocusButton?: null | 'ok' | 'cancel';
+    actions?: any;
 }
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
     const {
+        actions,
         icon,
         onCancel,
         onOk,
@@ -22,48 +23,41 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         centered,
         getContainer,
         maskStyle,
-        okText,
+        okText = 'Save',
         okButtonProps,
-        cancelText,
+        cancelText = 'Cancel',
         cancelButtonProps,
         prefixCls,
         bodyStyle,
         closable = false,
         closeIcon,
-        modalRender,
-        focusTriggerAfterClose,
+        okCancel,
     } = props;
     const contentPrefixCls = `${prefixCls}-confirm`;
-    // 默认为 true，保持向下兼容
-    const okCancel = 'okCancel' in props ? props.okCancel! : true;
     const width = props.width || 416;
     const style = props.style || {};
     const mask = props.mask === undefined ? true : props.mask;
     // 默认为 false，保持旧版默认行为
     const maskClosable =
         props.maskClosable === undefined ? false : props.maskClosable;
-    const autoFocusButton =
-        props.autoFocusButton === null ? false : props.autoFocusButton || 'ok';
     const transitionName = props.transitionName || 'zoom';
     const maskTransitionName = props.maskTransitionName || 'fade';
 
     const classString = classNames(
         contentPrefixCls,
         `${contentPrefixCls}-${props.type}`,
-        props.className
+        props.className,
     );
 
     const cancelButton = okCancel && (
         <ActionButton
-            actionFn={onCancel}
-            closeModal={close}
-            autoFocus={autoFocusButton === 'cancel'}
-            buttonProps={cancelButtonProps}
+          actionFn={onCancel}
+          closeModal={close}
+          buttonProps={cancelButtonProps}
         >
-            {cancelText}
+          {cancelText}
         </ActionButton>
-    );
-
+      );
     return (
         <Dialog
             prefixCls={prefixCls}
@@ -89,31 +83,35 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
             getContainer={getContainer}
             closable={closable}
             closeIcon={closeIcon}
-            modalRender={modalRender}
-            focusTriggerAfterClose={focusTriggerAfterClose}
         >
-            <div className={`${contentPrefixCls}-body-wrapper`}>
-                <div className={`${contentPrefixCls}-body`} style={bodyStyle}>
-                    {icon}
-                    {props.title === undefined ? null : (
-                        <span className={`${contentPrefixCls}-title`}>
+            <div className={`${contentPrefixCls}-body`} style={bodyStyle}>
+                <div className={`${contentPrefixCls}__icon`}> {icon} </div>
+                <div className={`${contentPrefixCls}__message`}>
+                    {props.title !== undefined && (
+                        <span className={`${contentPrefixCls}__message--text`}>
                             {props.title}
                         </span>
                     )}
-                    <div className={`${contentPrefixCls}-content`}>
+                    <div className={`${contentPrefixCls}__message--detail`}>
                         {props.content}
                     </div>
                 </div>
-                <div className={`${contentPrefixCls}-btns`}>
-                    {cancelButton}
-                    <ActionButton
-                        actionFn={onOk}
-                        closeModal={close}
-                        autoFocus={autoFocusButton === 'ok'}
-                        buttonProps={okButtonProps}
-                    >
-                        {okText}
-                    </ActionButton>
+                <div className={`${contentPrefixCls}__btns`}>
+                {
+                    actions === undefined ? (
+                        <>
+                            {cancelButton}
+                            {<ActionButton
+                                actionFn={onOk}
+                                closeModal={close}
+                                buttonProps={okButtonProps}
+                            >
+                                {okText}
+                            </ActionButton>
+                        }
+                        </>
+                    ) : actions
+                }
                 </div>
             </div>
         </Dialog>

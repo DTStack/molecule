@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { useState } from 'react';
-import Dialog from 'mo/components/dialog';
+import Modal from 'mo/components/dialog';
 import { Button } from 'mo/components/button';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
+
+const confirm = Modal.confirm;
 const stories = storiesOf('Dialog', module);
 stories.addDecorator(withKnobs);
 
@@ -22,6 +24,20 @@ stories.add('Basic Usage', () => {
         setIsModalVisible(false);
     };
 
+    function showConfirm() {
+        confirm({
+          title: 'Are you sure you want to permanently delete ?',
+          content: 'Some descriptions',
+          onOk() {
+            console.log('OK');
+          },
+          onCancel() {
+            console.log('Cancel');
+          },
+        });
+      }
+
+      
     return (
         <>
             <h2>简述</h2>
@@ -32,11 +48,13 @@ stories.add('Basic Usage', () => {
             <div>
                 <h3>使用示例 1 - 基本使用</h3>
                 <div>
+                    <div id="container" style={{ padding: 24 }}/>
                     <Button type="primary" onClick={showModal}>
                         Open Modal
                     </Button>
-                    <Dialog
-                        title="Basic Modal"
+                    <Modal
+                        width={520}
+                        title="Tweet us your feedback"
                         visible={isModalVisible}
                         onOk={handleOk}
                         onCancel={handleCancel}
@@ -44,7 +62,10 @@ stories.add('Basic Usage', () => {
                         <p>Some contents...</p>
                         <p>Some contents...</p>
                         <p>Some contents...</p>
-                    </Dialog>
+                    </Modal>
+                    <br/>
+                    <br/>
+                    <Button onClick={showConfirm}>Confirm</Button>
                 </div>
             </div>
         </>

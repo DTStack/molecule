@@ -2,8 +2,8 @@ import * as React from 'react';
 import Dialog from 'rc-dialog';
 import { IDialogPropTypes } from 'rc-dialog/lib/IDialogPropTypes';
 
-import { classNames, prefixClaName } from 'mo/common/className';
-
+import { classNames, prefixClaName, getBEMModifier } from 'mo/common/className';
+import { Icon } from 'mo/components/icon';
 import { Button, IButton } from 'mo/components/button';
 
 let mousePosition;
@@ -26,33 +26,28 @@ if (typeof window !== 'undefined' && window.document?.documentElement) {
 export const destroyFns: Array<() => void> = [];
 
 export interface IModalProps extends IDialogPropTypes {
-    /** 点击确定回调 */
     onOk?: (e: React.MouseEvent<HTMLElement>) => void;
-    /** 点击模态框右上角叉、取消按钮、Props.maskClosable 值为 true 时的遮罩层或键盘按下 Esc 时的回调 */
     onCancel?: (e: React.SyntheticEvent<Element, Event>) => void;
-    /** 垂直居中 */
     centered?: boolean;
-    /** 确认按钮文字 */
-    okText?: React.ReactNode;
-    /** 取消按钮文字 */
     cancelText?: React.ReactNode;
+    okText?: React.ReactNode;
     okButtonProps?: IButton;
     cancelButtonProps?: IButton;
+    okCancel?: boolean;
 }
 
 export interface IModalFuncProps extends IDialogPropTypes {
+    cancelText?: React.ReactNode;
+    okText?: React.ReactNode;
+    icon?: React.ReactNode;
     content?: React.ReactNode;
     onOk?: (...args: any[]) => any;
-    onCancel?: (...args: any[]) => any;
+    onCancel?: (...args: any[]) => void;
     okButtonProps?: IButton;
     cancelButtonProps?: IButton;
     centered?: boolean;
-    okText?: React.ReactNode;
-    cancelText?: React.ReactNode;
-    icon?: React.ReactNode;
     okCancel?: boolean;
     type?: string;
-    autoFocusButton?: null | 'ok' | 'cancel';
 }
 
 const Modal: React.FC<IModalProps> = (props) => {
@@ -65,21 +60,6 @@ const Modal: React.FC<IModalProps> = (props) => {
         const { onOk } = props;
         onOk?.(e);
     };
-
-    const renderFooter = () => {
-        const { okText, cancelText } = props;
-        return (
-            <>
-                <Button onClick={handleCancel} {...props.cancelButtonProps}>
-                    {cancelText}
-                </Button>
-                <Button onClick={handleOk} {...props.okButtonProps}>
-                    {okText}
-                </Button>
-            </>
-        );
-    };
-
     const {
         footer,
         visible,
@@ -87,41 +67,43 @@ const Modal: React.FC<IModalProps> = (props) => {
         centered,
         getContainer,
         closeIcon,
-        focusTriggerAfterClose = true,
+        cancelText = 'Cancel',
+        okText = 'Save',
         ...restProps
     } = props;
 
     const prefixCls = prefixClaName('modal');
-    const defaultFooter = renderFooter;
 
     const closeIconToRender = (
-        <span className={`${prefixCls}-close-x`}>{closeIcon}</span>
+        <span className={getBEMModifier(`${prefixCls}-close`, 'x')}><Icon type="close"/></span>
     );
 
     const wrapClassNameExtended = classNames(wrapClassName, {
-        [`${prefixCls}-centered`]: !!centered,
+        [getBEMModifier(`${prefixCls}`, 'centered')]: !!centered,
     });
+    console.log(props)
     return (
         <Dialog
             {...restProps}
             getContainer={getContainer}
             prefixCls={prefixCls}
             wrapClassName={wrapClassNameExtended}
-            footer={footer === undefined ? defaultFooter : footer}
+            footer={footer === undefined ? (
+                <>
+                    <Button onClick={handleCancel} {...props.cancelButtonProps}>
+                        {cancelText}
+                    </Button>
+                    <Button onClick={handleOk} {...props.okButtonProps}>
+                        {okText}
+                    </Button>
+                </>
+            ) : footer}
             visible={visible}
             mousePosition={mousePosition}
             onClose={handleCancel}
             closeIcon={closeIconToRender}
-            focusTriggerAfterClose={focusTriggerAfterClose}
         />
     );
-};
-
-Modal.defaultProps = {
-    width: 520,
-    transitionName: 'zoom',
-    maskTransitionName: 'fade',
-    visible: false,
 };
 
 export default Modal;

@@ -6,13 +6,15 @@ type BtnSizeType = 'normal' | 'large';
 export interface IButton extends React.ComponentProps<'a'> {
     disabled?: boolean;
     size?: BtnSizeType;
+    onClick?(event: React.MouseEvent): void;
 }
 
 export const defaultButtonClassName = 'btn';
 
 export function Button(props: React.PropsWithChildren<IButton>) {
-    const { className, children, size = 'normal', ...others } = props;
+    const { className, children, size = 'normal', onClick, ...others } = props;
     const disabled = props.disabled ? 'disabled' : null;
+    const click = (e: React.MouseEvent) => onClick?.(e);
     const claNames = classNames(
         prefixClaName(defaultButtonClassName),
         size,
@@ -21,7 +23,7 @@ export function Button(props: React.PropsWithChildren<IButton>) {
     );
 
     return (
-        <a className={claNames} {...others}>
+        <a className={claNames} {...others} onClick={click}>
             {children}
         </a>
     );

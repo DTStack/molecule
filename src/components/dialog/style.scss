@@ -52,16 +52,16 @@ $confirm: 'confirm';
         box-shadow: rgba(0, 0, 0, 0.31) 0 0 8px;
         color: #fff;
         font-size: 18px;
+        padding: 0 15px;
         pointer-events: auto;
         position: relative;
-        padding: 0px 15px;
     }
 
     &-header {
         background: inherit;
         color: #fff;
         font-size: 24px;
-        padding: 16px 0px;
+        padding: 16px 0;
     }
 
     &-footer {
@@ -110,7 +110,7 @@ $confirm: 'confirm';
         display: flex;
         flex-flow: column wrap;
         font-size: 14px;
-        padding: 25px 10px 10px 10px;
+        padding: 25px 10px 10px 10;
     }
 
     &__indicator {

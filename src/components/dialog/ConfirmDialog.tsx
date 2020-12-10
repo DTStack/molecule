@@ -78,7 +78,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
             prefixCls={confirmClassName}
             className={classString}
             wrapClassName={classNames({
-                [getBEMElement(confirmClassName, 'centered')]: !!props.centered,
+                [getBEMModifier(confirmClassName, 'centered')]: !!props.centered,
             })}
             onCancel={() => close({ triggerCancel: true })}
             visible={visible}
@@ -114,10 +114,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                             </span>
                         )}
                         <div
-                            className={`${getBEMModifier(
+                            className={getBEMModifier(
                                 messageClassName,
                                 'detail'
-                            )}`}
+                            )}
                         >
                             {props.content}
                         </div>

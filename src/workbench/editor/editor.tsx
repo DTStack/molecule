@@ -15,11 +15,11 @@ const groupContainerClassName = getBEMElement(
     defaultEditorClassName,
     'group-container'
 );
-const groupHeaderClassName = getBEMElement(defaultEditorClassName, 'header');
-const groupTabsClassName = getBEMElement(defaultEditorClassName, 'tabs');
+const groupHeaderClassName = getBEMElement(defaultEditorClassName, 'group-header');
+const groupTabsClassName = getBEMElement(defaultEditorClassName, 'group-tabs');
 const groupBreadcrumbsClassName = getBEMElement(
     defaultEditorClassName,
-    'breadcrumbs'
+    'group-breadcrumbs'
 );
 
 function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
@@ -42,18 +42,18 @@ function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
                     editor.renderPane ? (
                         editor.renderPane()
                     ) : (
-                        <MonacoEditor
-                            options={{
-                                value: editor.value,
-                                language: editor.mode || 'sql',
-                                automaticLayout: true,
-                            }}
-                            editorInstanceRef={(editorInstance) => {
-                                // This assignment will trigger moleculeCtx update, and subNodes update
-                                group.editorInstance = editorInstance;
-                            }}
-                        />
-                    )
+                            <MonacoEditor
+                                options={{
+                                    value: editor.value,
+                                    language: editor.mode || 'sql',
+                                    automaticLayout: true,
+                                }}
+                                editorInstanceRef={(editorInstance) => {
+                                    // This assignment will trigger moleculeCtx update, and subNodes update
+                                    group.editorInstance = editorInstance;
+                                }}
+                            />
+                        )
                 }
             </div>
         </div>

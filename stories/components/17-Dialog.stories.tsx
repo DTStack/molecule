@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import Modal from 'mo/components/dialog';
+import Modal from 'mo/components/Modal';
 import { Button } from 'mo/components/button';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
@@ -46,28 +46,24 @@ stories.add('Basic Usage', () => {
                 等语法糖方法
             </p>
             <div>
-                <h3>使用示例 1 - 基本使用</h3>
-                <div>
-                    <div id="container" style={{ padding: 24 }}/>
-                    <Button type="primary" onClick={showModal}>
-                        Open Modal
-                    </Button>
-                    <Modal
-                        width={520}
-                        title="Tweet us your feedback"
-                        destroyOnClose={true}
-                        visible={isModalVisible}
-                        onOk={handleOk}
-                        onCancel={handleCancel}
-                    >
-                        <p>Some contents...</p>
-                        <p>Some contents...</p>
-                        <p>Some contents...</p>
-                    </Modal>
-                    <br/>
-                    <br/>
-                    <Button onClick={showConfirm}>Confirm</Button>
-                </div>
+                <h3>使用示例 1 - Modal</h3>
+                <Button type="primary" onClick={showModal}>
+                    Open Modal
+                </Button>
+                <Modal
+                    width={520}
+                    title="Tweet us your feedback"
+                    destroyOnClose={true}
+                    visible={isModalVisible}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
+                <h3>使用示例 2 - confirm</h3>
+                <Button onClick={showConfirm}>Confirm</Button>
             </div>
         </>
     );

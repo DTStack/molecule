@@ -4,7 +4,6 @@ $confirm: 'confirm';
 
 #{prefix($modal)} {
     box-sizing: border-box;
-    color: #fff;
     font-size: 14px;
     margin: 0 auto;
     max-width: calc(100vw - 32px);
@@ -15,7 +14,6 @@ $confirm: 'confirm';
     width: auto;
 
     &-mask {
-        background-color: rgba(0, 0, 0, 0.45);
         bottom: 0;
         height: 100%;
         left: 0;
@@ -48,9 +46,6 @@ $confirm: 'confirm';
     }
 
     &-content {
-        background-color: #1e1e1e;
-        box-shadow: rgba(0, 0, 0, 0.31) 0 0 8px;
-        color: #fff;
         font-size: 18px;
         padding: 0 15px;
         pointer-events: auto;
@@ -58,8 +53,6 @@ $confirm: 'confirm';
     }
 
     &-header {
-        background: inherit;
-        color: #fff;
         font-size: 24px;
         padding: 16px 0;
     }
@@ -76,8 +69,6 @@ $confirm: 'confirm';
     }
 
     &-close {
-        background: 0 0;
-        border: 0;
         color: #fff;
         cursor: pointer;
         font-weight: 700;
@@ -122,10 +113,6 @@ $confirm: 'confirm';
         .codicon {
             font-size: 48px !important;
         }
-
-        .codicon-warning {
-            color: rgb(204, 167, 0);
-        }
     }
 
     &_content {
@@ -147,7 +134,6 @@ $confirm: 'confirm';
         }
 
         &--detail {
-            color: rgb(187, 187, 187);
             font-size: 13px;
         }
     }

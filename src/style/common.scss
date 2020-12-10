@@ -1,12 +1,10 @@
-// TODO Refactor the class name to camel style
 $prefix: 'mo';
 
-// Component parts below
 @function prefix($name) {
     @return '.' + $prefix + '-' + $name;
 }
 
-// The Workbench parts
+// ============= The Workbench parts =============
 $actionBar: prefix('action-bar');
 $btn: prefix('btn');
 $checkbox: prefix('checkbox');
@@ -23,7 +21,7 @@ $tabSwitcher: 'tab-switcher';
 $toolBar: prefix('tool-bar');
 $tree: prefix('tree');
 
-// The Workbench core component
+// ============= The Workbench core component =============
 $activityBar: prefix('activityBar');
 $editor: prefix('editor');
 $menuBar: prefix('menuBar');

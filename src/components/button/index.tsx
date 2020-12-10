@@ -12,11 +12,12 @@ export interface IButton extends React.ComponentProps<'a'> {
 const defaultButtonClassName = prefixClaName('btn');
 const normalButtonClassName = getBEMModifier(defaultButtonClassName, 'normal');
 const largeButtonClassName = getBEMModifier(defaultButtonClassName, 'large');
+const disableButtonClassName = getBEMModifier(defaultButtonClassName, 'disabled')
 
 export function Button(props: React.PropsWithChildren<IButton>) {
     const { className, children, size = 'normal', onClick, ...custom } = props;
 
-    const disabled = props.disabled ? 'disabled' : null;
+    const disabled = props.disabled ? disableButtonClassName : null;
     const click = (e: React.MouseEvent) => onClick?.(e);
 
     const sizeClassName =

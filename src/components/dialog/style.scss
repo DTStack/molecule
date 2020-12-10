@@ -1,6 +1,6 @@
 @import 'mo/style/common';
 
-#{prefix($modal)} {
+#{$modal} {
     box-sizing: border-box;
     font-size: 14px;
     margin: 0 auto;
@@ -93,7 +93,7 @@
     }
 }
 
-#{prefix($confirm)} {
+#{$confirm} {
     &__container {
         display: flex;
         flex-flow: column wrap;

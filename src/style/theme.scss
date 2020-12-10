@@ -252,7 +252,7 @@
     }
 }
 
-#{prefix($modal)} {
+#{$modal} {
     color: #fff;
 
     &-mask {
@@ -277,7 +277,7 @@
     }
 }
 
-#{prefix($confirm)} {
+#{$confirm} {
     &__indicator {
         .codicon-warning {
             color: rgb(204, 167, 0);

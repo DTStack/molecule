@@ -1,34 +1,11 @@
 @import 'mo/style/common';
 $modal: 'modal';
-
-#{prefix($modal)}-mask {
-    background-color: rgba(0, 0, 0, 0.45);
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1000;
-}
-
-#{prefix($modal)}-wrap {
-    bottom: 0;
-    left: 0;
-    outline: 0;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1000;
-}
+$confirm: 'confirm';
 
 #{prefix($modal)} {
     box-sizing: border-box;
     color: #fff;
     font-size: 14px;
-    list-style: none;
     margin: 0 auto;
     max-width: calc(100vw - 32px);
     padding: 0 0 24px;
@@ -37,6 +14,33 @@ $modal: 'modal';
     top: 100px;
     width: auto;
 
+    &-mask {
+        background-color: rgba(0, 0, 0, 0.45);
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1000;
+
+        &-hidden {
+            display: none;
+        }
+    }
+
+    &-wrap {
+        bottom: 0;
+        left: 0;
+        outline: 0;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1000;
+    }
+
     &--centered {
         align-items: center;
         display: flex;
@@ -44,96 +48,20 @@ $modal: 'modal';
     }
 
     &-content {
-        background-clip: padding-box;
         background-color: #1e1e1e;
-        border: 0;
-        border-radius: 2px;
         box-shadow: rgba(0, 0, 0, 0.31) 0 0 8px;
         color: #fff;
         font-size: 18px;
         pointer-events: auto;
         position: relative;
-    }
-
-    .mo-modal-confirm {
-        &-body {
-            align-items: center;
-            display: flex;
-            flex-grow: 1;
-            padding: 0 10px;
-
-            .codicon {
-                float: left;
-                font-size: 48px;
-                height: 48px;
-                margin-right: 16px;
-                width: 48px;
-            }
-
-            .codicon-warning {
-                color: rgb(204, 167, 0);
-            }
-        }
-
-        &__message {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            padding: 20px 10px 10px;
-            text-overflow: ellipsis;
-            white-space: normal;
-            word-wrap: break-word;
-
-            &--text {
-                align-items: center;
-                display: flex;
-                flex: 1;
-                font-size: 18px;
-                line-height: 22px;
-                margin-bottom: 8px;
-                min-height: 48px;
-                white-space: normal;
-                word-wrap: break-word;
-            }
-
-            &--detail {
-                color: rgb(187, 187, 187);
-                font-size: 13px;
-            }
-        }
-
-        &__btns {
-            display: flex;
-            justify-content: flex-end;
-            padding: 20px 10px 10px;
-        }
-    }
-
-    .mo-modal-confirm-title {
-        display: block;
-        font-size: 18px;
-        margin-bottom: 8px;
-        min-height: 48px;
-        overflow: hidden;
-        white-space: normal;
-        word-wrap: break-word;
-    }
-
-    .mo-modal-confirm-content {
-        margin-left: 38px;
-        margin-top: 8px;
+        padding: 0px 15px;
     }
 
     &-header {
         background: inherit;
         color: #fff;
         font-size: 24px;
-        padding: 16px 15px;
-    }
-
-    &-body {
-        font-size: 14px;
-        padding: 10px 15px 0;
+        padding: 16px 0px;
     }
 
     &-footer {
@@ -161,19 +89,72 @@ $modal: 'modal';
         text-decoration: none;
         top: 0;
         transition: color 0.3s;
-        transition: color 0.3s;
         z-index: 10;
+    }
 
+    &__close {
         &--x {
             display: block;
             font-size: 16px;
-            font-style: normal;
-            height: 56px;
-            line-height: 56px;
+            height: 40px;
+            line-height: 40px;
             text-align: center;
-            text-rendering: auto;
-            text-transform: none;
-            width: 56px;
+            width: 40px;
         }
+    }
+
+}
+
+#{prefix($confirm)} {
+    &__container {
+        display: flex;
+        flex-flow: column wrap;
+        font-size: 14px;
+        padding: 25px 10px 10px 10px;
+    }
+
+    &__indicator {
+        float: left;
+        height: 48px;
+        margin-right: 16px;
+        width: 48px;
+
+        .codicon {
+            font-size: 48px !important;
+        }
+
+        .codicon-warning {
+            color: rgb(204, 167, 0);
+        }
+    }
+
+    &_content {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+
+    &__message {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        &--text {
+            font-size: 18px;
+            margin-bottom: 8px;
+            min-height: 24px;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        &--detail {
+            color: rgb(187, 187, 187);
+            font-size: 13px;
+        }
+    }
+
+    &__btns {
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px 10px 10px;
     }
 }

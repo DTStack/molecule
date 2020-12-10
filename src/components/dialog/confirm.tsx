@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { prefixClaName } from 'mo/common/className';
+import { Icon } from 'mo/components/icon';
 import { IModalFuncProps, destroyFns } from './modal';
 import ConfirmDialog from './ConfirmDialog';
 
@@ -49,7 +49,6 @@ export default function confirm(config: IModalFuncProps) {
             ReactDOM.render(
                 <ConfirmDialog
                     {...props}
-                    prefixCls={prefixClaName('modal')}
                     okText={okText}
                     cancelText={cancelText}
                 />,
@@ -62,7 +61,7 @@ export default function confirm(config: IModalFuncProps) {
         currentConfig = {
             ...currentConfig,
             visible: false,
-            afterClose: destroy.bind(this, ...args),
+            // afterClose: destroy.bind(this, ...args),
         };
         render(currentConfig);
     }
@@ -80,6 +79,7 @@ export function withWarn(props: IModalFuncProps): IModalFuncProps {
     return {
         type: 'warning',
         okCancel: false,
+        icon: <Icon type="warning"/>,
         ...props,
     };
 }
@@ -88,6 +88,7 @@ export function withConfirm(props: IModalFuncProps): IModalFuncProps {
     return {
       type: 'confirm',
       okCancel: true,
+      icon: <Icon type="warning"/>,
       ...props,
     };
 }

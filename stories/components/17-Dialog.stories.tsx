@@ -27,7 +27,7 @@ stories.add('Basic Usage', () => {
     function showConfirm() {
         confirm({
           title: 'Are you sure you want to permanently delete ?',
-          content: 'Some descriptions',
+          content: 'This action is irreversible!',
           onOk() {
             console.log('OK');
           },
@@ -55,6 +55,7 @@ stories.add('Basic Usage', () => {
                     <Modal
                         width={520}
                         title="Tweet us your feedback"
+                        destroyOnClose={true}
                         visible={isModalVisible}
                         onOk={handleOk}
                         onCancel={handleCancel}

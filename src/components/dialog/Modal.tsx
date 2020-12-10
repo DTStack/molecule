@@ -2,11 +2,11 @@ import * as React from 'react';
 import Dialog from 'rc-dialog';
 import { IDialogPropTypes } from 'rc-dialog/lib/IDialogPropTypes';
 
-import { classNames, prefixClaName, getBEMModifier } from 'mo/common/className';
+import { classNames, prefixClaName, getBEMElement ,getBEMModifier} from 'mo/common/className';
 import { Icon } from 'mo/components/icon';
 import { Button, IButton } from 'mo/components/button';
 
-let mousePosition;
+let mousePosition: any;
 
 const getClickPosition = (e: MouseEvent) => {
     mousePosition = {
@@ -18,12 +18,14 @@ const getClickPosition = (e: MouseEvent) => {
     }, 100);
 };
 
-// 只有点击事件支持从鼠标位置动画展开
 if (typeof window !== 'undefined' && window.document?.documentElement) {
     document.documentElement.addEventListener('click', getClickPosition, true);
 }
 
 export const destroyFns: Array<() => void> = [];
+
+export const modalClassName = prefixClaName('modal');
+
 
 export interface IModalProps extends IDialogPropTypes {
     onOk?: (e: React.MouseEvent<HTMLElement>) => void;
@@ -67,37 +69,43 @@ const Modal: React.FC<IModalProps> = (props) => {
         centered,
         getContainer,
         closeIcon,
-        cancelText = 'Cancel',
+        cancelText = 'Ok',
         okText = 'Save',
         ...restProps
     } = props;
 
-    const prefixCls = prefixClaName('modal');
+    const wrapClassNameExtended = classNames(wrapClassName, {
+        [getBEMModifier(`${modalClassName}`, 'centered')]: !!centered,
+    });
+
+    const closeClassName = getBEMElement(modalClassName, 'close');
+    const closeDescriptorClassName = getBEMModifier(`${closeClassName}`, 'x');
 
     const closeIconToRender = (
-        <span className={getBEMModifier(`${prefixCls}-close`, 'x')}><Icon type="close"/></span>
+        <span className={closeDescriptorClassName}><Icon type="close"/></span>
     );
 
-    const wrapClassNameExtended = classNames(wrapClassName, {
-        [getBEMModifier(`${prefixCls}`, 'centered')]: !!centered,
-    });
-    console.log(props)
+    const renderFooter = () => {
+        const { footer, cancelButtonProps, okButtonProps } = props
+        if (footer !== undefined) return footer
+        return (
+            <>
+                <Button onClick={handleCancel} {...cancelButtonProps }>
+                    {cancelText}
+                </Button>
+                <Button onClick={handleOk} {...okButtonProps }>
+                    {okText}
+                </Button>
+            </>
+        )
+    }
     return (
         <Dialog
             {...restProps}
             getContainer={getContainer}
-            prefixCls={prefixCls}
+            prefixCls={modalClassName}
             wrapClassName={wrapClassNameExtended}
-            footer={footer === undefined ? (
-                <>
-                    <Button onClick={handleCancel} {...props.cancelButtonProps}>
-                        {cancelText}
-                    </Button>
-                    <Button onClick={handleOk} {...props.okButtonProps}>
-                        {okText}
-                    </Button>
-                </>
-            ) : footer}
+            footer={renderFooter()}
             visible={visible}
             mousePosition={mousePosition}
             onClose={handleCancel}

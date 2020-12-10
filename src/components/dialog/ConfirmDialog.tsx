@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { classNames, prefixClaName } from 'mo/common/className';
+import { classNames, getBEMElement, getBEMModifier, prefixClaName } from 'mo/common/className';
 import Dialog, { IModalFuncProps } from './modal';
 import ActionButton from './actionButton';
 
 interface ConfirmDialogProps extends IModalFuncProps {
     afterClose?: () => void;
     close: (...args: any[]) => void;
-    actions?: any;
+    actions?: React.ReactNode;
 }
+
+export const confirmClassName = prefixClaName('confirm');
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
     const {
@@ -23,30 +25,34 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         centered,
         getContainer,
         maskStyle,
-        okText = 'Save',
+        okText = 'Ok',
         okButtonProps,
         cancelText = 'Cancel',
         cancelButtonProps,
-        prefixCls,
         bodyStyle,
-        closable = false,
+        closable = true,
         closeIcon,
+        className,
         okCancel,
+        width = 520,
+        style = {},
+        mask = true,
+        maskClosable = false,
+        transitionName = 'zoom',
+        maskTransitionName = 'fade',
     } = props;
-    const contentPrefixCls = `${prefixCls}-confirm`;
-    const width = props.width || 416;
-    const style = props.style || {};
-    const mask = props.mask === undefined ? true : props.mask;
-    // 默认为 false，保持旧版默认行为
-    const maskClosable =
-        props.maskClosable === undefined ? false : props.maskClosable;
-    const transitionName = props.transitionName || 'zoom';
-    const maskTransitionName = props.maskTransitionName || 'fade';
+
+    const confirmDescriperClassName = getBEMElement(confirmClassName, `${props.type}`)
+    const containerClassName = getBEMElement(confirmClassName, 'container');
+    const indicatorClassName = getBEMElement(confirmClassName, 'indicator');
+    const contentClassName =  getBEMElement(confirmClassName, 'content');
+    const messageClassName =  getBEMElement(confirmClassName, 'message');
+    const btnsClassName = getBEMElement(confirmClassName, 'btns');
 
     const classString = classNames(
-        contentPrefixCls,
-        `${contentPrefixCls}-${props.type}`,
-        props.className,
+        confirmClassName,
+        confirmDescriperClassName,
+        className,
     );
 
     const cancelButton = okCancel && (
@@ -58,12 +64,13 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
           {cancelText}
         </ActionButton>
       );
+
     return (
         <Dialog
-            prefixCls={prefixCls}
+            prefixCls={confirmClassName}
             className={classString}
             wrapClassName={classNames({
-                [`${contentPrefixCls}-centered`]: !!props.centered,
+                [getBEMElement(confirmClassName, 'centered')]: !!props.centered,
             })}
             onCancel={() => close({ triggerCancel: true })}
             visible={visible}
@@ -84,19 +91,21 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
             closable={closable}
             closeIcon={closeIcon}
         >
-            <div className={`${contentPrefixCls}-body`} style={bodyStyle}>
-                <div className={`${contentPrefixCls}__icon`}> {icon} </div>
-                <div className={`${contentPrefixCls}__message`}>
-                    {props.title !== undefined && (
-                        <span className={`${contentPrefixCls}__message--text`}>
-                            {props.title}
-                        </span>
-                    )}
-                    <div className={`${contentPrefixCls}__message--detail`}>
-                        {props.content}
+            <div className={containerClassName} style={bodyStyle}>
+                <div className={contentClassName}>
+                    <div className={indicatorClassName}> {icon} </div>
+                    <div className={messageClassName}>
+                        {props.title !== undefined && (
+                            <span className={getBEMModifier(messageClassName, 'text')}>
+                                {props.title}
+                            </span>
+                        )}
+                        <div className={`${getBEMModifier(messageClassName, 'detail')}`}>
+                            {props.content}
+                        </div>
                     </div>
                 </div>
-                <div className={`${contentPrefixCls}__btns`}>
+                <div className={btnsClassName}>
                 {
                     actions === undefined ? (
                         <>

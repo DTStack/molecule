@@ -1,7 +1,6 @@
 @import 'mo/style/common';
-$menuBar: 'menuBar';
 
-#{prefix($menuBar)} {
+#{$menuBar} {
     align-items: center;
     cursor: pointer;
     display: flex;
@@ -11,7 +10,7 @@ $menuBar: 'menuBar';
     position: absolute;
     width: 48px;
 
-    .left {
+    &--left {
         left: 0;
         top: 0;
     }

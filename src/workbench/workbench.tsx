@@ -17,9 +17,12 @@ export interface IWorkbench {}
 
 export interface IMainBench {}
 
+const mainBenchClassName = prefixClaName('mainBench');
+const workbenchClassName = prefixClaName('workbench');
+
 export function MainBench(props: IMainBench) {
     return (
-        <div className={prefixClaName('mainBench')}>
+        <div className={mainBenchClassName}>
             <SplitPane
                 split={'vertical'}
                 minSize={170}
@@ -50,7 +53,7 @@ export function Workbench(props: IWorkbench) {
             id={ID_APP}
             className={classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '')}
         >
-            <div className={prefixClaName('workbench')}>
+            <div className={workbenchClassName}>
                 <MenuBarView />
                 <ActivityBarView />
                 <MainBench />

@@ -1,7 +1,7 @@
 import 'mo/workbench/sidebar/style.scss';
 import * as React from 'react';
 import { memo } from 'react';
-import { prefixClaName } from 'mo/common/className';
+import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { ISidebar, ISidebarPane } from 'mo/model/workbench/sidebar';
 
 export interface IHeaderProps {
@@ -9,19 +9,26 @@ export interface IHeaderProps {
     toolbar: React.ReactNode;
 }
 
+const defaultClassName = prefixClaName('sidebar');
+const paneClassName = getBEMElement(defaultClassName, 'pane');
+const headerClassName = getBEMElement(defaultClassName, 'header');
+const titleClassName = getBEMElement(defaultClassName, 'title');
+const contentClassName = getBEMElement(defaultClassName, 'content');
+const toolbarClassName = getBEMElement(defaultClassName, 'toolbar');
+
 export const Header = memo<IHeaderProps>(function Header(props: IHeaderProps) {
     return (
-        <header className={'pane-header'}>
-            <div className={'pane-title'}>
+        <header className={headerClassName}>
+            <div className={titleClassName}>
                 <h2>{props.title}</h2>
             </div>
-            <div className={'pane-toolbar'}>{props.toolbar || null}</div>
+            <div className={toolbarClassName}>{props.toolbar || null}</div>
         </header>
     );
 });
 
 export function Content(props: React.ComponentProps<any>) {
-    return <div className="pane-content">{props.children}</div>;
+    return <div className={contentClassName}>{props.children}</div>;
 }
 
 export function Sidebar(props: ISidebar) {
@@ -33,7 +40,7 @@ export function Sidebar(props: ISidebar) {
                 key={pane.id}
                 data-id={pane.id}
                 style={{ display: pane.id === current ? 'block' : 'none' }}
-                className={prefixClaName('pane', 'sidebar')}
+                className={paneClassName}
             >
                 {pane.render ? pane.render() : null}
             </div>
@@ -44,5 +51,5 @@ export function Sidebar(props: ISidebar) {
         sidebarPane = render();
     }
 
-    return <div className={prefixClaName('sidebar')}>{sidebarPane}</div>;
+    return <div className={defaultClassName}>{sidebarPane}</div>;
 }

@@ -60,7 +60,7 @@ stories.add('Basic Usage', () => {
         },
     ];
 
-    const [treeData, setTreeData] = useState<ITreeNodeItem[]>(data);
+    const [treeData] = useState<ITreeNodeItem[]>(data);
     return (
         <div>
             <h2>简述</h2>

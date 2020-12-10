@@ -1,14 +1,13 @@
 @import 'mo/style/common';
-$name: 'context-view';
 
-#{prefix($name)} {
+#{$name} {
     border: 0;
     outline: 0;
     position: absolute;
     width: initial;
     z-index: 2500;
 
-    .#{$name}-block {
+    &__block {
         bottom: 0;
         height: 100%;
         left: 0;
@@ -19,12 +18,12 @@ $name: 'context-view';
         width: 100%;
         z-index: -1;
     }
-}
 
-.context-view-content {
-    overflow: hidden;
-}
+    &__content {
+        overflow: hidden;
+    }
 
-.context-view--shadow {
-    box-shadow: rgb(0, 0, 0) 0 2px 4px;
+    &--shadow {
+        box-shadow: rgb(0, 0, 0) 0 2px 4px;
+    }
 }

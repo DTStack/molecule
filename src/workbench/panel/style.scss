@@ -1,7 +1,6 @@
 @import 'mo/style/common';
-$panel: 'panel';
 
-#{prefix($panel)} {
+#{$panel} {
     height: 100%;
     position: relative;
     width: 100%;

@@ -1,16 +1,24 @@
-import './style.scss';
 import * as React from 'react';
-import { classNames, prefixClaName } from 'mo/common/className';
-import { Icon } from '../icon';
-import { Menu } from './menu';
+import { classNames } from 'mo/common/className';
 import { useEffect } from 'react';
 import {
     findParentByClassName,
     getRelativePosition,
     TriggerEvent,
 } from 'mo/common/dom';
-import { defaultMenuItemClassName, IMenuItem } from './menuItem';
 import { em2Px } from 'mo/common/css';
+import { Icon } from 'mo/components/icon';
+
+import { Menu } from './menu';
+import { IMenuItem } from './menuItem';
+import {
+    checkClassName,
+    defaultMenuItemClassName,
+    defaultSubMenuClassName,
+    indicatorClassName,
+    labelClassName,
+    menuContentClassName,
+} from './base';
 
 export enum MenuMode {
     Vertical = 'vertical',
@@ -24,6 +32,7 @@ export function isHorizontal(mode: MenuMode) {
 export function isVertical(mode: MenuMode) {
     return mode === MenuMode.Horizontal;
 }
+
 export interface ISubMenu extends IMenuItem {
     /**
      * The event of show subMenu, default value is 'hover'
@@ -33,8 +42,6 @@ export interface ISubMenu extends IMenuItem {
     data?: ISubMenu[];
     mode?: MenuMode;
 }
-
-const defaultSubMenuClassName = prefixClaName('sub-menu');
 
 function hideSubMenu(target?: HTMLElement) {
     const container = target || document.body;
@@ -56,8 +63,6 @@ const hideAfterLeftWindow = () => {
     }
 };
 
-// let timer;
-
 export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
     const {
         className,
@@ -67,15 +72,13 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
         mode = MenuMode.Vertical,
         icon,
         children,
-        ...others
+        ...custom
     } = props;
-    const cNames = classNames(defaultSubMenuClassName, mode, className);
+    const cNames = classNames(defaultSubMenuClassName, className);
     const isAlignHorizontal = isHorizontal(mode);
 
     const events = {
         onMouseOver: (event: React.MouseEvent<any, any>) => {
-            // clearTimeout(timer);
-
             const nextMenuItem = findParentByClassName<HTMLLIElement>(
                 event.target,
                 defaultMenuItemClassName
@@ -162,7 +165,6 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
             document.removeEventListener('contextmenu', hideAll);
             window.removeEventListener('click', hideAll);
             window.removeEventListener('visibilitychange', hideAfterLeftWindow);
-            // clearTimeout(timer);
         };
     }, []);
 
@@ -180,17 +182,15 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
             </Menu>
         );
 
-    console.log('mode', mode, isAlignHorizontal);
-
     return (
-        <li className={defaultMenuItemClassName} {...events} {...others}>
-            <a className="menu-item-container">
-                <Icon className="menu-item-check" type={icon || ''} />
-                <span className="menu-item-label">
+        <li className={defaultMenuItemClassName} {...events} {...custom}>
+            <a className={menuContentClassName}>
+                <Icon className={checkClassName} type={icon || ''} />
+                <span className={labelClassName}>
                     {render ? render(props) : name}
                 </span>
                 <Icon
-                    className="menu-item-indicator"
+                    className={indicatorClassName}
                     type={`chevron-${chevronType}`}
                 />
             </a>

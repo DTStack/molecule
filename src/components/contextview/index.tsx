@@ -1,13 +1,18 @@
+import './style.scss';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { prefixClaName, classNames } from 'mo/common/className';
+import {
+    prefixClaName,
+    classNames,
+    getBEMElement,
+    getBEMModifier,
+} from 'mo/common/className';
 import {
     getRelativePosition,
     select,
     HTMLElementType,
     IPosition,
 } from 'mo/common/dom';
-import './style.scss';
 import { Utils } from 'dt-utils/lib';
 import { EventEmitter } from 'mo/common/event';
 
@@ -32,15 +37,18 @@ enum ContextViewEvent {
 }
 
 const contextViewClass = prefixClaName('context-view');
-const contentClass = '.context-view-content';
-const emitter = new EventEmitter();
+const contentClassName = getBEMElement(contextViewClass, 'content');
+const blockClassName = getBEMElement(contextViewClass, 'block');
+const shadowClassName = getBEMModifier(contextViewClass, 'shadow');
+
+const Emitter = new EventEmitter();
 
 export function useContextView(props?: IContextViewProps): IContextView {
     const claName = classNames(contextViewClass, 'fade-in');
     let contextView: HTMLElementType = select('.' + contextViewClass); // Singleton contextView dom
 
     const show = (anchorPos: IPosition, render?: () => React.ReactNode) => {
-        const content = select(contentClass);
+        const content = select('.' + contentClassName);
         const renderContent = render || props?.render;
         if (!renderContent)
             throw Error(
@@ -61,13 +69,13 @@ export function useContextView(props?: IContextViewProps): IContextView {
     const hide = () => {
         if (contextView) {
             contextView.style.visibility = 'hidden';
-            ReactDOM.unmountComponentAtNode(select(contentClass)!);
-            emitter.emit(ContextViewEvent.onHide);
+            ReactDOM.unmountComponentAtNode(select('.' + contentClassName)!);
+            Emitter.emit(ContextViewEvent.onHide);
         }
     };
 
     const onHide = (callback: Function) => {
-        emitter.subscribe(ContextViewEvent.onHide, callback);
+        Emitter.subscribe(ContextViewEvent.onHide, callback);
     };
 
     const onMaskClick = (e: React.MouseEvent) => {
@@ -77,7 +85,7 @@ export function useContextView(props?: IContextViewProps): IContextView {
     };
 
     const dispose = () => {
-        emitter.unsubscribe(ContextViewEvent.onHide);
+        Emitter.unsubscribe(ContextViewEvent.onHide);
     };
 
     if (!contextView) {
@@ -93,17 +101,17 @@ export function useContextView(props?: IContextViewProps): IContextView {
         } else {
             root.appendChild(contextView);
         }
-        const shadowClass = !props?.shadowOutline ? '' : 'context-view--shadow';
+        const shadowClass = !props?.shadowOutline ? '' : shadowClassName;
 
         ReactDOM.render(
             <>
                 <div
-                    className="context-view-block"
+                    className={blockClassName}
                     onClick={onMaskClick}
                     onContextMenu={onMaskClick}
                 ></div>
                 <div
-                    className={classNames('context-view-content', shadowClass)}
+                    className={classNames(contentClassName, shadowClass)}
                 ></div>
             </>,
             contextView

@@ -1,17 +1,22 @@
 import 'mo/workbench/activityBar/style.scss';
 import * as React from 'react';
-import { prefixClaName } from 'mo/common/className';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
 import ActivityBarItem from './activityBarItem';
 import { Scrollable } from 'mo/components/scrollable';
+import {
+    containerClassName,
+    defaultClassName,
+    globalItemsClassName,
+    normalItemsClassName,
+} from './base';
 
 export function ActivityBar(props: IActivityBar) {
     const { data = [], render, selected, onClick, onSelect } = props;
 
     if (render) {
-        return <div className={prefixClaName(ID_ACTIVITY_BAR)}>{render()}</div>;
+        return <div className={defaultClassName}>{render()}</div>;
     }
 
     const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
@@ -43,12 +48,12 @@ export function ActivityBar(props: IActivityBar) {
     };
 
     return (
-        <div className={prefixClaName(ID_ACTIVITY_BAR)} id={ID_ACTIVITY_BAR}>
-            <div className={prefixClaName('container', ID_ACTIVITY_BAR)}>
-                <Scrollable className={'normal-items'}>
+        <div className={defaultClassName} id={ID_ACTIVITY_BAR}>
+            <div className={containerClassName}>
+                <Scrollable className={normalItemsClassName}>
                     <ul>{normalBarItems.map(renderItems)}</ul>
                 </Scrollable>
-                <ul className={'global-items'}>
+                <ul className={globalItemsClassName}>
                     {globalBarItems.map(renderItems)}
                 </ul>
             </div>

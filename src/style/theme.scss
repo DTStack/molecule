@@ -1,119 +1,94 @@
 @import 'mo/style/common';
 
-// Workbench
-@import 'mo/workbench/style';
-@import 'mo/workbench/editor/style';
-@import 'mo/workbench/menuBar/style';
-@import 'mo/workbench/panel/style';
-@import 'mo/workbench/settings/style';
-@import 'mo/workbench/sidebar/style';
-@import 'mo/workbench/statusBar/style';
-@import 'mo/workbench/activityBar/style';
-
-// Workbench parts
-@import 'mo/components/actionbar/style';
-@import 'mo/components/menu/style';
-@import 'mo/components/collapse/style';
-@import 'mo/components/contextMenu/style';
-@import 'mo/components/contextView/style';
-@import 'mo/components/dropdown/style';
-@import 'mo/components/list/style';
-@import 'mo/components/menu/style';
-@import 'mo/components/toolbar/style';
-@import 'mo/components/tree/style';
-@import 'mo/components/tabs/style';
-@import 'mo/components/button/style';
-@import 'mo/components/input/style';
-@import 'mo/components/select/style';
-@import 'mo/components/checkbox/style';
-
 // =============== Workbench =============== //
-#{prefix($workbench)} {
+#{$workbench} {
     background-color: #252526;
     color: #ccc;
 }
 
 // =============== Sidebar =============== //
-#{prefix($sidebar)} {
+#{$sidebar} {
     // TODO temp style, just for development
     background-color: rgb(37, 37, 38);
     outline-color: rgba(83, 89, 93, 0.5);
-}
 
-.sidebar-pane .pane-title h2 {
-    color: rgb(187, 187, 187);
+    &__title h2 {
+        color: rgb(187, 187, 187);
+    }
 }
 
 // =============== Editor =============== //
-#{prefix($editor)} {
+#{$editor} {
     background-color: #1e1e1e;
 }
 
 // =============== MenuBar =============== //
-#{prefix($menuBar)} {
+#{$menuBar} {
     background-color: rgb(51, 51, 51);
 }
 
 // =============== activityBar =============== //
-#{prefix($activityBar)} {
+#{$activityBar} {
     background-color: rgb(51, 51, 51);
 
-    .active-item-indicator {
+    &__indicator {
         background: #fff;
     }
 
-    .checked {
-        color: rgb(255, 255, 255);
+    &__item--checked {
+        #{$activityBar}__label {
+            color: rgb(255, 255, 255);
+        }
     }
 }
 
 // =============== Settings =============== //
-#{prefix($settings)} {
+#{$settings} {
     color: rgba(255, 255, 255, 0.4);
 }
 
 // =============== Status Bar =============== //
-#{prefix($statusBar)} {
+#{$statusBar} {
     background-color: rgb(0, 122, 204);
     color: rgb(255, 255, 255);
 }
 
 // =============== Panel =============== //
-#{prefix($panel)} {
+#{$panel} {
     border-top-color: rgb(65, 67, 57);
 }
 
 // =============== Common =============== //
-.#{$activityBar}-item,
-#{prefix($menuBar)} {
+#{$activityBar}__item,
+#{$menuBar} {
     color: rgba(255, 255, 255, 0.4);
 }
 
-.#{$activityBar}-item:hover,
-#{prefix($menuBar)}:hover {
+#{$activityBar}__item:hover,
+#{$menuBar}:hover {
     color: #fff;
 }
 
 // =============== Action Bar =============== //
-#{prefix($actionBar)} {
+#{$actionBar} {
     background-color: rgb(37, 37, 38);
     color: rgb(204, 204, 204);
 }
 
 // =============== Menu =============== //
-#{prefix($menu)} {
-    .mo-menu-item {
+#{$menu} {
+    &__item {
         color: rgb(204, 204, 204);
-    }
 
-    #{prefix($menuItem)}:hover {
-        background-color: rgb(9, 71, 113);
-        color: rgb(255, 255, 255);
+        &:hover {
+            background-color: rgb(9, 71, 113);
+            color: rgb(255, 255, 255);
+        }
     }
 }
 
-#{prefix($menu)},
-#{prefix($subMenu)} {
+#{$menu},
+#{$subMenu} {
     background-color: rgb(37, 37, 38);
     box-shadow: #000 0 2px 4px;
     color: rgb(204, 204, 204);
@@ -144,7 +119,7 @@
 }
 
 // =============== Tree =============== //
-#{prefix($tree)} {
+#{$tree} {
     .rc-tree-treenode {
         &:hover {
             background-color: #333;
@@ -201,24 +176,24 @@
 }
 
 // =============== Button =============== //
-#{prefix($btn)} {
+#{$btn} {
     background-color: #316ac5;
     color: rgb(255, 255, 255);
 }
 
 // =============== List =============== //
-#{prefix($list)} {
-    .list-item {
+#{$list} {
+    &__item {
         background-color: #252526;
         color: #bbb;
 
-        &.active {
+        &--active {
             background-color: #316ac5;
         }
     }
 }
 // =============== Input =============== //
-#{prefix($Input)} {
+#{prefix($input)} {
     background-color: #1e1e1e;
     border: 1px solid transparent;
     color: rgb(204, 204, 204);

@@ -11,12 +11,12 @@ import { ITreeNodeItem } from 'mo/components/tree';
  * @param id match by ID
  */
 export const findParentNodeId = (treeData, id) => {
-    const parentIds = [];
+    const parentIds: Array<string> = [];
     let isContinue = true;
     const traverse = function (treeData, id) {
         treeData.forEach((item: ITreeNodeItem) => {
             if (!isContinue) return;
-            parentIds.push(item.id);
+            if (item.id) parentIds.push(item.id);
             if (item.id == id) {
                 isContinue = false;
             } else if (item.children) {

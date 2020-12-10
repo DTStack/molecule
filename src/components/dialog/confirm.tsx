@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import { Icon } from 'mo/components/icon';
 import { IModalFuncProps, destroyFns } from './modal';
-import ConfirmDialog from './confirmDialog';
+import ConfirmDialog from './ConfirmDialog';
 
 export type ModalFunc = (
     props: IModalFuncProps

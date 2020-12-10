@@ -61,7 +61,7 @@ export default function confirm(config: IModalFuncProps) {
         currentConfig = {
             ...currentConfig,
             visible: false,
-            afterClose: () => destroy(...args)
+            afterClose: () => destroy(...args),
         };
         render(currentConfig);
     }

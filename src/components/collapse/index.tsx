@@ -10,7 +10,7 @@ import { IPanelItem } from 'mo/model/workbench/explorer';
 interface IExpandProps {
     isActive?: boolean;
 }
-interface ICollapseProps  {
+interface ICollapseProps {
     data?: IPanelItem[];
     className?: string;
 }

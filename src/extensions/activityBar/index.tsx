@@ -33,14 +33,14 @@ function initActivityBar(extensionCtx: IExtensionService) {
     activityBarService.push(globalUserAccount);
     activityBarService.push(globalSettings);
 
-    activityBarService.onClick((data) => {
-        const target = data[0].target;
+    activityBarService.onClick((e, data) => {
+        const target = e.target;
         // activityBarService.updateState({ selected: 'search' });
         console.log('activityBar onClick:', data, target);
     });
 
-    activityBarService.onSelect((data) => {
-        const target = data[0].target;
+    activityBarService.onSelect((e, data) => {
+        const target = e.target;
         console.log('activityBar onSelect:', data, target);
     });
 }

@@ -21,12 +21,9 @@ export function mapState<S>(
             };
         }
 
-        _count = 0;
-
         componentDidMount() {
             // There is no declare state parameter as IObservable type, so must convert to any type.
             if ((state as any).observe) {
-                console.log('mapState:', this._count++);
                 (state as any).observe(this.onChange);
             } else {
                 Logger.error(

@@ -15,7 +15,7 @@ export interface IActivityBarService extends Component<IActivityBar> {
      * Add click event listener
      * @param callback
      */
-    onClick(callback: (key: React.MouseEvent) => void);
+    onClick(callback: (key: React.MouseEvent, item: IActivityBarItem) => void);
     onSelect(callback: (key: React.MouseEvent, item: IActivityBarItem) => void);
 }
 
@@ -63,15 +63,14 @@ export class ActivityBarService
     public onSelect(
         callback: (key: React.MouseEvent, item: IActivityBarItem) => void
     ) {
-        this.subscribe(ActivityBarEvent.Selected, (args) => {
-            const key = args[0];
-            const item: IActivityBarItem = args[1];
+        this.subscribe(ActivityBarEvent.Selected, (key, data) => {
+            const item: IActivityBarItem = data;
             if (item.type !== 'global') {
                 this.updateState({
                     selected: key,
                 });
             }
-            if (callback) callback(key, item);
+            callback?.(key, item);
         });
     }
 }

@@ -10,7 +10,7 @@
     position: relative;
     top: 100px;
     width: auto;
-
+    // TODO rc-dialog提pr解决
     &-mask {
         bottom: 0;
         height: 100%;
@@ -46,6 +46,7 @@
     &-content {
         font-size: 18px;
         padding: 0 15px;
+        pointer-events: auto;
         position: relative;
     }
 
@@ -111,7 +112,7 @@
         }
     }
 
-    &_content {
+    &__content {
         display: flex;
         flex-flow: row nowrap;
     }

@@ -26,9 +26,9 @@ export function Button(props: React.PropsWithChildren<IButton>) {
         size === 'large' ? largeButtonClassName : normalButtonClassName;
 
     const claNames = classNames(
+        className,
         defaultButtonClassName,
         sizeClassName,
-        className,
         disabled
     );
 

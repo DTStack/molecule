@@ -10,6 +10,32 @@ import {
 } from 'mo/common/className';
 import { Icon } from 'mo/components/icon';
 import { Button, IButton } from 'mo/components/button';
+export interface IModalProps extends IDialogPropTypes {
+    onOk?: (e: React.MouseEvent<HTMLElement>) => void;
+    onCancel?: (e: React.SyntheticEvent<Element, Event>) => void;
+    centered?: boolean;
+    cancelText?: React.ReactNode;
+    okText?: React.ReactNode;
+    okButtonProps?: IButton;
+    cancelButtonProps?: IButton;
+    okCancel?: boolean;
+}
+export interface IModalFuncProps extends IDialogPropTypes {
+    cancelText?: React.ReactNode;
+    okText?: React.ReactNode;
+    icon?: React.ReactNode;
+    content?: React.ReactNode;
+    onOk?: (...args: any[]) => any;
+    onCancel?: (...args: any[]) => void;
+    okButtonProps?: IButton;
+    cancelButtonProps?: IButton;
+    centered?: boolean;
+    okCancel?: boolean;
+    type?: string;
+}
+
+export const destroyFns: Array<() => void> = [];
+export const modalClassName = prefixClaName('modal');
 
 let mousePosition: any;
 
@@ -27,34 +53,13 @@ if (typeof window !== 'undefined' && window.document?.documentElement) {
     document.documentElement.addEventListener('click', getClickPosition, true);
 }
 
-export const destroyFns: Array<() => void> = [];
-
-export const modalClassName = prefixClaName('modal');
-
-export interface IModalProps extends IDialogPropTypes {
-    onOk?: (e: React.MouseEvent<HTMLElement>) => void;
-    onCancel?: (e: React.SyntheticEvent<Element, Event>) => void;
-    centered?: boolean;
-    cancelText?: React.ReactNode;
-    okText?: React.ReactNode;
-    okButtonProps?: IButton;
-    cancelButtonProps?: IButton;
-    okCancel?: boolean;
-}
-
-export interface IModalFuncProps extends IDialogPropTypes {
-    cancelText?: React.ReactNode;
-    okText?: React.ReactNode;
-    icon?: React.ReactNode;
-    content?: React.ReactNode;
-    onOk?: (...args: any[]) => any;
-    onCancel?: (...args: any[]) => void;
-    okButtonProps?: IButton;
-    cancelButtonProps?: IButton;
-    centered?: boolean;
-    okCancel?: boolean;
-    type?: string;
-}
+const closeClassName = getBEMElement(modalClassName, 'close');
+const closeDescriptorClassName = getBEMModifier(`${closeClassName}`, 'x');
+const closeIconToRender = (
+    <span className={closeDescriptorClassName}>
+        <Icon type="close" />
+    </span>
+);
 
 const Modal: React.FC<IModalProps> = (props) => {
     const handleCancel = (e: React.SyntheticEvent<Element, Event>) => {
@@ -81,15 +86,6 @@ const Modal: React.FC<IModalProps> = (props) => {
     const wrapClassNameExtended = classNames(wrapClassName, {
         [getBEMModifier(`${modalClassName}`, 'centered')]: !!centered,
     });
-
-    const closeClassName = getBEMElement(modalClassName, 'close');
-    const closeDescriptorClassName = getBEMModifier(`${closeClassName}`, 'x');
-
-    const closeIconToRender = (
-        <span className={closeDescriptorClassName}>
-            <Icon type="close" />
-        </span>
-    );
 
     const renderFooter = () => {
         const { footer, cancelButtonProps, okButtonProps } = props;

@@ -15,6 +15,11 @@ interface ConfirmDialogProps extends IModalFuncProps {
 }
 
 export const confirmClassName = prefixClaName('confirm');
+const containerClassName = getBEMElement(confirmClassName, 'container');
+const indicatorClassName = getBEMElement(confirmClassName, 'indicator');
+const contentClassName = getBEMElement(confirmClassName, 'content');
+const messageClassName = getBEMElement(confirmClassName, 'message');
+const btnsClassName = getBEMElement(confirmClassName, 'btns');
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
     const {
@@ -51,18 +56,11 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         confirmClassName,
         `${props.type}`
     );
-    const containerClassName = getBEMElement(confirmClassName, 'container');
-    const indicatorClassName = getBEMElement(confirmClassName, 'indicator');
-    const contentClassName = getBEMElement(confirmClassName, 'content');
-    const messageClassName = getBEMElement(confirmClassName, 'message');
-    const btnsClassName = getBEMElement(confirmClassName, 'btns');
-
     const classString = classNames(
         confirmClassName,
         confirmDescriperClassName,
         className
     );
-
     const cancelButton = okCancel && (
         <ActionButton
             actionFn={onCancel}

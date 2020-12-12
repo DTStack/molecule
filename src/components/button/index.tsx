@@ -18,7 +18,7 @@ const disableButtonClassName = getBEMModifier(
 );
 
 export function Button(props: React.PropsWithChildren<IButton>) {
-    const { className, children, size = 'normal', onClick, ...custom } = props;
+    const { className, children, size = 'normal', ...custom } = props;
 
     const disabled = props.disabled ? disableButtonClassName : null;
 

@@ -28,7 +28,7 @@ stories.add('Basic Usage', () => {
         confirm({
             title: 'Are you sure you want to permanently delete ?',
             content: 'This action is irreversible!',
-            cancelButtonProps: { disabled: true},
+            cancelButtonProps: { disabled: true },
             onOk() {
                 console.log('OK');
             },

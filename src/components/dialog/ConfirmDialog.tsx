@@ -59,7 +59,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         <ActionButton
             actionFn={onCancel}
             closeModal={close}
-            buttonProps={cancelButtonProps}
+           {...cancelButtonProps}
         >
             {cancelText}
         </ActionButton>
@@ -119,7 +119,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                                 <ActionButton
                                     actionFn={onOk}
                                     closeModal={close}
-                                    buttonProps={okButtonProps}
+                                    {...okButtonProps}
                                 >
                                     {okText}
                                 </ActionButton>

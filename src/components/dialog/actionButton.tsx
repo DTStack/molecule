@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Button, IButton } from 'mo/components/button';
-export interface ActionButtonProps {
+export interface ActionButtonProps extends IButton{
     actionFn?: (...args: any[]) => any | PromiseLike<any>;
     closeModal: Function;
-    buttonProps?: IButton;
 }
 
 const ActionButton: React.FC<ActionButtonProps> = (props) => {
@@ -50,9 +49,9 @@ const ActionButton: React.FC<ActionButtonProps> = (props) => {
         handlePromiseOnOk(returnValueOfOnOk);
     };
 
-    const { children, buttonProps } = props;
+    const { children, ...resetProps } = props;
     return (
-        <Button onClick={onClick} {...buttonProps}>
+        <Button onClick={onClick} {...resetProps}>
             {children}
         </Button>
     );

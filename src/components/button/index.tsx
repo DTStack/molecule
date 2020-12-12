@@ -21,7 +21,6 @@ export function Button(props: React.PropsWithChildren<IButton>) {
     const { className, children, size = 'normal', onClick, ...custom } = props;
 
     const disabled = props.disabled ? disableButtonClassName : null;
-    const click = (e: React.MouseEvent) => onClick?.(e);
 
     const sizeClassName =
         size === 'large' ? largeButtonClassName : normalButtonClassName;
@@ -34,7 +33,7 @@ export function Button(props: React.PropsWithChildren<IButton>) {
     );
 
     return (
-        <a className={claNames} {...custom} onClick={click}>
+        <a className={claNames} {...custom}>
             {children}
         </a>
     );

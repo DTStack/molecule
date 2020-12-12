@@ -1,0 +1,143 @@
+@import 'mo/style/common';
+
+#{$modal} {
+    box-sizing: border-box;
+    font-size: 14px;
+    margin: 0 auto;
+    max-width: calc(100vw - 32px);
+    padding: 0 0 24px;
+    pointer-events: none;
+    position: relative;
+    top: 100px;
+    width: auto;
+    // TODO rc-dialog提pr解决
+    &-mask {
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1000;
+
+        &-hidden {
+            display: none;
+        }
+    }
+
+    &-wrap {
+        bottom: 0;
+        left: 0;
+        outline: 0;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1000;
+    }
+
+    &--centered {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    &-content {
+        font-size: 18px;
+        padding: 0 15px;
+        pointer-events: auto;
+        position: relative;
+    }
+
+    &-header {
+        font-size: 24px;
+        padding: 16px 0;
+    }
+
+    &-footer {
+        display: flex;
+        font-size: 13px;
+        justify-content: flex-end;
+        padding: 20px 10px 10px;
+
+        .mo-botton {
+            width: fit-content;
+        }
+    }
+
+    &-close {
+        color: #fff;
+        cursor: pointer;
+        font-weight: 700;
+        line-height: 1;
+        outline: 0;
+        padding: 0;
+        position: absolute;
+        right: 0;
+        text-decoration: none;
+        top: 0;
+        transition: color 0.3s;
+        z-index: 10;
+    }
+
+    &__close {
+        &--x {
+            display: block;
+            font-size: 16px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            width: 40px;
+        }
+    }
+}
+
+#{$confirm} {
+    &__container {
+        display: flex;
+        flex-flow: column wrap;
+        font-size: 14px;
+        padding: 25px 10px 10px;
+    }
+
+    &__indicator {
+        float: left;
+        height: 48px;
+        margin-right: 16px;
+        width: 48px;
+
+        .codicon {
+            font-size: 48px !important;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+
+    &__message {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        &--text {
+            font-size: 18px;
+            margin-bottom: 8px;
+            min-height: 24px;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        &--detail {
+            font-size: 13px;
+        }
+    }
+
+    &__btns {
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px 10px 10px;
+    }
+}

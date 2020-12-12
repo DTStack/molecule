@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
 import RcCollapse, { Panel } from 'rc-collapse';
-import { CollapseProps } from 'rc-collapse/lib/interface';
 import Toolbar from 'mo/components/toolbar';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
@@ -10,7 +9,7 @@ import { IPanelItem } from 'mo/model/workbench/explorer';
 interface IExpandProps {
     isActive?: boolean;
 }
-interface ICollapseProps extends CollapseProps {
+interface ICollapseProps {
     data?: IPanelItem[];
     className?: string;
 }

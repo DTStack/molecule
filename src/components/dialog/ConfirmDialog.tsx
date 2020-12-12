@@ -28,12 +28,6 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         onCancel,
         onOk,
         close,
-        zIndex,
-        afterClose,
-        visible,
-        keyboard,
-        centered,
-        getContainer,
         maskStyle,
         okText = 'delete',
         okButtonProps,
@@ -41,7 +35,6 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         cancelButtonProps,
         bodyStyle,
         closable = true,
-        closeIcon,
         className,
         okCancel,
         width = 520,
@@ -50,6 +43,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         maskClosable = false,
         transitionName = 'zoom',
         maskTransitionName = 'fade',
+        ...resetProps
     } = props;
 
     const confirmDescriperClassName = getBEMElement(
@@ -82,23 +76,16 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                 )]: !!props.centered,
             })}
             onCancel={() => close({ triggerCancel: true })}
-            visible={visible}
             title=""
             transitionName={transitionName}
             footer=""
             maskTransitionName={maskTransitionName}
             mask={mask}
             maskClosable={maskClosable}
-            maskStyle={maskStyle}
             style={style}
             width={width}
-            zIndex={zIndex}
-            afterClose={afterClose}
-            keyboard={keyboard}
-            centered={centered}
-            getContainer={getContainer}
             closable={closable}
-            closeIcon={closeIcon}
+            {...resetProps}
         >
             <div className={containerClassName} style={bodyStyle}>
                 <div className={contentClassName}>

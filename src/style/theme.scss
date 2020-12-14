@@ -102,25 +102,25 @@
 #{$collapse} {
     background-color: #252526;
 
-    .rc-collapse-header {
+    #{$rcCollapse}-header {
         background: #333;
 
         &:focus,
         &:active {
             @include border-color(rgba(97, 97, 97, 0.19));
         }
-
-        .rc-collapse-extra {
-            #{$actionBar} {
-                background: #333;
-            }
+    }
+    #{$rcCollapse}-extra {
+        #{$actionBar} {
+            background: #333;
         }
     }
 }
 
 // =============== Tree =============== //
 #{$tree} {
-    .rc-tree-treenode {
+
+    #{$rcTree}-treenode {
         &:hover {
             background-color: #333;
         }
@@ -128,24 +128,25 @@
         .draggable {
             color: #bbb;
         }
+        
+        &-active {
+            background: rgba(0, 0, 0, 0.1);
+        }
     }
 
-    .rc-tree-treenode.drag-over > .draggable {
-        @include border-color(#316ac5);
-        background-color: #316ac5;
-        color: #bbb;
+    .drag-over {
+        >.draggable {
+            @include border-color(#316ac5);
+            background-color: #316ac5;
+            color: #bbb;
+        }
     }
 
-    .rc-tree-treenode.drag-over-gap-top > .draggable {
-        border-top: 2px rgb(0, 122, 204) solid;
-    }
-
-    .rc-tree-treenode.drag-over-gap-bottom > .draggable {
-        border-bottom: 2px rgb(0, 122, 204) solid;
-    }
-
-    .rc-tree-treenode-active {
-        background: rgba(0, 0, 0, 0.1);
+    .drag-over-gap-top,
+    .drag-over-gap-bottom {
+        >.draggable {
+            border-top: 2px rgb(0, 122, 204) solid;
+        }
     }
 
     input {

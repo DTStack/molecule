@@ -1,7 +1,7 @@
 $prefix: 'mo';
 
-@function prefix($name) {
-    @return '.' + $prefix + '-' + $name;
+@function prefix($name, $cusPrefix: $prefix) {
+    @return '.' + $cusPrefix + '-' + $name;
 }
 
 // ============= The Workbench parts =============
@@ -9,6 +9,7 @@ $actionBar: prefix('action-bar');
 $btn: prefix('btn');
 $checkbox: prefix('checkbox');
 $collapse: prefix('collapse');
+$rcCollapse: prefix('collapse', 'rc');
 $name: prefix('context-view');
 $dropDown: prefix('drop-down');
 $input: prefix('input');

@@ -5,6 +5,7 @@ import Toolbar from 'mo/components/toolbar';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
 import { IPanelItem } from 'mo/model/workbench/explorer';
+import './style.scss';
 
 interface IExpandProps {
     isActive?: boolean;

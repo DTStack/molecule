@@ -99,7 +99,7 @@
     border: 1px solid $color;
 }
 
-#{prefix($collapse)} {
+#{$collapse} {
     background-color: #252526;
 
     .rc-collapse-header {
@@ -111,7 +111,7 @@
         }
 
         .rc-collapse-extra {
-            #{prefix('action-bar')} {
+            #{$actionBar} {
                 background: #333;
             }
         }

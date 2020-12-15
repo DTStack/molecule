@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState, useRef } from 'react';
 import Tree, { TreeNode } from 'rc-tree';
 import { TreeProps } from 'rc-tree/lib/Tree';
 import { IMenuItem } from 'mo/components/menu';
@@ -7,12 +7,9 @@ import { Icon } from 'mo/components/icon';
 import { Menu } from 'mo/components/menu';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { prefixClaName, classNames } from 'mo/common/className';
-import { HTMLElementType } from 'mo/common/dom';
+import { select } from 'mo/common/dom';
 import './style.scss';
 
-export function getElementByCustomAttr(id: string): HTMLElementType {
-    return document.querySelector(`div[data-id=${id}]`);
-}
 export function generateTreeId(id?: string): string {
     return `mo_treeNode_${id}`;
 }
@@ -52,7 +49,14 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         ...others
     } = props;
     const [activeData, setActiveData] = useState<ITreeNodeItem>({});
-    // const [value, setValue] = useState<string>('')
+    const inputRef = useRef<any>(null);
+    const onFocus = () => {
+        setTimeout(() => {
+            if (inputRef.current) {
+                inputRef.current.focus();
+            }
+        })
+    }
     const getContextMenuList = (type?: FileType) => {
         let contextMenu: IMenuItem[] = [];
         if (type === FileTypes.FOLDER) {
@@ -63,6 +67,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     onClick: (e, active) => {
                         newFileItem &&
                             newFileItem(activeData, FileTypes.FILE as FileType);
+                        onFocus();
                     },
                 },
                 {
@@ -74,6 +79,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                 activeData,
                                 FileTypes.FOLDER as FileType
                             );
+                        onFocus();
                     },
                 },
                 {
@@ -81,6 +87,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     name: 'Rename',
                     onClick: (e, active) => {
                         reName && reName(activeData);
+                        onFocus();
                     },
                 },
                 {
@@ -99,6 +106,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     name: 'Rename',
                     onClick: (e, active) => {
                         reName && reName(activeData);
+                        onFocus();
                     },
                 },
                 {
@@ -117,7 +125,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         let contextViewMenu;
         if (moContextMenu && moContextMenu.length > 0) {
             contextViewMenu = useContextMenu({
-                anchor: getElementByCustomAttr(`${generateTreeId(id)}`),
+                anchor: select(`div[data-id=${generateTreeId(id)}]`),
                 render: renderContextMenu,
             });
         }
@@ -198,6 +206,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                         modify ? (
                             <input
                                 type="text"
+                                ref={inputRef}
                                 onKeyDown={(e: any) => {
                                     onEnter(e, item, index);
                                 }}
@@ -206,11 +215,11 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                     updateFile &&
                                         updateFile(item, e.target.value, index);
                                 }}
-                                onChange={(e) => {}}
+                                onChange={(e) => { }}
                             />
                         ) : (
-                            name
-                        )
+                                name
+                            )
                     }
                     key={id}
                     icon={modify ? '' : <Icon type={icon} />}

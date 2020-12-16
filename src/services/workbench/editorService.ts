@@ -18,9 +18,9 @@ export interface IEditorService extends Component<IEditor> {
      * @param groupId group ID
      */
     open<T = any>(tab: ITab, groupId?: number): void;
-    close(index: number, callback: () => void): void;
+    close(index: string, callback: () => void): void;
     onMoveTab(callback: (tabs: ITab[]) => void);
-    onSelectTab(callback: (tabKey: number) => void);
+    onSelectTab(callback: (tabKey: string) => void);
 }
 
 @singleton()
@@ -32,7 +32,7 @@ export class EditorService
         super();
         this.state = container.resolve(EditorModel);
     }
-    onSelectTab(callback: (tabKey: number) => void) {
+    onSelectTab(callback: (tabKey: string) => void) {
         this.subscribe(EditorEvent.OnSelectTab, (args) => {
             callback?.(args?.[0]);
         });
@@ -70,5 +70,5 @@ export class EditorService
     @emit(EditorEvent.CloseTab)
     public onClose() {}
 
-    public close(index: number, callback: () => void) {}
+    public close(index: string, callback: () => void) {}
 }

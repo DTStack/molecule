@@ -8,29 +8,20 @@ import {
     useDrop,
 } from 'react-dnd';
 
-import { prefixClaName, classNames } from 'mo/common/className';
-export interface TabSwicherProps {
-    children: any;
-    className?: string;
-}
+import { classNames, getBEMElement, getBEMModifier, prefixClaName } from 'mo/common/className';
 
-export function TabSwicher({ children, className }: TabSwicherProps) {
-    return (
-        <div className={classNames(prefixClaName('tab-switcher'), className)}>
-            {children}
-        </div>
-    );
-}
+export const tabClassName = prefixClaName('tab')
+export const tabItemClassName = getBEMElement(tabClassName, 'item')
 
 export const Tab = (props) => {
-    const { id, index, children, onMoveTab, onTabChange } = props;
+    const { index, propsKey, activeTab, children, onMoveTab, onTabChange } = props;
     const ref = useRef<HTMLDivElement>(null);
 
     const [, drag] = useDrag({
         collect: (monitor: DragSourceMonitor) => ({
             isDragging: monitor.isDragging(),
         }),
-        item: { type: 'DND_NODE', id, index },
+        item: { type: 'DND_NODE', propsKey, index },
     });
 
     const [, drop] = useDrop({
@@ -40,10 +31,9 @@ export const Tab = (props) => {
             monitor: DropTargetMonitor
         ) {
             if (!ref.current) return;
-            let hoverIndex;
             const component = ref.current;
             const dragIndex = monitor.getItem().index;
-            hoverIndex = index;
+            let hoverIndex = index;
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
                 return;
@@ -71,11 +61,11 @@ export const Tab = (props) => {
     });
 
     drag(drop(ref));
-
     return (
         <div
             ref={ref}
-            onClick={(event: React.MouseEvent) => onTabChange(props.index)}
+            className={classNames(tabItemClassName, { [getBEMModifier(tabItemClassName, 'active')]: activeTab === propsKey })}
+            onClick={(event: React.MouseEvent) => onTabChange(event, propsKey)}
         >
             {children}
         </div>

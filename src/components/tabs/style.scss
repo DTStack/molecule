@@ -1,90 +1,142 @@
 @import 'mo/style/common';
 
-#{prefix($tabSwitcher)} {
-    display: flex;
-    flex-flow: row nowrap;
-    height: 35px;
-}
-
-.tab-button {
-    align-items: center;
-    cursor: pointer;
-    display: inline-flex;
+#{$tabs} {
     height: 100%;
-    padding: 0 14px;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
     position: relative;
     user-select: none;
-    width: 150px;
+    width: 100%;
 
-    &__name {
-        font-size: 16px;
-        margin-left: 10px;
-    }
-
-    &__op {
+    &__header {
         align-items: center;
-        display: inline-flex;
-        line-height: 1;
-        margin-left: 10px;
+        display: flex;
+        flex-flow: row nowrap;
+        height: 36px;
+        justify-content: flex-start;
+        overflow: hidden;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
     }
 
-    &__dot {
-        display: block;
-        height: 18px;
-        position: relative;
-        width: 18px;
+    &__content {
+        font-size: 13px;
+        height: calc(100% - 36px);
+        width: 100%;
 
-        &::after {
-            border-radius: 50%;
-            content: '';
-            display: block;
-            height: 9px;
-            left: 5px;
-            position: relative;
-            top: 5px;
-            width: 9px;
+        &__item {
+            display: none;
+
+            &--active {
+                display: block;
+            }
         }
     }
+}
 
-    &__close {
+#{$tab} {
+    &__item {
+        align-items: center;
+        box-sizing: border-box;
         cursor: pointer;
-        display: block;
-        font-weight: 500;
-        height: 18px;
-        width: 18px;
-    }
-
-    &__svg {
+        display: flex;
+        font-size: 13px;
         height: 100%;
-        width: 100%;
-    }
+        max-width: 300px;
+        min-width: 40px;
+        padding: 0 20px;
 
-    &__placeholder {
-        display: block;
-        height: 18px;
-        width: 18px;
-    }
+        &__wrapper {
+            display: flex;
+            justify-content: flex-start;
+        }
 
-    .tab-button--active::after {
-        bottom: 0;
-        content: '';
-        height: 1px;
-        left: 0;
-        position: absolute;
-        width: 100%;
+        &--close {
+            font-size: 13px;
+            font-weight: 700;
+            height: 14px;
+            margin-left: 8px;
+            width: 14px;
+
+            &:hover {
+                visibility: hidden;
+            }
+
+            &:active {
+                transform: scale(1.1);
+            }
+        }
+
+        &__button {
+            align-items: center;
+            cursor: pointer;
+            display: inline-flex;
+            height: 100%;
+            padding: 0 14px;
+            position: relative;
+            user-select: none;
+            width: 150px;
+        
+            &__name {
+                font-size: 16px;
+                margin-left: 10px;
+            }
+        
+            &__op {
+                align-items: center;
+                display: inline-flex;
+                line-height: 1;
+                margin-left: 10px;
+            }
+
+            &__dot {
+                display: block;
+                height: 18px;
+                position: relative;
+                width: 18px;
+        
+                &::after {
+                    border-radius: 50%;
+                    content: '';
+                    display: block;
+                    height: 9px;
+                    left: 5px;
+                    position: relative;
+                    top: 5px;
+                    width: 9px;
+                }
+            }
+        
+            &__close {
+                cursor: pointer;
+                display: block;
+                font-weight: 500;
+                height: 18px;
+                width: 18px;
+            }
+
+            &__placeholder {
+                display: block;
+                height: 18px;
+                width: 18px;
+            }
+        
+            &--active::after {
+                bottom: 0;
+                content: '';
+                height: 1px;
+                left: 0;
+                position: absolute;
+                width: 100%;
+            }
+        }
     }
 }
 
-.tab-item {
-    display: none;
-    height: 100%;
 
-    .tab-item--active {
-        display: block;
-    }
-}
-
-.normal-items {
+.mo-ta {
     margin-bottom: auto;
     overflow: hidden;
     overflow-y: auto;

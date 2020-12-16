@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { classNames } from 'mo/common/className';
+
+import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
+import { tabItemClassName } from './Tab';
 import TabDot from './tabDot';
 import { Icon } from '../icon';
 
@@ -12,6 +14,9 @@ export interface TabButtonProps {
     onClick?: () => void;
     onClose?: () => void;
 }
+
+export const tabItemButtonClassName = getBEMElement(tabItemClassName, 'button')
+const tabItemNameClassName = getBEMElement(tabItemButtonClassName, 'name')
 
 export default function TabButton({
     name,
@@ -32,7 +37,7 @@ export default function TabButton({
     };
 
     const handleClick = () => {
-        onClick && onClick();
+        onClick?.();
     };
 
     const handleCloseClick = (event: React.MouseEvent) => {
@@ -43,16 +48,16 @@ export default function TabButton({
     return (
         <div
             className={classNames(
-                'tab-button',
-                { 'tab-button--active': active },
-                className
+                className,
+                tabItemButtonClassName,
+                { [getBEMModifier(tabItemButtonClassName, 'active')]: active }
             )}
             onClick={handleClick}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
             <Icon type="new-file" />
-            <span className="tab-button__name">{name}</span>
+            <span className={tabItemNameClassName}>{name}</span>
             <TabDot
                 modified={modified}
                 active={active}

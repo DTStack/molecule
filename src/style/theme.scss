@@ -157,24 +157,43 @@
 }
 
 // =============== Tab =============== //
-#{prefix($tabSwitcher)} {
+#{$tabs} {
     background-color: rgb(37, 37, 38);
 
-    .tab-button {
-        color: rgba(255, 255, 255, 0.6);
+    &__header {
+        background: 232323;
+        border-bottom: 1px solid #333;
+    }
 
-        &__dot {
-            &::after {
-                background-color: #fff;
+    &__content {
+        color: #fff;
+    }
+
+    &--line {
+        #{$tab}__item {
+            &--active {
+                border-bottom: 1px solid #e7e7e7;
+                color: #e7e7e7;
             }
-        }
-
-        &__close {
-            fill: rgba(255, 255, 255, 1);
         }
     }
 }
 
+#{$tab} {
+    &__item {
+        background: inherit;
+        color: #888;
+
+        &--active {
+            background: #1e1e1e;
+            color: #fff;
+        }
+
+        &--close {
+            color: #fff;
+        }
+    }
+}
 // =============== Button =============== //
 #{$btn} {
     background-color: #316ac5;

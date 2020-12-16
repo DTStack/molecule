@@ -42,13 +42,13 @@ function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
             <div className={groupContainerClassName}>
                 {
                     // Default we use monaco editor, but also you can customize by renderPane() function
-                    editor.renderPane ? (
-                        editor.renderPane()
+                    editor.renderPanel ? (
+                        editor.renderPanel()
                     ) : (
                         <MonacoEditor
                             options={{
                                 value: editor.value,
-                                language: editor.mode || 'sql',
+                                language: editor.language || 'sql',
                                 automaticLayout: true,
                             }}
                             editorInstanceRef={(editorInstance) => {

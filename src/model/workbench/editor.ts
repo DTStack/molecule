@@ -17,7 +17,7 @@ export interface IEditor {
     onClose?: () => void;
     render?: () => React.ReactNode;
     onMoveTab?: (tabs: ITab[], group?: number) => void;
-    onSelectTab?: (tabKey: number) => void;
+    onSelectTab?: (tabKey: string) => void;
 }
 
 export interface IEditorGroup<E = any> {

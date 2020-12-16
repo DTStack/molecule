@@ -82,7 +82,7 @@ export default class SearchPane extends React.Component<
         const newEditor = function () {
             const id = Math.random() * 10 + 1;
             const tabData = {
-                activeTab: 0,
+                activeTab: `${0}`,
                 id: id,
                 name: `editor.js`,
                 modified: true,

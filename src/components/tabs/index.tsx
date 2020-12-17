@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
@@ -29,7 +29,7 @@ export interface ITabsProps {
     type?: 'line' | 'editable-card';
     onCloseTab?: (key?: string) => void ;
     onMoveTab?: (tabs: ITab[]) => void;
-    onSelectTab?: (event: React.MouseEvent, key?: string) => void;
+    onSelectTab?: (key?: string) => void;
 }
 
 export const tabsClassName = prefixClaName('tabs')
@@ -55,22 +55,25 @@ const Tabs = (props: ITabsProps) => {
         [data]
     );
 
-    const onTabClick = (event: React.MouseEvent, key?: string) => {
-        onSelectTab?.(event, key);
+    const onTabClick = (key?: string) => {
+        onSelectTab?.(key);
     };
 
     const onTabClose = (item: ITab) => {
         onCloseTab?.(item.key)
     };
 
-    const renderTabBar = (tab) => (
-        <TabButton
-        key={tab.key}
-        name={tab.name}
-        modified={tab.modified}
-        active={activeTab === tab.key}
-        onClose={() => onCloseTab?.(tab.key)}
-    />)
+    const renderTabBar = (tab) => {
+        return (
+            <TabButton
+                key={tab.key}
+                name={tab.name}
+                modified={tab.modified}
+                active={activeTab === tab.key}
+                onClose={() => onCloseTab?.(tab.key)}
+            />
+        )
+    }
     return (
         <DndProvider backend={HTML5Backend}>
             <div className={classNames(tabsClassName, getBEMModifier(tabsClassName, `${type}`))}>

@@ -12,10 +12,9 @@ import { IEditor, IEditorGroup } from 'mo/model';
 const defaultEditorClassName = prefixClaName('editor');
 const groupClassName = getBEMElement(defaultEditorClassName, 'group');
 
-function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
+function renderEditorGroup(group: IEditorGroup, onMoveTab, onCloseTab, onSelectTab) {
     const editor = group.activeTab;
-
-    const tabs = group.tabs.map((item, index) => {
+    const tabs = group.tabs?.map((item, index) => {
         return Object.assign({}, item, {
           key: item.key,
           tip: item.path,
@@ -40,15 +39,15 @@ function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
                 onMoveTab={onMoveTab}
                 onSelectTab={onSelectTab}
                 activeTab={editor.key}
-                onCloseTab={(tabKey) => console.log(tabKey)}
+                onCloseTab={onCloseTab}
             />
         </div>
     );
 }
 
-export function renderGroups(groups: IEditorGroup[], onMoveTab, onSelectTab) {
+export function renderGroups(groups: IEditorGroup[], onCloseTab, onMoveTab, onSelectTab) {
     if (groups.length === 1) {
-        return renderEditorGroup(groups[0], onMoveTab, onSelectTab);
+        return renderEditorGroup(groups[0], onMoveTab, onCloseTab, onSelectTab);
     } else if (groups.length > 1) {
         const averageNum = Math.round(100 / groups.length);
         return (
@@ -59,7 +58,7 @@ export function renderGroups(groups: IEditorGroup[], onMoveTab, onSelectTab) {
                 allowResize={true}
             >
                 {groups.map((g: IEditorGroup) =>
-                    renderEditorGroup(g, onMoveTab, onSelectTab)
+                    renderEditorGroup(g, onMoveTab, onCloseTab, onSelectTab)
                 )}
             </SplitPane>
         );
@@ -68,12 +67,17 @@ export function renderGroups(groups: IEditorGroup[], onMoveTab, onSelectTab) {
 }
 
 export function Editor(props: IEditor) {
-    const { groups, render, current, onMoveTab, onSelectTab } = props;
+    const { groups, render, current, onCloseTab, onMoveTab, onSelectTab } = props;
+
+    const setMoveTab = tabs => onMoveTab?.(tabs, 1)
+    const setCloseTab = tabKey => onCloseTab?.(tabKey, 1)
+    const setSelectTab = tabKey => onSelectTab?.(tabKey, 1)
+
     let content: React.ReactNode = <Welcome />;
     if (current) {
         content = render
             ? render()
-            : renderGroups(groups, (tabs) => onMoveTab?.(tabs, 1), onSelectTab);
+            : renderGroups(groups, setCloseTab, setMoveTab, setSelectTab );
     }
 
     return <div className={defaultEditorClassName}>{content}</div>;

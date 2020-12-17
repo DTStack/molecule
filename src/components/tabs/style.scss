@@ -70,7 +70,6 @@
             padding: 0 14px;
             position: relative;
             user-select: none;
-            width: 150px;
         
             &__name {
                 font-size: 16px;
@@ -78,10 +77,8 @@
             }
         
             &__op {
-                align-items: center;
-                display: inline-flex;
-                line-height: 1;
                 margin-left: 10px;
+                width: 20px;
             }
 
             &__dot {
@@ -89,7 +86,7 @@
                 height: 18px;
                 position: relative;
                 width: 18px;
-        
+                
                 &::after {
                     border-radius: 50%;
                     content: '';

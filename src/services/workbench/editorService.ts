@@ -18,7 +18,7 @@ export interface IEditorService extends Component<IEditor> {
      * @param groupId group ID
      */
     open<T = any>(tab: ITab, groupId?: number): void;
-    close(index: string, callback: () => void): void;
+    onCloseTab(callback: (tabKey?: string) => void);
     onMoveTab(callback: (tabs: ITab[]) => void);
     onSelectTab(callback: (tabKey: string) => void);
 }
@@ -32,9 +32,18 @@ export class EditorService
         super();
         this.state = container.resolve(EditorModel);
     }
+
+    @emit(EditorEvent.OnSelectTab)
     onSelectTab(callback: (tabKey: string) => void) {
         this.subscribe(EditorEvent.OnSelectTab, (args) => {
-            callback?.(args?.[0]);
+            let group;
+            let { groups } = this.state;
+            const groupId = args?.[1];
+            const targetKey = args?.[0];
+            if (!groupId) return;
+            group = groups?.find((group: IEditorGroup) => group.id === groupId);
+            group.activeTab = { ...group.activeTab, key: targetKey};
+            callback?.(targetKey);
         });
     }
 
@@ -67,8 +76,33 @@ export class EditorService
     }
     public closeAll() {}
 
-    @emit(EditorEvent.CloseTab)
-    public onClose() {}
-
-    public close(index: string, callback: () => void) {}
+    @emit(EditorEvent.OnCloseTab)
+    public onCloseTab(callback: (data) => void) {
+        this.subscribe(EditorEvent.OnCloseTab, (args) => {
+            let group,lastIndex;
+            let { groups } = this.state;
+            const groupId = args?.[1];
+            const targetKey = args?.[0];
+            if (!groupId) return;
+            group = groups?.find((group: IEditorGroup) => group.id === groupId);
+            let newActiveKey = group?.activeTab?.key;
+            const groupTabs = group.tabs;
+            groupTabs.forEach((pane, i) => {
+                if (pane.key === targetKey) {
+                  lastIndex = i - 1;
+                }
+            });
+            const newPanes = groupTabs.filter(pane => pane.key !== targetKey);
+            if (newPanes.length && newActiveKey === targetKey) {
+                if (lastIndex >= 0) {
+                    newActiveKey = newPanes[lastIndex].key
+                } else {
+                    newActiveKey = newPanes[0].key
+                }
+            }
+            group.tabs = newPanes
+            group.activeTab ={ ...group.activeTab, key: newActiveKey}
+            callback?.(targetKey)
+        });
+    }
 }

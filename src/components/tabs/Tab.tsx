@@ -12,6 +12,7 @@ import { classNames, getBEMElement, getBEMModifier, prefixClaName } from 'mo/com
 
 export const tabClassName = prefixClaName('tab')
 export const tabItemClassName = getBEMElement(tabClassName, 'item')
+export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close')
 
 export const Tab = (props) => {
     const { index, propsKey, activeTab, children, onMoveTab, onTabChange } = props;
@@ -65,7 +66,7 @@ export const Tab = (props) => {
         <div
             ref={ref}
             className={classNames(tabItemClassName, { [getBEMModifier(tabItemClassName, 'active')]: activeTab === propsKey })}
-            onClick={(event: React.MouseEvent) => onTabChange(event, propsKey)}
+            onClick={(event: React.MouseEvent) => onTabChange(propsKey)}
         >
             {children}
         </div>

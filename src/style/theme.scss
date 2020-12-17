@@ -170,9 +170,12 @@
     }
 
     &--editable-card {
+        #{$tabs}__header {
+            border-bottom: 1px solid transparent;
+        }
         #{$tab}__item {
             &--active {
-                
+                border-bottom: 1px solid transparent;
             }
         }
     }
@@ -180,13 +183,13 @@
 
 #{$tab} {
     &__item {
-        background: inherit;
+        background: #232323;
         color: #888;
 
         &--active {
             background: #1e1e1e;
             border-bottom: 1px solid #e7e7e7;
-            color: #e7e7e7;
+            color: #fff;
         }
 
         &--close {

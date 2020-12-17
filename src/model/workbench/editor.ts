@@ -5,7 +5,7 @@ import { ITab } from 'mo/components/tabs';
 import { container, inject, injectable } from 'tsyringe';
 
 export enum EditorEvent {
-    CloseTab = 'editor.close',
+    OnCloseTab = 'editor.closeTab',
     OnMoveTab = 'editor.moveTab',
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
@@ -14,10 +14,10 @@ export interface IEditor {
     current: IEditorGroup | undefined;
     groups: IEditorGroup[];
     closeAll?: () => void;
-    onClose?: () => void;
+    onCloseTab?: (tabKey?: string, group?: number) => void;
     render?: () => React.ReactNode;
     onMoveTab?: (tabs: ITab[], group?: number) => void;
-    onSelectTab?: (tabKey: string) => void;
+    onSelectTab?: (tabKey: string, group?: number) => void;
 }
 
 export interface IEditorGroup<E = any> {
@@ -72,15 +72,17 @@ export class EditorModel implements IEditor {
         this.groups = groups;
     }
     closeAll?: (() => void) | undefined;
-    onClose?: (() => void) | undefined;
 
     public render!: () => React.ReactNode;
 
-    public readonly onselectTab = (tabKey: number) => {
-        EventBus.emit(EditorEvent.OnSelectTab, tabKey);
+    public readonly onSelectTab = (tabKey: string, groupId?: number) => {
+        EventBus.emit(EditorEvent.OnSelectTab, tabKey, groupId);
     };
     public readonly onMoveTab = (updateTabs: ITab[], groupId?: number) => {
         EventBus.emit(EditorEvent.OnMoveTab, updateTabs, groupId);
+    };
+    public readonly onCloseTab = (tabKey?: string, groupId?: number) => {
+        EventBus.emit(EditorEvent.OnCloseTab, tabKey, groupId);
     };
 }
 

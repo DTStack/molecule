@@ -67,7 +67,7 @@ export const Basic = () => {
             <h2>简述</h2>
             <p>Collapse 可以折叠/展开的内容区域。</p>
             <h3>使用示例 尝试点击下方面板看看～</h3>
-            <Collapse data={[editorPanel, sampleFolderPanel]} />;
+            <Collapse data={[editorPanel, sampleFolderPanel]} />
         </div>
     );
 };

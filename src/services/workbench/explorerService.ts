@@ -6,15 +6,15 @@ import {
     IPanelItem,
     getFileIconByName,
     generateFileTemplate,
-    findParentNodeId,
     getPrevParentNode,
 } from 'mo/model/workbench/explorer';
 import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
 export interface IExplorerService extends Component<IExpolorer> {
     push(data: IPanelItem): void;
-    newFileItem(fileData: ITreeNodeItem, type: FileType): void;
+    newFileItem(fileData: ITreeNodeItem, type: FileType, callback: Function): void;
     updateFile(fileData: ITreeNodeItem, newName: string, index: number): void;
-    reName(fileData: ITreeNodeItem): void;
+    reName(fileData: ITreeNodeItem, callback: Function): void;
+    deleteFile(fileData: ITreeNodeItem): void;
     onDropTree(treeData: ITreeNodeItem[]): void;
 }
 
@@ -51,7 +51,7 @@ export class ExplorerService
      * @param fileData treeNode ite
      * @param type new type
      */
-    public newFileItem(fileData: ITreeNodeItem, type: FileType) {
+    public newFileItem(fileData: ITreeNodeItem, type: FileType, callback: Function) {
         const original = this.state.treeData;
         const loop = (data: ITreeNodeItem[]) => {
             for (const item of data) {
@@ -79,6 +79,7 @@ export class ExplorerService
                 original?.push(fileData);
             }
         }
+        if (callback) callback()
     }
 
     /**
@@ -86,11 +87,9 @@ export class ExplorerService
      */
     public updateFile(fileData: ITreeNodeItem, newName: string, index: number) {
         const original = this.state.treeData;
-        const parentIds: string[] = findParentNodeId(original, fileData.id);
-        const prevPatentNodeId = parentIds.slice(-2)[0]; // prevParentNode Id
         const prevParentNode: ITreeNodeItem = getPrevParentNode(
             original,
-            prevPatentNodeId
+            fileData.id
         );
         const update = (tree) => {
             const rootNode = tree[0];
@@ -131,7 +130,7 @@ export class ExplorerService
         update(original);
     }
 
-    public reName(fileData: ITreeNodeItem) {
+    public reName(fileData: ITreeNodeItem, callback: Function) {
         const original = this.state.treeData;
         const updateName = (tree, id) => {
             const rootNode = tree[0];
@@ -154,6 +153,36 @@ export class ExplorerService
             return tree;
         };
         updateName(original, fileData.id);
+        if (callback) callback();
+    }
+
+    public deleteFile(fileData: ITreeNodeItem) {
+        const original = this.state.treeData;
+        const prevParentNode: ITreeNodeItem = getPrevParentNode(
+            original,
+            fileData.id
+        );
+        const curIndex = (prevParentNode.children || []).findIndex(item => item.id === fileData.id);
+        const deleteItem = (tree, id) => {
+            const rootNode = tree[0];
+            if (rootNode.id === id) {
+                return tree;
+            }
+            const loopNode = (file, id) => {
+                for (const item of file) {
+                    if (item.id === id) {
+                        prevParentNode.children?.splice(curIndex, 1);
+                        return;
+                    }
+                    if (item.children) {
+                        loopNode(item.children, id);
+                    }
+                }
+            };
+            loopNode(tree[0]?.children, id);
+            return tree;
+        };
+        deleteItem(original, fileData.id);
     }
 
     public onDropTree = (treeData: ITreeNodeItem[]) => {

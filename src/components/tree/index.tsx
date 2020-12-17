@@ -6,10 +6,12 @@ import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { Menu } from 'mo/components/menu';
 import { useContextMenu } from 'mo/components/contextMenu';
+import Modal from 'mo/components/dialog';
 import { prefixClaName, classNames } from 'mo/common/className';
 import { select } from 'mo/common/dom';
 import './style.scss';
 
+const confirm = Modal.confirm;
 export function generateTreeId(id?: string): string {
     return `mo_treeNode_${id}`;
 }
@@ -32,9 +34,10 @@ export interface ITreeNodeItem {
 export interface ITreeProps extends TreeProps {
     data: ITreeNodeItem[];
     onSelectFile?: (IMenuItem) => void;
-    newFileItem?: (fileData: ITreeNodeItem, type: FileType) => void;
+    newFileItem?: (fileData: ITreeNodeItem, type: FileType, callback: Function) => void;
     updateFile?(fileData: ITreeNodeItem, newName: string, index: number): void;
-    reName?(fileData: ITreeNodeItem): void;
+    reName?(fileData: ITreeNodeItem, callback: Function): void;
+    deleteFile?(fileData: ITreeNodeItem): void;
     onDropTree?(treeNode): void;
     className?: string;
 }
@@ -45,11 +48,14 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         newFileItem,
         updateFile,
         reName,
+        deleteFile,
         onDropTree,
         ...others
     } = props;
     const [activeData, setActiveData] = useState<ITreeNodeItem>({});
+    const [expandedKeys, setExpandedKeys] = useState<any[]>([]);
     const inputRef = useRef<any>(null);
+
     const onFocus = () => {
         setTimeout(() => {
             if (inputRef.current) {
@@ -57,63 +63,72 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
             }
         })
     }
+    const handleDelte = (activeData: ITreeNodeItem) => {
+        confirm({
+            title: `Are you sure you want to delete '${activeData?.name}' ?`,
+            content: 'This action is irreversible!',
+            onOk() {
+                deleteFile && deleteFile(activeData)
+            },
+            onCancel() {
+            },
+        });
+    }
+    const addExpandedKeys = (activeData: ITreeNodeItem) => {
+        const keys: any = [...expandedKeys]
+        keys.push(activeData?.id)
+        setExpandedKeys(keys);
+    }
     const getContextMenuList = (type?: FileType) => {
         let contextMenu: IMenuItem[] = [];
+        const commContextMenu = [
+            {
+                id: 'rename',
+                name: 'Rename',
+                onClick: (e, active) => {
+                    reName && reName(activeData, onFocus);
+                },
+            },
+            {
+                id: 'delete',
+                name: 'Delete',
+                onClick: (e, active) => {
+                    handleDelte(activeData)
+                }
+            }
+        ]
         if (type === FileTypes.FOLDER) {
             contextMenu = [
                 {
                     id: 'newFile',
                     name: 'New File',
                     onClick: (e, active) => {
+                        addExpandedKeys(activeData)
                         newFileItem &&
-                            newFileItem(activeData, FileTypes.FILE as FileType);
-                        onFocus();
+                            newFileItem(activeData, FileTypes.FILE as FileType, onFocus);
                     },
                 },
                 {
                     id: 'newFolder',
                     name: 'New Folder',
                     onClick: (e, active) => {
+                        addExpandedKeys(activeData)
                         newFileItem &&
                             newFileItem(
                                 activeData,
-                                FileTypes.FOLDER as FileType
+                                FileTypes.FOLDER as FileType,
+                                onFocus
                             );
-                        onFocus();
                     },
-                },
-                {
-                    id: 'rename',
-                    name: 'Rename',
-                    onClick: (e, active) => {
-                        reName && reName(activeData);
-                        onFocus();
-                    },
-                },
-                {
-                    id: 'delete',
-                    name: 'Delete',
-                },
-            ];
+                }
+            ].concat(commContextMenu);
         } else if (type === FileTypes.FILE) {
             contextMenu = [
                 {
                     id: 'openToSide',
                     name: 'Open to the side',
-                },
-                {
-                    id: 'rename',
-                    name: 'Rename',
-                    onClick: (e, active) => {
-                        reName && reName(activeData);
-                        onFocus();
-                    },
-                },
-                {
-                    id: 'delete',
-                    name: 'Delete',
-                },
-            ];
+                }
+            ].concat(commContextMenu);
         }
         return contextMenu;
     };
@@ -228,7 +243,6 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 </TreeNode>
             );
         });
-
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
@@ -240,6 +254,10 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     onRightClick={({ event, node }: any) => {
                         setActiveData(node.data);
                     }}
+                    onExpand={(expandedKeys) => {
+                        setExpandedKeys(expandedKeys)
+                    }}
+                    expandedKeys={expandedKeys}
                     onSelect={(selectedKeys, e: any) => {
                         const isFile = e.node.data.type === FileTypes.FILE;
                         const idModify = e.node.data.modify;

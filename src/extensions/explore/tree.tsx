@@ -12,14 +12,17 @@ const serviceProps = {
         };
         editorService.open(tabData, tabData.activeTab);
     },
-    newFileItem: function (fileData: ITreeNodeItem, type: FileType) {
-        explorerService.newFileItem(fileData, type);
+    newFileItem: function (fileData: ITreeNodeItem, type: FileType, callback: Function) {
+        explorerService.newFileItem(fileData, type, callback);
     },
     updateFile: function (fileData, newName, index) {
         explorerService.updateFile(fileData, newName, index);
     },
-    reName: function (fileData) {
-        explorerService.reName(fileData);
+    reName: function (fileData, callback: Function) {
+        explorerService.reName(fileData, callback);
+    },
+    deleteFile: function (fileData) {
+        explorerService.deleteFile(fileData);
     },
     onDropTree: function (treeNode) {
         explorerService.onDropTree(treeNode);

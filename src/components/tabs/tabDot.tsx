@@ -29,7 +29,7 @@ export default function TabDot({
     };
 
     const handleClick = (e: React.MouseEvent) => {
-        e.stopPropagation()
+        e.stopPropagation();
         onClick?.(e);
         handleMouseOut();
     };
@@ -52,11 +52,7 @@ export default function TabDot({
         if (modified) {
             return <i className={getBEMElement(classNames, 'dot')} />;
         }
-        return (
-            <i
-                className={getBEMElement(classNames, 'placeholder')}
-            />
-        );
+        return <i className={getBEMElement(classNames, 'placeholder')} />;
     };
 
     return (

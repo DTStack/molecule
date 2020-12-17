@@ -50,7 +50,7 @@ const Tabs = (props: ITabsProps) => {
         onCloseTab,
         onSelectTab,
     } = props;
-    debugger
+    debugger;
     const onMoveTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
@@ -66,7 +66,7 @@ const Tabs = (props: ITabsProps) => {
         [data]
     );
 
-    const onTabClick = (e: React.MouseEvent, key?: string) => {        
+    const onTabClick = (e: React.MouseEvent, key?: string) => {
         onSelectTab?.(key);
     };
     return (
@@ -91,8 +91,7 @@ const Tabs = (props: ITabsProps) => {
                                 title={tab.tip}
                                 closable={closable}
                                 {...tab}
-                            >
-                            </Tab>
+                            ></Tab>
                         );
                     })}
                 </div>

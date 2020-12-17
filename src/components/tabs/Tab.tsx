@@ -29,13 +29,13 @@ export const Tab = (props) => {
         label,
         onTabClose,
         onMoveTab,
-        onTabChange
+        onTabChange,
     } = props;
     const ref = useRef<HTMLDivElement>(null);
 
     const [hover, setHover] = useState(false);
     const handleMouseOver = () => setHover(true);
-    const handleMouseOut = () =>  setHover(false);
+    const handleMouseOut = () => setHover(false);
 
     const [, drag] = useDrag({
         collect: (monitor: DragSourceMonitor) => ({
@@ -85,8 +85,7 @@ export const Tab = (props) => {
         <div
             ref={ref}
             className={classNames(tabItemClassName, {
-                [getBEMModifier(tabItemClassName, 'active')]:
-                active,
+                [getBEMModifier(tabItemClassName, 'active')]: active,
             })}
             onClick={(event: React.MouseEvent) => onTabChange(event, propsKey)}
             onMouseOver={handleMouseOver}
@@ -100,7 +99,7 @@ export const Tab = (props) => {
                     active={active}
                     buttonHover={hover}
                     onClick={(e) => onTabClose?.(propsKey)}
-                />     
+                />
             )}
         </div>
     );

@@ -87,7 +87,7 @@ export class EditorService
             const targetKey = args?.[0];
             if (!groupId) return;
             group = groups?.find((group: IEditorGroup) => group.id === groupId);
-            let newActiveKey = group?.activeTab?.key
+            let newActiveKey = group?.activeTab?.key;
             const groupTabs = group.tabs;
             groupTabs.forEach((pane, i) => {
                 if (pane.key === targetKey) {
@@ -102,8 +102,8 @@ export class EditorService
                     newActiveKey = newPanes[0].key;
                 }
             }
-            group.tabs = newPanes
-            group.activeTab ={ ...group.activeTab, key: newActiveKey}
+            group.tabs = newPanes;
+            group.activeTab = { ...group.activeTab, key: newActiveKey };
 
             callback?.(targetKey);
         });

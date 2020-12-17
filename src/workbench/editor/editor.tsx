@@ -5,8 +5,8 @@ import SplitPane from 'react-split-pane';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import MonacoEditor from 'mo/components/monaco-editor';
 import Tabs from 'mo/components/tabs';
-import { tabItemClassName } from 'mo/components/tabs/Tab'
-import { Icon } from 'mo/components/icon'
+import { tabItemClassName } from 'mo/components/tabs/Tab';
+import { Icon } from 'mo/components/icon';
 import Welcome from './welcome';
 import { IEditor, IEditorGroup } from 'mo/model';
 
@@ -24,9 +24,12 @@ function renderEditorGroup(
         return Object.assign({}, item, {
             key: item.key,
             tip: item.path,
-            label: 
-                [<Icon type="new-file"/>,
-                 <span className={getBEMElement(tabItemClassName, 'name')}>{item.name}</span>],
+            label: [
+                <Icon type="new-file" />,
+                <span className={getBEMElement(tabItemClassName, 'name')}>
+                    {item.name}
+                </span>,
+            ],
             renderPanel: (
                 <MonacoEditor
                     options={{

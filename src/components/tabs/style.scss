@@ -53,20 +53,13 @@
             justify-content: flex-start;
         }
 
-        &--close {
+        &__close {
             font-size: 13px;
             font-weight: 700;
             height: 14px;
             margin-left: 8px;
+            visibility: visible;
             width: 14px;
-
-            &:hover {
-                visibility: hidden;
-            }
-
-            &:active {
-                transform: scale(1.1);
-            }
         }
 
         &__button {
@@ -133,11 +126,4 @@
             }
         }
     }
-}
-
-
-.mo-ta {
-    margin-bottom: auto;
-    overflow: hidden;
-    overflow-y: auto;
 }

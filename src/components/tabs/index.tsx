@@ -25,21 +25,22 @@ export interface ITabsProps {
     closable?: boolean;
     data: ITab[];
     activeTab?: string;
-    type?: 'line' | 'editable-card';
-    onCloseTab?: (item?: ITab) => void ;
+    // TODO 支持Card editable-card 默认 inline
+    type?: 'line' | 'card' |'editable-card';
+    onCloseTab?: (key?: string) => void ;
     onMoveTab?: (tabs: ITab[]) => void;
     onSelectTab?: (event: React.MouseEvent, key?: string) => void;
-    onTabChange: (index: string) => void;
 }
 
 export const tabsClassName = prefixClaName('tabs')
 export const tabsHeader = getBEMElement(tabsClassName, 'header')
 export const tabsContent = getBEMElement(tabsClassName, 'content')
 export const tabsContentItem = getBEMElement(tabsContent, 'item')
+export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close')
 
 const Tabs = (props: ITabsProps) => {
-    const { closable, data, activeTab: newActiveTab, type = 'line', onCloseTab, onSelectTab } = props;
-    const [activeTab, setActiveTab] = useState<string | number | void>(newActiveTab)
+    const { closable, data, activeTab, type = 'line', onCloseTab, onSelectTab } = props;
+    // const [activeTab, setActiveTab] = useState<string | number | void>(newActiveTab)
     const onMoveTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
@@ -56,14 +57,11 @@ const Tabs = (props: ITabsProps) => {
     );
 
     const onTabClick = (event: React.MouseEvent, key?: string) => {
-        setActiveTab(key)
         onSelectTab?.(event, key);
     };
 
     const onTabClose = (item: ITab) => {
-        let activekey = (data.filter(tab => item.key === tab.key))?.[0]?.key
-        setActiveTab(activekey)
-        onCloseTab?.(item)
+        onCloseTab?.(item.key)
     };
 
     const renderTabBar = (tab) => (
@@ -72,8 +70,7 @@ const Tabs = (props: ITabsProps) => {
         name={tab.name}
         modified={tab.modified}
         active={activeTab === tab.key}
-        onClose={() => onCloseTab?.(tab)}
-        className={'tab-button'}
+        onClose={() => onCloseTab?.(tab.key)}
     />)
     return (
         <DndProvider backend={HTML5Backend}>
@@ -92,7 +89,7 @@ const Tabs = (props: ITabsProps) => {
                             >
                                 {type === 'editable-card' ? renderTabBar?.(tab) : tab.label}
                                 {closable && (
-                                    <div className={getBEMModifier(tabItemClassName, 'close')} onClick={(e) => {
+                                    <div className={classNames(tabItemCloseClassName, {[getBEMModifier(tabItemCloseClassName, 'active')]: activeTab === tab.key })} onClick={(e) => {
                                         e.stopPropagation()
                                         onTabClose(tab)
                                     }}>

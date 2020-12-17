@@ -27,6 +27,7 @@ const groupBreadcrumbsClassName = getBEMElement(
 
 function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
     const editor = group.activeTab;
+    // Todo 测试editor tabs
     return (
         <div className={groupClassName} key={`group-${group.id}`}>
             <div className={groupHeaderClassName}>

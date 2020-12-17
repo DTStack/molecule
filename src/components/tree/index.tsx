@@ -53,6 +53,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         ...others
     } = props;
     const [activeData, setActiveData] = useState<ITreeNodeItem>({});
+    const [activeId, setActiveId] = useState<any>('');
     const [expandedKeys, setExpandedKeys] = useState<any[]>([]);
     const inputRef = useRef<any>(null);
 
@@ -132,6 +133,11 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         }
         return contextMenu;
     };
+    /**
+     * TODO:
+     * useEffect 约束参数最好不要为引用类型
+     * 这里 data 要做细粒度判断
+     */
     useEffect(() => {
         const { contextMenu, id, type } = activeData;
         const moContextMenu: IMenuItem[] =
@@ -147,7 +153,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         return function cleanup() {
             contextViewMenu?.dispose();
         };
-    }, [data, activeData]);
+    }, [data, activeId]);
 
     const onDrop = (info) => {
         console.log(info);
@@ -253,6 +259,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     switcherIcon={<Icon type="chevron-right" />}
                     onRightClick={({ event, node }: any) => {
                         setActiveData(node.data);
+                        setActiveId(node.data.id)
                     }}
                     onExpand={(expandedKeys) => {
                         setExpandedKeys(expandedKeys)

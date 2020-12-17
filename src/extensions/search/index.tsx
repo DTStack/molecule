@@ -43,8 +43,8 @@ function init() {
         console.log(`selected tabKey ${tabKey}`);
     });
     editorService.onCloseTab((tabKey?: string) => {
-        console.log(`closed tabkey ${tabKey}`)
-    })
+        console.log(`closed tabkey ${tabKey}`);
+    });
 }
 
 export const ExtendSearch: IExtension = {

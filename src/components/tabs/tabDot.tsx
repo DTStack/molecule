@@ -3,16 +3,16 @@ import { useState } from 'react';
 
 import { getBEMElement } from 'mo/common/className';
 import { Icon } from 'mo/components/icon';
-import { tabItemButtonClassName } from './tabButton'
-
 export interface TabDotProps {
     modified?: boolean;
     active?: boolean;
     buttonHover?: boolean;
     onClick?: (event: React.MouseEvent) => void;
+    classNames?: string;
 }
 
 export default function TabDot({
+    classNames = '',
     modified = false,
     onClick,
     active = false,
@@ -29,6 +29,7 @@ export default function TabDot({
     };
 
     const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation()
         onClick?.(e);
         handleMouseOut();
     };
@@ -40,20 +41,27 @@ export default function TabDot({
             (active && !modified)
         ) {
             return (
-                <div className={getBEMElement(tabItemButtonClassName, 'button')} onClick={handleClick}>
+                <div
+                    className={getBEMElement(classNames, 'button')}
+                    onClick={handleClick}
+                >
                     <Icon type="close" />
                 </div>
             );
         }
         if (modified) {
-            return <i className={getBEMElement("tab-button__dot", 'dot')} />;
+            return <i className={getBEMElement(classNames, 'dot')} />;
         }
-        return <i className={getBEMElement(tabItemButtonClassName, 'placeholder')} />;
+        return (
+            <i
+                className={getBEMElement(classNames, 'placeholder')}
+            />
+        );
     };
 
     return (
         <a
-            className={getBEMElement(tabItemButtonClassName, 'op')}
+            className={classNames}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >

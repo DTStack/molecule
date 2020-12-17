@@ -86,14 +86,13 @@ export default class SearchPane extends React.Component<
                 name: `editor.js`,
                 modified: false,
                 value: `hello javascript ${key}`,
-                path: 'desktop/molecule/editor1'
+                path: 'desktop/molecule/editor1',
             };
             console.log('open editor:', tabData);
             editorService.open(tabData, 1);
         };
 
-        const openCommand = function () {
-        };
+        const openCommand = function () {};
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header

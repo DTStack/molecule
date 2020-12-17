@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { findDOMNode } from 'react-dom';
 import {
     DragSourceMonitor,
@@ -8,15 +8,34 @@ import {
     useDrop,
 } from 'react-dnd';
 
-import { classNames, getBEMElement, getBEMModifier, prefixClaName } from 'mo/common/className';
+import {
+    classNames,
+    getBEMElement,
+    getBEMModifier,
+    prefixClaName,
+} from 'mo/common/className';
+import TabDot from './tabDot';
 
-export const tabClassName = prefixClaName('tab')
-export const tabItemClassName = getBEMElement(tabClassName, 'item')
-export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close')
+export const tabClassName = prefixClaName('tab');
+export const tabItemClassName = getBEMElement(tabClassName, 'item');
 
 export const Tab = (props) => {
-    const { index, propsKey, activeTab, children, onMoveTab, onTabChange } = props;
+    const {
+        closable,
+        index,
+        modified,
+        propsKey,
+        active,
+        label,
+        onTabClose,
+        onMoveTab,
+        onTabChange
+    } = props;
     const ref = useRef<HTMLDivElement>(null);
+
+    const [hover, setHover] = useState(false);
+    const handleMouseOver = () => setHover(true);
+    const handleMouseOut = () =>  setHover(false);
 
     const [, drag] = useDrag({
         collect: (monitor: DragSourceMonitor) => ({
@@ -65,10 +84,24 @@ export const Tab = (props) => {
     return (
         <div
             ref={ref}
-            className={classNames(tabItemClassName, { [getBEMModifier(tabItemClassName, 'active')]: activeTab === propsKey })}
-            onClick={(event: React.MouseEvent) => onTabChange(propsKey)}
+            className={classNames(tabItemClassName, {
+                [getBEMModifier(tabItemClassName, 'active')]:
+                active,
+            })}
+            onClick={(event: React.MouseEvent) => onTabChange(event, propsKey)}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
         >
-            {children}
+            {label}
+            {closable && (
+                <TabDot
+                    classNames={getBEMElement(tabItemClassName, 'op')}
+                    modified={modified}
+                    active={active}
+                    buttonHover={hover}
+                    onClick={(e) => onTabClose?.(propsKey)}
+                />     
+            )}
         </div>
     );
 };

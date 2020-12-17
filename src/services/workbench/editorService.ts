@@ -42,7 +42,7 @@ export class EditorService
             const targetKey = args?.[0];
             if (!groupId) return;
             group = groups?.find((group: IEditorGroup) => group.id === groupId);
-            group.activeTab = { ...group.activeTab, key: targetKey};
+            group.activeTab = { ...group.activeTab, key: targetKey };
             callback?.(targetKey);
         });
     }
@@ -63,6 +63,8 @@ export class EditorService
             current = group;
         }
     }
+
+    @emit(EditorEvent.OnMoveTab)
     public onMoveTab(callback: (data) => void) {
         this.subscribe(EditorEvent.OnMoveTab, (args) => {
             let { groups } = this.state;
@@ -79,30 +81,31 @@ export class EditorService
     @emit(EditorEvent.OnCloseTab)
     public onCloseTab(callback: (data) => void) {
         this.subscribe(EditorEvent.OnCloseTab, (args) => {
-            let group,lastIndex;
+            let group, lastIndex;
             let { groups } = this.state;
             const groupId = args?.[1];
             const targetKey = args?.[0];
             if (!groupId) return;
             group = groups?.find((group: IEditorGroup) => group.id === groupId);
-            let newActiveKey = group?.activeTab?.key;
+            let newActiveKey = group?.activeTab?.key
             const groupTabs = group.tabs;
             groupTabs.forEach((pane, i) => {
                 if (pane.key === targetKey) {
-                  lastIndex = i - 1;
+                    lastIndex = i - 1;
                 }
             });
-            const newPanes = groupTabs.filter(pane => pane.key !== targetKey);
+            const newPanes = groupTabs.filter((pane) => pane.key !== targetKey);
             if (newPanes.length && newActiveKey === targetKey) {
                 if (lastIndex >= 0) {
-                    newActiveKey = newPanes[lastIndex].key
+                    newActiveKey = newPanes[lastIndex].key;
                 } else {
-                    newActiveKey = newPanes[0].key
+                    newActiveKey = newPanes[0].key;
                 }
             }
             group.tabs = newPanes
             group.activeTab ={ ...group.activeTab, key: newActiveKey}
-            callback?.(targetKey)
+
+            callback?.(targetKey);
         });
     }
 }

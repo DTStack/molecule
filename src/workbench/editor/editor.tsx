@@ -2,64 +2,46 @@ import 'mo/workbench/editor/style.scss';
 import * as React from 'react';
 import SplitPane from 'react-split-pane';
 
-import MonacoEditor from 'mo/components/monaco-editor';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
-
+import MonacoEditor from 'mo/components/monaco-editor';
 import Tabs from 'mo/components/tabs';
+
 import Welcome from './welcome';
 import { IEditor, IEditorGroup } from 'mo/model';
 
 const defaultEditorClassName = prefixClaName('editor');
 const groupClassName = getBEMElement(defaultEditorClassName, 'group');
-const groupContainerClassName = getBEMElement(
-    defaultEditorClassName,
-    'group-container'
-);
-const groupHeaderClassName = getBEMElement(
-    defaultEditorClassName,
-    'group-header'
-);
-const groupTabsClassName = getBEMElement(defaultEditorClassName, 'group-tabs');
-const groupBreadcrumbsClassName = getBEMElement(
-    defaultEditorClassName,
-    'group-breadcrumbs'
-);
 
 function renderEditorGroup(group: IEditorGroup, onMoveTab, onSelectTab) {
     const editor = group.activeTab;
-    // Todo 测试editor tabs
+
+    const tabs = group.tabs.map((item, index) => {
+        return Object.assign({}, item, {
+          key: item.key,
+          tip: item.path,
+          renderPanel:  <MonacoEditor
+          options={{
+              value: item.value,
+              language: item.language || 'sql',
+              automaticLayout: true,
+          }}
+          editorInstanceRef={(editorInstance) => {
+              // This assignment will trigger moleculeCtx update, and subNodes update
+              group.editorInstance = editorInstance;
+          }}
+      />
+        })
+      })
     return (
         <div className={groupClassName} key={`group-${group.id}`}>
-            <div className={groupHeaderClassName}>
-                <div className={groupTabsClassName}>
-                    <Tabs
-                        data={group.tabs}
-                        onMoveTab={onMoveTab}
-                        onTabChange={onSelectTab}
-                    />
-                </div>
-                <div className={groupBreadcrumbsClassName}></div>
-            </div>
-            <div className={groupContainerClassName}>
-                {
-                    // Default we use monaco editor, but also you can customize by renderPane() function
-                    editor.renderPanel ? (
-                        editor.renderPanel()
-                    ) : (
-                        <MonacoEditor
-                            options={{
-                                value: editor.value,
-                                language: editor.language || 'sql',
-                                automaticLayout: true,
-                            }}
-                            editorInstanceRef={(editorInstance) => {
-                                // This assignment will trigger moleculeCtx update, and subNodes update
-                                group.editorInstance = editorInstance;
-                            }}
-                        />
-                    )
-                }
-            </div>
+            <Tabs
+                type="editable-card"
+                data={tabs}
+                onMoveTab={onMoveTab}
+                onSelectTab={onSelectTab}
+                activeTab={editor.key}
+                onCloseTab={(tabKey) => console.log(tabKey)}
+            />
         </div>
     );
 }

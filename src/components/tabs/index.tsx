@@ -12,6 +12,7 @@ import TabButton from './tabButton';
 
 import './style.scss';
 export interface ITab {
+    path?: string;
     key?: string;
     name?: string;
     modified?: boolean;
@@ -25,8 +26,7 @@ export interface ITabsProps {
     closable?: boolean;
     data: ITab[];
     activeTab?: string;
-    // TODO 支持Card editable-card 默认 inline
-    type?: 'line' | 'card' |'editable-card';
+    type?: 'line' | 'editable-card';
     onCloseTab?: (key?: string) => void ;
     onMoveTab?: (tabs: ITab[]) => void;
     onSelectTab?: (event: React.MouseEvent, key?: string) => void;
@@ -40,7 +40,6 @@ export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close')
 
 const Tabs = (props: ITabsProps) => {
     const { closable, data, activeTab, type = 'line', onCloseTab, onSelectTab } = props;
-    // const [activeTab, setActiveTab] = useState<string | number | void>(newActiveTab)
     const onMoveTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];

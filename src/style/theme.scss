@@ -169,11 +169,10 @@
         color: #fff;
     }
 
-    &--line {
+    &--editable-card {
         #{$tab}__item {
             &--active {
-                border-bottom: 1px solid #e7e7e7;
-                color: #e7e7e7;
+                
             }
         }
     }
@@ -186,7 +185,8 @@
 
         &--active {
             background: #1e1e1e;
-            color: #fff;
+            border-bottom: 1px solid #e7e7e7;
+            color: #e7e7e7;
         }
 
         &--close {

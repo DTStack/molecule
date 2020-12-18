@@ -84,7 +84,7 @@ stories.add('Basic Usage', () => {
             <h2>简述</h2>
             <p>Tab 提供组件多tab切换；拖拽</p>
             <div>
-                <h3>使用示例 1 - 基本使用</h3>
+                <h3>使用示例 1 - line模式</h3>
                 <div style={{ height: 300 }}>
                     <Tabs
                         data={tabs}
@@ -93,7 +93,7 @@ stories.add('Basic Usage', () => {
                         onSelectTab={onSelectTab}
                     />
                 </div>
-                <h3>使用示例2 - 带关闭状态的tab</h3>
+                <h3>使用示例2 - card模式</h3>
                 <div style={{ height: 300 }}>
                     <Tabs
                         type="card"

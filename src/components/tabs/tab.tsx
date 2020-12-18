@@ -22,7 +22,7 @@ export interface TabData<T = any> {
     path?: string;
     value?: string;
 }
-export interface ITab extends TabData{
+export interface ITab extends TabData {
     key?: string;
     name?: string;
     label?: React.ReactNode;

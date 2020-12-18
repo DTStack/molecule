@@ -6,7 +6,6 @@ export class EventEmitter {
         if (events && events.length > 0) {
             // The log for development
             events.forEach((callEvent) => {
-                console.log(...args)
                 callEvent(...args);
             });
         }

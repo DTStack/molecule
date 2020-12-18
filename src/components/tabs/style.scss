@@ -64,7 +64,7 @@
                 height: 18px;
                 position: relative;
                 width: 18px;
-    
+
                 &::after {
                     border-radius: 50%;
                     content: '';
@@ -76,7 +76,7 @@
                     width: 9px;
                 }
             }
-    
+
             &__close {
                 cursor: pointer;
                 display: block;
@@ -84,7 +84,7 @@
                 height: 18px;
                 width: 18px;
             }
-    
+
             &__placeholder {
                 display: block;
                 height: 18px;

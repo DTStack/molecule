@@ -11,7 +11,7 @@ import {
     classNames,
 } from 'mo/common/className';
 
-import { Tab, tabItemClassName } from './tab';
+import { Tab, tabItemClassName } from './tabItem';
 
 import './style.scss';
 export interface ITab {
@@ -43,17 +43,17 @@ export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close');
 
 const Tabs = (props: ITabsProps) => {
     const {
-        closable,
-        data,
         activeTab,
-        type = 'line',
-        onCloseTab,
-        onSelectTab,
+        data,
+        type = 'line', //TODO type logic
+        onMoveTab,
+        ...resetProps
     } = props;
-    const onMoveTab = useCallback(
+
+    const onChangeTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
-            props.onMoveTab?.(
+            onMoveTab?.(
                 update(data, {
                     $splice: [
                         [dragIndex, 1],
@@ -77,16 +77,15 @@ const Tabs = (props: ITabsProps) => {
                     {data?.map((tab: ITab, index: number) => {
                         return (
                             <Tab
-                                onMoveTab={onMoveTab}
-                                onTabChange={onSelectTab}
-                                onTabClose={onCloseTab}
-                                index={index}
-                                propsKey={tab.key}
-                                key={tab.key}
                                 active={activeTab === tab.key}
+                                index={index}
+                                label={tab.label}
+                                modified={tab.modified}
+                                key={tab.key}
+                                propsKey={tab.key}
                                 title={tab.tip}
-                                closable={closable}
-                                {...tab}
+                                onMoveTab={onChangeTab}
+                                {...resetProps}
                             ></Tab>
                         );
                     })}

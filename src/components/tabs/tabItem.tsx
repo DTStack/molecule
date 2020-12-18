@@ -23,13 +23,13 @@ export const Tab = (props) => {
     const {
         closable,
         index,
-        modified,
         propsKey,
         active,
         label,
-        onTabClose,
+        onCloseTab,
         onMoveTab,
-        onTabChange,
+        onSelectTab,
+        ...resetProps
     } = props;
     const ref = useRef<HTMLDivElement>(null);
 
@@ -87,7 +87,7 @@ export const Tab = (props) => {
             className={classNames(tabItemClassName, {
                 [getBEMModifier(tabItemClassName, 'active')]: active,
             })}
-            onClick={(event: React.MouseEvent) => onTabChange(propsKey)}
+            onClick={(event: React.MouseEvent) => onSelectTab(propsKey)}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
@@ -95,10 +95,10 @@ export const Tab = (props) => {
             {closable && (
                 <TabDot
                     classNames={getBEMElement(tabItemClassName, 'op')}
-                    modified={modified}
                     active={active}
                     buttonHover={hover}
-                    onClick={(e) => onTabClose?.(propsKey)}
+                    onClick={(e) => onCloseTab?.(propsKey)}
+                    {...resetProps}
                 />
             )}
         </div>

@@ -54,7 +54,9 @@ stories.add('Basic Usage', () => {
     const onSelectTab1 = (tabKey) => {
         setActiveTab1(tabKey);
     };
-    const onMoveTab = (data) => setTabs(data);
+    const onMoveTab = (data) => {
+        setTabs(data);
+    }
 
     const onMoveTab1 = (data) => setTabs1(data);
 
@@ -71,7 +73,7 @@ stories.add('Basic Usage', () => {
             if (lastIndex >= 0) {
                 newActiveKey = newPanes[lastIndex].key;
             } else {
-                newActiveKey = newPanes[0].key;
+                newActiveKey = newPanes[0]?.key;
             }
         }
         setTabs1(newPanes);

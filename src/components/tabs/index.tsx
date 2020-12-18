@@ -11,7 +11,7 @@ import {
     classNames,
 } from 'mo/common/className';
 
-import { Tab, tabItemClassName } from './Tab';
+import { Tab, tabItemClassName } from './tab';
 
 import './style.scss';
 export interface ITab {
@@ -50,7 +50,6 @@ const Tabs = (props: ITabsProps) => {
         onCloseTab,
         onSelectTab,
     } = props;
-    debugger;
     const onMoveTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
@@ -66,9 +65,6 @@ const Tabs = (props: ITabsProps) => {
         [data]
     );
 
-    const onTabClick = (e: React.MouseEvent, key?: string) => {
-        onSelectTab?.(key);
-    };
     return (
         <DndProvider backend={HTML5Backend}>
             <div
@@ -82,7 +78,7 @@ const Tabs = (props: ITabsProps) => {
                         return (
                             <Tab
                                 onMoveTab={onMoveTab}
-                                onTabChange={onTabClick}
+                                onTabChange={onSelectTab}
                                 onTabClose={onCloseTab}
                                 index={index}
                                 propsKey={tab.key}

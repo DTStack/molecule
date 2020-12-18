@@ -1,8 +1,9 @@
-import { Component } from 'mo/react';
-
-import { ITab } from 'mo/components/tabs';
-import { emit } from 'mo/common/event';
 import { singleton, container } from 'tsyringe';
+import { isEmpty } from 'loadsh';
+
+import { Component } from 'mo/react';
+import { emit } from 'mo/common/event';
+import { ITab } from 'mo/components/tabs';
 import {
     EditorEvent,
     EditorModel,
@@ -35,12 +36,10 @@ export class EditorService
 
     @emit(EditorEvent.OnSelectTab)
     onSelectTab(callback: (tabKey: string) => void) {
-        this.subscribe(EditorEvent.OnSelectTab, (args) => {
+        this.subscribe(EditorEvent.OnSelectTab, (targetKey: string, groupId?: number) => {
             let group;
             let { groups } = this.state;
-            const groupId = args?.[1];
-            const targetKey = args?.[0];
-            if (!groupId) return;
+            if (groupId === undefined) return;
             group = groups?.find((group: IEditorGroup) => group.id === groupId);
             group.activeTab = { ...group.activeTab, key: targetKey };
             callback?.(targetKey);
@@ -66,26 +65,23 @@ export class EditorService
 
     @emit(EditorEvent.OnMoveTab)
     public onMoveTab(callback: (data) => void) {
-        this.subscribe(EditorEvent.OnMoveTab, (args) => {
+        this.subscribe(EditorEvent.OnMoveTab, (tabs: ITab[], groupId?: number) => {
             let { groups } = this.state;
             let group;
-            if (!args?.[1]) return;
-            const groupId = args?.[1];
+            if (isEmpty(groupId)) return;
             group = groups?.find((group: IEditorGroup) => group.id === groupId);
-            group.tabs = args?.[0];
-            callback?.(args?.[0]);
+            group.tabs = tabs;
+            callback?.(tabs);
         });
     }
     public closeAll() {}
 
     @emit(EditorEvent.OnCloseTab)
     public onCloseTab(callback: (data) => void) {
-        this.subscribe(EditorEvent.OnCloseTab, (args) => {
+        this.subscribe(EditorEvent.OnCloseTab, (targetKey: string, groupId?: number) => {
             let group, lastIndex;
             let { groups } = this.state;
-            const groupId = args?.[1];
-            const targetKey = args?.[0];
-            if (!groupId) return;
+            if (groupId === undefined) return;
             group = groups?.find((group: IEditorGroup) => group.id === groupId);
             let newActiveKey = group?.activeTab?.key;
             const groupTabs = group.tabs;

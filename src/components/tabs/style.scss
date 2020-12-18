@@ -39,20 +39,14 @@
 #{$tab} {
     &__item {
         align-items: center;
-
-        align-items: center;
         box-sizing: border-box;
         cursor: pointer;
-        cursor: pointer;
         display: flex;
-        display: inline-flex;
         font-size: 13px;
-        height: 100%;
         height: 100%;
         max-width: 300px;
         min-width: 40px;
         padding: 0 20px;
-        padding: 0 14px;
         position: relative;
         user-select: none;
 
@@ -64,64 +58,38 @@
         &__op {
             margin-left: 10px;
             width: 20px;
-        }
 
-        &__dot {
-            display: block;
-            height: 18px;
-            position: relative;
-            width: 18px;
-
-            &::after {
-                border-radius: 50%;
-                content: '';
+            &__dot {
                 display: block;
-                height: 9px;
-                left: 5px;
+                height: 18px;
                 position: relative;
-                top: 5px;
-                width: 9px;
+                width: 18px;
+    
+                &::after {
+                    border-radius: 50%;
+                    content: '';
+                    display: block;
+                    height: 9px;
+                    left: 5px;
+                    position: relative;
+                    top: 5px;
+                    width: 9px;
+                }
+            }
+    
+            &__close {
+                cursor: pointer;
+                display: block;
+                font-weight: 500;
+                height: 18px;
+                width: 18px;
+            }
+    
+            &__placeholder {
+                display: block;
+                height: 18px;
+                width: 18px;
             }
         }
-
-        &__close {
-            cursor: pointer;
-            display: block;
-            font-weight: 500;
-            height: 18px;
-            width: 18px;
-        }
-
-        &__placeholder {
-            display: block;
-            height: 18px;
-            width: 18px;
-        }
-
-        // &--active::after {
-        //     bottom: 0;
-        //     content: '';
-        //     height: 1px;
-        //     left: 0;
-        //     position: absolute;
-        //     width: 100%;
-        // }
-
-        // &__wrapper {
-        //     display: flex;
-        //     justify-content: flex-start;
-        // }
-
-        // &__close {
-        //     font-size: 13px;
-        //     font-weight: 700;
-        //     height: 14px;
-        //     margin-left: 8px;
-        //     visibility: visible;
-        //     width: 14px;
-        // }
-
-        // &__button {
-        // }
     }
 }

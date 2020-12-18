@@ -5,7 +5,7 @@ import SplitPane from 'react-split-pane';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import MonacoEditor from 'mo/components/monaco-editor';
 import Tabs from 'mo/components/tabs';
-import { tabItemClassName } from 'mo/components/tabs/Tab';
+import { tabItemClassName } from 'mo/components/tabs/tab';
 import { Icon } from 'mo/components/icon';
 import Welcome from './welcome';
 import { IEditor, IEditorGroup } from 'mo/model';

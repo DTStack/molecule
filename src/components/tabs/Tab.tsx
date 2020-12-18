@@ -67,11 +67,11 @@ export const Tab = (props) => {
             const hoverClientX =
                 (clientOffset as { x: number; y: number }).x -
                 hoverBoundingRect.left;
-            // 往下拖动
+            // drag down
             if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
                 return;
             }
-            // 往上拖动
+            // drag up
             if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
                 return;
             }
@@ -87,7 +87,7 @@ export const Tab = (props) => {
             className={classNames(tabItemClassName, {
                 [getBEMModifier(tabItemClassName, 'active')]: active,
             })}
-            onClick={(event: React.MouseEvent) => onTabChange(event, propsKey)}
+            onClick={(event: React.MouseEvent) => onTabChange(propsKey)}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >

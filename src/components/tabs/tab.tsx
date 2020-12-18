@@ -16,15 +16,17 @@ import {
 } from 'mo/common/className';
 import TabDot from './tabDot';
 
-export interface ITab {
+export interface TabData<T = any> {
+    modified?: boolean;
+    language?: string | undefined;
     path?: string;
+    value?: string;
+}
+export interface ITab extends TabData{
     key?: string;
     name?: string;
-    modified?: boolean;
-    value?: string;
-    language?: string | undefined;
-    tip?: string | React.ReactNode;
     label?: React.ReactNode;
+    tip?: string | React.ReactNode;
     renderPanel?: React.ReactNode;
 }
 

@@ -16,3 +16,4 @@ interface HTMLElementProps<T = any> {
 }
 
 type LiteralUnion<T extends U, U> = T | (U & {});
+

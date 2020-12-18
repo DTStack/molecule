@@ -44,13 +44,7 @@ export const tabsContentItem = getBEMElement(tabsContent, 'item');
 export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close');
 
 const Tabs = (props: ITabsProps) => {
-    const {
-        activeTab,
-        data,
-        type = 'line',
-        onMoveTab,
-        ...resetProps
-    } = props;
+    const { activeTab, data, type = 'line', onMoveTab, ...resetProps } = props;
 
     const onChangeTab = useCallback(
         (dragIndex, hoverIndex) => {

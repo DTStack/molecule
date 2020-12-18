@@ -11,20 +11,9 @@ import {
     classNames,
 } from 'mo/common/className';
 
-import { Tab, tabItemClassName } from './tab';
+import { Tab, ITab, tabItemClassName } from './tab';
 
 import './style.scss';
-export interface ITab {
-    path?: string;
-    key?: string;
-    name?: string;
-    modified?: boolean;
-    value?: string;
-    language?: string | undefined;
-    tip?: string | React.ReactNode;
-    label?: React.ReactNode;
-    renderPanel?: React.ReactNode;
-}
 
 export type TabsType = 'line' | 'card';
 export interface ITabsProps {

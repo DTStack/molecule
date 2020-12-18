@@ -16,6 +16,18 @@ import {
 } from 'mo/common/className';
 import TabDot from './tabDot';
 
+export interface ITab {
+    path?: string;
+    key?: string;
+    name?: string;
+    modified?: boolean;
+    value?: string;
+    language?: string | undefined;
+    tip?: string | React.ReactNode;
+    label?: React.ReactNode;
+    renderPanel?: React.ReactNode;
+}
+
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
 

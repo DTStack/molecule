@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { EventBus } from 'mo/common/event';
 import { observable } from 'mo/common/observable';
-import { ITab } from 'mo/components/tabs';
+import { ITab } from 'mo/components/tabs/tab';
 import { container, inject, injectable } from 'tsyringe';
 
 export enum EditorEvent {

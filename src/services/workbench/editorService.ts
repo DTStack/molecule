@@ -2,7 +2,7 @@ import { singleton, container } from 'tsyringe';
 
 import { Component } from 'mo/react';
 import { emit } from 'mo/common/event';
-import { ITab } from 'mo/components/tabs';
+import { ITab } from 'mo/components/tabs/tab';
 import {
     EditorEvent,
     EditorModel,

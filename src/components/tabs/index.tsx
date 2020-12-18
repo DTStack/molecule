@@ -11,7 +11,7 @@ import {
     classNames,
 } from 'mo/common/className';
 
-import { Tab, tabItemClassName } from './tabItem';
+import { Tab, tabItemClassName } from './tab';
 
 import './style.scss';
 export interface ITab {

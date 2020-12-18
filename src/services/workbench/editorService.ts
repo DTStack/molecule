@@ -72,7 +72,6 @@ export class EditorService
         this.subscribe(
             EditorEvent.OnMoveTab,
             (tabs: ITab[], groupId?: number) => {
-                debugger;
                 let { groups } = this.state;
                 let group;
                 if (groupId === undefined) return;

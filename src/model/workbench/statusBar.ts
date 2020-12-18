@@ -1,28 +1,45 @@
+import { EventBus } from 'mo/common/event';
 import { observable } from 'mo/common/observable';
-import { container, inject, injectable } from 'tsyringe';
+import * as React from 'react';
+import { injectable } from 'tsyringe';
 
-export interface IStatusBarItem {}
+export interface IStatusBarItem extends HTMLElementProps {
+    id: string;
+    sortIndex: number;
+    onClick?(e: React.MouseEvent, item?: IStatusBarItem);
+    render?: () => ReactNode;
+    name?: string;
+}
 
 export interface IStatusBar {
-    data: IStatusBarItem[];
-    onClick: (event: React.MouseEvent<any, any>) => void;
-    render?: () => React.ReactNode | JSX.Element;
+    rightItems: IStatusBarItem[];
+    leftItems: IStatusBarItem[];
+    onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
+}
+
+/**
+ * The activity bar event definition
+ */
+export enum StatusBarEvent {
+    /**
+     * Selected an activity bar
+     */
+    onClick = 'statusBar.onClick',
+    /**
+     * Activity bar data changed
+     */
+    DataChanged = 'statusBar.data',
 }
 
 @observable()
 @injectable()
 export class StatusBarModel implements IStatusBar {
-    public data: IStatusBarItem[] = [];
-
-    constructor(@inject('StatusBarData') data: IStatusBarItem[] = []) {
-        this.data = data;
-    }
+    public leftItems: IStatusBarItem[] = [];
+    public rightItems: IStatusBarItem[] = [];
 
     public render!: () => React.ReactNode;
 
-    public onClick = (event: React.MouseEvent) => {
-        console.log('onClick:', event);
+    public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
+        EventBus.emit(StatusBarEvent.onClick, e, item);
     };
 }
-
-container.register('StatusBarData', { useValue: [] });

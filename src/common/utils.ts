@@ -7,7 +7,6 @@ export function cloneInstance<T>(origin: T) {
         const prototypes = Object.getPrototypeOf(origin) || {};
         Object.keys(prototypes).forEach((prop) => {
             if (typeof prototypes[prop] === 'function') {
-                console.log('bind:', prototypes[prop], origin);
                 prototypes[prop].bind(origin);
             }
         });
@@ -16,6 +15,16 @@ export function cloneInstance<T>(origin: T) {
             ...prototypes,
         };
     } catch (e) {
-        console.error('cloneInstance error:', e);
+        console.error('Function cloneInstance error:', e);
     }
+}
+
+/**
+ * Merge multiple functions to one function
+ * @param funcs
+ */
+export function mergeFunctions(...funcs) {
+    return function (...args) {
+        funcs.filter((fn) => !!fn).forEach((fn) => fn?.(...args));
+    };
 }

@@ -273,3 +273,42 @@
         }
     }
 }
+
+#{$modal} {
+    color: #fff;
+
+    &-mask {
+        background-color: rgba(0, 0, 0, 0.45);
+    }
+
+    &-content {
+        background-color: #1e1e1e;
+        box-shadow: rgba(0, 0, 0, 0.31) 0 0 8px;
+        color: #fff;
+    }
+
+    &-header {
+        background: inherit;
+        color: #fff;
+    }
+
+    &-close {
+        background: 0 0;
+        border: 0;
+        color: #fff;
+    }
+}
+
+#{$confirm} {
+    &__indicator {
+        .codicon-warning {
+            color: rgb(204, 167, 0);
+        }
+    }
+
+    &__message {
+        &--detail {
+            color: rgb(187, 187, 187);
+        }
+    }
+}

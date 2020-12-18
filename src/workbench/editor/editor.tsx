@@ -49,7 +49,7 @@ function renderEditorGroup(
         <div className={groupClassName} key={`group-${group.id}`}>
             <Tabs
                 closable={true}
-                type="editable-card"
+                type="card"
                 data={tabs}
                 onMoveTab={onMoveTab}
                 onSelectTab={onSelectTab}

@@ -1,5 +1,4 @@
 import { singleton, container } from 'tsyringe';
-import { isEmpty } from 'loadsh';
 
 import { Component } from 'mo/react';
 import { emit } from 'mo/common/event';
@@ -73,9 +72,10 @@ export class EditorService
         this.subscribe(
             EditorEvent.OnMoveTab,
             (tabs: ITab[], groupId?: number) => {
+                debugger
                 let { groups } = this.state;
                 let group;
-                if (isEmpty(groupId)) return;
+                if (groupId === undefined) return;
                 group = groups?.find(
                     (group: IEditorGroup) => group.id === groupId
                 );

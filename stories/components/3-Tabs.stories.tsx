@@ -96,10 +96,10 @@ stories.add('Basic Usage', () => {
                 <h3>使用示例2 - 带关闭状态的tab</h3>
                 <div style={{ height: 300 }}>
                     <Tabs
+                        type="card"
                         data={tabs1}
                         activeTab={activeTab1}
                         onMoveTab={onMoveTab1}
-                        closable={true}
                         onSelectTab={onSelectTab1}
                         onCloseTab={onCloseTab1}
                     />

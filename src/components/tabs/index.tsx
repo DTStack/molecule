@@ -25,11 +25,13 @@ export interface ITab {
     label?: React.ReactNode;
     renderPanel?: React.ReactNode;
 }
+
+export type TabsType = 'line' | 'card';
 export interface ITabsProps {
     closable?: boolean;
     data: ITab[];
     activeTab?: string;
-    type?: 'line' | 'editable-card';
+    type?: TabsType;
     onCloseTab?: (key?: string) => void;
     onMoveTab?: (tabs: ITab[]) => void;
     onSelectTab?: (key?: string) => void;
@@ -45,7 +47,7 @@ const Tabs = (props: ITabsProps) => {
     const {
         activeTab,
         data,
-        type = 'line', //TODO type logic
+        type = 'line',
         onMoveTab,
         ...resetProps
     } = props;
@@ -70,7 +72,7 @@ const Tabs = (props: ITabsProps) => {
             <div
                 className={classNames(
                     tabsClassName,
-                    getBEMModifier(tabsClassName, `${type}`)
+                    getBEMModifier(tabsClassName, type as string)
                 )}
             >
                 <div className={tabsHeader}>

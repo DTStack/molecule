@@ -169,7 +169,7 @@
         color: #fff;
     }
 
-    &--editable-card {
+    &--card {
         #{$tabs}__header {
             border-bottom: 1px solid transparent;
         }
@@ -185,6 +185,14 @@
     &__item {
         background: #232323;
         color: #888;
+
+        &__op {
+            &__dot {
+                &::after {
+                    background: #fff;
+                }
+            }
+        }
 
         &--active {
             background: #1e1e1e;

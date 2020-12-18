@@ -56,7 +56,7 @@ stories.add('Basic Usage', () => {
     };
     const onMoveTab = (data) => {
         setTabs(data);
-    }
+    };
 
     const onMoveTab1 = (data) => setTabs1(data);
 

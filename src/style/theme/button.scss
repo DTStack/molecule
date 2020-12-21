@@ -1,0 +1,13 @@
+@import 'mo/style/common';
+
+// =============== Button =============== //
+#{$btn} {
+    --button-hoverBackground: var(--button-background);
+    background-color: var(--button-background);
+    color: var(--button-foreground);
+
+    &:hover {
+        background-color: var(--button-hoverBackground);
+        opacity: 0.9;
+    }
+}

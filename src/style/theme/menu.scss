@@ -1,0 +1,28 @@
+@import 'mo/style/common';
+
+// =============== Menu =============== //
+#{$menu} {
+    &__item {
+        &:hover {
+            background-color: var(--button-background);
+            color: var(--button-foreground);
+        }
+
+        &-active {
+            background-color: var(--button-background);
+            color: var(--button-foreground);
+        }
+    }
+
+    &__separator {
+        background-color: var(--menu-separatorBackground);
+    }
+}
+
+#{$menu},
+#{$subMenu} {
+    background-color: var(--menu-background);
+    border-color: var(--menu-border);
+    box-shadow: var(--menu-background) 0 2px 4px;
+    color: var(--menu-foreground);
+}

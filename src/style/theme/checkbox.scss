@@ -1,0 +1,18 @@
+@import 'mo/style/common';
+
+// =============== Checkbox =============== //
+
+#{$checkbox} {
+    &--focus + label::before {
+        outline-color: var(--focusBorder);
+    }
+
+    &__label {
+        color: var(--checkbox-foreground);
+
+        &::before {
+            background-color: var(--checkbox-background);
+            border-color: var(--checkbox-border);
+        }
+    }
+}

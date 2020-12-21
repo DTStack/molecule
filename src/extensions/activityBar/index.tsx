@@ -19,6 +19,9 @@ function initActivityBar(extensionCtx: IExtensionService) {
             {
                 id: 'ColorTheme',
                 name: 'Color Theme',
+                onClick(e) {
+                    console.log('globalSettings: colorTheme onClick:', e);
+                },
             },
         ],
     };

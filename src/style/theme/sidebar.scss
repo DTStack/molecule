@@ -1,0 +1,19 @@
+@import 'mo/style/common';
+
+// =============== Sidebar =============== //
+#{$sidebar} {
+    background-color: var(--sideBar-background);
+    border-color: var(--sideBar-border);
+    color: var(--sideBar-foreground);
+    outline-color: var(--sideBar-border);
+
+    &__header {
+        background-color: var(--sideBarSectionHeader-background);
+        border-color: var(--sideBarSectionHeader-border);
+        color: var(--sideBarSectionHeader-foreground);
+    }
+
+    &__title h2 {
+        color: var(--sideBarTitle-foreground);
+    }
+}

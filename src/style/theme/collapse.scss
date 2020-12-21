@@ -1,0 +1,25 @@
+@import 'mo/style/common';
+
+// =============== Collapse =============== //
+@mixin border-color($color) {
+    border: 1px solid $color;
+}
+
+#{prefix($collapse)} {
+    background-color: var(--sidebar-background);
+
+    .rc-collapse-header {
+        background: var(--sidebar-section-header-background);
+
+        &:focus,
+        &:active {
+            border-color: var(--sidebar-border);
+        }
+
+        .rc-collapse-extra {
+            #{prefix('action-bar')} {
+                background: var(--sidebar-section-header-background);
+            }
+        }
+    }
+}

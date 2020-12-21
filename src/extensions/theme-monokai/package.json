@@ -11,6 +11,7 @@
     "contributes": {
         "themes": [
             {
+                "id": "Monokai",
                 "label": "Monokai",
                 "uiTheme": "vs-dark",
                 "path": "./themes/monokai-color-theme.json"

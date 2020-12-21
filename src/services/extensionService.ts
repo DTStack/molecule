@@ -1,6 +1,9 @@
 import { singleton, inject, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension } from 'mo/model/extension';
+import { colorThemeService } from 'mo';
+import { IColorTheme } from 'mo/model/colorTheme';
+import logger from 'mo/common/logger';
 
 export interface IExtensionService {
     /**
@@ -25,25 +28,18 @@ export class ExtensionService implements IExtensionService {
         this.load(extensions);
     }
 
-    /**
-     * TODO: Current extension service can't parses VSCode theme, so needs to refactor
-     * @param param0 extensionEntry object
-     * @param moleculeCtx the context object of molecule
-     */
     public load(extensions: IExtension[] = []) {
         try {
             if (extensions?.length === 0) return;
             this.extensions = this.extensions.concat(extensions);
+            logger.info('ExtensionService.extensions:', this.extensions);
             const ctx = this;
-
             extensions?.forEach((extension: IExtension, index: number) => {
-                if (extension.activate) {
+                if (extension && extension.activate) {
                     extension.activate(ctx);
-                } else {
-                    // TODO: different kind of extension ,different hand
-                    // throw new Error(ErrorMsg.NotFoundActivateMethod);
                 }
-                if (extension.contributes) {
+
+                if (extension && extension.contributes) {
                     this.loadContributes(extension.contributes);
                 }
             });
@@ -55,10 +51,13 @@ export class ExtensionService implements IExtensionService {
     public loadContributes(contributes: IContribute) {
         const contributeKeys = Object.keys(contributes);
         contributeKeys.forEach((type: string) => {
-            if (type === IContributeType.Commands) {
-                console.log('contributeKeys:', type);
-                // ThemeService.load(extension[type]);
-                // exts.push(extension);
+            switch (type) {
+                case IContributeType.Themes: {
+                    const themes: IColorTheme[] | undefined = contributes[type];
+                    if (themes) {
+                        colorThemeService.load(themes);
+                    }
+                }
             }
         });
     }

@@ -29,11 +29,7 @@
             "mo/*": ["./src/*"],
             "@stories": ["./stories/*"]
         },
-        "typeRoots": [
-            "node",
-            "node_modules/@types",
-            "src/typings"
-        ]
+        "typeRoots": ["node", "node_modules/@types", "src/typings"]
     },
     "exclude": ["node_modules", "build", "scripts"]
 }

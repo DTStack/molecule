@@ -24,6 +24,6 @@
     }
 
     &--shadow {
-        box-shadow: rgb(0, 0, 0) 0 2px 4px;
+        box-shadow: var(--widget-shadow) 0 2px 4px;
     }
 }

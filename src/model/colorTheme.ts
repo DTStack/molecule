@@ -1,7 +1,6 @@
-export interface ThemeColor extends Object {
-    id?: string;
+export interface IColors {
+    [colorId: string]: string;
 }
-
 export interface TokenColor extends Object {
     name?: string;
     scope?: string | string[];
@@ -17,7 +16,7 @@ export interface IColorTheme {
     name: string;
     uiTheme: string;
     path?: string;
-    colors?: ThemeColor;
+    colors?: IColors;
     tokenColors?: TokenColor[];
     /**
      * The semanticTokenColors mappings as well as

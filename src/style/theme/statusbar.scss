@@ -1,0 +1,18 @@
+@import 'mo/style/common';
+
+// =============== Status Bar =============== //
+#{$statusBar} {
+    background-color: var(--statusBar-background);
+    border-color: var(--statusBar-border);
+    color: var(--statusBar-foreground);
+
+    &__item {
+        &:hover {
+            background-color: var(--statusBarItem-hoverBackground);
+        }
+
+        &:active {
+            background-color: var(--statusBarItem-activeBackground);
+        }
+    }
+}

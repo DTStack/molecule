@@ -5,7 +5,10 @@ export * from './extensionService';
 export * from './theme/colorThemeService';
 export * from './workbench';
 
-import { ColorThemeService, IColorThemeService } from './theme/colorThemeService';
+import {
+    ColorThemeService,
+    IColorThemeService,
+} from './theme/colorThemeService';
 import { ExtensionService, IExtensionService } from './extensionService';
 import {
     ActivityBarService,
@@ -36,10 +39,11 @@ const editorService = container.resolve<IEditorService>(EditorService);
 const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
 
 /**
- * The theme service,
- * TODO: think about break themeService into ColorTheme and IconTheme
+ * The ColorTheme service,
  */
-const colorThemeService = container.resolve<IColorThemeService>(ColorThemeService);
+const colorThemeService = container.resolve<IColorThemeService>(
+    ColorThemeService
+);
 
 /**
  * Note: The extension service depends on other workbench services,

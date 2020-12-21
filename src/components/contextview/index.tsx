@@ -13,9 +13,8 @@ import {
     HTMLElementType,
     IPosition,
 } from 'mo/common/dom';
-import { Utils } from 'dt-utils/lib';
 import { EventEmitter } from 'mo/common/event';
-
+import { Utils } from 'dt-utils';
 export interface IContextViewProps {
     /**
      * Default true
@@ -43,7 +42,8 @@ const shadowClassName = getBEMModifier(contextViewClass, 'shadow');
 
 const Emitter = new EventEmitter();
 
-export function useContextView(props?: IContextViewProps): IContextView {
+export function useContextView(props: IContextViewProps = {}): IContextView {
+    const { shadowOutline = true } = props;
     const claName = classNames(contextViewClass, 'fade-in');
     let contextView: HTMLElementType = select('.' + contextViewClass); // Singleton contextView dom
 
@@ -92,7 +92,7 @@ export function useContextView(props?: IContextViewProps): IContextView {
         contextView = document.createElement('div');
         contextView.className = classNames(
             claName,
-            Utils.isMacOs() ? 'mac' : null
+            Utils.isMacOs() ? 'mac' : ''
         )!;
         contextView.style.visibility = 'hidden';
         const root = document.getElementById('molecule');
@@ -101,7 +101,7 @@ export function useContextView(props?: IContextViewProps): IContextView {
         } else {
             root.appendChild(contextView);
         }
-        const shadowClass = !props?.shadowOutline ? '' : shadowClassName;
+        const shadowClass = !shadowOutline ? '' : shadowClassName;
 
         ReactDOM.render(
             <>

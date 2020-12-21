@@ -19,7 +19,7 @@ export enum IContributeType {
     Commands = 'commands',
     Configuration = 'configuration',
     Grammar = 'grammars',
-    Theme = 'themes',
+    Themes = 'themes',
     IconTheme = 'iconThemes',
 }
 
@@ -28,7 +28,7 @@ export interface IContribute {
     [IContributeType.Commands]?: any;
     [IContributeType.Configuration]?: any;
     [IContributeType.Grammar]?: any;
-    [IContributeType.Theme]?: IColorTheme[];
+    [IContributeType.Themes]?: IColorTheme[];
     [IContributeType.IconTheme]?: IIconTheme[];
 }
 

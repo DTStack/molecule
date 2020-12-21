@@ -22,7 +22,7 @@ function init() {
     statusBarService.appendRightItem(notifications);
 
     statusBarService.onClick(function (e, item) {
-        console.log('statusBarService:', e, item);
+        console.log('statusBarService:', e, item, problems, notifications);
     });
 }
 

@@ -1,0 +1,15 @@
+@import 'mo/style/common';
+
+// =============== Workbench not customizable =============== //
+#{$workbench} {
+    background-color: var(--workbenchBackground);
+    color: var(--foreground);
+
+    *::selection {
+        background-color: var(--editorSelectionBackground);
+    }
+
+    &.codicon {
+        color: var(--icon-foreground);
+    }
+}

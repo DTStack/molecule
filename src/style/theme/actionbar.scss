@@ -1,0 +1,8 @@
+@import 'mo/style/common';
+
+// =============== Action Bar =============== //
+#{$actionBar} {
+    background-color: var(--listFilterWidget-background);
+    color: var(--button-foreground);
+    outline-color: var(--listFilterWidget-outline);
+}

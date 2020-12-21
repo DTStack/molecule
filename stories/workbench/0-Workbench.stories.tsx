@@ -5,7 +5,7 @@ import '../demo.scss';
 
 export const IDEDemo = () => (
     <MoleculeProvider extensions={customExtensions} locales={[]}>
-        <Workbench />
+        <Workbench/>
     </MoleculeProvider>
 );
 

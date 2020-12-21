@@ -92,7 +92,7 @@ export function renderGroups(
     return null;
 }
 
-export function Editor(props: IEditor) {
+export function Editor<T>(props: IEditor<T>) {
     const {
         groups,
         render,

@@ -11,23 +11,23 @@ import {
     IEditorGroup,
 } from 'mo/model';
 
-export interface IEditorService extends Component<IEditor> {
+export interface IEditorService<T> extends Component<IEditor<T>> {
     /**
      * Open a new tab in indicated group instance
      * @param tab Tab data
      * @param groupId group ID
      */
-    open<T = any>(tab: ITab, groupId?: number): void;
+    open<T = any>(tab: ITab<T>, groupId?: number): void;
     onCloseTab(callback: (tabKey?: string) => void);
-    onMoveTab(callback: (tabs: ITab[]) => void);
+    onMoveTab(callback: (tabs: ITab<T>[]) => void);
     onSelectTab(callback: (tabKey: string) => void);
 }
 
 @singleton()
-export class EditorService
-    extends Component<IEditor>
-    implements IEditorService {
-    protected state: IEditor;
+export class EditorService<T>
+    extends Component<IEditor<T>>
+    implements IEditorService<T> {
+    protected state: IEditor<T>;
     constructor() {
         super();
         this.state = container.resolve(EditorModel);
@@ -51,7 +51,7 @@ export class EditorService
     }
 
     @emit(EditorEvent.OpenTab)
-    public open<T>(tab: ITab, groupId?: number) {
+    public open<T>(tab: ITab<T>, groupId?: number) {
         let { current, groups } = this.state;
         let group: IEditorGroup | undefined = current;
         if (groupId) {
@@ -71,7 +71,7 @@ export class EditorService
     public onMoveTab(callback: (data) => void) {
         this.subscribe(
             EditorEvent.OnMoveTab,
-            (tabs: ITab[], groupId?: number) => {
+            (tabs: ITab<T>[], groupId?: number) => {
                 let { groups } = this.state;
                 let group;
                 if (groupId === undefined) return;

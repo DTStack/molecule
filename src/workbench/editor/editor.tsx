@@ -25,8 +25,11 @@ function renderEditorGroup(
             key: item.key,
             tip: item.path,
             label: [
-                <Icon type="new-file" />,
-                <span className={getBEMElement(tabItemClassName, 'name')}>
+                <Icon type="new-file" key={`icon` + item.key} />,
+                <span
+                    key={'item' + item.key}
+                    className={getBEMElement(tabItemClassName, 'name')}
+                >
                     {item.name}
                 </span>,
             ],

@@ -7,7 +7,7 @@ import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
 
-interface ISearchPaneToolBar { }
+interface ISearchPaneToolBar {}
 
 const initialState = {
     input: '',
@@ -38,7 +38,7 @@ type State = typeof initialState;
 export default class SearchPane extends React.Component<
     ISearchPaneToolBar,
     State
-    > {
+> {
     state: State;
 
     constructor(props) {
@@ -121,7 +121,7 @@ export default class SearchPane extends React.Component<
             editorService.open(tabData, 1);
         };
 
-        const openCommand = function () { };
+        const openCommand = function () {};
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header

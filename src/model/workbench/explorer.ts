@@ -102,7 +102,7 @@ export const getFileIconByName = (name: string): string => {
     return icon;
 };
 
-export enum ExplorerEvent { }
+export enum ExplorerEvent {}
 export interface IPanelItem<T = any> extends IActionBarItem {
     renderPanel?: (props) => React.ReactNode | JSX.Element;
     toolbar?: T;

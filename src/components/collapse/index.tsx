@@ -7,7 +7,7 @@ import {
     prefixClaName,
     classNames,
     getBEMElement,
-    getBEMModifier
+    getBEMModifier,
 } from 'mo/common/className';
 import './style.scss';
 
@@ -23,10 +23,10 @@ interface IState {
     activePanelKey: React.Key | React.Key[];
 }
 const defaultCollapseClassName = prefixClaName('collapse');
-export const contentPaddingClassName = getBEMModifier(getBEMElement(
-    defaultCollapseClassName,
-    'content'
-), 'padding');
+export const contentPaddingClassName = getBEMModifier(
+    getBEMElement(defaultCollapseClassName, 'content'),
+    'padding'
+);
 
 const initState = {
     activePanelKey: '',
@@ -48,7 +48,9 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
             return render();
         } else {
             return (
-                <span className={contentPaddingClassName}>Cannot provide...</span>
+                <span className={contentPaddingClassName}>
+                    Cannot provide...
+                </span>
             );
         }
     };

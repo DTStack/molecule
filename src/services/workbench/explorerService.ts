@@ -11,7 +11,11 @@ import {
 import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
 export interface IExplorerService extends Component<IExpolorer> {
     push(data: IPanelItem): void;
-    newFileItem(fileData: ITreeNodeItem, type: FileType, callback?: Function): void;
+    newFileItem(
+        fileData: ITreeNodeItem,
+        type: FileType,
+        callback?: Function
+    ): void;
     updateFile(fileData: ITreeNodeItem, newName: string, index: number): void;
     reName(fileData: ITreeNodeItem, callback: Function): void;
     deleteFile(fileData: ITreeNodeItem): void;
@@ -51,7 +55,11 @@ export class ExplorerService
      * @param fileData treeNode ite
      * @param type new type
      */
-    public newFileItem(fileData: ITreeNodeItem, type: FileType, callback: Function) {
+    public newFileItem(
+        fileData: ITreeNodeItem,
+        type: FileType,
+        callback: Function
+    ) {
         const original = this.state.treeData;
         const loop = (data: ITreeNodeItem[]) => {
             for (const item of data) {
@@ -79,7 +87,7 @@ export class ExplorerService
                 original?.push(fileData);
             }
         }
-        if (callback) callback()
+        if (callback) callback();
     }
 
     /**
@@ -162,7 +170,9 @@ export class ExplorerService
             original,
             fileData.id
         );
-        const curIndex = (prevParentNode.children || []).findIndex(item => item.id === fileData.id);
+        const curIndex = (prevParentNode.children || []).findIndex(
+            (item) => item.id === fileData.id
+        );
         const deleteItem = (tree, id) => {
             const rootNode = tree[0];
             if (rootNode.id === id) {

@@ -34,7 +34,11 @@ export interface ITreeNodeItem {
 export interface ITreeProps extends TreeProps {
     data: ITreeNodeItem[];
     onSelectFile?: (IMenuItem) => void;
-    newFileItem?: (fileData: ITreeNodeItem, type: FileType, callback: Function) => void;
+    newFileItem?: (
+        fileData: ITreeNodeItem,
+        type: FileType,
+        callback: Function
+    ) => void;
     updateFile?(fileData: ITreeNodeItem, newName: string, index: number): void;
     reName?(fileData: ITreeNodeItem, callback: Function): void;
     deleteFile?(fileData: ITreeNodeItem): void;
@@ -62,24 +66,23 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
             if (inputRef.current) {
                 inputRef.current.focus();
             }
-        })
-    }
+        });
+    };
     const handleDelte = (activeData: ITreeNodeItem) => {
         confirm({
             title: `Are you sure you want to delete '${activeData?.name}' ?`,
             content: 'This action is irreversible!',
             onOk() {
-                deleteFile && deleteFile(activeData)
+                deleteFile && deleteFile(activeData);
             },
-            onCancel() {
-            },
+            onCancel() {},
         });
-    }
+    };
     const addExpandedKeys = (activeData: ITreeNodeItem) => {
-        const keys: any = [...expandedKeys]
-        keys.push(activeData?.id)
+        const keys: any = [...expandedKeys];
+        keys.push(activeData?.id);
         setExpandedKeys(keys);
-    }
+    };
     const getContextMenuList = (type?: FileType) => {
         let contextMenu: IMenuItem[] = [];
         const commContextMenu = [
@@ -94,26 +97,30 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 id: 'delete',
                 name: 'Delete',
                 onClick: (e, active) => {
-                    handleDelte(activeData)
-                }
-            }
-        ]
+                    handleDelte(activeData);
+                },
+            },
+        ];
         if (type === FileTypes.FOLDER) {
             contextMenu = [
                 {
                     id: 'newFile',
                     name: 'New File',
                     onClick: (e, active) => {
-                        addExpandedKeys(activeData)
+                        addExpandedKeys(activeData);
                         newFileItem &&
-                            newFileItem(activeData, FileTypes.FILE as FileType, onFocus);
+                            newFileItem(
+                                activeData,
+                                FileTypes.FILE as FileType,
+                                onFocus
+                            );
                     },
                 },
                 {
                     id: 'newFolder',
                     name: 'New Folder',
                     onClick: (e, active) => {
-                        addExpandedKeys(activeData)
+                        addExpandedKeys(activeData);
                         newFileItem &&
                             newFileItem(
                                 activeData,
@@ -121,14 +128,14 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                 onFocus
                             );
                     },
-                }
+                },
             ].concat(commContextMenu);
         } else if (type === FileTypes.FILE) {
             contextMenu = [
                 {
                     id: 'openToSide',
                     name: 'Open to the side',
-                }
+                },
             ].concat(commContextMenu);
         }
         return contextMenu;
@@ -236,11 +243,11 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                     updateFile &&
                                         updateFile(item, e.target.value, index);
                                 }}
-                                onChange={(e) => { }}
+                                onChange={(e) => {}}
                             />
                         ) : (
-                                name
-                            )
+                            name
+                        )
                     }
                     key={id}
                     icon={modify ? '' : <Icon type={icon} />}
@@ -259,10 +266,10 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     switcherIcon={<Icon type="chevron-right" />}
                     onRightClick={({ event, node }: any) => {
                         setActiveData(node.data);
-                        setActiveId(node.data.id)
+                        setActiveId(node.data.id);
                     }}
                     onExpand={(expandedKeys) => {
-                        setExpandedKeys(expandedKeys)
+                        setExpandedKeys(expandedKeys);
                     }}
                     expandedKeys={expandedKeys}
                     onSelect={(selectedKeys, e: any) => {

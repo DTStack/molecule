@@ -4,7 +4,7 @@ $switch: #{$rcTree}-switcher;
 
 #{$tree} {
     font-size: 13px;
-    
+
     #{$rcTree} {
         border: 1px solid transparent;
         margin: 0;
@@ -43,7 +43,7 @@ $switch: #{$rcTree}-switcher;
                 outline: none;
                 vertical-align: middle;
                 width: 16px;
-                
+
                 &-noop {
                     cursor: auto;
                     display: none;
@@ -56,16 +56,12 @@ $switch: #{$rcTree}-switcher;
             }
 
             &-disabled {
-                
-                >span:not(#{$switch}),
-                >a
-                >a span {
+                > span:not(#{$switch}),
+                > a > a span {
                     color: #767676;
                     cursor: not-allowed;
                 }
             }
-
-            
         }
 
         &-node-content-wrapper {

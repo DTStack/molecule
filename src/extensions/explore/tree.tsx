@@ -12,7 +12,11 @@ const serviceProps = {
         };
         editorService.open(tabData, tabData.activeTab);
     },
-    newFileItem: function (fileData: ITreeNodeItem, type: FileType, callback: Function) {
+    newFileItem: function (
+        fileData: ITreeNodeItem,
+        type: FileType,
+        callback: Function
+    ) {
         explorerService.newFileItem(fileData, type, callback);
     },
     updateFile: function (fileData, newName, index) {

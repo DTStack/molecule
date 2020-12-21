@@ -10,7 +10,7 @@ import { Icon } from 'mo/components/icon';
 import Welcome from './welcome';
 import { IEditor, IEditorGroup } from 'mo/model';
 
-interface dataType {
+interface DtaType {
     modified?: boolean;
     language?: string | undefined;
     path?: string;
@@ -52,7 +52,7 @@ function renderEditorGroup(
     });
     return (
         <div className={groupClassName} key={`group-${group.id}`}>
-            <Tabs<dataType>
+            <Tabs<DtaType>
                 closable={true}
                 type="card"
                 data={tabs}

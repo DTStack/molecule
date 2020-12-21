@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 
 export * from './extensionService';
-export * from './themeService';
+export * from './theme/colorThemeService';
 export * from './workbench';
 
-import { ThemeService } from './themeService';
+import { ColorThemeService, IColorThemeService } from './theme/colorThemeService';
 import { ExtensionService, IExtensionService } from './extensionService';
 import {
     ActivityBarService,
@@ -39,7 +39,7 @@ const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
  * The theme service,
  * TODO: think about break themeService into ColorTheme and IconTheme
  */
-const themeService = container.resolve(ThemeService);
+const colorThemeService = container.resolve<IColorThemeService>(ColorThemeService);
 
 /**
  * Note: The extension service depends on other workbench services,
@@ -55,5 +55,5 @@ export {
     statusBarService,
     editorService,
     extensionService,
-    themeService,
+    colorThemeService,
 };

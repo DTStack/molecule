@@ -1,38 +1,44 @@
 import * as React from 'react';
 import { useCallback } from 'react';
-import update from 'immutability-helper';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
 
-import { Scrollable } from 'mo/components/scrollable';
-import { TabSwicher, Tab } from './Tab';
-import TabButton from './tabButton';
+import {
+    prefixClaName,
+    getBEMElement,
+    getBEMModifier,
+    classNames,
+} from 'mo/common/className';
+
+import { Tab, ITab, tabItemClassName } from './tab';
+
 import './style.scss';
 
-export interface ITab {
-    id?: number | string;
-    name?: string;
-    activeTab?: number;
-    modified?: boolean;
-    renderPane?: () => React.ReactNode;
-    value?: string;
-    mode?: string | undefined;
-}
+export type TabsType = 'line' | 'card';
 export interface ITabsProps {
+    closable?: boolean;
     data: ITab[];
-    closeTab?: (item: ITab) => void;
+    activeTab?: string;
+    type?: TabsType;
+    onCloseTab?: (key?: string) => void;
     onMoveTab?: (tabs: ITab[]) => void;
-    onSelectTab?: (index: number) => void;
-    onTabChange: (index: number) => void;
+    onSelectTab?: (key?: string) => void;
 }
 
-const DraggleTabs = (props: ITabsProps) => {
-    const { data, onSelectTab } = props;
+export const tabsClassName = prefixClaName('tabs');
+export const tabsHeader = getBEMElement(tabsClassName, 'header');
+export const tabsContent = getBEMElement(tabsClassName, 'content');
+export const tabsContentItem = getBEMElement(tabsContent, 'item');
+export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close');
 
-    const onMoveTab = useCallback(
+const Tabs = (props: ITabsProps) => {
+    const { activeTab, data, type = 'line', onMoveTab, ...resetProps } = props;
+
+    const onChangeTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
-            props.onMoveTab?.(
+            onMoveTab?.(
                 update(data, {
                     $splice: [
                         [dragIndex, 1],
@@ -44,37 +50,48 @@ const DraggleTabs = (props: ITabsProps) => {
         [data]
     );
 
-    const onTabClick = (key) => {
-        console.log(`onTabClick ${key}`);
-        onSelectTab?.(key);
-    };
-
-    const onTabClose = (item: ITab) => {};
     return (
         <DndProvider backend={HTML5Backend}>
-            <Scrollable className={'normal-items'}>
-                <TabSwicher className="tab-switcher">
-                    {data?.map((item: ITab, index: number) => (
-                        <Tab
-                            onMoveTab={onMoveTab}
-                            onTabChange={onTabClick}
-                            index={index}
-                            id={item.id}
-                        >
-                            <TabButton
-                                key={item.id}
-                                name={item.name}
-                                modified={item.modified}
-                                active={item.activeTab === index}
-                                onClose={() => onTabClose(item)}
-                                className={'tab-button'}
-                            />
-                        </Tab>
-                    ))}
-                </TabSwicher>
-            </Scrollable>
+            <div
+                className={classNames(
+                    tabsClassName,
+                    getBEMModifier(tabsClassName, type as string)
+                )}
+            >
+                <div className={tabsHeader}>
+                    {data?.map((tab: ITab, index: number) => {
+                        return (
+                            <Tab
+                                active={activeTab === tab.key}
+                                index={index}
+                                label={tab.label}
+                                modified={tab.modified}
+                                key={tab.key}
+                                propsKey={tab.key}
+                                title={tab.tip}
+                                onMoveTab={onChangeTab}
+                                {...resetProps}
+                            ></Tab>
+                        );
+                    })}
+                </div>
+                <div className={tabsContent}>
+                    {data?.map((tab: ITab) => {
+                        return (
+                            <div
+                                className={classNames(tabsContentItem, {
+                                    [getBEMModifier(tabsContentItem, 'active')]:
+                                        activeTab === tab.key,
+                                })}
+                            >
+                                {tab.renderPanel}
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </DndProvider>
     );
 };
 
-export default DraggleTabs;
+export default Tabs;

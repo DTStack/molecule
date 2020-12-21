@@ -39,8 +39,11 @@ function init() {
     editorService.onMoveTab((data) => {
         console.log(data);
     });
-    editorService.onSelectTab((tab) => {
-        console.log(`selected tabKey${tab}`);
+    editorService.onSelectTab((tabKey?: string) => {
+        console.log(`selected tabKey ${tabKey}`);
+    });
+    editorService.onCloseTab((tabKey?: string) => {
+        console.log(`closed tabkey ${tabKey}`);
     });
 }
 

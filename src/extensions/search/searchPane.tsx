@@ -80,21 +80,19 @@ export default class SearchPane extends React.Component<
         };
 
         const newEditor = function () {
-            const id = Math.random() * 10 + 1;
+            const key = Math.random() * 10 + 1;
             const tabData = {
-                activeTab: 0,
-                id: id,
+                key: `${key}`,
                 name: `editor.js`,
-                modified: true,
-                value: 'hello javascript',
+                modified: false,
+                value: `hello javascript ${key}`,
+                path: 'desktop/molecule/editor1',
             };
             console.log('open editor:', tabData);
             editorService.open(tabData, 1);
         };
 
-        const openCommand = function () {
-            // MonacoEditor.editor.getModel().
-        };
+        const openCommand = function () {};
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header

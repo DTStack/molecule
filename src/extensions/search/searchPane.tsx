@@ -89,7 +89,7 @@ export default class SearchPane extends React.Component<
                     value: `hello javascript ${key}`,
                     path: 'desktop/molecule/editor1',
                     language: 'javascript',
-                }
+                },
             };
             console.log('open editor:', tabData);
             editorService.open(tabData, 1);

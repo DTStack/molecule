@@ -11,7 +11,7 @@ import {
     IEditorGroup,
 } from 'mo/model';
 
-export interface IEditorService<T> extends Component<IEditor<T>> {
+export interface IEditorService<T = any> extends Component<IEditor<T>> {
     /**
      * Open a new tab in indicated group instance
      * @param tab Tab data

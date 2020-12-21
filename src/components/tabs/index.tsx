@@ -16,13 +16,13 @@ import { Tab, ITab, tabItemClassName } from './tab';
 import './style.scss';
 
 export type TabsType = 'line' | 'card';
-export interface ITabsProps<T>{
+export interface ITabsProps<T> {
     closable?: boolean;
-    data: (ITab<T>)[];
+    data: ITab<T>[];
     activeTab?: string;
     type?: TabsType;
     onCloseTab?: (key?: string) => void;
-    onMoveTab?: (tabs: (ITab<T>)[]) => void;
+    onMoveTab?: (tabs: ITab<T>[]) => void;
     onSelectTab?: (key?: string) => void;
 }
 
@@ -59,7 +59,7 @@ export function Tabs<T>(props: ITabsProps<T>) {
                 )}
             >
                 <div className={tabsHeader}>
-                    {data?.map((tab: (ITab<T>), index: number) => {
+                    {data?.map((tab: ITab<T>, index: number) => {
                         return (
                             <Tab
                                 active={activeTab === tab.key}
@@ -91,4 +91,4 @@ export function Tabs<T>(props: ITabsProps<T>) {
             </div>
         </DndProvider>
     );
-};
+}

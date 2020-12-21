@@ -25,7 +25,7 @@ export interface ITab<T> {
     label?: React.ReactNode;
     tip?: string | React.ReactNode;
     renderPanel?: React.ReactNode;
-    data?: T
+    data?: T;
 }
 
 export interface ITabEvent {
@@ -36,7 +36,7 @@ export interface ITabEvent {
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
 
-export function Tab<T> (props: ITab<T> & ITabEvent) {
+export function Tab<T>(props: ITab<T> & ITabEvent) {
     const {
         closable,
         index,
@@ -120,4 +120,4 @@ export function Tab<T> (props: ITab<T> & ITabEvent) {
             )}
         </div>
     );
-};
+}

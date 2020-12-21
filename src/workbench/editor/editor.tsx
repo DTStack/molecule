@@ -52,8 +52,7 @@ function renderEditorGroup(
     });
     return (
         <div className={groupClassName} key={`group-${group.id}`}>
-            <Tabs
-                <dataType>
+            <Tabs<dataType>
                 closable={true}
                 type="card"
                 data={tabs}

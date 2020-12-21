@@ -10,6 +10,7 @@ import { ExplorerView } from './explore';
 import TreeView from './tree';
 import { ExtensionService } from 'mo/services/extensionService';
 import { IExtension } from 'mo/model/extension';
+import { contentPaddingClassName } from 'mo/components/collapse';
 import { FileTypes, FileType } from 'mo/components/tree';
 
 function init(extensionCtx: ExtensionService) {
@@ -76,7 +77,7 @@ function init(extensionCtx: ExtensionService) {
             },
         ],
         renderPanel: () => {
-            return <span className="content-box__padding">editors</span>;
+            return <span className={contentPaddingClassName}>editors</span>;
         },
     };
     const sampleFolderPanel = {
@@ -114,7 +115,7 @@ function init(extensionCtx: ExtensionService) {
                             data={explorerState.treeData}
                         />
                     ) : (
-                        <span className="content-box__padding">
+                        <span className={contentPaddingClassName}>
                             you have not yet opened a folder
                             <Button
                                 onClick={() => {

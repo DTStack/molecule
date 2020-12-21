@@ -1,138 +1,116 @@
 @import 'mo/style/common';
 
+$switch: #{$rcTree}-switcher;
+
 #{$tree} {
     font-size: 13px;
 
-    .rc-tree {
+    #{$rcTree} {
         border: 1px solid transparent;
         margin: 0;
-    }
 
-    .rc-tree .rc-tree-treenode {
-        cursor: pointer;
-        height: 22px;
-        line-height: 22px;
-        list-style: none;
-        margin: 0;
-        outline: 0;
-        padding: 0 0 0 8px;
-        white-space: nowrap;
-    }
+        &-treenode {
+            cursor: pointer;
+            height: 22px;
+            line-height: 22px;
+            list-style: none;
+            margin: 0;
+            outline: 0;
+            padding: 0 0 0 8px;
+            white-space: nowrap;
 
-    /* stylelint-disable */
-    .rc-tree .rc-tree-treenode .draggable {
-        /* Required to make elements draggable in old WebKit */
-        -khtml-user-drag: element;
-        -webkit-user-drag: element;
-        user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
-    }
+            .draggable {
+                /* Required to make elements draggable in old WebKit */
+                -khtml-user-drag: element;
+                -webkit-user-drag: element;
+                user-select: none;
+            }
 
-    .rc-tree .rc-tree-treenode.drag-over > .draggable {
-        opacity: 0.8;
-    }
+            ul {
+                margin: 0;
+                padding: 0 0 0 18px;
+            }
+            span#{$switch} {
+                background-attachment: scroll;
+                background-color: transparent;
+                background-repeat: no-repeat;
+                border: 0 none;
+                cursor: pointer;
+                display: inline-block;
+                height: 16px;
+                line-height: 16px;
+                margin-right: 2px;
+                outline: none;
+                vertical-align: middle;
+                width: 16px;
 
-    .rc-tree .rc-tree-treenode.filter-node > .rc-tree-node-content-wrapper {
-        color: #a60000 !important;
-        font-weight: bold !important;
-    }
+                &-noop {
+                    cursor: auto;
+                    display: none;
+                }
 
-    .rc-tree .rc-tree-treenode ul {
-        margin: 0;
-        padding: 0 0 0 18px;
-    }
+                &_open {
+                    margin-top: -2px;
+                    transform: rotate(90deg);
+                }
+            }
 
-    .rc-tree .rc-tree-treenode .rc-tree-node-content-wrapper {
-        cursor: pointer;
-        display: inline-block;
-        height: 22px;
-        margin: 0;
-        text-decoration: none;
-        vertical-align: top;
-    }
-
-    .rc-tree .rc-tree-treenode span.rc-tree-switcher,
-    .rc-tree .rc-tree-treenode span.rc-tree-checkbox {
-        background-attachment: scroll;
-        background-color: transparent;
-        background-repeat: no-repeat;
-        border: 0 none;
-        cursor: pointer;
-        display: inline-block;
-        height: 16px;
-        line-height: 16px;
-        margin-right: 2px;
-        outline: none;
-        vertical-align: middle;
-        width: 16px;
-    }
-
-    .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-icon__customize,
-    .rc-tree .rc-tree-treenode span.rc-tree-checkbox.rc-tree-icon__customize,
-    .rc-tree .rc-tree-treenode span.rc-tree-iconEle.rc-tree-icon__customize {
-        background-image: none;
-
-        .codicon {
-            margin-top: 4px;
-            transform: scale(0.8);
+            &-disabled {
+                > span:not(#{$switch}),
+                > a > a span {
+                    color: #767676;
+                    cursor: not-allowed;
+                }
+            }
         }
-    }
 
-    .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher-noop {
-        cursor: auto;
-        display: none;
-    }
+        &-node-content-wrapper {
+            cursor: pointer;
+            display: inline-block;
+            height: 22px;
+            margin: 0;
+            text-decoration: none;
+            vertical-align: top;
+        }
 
-    .rc-tree .rc-tree-treenode span.rc-tree-switcher.rc-tree-switcher_open {
-        margin-top: -2px;
-        transform: rotate(90deg);
-    }
+        &-child {
+            &-tree {
+                display: none;
 
-    .rc-tree:not(.rc-tree-show-line) .rc-tree-treenode .rc-tree-switcher-noop {
-        background: none;
-    }
+                &-open {
+                    display: block;
+                }
+            }
+        }
 
-    .rc-tree-child-tree {
-        display: none;
-    }
+        &-icon {
+            &__open {
+                background-position: -110px -16px;
+                margin-right: 2px;
+                vertical-align: top;
+            }
 
-    .rc-tree-child-tree-open {
-        display: block;
-    }
+            &__close,
+            &__docu,
+            &__customize {
+                margin-right: 2px;
+                vertical-align: top;
+            }
 
-    .rc-tree-treenode-disabled > span:not(.rc-tree-switcher),
-    .rc-tree-treenode-disabled > a,
-    .rc-tree-treenode-disabled > a span {
-        color: #767676;
-        cursor: not-allowed;
-    }
+            &__customize {
+                background-image: none;
 
-    .rc-tree-icon__open {
-        background-position: -110px -16px;
-        margin-right: 2px;
-        vertical-align: top;
-    }
+                .codicon {
+                    margin-top: 4px;
+                    transform: scale(0.8);
+                }
+            }
+        }
 
-    .rc-tree-icon__close {
-        margin-right: 2px;
-        vertical-align: top;
-    }
-
-    .rc-tree-icon__docu {
-        margin-right: 2px;
-        vertical-align: top;
-    }
-
-    .rc-tree-icon__customize {
-        margin-right: 2px;
-        vertical-align: top;
-    }
-
-    .rc-tree-indent-unit {
-        display: inline-block;
-        padding-left: 7px;
-        width: 0;
+        &-indent-unit {
+            display: inline-block;
+            padding-left: 7px;
+            width: 0;
+        }
     }
 }

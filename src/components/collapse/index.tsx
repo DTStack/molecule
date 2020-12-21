@@ -3,20 +3,30 @@ import { useState } from 'react';
 import RcCollapse, { Panel } from 'rc-collapse';
 import Toolbar from 'mo/components/toolbar';
 import { Icon } from 'mo/components/icon';
-import { prefixClaName, classNames } from 'mo/common/className';
-import { IPanelItem } from 'mo/model/workbench/explorer';
+import {
+    prefixClaName,
+    classNames,
+    getBEMElement,
+    getBEMModifier,
+} from 'mo/common/className';
+import './style.scss';
 
-interface IExpandProps {
+export interface IExpandProps {
     isActive?: boolean;
 }
-interface ICollapseProps {
-    data?: IPanelItem[];
+export interface ICollapseProps<T = any> {
+    data?: T;
     className?: string;
 }
 
 interface IState {
     activePanelKey: React.Key | React.Key[];
 }
+const defaultCollapseClassName = prefixClaName('collapse');
+export const contentPaddingClassName = getBEMModifier(
+    getBEMElement(defaultCollapseClassName, 'content'),
+    'padding'
+);
 
 const initState = {
     activePanelKey: '',
@@ -25,7 +35,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
     props: ICollapseProps
 ) => {
     const [state, setState] = useState<IState>(initState);
-    const { className, data = [], ...others } = props;
+    const { className, data = [], ...restProps } = props;
     const onChangeCallback = (key: React.Key | React.Key[]) => {
         setState((state: IState) => ({ ...state, activePanelKey: key }));
     };
@@ -38,15 +48,17 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
             return render();
         } else {
             return (
-                <span className="content-box__padding">Cannot provide...</span>
+                <span className={contentPaddingClassName}>
+                    Cannot provide...
+                </span>
             );
         }
     };
     const { activePanelKey } = state;
     return (
-        <div className={classNames(prefixClaName('collapse'), className)}>
+        <div className={classNames(defaultCollapseClassName, className)}>
             <RcCollapse
-                {...others}
+                {...restProps}
                 accordion={true}
                 activeKey={activePanelKey}
                 onChange={(activeKey: React.Key | React.Key[]) => {
@@ -56,7 +68,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
                     <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
                 )}
             >
-                {data.map((panel: IPanelItem) => (
+                {data.map((panel) => (
                     <Panel
                         key={panel.id}
                         header={panel.name}

@@ -34,13 +34,15 @@ export const findParentNodeId = (treeData, id) => {
 /**
  *
  * @param tree tree Data
- * @param id prevParentNode ID
+ * @param id currentNode ID
  */
-export const getPrevParentNode = (tree, id) => {
+export const getPrevParentNode = (tree, currentNodeId) => {
     let prevParentNode = {};
+    const parentIds: string[] = findParentNodeId(tree, currentNodeId);
+    const prevPatentNodeId = parentIds.slice(-2)[0]; // prevParentNode Id
     const loop = (data: any) => {
         for (const item of data) {
-            if (item.id === id) {
+            if (item.id === prevPatentNodeId) {
                 prevParentNode = item;
             }
             if (item.children) {
@@ -52,6 +54,7 @@ export const getPrevParentNode = (tree, id) => {
     loop(tree);
     return prevParentNode;
 };
+
 /**
  * 生成规则：
  * id不能带 querySelector 非法字符（小数点、_、数字开头..）

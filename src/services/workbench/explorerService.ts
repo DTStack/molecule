@@ -11,7 +11,7 @@ import {
 import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
 export interface IExplorerService extends Component<IExpolorer> {
     push(data: IPanelItem): void;
-    newFileItem(fileData: ITreeNodeItem, type: FileType, callback: Function): void;
+    newFileItem(fileData: ITreeNodeItem, type: FileType, callback?: Function): void;
     updateFile(fileData: ITreeNodeItem, newName: string, index: number): void;
     reName(fileData: ITreeNodeItem, callback: Function): void;
     deleteFile(fileData: ITreeNodeItem): void;

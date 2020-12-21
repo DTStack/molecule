@@ -50,7 +50,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         reName,
         deleteFile,
         onDropTree,
-        ...others
+        ...restProps
     } = props;
     const [activeData, setActiveData] = useState<ITreeNodeItem>({});
     const [activeId, setActiveId] = useState<any>('');
@@ -253,7 +253,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
                 <Tree
-                    {...others}
+                    {...restProps}
                     draggable
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}

@@ -9,14 +9,13 @@ import {
     getBEMElement,
     getBEMModifier
 } from 'mo/common/className';
-import { IPanelItem } from 'mo/model/workbench/explorer';
 import './style.scss';
 
-interface IExpandProps {
+export interface IExpandProps {
     isActive?: boolean;
 }
-interface ICollapseProps {
-    data?: IPanelItem[];
+export interface ICollapseProps<T = any> {
+    data?: T;
     className?: string;
 }
 
@@ -36,7 +35,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
     props: ICollapseProps
 ) => {
     const [state, setState] = useState<IState>(initState);
-    const { className, data = [], ...others } = props;
+    const { className, data = [], ...restProps } = props;
     const onChangeCallback = (key: React.Key | React.Key[]) => {
         setState((state: IState) => ({ ...state, activePanelKey: key }));
     };
@@ -57,7 +56,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
     return (
         <div className={classNames(defaultCollapseClassName, className)}>
             <RcCollapse
-                {...others}
+                {...restProps}
                 accordion={true}
                 activeKey={activePanelKey}
                 onChange={(activeKey: React.Key | React.Key[]) => {
@@ -67,7 +66,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
                     <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
                 )}
             >
-                {data.map((panel: IPanelItem) => (
+                {data.map((panel) => (
                     <Panel
                         key={panel.id}
                         header={panel.name}

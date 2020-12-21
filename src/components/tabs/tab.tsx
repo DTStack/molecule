@@ -15,25 +15,28 @@ import {
     prefixClaName,
 } from 'mo/common/className';
 import TabDot from './tabDot';
-
-export interface TabData<T = any> {
-    modified?: boolean;
-    language?: string | undefined;
-    path?: string;
-    value?: string;
-}
-export interface ITab extends TabData {
+export interface ITab<T> {
+    active?: boolean;
+    closable?: boolean;
+    index?: number;
     key?: string;
+    propsKey?: string;
     name?: string;
     label?: React.ReactNode;
     tip?: string | React.ReactNode;
     renderPanel?: React.ReactNode;
+    data?: T;
 }
 
+export interface ITabEvent {
+    onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
+    onCloseTab?: (key?: string) => void;
+    onSelectTab?: (key?: string) => void;
+}
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
 
-export const Tab = (props) => {
+export function Tab<T>(props: ITab<T> & ITabEvent) {
     const {
         closable,
         index,
@@ -67,7 +70,7 @@ export const Tab = (props) => {
             if (!ref.current) return;
             const component = ref.current;
             const dragIndex = monitor.getItem().index;
-            let hoverIndex = index;
+            let hoverIndex = index!;
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
                 return;
@@ -89,7 +92,7 @@ export const Tab = (props) => {
             if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
                 return;
             }
-            onMoveTab(dragIndex, hoverIndex);
+            onMoveTab?.(dragIndex, hoverIndex);
             monitor.getItem().index = hoverIndex;
         },
     });
@@ -101,7 +104,7 @@ export const Tab = (props) => {
             className={classNames(tabItemClassName, {
                 [getBEMModifier(tabItemClassName, 'active')]: active,
             })}
-            onClick={(event: React.MouseEvent) => onSelectTab(propsKey)}
+            onClick={(event: React.MouseEvent) => onSelectTab?.(propsKey)}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
@@ -117,6 +120,4 @@ export const Tab = (props) => {
             )}
         </div>
     );
-};
-
-export default Tab;
+}

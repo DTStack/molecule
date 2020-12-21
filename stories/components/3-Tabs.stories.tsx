@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import Tabs from 'mo/components/tabs';
+import { Tabs } from 'mo/components/tabs';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 const stories = storiesOf('Tab', module);

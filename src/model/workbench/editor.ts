@@ -10,30 +10,30 @@ export enum EditorEvent {
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
 }
-export interface IEditor {
+export interface IEditor<T> {
     current: IEditorGroup | undefined;
     groups: IEditorGroup[];
     closeAll?: () => void;
     onCloseTab?: (tabKey?: string, group?: number) => void;
     render?: () => React.ReactNode;
-    onMoveTab?: (tabs: ITab[], group?: number) => void;
+    onMoveTab?: (tabs: ITab<T>[], group?: number) => void;
     onSelectTab?: (tabKey: string, group?: number) => void;
 }
 
-export interface IEditorGroup<E = any> {
+export interface IEditorGroup<E = any, T = any> {
     id: number;
-    activeTab: ITab;
-    tabs: ITab[];
+    activeTab: ITab<T>;
+    tabs: ITab<T>[];
     breadcrumb: any[];
     actions: any[];
     menu: any[];
     editorInstance?: E | null;
 }
 
-export class EditorGroupModel implements IEditorGroup {
+export class EditorGroupModel<T> implements IEditorGroup<T> {
     id: number;
-    activeTab: ITab;
-    tabs: ITab[];
+    activeTab: ITab<T>;
+    tabs: ITab<T>[];
     breadcrumb: any[];
     actions: any[];
     menu: any[];
@@ -41,8 +41,8 @@ export class EditorGroupModel implements IEditorGroup {
 
     constructor(
         id: number,
-        activeTab: ITab,
-        tabs: ITab[],
+        activeTab: ITab<T>,
+        tabs: ITab<T>[],
         breadcrumb: any[] = [],
         actions: any[] = [],
         menu: any[] = [],
@@ -60,7 +60,7 @@ export class EditorGroupModel implements IEditorGroup {
 
 @observable()
 @injectable()
-export class EditorModel implements IEditor {
+export class EditorModel<T> implements IEditor<T> {
     public current: IEditorGroup | undefined;
     public groups!: IEditorGroup[];
 
@@ -78,7 +78,7 @@ export class EditorModel implements IEditor {
     public readonly onSelectTab = (tabKey: string, groupId?: number) => {
         EventBus.emit(EditorEvent.OnSelectTab, tabKey, groupId);
     };
-    public readonly onMoveTab = (updateTabs: ITab[], groupId?: number) => {
+    public readonly onMoveTab = (updateTabs: ITab<T>[], groupId?: number) => {
         EventBus.emit(EditorEvent.OnMoveTab, updateTabs, groupId);
     };
     public readonly onCloseTab = (tabKey?: string, groupId?: number) => {

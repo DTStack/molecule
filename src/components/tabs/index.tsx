@@ -16,13 +16,13 @@ import { Tab, ITab, tabItemClassName } from './tab';
 import './style.scss';
 
 export type TabsType = 'line' | 'card';
-export interface ITabsProps {
+export interface ITabsProps<T>{
     closable?: boolean;
-    data: ITab[];
+    data: (ITab<T>)[];
     activeTab?: string;
     type?: TabsType;
     onCloseTab?: (key?: string) => void;
-    onMoveTab?: (tabs: ITab[]) => void;
+    onMoveTab?: (tabs: (ITab<T>)[]) => void;
     onSelectTab?: (key?: string) => void;
 }
 
@@ -32,7 +32,7 @@ export const tabsContent = getBEMElement(tabsClassName, 'content');
 export const tabsContentItem = getBEMElement(tabsContent, 'item');
 export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close');
 
-const Tabs = (props: ITabsProps) => {
+export function Tabs<T>(props: ITabsProps<T>) {
     const { activeTab, data, type = 'line', onMoveTab, ...resetProps } = props;
 
     const onChangeTab = useCallback(
@@ -59,16 +59,15 @@ const Tabs = (props: ITabsProps) => {
                 )}
             >
                 <div className={tabsHeader}>
-                    {data?.map((tab: ITab, index: number) => {
+                    {data?.map((tab: (ITab<T>), index: number) => {
                         return (
                             <Tab
                                 active={activeTab === tab.key}
                                 index={index}
                                 label={tab.label}
-                                modified={tab.modified}
+                                data={tab.data}
                                 key={tab.key}
                                 propsKey={tab.key}
-                                title={tab.tip}
                                 onMoveTab={onChangeTab}
                                 {...resetProps}
                             ></Tab>
@@ -76,7 +75,7 @@ const Tabs = (props: ITabsProps) => {
                     })}
                 </div>
                 <div className={tabsContent}>
-                    {data?.map((tab: ITab) => {
+                    {data?.map((tab: ITab<T>) => {
                         return (
                             <div
                                 className={classNames(tabsContentItem, {
@@ -93,5 +92,3 @@ const Tabs = (props: ITabsProps) => {
         </DndProvider>
     );
 };
-
-export default Tabs;

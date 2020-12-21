@@ -84,9 +84,12 @@ export default class SearchPane extends React.Component<
             const tabData = {
                 key: `${key}`,
                 name: `editor.js`,
-                modified: false,
-                value: `hello javascript ${key}`,
-                path: 'desktop/molecule/editor1',
+                data: {
+                    modified: false,
+                    value: `hello javascript ${key}`,
+                    path: 'desktop/molecule/editor1',
+                    language: 'javascript',
+                }
             };
             console.log('open editor:', tabData);
             editorService.open(tabData, 1);

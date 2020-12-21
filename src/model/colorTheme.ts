@@ -8,12 +8,15 @@ export interface TokenColor extends Object {
     settings?: object;
 }
 
-export interface ITheme {
+export interface IColorTheme {
     /**
      * The id of component, theme will be applied by this ID
      */
     id: string;
+    label: string;
     name: string;
+    uiTheme: string;
+    path?: string;
     colors?: ThemeColor;
     tokenColors?: TokenColor[];
     /**

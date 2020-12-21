@@ -1,6 +1,7 @@
-import { ITheme } from './theme';
+import { IColorTheme } from './colorTheme';
+import { IIconTheme } from './iconTheme';
 
 export interface IUI {
-    colorTheme?: ITheme;
-    iconTheme?: ITheme;
+    colorTheme?: IColorTheme;
+    iconTheme?: IIconTheme;
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { findDOMNode } from 'react-dom';
 import {
     DragSourceMonitor,
@@ -8,29 +8,54 @@ import {
     useDrop,
 } from 'react-dnd';
 
-import { prefixClaName, classNames } from 'mo/common/className';
-export interface TabSwicherProps {
-    children: any;
-    className?: string;
+import {
+    classNames,
+    getBEMElement,
+    getBEMModifier,
+    prefixClaName,
+} from 'mo/common/className';
+import TabDot from './tabDot';
+
+export interface TabData<T = any> {
+    modified?: boolean;
+    language?: string | undefined;
+    path?: string;
+    value?: string;
+}
+export interface ITab extends TabData {
+    key?: string;
+    name?: string;
+    label?: React.ReactNode;
+    tip?: string | React.ReactNode;
+    renderPanel?: React.ReactNode;
 }
 
-export function TabSwicher({ children, className }: TabSwicherProps) {
-    return (
-        <div className={classNames(prefixClaName('tab-switcher'), className)}>
-            {children}
-        </div>
-    );
-}
+export const tabClassName = prefixClaName('tab');
+export const tabItemClassName = getBEMElement(tabClassName, 'item');
 
 export const Tab = (props) => {
-    const { id, index, children, onMoveTab, onTabChange } = props;
+    const {
+        closable,
+        index,
+        propsKey,
+        active,
+        label,
+        onCloseTab,
+        onMoveTab,
+        onSelectTab,
+        ...resetProps
+    } = props;
     const ref = useRef<HTMLDivElement>(null);
+
+    const [hover, setHover] = useState(false);
+    const handleMouseOver = () => setHover(true);
+    const handleMouseOut = () => setHover(false);
 
     const [, drag] = useDrag({
         collect: (monitor: DragSourceMonitor) => ({
             isDragging: monitor.isDragging(),
         }),
-        item: { type: 'DND_NODE', id, index },
+        item: { type: 'DND_NODE', propsKey, index },
     });
 
     const [, drop] = useDrop({
@@ -40,10 +65,9 @@ export const Tab = (props) => {
             monitor: DropTargetMonitor
         ) {
             if (!ref.current) return;
-            let hoverIndex;
             const component = ref.current;
             const dragIndex = monitor.getItem().index;
-            hoverIndex = index;
+            let hoverIndex = index;
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
                 return;
@@ -57,11 +81,11 @@ export const Tab = (props) => {
             const hoverClientX =
                 (clientOffset as { x: number; y: number }).x -
                 hoverBoundingRect.left;
-            // 往下拖动
+            // drag down
             if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
                 return;
             }
-            // 往上拖动
+            // drag up
             if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
                 return;
             }
@@ -71,13 +95,26 @@ export const Tab = (props) => {
     });
 
     drag(drop(ref));
-
     return (
         <div
             ref={ref}
-            onClick={(event: React.MouseEvent) => onTabChange(props.index)}
+            className={classNames(tabItemClassName, {
+                [getBEMModifier(tabItemClassName, 'active')]: active,
+            })}
+            onClick={(event: React.MouseEvent) => onSelectTab(propsKey)}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
         >
-            {children}
+            {label}
+            {closable && (
+                <TabDot
+                    classNames={getBEMElement(tabItemClassName, 'op')}
+                    active={active}
+                    buttonHover={hover}
+                    onClick={(e) => onCloseTab?.(propsKey)}
+                    {...resetProps}
+                />
+            )}
         </div>
     );
 };

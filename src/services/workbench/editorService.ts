@@ -1,8 +1,8 @@
-import { Component } from 'mo/react';
-
-import { ITab } from 'mo/components/tabs';
-import { emit } from 'mo/common/event';
 import { singleton, container } from 'tsyringe';
+
+import { Component } from 'mo/react';
+import { emit } from 'mo/common/event';
+import { ITab } from 'mo/components/tabs/tab';
 import {
     EditorEvent,
     EditorModel,
@@ -18,9 +18,9 @@ export interface IEditorService extends Component<IEditor> {
      * @param groupId group ID
      */
     open<T = any>(tab: ITab, groupId?: number): void;
-    close(index: number, callback: () => void): void;
+    onCloseTab(callback: (tabKey?: string) => void);
     onMoveTab(callback: (tabs: ITab[]) => void);
-    onSelectTab(callback: (tabKey: number) => void);
+    onSelectTab(callback: (tabKey: string) => void);
 }
 
 @singleton()
@@ -32,10 +32,22 @@ export class EditorService
         super();
         this.state = container.resolve(EditorModel);
     }
-    onSelectTab(callback: (tabKey: number) => void) {
-        this.subscribe(EditorEvent.OnSelectTab, (args) => {
-            callback?.(args?.[0]);
-        });
+
+    @emit(EditorEvent.OnSelectTab)
+    onSelectTab(callback: (tabKey: string) => void) {
+        this.subscribe(
+            EditorEvent.OnSelectTab,
+            (targetKey: string, groupId?: number) => {
+                let group;
+                let { groups } = this.state;
+                if (groupId === undefined) return;
+                group = groups?.find(
+                    (group: IEditorGroup) => group.id === groupId
+                );
+                group.activeTab = { ...group.activeTab, key: targetKey };
+                callback?.(targetKey);
+            }
+        );
     }
 
     @emit(EditorEvent.OpenTab)
@@ -54,21 +66,58 @@ export class EditorService
             current = group;
         }
     }
+
+    @emit(EditorEvent.OnMoveTab)
     public onMoveTab(callback: (data) => void) {
-        this.subscribe(EditorEvent.OnMoveTab, (args) => {
-            let { groups } = this.state;
-            let group;
-            if (!args?.[1]) return;
-            const groupId = args?.[1];
-            group = groups?.find((group: IEditorGroup) => group.id === groupId);
-            group.tabs = args?.[0];
-            callback?.(args?.[0]);
-        });
+        this.subscribe(
+            EditorEvent.OnMoveTab,
+            (tabs: ITab[], groupId?: number) => {
+                let { groups } = this.state;
+                let group;
+                if (groupId === undefined) return;
+                group = groups?.find(
+                    (group: IEditorGroup) => group.id === groupId
+                );
+                group.tabs = tabs;
+                callback?.(tabs);
+            }
+        );
     }
     public closeAll() {}
 
-    @emit(EditorEvent.CloseTab)
-    public onClose() {}
+    @emit(EditorEvent.OnCloseTab)
+    public onCloseTab(callback: (data) => void) {
+        this.subscribe(
+            EditorEvent.OnCloseTab,
+            (targetKey: string, groupId?: number) => {
+                let group, lastIndex;
+                let { groups } = this.state;
+                if (groupId === undefined) return;
+                group = groups?.find(
+                    (group: IEditorGroup) => group.id === groupId
+                );
+                let newActiveKey = group?.activeTab?.key;
+                const groupTabs = group.tabs;
+                groupTabs.forEach((pane, i) => {
+                    if (pane.key === targetKey) {
+                        lastIndex = i - 1;
+                    }
+                });
+                const newPanes = groupTabs.filter(
+                    (pane) => pane.key !== targetKey
+                );
+                if (newPanes.length && newActiveKey === targetKey) {
+                    if (lastIndex >= 0) {
+                        newActiveKey = newPanes[lastIndex].key;
+                    } else {
+                        newActiveKey = newPanes[0].key;
+                    }
+                }
+                group.tabs = newPanes;
+                group.activeTab = { ...group.activeTab, key: newActiveKey };
 
-    public close(index: number, callback: () => void) {}
+                callback?.(targetKey);
+            }
+        );
+    }
 }

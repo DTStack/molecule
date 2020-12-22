@@ -62,7 +62,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
      */
     useEffect(() => {
         const { contextMenu, id, fileType } = activeData;
-        const moContextMenu: IMenuItem[] =
+        const moContextMenu: IMenuItem[] | undefined =
             contextMenu || renderContextMenu?.(fileType, activeData);
         let contextViewMenu;
         if (moContextMenu && moContextMenu.length > 0) {

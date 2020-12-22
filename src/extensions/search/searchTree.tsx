@@ -6,7 +6,6 @@ import {
     prefixClaName,
     getBEMElement,
     getBEMModifier,
-    classNames,
 } from 'mo/common/className';
 export interface SearchTreeProps extends ITreeProps {
     searchValue?: string;
@@ -32,7 +31,6 @@ const SearchTree: React.FunctionComponent<SearchTreeProps> = (
     const { data, searchValue, ...restProps } = props;
     return (
         <Tree
-            prefixCls="rc-tree"
             data={data}
             renderTitle={(node, index) => {
                 const { name } = node;
@@ -49,8 +47,8 @@ const SearchTree: React.FunctionComponent<SearchTreeProps> = (
                             {afterStr}
                         </span>
                     ) : (
-                        name
-                    );
+                            name
+                        );
                 return title;
             }}
             onSelectFile={serviceProps.onSelectFile}

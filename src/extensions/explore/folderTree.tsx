@@ -51,7 +51,6 @@ const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     const { data, ...restProps } = props;
     return (
         <Tree
-            prefixCls="rc-tree"
             data={data}
             draggable
             onSelectFile={serviceProps.onSelectFile}
@@ -79,11 +78,11 @@ const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                 index
                             );
                         }}
-                        onChange={(e) => {}}
+                        onChange={(e) => { }}
                     />
                 ) : (
-                    name
-                );
+                        name
+                    );
             }}
             {...restProps}
         />

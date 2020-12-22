@@ -78,11 +78,11 @@ const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                 index
                             );
                         }}
-                        onChange={(e) => { }}
+                        onChange={(e) => {}}
                     />
                 ) : (
-                        name
-                    );
+                    name
+                );
             }}
             {...restProps}
         />

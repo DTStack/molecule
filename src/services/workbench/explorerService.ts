@@ -8,16 +8,17 @@ import {
     generateFileTemplate,
     getPrevParentNode,
 } from 'mo/model/workbench/explorer';
-import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
+import { ITreeNodeItem, } from 'mo/components/tree';
+import { FileType, FileTypes } from 'mo/extensions/explore/folderTree';
 export interface IExplorerService extends Component<IExpolorer> {
     push(data: IPanelItem): void;
-    newFileItem(
+    createFile(
         fileData: ITreeNodeItem,
-        type: FileType,
+        fileType: FileType,
         callback?: Function
     ): void;
     updateFile(fileData: ITreeNodeItem, newName: string, index: number): void;
-    reName(fileData: ITreeNodeItem, callback: Function): void;
+    rename(fileData: ITreeNodeItem, callback: Function): void;
     deleteFile(fileData: ITreeNodeItem): void;
     onDropTree(treeData: ITreeNodeItem[]): void;
 }
@@ -53,11 +54,11 @@ export class ExplorerService
     /**
      *
      * @param fileData treeNode ite
-     * @param type new type
+     * @param fileType new fileType
      */
-    public newFileItem(
+    public createFile(
         fileData: ITreeNodeItem,
-        type: FileType,
+        fileType: FileType,
         callback: Function
     ) {
         const original = this.state.treeData;
@@ -67,7 +68,7 @@ export class ExplorerService
                     if (!item.children) item.children = [];
                     item.children.push({
                         ...generateFileTemplate(),
-                        type,
+                        fileType,
                     });
                 }
                 if (item.children) {
@@ -82,7 +83,7 @@ export class ExplorerService
          * + 支持工作空间/多目录结构
          * + 支持本地文件导入
          */
-        if (type === FileTypes.FOLDER) {
+        if (fileType === FileTypes.FOLDER) {
             if (!original?.length) {
                 original?.push(fileData);
             }
@@ -116,7 +117,7 @@ export class ExplorerService
                             name: newName,
                             modify: false,
                             icon:
-                                fileData.type === FileTypes.FILE
+                                fileData.fileType === FileTypes.FILE
                                     ? getFileIconByName(newName)
                                     : '',
                         };
@@ -138,7 +139,7 @@ export class ExplorerService
         update(original);
     }
 
-    public reName(fileData: ITreeNodeItem, callback: Function) {
+    public rename(fileData: ITreeNodeItem, callback: Function) {
         const original = this.state.treeData;
         const updateName = (tree, id) => {
             const rootNode = tree[0];

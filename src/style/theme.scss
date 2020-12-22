@@ -119,7 +119,13 @@
 
 // =============== Tree =============== //
 #{$tree} {
+    .site-tree-search-value {
+        color: #f50;
+    }
+    
     #{$rcTree}-treenode {
+        color: #bbb;
+
         &:hover {
             background-color: #333;
         }

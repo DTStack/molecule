@@ -7,7 +7,7 @@ import {
 } from 'mo';
 import { Button } from 'mo/components/button';
 import { ExplorerView } from './explore';
-import TreeView from './tree';
+import FolderTree from './folderTree';
 import { ExtensionService } from 'mo/services/extensionService';
 import { IExtension } from 'mo/model/extension';
 import { contentPaddingClassName } from 'mo/components/collapse';
@@ -88,7 +88,7 @@ function init(extensionCtx: ExtensionService) {
                 id: 'new_file',
                 title: 'New File',
                 iconName: 'codicon-new-file',
-                onClick: () => {},
+                onClick: () => { },
             },
             {
                 id: 'new_folder',
@@ -110,31 +110,31 @@ function init(extensionCtx: ExtensionService) {
             return (
                 <>
                     {explorerState.treeData?.length ? (
-                        <TreeView
+                        <FolderTree
                             prefixCls="rc-tree"
                             data={explorerState.treeData}
                         />
                     ) : (
-                        <span className={contentPaddingClassName}>
-                            you have not yet opened a folder
-                            <Button
-                                onClick={() => {
-                                    // test service
-                                    explorerService.newFileItem(
-                                        {
-                                            id: '1',
-                                            name: '',
-                                            type: 'folder',
-                                            modify: true,
-                                        },
-                                        FileTypes.FOLDER as FileType
-                                    );
-                                }}
-                            >
-                                New Folder
+                            <span className={contentPaddingClassName}>
+                                you have not yet opened a folder
+                                <Button
+                                    onClick={() => {
+                                        // test service
+                                        explorerService.createFile(
+                                            {
+                                                id: '1',
+                                                name: '',
+                                                fileType: 'folder',
+                                                modify: true,
+                                            },
+                                            FileTypes.FOLDER as FileType
+                                        );
+                                    }}
+                                >
+                                    New Folder
                             </Button>
-                        </span>
-                    )}
+                            </span>
+                        )}
                 </>
             );
         },

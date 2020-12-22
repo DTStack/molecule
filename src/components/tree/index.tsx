@@ -1,20 +1,19 @@
 import * as React from 'react';
-import { memo, useEffect, useState, useRef } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Tree, { TreeNode } from 'rc-tree';
 import { TreeProps } from 'rc-tree/lib/Tree';
 import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { Menu } from 'mo/components/menu';
 import { useContextMenu } from 'mo/components/contextMenu';
-import Modal from 'mo/components/dialog';
 import { prefixClaName, classNames } from 'mo/common/className';
 import { select } from 'mo/common/dom';
 import './style.scss';
 
-const confirm = Modal.confirm;
 export function generateTreeId(id?: string): string {
     return `mo_treeNode_${id}`;
 }
+
 export const FileTypes = {
     FILE: 'file',
     FOLDER: 'folder',
@@ -23,7 +22,8 @@ export type FileType = 'file' | 'folder';
 
 export interface ITreeNodeItem {
     name?: string;
-    type?: FileType;
+    location?: string;
+    fileType?: FileType;
     contextMenu?: IMenuItem[]; // custom contextMenu
     children?: ITreeNodeItem[];
     readonly id?: string;
@@ -32,129 +32,43 @@ export interface ITreeNodeItem {
     className?: string;
 }
 export interface ITreeProps extends TreeProps {
-    data: ITreeNodeItem[];
-    onSelectFile?: (IMenuItem) => void;
-    newFileItem?: (
-        fileData: ITreeNodeItem,
-        type: FileType,
-        callback: Function
-    ) => void;
-    updateFile?(fileData: ITreeNodeItem, newName: string, index: number): void;
-    reName?(fileData: ITreeNodeItem, callback: Function): void;
-    deleteFile?(fileData: ITreeNodeItem): void;
-    onDropTree?(treeNode): void;
     className?: string;
+    data?: ITreeNodeItem[];
+    draggable?: boolean;
+    onSelectFile?: (IMenuItem) => void;
+    onRightClick?: (node) => void;
+    renderContextMenu?: (fileType, activeData) => IMenuItem[];
+    renderTitle?: (node, index) => React.ReactDOM | string;
+    onDropTree?(treeNode): void;
 }
 const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     const {
         className,
         data,
-        newFileItem,
-        updateFile,
-        reName,
-        deleteFile,
+        draggable,
         onDropTree,
+        onRightClick,
+        renderContextMenu,
+        renderTitle, // custom title
         ...restProps
     } = props;
     const [activeData, setActiveData] = useState<ITreeNodeItem>({});
-    const [activeId, setActiveId] = useState<any>('');
-    const [expandedKeys, setExpandedKeys] = useState<any[]>([]);
-    const inputRef = useRef<any>(null);
+    const [activeId, setActiveId] = useState<string>('');
 
-    const onFocus = () => {
-        setTimeout(() => {
-            if (inputRef.current) {
-                inputRef.current.focus();
-            }
-        });
-    };
-    const handleDelte = (activeData: ITreeNodeItem) => {
-        confirm({
-            title: `Are you sure you want to delete '${activeData?.name}' ?`,
-            content: 'This action is irreversible!',
-            onOk() {
-                deleteFile && deleteFile(activeData);
-            },
-            onCancel() {},
-        });
-    };
-    const addExpandedKeys = (activeData: ITreeNodeItem) => {
-        const keys: any = [...expandedKeys];
-        keys.push(activeData?.id);
-        setExpandedKeys(keys);
-    };
-    const getContextMenuList = (type?: FileType) => {
-        let contextMenu: IMenuItem[] = [];
-        const commContextMenu = [
-            {
-                id: 'rename',
-                name: 'Rename',
-                onClick: (e, active) => {
-                    reName && reName(activeData, onFocus);
-                },
-            },
-            {
-                id: 'delete',
-                name: 'Delete',
-                onClick: (e, active) => {
-                    handleDelte(activeData);
-                },
-            },
-        ];
-        if (type === FileTypes.FOLDER) {
-            contextMenu = [
-                {
-                    id: 'newFile',
-                    name: 'New File',
-                    onClick: (e, active) => {
-                        addExpandedKeys(activeData);
-                        newFileItem &&
-                            newFileItem(
-                                activeData,
-                                FileTypes.FILE as FileType,
-                                onFocus
-                            );
-                    },
-                },
-                {
-                    id: 'newFolder',
-                    name: 'New Folder',
-                    onClick: (e, active) => {
-                        addExpandedKeys(activeData);
-                        newFileItem &&
-                            newFileItem(
-                                activeData,
-                                FileTypes.FOLDER as FileType,
-                                onFocus
-                            );
-                    },
-                },
-            ].concat(commContextMenu);
-        } else if (type === FileTypes.FILE) {
-            contextMenu = [
-                {
-                    id: 'openToSide',
-                    name: 'Open to the side',
-                },
-            ].concat(commContextMenu);
-        }
-        return contextMenu;
-    };
     /**
      * TODO:
      * useEffect 约束参数最好不要为引用类型
      * 这里 data 要做细粒度判断
      */
     useEffect(() => {
-        const { contextMenu, id, type } = activeData;
+        const { contextMenu, id, fileType } = activeData;
         const moContextMenu: IMenuItem[] =
-            contextMenu || getContextMenuList(type);
-        const renderContextMenu = () => <Menu data={moContextMenu} />;
+            contextMenu || renderContextMenu?.(fileType, activeData);
         let contextViewMenu;
         if (moContextMenu && moContextMenu.length > 0) {
             contextViewMenu = useContextMenu({
                 anchor: select(`div[data-id=${generateTreeId(id)}]`),
-                render: renderContextMenu,
+                render: () => <Menu data={moContextMenu} />,
             });
         }
         return function cleanup() {
@@ -163,6 +77,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     }, [data, activeId]);
 
     const onDrop = (info) => {
+        if (!draggable) return;
         console.log(info);
         const dropKey = info.node.props.eventKey;
         const dragKey = info.dragNode.props.eventKey;
@@ -218,37 +133,20 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         console.log('treeData', treeData);
         onDropTree && onDropTree(treeData);
     };
-    const onEnter = (e, file, index) => {
-        if (e.keyCode === 13) {
-            updateFile && updateFile(file, e.target.value, index);
-        }
-    };
     const renderTreeNodes = (data) =>
         data?.map((item, index) => {
-            const { modify, name, id, icon, children } = item;
+            const { modify, id, icon, children } = item;
             return (
+                /**
+                 * TODO: antd TreeNode 目前强依赖于 Tree，不好抽离，后续还不支持的话，考虑重写..
+                 * https://github.com/ant-design/ant-design/issues/4688
+                 * https://github.com/ant-design/ant-design/issues/4853
+                 */
                 <TreeNode
                     data-id={generateTreeId(id)}
+                    data-index={index}
                     data={item}
-                    title={
-                        modify ? (
-                            <input
-                                type="text"
-                                ref={inputRef}
-                                onKeyDown={(e: any) => {
-                                    onEnter(e, item, index);
-                                }}
-                                autoComplete="off"
-                                onBlur={(e) => {
-                                    updateFile &&
-                                        updateFile(item, e.target.value, index);
-                                }}
-                                onChange={(e) => {}}
-                            />
-                        ) : (
-                            name
-                        )
-                    }
+                    title={renderTitle?.(item, index)} // dynamic title
                     key={id}
                     icon={modify ? '' : <Icon type={icon} />}
                 >
@@ -256,26 +154,26 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 </TreeNode>
             );
         });
+    const handleRightClick = (node) => {
+        setActiveData(node.data);
+        setActiveId(node.data.id);
+        if (onRightClick) onRightClick(node);
+    }
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
                 <Tree
                     {...restProps}
-                    draggable
+                    draggable={draggable}
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
                     onRightClick={({ event, node }: any) => {
-                        setActiveData(node.data);
-                        setActiveId(node.data.id);
+                        handleRightClick(node)
                     }}
-                    onExpand={(expandedKeys) => {
-                        setExpandedKeys(expandedKeys);
-                    }}
-                    expandedKeys={expandedKeys}
                     onSelect={(selectedKeys, e: any) => {
-                        const isFile = e.node.data.type === FileTypes.FILE;
-                        const idModify = e.node.data.modify;
-                        if (isFile && !idModify && props.onSelectFile) {
+                        const { fileType, modify } = e.node.data;
+                        const isFile = fileType === FileTypes.FILE;
+                        if (isFile && !modify && props.onSelectFile) {
                             props.onSelectFile(e.node.data);
                         }
                     }}

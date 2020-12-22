@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { useState } from 'react';
-import Tree, { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
+import { useState, useCallback } from 'react';
+import Tree from 'mo/components/tree';
+import Input from 'mo/components/input';
+import { FileType, FileTypes } from 'mo/extensions/explore/folderTree';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 const stories = storiesOf('Tree', module);
@@ -10,11 +12,11 @@ const folder = FileTypes.FOLDER as FileType;
 const file = FileTypes.FILE as FileType;
 
 stories.add('Basic Usage', () => {
-    const data = [
+    const folderData = [
         {
             id: '1',
             name: folder,
-            type: folder,
+            fileType: folder,
             contextMenu: [
                 {
                     id: 'custom',
@@ -28,12 +30,12 @@ stories.add('Basic Usage', () => {
                 {
                     id: '2',
                     name: 'abc',
-                    type: folder,
+                    fileType: folder,
                     children: [
                         {
                             id: '3',
                             name: 'test.txt',
-                            type: file,
+                            fileType: file,
                             icon: 'symbol-file',
                         },
                     ],
@@ -41,12 +43,12 @@ stories.add('Basic Usage', () => {
                 {
                     id: '6',
                     name: 'xyz',
-                    type: folder,
+                    fileType: folder,
                     children: [
                         {
                             id: '7',
                             name: 'test.pdf',
-                            type: file,
+                            fileType: file,
                             icon: 'file-pdf',
                         },
                     ],
@@ -54,19 +56,71 @@ stories.add('Basic Usage', () => {
                 {
                     id: '10',
                     name: 'file.yaml',
-                    type: file,
+                    fileType: file,
                 },
             ],
         },
     ];
-
-    const [treeData] = useState<ITreeNodeItem[]>(data);
+    // 按一级目录展开
+    const searchData = [
+        {
+            id: '1',
+            name: 'large.ts',
+            fileType: folder,
+            location: '~/large.ts',
+            children: [
+                {
+                    id: '6',
+                    name: 'test',
+                    fileType: file,
+                },
+                {
+                    id: '10',
+                    name: 'test_search',
+                    fileType: file,
+                },
+            ],
+        },
+        {
+            id: '2',
+            name: 'abc',
+            fileType: folder,
+            children: [
+                {
+                    id: '99',
+                    name: 'test_abc',
+                    fileType: file,
+                }
+            ],
+        }
+    ];
+    const [inputValue, setInputValue] = useState('');
+    const handleInputChange = useCallback(
+        (e) => setInputValue(e.target.value),
+        [inputValue]
+    );
     return (
         <div>
             <h2>简述</h2>
             <p>Tree 多层次的结构列表。实现组件拖拽、右键面板等简单功能</p>
-            <h3>使用示例 尝试点击面板或者右键看看～</h3>
-            <Tree prefixCls="rc-tree" data={treeData} />
+            <h3>Tree component.</h3>
+
+            <h3>使用示例 1 - Folder Tree</h3>
+            <Tree prefixCls="rc-tree" data={folderData} />
+
+            <h3>使用示例 2 - Search Tree</h3>
+            <Input
+                placeholder="Search"
+                onChange={handleInputChange}
+            />
+            <Tree
+                prefixCls="rc-tree"
+                type='search'
+                defaultExpandAll
+                autoExpandParent
+                searchValue={inputValue}
+                data={searchData}
+            />
         </div>
     );
 });

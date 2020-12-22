@@ -2,7 +2,12 @@ import * as React from 'react';
 import { memo } from 'react';
 import { editorService } from 'mo';
 import Tree, { ITreeProps } from 'mo/components/tree';
-
+import {
+    prefixClaName,
+    getBEMElement,
+    getBEMModifier,
+    classNames,
+} from 'mo/common/className';
 export interface SearchTreeProps extends ITreeProps {
     searchValue?: string;
 }
@@ -20,6 +25,7 @@ const serviceProps = {
 const SearchTree: React.FunctionComponent<SearchTreeProps> = (
     props: SearchTreeProps
 ) => {
+    const treeNodeSearchValClassName = getBEMModifier(getBEMElement(prefixClaName('tree'), 'treeNode'), 'search');
     const { data, searchValue, ...restProps } = props;
     return (
         <Tree
@@ -34,7 +40,7 @@ const SearchTree: React.FunctionComponent<SearchTreeProps> = (
                     searchIndex > -1 ? (
                         <span>
                             {beforeStr}
-                            <span style={{ color: '#ce9178' }}>
+                            <span className={treeNodeSearchValClassName}>
                                 {searchValue}
                             </span>
                             {afterStr}

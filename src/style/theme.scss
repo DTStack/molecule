@@ -119,17 +119,13 @@
 
 // =============== Tree =============== //
 #{$tree} {
-    .site-tree-search-value {
-        color: #f50;
-    }
-
     #{$rcTree}-treenode {
         color: #bbb;
 
         &:hover {
             background-color: #333;
         }
-
+        
         .draggable {
             color: #bbb;
         }
@@ -137,6 +133,10 @@
         &-active {
             background: rgba(0, 0, 0, 0.1);
         }
+    }
+    
+    &__treeNode--search {
+        color: #ce9178;
     }
 
     .drag-over {

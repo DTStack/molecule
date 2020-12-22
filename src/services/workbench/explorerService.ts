@@ -8,8 +8,7 @@ import {
     generateFileTemplate,
     getPrevParentNode,
 } from 'mo/model/workbench/explorer';
-import { ITreeNodeItem, } from 'mo/components/tree';
-import { FileType, FileTypes } from 'mo/extensions/explore/folderTree';
+import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
 export interface IExplorerService extends Component<IExpolorer> {
     push(data: IPanelItem): void;
     createFile(

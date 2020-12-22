@@ -25,7 +25,10 @@ const serviceProps = {
 const SearchTree: React.FunctionComponent<SearchTreeProps> = (
     props: SearchTreeProps
 ) => {
-    const treeNodeSearchValClassName = getBEMModifier(getBEMElement(prefixClaName('tree'), 'treeNode'), 'search');
+    const treeNodeSearchValClassName = getBEMModifier(
+        getBEMElement(prefixClaName('tree'), 'treeNode'),
+        'search'
+    );
     const { data, searchValue, ...restProps } = props;
     return (
         <Tree
@@ -46,8 +49,8 @@ const SearchTree: React.FunctionComponent<SearchTreeProps> = (
                             {afterStr}
                         </span>
                     ) : (
-                            name
-                        );
+                        name
+                    );
                 return title;
             }}
             onSelectFile={serviceProps.onSelectFile}

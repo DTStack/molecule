@@ -6,7 +6,7 @@ import { activityBarService, editorService, explorerService } from 'mo';
 import { Button } from 'mo/components/button';
 import SearchTree from './searchTree';
 
-interface ISearchPaneToolBar { }
+interface ISearchPaneToolBar {}
 
 const initialState = {
     input: '',
@@ -38,7 +38,7 @@ type State = typeof initialState;
 export default class SearchPane extends React.Component<
     ISearchPaneToolBar,
     State
-    > {
+> {
     state: State;
 
     constructor(props) {
@@ -94,7 +94,7 @@ export default class SearchPane extends React.Component<
             editorService.open(tabData, 1);
         };
 
-        const openCommand = function () { };
+        const openCommand = function () {};
         const { input } = this.state;
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
@@ -106,11 +106,13 @@ export default class SearchPane extends React.Component<
                     <h1>Search Pane</h1>
                     <p>{input}</p>
                     <input onInput={this.onInput} />
-                    {input && <SearchTree
-                        prefixCls='rc-tree'
-                        data={explorerState?.treeData}
-                        searchValue={input}
-                    />}
+                    {input && (
+                        <SearchTree
+                            prefixCls="rc-tree"
+                            data={explorerState?.treeData}
+                            searchValue={input}
+                        />
+                    )}
                     <hr></hr>
                     <div>
                         <Button onClick={addABar}>Add Bar</Button>

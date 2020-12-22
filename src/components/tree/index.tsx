@@ -158,7 +158,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         setActiveData(node.data);
         setActiveId(node.data.id);
         if (onRightClick) onRightClick(node);
-    }
+    };
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
@@ -168,7 +168,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
                     onRightClick={({ event, node }: any) => {
-                        handleRightClick(node)
+                        handleRightClick(node);
                     }}
                     onSelect={(selectedKeys, e: any) => {
                         const { fileType, modify } = e.node.data;

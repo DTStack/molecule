@@ -48,30 +48,45 @@ const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
             serviceProps.updateFile(file, e.target.value, index);
         }
     };
-    const { data } = props;
-    return <Tree
-        prefixCls="rc-tree"
-        data={data}
-        draggable
-        onSelectFile={serviceProps.onSelectFile}
-        renderContextMenu={(fileType, activeData) => {
-            return getFolderDefaultContextMenu(fileType, activeData, Object.assign({}, serviceProps, { onFocus }))
-        }}
-        renderTitle={(node, index) => {
-            const { modify, name } = node;
-            return modify ? <input
-                type="text"
-                ref={inputRef}
-                onKeyDown={(e: any) => {
-                    onEnter(e, node, index);
-                }}
-                autoComplete="off"
-                onBlur={(e) => {
-                    serviceProps.updateFile(node, e.target.value, index);
-                }}
-                onChange={(e) => { }}
-            /> : name
-        }}
-    />;
+    const { data, ...restProps } = props;
+    return (
+        <Tree
+            prefixCls="rc-tree"
+            data={data}
+            draggable
+            onSelectFile={serviceProps.onSelectFile}
+            renderContextMenu={(fileType, activeData) => {
+                return getFolderDefaultContextMenu(
+                    fileType,
+                    activeData,
+                    Object.assign({}, serviceProps, { onFocus })
+                );
+            }}
+            renderTitle={(node, index) => {
+                const { modify, name } = node;
+                return modify ? (
+                    <input
+                        type="text"
+                        ref={inputRef}
+                        onKeyDown={(e: any) => {
+                            onEnter(e, node, index);
+                        }}
+                        autoComplete="off"
+                        onBlur={(e) => {
+                            serviceProps.updateFile(
+                                node,
+                                e.target.value,
+                                index
+                            );
+                        }}
+                        onChange={(e) => { }}
+                    />
+                ) : (
+                        name
+                    );
+            }}
+            {...restProps}
+        />
+    );
 };
 export default memo(FolderTree);

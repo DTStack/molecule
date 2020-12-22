@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import Tree from 'mo/components/tree';
+import { FileType, FileTypes } from 'mo/components/tree';
+import FolderTree from 'mo/extensions/explore/folderTree';
+import SearchTree from 'mo/extensions/search/searchTree';
 import Input from 'mo/components/input';
-import { FileType, FileTypes } from 'mo/extensions/explore/folderTree';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 const stories = storiesOf('Tree', module);
@@ -90,9 +91,9 @@ stories.add('Basic Usage', () => {
                     id: '99',
                     name: 'test_abc',
                     fileType: file,
-                }
+                },
             ],
-        }
+        },
     ];
     const [inputValue, setInputValue] = useState('');
     const handleInputChange = useCallback(
@@ -106,16 +107,12 @@ stories.add('Basic Usage', () => {
             <h3>Tree component.</h3>
 
             <h3>使用示例 1 - Folder Tree</h3>
-            <Tree prefixCls="rc-tree" data={folderData} />
+            <FolderTree prefixCls="rc-tree" data={folderData} />
 
             <h3>使用示例 2 - Search Tree</h3>
-            <Input
-                placeholder="Search"
-                onChange={handleInputChange}
-            />
-            <Tree
+            <Input placeholder="Search" onChange={handleInputChange} />
+            <SearchTree
                 prefixCls="rc-tree"
-                type='search'
                 defaultExpandAll
                 autoExpandParent
                 searchValue={inputValue}

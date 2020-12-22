@@ -3,13 +3,12 @@ import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import Modal from 'mo/components/dialog';
 const confirm = Modal.confirm;
 
-export const getFolderDefaultContextMenu = (fileType?: FileType, activeData?: ITreeNodeItem, props?): IMenuItem[] => {
-    const {
-        createFile,
-        rename,
-        deleteFile,
-        onFocus
-    } = props;
+export const getFolderDefaultContextMenu = (
+    fileType?: FileType,
+    activeData?: ITreeNodeItem,
+    props?
+): IMenuItem[] => {
+    const { createFile, rename, deleteFile, onFocus } = props;
     let contextMenu: IMenuItem[] = [];
     const handleDelte = (activeData) => {
         confirm({
@@ -18,7 +17,7 @@ export const getFolderDefaultContextMenu = (fileType?: FileType, activeData?: IT
             onOk() {
                 deleteFile && deleteFile(activeData);
             },
-            onCancel() { },
+            onCancel() {},
         });
     };
     const commContextMenu = [

@@ -15,29 +15,38 @@ const serviceProps = {
             modified: false,
         };
         editorService.open(tabData, tabData.activeTab);
-    }
+    },
 };
-const SearchTree: React.FunctionComponent<SearchTreeProps> = (props: SearchTreeProps) => {
-    const { data, searchValue } = props;
-    return <Tree
-        prefixCls="rc-tree"
-        data={data}
-        renderTitle={(node, index) => {
-            const { name } = node;
-            const searchIndex = name.indexOf(searchValue);
-            const beforeStr = name.substr(0, searchIndex);
-            const afterStr = name.substr(searchIndex + searchValue?.length);
-            const title =
-                searchIndex > -1 ? (
-                    <span>
-                        {beforeStr}
-                        <span style={{ color: '#ce9178' }}>{searchValue}</span>
-                        {afterStr}
-                    </span>
-                ) : name;
-            return title;
-        }}
-        onSelectFile={serviceProps.onSelectFile}
-    />;
+const SearchTree: React.FunctionComponent<SearchTreeProps> = (
+    props: SearchTreeProps
+) => {
+    const { data, searchValue, ...restProps } = props;
+    return (
+        <Tree
+            prefixCls="rc-tree"
+            data={data}
+            renderTitle={(node, index) => {
+                const { name } = node;
+                const searchIndex = name.indexOf(searchValue);
+                const beforeStr = name.substr(0, searchIndex);
+                const afterStr = name.substr(searchIndex + searchValue?.length);
+                const title =
+                    searchIndex > -1 ? (
+                        <span>
+                            {beforeStr}
+                            <span style={{ color: '#ce9178' }}>
+                                {searchValue}
+                            </span>
+                            {afterStr}
+                        </span>
+                    ) : (
+                            name
+                        );
+                return title;
+            }}
+            onSelectFile={serviceProps.onSelectFile}
+            {...restProps}
+        />
+    );
 };
 export default memo(SearchTree);

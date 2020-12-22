@@ -88,7 +88,7 @@ function init(extensionCtx: ExtensionService) {
                 id: 'new_file',
                 title: 'New File',
                 iconName: 'codicon-new-file',
-                onClick: () => { },
+                onClick: () => {},
             },
             {
                 id: 'new_folder',
@@ -115,26 +115,26 @@ function init(extensionCtx: ExtensionService) {
                             data={explorerState.treeData}
                         />
                     ) : (
-                            <span className={contentPaddingClassName}>
-                                you have not yet opened a folder
-                                <Button
-                                    onClick={() => {
-                                        // test service
-                                        explorerService.createFile(
-                                            {
-                                                id: '1',
-                                                name: '',
-                                                fileType: 'folder',
-                                                modify: true,
-                                            },
-                                            FileTypes.FOLDER as FileType
-                                        );
-                                    }}
-                                >
-                                    New Folder
+                        <span className={contentPaddingClassName}>
+                            you have not yet opened a folder
+                            <Button
+                                onClick={() => {
+                                    // test service
+                                    explorerService.createFile(
+                                        {
+                                            id: '1',
+                                            name: '',
+                                            fileType: 'folder',
+                                            modify: true,
+                                        },
+                                        FileTypes.FOLDER as FileType
+                                    );
+                                }}
+                            >
+                                New Folder
                             </Button>
-                            </span>
-                        )}
+                        </span>
+                    )}
                 </>
             );
         },

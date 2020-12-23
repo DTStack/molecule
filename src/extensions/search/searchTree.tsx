@@ -47,8 +47,8 @@ const SearchTree: React.FunctionComponent<SearchTreeProps> = (
                             {afterStr}
                         </span>
                     ) : (
-                        name
-                    );
+                            name
+                        );
                 return title;
             }}
             onSelectFile={serviceProps.onSelectFile}

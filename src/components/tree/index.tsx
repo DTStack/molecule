@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 import Tree, { TreeNode } from 'rc-tree';
 import { TreeProps } from 'rc-tree/lib/Tree';
 import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
-import { Menu } from 'mo/components/menu';
-import { useContextMenu } from 'mo/components/contextMenu';
 import { prefixClaName, classNames } from 'mo/common/className';
-import { select } from 'mo/common/dom';
 import './style.scss';
 
 export function generateTreeId(id?: string): string {
@@ -37,7 +34,6 @@ export interface ITreeProps extends TreeProps {
     draggable?: boolean;
     onSelectFile?: (IMenuItem) => void;
     onRightClick?: (node) => void;
-    renderContextMenu?: (fileType, activeData) => IMenuItem[];
     renderTitle?: (node, index) => React.ReactDOM | string;
     onDropTree?(treeNode): void;
 }
@@ -48,33 +44,9 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         draggable,
         onDropTree,
         onRightClick,
-        renderContextMenu,
         renderTitle, // custom title
         ...restProps
     } = props;
-    const [activeData, setActiveData] = useState<ITreeNodeItem>({});
-    const [activeId, setActiveId] = useState<string>('');
-
-    /**
-     * TODO:
-     * useEffect 约束参数最好不要为引用类型
-     * 这里 data 要做细粒度判断
-     */
-    useEffect(() => {
-        const { contextMenu, id, fileType } = activeData;
-        const moContextMenu: IMenuItem[] | undefined =
-            contextMenu || renderContextMenu?.(fileType, activeData);
-        let contextViewMenu;
-        if (moContextMenu && moContextMenu.length > 0) {
-            contextViewMenu = useContextMenu({
-                anchor: select(`div[data-id=${generateTreeId(id)}]`),
-                render: () => <Menu data={moContextMenu} />,
-            });
-        }
-        return function cleanup() {
-            contextViewMenu?.dispose();
-        };
-    }, [data, activeId]);
 
     const onDrop = (info) => {
         if (!draggable) return;
@@ -154,11 +126,6 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                 </TreeNode>
             );
         });
-    const handleRightClick = (node) => {
-        setActiveData(node.data);
-        setActiveId(node.data.id);
-        if (onRightClick) onRightClick(node);
-    };
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
@@ -168,7 +135,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
                     onRightClick={({ event, node }: any) => {
-                        handleRightClick(node);
+                        onRightClick?.(node);
                     }}
                     onSelect={(selectedKeys, e: any) => {
                         const { fileType, modify } = e.node.data;

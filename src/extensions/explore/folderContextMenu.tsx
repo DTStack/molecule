@@ -17,7 +17,7 @@ export const getFolderDefaultContextMenu = (
             onOk() {
                 deleteFile && deleteFile(activeData);
             },
-            onCancel() {},
+            onCancel() { },
         });
     };
     const commContextMenu = [

@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { memo, useRef } from 'react';
+import { memo, useRef, useEffect, useState } from 'react';
 import { editorService, explorerService } from 'mo';
-import Tree, { ITreeNodeItem, ITreeProps, FileType } from 'mo/components/tree';
+import Tree, { ITreeNodeItem, ITreeProps, FileType, generateTreeId } from 'mo/components/tree';
+import { IMenuItem, Menu } from 'mo/components/menu';
+import { useContextMenu } from 'mo/components/contextMenu';
+import { select } from 'mo/common/dom';
 import { getFolderDefaultContextMenu } from './folderContextMenu';
 
 const serviceProps = {
@@ -35,7 +38,7 @@ const serviceProps = {
 };
 const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     const inputRef = useRef<any>(null);
-
+    const [activeData, setActiveData] = useState<ITreeNodeItem>({});
     const onFocus = () => {
         setTimeout(() => {
             if (inputRef.current) {
@@ -49,17 +52,33 @@ const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         }
     };
     const { data, ...restProps } = props;
+    /**
+     * TODO:
+     * useEffect 约束参数最好不要为引用类型
+     * 这里 data 要做细粒度判断
+     */
+    useEffect(() => {
+        const { contextMenu, id, fileType } = activeData;
+        const moContextMenu: IMenuItem[] | undefined =
+            contextMenu || getFolderDefaultContextMenu?.(fileType, activeData, Object.assign({}, serviceProps, { onFocus }));
+        let contextViewMenu;
+        if (moContextMenu && moContextMenu.length > 0) {
+            contextViewMenu = useContextMenu({
+                anchor: select(`div[data-id=${generateTreeId(id)}]`),
+                render: () => <Menu data={moContextMenu} />,
+            });
+        }
+        return function cleanup() {
+            contextViewMenu?.dispose();
+        };
+    }, [data, activeData?.id]);
     return (
         <Tree
             data={data}
             draggable
             onSelectFile={serviceProps.onSelectFile}
-            renderContextMenu={(fileType, activeData) => {
-                return getFolderDefaultContextMenu(
-                    fileType,
-                    activeData,
-                    Object.assign({}, serviceProps, { onFocus })
-                );
+            onRightClick={(node) => {
+                setActiveData(node.data);
             }}
             renderTitle={(node, index) => {
                 const { modify, name } = node;
@@ -78,11 +97,11 @@ const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                 index
                             );
                         }}
-                        onChange={(e) => {}}
+                        onChange={(e) => { }}
                     />
                 ) : (
-                    name
-                );
+                        name
+                    );
             }}
             {...restProps}
         />

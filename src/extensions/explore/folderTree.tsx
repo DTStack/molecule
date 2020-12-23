@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { memo, useRef, useEffect, useState } from 'react';
 import { editorService, explorerService } from 'mo';
-import Tree, { ITreeNodeItem, ITreeProps, FileType, generateTreeId } from 'mo/components/tree';
+import Tree, {
+    ITreeNodeItem,
+    ITreeProps,
+    FileType,
+    generateTreeId,
+} from 'mo/components/tree';
 import { IMenuItem, Menu } from 'mo/components/menu';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { select } from 'mo/common/dom';
@@ -60,7 +65,12 @@ const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     useEffect(() => {
         const { contextMenu, id, fileType } = activeData;
         const moContextMenu: IMenuItem[] | undefined =
-            contextMenu || getFolderDefaultContextMenu?.(fileType, activeData, Object.assign({}, serviceProps, { onFocus }));
+            contextMenu ||
+            getFolderDefaultContextMenu?.(
+                fileType,
+                activeData,
+                Object.assign({}, serviceProps, { onFocus })
+            );
         let contextViewMenu;
         if (moContextMenu && moContextMenu.length > 0) {
             contextViewMenu = useContextMenu({
@@ -97,11 +107,11 @@ const FolderTree: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                                 index
                             );
                         }}
-                        onChange={(e) => { }}
+                        onChange={(e) => {}}
                     />
                 ) : (
-                        name
-                    );
+                    name
+                );
             }}
             {...restProps}
         />

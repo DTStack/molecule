@@ -7,7 +7,7 @@ import {
 } from 'mo';
 import { Button } from 'mo/components/button';
 import { ExplorerView } from './explore';
-import TreeView from './tree';
+import FolderTree from './folderTree';
 import { ExtensionService } from 'mo/services/extensionService';
 import { IExtension } from 'mo/model/extension';
 import { contentPaddingClassName } from 'mo/components/collapse';
@@ -110,7 +110,7 @@ function init(extensionCtx: ExtensionService) {
             return (
                 <>
                     {explorerState.treeData?.length ? (
-                        <TreeView
+                        <FolderTree
                             prefixCls="rc-tree"
                             data={explorerState.treeData}
                         />
@@ -120,11 +120,11 @@ function init(extensionCtx: ExtensionService) {
                             <Button
                                 onClick={() => {
                                     // test service
-                                    explorerService.newFileItem(
+                                    explorerService.createFile(
                                         {
                                             id: '1',
                                             name: '',
-                                            type: 'folder',
+                                            fileType: 'folder',
                                             modify: true,
                                         },
                                         FileTypes.FOLDER as FileType

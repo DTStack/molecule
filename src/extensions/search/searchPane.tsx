@@ -2,12 +2,18 @@ import * as React from 'react';
 import Toolbar from 'mo/components/toolbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
-import { activityBarService, colorThemeService, editorService } from 'mo';
+import {
+    activityBarService,
+    colorThemeService,
+    explorerService,
+    editorService,
+} from 'mo';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
+import SearchTree from './searchTree';
 
-interface ISearchPaneToolBar {}
+interface ISearchPaneToolBar { }
 
 const initialState = {
     input: '',
@@ -32,13 +38,14 @@ const initialState = {
         },
     ],
 };
+const explorerState = explorerService.getState();
 
 type State = typeof initialState;
 
 export default class SearchPane extends React.Component<
     ISearchPaneToolBar,
     State
-> {
+    > {
     state: State;
 
     constructor(props) {
@@ -113,15 +120,19 @@ export default class SearchPane extends React.Component<
             const tabData = {
                 key: `${key}`,
                 name: `editor.js`,
-                modified: false,
-                value: `hello javascript ${key}`,
-                path: 'desktop/molecule/editor1',
+                data: {
+                    modified: false,
+                    value: `hello javascript ${key}`,
+                    path: 'desktop/molecule/editor1',
+                    language: 'javascript',
+                },
             };
             console.log('open editor:', tabData);
             editorService.open(tabData, 1);
         };
 
-        const openCommand = function () {};
+        const openCommand = function () { };
+        const { input } = this.state;
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header
@@ -130,8 +141,15 @@ export default class SearchPane extends React.Component<
                 />
                 <Content>
                     <h1>Search Pane</h1>
-                    <p>{this.state.input}</p>
+                    <p>{input}</p>
                     <input onInput={this.onInput} />
+                    {input && (
+                        <SearchTree
+                            prefixCls="rc-tree"
+                            data={explorerState?.treeData}
+                            searchValue={input}
+                        />
+                    )}
                     <hr></hr>
                     <div>
                         <Button onClick={addABar}>Add Bar</Button>

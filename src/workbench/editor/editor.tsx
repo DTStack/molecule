@@ -4,11 +4,18 @@ import SplitPane from 'react-split-pane';
 
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import MonacoEditor from 'mo/components/monaco-editor';
-import Tabs from 'mo/components/tabs';
+import { Tabs } from 'mo/components/tabs';
 import { tabItemClassName } from 'mo/components/tabs/tab';
 import { Icon } from 'mo/components/icon';
 import Welcome from './welcome';
 import { IEditor, IEditorGroup } from 'mo/model';
+
+interface DtaType {
+    modified?: boolean;
+    language?: string | undefined;
+    path?: string;
+    value?: string;
+}
 
 const defaultEditorClassName = prefixClaName('editor');
 const groupClassName = getBEMElement(defaultEditorClassName, 'group');
@@ -22,8 +29,6 @@ function renderEditorGroup(
     const editor = group.activeTab;
     const tabs = group.tabs?.map((item, index) => {
         return Object.assign({}, item, {
-            key: item.key,
-            tip: item.path,
             label: [
                 <Icon type="new-file" key={`icon` + item.key} />,
                 <span
@@ -36,8 +41,8 @@ function renderEditorGroup(
             renderPanel: (
                 <MonacoEditor
                     options={{
-                        value: item.value,
-                        language: item.language || 'sql',
+                        value: item?.data?.value,
+                        language: item?.data?.language || 'sql',
                         automaticLayout: true,
                     }}
                     editorInstanceRef={(editorInstance) => {
@@ -50,7 +55,7 @@ function renderEditorGroup(
     });
     return (
         <div className={groupClassName} key={`group-${group.id}`}>
-            <Tabs
+            <Tabs<DtaType>
                 closable={true}
                 type="card"
                 data={tabs}
@@ -89,7 +94,7 @@ export function renderGroups(
     return null;
 }
 
-export function Editor(props: IEditor) {
+export function Editor<T>(props: IEditor<T>) {
     const {
         groups,
         render,

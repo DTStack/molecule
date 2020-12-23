@@ -2,7 +2,7 @@ import 'mo/style/main.scss';
 import 'vscode-codicons/dist/codicon.css';
 import * as React from 'react';
 import { container } from 'tsyringe';
-import { ITheme } from 'mo/model/theme';
+import { IColorTheme } from 'mo/model/colorTheme';
 import { defaultExtensions } from 'mo/extensions';
 import { IExtension } from 'mo/model/extension';
 import { ILocalization } from 'mo/model/localization';
@@ -14,7 +14,7 @@ import {
 interface Props {
     extensions?: IExtension[];
     locales?: ILocalization[];
-    colorTheme?: ITheme[];
+    colorTheme?: IColorTheme[];
 }
 
 export const MoleculeCtx = React.createContext({});

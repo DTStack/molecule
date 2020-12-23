@@ -14,11 +14,10 @@
 
     &__group-container {
         bottom: 0;
-        height: auto;
         left: 0;
-        position: relative;
+        position: absolute;
         right: 0;
-        width: 100%;
+        top: 57px;
     }
 
     &__group-header {

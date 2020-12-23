@@ -30,8 +30,11 @@ function renderEditorGroup(
     const tabs = group.tabs?.map((item, index) => {
         return Object.assign({}, item, {
             label: [
-                <Icon type="new-file" />,
-                <span className={getBEMElement(tabItemClassName, 'name')}>
+                <Icon type="new-file" key={`icon` + item.key} />,
+                <span
+                    key={'item' + item.key}
+                    className={getBEMElement(tabItemClassName, 'name')}
+                >
                     {item.name}
                 </span>,
             ],

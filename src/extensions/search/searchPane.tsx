@@ -2,8 +2,15 @@ import * as React from 'react';
 import Toolbar from 'mo/components/toolbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
-import { activityBarService, editorService, explorerService } from 'mo';
+import {
+    activityBarService,
+    colorThemeService,
+    explorerService,
+    editorService,
+} from 'mo';
 import { Button } from 'mo/components/button';
+import { Select, Option } from 'mo/components/select';
+import { IColorTheme } from 'mo/model/colorTheme';
 import SearchTree from './searchTree';
 
 interface ISearchPaneToolBar {}
@@ -69,6 +76,33 @@ export default class SearchPane extends React.Component<
         });
     };
 
+    onChangeTheme = (e, option) => {
+        if (option && option.value) {
+            console.log('onChangeTheme:', option.value);
+            colorThemeService.applyTheme(option.value);
+        }
+    };
+
+    renderColorThemes() {
+        const colorThemes = colorThemeService.getThemes();
+        const defaultTheme = colorThemeService.colorTheme;
+        const options = colorThemes.map((theme: IColorTheme) => {
+            return (
+                <Option key={theme.id} value={theme.id}>
+                    {theme.label}
+                </Option>
+            );
+        });
+        return (
+            <Select
+                defaultValue={defaultTheme.id}
+                onSelect={this.onChangeTheme}
+            >
+                {options}
+            </Select>
+        );
+    }
+
     render() {
         const { toolbar } = this.state;
 
@@ -121,6 +155,10 @@ export default class SearchPane extends React.Component<
                         <Button onClick={addABar}>Add Bar</Button>
                         <Button onClick={newEditor}>New Editor</Button>
                         <Button onClick={openCommand}>Command Palette</Button>
+                    </div>
+                    <div style={{ margin: '50px 20px' }}>
+                        ColorThemes:
+                        {this.renderColorThemes()}
                     </div>
                 </Content>
             </div>

@@ -2,8 +2,9 @@ import { ExtendActivityBar } from './activityBar';
 import { ExtendExplore } from './explore';
 import { ExtendSearch } from './search';
 import { ExtendStatusBar } from './statusBar';
-
-const Themes = require('./theme-defaults/package.json');
+import { defaultColorThemeExtension } from './theme-defaults';
+import { monokaiColorThemeExtension } from './theme-monokai';
+import { paleNightColorThemeExtension } from './vscode-palenight-theme';
 
 /**
  * Default extensions
@@ -13,5 +14,7 @@ export const defaultExtensions = [
     ExtendExplore,
     ExtendSearch,
     ExtendStatusBar,
-    Themes,
+    defaultColorThemeExtension,
+    monokaiColorThemeExtension,
+    paleNightColorThemeExtension,
 ];

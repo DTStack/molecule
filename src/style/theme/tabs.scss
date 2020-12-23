@@ -1,0 +1,26 @@
+@import 'mo/style/common';
+
+// =============== Editor Tabs =============== //
+#{prefix($tabSwitcher)} {
+    background-color: var(--editorGroupHeader-tabsBackground);
+
+    .tab-button {
+        color: var(--foreground);
+
+        &__dot {
+            &::after {
+                background-color: var(--tab-activeBackground);
+                color: var(--tab-activeForeground);
+            }
+        }
+
+        &:hover {
+            background-color: var(--tab-activeBackground);
+            color: var(--tab-activeForeground);
+        }
+
+        &__close {
+            fill: var(--tab-activeBackground);
+        }
+    }
+}

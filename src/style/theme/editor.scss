@@ -1,0 +1,19 @@
+@import 'mo/style/common';
+
+// =============== Editor =============== //
+#{$editor} {
+    &__group-breadcrumbs,
+    &__group-container {
+        background-color: var(--editor-background);
+        color: var(--editor-foreground);
+    }
+
+    #{prefix($tabSwitcher)} {
+        .tab-button {
+            &--active {
+                background-color: var(--tab-activeBackground);
+                color: var(--tab-activeForeground);
+            }
+        }
+    }
+}

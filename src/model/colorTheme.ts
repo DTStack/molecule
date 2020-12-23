@@ -1,20 +1,22 @@
-export interface ThemeColor extends Object {
-    id?: string;
+export interface IColors {
+    [colorId: string]: string;
 }
-
 export interface TokenColor extends Object {
     name?: string;
     scope?: string | string[];
     settings?: object;
 }
 
-export interface ITheme {
+export interface IColorTheme {
     /**
      * The id of component, theme will be applied by this ID
      */
     id: string;
+    label: string;
     name: string;
-    colors?: ThemeColor;
+    uiTheme: string;
+    path?: string;
+    colors?: IColors;
     tokenColors?: TokenColor[];
     /**
      * The semanticTokenColors mappings as well as

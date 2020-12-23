@@ -21,7 +21,6 @@
 
     /* stylelint-disable */
     .Resizer {
-        background: #000;
         background-clip: padding;
         background-clip: padding;
         background-clip: padding-box;
@@ -38,8 +37,8 @@
     }
 
     .Resizer.horizontal {
-        border-bottom: 5px solid rgba(255, 255, 255, 0);
-        border-top: 5px solid rgba(255, 255, 255, 0);
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
         cursor: row-resize;
         height: 11px;
         margin: -5px 0;
@@ -47,21 +46,16 @@
     }
 
     .Resizer.horizontal:hover {
-        border-bottom: 5px solid rgba(0, 0, 0, 0.5);
-        border-top: 5px solid rgba(0, 0, 0, 0.5);
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
     }
 
     .Resizer.vertical {
-        border-left: 5px solid rgba(255, 255, 255, 0);
-        border-right: 5px solid rgba(255, 255, 255, 0);
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
         cursor: col-resize;
         margin: 0 -5px;
         width: 11px;
-    }
-
-    .Resizer.vertical:hover {
-        border-left: 5px solid rgba(0, 0, 0, 0.5);
-        border-right: 5px solid rgba(0, 0, 0, 0.5);
     }
 
     .Resizer.disabled {
@@ -71,5 +65,4 @@
     .Resizer.disabled:hover {
         border-color: transparent;
     }
-    /* stylelint-enable */
 }

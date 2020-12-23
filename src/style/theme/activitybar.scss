@@ -1,0 +1,27 @@
+@import 'mo/style/common';
+
+// =============== activityBar =============== //
+#{$activityBar} {
+    background-color: var(--activityBar-background);
+    border-color: var(--activityBar-border);
+
+    &__indicator {
+        background: var(--activityBar-activeBorder);
+    }
+
+    &__item--checked {
+        #{$activityBar}__label {
+            background-color: var(--activityBar-activeBackground);
+            border-color: var(--activityBar-activeFocusBorder);
+        }
+    }
+
+    #{$activityBar}__item {
+        color: var(--activityBar-foreground);
+
+        &:hover {
+            background-color: var(--activityBar-activeBackground);
+            color: var(--activityBar-foreground);
+        }
+    }
+}

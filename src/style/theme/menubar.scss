@@ -1,0 +1,18 @@
+@import 'mo/style/common';
+
+// =============== MenuBar =============== //
+#{$menuBar} {
+    background-color: var(--activityBar-background);
+    border-color: var(--activityBar-border);
+    color: var(--activityBar-foreground);
+
+    #{$menu} {
+        &__item {
+            &:hover {
+                background-color: var(--menubar-selectionBackground);
+                border-color: var(--menubar-selectionBorder);
+                color: var(--menubar-selectionForeground);
+            }
+        }
+    }
+}

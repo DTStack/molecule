@@ -1,10 +1,12 @@
 import { IExtensionService } from 'mo/services';
+import { IColorTheme } from './colorTheme';
+import { IIconTheme } from './iconTheme';
 
 /**
  * Defines extension types
  */
 export enum IExtensionType {
-    Theme = 'themes',
+    Theme = 'Themes',
     Normal = 'normal',
     Settings = 'settings',
     Locals = 'locals',
@@ -17,13 +19,17 @@ export enum IContributeType {
     Commands = 'commands',
     Configuration = 'configuration',
     Grammar = 'grammars',
+    Themes = 'themes',
+    IconTheme = 'iconThemes',
 }
 
 export interface IContribute {
-    [IContributeType.Languages]: any;
-    [IContributeType.Commands]: any;
-    [IContributeType.Configuration]: any;
-    [IContributeType.Grammar]: any;
+    [IContributeType.Languages]?: any;
+    [IContributeType.Commands]?: any;
+    [IContributeType.Configuration]?: any;
+    [IContributeType.Grammar]?: any;
+    [IContributeType.Themes]?: IColorTheme[];
+    [IContributeType.IconTheme]?: IIconTheme[];
 }
 
 /**

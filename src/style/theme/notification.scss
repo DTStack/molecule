@@ -1,0 +1,45 @@
+@import 'mo/style/common';
+
+#{$modal} {
+    background-color: var(--notification-background);
+    border-color: var(--notification-border);
+    color: var(--notification-foreground);
+
+    &-mask {
+        background-color: var(--widgetShadow);
+    }
+
+    &-content {
+        border-color: var(--notificationCenter-border);
+        box-shadow: var(--widgetShadow) 0 0 8px;
+    }
+
+    &-header {
+        background: var(--notificationCenterHeader-background);
+        color: var(--notificationCenterHeader-foreground);
+    }
+
+    &-close {
+        background: 0 0;
+        border: 0;
+    }
+
+    &-content,
+    &-close {
+        color: var(--notification-foreground);
+    }
+}
+
+#{$confirm} {
+    &__indicator {
+        .codicon-warning {
+            color: var(--notificationsWarningIcon-foreground);
+        }
+    }
+
+    &__message {
+        &--detail {
+            color: var(--notificationsInfoIcon-foreground);
+        }
+    }
+}

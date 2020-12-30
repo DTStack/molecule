@@ -12,8 +12,9 @@ import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
 import SearchTree from './searchTree';
+import { IEditorTab } from 'mo/model';
 
-interface ISearchPaneToolBar { }
+interface ISearchPaneToolBar {}
 
 const initialState = {
     input: '',
@@ -45,7 +46,7 @@ type State = typeof initialState;
 export default class SearchPane extends React.Component<
     ISearchPaneToolBar,
     State
-    > {
+> {
     state: State;
 
     constructor(props) {
@@ -117,21 +118,22 @@ export default class SearchPane extends React.Component<
 
         const newEditor = function () {
             const key = Math.random() * 10 + 1;
-            const tabData = {
-                key: `${key}`,
+            const tabData: IEditorTab = {
+                id: `${key}`,
                 name: `editor.js`,
+                modified: false,
                 data: {
-                    modified: false,
                     value: `hello javascript ${key}`,
                     path: 'desktop/molecule/editor1',
                     language: 'javascript',
                 },
+                breadcrumb: [{ id: `${key}`, name: 'editor.js' }],
             };
             console.log('open editor:', tabData);
             editorService.open(tabData, 1);
         };
 
-        const openCommand = function () { };
+        const openCommand = function () {};
         const { input } = this.state;
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>

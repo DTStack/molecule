@@ -2,7 +2,7 @@ import * as React from 'react';
 import { mapState } from 'mo/react';
 import Collapse from 'mo/components/collapse';
 import Toolbar from 'mo/components/toolbar';
-import { IActionBarItem } from 'mo/components/actionbar';
+import { IActionBarItem } from 'mo/components/actionBar';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { prefixClaName } from 'mo/common/className';
 import { explorerService } from 'mo/services';

@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 export * from './extensionService';
 export * from './theme/colorThemeService';
 export * from './workbench';
+export * from './settingsService';
 
 import {
     ColorThemeService,
@@ -23,7 +24,10 @@ import {
     StatusBarService,
     EditorService,
     IEditorService,
+    IPanelService,
+    PanelService,
 } from './workbench';
+import { ISettingsService, SettingsService } from './settingsService';
 
 /**
  * The Services of Workbench
@@ -37,6 +41,7 @@ const sidebarService = container.resolve<ISidebarService>(SidebarService);
 const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
 const editorService = container.resolve<IEditorService>(EditorService);
 const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
+const panelService = container.resolve<IPanelService>(PanelService);
 
 /**
  * The ColorTheme service,
@@ -51,13 +56,20 @@ const colorThemeService = container.resolve<IColorThemeService>(
  */
 const extensionService = container.resolve<IExtensionService>(ExtensionService);
 
+/**
+ * Settings service
+ */
+const settingsService = container.resolve<ISettingsService>(SettingsService);
+
 export {
     activityBarService,
     explorerService,
     sidebarService,
     menuBarService,
     statusBarService,
+    panelService,
     editorService,
     extensionService,
     colorThemeService,
+    settingsService,
 };

@@ -75,10 +75,12 @@ export class StatusBarService
 
     appendLeftItem(item: IStatusBarItem): void {
         this.state.leftItems.push(item);
+        this.render();
     }
 
     appendRightItem(item: IStatusBarItem): void {
         this.state.rightItems.push(item);
+        this.render();
     }
 
     updateItem(item: IStatusBarItem): void {

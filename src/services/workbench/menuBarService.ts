@@ -5,21 +5,6 @@ import {
 } from 'mo/model/workbench/menuBar';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
-import { emit } from '../../common/event';
-
-/**
- * The activity bar event definition
- */
-export enum MenuBarEvent {
-    /**
-     * Selected an activity bar
-     */
-    onClick = 'menuBar.onClick',
-    /**
-     * Activity bar data changed
-     */
-    DataChanged = 'menuBar.data',
-}
 
 export interface IMenuBarService extends Component<IMenuBar> {
     push(data: IMenuBarItem | IMenuBarItem[]): void;
@@ -38,7 +23,6 @@ export class MenuBarService
         this.state = container.resolve(MenuBarModel);
     }
 
-    @emit(MenuBarEvent.DataChanged)
     public push(item: IMenuBarItem | IMenuBarItem[]) {
         let original = this.state.data || [];
         if (Array.isArray(item)) {

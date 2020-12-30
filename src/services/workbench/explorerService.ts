@@ -38,7 +38,7 @@ export class ExplorerService
     }
 
     public reset() {
-        this.updateState({
+        this.setState({
             data: [],
         });
     }
@@ -196,7 +196,7 @@ export class ExplorerService
     }
 
     public onDropTree = (treeData: ITreeNodeItem[]) => {
-        this.updateState({
+        this.setState({
             treeData,
         });
     };

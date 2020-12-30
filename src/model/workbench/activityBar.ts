@@ -1,7 +1,4 @@
-/* eslint-disable no-invalid-this */
 import 'reflect-metadata';
-import { EventBus } from 'mo/common/event';
-import { observable } from 'mo/common/observable';
 import { container, inject, injectable } from 'tsyringe';
 import { IMenuItem } from 'mo/components/menu';
 
@@ -30,18 +27,12 @@ export interface IActivityBarItem {
     type?: 'normal' | 'global';
     contextMenu?: IMenuItem[];
     render?: () => React.ReactNode | JSX.Element;
-    onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
 }
 
 export interface IActivityBar {
     data?: IActivityBarItem[];
     selected?: string;
-    onSelect?: (key: string, item?: IActivityBarItem) => void;
-    onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
-    render?: () => React.ReactNode;
 }
-
-@observable()
 @injectable()
 export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
@@ -54,22 +45,6 @@ export class ActivityBarModel implements IActivityBar {
         this.data = data;
         this.selected = selected;
     }
-
-    public render!: () => React.ReactNode;
-
-    public readonly onSelect = (
-        key: string,
-        item?: IActivityBarItem | undefined
-    ) => {
-        EventBus.emit(ActivityBarEvent.Selected, key, item);
-    };
-
-    public readonly onClick = (
-        event: React.MouseEvent,
-        item: IActivityBarItem
-    ) => {
-        EventBus.emit(ActivityBarEvent.OnClick, event, item);
-    };
 }
 
 container.register('ActivityBarData', { useValue: [] });

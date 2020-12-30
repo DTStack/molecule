@@ -1,3 +1,4 @@
+import 'mo/style/mo.scss';
 import * as React from 'react';
 import { MoleculeProvider, Workbench } from 'mo/index';
 import { customExtensions } from '../extensions';

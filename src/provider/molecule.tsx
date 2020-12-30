@@ -1,5 +1,3 @@
-import 'mo/style/main.scss';
-import 'vscode-codicons/dist/codicon.css';
 import * as React from 'react';
 import { container } from 'tsyringe';
 import { IColorTheme } from 'mo/model/colorTheme';

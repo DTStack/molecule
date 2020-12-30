@@ -1,8 +1,17 @@
-import 'mo/workbench/editor/style.scss';
-import { Editor } from './editor';
-import { editorService } from 'mo/services';
-import { mapState } from 'mo/react';
+import { connect } from 'mo/react';
+import { container } from 'tsyringe';
+import { IEditor } from 'mo/model';
+import { editorService, IEditorService } from 'mo/services';
+import { EditorController, IEditorController } from 'mo/controller/editor';
 
-const EditorView = mapState(Editor, editorService.getState());
+import { Editor } from './editor';
+
+const editorController = container.resolve(EditorController);
+
+const EditorView = connect<IEditorService, IEditor, IEditorController>(
+    editorService,
+    Editor,
+    editorController
+);
 
 export { Editor, EditorView };

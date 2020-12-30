@@ -5,6 +5,7 @@ import { IMenuBar } from 'mo/model/workbench/menuBar';
 import { Menu } from 'mo/components/menu';
 import { DropDown } from 'mo/components/dropdown';
 import { Icon } from 'mo/components/icon';
+import { IMenuBarController } from 'mo/controller/menuBar';
 
 export interface IMenuBarProps {
     // menuBar: IMenuBar;
@@ -118,12 +119,10 @@ const initialMenuData = [
 const defaultClassName = prefixClaName('menuBar');
 const actionClassName = getBEMElement(defaultClassName, 'action');
 
-function MenuBar(props: IMenuBar) {
-    const menuBar = props;
-    const click = function (e) {
-        menuBar.onClick(e, {
-            name: 'test',
-        });
+function MenuBar(props: IMenuBar & IMenuBarController) {
+    const { onClick } = props;
+    const click = function (e, item) {
+        onClick?.(e, item);
     };
     const menu = (
         <Menu onClick={click} style={{ width: 200 }} data={initialMenuData} />

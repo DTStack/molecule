@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { classNames } from 'mo/common/className';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { select } from 'mo/common/dom';
 import { Menu } from 'mo/components/menu';
+import { IActivityBarController } from 'mo/controller/activityBar';
 
 import {
     indicatorClassName,
@@ -13,7 +14,7 @@ import {
     itemCheckedClassName,
 } from './base';
 
-function ActivityBarItem(props: IActivityBarItem) {
+function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
     const {
         checked = false,
         name = '',
@@ -29,8 +30,14 @@ function ActivityBarItem(props: IActivityBarItem) {
         content = render();
     }
 
-    const renderContextMenu = () => <Menu data={contextMenu} />;
     let contextViewMenu;
+
+    const onClickMenuItem = useCallback(() => {
+        contextViewMenu?.dispose();
+    }, [contextMenu]);
+    const renderContextMenu = () => (
+        <Menu onClick={onClickMenuItem} data={contextMenu} />
+    );
 
     useEffect(() => {
         if (contextMenu.length > 0) {

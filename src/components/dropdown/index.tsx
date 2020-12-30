@@ -1,7 +1,6 @@
-import './style.scss';
 import * as React from 'react';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
-import { useContextView } from '../contextview';
+import { useContextView } from '../contextView';
 import {
     triggerEvent,
     TriggerEvent,
@@ -9,7 +8,7 @@ import {
     getPositionByPlacement,
 } from 'mo/common/dom';
 
-export interface IDropDown extends HTMLElementProps {
+export interface IDropDown extends React.ComponentProps<'div'> {
     overlay: ReactNode;
     trigger?: TriggerEvent;
     placement?: PlacementType;
@@ -24,7 +23,7 @@ export function DropDown(props: React.PropsWithChildren<IDropDown>) {
         children,
         placement = 'right',
         trigger = 'click',
-        ...others
+        ...extra
     } = props;
     const contextView = useContextView({
         render: () => overlay,
@@ -54,7 +53,7 @@ export function DropDown(props: React.PropsWithChildren<IDropDown>) {
     };
 
     return (
-        <div className={claNames} {...events} {...others}>
+        <div className={claNames} {...events} {...extra}>
             {children}
         </div>
     );

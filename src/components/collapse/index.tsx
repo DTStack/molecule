@@ -59,7 +59,6 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
         <div className={classNames(defaultCollapseClassName, className)}>
             <RcCollapse
                 {...restProps}
-                accordion={true}
                 activeKey={activePanelKey}
                 onChange={(activeKey: React.Key | React.Key[]) => {
                     onChangeCallback(activeKey);

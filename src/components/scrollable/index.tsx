@@ -1,4 +1,3 @@
-import './style.scss';
 import * as React from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { Scrollbar, ScrollbarProps } from 'react-scrollbars-custom';

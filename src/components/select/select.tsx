@@ -1,4 +1,3 @@
-import './style.scss';
 import * as React from 'react';
 import {
     Children,
@@ -15,7 +14,7 @@ import {
 } from 'mo/common/className';
 import { cloneReactChildren } from 'mo/react';
 import { getAttr } from 'mo/common/dom';
-import { IContextView, useContextView } from 'mo/components/contextview';
+import { IContextView, useContextView } from 'mo/components/contextView';
 
 import { ISelectOption } from './option';
 import { Icon } from '../icon';

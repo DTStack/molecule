@@ -19,12 +19,11 @@ export interface ITab<T> {
     active?: boolean;
     closable?: boolean;
     index?: number;
-    key?: string;
-    propsKey?: string;
+    id?: string;
     name?: string;
     label?: React.ReactNode;
     tip?: string | React.ReactNode;
-    renderPanel?: React.ReactNode;
+    renderPanel?: ReactNode;
     data?: T;
 }
 
@@ -40,9 +39,10 @@ export function Tab<T>(props: ITab<T> & ITabEvent) {
     const {
         closable,
         index,
-        propsKey,
+        id,
         active,
         label,
+        name,
         onCloseTab,
         onMoveTab,
         onSelectTab,
@@ -58,7 +58,7 @@ export function Tab<T>(props: ITab<T> & ITabEvent) {
         collect: (monitor: DragSourceMonitor) => ({
             isDragging: monitor.isDragging(),
         }),
-        item: { type: 'DND_NODE', propsKey, index },
+        item: { type: 'DND_NODE', id, index },
     });
 
     const [, drop] = useDrop({
@@ -70,7 +70,7 @@ export function Tab<T>(props: ITab<T> & ITabEvent) {
             if (!ref.current) return;
             const component = ref.current;
             const dragIndex = monitor.getItem().index;
-            let hoverIndex = index!;
+            const hoverIndex = index!;
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
                 return;
@@ -104,17 +104,17 @@ export function Tab<T>(props: ITab<T> & ITabEvent) {
             className={classNames(tabItemClassName, {
                 [getBEMModifier(tabItemClassName, 'active')]: active,
             })}
-            onClick={(event: React.MouseEvent) => onSelectTab?.(propsKey)}
+            onClick={(event: React.MouseEvent) => onSelectTab?.(id)}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
-            {label}
+            {label || name}
             {closable && (
                 <TabDot
                     classNames={getBEMElement(tabItemClassName, 'op')}
                     active={active}
                     buttonHover={hover}
-                    onClick={(e) => onCloseTab?.(propsKey)}
+                    onClick={(e) => onCloseTab?.(id)}
                     {...resetProps}
                 />
             )}

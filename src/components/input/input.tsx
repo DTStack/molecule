@@ -1,9 +1,8 @@
-import './style.scss';
 import * as React from 'react';
-
 import { classNames, prefixClaName, getBEMModifier } from 'mo/common/className';
 import { KeyCodes } from 'mo/common/keyCodes';
-import TextArea from './TextArea';
+
+import TextArea from './textArea';
 
 type SizeType = 'normal' | 'large';
 export interface InputProps {
@@ -43,7 +42,7 @@ export function resolveOnChange(
     ) => void
 ) {
     if (onChange) {
-        let event = e;
+        const event = e;
         onChange(
             event as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
         );

@@ -22,15 +22,15 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
         menu.length > 0 ? (
             <Menu style={{ width: 200 }} data={menu} />
         ) : (
-                <span
-                    style={{
-                        padding: 15,
-                        fontSize: 14,
-                    }}
-                >
-                    No more actions
-                </span>
-            );
+            <span
+                style={{
+                    padding: 15,
+                    fontSize: 14,
+                }}
+            >
+                No more actions
+            </span>
+        );
 
     const handleSplitEditor = useCallback(
         (e: React.MouseEvent) => {

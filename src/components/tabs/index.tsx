@@ -18,6 +18,7 @@ export interface ITabs<T> extends React.ComponentProps<any> {
     data?: ITab<T>[];
     activeTab?: string;
     type?: TabsType;
+    style?: React.CSSProperties;
     onCloseTab?: (key?: string) => void;
     onMoveTab?: (tabs: ITab<T>[]) => void;
     onSelectTab?: (key?: string) => void;
@@ -34,7 +35,7 @@ export function Tabs<T>(props: ITabs<T>) {
         activeTab,
         data = [],
         type = 'line',
-        closable,
+        style,
         onMoveTab,
         ...resetProps
     } = props;
@@ -57,11 +58,11 @@ export function Tabs<T>(props: ITabs<T>) {
     return (
         <DragAndDrop>
             <div
+                style={style}
                 className={classNames(
                     tabsClassName,
                     getBEMModifier(tabsClassName, type as string)
                 )}
-                {...resetProps}
             >
                 <div className={tabsHeader}>
                     {data?.map((tab: ITab<T>, index: number) => {

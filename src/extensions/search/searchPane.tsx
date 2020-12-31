@@ -130,7 +130,7 @@ export default class SearchPane extends React.Component<
                 breadcrumb: [{ id: `${key}`, name: 'editor.js' }],
             };
             console.log('open editor:', tabData);
-            editorService.open(tabData, 1);
+            editorService.open(tabData);
         };
 
         const openCommand = function () {};

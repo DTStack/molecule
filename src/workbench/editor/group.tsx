@@ -3,7 +3,7 @@ import { Scrollable } from 'mo/components/scrollable';
 import { Tabs } from 'mo/components/tabs';
 import { IEditorGroup } from 'mo/model';
 import * as React from 'react';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import {
     groupClassName,
     groupContainerClassName,
@@ -13,6 +13,9 @@ import {
 import EditorAction from './action';
 import EditorBreadcrumb from './breadcrumb';
 import { IEditorController } from 'mo/controller/editor';
+import { Menu } from 'mo/components/menu';
+import { useContextView } from 'mo/components/contextView';
+import { getEventPosition } from 'mo/common/dom';
 
 export interface IEditorGroupProps extends IEditorGroup {
     currentGroup?: IEditorGroup;
@@ -29,11 +32,28 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
         onMoveTab,
         onCloseTab,
         onSelectTab,
+        onTabContextMenu,
         onSplitEditorRight,
         onUpdateEditorIns,
     } = props;
 
     const isActiveGroup = id === currentGroup?.id;
+
+    const contextView = useContextView({
+        render: () => <Menu data={menu} />,
+    });
+
+    const handleTabContextMenu = (e, item) => {
+        e.preventDefault();
+        contextView.show(getEventPosition(e));
+        onTabContextMenu?.(e, item);
+    };
+
+    useEffect(() => {
+        return function cleanup() {
+            contextView?.dispose();
+        };
+    });
 
     return (
         <div className={groupClassName}>
@@ -44,9 +64,10 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                             closable={true}
                             type="card"
                             data={data}
-                            style={{ overflow: 'hidden' }}
                             onMoveTab={onMoveTab}
+                            style={{ overflow: 'hidden' }}
                             onSelectTab={onSelectTab}
+                            onContextMenu={handleTabContextMenu}
                             activeTab={tab.id}
                             onCloseTab={onCloseTab}
                         />
@@ -70,7 +91,6 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                                 language: tab.data?.language,
                                 automaticLayout: true,
                             }}
-                            key={tab.id}
                             editorInstanceRef={(editorInstance) => {
                                 // This assignment will trigger moleculeCtx update, and subNodes update
                                 onUpdateEditorIns?.(editorInstance, id!);

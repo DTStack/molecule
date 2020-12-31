@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { findDOMNode } from 'react-dom';
 import {
     DragSourceMonitor,
@@ -31,6 +31,7 @@ export interface ITabEvent {
     onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
     onCloseTab?: (key?: string) => void;
     onSelectTab?: (key?: string) => void;
+    onContextMenu?: <T = any>(event: React.MouseEvent, tab: ITab<T>) => void;
 }
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
@@ -46,6 +47,7 @@ export function Tab<T>(props: ITab<T> & ITabEvent) {
         onCloseTab,
         onMoveTab,
         onSelectTab,
+        onContextMenu,
         ...resetProps
     } = props;
     const ref = useRef<HTMLDivElement>(null);
@@ -53,6 +55,12 @@ export function Tab<T>(props: ITab<T> & ITabEvent) {
     const [hover, setHover] = useState(false);
     const handleMouseOver = () => setHover(true);
     const handleMouseOut = () => setHover(false);
+    const handleOnContextMenu = useCallback(
+        (event: React.MouseEvent) => {
+            onContextMenu?.(event, props);
+        },
+        [props]
+    );
 
     const [, drag] = useDrag({
         collect: (monitor: DragSourceMonitor) => ({
@@ -107,6 +115,7 @@ export function Tab<T>(props: ITab<T> & ITabEvent) {
             onClick={(event: React.MouseEvent) => onSelectTab?.(id)}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
+            onContextMenu={handleOnContextMenu}
         >
             {label || name}
             {closable && (

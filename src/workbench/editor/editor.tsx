@@ -1,31 +1,36 @@
 import * as React from 'react';
-import SplitPane from 'react-split-pane';
-import { IEditor, IEditorGroup } from 'mo/model';
 import { memo } from 'react';
+import SplitPane from 'react-split-pane';
+import * as Pane from 'react-split-pane/lib/Pane';
+import { IEditor, IEditorGroup } from 'mo/model';
 
 import EditorGroup from './group';
 import Welcome from './welcome';
 import { defaultEditorClassName } from './base';
 import { IEditorController } from 'mo/controller/editor';
 
-export function Editor<T>(props: IEditor & IEditorController) {
+export function Editor(props: IEditor & IEditorController) {
     const {
         groups = [],
         current,
         onCloseTab,
         onMoveTab,
         onSelectTab,
+        groupSplitPos = [],
         onSplitEditorRight,
         onUpdateEditorIns,
+        onTabContextMenu,
+        onPaneSizeChange,
     } = props;
 
     const getEvents = (groupId: number) => {
         return {
-            setMoveTab: (tabs) => onMoveTab?.(tabs, groupId),
-            setCloseTab: (tabKey) => onCloseTab?.(tabKey, groupId),
-            setSelectTab: (tabKey) => onSelectTab?.(tabKey, groupId),
+            onMoveTab: (tabs) => onMoveTab?.(tabs, groupId),
+            onCloseTab: (tabKey) => onCloseTab?.(tabKey, groupId),
+            onSelectTab: (tabKey) => onSelectTab?.(tabKey, groupId),
             onSplitEditorRight,
             onUpdateEditorIns,
+            onTabContextMenu,
         };
     };
 
@@ -40,14 +45,23 @@ export function Editor<T>(props: IEditor & IEditorController) {
             );
         } else if (groups.length > 1) {
             return (
-                <SplitPane split={'vertical'}>
+                <SplitPane split={'vertical'} onChange={onPaneSizeChange}>
                     {groups.map((g: IEditorGroup, index: number) => (
-                        <EditorGroup
+                        <Pane
                             key={`group-${index}${g.id}`}
-                            currentGroup={current!}
-                            {...g}
-                            {...getEvents(g.id!)}
-                        />
+                            initialSize={
+                                groupSplitPos[index]
+                                    ? `${groupSplitPos[index]}ratio`
+                                    : undefined
+                            }
+                            minSize="220px"
+                        >
+                            <EditorGroup
+                                currentGroup={current!}
+                                {...g}
+                                {...getEvents(g.id!)}
+                            />
+                        </Pane>
                     ))}
                 </SplitPane>
             );

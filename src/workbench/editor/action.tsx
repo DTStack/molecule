@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { memo, useCallback } from 'react';
 import { Icon } from 'mo/components/icon';
-import { Menu } from 'mo/components/menu';
+import { IMenuItem, Menu } from 'mo/components/menu';
 import { DropDown } from 'mo/components/dropdown';
-import { IEditorAction, IEditorActionItem } from 'mo/model';
+import { IEditorAction } from 'mo/model';
 import { groupActionsClassName, groupActionsItemClassName } from './base';
 import { IEditorController } from 'mo/controller/editor';
 
@@ -22,15 +22,15 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
         menu.length > 0 ? (
             <Menu style={{ width: 200 }} data={menu} />
         ) : (
-            <span
-                style={{
-                    padding: 15,
-                    fontSize: 14,
-                }}
-            >
-                No more actions
-            </span>
-        );
+                <span
+                    style={{
+                        padding: 15,
+                        fontSize: 14,
+                    }}
+                >
+                    No more actions
+                </span>
+            );
 
     const handleSplitEditor = useCallback(
         (e: React.MouseEvent) => {
@@ -41,7 +41,7 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
 
     return (
         <div className={groupActionsClassName}>
-            {actions.map((action: IEditorActionItem) => (
+            {actions.map((action: IMenuItem) => (
                 <div
                     className={groupActionsItemClassName}
                     key={action.id}

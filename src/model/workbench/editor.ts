@@ -23,26 +23,17 @@ export interface IEditorTab<T = BuiltInEditorTabDataType> extends ITab<T> {
     modified?: boolean;
     breadcrumb?: IBreadcrumbItem[];
 }
-
-export interface IEditorActionItem {
-    id?: number;
-    icon?: ReactNode;
-    title?: string;
-    onClick?: (e: React.MouseEvent) => void;
-}
-
 export interface IEditorAction {
-    actions?: IEditorActionItem[];
+    actions?: IMenuItem[];
     menu?: IMenuItem[];
 }
-
 export interface IEditorGroup<E = any, T = any> extends ITabs<T> {
     id?: number;
     /**
      * Current editor group tab
      */
     tab?: IEditorTab<T>;
-    actions?: IEditorActionItem[];
+    actions?: IMenuItem[];
     menu?: IMenuItem[];
     editorInstance?: E;
 }
@@ -54,11 +45,46 @@ export interface IEditor {
     groups?: IEditorGroup[];
 }
 
+const baseMenu = [
+    {
+        id: 'closeToRight',
+        name: 'Close To Right',
+    },
+    {
+        id: 'closeSaved',
+        name: 'Close Saved',
+    },
+];
+
+const initialActions: IMenuItem[] = [
+    {
+        id: 'showOpenEditors',
+        name: 'Show Opened Editors',
+    },
+    ...baseMenu,
+];
+
+const initialMenu: IMenuItem[] = [
+    {
+        id: 'close',
+        name: 'Close',
+    },
+    {
+        id: 'closeOther',
+        name: 'Close Others',
+    },
+    {
+        id: 'closeToRight',
+        name: 'Close To Right',
+    },
+    ...baseMenu,
+];
+
 export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     id: number;
     tab: IEditorTab<T>;
     data: IEditorTab<T>[];
-    actions: IEditorActionItem[];
+    actions: IMenuItem[];
     menu: IMenuItem[];
     editorInstance: E | undefined;
 
@@ -66,8 +92,8 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
         id: number,
         tab: IEditorTab<T>,
         data: IEditorTab<T>[],
-        actions: IEditorActionItem[] = [],
-        menu: IMenuItem[] = [],
+        actions: IMenuItem[] = initialActions,
+        menu: IMenuItem[] = initialMenu,
         editorInstance?: E
     ) {
         this.id = id;

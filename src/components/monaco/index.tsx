@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import * as monaco from 'monaco-editor';
 import { APP_PREFIX } from 'mo/common/const';
 
@@ -21,7 +21,7 @@ export interface IMonacoEditorProps extends React.ComponentProps<any> {
     editorInstanceRef?: (instance: monaco.editor.IStandaloneCodeEditor) => void;
 }
 
-export default class MonacoEditor extends Component<IMonacoEditorProps> {
+export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
     /**
      * The instance of monaco
      */
@@ -55,7 +55,7 @@ export default class MonacoEditor extends Component<IMonacoEditorProps> {
 
     render() {
         const { style } = this.props;
-        let renderStyle: any = {
+        let renderStyle: React.CSSProperties = {
             position: 'relative',
             minHeight: '400px',
             height: '100%',

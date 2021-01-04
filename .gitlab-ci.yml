@@ -44,4 +44,5 @@ build:
     script:
         - yarn build
     only:
+        - merge_requests
         - dev

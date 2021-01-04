@@ -1,14 +1,10 @@
-import 'mo/workbench/panel/style.scss';
-import * as React from 'react';
-import { memo } from 'react';
-import { prefixClaName } from 'mo/common/className';
+import { connect, panelService } from 'mo';
+import { PanelController } from 'mo/controller/panel';
+import { container } from 'tsyringe';
+import Panel from './panel';
 
-const defaultClassName = prefixClaName('panel');
+const panelController = container.resolve(PanelController);
 
-function Panel(props) {
-    console.log('Panel render:', props);
+const PanelView = connect(panelService, Panel, panelController);
 
-    return <div className={defaultClassName}>Panel</div>;
-}
-
-export default memo(Panel);
+export { PanelView };

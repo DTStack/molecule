@@ -6,20 +6,6 @@ import {
     SidebarModel,
 } from 'mo/model/workbench/sidebar';
 
-/**
- * The Sidebar event definition
- */
-export enum SideBarEvent {
-    /**
-     * Selected an sidebar bar
-     */
-    onClick = 'sidebar.onClick',
-    /**
-     * Sidebar bar data changed
-     */
-    DataChanged = 'sidebar.data',
-}
-
 export interface ISidebarService extends Component<ISidebar> {
     push(data: ISidebarPane): void;
 }

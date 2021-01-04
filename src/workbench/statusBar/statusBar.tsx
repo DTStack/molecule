@@ -1,22 +1,18 @@
-import 'mo/workbench/statusBar/style.scss';
-
 import * as React from 'react';
 import { memo } from 'react';
 
-import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IStatusBar, IStatusBarItem } from 'mo/model/workbench/statusBar';
 import StatusItem from './item';
 import { mergeFunctions } from 'mo/common/utils';
+import { IStatusBarController } from 'mo/controller/statusBar';
+import {
+    leftItemsClassName,
+    rightItemsClassName,
+    sortByIndex,
+    statusBarClassName,
+} from './base';
 
-export const statusBarClassName = prefixClaName('statusBar');
-const leftItemsClassName = getBEMElement(statusBarClassName, 'left-items');
-const rightItemsClassName = getBEMElement(statusBarClassName, 'right-items');
-
-function sortByIndex(a: IStatusBarItem, b: IStatusBarItem) {
-    return a.sortIndex - b.sortIndex;
-}
-
-function StatusBar(props: IStatusBar) {
+function StatusBar(props: IStatusBar & IStatusBarController) {
     const { leftItems = [], onClick, rightItems = [] } = props;
 
     const renderItems = (data: IStatusBarItem[]) => {

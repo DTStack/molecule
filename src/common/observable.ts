@@ -2,7 +2,7 @@ export interface IObservable {
     /**
      * The onChange of observed object
      */
-    observe: (onChange: (target, property, value) => void) => void;
+    subscribe: (onChange: (target, property, value) => void) => void;
 }
 
 /**
@@ -10,10 +10,10 @@ export interface IObservable {
  * @param object target object
  * @param callback callback when target observed
  */
-export function observableWrapper<T>(object, callback?): IObservable & T {
+export function observableWrapper<T = any>(object, callback?): IObservable & T {
     Object.setPrototypeOf(object, {
         handlers: [],
-        observe: function (onChange: Function) {
+        subscribe: function (onChange: Function) {
             object.handlers.push(onChange);
         },
     });
@@ -80,7 +80,6 @@ export function observable(): any {
             decoratedConstructor.prototype = Original.prototype;
             return decoratedConstructor;
         } catch (e) {
-            console.error('observable error:', e);
             return target;
         }
     };

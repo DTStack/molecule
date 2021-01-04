@@ -1,6 +1,6 @@
 .history
 node_modules
-dist
+lib
 coverage
 .DS_Store
 storybook-static

@@ -1,12 +1,10 @@
-import { classNames, getBEMElement } from 'mo/common/className';
+import { classNames } from 'mo/common/className';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import * as React from 'react';
 import { memo } from 'react';
-import { statusBarClassName } from './statusBar';
+import { itemClassName } from './base';
 
 function StatusItem(props: IStatusBarItem) {
-    const itemClassName = getBEMElement(statusBarClassName, 'item');
-
     const { className, onClick, name, render, ...extra } = props;
 
     const clsName = classNames(itemClassName, className);

@@ -3,13 +3,15 @@ import Logger from 'mo/common/logger';
 
 /**
  * Mapping the state to the component
+ * TODO support mapping service method to the component.
  * @param WrappedComponent The component will be wrapped
  * @param state The state you want to injected, notice the state must be an observable object
  * @param subscribes The events of your subscribe, it used to trigger the state re render
  */
-export function mapState<S>(
+export function mapState<S, T>(
     WrappedComponent: React.ComponentType<S>,
-    state: S
+    state: S,
+    actions?: T
 ) {
     return class StateProvider extends React.Component {
         state: { lastUpdated: number };
@@ -23,8 +25,8 @@ export function mapState<S>(
 
         componentDidMount() {
             // There is no declare state parameter as IObservable type, so must convert to any type.
-            if ((state as any).observe) {
-                (state as any).observe(this.onChange);
+            if ((state as any).subscribe) {
+                (state as any).subscribe(this.onChange);
             } else {
                 Logger.error(
                     'The state parameter of mapState must be an observable object.'
@@ -45,7 +47,12 @@ export function mapState<S>(
 
         render() {
             return (
-                <WrappedComponent {...this.state} {...state} {...this.props} />
+                <WrappedComponent
+                    {...this.state}
+                    {...state}
+                    {...this.props}
+                    {...actions}
+                />
             );
         }
     };

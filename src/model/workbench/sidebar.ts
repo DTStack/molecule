@@ -1,4 +1,3 @@
-import { observable } from 'mo/common/observable';
 import { container, inject, injectable } from 'tsyringe';
 
 export interface ISidebarPane {
@@ -7,13 +6,20 @@ export interface ISidebarPane {
     render?: () => React.ReactNode;
 }
 
+/**
+ * The Sidebar event definition
+ */
+export enum SideBarEvent {
+    /**
+     * Selected an sidebar bar
+     */
+    onClick = 'sidebar.onClick',
+}
 export interface ISidebar {
     current: string;
     panes?: ISidebarPane[];
-    render?: () => React.ReactNode;
 }
 
-@observable()
 @injectable()
 export class SidebarModel implements ISidebar {
     public current: string;
@@ -26,8 +32,6 @@ export class SidebarModel implements ISidebar {
         this.panes = panes;
         this.current = selected;
     }
-
-    public render!: () => React.ReactNode;
 }
 
 container.register('SidebarPane', { useValue: [] });

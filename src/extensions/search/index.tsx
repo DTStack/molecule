@@ -5,6 +5,7 @@ import {
     IExtensionService,
     IActivityBarItem,
     editorService,
+    EditorEvent,
 } from 'mo';
 import { IExtension } from 'mo/model/extension';
 import SearchPane from './searchPane';
@@ -30,19 +31,20 @@ function init() {
 
     activityBarService.onSelect((e, item: IActivityBarItem) => {
         if (item.id === searchActivityItem.id) {
-            sidebarService.updateState({
+            sidebarService.setState({
                 current: searchSidePane.id,
             });
         }
     });
 
-    editorService.onMoveTab((data) => {
+    editorService.onEvent(EditorEvent.OnMoveTab, (data) => {
         console.log(data);
     });
-    editorService.onSelectTab((tabKey?: string) => {
+
+    editorService.onEvent(EditorEvent.OnSelectTab, (tabKey?: string) => {
         console.log(`selected tabKey ${tabKey}`);
     });
-    editorService.onCloseTab((tabKey?: string) => {
+    editorService.onEvent(EditorEvent.OnCloseTab, (tabKey?: string) => {
         console.log(`closed tabkey ${tabKey}`);
     });
 }

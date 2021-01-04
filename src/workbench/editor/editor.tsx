@@ -1,120 +1,79 @@
-import 'mo/workbench/editor/style.scss';
 import * as React from 'react';
+import { memo } from 'react';
 import SplitPane from 'react-split-pane';
-
-import { getBEMElement, prefixClaName } from 'mo/common/className';
-import MonacoEditor from 'mo/components/monaco-editor';
-import { Tabs } from 'mo/components/tabs';
-import { tabItemClassName } from 'mo/components/tabs/tab';
-import { Icon } from 'mo/components/icon';
-import Welcome from './welcome';
+import * as Pane from 'react-split-pane/lib/Pane';
 import { IEditor, IEditorGroup } from 'mo/model';
 
-interface DtaType {
-    modified?: boolean;
-    language?: string | undefined;
-    path?: string;
-    value?: string;
-}
+import EditorGroup from './group';
+import Welcome from './welcome';
+import { defaultEditorClassName } from './base';
+import { IEditorController } from 'mo/controller/editor';
 
-const defaultEditorClassName = prefixClaName('editor');
-const groupClassName = getBEMElement(defaultEditorClassName, 'group');
-
-function renderEditorGroup(
-    group: IEditorGroup,
-    onMoveTab,
-    onCloseTab,
-    onSelectTab
-) {
-    const editor = group.activeTab;
-    const tabs = group.tabs?.map((item, index) => {
-        return Object.assign({}, item, {
-            label: [
-                <Icon type="new-file" key={`icon` + item.key} />,
-                <span
-                    key={'item' + item.key}
-                    className={getBEMElement(tabItemClassName, 'name')}
-                >
-                    {item.name}
-                </span>,
-            ],
-            renderPanel: (
-                <MonacoEditor
-                    options={{
-                        value: item?.data?.value,
-                        language: item?.data?.language || 'sql',
-                        automaticLayout: true,
-                    }}
-                    editorInstanceRef={(editorInstance) => {
-                        // This assignment will trigger moleculeCtx update, and subNodes update
-                        group.editorInstance = editorInstance;
-                    }}
-                />
-            ),
-        });
-    });
-    return (
-        <div className={groupClassName} key={`group-${group.id}`}>
-            <Tabs<DtaType>
-                closable={true}
-                type="card"
-                data={tabs}
-                onMoveTab={onMoveTab}
-                onSelectTab={onSelectTab}
-                activeTab={editor.key}
-                onCloseTab={onCloseTab}
-            />
-        </div>
-    );
-}
-
-export function renderGroups(
-    groups: IEditorGroup[],
-    onCloseTab,
-    onMoveTab,
-    onSelectTab
-) {
-    if (groups.length === 1) {
-        return renderEditorGroup(groups[0], onMoveTab, onCloseTab, onSelectTab);
-    } else if (groups.length > 1) {
-        const averageNum = Math.round(100 / groups.length);
-        return (
-            <SplitPane
-                split={'vertical'}
-                defaultSize={`${averageNum}%`}
-                primary="first"
-                allowResize={true}
-            >
-                {groups.map((g: IEditorGroup) =>
-                    renderEditorGroup(g, onMoveTab, onCloseTab, onSelectTab)
-                )}
-            </SplitPane>
-        );
-    }
-    return null;
-}
-
-export function Editor<T>(props: IEditor<T>) {
+export function Editor(props: IEditor & IEditorController) {
     const {
-        groups,
-        render,
+        groups = [],
         current,
         onCloseTab,
         onMoveTab,
         onSelectTab,
+        groupSplitPos = [],
+        onSplitEditorRight,
+        onUpdateEditorIns,
+        onTabContextMenu,
+        onPaneSizeChange,
     } = props;
-    const setMoveTab = (tabs) => onMoveTab?.(tabs, 1);
-    const setCloseTab = (tabKey) => onCloseTab?.(tabKey, 1);
-    const setSelectTab = (tabKey) => onSelectTab?.(tabKey, 1);
 
-    let content: React.ReactNode = <Welcome />;
-    if (current) {
-        content = render
-            ? render()
-            : renderGroups(groups, setCloseTab, setMoveTab, setSelectTab);
-    }
+    const getEvents = (groupId: number) => {
+        return {
+            onMoveTab: (tabs) => onMoveTab?.(tabs, groupId),
+            onCloseTab: (tabKey) => onCloseTab?.(tabKey, groupId),
+            onSelectTab: (tabKey) => onSelectTab?.(tabKey, groupId),
+            onSplitEditorRight,
+            onUpdateEditorIns,
+            onTabContextMenu,
+        };
+    };
 
-    return <div className={defaultEditorClassName}>{content}</div>;
+    const renderGroups = () => {
+        if (groups.length === 1) {
+            return (
+                <EditorGroup
+                    currentGroup={current!}
+                    {...groups[0]}
+                    {...getEvents(groups[0].id!)}
+                />
+            );
+        } else if (groups.length > 1) {
+            return (
+                <SplitPane split={'vertical'} onChange={onPaneSizeChange}>
+                    {groups.map((g: IEditorGroup, index: number) => (
+                        <Pane
+                            key={`group-${index}${g.id}`}
+                            initialSize={
+                                groupSplitPos[index]
+                                    ? `${groupSplitPos[index]}ratio`
+                                    : undefined
+                            }
+                            minSize="220px"
+                        >
+                            <EditorGroup
+                                currentGroup={current!}
+                                {...g}
+                                {...getEvents(g.id!)}
+                            />
+                        </Pane>
+                    ))}
+                </SplitPane>
+            );
+        }
+        return null;
+    };
+
+    return (
+        <div className={defaultEditorClassName}>
+            {current ? renderGroups() : <Welcome />}
+        </div>
+    );
 }
 
-export default Editor;
+export default memo(Editor);

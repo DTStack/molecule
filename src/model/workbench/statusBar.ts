@@ -1,8 +1,5 @@
-import { EventBus } from 'mo/common/event';
-import { observable } from 'mo/common/observable';
 import * as React from 'react';
 import { injectable } from 'tsyringe';
-
 export interface IStatusBarItem extends HTMLElementProps {
     id: string;
     sortIndex: number;
@@ -14,7 +11,6 @@ export interface IStatusBarItem extends HTMLElementProps {
 export interface IStatusBar {
     rightItems: IStatusBarItem[];
     leftItems: IStatusBarItem[];
-    onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
 }
 
 /**
@@ -30,16 +26,8 @@ export enum StatusBarEvent {
      */
     DataChanged = 'statusBar.data',
 }
-
-@observable()
 @injectable()
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[] = [];
     public rightItems: IStatusBarItem[] = [];
-
-    public render!: () => React.ReactNode;
-
-    public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
-        EventBus.emit(StatusBarEvent.onClick, e, item);
-    };
 }

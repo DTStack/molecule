@@ -1,8 +1,7 @@
-/* eslint-disable no-invalid-this */
 import 'reflect-metadata';
 import { observable } from 'mo/common/observable';
 import { container, inject, injectable } from 'tsyringe';
-import { IActionBarItem } from 'mo/components/actionbar';
+import { IActionBarItem } from 'mo/components/actionBar';
 import { ITreeNodeItem } from 'mo/components/tree';
 
 /**
@@ -124,8 +123,6 @@ export class IExpolorerModel implements IExpolorer {
         this.data = data;
         this.treeData = treeData;
     }
-
-    public render!: () => React.ReactNode;
 }
 
 container.register('ExplorerData', { useValue: [] });

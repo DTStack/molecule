@@ -1,5 +1,5 @@
 # Ignore artifacts:
-dist
+lib
 .history
 node_modules
 yarn.lock

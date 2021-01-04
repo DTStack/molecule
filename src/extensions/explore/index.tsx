@@ -23,7 +23,7 @@ function init(extensionCtx: ExtensionService) {
         iconName: 'codicon-files',
     };
 
-    activityBarService.updateState({
+    activityBarService.setState({
         selected: exploreActiveItem.id,
         data: [...state.data, exploreActiveItem],
     });
@@ -38,14 +38,14 @@ function init(extensionCtx: ExtensionService) {
     activityBarService.onSelect((e, item: IActivityBarItem) => {
         console.log('Search Pane onClick:', e, item);
         if (item.id === exploreActiveItem.id) {
-            sidebarService.updateState({
+            sidebarService.setState({
                 current: explorePane.id,
             });
         }
     });
 
     // sidebarService.push(explorePane);
-    sidebarService.updateState({
+    sidebarService.setState({
         current: explorePane.id,
         panes: [...sideBarState.panes, explorePane],
     });

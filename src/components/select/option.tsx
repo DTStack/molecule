@@ -1,4 +1,3 @@
-import './style.scss';
 import * as React from 'react';
 import { ComponentProps } from 'react';
 import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';

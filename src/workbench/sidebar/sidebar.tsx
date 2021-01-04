@@ -1,4 +1,3 @@
-import 'mo/workbench/sidebar/style.scss';
 import * as React from 'react';
 import { memo } from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
@@ -32,9 +31,9 @@ export function Content(props: React.ComponentProps<any>) {
 }
 
 export function Sidebar(props: ISidebar) {
-    const { panes = [], render, current } = props;
+    const { panes = [], current } = props;
 
-    let sidebarPane: React.ReactNode = panes?.map((pane: ISidebarPane) => {
+    const sidebarPane: React.ReactNode = panes?.map((pane: ISidebarPane) => {
         return (
             <div
                 key={pane.id}
@@ -46,10 +45,6 @@ export function Sidebar(props: ISidebar) {
             </div>
         );
     });
-
-    if (render) {
-        sidebarPane = render();
-    }
 
     return <div className={defaultClassName}>{sidebarPane}</div>;
 }

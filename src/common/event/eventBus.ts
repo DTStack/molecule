@@ -18,6 +18,6 @@ export abstract class GlobalEvent {
      * @param args Arguments
      */
     public emit(name: string, ...args: any) {
-        EventBus.emit(name, args);
+        EventBus.emit(name, ...args);
     }
 }

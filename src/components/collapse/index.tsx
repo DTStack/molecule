@@ -9,7 +9,6 @@ import {
     getBEMElement,
     getBEMModifier,
 } from 'mo/common/className';
-import './style.scss';
 
 export interface IExpandProps {
     isActive?: boolean;
@@ -59,7 +58,6 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
         <div className={classNames(defaultCollapseClassName, className)}>
             <RcCollapse
                 {...restProps}
-                accordion={true}
                 activeKey={activePanelKey}
                 onChange={(activeKey: React.Key | React.Key[]) => {
                     onChangeCallback(activeKey);

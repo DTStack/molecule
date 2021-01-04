@@ -31,7 +31,7 @@ export class ActivityBarService
     }
 
     public reset() {
-        this.updateState({
+        this.setState({
             data: [],
             selected: '',
         });
@@ -40,7 +40,6 @@ export class ActivityBarService
     public push(data: IActivityBarItem) {
         const original = this.state.data;
         original?.push(data);
-        console.log('ac push:', original);
     }
 
     public remove(index: number) {
@@ -50,12 +49,7 @@ export class ActivityBarService
         }
     }
 
-    public setRenderer(renderer: () => React.ReactNode) {
-        this.updateState({
-            render: renderer,
-        });
-    }
-
+    // ====== The belows for subscribe activity bar events ======
     public onClick(callback: Function) {
         this.subscribe(ActivityBarEvent.OnClick, callback);
     }
@@ -63,14 +57,6 @@ export class ActivityBarService
     public onSelect(
         callback: (key: React.MouseEvent, item: IActivityBarItem) => void
     ) {
-        this.subscribe(ActivityBarEvent.Selected, (key, data) => {
-            const item: IActivityBarItem = data;
-            if (item.type !== 'global') {
-                this.updateState({
-                    selected: key,
-                });
-            }
-            callback?.(key, item);
-        });
+        this.subscribe(ActivityBarEvent.Selected, callback);
     }
 }

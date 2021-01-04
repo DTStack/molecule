@@ -15,8 +15,8 @@ module.exports = {
     output: {
         pathinfo: false,
         globalObject: 'self',
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, '../dist'),
+        filename: '[name].js',
+        path: path.resolve(__dirname, '../lib'),
     },
     module: {
         rules: [
@@ -29,11 +29,6 @@ module.exports = {
                         options: {
                             transpileOnly: true,
                         },
-                    },
-                    {
-                        loader: require.resolve(
-                            'react-docgen-typescript-loader'
-                        ),
                     },
                 ],
             },

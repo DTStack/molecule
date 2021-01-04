@@ -1,44 +1,14 @@
-import { IExtensionService, activityBarService, IActivityBarItem } from 'mo';
+import { IExtensionService, activityBarService } from 'mo';
 import { IExtension } from 'mo/model/extension';
 
+import { initGlobalActivityBars } from './settings';
+
 function initActivityBar(extensionCtx: IExtensionService) {
-    const globalSettings: IActivityBarItem = {
-        id: 'global-settings',
-        name: 'Settings',
-        iconName: 'codicon-settings-gear',
-        type: 'global',
-        contextMenu: [
-            {
-                id: 'CommandPalette',
-                name: 'Command Palette...',
-            },
-            {
-                id: 'Settings',
-                name: 'Settings',
-            },
-            {
-                id: 'ColorTheme',
-                name: 'Color Theme',
-                onClick(e) {
-                    console.log('globalSettings: colorTheme onClick:', e);
-                },
-            },
-        ],
-    };
-
-    const globalUserAccount: IActivityBarItem = {
-        id: 'global-Account',
-        name: 'Account',
-        iconName: 'codicon-account',
-        type: 'global',
-    };
-
-    activityBarService.push(globalUserAccount);
-    activityBarService.push(globalSettings);
+    initGlobalActivityBars();
 
     activityBarService.onClick((e, data) => {
         const target = e.target;
-        // activityBarService.updateState({ selected: 'search' });
+        // activityBarService.setState({ selected: 'search' });
         console.log('activityBar onClick:', data, target);
     });
 

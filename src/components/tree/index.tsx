@@ -5,7 +5,6 @@ import { TreeProps } from 'rc-tree/lib/Tree';
 import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
-import './style.scss';
 
 export function generateTreeId(id?: string): string {
     return `mo_treeNode_${id}`;
@@ -40,7 +39,7 @@ export interface ITreeProps extends TreeProps {
 const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     const {
         className,
-        data,
+        data = [],
         draggable,
         onDropTree,
         onRightClick,

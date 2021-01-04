@@ -1,10 +1,11 @@
-import 'mo/workbench/activityBar/style.scss';
 import * as React from 'react';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
 import ActivityBarItem from './activityBarItem';
 import { Scrollable } from 'mo/components/scrollable';
+import { IActivityBarController } from 'mo/controller/activityBar';
+
 import {
     containerClassName,
     defaultClassName,
@@ -12,12 +13,8 @@ import {
     normalItemsClassName,
 } from './base';
 
-export function ActivityBar(props: IActivityBar) {
-    const { data = [], render, selected, onClick, onSelect } = props;
-
-    if (render) {
-        return <div className={defaultClassName}>{render()}</div>;
-    }
+export function ActivityBar(props: IActivityBar & IActivityBarController) {
+    const { data = [], selected, onClick, onSelect } = props;
 
     const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
         if (onClick) onClick(e, item);

@@ -8,7 +8,6 @@ import {
     labelClassName,
     menuContentClassName,
 } from './base';
-
 export interface IMenuItem extends HTMLElementProps {
     /**
      * The name of icon

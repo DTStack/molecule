@@ -48,7 +48,7 @@ module.exports = function (mode) {
         entry: [...getSassEntries()],
         output: {
             path: path.resolve(__dirname, '../lib'),
-            publicPath: 'lib/'
+            publicPath: 'lib/',
         },
         resolve: {
             extensions: ['.css', '.scss'],
@@ -65,28 +65,33 @@ module.exports = function (mode) {
                         {
                             loader: 'file-loader',
                             options: {
-                                name: "[name].css",
+                                name: '[name].css',
                                 outputPath: (url, resourcePath, context) => {
-                                    const relativePath = path.relative(context, resourcePath);
-                                    const target = relativePath.replace(/(src|(style|mo)\.scss)/g, '');
+                                    const relativePath = path.relative(
+                                        context,
+                                        resourcePath
+                                    );
+                                    const target = relativePath.replace(
+                                        /(src|(style|mo)\.scss)/g,
+                                        ''
+                                    );
                                     return `${target}${url}`;
-                                  },
+                                },
                             },
-                        }, 
+                        },
                         {
                             loader: 'extract-loader',
-                        }, 
+                        },
                         {
-                            loader: 'css-loader'
-                        }, 
+                            loader: 'css-loader',
+                        },
                         {
                             loader: 'sass-loader',
                             options: {
-                                sourceMap: true
-                            }
-                        }
+                                sourceMap: true,
+                            },
+                        },
                     ],
-                    
                 },
             ],
         },

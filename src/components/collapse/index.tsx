@@ -9,7 +9,6 @@ import {
     getBEMElement,
     getBEMModifier,
 } from 'mo/common/className';
-import './style.scss';
 
 export interface IExpandProps {
     isActive?: boolean;

@@ -167,7 +167,7 @@ export class EditorService
         );
         const ids: number[] = groups.map((g) => g.id || 0);
         const id = ids.length > 0 ? Math.max(...ids) + 1 : 1;
-        const initialTab = { ...cloneGroup.tab };
+        const initialTab: IEditorTab = { ...cloneGroup.tab };
         cloneGroup.data = [initialTab];
         cloneGroup.tab = initialTab;
         cloneGroup.activeTab = initialTab.id;

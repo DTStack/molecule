@@ -1,6 +1,4 @@
 const path = require('path');
-const { merge } = require('webpack-merge');
-const webpackConf = require('./webpack.base');
 
 // There list the SASS style files manually
 const styles = [
@@ -44,26 +42,53 @@ function getSassEntries() {
     return cssFiles;
 }
 
-module.exports = function (env) {
-    return merge(webpackConf, {
-        devtool: 'inline-source-map',
+module.exports = function (mode) {
+    return {
+        mode,
         entry: [...getSassEntries()],
         output: {
-            pathinfo: false,
-            filename: '[name].css',
             path: path.resolve(__dirname, '../lib'),
+            publicPath: 'lib/'
+        },
+        resolve: {
+            extensions: ['.css', '.scss'],
+            alias: {
+                mo: path.resolve(__dirname, '../src'),
+                '@stories': path.resolve(__dirname, '../stories'),
+            },
         },
         module: {
             rules: [
                 {
-                    test: /\.css$/,
-                    use: ['style-loader', 'css-loader'],
-                },
-                {
-                    test: /\.(jpg|png|gif|eot|woff|svg|ttf|woff2|gif|appcache|webp)(\?|$)/,
-                    use: ['file-loader'],
+                    test: [...getSassEntries()],
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name: "[name].css",
+                                outputPath: (url, resourcePath, context) => {
+                                    const relativePath = path.relative(context, resourcePath);
+                                    const target = relativePath.replace(/(src|(style|mo)\.scss)/g, '');
+                                    return `${target}${url}`;
+                                  },
+                            },
+                        }, 
+                        {
+                            loader: 'extract-loader',
+                        }, 
+                        {
+                            loader: 'css-loader'
+                        }, 
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        }
+                    ],
+                    
                 },
             ],
         },
-    });
+    };
 };

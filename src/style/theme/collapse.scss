@@ -6,19 +6,21 @@
 }
 
 #{prefix($collapse)} {
-    background-color: var(--sidebar-background);
+    background-color: var(--sideBar-background);
+    color: var(--sideBar-foreground);
 
     .rc-collapse-header {
-        background: var(--sidebar-section-header-background);
+        background: var(--sidebarSectionHeader-background);
+        border-top: 1px solid var(--sideBar-border);
 
         &:focus,
         &:active {
-            border-color: var(--sidebar-border);
+            border-color: var(--sideBar-border);
         }
 
         .rc-collapse-extra {
             #{prefix('action-bar')} {
-                background: var(--sidebar-section-header-background);
+                background: var(--sideBarSectionHeader-background);
             }
         }
     }

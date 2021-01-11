@@ -1,5 +1,4 @@
 import { ExtendActivityBar } from './activityBar';
-import { ExtendExplore } from './explore';
 import { ExtendSearch } from './search';
 import { ExtendStatusBar } from './statusBar';
 import { defaultColorThemeExtension } from './theme-defaults';
@@ -11,7 +10,6 @@ import { paleNightColorThemeExtension } from './vscode-palenight-theme';
  */
 export const defaultExtensions = [
     ExtendActivityBar,
-    ExtendExplore,
     ExtendSearch,
     ExtendStatusBar,
     defaultColorThemeExtension,

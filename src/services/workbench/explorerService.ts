@@ -1,16 +1,16 @@
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import {
-    IExpolorerModel,
-    IExpolorer,
     IPanelItem,
     getFileIconByName,
     generateFileTemplate,
     getPrevParentNode,
+    IExplorer,
+    IExplorerModel,
 } from 'mo/model/workbench/explorer';
 import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
-export interface IExplorerService extends Component<IExpolorer> {
-    push(data: IPanelItem): void;
+export interface IExplorerService extends Component<IExplorer> {
+    addPanel(panel: IPanelItem | IPanelItem[]): void;
     createFile(
         fileData: ITreeNodeItem,
         fileType: FileType,
@@ -24,17 +24,24 @@ export interface IExplorerService extends Component<IExpolorer> {
 
 @singleton()
 export class ExplorerService
-    extends Component<IExpolorer>
+    extends Component<IExplorer>
     implements IExplorerService {
-    protected state: IExpolorer;
+    protected state: IExplorer;
     constructor() {
         super();
-        this.state = container.resolve(IExpolorerModel);
+        this.state = container.resolve(IExplorerModel);
     }
-    // collapse
-    public push(data: IPanelItem) {
-        const original = this.state.data;
-        original?.push(data);
+
+    public addPanel(data: IPanelItem | IPanelItem[]) {
+        let next = [...this.state.data!];
+        if (Array.isArray(data)) {
+            next = next?.concat(data);
+        } else {
+            next?.push(data);
+        }
+        this.setState({
+            data: next,
+        });
     }
 
     public reset() {
@@ -60,7 +67,7 @@ export class ExplorerService
         fileType: FileType,
         callback: Function
     ) {
-        const original = this.state.treeData;
+        const original = this.state.folderTree?.data;
         const loop = (data: ITreeNodeItem[]) => {
             for (const item of data) {
                 if (item.id === fileData.id) {
@@ -94,7 +101,7 @@ export class ExplorerService
      * new file / new folder / Rename 最终都走这步
      */
     public updateFile(fileData: ITreeNodeItem, newName: string, index: number) {
-        const original = this.state.treeData;
+        const original = this.state.folderTree?.data;
         const prevParentNode: ITreeNodeItem = getPrevParentNode(
             original,
             fileData.id
@@ -139,7 +146,7 @@ export class ExplorerService
     }
 
     public rename(fileData: ITreeNodeItem, callback: Function) {
-        const original = this.state.treeData;
+        const original = this.state.folderTree?.data;
         const updateName = (tree, id) => {
             const rootNode = tree[0];
             if (rootNode.id === id) {
@@ -165,7 +172,7 @@ export class ExplorerService
     }
 
     public deleteFile(fileData: ITreeNodeItem) {
-        const original = this.state.treeData;
+        const original = this.state.folderTree?.data;
         const prevParentNode: ITreeNodeItem = getPrevParentNode(
             original,
             fileData.id
@@ -197,7 +204,9 @@ export class ExplorerService
 
     public onDropTree = (treeData: ITreeNodeItem[]) => {
         this.setState({
-            treeData,
+            folderTree: Object.assign(this.state.folderTree?.data, {
+                data: treeData,
+            }),
         });
     };
 }

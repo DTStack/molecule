@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
 import { FileType, FileTypes } from 'mo/components/tree';
-import FolderTree from 'mo/extensions/explore/folderTree';
+
+// TODO FolderTree, SearchTree not belongs to the Component below.
+import FolderTree from 'mo/workbench/sidebar/explore/folderTree';
 import SearchTree from 'mo/extensions/search/searchTree';
 import Input from 'mo/components/input';
 import { storiesOf } from '@storybook/react';
@@ -107,11 +109,12 @@ stories.add('Basic Usage', () => {
             <h3>Tree component.</h3>
 
             <h3>使用示例 1 - Folder Tree</h3>
-            <FolderTree prefixCls="rc-tree" data={folderData} />
+            <FolderTree data={folderData} />
 
             <h3>使用示例 2 - Search Tree</h3>
             <Input placeholder="Search" onChange={handleInputChange} />
             <SearchTree
+                // TODO extract default rc-tree
                 prefixCls="rc-tree"
                 defaultExpandAll
                 autoExpandParent

@@ -6,10 +6,12 @@ import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
 
+// TODO 提出来
 export function generateTreeId(id?: string): string {
     return `mo_treeNode_${id}`;
 }
 
+// TODO: 提出来
 export const FileTypes = {
     FILE: 'file',
     FOLDER: 'folder',
@@ -20,6 +22,7 @@ export interface ITreeNodeItem {
     name?: string;
     location?: string;
     fileType?: FileType;
+    // TODO Remove from NoteItem
     contextMenu?: IMenuItem[]; // custom contextMenu
     children?: ITreeNodeItem[];
     readonly id?: string;
@@ -27,12 +30,13 @@ export interface ITreeNodeItem {
     modify?: boolean; // Edit status
     className?: string;
 }
+
+// TODO 补全类型声明
 export interface ITreeProps extends TreeProps {
     className?: string;
     data?: ITreeNodeItem[];
     draggable?: boolean;
     onSelectFile?: (IMenuItem) => void;
-    onRightClick?: (node) => void;
     renderTitle?: (node, index) => React.ReactDOM | string;
     onDropTree?(treeNode): void;
 }
@@ -129,13 +133,9 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
                 <Tree
-                    {...restProps}
                     draggable={draggable}
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
-                    onRightClick={({ event, node }: any) => {
-                        onRightClick?.(node);
-                    }}
                     onSelect={(selectedKeys, e: any) => {
                         const { fileType, modify } = e.node.data;
                         const isFile = fileType === FileTypes.FILE;
@@ -143,6 +143,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                             props.onSelectFile(e.node.data);
                         }
                     }}
+                    {...restProps}
                 >
                     {renderTreeNodes(data)}
                 </Tree>

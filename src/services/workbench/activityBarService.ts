@@ -41,13 +41,12 @@ export class ActivityBarService
         let next = [...this.state.data!];
         if (Array.isArray(data)) {
             next = next?.concat(data);
-
         } else {
             next?.push(data);
         }
         this.setState({
-            data: next
-        })
+            data: next,
+        });
     }
 
     public remove(index: number) {

@@ -4,6 +4,7 @@ import { sidebarService } from 'mo/services';
 import { connect } from 'mo/react';
 import { SidebarController } from 'mo/controller/sidebar';
 import { container } from 'tsyringe';
+import './explore';
 
 const sidebarController = container.resolve(SidebarController);
 

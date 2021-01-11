@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import { observable } from 'mo/common/observable';
-import { container, inject, injectable } from 'tsyringe';
+import { injectable } from 'tsyringe';
 import { IActionBarItem } from 'mo/components/actionBar';
 import { ITreeNodeItem } from 'mo/components/tree';
+import { IMenuItem } from 'mo/components/menu';
 
 /**
  *
@@ -71,6 +71,7 @@ export const generateFileTemplate = () => {
         modify: true,
     };
 };
+
 /**
  * match icon by file name extension
  * @param name fileName
@@ -107,23 +108,58 @@ export interface IPanelItem<T = any> extends IActionBarItem {
     toolbar?: T;
 }
 
-export interface IExpolorer {
-    data?: IPanelItem[];
-    treeData?: ITreeNodeItem[];
+export interface IFolderTree {
+    data?: ITreeNodeItem[];
+    contextMenu?: IMenuItem[];
 }
-@observable()
-@injectable()
-export class IExpolorerModel implements IExpolorer {
-    public data: IPanelItem[];
-    public treeData: ITreeNodeItem[];
-    constructor(
-        @inject('ExplorerData') data: IPanelItem[] = [],
-        @inject('TreeData') treeData: ITreeNodeItem[] = []
-    ) {
-        this.data = data;
-        this.treeData = treeData;
-    }
+export interface IExplorer {
+    data?: IPanelItem[];
+    headerToolBar?: IActionBarItem[];
+    folderTree?: IFolderTree;
 }
 
-container.register('ExplorerData', { useValue: [] });
-container.register('TreeData', { useValue: [] });
+const builtInHeaderToolbar: IActionBarItem[] = [
+    {
+        id: 'explorer-more',
+        title: 'View and More Actions...',
+        iconName: 'codicon-ellipsis',
+    },
+];
+
+const commonContextMenu = [
+    {
+        id: 'rename',
+        name: 'Rename',
+    },
+    {
+        id: 'delete',
+        name: 'Delete',
+    },
+];
+
+const folderContextMenu = [
+    {
+        id: 'newFile',
+        name: 'New File',
+    },
+    {
+        id: 'newFolder',
+        name: 'New Folder',
+    },
+].concat(commonContextMenu);
+
+const fileContextMenu = [
+    {
+        id: 'openToSide',
+        name: 'Open to the side',
+    },
+].concat(commonContextMenu);
+
+@injectable()
+export class IExplorerModel implements IExplorer {
+    public data: IPanelItem[] = [];
+    public folderTree: IFolderTree = {
+        contextMenu: folderContextMenu.concat(fileContextMenu),
+    };
+    public headerToolBar: IActionBarItem[] = builtInHeaderToolbar;
+}

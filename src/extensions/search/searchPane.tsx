@@ -109,7 +109,7 @@ export default class SearchPane extends React.Component<
 
         const addABar = function () {
             const id = Math.random() * 10 + 1;
-            activityBarService.push({
+            activityBarService.addBar({
                 id: id + '',
                 name: 'folder' + id,
                 iconName: 'codicon-edit',
@@ -148,7 +148,7 @@ export default class SearchPane extends React.Component<
                     {input && (
                         <SearchTree
                             prefixCls="rc-tree"
-                            data={explorerState?.treeData}
+                            data={explorerState?.folderTree?.data}
                             searchValue={input}
                         />
                     )}

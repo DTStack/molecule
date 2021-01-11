@@ -57,6 +57,5 @@ export function initGlobalActivityBars() {
         type: 'global',
     };
 
-    activityBarService.push(globalUserAccount);
-    activityBarService.push(globalSettings);
+    activityBarService.addBar([globalUserAccount, globalSettings]);
 }

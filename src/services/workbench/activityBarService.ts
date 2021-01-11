@@ -9,7 +9,7 @@ import {
 
 export interface IActivityBarService extends Component<IActivityBar> {
     reset(): void;
-    push(data: IActivityBarItem): void;
+    addBar(data: IActivityBarItem | IActivityBarItem[]): void;
     remove(index: number): void;
     /**
      * Add click event listener
@@ -37,9 +37,17 @@ export class ActivityBarService
         });
     }
 
-    public push(data: IActivityBarItem) {
-        const original = this.state.data;
-        original?.push(data);
+    public addBar(data: IActivityBarItem | IActivityBarItem[]) {
+        let next = [...this.state.data!];
+        if (Array.isArray(data)) {
+            next = next?.concat(data);
+
+        } else {
+            next?.push(data);
+        }
+        this.setState({
+            data: next
+        })
     }
 
     public remove(index: number) {

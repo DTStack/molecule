@@ -27,7 +27,7 @@ function init() {
         iconName: 'codicon-search',
     };
 
-    activityBarService.push(searchActivityItem);
+    activityBarService.addBar(searchActivityItem);
 
     activityBarService.onSelect((e, item: IActivityBarItem) => {
         if (item.id === searchActivityItem.id) {

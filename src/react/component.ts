@@ -1,5 +1,4 @@
 import { EventEmitter, GlobalEvent } from 'mo/common/event';
-import logger from 'mo/common/logger';
 
 enum componentEvents {
     Update = 'Component.Update',
@@ -40,7 +39,6 @@ export abstract class Component<S = any>
         const nextState = Object.assign(this.state, values);
         this.render(nextState);
         callback?.(this.state, nextState);
-        logger.info(`Component.setState()`, this.state, nextState);
     }
 
     /**

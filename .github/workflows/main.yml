@@ -2,42 +2,42 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on: [push, pull_request] # Triggers the workflow on push or pull request events
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+# Allows you to run this workflow manually from the Actions tab
+workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Install the dependencies."
-      - run: yarn install --cache-folder .yarn
-  
-  static-checking:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Check Types
-        run: yarn check-types
-      - name: Run ESlint
-        run: yarn eslint
-      - name: Run Prettier
-        run: yarn prettier --check
-      - name: Run StyleLint
-        run: yarn stylelint
+    install:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "Install the dependencies."
+            - run: yarn install --cache-folder .yarn
 
-  build:
-    runs-on: ubuntu-latest
-    needs: [install]
-    steps: 
-      - name: Run Build
-        run: yarn build
-  
-  test:
-    runs-on: ubuntu-latest
-    needs: [install]
-    steps: 
-      - name: Run Unit Test
-        run: yarn test
+    static-checking:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Run Check Types
+              run: yarn check-types
+            - name: Run ESlint
+              run: yarn eslint
+            - name: Run Prettier
+              run: yarn prettier --check
+            - name: Run StyleLint
+              run: yarn stylelint
+
+    build:
+        runs-on: ubuntu-latest
+        needs: [install]
+        steps:
+            - name: Run Build
+              run: yarn build
+
+    test:
+        runs-on: ubuntu-latest
+        needs: [install]
+        steps:
+            - name: Run Unit Test
+              run: yarn test

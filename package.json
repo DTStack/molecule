@@ -28,7 +28,6 @@
     "dependencies": {
         "@types/react": "^16.9.35",
         "@types/react-dom": "^16.9.9",
-        "dt-utils": "^1.0.1",
         "immutability-helper": "^3.1.1",
         "loadsh": "^0.0.4",
         "monaco-editor": "^0.21.2",
@@ -50,6 +49,7 @@
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
+        "@dtinsight/dt-utils": "^1.0.1",
         "@storybook/addon-actions": "6.1.10",
         "@storybook/addon-knobs": "^6.1.10",
         "@storybook/addon-links": "6.1.10",

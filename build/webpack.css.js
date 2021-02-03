@@ -42,9 +42,9 @@ function getSassEntries() {
     return cssFiles;
 }
 
-module.exports = function (mode) {
+module.exports = function () {
     return {
-        mode,
+        mode: 'development',
         entry: [...getSassEntries()],
         output: {
             path: path.resolve(__dirname, '../lib'),

@@ -13,7 +13,7 @@ import {
     IPosition,
 } from 'mo/common/dom';
 import { EventEmitter } from 'mo/common/event';
-import { Utils } from 'dt-utils';
+import { Utils } from '@dtinsight/dt-utils';
 export interface IContextViewProps {
     /**
      * Default true

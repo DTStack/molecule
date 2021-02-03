@@ -11,18 +11,56 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-    install:
+    setup:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - run: echo "Install the dependencies."
-            - run: yarn install --cache-folder .yarn
+            - name: checkout
+              uses: actions/checkout@v2
+
+            - name: cache yarn.lock
+              uses: actions/cache@v2
+              with:
+                  path: package-temp-dir
+                  key: lock-${{ github.sha }}
+
+            - name: create yarn.lock
+              run: yarn generate-lock-entry
+
+            - name: hack for single file
+              run: |
+                  if [ ! -d "package-temp-dir" ]; then
+                    mkdir package-temp-dir
+                  fi
+                  cp yarn.lock package-temp-dir
+            - name: cache node_modules
+              id: node_modules_cache_id
+              uses: actions/cache@v2
+              with:
+                  path: node_modules
+                  key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
+
+            - name: install
+              if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
+              run: yarn
 
     static-checking:
+        needs: [setup]
         runs-on: ubuntu-latest
-        needs: [install]
         steps:
             - uses: actions/checkout@v2
+
+            - name: Restore cache from yarn.lock
+              uses: actions/cache@v2
+              with:
+                  path: package-temp-dir
+                  key: lock-${{ github.sha }}
+
+            - name: Restore cache from node_modules
+              uses: actions/cache@v2
+              with:
+                  path: node_modules
+                  key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
+
             - name: Run Check Types
               run: yarn check-types
             - name: Run ESlint
@@ -34,16 +72,42 @@ jobs:
 
     build:
         runs-on: ubuntu-latest
-        needs: [install]
+        needs: [setup]
         steps:
             - uses: actions/checkout@v2
+
+            - name: Restore cache from yarn.lock
+              uses: actions/cache@v2
+              with:
+                  path: package-temp-dir
+                  key: lock-${{ github.sha }}
+
+            - name: Restore cache from node_modules
+              uses: actions/cache@v2
+              with:
+                  path: node_modules
+                  key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
+
             - name: Run Build
               run: yarn build
 
     test:
         runs-on: ubuntu-latest
-        needs: [install]
+        needs: [setup]
         steps:
             - uses: actions/checkout@v2
+
+            - name: Restore cache from yarn.lock
+              uses: actions/cache@v2
+              with:
+                  path: package-temp-dir
+                  key: lock-${{ github.sha }}
+
+            - name: Restore cache from node_modules
+              uses: actions/cache@v2
+              with:
+                  path: node_modules
+                  key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
+
             - name: Run Unit Test
               run: yarn test

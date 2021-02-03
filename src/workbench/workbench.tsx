@@ -14,9 +14,9 @@ import { ID_APP } from 'mo/common/id';
 import { Utils } from '@dtinsight/dt-utils';
 import { APP_PREFIX } from 'mo/common/const';
 
-export interface IWorkbench { }
+export interface IWorkbench {}
 
-export interface IMainBench { }
+export interface IMainBench {}
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');

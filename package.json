@@ -69,6 +69,7 @@
         "jest": "^26.0.1",
         "monaco-editor-webpack-plugin": "^2.0.0",
         "prettier": "^2.1.2",
+        "react-docgen-typescript-loader": "^3.7.2",
         "sass": "^1.26.10",
         "sass-loader": "^10.0.2",
         "standard-version": "^9.0.0",

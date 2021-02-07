@@ -1,7 +1,11 @@
+import * as React from 'react';
 import { EditorEvent, IEditorTab } from 'mo/model/workbench/editor';
 import { Controller } from 'mo/react/controller';
-import { editorService } from 'mo/services';
+import { editorService, statusBarService } from 'mo/services';
 import { singleton } from 'tsyringe';
+import * as monaco from 'monaco-editor';
+import { editorLineColumnItem } from './statusBar';
+
 export interface IEditorController {
     groupSplitPos?: string[];
     onCloseAll?: (group: number) => void;
@@ -14,10 +18,11 @@ export interface IEditorController {
     onTabContextMenu?: (e: React.MouseEvent, tab: IEditorTab) => void;
 }
 
+type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
+
 @singleton()
 export class EditorController extends Controller implements IEditorController {
-    private editorInstance;
-    // Group Pos locate here temporary, we can move it to state or localStorage if you need
+    // Group Pos locate here temporary, we can move it to state or localStorage in future.
     public groupSplitPos: string[] = [];
 
     constructor() {
@@ -51,7 +56,7 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     public onUpdateEditorIns = (
-        editorInstance: IStandaloneCodeEditor,
+        editorInstance: monaco.editor.IStandaloneCodeEditor,
         groupId: number
     ) => {
         if (editorInstance) {
@@ -79,7 +84,6 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance: IStandaloneCodeEditor,
         groupId: number
     ) {
-        this.editorInstance = editorInstance;
         if (editorInstance) {
             editorInstance.onDidChangeModelContent((event: any) => {
                 const newValue = editorInstance.getValue();
@@ -97,6 +101,7 @@ export class EditorController extends Controller implements IEditorController {
                         },
                         groupId
                     );
+                    this.updateStatusBar(editorInstance);
                 }
             });
 
@@ -104,12 +109,39 @@ export class EditorController extends Controller implements IEditorController {
                 const group = editorService.getGroupById(groupId);
                 if (group?.tab!.id) {
                     editorService.setActive(groupId, group.tab.id);
+                    this.updateEditorLineColumnInfo(editorInstance);
                 }
+            });
+
+            editorInstance.onDidChangeCursorSelection(() => {
+                this.updateEditorLineColumnInfo(editorInstance);
             });
         }
     }
 
-    getEditorInstance() {
-        return this.editorInstance;
+    private updateStatusBar(editorInstance: IStandaloneCodeEditor) {
+        if (editorInstance) {
+            const model:
+                | monaco.editor.ITextModel
+                | null
+                | undefined = editorInstance?.getModel();
+            const decorations = model?.getAllDecorations();
+            console.log('decorations:', decorations);
+        }
+    }
+
+    public updateEditorLineColumnInfo(editorInstance: IStandaloneCodeEditor) {
+        if (editorInstance) {
+            const position = editorInstance.getPosition();
+            statusBarService.updateItem(
+                Object.assign(editorLineColumnItem, {
+                    render: () => (
+                        <span>
+                            Ln {position?.lineNumber}, Col {position?.column}
+                        </span>
+                    ),
+                })
+            );
+        }
     }
 }

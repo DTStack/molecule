@@ -25,10 +25,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: require.resolve('ts-loader'),
-                        options: {
-                            transpileOnly: true,
-                        },
+                        loader: 'babel-loader',
                     },
                 ],
             },

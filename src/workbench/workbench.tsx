@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SplitPane from 'react-split-pane';
-import * as Pane from 'react-split-pane/lib/Pane';
+import Pane from 'react-split-pane/lib/Pane';
 
 import { classNames, prefixClaName } from 'mo/common/className';
 

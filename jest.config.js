@@ -2,11 +2,11 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
-    // All imported modules in your tests should be mocked automatically
-    // automock: false,
-
     // Automatically clear mock calls and instances between every test
     clearMocks: true,
+    globals: {
+        __DEVELOPMENT__: true,
+    },
     testMatch: [
         '**/__tests__/**/(*.)+(spec|test).[jt]s?(x)',
         '**/test/**/(*.)+(spec|test).[jt]s?(x)',
@@ -14,6 +14,15 @@ module.exports = {
     testPathIgnorePatterns: ['/node_modules/', 'lib'],
     // The directory where Jest should output its coverage files
     coverageDirectory: 'coverage',
-    testEnvironment: 'node',
+    transformIgnorePatterns: ['node_modules/(?!(monaco-editor|.*dnd.*)/)'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+    moduleNameMapper: {
+        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+            '<rootDir>/mock/fileMock.js',
+        '\\.(css|scss|less)$': '<rootDir>/mock/styleMock.js',
+        '^mo/(.*)$': '<rootDir>/src/$1',
+        '^mo$': '<rootDir>/src/index.ts',
+        // '^monaco-editor(.*)$': '<rootDir>/mock/monacoMock.jsx',
+        '^monaco-editor$': '<rootDir>/mock/monacoMock.js',
+    },
 };

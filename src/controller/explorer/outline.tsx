@@ -3,7 +3,7 @@ import { singleton } from 'tsyringe';
 import { explorerService } from 'mo';
 import React from 'react';
 
-export interface IOutlineController {}
+export interface IOutlineController { }
 
 @singleton()
 export class OutlineController

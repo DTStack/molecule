@@ -4,7 +4,7 @@ import { IActionBarItem } from 'mo/components/actionBar';
 import { ITreeNodeItem } from 'mo/components/tree';
 import { IMenuItem } from 'mo/components/menu';
 
-export enum ExplorerEvent { }
+export enum ExplorerEvent {}
 export interface IPanelItem<T = any> extends IActionBarItem {
     renderPanel?: (props) => React.ReactNode | JSX.Element;
     toolbar?: T;

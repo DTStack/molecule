@@ -2,7 +2,10 @@ import * as React from 'react';
 import { memo } from 'react';
 import RcTree, { TreeNode as RcTreeNode } from 'rc-tree';
 import { DataNode, IconType, Key, EventDataNode } from 'rc-tree/lib/interface';
-import { NodeDragEventParams, NodeMouseEventParams } from 'rc-tree/lib/contextTypes';
+import {
+    NodeDragEventParams,
+    NodeMouseEventParams,
+} from 'rc-tree/lib/contextTypes';
 import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
@@ -46,10 +49,12 @@ export interface ITreeProps {
     defaultExpandedKeys?: Key[];
     expandedKeys?: Key[];
     defaultCheckedKeys?: Key[];
-    checkedKeys?: Key[] | {
-        checked: Key[];
-        halfChecked: Key[];
-    };
+    checkedKeys?:
+        | Key[]
+        | {
+              checked: Key[];
+              halfChecked: Key[];
+          };
     defaultSelectedKeys?: Key[];
     selectedKeys?: Key[];
     titleRender?: (node: DataNode) => React.ReactNode;
@@ -57,22 +62,31 @@ export interface ITreeProps {
     onBlur?: React.FocusEventHandler<HTMLDivElement>;
     onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
     onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
-    onExpand?: (expandedKeys: Key[], info: {
-        node: EventDataNode;
-        expanded: boolean;
-        nativeEvent: MouseEvent;
-    }) => void;
-    onSelect?: (selectedKeys: Key[], info: {
-        event: 'select';
-        selected: boolean;
-        node: EventDataNode;
-        selectedNodes: DataNode[];
-        nativeEvent: MouseEvent;
-    }) => void;
-    onLoad?: (loadedKeys: Key[], info: {
-        event: 'load';
-        node: EventDataNode;
-    }) => void;
+    onExpand?: (
+        expandedKeys: Key[],
+        info: {
+            node: EventDataNode;
+            expanded: boolean;
+            nativeEvent: MouseEvent;
+        }
+    ) => void;
+    onSelect?: (
+        selectedKeys: Key[],
+        info: {
+            event: 'select';
+            selected: boolean;
+            node: EventDataNode;
+            selectedNodes: DataNode[];
+            nativeEvent: MouseEvent;
+        }
+    ) => void;
+    onLoad?: (
+        loadedKeys: Key[],
+        info: {
+            event: 'load';
+            node: EventDataNode;
+        }
+    ) => void;
     loadData?: (treeNode: EventDataNode) => Promise<void>;
     loadedKeys?: Key[];
     onMouseEnter?: (info: NodeMouseEventParams) => void;
@@ -82,18 +96,22 @@ export interface ITreeProps {
         node: EventDataNode;
     }) => void;
     onDragStart?: (info: NodeDragEventParams) => void;
-    onDragEnter?: (info: NodeDragEventParams & {
-        expandedKeys: Key[];
-    }) => void;
+    onDragEnter?: (
+        info: NodeDragEventParams & {
+            expandedKeys: Key[];
+        }
+    ) => void;
     onDragOver?: (info: NodeDragEventParams) => void;
     onDragLeave?: (info: NodeDragEventParams) => void;
     onDragEnd?: (info: NodeDragEventParams) => void;
-    onDrop?: (info: NodeDragEventParams & {
-        dragNode: EventDataNode;
-        dragNodesKeys: Key[];
-        dropPosition: number;
-        dropToGap: boolean;
-    }) => void;
+    onDrop?: (
+        info: NodeDragEventParams & {
+            dragNode: EventDataNode;
+            dragNodesKeys: Key[];
+            dropPosition: number;
+            dropToGap: boolean;
+        }
+    ) => void;
     switcherIcon?: IconType;
     className?: string;
     draggable?: boolean;
@@ -195,7 +213,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
                 <RcTree
-                    prefixCls='rc-tree'
+                    prefixCls="rc-tree"
                     draggable={draggable}
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}

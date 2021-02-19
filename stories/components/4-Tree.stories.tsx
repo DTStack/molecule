@@ -63,14 +63,14 @@ stories.add('Basic Usage', () => {
     return (
         <div>
             <h2>简述</h2>
-            <p>Tree 多层次的结构列表。实现组件拖拽、右键面板等简单功能，可以通过 renderTitle 适配 Tree 更多场景</p>
+            <p>
+                Tree
+                多层次的结构列表。实现组件拖拽、右键面板等简单功能，可以通过
+                renderTitle 适配 Tree 更多场景
+            </p>
 
             <h3>使用示例 Tree</h3>
-            <Tree
-                data={treeData}
-                draggable
-                renderTitle={(node) => node.name}
-            />
+            <Tree data={treeData} draggable renderTitle={(node) => node.name} />
         </div>
     );
 });

@@ -53,7 +53,7 @@ export class ExplorerService
         };
         traverse(treeData, id);
         return parentIds;
-    };
+    }
 
     /**
      *
@@ -77,7 +77,7 @@ export class ExplorerService
         };
         loop(tree);
         return prevParentNode;
-    };
+    }
 
     /**
      * 生成规则：
@@ -85,7 +85,7 @@ export class ExplorerService
      */
     private generateRandomId() {
         return Math.random().toString().split('.')[1];
-    };
+    }
     /**
      * file item template
      */
@@ -95,7 +95,7 @@ export class ExplorerService
             name: '',
             modify: true,
         };
-    };
+    }
 
     /**
      * match icon by file name extension
@@ -125,7 +125,7 @@ export class ExplorerService
                 icon;
         }
         return icon;
-    };
+    }
 
     public addPanel(data: IPanelItem | IPanelItem[]) {
         let next = [...this.state.data!];

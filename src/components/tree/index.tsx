@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { memo } from 'react';
-import Tree, { TreeNode } from 'rc-tree';
-import { TreeProps } from 'rc-tree/lib/Tree';
+import RcTree, { TreeNode as RcTreeNode } from 'rc-tree';
+import { DataNode, IconType, Key, EventDataNode } from 'rc-tree/lib/interface';
+import { NodeDragEventParams, NodeMouseEventParams } from 'rc-tree/lib/contextTypes';
 import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
-
-// TODO 提出来
-export function generateTreeId(id?: string): string {
-    return `mo_treeNode_${id}`;
-}
 
 // TODO: 提出来
 export const FileTypes = {
@@ -22,8 +18,6 @@ export interface ITreeNodeItem {
     name?: string;
     location?: string;
     fileType?: FileType;
-    // TODO Remove from NoteItem
-    contextMenu?: IMenuItem[]; // custom contextMenu
     children?: ITreeNodeItem[];
     readonly id?: string;
     icon?: string | React.ReactNode;
@@ -31,11 +25,80 @@ export interface ITreeNodeItem {
     className?: string;
 }
 
-// TODO 补全类型声明
-export interface ITreeProps extends TreeProps {
+export interface ITreeProps {
+    prefixCls?: string;
+    style?: React.CSSProperties;
+    focusable?: boolean;
+    tabIndex?: number;
+    children?: React.ReactNode;
+    treeData?: DataNode[];
+    showLine?: boolean;
+    showIcon?: boolean;
+    icon?: IconType;
+    selectable?: boolean;
+    disabled?: boolean;
+    multiple?: boolean;
+    checkable?: boolean | React.ReactNode;
+    checkStrictly?: boolean;
+    defaultExpandParent?: boolean;
+    autoExpandParent?: boolean;
+    defaultExpandAll?: boolean;
+    defaultExpandedKeys?: Key[];
+    expandedKeys?: Key[];
+    defaultCheckedKeys?: Key[];
+    checkedKeys?: Key[] | {
+        checked: Key[];
+        halfChecked: Key[];
+    };
+    defaultSelectedKeys?: Key[];
+    selectedKeys?: Key[];
+    titleRender?: (node: DataNode) => React.ReactNode;
+    onFocus?: React.FocusEventHandler<HTMLDivElement>;
+    onBlur?: React.FocusEventHandler<HTMLDivElement>;
+    onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
+    onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
+    onExpand?: (expandedKeys: Key[], info: {
+        node: EventDataNode;
+        expanded: boolean;
+        nativeEvent: MouseEvent;
+    }) => void;
+    onSelect?: (selectedKeys: Key[], info: {
+        event: 'select';
+        selected: boolean;
+        node: EventDataNode;
+        selectedNodes: DataNode[];
+        nativeEvent: MouseEvent;
+    }) => void;
+    onLoad?: (loadedKeys: Key[], info: {
+        event: 'load';
+        node: EventDataNode;
+    }) => void;
+    loadData?: (treeNode: EventDataNode) => Promise<void>;
+    loadedKeys?: Key[];
+    onMouseEnter?: (info: NodeMouseEventParams) => void;
+    onMouseLeave?: (info: NodeMouseEventParams) => void;
+    onRightClick?: (info: {
+        event: React.MouseEvent;
+        node: EventDataNode;
+    }) => void;
+    onDragStart?: (info: NodeDragEventParams) => void;
+    onDragEnter?: (info: NodeDragEventParams & {
+        expandedKeys: Key[];
+    }) => void;
+    onDragOver?: (info: NodeDragEventParams) => void;
+    onDragLeave?: (info: NodeDragEventParams) => void;
+    onDragEnd?: (info: NodeDragEventParams) => void;
+    onDrop?: (info: NodeDragEventParams & {
+        dragNode: EventDataNode;
+        dragNodesKeys: Key[];
+        dropPosition: number;
+        dropToGap: boolean;
+    }) => void;
+    switcherIcon?: IconType;
     className?: string;
-    data?: ITreeNodeItem[];
     draggable?: boolean;
+
+    data?: ITreeNodeItem[];
     onSelectFile?: (IMenuItem) => void;
     renderTitle?: (node, index) => React.ReactDOM | string;
     onDropTree?(treeNode): void;
@@ -50,7 +113,6 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         renderTitle, // custom title
         ...restProps
     } = props;
-
     const onDrop = (info) => {
         if (!draggable) return;
         console.log(info);
@@ -117,8 +179,8 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                  * https://github.com/ant-design/ant-design/issues/4688
                  * https://github.com/ant-design/ant-design/issues/4853
                  */
-                <TreeNode
-                    data-id={generateTreeId(id)}
+                <RcTreeNode
+                    data-id={`mo_treeNode_${id}`}
                     data-index={index}
                     data={item}
                     title={renderTitle?.(item, index)} // dynamic title
@@ -126,13 +188,14 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     icon={modify ? '' : <Icon type={icon} />}
                 >
                     {children && renderTreeNodes(children)}
-                </TreeNode>
+                </RcTreeNode>
             );
         });
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
-                <Tree
+                <RcTree
+                    prefixCls='rc-tree'
                     draggable={draggable}
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
@@ -146,10 +209,9 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     {...restProps}
                 >
                     {renderTreeNodes(data)}
-                </Tree>
+                </RcTree>
             </div>
         </div>
     );
 };
-
 export default memo(TreeView);

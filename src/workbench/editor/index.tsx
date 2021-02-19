@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { connect } from 'mo/react';
 import { container } from 'tsyringe';
 import { IEditor } from 'mo/model';

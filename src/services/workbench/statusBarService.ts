@@ -87,6 +87,7 @@ export class StatusBarService
         const original = this.findById(item.id);
         if (original) {
             Object.assign(original, item);
+            this.render();
         }
     }
 }

@@ -27,7 +27,12 @@ export interface IColorThemeService {
     getThemeById(id: string): void;
 }
 
-const BUILT_IN_THEME = { id: 'Default Dark+', uiTheme: 'vs-dark' };
+const BUILT_IN_THEME: IColorTheme = {
+    id: 'Default Dark+',
+    name: 'Default Dark+',
+    label: 'Default Dark+',
+    uiTheme: 'vs-dark',
+};
 const DEFAULT_THEME_CLASS_NAME = prefixClaName('customize-theme');
 
 @singleton()
@@ -37,7 +42,7 @@ export class ColorThemeService implements IColorThemeService {
 
     constructor(
         @inject('ColorThemes') colorThemes: IColorTheme[] = [],
-        @inject('ColorTheme') colorTheme: IColorTheme
+        @inject('ColorTheme') colorTheme: IColorTheme = BUILT_IN_THEME
     ) {
         this.colorThemes = colorThemes;
         this.colorTheme = colorTheme;

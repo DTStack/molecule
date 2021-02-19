@@ -14,7 +14,7 @@ import { IColorTheme } from 'mo/model/colorTheme';
 import SearchTree from './searchTree';
 import { IEditorTab } from 'mo/model';
 
-interface ISearchPaneToolBar {}
+interface ISearchPaneToolBar { }
 
 const initialState = {
     input: '',
@@ -46,7 +46,7 @@ type State = typeof initialState;
 export default class SearchPane extends React.Component<
     ISearchPaneToolBar,
     State
-> {
+    > {
     state: State;
 
     constructor(props) {
@@ -133,7 +133,7 @@ export default class SearchPane extends React.Component<
             editorService.open(tabData);
         };
 
-        const openCommand = function () {};
+        const openCommand = function () { };
         const { input } = this.state;
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
@@ -147,7 +147,6 @@ export default class SearchPane extends React.Component<
                     <input onInput={this.onInput} />
                     {input && (
                         <SearchTree
-                            prefixCls="rc-tree"
                             data={explorerState?.folderTree?.data}
                             searchValue={input}
                         />

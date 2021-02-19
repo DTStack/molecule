@@ -65,15 +65,14 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-            name
-        );
+                name
+            );
     };
 
     const renderByData = (
         <Tree
             data={data}
             draggable
-            prefixCls="rc-tree"
             onSelectFile={onSelectFile}
             onRightClick={handleRightClick}
             renderTitle={renderTitle}

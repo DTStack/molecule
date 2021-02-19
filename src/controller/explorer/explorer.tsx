@@ -99,7 +99,7 @@ export class ExplorerController
                     id: 'new_file',
                     title: 'New File',
                     iconName: 'codicon-new-file',
-                    onClick: () => {},
+                    onClick: () => { },
                 },
                 {
                     id: 'new_folder',

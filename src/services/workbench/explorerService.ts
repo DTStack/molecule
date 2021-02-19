@@ -2,9 +2,6 @@ import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import {
     IPanelItem,
-    getFileIconByName,
-    generateFileTemplate,
-    getPrevParentNode,
     IExplorer,
     IExplorerModel,
 } from 'mo/model/workbench/explorer';
@@ -31,6 +28,104 @@ export class ExplorerService
         super();
         this.state = container.resolve(IExplorerModel);
     }
+
+    /**
+     *
+     * @param treeData tree Data
+     * @param id match by ID
+     */
+    private findParentNodeId(treeData, id) {
+        const parentIds: Array<string> = [];
+        let isContinue = true;
+        const traverse = function (treeData, id) {
+            treeData.forEach((item: ITreeNodeItem) => {
+                if (!isContinue) return;
+                if (item.id) parentIds.push(item.id);
+                if (item.id == id) {
+                    isContinue = false;
+                } else if (item.children) {
+                    traverse(item.children, id);
+                } else {
+                    parentIds.pop();
+                }
+            });
+            if (isContinue) parentIds.pop();
+        };
+        traverse(treeData, id);
+        return parentIds;
+    };
+
+    /**
+     *
+     * @param tree tree Data
+     * @param id currentNode ID
+     */
+    private getPrevParentNode(tree, currentNodeId) {
+        let prevParentNode = {};
+        const parentIds: string[] = this.findParentNodeId(tree, currentNodeId);
+        const prevPatentNodeId = parentIds.slice(-2)[0]; // prevParentNode Id
+        const loop = (data: any) => {
+            for (const item of data) {
+                if (item.id === prevPatentNodeId) {
+                    prevParentNode = item;
+                }
+                if (item.children) {
+                    loop(item.children);
+                }
+            }
+            return prevParentNode;
+        };
+        loop(tree);
+        return prevParentNode;
+    };
+
+    /**
+     * 生成规则：
+     * id不能带 querySelector 非法字符（小数点、_、数字开头..）
+     */
+    private generateRandomId() {
+        return Math.random().toString().split('.')[1];
+    };
+    /**
+     * file item template
+     */
+    private generateFileTemplate() {
+        return {
+            id: `${this.generateRandomId()}`,
+            name: '',
+            modify: true,
+        };
+    };
+
+    /**
+     * match icon by file name extension
+     * @param name fileName
+     */
+    private getFileIconByName(name: string): string {
+        const fileExtension = name && name.split('.')?.[1];
+        let icon = 'symbol-file';
+        switch (fileExtension) {
+            case 'txt': {
+                icon = 'symbol-file';
+                break;
+            }
+            case 'js': {
+                icon = 'file-binary';
+                break;
+            }
+            case 'html': {
+                icon = 'file-code';
+                break;
+            }
+            case 'zip': {
+                icon = 'file-zip';
+                break;
+            }
+            default:
+                icon;
+        }
+        return icon;
+    };
 
     public addPanel(data: IPanelItem | IPanelItem[]) {
         let next = [...this.state.data!];
@@ -73,7 +168,7 @@ export class ExplorerService
                 if (item.id === fileData.id) {
                     if (!item.children) item.children = [];
                     item.children.push({
-                        ...generateFileTemplate(),
+                        ...this.generateFileTemplate(),
                         fileType,
                     });
                 }
@@ -102,7 +197,7 @@ export class ExplorerService
      */
     public updateFile(fileData: ITreeNodeItem, newName: string, index: number) {
         const original = this.state.folderTree?.data;
-        const prevParentNode: ITreeNodeItem = getPrevParentNode(
+        const prevParentNode: ITreeNodeItem = this.getPrevParentNode(
             original,
             fileData.id
         );
@@ -124,7 +219,7 @@ export class ExplorerService
                             modify: false,
                             icon:
                                 fileData.fileType === FileTypes.FILE
-                                    ? getFileIconByName(newName)
+                                    ? this.getFileIconByName(newName)
                                     : '',
                         };
                         if (!prevParentNode.children)
@@ -173,7 +268,7 @@ export class ExplorerService
 
     public deleteFile(fileData: ITreeNodeItem) {
         const original = this.state.folderTree?.data;
-        const prevParentNode: ITreeNodeItem = getPrevParentNode(
+        const prevParentNode: ITreeNodeItem = this.getPrevParentNode(
             original,
             fileData.id
         );

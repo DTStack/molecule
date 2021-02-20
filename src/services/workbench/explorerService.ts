@@ -6,6 +6,7 @@ import {
     IExplorerModel,
 } from 'mo/model/workbench/explorer';
 import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
+import { searchById } from '../helper';
 export interface IExplorerService extends Component<IExplorer> {
     addPanel(panel: IPanelItem | IPanelItem[]): void;
     createFile(
@@ -17,6 +18,8 @@ export interface IExplorerService extends Component<IExplorer> {
     rename(fileData: ITreeNodeItem, callback: Function): void;
     deleteFile(fileData: ITreeNodeItem): void;
     onDropTree(treeData: ITreeNodeItem[]): void;
+
+    addFolder(fileData?: ITreeNodeItem): void;
 }
 
 @singleton()
@@ -304,4 +307,35 @@ export class ExplorerService
             }),
         });
     };
+
+
+    // second version
+    // 考虑操作 tree 数据结构的方法抽离出一个 tree 类
+
+    public addFolder(folder) {
+        const { folderTree } = this.state;
+        let next = [...folderTree?.data!];
+        if (Array.isArray(folder)) {
+            next = next?.concat(folder);
+        } else {
+            next?.push(folder);
+        }
+        console.log('next', next)
+        this.setState({
+            folderTree: { ...folderTree, data: next }
+        });
+    }
+    // public deleteFolder(id) {
+    //     const { folderTree } = this.state;
+    //     let next = [...folderTree?.data!];
+    //     if (Array.isArray(folder)) {
+    //         next = next?.concat(folder);
+    //     } else {
+    //         next?.push(folder);
+    //     }
+    //     const current = searchById(id)
+    //     this.setState({
+    //         folderTree: { ...folderTree, data: next }
+    //     });
+    // }
 }

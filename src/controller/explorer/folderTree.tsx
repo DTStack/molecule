@@ -28,6 +28,8 @@ export interface IFolderTreeController {
         menus: IMenuItem[],
         treeNode: IMenuItem
     ) => IMenuItem[];
+
+    readonly onAddFolder?: (folder: ITreeNodeItem) => void;
 }
 
 @singleton()
@@ -39,7 +41,7 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() {}
+    private initView() { }
 
     public readonly onSelectFile = (file: ITreeNodeItem) => {
         const tabData = {
@@ -130,4 +132,8 @@ export class FolderTreeController
     ) => {
         return menus;
     };
+
+    public readonly onAddFolder = (folder) => {
+        explorerService.addFolder(folder);
+    }
 }

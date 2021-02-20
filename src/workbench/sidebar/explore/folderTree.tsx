@@ -22,6 +22,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
         onDropTree,
         filterContextMenu,
         onClickContextMenu,
+        onAddFolder,
         ...restProps
     } = props;
 
@@ -65,8 +66,8 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-            name
-        );
+                name
+            );
     };
 
     const renderByData = (
@@ -83,10 +84,20 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     const renderInitial = (
         <span>
             you have not yet opened a folder
-            <Button onClick={onCreateFile}>New Folder</Button>
+            <Button onClick={() => {
+                console.log('test')
+                onAddFolder?.({
+                    name: 'qingyi',
+                    location: 'test',
+                    fileType: 'folder',
+                    children: [],
+                    id: '123',
+                    icon: '',
+                    modify: false
+                });
+            }}>Add Folder</Button>
         </span>
     );
-
     return data?.length > 0 ? renderByData : renderInitial;
 };
 export default memo(FolderTree);

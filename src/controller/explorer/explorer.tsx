@@ -7,7 +7,7 @@ import {
     explorerService,
 } from 'mo';
 import * as React from 'react';
-import { ExplorerView, FolderTree } from 'mo/workbench/sidebar/explore';
+import { ExplorerView, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IActionBarItem } from 'mo/components/actionBar';
 
 export interface IExplorerController {
@@ -99,7 +99,7 @@ export class ExplorerController
                     id: 'new_file',
                     title: 'New File',
                     iconName: 'codicon-new-file',
-                    onClick: () => {},
+                    onClick: () => { },
                 },
                 {
                     id: 'new_folder',
@@ -118,7 +118,9 @@ export class ExplorerController
                 },
             ],
             renderPanel: () => (
-                <FolderTree data={explorerState.folderTree?.data} />
+                <FolderTreeView
+                    data={explorerState.folderTree?.data}
+                    contextMenu={explorerState.folderTree?.contextMenu} />
             ),
         };
 

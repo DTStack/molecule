@@ -11,3 +11,5 @@ commitlint.config.js
 tsconfig.build.json
 tsconfig.base.json
 jest.config.js
+lib/test
+lib/stories

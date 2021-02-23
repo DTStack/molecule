@@ -1,4 +1,6 @@
 import { IExtension } from 'mo/model/extension';
 import { ExtendDataSync } from './data-sync';
 
-export const customExtensions: IExtension[] = [ExtendDataSync];
+import { ExtendTestPane } from './test';
+
+export const customExtensions: IExtension[] = [ExtendDataSync, ExtendTestPane];

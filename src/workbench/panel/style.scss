@@ -1,7 +1,47 @@
 @import 'mo/style/common';
 
 #{$panel} {
+    display: flex;
     height: 100%;
     position: relative;
     width: 100%;
+
+    &__header,
+    &__tabs,
+    &__toolbar {
+        display: flex;
+    }
+
+    &__header {
+        border-top-style: solid;
+        border-top-width: 1px;
+        flex-direction: row;
+        height: 35px;
+        justify-content: space-between;
+        padding: 0 8px;
+        width: 100%;
+
+        #{$tabs} {
+            flex-grow: 1;
+        }
+
+        #{$tab}__item {
+            font-size: 11px;
+            padding: 0 10px;
+            text-transform: uppercase;
+        }
+    }
+
+    &__container {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 35px;
+        width: 100%;
+    }
+
+    &__toolbar {
+        min-width: 60px;
+    }
 }

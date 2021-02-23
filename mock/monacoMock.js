@@ -7,5 +7,6 @@ module.exports = {
     editor: {
         defineTheme: function (name, theme) {},
         setTheme: function (theme) {},
+        create: function (dom, options, override) {},
     },
 };

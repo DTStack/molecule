@@ -14,15 +14,16 @@ import { prefixClaName, classNames } from 'mo/common/className';
 export const FileTypes = {
     FILE: 'file',
     FOLDER: 'folder',
+    ROOT: 'rootFolder'
 };
-export type FileType = 'file' | 'folder';
+export type FileType = 'file' | 'folder' | 'rootFolder';
 
 export interface ITreeNodeItem {
     name?: string;
     location?: string;
     fileType?: FileType;
     children?: ITreeNodeItem[];
-    readonly id?: string;
+    readonly id?: number;
     icon?: string | React.ReactNode;
     modify?: boolean; // Edit status
     className?: string;
@@ -202,7 +203,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     data-index={index}
                     data={item}
                     title={renderTitle?.(item, index)} // dynamic title
-                    key={id}
+                    key={`${id}`}
                     icon={modify ? '' : <Icon type={icon} />}
                 >
                     {children && renderTreeNodes(children)}
@@ -224,6 +225,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                             props.onSelectFile(e.node.data);
                         }
                     }}
+                    onRightClick={onRightClick}
                     {...restProps}
                 >
                     {renderTreeNodes(data)}

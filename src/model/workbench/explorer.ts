@@ -1,10 +1,12 @@
 import 'reflect-metadata';
 import { injectable } from 'tsyringe';
 import { IActionBarItem } from 'mo/components/actionBar';
-import { ITreeNodeItem } from 'mo/components/tree';
+import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
 import { IMenuItem } from 'mo/components/menu';
 
-export enum ExplorerEvent { }
+export enum ExplorerEvent {
+    onClick = 'explorer.onClick',
+}
 export interface IPanelItem<T = any> extends IActionBarItem {
     renderPanel?: (props) => React.ReactNode | JSX.Element;
     toolbar?: T;
@@ -39,29 +41,42 @@ const commonContextMenu = [
     },
 ];
 
-const folderContextMenu = [
-    {
-        id: 'newFile',
-        name: 'New File',
-    },
-    {
-        id: 'newFolder',
-        name: 'New Folder',
-    },
-].concat(commonContextMenu);
+export class TreeNodeModel implements ITreeNodeItem {
+    id?: number;
+    name?: string;
+    location?: string;
+    fileType?: FileType;
+    children?: ITreeNodeItem[];
+    icon?: string | React.ReactNode;
+    modify?: boolean;
 
-const fileContextMenu = [
-    {
-        id: 'openToSide',
-        name: 'Open to the side',
-    },
-].concat(commonContextMenu);
+    constructor(
+        props: ITreeNodeItem = {}
+    ) {
+        const {
+            id,
+            name = '',
+            location = '',
+            fileType = FileTypes.FILE as FileType,
+            children = [],
+            icon = '',
+            modify = false
+        } = props;
+        this.fileType = fileType,
+            this.modify = modify,
+            this.name = name,
+            this.id = id || Math.random() * 10 + 1,
+            this.location = location,
+            this.children = children,
+            this.icon = icon
+    }
+}
 
 @injectable()
 export class IExplorerModel implements IExplorer {
     public data: IPanelItem[] = [];
     public folderTree: IFolderTree = {
-        contextMenu: folderContextMenu.concat(fileContextMenu),
+        contextMenu: commonContextMenu,
         data: []
     };
     public headerToolBar: IActionBarItem[] = builtInHeaderToolbar;

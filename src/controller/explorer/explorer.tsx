@@ -117,11 +117,13 @@ export class ExplorerController
                     iconName: 'codicon-collapse-all',
                 },
             ],
-            renderPanel: () => (
-                <FolderTreeView
-                    data={explorerState.folderTree?.data}
-                    contextMenu={explorerState.folderTree?.contextMenu} />
-            ),
+            renderPanel: () => {
+                const folderProps: any = {
+                    data: explorerState.folderTree?.data,
+                    contextMenu: explorerState.folderTree?.contextMenu
+                }
+                return <FolderTreeView {...folderProps} />
+            }
         };
 
         const outlinePanel = {
@@ -138,7 +140,7 @@ export class ExplorerController
                     title: 'More Actions...',
                     iconName: 'codicon-ellipsis',
                 },
-            ],
+            ]
         };
 
         explorerService.addPanel([

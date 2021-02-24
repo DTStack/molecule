@@ -48,18 +48,21 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
 
     const handleUpdateFile = (e, node) => {
         const newName = (e.target as HTMLInputElement).value;
-        explorerService.updateFile({
-            ...node,
-            name: newName
-        }, () => {
-            if (node?.fileType === FileTypes.FILE && newName) {
-                onSelectFile?.({
-                    ...node,
-                    name: newName
-                })
+        explorerService.updateFile(
+            {
+                ...node,
+                name: newName,
+            },
+            () => {
+                if (node?.fileType === FileTypes.FILE && newName) {
+                    onSelectFile?.({
+                        ...node,
+                        name: newName,
+                    });
+                }
             }
-        })
-    }
+        );
+    };
 
     const renderTitle = (node, index) => {
         const { modify, name } = node;
@@ -72,7 +75,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
             }
         };
         const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-            handleUpdateFile(e, node)
+            handleUpdateFile(e, node);
         };
 
         return modify ? (
@@ -84,8 +87,8 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-                name
-            );
+            name
+        );
     };
 
     const renderByData = (
@@ -100,16 +103,26 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
             />
             {/* test service */}
             <div style={{ marginTop: '100px' }}>
-                <Button onClick={() => {
-                    explorerService.addRootFolder?.(new TreeNodeModel({
-                        name: `tree_${Math.random() * 10 + 1}`,
-                        fileType: 'rootFolder',
-                    }))
-                }}>Add Folder</Button>
-                <Button onClick={() => {
-                    console.log('test')
-                    explorerService.newFile?.();
-                }}>New File</Button>
+                <Button
+                    onClick={() => {
+                        explorerService.addRootFolder?.(
+                            new TreeNodeModel({
+                                name: `tree_${Math.random() * 10 + 1}`,
+                                fileType: 'rootFolder',
+                            })
+                        );
+                    }}
+                >
+                    Add Folder
+                </Button>
+                <Button
+                    onClick={() => {
+                        console.log('test');
+                        explorerService.newFile?.();
+                    }}
+                >
+                    New File
+                </Button>
             </div>
         </>
     );
@@ -117,13 +130,19 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     const renderInitial = (
         <span>
             you have not yet opened a folder
-            <Button onClick={() => {
-                console.log('test')
-                explorerService.addRootFolder?.(new TreeNodeModel({
-                    name: 'molecule_temp',
-                    fileType: 'rootFolder',
-                }))
-            }}>Add Folder</Button>
+            <Button
+                onClick={() => {
+                    console.log('test');
+                    explorerService.addRootFolder?.(
+                        new TreeNodeModel({
+                            name: 'molecule_temp',
+                            fileType: 'rootFolder',
+                        })
+                    );
+                }}
+            >
+                Add Folder
+            </Button>
         </span>
     );
     return data?.length > 0 ? renderByData : renderInitial;

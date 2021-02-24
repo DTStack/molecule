@@ -8,7 +8,7 @@ import {
     verticalMenuClassName,
 } from './base';
 
-export interface IMenu extends ISubMenu { }
+export interface IMenu extends ISubMenu {}
 
 export function Menu(props: React.PropsWithChildren<IMenu>) {
     const {

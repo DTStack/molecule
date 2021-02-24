@@ -8,7 +8,7 @@ import {
     verticalMenuClassName,
 } from './base';
 
-export interface IMenu extends ISubMenu {}
+export interface IMenu extends ISubMenu { }
 
 export function Menu(props: React.PropsWithChildren<IMenu>) {
     const {
@@ -16,6 +16,7 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
         mode = MenuMode.Vertical,
         data = [],
         children,
+        onClick,
         ...custom
     } = props;
     let content = children;
@@ -37,7 +38,7 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
                     );
                 }
                 return (
-                    <MenuItem key={item.id} {...item}>
+                    <MenuItem key={item.id} onClick={onClick} {...item}>
                         {item.name}
                     </MenuItem>
                 );

@@ -5,21 +5,238 @@ import {
     IExplorer,
     IExplorerModel,
 } from 'mo/model/workbench/explorer';
-import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
-import { searchById } from '../helper';
+import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
+import { editorService } from 'mo';
+import { TreeNodeModel } from 'mo/model';
+
+export interface IIndex {
+    id?: number;
+    node?: ITreeNodeItem;
+    parent?: number;
+    prev?: number;
+    next?: number;
+    [x: string]: any; // default: children: []
+}
+export interface IIndexs {
+    [index: number]: IIndex;
+}
+export interface ITreeInterface {
+    count: number;
+    obj: ITreeNodeItem;
+    indexes: IIndexs;
+    childNodeName: string;
+}
+
+export class TreeView implements ITreeInterface {
+    count: number;
+    obj: ITreeNodeItem;
+    indexes: IIndexs;
+    childNodeName: string;
+
+    /**
+     * 
+     * @param obj // tree object
+     * @param childNodeName // loop properties
+     * @example indexes data structure example:
+     * {
+            [2]: {
+                id: 2,
+                node: {},
+                parent: 1,
+                prev: null,
+                next: 3
+            },
+            ...
+        }
+     */
+    constructor(obj, childNodeName = 'children') {
+        this.count = 1; // nodes count
+        this.obj = obj || { [childNodeName]: [] };
+        this.indexes = {};
+        this.childNodeName = childNodeName;
+        this.generate(this.obj);
+    }
+
+    generate(obj) {
+        const indexes = this.indexes;
+        const startId = obj.id;
+        const self = this;
+
+        const index: IIndex = { id: startId, node: obj };
+        indexes[startId + ''] = index;
+        this.count++;
+
+        if (obj[this.childNodeName]?.length) {
+            walk(obj[this.childNodeName], index);
+        }
+
+        function walk(objs, parent) {
+            const children: number[] = []; // current children ids
+            objs.forEach(function (obj: ITreeNodeItem, i) {
+                const index: IIndex = {};
+                index.id = obj.id;
+                index.node = obj;
+
+                if (parent) index.parent = parent.id;
+
+                indexes[obj.id + ''] = index;
+                children.push(obj.id as number);
+                self.count++;
+
+                if (obj[self.childNodeName]?.length) {
+                    walk(obj[self.childNodeName], index);
+                }
+            });
+            parent[self.childNodeName] = children;
+
+            children.forEach(function (id, i) {
+                const index = indexes[id + ''];
+                if (i > 0) index.prev = children[i - 1];
+                if (i < children.length - 1) index.next = children[i + 1];
+            });
+        }
+
+        return index;
+    }
+
+    getIndex(id) {
+        const index = this.indexes[id + ''];
+        if (index) return index;
+    }
+
+    removeIndex(index) {
+        const self = this;
+        del(index);
+
+        function del(index) {
+            delete self.indexes[index.id + ''];
+            if (index[self.childNodeName]?.length) {
+                index[self.childNodeName].forEach(function (child) {
+                    del(self.getIndex(child));
+                });
+            }
+        }
+    }
+
+    get(id: number) {
+        const index = this.getIndex(id);
+        if (index?.node) return index.node;
+        return null;
+    }
+
+    remove(id: number) {
+        const index = this.getIndex(id);
+        const node = this.get(id);
+        const parentIndex = this.getIndex(index.parent);
+        const parentNode = this.get(index.parent);
+
+        parentNode[this.childNodeName].splice(
+            parentNode[this.childNodeName].indexOf(node),
+            1
+        );
+        parentIndex[this.childNodeName].splice(
+            parentIndex[this.childNodeName].indexOf(id),
+            1
+        );
+        this.removeIndex(index);
+        this.updateChildren(parentIndex[this.childNodeName]);
+
+        return node;
+    }
+
+    update(id: number, extra = {}) {
+        const index = this.getIndex(id);
+        const node = this.get(id);
+        const parentIndex = this.getIndex(index.parent);
+        const parentNode = this.get(index.parent);
+        parentNode[this.childNodeName].splice(
+            parentNode[this.childNodeName].indexOf(node),
+            1,
+            {
+                ...node,
+                ...extra
+            }
+        );
+        this.updateChildren(parentIndex[this.childNodeName]);
+
+        return node;
+    }
+
+    updateChildren(children: IIndex) {
+        const self = this;
+        children.forEach(
+            function (id, i) {
+                const index = self.getIndex(id);
+                index.prev = index.next = null;
+                if (i > 0) index.prev = children[i - 1];
+                if (i < children.length - 1) index.next = children[i + 1];
+            }
+        );
+    }
+
+    insert(obj: ITreeNodeItem, parentId: number, i: number) {
+        const parentIndex = this.getIndex(parentId);
+        const parentNode = this.get(parentId);
+
+        const index = this.generate(obj);
+        index.parent = parentId;
+
+        parentNode[this.childNodeName] = parentNode[this.childNodeName] || [];
+        parentIndex[this.childNodeName] = parentIndex[this.childNodeName] || [];
+
+        parentNode[this.childNodeName].splice(i, 0, obj);
+        parentIndex[this.childNodeName].splice(i, 0, index.id);
+
+        this.updateChildren(parentIndex[this.childNodeName]);
+        if (parentIndex.parent) {
+            this.updateChildren(
+                this.getIndex(parentIndex.parent)[this.childNodeName]
+            );
+        }
+
+        return index;
+    }
+
+    insertBefore(obj: ITreeNodeItem, destId: number) {
+        const destIndex = this.getIndex(destId);
+        const parentId = destIndex.parent;
+        const i = this.getIndex(parentId)[this.childNodeName].indexOf(destId);
+        return this.insert(obj, parentId, i);
+    }
+
+    insertAfter(obj: ITreeNodeItem, destId: number) {
+        const destIndex = this.getIndex(destId);
+        const parentId = destIndex.parent;
+        const i = this.getIndex(parentId)[this.childNodeName].indexOf(destId);
+        return this.insert(obj, parentId, i + 1);
+    }
+
+    prepend(obj: ITreeNodeItem, destId: number) {
+        return this.insert(obj, destId, 0);
+    }
+
+    append(obj: ITreeNodeItem, destId: number) {
+        const destIndex = this.getIndex(destId);
+        destIndex[this.childNodeName] = destIndex[this.childNodeName] || [];
+        return this.insert(obj, destId, destIndex[this.childNodeName].length);
+    }
+}
+
+
 export interface IExplorerService extends Component<IExplorer> {
     addPanel(panel: IPanelItem | IPanelItem[]): void;
-    createFile(
-        fileData: ITreeNodeItem,
-        fileType: FileType,
-        callback?: Function
-    ): void;
-    updateFile(fileData: ITreeNodeItem, newName: string, index: number): void;
-    rename(fileData: ITreeNodeItem, callback: Function): void;
-    deleteFile(fileData: ITreeNodeItem): void;
-    onDropTree(treeData: ITreeNodeItem[]): void;
+    reset(): void;
+    remove(index: number): void;
 
-    addFolder(fileData?: ITreeNodeItem): void;
+    getRootFolderByRootId(id: number): ITreeNodeItem | undefined;
+    addRootFolder(folder?: ITreeNodeItem | ITreeNodeItem[]): void;
+    removeRootFolder(id: number): void;
+    updateFile(file: ITreeNodeItem, callback?: Function): void;
+    newFile(id?: number, callback?: Function): void;
+    newFolder(id: number, callback?: Function): void;
+    rename(id: number, callback?: Function): void;
+    delete(id: number, callback?: Function): void;
+    onDropTree(treeData: ITreeNodeItem[]): void;
 }
 
 @singleton()
@@ -32,79 +249,40 @@ export class ExplorerService
         this.state = container.resolve(IExplorerModel);
     }
 
-    /**
-     *
-     * @param treeData tree Data
-     * @param id match by ID
-     */
-    private findParentNodeId(treeData, id) {
-        const parentIds: Array<string> = [];
-        let isContinue = true;
-        const traverse = function (treeData, id) {
-            treeData.forEach((item: ITreeNodeItem) => {
-                if (!isContinue) return;
-                if (item.id) parentIds.push(item.id);
-                if (item.id == id) {
-                    isContinue = false;
-                } else if (item.children) {
-                    traverse(item.children, id);
-                } else {
-                    parentIds.pop();
-                }
-            });
-            if (isContinue) parentIds.pop();
-        };
-        traverse(treeData, id);
-        return parentIds;
+    /* ============================Panel============================ */
+    public addPanel(data: IPanelItem | IPanelItem[]) {
+        let next = [...this.state.data!];
+        if (Array.isArray(data)) {
+            next = next?.concat(data);
+        } else {
+            next?.push(data);
+        }
+        this.setState({
+            data: next,
+        });
     }
 
-    /**
-     *
-     * @param tree tree Data
-     * @param id currentNode ID
-     */
-    private getPrevParentNode(tree, currentNodeId) {
-        let prevParentNode = {};
-        const parentIds: string[] = this.findParentNodeId(tree, currentNodeId);
-        const prevPatentNodeId = parentIds.slice(-2)[0]; // prevParentNode Id
-        const loop = (data: any) => {
-            for (const item of data) {
-                if (item.id === prevPatentNodeId) {
-                    prevParentNode = item;
-                }
-                if (item.children) {
-                    loop(item.children);
-                }
-            }
-            return prevParentNode;
-        };
-        loop(tree);
-        return prevParentNode;
+    public reset() {
+        this.setState({
+            data: [],
+        });
     }
 
-    /**
-     * 生成规则：
-     * id不能带 querySelector 非法字符（小数点、_、数字开头..）
-     */
-    private generateRandomId() {
-        return Math.random().toString().split('.')[1];
-    }
-    /**
-     * file item template
-     */
-    private generateFileTemplate() {
-        return {
-            id: `${this.generateRandomId()}`,
-            name: '',
-            modify: true,
-        };
+    public remove(index: number) {
+        const { data } = this.state;
+        const next = [...data!];
+        if (index > -1) {
+            next.splice(index, 1);
+        }
+        this.setState({
+            data: next
+        });
     }
 
-    /**
-     * match icon by file name extension
-     * @param name fileName
-     */
-    private getFileIconByName(name: string): string {
+    /* ============================Tree============================ */
+
+    private getFileIconByExtensionName(name: string, fileType: FileType): string {
+        if (fileType === FileTypes.FOLDER) return '';
         const fileExtension = name && name.split('.')?.[1];
         let icon = 'symbol-file';
         switch (fileExtension) {
@@ -130,174 +308,146 @@ export class ExplorerService
         return icon;
     }
 
-    public addPanel(data: IPanelItem | IPanelItem[]) {
-        let next = [...this.state.data!];
-        if (Array.isArray(data)) {
-            next = next?.concat(data);
+    private getCurrentRootFolderAndIndex(id: number) {
+        const currentRootFolder: ITreeNodeItem = this.getRootFolderById(id);
+        const index = this.getRootFolderIndexByRootId((currentRootFolder as any).id);
+        return {
+            index,
+            currentRootFolder
+        }
+    }
+
+    public getRootFolderIndexByRootId(id: number): number {
+        return this.state.folderTree?.data!.findIndex((folder) => folder.id === id);
+    }
+
+    public getRootFolderByRootId(id: number): ITreeNodeItem | undefined {
+        return this.state.folderTree?.data!.find((folder) => folder.id === id);
+    }
+
+    public getRootFolderById(id: number): ITreeNodeItem {
+        let rootNode = {};
+        this.state.folderTree?.data?.forEach(folder => {
+            const treeInstance = new TreeView(folder);
+            if (treeInstance.get(id)) {
+                rootNode = folder;
+            }
+        })
+        return rootNode;
+    }
+
+    public addRootFolder(folder: ITreeNodeItem | ITreeNodeItem[]) {
+        const { folderTree } = this.state;
+        let next = [...folderTree?.data!];
+        if (Array.isArray(folder)) {
+            next = next?.concat(folder);
         } else {
-            next?.push(data);
+            next?.push(folder);
         }
         this.setState({
-            data: next,
+            folderTree: { ...folderTree, data: next }
         });
     }
 
-    public reset() {
+    public removeRootFolder(id: number) {
+        const { folderTree } = this.state;
+        const next = [...folderTree?.data!];
+        const index = this.getRootFolderIndexByRootId(id);
+        if (index > -1) {
+            next.splice(index, 1);
+        }
         this.setState({
-            data: [],
+            folderTree: { ...folderTree, data: next }
         });
     }
 
-    public remove(index: number) {
-        if (this.state.data) {
-            const data = this.state.data;
-            data.splice(index, 1);
+    public updateFile(file, callback) {
+        const { folderTree } = this.state;
+        const { id, name, fileType } = file;
+        const cloneData: ITreeNodeItem[] = folderTree?.data || [];
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(id)
+        const tree = new TreeView(currentRootFolder);
+        if (name) {
+            tree.update(id, {
+                ...file,
+                icon: this.getFileIconByExtensionName(name, fileType),
+                modify: false
+            })
+        } else {
+            tree.remove(id)
         }
-    }
-
-    /**
-     *
-     * @param fileData treeNode ite
-     * @param fileType new fileType
-     */
-    public createFile(
-        fileData: ITreeNodeItem,
-        fileType: FileType,
-        callback: Function
-    ) {
-        const original = this.state.folderTree?.data;
-        const loop = (data: ITreeNodeItem[]) => {
-            for (const item of data) {
-                if (item.id === fileData.id) {
-                    if (!item.children) item.children = [];
-                    item.children.push({
-                        ...this.generateFileTemplate(),
-                        fileType,
-                    });
-                }
-                if (item.children) {
-                    loop(item.children);
-                }
-            }
-        };
-        loop(original as any);
-
-        /**
-         *  TODO: generate root fileFolder
-         * + 支持工作空间/多目录结构
-         * + 支持本地文件导入
-         */
-        if (fileType === FileTypes.FOLDER) {
-            if (!original?.length) {
-                original?.push(fileData);
-            }
-        }
+        if (index > -1) cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: { ...folderTree, data: cloneData }
+        });
         if (callback) callback();
     }
 
-    /**
-     * new file / new folder / Rename 最终都走这步
-     */
-    public updateFile(fileData: ITreeNodeItem, newName: string, index: number) {
-        const original = this.state.folderTree?.data;
-        const prevParentNode: ITreeNodeItem = this.getPrevParentNode(
-            original,
-            fileData.id
-        );
-        const update = (tree) => {
-            const rootNode = tree[0];
-            if (rootNode.id === fileData.id) {
-                if (newName) {
-                    rootNode.name = newName;
-                    rootNode.modify = false;
-                }
-                return tree;
-            }
-            const loopById = (file, id) => {
-                for (const item of file) {
-                    if (item.id === id) {
-                        const newItem = {
-                            ...item,
-                            name: newName,
-                            modify: false,
-                            icon:
-                                fileData.fileType === FileTypes.FILE
-                                    ? this.getFileIconByName(newName)
-                                    : '',
-                        };
-                        if (!prevParentNode.children)
-                            prevParentNode.children = [];
-                        if (newName) {
-                            prevParentNode.children.splice(index, 1, newItem);
-                        } else {
-                            prevParentNode.children.splice(index, 1);
-                        }
-                    }
-                    if (item.children) {
-                        loopById(item.children, id);
-                    }
-                }
-            };
-            loopById(tree[0]?.children, fileData.id);
-        };
-        update(original);
-    }
-
-    public rename(fileData: ITreeNodeItem, callback: Function) {
-        const original = this.state.folderTree?.data;
-        const updateName = (tree, id) => {
-            const rootNode = tree[0];
-            if (rootNode.id === id) {
-                rootNode.modify = true;
-                return tree;
-            }
-            const traverseModfyCol = (file, id) => {
-                for (const item of file) {
-                    if (item.id === id) {
-                        item.modify = true;
-                        return;
-                    }
-                    if (item.children) {
-                        traverseModfyCol(item.children, id);
-                    }
-                }
-            };
-            traverseModfyCol(tree[0]?.children, id);
-            return tree;
-        };
-        updateName(original, fileData.id);
+    public rename(id: number, callback?: Function) {
+        const { folderTree } = this.state;
+        const cloneData: ITreeNodeItem[] = folderTree?.data || [];
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(id)
+        const tree = new TreeView(currentRootFolder);
+        tree.update(id, {
+            modify: true
+        })
+        if (index > -1) cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: { ...folderTree, data: cloneData }
+        });
         if (callback) callback();
     }
 
-    public deleteFile(fileData: ITreeNodeItem) {
-        const original = this.state.folderTree?.data;
-        const prevParentNode: ITreeNodeItem = this.getPrevParentNode(
-            original,
-            fileData.id
-        );
-        const curIndex = (prevParentNode.children || []).findIndex(
-            (item) => item.id === fileData.id
-        );
-        const deleteItem = (tree, id) => {
-            const rootNode = tree[0];
-            if (rootNode.id === id) {
-                return tree;
-            }
-            const loopNode = (file, id) => {
-                for (const item of file) {
-                    if (item.id === id) {
-                        prevParentNode.children?.splice(curIndex, 1);
-                        return;
-                    }
-                    if (item.children) {
-                        loopNode(item.children, id);
-                    }
-                }
+    public delete(id: number, callback?: Function) {
+        const { folderTree } = this.state;
+        const cloneData: ITreeNodeItem[] = folderTree?.data || [];
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(id)
+        const tree = new TreeView(currentRootFolder);
+        tree.remove(id);
+        if (index > -1) cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: { ...folderTree, data: cloneData }
+        });
+        if (callback) callback();
+    }
+
+    public newFile(parentId: number, callback?: Function) {
+        const { folderTree } = this.state;
+        const cloneData: ITreeNodeItem[] = folderTree?.data || [];
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(parentId)
+        const tree = new TreeView(currentRootFolder);
+        if (!parentId) {
+            const tabData = {
+                id: `${Math.random() * 10 + 1}`,
+                name: `Untitled`,
+                modified: false
             };
-            loopNode(tree[0]?.children, id);
-            return tree;
-        };
-        deleteItem(original, fileData.id);
+            editorService.open(tabData)
+        }
+        tree.append(new TreeNodeModel({
+            modify: true
+        }), parentId)
+        if (index > -1) cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: { ...folderTree, data: cloneData }
+        });
+        if (callback) callback();
+    }
+
+    public newFolder(parentId, callback: Function) {
+        const { folderTree } = this.state;
+        const cloneData: ITreeNodeItem[] = folderTree?.data || [];
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(parentId)
+        const tree = new TreeView(currentRootFolder);
+        tree.append(new TreeNodeModel({
+            fileType: FileTypes.FOLDER as FileType,
+            modify: true
+        }), parentId)
+        if (index > -1) cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: { ...folderTree, data: cloneData }
+        });
+        if (callback) callback();
     }
 
     public onDropTree = (treeData: ITreeNodeItem[]) => {
@@ -308,34 +458,4 @@ export class ExplorerService
         });
     };
 
-
-    // second version
-    // 考虑操作 tree 数据结构的方法抽离出一个 tree 类
-
-    public addFolder(folder) {
-        const { folderTree } = this.state;
-        let next = [...folderTree?.data!];
-        if (Array.isArray(folder)) {
-            next = next?.concat(folder);
-        } else {
-            next?.push(folder);
-        }
-        console.log('next', next)
-        this.setState({
-            folderTree: { ...folderTree, data: next }
-        });
-    }
-    // public deleteFolder(id) {
-    //     const { folderTree } = this.state;
-    //     let next = [...folderTree?.data!];
-    //     if (Array.isArray(folder)) {
-    //         next = next?.concat(folder);
-    //     } else {
-    //         next?.push(folder);
-    //     }
-    //     const current = searchById(id)
-    //     this.setState({
-    //         folderTree: { ...folderTree, data: next }
-    //     });
-    // }
 }

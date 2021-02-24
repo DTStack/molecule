@@ -1,35 +1,28 @@
 import { singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
 
-import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
+import { ITreeNodeItem, FileTypes } from 'mo/components/tree';
 
 import { editorService, explorerService } from 'mo';
+import { EditorController } from 'mo/controller/editor';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
 const confirm = Modal.confirm;
 
 export interface IFolderTreeController {
     readonly onSelectFile?: (file: ITreeNodeItem) => void;
-    readonly onCreateFile?: (e: React.MouseEvent) => void;
-    readonly onUpdateFile?: (
-        file: ITreeNodeItem,
-        newName: string,
-        index: number
-    ) => void;
-    readonly onRename?: (file: ITreeNodeItem, callback: Function) => void;
-    readonly onDeleteFile?: (file: ITreeNodeItem) => void;
     readonly onDropTree?: (treeNode: ITreeNodeItem[]) => void;
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
         item: IMenuItem,
-        node: ITreeNodeItem
+        node: ITreeNodeItem,
+        callback?: Function
     ) => void;
     readonly filterContextMenu?: (
         menus: IMenuItem[],
-        treeNode: IMenuItem
+        treeNode: ITreeNodeItem
     ) => IMenuItem[];
 
-    readonly onAddFolder?: (folder: ITreeNodeItem) => void;
 }
 
 @singleton()
@@ -44,39 +37,17 @@ export class FolderTreeController
     private initView() { }
 
     public readonly onSelectFile = (file: ITreeNodeItem) => {
-        const tabData = {
+        const tabData: any = {
             ...file,
-            activeTab: file.id,
             modified: false,
+            data: {
+                value: `hello tree ${file.id}`,
+                path: 'desktop/molecule/editor1',
+                language: 'ini',
+            },
+            breadcrumb: [{ id: `${file.id}`, name: 'editor.js' }],
         };
-        editorService.open(tabData, Number(tabData.activeTab!));
-    };
-
-    public readonly onCreateFile = (e: React.MouseEvent) => {
-        const file: ITreeNodeItem = {
-            id: '1',
-            name: '',
-            fileType: 'folder',
-            modify: true,
-        };
-        const fileType = FileTypes.FOLDER as FileType;
-        explorerService.createFile(file, fileType);
-    };
-
-    public readonly onUpdateFile = (
-        file: ITreeNodeItem,
-        newName: string,
-        index: number
-    ) => {
-        explorerService.updateFile(file, newName, index);
-    };
-
-    public readonly onRename = (file: ITreeNodeItem, callback: Function) => {
-        explorerService.rename(file, callback);
-    };
-
-    public readonly onDeleteFile = (file: ITreeNodeItem) => {
-        explorerService.deleteFile(file);
+        editorService.open(tabData);
     };
 
     public readonly onDropTree = (treeNode: ITreeNodeItem[]) => {
@@ -86,54 +57,101 @@ export class FolderTreeController
     public readonly onClickContextMenu = (
         e: React.MouseEvent,
         item: IMenuItem,
-        node: ITreeNodeItem
+        node: ITreeNodeItem,
+        callback?: Function
     ) => {
         const menuId = item.id;
-        const ctx = this;
-
+        const { id: nodeId, name } = node as any;
         switch (menuId) {
             case 'rename': {
-                this.onRename(node, () => {
-                    console.log('Rename file item:', node);
+                explorerService.rename(nodeId, () => {
+                    if (callback) callback()
                 });
+                break;
             }
             case 'delete': {
                 confirm({
-                    title: `Are you sure you want to delete '${node?.name}' ?`,
+                    title: `Are you sure you want to delete '${name}' ?`,
                     content: 'This action is irreversible!',
                     onOk() {
-                        ctx.onDeleteFile(node);
+                        explorerService.delete(nodeId, () => {
+                            new EditorController().onCloseTab(nodeId)
+                        });
                     },
                 });
+                break;
             }
             case 'newFile': {
-                this.onCreateFile(e);
+                explorerService.newFile(nodeId, () => {
+                    if (callback) callback()
+                });
+                break;
             }
             case 'newFolder': {
-                const file: ITreeNodeItem = {
-                    id: '1',
-                    name: '',
-                    fileType: 'folder',
-                    modify: true,
-                };
-                const fileType = FileTypes.FOLDER as FileType;
-                explorerService.createFile(file, fileType);
+                explorerService.newFolder(nodeId, () => {
+                    if (callback) callback()
+                });
+                break;
+            }
+            case 'remove': {
+                explorerService.removeRootFolder(nodeId);
+                break;
             }
             case 'openTab': {
                 console.log('OpenTab');
+                break;
                 // editorService.open();
             }
         }
     };
 
-    public readonly filterContextMenu = (
-        menus: IMenuItem[],
-        menuItem: IMenuItem
-    ) => {
-        return menus;
+    public readonly filterContextMenu = (menus, node) => {
+        let menu;
+        const baseContextMenu = [
+            {
+                id: 'newFile',
+                name: 'New File',
+            },
+            {
+                id: 'newFolder',
+                name: 'New Folder',
+            }
+        ];
+
+        const rootFolderContextMenu = [
+            {
+                id: 'remove',
+                name: 'Remove Folder',
+            }
+        ]
+
+        const folderContextMenu: any = baseContextMenu.concat(menus);
+
+        const fileContextMenu = [
+            {
+                id: 'openToSide',
+                name: 'Open to the side',
+            }
+        ].concat(menus);
+
+        const rootFodlerContextMenu = baseContextMenu.concat(rootFolderContextMenu);
+
+        switch (node.fileType) {
+            case FileTypes.FILE: {
+                menu = fileContextMenu;
+                break;
+            }
+            case FileTypes.FOLDER: {
+                menu = folderContextMenu;
+                break;
+            };
+            case FileTypes.ROOT: {
+                menu = rootFodlerContextMenu;
+                break;
+            };
+            default: menu = menus
+        }
+        return menu;
     };
 
-    public readonly onAddFolder = (folder) => {
-        explorerService.addFolder(folder);
-    }
 }

@@ -177,10 +177,10 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
                 data={data}
             />
         ) : (
-                <Menu className={cNames} style={{ visibility: 'hidden' }}>
-                    {children}
-                </Menu>
-            );
+            <Menu className={cNames} style={{ visibility: 'hidden' }}>
+                {children}
+            </Menu>
+        );
 
     return (
         <li className={defaultMenuItemClassName} {...events} {...custom}>

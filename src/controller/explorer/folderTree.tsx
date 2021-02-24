@@ -22,7 +22,6 @@ export interface IFolderTreeController {
         menus: IMenuItem[],
         treeNode: ITreeNodeItem
     ) => IMenuItem[];
-
 }
 
 @singleton()
@@ -34,7 +33,7 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() { }
+    private initView() {}
 
     public readonly onSelectFile = (file: ITreeNodeItem) => {
         const tabData: any = {
@@ -65,7 +64,7 @@ export class FolderTreeController
         switch (menuId) {
             case 'rename': {
                 explorerService.rename(nodeId, () => {
-                    if (callback) callback()
+                    if (callback) callback();
                 });
                 break;
             }
@@ -75,7 +74,7 @@ export class FolderTreeController
                     content: 'This action is irreversible!',
                     onOk() {
                         explorerService.delete(nodeId, () => {
-                            new EditorController().onCloseTab(nodeId)
+                            new EditorController().onCloseTab(nodeId);
                         });
                     },
                 });
@@ -83,13 +82,13 @@ export class FolderTreeController
             }
             case 'newFile': {
                 explorerService.newFile(nodeId, () => {
-                    if (callback) callback()
+                    if (callback) callback();
                 });
                 break;
             }
             case 'newFolder': {
                 explorerService.newFolder(nodeId, () => {
-                    if (callback) callback()
+                    if (callback) callback();
                 });
                 break;
             }
@@ -115,15 +114,15 @@ export class FolderTreeController
             {
                 id: 'newFolder',
                 name: 'New Folder',
-            }
+            },
         ];
 
         const rootFolderContextMenu = [
             {
                 id: 'remove',
                 name: 'Remove Folder',
-            }
-        ]
+            },
+        ];
 
         const folderContextMenu: any = baseContextMenu.concat(menus);
 
@@ -131,10 +130,12 @@ export class FolderTreeController
             {
                 id: 'openToSide',
                 name: 'Open to the side',
-            }
+            },
         ].concat(menus);
 
-        const rootFodlerContextMenu = baseContextMenu.concat(rootFolderContextMenu);
+        const rootFodlerContextMenu = baseContextMenu.concat(
+            rootFolderContextMenu
+        );
 
         switch (node.fileType) {
             case FileTypes.FILE: {
@@ -144,14 +145,14 @@ export class FolderTreeController
             case FileTypes.FOLDER: {
                 menu = folderContextMenu;
                 break;
-            };
+            }
             case FileTypes.ROOT: {
                 menu = rootFodlerContextMenu;
                 break;
-            };
-            default: menu = menus
+            }
+            default:
+                menu = menus;
         }
         return menu;
     };
-
 }

@@ -14,7 +14,7 @@ import { prefixClaName, classNames } from 'mo/common/className';
 export const FileTypes = {
     FILE: 'file',
     FOLDER: 'folder',
-    ROOT: 'rootFolder'
+    ROOT: 'rootFolder',
 };
 export type FileType = 'file' | 'folder' | 'rootFolder';
 
@@ -51,11 +51,11 @@ export interface ITreeProps {
     expandedKeys?: Key[];
     defaultCheckedKeys?: Key[];
     checkedKeys?:
-    | Key[]
-    | {
-        checked: Key[];
-        halfChecked: Key[];
-    };
+        | Key[]
+        | {
+              checked: Key[];
+              halfChecked: Key[];
+          };
     defaultSelectedKeys?: Key[];
     selectedKeys?: Key[];
     titleRender?: (node: DataNode) => React.ReactNode;

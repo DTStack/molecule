@@ -99,7 +99,7 @@ export class ExplorerController
                     id: 'new_file',
                     title: 'New File',
                     iconName: 'codicon-new-file',
-                    onClick: () => { },
+                    onClick: () => {},
                 },
                 {
                     id: 'new_folder',
@@ -120,10 +120,10 @@ export class ExplorerController
             renderPanel: () => {
                 const folderProps: any = {
                     data: explorerState.folderTree?.data,
-                    contextMenu: explorerState.folderTree?.contextMenu
-                }
-                return <FolderTreeView {...folderProps} />
-            }
+                    contextMenu: explorerState.folderTree?.contextMenu,
+                };
+                return <FolderTreeView {...folderProps} />;
+            },
         };
 
         const outlinePanel = {
@@ -140,7 +140,7 @@ export class ExplorerController
                     title: 'More Actions...',
                     iconName: 'codicon-ellipsis',
                 },
-            ]
+            ],
         };
 
         explorerService.addPanel([

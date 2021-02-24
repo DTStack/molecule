@@ -50,9 +50,7 @@ export class TreeNodeModel implements ITreeNodeItem {
     icon?: string | React.ReactNode;
     modify?: boolean;
 
-    constructor(
-        props: ITreeNodeItem = {}
-    ) {
+    constructor(props: ITreeNodeItem = {}) {
         const {
             id,
             name = '',
@@ -60,15 +58,15 @@ export class TreeNodeModel implements ITreeNodeItem {
             fileType = FileTypes.FILE as FileType,
             children = [],
             icon = '',
-            modify = false
+            modify = false,
         } = props;
-        this.fileType = fileType,
-            this.modify = modify,
-            this.name = name,
-            this.id = id || Math.random() * 10 + 1,
-            this.location = location,
-            this.children = children,
-            this.icon = icon
+        (this.fileType = fileType),
+            (this.modify = modify),
+            (this.name = name),
+            (this.id = id || Math.random() * 10 + 1),
+            (this.location = location),
+            (this.children = children),
+            (this.icon = icon);
     }
 }
 
@@ -77,7 +75,7 @@ export class IExplorerModel implements IExplorer {
     public data: IPanelItem[] = [];
     public folderTree: IFolderTree = {
         contextMenu: commonContextMenu,
-        data: []
+        data: [],
     };
     public headerToolBar: IActionBarItem[] = builtInHeaderToolbar;
 }

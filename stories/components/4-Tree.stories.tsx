@@ -13,26 +13,17 @@ const file = FileTypes.FILE as FileType;
 stories.add('Basic Usage', () => {
     const treeData = [
         {
-            id: '1',
+            id: 1,
             name: folder,
             fileType: folder,
-            contextMenu: [
-                {
-                    id: 'custom',
-                    name: 'Custom ContextMenu',
-                    onClick: () => {
-                        console.log("i'm custom contextMenu");
-                    },
-                },
-            ],
             children: [
                 {
-                    id: '2',
+                    id: 2,
                     name: 'abc',
                     fileType: folder,
                     children: [
                         {
-                            id: '3',
+                            id: 3,
                             name: 'test.txt',
                             fileType: file,
                             icon: 'symbol-file',
@@ -40,12 +31,12 @@ stories.add('Basic Usage', () => {
                     ],
                 },
                 {
-                    id: '6',
+                    id: 6,
                     name: 'xyz',
                     fileType: folder,
                     children: [
                         {
-                            id: '7',
+                            id: 7,
                             name: 'test.pdf',
                             fileType: file,
                             icon: 'file-pdf',
@@ -53,7 +44,7 @@ stories.add('Basic Usage', () => {
                     ],
                 },
                 {
-                    id: '10',
+                    id: 10,
                     name: 'file.yaml',
                     fileType: file,
                 },

@@ -33,11 +33,12 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() {}
+    private initView() { }
 
     public readonly onSelectFile = (file: ITreeNodeItem) => {
-        const tabData: any = {
+        const tabData = {
             ...file,
+            id: `${file.id}`,
             modified: false,
             data: {
                 value: `hello tree ${file.id}`,
@@ -124,7 +125,7 @@ export class FolderTreeController
             },
         ];
 
-        const folderContextMenu: any = baseContextMenu.concat(menus);
+        const folderContextMenu = baseContextMenu.concat(menus);
 
         const fileContextMenu = [
             {

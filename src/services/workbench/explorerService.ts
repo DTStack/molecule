@@ -154,7 +154,7 @@ export class TreeView implements ITreeInterface {
             1,
             {
                 ...node,
-                ...extra
+                ...extra,
             }
         );
         this.updateChildren(parentIndex[this.childNodeName]);
@@ -164,14 +164,12 @@ export class TreeView implements ITreeInterface {
 
     updateChildren(children: IIndex) {
         const self = this;
-        children.forEach(
-            function (id, i) {
-                const index = self.getIndex(id);
-                index.prev = index.next = null;
-                if (i > 0) index.prev = children[i - 1];
-                if (i < children.length - 1) index.next = children[i + 1];
-            }
-        );
+        children.forEach(function (id, i) {
+            const index = self.getIndex(id);
+            index.prev = index.next = null;
+            if (i > 0) index.prev = children[i - 1];
+            if (i < children.length - 1) index.next = children[i + 1];
+        });
     }
 
     insert(obj: ITreeNodeItem, parentId: number, i: number) {
@@ -221,7 +219,6 @@ export class TreeView implements ITreeInterface {
         return this.insert(obj, destId, destIndex[this.childNodeName].length);
     }
 }
-
 
 export interface IExplorerService extends Component<IExplorer> {
     addPanel(panel: IPanelItem | IPanelItem[]): void;
@@ -275,13 +272,16 @@ export class ExplorerService
             next.splice(index, 1);
         }
         this.setState({
-            data: next
+            data: next,
         });
     }
 
     /* ============================Tree============================ */
 
-    private getFileIconByExtensionName(name: string, fileType: FileType): string {
+    private getFileIconByExtensionName(
+        name: string,
+        fileType: FileType
+    ): string {
         if (fileType === FileTypes.FOLDER) return '';
         const fileExtension = name && name.split('.')?.[1];
         let icon = 'symbol-file';
@@ -310,15 +310,19 @@ export class ExplorerService
 
     private getCurrentRootFolderAndIndex(id: number) {
         const currentRootFolder: ITreeNodeItem = this.getRootFolderById(id);
-        const index = this.getRootFolderIndexByRootId((currentRootFolder as any).id) as number;
+        const index = this.getRootFolderIndexByRootId(
+            (currentRootFolder as any).id
+        ) as number;
         return {
             index,
-            currentRootFolder
-        }
+            currentRootFolder,
+        };
     }
 
     public getRootFolderIndexByRootId(id: number): number | undefined {
-        return this.state.folderTree?.data!.findIndex((folder) => folder.id === id);
+        return this.state.folderTree?.data!.findIndex(
+            (folder) => folder.id === id
+        );
     }
 
     public getRootFolderByRootId(id: number): ITreeNodeItem | undefined {
@@ -327,12 +331,12 @@ export class ExplorerService
 
     public getRootFolderById(id: number): ITreeNodeItem {
         let rootNode = {};
-        this.state.folderTree?.data?.forEach(folder => {
+        this.state.folderTree?.data?.forEach((folder) => {
             const treeInstance = new TreeView(folder);
             if (treeInstance.get(id)) {
                 rootNode = folder;
             }
-        })
+        });
         return rootNode;
     }
 
@@ -345,7 +349,7 @@ export class ExplorerService
             next?.push(folder);
         }
         this.setState({
-            folderTree: { ...folderTree, data: next }
+            folderTree: { ...folderTree, data: next },
         });
     }
 
@@ -357,7 +361,7 @@ export class ExplorerService
             next.splice(index, 1);
         }
         this.setState({
-            folderTree: { ...folderTree, data: next }
+            folderTree: { ...folderTree, data: next },
         });
     }
 
@@ -365,20 +369,22 @@ export class ExplorerService
         const { folderTree } = this.state;
         const { id, name, fileType } = file;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(id)
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
+            id
+        );
         const tree = new TreeView(currentRootFolder);
         if (name) {
             tree.update(id, {
                 ...file,
                 icon: this.getFileIconByExtensionName(name, fileType),
-                modify: false
-            })
+                modify: false,
+            });
         } else {
-            tree.remove(id)
+            tree.remove(id);
         }
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
-            folderTree: { ...folderTree, data: cloneData }
+            folderTree: { ...folderTree, data: cloneData },
         });
         if (callback) callback();
     }
@@ -386,14 +392,16 @@ export class ExplorerService
     public rename(id: number, callback?: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(id)
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
+            id
+        );
         const tree = new TreeView(currentRootFolder);
         tree.update(id, {
-            modify: true
-        })
+            modify: true,
+        });
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
-            folderTree: { ...folderTree, data: cloneData }
+            folderTree: { ...folderTree, data: cloneData },
         });
         if (callback) callback();
     }
@@ -401,12 +409,14 @@ export class ExplorerService
     public delete(id: number, callback?: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(id)
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
+            id
+        );
         const tree = new TreeView(currentRootFolder);
         tree.remove(id);
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
-            folderTree: { ...folderTree, data: cloneData }
+            folderTree: { ...folderTree, data: cloneData },
         });
         if (callback) callback();
     }
@@ -414,22 +424,27 @@ export class ExplorerService
     public newFile(parentId: number, callback?: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(parentId)
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
+            parentId
+        );
         const tree = new TreeView(currentRootFolder);
         if (!parentId) {
             const tabData = {
                 id: `${Math.random() * 10 + 1}`,
                 name: `Untitled`,
-                modified: false
+                modified: false,
             };
-            editorService.open(tabData)
+            editorService.open(tabData);
         }
-        tree.append(new TreeNodeModel({
-            modify: true
-        }), parentId)
+        tree.append(
+            new TreeNodeModel({
+                modify: true,
+            }),
+            parentId
+        );
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
-            folderTree: { ...folderTree, data: cloneData }
+            folderTree: { ...folderTree, data: cloneData },
         });
         if (callback) callback();
     }
@@ -437,15 +452,20 @@ export class ExplorerService
     public newFolder(parentId, callback: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(parentId)
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
+            parentId
+        );
         const tree = new TreeView(currentRootFolder);
-        tree.append(new TreeNodeModel({
-            fileType: FileTypes.FOLDER as FileType,
-            modify: true
-        }), parentId)
+        tree.append(
+            new TreeNodeModel({
+                fileType: FileTypes.FOLDER as FileType,
+                modify: true,
+            }),
+            parentId
+        );
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
-            folderTree: { ...folderTree, data: cloneData }
+            folderTree: { ...folderTree, data: cloneData },
         });
         if (callback) callback();
     }
@@ -457,5 +477,4 @@ export class ExplorerService
             }),
         });
     };
-
 }

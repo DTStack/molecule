@@ -123,19 +123,33 @@ export class EditorService
         }
     }
 
-    public open<T>(tab: IEditorTab<T>, groupId?: number) {
+    public open<T>(tab: IEditorTab<T>, groupId: number) {
         const { current, groups = [] } = this.state;
         let group: IEditorGroup | null | undefined = current;
+        debugger
         if (groupId) {
             group = this.getGroupById(groupId);
         }
         if (group) {
-            group.data!.push(tab);
-            group.current = tab;
+            const { id: tabKey } = tab
+            const isExist = group?.data!.find((tab: IEditorTab) => tab.id === tabKey);
+            const groupIndex = this.getGroupIndexById(group.id!)
+            if (!isExist) {
+                group.data!.push(tab)
+                group.tab = tab
+                group.activeTab = tabKey
+                groups[groupIndex] = group
+            } 
+            if (isExist && tabKey !== group?.activeTab)  {
+                group.tab = tab
+                group.activeTab = tabKey
+                groups[groupIndex] = group
+            }
         } else {
             group = new EditorGroupModel(groups.length + 1, tab, [tab]);
             groups.push(group);
         }
+        console.log(group, groups)
         this.setState({
             current: group,
             groups: [...groups],

@@ -123,7 +123,7 @@ export default class SearchPane extends React.Component<
                 name: `editor.js`,
                 modified: false,
                 data: {
-                    value: `console.log("javascript")`,
+                    value: `console.log(javascript ${key})`,
                     path: 'desktop/molecule/editor1',
                     language: 'javascript',
                 },

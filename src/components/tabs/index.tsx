@@ -41,7 +41,6 @@ export function Tabs<T>(props: ITabs<T>) {
         onMoveTab,
         ...resetProps
     } = props;
-    console.log(props);
     const onChangeTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];

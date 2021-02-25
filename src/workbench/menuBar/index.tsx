@@ -3,10 +3,7 @@ import { menuBarService } from 'mo/services';
 import { connect } from 'mo/react';
 
 import MenuBar from './menuBar';
-import { container } from 'tsyringe';
-import { MenuBarController } from 'mo/controller/menuBar';
-
-const menuBarController = container.resolve(MenuBarController);
+import { menuBarController } from 'mo/controller';
 
 const MenuBarView = connect(menuBarService, MenuBar, menuBarController);
 

@@ -3,18 +3,14 @@ import Toolbar from 'mo/components/toolbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
 import {
-    activityBarService,
     colorThemeService,
     explorerService,
-    editorService,
 } from 'mo';
-import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
 import SearchTree from './searchTree';
-import { IEditorTab } from 'mo/model';
 
-interface ISearchPaneToolBar {}
+interface ISearchPaneToolBar { }
 
 const initialState = {
     input: '',
@@ -46,7 +42,7 @@ type State = typeof initialState;
 export default class SearchPane extends React.Component<
     ISearchPaneToolBar,
     State
-> {
+    > {
     state: State;
 
     constructor(props) {
@@ -106,34 +102,6 @@ export default class SearchPane extends React.Component<
 
     render() {
         const { toolbar } = this.state;
-
-        const addABar = function () {
-            const id = Math.random() * 10 + 1;
-            activityBarService.addBar({
-                id: id + '',
-                name: 'folder' + id,
-                iconName: 'codicon-edit',
-            });
-        };
-
-        const newEditor = function () {
-            const key = Math.random() * 10 + 1;
-            const tabData: IEditorTab = {
-                id: `${key}`,
-                name: `editor.js`,
-                modified: false,
-                data: {
-                    value: `hello javascript ${key}`,
-                    path: 'desktop/molecule/editor1',
-                    language: 'javascript',
-                },
-                breadcrumb: [{ id: `${key}`, name: 'editor.js' }],
-            };
-            console.log('open editor:', tabData);
-            editorService.open(tabData);
-        };
-
-        const openCommand = function () {};
         const { input } = this.state;
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
@@ -151,16 +119,6 @@ export default class SearchPane extends React.Component<
                             searchValue={input}
                         />
                     )}
-                    <hr></hr>
-                    <div>
-                        <Button onClick={addABar}>Add Bar</Button>
-                        <Button onClick={newEditor}>New Editor</Button>
-                        <Button onClick={openCommand}>Command Palette</Button>
-                    </div>
-                    <div style={{ margin: '50px 20px' }}>
-                        ColorThemes:
-                        {this.renderColorThemes()}
-                    </div>
                 </Content>
             </div>
         );

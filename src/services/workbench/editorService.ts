@@ -73,27 +73,28 @@ export class EditorService
         if (index > -1) {
             const nextGroup = nextGroups[index];
             const tabIndex = nextGroup.data!.findIndex(searchById(tabId));
-            const activeTab = tabId === nextGroup.activeTab
+            const activeTab = tabId === nextGroup.activeTab;
             if (nextGroup.data!.length === 1 && tabIndex === 0) {
                 nextGroups.splice(index, 1);
                 this.setState({
                     groups: nextGroups,
                 });
-                return
-            } 
-            if (tabIndex === -1) return
+                return;
+            }
+            if (tabIndex === -1) return;
             if (activeTab) {
-                const nextTab = nextGroup.data![tabIndex + 1] || nextGroup.data![tabIndex - 1];
-                this.setActive(groupId, nextTab.id!)
-                nextGroup?.editorInstance.setValue(nextTab.data.value)
+                const nextTab =
+                    nextGroup.data![tabIndex + 1] ||
+                    nextGroup.data![tabIndex - 1];
+                this.setActive(groupId, nextTab.id!);
+                nextGroup?.editorInstance.setValue(nextTab.data.value);
                 nextGroup.data!.splice(tabIndex, 1);
-                return
-            } 
+                return;
+            }
             nextGroup.data!.splice(tabIndex, 1);
             this.setState({
                 groups: nextGroups,
             });
-
         }
     }
 

@@ -83,7 +83,7 @@ const initialMenu: IMenuItem[] = [
 export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     id: number;
     tab: IEditorTab<T>;
-    data?: IEditorTab<T>[];
+    data: IEditorTab<T>[];
     actions: IMenuItem[];
     menu: IMenuItem[];
     editorInstance: E | undefined;

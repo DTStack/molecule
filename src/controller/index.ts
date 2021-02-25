@@ -1,0 +1,20 @@
+import { container } from 'tsyringe';
+import { ActivityBarController } from './activityBar';
+import { EditorController } from './editor';
+import { ExplorerController } from './explorer/explorer';
+import { FolderTreeController } from './explorer/folderTree';
+import { MenuBarController } from './menuBar';
+import { PanelController } from './panel';
+import { SettingsController } from './settings';
+import { SidebarController } from './sidebar';
+import { StatusBarController } from './statusBar';
+
+export const activityBarController = container.resolve(ActivityBarController);
+export const editorController = container.resolve(EditorController);
+export const menuBarController = container.resolve(MenuBarController);
+export const panelController = container.resolve(PanelController);
+export const sidebarController = container.resolve(SidebarController);
+export const explorerController = container.resolve(ExplorerController);
+export const statusBarController = container.resolve(StatusBarController);
+export const settingsController = container.resolve(SettingsController);
+export const folderTreeController = container.resolve(FolderTreeController);

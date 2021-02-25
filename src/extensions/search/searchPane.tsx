@@ -2,15 +2,12 @@ import * as React from 'react';
 import Toolbar from 'mo/components/toolbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
-import {
-    colorThemeService,
-    explorerService,
-} from 'mo';
+import { colorThemeService, explorerService } from 'mo';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
 import SearchTree from './searchTree';
 
-interface ISearchPaneToolBar { }
+interface ISearchPaneToolBar {}
 
 const initialState = {
     input: '',
@@ -42,7 +39,7 @@ type State = typeof initialState;
 export default class SearchPane extends React.Component<
     ISearchPaneToolBar,
     State
-    > {
+> {
     state: State;
 
     constructor(props) {

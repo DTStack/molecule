@@ -17,19 +17,6 @@ export enum PanelEvent {
     onClick = 'panel.onClick',
 }
 
-export enum PanelStatus {
-    Close = 'close',
-    Open = 'open',
-    Maximize = 'maximize',
-}
-
-export interface IPanel {
-    current?: IPanelItem;
-    data?: IPanelItem[];
-    toolbox?: IActionBarItem[];
-    status?: PanelStatus;
-}
-
 export const PANEL_PROBLEMS: IPanelItem = {
     id: 'ProblemsPane',
     name: 'problems',
@@ -58,11 +45,20 @@ export const PANEL_TOOLBOX_RESIZE = {
     iconName: 'codicon-chevron-up',
 };
 
+export interface IPanel {
+    current?: IPanelItem;
+    data?: IPanelItem[];
+    toolbox?: IActionBarItem[];
+    hidden?: boolean;
+    maximize?: boolean;
+}
+
 @injectable()
 export class PanelModel implements IPanel {
     public current: IPanelItem | undefined = PANEL_OUTPUT;
     public data: IPanelItem[] = ([] = [PANEL_PROBLEMS, PANEL_OUTPUT]);
-    public status = PanelStatus.Open;
+    public hidden = false;
+    public maximize = false;
     public toolbox: IActionBarItem[] = [
         PANEL_TOOLBOX_RESIZE,
         PANEL_TOOLBOX_CLOSE,

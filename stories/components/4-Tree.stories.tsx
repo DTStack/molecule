@@ -7,8 +7,8 @@ import { withKnobs } from '@storybook/addon-knobs';
 const stories = storiesOf('Tree', module);
 stories.addDecorator(withKnobs);
 
-const folder = FileTypes.FOLDER as FileType;
-const file = FileTypes.FILE as FileType;
+const folder = FileTypes.folder as FileType;
+const file = FileTypes.file as FileType;
 
 stories.add('Basic Usage', () => {
     const treeData = [

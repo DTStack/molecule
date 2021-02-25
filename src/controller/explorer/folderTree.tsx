@@ -33,7 +33,7 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() {}
+    private initView() { }
 
     public readonly onSelectFile = (file: ITreeNodeItem) => {
         const tabData = {
@@ -142,15 +142,15 @@ export class FolderTreeController
         );
 
         switch (node.fileType) {
-            case FileTypes.FILE: {
+            case FileTypes.file: {
                 menu = fileContextMenu;
                 break;
             }
-            case FileTypes.FOLDER: {
+            case FileTypes.folder: {
                 menu = folderContextMenu;
                 break;
             }
-            case FileTypes.ROOT: {
+            case FileTypes.rootFolder: {
                 menu = rootFodlerContextMenu;
                 break;
             }

@@ -13,54 +13,50 @@ import { PanelView } from 'mo/workbench/panel';
 import { ID_APP } from 'mo/common/id';
 import { Utils } from '@dtinsight/dt-utils';
 import { APP_PREFIX } from 'mo/common/const';
+import { panelService } from 'mo/services';
+import { connect } from 'mo/react';
 
 export interface IWorkbench {}
-
-export interface IMainBench {}
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
 const appClassName = classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '');
 
-export function MainBench(props: IMainBench) {
-    return (
-        <div className={mainBenchClassName}>
-            <SplitPane // TODO: The official Docs of React-Split-Pane v2 is expired, must reference the source code
-                split="vertical"
-                primary="first"
-                allowResize={true}
-            >
-                <Pane minSize="170px" initialSize="300px" maxSize="80%">
-                    <SidebarView />
-                </Pane>
-                <SplitPane
-                    primary="first"
-                    split="horizontal"
-                    allowResize={true}
-                >
-                    <Pane initialSize="70%" maxSize="99%" minSize="10%">
-                        <EditorView />
-                    </Pane>
-                    <Pane>
-                        <PanelView />
-                    </Pane>
-                </SplitPane>
-            </SplitPane>
-        </div>
-    );
-}
-
-export function Workbench(props: IWorkbench) {
+export function WorkbenchView(props: IWorkbench) {
     return (
         <div id={ID_APP} className={appClassName}>
             <div className={workbenchClassName}>
                 <MenuBarView />
                 <ActivityBarView />
-                <MainBench />
+                <div className={mainBenchClassName}>
+                    <SplitPane
+                        split="vertical"
+                        primary="first"
+                        allowResize={true}
+                    >
+                        <Pane minSize="170px" initialSize="300px" maxSize="80%">
+                            <SidebarView />
+                        </Pane>
+                        <SplitPane
+                            primary="first"
+                            split="horizontal"
+                            allowResize={true}
+                        >
+                            <Pane initialSize="70%" maxSize="99%" minSize="10%">
+                                <EditorView />
+                            </Pane>
+                            <Pane>
+                                <PanelView />
+                            </Pane>
+                        </SplitPane>
+                    </SplitPane>
+                </div>
             </div>
             <StatusBarView />
         </div>
     );
 }
+
+export const Workbench = connect({ panel: panelService }, WorkbenchView);
 
 export default Workbench;

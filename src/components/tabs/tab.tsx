@@ -15,7 +15,7 @@ import {
     prefixClaName,
 } from 'mo/common/className';
 import TabDot from './tabDot';
-export interface ITab<T, P=any> {
+export interface ITab<T, P = any> {
     active?: boolean;
     closable?: boolean;
     index?: number;

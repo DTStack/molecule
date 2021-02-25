@@ -66,6 +66,10 @@ export default class TestPane extends React.Component {
             });
         };
 
+        const showHidePanel = function () {
+            panelService.showHide();
+        };
+
         const newEditor = function () {
             const key = Math.random() * 10 + 1;
             const tabData: IEditorTab = {
@@ -98,6 +102,7 @@ export default class TestPane extends React.Component {
                 <div style={{ margin: '50px 20px' }}>
                     <h2>Add a new Panel:</h2>
                     <Button onClick={addPanel}>Add Panel</Button>
+                    <Button onClick={showHidePanel}>Show/Hide Panel</Button>
                 </div>
             </div>
         );

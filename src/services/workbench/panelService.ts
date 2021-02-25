@@ -6,6 +6,7 @@ import {
     PanelModel,
     PANEL_OUTPUT,
     PANEL_PROBLEMS,
+    PANEL_TOOLBOX_RESIZE,
 } from 'mo/model/workbench/panel';
 
 import { searchById } from '../helper';
@@ -20,6 +21,8 @@ export interface IPanelService extends Component<IPanel> {
     clearOutput(): void;
     updateProblems(data: IPanelItem): IPanelItem | undefined;
     clearProblems(): void;
+    showHide(): void;
+    maximizeRestore(): void;
 }
 
 @singleton()
@@ -30,6 +33,35 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         super();
         this.state = container.resolve(PanelModel);
     }
+
+    public showHide(): void {
+        this.setState({
+            hidden: !this.state.hidden,
+        });
+    }
+
+    public maximizeRestore(): void {
+        const maximize = !this.state.maximize;
+        const { toolbox = [] } = this.state;
+        const resizeBtnIndex = toolbox?.findIndex(
+            searchById(PANEL_TOOLBOX_RESIZE.id)
+        );
+        const resizeBtn = toolbox[resizeBtnIndex];
+        if (resizeBtn) {
+            if (maximize) {
+                toolbox[resizeBtnIndex] = Object.assign({}, resizeBtn, {
+                    title: 'Restore Panel Size',
+                    iconName: 'codicon-chevron-down',
+                });
+            } else {
+                toolbox[resizeBtnIndex] = PANEL_TOOLBOX_RESIZE;
+            }
+            this.setState({
+                maximize: !this.state.maximize,
+            });
+        }
+    }
+
     public open(data: IPanelItem<any>): void {
         let current = this.getById(data.id);
         if (!current) {

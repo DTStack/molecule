@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { IActionBarItem } from 'mo/components/actionBar';
-import { PanelStatus } from 'mo/model/workbench/panel';
 import { Controller } from 'mo/react/controller';
 import { panelService } from 'mo/services';
 import { singleton } from 'tsyringe';
+import {
+    PANEL_TOOLBOX_CLOSE,
+    PANEL_TOOLBOX_RESIZE,
+} from 'mo/model/workbench/panel';
 
 export interface IPanelController {
     onTabChange(key: string | undefined): void;
@@ -29,14 +32,10 @@ export class PanelController extends Controller implements IPanelController {
         e: React.MouseEvent,
         item: IActionBarItem
     ): void => {
-        if (item.id === 'Closeable') {
-            panelService.setState({
-                status: PanelStatus.Close,
-            });
-        } else if (item.id === 'Resize') {
-            panelService.setState({
-                status: PanelStatus.Maximize,
-            });
+        if (item.id === PANEL_TOOLBOX_CLOSE.id) {
+            panelService.showHide();
+        } else if (item.id === PANEL_TOOLBOX_RESIZE.id) {
+            panelService.maximizeRestore();
         }
     };
 }

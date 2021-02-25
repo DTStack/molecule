@@ -14,7 +14,6 @@ const panelToolbarClassName = getBEMElement(defaultClassName, 'toolbar');
 const panelContainerClassName = getBEMElement(defaultClassName, 'container');
 
 function Panel(props: IPanel & IPanelController) {
-    console.log('Panel render:', props);
     const { data, current, toolbox = [], onTabChange, onToolbarClick } = props;
     let toolboxData = toolbox;
     if (current && current.toolbox) {

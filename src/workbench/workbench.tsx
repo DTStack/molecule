@@ -15,14 +15,18 @@ import { Utils } from '@dtinsight/dt-utils';
 import { APP_PREFIX } from 'mo/common/const';
 import { panelService } from 'mo/services';
 import { connect } from 'mo/react';
+import { IPanel } from 'mo/model/workbench/panel';
 
-export interface IWorkbench {}
+export interface IWorkbench {
+    panel: IPanel;
+}
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
 const appClassName = classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '');
 
 export function WorkbenchView(props: IWorkbench) {
+    const { panel } = props;
     return (
         <div id={ID_APP} className={appClassName}>
             <div className={workbenchClassName}>
@@ -42,12 +46,20 @@ export function WorkbenchView(props: IWorkbench) {
                             split="horizontal"
                             allowResize={true}
                         >
-                            <Pane initialSize="70%" maxSize="99%" minSize="10%">
-                                <EditorView />
-                            </Pane>
-                            <Pane>
-                                <PanelView />
-                            </Pane>
+                            {!panel.maximize ? (
+                                <Pane
+                                    initialSize="70%"
+                                    maxSize="99%"
+                                    minSize="10%"
+                                >
+                                    <EditorView />
+                                </Pane>
+                            ) : null}
+                            {!panel.hidden ? (
+                                <Pane>
+                                    <PanelView />
+                                </Pane>
+                            ) : null}
                         </SplitPane>
                     </SplitPane>
                 </div>

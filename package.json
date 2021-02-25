@@ -93,7 +93,7 @@
     "husky": {
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-            "pre-push": "yarn prettier --write"
+            "pre-commit": "yarn prettier --write && yarn eslint && yarn stylelint && yarn check-types"
         }
     },
     "config": {

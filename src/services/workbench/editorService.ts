@@ -1,4 +1,3 @@
-import { EditorEvent } from 'mo/model/workbench/editor';
 import { singleton, container } from 'tsyringe';
 
 import { Component } from 'mo/react';
@@ -86,18 +85,18 @@ export class EditorService
     }
 
     public getGroupById(id: number): IEditorGroup | undefined {
-        const { groups } = this.state
+        const { groups } = this.state;
         return groups!.find((group) => group.id === id);
     }
 
     public getGroupIndexById(id: number): number {
-        const { groups } = this.state
+        const { groups } = this.state;
         return groups!.findIndex((group) => group.id === id);
     }
 
     public setActive(groupId: number, tabId: string) {
         const { groups = [] } = this.state;
-        const groupIndex = this.getGroupIndexById(groupId)
+        const groupIndex = this.getGroupIndexById(groupId);
         if (groupIndex > -1) {
             const nextGroups = [...groups];
             const group = nextGroups[groupIndex];
@@ -132,16 +131,21 @@ export class EditorService
             group = this.getGroupById(groupId);
         }
         if (group) {
-            const { id: tabId, data: { value } } = tab
-            const isExist = group?.data!.find((tab: IEditorTab) => tab.id === tabId);
-            const groupIndex = this.getGroupIndexById(group.id!)
-            if (isExist && tabId === group?.activeTab) return
-            const currentGroup = groups[groupIndex]
-            if (!isExist) group.data!.push(tab)
-            group.tab = tab
-            group.activeTab = tabId
-            groups[groupIndex] = {...currentGroup, tab}
-            currentGroup?.editorInstance.setValue(value!)
+            const {
+                id: tabId,
+                data: { value },
+            } = tab;
+            const isExist = group?.data!.find(
+                (tab: IEditorTab) => tab.id === tabId
+            );
+            const groupIndex = this.getGroupIndexById(group.id!);
+            if (isExist && tabId === group?.activeTab) return;
+            const currentGroup = groups[groupIndex];
+            if (!isExist) group.data!.push(tab);
+            group.tab = tab;
+            group.activeTab = tabId;
+            groups[groupIndex] = { ...currentGroup, tab };
+            currentGroup?.editorInstance.setValue(value!);
         } else {
             group = new EditorGroupModel(groups.length + 1, tab, [tab]);
             groups.push(group);
@@ -155,7 +159,7 @@ export class EditorService
 
     public closeAll(groupId: number) {
         const { current, groups = [] } = this.state;
-        const groupIndex = this.getGroupIndexById(groupId)
+        const groupIndex = this.getGroupIndexById(groupId);
         if (groupIndex > -1) {
             const nextGroups = [...groups];
             let nextCurrentGroup = current;
@@ -189,5 +193,4 @@ export class EditorService
         });
         return cloneGroup;
     }
-
 }

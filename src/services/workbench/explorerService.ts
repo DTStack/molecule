@@ -282,7 +282,7 @@ export class ExplorerService
         name: string,
         fileType: FileType
     ): string {
-        if (fileType === FileTypes.FOLDER) return '';
+        if (fileType === FileTypes.folder) return '';
         const fileExtension = name && name.split('.')?.[1];
         let icon = 'symbol-file';
         switch (fileExtension) {
@@ -458,7 +458,7 @@ export class ExplorerService
         const tree = new TreeView(currentRootFolder);
         tree.append(
             new TreeNodeModel({
-                fileType: FileTypes.FOLDER as FileType,
+                fileType: FileTypes.folder as FileType,
                 modify: true,
             }),
             parentId

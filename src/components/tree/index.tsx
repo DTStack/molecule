@@ -10,13 +10,13 @@ import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
 
-// TODO: 提出来
 export enum FileTypes {
-    FILE = 'file',
-    FOLDER = 'folder',
-    ROOT = 'rootFolder',
+    file = 'file',
+    folder = 'folder',
+    rootFolder = 'rootFolder',
 }
-export type FileType = 'file' | 'folder' | 'rootFolder';
+
+export type FileType = keyof typeof FileTypes;
 
 export interface ITreeNodeItem {
     name?: string;
@@ -51,11 +51,11 @@ export interface ITreeProps {
     expandedKeys?: Key[];
     defaultCheckedKeys?: Key[];
     checkedKeys?:
-        | Key[]
-        | {
-              checked: Key[];
-              halfChecked: Key[];
-          };
+    | Key[]
+    | {
+        checked: Key[];
+        halfChecked: Key[];
+    };
     defaultSelectedKeys?: Key[];
     selectedKeys?: Key[];
     titleRender?: (node: DataNode) => React.ReactNode;
@@ -220,7 +220,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     switcherIcon={<Icon type="chevron-right" />}
                     onSelect={(selectedKeys, e: any) => {
                         const { fileType, modify } = e.node.data;
-                        const isFile = fileType === FileTypes.FILE;
+                        const isFile = fileType === FileTypes.file;
                         if (isFile && !modify && props.onSelectFile) {
                             props.onSelectFile(e.node.data);
                         }

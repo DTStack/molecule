@@ -54,7 +54,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 name: newName,
             },
             () => {
-                if (node?.fileType === FileTypes.FILE && newName) {
+                if (node?.fileType === FileTypes.file && newName) {
                     onSelectFile?.({
                         ...node,
                         name: newName,
@@ -87,8 +87,8 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-            name
-        );
+                name
+            );
     };
 
     const renderByData = (

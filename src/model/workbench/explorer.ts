@@ -55,7 +55,7 @@ export class TreeNodeModel implements ITreeNodeItem {
             id,
             name = '',
             location = '',
-            fileType = FileTypes.FILE as FileType,
+            fileType = FileTypes.file as FileType,
             children = [],
             icon = '',
             modify = false,

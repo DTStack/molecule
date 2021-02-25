@@ -1,3 +1,4 @@
+import { EditorEvent } from 'mo/model/workbench/editor';
 import { singleton, container } from 'tsyringe';
 
 import { Component } from 'mo/react';
@@ -85,17 +86,18 @@ export class EditorService
     }
 
     public getGroupById(id: number): IEditorGroup | undefined {
-        return this.state.groups!.find((group) => group.id === id);
+        const { groups } = this.state
+        return groups!.find((group) => group.id === id);
     }
 
     public getGroupIndexById(id: number): number {
-        return this.state.groups!.findIndex((group) => group.id === id);
+        const { groups } = this.state
+        return groups!.findIndex((group) => group.id === id);
     }
 
     public setActive(groupId: number, tabId: string) {
         const { groups = [] } = this.state;
-        const groupIndex = groups.findIndex((group) => group.id === groupId);
-
+        const groupIndex = this.getGroupIndexById(groupId)
         if (groupIndex > -1) {
             const nextGroups = [...groups];
             const group = nextGroups[groupIndex];
@@ -115,43 +117,36 @@ export class EditorService
 
     public updateGroup(groupId: number, groupValues: IEditorGroup) {
         const { groups = [] } = this.state;
-        const index = this.getGroupIndexById(groupId);
-        if (index > -1) {
-            const group = Object.assign({}, groups[index], groupValues);
-            groups[index] = group;
+        const groupIndex = this.getGroupIndexById(groupId);
+        if (groupIndex > -1) {
+            const group = Object.assign({}, groups[groupIndex], groupValues);
+            groups[groupIndex] = group;
             this.render();
         }
     }
 
-    public open<T>(tab: IEditorTab<T>, groupId: number) {
+    public open<T>(tab: IEditorTab<any>, groupId: number) {
         const { current, groups = [] } = this.state;
         let group: IEditorGroup | null | undefined = current;
-        debugger;
         if (groupId) {
             group = this.getGroupById(groupId);
         }
         if (group) {
-            const { id: tabKey } = tab;
-            const isExist = group?.data!.find(
-                (tab: IEditorTab) => tab.id === tabKey
-            );
-            const groupIndex = this.getGroupIndexById(group.id!);
-            if (!isExist) {
-                group.data!.push(tab);
-                group.tab = tab;
-                group.activeTab = tabKey;
-                groups[groupIndex] = group;
-            }
-            if (isExist && tabKey !== group?.activeTab) {
-                group.tab = tab;
-                group.activeTab = tabKey;
-                groups[groupIndex] = group;
-            }
+            const { id: tabId, data: { value } } = tab
+            const isExist = group?.data!.find((tab: IEditorTab) => tab.id === tabId);
+            const groupIndex = this.getGroupIndexById(group.id!)
+            if (isExist && tabId === group?.activeTab) return
+            const currentGroup = groups[groupIndex]
+            if (!isExist) group.data!.push(tab)
+            group.tab = tab
+            group.activeTab = tabId
+            groups[groupIndex] = {...currentGroup, tab}
+            currentGroup?.editorInstance.setValue(value!)
         } else {
             group = new EditorGroupModel(groups.length + 1, tab, [tab]);
             groups.push(group);
         }
-        console.log(group, groups);
+
         this.setState({
             current: group,
             groups: [...groups],
@@ -160,7 +155,7 @@ export class EditorService
 
     public closeAll(groupId: number) {
         const { current, groups = [] } = this.state;
-        const groupIndex = groups.findIndex((group) => group.id === groupId);
+        const groupIndex = this.getGroupIndexById(groupId)
         if (groupIndex > -1) {
             const nextGroups = [...groups];
             let nextCurrentGroup = current;
@@ -194,4 +189,5 @@ export class EditorService
         });
         return cloneGroup;
     }
+
 }

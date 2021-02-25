@@ -1,4 +1,3 @@
-import { EditorEvent } from 'mo/model/workbench/editor';
 import { singleton, container } from 'tsyringe';
 
 import { Component } from 'mo/react';
@@ -33,10 +32,6 @@ export interface IEditorService extends Component<IEditor> {
      */
     setActive(groupId: number, tabId: string);
     updateGroup(groupId, groupValues: IEditorGroup): void;
-    onCloseTab(callback: (tabKey?: string) => void);
-    onMoveTab(callback: (tabs: IEditorTab[]) => void);
-    onSelectTab(callback: (tabKey?: string) => void);
-    onCloseAll(callback: (groupId?: number) => void);
 }
 @singleton()
 export class EditorService
@@ -211,38 +206,5 @@ export class EditorService
             groups: [...groups, cloneGroup],
         });
         return cloneGroup;
-    }
-
-    public onMoveTab(callback: (updateTabs: IEditorTab<any>[]) => void) {
-        this.subscribe(
-            EditorEvent.OnMoveTab,
-            (tabs: IEditorTab<any>[], groupId?: number) => {
-                callback?.(tabs);
-            }
-        );
-    }
-
-    public onSelectTab(callback: (tabKey: string) => void) {
-        this.subscribe(
-            EditorEvent.OnSelectTab,
-            (tabKey: string, groupId: number) => {
-                callback?.(tabKey);
-            }
-        );
-    }
-
-    public onCloseTab(callback: (tabKey: string) => void) {
-        this.subscribe(
-            EditorEvent.OnCloseTab,
-            (tabKey: string, groupId: number) => {
-                callback?.(tabKey);
-            }
-        );
-    }
-
-    public onCloseAll(callback: (groupId?: number) => void) {
-        this.subscribe(EditorEvent.OnCloseAll, (groupId: number) => {
-            callback?.(groupId);
-        });
     }
 }

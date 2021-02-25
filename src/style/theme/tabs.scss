@@ -17,19 +17,19 @@
             background: var(--tabItem-background);
             border-right: 1px solid var(--tabItem-border);
             color: var(--tabItem-foreground);
-    
+
             &__op {
                 &__dot::after {
                     background: var(--tabItem-activeForeground);
                 }
             }
-    
+
             &--active {
                 background: var(--tabItem-activeBackground);
                 border-bottom-color: var(--tabItem-activeForeground);
                 color: var(--tabItem-activeForeground);
             }
-    
+
             &--close {
                 color: var(--tabItem-activeForeground);
             }

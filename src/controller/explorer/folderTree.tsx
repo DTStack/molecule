@@ -33,7 +33,7 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() {}
+    private initView() { }
 
     public readonly onSelectFile = (file: ITreeNodeItem) => {
         const tabData = {
@@ -75,7 +75,7 @@ export class FolderTreeController
                     content: 'This action is irreversible!',
                     onOk() {
                         explorerService.delete(nodeId, () => {
-                            new EditorController().onCloseTab(nodeId);
+                            new EditorController().onCloseTab(`${nodeId}`, editorService.getState()?.current?.id);
                         });
                     },
                 });

@@ -9,34 +9,34 @@ stories.addDecorator(withKnobs);
 stories.add('Basic Usage', () => {
     const userSetting = [
         {
-            key: '1',
+            id: '1',
             label: 'User',
             renderPanel: 'this is user',
         },
         {
-            key: '2',
+            id: '2',
             label: 'workSpace',
             renderPanel: 'this is a workSpace',
         },
     ];
     const tabArr = [
         {
-            key: '1',
+            id: '1',
             label: 'Tab1',
             renderPanel: 'this is tab1',
         },
         {
-            key: '2',
+            id: '2',
             label: 'Tab2',
             renderPanel: 'this is a tab2',
         },
         {
-            key: '3',
+            id: '3',
             label: 'Tab3',
             renderPanel: 'this is a tab3',
         },
         {
-            key: '4',
+            id: '4',
             label: 'Tab4',
             renderPanel: 'this is a tab4',
         },

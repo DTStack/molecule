@@ -1,15 +1,11 @@
 @import 'mo/style/common';
 
 // =============== Tree =============== //
-#{$tree} {
-    .rc-tree-treenode {
+#{$rcTree} {
+    .rc-tree-treenode:not(.rc-tree-treenode-selected) {
         &:hover {
             background-color: var(--list-hoverBackground);
             color: var(--list-hoverForeground);
-        }
-
-        .draggable {
-            color: var(--list-activeSelectionForeground);
         }
     }
 
@@ -30,5 +26,20 @@
     .rc-tree-treenode-active {
         background-color: var(--list-activeSelectionBackground);
         color: var(--list-activeSelectionForeground);
+    }
+
+    .rc-tree-treenode-selected {
+        background: var(--button-background);
+
+        .rc-tree-node-content-wrapper {
+            color: var(--list-activeSelectionForeground);
+        }
+    }
+
+    input {
+        background-color: var(--list-activeSelectionBackground);
+        border-width: 0;
+        color: inherit;
+        outline: 1px solid var(--button-background);
     }
 }

@@ -15,6 +15,7 @@ export interface IPanelItem<T = any> extends IActionBarItem {
 export interface IFolderTree {
     data?: ITreeNodeItem[];
     contextMenu?: IMenuItem[];
+    current?: ITreeNodeItem | null;
 }
 export interface IExplorer {
     data?: IPanelItem[];
@@ -75,6 +76,7 @@ export class IExplorerModel implements IExplorer {
     public data: IPanelItem[] = [];
     public folderTree: IFolderTree = {
         contextMenu: commonContextMenu,
+        current: null,
         data: [],
     };
     public headerToolBar: IActionBarItem[] = builtInHeaderToolbar;

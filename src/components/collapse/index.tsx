@@ -19,7 +19,7 @@ export interface ICollapseProps<T = any> {
 }
 
 interface IState {
-    activePanelKey: React.Key | React.Key[];
+    activePanelKeys: React.Key[];
 }
 const defaultCollapseClassName = prefixClaName('collapse');
 export const contentPaddingClassName = getBEMModifier(
@@ -28,15 +28,15 @@ export const contentPaddingClassName = getBEMModifier(
 );
 
 const initState = {
-    activePanelKey: '',
+    activePanelKeys: [],
 };
 const Collapse: React.FunctionComponent<ICollapseProps> = (
     props: ICollapseProps
 ) => {
     const [state, setState] = useState<IState>(initState);
     const { className, data = [], ...restProps } = props;
-    const onChangeCallback = (key: React.Key | React.Key[]) => {
-        setState((state: IState) => ({ ...state, activePanelKey: key }));
+    const onChangeCallback = (key: React.Key[]) => {
+        setState((state: IState) => ({ ...state, activePanelKeys: key }));
     };
     const onClick = (e, item) => {
         e.stopPropagation();
@@ -53,14 +53,13 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
             );
         }
     };
-    const { activePanelKey } = state;
+    const { activePanelKeys } = state;
     return (
         <div className={classNames(defaultCollapseClassName, className)}>
             <RcCollapse
                 {...restProps}
-                activeKey={activePanelKey}
-                onChange={(activeKey: React.Key | React.Key[]) => {
-                    onChangeCallback(activeKey);
+                onChange={(activeKeys: React.Key[]) => {
+                    onChangeCallback(activeKeys);
                 }}
                 expandIcon={({ isActive }: IExpandProps) => (
                     <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
@@ -71,7 +70,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
                         key={panel.id}
                         header={panel.name}
                         extra={
-                            activePanelKey === panel.id && (
+                            activePanelKeys?.includes(panel.id) && (
                                 <Toolbar
                                     key={panel.id}
                                     data={panel.toolbar}

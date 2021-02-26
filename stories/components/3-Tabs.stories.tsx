@@ -64,16 +64,16 @@ stories.add('Basic Usage', () => {
         let newActiveKey = activeTab;
         let lastIndex;
         tabs1.forEach((pane, i) => {
-            if (pane.key === targetKey) {
+            if (pane.id === targetKey) {
                 lastIndex = i - 1;
             }
         });
-        const newPanes = tabs1.filter((pane) => pane.key !== targetKey);
+        const newPanes = tabs1.filter((pane) => pane.id !== targetKey);
         if (newPanes.length && newActiveKey === targetKey) {
             if (lastIndex >= 0) {
-                newActiveKey = newPanes[lastIndex].key;
+                newActiveKey = newPanes[lastIndex].id;
             } else {
-                newActiveKey = newPanes[0]?.key;
+                newActiveKey = newPanes[0]?.id;
             }
         }
         setTabs1(newPanes);

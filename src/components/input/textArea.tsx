@@ -16,7 +16,7 @@ export interface TextAreaProps extends RcTextAreaProps {
 const textAreaClassName = getBEMElement(inputClassName, 'textarea');
 const showCountClassName = getBEMModifier(textAreaClassName, 'show-count');
 
-const TextArea = ({
+export const TextArea = ({
     showCount = false,
     maxLength,
     className,
@@ -92,4 +92,4 @@ const TextArea = ({
     return textArea;
 };
 
-export default TextArea;
+// export default TextArea;

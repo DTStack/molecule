@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames, prefixClaName, getBEMModifier } from 'mo/common/className';
 import { KeyCodes } from 'mo/common/keyCodes';
 
-import TextArea from './textArea';
+import { TextArea } from './textArea';
 
 type SizeType = 'normal' | 'large';
 export interface InputProps {
@@ -67,7 +67,7 @@ export interface InputState {
     prevValue: any;
 }
 
-class Input extends React.Component<InputProps, InputState> {
+export class Input extends React.Component<InputProps, InputState> {
     static TextArea: typeof TextArea;
 
     static defaultProps = {
@@ -152,5 +152,3 @@ class Input extends React.Component<InputProps, InputState> {
         );
     }
 }
-
-export default Input;

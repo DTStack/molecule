@@ -100,12 +100,17 @@ export class ExplorerController
                     id: 'new_file',
                     title: 'New File',
                     iconName: 'codicon-new-file',
-                    onClick: () => {},
+                    onClick: (e) => {
+                        this.createFile(e, 'newFile');
+                    },
                 },
                 {
                     id: 'new_folder',
                     title: 'New Folder',
                     iconName: 'codicon-new-folder',
+                    onClick: (e) => {
+                        this.createFile(e, 'newFolder');
+                    },
                 },
                 {
                     id: 'refresh',
@@ -150,6 +155,15 @@ export class ExplorerController
             outlinePanel,
         ]);
     }
+
+    private createFile = (e, type) => {
+        e.stopPropagation();
+        const explorerState = explorerService.getState();
+        const { data, current } = explorerState?.folderTree || {};
+        // The current selected node id or the first root node
+        const nodeId = current?.id || data?.[0]?.id;
+        explorerService[type]?.(nodeId);
+    };
 
     public readonly onClick = (event: React.MouseEvent) => {
         // console.log('onClick:', panelService);

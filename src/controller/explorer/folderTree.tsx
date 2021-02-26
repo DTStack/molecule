@@ -11,6 +11,7 @@ const confirm = Modal.confirm;
 
 export interface IFolderTreeController {
     readonly onSelectFile?: (file: ITreeNodeItem) => void;
+    readonly onSelectTree?: (id: number) => void;
     readonly onDropTree?: (treeNode: ITreeNodeItem[]) => void;
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
@@ -48,6 +49,10 @@ export class FolderTreeController
             breadcrumb: [{ id: `${file.id}`, name: 'editor.js' }],
         };
         editorService.open(tabData);
+    };
+
+    public onSelectTree = (id: number) => {
+        explorerService.setActive(id);
     };
 
     public readonly onDropTree = (treeNode: ITreeNodeItem[]) => {

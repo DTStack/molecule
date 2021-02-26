@@ -228,9 +228,10 @@ export interface IExplorerService extends Component<IExplorer> {
     getRootFolderByRootId(id: number): ITreeNodeItem | undefined;
     addRootFolder(folder?: ITreeNodeItem | ITreeNodeItem[]): void;
     removeRootFolder(id: number): void;
+    setActive(id: number): void;
     updateFile(file: ITreeNodeItem, callback?: Function): void;
     newFile(id?: number, callback?: Function): void;
-    newFolder(id: number, callback?: Function): void;
+    newFolder(id?: number, callback?: Function): void;
     rename(id: number, callback?: Function): void;
     delete(id: number, callback?: Function): void;
     onDropTree(treeData: ITreeNodeItem[]): void;
@@ -319,6 +320,23 @@ export class ExplorerService
         };
     }
 
+    private createTargetNodeById(
+        id: number,
+        treeInstance,
+        extra?: ITreeNodeItem
+    ) {
+        const currentIndex = treeInstance.getIndex(id);
+        // If the node type of the current id is a file, insert it at the parent node above it
+        if (currentIndex?.node?.fileType === FileTypes.file) {
+            treeInstance.prepend(
+                new TreeNodeModel(extra),
+                currentIndex?.parent
+            );
+        } else {
+            treeInstance.append(new TreeNodeModel(extra), id);
+        }
+    }
+
     public getRootFolderIndexByRootId(id: number): number | undefined {
         return this.state.folderTree?.data!.findIndex(
             (folder) => folder.id === id
@@ -362,6 +380,16 @@ export class ExplorerService
         }
         this.setState({
             folderTree: { ...folderTree, data: next },
+        });
+    }
+
+    public setActive(id: number) {
+        const { folderTree } = this.state;
+        const { currentRootFolder } = this.getCurrentRootFolderAndIndex(id);
+        const tree = new TreeView(currentRootFolder);
+        const currentNode = tree.get(id);
+        this.setState({
+            folderTree: { ...folderTree, current: currentNode },
         });
     }
 
@@ -421,14 +449,14 @@ export class ExplorerService
         if (callback) callback();
     }
 
-    public newFile(parentId: number, callback?: Function) {
+    public newFile(id: number, callback?: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
         const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
-            parentId
+            id
         );
         const tree = new TreeView(currentRootFolder);
-        if (!parentId) {
+        if (!id) {
             const tabData = {
                 id: `${Math.random() * 10 + 1}`,
                 name: `Untitled`,
@@ -438,12 +466,9 @@ export class ExplorerService
             };
             editorService.open(tabData);
         }
-        tree.append(
-            new TreeNodeModel({
-                modify: true,
-            }),
-            parentId
-        );
+        this.createTargetNodeById(id, tree, {
+            modify: true,
+        });
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
             folderTree: { ...folderTree, data: cloneData },
@@ -451,20 +476,17 @@ export class ExplorerService
         if (callback) callback();
     }
 
-    public newFolder(parentId, callback: Function) {
+    public newFolder(id, callback: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
         const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
-            parentId
+            id
         );
         const tree = new TreeView(currentRootFolder);
-        tree.append(
-            new TreeNodeModel({
-                fileType: FileTypes.folder as FileType,
-                modify: true,
-            }),
-            parentId
-        );
+        this.createTargetNodeById(id, tree, {
+            fileType: FileTypes.folder as FileType,
+            modify: true,
+        });
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
             folderTree: { ...folderTree, data: cloneData },

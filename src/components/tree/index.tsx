@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { memo } from 'react';
 import RcTree, { TreeNode as RcTreeNode } from 'rc-tree';
 import { DataNode, IconType, Key, EventDataNode } from 'rc-tree/lib/interface';
@@ -51,11 +52,11 @@ export interface ITreeProps {
     expandedKeys?: Key[];
     defaultCheckedKeys?: Key[];
     checkedKeys?:
-        | Key[]
-        | {
-              checked: Key[];
-              halfChecked: Key[];
-          };
+    | Key[]
+    | {
+        checked: Key[];
+        halfChecked: Key[];
+    };
     defaultSelectedKeys?: Key[];
     selectedKeys?: Key[];
     titleRender?: (node: DataNode) => React.ReactNode;
@@ -119,6 +120,7 @@ export interface ITreeProps {
 
     data?: ITreeNodeItem[];
     onSelectFile?: (IMenuItem) => void;
+    onSelectTree?: (id) => void;
     renderTitle?: (node, index) => React.ReactDOM | string;
     onDropTree?(treeNode): void;
 }
@@ -129,9 +131,16 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         draggable,
         onDropTree,
         onRightClick,
+        onSelectTree,
         renderTitle, // custom title
         ...restProps
     } = props;
+    const [expandedKeys, setExpandedKeys] = useState([]);
+    const onExpand = (expandedKeys) => {
+        console.log('onExpand', expandedKeys);
+        setExpandedKeys(expandedKeys);
+    };
+
     const onDrop = (info) => {
         if (!draggable) return;
         console.log(info);
@@ -218,12 +227,15 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     draggable={draggable}
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
+                    expandedKeys={expandedKeys}
+                    onExpand={onExpand}
                     onSelect={(selectedKeys, e: any) => {
                         const { fileType, modify } = e.node.data;
                         const isFile = fileType === FileTypes.file;
                         if (isFile && !modify && props.onSelectFile) {
                             props.onSelectFile(e.node.data);
                         }
+                        onSelectTree?.(e.node?.data?.id);
                     }}
                     onRightClick={onRightClick}
                     {...restProps}

@@ -23,7 +23,7 @@ export interface ITab<T, P = any> {
     name?: string;
     label?: React.ReactNode;
     tip?: string | React.ReactNode;
-    renderPanel?: (item: P) => ReactNode | ReactNode;
+    renderPanel?: ((item: P) => ReactNode) | ReactNode;
     data?: T;
 }
 

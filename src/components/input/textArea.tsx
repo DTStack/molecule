@@ -91,5 +91,3 @@ export const TextArea = ({
     }
     return textArea;
 };
-
-// export default TextArea;

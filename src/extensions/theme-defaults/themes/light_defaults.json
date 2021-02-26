@@ -19,7 +19,13 @@
         "statusBarItem.remoteForeground": "#FFF",
         "statusBarItem.remoteBackground": "#16825D",
         "sidebarSectionHeader.background": "#0000",
-        "sidebarSectionHeader.border": "#61616130"
+        "sidebarSectionHeader.border": "#61616130",
+        "tabHeader.border": "#333",
+        "tabItem.background": "rgb(236, 236, 236)",
+        "tabItem.foreground": "rgba(51, 51, 51, 0.7)",
+        "tabItem.border": "rgb(243, 243, 243)",
+        "tabItem.activeBackground": "rgb(255, 255, 255)",
+        "tabItem.activeForeground": "rgb(51, 51, 51)"
     },
     "semanticHighlighting": true
 }

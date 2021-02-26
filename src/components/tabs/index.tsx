@@ -14,6 +14,7 @@ import DragAndDrop from './dragAndDrop';
 
 export type TabsType = 'line' | 'card';
 export interface ITabs<T> extends React.ComponentProps<any> {
+    className?: string;
     closable?: boolean;
     data?: ITab<T>[];
     activeTab?: string;
@@ -33,13 +34,13 @@ export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close');
 export function Tabs<T>(props: ITabs<T>) {
     const {
         activeTab,
+        className,
         data = [],
         type = 'line',
         style,
         onMoveTab,
         ...resetProps
     } = props;
-
     const onChangeTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
@@ -61,7 +62,8 @@ export function Tabs<T>(props: ITabs<T>) {
                 style={style}
                 className={classNames(
                     tabsClassName,
-                    getBEMModifier(tabsClassName, type as string)
+                    getBEMModifier(tabsClassName, type as string),
+                    className
                 )}
             >
                 <div className={tabsHeader}>

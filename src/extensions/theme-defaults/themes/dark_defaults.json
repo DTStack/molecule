@@ -8,6 +8,7 @@
         "editorIndentGuide.background": "#404040",
         "editorIndentGuide.activeBackground": "#707070",
         "editor.selectionHighlightBackground": "#ADD6FF26",
+        "editorGroupHeader.tabsBackground": "rgb(37, 37, 38)",
         "list.dropBackground": "#383B3D",
         "activityBarBadge.background": "#007ACC",
         "sidebarTitle.foreground": "#BBBBBB",
@@ -19,7 +20,13 @@
         "statusBarItem.remoteForeground": "#FFF",
         "statusBarItem.remoteBackground": "#16825D",
         "sidebarSectionHeader.background": "#0000",
-        "sidebarSectionHeader.border": "#ccc3"
+        "sidebarSectionHeader.border": "#ccc3",
+        "tabHeader.border": "#333",
+        "tabItem.background": "rgb(45, 45, 45)",
+        "tabItem.foreground": "rgba(255, 255, 255, 0.5)",
+        "tabItem.border": "rgb(37, 37, 38)",
+        "tabItem.activeBackground": "rgb(30, 30, 30)",
+        "tabItem.activeForeground": "rgb(255, 255, 255)"
     },
     "semanticHighlighting": true
 }

@@ -73,11 +73,25 @@ export class EditorService
         if (index > -1) {
             const nextGroup = nextGroups[index];
             const tabIndex = nextGroup.data!.findIndex(searchById(tabId));
+            const activeTab = tabId === nextGroup.activeTab;
             if (nextGroup.data!.length === 1 && tabIndex === 0) {
                 nextGroups.splice(index, 1);
-            } else if (tabIndex > -1) {
-                nextGroup.data!.splice(tabIndex, 1);
+                this.setState({
+                    groups: nextGroups,
+                });
+                return;
             }
+            if (tabIndex === -1) return;
+            if (activeTab) {
+                const nextTab =
+                    nextGroup.data![tabIndex + 1] ||
+                    nextGroup.data![tabIndex - 1];
+                this.setActive(groupId, nextTab.id!);
+                nextGroup?.editorInstance.setValue(nextTab.data.value);
+                nextGroup.data!.splice(tabIndex, 1);
+                return;
+            }
+            nextGroup.data!.splice(tabIndex, 1);
             this.setState({
                 groups: nextGroups,
             });
@@ -85,17 +99,18 @@ export class EditorService
     }
 
     public getGroupById(id: number): IEditorGroup | undefined {
-        return this.state.groups!.find((group) => group.id === id);
+        const { groups } = this.state;
+        return groups!.find((group) => group.id === id);
     }
 
     public getGroupIndexById(id: number): number {
-        return this.state.groups!.findIndex((group) => group.id === id);
+        const { groups } = this.state;
+        return groups!.findIndex((group) => group.id === id);
     }
 
     public setActive(groupId: number, tabId: string) {
         const { groups = [] } = this.state;
-        const groupIndex = groups.findIndex((group) => group.id === groupId);
-
+        const groupIndex = this.getGroupIndexById(groupId);
         if (groupIndex > -1) {
             const nextGroups = [...groups];
             const group = nextGroups[groupIndex];
@@ -115,27 +130,41 @@ export class EditorService
 
     public updateGroup(groupId: number, groupValues: IEditorGroup) {
         const { groups = [] } = this.state;
-        const index = this.getGroupIndexById(groupId);
-        if (index > -1) {
-            const group = Object.assign({}, groups[index], groupValues);
-            groups[index] = group;
+        const groupIndex = this.getGroupIndexById(groupId);
+        if (groupIndex > -1) {
+            const group = Object.assign({}, groups[groupIndex], groupValues);
+            groups[groupIndex] = group;
             this.render();
         }
     }
 
-    public open<T>(tab: IEditorTab<T>, groupId?: number) {
+    public open<T>(tab: IEditorTab<any>, groupId: number) {
         const { current, groups = [] } = this.state;
         let group: IEditorGroup | null | undefined = current;
         if (groupId) {
             group = this.getGroupById(groupId);
         }
         if (group) {
-            group.data!.push(tab);
-            group.current = tab;
+            const {
+                id: tabId,
+                data: { value },
+            } = tab;
+            const isExist = group?.data!.find(
+                (tab: IEditorTab) => tab.id === tabId
+            );
+            const groupIndex = this.getGroupIndexById(group.id!);
+            if (isExist && tabId === group?.activeTab) return;
+            const currentGroup = groups[groupIndex];
+            if (!isExist) group.data!.push(tab);
+            group.tab = tab;
+            group.activeTab = tabId;
+            groups[groupIndex] = { ...currentGroup, tab };
+            currentGroup?.editorInstance.setValue(value!);
         } else {
             group = new EditorGroupModel(groups.length + 1, tab, [tab]);
             groups.push(group);
         }
+
         this.setState({
             current: group,
             groups: [...groups],
@@ -144,7 +173,7 @@ export class EditorService
 
     public closeAll(groupId: number) {
         const { current, groups = [] } = this.state;
-        const groupIndex = groups.findIndex((group) => group.id === groupId);
+        const groupIndex = this.getGroupIndexById(groupId);
         if (groupIndex > -1) {
             const nextGroups = [...groups];
             let nextCurrentGroup = current;

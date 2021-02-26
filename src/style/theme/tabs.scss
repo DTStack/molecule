@@ -1,26 +1,38 @@
 @import 'mo/style/common';
 
 // =============== Editor Tabs =============== //
-#{prefix($tabSwitcher)} {
+#{$tabs} {
     background-color: var(--editorGroupHeader-tabsBackground);
 
-    .tab-button {
-        color: var(--foreground);
+    &__content {
+        color: var(--tabItem-foreground);
+    }
 
-        &__dot {
-            &::after {
-                background-color: var(--tab-activeBackground);
-                color: var(--tab-activeForeground);
+    &--line {
+        border-bottom: 1px solid var(--tabHeader-border);
+    }
+
+    #{$tab} {
+        &__item {
+            background: var(--tabItem-background);
+            border-right: 1px solid var(--tabItem-border);
+            color: var(--tabItem-foreground);
+
+            &__op {
+                &__dot::after {
+                    background: var(--tabItem-activeForeground);
+                }
             }
-        }
 
-        &:hover {
-            background-color: var(--tab-activeBackground);
-            color: var(--tab-activeForeground);
-        }
+            &--active {
+                background: var(--tabItem-activeBackground);
+                border-bottom-color: var(--tabItem-activeForeground);
+                color: var(--tabItem-activeForeground);
+            }
 
-        &__close {
-            fill: var(--tab-activeBackground);
+            &--close {
+                color: var(--tabItem-activeForeground);
+            }
         }
     }
 }

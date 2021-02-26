@@ -9,34 +9,34 @@ stories.addDecorator(withKnobs);
 stories.add('Basic Usage', () => {
     const userSetting = [
         {
-            key: '1',
+            id: '1',
             label: 'User',
             renderPanel: 'this is user',
         },
         {
-            key: '2',
+            id: '2',
             label: 'workSpace',
             renderPanel: 'this is a workSpace',
         },
     ];
     const tabArr = [
         {
-            key: '1',
+            id: '1',
             label: 'Tab1',
             renderPanel: 'this is tab1',
         },
         {
-            key: '2',
+            id: '2',
             label: 'Tab2',
             renderPanel: 'this is a tab2',
         },
         {
-            key: '3',
+            id: '3',
             label: 'Tab3',
             renderPanel: 'this is a tab3',
         },
         {
-            key: '4',
+            id: '4',
             label: 'Tab4',
             renderPanel: 'this is a tab4',
         },
@@ -64,16 +64,16 @@ stories.add('Basic Usage', () => {
         let newActiveKey = activeTab;
         let lastIndex;
         tabs1.forEach((pane, i) => {
-            if (pane.key === targetKey) {
+            if (pane.id === targetKey) {
                 lastIndex = i - 1;
             }
         });
-        const newPanes = tabs1.filter((pane) => pane.key !== targetKey);
+        const newPanes = tabs1.filter((pane) => pane.id !== targetKey);
         if (newPanes.length && newActiveKey === targetKey) {
             if (lastIndex >= 0) {
-                newActiveKey = newPanes[lastIndex].key;
+                newActiveKey = newPanes[lastIndex].id;
             } else {
-                newActiveKey = newPanes[0]?.key;
+                newActiveKey = newPanes[0]?.id;
             }
         }
         setTabs1(newPanes);

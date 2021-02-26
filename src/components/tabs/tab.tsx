@@ -15,7 +15,7 @@ import {
     prefixClaName,
 } from 'mo/common/className';
 import TabDot from './tabDot';
-export interface ITab<T> {
+export interface ITab<T, P = any> {
     active?: boolean;
     closable?: boolean;
     index?: number;
@@ -23,7 +23,7 @@ export interface ITab<T> {
     name?: string;
     label?: React.ReactNode;
     tip?: string | React.ReactNode;
-    renderPanel?: ReactNode;
+    renderPanel?: ((item: P) => ReactNode) | ReactNode;
     data?: T;
 }
 

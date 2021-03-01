@@ -4,6 +4,7 @@ import { Controller } from 'mo/react/controller';
 import { panelService } from 'mo/services';
 import { singleton } from 'tsyringe';
 import {
+    PanelEvent,
     PANEL_TOOLBOX_CLOSE,
     PANEL_TOOLBOX_RESIZE,
 } from 'mo/model/workbench/panel';
@@ -19,13 +20,14 @@ export class PanelController extends Controller implements IPanelController {
         super();
     }
 
-    public readonly onTabChange = (key: string): void => {
+    public readonly onTabChange = (key: string | undefined): void => {
         const state = panelService.getState();
         if (key) {
             panelService.setState({
                 current: state.data?.find((item) => item.id === key),
             });
         }
+        this.emit(PanelEvent.onTabChange, key);
     };
 
     public readonly onToolbarClick = (
@@ -37,5 +39,6 @@ export class PanelController extends Controller implements IPanelController {
         } else if (item.id === PANEL_TOOLBOX_RESIZE.id) {
             panelService.maximizeRestore();
         }
+        this.emit(PanelEvent.onToolbarClick, e, item);
     };
 }

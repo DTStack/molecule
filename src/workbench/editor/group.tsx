@@ -68,7 +68,7 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                             style={{ overflow: 'hidden' }}
                             onSelectTab={onSelectTab}
                             onContextMenu={handleTabContextMenu}
-                            activeTab={tab.id}
+                            activeTab={isActiveGroup ? tab.id : ''}
                             onCloseTab={onCloseTab}
                         />
                     </Scrollable>

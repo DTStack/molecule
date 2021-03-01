@@ -8,6 +8,7 @@ import { editorLineColumnItem } from './statusBar';
 
 export interface IEditorController {
     groupSplitPos?: string[];
+    open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
     onCloseAll?: (group: number) => void;
     onCloseTab?: (tabKey: string, group: number) => void;
     onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: number) => void;
@@ -29,14 +30,25 @@ export class EditorController extends Controller implements IEditorController {
         super();
     }
 
+    public open<T>(tab: IEditorTab<any>, groupId: number){
+        editorService.open<T>(tab, groupId)
+        this.updateCurrentValue()
+    }
+
     public onCloseAll = (groupId: number) => {
         editorService.closeAll(groupId);
         this.emit(EditorEvent.OnCloseAll, groupId);
     };
 
+    public updateCurrentValue = () => {
+        const { current } = editorService.getState()
+        const newValue = current?.tab?.data?.value
+        if (newValue) current?.editorInstance.setValue(newValue)
+    }
     public onCloseTab = (tabKey?: string, groupId?: number) => {
         if (tabKey && groupId) {
             editorService.closeTab(tabKey, groupId);
+            this.updateCurrentValue()
             this.emit(EditorEvent.OnCloseTab, tabKey, groupId);
         }
     };
@@ -50,8 +62,7 @@ export class EditorController extends Controller implements IEditorController {
 
     public onSelectTab = (tabKey: string, groupId: number) => {
         editorService.setActive(groupId, tabKey);
-        const { current } = editorService.getState();
-        current?.editorInstance.setValue(current.tab?.data.value);
+        this.updateCurrentValue()
         this.emit(EditorEvent.OnSelectTab, tabKey, groupId);
     };
 
@@ -84,39 +95,48 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance: IStandaloneCodeEditor,
         groupId: number
     ) {
-        if (editorInstance) {
-            editorInstance.onDidChangeModelContent((event: any) => {
-                const newValue = editorInstance.getValue();
-                const { current } = editorService.getState();
-                const tab = current?.tab;
-                if (tab) {
-                    editorService.updateTab(
-                        {
-                            id: tab.id,
-                            data: {
-                                ...tab.data,
-                                value: newValue,
-                            },
-                            modified: true,
-                        },
-                        groupId
-                    );
-                    this.updateStatusBar(editorInstance);
-                }
-            });
+        if (!editorInstance) return
+        
+        editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, () => {
+            const { current } = editorService.getState();
+            const tab = current?.tab;
+            editorService.updateTab({
+                id: tab?.id,
+                modified: false
+            }, groupId)
+        })
 
-            editorInstance.onDidFocusEditorText(() => {
-                const group = editorService.getGroupById(groupId);
-                if (group?.tab!.id) {
-                    editorService.setActive(groupId, group.tab.id);
-                    this.updateEditorLineColumnInfo(editorInstance);
-                }
-            });
+        editorInstance.onDidChangeModelContent((event: any) => {
+            const newValue = editorInstance.getValue();
+            const { current } = editorService.getState();
+            const tab = current?.tab
+            if (!tab) return
+            const notSave = newValue !== tab?.data?.value
+            editorService.updateTab(
+                {
+                    id: tab.id,
+                    data: {
+                        ...tab.data,
+                        value: newValue,
+                    },
+                    modified: notSave,
+                },
+                groupId
+            );
+            this.updateStatusBar(editorInstance);
+        });
 
-            editorInstance.onDidChangeCursorSelection(() => {
+        editorInstance.onDidFocusEditorText(() => {
+            const group = editorService.getGroupById(groupId);
+            if (group?.tab!.id) {
+                editorService.setActive(groupId, group.tab.id);
                 this.updateEditorLineColumnInfo(editorInstance);
-            });
-        }
+            }
+        });
+
+        editorInstance.onDidChangeCursorSelection(() => {
+            this.updateEditorLineColumnInfo(editorInstance);
+        });
     }
 
     private updateStatusBar(editorInstance: IStandaloneCodeEditor) {

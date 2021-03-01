@@ -14,23 +14,22 @@ export interface IPanelItem<T = any> extends ITab<any> {
 }
 
 export enum PanelEvent {
-    onClick = 'panel.onClick',
+    onTabChange = 'panel.onTabChange',
+    onToolbarClick = 'panel.onToolbarClick',
 }
 
 export const PANEL_PROBLEMS: IPanelItem = {
     id: 'ProblemsPane',
     name: 'problems',
-    renderPanel: 'Problems',
     data: null,
-    render: (item) => <Problems {...item} />,
+    renderPanel: (item) => <Problems {...item} />,
 };
 
 export const PANEL_OUTPUT: IPanelItem = {
     id: 'OutputPane',
     name: 'output',
-    renderPanel: 'output',
     data: 'output',
-    render: (item) => <Output {...item} />,
+    renderPanel: (item) => <Output {...item} />,
 };
 
 export const PANEL_TOOLBOX_CLOSE = {

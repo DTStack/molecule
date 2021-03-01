@@ -3,6 +3,7 @@ import { singleton, container } from 'tsyringe';
 import {
     IPanel,
     IPanelItem,
+    PanelEvent,
     PanelModel,
     PANEL_OUTPUT,
     PANEL_PROBLEMS,
@@ -10,6 +11,7 @@ import {
 } from 'mo/model/workbench/panel';
 
 import { searchById } from '../helper';
+import { IActionBarItem } from 'mo/components/actionBar';
 export interface IPanelService extends Component<IPanel> {
     open(data: IPanelItem): void;
     getById(id: string): IPanelItem | undefined;
@@ -23,6 +25,10 @@ export interface IPanelService extends Component<IPanel> {
     clearProblems(): void;
     showHide(): void;
     maximizeRestore(): void;
+    onTabChange(callback: (key: string) => void): void;
+    onToolbarClick(
+        callback: (e: React.MouseEvent, item: IActionBarItem) => void
+    ): void;
 }
 
 @singleton()
@@ -137,5 +143,15 @@ export class PanelService extends Component<IPanel> implements IPanelService {
             return result[0];
         }
         return undefined;
+    }
+
+    public onTabChange(callback: (key: string) => void) {
+        this.subscribe(PanelEvent.onTabChange, callback);
+    }
+
+    public onToolbarClick(
+        callback: (e: React.MouseEvent, item: IActionBarItem) => void
+    ) {
+        this.subscribe(PanelEvent.onToolbarClick, callback);
     }
 }

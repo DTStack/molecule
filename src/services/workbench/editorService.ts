@@ -70,31 +70,33 @@ export class EditorService
         const { groups = [] } = this.state;
         const nextGroups = [...groups];
         const groupIndex = this.getGroupIndexById(groupId);
-        if (groupIndex <= -1) return
+        if (groupIndex <= -1) return;
         const nextGroup = nextGroups[groupIndex];
         const tabIndex = nextGroup.data!.findIndex(searchById(tabId));
         const activeTab = tabId === nextGroup.activeTab;
         if (nextGroup.data!.length === 1 && tabIndex === 0) {
-            const activeGroup = nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1] 
+            const activeGroup =
+                nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1];
             nextGroups.splice(groupIndex, 1);
             this.setState({
                 groups: nextGroups,
-                current: nextGroups?.length === 0 ? undefined : activeGroup
+                current: nextGroups?.length === 0 ? undefined : activeGroup,
             });
             return;
         }
         if (tabIndex === -1) return;
         if (activeTab) {
-            const nextTab = nextGroup.data![tabIndex + 1] || nextGroup.data![tabIndex - 1];
+            const nextTab =
+                nextGroup.data![tabIndex + 1] || nextGroup.data![tabIndex - 1];
             nextGroup?.editorInstance.setValue(nextTab.data.value);
-            nextGroup.tab = {...nextTab};
+            nextGroup.tab = { ...nextTab };
             nextGroup.activeTab = nextTab?.id;
         }
         nextGroup.data!.splice(tabIndex, 1);
         nextGroups[groupIndex] = nextGroup;
         this.setState({
             current: nextGroup,
-            groups: nextGroups
+            groups: nextGroups,
         });
     }
 
@@ -161,7 +163,7 @@ export class EditorService
             group = new EditorGroupModel(groups.length + 1, tab, [tab]);
             groups.push(group);
         }
-      this.setState({
+        this.setState({
             current: group,
             groups: [...groups],
         });

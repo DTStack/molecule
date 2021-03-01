@@ -16,6 +16,7 @@ function Output(props: IPanelItem) {
                     readOnly: true,
                     lineDecorationsWidth: 0,
                     lineNumbers: 'off',
+                    minimap: undefined,
                     automaticLayout: true,
                 }}
             />

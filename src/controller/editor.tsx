@@ -30,9 +30,9 @@ export class EditorController extends Controller implements IEditorController {
         super();
     }
 
-    public open<T>(tab: IEditorTab<any>, groupId: number){
-        editorService.open<T>(tab, groupId)
-        this.updateCurrentValue()
+    public open<T>(tab: IEditorTab<any>, groupId: number) {
+        editorService.open<T>(tab, groupId);
+        this.updateCurrentValue();
     }
 
     public onCloseAll = (groupId: number) => {
@@ -41,14 +41,14 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     public updateCurrentValue = () => {
-        const { current } = editorService.getState()
-        const newValue = current?.tab?.data?.value
-        if (newValue) current?.editorInstance.setValue(newValue)
-    }
+        const { current } = editorService.getState();
+        const newValue = current?.tab?.data?.value;
+        if (newValue) current?.editorInstance.setValue(newValue);
+    };
     public onCloseTab = (tabKey?: string, groupId?: number) => {
         if (tabKey && groupId) {
             editorService.closeTab(tabKey, groupId);
-            this.updateCurrentValue()
+            this.updateCurrentValue();
             this.emit(EditorEvent.OnCloseTab, tabKey, groupId);
         }
     };
@@ -62,7 +62,7 @@ export class EditorController extends Controller implements IEditorController {
 
     public onSelectTab = (tabKey: string, groupId: number) => {
         editorService.setActive(groupId, tabKey);
-        this.updateCurrentValue()
+        this.updateCurrentValue();
         this.emit(EditorEvent.OnSelectTab, tabKey, groupId);
     };
 
@@ -95,23 +95,29 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance: IStandaloneCodeEditor,
         groupId: number
     ) {
-        if (!editorInstance) return
-        
-        editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, () => {
-            const { current } = editorService.getState();
-            const tab = current?.tab;
-            editorService.updateTab({
-                id: tab?.id,
-                modified: false
-            }, groupId)
-        })
+        if (!editorInstance) return;
+
+        editorInstance.addCommand(
+            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
+            () => {
+                const { current } = editorService.getState();
+                const tab = current?.tab;
+                editorService.updateTab(
+                    {
+                        id: tab?.id,
+                        modified: false,
+                    },
+                    groupId
+                );
+            }
+        );
 
         editorInstance.onDidChangeModelContent((event: any) => {
             const newValue = editorInstance.getValue();
             const { current } = editorService.getState();
-            const tab = current?.tab
-            if (!tab) return
-            const notSave = newValue !== tab?.data?.value
+            const tab = current?.tab;
+            if (!tab) return;
+            const notSave = newValue !== tab?.data?.value;
             editorService.updateTab(
                 {
                     id: tab.id,

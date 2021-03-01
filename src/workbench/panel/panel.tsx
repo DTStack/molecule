@@ -20,6 +20,11 @@ function Panel(props: IPanel & IPanelController) {
         toolboxData = current.toolbox.concat(toolbox);
     }
 
+    const content =
+        typeof current?.renderPanel === 'function'
+            ? current?.renderPanel?.(current)
+            : current?.renderPanel;
+
     return (
         <div className={defaultClassName}>
             <div className={panelHeaderClassName}>
@@ -30,9 +35,7 @@ function Panel(props: IPanel & IPanelController) {
                     onClick={onToolbarClick}
                 />
             </div>
-            <div className={panelContainerClassName}>
-                {current?.render?.(current)}
-            </div>
+            <div className={panelContainerClassName}>{content}</div>
         </div>
     );
 }

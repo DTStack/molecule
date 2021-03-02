@@ -61,7 +61,6 @@ export default class TestPane extends React.Component {
             panelService.open({
                 id: 'Pane' + id,
                 name: 'Panel' + id,
-                label: 'test',
                 render: () => <h1>Test Pane</h1>,
             });
         };
@@ -83,7 +82,7 @@ export type GenericClassDecorator<T> = (target: T) => void;
                     path: 'desktop/molecule/editor1',
                     language: 'typescript',
                 },
-                breadcrumb: [{ id: `${key}`, name: `editor.ts`}],
+                breadcrumb: [{ id: `${key}`, name: `editor.ts` }],
             };
             console.log('open editor:', tabData);
             editorService.open(tabData);

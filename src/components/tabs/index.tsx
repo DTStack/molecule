@@ -71,6 +71,7 @@ export function Tabs<T>(props: ITabs<T>) {
                     {data?.map((tab: ITab<T>, index: number) => {
                         return (
                             <Tab
+                                id={tab.id}
                                 key={tab.id}
                                 active={activeTab === tab.id}
                                 index={index}

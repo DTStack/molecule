@@ -37,6 +37,7 @@ export const tabItemClassName = getBEMElement(tabClassName, 'item');
 export function Tab<T>(props: ITab & ITabEvent) {
     const {
         active,
+        name,
         closable,
         editable,
         data,

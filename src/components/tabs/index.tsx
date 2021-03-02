@@ -68,14 +68,13 @@ export function Tabs<T>(props: ITabs<T>) {
             >
                 <div className={tabsHeader}>
                     {data?.map((tab: ITab<T>, index: number) => {
-                        // TODO 这里 tab 直接继承 tabs Props 的方式，需要重构
                         return (
                             <Tab
+                                activeTab={activeTab}
+                                // active={ === tab.id}
                                 key={tab.id}
-                                active={activeTab === tab.id}
-                                index={index}
+                                tab={tab}
                                 onMoveTab={onChangeTab}
-                                {...tab}
                                 {...resetProps}
                             ></Tab>
                         );

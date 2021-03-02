@@ -27,6 +27,11 @@ export interface ITab<T, P = any> {
     data?: T;
 }
 
+export interface ITabProps<T> {
+    activeTab?: string;
+    key?: number | string;
+    tab: ITab<T>
+}
 export interface ITabEvent {
     onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
     onCloseTab?: (key?: string) => void;
@@ -36,14 +41,11 @@ export interface ITabEvent {
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
 
-export function Tab<T>(props: ITab<T> & ITabEvent) {
+export function Tab<T>(props: ITabProps<T> & ITabEvent) {
     const {
-        closable,
-        index,
-        id,
-        active,
-        label,
-        name,
+        activeTab,
+        tab,
+        tab: { id, index, closable, name, label},
         onCloseTab,
         onMoveTab,
         onSelectTab,
@@ -55,9 +57,10 @@ export function Tab<T>(props: ITab<T> & ITabEvent) {
     const [hover, setHover] = useState(false);
     const handleMouseOver = () => setHover(true);
     const handleMouseOut = () => setHover(false);
+    const active = activeTab === id
     const handleOnContextMenu = useCallback(
         (event: React.MouseEvent) => {
-            onContextMenu?.(event, props);
+            onContextMenu?.(event, tab);
         },
         [props]
     );

@@ -15,8 +15,6 @@ import {
     prefixClaName,
 } from 'mo/common/className';
 import TabExtra from './tabExtra';
-
-export type TabStatus = 'closable' | 'modifier';
 export interface ITab<T = any, P = any> {
     active?: boolean;
     closable?: boolean;

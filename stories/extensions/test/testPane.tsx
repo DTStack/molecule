@@ -74,13 +74,13 @@ export default class TestPane extends React.Component {
             const tabData: IEditorTab = {
                 id: `${key}`,
                 name: `editor.ts`,
-                modified: false,
                 data: {
                     value: `export interface Type<T> { new(...args: any[]): T;}
 export type GenericClassDecorator<T> = (target: T) => void;
                     `,
                     path: 'desktop/molecule/editor1',
                     language: 'typescript',
+                    modified: false
                 },
                 breadcrumb: [{ id: `${key}`, name: `editor.ts` }],
             };

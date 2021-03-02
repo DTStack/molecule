@@ -14,21 +14,18 @@ import {
     getBEMModifier,
     prefixClaName,
 } from 'mo/common/className';
-import TabDot from './tabDot';
+import TabExtra from './tabExtra';
+
+export type TabStatus = 'closable' | 'modifier';
 export interface ITab<T = any, P = any> {
+    active?: boolean;
+    closable?: boolean;
+    editable?: boolean;
+    index?: number;
     id?: string;
     name?: string;
-    tip?: string | React.ReactNode;
     renderPanel?: ((item: P) => ReactNode) | ReactNode;
     data?: T;
-}
-
-export interface ITabProps {
-    activeTab?: string;
-    closable?: boolean;
-    index?: number;
-    key?: number | string;
-    tab: ITab;
 }
 export interface ITabEvent {
     onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
@@ -39,13 +36,14 @@ export interface ITabEvent {
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
 
-export function Tab<T>(props: ITabProps & ITabEvent) {
+export function Tab<T>(props: ITab & ITabEvent) {
     const {
-        activeTab,
+        active,
         closable,
+        editable,
+        data,
+        id,
         index,
-        tab,
-        tab: { id, name, data },
         onCloseTab,
         onMoveTab,
         onSelectTab,
@@ -57,10 +55,9 @@ export function Tab<T>(props: ITabProps & ITabEvent) {
     const [hover, setHover] = useState(false);
     const handleMouseOver = () => setHover(true);
     const handleMouseOut = () => setHover(false);
-    const active = activeTab === id;
     const handleOnContextMenu = useCallback(
         (event: React.MouseEvent) => {
-            onContextMenu?.(event, tab);
+            onContextMenu?.(event, props);
         },
         [props]
     );
@@ -121,13 +118,22 @@ export function Tab<T>(props: ITabProps & ITabEvent) {
             onContextMenu={handleOnContextMenu}
         >
             {name}
-            {closable && (
-                <TabDot
+            {editable && (
+                <TabExtra
                     classNames={getBEMElement(tabItemClassName, 'op')}
                     active={active}
                     buttonHover={hover}
                     onClick={(e) => onCloseTab?.(id)}
                     modified={data?.modified || false}
+                    {...resetProps}
+                />
+            )}
+            {closable && (
+                <TabExtra
+                    classNames={getBEMElement(tabItemClassName, 'op')}
+                    active={active}
+                    buttonHover={hover}
+                    onClick={(e) => onCloseTab?.(id)}
                     {...resetProps}
                 />
             )}

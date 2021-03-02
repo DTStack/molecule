@@ -16,6 +16,7 @@ export type TabsType = 'line' | 'card';
 export interface ITabs<T> extends React.ComponentProps<any> {
     className?: string;
     closable?: boolean;
+    editable?: boolean;
     data?: ITab<T>[];
     activeTab?: string;
     type?: TabsType;
@@ -70,10 +71,11 @@ export function Tabs<T>(props: ITabs<T>) {
                     {data?.map((tab: ITab<T>, index: number) => {
                         return (
                             <Tab
-                                activeTab={activeTab}
-                                index={index}
                                 key={tab.id}
-                                tab={tab}
+                                active={activeTab === tab.id}
+                                index={index}
+                                name={tab.name}
+                                data={tab.data}
                                 onMoveTab={onChangeTab}
                                 {...resetProps}
                             />

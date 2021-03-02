@@ -97,24 +97,6 @@ export class EditorController extends Controller implements IEditorController {
     ) {
         if (!editorInstance) return;
 
-        editorInstance.addCommand(
-            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
-            () => {
-                const { current } = editorService.getState();
-                const tab = current?.tab;
-                editorService.updateTab(
-                    {
-                        id: tab?.id,
-                        data: {
-                            ...tab?.data,
-                            modified: false,
-                        },
-                    },
-                    groupId
-                );
-            }
-        );
-
         editorInstance.onDidChangeModelContent((event: any) => {
             const newValue = editorInstance.getValue();
             const { current } = editorService.getState();

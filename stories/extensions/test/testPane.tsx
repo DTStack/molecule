@@ -61,7 +61,6 @@ export default class TestPane extends React.Component {
             panelService.open({
                 id: 'Pane' + id,
                 name: 'Panel' + id,
-                label: 'test',
                 render: () => <h1>Test Pane</h1>,
             });
         };

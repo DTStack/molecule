@@ -432,7 +432,9 @@ export class ExplorerService
             const tabData = {
                 id: `${Math.random() * 10 + 1}`,
                 name: `Untitled`,
-                modified: false,
+                data: {
+                    modified: false
+                }
             };
             editorService.open(tabData);
         }

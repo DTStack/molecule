@@ -105,7 +105,10 @@ export class EditorController extends Controller implements IEditorController {
                 editorService.updateTab(
                     {
                         id: tab?.id,
-                        modified: false,
+                        data: {
+                            ...tab?.data,
+                            modified: false
+                        }
                     },
                     groupId
                 );
@@ -123,9 +126,9 @@ export class EditorController extends Controller implements IEditorController {
                     id: tab.id,
                     data: {
                         ...tab.data,
+                        modified: notSave,
                         value: newValue,
-                    },
-                    modified: notSave,
+                    }
                 },
                 groupId
             );

@@ -71,11 +71,12 @@ export function Tabs<T>(props: ITabs<T>) {
                         return (
                             <Tab
                                 activeTab={activeTab}
+                                index={index}
                                 key={tab.id}
                                 tab={tab}
                                 onMoveTab={onChangeTab}
                                 {...resetProps}
-                            ></Tab>
+                            />
                         );
                     })}
                 </div>

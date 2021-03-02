@@ -15,22 +15,20 @@ import {
     prefixClaName,
 } from 'mo/common/className';
 import TabDot from './tabDot';
-export interface ITab<T, P = any> {
-    active?: boolean;
-    closable?: boolean;
-    index?: number;
+export interface ITab<T = any, P = any> {
     id?: string;
     name?: string;
-    label?: React.ReactNode;
     tip?: string | React.ReactNode;
     renderPanel?: ((item: P) => ReactNode) | ReactNode;
     data?: T;
 }
 
-export interface ITabProps<T> {
+export interface ITabProps {
     activeTab?: string;
+    closable?: boolean;
+    index?: number;
     key?: number | string;
-    tab: ITab<T>;
+    tab: ITab;
 }
 export interface ITabEvent {
     onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
@@ -41,11 +39,13 @@ export interface ITabEvent {
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
 
-export function Tab<T>(props: ITabProps<T> & ITabEvent) {
+export function Tab<T>(props: ITabProps & ITabEvent) {
     const {
         activeTab,
+        closable,
+        index,
         tab,
-        tab: { id, index, closable, name, label },
+        tab: { id, name, data },
         onCloseTab,
         onMoveTab,
         onSelectTab,
@@ -120,13 +120,14 @@ export function Tab<T>(props: ITabProps<T> & ITabEvent) {
             onMouseOut={handleMouseOut}
             onContextMenu={handleOnContextMenu}
         >
-            {label || name}
+            {name}
             {closable && (
                 <TabDot
                     classNames={getBEMElement(tabItemClassName, 'op')}
                     active={active}
                     buttonHover={hover}
                     onClick={(e) => onCloseTab?.(id)}
+                    modified={data?.modified || false}
                     {...resetProps}
                 />
             )}

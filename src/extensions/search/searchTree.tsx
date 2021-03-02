@@ -16,7 +16,9 @@ const serviceProps = {
         const tabData = {
             ...fileData,
             activeTab: fileData.id,
-            modified: false,
+            data: { 
+                modified: false
+            }
         };
         editorService.open(tabData, tabData.activeTab);
     },

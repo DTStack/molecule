@@ -433,8 +433,8 @@ export class ExplorerService
                 id: `${Math.random() * 10 + 1}`,
                 name: `Untitled`,
                 data: {
-                    modified: false
-                }
+                    modified: false,
+                },
             };
             editorService.open(tabData);
         }

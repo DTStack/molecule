@@ -107,8 +107,8 @@ export class EditorController extends Controller implements IEditorController {
                         id: tab?.id,
                         data: {
                             ...tab?.data,
-                            modified: false
-                        }
+                            modified: false,
+                        },
                     },
                     groupId
                 );
@@ -128,7 +128,7 @@ export class EditorController extends Controller implements IEditorController {
                         ...tab.data,
                         modified: notSave,
                         value: newValue,
-                    }
+                    },
                 },
                 groupId
             );

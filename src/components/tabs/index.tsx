@@ -71,7 +71,6 @@ export function Tabs<T>(props: ITabs<T>) {
                         return (
                             <Tab
                                 activeTab={activeTab}
-                                // active={ === tab.id}
                                 key={tab.id}
                                 tab={tab}
                                 onMoveTab={onChangeTab}

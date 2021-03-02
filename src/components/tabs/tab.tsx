@@ -30,7 +30,7 @@ export interface ITab<T, P = any> {
 export interface ITabProps<T> {
     activeTab?: string;
     key?: number | string;
-    tab: ITab<T>
+    tab: ITab<T>;
 }
 export interface ITabEvent {
     onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
@@ -45,7 +45,7 @@ export function Tab<T>(props: ITabProps<T> & ITabEvent) {
     const {
         activeTab,
         tab,
-        tab: { id, index, closable, name, label},
+        tab: { id, index, closable, name, label },
         onCloseTab,
         onMoveTab,
         onSelectTab,
@@ -57,7 +57,7 @@ export function Tab<T>(props: ITabProps<T> & ITabEvent) {
     const [hover, setHover] = useState(false);
     const handleMouseOver = () => setHover(true);
     const handleMouseOut = () => setHover(false);
-    const active = activeTab === id
+    const active = activeTab === id;
     const handleOnContextMenu = useCallback(
         (event: React.MouseEvent) => {
             onContextMenu?.(event, tab);

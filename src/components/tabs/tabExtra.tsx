@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { getBEMElement } from 'mo/common/className';
 import { Icon } from 'mo/components/icon';
-export interface TabDotProps {
+export interface TabExtraProps {
     modified?: boolean;
     active?: boolean;
     buttonHover?: boolean;
@@ -11,13 +11,13 @@ export interface TabDotProps {
     classNames?: string;
 }
 
-export default function TabDot({
+export default function TabExtra({
     classNames = '',
     modified = false,
     onClick,
     active = false,
     buttonHover = false,
-}: TabDotProps) {
+}: TabExtraProps) {
     const [hover, setHover] = useState(false);
 
     const handleMouseOver = () => {
@@ -34,7 +34,7 @@ export default function TabDot({
         handleMouseOut();
     };
 
-    const renderDot = () => {
+    const renderTabExtra = () => {
         if (
             hover ||
             (!active && buttonHover && !modified) ||
@@ -61,7 +61,7 @@ export default function TabDot({
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
-            {renderDot()}
+            {renderTabExtra()}
         </a>
     );
 }

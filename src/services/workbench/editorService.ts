@@ -60,6 +60,7 @@ export class EditorService
                 if (tabIndex > -1) {
                     const tabData = group.data![tabIndex];
                     group.data![tabIndex] = Object.assign({}, tabData, tab);
+                    this.render();
                 }
             }
         }
@@ -88,7 +89,6 @@ export class EditorService
         if (activeTab) {
             const nextTab =
                 nextGroup.data![tabIndex + 1] || nextGroup.data![tabIndex - 1];
-            nextGroup?.editorInstance.setValue(nextTab.data.value);
             nextGroup.tab = { ...nextTab };
             nextGroup.activeTab = nextTab?.id;
         }
@@ -140,7 +140,7 @@ export class EditorService
         }
     }
 
-    public open<T>(tab: IEditorTab<any>, groupId: number) {
+    public open<T>(tab: IEditorTab<T>, groupId: number) {
         const { current, groups = [] } = this.state;
         let group: IEditorGroup | null | undefined = current;
         if (groupId) {
@@ -158,7 +158,6 @@ export class EditorService
             group.tab = tab;
             group.activeTab = tabId;
             groups[groupIndex] = { ...currentGroup, tab, activeTab: tabId };
-            currentGroup?.editorInstance.setValue(tab?.data?.value!);
         } else {
             group = new EditorGroupModel(groups.length + 1, tab, [tab]);
             groups.push(group);

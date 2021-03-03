@@ -61,7 +61,7 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                 <div className={groupTabsClassName}>
                     <Scrollable>
                         <Tabs
-                            closable={true}
+                            editable={true}
                             type="card"
                             data={data}
                             onMoveTab={onMoveTab}

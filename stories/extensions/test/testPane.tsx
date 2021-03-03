@@ -61,7 +61,6 @@ export default class TestPane extends React.Component {
             panelService.open({
                 id: 'Pane' + id,
                 name: 'Panel' + id,
-                label: 'test',
                 render: () => <h1>Test Pane</h1>,
             });
         };
@@ -71,17 +70,19 @@ export default class TestPane extends React.Component {
         };
 
         const newEditor = function () {
-            const key = Math.random() * 10 + 1;
+            const key = (Math.random() * 10 + 1).toFixed(2);
             const tabData: IEditorTab = {
                 id: `${key}`,
-                name: `editor.js`,
-                modified: false,
+                name: `editor.ts`,
                 data: {
-                    value: `hello javascript ${key}`,
+                    value: `export interface Type<T> { new(...args: any[]): T;}
+export type GenericClassDecorator<T> = (target: T) => void;
+                    `,
                     path: 'desktop/molecule/editor1',
-                    language: 'javascript',
+                    language: 'typescript',
+                    modified: false,
                 },
-                breadcrumb: [{ id: `${key}`, name: 'editor.js' }],
+                breadcrumb: [{ id: `${key}`, name: `editor.ts` }],
             };
             console.log('open editor:', tabData);
             editorService.open(tabData);

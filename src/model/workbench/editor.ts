@@ -17,10 +17,10 @@ interface BuiltInEditorTabDataType {
     language?: string | undefined;
     path?: string;
     value?: string;
+    modified?: boolean;
 }
 
 export interface IEditorTab<T = BuiltInEditorTabDataType> extends ITab<T> {
-    modified?: boolean;
     breadcrumb?: IBreadcrumbItem[];
 }
 export interface IEditorAction {

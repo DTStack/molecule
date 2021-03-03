@@ -120,7 +120,7 @@ export class EditorService
         const tabId = tab.id;
         if (groupIndex <= -1) return;
         const nextGroup = nextGroups[groupIndex];
-        const nextTabData = nextGroup.data!
+        const nextTabData = nextGroup.data!;
         const updateTabs = nextTabData!.filter((tab) => tab.id === tabId);
         this.updateGroup(groupId, {
             data: updateTabs,
@@ -265,7 +265,7 @@ export class EditorService
         const updateTabs = nextTabData?.filter((tab) => tab.data.modified);
         if (updateTabs?.length === 0) {
             const activeGroup =
-            nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1];
+                nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1];
             nextGroups.splice(groupIndex, 1);
             this.setState({
                 groups: nextGroups,

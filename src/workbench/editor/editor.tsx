@@ -13,6 +13,7 @@ export function Editor(props: IEditor & IEditorController) {
     const {
         groups = [],
         current,
+        onClickContextMenu,
         onCloseTab,
         onMoveTab,
         onSelectTab,
@@ -31,6 +32,7 @@ export function Editor(props: IEditor & IEditorController) {
             onSplitEditorRight,
             onUpdateEditorIns,
             onTabContextMenu,
+            onClickContextMenu,
         };
     };
 

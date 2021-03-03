@@ -8,6 +8,9 @@ import { IBreadcrumbItem } from 'mo/components/breadcrumb';
 export enum EditorEvent {
     OnCloseTab = 'editor.closeTab',
     OnCloseAll = 'editor.closeAll',
+    OnCloseOthers = 'editor.closeOthers',
+    OnCloseToLeft = 'editor.closeToLeft',
+    OnCloseToRight = 'editor.closeToRight',
     OnMoveTab = 'editor.moveTab',
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
@@ -47,8 +50,8 @@ export interface IEditor {
 
 const baseMenu = [
     {
-        id: 'closeToRight',
-        name: 'Close To Right',
+        id: 'closeAll',
+        name: 'Close All',
     },
     {
         id: 'closeSaved',
@@ -70,12 +73,16 @@ const initialMenu: IMenuItem[] = [
         name: 'Close',
     },
     {
-        id: 'closeOther',
+        id: 'closeOthers',
         name: 'Close Others',
     },
     {
         id: 'closeToRight',
         name: 'Close To Right',
+    },
+    {
+        id: 'closeToLeft',
+        name: 'Close To Left',
     },
     ...baseMenu,
 ];

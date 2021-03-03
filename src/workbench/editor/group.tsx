@@ -33,7 +33,6 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
         onCloseTab,
         onClickContextMenu,
         onSelectTab,
-        // onTabContextMenu,
         onSplitEditorRight,
         onUpdateEditorIns,
     } = props;
@@ -65,7 +64,7 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                 <div className={groupTabsClassName}>
                     <Scrollable>
                         <Tabs
-                            closable={true}
+                            editable={true}
                             type="card"
                             data={data}
                             onMoveTab={onMoveTab}

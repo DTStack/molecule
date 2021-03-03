@@ -72,6 +72,7 @@ export class EditorController extends Controller implements IEditorController {
             }
             case 'closeToLeft': {
                 this.onCloseToLeft(tabItem, groupId);
+                break;
             }
         }
     };

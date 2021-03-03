@@ -1,10 +1,6 @@
 import * as React from 'react';
-import {
-    activityBarService,
-    colorThemeService,
-    editorService,
-    panelService,
-} from 'mo';
+import { activityBarService, colorThemeService, panelService } from 'mo';
+import { editorController } from 'mo/controller';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
@@ -73,9 +69,9 @@ export default class TestPane extends React.Component {
             const key = (Math.random() * 10 + 1).toFixed(2);
             const tabData: IEditorTab = {
                 id: `${key}`,
-                name: `editor.ts`,
+                name: `editor${key}.ts`,
                 data: {
-                    value: `export interface Type<T> { new(...args: any[]): T;}
+                    value: `${key}export interface Type<T> { new(...args: any[]): T;}
 export type GenericClassDecorator<T> = (target: T) => void;
                     `,
                     path: 'desktop/molecule/editor1',
@@ -85,7 +81,7 @@ export type GenericClassDecorator<T> = (target: T) => void;
                 breadcrumb: [{ id: `${key}`, name: `editor.ts` }],
             };
             console.log('open editor:', tabData);
-            editorService.open(tabData);
+            editorController.open(tabData);
         };
 
         const openCommand = function () {};

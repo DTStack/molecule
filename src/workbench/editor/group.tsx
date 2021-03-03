@@ -31,22 +31,25 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
         menu = [],
         onMoveTab,
         onCloseTab,
+        onClickContextMenu,
         onSelectTab,
-        onTabContextMenu,
         onSplitEditorRight,
         onUpdateEditorIns,
     } = props;
 
     const isActiveGroup = id === currentGroup?.id;
 
-    const contextView = useContextView({
-        render: () => <Menu data={menu} />,
-    });
+    const contextView = useContextView();
 
-    const handleTabContextMenu = (e, item) => {
-        e.preventDefault();
-        contextView.show(getEventPosition(e));
-        onTabContextMenu?.(e, item);
+    const handleTabContextMenu = (e: React.MouseEvent, tabItem) => {
+        const handleOnMenuClick = (e: React.MouseEvent, item) => {
+            onClickContextMenu?.(e, item, tabItem);
+            contextView.hide();
+        };
+
+        contextView?.show(getEventPosition(e), () => (
+            <Menu data={menu} onClick={handleOnMenuClick} />
+        ));
     };
 
     useEffect(() => {

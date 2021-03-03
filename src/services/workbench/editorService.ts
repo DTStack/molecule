@@ -261,7 +261,7 @@ export class EditorService
         const groupIndex = this.getGroupIndexById(groupId);
         if (groupIndex <= -1) return;
         const nextGroup = nextGroups[groupIndex];
-        const updateTabs = nextGroup!.data?.filter(tab => tab.data.modified)
+        const updateTabs = nextGroup!.data?.filter((tab) => tab.data.modified);
         this.updateGroup(groupId, {
             data: updateTabs,
         });

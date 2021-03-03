@@ -75,7 +75,7 @@ export class EditorController extends Controller implements IEditorController {
                 break;
             }
             case 'closeSaved': {
-                this.onCloseSaved(groupId)
+                this.onCloseSaved(groupId);
             }
         }
     };
@@ -86,9 +86,9 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     public onCloseSaved = (groupId: number) => {
-        editorService.closeSaved(groupId)
-        this.emit(EditorEvent.OnCloseAll, groupId)
-    }
+        editorService.closeSaved(groupId);
+        this.emit(EditorEvent.OnCloseAll, groupId);
+    };
 
     public updateCurrentValue = () => {
         const { current } = editorService.getState();

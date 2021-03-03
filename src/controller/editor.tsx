@@ -20,6 +20,7 @@ export interface IEditorController {
     onCloseToLeft?: (tab: IEditorTab, group: number) => void;
     onCloseToRight?: (tab: IEditorTab, group: number) => void;
     onCloseOthers?: (tab: IEditorTab, group: number) => void;
+    onCloseSaved?: (group: number) => void;
     onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: number) => void;
     onSelectTab?: (tabId: string, group: number) => void;
     onSplitEditorRight?: () => void;
@@ -73,6 +74,9 @@ export class EditorController extends Controller implements IEditorController {
                 this.onCloseToLeft(tabItem!, groupId);
                 break;
             }
+            case 'closeSaved': {
+                this.onCloseSaved(groupId)
+            }
         }
     };
 
@@ -80,6 +84,11 @@ export class EditorController extends Controller implements IEditorController {
         editorService.closeAll(groupId);
         this.emit(EditorEvent.OnCloseAll, groupId);
     };
+
+    public onCloseSaved = (groupId: number) => {
+        editorService.closeSaved(groupId)
+        this.emit(EditorEvent.OnCloseAll, groupId)
+    }
 
     public updateCurrentValue = () => {
         const { current } = editorService.getState();

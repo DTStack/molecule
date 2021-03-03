@@ -23,12 +23,16 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
 
     const handleOnMenuClick = (e: React.MouseEvent, item) => {
         onClickContextMenu?.(e, item);
-        (childRef.current as any)!.dispose()
-    }
+        (childRef.current as any)!.dispose();
+    };
 
     const overlay =
-    actions.length > 0 ? (
-            <Menu style={{ width: 200 }} data={actions} onClick={handleOnMenuClick}/>
+        actions.length > 0 ? (
+            <Menu
+                style={{ width: 200 }}
+                data={actions}
+                onClick={handleOnMenuClick}
+            />
         ) : (
             <span
                 style={{

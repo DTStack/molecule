@@ -120,7 +120,8 @@ export class EditorService
         const tabId = tab.id;
         if (groupIndex <= -1) return;
         const nextGroup = nextGroups[groupIndex];
-        const updateTabs = nextGroup.data!.filter((tab) => tab.id === tabId);
+        const nextTabData = nextGroup.data!
+        const updateTabs = nextTabData!.filter((tab) => tab.id === tabId);
         this.updateGroup(groupId, {
             data: updateTabs,
         });
@@ -153,7 +154,6 @@ export class EditorService
         const nextGroup = nextGroups[groupIndex];
         const nextTabData = nextGroup.data;
         const tabIndex = nextTabData!.findIndex(searchById(tabId));
-        if (tabIndex <= -1) return;
         const updateTabs = nextTabData?.slice(tabIndex, nextTabData.length);
         this.updateGroup(groupId, {
             data: updateTabs,
@@ -261,7 +261,18 @@ export class EditorService
         const groupIndex = this.getGroupIndexById(groupId);
         if (groupIndex <= -1) return;
         const nextGroup = nextGroups[groupIndex];
-        const updateTabs = nextGroup!.data?.filter((tab) => tab.data.modified);
+        const nextTabData = nextGroup!.data;
+        const updateTabs = nextTabData?.filter((tab) => tab.data.modified);
+        if (updateTabs?.length === 0) {
+            const activeGroup =
+            nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1];
+            nextGroups.splice(groupIndex, 1);
+            this.setState({
+                groups: nextGroups,
+                current: nextGroups?.length === 0 ? undefined : activeGroup,
+            });
+            return;
+        }
         this.updateGroup(groupId, {
             data: updateTabs,
         });

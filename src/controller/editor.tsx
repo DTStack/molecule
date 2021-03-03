@@ -13,7 +13,7 @@ export interface IEditorController {
     onClickContextMenu?: (
         e: React.MouseEvent,
         item: IMenuItem,
-        tabItem: IEditorTab
+        tabItem?: IEditorTab
     ) => void;
     onCloseAll?: (group: number) => void;
     onCloseTab?: (tabId: string, group: number) => void;
@@ -25,7 +25,6 @@ export interface IEditorController {
     onSplitEditorRight?: () => void;
     onUpdateEditorIns?: (editorInstance: any, groupId: number) => void;
     onPaneSizeChange?: (newSize: number) => void;
-    onTabContextMenu?: (e: React.MouseEvent, tab: IEditorTab) => void;
 }
 
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
@@ -47,7 +46,7 @@ export class EditorController extends Controller implements IEditorController {
     public onClickContextMenu = (
         e: React.MouseEvent,
         item: IMenuItem,
-        tabItem: IEditorTab
+        tabItem?: IEditorTab<any>
     ) => {
         const menuId = item?.id;
         const tabId = tabItem?.id!;
@@ -59,7 +58,7 @@ export class EditorController extends Controller implements IEditorController {
                 break;
             }
             case 'closeOthers': {
-                this.onCloseOthers(tabItem, groupId);
+                this.onCloseOthers(tabItem!, groupId);
                 break;
             }
             case 'closeAll': {
@@ -67,11 +66,11 @@ export class EditorController extends Controller implements IEditorController {
                 break;
             }
             case 'closeToRight': {
-                this.onCloseToRight(tabItem, groupId);
+                this.onCloseToRight(tabItem!, groupId);
                 break;
             }
             case 'closeToLeft': {
-                this.onCloseToLeft(tabItem, groupId);
+                this.onCloseToLeft(tabItem!, groupId);
                 break;
             }
         }

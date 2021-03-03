@@ -12,11 +12,12 @@ export interface IDropDown extends React.ComponentProps<'div'> {
     overlay: ReactNode;
     trigger?: TriggerEvent;
     placement?: PlacementType;
+    ref?: React.RefObject<any>;
 }
 
 const defaultDropDownClassName = prefixClaName('drop-down');
 
-export function DropDown(props: React.PropsWithChildren<IDropDown>) {
+export const DropDown = React.forwardRef((props: React.PropsWithChildren<IDropDown>, ref) => {
     const {
         className,
         overlay,
@@ -28,6 +29,12 @@ export function DropDown(props: React.PropsWithChildren<IDropDown>) {
     const contextView = useContextView({
         render: () => overlay,
     });
+
+    React.useImperativeHandle(ref, () => ({
+        dispose: () => {
+            contextView!.hide()
+        }
+    }))
 
     const claNames = classNames(
         defaultDropDownClassName,
@@ -57,4 +64,4 @@ export function DropDown(props: React.PropsWithChildren<IDropDown>) {
             {children}
         </div>
     );
-}
+})

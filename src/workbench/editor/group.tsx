@@ -81,6 +81,7 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                     actions={actions}
                     menu={menu}
                     onSplitEditorRight={onSplitEditorRight}
+                    onClickContextMenu={onClickContextMenu}
                 />
             </div>
             <EditorBreadcrumb breadcrumbs={tab.breadcrumb} />

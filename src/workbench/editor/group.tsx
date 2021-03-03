@@ -13,7 +13,7 @@ import {
 import EditorAction from './action';
 import EditorBreadcrumb from './breadcrumb';
 import { IEditorController } from 'mo/controller/editor';
-import { IMenuItem, Menu } from 'mo/components/menu';
+import { Menu } from 'mo/components/menu';
 import { useContextView } from 'mo/components/contextView';
 import { getEventPosition } from 'mo/common/dom';
 
@@ -40,18 +40,17 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
 
     const isActiveGroup = id === currentGroup?.id;
 
-    const contextView = useContextView()
+    const contextView = useContextView();
 
     const handleTabContextMenu = (e: React.MouseEvent, tabItem) => {
-
         const handleOnMenuClick = (e: React.MouseEvent, item) => {
             onClickContextMenu?.(e, item, tabItem);
-            contextView.hide()
+            contextView.hide();
         };
 
         contextView?.show(getEventPosition(e), () => (
-            <Menu data={menu} onClick={handleOnMenuClick}/>
-        ))
+            <Menu data={menu} onClick={handleOnMenuClick} />
+        ));
     };
 
     useEffect(() => {

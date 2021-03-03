@@ -14,7 +14,7 @@ export interface IEditorController {
         e: React.MouseEvent,
         item: IMenuItem,
         tabItem: IEditorTab
-    ) => void;    
+    ) => void;
     onCloseAll?: (group: number) => void;
     onCloseTab?: (tabId: string, group: number) => void;
     onCloseToLeft?: (tab: IEditorTab, group: number) => void;
@@ -39,7 +39,7 @@ export class EditorController extends Controller implements IEditorController {
         super();
     }
 
-    public open<T>(tab: IEditorTab<any>, groupId: number) {
+    public open<T>(tab: IEditorTab<any>, groupId?: number) {
         editorService.open<T>(tab, groupId);
         this.updateCurrentValue();
     }
@@ -49,32 +49,32 @@ export class EditorController extends Controller implements IEditorController {
         item: IMenuItem,
         tabItem: IEditorTab
     ) => {
-        const menuId = item?.id
+        const menuId = item?.id;
         const tabId = tabItem?.id!;
         const { current } = editorService.getState();
-        const groupId = current?.id!
+        const groupId = current?.id!;
         switch (menuId) {
-           case 'close': {
-               this.onCloseTab(tabId, groupId)
-               break;
-           }
-           case 'closeOthers': {
-                this.onCloseOthers(tabItem, groupId)
-               break;
-           }
-           case 'closeAll': {
-               this.onCloseAll(groupId)
-               break;
-           }
-           case 'closeToRight': {
-                this.onCloseToRight(tabItem, groupId)
-               break;
-           }
-           case 'closeToLeft': {
-                this.onCloseToLeft(tabItem, groupId)
-           }
-       }
-    }
+            case 'close': {
+                this.onCloseTab(tabId, groupId);
+                break;
+            }
+            case 'closeOthers': {
+                this.onCloseOthers(tabItem, groupId);
+                break;
+            }
+            case 'closeAll': {
+                this.onCloseAll(groupId);
+                break;
+            }
+            case 'closeToRight': {
+                this.onCloseToRight(tabItem, groupId);
+                break;
+            }
+            case 'closeToLeft': {
+                this.onCloseToLeft(tabItem, groupId);
+            }
+        }
+    };
 
     public onCloseAll = (groupId: number) => {
         editorService.closeAll(groupId);
@@ -84,7 +84,7 @@ export class EditorController extends Controller implements IEditorController {
     public updateCurrentValue = () => {
         const { current } = editorService.getState();
         const newValue = current?.tab?.data?.value;
-        current?.editorInstance?.setValue(newValue)
+        current?.editorInstance?.setValue(newValue);
     };
 
     public onCloseTab = (tabId?: string, groupId?: number) => {
@@ -96,22 +96,22 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     public onCloseToRight = (tabItem: IEditorTab, groupId: number) => {
-        editorService.closeToRight(tabItem, groupId)
-        this.updateCurrentValue()
-        this.emit(EditorEvent.OnCloseToRight, tabItem, groupId)
-    }
+        editorService.closeToRight(tabItem, groupId);
+        this.updateCurrentValue();
+        this.emit(EditorEvent.OnCloseToRight, tabItem, groupId);
+    };
 
     public onCloseToLeft = (tabItem: IEditorTab, groupId: number) => {
-        editorService.closeToLeft(tabItem, groupId)
-        this.updateCurrentValue()
-        this.emit(EditorEvent.OnCloseToLeft, tabItem, groupId)
-    }
+        editorService.closeToLeft(tabItem, groupId);
+        this.updateCurrentValue();
+        this.emit(EditorEvent.OnCloseToLeft, tabItem, groupId);
+    };
 
     public onCloseOthers = (tabItem: IEditorTab, groupId: number) => {
-        editorService.closeOthers(tabItem, groupId)
-        this.updateCurrentValue()
-        this.emit(EditorEvent.OnCloseOthers, tabItem, groupId)
-    }
+        editorService.closeOthers(tabItem, groupId);
+        this.updateCurrentValue();
+        this.emit(EditorEvent.OnCloseOthers, tabItem, groupId);
+    };
 
     public onMoveTab = (updateTabs: IEditorTab<any>[], groupId: number) => {
         editorService.updateGroup(groupId, {

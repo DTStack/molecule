@@ -51,7 +51,7 @@ export interface IEditor {
 const baseMenu = [
     {
         id: 'closeAll',
-        name: 'Close All'
+        name: 'Close All',
     },
     {
         id: 'closeSaved',
@@ -84,7 +84,7 @@ const initialMenu: IMenuItem[] = [
         id: 'closeToLeft',
         name: 'Close To Left',
     },
-    ...baseMenu
+    ...baseMenu,
 ];
 
 export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {

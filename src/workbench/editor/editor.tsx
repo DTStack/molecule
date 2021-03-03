@@ -32,7 +32,7 @@ export function Editor(props: IEditor & IEditorController) {
             onSplitEditorRight,
             onUpdateEditorIns,
             onTabContextMenu,
-            onClickContextMenu
+            onClickContextMenu,
         };
     };
 

@@ -1,10 +1,6 @@
 import * as React from 'react';
-import {
-    activityBarService,
-    colorThemeService,
-    panelService,
-} from 'mo';
-import { editorController } from 'mo/controller'
+import { activityBarService, colorThemeService, panelService } from 'mo';
+import { editorController } from 'mo/controller';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
@@ -80,7 +76,7 @@ export type GenericClassDecorator<T> = (target: T) => void;
                     `,
                     path: 'desktop/molecule/editor1',
                     language: 'typescript',
-                    modified: false
+                    modified: false,
                 },
                 breadcrumb: [{ id: `${key}`, name: `editor.ts` }],
             };

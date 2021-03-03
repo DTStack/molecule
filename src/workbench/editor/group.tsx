@@ -13,7 +13,7 @@ import {
 import EditorAction from './action';
 import EditorBreadcrumb from './breadcrumb';
 import { IEditorController } from 'mo/controller/editor';
-import { Menu } from 'mo/components/menu';
+import { IMenuItem, Menu } from 'mo/components/menu';
 import { useContextView } from 'mo/components/contextView';
 import { getEventPosition } from 'mo/common/dom';
 
@@ -31,22 +31,27 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
         menu = [],
         onMoveTab,
         onCloseTab,
+        onClickContextMenu,
         onSelectTab,
-        onTabContextMenu,
+        // onTabContextMenu,
         onSplitEditorRight,
         onUpdateEditorIns,
     } = props;
 
     const isActiveGroup = id === currentGroup?.id;
 
-    const contextView = useContextView({
-        render: () => <Menu data={menu} />,
-    });
+    const contextView = useContextView()
 
-    const handleTabContextMenu = (e, item) => {
-        e.preventDefault();
-        contextView.show(getEventPosition(e));
-        onTabContextMenu?.(e, item);
+    const handleTabContextMenu = (e: React.MouseEvent, tabItem) => {
+
+        const handleOnMenuClick = (e: React.MouseEvent, item) => {
+            onClickContextMenu?.(e, item, tabItem);
+            contextView.hide()
+        };
+
+        contextView?.show(getEventPosition(e), () => (
+            <Menu data={menu} onClick={handleOnMenuClick}/>
+        ))
     };
 
     useEffect(() => {
@@ -61,7 +66,7 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                 <div className={groupTabsClassName}>
                     <Scrollable>
                         <Tabs
-                            editable={true}
+                            closable={true}
                             type="card"
                             data={data}
                             onMoveTab={onMoveTab}

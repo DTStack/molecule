@@ -1,3 +1,4 @@
+import { group } from 'console';
 import { singleton, container } from 'tsyringe';
 
 import { Component } from 'mo/react';
@@ -22,8 +23,11 @@ export interface IEditorService extends Component<IEditor> {
     ): IEditorTab<T> | undefined;
     updateTab(tab: IEditorTab, groupId: number): IEditorTab;
     closeTab(tabId: string, groupId: number): void;
+    closeOthers(tab: IEditorTab, groupId: number): void;
+    closeToRight(tab: IEditorTab, groupId: number): void;
+    closeToLeft(tab: IEditorTab, groupId: number): void;
     closeAll(groupId: number): void;
-    getGroupById(id: number): IEditorGroup | undefined;
+    getGroupById(groupId: number): IEditorGroup | undefined;
     cloneGroup(groupId?: number): IEditorGroup;
     /**
      * Set active group and tab
@@ -100,9 +104,58 @@ export class EditorService
         });
     }
 
-    public getGroupById(id: number): IEditorGroup | undefined {
+    public closeOthers(tab: IEditorTab, groupId: number) {
+        const { groups = [] } = this.state;
+        const nextGroups = [...groups];
+        const groupIndex = this.getGroupIndexById(groupId);
+        const tabId = tab.id
+        if (groupIndex <= -1) return;
+        const nextGroup = nextGroups[groupIndex];
+        const updateTabs = nextGroup.data!.filter(tab => tab.id === tabId);
+        this.updateGroup(groupId, {
+            data: updateTabs
+        })
+        this.setActive(groupId, tabId!)
+    }
+
+    public closeToRight (tab: IEditorTab, groupId: number) {
+        const { groups = [] } = this.state;
+        const nextGroups = [...groups];
+        const groupIndex = this.getGroupIndexById(groupId);
+        const tabId = tab.id
+        if (groupIndex <= -1) return;
+        const nextGroup = nextGroups[groupIndex];
+        const nextTabData = nextGroup.data;
+        const tabIndex = nextTabData!.findIndex(searchById(tabId));
+        if (tabIndex <= -1) return
+        const updateTabs = nextTabData?.slice(0, tabIndex + 1 )
+        this.updateGroup(groupId, {
+            data: updateTabs
+        })
+        this.setActive(groupId, tabId!)
+    }
+
+    
+    public closeToLeft (tab: IEditorTab, groupId: number) {
+        const { groups = [] } = this.state;
+        const nextGroups = [...groups];
+        const groupIndex = this.getGroupIndexById(groupId);
+        const tabId = tab.id
+        if (groupIndex <= -1) return;
+        const nextGroup = nextGroups[groupIndex];
+        const nextTabData = nextGroup.data;
+        const tabIndex = nextTabData!.findIndex(searchById(tabId));
+        if (tabIndex <= -1) return
+        const updateTabs = nextTabData?.slice(tabIndex, nextTabData.length)
+        this.updateGroup(groupId, {
+            data: updateTabs
+        })
+        this.setActive(groupId, tabId!)
+    }
+
+    public getGroupById(groupId: number): IEditorGroup | undefined {
         const { groups } = this.state;
-        return groups!.find((group) => group.id === id);
+        return groups!.find((group) => group.id === groupId);
     }
 
     public getGroupIndexById(id: number): number {
@@ -132,11 +185,15 @@ export class EditorService
 
     public updateGroup(groupId: number, groupValues: IEditorGroup) {
         const { groups = [] } = this.state;
+        const nextGroups = [...groups]
         const groupIndex = this.getGroupIndexById(groupId);
         if (groupIndex > -1) {
-            const group = Object.assign({}, groups[groupIndex], groupValues);
-            groups[groupIndex] = group;
-            this.render();
+            const nextGroup = Object.assign({}, nextGroups[groupIndex], groupValues);
+            nextGroups[groupIndex] = nextGroup; 
+            this.setState({
+                current: nextGroup,
+                groups: nextGroups,
+            });
         }
     }
 
@@ -162,6 +219,7 @@ export class EditorService
             group = new EditorGroupModel(groups.length + 1, tab, [tab]);
             groups.push(group);
         }
+
         this.setState({
             current: group,
             groups: [...groups],

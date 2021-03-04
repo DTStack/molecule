@@ -87,7 +87,7 @@ export class EditorController extends Controller implements IEditorController {
 
     public onCloseSaved = (groupId: number) => {
         editorService.closeSaved(groupId);
-        this.emit(EditorEvent.OnCloseAll, groupId);
+        this.emit(EditorEvent.OnCloseSaved, groupId);
     };
 
     public updateCurrentValue = () => {

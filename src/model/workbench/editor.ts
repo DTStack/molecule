@@ -11,6 +11,7 @@ export enum EditorEvent {
     OnCloseOthers = 'editor.closeOthers',
     OnCloseToLeft = 'editor.closeToLeft',
     OnCloseToRight = 'editor.closeToRight',
+    OnCloseSaved = 'editor.closeSaved',
     OnMoveTab = 'editor.moveTab',
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',

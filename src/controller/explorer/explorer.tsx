@@ -10,7 +10,8 @@ import * as React from 'react';
 import { IFolderTree } from 'mo/model';
 import { ExplorerView, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IActionBarItem } from 'mo/components/actionBar';
-
+// TODO: 自依赖问题 connect 失效，暂时手动引入 Controller 往 View 层传递
+import { folderTreeController, explorerController } from 'mo/controller';
 export interface IExplorerController {
     onHeaderToolbarClick?: (e: React.MouseEvent, item: IActionBarItem) => void;
 }
@@ -42,7 +43,7 @@ export class ExplorerController
             id: 'explore',
             title: 'EXPLORER',
             render() {
-                return <ExplorerView />;
+                return <ExplorerView {...explorerController} />;
             },
         };
 
@@ -128,7 +129,7 @@ export class ExplorerController
                     data: explorerState.folderTree?.data,
                     contextMenu: explorerState.folderTree?.contextMenu,
                 };
-                return <FolderTreeView {...folderProps} />;
+                return <FolderTreeView {...folderProps} {...folderTreeController} />;
             },
         };
 

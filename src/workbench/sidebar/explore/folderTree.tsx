@@ -22,7 +22,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
         onClickContextMenu,
         ...restProps
     } = props;
-
+    console.log('FolderTree => FolderTreeController', props)
     const inputRef = useRef<any>(null);
 
     const contextView = useContextView();
@@ -87,8 +87,8 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-            name
-        );
+                name
+            );
     };
 
     const renderByData = (

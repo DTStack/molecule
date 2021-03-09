@@ -67,7 +67,7 @@
 
         // test
         .samplefolder {
-            .rc-collapse-content {
+            #{$rcCollapse}-content {
                 height: 600px;
             }
         }

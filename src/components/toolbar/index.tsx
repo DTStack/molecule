@@ -3,7 +3,7 @@ import * as React from 'react';
 import { prefixClaName, classNames } from 'mo/common/className';
 import ActionBar, { IActionBar } from 'mo/components/actionBar';
 
-export interface IToolBar<T = any> extends IActionBar {}
+export interface IToolBar<T = any> extends IActionBar { }
 
 const rootClassName = 'tool-bar';
 

@@ -26,6 +26,7 @@ export interface IActivityBarItem {
     checked?: boolean;
     type?: 'normal' | 'global';
     contextMenu?: IMenuItem[];
+    className?: string;
     render?: () => React.ReactNode | JSX.Element;
 }
 

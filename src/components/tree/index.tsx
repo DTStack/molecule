@@ -52,11 +52,11 @@ export interface ITreeProps {
     expandedKeys?: Key[];
     defaultCheckedKeys?: Key[];
     checkedKeys?:
-    | Key[]
-    | {
-        checked: Key[];
-        halfChecked: Key[];
-    };
+        | Key[]
+        | {
+              checked: Key[];
+              halfChecked: Key[];
+          };
     defaultSelectedKeys?: Key[];
     selectedKeys?: Key[];
     titleRender?: (node: DataNode) => React.ReactNode;

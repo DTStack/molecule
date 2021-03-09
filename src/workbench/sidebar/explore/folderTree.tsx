@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { memo, useRef } from 'react';
+import { memo, useRef, useEffect, useCallback } from 'react';
 import { IFolderTree } from 'mo';
+import { select } from 'mo/common/dom';
 import Tree, { FileTypes } from 'mo/components/tree';
 import { Menu } from 'mo/components/menu';
 import { getEventPosition } from 'mo/common/dom';
 import { Button } from 'mo/components/button';
 import { IFolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
+import { useContextMenu } from 'mo/components/contextMenu';
 import { explorerService } from 'mo/services';
 import { TreeNodeModel } from 'mo/model';
 
@@ -26,6 +28,41 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
 
     const contextView = useContextView();
 
+    let contextViewMenu;
+    const folderContextMenu = [{
+        id: 'addFolder',
+        name: 'Add Folder to Workspace',
+        onClick: () => {
+            explorerService.addRootFolder?.(
+                new TreeNodeModel({
+                    name: `molecule_temp${Math.random()}`,
+                    fileType: 'rootFolder',
+                })
+            );
+        }
+    }]
+    const onClickMenuItem = useCallback(
+        (e, item) => {
+            contextViewMenu?.dispose();
+        },
+        [folderContextMenu]
+    );
+    const renderContextMenu = () => (
+        <Menu onClick={onClickMenuItem} data={folderContextMenu} />
+    );
+
+    useEffect(() => {
+        if (folderContextMenu.length > 0) {
+            contextViewMenu = useContextMenu({
+                anchor: select('.samplefolder'),
+                render: renderContextMenu,
+            });
+        }
+        return function cleanup() {
+            contextViewMenu?.dispose();
+        };
+    });
+
     const onFocus = () => {
         setTimeout(() => {
             if (inputRef.current) {
@@ -37,15 +74,15 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     const setInputVal = (val) => {
         setTimeout(() => {
             if (inputRef.current) {
-                inputRef.current.value = val
+                inputRef.current.value = val;
             }
         });
-    }
+    };
 
     const inputEvents = {
         onFocus,
-        setValue: (val) => setInputVal(val)
-    }
+        setValue: (val) => setInputVal(val),
+    };
 
     const handleRightClick = ({ event, node }) => {
         const menuItems = filterContextMenu?.(contextMenu, node.data);
@@ -67,10 +104,13 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
             },
             () => {
                 if (node?.fileType === FileTypes.file && newName) {
-                    onSelectFile?.({
-                        ...node,
-                        name: newName,
-                    }, true);
+                    onSelectFile?.(
+                        {
+                            ...node,
+                            name: newName,
+                        },
+                        true
+                    );
                 }
             }
         );
@@ -104,39 +144,14 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     };
 
     const renderByData = (
-        <>
-            <Tree
-                data={data}
-                draggable
-                onSelectFile={onSelectFile}
-                onRightClick={handleRightClick}
-                renderTitle={renderTitle}
-                {...restProps}
-            />
-            {/* test service */}
-            <div style={{ marginTop: '100px' }}>
-                <Button
-                    onClick={() => {
-                        explorerService.addRootFolder?.(
-                            new TreeNodeModel({
-                                name: `tree_${Math.random() * 10 + 1}`,
-                                fileType: 'rootFolder',
-                            })
-                        );
-                    }}
-                >
-                    Add Folder
-                </Button>
-                <Button
-                    onClick={() => {
-                        console.log('test');
-                        explorerService.newFile?.();
-                    }}
-                >
-                    New File
-                </Button>
-            </div>
-        </>
+        <Tree
+            data={data}
+            draggable
+            onSelectFile={onSelectFile}
+            onRightClick={handleRightClick}
+            renderTitle={renderTitle}
+            {...restProps}
+        />
     );
 
     const renderInitial = (

@@ -2,7 +2,6 @@ import { singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
 
 import { ITreeNodeItem, FileTypes } from 'mo/components/tree';
-
 import { editorService, explorerService } from 'mo';
 import { EditorController } from 'mo/controller/editor';
 import { IMenuItem } from 'mo/components/menu';
@@ -34,7 +33,8 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() { }
+    private initView() {
+    }
 
     public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
         const tabData = {
@@ -54,9 +54,9 @@ export class FolderTreeController
 
             const { id, data = [] } = editorState?.current || {};
             const tabId = file.id;
-            const index = data?.findIndex(tab => tab.id == tabId);
+            const index = data?.findIndex((tab) => tab.id == tabId);
             if (index > -1) {
-                if (id) editorService.updateTab(tabData, id)
+                if (id) editorService.updateTab(tabData, id);
             } else {
                 editorService.open(tabData);
             }

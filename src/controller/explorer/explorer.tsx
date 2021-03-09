@@ -17,6 +17,7 @@ export interface IExplorerController {
         e: React.MouseEvent,
         item: IActionBarItem
     ) => void;
+    onCollapseChange?: (keys) => void;
 }
 
 @singleton()
@@ -69,6 +70,7 @@ export class ExplorerController
         const sampleFolderPanel = {
             id: 'Folders',
             name: 'Sample Folder',
+            className: 'samplefolder',
             toolbar: [
                 {
                     id: 'new_file',
@@ -112,6 +114,7 @@ export class ExplorerController
         };
 
         explorerService.addPanel([sampleFolderPanel]);
+
     }
 
     private createFile = (e, type) => {
@@ -137,4 +140,8 @@ export class ExplorerController
         if (panelId === 'Folders') return;
         explorerService.addOrRemovePanel(panelId);
     };
+
+    public readonly onCollapseChange = (keys) => {
+        console.log('keys', keys)
+    }
 }

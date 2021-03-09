@@ -17,6 +17,7 @@ export const Explorer: React.FunctionComponent<IExplorer> = (
         data = [],
         headerToolBar = [],
         onHeaderToolbarContextMenuClick,
+        onCollapseChange,
     } = props;
     const renderItems = (item: IActivityBarItem, index: number) => {
         return (
@@ -36,7 +37,7 @@ export const Explorer: React.FunctionComponent<IExplorer> = (
                 toolbar={headerToolBar.map(renderItems)}
             />
             <Content>
-                <Collapse data={data} />
+                <Collapse data={data} onCollapseChange={onCollapseChange} />
             </Content>
         </div>
     );

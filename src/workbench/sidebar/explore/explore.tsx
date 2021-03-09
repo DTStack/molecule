@@ -12,7 +12,6 @@ export const Explorer: React.FunctionComponent<IExplorer> = (
     props: IExplorer & IExplorerController
 ) => {
     const { data = [], headerToolBar = [], onHeaderToolbarClick } = props;
-    console.log('Explorer => ExplorerController', props)
     return (
         <div className={defaultExplorerClassName}>
             <Header

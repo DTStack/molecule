@@ -29,18 +29,20 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     const contextView = useContextView();
 
     let contextViewMenu;
-    const folderContextMenu = [{
-        id: 'addFolder',
-        name: 'Add Folder to Workspace',
-        onClick: () => {
-            explorerService.addRootFolder?.(
-                new TreeNodeModel({
-                    name: `molecule_temp${Math.random()}`,
-                    fileType: 'rootFolder',
-                })
-            );
-        }
-    }]
+    const folderContextMenu = [
+        {
+            id: 'addFolder',
+            name: 'Add Folder to Workspace',
+            onClick: () => {
+                explorerService.addRootFolder?.(
+                    new TreeNodeModel({
+                        name: `molecule_temp${Math.random()}`,
+                        fileType: 'rootFolder',
+                    })
+                );
+            },
+        },
+    ];
     const onClickMenuItem = useCallback(
         (e, item) => {
             contextViewMenu?.dispose();
@@ -139,8 +141,8 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-                name
-            );
+            name
+        );
     };
 
     const renderByData = (

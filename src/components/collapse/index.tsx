@@ -37,7 +37,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
     const [state, setState] = useState<IState>(initState);
     const { className, data = [], onCollapseChange, ...restProps } = props;
     const onChangeCallback = (key: React.Key[]) => {
-        onCollapseChange?.(key)
+        onCollapseChange?.(key);
         setState((state: IState) => ({ ...state, activePanelKeys: key }));
     };
     const onClick = (e, item) => {

@@ -35,7 +35,7 @@ export class SelectColorThemeAction extends EditorAction {
         this.quickInputService = accessor.get(IQuickInputService);
         const themes = colorThemeService.getThemes();
         const currentTheme = colorThemeService.getColorTheme();
-     
+
         const picks: QuickPickInput<IColorTheme>[] = [...toEntries(themes)];
 
         let selectThemeTimeout: number | undefined;

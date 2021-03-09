@@ -7,13 +7,17 @@ import ActivityBarItem from 'mo/workbench/activityBar/activityBarItem';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import {
     defaultExplorerClassName,
-    activityBarItemFloatClassName
+    activityBarItemFloatClassName,
 } from './base';
 
 export const Explorer: React.FunctionComponent<IExplorer> = (
     props: IExplorer & IExplorerController
 ) => {
-    const { data = [], headerToolBar = [], onHeaderToolbarContextMenuClick } = props;
+    const {
+        data = [],
+        headerToolBar = [],
+        onHeaderToolbarContextMenuClick,
+    } = props;
     const renderItems = (item: IActivityBarItem, index: number) => {
         return (
             <ActivityBarItem

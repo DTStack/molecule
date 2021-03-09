@@ -24,29 +24,31 @@ export interface IExplorer {
     folderTree?: IFolderTree;
 }
 
-const builtInHeaderToolbar: IActivityBarItem[] = [{
-    id: 'explorer-more',
-    name: 'View and More Actions...',
-    iconName: 'codicon-ellipsis',
-    type: 'global',
-    contextMenu: [
-        {
-            id: 'OpenEditors',
-            name: 'Open Editors',
-            icon: 'check'
-        },
-        {
-            id: 'Folders',
-            name: 'Folders',
-            icon: 'check'
-        },
-        {
-            id: 'Outline',
-            name: 'Outline',
-            icon: 'check'
-        },
-    ],
-}]
+const builtInHeaderToolbar: IActivityBarItem[] = [
+    {
+        id: 'explorer-more',
+        name: 'View and More Actions...',
+        iconName: 'codicon-ellipsis',
+        type: 'global',
+        contextMenu: [
+            {
+                id: 'OpenEditors',
+                name: 'Open Editors',
+                icon: 'check',
+            },
+            {
+                id: 'Folders',
+                name: 'Folders',
+                icon: 'check',
+            },
+            {
+                id: 'Outline',
+                name: 'Outline',
+                icon: 'check',
+            },
+        ],
+    },
+];
 
 const commonContextMenu = [
     {

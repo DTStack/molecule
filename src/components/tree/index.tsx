@@ -52,11 +52,11 @@ export interface ITreeProps {
     expandedKeys?: Key[];
     defaultCheckedKeys?: Key[];
     checkedKeys?:
-        | Key[]
-        | {
-              checked: Key[];
-              halfChecked: Key[];
-          };
+    | Key[]
+    | {
+        checked: Key[];
+        halfChecked: Key[];
+    };
     defaultSelectedKeys?: Key[];
     selectedKeys?: Key[];
     titleRender?: (node: DataNode) => React.ReactNode;
@@ -119,7 +119,7 @@ export interface ITreeProps {
     draggable?: boolean;
 
     data?: ITreeNodeItem[];
-    onSelectFile?: (IMenuItem) => void;
+    onSelectFile?: (IMenuItem, isAuto?) => void;
     onSelectTree?: (id) => void;
     renderTitle?: (node, index) => React.ReactDOM | string;
     onDropTree?(treeNode): void;

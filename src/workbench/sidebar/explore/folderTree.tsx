@@ -26,23 +26,36 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
 
     const contextView = useContextView();
 
-    const handleRightClick = ({ event, node }) => {
-        const menuItems = filterContextMenu?.(contextMenu, node.data);
-        const handleOnMenuClick = (e: React.MouseEvent, item) => {
-            onClickContextMenu?.(e, item, node.data, onFocus);
-            contextView.hide();
-        };
-        contextView?.show(getEventPosition(event), () => (
-            <Menu onClick={handleOnMenuClick} data={menuItems} />
-        ));
-    };
-
     const onFocus = () => {
         setTimeout(() => {
             if (inputRef.current) {
                 inputRef.current.focus();
             }
         });
+    };
+
+    const setInputVal = (val) => {
+        setTimeout(() => {
+            if (inputRef.current) {
+                inputRef.current.value = val
+            }
+        });
+    }
+
+    const inputEvents = {
+        onFocus,
+        setValue: (val) => setInputVal(val)
+    }
+
+    const handleRightClick = ({ event, node }) => {
+        const menuItems = filterContextMenu?.(contextMenu, node.data);
+        const handleOnMenuClick = (e: React.MouseEvent, item) => {
+            onClickContextMenu?.(e, item, node.data, inputEvents);
+            contextView.hide();
+        };
+        contextView?.show(getEventPosition(event), () => (
+            <Menu onClick={handleOnMenuClick} data={menuItems} />
+        ));
     };
 
     const handleUpdateFile = (e, node) => {
@@ -57,7 +70,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                     onSelectFile?.({
                         ...node,
                         name: newName,
-                    });
+                    }, true);
                 }
             }
         );

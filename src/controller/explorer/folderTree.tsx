@@ -10,14 +10,14 @@ import Modal from 'mo/components/dialog';
 const confirm = Modal.confirm;
 
 export interface IFolderTreeController {
-    readonly onSelectFile?: (file: ITreeNodeItem) => void;
+    readonly onSelectFile?: (file: ITreeNodeItem, isAuto?: boolean) => void;
     readonly onSelectTree?: (id: number) => void;
     readonly onDropTree?: (treeNode: ITreeNodeItem[]) => void;
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
         item: IMenuItem,
         node: ITreeNodeItem,
-        callback?: Function
+        events?: Object
     ) => void;
     readonly filterContextMenu?: (
         menus: IMenuItem[],
@@ -36,7 +36,7 @@ export class FolderTreeController
 
     private initView() { }
 
-    public readonly onSelectFile = (file: ITreeNodeItem) => {
+    public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
         const tabData = {
             ...file,
             id: `${file.id}`,
@@ -48,7 +48,21 @@ export class FolderTreeController
             },
             breadcrumb: [{ id: `${file.id}`, name: 'editor.js' }],
         };
-        editorService.open(tabData);
+        if (isAuto) {
+            // 更新文件自动回调
+            const editorState = editorService.getState();
+
+            const { id, data = [] } = editorState?.current || {};
+            const tabId = file.id;
+            const index = data?.findIndex(tab => tab.id == tabId);
+            if (index > -1) {
+                if (id) editorService.updateTab(tabData, id)
+            } else {
+                editorService.open(tabData);
+            }
+        } else {
+            editorService.open(tabData);
+        }
     };
 
     public onSelectTree = (id: number) => {
@@ -63,14 +77,15 @@ export class FolderTreeController
         e: React.MouseEvent,
         item: IMenuItem,
         node: ITreeNodeItem,
-        callback?: Function
+        events?: Object
     ) => {
         const menuId = item.id;
         const { id: nodeId, name } = node as any;
         switch (menuId) {
             case 'rename': {
                 explorerService.rename(nodeId, () => {
-                    if (callback) callback();
+                    events?.['setValue'](name);
+                    events?.['onFocus']();
                 });
                 break;
             }
@@ -91,13 +106,13 @@ export class FolderTreeController
             }
             case 'newFile': {
                 explorerService.newFile(nodeId, () => {
-                    if (callback) callback();
+                    events?.['onFocus']();
                 });
                 break;
             }
             case 'newFolder': {
                 explorerService.newFolder(nodeId, () => {
-                    if (callback) callback();
+                    events?.['onFocus']();
                 });
                 break;
             }

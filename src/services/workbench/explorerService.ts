@@ -5,9 +5,7 @@ import {
     IExplorer,
     IExplorerModel,
 } from 'mo/model/workbench/explorer';
-import {
-    DEFAULT_PANELS
-} from 'mo/model/workbench/explorer';
+import { DEFAULT_PANELS } from 'mo/model/workbench/explorer';
 import { TreeViewUtil, searchById } from '../helper';
 import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import { editorService } from 'mo';
@@ -65,11 +63,11 @@ export class ExplorerService
         const next = [...data!];
         const index = next.findIndex(searchById(id));
         if (index > -1) {
-            this.remove(id)
+            this.remove(id);
         } else {
-            const existPanel = DEFAULT_PANELS.find(searchById(id))
+            const existPanel = DEFAULT_PANELS.find(searchById(id));
             if (!existPanel) return;
-            this.addPanel(existPanel)
+            this.addPanel(existPanel);
         }
     }
 

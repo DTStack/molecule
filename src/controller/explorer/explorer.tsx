@@ -13,7 +13,10 @@ import { IActionBarItem } from 'mo/components/actionBar';
 // TODO: 自依赖问题 connect 失效，暂时手动引入 Controller 往 View 层传递
 import { folderTreeController, explorerController } from 'mo/controller';
 export interface IExplorerController {
-    onHeaderToolbarContextMenuClick?: (e: React.MouseEvent, item: IActionBarItem) => void;
+    onHeaderToolbarContextMenuClick?: (
+        e: React.MouseEvent,
+        item: IActionBarItem
+    ) => void;
 }
 
 @singleton()
@@ -108,9 +111,7 @@ export class ExplorerController
             },
         };
 
-        explorerService.addPanel([
-            sampleFolderPanel,
-        ]);
+        explorerService.addPanel([sampleFolderPanel]);
     }
 
     private createFile = (e, type) => {

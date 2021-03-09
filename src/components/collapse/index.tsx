@@ -16,6 +16,7 @@ export interface IExpandProps {
 export interface ICollapseProps<T = any> {
     data?: T;
     className?: string;
+    onCollapseChange?: (keys) => void;
 }
 
 interface IState {
@@ -34,8 +35,9 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
     props: ICollapseProps
 ) => {
     const [state, setState] = useState<IState>(initState);
-    const { className, data = [], ...restProps } = props;
+    const { className, data = [], onCollapseChange, ...restProps } = props;
     const onChangeCallback = (key: React.Key[]) => {
+        onCollapseChange?.(key)
         setState((state: IState) => ({ ...state, activePanelKeys: key }));
     };
     const onClick = (e, item) => {
@@ -69,6 +71,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
                     <Panel
                         key={panel.id}
                         header={panel.name}
+                        className={panel.className}
                         extra={
                             activePanelKeys?.includes(panel.id) && (
                                 <Toolbar

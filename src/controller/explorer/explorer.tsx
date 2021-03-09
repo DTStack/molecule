@@ -114,7 +114,6 @@ export class ExplorerController
         };
 
         explorerService.addPanel([sampleFolderPanel]);
-
     }
 
     private createFile = (e, type) => {
@@ -142,6 +141,6 @@ export class ExplorerController
     };
 
     public readonly onCollapseChange = (keys) => {
-        console.log('keys', keys)
-    }
+        console.log('keys', keys);
+    };
 }

@@ -22,7 +22,6 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
         onClickContextMenu,
         ...restProps
     } = props;
-    console.log('FolderTree => FolderTreeController', props)
     const inputRef = useRef<any>(null);
 
     const contextView = useContextView();

@@ -2,7 +2,6 @@ export function searchById(id) {
     return (item) => item.id === id;
 }
 
-
 export interface IIndex<T> {
     id?: number;
     node?: T;
@@ -43,7 +42,7 @@ export class TreeViewUtil<T = any> implements ITreeInterface<T> {
             ...
         }
      */
-    constructor(obj, childNodeName = 'children') {
+    constructor(obj?, childNodeName = 'children') {
         this.count = 1; // nodes count
         this.obj = obj || { [childNodeName]: [] };
         this.indexes = {};

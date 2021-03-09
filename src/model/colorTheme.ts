@@ -7,15 +7,26 @@ export interface TokenColor extends Object {
     settings?: object;
 }
 
+/**
+ * Color scheme used by the OS and by color themes.
+ */
+export enum ColorScheme {
+    DARK = 'dark',
+    LIGHT = 'light',
+    HIGH_CONTRAST = 'hc',
+}
+
 export interface IColorTheme {
     /**
      * The id of component, theme will be applied by this ID
      */
     id: string;
     label: string;
-    name: string;
-    uiTheme: string;
+    name?: string;
+    uiTheme?: string;
     path?: string;
+    description?: string;
+    type?: ColorScheme;
     colors?: IColors;
     tokenColors?: TokenColor[];
     /**

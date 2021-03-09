@@ -83,7 +83,6 @@ export class MonacoService implements IMonacoService {
         options?: IStandaloneEditorConstructionOptions,
         overrides?: IEditorOverrideServices
     ): IStandaloneCodeEditor {
-        
         const services = this.services;
 
         const standaloneEditor = new StandaloneEditor(
@@ -146,7 +145,7 @@ export class MonacoService implements IMonacoService {
             StaticServices.codeEditorService.get(ICodeEditorService),
             this.container
         );
-        
+
         // Override layoutService
         services.set(ILayoutService, layoutService);
 

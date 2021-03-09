@@ -14,7 +14,13 @@ import {
 } from './base';
 
 export function ActivityBar(props: IActivityBar & IActivityBarController) {
-    const { data = [], selected, onClick, onSelect } = props;
+    const {
+        data = [],
+        selected,
+        onClick,
+        onSelect,
+        onContextMenuClick,
+    } = props;
 
     const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
         if (onClick) onClick(e, item);
@@ -37,6 +43,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
             <ActivityBarItem
                 key={item.id}
                 {...item}
+                onContextMenuClick={onContextMenuClick}
                 onClick={onClickBar}
                 data-index={index}
                 checked={selected === item.id}

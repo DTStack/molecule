@@ -129,7 +129,12 @@ export class ExplorerController
                     data: explorerState.folderTree?.data,
                     contextMenu: explorerState.folderTree?.contextMenu,
                 };
-                return <FolderTreeView {...folderProps} {...folderTreeController} />;
+                return (
+                    <FolderTreeView
+                        {...folderProps}
+                        {...folderTreeController}
+                    />
+                );
             },
         };
 

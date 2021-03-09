@@ -1,4 +1,5 @@
 import { singleton, container } from 'tsyringe';
+import * as monaco from 'monaco-editor';
 
 import { Component } from 'mo/react';
 import {
@@ -32,6 +33,10 @@ export interface IEditorService extends Component<IEditor> {
      */
     setActive(groupId: number, tabId: string);
     updateGroup(groupId, groupValues: IEditorGroup): void;
+    /**
+     * The Instance of Editor
+     */
+    readonly editorInstance: monaco.editor.IStandaloneCodeEditor;
 }
 @singleton()
 export class EditorService
@@ -48,6 +53,10 @@ export class EditorService
         group: IEditorGroup
     ): IEditorTab<T> | undefined {
         return group.data?.find(searchById(tabId));
+    }
+
+    public get editorInstance() {
+        return this.state.current?.editorInstance;
     }
 
     public updateTab(tab: IEditorTab, groupId: number): IEditorTab {

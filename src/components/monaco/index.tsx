@@ -55,7 +55,7 @@ export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
 
     componentWillUnmount() {
         if (this.monacoInstance) {
-            this.monacoInstance.dispose();
+            // this.monacoInstance.dispose();
         }
     }
 

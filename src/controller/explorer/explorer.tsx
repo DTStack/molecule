@@ -13,7 +13,7 @@ import { IActionBarItem } from 'mo/components/actionBar';
 // TODO: 自依赖问题 connect 失效，暂时手动引入 Controller 往 View 层传递
 import { folderTreeController, explorerController } from 'mo/controller';
 export interface IExplorerController {
-    onHeaderToolbarClick?: (e: React.MouseEvent, item: IActionBarItem) => void;
+    onHeaderToolbarContextMenuClick?: (e: React.MouseEvent, item: IActionBarItem) => void;
 }
 
 @singleton()
@@ -62,39 +62,9 @@ export class ExplorerController
             panes: [...sideBarState.panes!, explorePane],
         });
 
-        /**
-         * explorer service
-         * includes collapse and tree
-         */
-        const editorPanel = {
-            id: 'editors',
-            name: 'OPEN EDITORS',
-            toolbar: [
-                {
-                    id: 'toggle',
-                    title: 'Toggle Vertical',
-                    disabled: true,
-                    iconName: 'codicon-editor-layout',
-                },
-                {
-                    id: 'save',
-                    title: 'Save All',
-                    disabled: true,
-                    iconName: 'codicon-save-all',
-                },
-                {
-                    id: 'close',
-                    title: 'Close All Editors',
-                    iconName: 'codicon-close-all',
-                },
-            ],
-            renderPanel: () => {
-                return <span>editors</span>;
-            },
-        };
-
+        // TODO: 这里初始化数据应提取到 model, 但由于 renderPanel return View 层，存在依赖关系.
         const sampleFolderPanel = {
-            id: 'sample_folder',
+            id: 'Folders',
             name: 'Sample Folder',
             toolbar: [
                 {
@@ -138,27 +108,8 @@ export class ExplorerController
             },
         };
 
-        const outlinePanel = {
-            id: 'outline',
-            name: 'OUTLINE',
-            toolbar: [
-                {
-                    id: 'outline-collapse',
-                    title: 'Collapse All',
-                    iconName: 'codicon-collapse-all',
-                },
-                {
-                    id: 'outline-more',
-                    title: 'More Actions...',
-                    iconName: 'codicon-ellipsis',
-                },
-            ],
-        };
-
         explorerService.addPanel([
-            editorPanel,
             sampleFolderPanel,
-            outlinePanel,
         ]);
     }
 
@@ -175,11 +126,14 @@ export class ExplorerController
         // console.log('onClick:', panelService);
     };
 
-    public readonly onHeaderToolbarClick = (
+    public readonly onHeaderToolbarContextMenuClick = (
         e: React.MouseEvent,
         item: IActionBarItem
     ) => {
         e.stopPropagation();
         console.log('onClick:', e, item);
+        const panelId = item.id;
+        if (panelId === 'Folders') return;
+        explorerService.addOrRemovePanel(panelId);
     };
 }

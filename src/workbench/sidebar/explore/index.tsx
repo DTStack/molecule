@@ -1,3 +1,4 @@
+import 'mo/workbench/sidebar/explore/style.scss';
 import { connect } from 'mo/react';
 import { explorerService } from 'mo/services';
 import { explorerController, folderTreeController } from 'mo/controller';

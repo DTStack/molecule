@@ -5,7 +5,10 @@ import {
     IExplorer,
     IExplorerModel,
 } from 'mo/model/workbench/explorer';
-import { TreeViewUtil } from '../helper';
+import {
+    DEFAULT_PANELS
+} from 'mo/model/workbench/explorer';
+import { TreeViewUtil, searchById } from '../helper';
 import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import { editorService } from 'mo';
 import { TreeNodeModel } from 'mo/model';
@@ -13,7 +16,8 @@ import { TreeNodeModel } from 'mo/model';
 export interface IExplorerService extends Component<IExplorer> {
     addPanel(panel: IPanelItem | IPanelItem[]): void;
     reset(): void;
-    remove(index: number): void;
+    remove(id: string): void;
+    addOrRemovePanel(id: string): void;
 
     getRootFolderByRootId(id: number): ITreeNodeItem | undefined;
     addRootFolder(folder?: ITreeNodeItem | ITreeNodeItem[]): void;
@@ -56,9 +60,23 @@ export class ExplorerService
         });
     }
 
-    public remove(index: number) {
+    public addOrRemovePanel(id: string) {
         const { data } = this.state;
         const next = [...data!];
+        const index = next.findIndex(searchById(id));
+        if (index > -1) {
+            this.remove(id)
+        } else {
+            const existPanel = DEFAULT_PANELS.find(searchById(id))
+            if (!existPanel) return;
+            this.addPanel(existPanel)
+        }
+    }
+
+    public remove(id: string) {
+        const { data } = this.state;
+        const next = [...data!];
+        const index = next.findIndex(searchById(id));
         if (index > -1) {
             next.splice(index, 1);
         }
@@ -66,6 +84,15 @@ export class ExplorerService
             data: next,
         });
     }
+
+    // private updateHeaderToolBarCheckStatus(id: string) {
+    //     const { headerToolBar, data } = this.state;
+    //     const existPanel = data?.find(searchById(id));
+    //     const next = [...headerToolBar!];
+    //     this.setState({
+    //         headerToolBar: next,
+    //     });
+    // }
 
     /* ============================Tree============================ */
 

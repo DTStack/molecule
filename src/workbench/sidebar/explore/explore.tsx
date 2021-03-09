@@ -1,27 +1,35 @@
 import * as React from 'react';
 import Collapse from 'mo/components/collapse';
-import Toolbar from 'mo/components/toolbar';
 import { Header, Content } from 'mo/workbench/sidebar';
-import { prefixClaName } from 'mo/common/className';
 import { IExplorer } from 'mo/model/workbench/explorer';
 import { IExplorerController } from 'mo/controller/explorer/explorer';
-
-const defaultExplorerClassName = prefixClaName('explorer', 'sidebar');
+import ActivityBarItem from 'mo/workbench/activityBar/activityBarItem';
+import { IActivityBarItem } from 'mo/model/workbench/activityBar';
+import {
+    defaultExplorerClassName,
+    activityBarItemFloatClassName
+} from './base';
 
 export const Explorer: React.FunctionComponent<IExplorer> = (
     props: IExplorer & IExplorerController
 ) => {
-    const { data = [], headerToolBar = [], onHeaderToolbarClick } = props;
+    const { data = [], headerToolBar = [], onHeaderToolbarContextMenuClick } = props;
+    const renderItems = (item: IActivityBarItem, index: number) => {
+        return (
+            <ActivityBarItem
+                {...item}
+                key={item.id}
+                onClick={onHeaderToolbarContextMenuClick}
+                className={activityBarItemFloatClassName}
+                data-index={index}
+            />
+        );
+    };
     return (
         <div className={defaultExplorerClassName}>
             <Header
                 title={'Explorer'}
-                toolbar={
-                    <Toolbar
-                        data={headerToolBar}
-                        onClick={onHeaderToolbarClick}
-                    />
-                }
+                toolbar={headerToolBar.map(renderItems)}
             />
             <Content>
                 <Collapse data={data} />

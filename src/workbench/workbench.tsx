@@ -16,6 +16,8 @@ import { APP_PREFIX } from 'mo/common/const';
 import { panelService } from 'mo/services';
 import { connect } from 'mo/react';
 import { IPanel } from 'mo/model/workbench/panel';
+import { workbenchController } from 'mo/controller';
+import { IWorkbenchController } from 'mo/controller/workbench';
 
 export interface IWorkbench {
     panel: IPanel;
@@ -25,8 +27,9 @@ const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
 const appClassName = classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '');
 
-export function WorkbenchView(props: IWorkbench) {
-    const { panel } = props;
+export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
+    const { panel, onPaneSizeChange, splitPanePos } = props;
+
     return (
         <div id={ID_APP} className={appClassName}>
             <div className={workbenchClassName}>
@@ -37,8 +40,13 @@ export function WorkbenchView(props: IWorkbench) {
                         split="vertical"
                         primary="first"
                         allowResize={true}
+                        onChange={onPaneSizeChange}
                     >
-                        <Pane minSize="170px" initialSize="300px" maxSize="80%">
+                        <Pane
+                            minSize="170px"
+                            initialSize={splitPanePos[0]}
+                            maxSize="80%"
+                        >
                             <SidebarView />
                         </Pane>
                         <SplitPane
@@ -69,6 +77,10 @@ export function WorkbenchView(props: IWorkbench) {
     );
 }
 
-export const Workbench = connect({ panel: panelService }, WorkbenchView);
+export const Workbench = connect(
+    { panel: panelService },
+    WorkbenchView,
+    workbenchController
+);
 
 export default Workbench;

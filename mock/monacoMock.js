@@ -9,4 +9,6 @@ module.exports = {
         setTheme: function (theme) {},
         create: function (dom, options, override) {},
     },
+    KeyMod: {},
+    KeyCode: {},
 };

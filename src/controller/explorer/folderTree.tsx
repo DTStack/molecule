@@ -6,6 +6,7 @@ import { editorService, explorerService } from 'mo';
 import { EditorController } from 'mo/controller/editor';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
+import { IFolderInputEvent, TreeNodeModel } from 'mo/model';
 const confirm = Modal.confirm;
 
 export interface IFolderTreeController {
@@ -15,13 +16,14 @@ export interface IFolderTreeController {
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
         item: IMenuItem,
-        node: ITreeNodeItem,
-        events?: Object
+        node?: ITreeNodeItem,
+        events?: IFolderInputEvent
     ) => void;
     readonly filterContextMenu?: (
         menus: IMenuItem[],
         treeNode: ITreeNodeItem
     ) => IMenuItem[];
+    readonly getInputEvent?: (events: IFolderInputEvent) => IFolderInputEvent;
 }
 
 @singleton()
@@ -33,7 +35,7 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() {}
+    private initView() { }
 
     public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
         const tabData = {
@@ -72,19 +74,24 @@ export class FolderTreeController
         explorerService.onDropTree(treeNode);
     };
 
+    public readonly getInputEvent = (events: IFolderInputEvent): IFolderInputEvent => {
+        return events;
+    }
+
     public readonly onClickContextMenu = (
         e: React.MouseEvent,
         item: IMenuItem,
-        node: ITreeNodeItem,
-        events?: Object
+        node = {},
+        events?: IFolderInputEvent
     ) => {
         const menuId = item.id;
         const { id: nodeId, name } = node as any;
+        console.log('onClickContextMenu => Item', item)
         switch (menuId) {
             case 'rename': {
                 explorerService.rename(nodeId, () => {
-                    events?.['setValue'](name);
-                    events?.['onFocus']();
+                    events?.setValue?.(name);
+                    events?.onFocus();
                 });
                 break;
             }
@@ -105,18 +112,27 @@ export class FolderTreeController
             }
             case 'newFile': {
                 explorerService.newFile(nodeId, () => {
-                    events?.['onFocus']();
+                    events?.onFocus();
                 });
                 break;
             }
             case 'newFolder': {
                 explorerService.newFolder(nodeId, () => {
-                    events?.['onFocus']();
+                    events?.onFocus();
                 });
                 break;
             }
             case 'remove': {
                 explorerService.removeRootFolder(nodeId);
+                break;
+            }
+            case 'addRootFolder': {
+                explorerService.addRootFolder?.(
+                    new TreeNodeModel({
+                        name: `molecule_temp${Math.random()}`,
+                        fileType: 'rootFolder',
+                    })
+                );
                 break;
             }
             case 'openTab': {
@@ -178,4 +194,5 @@ export class FolderTreeController
         }
         return menu;
     };
+
 }

@@ -71,17 +71,17 @@ const commonContextMenu = [
 const folderPanelContextMenu = [
     {
         id: 'addRootFolder',
-        name: 'Add Folder to Workspace...'
+        name: 'Add Folder to Workspace...',
     },
     {
         id: 'find',
-        name: 'Find in Workspace...'
+        name: 'Find in Workspace...',
     },
     {
         id: 'download',
-        name: 'Download...'
+        name: 'Download...',
     },
-]
+];
 // Dedault Panel
 export const EDITOR_PANEL = {
     id: 'OpenEditors',

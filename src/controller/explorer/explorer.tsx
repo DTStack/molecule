@@ -103,7 +103,8 @@ export class ExplorerController
                 const folderProps: IFolderTree = {
                     data: explorerState.folderTree?.data,
                     contextMenu: explorerState.folderTree?.contextMenu,
-                    folderPanelContextMenu: explorerState.folderTree?.folderPanelContextMenu
+                    folderPanelContextMenu:
+                        explorerState.folderTree?.folderPanelContextMenu,
                 };
                 return (
                     <FolderTreeView

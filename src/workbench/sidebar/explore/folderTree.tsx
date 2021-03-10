@@ -33,7 +33,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     let contextViewMenu;
     const onClickMenuItem = useCallback(
         (e, item) => {
-            onClickContextMenu?.(e, item)
+            onClickContextMenu?.(e, item);
             contextViewMenu?.dispose();
         },
         [folderPanelContextMenu]
@@ -78,7 +78,12 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     const handleRightClick = ({ event, node }) => {
         const menuItems = filterContextMenu?.(contextMenu, node.data);
         const handleOnMenuClick = (e: React.MouseEvent, item) => {
-            onClickContextMenu?.(e, item, node.data, getInputEvent?.(inputEvents));
+            onClickContextMenu?.(
+                e,
+                item,
+                node.data,
+                getInputEvent?.(inputEvents)
+            );
             contextView.hide();
         };
         contextView?.show(getEventPosition(event), () => (
@@ -130,8 +135,8 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-                name
-            );
+            name
+        );
     };
 
     const renderByData = (

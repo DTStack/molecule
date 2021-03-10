@@ -8,6 +8,7 @@ import { PanelController } from './panel';
 import { SettingsController } from './settings';
 import { SidebarController } from './sidebar';
 import { StatusBarController } from './statusBar';
+import { WorkbenchController } from './workbench';
 
 export const activityBarController = container.resolve(ActivityBarController);
 export const editorController = container.resolve(EditorController);
@@ -18,3 +19,4 @@ export const explorerController = container.resolve(ExplorerController);
 export const statusBarController = container.resolve(StatusBarController);
 export const settingsController = container.resolve(SettingsController);
 export const folderTreeController = container.resolve(FolderTreeController);
+export const workbenchController = container.resolve(WorkbenchController);

@@ -35,7 +35,7 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() { }
+    private initView() {}
 
     public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
         const tabData = {
@@ -74,9 +74,11 @@ export class FolderTreeController
         explorerService.onDropTree(treeNode);
     };
 
-    public readonly getInputEvent = (events: IFolderInputEvent): IFolderInputEvent => {
+    public readonly getInputEvent = (
+        events: IFolderInputEvent
+    ): IFolderInputEvent => {
         return events;
-    }
+    };
 
     public readonly onClickContextMenu = (
         e: React.MouseEvent,
@@ -86,7 +88,7 @@ export class FolderTreeController
     ) => {
         const menuId = item.id;
         const { id: nodeId, name } = node as any;
-        console.log('onClickContextMenu => Item', item)
+        console.log('onClickContextMenu => Item', item);
         switch (menuId) {
             case 'rename': {
                 explorerService.rename(nodeId, () => {
@@ -194,5 +196,4 @@ export class FolderTreeController
         }
         return menu;
     };
-
 }

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { singleton } from 'tsyringe';
+import { container, singleton } from 'tsyringe';
 
 import {
     IStandaloneEditorConstructionOptions,
@@ -64,19 +64,19 @@ export class MonacoService implements IMonacoService {
         return document.getElementById(ID_APP);
     }
 
-    // private mergeEditorServices(overrides?: IEditorOverrideServices) {
-    //     if (overrides) {
-    //         const services = this.services;
-    //         for (const serviceId in overrides) {
-    //             if (serviceId) {
-    //                 const service = services.get(serviceId);
-    //                 if (service && overrides[serviceId]){
-    //                     services.set(serviceId, overrides[serviceId]);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    private mergeEditorServices(overrides?: IEditorOverrideServices) {
+        if (overrides) {
+            const services = this.services;
+            for (const serviceId in overrides) {
+                if (serviceId) {
+                    const service = services.get(serviceId);
+                    if (service && overrides[serviceId]) {
+                        services.set(serviceId, overrides[serviceId]);
+                    }
+                }
+            }
+        }
+    }
 
     public create(
         domElement: HTMLElement,
@@ -84,6 +84,8 @@ export class MonacoService implements IMonacoService {
         overrides?: IEditorOverrideServices
     ): IStandaloneCodeEditor {
         const services = this.services;
+
+        this.mergeEditorServices(overrides);
 
         const standaloneEditor = new StandaloneEditor(
             domElement,
@@ -153,3 +155,5 @@ export class MonacoService implements IMonacoService {
         services.set(IQuickInputService, quickInputService);
     }
 }
+
+export const monacoService = container.resolve<IMonacoService>(MonacoService);

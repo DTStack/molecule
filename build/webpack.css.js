@@ -29,6 +29,7 @@ const styles = [
     'workbench/settings/style',
     'workbench/sidebar/style',
     'workbench/statusBar/style',
+    'workbench/sidebar/explore/style',
     // ============= Molecule.css =============
     'style/mo',
 ];

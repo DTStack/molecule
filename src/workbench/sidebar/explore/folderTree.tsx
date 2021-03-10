@@ -10,7 +10,7 @@ import { IFolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { explorerService } from 'mo/services';
-import { TreeNodeModel } from 'mo/model';
+import { TreeNodeModel, IFolderInputEvent } from 'mo/model';
 
 const FolderTree: React.FunctionComponent<IFolderTree> = (
     props: IFolderTree & IFolderTreeController
@@ -18,10 +18,12 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     const {
         data = [],
         contextMenu = [],
+        folderPanelContextMenu = [],
         onSelectFile,
         onDropTree,
         filterContextMenu,
         onClickContextMenu,
+        getInputEvent,
         ...restProps
     } = props;
     const inputRef = useRef<any>(null);
@@ -29,32 +31,19 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
     const contextView = useContextView();
 
     let contextViewMenu;
-    const folderContextMenu = [
-        {
-            id: 'addFolder',
-            name: 'Add Folder to Workspace',
-            onClick: () => {
-                explorerService.addRootFolder?.(
-                    new TreeNodeModel({
-                        name: `molecule_temp${Math.random()}`,
-                        fileType: 'rootFolder',
-                    })
-                );
-            },
-        },
-    ];
     const onClickMenuItem = useCallback(
         (e, item) => {
+            onClickContextMenu?.(e, item)
             contextViewMenu?.dispose();
         },
-        [folderContextMenu]
+        [folderPanelContextMenu]
     );
     const renderContextMenu = () => (
-        <Menu onClick={onClickMenuItem} data={folderContextMenu} />
+        <Menu onClick={onClickMenuItem} data={folderPanelContextMenu} />
     );
 
     useEffect(() => {
-        if (folderContextMenu.length > 0) {
+        if (folderPanelContextMenu.length > 0) {
             contextViewMenu = useContextMenu({
                 anchor: select('.samplefolder'),
                 render: renderContextMenu,
@@ -73,7 +62,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
         });
     };
 
-    const setInputVal = (val) => {
+    const setInputValue = (val) => {
         setTimeout(() => {
             if (inputRef.current) {
                 inputRef.current.value = val;
@@ -81,15 +70,15 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
         });
     };
 
-    const inputEvents = {
+    const inputEvents: IFolderInputEvent = {
         onFocus,
-        setValue: (val) => setInputVal(val),
+        setValue: (val) => setInputValue(val),
     };
 
     const handleRightClick = ({ event, node }) => {
         const menuItems = filterContextMenu?.(contextMenu, node.data);
         const handleOnMenuClick = (e: React.MouseEvent, item) => {
-            onClickContextMenu?.(e, item, node.data, inputEvents);
+            onClickContextMenu?.(e, item, node.data, getInputEvent?.(inputEvents));
             contextView.hide();
         };
         contextView?.show(getEventPosition(event), () => (
@@ -141,8 +130,8 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-            name
-        );
+                name
+            );
     };
 
     const renderByData = (

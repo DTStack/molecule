@@ -13,9 +13,15 @@ export interface IPanelItem<T = any> extends IActivityBarItem {
     toolbar?: T;
 }
 
+export interface IFolderInputEvent {
+    onFocus: () => void;
+    setValue: (value: string) => void;
+}
+
 export interface IFolderTree {
     data?: ITreeNodeItem[];
     contextMenu?: IMenuItem[];
+    folderPanelContextMenu?: IMenuItem[];
     current?: ITreeNodeItem | null;
 }
 export interface IExplorer {
@@ -60,6 +66,22 @@ const commonContextMenu = [
         name: 'Delete',
     },
 ];
+
+// Sample folder panel area ContextMenu
+const folderPanelContextMenu = [
+    {
+        id: 'addRootFolder',
+        name: 'Add Folder to Workspace...'
+    },
+    {
+        id: 'find',
+        name: 'Find in Workspace...'
+    },
+    {
+        id: 'download',
+        name: 'Download...'
+    },
+]
 // Dedault Panel
 export const EDITOR_PANEL = {
     id: 'OpenEditors',
@@ -141,6 +163,7 @@ export class IExplorerModel implements IExplorer {
     public folderTree: IFolderTree = {
         contextMenu: commonContextMenu,
         current: null,
+        folderPanelContextMenu: folderPanelContextMenu,
         data: [],
     };
     public headerToolBar: IActivityBarItem[] = builtInHeaderToolbar;

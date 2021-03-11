@@ -54,12 +54,23 @@ export interface IPanel {
 
 @injectable()
 export class PanelModel implements IPanel {
-    public current: IPanelItem | undefined = PANEL_OUTPUT;
-    public data: IPanelItem[] = ([] = [PANEL_PROBLEMS, PANEL_OUTPUT]);
+    public current: IPanelItem | undefined;
+    public data: IPanelItem[];
     public hidden = false;
     public maximize = false;
-    public toolbox: IActionBarItem[] = [
-        PANEL_TOOLBOX_RESIZE,
-        PANEL_TOOLBOX_CLOSE,
-    ];
+    public toolbox: IActionBarItem[];
+
+    constructor(
+        current: IPanelItem = PANEL_OUTPUT,
+        data: IPanelItem[] = ([] = [PANEL_PROBLEMS, PANEL_OUTPUT]),
+        hidden = false,
+        maximize = false,
+        toolbox: IActionBarItem[] = [PANEL_TOOLBOX_RESIZE, PANEL_TOOLBOX_CLOSE]
+    ) {
+        this.current = current;
+        this.data = data;
+        this.hidden = hidden;
+        this.maximize = maximize;
+        this.toolbox = toolbox;
+    }
 }

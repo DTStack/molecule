@@ -1,4 +1,4 @@
-import { container, injectable, inject } from 'tsyringe';
+import { injectable } from 'tsyringe';
 
 /**
  * The activity bar event definition
@@ -25,9 +25,7 @@ export interface IMenuBar {
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];
 
-    constructor(@inject('MenuBarData') data: IMenuBarItem[] = []) {
+    constructor(data: IMenuBarItem[] = []) {
         this.data = data;
     }
 }
-
-container.register('MenuBarData', { useValue: [] });

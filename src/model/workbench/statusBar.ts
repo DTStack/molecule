@@ -28,6 +28,14 @@ export enum StatusBarEvent {
 }
 @injectable()
 export class StatusBarModel implements IStatusBar {
-    public leftItems: IStatusBarItem[] = [];
-    public rightItems: IStatusBarItem[] = [];
+    public leftItems: IStatusBarItem[];
+    public rightItems: IStatusBarItem[];
+
+    constructor(
+        leftItems: IStatusBarItem[] = [],
+        rightItems: IStatusBarItem[] = []
+    ) {
+        this.leftItems = leftItems;
+        this.rightItems = rightItems;
+    }
 }

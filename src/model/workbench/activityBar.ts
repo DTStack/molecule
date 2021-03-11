@@ -69,11 +69,21 @@ export const ACTIVITY_BAR_GLOBAL_ACCOUNT: IActivityBarItem = {
     type: 'global',
 };
 
+export const initialActivityBarData: IActivityBarItem[] = [
+    ACTIVITY_BAR_GLOBAL_ACCOUNT,
+    ACTIVITY_BAR_GLOBAL_SETTINGS,
+];
+
 @injectable()
 export class ActivityBarModel implements IActivityBar {
-    public data: IActivityBarItem[] = [
-        ACTIVITY_BAR_GLOBAL_ACCOUNT,
-        ACTIVITY_BAR_GLOBAL_SETTINGS,
-    ];
-    public selected: string = '';
+    public data: IActivityBarItem[];
+    public selected: string;
+
+    constructor(
+        data: IActivityBarItem[] = initialActivityBarData,
+        selected: string = ''
+    ) {
+        this.data = data;
+        this.selected = selected;
+    }
 }

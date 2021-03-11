@@ -30,6 +30,16 @@ export interface IExplorer {
     folderTree?: IFolderTree;
 }
 
+export const NEW_FILE_COMMAND_ID = 'explorer.newFile';
+export const NEW_FOLDER_COMMAND_ID = 'explorer.newFolder';
+export const RENAME_COMMAND_ID = 'explorer.rename';
+export const REMOVE_COMMAND_ID = 'explorer.remove';
+export const DELETE_COMMAND_ID = 'explorer.delete';
+export const OPEN_TO_SIDE_COMMAND_ID = 'explorer.openToSide';
+export const ADD_ROOT_FOLDER_COMMAND_ID = 'addRootFolder';
+export const FIND_IN_WORKSPACE_ID = 'filesExplorer.findInWorkspace';
+export const DOWNLOAD_COMMAND_ID = 'explorer.download';
+
 const builtInHeaderToolbar: IActivityBarItem[] = [
     {
         id: 'explorer-more',
@@ -56,29 +66,52 @@ const builtInHeaderToolbar: IActivityBarItem[] = [
     },
 ];
 
-const commonContextMenu = [
+// TODO: name property extract, to adapt Localize
+export const commonContextMenu = [
     {
-        id: 'rename',
+        id: RENAME_COMMAND_ID,
         name: 'Rename',
     },
     {
-        id: 'delete',
+        id: DELETE_COMMAND_ID,
         name: 'Delete',
     },
 ];
-
-// Sample folder panel area ContextMenu
-const folderPanelContextMenu = [
+export const baseContextMenu = [
     {
-        id: 'addRootFolder',
+        id: NEW_FILE_COMMAND_ID,
+        name: 'New File',
+    },
+    {
+        id: NEW_FOLDER_COMMAND_ID,
+        name: 'New Folder',
+    },
+];
+
+export const rootFolderContextMenu = [
+    {
+        id: RENAME_COMMAND_ID,
+        name: 'Remove Folder',
+    },
+];
+export const fileContextMenu = [
+    {
+        id: OPEN_TO_SIDE_COMMAND_ID,
+        name: 'Open to the Side',
+    },
+]
+// Sample folder panel area ContextMenu
+export const folderPanelContextMenu = [
+    {
+        id: ADD_ROOT_FOLDER_COMMAND_ID,
         name: 'Add Folder to Workspace...',
     },
     {
-        id: 'find',
+        id: FIND_IN_WORKSPACE_ID,
         name: 'Find in Workspace...',
     },
     {
-        id: 'download',
+        id: DOWNLOAD_COMMAND_ID,
         name: 'Download...',
     },
 ];

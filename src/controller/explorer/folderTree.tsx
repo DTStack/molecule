@@ -6,7 +6,13 @@ import { editorService, explorerService } from 'mo';
 import { EditorController } from 'mo/controller/editor';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
-import { IFolderInputEvent, TreeNodeModel } from 'mo/model';
+import {
+    IFolderInputEvent, TreeNodeModel,
+    baseContextMenu, rootFolderContextMenu, fileContextMenu,
+    NEW_FILE_COMMAND_ID, NEW_FOLDER_COMMAND_ID, RENAME_COMMAND_ID,
+    REMOVE_COMMAND_ID, DELETE_COMMAND_ID, OPEN_TO_SIDE_COMMAND_ID,
+    ADD_ROOT_FOLDER_COMMAND_ID
+} from 'mo/model';
 const confirm = Modal.confirm;
 
 export interface IFolderTreeController {
@@ -35,7 +41,7 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() {}
+    private initView() { }
 
     public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
         const tabData = {
@@ -90,14 +96,14 @@ export class FolderTreeController
         const { id: nodeId, name } = node as any;
         console.log('onClickContextMenu => Item', item);
         switch (menuId) {
-            case 'rename': {
+            case RENAME_COMMAND_ID: {
                 explorerService.rename(nodeId, () => {
                     events?.setValue?.(name);
                     events?.onFocus();
                 });
                 break;
             }
-            case 'delete': {
+            case DELETE_COMMAND_ID: {
                 confirm({
                     title: `Are you sure you want to delete '${name}' ?`,
                     content: 'This action is irreversible!',
@@ -112,23 +118,23 @@ export class FolderTreeController
                 });
                 break;
             }
-            case 'newFile': {
+            case NEW_FILE_COMMAND_ID: {
                 explorerService.newFile(nodeId, () => {
                     events?.onFocus();
                 });
                 break;
             }
-            case 'newFolder': {
+            case NEW_FOLDER_COMMAND_ID: {
                 explorerService.newFolder(nodeId, () => {
                     events?.onFocus();
                 });
                 break;
             }
-            case 'remove': {
+            case REMOVE_COMMAND_ID: {
                 explorerService.removeRootFolder(nodeId);
                 break;
             }
-            case 'addRootFolder': {
+            case ADD_ROOT_FOLDER_COMMAND_ID: {
                 explorerService.addRootFolder?.(
                     new TreeNodeModel({
                         name: `molecule_temp${Math.random()}`,
@@ -137,7 +143,7 @@ export class FolderTreeController
                 );
                 break;
             }
-            case 'openTab': {
+            case OPEN_TO_SIDE_COMMAND_ID: {
                 console.log('OpenTab');
                 break;
                 // editorService.open();
@@ -147,48 +153,20 @@ export class FolderTreeController
 
     public readonly filterContextMenu = (menus, node) => {
         let menu;
-        const baseContextMenu = [
-            {
-                id: 'newFile',
-                name: 'New File',
-            },
-            {
-                id: 'newFolder',
-                name: 'New Folder',
-            },
-        ];
-
-        const rootFolderContextMenu = [
-            {
-                id: 'remove',
-                name: 'Remove Folder',
-            },
-        ];
-
-        const folderContextMenu = baseContextMenu.concat(menus);
-
-        const fileContextMenu = [
-            {
-                id: 'openToSide',
-                name: 'Open to the side',
-            },
-        ].concat(menus);
-
-        const rootFodlerContextMenu = baseContextMenu.concat(
-            rootFolderContextMenu
-        );
 
         switch (node.fileType) {
             case FileTypes.file: {
-                menu = fileContextMenu;
+                menu = fileContextMenu.concat(menus);
                 break;
             }
             case FileTypes.folder: {
-                menu = folderContextMenu;
+                menu = baseContextMenu.concat(menus);
                 break;
             }
             case FileTypes.rootFolder: {
-                menu = rootFodlerContextMenu;
+                menu = baseContextMenu.concat(
+                    rootFolderContextMenu
+                );;
                 break;
             }
             default:

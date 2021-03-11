@@ -28,3 +28,7 @@ export function mergeFunctions(...funcs) {
         funcs.filter((fn) => !!fn).forEach((fn) => fn?.(...args));
     };
 }
+
+export function randomId() {
+    return (Date.now() + Math.round(Math.random() * 1000));
+}

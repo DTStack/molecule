@@ -10,6 +10,7 @@ import { TreeViewUtil, searchById } from '../helper';
 import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import { editorService } from 'mo';
 import { TreeNodeModel } from 'mo/model';
+import { randomId } from 'mo/common/utils';
 
 export interface IExplorerService extends Component<IExplorer> {
     addPanel(panel: IPanelItem | IPanelItem[]): void;
@@ -273,7 +274,7 @@ export class ExplorerService
         const tree = new TreeViewUtil(currentRootFolder);
         if (!id) {
             const tabData = {
-                id: `${Math.random() * 10 + 1}`,
+                id: `${randomId()}`,
                 name: `Untitled`,
                 data: {
                     modified: false,

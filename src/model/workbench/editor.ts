@@ -107,6 +107,14 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
 
 @injectable()
 export class EditorModel<T> implements IEditor {
-    public current: IEditorGroup | null = null;
-    public groups: IEditorGroup[] = [];
+    public current: IEditorGroup | null;
+    public groups: IEditorGroup[];
+
+    constructor(
+        current: IEditorGroup | null = null,
+        groups: IEditorGroup[] = []
+    ) {
+        this.current = current;
+        this.groups = groups;
+    }
 }

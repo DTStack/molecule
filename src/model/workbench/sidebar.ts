@@ -1,4 +1,4 @@
-import { container, inject, injectable } from 'tsyringe';
+import { injectable } from 'tsyringe';
 
 export interface ISidebarPane {
     id: string;
@@ -25,14 +25,8 @@ export class SidebarModel implements ISidebar {
     public current: string;
     public panes: ISidebarPane[];
 
-    constructor(
-        @inject('SidebarPane') panes: ISidebarPane[] = [],
-        @inject('Selected') selected: string = ''
-    ) {
+    constructor(panes: ISidebarPane[] = [], selected: string = '') {
         this.panes = panes;
         this.current = selected;
     }
 }
-
-container.register('SidebarPane', { useValue: [] });
-container.register('Selected', { useValue: '' });

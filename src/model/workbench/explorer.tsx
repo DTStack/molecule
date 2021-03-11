@@ -66,7 +66,8 @@ const builtInHeaderToolbar: IActivityBarItem[] = [
     },
 ];
 
-// TODO: name property extract, to adapt Localize
+// TODO: name property extract, to adapt Localize,
+// TODO: Refactor the constants naming to uppercase_underline format
 export const commonContextMenu = [
     {
         id: RENAME_COMMAND_ID,
@@ -190,14 +191,25 @@ export class TreeNodeModel implements ITreeNodeItem {
     }
 }
 
+const builtInFolderTree = {
+    contextMenu: commonContextMenu,
+    current: null,
+    folderPanelContextMenu: folderPanelContextMenu,
+    data: [],
+};
 @injectable()
 export class IExplorerModel implements IExplorer {
     public data: IPanelItem[] = DEFAULT_PANELS;
-    public folderTree: IFolderTree = {
-        contextMenu: commonContextMenu,
-        current: null,
-        folderPanelContextMenu: folderPanelContextMenu,
-        data: [],
-    };
-    public headerToolBar: IActivityBarItem[] = builtInHeaderToolbar;
+    public folderTree: IFolderTree;
+    public headerToolBar: IActivityBarItem[];
+
+    constructor(
+        data: IPanelItem[] = DEFAULT_PANELS,
+        folderTree: IFolderTree = builtInFolderTree,
+        headerToolBar: IActivityBarItem[] = builtInHeaderToolbar
+    ) {
+        this.data = data;
+        this.folderTree = folderTree;
+        this.headerToolBar = headerToolBar;
+    }
 }

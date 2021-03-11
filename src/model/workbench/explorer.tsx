@@ -90,7 +90,7 @@ export const baseContextMenu = [
 
 export const rootFolderContextMenu = [
     {
-        id: RENAME_COMMAND_ID,
+        id: REMOVE_COMMAND_ID,
         name: 'Remove Folder',
     },
 ];

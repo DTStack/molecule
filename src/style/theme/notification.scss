@@ -3,7 +3,7 @@
 #{$modal} {
     background-color: var(--notification-background);
     border-color: var(--notification-border);
-    color: var(--notification-foreground);
+    color: var(--button-foreground);
 
     &-mask {
         background-color: var(--widgetShadow);
@@ -26,7 +26,7 @@
 
     &-content,
     &-close {
-        color: var(--notification-foreground);
+        color: var(--button-foreground);
     }
 }
 

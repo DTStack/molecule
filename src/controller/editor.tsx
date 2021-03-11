@@ -43,7 +43,7 @@ export class EditorController extends Controller implements IEditorController {
     public updateCurrentValue = () => {
         const { current } = editorService.getState();
         const newValue = current?.tab?.data?.value;
-        if (newValue) current?.editorInstance.setValue(newValue);
+        if (newValue) current?.editorInstance?.setValue(newValue);
     };
     public onCloseTab = (tabKey?: string, groupId?: number) => {
         if (tabKey && groupId) {

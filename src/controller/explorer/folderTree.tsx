@@ -7,11 +7,18 @@ import { EditorController } from 'mo/controller/editor';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
 import {
-    IFolderInputEvent, TreeNodeModel,
-    baseContextMenu, rootFolderContextMenu, fileContextMenu,
-    NEW_FILE_COMMAND_ID, NEW_FOLDER_COMMAND_ID, RENAME_COMMAND_ID,
-    REMOVE_COMMAND_ID, DELETE_COMMAND_ID, OPEN_TO_SIDE_COMMAND_ID,
-    ADD_ROOT_FOLDER_COMMAND_ID
+    IFolderInputEvent,
+    TreeNodeModel,
+    baseContextMenu,
+    rootFolderContextMenu,
+    fileContextMenu,
+    NEW_FILE_COMMAND_ID,
+    NEW_FOLDER_COMMAND_ID,
+    RENAME_COMMAND_ID,
+    REMOVE_COMMAND_ID,
+    DELETE_COMMAND_ID,
+    OPEN_TO_SIDE_COMMAND_ID,
+    ADD_ROOT_FOLDER_COMMAND_ID,
 } from 'mo/model';
 const confirm = Modal.confirm;
 
@@ -41,7 +48,7 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() { }
+    private initView() {}
 
     public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
         const tabData = {
@@ -164,9 +171,7 @@ export class FolderTreeController
                 break;
             }
             case FileTypes.rootFolder: {
-                menu = baseContextMenu.concat(
-                    rootFolderContextMenu
-                );;
+                menu = baseContextMenu.concat(rootFolderContextMenu);
                 break;
             }
             default:

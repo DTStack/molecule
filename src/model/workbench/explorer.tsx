@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe';
 import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
 import { IMenuItem } from 'mo/components/menu';
 import { IActivityBarItem } from './activityBar';
-
+import { randomId } from 'mo/common/utils';
 export enum ExplorerEvent {
     onClick = 'explorer.onClick',
 }
@@ -99,7 +99,7 @@ export const fileContextMenu = [
         id: OPEN_TO_SIDE_COMMAND_ID,
         name: 'Open to the Side',
     },
-]
+];
 // Sample folder panel area ContextMenu
 export const folderPanelContextMenu = [
     {
@@ -180,13 +180,13 @@ export class TreeNodeModel implements ITreeNodeItem {
             icon = '',
             modify = false,
         } = props;
-        (this.fileType = fileType),
-            (this.modify = modify),
-            (this.name = name),
-            (this.id = id || Math.random() * 10 + 1),
-            (this.location = location),
-            (this.children = children),
-            (this.icon = icon);
+        this.fileType = fileType;
+        this.modify = modify;
+        this.name = name;
+        this.id = id || randomId();
+        this.location = location;
+        this.children = children;
+        this.icon = icon;
     }
 }
 

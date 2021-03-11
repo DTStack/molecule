@@ -1,7 +1,9 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import { PureComponent } from 'react';
 import * as monaco from 'monaco-editor';
 import { APP_PREFIX } from 'mo/common/const';
+import { monacoService } from 'mo/monaco/monacoService';
 
 export const SYMBOL_MONACO_EDITOR = `${APP_PREFIX}-monaco-editor`;
 
@@ -37,21 +39,19 @@ export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
 
     componentDidMount() {
         const { options = {}, override, editorInstanceRef } = this.props;
-        this.monacoInstance = monaco.editor.create(
-            this.monacoDom,
-            options,
-            override
-        );
+        if (monacoService) {
+            this.monacoInstance = monacoService.create(
+                this.monacoDom,
+                options,
+                override
+            );
+        }
         if (editorInstanceRef) {
             editorInstanceRef(this.monacoInstance);
         }
     }
 
-    componentWillUnmount() {
-        if (this.monacoInstance) {
-            this.monacoInstance.dispose();
-        }
-    }
+    componentWillUnmount() {}
 
     render() {
         const { style } = this.props;

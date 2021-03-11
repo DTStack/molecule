@@ -25,6 +25,10 @@ export interface IColorThemeService {
     applyTheme(id: string): void;
     getThemes(): IColorTheme[];
     getThemeById(id: string): void;
+    /**
+     * Get the current Color Theme
+     */
+    getColorTheme(): IColorTheme;
 }
 
 const BUILT_IN_THEME: IColorTheme = {
@@ -47,6 +51,9 @@ export class ColorThemeService implements IColorThemeService {
         this.colorThemes = colorThemes;
         this.colorTheme = colorTheme;
         this.init();
+    }
+    getColorTheme(): IColorTheme {
+        return this.colorTheme;
     }
 
     public init() {

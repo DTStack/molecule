@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { container, inject, injectable } from 'tsyringe';
+import { injectable } from 'tsyringe';
 import { IMenuItem } from 'mo/components/menu';
 
 /**
@@ -34,19 +34,46 @@ export interface IActivityBar {
     data?: IActivityBarItem[];
     selected?: string;
 }
+
+export const CONTEXT_MENU_COMMAND_PALETTE = {
+    id: 'CommandPalette',
+    name: 'Command Palette...',
+};
+
+export const CONTEXT_MENU_SETTINGS = {
+    id: 'Settings',
+    name: 'Settings',
+};
+
+export const CONTEXT_MENU_COLOR_THEME = {
+    id: 'ColorTheme',
+    name: 'Color Theme',
+};
+
+export const ACTIVITY_BAR_GLOBAL_SETTINGS: IActivityBarItem = {
+    id: 'global-settings',
+    name: 'Settings',
+    iconName: 'codicon-settings-gear',
+    type: 'global',
+    contextMenu: [
+        CONTEXT_MENU_COMMAND_PALETTE,
+        CONTEXT_MENU_SETTINGS,
+        CONTEXT_MENU_COLOR_THEME,
+    ],
+};
+
+export const ACTIVITY_BAR_GLOBAL_ACCOUNT: IActivityBarItem = {
+    id: 'global-Account',
+    name: 'Account',
+    iconName: 'codicon-account',
+    type: 'global',
+};
+
 @injectable()
 export class ActivityBarModel implements IActivityBar {
-    public data: IActivityBarItem[];
-    public selected: string;
-
-    constructor(
-        @inject('ActivityBarData') data: IActivityBarItem[] = [],
-        @inject('ActivityBarSelected') selected: string = ''
-    ) {
-        this.data = data;
-        this.selected = selected;
-    }
+    public data: IActivityBarItem[] = [
+        ACTIVITY_BAR_GLOBAL_ACCOUNT,
+        ACTIVITY_BAR_GLOBAL_SETTINGS,
+    ];
+    public selected: string = '';
 }
-
-container.register('ActivityBarData', { useValue: [] });
-container.register('ActivityBarSelected', { useValue: '' });

@@ -22,7 +22,7 @@ module.exports = {
         '\\.(css|scss|less)$': '<rootDir>/mock/styleMock.js',
         '^mo/(.*)$': '<rootDir>/src/$1',
         '^mo$': '<rootDir>/src/index.ts',
-        // '^monaco-editor(.*)$': '<rootDir>/mock/monacoMock.jsx',
         '^monaco-editor$': '<rootDir>/mock/monacoMock.js',
     },
+    setupFiles: ['jest-canvas-mock', './test/setupTests.ts'],
 };

@@ -4,7 +4,7 @@ import { classNames } from 'mo/common/className';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { select } from 'mo/common/dom';
-import { Menu } from 'mo/components/menu';
+import { IMenuItem, Menu } from 'mo/components/menu';
 import { IActivityBarController } from 'mo/controller/activityBar';
 
 import {
@@ -25,6 +25,7 @@ function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
         onClick,
         contextMenu = [],
         className,
+        onContextMenuClick,
     } = props;
     let content: React.ReactNode = '';
     if (render) {
@@ -34,8 +35,8 @@ function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
     let contextViewMenu;
 
     const onClickMenuItem = useCallback(
-        (e, item) => {
-            if (onClick) onClick(e, item);
+        (e: React.MouseEvent, item: IMenuItem | undefined) => {
+            onContextMenuClick?.(e, item);
             contextViewMenu?.dispose();
         },
         [contextMenu]

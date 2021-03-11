@@ -30,5 +30,5 @@ export function mergeFunctions(...funcs) {
 }
 
 export function randomId() {
-    return (Date.now() + Math.round(Math.random() * 1000));
+    return Date.now() + Math.round(Math.random() * 1000);
 }

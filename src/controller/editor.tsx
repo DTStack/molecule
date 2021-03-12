@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { EditorEvent, IEditorTab } from 'mo/model/workbench/editor';
+import { EditorEvent, IEditorTab, EDITOR_MENU_CLOSE, EDITOR_MENU_CLOSE_OTHERS, EDITOR_MENU_CLOSE_TO_RIGHT, EDITOR_MENU_CLOSE_TO_LEFT, EDITOR_MENU_CLOSE_ALL } from 'mo/model/workbench/editor';
 import { Controller } from 'mo/react/controller';
 import { editorService, statusBarService } from 'mo/services';
 import { IMenuItem } from 'mo/components/menu';
@@ -54,23 +54,23 @@ export class EditorController extends Controller implements IEditorController {
         const { current } = editorService.getState();
         const groupId = current?.id!;
         switch (menuId) {
-            case 'close': {
+            case EDITOR_MENU_CLOSE: {
                 this.onCloseTab(tabId, groupId);
                 break;
             }
-            case 'closeOthers': {
+            case EDITOR_MENU_CLOSE_OTHERS: {
                 this.onCloseOthers(tabItem!, groupId);
                 break;
             }
-            case 'closeAll': {
+            case EDITOR_MENU_CLOSE_ALL: {
                 this.onCloseAll(groupId);
                 break;
             }
-            case 'closeToRight': {
+            case EDITOR_MENU_CLOSE_TO_RIGHT: {
                 this.onCloseToRight(tabItem!, groupId);
                 break;
             }
-            case 'closeToLeft': {
+            case EDITOR_MENU_CLOSE_TO_LEFT: {
                 this.onCloseToLeft(tabItem!, groupId);
                 break;
             }

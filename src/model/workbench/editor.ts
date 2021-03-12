@@ -48,16 +48,23 @@ export interface IEditor {
     groups?: IEditorGroup[];
 }
 
+export const EDITOR_MENU_CLOSE_TO_RIGHT = 'editor.closeToRight';
+export const EDITOR_MENU_CLOSE_TO_LEFT = 'editor.closeToLeft';
+export const EDITOR_MENU_CLOSE_ALL = 'editor.closeAll';
+export const EDITOR_MENU_CLOSE_OTHERS = 'editor.closeOthers';
+export const EDITOR_MENU_CLOSE = 'editor.close';
+export const EDITOR_MENU_SHOW_OPENEDITORS = 'editor.showOpenEditors'
+
 const baseMenu = [
     {
-        id: 'closeAll',
+        id: EDITOR_MENU_CLOSE_ALL,
         name: 'Close All',
     },
 ];
 
 const initialActions: IMenuItem[] = [
     {
-        id: 'showOpenEditors',
+        id: EDITOR_MENU_SHOW_OPENEDITORS,
         name: 'Show Opened Editors',
     },
     ...baseMenu,
@@ -65,19 +72,19 @@ const initialActions: IMenuItem[] = [
 
 const initialMenu: IMenuItem[] = [
     {
-        id: 'close',
+        id: EDITOR_MENU_CLOSE,
         name: 'Close',
     },
     {
-        id: 'closeOthers',
+        id: EDITOR_MENU_CLOSE_OTHERS,
         name: 'Close Others',
     },
     {
-        id: 'closeToRight',
+        id: EDITOR_MENU_CLOSE_TO_RIGHT,
         name: 'Close To Right',
     },
     {
-        id: 'closeToLeft',
+        id: EDITOR_MENU_CLOSE_TO_LEFT,
         name: 'Close To Left',
     },
     ...baseMenu,

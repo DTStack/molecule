@@ -204,15 +204,15 @@ export class EditorService
             );
             nextGroups[groupIndex] = nextGroup;
             this.setState({
-                groups: nextGroups
+                groups: nextGroups,
             });
         }
     }
 
-    public updateCurrentGroup (currentValues: IEditorGroup) {
-        const { current } = this.state
-        const nextGroup = Object.assign({}, current, currentValues )
-        this.setState({ current: nextGroup})
+    public updateCurrentGroup(currentValues: IEditorGroup) {
+        const { current } = this.state;
+        const nextGroup = Object.assign({}, current, currentValues);
+        this.setState({ current: nextGroup });
     }
 
     public open<T>(tab: IEditorTab<T>, groupId: number) {

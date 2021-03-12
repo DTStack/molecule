@@ -11,7 +11,6 @@ export enum EditorEvent {
     OnCloseOthers = 'editor.closeOthers',
     OnCloseToLeft = 'editor.closeToLeft',
     OnCloseToRight = 'editor.closeToRight',
-    OnCloseSaved = 'editor.closeSaved',
     OnMoveTab = 'editor.moveTab',
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
@@ -53,11 +52,7 @@ const baseMenu = [
     {
         id: 'closeAll',
         name: 'Close All',
-    },
-    {
-        id: 'closeSaved',
-        name: 'Close Saved',
-    },
+    }
 ];
 
 const initialActions: IMenuItem[] = [

@@ -74,20 +74,12 @@ export class EditorController extends Controller implements IEditorController {
                 this.onCloseToLeft(tabItem!, groupId);
                 break;
             }
-            case 'closeSaved': {
-                this.onCloseSaved(groupId);
-            }
         }
     };
 
     public onCloseAll = (groupId: number) => {
         editorService.closeAll(groupId);
         this.emit(EditorEvent.OnCloseAll, groupId);
-    };
-
-    public onCloseSaved = (groupId: number) => {
-        editorService.closeSaved(groupId);
-        this.emit(EditorEvent.OnCloseSaved, groupId);
     };
 
     public updateCurrentValue = () => {

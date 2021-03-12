@@ -27,7 +27,6 @@ export interface IEditorService extends Component<IEditor> {
     closeToRight(tab: IEditorTab, groupId: number): void;
     closeToLeft(tab: IEditorTab, groupId: number): void;
     closeAll(groupId: number): void;
-    closeSaved(groupId: number): void;
     getGroupById(groupId: number): IEditorGroup | undefined;
     cloneGroup(groupId?: number): IEditorGroup;
     /**
@@ -259,29 +258,6 @@ export class EditorService
                 current: nextCurrentGroup,
             });
         }
-    }
-
-    public closeSaved(groupId: number) {
-        const { groups = [] } = this.state;
-        const nextGroups = [...groups];
-        const groupIndex = this.getGroupIndexById(groupId);
-        if (groupIndex <= -1) return;
-        const nextGroup = nextGroups[groupIndex];
-        const nextTabData = nextGroup!.data;
-        const updateTabs = nextTabData?.filter((tab) => tab.data.modified);
-        if (updateTabs?.length === 0) {
-            const activeGroup =
-                nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1];
-            nextGroups.splice(groupIndex, 1);
-            this.setState({
-                groups: nextGroups,
-                current: nextGroups?.length === 0 ? undefined : activeGroup,
-            });
-            return;
-        }
-        this.updateGroup(groupId, {
-            data: updateTabs,
-        });
     }
 
     public cloneGroup(groupId?: number): IEditorGroup {

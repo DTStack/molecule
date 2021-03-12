@@ -37,6 +37,7 @@ export interface IEditorService extends Component<IEditor> {
      */
     setActive(groupId: number, tabId: string);
     updateGroup(groupId, groupValues: IEditorGroup): void;
+    updateCurrentGroup(currentValues): void;
     /**
      * The Instance of Editor
      */
@@ -203,10 +204,15 @@ export class EditorService
             );
             nextGroups[groupIndex] = nextGroup;
             this.setState({
-                current: nextGroup,
-                groups: nextGroups,
+                groups: nextGroups
             });
         }
+    }
+
+    public updateCurrentGroup (currentValues: IEditorGroup) {
+        const { current } = this.state
+        const nextGroup = Object.assign({}, current, currentValues )
+        this.setState({ current: nextGroup})
     }
 
     public open<T>(tab: IEditorTab<T>, groupId: number) {

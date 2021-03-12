@@ -144,6 +144,7 @@ export class EditorController extends Controller implements IEditorController {
             editorService.updateGroup(groupId, {
                 editorInstance: editorInstance,
             });
+            editorService.updateCurrentGroup({ editorInstance })
         }
     };
 

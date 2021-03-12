@@ -52,7 +52,7 @@ const baseMenu = [
     {
         id: 'closeAll',
         name: 'Close All',
-    }
+    },
 ];
 
 const initialActions: IMenuItem[] = [

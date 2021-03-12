@@ -6,9 +6,7 @@ import {
     IStandaloneCodeEditor,
     StandaloneEditor,
 } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
-import {
-    createModel
-} from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneEditor';
+import { createModel } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneEditor';
 import {
     SimpleEditorModelResolverService,
     SimpleLayoutService,
@@ -18,7 +16,6 @@ import {
     StaticServices,
     IEditorOverrideServices,
     DynamicStandaloneServices,
-
 } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices';
 import { URI } from 'monaco-editor/esm/vs/base/common/uri';
 import { IInstantiationService } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
@@ -50,7 +47,7 @@ export interface IMonacoService {
         overrides?: IEditorOverrideServices
     ): IStandaloneCodeEditor;
     createModel(value: string, language?: string, uri?: URI): ITextModel;
-    getModel(uri: URI): ITextModel | null ;
+    getModel(uri: URI): ITextModel | null;
 }
 
 @singleton()
@@ -115,14 +112,13 @@ export class MonacoService implements IMonacoService {
         }
         return standaloneEditor;
     }
- 
-    public createModel(value: string, language?: string, uri?: URI): ITextModel {
-        debugger
-        return createModel(
-            value,
-            language,
-            uri
-        );
+
+    public createModel(
+        value: string,
+        language?: string,
+        uri?: URI
+    ): ITextModel {
+        return createModel(value, language, uri);
     }
 
     public getModel(uri: URI): ITextModel | null {

@@ -35,9 +35,12 @@ export function randomId() {
 }
 
 export function getOrCreateModel(monaco, value, language, path) {
-    return monacoService?.getModel(crateModelUri(monaco, path)) || monacoService?.createModel(value, language, crateModelUri(monaco, path));
+    return (
+        monacoService?.getModel(crateModelUri(monaco, path)) ||
+        monacoService?.createModel(value, language, crateModelUri(monaco, path))
+    );
 }
-  
+
 export function crateModelUri(monaco, path) {
     return monaco.Uri.parse(path);
 }

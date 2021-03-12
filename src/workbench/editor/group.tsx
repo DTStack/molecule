@@ -95,6 +95,7 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                                 language: tab.data?.language,
                                 automaticLayout: true,
                             }}
+                            path={tab.data?.name}
                             editorInstanceRef={(editorInstance) => {
                                 // This assignment will trigger moleculeCtx update, and subNodes update
                                 onUpdateEditorIns?.(editorInstance, id!);

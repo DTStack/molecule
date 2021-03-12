@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { EditorEvent, IEditorTab, EDITOR_MENU_CLOSE, EDITOR_MENU_CLOSE_OTHERS, EDITOR_MENU_CLOSE_TO_RIGHT, EDITOR_MENU_CLOSE_TO_LEFT, EDITOR_MENU_CLOSE_ALL } from 'mo/model/workbench/editor';
+import {
+    EditorEvent,
+    IEditorTab,
+    EDITOR_MENU_CLOSE,
+    EDITOR_MENU_CLOSE_OTHERS,
+    EDITOR_MENU_CLOSE_TO_RIGHT,
+    EDITOR_MENU_CLOSE_TO_LEFT,
+    EDITOR_MENU_CLOSE_ALL,
+} from 'mo/model/workbench/editor';
 import { Controller } from 'mo/react/controller';
 import { editorService, statusBarService } from 'mo/services';
 import { IMenuItem } from 'mo/components/menu';

@@ -53,7 +53,7 @@ export const EDITOR_MENU_CLOSE_TO_LEFT = 'editor.closeToLeft';
 export const EDITOR_MENU_CLOSE_ALL = 'editor.closeAll';
 export const EDITOR_MENU_CLOSE_OTHERS = 'editor.closeOthers';
 export const EDITOR_MENU_CLOSE = 'editor.close';
-export const EDITOR_MENU_SHOW_OPENEDITORS = 'editor.showOpenEditors'
+export const EDITOR_MENU_SHOW_OPENEDITORS = 'editor.showOpenEditors';
 
 const baseMenu = [
     {

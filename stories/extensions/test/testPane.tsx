@@ -83,7 +83,7 @@ export type GenericClassDecorator<T> = (target: T) => void;
             console.log('open editor:', tabData);
             editorService.open(tabData);
             editorService.open(tabData);
-            const { current }  = editorService.getState();
+            const { current } = editorService.getState();
             current?.editorInstance?.setValue(current?.tab?.data?.value);
         };
 

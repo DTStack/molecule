@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { activityBarService, colorThemeService, panelService } from 'mo';
-import { editorController } from 'mo/controller';
+import { editorService } from 'mo/services';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
@@ -81,7 +81,10 @@ export type GenericClassDecorator<T> = (target: T) => void;
                 breadcrumb: [{ id: `${key}`, name: `editor.ts` }],
             };
             console.log('open editor:', tabData);
-            editorController.open(tabData);
+            editorService.open(tabData);
+            editorService.open(tabData);
+            const { current }  = editorService.getState();
+            current?.editorInstance?.setValue(current?.tab?.data?.value);
         };
 
         const openCommand = function () {};

@@ -1,7 +1,16 @@
 import * as React from 'react';
-import { EditorEvent, IEditorTab } from 'mo/model/workbench/editor';
+import {
+    EditorEvent,
+    IEditorTab,
+    EDITOR_MENU_CLOSE,
+    EDITOR_MENU_CLOSE_OTHERS,
+    EDITOR_MENU_CLOSE_TO_RIGHT,
+    EDITOR_MENU_CLOSE_TO_LEFT,
+    EDITOR_MENU_CLOSE_ALL,
+} from 'mo/model/workbench/editor';
 import { Controller } from 'mo/react/controller';
 import { editorService, statusBarService } from 'mo/services';
+import { IMenuItem } from 'mo/components/menu';
 import { singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
 import { editorLineColumnItem } from './statusBar';
@@ -9,14 +18,22 @@ import { editorLineColumnItem } from './statusBar';
 export interface IEditorController {
     groupSplitPos?: string[];
     open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
+    onClickContextMenu?: (
+        e: React.MouseEvent,
+        item: IMenuItem,
+        tabItem?: IEditorTab
+    ) => void;
     onCloseAll?: (group: number) => void;
-    onCloseTab?: (tabKey: string, group: number) => void;
+    onCloseTab?: (tabId: string, group: number) => void;
+    onCloseToLeft?: (tab: IEditorTab, group: number) => void;
+    onCloseToRight?: (tab: IEditorTab, group: number) => void;
+    onCloseOthers?: (tab: IEditorTab, group: number) => void;
+    onCloseSaved?: (group: number) => void;
     onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: number) => void;
-    onSelectTab?: (tabKey: string, group: number) => void;
+    onSelectTab?: (tabId: string, group: number) => void;
     onSplitEditorRight?: () => void;
     onUpdateEditorIns?: (editorInstance: any, groupId: number) => void;
     onPaneSizeChange?: (newSize: number) => void;
-    onTabContextMenu?: (e: React.MouseEvent, tab: IEditorTab) => void;
 }
 
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
@@ -30,10 +47,43 @@ export class EditorController extends Controller implements IEditorController {
         super();
     }
 
-    public open<T>(tab: IEditorTab<any>, groupId: number) {
+    public open<T>(tab: IEditorTab<any>, groupId?: number) {
         editorService.open<T>(tab, groupId);
         this.updateCurrentValue();
     }
+
+    public onClickContextMenu = (
+        e: React.MouseEvent,
+        item: IMenuItem,
+        tabItem?: IEditorTab<any>
+    ) => {
+        const menuId = item?.id;
+        const tabId = tabItem?.id!;
+        const { current } = editorService.getState();
+        const groupId = current?.id!;
+        switch (menuId) {
+            case EDITOR_MENU_CLOSE: {
+                this.onCloseTab(tabId, groupId);
+                break;
+            }
+            case EDITOR_MENU_CLOSE_OTHERS: {
+                this.onCloseOthers(tabItem!, groupId);
+                break;
+            }
+            case EDITOR_MENU_CLOSE_ALL: {
+                this.onCloseAll(groupId);
+                break;
+            }
+            case EDITOR_MENU_CLOSE_TO_RIGHT: {
+                this.onCloseToRight(tabItem!, groupId);
+                break;
+            }
+            case EDITOR_MENU_CLOSE_TO_LEFT: {
+                this.onCloseToLeft(tabItem!, groupId);
+                break;
+            }
+        }
+    };
 
     public onCloseAll = (groupId: number) => {
         editorService.closeAll(groupId);
@@ -43,14 +93,33 @@ export class EditorController extends Controller implements IEditorController {
     public updateCurrentValue = () => {
         const { current } = editorService.getState();
         const newValue = current?.tab?.data?.value;
-        if (newValue) current?.editorInstance?.setValue(newValue);
+        current?.editorInstance?.setValue(newValue);
     };
-    public onCloseTab = (tabKey?: string, groupId?: number) => {
-        if (tabKey && groupId) {
-            editorService.closeTab(tabKey, groupId);
+
+    public onCloseTab = (tabId?: string, groupId?: number) => {
+        if (tabId && groupId) {
+            editorService.closeTab(tabId, groupId);
             this.updateCurrentValue();
-            this.emit(EditorEvent.OnCloseTab, tabKey, groupId);
+            this.emit(EditorEvent.OnCloseTab, tabId, groupId);
         }
+    };
+
+    public onCloseToRight = (tabItem: IEditorTab, groupId: number) => {
+        editorService.closeToRight(tabItem, groupId);
+        this.updateCurrentValue();
+        this.emit(EditorEvent.OnCloseToRight, tabItem, groupId);
+    };
+
+    public onCloseToLeft = (tabItem: IEditorTab, groupId: number) => {
+        editorService.closeToLeft(tabItem, groupId);
+        this.updateCurrentValue();
+        this.emit(EditorEvent.OnCloseToLeft, tabItem, groupId);
+    };
+
+    public onCloseOthers = (tabItem: IEditorTab, groupId: number) => {
+        editorService.closeOthers(tabItem, groupId);
+        this.updateCurrentValue();
+        this.emit(EditorEvent.OnCloseOthers, tabItem, groupId);
     };
 
     public onMoveTab = (updateTabs: IEditorTab<any>[], groupId: number) => {
@@ -60,10 +129,10 @@ export class EditorController extends Controller implements IEditorController {
         this.emit(EditorEvent.OnMoveTab, updateTabs, groupId);
     };
 
-    public onSelectTab = (tabKey: string, groupId: number) => {
-        editorService.setActive(groupId, tabKey);
+    public onSelectTab = (tabId: string, groupId: number) => {
+        editorService.setActive(groupId, tabId);
         this.updateCurrentValue();
-        this.emit(EditorEvent.OnSelectTab, tabKey, groupId);
+        this.emit(EditorEvent.OnSelectTab, tabId, groupId);
     };
 
     public onUpdateEditorIns = (
@@ -75,6 +144,7 @@ export class EditorController extends Controller implements IEditorController {
             editorService.updateGroup(groupId, {
                 editorInstance: editorInstance,
             });
+            editorService.updateCurrentGroup({ editorInstance });
         }
     };
 
@@ -85,10 +155,6 @@ export class EditorController extends Controller implements IEditorController {
 
     public onPaneSizeChange = (newSize) => {
         this.groupSplitPos = newSize;
-    };
-
-    public onTabContextMenu = (e: React.MouseEvent, tab: IEditorTab) => {
-        console.log('onTabContextMenu', e, tab);
     };
 
     private initEditorEvents(

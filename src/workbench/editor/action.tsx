@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { memo, useCallback } from 'react';
 import { Icon } from 'mo/components/icon';
-import { IMenuItem, Menu } from 'mo/components/menu';
+import { Menu } from 'mo/components/menu';
 import { DropDown } from 'mo/components/dropdown';
 import { IEditorAction } from 'mo/model';
 import { groupActionsClassName, groupActionsItemClassName } from './base';
@@ -14,13 +14,25 @@ export interface IEditorActionProps extends IEditorAction {
 function EditorAction(props: IEditorActionProps & IEditorController) {
     const {
         actions = [],
-        menu = [],
         isActiveGroup = false,
+        onClickContextMenu,
         onSplitEditorRight,
     } = props;
+
+    const childRef = React.useRef();
+
+    const handleOnMenuClick = (e: React.MouseEvent, item) => {
+        onClickContextMenu?.(e, item);
+        (childRef.current as any)!.dispose();
+    };
+
     const overlay =
-        menu.length > 0 ? (
-            <Menu style={{ width: 200 }} data={menu} />
+        actions.length > 0 ? (
+            <Menu
+                style={{ width: 200 }}
+                data={actions}
+                onClick={handleOnMenuClick}
+            />
         ) : (
             <span
                 style={{
@@ -36,21 +48,10 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
         (e: React.MouseEvent) => {
             onSplitEditorRight?.();
         },
-        [actions, menu]
+        [actions]
     );
-
     return (
         <div className={groupActionsClassName}>
-            {actions.map((action: IMenuItem) => (
-                <div
-                    className={groupActionsItemClassName}
-                    key={action.id}
-                    onClick={action.onClick}
-                    title={action.title}
-                >
-                    {action.icon}
-                </div>
-            ))}
             {isActiveGroup ? (
                 <div
                     onClick={handleSplitEditor}
@@ -61,6 +62,7 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
                 </div>
             ) : null}
             <DropDown
+                ref={childRef}
                 placement="bottom"
                 className={groupActionsItemClassName}
                 trigger="click"

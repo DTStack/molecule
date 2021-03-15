@@ -36,7 +36,7 @@ const explorerState = explorerService.getState();
 
 type State = typeof initialState;
 
-export default class SearchPane extends React.Component<
+export default class SearchPanel extends React.Component<
     ISearchPaneToolBar,
     State
 > {
@@ -107,7 +107,6 @@ export default class SearchPane extends React.Component<
                     toolbar={<Toolbar data={toolbar} onClick={this.onClick} />}
                 />
                 <Content>
-                    <h1>Search Pane</h1>
                     <p>{input}</p>
                     <input onInput={this.onInput} />
                     {input && (

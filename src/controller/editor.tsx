@@ -15,11 +15,8 @@ import { editorService, statusBarService } from 'mo/services';
 import { IMenuItem } from 'mo/components/menu';
 import { singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
-<<<<<<< HEAD
 import { IMonacoEditorProps } from 'mo/components/monaco';
 
-=======
->>>>>>> feat(status bar): define the bottom status bar data structure and processing logic
 export interface IEditorController {
     groupSplitPos?: string[];
     open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
@@ -316,13 +313,8 @@ export class EditorController extends Controller implements IEditorController {
                 Object.assign(STATUS_EDITOR_INFO, {
                     data: {
                         ln: position?.lineNumber,
-<<<<<<< HEAD
                         col: position?.column,
                     },
-=======
-                        col: position?.column
-                    }
->>>>>>> feat(status bar): define the bottom status bar data structure and processing logic
                 })
             );
         }

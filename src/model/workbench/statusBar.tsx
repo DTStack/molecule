@@ -37,17 +37,19 @@ export const STATUS_PROBLEMS: IStatusBarItem = {
     data: {
         warn: 0,
         error: 0,
-        info: 0
+        info: 0,
     },
     name: 'Problems',
-    render: (item:IProblems) => <React.Fragment>
-        <Icon type="error" />
-        {` ${item.error} `}
-        <Icon type="warning" />
-        {` ${item.warn} `}
-        <Icon type="info" />
-        {` ${item.info}`}
-    </React.Fragment>,
+    render: (item: IProblems) => (
+        <React.Fragment>
+            <Icon type="error" />
+            {` ${item.error} `}
+            <Icon type="warning" />
+            {` ${item.warn} `}
+            <Icon type="info" />
+            {` ${item.info}`}
+        </React.Fragment>
+    ),
 };
 
 export const STATUS_NOTIFICATIONS: IStatusBarItem = {
@@ -55,11 +57,11 @@ export const STATUS_NOTIFICATIONS: IStatusBarItem = {
     sortIndex: 1,
     data: [],
     name: 'Notification',
-    render: (item:INotifications[]) => <React.Fragment>
-        {
-            item.length ? <Icon type="bell-dot" /> : <Icon type="bell" />
-        }
-    </React.Fragment>,
+    render: (item: INotifications[]) => (
+        <React.Fragment>
+            {item.length ? <Icon type="bell-dot" /> : <Icon type="bell" />}
+        </React.Fragment>
+    ),
 };
 
 export const STATUS_EDITOR_INFO: IStatusBarItem = {
@@ -67,10 +69,12 @@ export const STATUS_EDITOR_INFO: IStatusBarItem = {
     sortIndex: 2,
     data: {
         ln: 0,
-        col: 0
+        col: 0,
     },
     name: 'Go to Line/Column',
-    render: (item:ILineColumnItem) => <span>{`Ln ${item.ln}, Col ${item.col}`}</span>,
+    render: (item: ILineColumnItem) => (
+        <span>{`Ln ${item.ln}, Col ${item.col}`}</span>
+    ),
 };
 
 /**
@@ -89,5 +93,8 @@ export enum StatusBarEvent {
 @injectable()
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[] = [STATUS_PROBLEMS];
-    public rightItems: IStatusBarItem[] = [STATUS_NOTIFICATIONS, STATUS_EDITOR_INFO];
+    public rightItems: IStatusBarItem[] = [
+        STATUS_NOTIFICATIONS,
+        STATUS_EDITOR_INFO,
+    ];
 }

@@ -8,14 +8,6 @@ import { PANEL_PROBLEMS } from 'mo/model/workbench/panel';
 export interface IStatusBarController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
 }
-export const editorLineColumnItem: IStatusBarItem = {
-    id: 'MoEditorInfo',
-    sortIndex: 2,
-    data: null,
-    name: 'Go to Line/Column',
-    render: () => <span>Ln 0, Col 0</span>,
-};
-
 @singleton()
 export class StatusBarController
     extends Controller
@@ -28,11 +20,11 @@ export class StatusBarController
         const { id } = item;
         switch (id) {
             case 'MoProblems':
-                const { current,hidden } = panelService.getState();
-                if(hidden){
+                const { current, hidden } = panelService.getState();
+                if (hidden) {
                     panelService.showHide();
-                } else if(current?.id!==PANEL_PROBLEMS.id){
-                    panelService.open(PANEL_PROBLEMS)
+                } else if (current?.id !== PANEL_PROBLEMS.id) {
+                    panelService.open(PANEL_PROBLEMS);
                 } else {
                     panelService.showHide();
                 }

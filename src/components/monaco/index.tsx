@@ -58,9 +58,6 @@ export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
             onSaveEditorState?.(prevProps, this.props);
         }
     }
-    componentWillUnmount() {
-        this.monacoInstance?.dispose();
-    }
 
     render() {
         const { style } = this.props;

@@ -1,0 +1,11 @@
+@import 'mo/style/common';
+
+// =============== Tree =============== //
+#{$search} {
+
+    input {
+        background-color: var(--list-activeSelectionBackground);
+        border-width: 0;
+        color: inherit;
+    }
+}

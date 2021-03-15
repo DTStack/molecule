@@ -4,10 +4,11 @@ import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { colorThemeService, explorerService } from 'mo';
 import { Select, Option } from 'mo/components/select';
+import { SearchWidget } from 'mo/components/search';
 import { IColorTheme } from 'mo/model/colorTheme';
 import SearchTree from './searchTree';
 
-interface ISearchPaneToolBar {}
+interface ISearchPaneToolBar { }
 
 const initialState = {
     input: '',
@@ -30,6 +31,12 @@ const initialState = {
             disabled: true,
             iconName: 'codicon-collapse-all',
         },
+        {
+            id: 'test',
+            title: 'test',
+            disabled: true,
+            iconName: 'codicon-case-sensitive',
+        },
     ],
 };
 const explorerState = explorerService.getState();
@@ -39,7 +46,7 @@ type State = typeof initialState;
 export default class SearchPanel extends React.Component<
     ISearchPaneToolBar,
     State
-> {
+    > {
     state: State;
 
     constructor(props) {
@@ -103,12 +110,11 @@ export default class SearchPanel extends React.Component<
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header
-                    title={'Search'}
+                    title='Search'
                     toolbar={<Toolbar data={toolbar} onClick={this.onClick} />}
                 />
                 <Content>
-                    <p>{input}</p>
-                    <input onInput={this.onInput} />
+                    <SearchWidget />
                     {input && (
                         <SearchTree
                             data={explorerState?.folderTree?.data}

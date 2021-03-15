@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { EditorEvent, IEditorTab } from 'mo/model/workbench/editor';
+import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { Controller } from 'mo/react/controller';
 import { editorService, statusBarService } from 'mo/services';
 import { singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
-import { editorLineColumnItem } from './statusBar';
-
 export interface IEditorController {
     groupSplitPos?: string[];
     open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
@@ -145,12 +144,11 @@ export class EditorController extends Controller implements IEditorController {
         if (editorInstance) {
             const position = editorInstance.getPosition();
             statusBarService.updateItem(
-                Object.assign(editorLineColumnItem, {
-                    render: () => (
-                        <span>
-                            Ln {position?.lineNumber}, Col {position?.column}
-                        </span>
-                    ),
+                Object.assign(STATUS_EDITOR_INFO, {
+                    data: {
+                        ln: position?.lineNumber,
+                        col: position?.column
+                    }
                 })
             );
         }

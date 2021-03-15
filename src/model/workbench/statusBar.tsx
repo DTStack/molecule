@@ -38,7 +38,7 @@ export const STATUS_PROBLEMS: IStatusBarItem = {
         info: 0,
     },
     name: 'Problems',
-    render: (item:IProblems) => (
+    render: (item: IProblems) => (
         <React.Fragment>
             <Icon type="error" />
             {` ${item.error} `}

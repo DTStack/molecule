@@ -313,8 +313,8 @@ export class EditorController extends Controller implements IEditorController {
                 Object.assign(STATUS_EDITOR_INFO, {
                     data: {
                         ln: position?.lineNumber,
-                        col: position?.column
-                    }
+                        col: position?.column,
+                    },
                 })
             );
         }

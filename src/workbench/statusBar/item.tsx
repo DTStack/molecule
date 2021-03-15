@@ -5,8 +5,7 @@ import { memo } from 'react';
 import { itemClassName } from './base';
 
 function StatusItem(props: IStatusBarItem) {
-    const { className, onClick, name, render, ...extra } = props;
-
+    const { className, onClick, name, data, render, ...extra } = props;
     const clsName = classNames(itemClassName, className);
     const events = {
         onClick: function (e: React.MouseEvent) {
@@ -17,7 +16,7 @@ function StatusItem(props: IStatusBarItem) {
     return (
         <div className={clsName} {...extra}>
             <a tabIndex={-1} title={name} {...events}>
-                {render ? render() : name}
+                {render ? render(data) : name}
             </a>
         </div>
     );

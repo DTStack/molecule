@@ -18,6 +18,7 @@ export function Editor(props: IEditor & IEditorController) {
         onMoveTab,
         onSelectTab,
         groupSplitPos = [],
+        onSaveEditorState,
         onSplitEditorRight,
         onUpdateEditorIns,
         onPaneSizeChange,
@@ -30,9 +31,12 @@ export function Editor(props: IEditor & IEditorController) {
             onSelectTab: (tabKey) => onSelectTab?.(tabKey, groupId),
             onSplitEditorRight,
             onUpdateEditorIns,
+            onSaveEditorState,
             onClickContextMenu,
         };
     };
+
+    console.log(getEvents(groups[0]?.id!));
 
     const renderGroups = () => {
         if (groups.length === 1) {

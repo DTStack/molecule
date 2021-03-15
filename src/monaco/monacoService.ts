@@ -6,7 +6,6 @@ import {
     IStandaloneCodeEditor,
     StandaloneEditor,
 } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
-import { createModel } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneEditor';
 import {
     SimpleEditorModelResolverService,
     SimpleLayoutService,
@@ -17,7 +16,6 @@ import {
     IEditorOverrideServices,
     DynamicStandaloneServices,
 } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices';
-import { URI } from 'monaco-editor/esm/vs/base/common/uri';
 import { IInstantiationService } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { ICodeEditorService } from 'monaco-editor/esm/vs/editor/browser/services/codeEditorService';
 import { ICommandService } from 'monaco-editor/esm/vs/platform/commands/common/commands';
@@ -28,7 +26,6 @@ import { IStandaloneThemeService } from 'monaco-editor/esm/vs/editor/standalone/
 import { INotificationService } from 'monaco-editor/esm/vs/platform/notification/common/notification';
 import { IConfigurationService } from 'monaco-editor/esm/vs/platform/configuration/common/configuration';
 import { IAccessibilityService } from 'monaco-editor/esm/vs/platform/accessibility/common/accessibility';
-import { ITextModel } from 'monaco-editor/esm/vs/editor/common/model';
 import { IOpenerService } from 'monaco-editor/esm/vs/platform/opener/common/opener';
 import { OpenerService } from 'monaco-editor/esm/vs/editor/browser/services/openerService';
 import { QuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/browser/quickInput';
@@ -46,8 +43,6 @@ export interface IMonacoService {
         options?: IStandaloneEditorConstructionOptions,
         overrides?: IEditorOverrideServices
     ): IStandaloneCodeEditor;
-    createModel(value: string, language?: string, uri?: URI): ITextModel;
-    getModel(uri: URI): ITextModel | null;
 }
 
 @singleton()
@@ -111,22 +106,6 @@ export class MonacoService implements IMonacoService {
             this.simpleEditorModelResolverService.setEditor(standaloneEditor);
         }
         return standaloneEditor;
-    }
-
-    public createModel(
-        value: string,
-        language?: string,
-        uri?: URI
-    ): ITextModel {
-        return createModel(value, language, uri);
-    }
-
-    public getModel(uri: URI): ITextModel | null {
-        return StaticServices.modelService.get().getModel(uri);
-    }
-
-    public getModels(): ITextModel[] {
-        return StaticServices.modelService.get().getModels();
     }
 
     private createStandaloneServices(): ServiceCollection {

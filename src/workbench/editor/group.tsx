@@ -32,6 +32,7 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
         onMoveTab,
         onCloseTab,
         onClickContextMenu,
+        onSaveEditorState,
         onSelectTab,
         onSplitEditorRight,
         onUpdateEditorIns,
@@ -57,7 +58,6 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
             contextView?.dispose();
         };
     });
-
     return (
         <div className={groupClassName}>
             <div className={groupHeaderClassName}>
@@ -95,10 +95,14 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                                 language: tab.data?.language,
                                 automaticLayout: true,
                             }}
-                            path={tab.data?.name}
+                            path={tab.name}
                             editorInstanceRef={(editorInstance) => {
                                 // This assignment will trigger moleculeCtx update, and subNodes update
                                 onUpdateEditorIns?.(editorInstance, id!);
+                            }}
+                            onSaveEditorState={(preProps, props) => {
+                                console.log(onSaveEditorState);
+                                onSaveEditorState?.(preProps, props);
                             }}
                         />
                     )

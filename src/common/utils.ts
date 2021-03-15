@@ -1,4 +1,3 @@
-import { monacoService } from 'mo/monaco/monacoService';
 /**
  * Clone a new object by an object instance
  * @param origin Original object instance
@@ -32,15 +31,4 @@ export function mergeFunctions(...funcs) {
 
 export function randomId() {
     return Date.now() + Math.round(Math.random() * 1000);
-}
-
-export function getOrCreateModel(monaco, value, language, path) {
-    return (
-        monacoService?.getModel(crateModelUri(monaco, path)) ||
-        monacoService?.createModel(value, language, crateModelUri(monaco, path))
-    );
-}
-
-export function crateModelUri(monaco, path) {
-    return monaco.Uri.parse(path);
 }

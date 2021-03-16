@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { activityBarService, colorThemeService, panelService } from 'mo';
-import { editorService } from 'mo/services';
+import { editorService, notificationService } from 'mo/services';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
@@ -83,6 +83,18 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             editorService.open(tabData);
         };
 
+        let notify;
+        const addANotification = function () {
+            notify = notificationService.addNotification<string>({
+                value: 'Test Notification!',
+            });
+            console.log('Add Notification index:', notify);
+        };
+
+        const removeNotification = function () {
+            notificationService.removeNotification(notify.id);
+        };
+
         const openCommand = function () {};
         return (
             <div>
@@ -99,6 +111,15 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                     <h2>Add a new Panel:</h2>
                     <Button onClick={addPanel}>Add Panel</Button>
                     <Button onClick={showHidePanel}>Show/Hide Panel</Button>
+                </div>
+                <div style={{ margin: '50px 20px' }}>
+                    <h2>Notification:</h2>
+                    <Button onClick={addANotification}>
+                        Add A Notification
+                    </Button>
+                    <Button onClick={removeNotification}>
+                        Remove A Notification
+                    </Button>
                 </div>
             </div>
         );

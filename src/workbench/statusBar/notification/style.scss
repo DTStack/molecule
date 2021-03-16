@@ -1,0 +1,50 @@
+@import 'mo/style/common';
+
+#{$notification} {
+    background-color: var(--workbenchBackground);
+    bottom: 31px;
+    color: var(--foreground);
+    display: none;
+    overflow: hidden;
+    position: fixed;
+    right: 8px;
+    z-index: 1000;
+
+    &__header {
+        align-items: center;
+        direction: ltr;
+        display: flex;
+        height: 35px;
+        padding-left: 8px;
+        padding-right: 5px;
+
+        > span {
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        #{$actionBar} {
+            flex: 1;
+        }
+    }
+
+    &__body {
+        max-height: 500px;
+        min-width: 450px;
+        overflow: hidden;
+        overflow-y: auto;
+        padding: 0 8px;
+        position: relative;
+
+        p {
+            position: relative;
+            text-align: left;
+        }
+    }
+
+    &--close {
+        cursor: pointer;
+        position: absolute;
+        right: 8px;
+    }
+}

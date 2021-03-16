@@ -1,41 +1,69 @@
+import { IActionBarItem } from 'mo/components/actionBar';
 import { Icon } from 'mo/components/icon';
 import * as React from 'react';
 import { injectable } from 'tsyringe';
 import { IStatusBarItem } from './workbench/statusBar';
 
-export type NotificationStatusType = 'message' | 'normal';
+export enum NotificationStatus {
+    Read = 1,
+    WaitRead = 2,
+}
+
+export interface INotificationItem<T = any> {
+    id?: number;
+    value: T;
+    status?: NotificationStatus;
+}
 
 export interface INotification<T = any> extends IStatusBarItem {
-    data: T[];
-    status: NotificationStatusType;
+    data?: INotificationItem<T>[];
+    showNotifications?: boolean;
+    actionBar?: IActionBarItem[];
 }
+
+export const NOTIFICATION_CLEAR_ALL: IActionBarItem = {
+    id: 'ClearAll',
+    title: 'Clear All Notifications',
+    iconName: 'codicon-clear-all',
+};
+
+export const NOTIFICATION_HIDE: IActionBarItem = {
+    id: 'HideNotifications',
+    title: 'Hide Notifications',
+    iconName: 'codicon-chevron-down',
+};
 
 @injectable()
 export class NotificationModel<T> implements INotification<T> {
-
     static readonly ID = 'MO_NOTIFICATION';
     static readonly NAME = 'Notification';
 
     public id: string;
     public name: string;
-    public data: T[];
+    public data: INotificationItem<T>[];
     public sortIndex: number;
     public render: () => ReactNode;
-    public status: NotificationStatusType;
+    public showNotifications: boolean;
+    public actionBar: IActionBarItem[];
 
     constructor(
         id: string = NotificationModel.ID,
         name: string = NotificationModel.NAME,
-        data: T[] = [],
+        data: INotificationItem<T>[] = [],
         sortIndex: number = 1,
-        render: () => ReactNode = () => <Icon type="bell" />,
-        status: NotificationStatusType = 'normal'
+        showNotifications: boolean = false,
+        actionBar: IActionBarItem[] = [
+            NOTIFICATION_CLEAR_ALL,
+            NOTIFICATION_HIDE,
+        ],
+        render: () => ReactNode = () => <Icon type="bell" />
     ) {
         this.id = id;
         this.name = name;
         this.sortIndex = sortIndex;
         this.render = render;
-        this.status = status;
+        this.showNotifications = showNotifications;
         this.data = data;
+        this.actionBar = actionBar;
     }
 }

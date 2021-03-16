@@ -238,16 +238,18 @@ export class EditorController extends Controller implements IEditorController {
         prevProps: IMonacoEditorProps,
         props: IMonacoEditorProps
     ) => {
-        const { current } = editorService.getState();
         const { path, options } = props;
-        const editorInstance = current?.editorInstance;
-        this.editorStates.set(prevProps.path, editorInstance?.saveViewState());
-        this.openFile(
-            editorInstance,
-            path!,
-            options?.value!,
-            options?.language!
-        );
+        if (prevProps?.path !== path) {
+            const { current } = editorService.getState();
+            const editorInstance = current?.editorInstance;
+            this.editorStates.set(prevProps.path, editorInstance?.saveViewState());
+            this.openFile(
+                editorInstance,
+                path!,
+                options?.value!,
+                options?.language!
+            );
+        }
     };
 
     private openFile(

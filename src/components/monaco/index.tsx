@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { PureComponent } from 'react';
 import * as monaco from 'monaco-editor';
+import { isEqual } from 'loadsh';
 import { APP_PREFIX } from 'mo/common/const';
 import { monacoService } from 'mo/monaco/monacoService';
 
@@ -53,10 +54,8 @@ export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
     }
 
     componentDidUpdate(prevProps) {
-        const { path, onChangeEditorProps } = this.props;
-        if (path !== prevProps?.path!) {
-            onChangeEditorProps?.(prevProps, this.props);
-        }
+        const { onChangeEditorProps } = this.props;
+        !isEqual(prevProps, this.props) && onChangeEditorProps?.(prevProps, this.props);
     }
 
     render() {

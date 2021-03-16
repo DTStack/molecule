@@ -175,17 +175,17 @@ export class EditorController extends Controller implements IEditorController {
 
     private registerActions = (editorInstance) => {
         undoRedoMenu.map(({ id, label }) => {
-            console.log(id, label)
+            console.log(id, label);
             editorInstance?.addAction({
-               id,
+                id,
                 label,
-                 run: () => {
+                run: () => {
                     editorInstance!.focus();
                     if (!document.execCommand(id)) {
                         editorInstance?.getModel()?.[id]();
                     }
                 },
-            })
+            });
         });
     };
     public onSplitEditorRight = () => {

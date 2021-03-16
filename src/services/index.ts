@@ -28,6 +28,10 @@ import {
     PanelService,
 } from './workbench';
 import { ISettingsService, SettingsService } from './settingsService';
+import {
+    INotificationService,
+    NotificationService,
+} from './notificationService';
 
 /**
  * The Services of Workbench
@@ -42,6 +46,9 @@ const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
 const editorService = container.resolve<IEditorService>(EditorService);
 const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
 const panelService = container.resolve<IPanelService>(PanelService);
+const notificationService = container.resolve<INotificationService>(
+    NotificationService
+);
 
 /**
  * The ColorTheme service,
@@ -72,4 +79,5 @@ export {
     extensionService,
     colorThemeService,
     settingsService,
+    notificationService,
 };

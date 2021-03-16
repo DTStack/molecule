@@ -38,6 +38,7 @@ $sidebar: prefix('sidebar');
 $statusBar: prefix('statusBar');
 $workbench: prefix('workbench');
 $mainBench: prefix('mainBench');
+$notification: prefix('notification');
 
 // The Naming of BEM Element
 @function bem-ele($block, $element) {

@@ -3,7 +3,13 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { Menu, MenuMode, MenuItem, SubMenu } from 'mo/components/menu';
+import {
+    Menu,
+    MenuMode,
+    MenuItem,
+    SubMenu,
+    IMenuItem,
+} from 'mo/components/menu';
 const stories = storiesOf('Menu', module);
 stories.addDecorator(withKnobs);
 
@@ -125,6 +131,10 @@ stories.add(
             },
         ];
 
+        const handleClick = (e: React.MouseEvent, item?: IMenuItem) => {
+            console.log('click Menu', e, item);
+        };
+
         return (
             <div>
                 <h2>简述</h2>
@@ -134,7 +144,7 @@ stories.add(
                 </p>
                 <div>
                     <h3>使用示例 1 - 基本使用</h3>
-                    <Menu mode={MenuMode.Horizontal}>
+                    <Menu mode={MenuMode.Horizontal} onClick={handleClick}>
                         <MenuItem>menuItem1</MenuItem>
                         <MenuItem>menuItem2</MenuItem>
                         <MenuItem>menuItem3</MenuItem>
@@ -148,7 +158,11 @@ stories.add(
                 </div>
                 <div>
                     <h3>使用示例 2 - horizontal</h3>
-                    <Menu mode={MenuMode.Horizontal} data={menuData} />
+                    <Menu
+                        mode={MenuMode.Horizontal}
+                        data={menuData}
+                        onClick={handleClick}
+                    />
                 </div>
                 <div>
                     <h3>使用示例 3 - vertical</h3>
@@ -156,6 +170,7 @@ stories.add(
                         style={{ width: 200 }}
                         data={menuData}
                         mode={MenuMode.Vertical}
+                        onClick={handleClick}
                     />
                 </div>
             </div>

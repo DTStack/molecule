@@ -53,10 +53,13 @@ export class ExplorerController
 
         activityBarService.onSelect((e, item: IActivityBarItem) => {
             console.log('Search Pane onClick:', e, item);
+            const { hidden } = sideBarService.getState()
             if (item.id === exploreActiveItem.id) {
                 sideBarService.setState({
                     current: explorePane.id,
+                    hidden: hidden ? !hidden : hidden
                 });
+                
             }
         });
 

@@ -30,9 +30,11 @@ function init() {
     activityBarService.addBar(searchActivityItem);
 
     activityBarService.onSelect((e, item: IActivityBarItem) => {
+        const { hidden } = sideBarService.getState()
         if (item.id === searchActivityItem.id) {
             sideBarService.setState({
                 current: searchSidePane.id,
+                hidden: hidden ? !hidden : hidden
             });
         }
     });

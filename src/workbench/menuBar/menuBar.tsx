@@ -129,7 +129,7 @@ function MenuBar(props: IMenuBar & IMenuBarController) {
     const handleClick = (e: React.MouseEvent, item) => {
         onClick?.(e, item);
         (childRef.current as any)!.dispose();
-    }
+    };
     const overlay = (
         <Menu
             onClick={handleClick}

@@ -13,6 +13,7 @@ export enum MenuBarEvent {
 export interface IMenuBarItem {
     id?: string;
     name?: string;
+    icon?: string;
     data?: any;
     iconName?: string;
     render?: () => React.ReactNode | JSX.Element;

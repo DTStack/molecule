@@ -40,16 +40,16 @@ export class MenuBarController
                 this.redo();
                 break;
             case MENU_VIEW_ACTIVITYBAR:
-                activityBarService.showHide();
+                this.updateActivityBar()
                 break;
             case MENU_VIEW_MENUBAR:
-                menuBarService.showHide();
+                this.updateMenuBar()
                 break;
             case MENU_VIEW_STATUSBAR:
-                statusBarService.showHide();
+                this.updateStatusBar()
                 break;
             case MENU_VIEW_SIDEBAR:
-                sideBarService.showHide();
+                this.updateSideBar()
                 break;
         }
     };
@@ -61,4 +61,29 @@ export class MenuBarController
     public redo = () => {
         editorService.editorInstance?.getAction('redo').run();
     };
+
+    public updateActivityBar = () => {
+        activityBarService.showHide();
+        const { hidden } = activityBarService.getState()
+        menuBarService.update(MENU_VIEW_ACTIVITYBAR, { icon: hidden ? '' : 'check' })
+    }
+
+    public updateMenuBar = () => {
+        menuBarService.showHide();
+        const { hidden } = menuBarService.getState()
+        menuBarService.update(MENU_VIEW_MENUBAR, { icon: hidden ? '' : 'check' })
+    }
+
+    public updateStatusBar = () => {
+        statusBarService.showHide();
+        const { hidden } = statusBarService.getState()
+        menuBarService.update(MENU_VIEW_STATUSBAR, { icon: hidden ? '' : 'check' })
+    }
+
+    public updateSideBar = () => {
+        sideBarService.showHide();
+        const { hidden } = sideBarService.getState();
+        menuBarService.update(MENU_VIEW_SIDEBAR, { icon: hidden ? '' : 'check' })
+    }
+
 }

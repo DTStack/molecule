@@ -43,12 +43,11 @@ export interface IEditorController {
 }
 
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
-
-const editorStates = new Map();
 @singleton()
 export class EditorController extends Controller implements IEditorController {
     // Group Pos locate here temporary, we can move it to state or localStorage in future.
     public groupSplitPos: string[] = [];
+    private editorStates = new Map()
 
     constructor() {
         super();
@@ -243,7 +242,7 @@ export class EditorController extends Controller implements IEditorController {
         const { current } = editorService.getState();
         const { path, options } = props;
         const editorInstance = current?.editorInstance;
-        editorStates.set(prevProps.path, editorInstance?.saveViewState());
+        this.editorStates.set(prevProps.path, editorInstance?.saveViewState());
         this.openFile(
             editorInstance,
             path!,
@@ -262,7 +261,7 @@ export class EditorController extends Controller implements IEditorController {
         const model = monaco.editor.getModel(monaco.Uri.parse(path));
         editorInstance.setModel(model!);
         // Restore the editor state for the file
-        const editorState = editorStates.get(path);
+        const editorState = this.editorStates.get(path);
         if (editorState) {
             editorInstance.restoreViewState(editorState);
         }

@@ -55,16 +55,19 @@ export const EDITOR_MENU_CLOSE_OTHERS = 'editor.closeOthers';
 export const EDITOR_MENU_CLOSE = 'editor.close';
 export const EDITOR_MENU_SHOW_OPENEDITORS = 'editor.showOpenEditors';
 
-export const EDITOR_MENU_FILE_UNDO = 'undo'
-export const EDITOR_MENU_FILE_REDO = 'redo'
+export const EDITOR_MENU_FILE_UNDO = 'undo';
+export const EDITOR_MENU_FILE_REDO = 'redo';
 
-export const undoRedoMenu = [{
-    id: EDITOR_MENU_FILE_UNDO,
-    label: 'Undo'
-}, {
-    id: EDITOR_MENU_FILE_REDO,
-    label: 'Redo'
-}]
+export const undoRedoMenu = [
+    {
+        id: EDITOR_MENU_FILE_UNDO,
+        label: 'Undo',
+    },
+    {
+        id: EDITOR_MENU_FILE_REDO,
+        label: 'Redo',
+    },
+];
 
 const baseMenu = [
     {

@@ -2,7 +2,10 @@ import 'mo/workbench/menuBar/style.scss';
 import * as React from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IMenuBar } from 'mo/model/workbench/menuBar';
-import { EDITOR_MENU_FILE_REDO, EDITOR_MENU_FILE_UNDO } from 'mo/model/workbench/editor'
+import {
+    EDITOR_MENU_FILE_REDO,
+    EDITOR_MENU_FILE_UNDO,
+} from 'mo/model/workbench/editor';
 import { Menu } from 'mo/components/menu';
 import { DropDown } from 'mo/components/dropdown';
 import { Icon } from 'mo/components/icon';
@@ -126,7 +129,11 @@ function MenuBar(props: IMenuBar & IMenuBarController) {
         onClick?.(e, item);
     };
     const overlay = (
-        <Menu onClick={handleOnMenuClick} style={{ width: 200 }} data={initialMenuData} />
+        <Menu
+            onClick={handleOnMenuClick}
+            style={{ width: 200 }}
+            data={initialMenuData}
+        />
     );
     return (
         <div className={defaultClassName}>

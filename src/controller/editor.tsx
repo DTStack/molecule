@@ -7,7 +7,7 @@ import {
     EDITOR_MENU_CLOSE_TO_RIGHT,
     EDITOR_MENU_CLOSE_TO_LEFT,
     EDITOR_MENU_CLOSE_ALL,
-    undoRedoMenu
+    undoRedoMenu,
 } from 'mo/model/workbench/editor';
 import { Controller } from 'mo/react/controller';
 import { editorService, statusBarService } from 'mo/services';
@@ -155,14 +155,14 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance: monaco.editor.IStandaloneCodeEditor,
         groupId: number
     ) => {
-        if (!editorInstance) return
+        if (!editorInstance) return;
         this.initEditorEvents(editorInstance, groupId);
         this.registerActions(editorInstance);
         editorService.updateGroup(groupId, {
             editorInstance: editorInstance,
         });
         editorService.updateCurrentGroup({ editorInstance });
-        
+
         const { current } = editorService.getState();
         const tab = current?.tab;
         this.openFile(
@@ -174,19 +174,19 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     private registerActions = (editorInstance) => {
-        undoRedoMenu.map(({id, label}) => (
+        undoRedoMenu.map(({ id, label }) =>
             editorInstance?.addAction({
                 id,
                 label,
                 run: () => {
-                    editorInstance!.focus()
+                    editorInstance!.focus();
                     if (!document.execCommand(id)) {
-                        editorInstance?.getModel()?.[id]()
+                        editorInstance?.getModel()?.[id]();
                     }
-                }
+                },
             })
-        ))
-    }
+        );
+    };
     public onSplitEditorRight = () => {
         editorService.cloneGroup();
         this.emit(EditorEvent.OnSplitEditorRight);

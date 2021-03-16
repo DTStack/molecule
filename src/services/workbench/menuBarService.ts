@@ -13,9 +13,8 @@ export interface IMenuBarService extends Component<IMenuBar> {
     push(data: IMenuBarItem | IMenuBarItem[]): void;
     remove(index: number): void;
     getState(): IMenuBar;
-    update(did:string, newNode: IMenuBarItem): void;
+    update(did: string, newNode: IMenuBarItem): void;
 }
-
 
 @singleton()
 export class MenuBarService
@@ -47,22 +46,22 @@ export class MenuBarService
         this.state.data!.splice(index, 1);
     }
 
-    public update (menuId, extra = {}) {
+    public update(menuId, extra = {}) {
         const { data } = this.state;
         const currentNode = this.getCurrentNode(menuId, data);
-        const deepData = cloneDeep(data)
-        for( let node of deepData) {
-            this.replaceNode(node, currentNode, extra)
+        const deepData = cloneDeep(data);
+        for (let node of deepData) {
+            this.replaceNode(node, currentNode, extra);
         }
-        this.setState({ data: deepData })
+        this.setState({ data: deepData });
     }
 
     public getCurrentNode(menuId, data) {
-        const queue = [...data]
+        const queue = [...data];
         while (queue.length) {
-          const menu = queue.shift()
-          if (menu.id === menuId) return menu
-          queue.push(...(menu.data || []))
+            const menu = queue.shift();
+            if (menu.id === menuId) return menu;
+            queue.push(...(menu.data || []));
         }
     }
 
@@ -70,17 +69,16 @@ export class MenuBarService
         if (node?.id === currentNode?.id) {
             for (let key in extra) {
                 if (extra.hasOwnProperty(key)) {
-                    delete node[key]
-                    node[key] = extra[key]
+                    delete node[key];
+                    node[key] = extra[key];
                 }
             }
         } else {
             if (node?.data?.length) {
                 for (let item of node?.data) {
-                    this.replaceNode(item, currentNode, extra)
+                    this.replaceNode(item, currentNode, extra);
                 }
             }
         }
     }
-    
 }

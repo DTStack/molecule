@@ -40,16 +40,16 @@ export class MenuBarController
                 this.redo();
                 break;
             case MENU_VIEW_ACTIVITYBAR:
-                this.updateActivityBar()
+                this.updateActivityBar();
                 break;
             case MENU_VIEW_MENUBAR:
-                this.updateMenuBar()
+                this.updateMenuBar();
                 break;
             case MENU_VIEW_STATUSBAR:
-                this.updateStatusBar()
+                this.updateStatusBar();
                 break;
             case MENU_VIEW_SIDEBAR:
-                this.updateSideBar()
+                this.updateSideBar();
                 break;
         }
     };
@@ -64,26 +64,33 @@ export class MenuBarController
 
     public updateActivityBar = () => {
         activityBarService.showHide();
-        const { hidden } = activityBarService.getState()
-        menuBarService.update(MENU_VIEW_ACTIVITYBAR, { icon: hidden ? '' : 'check' })
-    }
+        const { hidden } = activityBarService.getState();
+        menuBarService.update(MENU_VIEW_ACTIVITYBAR, {
+            icon: hidden ? '' : 'check',
+        });
+    };
 
     public updateMenuBar = () => {
         menuBarService.showHide();
-        const { hidden } = menuBarService.getState()
-        menuBarService.update(MENU_VIEW_MENUBAR, { icon: hidden ? '' : 'check' })
-    }
+        const { hidden } = menuBarService.getState();
+        menuBarService.update(MENU_VIEW_MENUBAR, {
+            icon: hidden ? '' : 'check',
+        });
+    };
 
     public updateStatusBar = () => {
         statusBarService.showHide();
-        const { hidden } = statusBarService.getState()
-        menuBarService.update(MENU_VIEW_STATUSBAR, { icon: hidden ? '' : 'check' })
-    }
+        const { hidden } = statusBarService.getState();
+        menuBarService.update(MENU_VIEW_STATUSBAR, {
+            icon: hidden ? '' : 'check',
+        });
+    };
 
     public updateSideBar = () => {
         sideBarService.showHide();
         const { hidden } = sideBarService.getState();
-        menuBarService.update(MENU_VIEW_SIDEBAR, { icon: hidden ? '' : 'check' })
-    }
-
+        menuBarService.update(MENU_VIEW_SIDEBAR, {
+            icon: hidden ? '' : 'check',
+        });
+    };
 }

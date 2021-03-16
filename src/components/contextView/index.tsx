@@ -37,7 +37,7 @@ enum ContextViewEvent {
 const contextViewClass = prefixClaName('context-view');
 const contentClassName = getBEMElement(contextViewClass, 'content');
 const blockClassName = getBEMElement(contextViewClass, 'block');
-const shadowClassName = getBEMModifier(contextViewClass, 'shadow');
+export const shadowClassName = getBEMModifier(contextViewClass, 'shadow');
 
 const Emitter = new EventEmitter();
 

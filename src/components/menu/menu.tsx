@@ -7,6 +7,8 @@ import {
     horizontalMenuClassName,
     verticalMenuClassName,
 } from './base';
+import { mergeFunctions } from 'mo/common/utils';
+import { cloneReactChildren } from 'mo/react';
 
 export interface IMenu extends ISubMenu {}
 
@@ -19,7 +21,7 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
         onClick,
         ...custom
     } = props;
-    let content = children;
+    let content = cloneReactChildren(children, { onClick });
 
     const modeClassName =
         mode === MenuMode.Horizontal
@@ -30,15 +32,21 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
     if (data.length > 0) {
         const renderMenusByData = (menus: IMenu[]) => {
             return menus.map((item: IMenu) => {
+                const handleClick = mergeFunctions(onClick, item.onClick);
                 if (item.data && item.data.length > 0) {
                     return (
-                        <SubMenu key={item.id} mode={mode} {...item}>
+                        <SubMenu
+                            key={item.id}
+                            mode={mode}
+                            {...item}
+                            onClick={handleClick}
+                        >
                             {renderMenusByData(item.data)}
                         </SubMenu>
                     );
                 }
                 return (
-                    <MenuItem key={item.id} onClick={onClick} {...item}>
+                    <MenuItem key={item.id} onClick={handleClick} {...item}>
                         {item.name}
                     </MenuItem>
                 );

@@ -43,9 +43,7 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItem>) {
     } = props;
     const events = {
         onClick: function (e: React.MouseEvent) {
-            if (onClick) {
-                onClick(e, props);
-            }
+            onClick?.(e, props);
         },
     };
     return (

@@ -72,6 +72,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
         mode = MenuMode.Vertical,
         icon,
         children,
+        onClick,
         ...custom
     } = props;
     const cNames = classNames(defaultSubMenuClassName, className);
@@ -152,9 +153,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
                 hideAll();
             }
         },
-        onClick: function (event: React.MouseEvent) {
-            event.stopPropagation();
-        },
+        onClick: function (event: React.MouseEvent) {},
     };
 
     useEffect(() => {
@@ -175,12 +174,25 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
                 className={cNames}
                 style={{ visibility: 'hidden' }}
                 data={data}
+                onClick={onClick}
+                {...custom}
             />
         ) : (
-            <Menu className={cNames} style={{ visibility: 'hidden' }}>
+            <Menu
+                className={cNames}
+                style={{ visibility: 'hidden' }}
+                onClick={onClick}
+            >
                 {children}
             </Menu>
         );
+
+    events.onClick = (event: React.MouseEvent) => {
+        if (!subMenuContent) {
+            onClick?.(event, props);
+        }
+        event.stopPropagation();
+    };
 
     return (
         <li className={defaultMenuItemClassName} {...events} {...custom}>

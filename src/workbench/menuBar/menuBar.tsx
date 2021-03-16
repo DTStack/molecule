@@ -125,7 +125,11 @@ const actionClassName = getBEMElement(defaultClassName, 'action');
 
 function MenuBar(props: IMenuBar & IMenuBarController) {
     const { onClick } = props;
-    const handleClick = (e: React.MouseEvent, item) => onClick?.(e, item);
+    const childRef = React.useRef();
+    const handleClick = (e: React.MouseEvent, item) => {
+        onClick?.(e, item);
+        (childRef.current as any)!.dispose();
+    }
     const overlay = (
         <Menu
             onClick={handleClick}
@@ -136,6 +140,7 @@ function MenuBar(props: IMenuBar & IMenuBarController) {
     return (
         <div className={defaultClassName}>
             <DropDown
+                ref={childRef}
                 trigger="click"
                 className={actionClassName}
                 placement="right"

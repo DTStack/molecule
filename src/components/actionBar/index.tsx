@@ -5,6 +5,7 @@ import {
     getBEMElement,
     getBEMModifier,
 } from 'mo/common/className';
+import { mergeFunctions } from 'mo/common/utils';
 
 export interface IActionBarItem<T = any> {
     id: string;
@@ -34,10 +35,8 @@ const labelClassName = getBEMElement(defaultActionBarClassName, 'label');
 
 export function ActionBarItem(props: IActionBarItem) {
     const { id, title, name, onClick } = props;
-    const click = (e: React.MouseEvent) => {
-        if (onClick) {
-            onClick(e, props);
-        }
+    const handClick = (e: React.MouseEvent) => {
+        onClick?.(e, props);
     };
     const disabled = props.disabled ? itemDisabledClassName : null;
     const claNames = classNames(
@@ -49,7 +48,7 @@ export function ActionBarItem(props: IActionBarItem) {
     return (
         <li
             className={classNames(itemClassName, disabled)}
-            onClick={click}
+            onClick={handClick}
             key={`${id}`}
         >
             <a className={claNames} title={title}>
@@ -65,7 +64,11 @@ export default function ActionBar<T = any>(props: IActionBar<T>) {
     const claNames = classNames(defaultActionBarClassName, className);
 
     const items = data.map((item: IActionBarItem<T>) => (
-        <ActionBarItem key={item.id} onClick={onClick} {...item} />
+        <ActionBarItem
+            key={item.id}
+            {...item}
+            onClick={mergeFunctions(onClick, item.onClick)}
+        />
     ));
 
     return (

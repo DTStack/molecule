@@ -18,7 +18,7 @@ export function Editor(props: IEditor & IEditorController) {
         onMoveTab,
         onSelectTab,
         groupSplitPos = [],
-        onSaveEditorState,
+        onChangeEditorProps,
         onSplitEditorRight,
         onUpdateEditorIns,
         onPaneSizeChange,
@@ -31,7 +31,7 @@ export function Editor(props: IEditor & IEditorController) {
             onSelectTab: (tabKey) => onSelectTab?.(tabKey, groupId),
             onSplitEditorRight,
             onUpdateEditorIns,
-            onSaveEditorState,
+            onChangeEditorProps,
             onClickContextMenu,
         };
     };

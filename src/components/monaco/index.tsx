@@ -22,7 +22,7 @@ export interface IMonacoEditorProps extends React.ComponentProps<any> {
      */
     override?: monaco.editor.IEditorOverrideServices;
     editorInstanceRef?: (instance: monaco.editor.IStandaloneCodeEditor) => void;
-    onSaveEditorState?: (
+    onChangeEditorProps?: (
         props: IMonacoEditorProps,
         nextProps: IMonacoEditorProps
     ) => void;
@@ -53,9 +53,9 @@ export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
     }
 
     componentDidUpdate(prevProps) {
-        const { path, onSaveEditorState } = this.props;
+        const { path, onChangeEditorProps } = this.props;
         if (path !== prevProps?.path!) {
-            onSaveEditorState?.(prevProps, this.props);
+            onChangeEditorProps?.(prevProps, this.props);
         }
     }
 

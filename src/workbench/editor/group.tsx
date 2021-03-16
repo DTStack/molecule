@@ -32,7 +32,7 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
         onMoveTab,
         onCloseTab,
         onClickContextMenu,
-        onSaveEditorState,
+        onChangeEditorProps,
         onSelectTab,
         onSplitEditorRight,
         onUpdateEditorIns,
@@ -100,8 +100,9 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                                 // This assignment will trigger moleculeCtx update, and subNodes update
                                 onUpdateEditorIns?.(editorInstance, id!);
                             }}
-                            onSaveEditorState={(preProps, props) => {
-                                onSaveEditorState?.(preProps, props);
+                            onChangeEditorProps={(preProps, props) => {
+                                // Listener event for Editor property update
+                                onChangeEditorProps?.(preProps, props);
                             }}
                         />
                     )

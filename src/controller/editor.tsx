@@ -31,7 +31,7 @@ export interface IEditorController {
     onCloseToRight?: (tab: IEditorTab, group: number) => void;
     onCloseOthers?: (tab: IEditorTab, group: number) => void;
     onCloseSaved?: (group: number) => void;
-    onSaveEditorState?: (
+    onChangeEditorProps?: (
         preProps: IMonacoEditorProps,
         nextProps: IMonacoEditorProps
     ) => void;
@@ -236,7 +236,7 @@ export class EditorController extends Controller implements IEditorController {
         });
     }
 
-    public onSaveEditorState = (
+    public onChangeEditorProps = (
         prevProps: IMonacoEditorProps,
         props: IMonacoEditorProps
     ) => {

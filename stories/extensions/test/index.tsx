@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { activityBarService, IActivityBarItem, sidebarService } from 'mo';
+import { activityBarService, IActivityBarItem, sideBarService } from 'mo';
 import { IExtension } from 'mo/model/extension';
 
 import TestPane from './testPane';
@@ -14,7 +14,7 @@ export const ExtendTestPane: IExtension = {
             },
         };
 
-        sidebarService.push(testSidePane);
+        sideBarService.push(testSidePane);
         const newItem = {
             id: 'ActivityBarTestPane',
             iconName: 'codicon-beaker',
@@ -24,7 +24,7 @@ export const ExtendTestPane: IExtension = {
 
         activityBarService.onSelect((e, item: IActivityBarItem) => {
             if (item.id === newItem.id) {
-                sidebarService.setState({
+                sideBarService.setState({
                     current: testSidePane.id,
                 });
             }

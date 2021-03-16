@@ -88,6 +88,6 @@ export class ActivityBarModel implements IActivityBar {
     ) {
         this.data = data;
         this.selected = selected;
-        this.hidden = hidden
+        this.hidden = hidden;
     }
 }

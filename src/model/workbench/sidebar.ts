@@ -27,7 +27,11 @@ export class SidebarModel implements ISidebar {
     public panes: ISidebarPane[];
     public hidden = false;
 
-    constructor(panes: ISidebarPane[] = [], selected: string = '', hidden = false) {
+    constructor(
+        panes: ISidebarPane[] = [],
+        selected: string = '',
+        hidden = false
+    ) {
         this.panes = panes;
         this.current = selected;
         this.hidden = hidden;

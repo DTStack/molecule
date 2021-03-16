@@ -3,7 +3,7 @@ import { singleton } from 'tsyringe';
 import {
     activityBarService,
     IActivityBarItem,
-    sidebarService,
+    sideBarService,
     explorerService,
 } from 'mo';
 import * as React from 'react';
@@ -31,7 +31,7 @@ export class ExplorerController
 
     private initView() {
         const state = activityBarService.getState();
-        const sideBarState = sidebarService.getState();
+        const sideBarState = sideBarService.getState();
         const explorerState = explorerService.getState();
         const exploreActiveItem = {
             id: 'active-explorer',
@@ -54,14 +54,14 @@ export class ExplorerController
         activityBarService.onSelect((e, item: IActivityBarItem) => {
             console.log('Search Pane onClick:', e, item);
             if (item.id === exploreActiveItem.id) {
-                sidebarService.setState({
+                sideBarService.setState({
                     current: explorePane.id,
                 });
             }
         });
 
-        // sidebarService.push(explorePane);
-        sidebarService.setState({
+        // sideBarService.push(explorePane);
+        sideBarService.setState({
             current: explorePane.id,
             panes: [...sideBarState.panes!, explorePane],
         });

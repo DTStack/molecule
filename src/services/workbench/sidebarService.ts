@@ -32,5 +32,4 @@ export class SideBarService
             hidden: !this.state.hidden,
         });
     }
-    
 }

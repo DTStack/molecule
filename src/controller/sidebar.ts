@@ -1,5 +1,5 @@
 import { Controller } from 'mo/react/controller';
-import { sidebarService } from 'mo/services';
+import { sideBarService } from 'mo/services';
 import { singleton } from 'tsyringe';
 
 export interface ISideBarController {}
@@ -13,6 +13,6 @@ export class SidebarController
     }
 
     public readonly onClick = (event: React.MouseEvent) => {
-        console.log('onClick:', sidebarService);
+        console.log('onClick:', sideBarService);
     };
 }

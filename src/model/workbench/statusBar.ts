@@ -31,7 +31,7 @@ export enum StatusBarEvent {
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[];
     public rightItems: IStatusBarItem[];
-    public hidden = false
+    public hidden = false;
 
     constructor(
         leftItems: IStatusBarItem[] = [],

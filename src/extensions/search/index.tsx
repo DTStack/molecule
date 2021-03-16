@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     activityBarService,
-    sidebarService,
+    sideBarService,
     IExtensionService,
     IActivityBarItem,
     editorService,
@@ -19,7 +19,7 @@ function init() {
         },
     };
 
-    sidebarService.push(searchSidePane);
+    sideBarService.push(searchSidePane);
 
     const searchActivityItem = {
         id: 'search',
@@ -31,7 +31,7 @@ function init() {
 
     activityBarService.onSelect((e, item: IActivityBarItem) => {
         if (item.id === searchActivityItem.id) {
-            sidebarService.setState({
+            sideBarService.setState({
                 current: searchSidePane.id,
             });
         }

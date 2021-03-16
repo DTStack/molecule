@@ -25,7 +25,7 @@ export interface IMenuBar {
 @injectable()
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];
-    public hidden = false
+    public hidden = false;
 
     constructor(data: IMenuBarItem[] = [], hidden = false) {
         this.data = data;

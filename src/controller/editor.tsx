@@ -47,7 +47,7 @@ type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 export class EditorController extends Controller implements IEditorController {
     // Group Pos locate here temporary, we can move it to state or localStorage in future.
     public groupSplitPos: string[] = [];
-    private editorStates = new Map()
+    private editorStates = new Map();
 
     constructor() {
         super();

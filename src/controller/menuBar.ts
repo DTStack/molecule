@@ -33,12 +33,10 @@ export class MenuBarController
     };
 
     public undo = () => {
-        const { current } = editorService.getState();
-        current?.editorInstance?.getAction('undo').run();
+        editorService.editorInstance?.getAction('undo').run();
     };
 
     public redo = () => {
-        const { current } = editorService.getState();
-        current?.editorInstance?.getAction('undo').run();
+        editorService.editorInstance?.getAction('redo').run();
     };
 }

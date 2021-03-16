@@ -72,8 +72,7 @@ export default class TestPane extends React.Component {
                 name: `editor${key}.ts`,
                 data: {
                     value: `${key}export interface Type<T> { new(...args: any[]): T;}
-export type GenericClassDecorator<T> = (target: T) => void;
-                    `,
+export type GenericClassDecorator<T> = (target: T) => void;`,
                     path: 'desktop/molecule/editor1',
                     language: 'typescript',
                     modified: false,
@@ -82,9 +81,6 @@ export type GenericClassDecorator<T> = (target: T) => void;
             };
             console.log('open editor:', tabData);
             editorService.open(tabData);
-            editorService.open(tabData);
-            const { current } = editorService.getState();
-            current?.editorInstance?.setValue(current?.tab?.data?.value);
         };
 
         const openCommand = function () {};

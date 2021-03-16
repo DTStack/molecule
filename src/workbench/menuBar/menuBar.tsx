@@ -2,6 +2,10 @@ import 'mo/workbench/menuBar/style.scss';
 import * as React from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IMenuBar } from 'mo/model/workbench/menuBar';
+import {
+    EDITOR_MENU_FILE_REDO,
+    EDITOR_MENU_FILE_UNDO,
+} from 'mo/model/workbench/editor';
 import { Menu } from 'mo/components/menu';
 import { DropDown } from 'mo/components/dropdown';
 import { Icon } from 'mo/components/icon';
@@ -31,11 +35,11 @@ const initialMenuData = [
         name: 'Edit',
         data: [
             {
-                id: 'Undo',
+                id: EDITOR_MENU_FILE_UNDO,
                 name: 'Undo',
             },
             {
-                id: 'Redo',
+                id: EDITOR_MENU_FILE_REDO,
                 name: 'Redo',
             },
         ],
@@ -121,18 +125,26 @@ const actionClassName = getBEMElement(defaultClassName, 'action');
 
 function MenuBar(props: IMenuBar & IMenuBarController) {
     const { onClick } = props;
-    const click = function (e, item) {
+    const childRef = React.useRef();
+    const handleClick = (e: React.MouseEvent, item) => {
         onClick?.(e, item);
+        (childRef.current as any)!.dispose();
     };
-    const menu = (
-        <Menu onClick={click} style={{ width: 200 }} data={initialMenuData} />
+    const overlay = (
+        <Menu
+            onClick={handleClick}
+            style={{ width: 200 }}
+            data={initialMenuData}
+        />
     );
     return (
         <div className={defaultClassName}>
             <DropDown
+                ref={childRef}
+                trigger="click"
                 className={actionClassName}
                 placement="right"
-                overlay={menu}
+                overlay={overlay}
             >
                 <Icon type="menu" />
             </DropDown>

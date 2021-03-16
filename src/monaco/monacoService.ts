@@ -6,7 +6,6 @@ import {
     IStandaloneCodeEditor,
     StandaloneEditor,
 } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
-
 import {
     SimpleEditorModelResolverService,
     SimpleLayoutService,

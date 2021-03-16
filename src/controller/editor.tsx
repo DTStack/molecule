@@ -7,6 +7,7 @@ import {
     EDITOR_MENU_CLOSE_TO_RIGHT,
     EDITOR_MENU_CLOSE_TO_LEFT,
     EDITOR_MENU_CLOSE_ALL,
+    undoRedoMenu,
 } from 'mo/model/workbench/editor';
 import { Controller } from 'mo/react/controller';
 import { editorService, statusBarService } from 'mo/services';
@@ -14,6 +15,7 @@ import { IMenuItem } from 'mo/components/menu';
 import { singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
 import { editorLineColumnItem } from './statusBar';
+import { IMonacoEditorProps } from 'mo/components/monaco';
 
 export interface IEditorController {
     groupSplitPos?: string[];
@@ -29,6 +31,10 @@ export interface IEditorController {
     onCloseToRight?: (tab: IEditorTab, group: number) => void;
     onCloseOthers?: (tab: IEditorTab, group: number) => void;
     onCloseSaved?: (group: number) => void;
+    onChangeEditorProps?: (
+        preProps: IMonacoEditorProps,
+        nextProps: IMonacoEditorProps
+    ) => void;
     onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: number) => void;
     onSelectTab?: (tabId: string, group: number) => void;
     onSplitEditorRight?: () => void;
@@ -37,11 +43,11 @@ export interface IEditorController {
 }
 
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
-
 @singleton()
 export class EditorController extends Controller implements IEditorController {
     // Group Pos locate here temporary, we can move it to state or localStorage in future.
     public groupSplitPos: string[] = [];
+    private editorStates = new Map();
 
     constructor() {
         super();
@@ -49,7 +55,6 @@ export class EditorController extends Controller implements IEditorController {
 
     public open<T>(tab: IEditorTab<any>, groupId?: number) {
         editorService.open<T>(tab, groupId);
-        this.updateCurrentValue();
     }
 
     public onClickContextMenu = (
@@ -93,7 +98,17 @@ export class EditorController extends Controller implements IEditorController {
     public updateCurrentValue = () => {
         const { current } = editorService.getState();
         const newValue = current?.tab?.data?.value;
-        current?.editorInstance?.setValue(newValue);
+        const model = current?.editorInstance?.getModel();
+        model?.pushEditOperations(
+            [],
+            [
+                {
+                    range: model?.getFullModelRange(),
+                    text: newValue!,
+                },
+            ]
+        );
+        current?.editorInstance?.focus();
     };
 
     public onCloseTab = (tabId?: string, groupId?: number) => {
@@ -139,15 +154,38 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance: monaco.editor.IStandaloneCodeEditor,
         groupId: number
     ) => {
-        if (editorInstance) {
-            this.initEditorEvents(editorInstance, groupId);
-            editorService.updateGroup(groupId, {
-                editorInstance: editorInstance,
-            });
-            editorService.updateCurrentGroup({ editorInstance });
-        }
+        if (!editorInstance) return;
+        this.initEditorEvents(editorInstance, groupId);
+        this.registerActions(editorInstance);
+        editorService.updateGroup(groupId, {
+            editorInstance: editorInstance,
+        });
+        editorService.updateCurrentGroup({ editorInstance });
+
+        const { current } = editorService.getState();
+        const tab = current?.tab;
+        this.openFile(
+            editorInstance,
+            tab?.name!,
+            tab?.data?.value!,
+            tab?.data?.language!
+        );
     };
 
+    private registerActions = (editorInstance) => {
+        undoRedoMenu.forEach(({ id, label }) => {
+            editorInstance?.addAction({
+                id,
+                label,
+                run: () => {
+                    editorInstance!.focus();
+                    if (!document.execCommand(id)) {
+                        editorInstance?.getModel()?.[id]();
+                    }
+                },
+            });
+        });
+    };
     public onSplitEditorRight = () => {
         editorService.cloneGroup();
         this.emit(EditorEvent.OnSplitEditorRight);
@@ -164,7 +202,7 @@ export class EditorController extends Controller implements IEditorController {
         if (!editorInstance) return;
 
         editorInstance.onDidChangeModelContent((event: any) => {
-            const newValue = editorInstance.getValue();
+            const newValue = editorInstance.getModel()?.getValue();
             const { current } = editorService.getState();
             const tab = current?.tab;
             if (!tab) return;
@@ -194,6 +232,67 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance.onDidChangeCursorSelection(() => {
             this.updateEditorLineColumnInfo(editorInstance);
         });
+    }
+
+    public onChangeEditorProps = (
+        prevProps: IMonacoEditorProps,
+        props: IMonacoEditorProps
+    ) => {
+        const { path, options } = props;
+        if (prevProps?.path !== path) {
+            const { current } = editorService.getState();
+            const editorInstance = current?.editorInstance;
+            this.editorStates.set(
+                prevProps.path,
+                editorInstance?.saveViewState()
+            );
+            this.openFile(
+                editorInstance,
+                path!,
+                options?.value!,
+                options?.language!
+            );
+        }
+    };
+
+    private openFile(
+        editorInstance,
+        path: string,
+        value: string,
+        language: string
+    ) {
+        this.initializeFile(path, value, language);
+        const model = monaco.editor.getModel(monaco.Uri.parse(path));
+        editorInstance.setModel(model!);
+        // Restore the editor state for the file
+        const editorState = this.editorStates.get(path);
+        if (editorState) {
+            editorInstance.restoreViewState(editorState);
+        }
+        editorInstance?.focus();
+    }
+
+    private initializeFile(path: string, value: string, language: string) {
+        let model = monaco.editor.getModel(monaco.Uri.parse(path));
+
+        if (model) {
+            model?.pushEditOperations(
+                [],
+                [
+                    {
+                        range: model?.getFullModelRange(),
+                        text: value!,
+                    },
+                ],
+                [] as any
+            );
+        } else {
+            model = monaco.editor.createModel(
+                value,
+                language,
+                monaco.Uri.parse(path)
+            );
+        }
     }
 
     private updateStatusBar(editorInstance: IStandaloneCodeEditor) {

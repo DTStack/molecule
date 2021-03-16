@@ -3,9 +3,13 @@ import * as React from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IMenuBar } from 'mo/model/workbench/menuBar';
 import {
-    EDITOR_MENU_FILE_REDO,
-    EDITOR_MENU_FILE_UNDO,
-} from 'mo/model/workbench/editor';
+    MENU_FILE_REDO,
+    MENU_FILE_UNDO,
+    MENU_VIEW_ACTIVITYBAR,
+    MENU_VIEW_MENUBAR,
+    MENU_VIEW_STATUSBAR,
+    MENU_VIEW_SIDEBAR,
+} from 'mo/model/workbench/menuBar';
 import { Menu } from 'mo/components/menu';
 import { DropDown } from 'mo/components/dropdown';
 import { Icon } from 'mo/components/icon';
@@ -35,11 +39,11 @@ const initialMenuData = [
         name: 'Edit',
         data: [
             {
-                id: EDITOR_MENU_FILE_UNDO,
+                id: MENU_FILE_UNDO,
                 name: 'Undo',
             },
             {
-                id: EDITOR_MENU_FILE_REDO,
+                id: MENU_FILE_REDO,
                 name: 'Redo',
             },
         ],
@@ -76,22 +80,22 @@ const initialMenuData = [
                 data: [
                     {
                         icon: 'check',
-                        id: 'ShowMenuBar',
+                        id: MENU_VIEW_MENUBAR,
                         name: 'Show Menu Bar',
                     },
                     {
                         icon: 'check',
-                        id: 'ShowSideBar',
+                        id: MENU_VIEW_SIDEBAR,
                         name: 'Show Side Bar',
                     },
                     {
                         icon: 'check',
-                        id: 'ShowStatusBar',
+                        id: MENU_VIEW_STATUSBAR,
                         name: 'Show Status Bar',
                     },
                     {
                         icon: 'check',
-                        id: 'ShowActivityBar',
+                        id: MENU_VIEW_ACTIVITYBAR,
                         name: 'Show Activity Bar',
                     },
                 ],

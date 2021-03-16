@@ -22,7 +22,6 @@ export interface IActivityBarItem {
     id: string;
     name?: string;
     data?: any;
-    hidden?: boolean;
     iconName?: string;
     checked?: boolean;
     type?: 'normal' | 'global';

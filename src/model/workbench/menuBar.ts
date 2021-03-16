@@ -22,6 +22,23 @@ export interface IMenuBar {
     hidden?: boolean;
 }
 
+export const MENU_FILE_UNDO = 'undo';
+export const MENU_FILE_REDO = 'redo';
+export const MENU_VIEW_MENUBAR = 'workbench.action.showMenuBar';
+export const MENU_VIEW_SIDEBAR = 'workbench.action.showSideBar';
+export const MENU_VIEW_ACTIVITYBAR = 'workbench.action.showActivityBar';
+export const MENU_VIEW_STATUSBAR = 'workbench.action.showStatusBar';
+
+export const undoRedoMenu = [
+    {
+        id: MENU_FILE_UNDO,
+        label: 'Undo',
+    },
+    {
+        id: MENU_FILE_REDO,
+        label: 'Redo',
+    },
+];
 @injectable()
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];

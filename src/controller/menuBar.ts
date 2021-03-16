@@ -34,11 +34,11 @@ export class MenuBarController
 
     public undo = () => {
         const { current } = editorService.getState();
-        current?.editorInstance?.trigger('editor trigger undo', 'undo');
+        current?.editorInstance?.getAction('undo').run();
     };
 
     public redo = () => {
         const { current } = editorService.getState();
-        current?.editorInstance?.trigger('editor trigger redo', 'redo');
+        current?.editorInstance?.getAction('undo').run();
     };
 }

@@ -125,12 +125,10 @@ const actionClassName = getBEMElement(defaultClassName, 'action');
 
 function MenuBar(props: IMenuBar & IMenuBarController) {
     const { onClick } = props;
-    const handleOnMenuClick = (e: React.MouseEvent, item) => {
-        onClick?.(e, item);
-    };
+    const handleClick = (e: React.MouseEvent, item) => onClick?.(e, item);
     const overlay = (
         <Menu
-            onClick={handleOnMenuClick}
+            onClick={handleClick}
             style={{ width: 200 }}
             data={initialMenuData}
         />

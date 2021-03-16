@@ -36,8 +36,6 @@ export function Editor(props: IEditor & IEditorController) {
         };
     };
 
-    console.log(getEvents(groups[0]?.id!));
-
     const renderGroups = () => {
         if (groups.length === 1) {
             return (

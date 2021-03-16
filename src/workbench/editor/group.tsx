@@ -101,7 +101,6 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
                                 onUpdateEditorIns?.(editorInstance, id!);
                             }}
                             onSaveEditorState={(preProps, props) => {
-                                console.log(onSaveEditorState);
                                 onSaveEditorState?.(preProps, props);
                             }}
                         />

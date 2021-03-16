@@ -173,8 +173,7 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     private registerActions = (editorInstance) => {
-        undoRedoMenu.map(({ id, label }) => {
-            console.log(id, label);
+        undoRedoMenu.forEach(({ id, label }) => {
             editorInstance?.addAction({
                 id,
                 label,

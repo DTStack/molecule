@@ -242,7 +242,10 @@ export class EditorController extends Controller implements IEditorController {
         if (prevProps?.path !== path) {
             const { current } = editorService.getState();
             const editorInstance = current?.editorInstance;
-            this.editorStates.set(prevProps.path, editorInstance?.saveViewState());
+            this.editorStates.set(
+                prevProps.path,
+                editorInstance?.saveViewState()
+            );
             this.openFile(
                 editorInstance,
                 path!,

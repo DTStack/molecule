@@ -55,7 +55,8 @@ export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
 
     componentDidUpdate(prevProps) {
         const { onChangeEditorProps } = this.props;
-        !isEqual(prevProps, this.props) && onChangeEditorProps?.(prevProps, this.props);
+        !isEqual(prevProps, this.props) &&
+            onChangeEditorProps?.(prevProps, this.props);
     }
 
     render() {

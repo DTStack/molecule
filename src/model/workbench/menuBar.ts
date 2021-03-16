@@ -18,14 +18,17 @@ export interface IMenuBarItem {
     render?: () => React.ReactNode | JSX.Element;
 }
 export interface IMenuBar {
-    data: IMenuBarItem[];
+    data?: IMenuBarItem[];
+    hidden?: boolean;
 }
 
 @injectable()
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];
+    public hidden = false
 
-    constructor(data: IMenuBarItem[] = []) {
+    constructor(data: IMenuBarItem[] = [], hidden = false) {
         this.data = data;
+        this.hidden = hidden;
     }
 }

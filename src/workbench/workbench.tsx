@@ -13,14 +13,22 @@ import { PanelView } from 'mo/workbench/panel';
 import { ID_APP } from 'mo/common/id';
 import { Utils } from '@dtinsight/dt-utils';
 import { APP_PREFIX } from 'mo/common/const';
-import { panelService } from 'mo/services';
+import { panelService, activityBarService, menuBarService, sideBarService, statusBarService } from 'mo/services';
 import { connect } from 'mo/react';
 import { IPanel } from 'mo/model/workbench/panel';
+import { IActivityBar } from 'mo/model/workbench/activityBar';
+import { ISidebar } from 'mo/model/workbench/sidebar';
+import { IMenuBar } from 'mo/model/workbench/menuBar';
+import { IStatusBar } from 'mo/model/workbench/statusBar';
 import { workbenchController } from 'mo/controller';
 import { IWorkbenchController } from 'mo/controller/workbench';
 
 export interface IWorkbench {
     panel: IPanel;
+    activityBar: IActivityBar;
+    menuBar: IMenuBar;
+    statusBar: IStatusBar;
+    sideBar: ISidebar;
 }
 
 const mainBenchClassName = prefixClaName('mainBench');
@@ -28,27 +36,29 @@ const workbenchClassName = prefixClaName('workbench');
 const appClassName = classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '');
 
 export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
-    const { panel, onPaneSizeChange, splitPanePos } = props;
+    const { activityBar, menuBar, panel, sideBar, statusBar, onPaneSizeChange, splitPanePos } = props;
 
     return (
         <div id={ID_APP} className={appClassName}>
             <div className={workbenchClassName}>
-                <MenuBarView />
-                <ActivityBarView />
+                { !menuBar.hidden &&  <MenuBarView /> }
+                { !activityBar.hidden && <ActivityBarView />}
                 <div className={mainBenchClassName}>
                     <SplitPane
                         split="vertical"
                         primary="first"
                         allowResize={true}
                         onChange={onPaneSizeChange}
-                    >
-                        <Pane
-                            minSize="170px"
-                            initialSize={splitPanePos[0]}
-                            maxSize="80%"
-                        >
-                            <SidebarView />
-                        </Pane>
+                    >   
+                        { !sideBar.hidden && (
+                            <Pane
+                                minSize="170px"
+                                initialSize={splitPanePos[0]}
+                                maxSize="80%"
+                            >
+                                <SidebarView />
+                            </Pane>
+                        )}
                         <SplitPane
                             primary="first"
                             split="horizontal"
@@ -72,13 +82,13 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
                     </SplitPane>
                 </div>
             </div>
-            <StatusBarView />
+            { !statusBar.hidden && <StatusBarView />}
         </div>
     );
 }
 
 export const Workbench = connect(
-    { panel: panelService },
+    { panel: panelService, activityBar: activityBarService, menuBar: menuBarService, sideBar: sideBarService, statusBar: statusBarService },
     WorkbenchView,
     workbenchController
 );

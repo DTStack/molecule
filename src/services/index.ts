@@ -16,8 +16,8 @@ import {
     IActivityBarService,
     ExplorerService,
     IExplorerService,
-    ISidebarService,
-    SidebarService,
+    ISideBarService,
+    SideBarService,
     IMenuBarService,
     MenuBarService,
     IStatusBarService,
@@ -41,7 +41,7 @@ const activityBarService = container.resolve<IActivityBarService>(
 );
 // explorer service
 const explorerService = container.resolve<IExplorerService>(ExplorerService);
-const sidebarService = container.resolve<ISidebarService>(SidebarService);
+const sideBarService = container.resolve<ISideBarService>(SideBarService);
 const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
 const editorService = container.resolve<IEditorService>(EditorService);
 const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
@@ -71,7 +71,7 @@ const settingsService = container.resolve<ISettingsService>(SettingsService);
 export {
     activityBarService,
     explorerService,
-    sidebarService,
+    sideBarService,
     menuBarService,
     statusBarService,
     panelService,

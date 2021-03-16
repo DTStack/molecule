@@ -7,6 +7,7 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 
 export interface IMenuBarService extends Component<IMenuBar> {
+    showHide(): void;
     push(data: IMenuBarItem | IMenuBarItem[]): void;
     remove(index: number): void;
     getState(): IMenuBar;
@@ -23,6 +24,12 @@ export class MenuBarService
         this.state = container.resolve(MenuBarModel);
     }
 
+    public showHide(): void {
+        this.setState({
+            hidden: !this.state.hidden,
+        });
+    }
+
     public push(item: IMenuBarItem | IMenuBarItem[]) {
         let original = this.state.data || [];
         if (Array.isArray(item)) {
@@ -33,6 +40,6 @@ export class MenuBarService
     }
 
     public remove(index: number) {
-        this.state.data.splice(index, 1);
+        this.state.data!.splice(index, 1);
     }
 }

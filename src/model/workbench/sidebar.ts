@@ -16,17 +16,20 @@ export enum SideBarEvent {
     onClick = 'sidebar.onClick',
 }
 export interface ISidebar {
-    current: string;
+    current?: string;
     panes?: ISidebarPane[];
+    hidden?: boolean;
 }
 
 @injectable()
 export class SidebarModel implements ISidebar {
     public current: string;
     public panes: ISidebarPane[];
+    public hidden = false;
 
-    constructor(panes: ISidebarPane[] = [], selected: string = '') {
+    constructor(panes: ISidebarPane[] = [], selected: string = '', hidden = false) {
         this.panes = panes;
         this.current = selected;
+        this.hidden = hidden;
     }
 }

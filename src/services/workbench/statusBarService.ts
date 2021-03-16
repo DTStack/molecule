@@ -8,6 +8,7 @@ import { Component } from 'mo/react';
 import { container, singleton } from 'tsyringe';
 
 export interface IStatusBarService extends Component<IStatusBar> {
+    showHide(): void;
     appendLeftItem(item: IStatusBarItem): void;
     appendRightItem(item: IStatusBarItem): void;
     updateItem(item: IStatusBarItem): void;
@@ -49,6 +50,12 @@ export class StatusBarService
         this.subscribe(StatusBarEvent.onClick, callback);
     }
 
+    public showHide(): void {
+        this.setState({
+            hidden: !this.state.hidden,
+        });
+    }
+
     private remove(id: string, arr: IStatusBarItem[]): IStatusBarItem {
         const index = arr.findIndex(searchById(id));
         const result = arr.splice(index, 1);
@@ -56,30 +63,30 @@ export class StatusBarService
     }
 
     removeLeftItem(id: string): IStatusBarItem {
-        return this.remove(id, this.state.leftItems);
+        return this.remove(id, this.state.leftItems!);
     }
 
     removeRightItem(id: string): IStatusBarItem {
-        return this.remove(id, this.state.rightItems);
+        return this.remove(id, this.state.rightItems!);
     }
 
     findById(id: string): IStatusBarItem {
         let result;
         const { leftItems, rightItems } = this.state;
-        result = leftItems.find(searchById(id));
+        result = leftItems!.find(searchById(id));
         if (!result) {
-            result = rightItems.find(searchById(id));
+            result = rightItems!.find(searchById(id));
         }
         return result;
     }
 
     appendLeftItem(item: IStatusBarItem): void {
-        this.state.leftItems.push(item);
+        this.state.leftItems!.push(item);
         this.render();
     }
 
     appendRightItem(item: IStatusBarItem): void {
-        this.state.rightItems.push(item);
+        this.state.rightItems!.push(item);
         this.render();
     }
 

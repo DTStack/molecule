@@ -6,14 +6,15 @@ import {
     SidebarModel,
 } from 'mo/model/workbench/sidebar';
 
-export interface ISidebarService extends Component<ISidebar> {
+export interface ISideBarService extends Component<ISidebar> {
+    showHide(): void;
     push(data: ISidebarPane): void;
 }
 
 @singleton()
-export class SidebarService
+export class SideBarService
     extends Component<ISidebar>
-    implements ISidebarService {
+    implements ISideBarService {
     protected state: ISidebar;
 
     constructor() {
@@ -25,4 +26,11 @@ export class SidebarService
         const original = this.state.panes;
         original?.push(data);
     }
+
+    public showHide(): void {
+        this.setState({
+            hidden: !this.state.hidden,
+        });
+    }
+    
 }

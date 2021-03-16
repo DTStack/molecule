@@ -1,6 +1,6 @@
 export * from './activityBarService';
 export * from './menuBarService';
-export * from './sidebarService';
+export * from './sideBarService';
 export * from './editorService';
 export * from './statusBarService';
 export * from './explorerService';

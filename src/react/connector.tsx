@@ -17,7 +17,7 @@ export function connect(
     Controller?: Controller | ControllerObject,
     watchFiled?: object
 ) {
-    return class Connector extends React.Component {
+    return class Connector extends React.Component<any, any> {
         state: { lastUpdated: number };
         constructor(props) {
             super(props);

@@ -29,7 +29,7 @@ export const MENU_VIEW_SIDEBAR = 'workbench.action.showSideBar';
 export const MENU_VIEW_ACTIVITYBAR = 'workbench.action.showActivityBar';
 export const MENU_VIEW_STATUSBAR = 'workbench.action.showStatusBar';
 
-const builtMenuData= [
+const builtMenuData = [
     {
         id: 'File',
         name: 'File',

@@ -19,11 +19,7 @@ function MenuBar(props: IMenuBar & IMenuBarController) {
         (childRef.current as any)!.dispose();
     };
     const overlay = (
-        <Menu
-            onClick={handleClick}
-            style={{ width: 200 }}
-            data={data}
-        />
+        <Menu onClick={handleClick} style={{ width: 200 }} data={data} />
     );
     return (
         <div className={defaultClassName}>

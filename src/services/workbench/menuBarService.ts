@@ -64,7 +64,11 @@ export class MenuBarService
         }
     }
 
-    public updateMenu(menu, currentMenuItem: IMenuBarItem, menuItem: IMenuBarItem) {
+    public updateMenu(
+        menu,
+        currentMenuItem: IMenuBarItem,
+        menuItem: IMenuBarItem
+    ) {
         if (menu?.id === currentMenuItem?.id) {
             for (let key in menuItem) {
                 if (menuItem.hasOwnProperty(key)) {

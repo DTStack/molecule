@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     activityBarService,
-    sideBarService,
+    sidebarService,
     menuBarService,
     IExtensionService,
     IActivityBarItem,
@@ -21,7 +21,7 @@ function init() {
         },
     };
 
-    sideBarService.push(searchSidePane);
+    sidebarService.push(searchSidePane);
 
     const searchActivityItem = {
         id: 'search',
@@ -32,10 +32,10 @@ function init() {
     activityBarService.addBar(searchActivityItem);
 
     activityBarService.onSelect((e, item: IActivityBarItem) => {
-        const { hidden } = sideBarService.getState();
+        const { hidden } = sidebarService.getState();
         if (item.id === searchActivityItem.id) {
             const isShow = hidden ? !hidden : hidden;
-            sideBarService.setState({
+            sidebarService.setState({
                 current: searchSidePane.id,
                 hidden: isShow,
             });

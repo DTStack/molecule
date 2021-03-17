@@ -17,7 +17,7 @@ import {
     panelService,
     activityBarService,
     menuBarService,
-    sideBarService,
+    sidebarService,
     statusBarService,
 } from 'mo/services';
 import { connect } from 'mo/react';
@@ -106,7 +106,7 @@ export const Workbench = connect(
         panel: panelService,
         activityBar: activityBarService,
         menuBar: menuBarService,
-        sideBar: sideBarService,
+        sideBar: sidebarService,
         statusBar: statusBarService,
     },
     WorkbenchView,

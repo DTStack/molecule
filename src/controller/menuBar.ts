@@ -13,7 +13,7 @@ import {
     editorService,
     menuBarService,
     statusBarService,
-    sideBarService,
+    sidebarService,
 } from 'mo/services';
 import { singleton } from 'tsyringe';
 
@@ -87,8 +87,8 @@ export class MenuBarController
     };
 
     public updateSideBar = () => {
-        sideBarService.showHide();
-        const { hidden } = sideBarService.getState();
+        sidebarService.showHide();
+        const { hidden } = sidebarService.getState();
         menuBarService.update(MENU_VIEW_SIDEBAR, {
             icon: hidden ? '' : 'check',
         });

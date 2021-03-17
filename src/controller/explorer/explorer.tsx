@@ -3,7 +3,7 @@ import { singleton } from 'tsyringe';
 import {
     activityBarService,
     IActivityBarItem,
-    sideBarService,
+    sidebarService,
     explorerService,
     menuBarService,
 } from 'mo';
@@ -33,7 +33,7 @@ export class ExplorerController
 
     private initView() {
         const state = activityBarService.getState();
-        const sideBarState = sideBarService.getState();
+        const sideBarState = sidebarService.getState();
         const explorerState = explorerService.getState();
         const exploreActiveItem = {
             id: 'active-explorer',
@@ -55,10 +55,10 @@ export class ExplorerController
 
         activityBarService.onSelect((e, item: IActivityBarItem) => {
             console.log('Search Pane onClick:', e, item);
-            const { hidden } = sideBarService.getState();
+            const { hidden } = sidebarService.getState();
             if (item.id === exploreActiveItem.id) {
                 const isShow = hidden ? !hidden : hidden;
-                sideBarService.setState({
+                sidebarService.setState({
                     current: explorePane.id,
                     hidden: isShow,
                 });
@@ -68,8 +68,8 @@ export class ExplorerController
             }
         });
 
-        // sideBarService.push(explorePane);
-        sideBarService.setState({
+        // sidebarService.push(explorePane);
+        sidebarService.setState({
             current: explorePane.id,
             panes: [...sideBarState.panes!, explorePane],
         });

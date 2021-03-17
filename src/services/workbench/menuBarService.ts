@@ -13,9 +13,8 @@ export interface IMenuBarService extends Component<IMenuBar> {
     push(data: IMenuBarItem | IMenuBarItem[]): void;
     remove(index: number): void;
     getState(): IMenuBar;
-    update(did: string, newNode: IMenuBarItem): void;
+    update(menuId: string, menuItem: IMenuBarItem): void;
 }
-
 @singleton()
 export class MenuBarService
     extends Component<IMenuBar>
@@ -46,17 +45,17 @@ export class MenuBarService
         this.state.data!.splice(index, 1);
     }
 
-    public update(menuId, extra = {}) {
+    public update(menuId: string, menuItem = {}) {
         const { data } = this.state;
-        const currentNode = this.getCurrentNode(menuId, data);
+        const currentMenuItem = this.getMenuById(menuId, data);
         const deepData = cloneDeep(data);
-        for (let node of deepData) {
-            this.replaceNode(node, currentNode, extra);
+        for (let menu of deepData) {
+            this.updateMenu(menu, currentMenuItem!, menuItem);
         }
         this.setState({ data: deepData });
     }
 
-    public getCurrentNode(menuId, data) {
+    public getMenuById(menuId: string, data) {
         const queue = [...data];
         while (queue.length) {
             const menu = queue.shift();
@@ -65,18 +64,18 @@ export class MenuBarService
         }
     }
 
-    public replaceNode(node, currentNode: IMenuBarItem, extra: IMenuBarItem) {
-        if (node?.id === currentNode?.id) {
-            for (let key in extra) {
-                if (extra.hasOwnProperty(key)) {
-                    delete node[key];
-                    node[key] = extra[key];
+    public updateMenu(menu, currentMenuItem: IMenuBarItem, menuItem: IMenuBarItem) {
+        if (menu?.id === currentMenuItem?.id) {
+            for (let key in menuItem) {
+                if (menuItem.hasOwnProperty(key)) {
+                    delete menu[key];
+                    menu[key] = menuItem[key];
                 }
             }
         } else {
-            if (node?.data?.length) {
-                for (let item of node?.data) {
-                    this.replaceNode(item, currentNode, extra);
+            if (menu?.data?.length) {
+                for (let item of menu?.data) {
+                    this.updateMenu(item, currentMenuItem, menuItem);
                 }
             }
         }

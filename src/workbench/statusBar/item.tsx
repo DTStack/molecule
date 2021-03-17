@@ -16,7 +16,7 @@ function StatusItem(props: IStatusBarItem) {
     return (
         <div className={clsName} {...extra}>
             <a tabIndex={-1} title={name} {...events}>
-                {render ? render(data) : name}
+                {render ? render(props) : name}
             </a>
         </div>
     );

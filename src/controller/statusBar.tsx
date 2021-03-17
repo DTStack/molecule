@@ -4,7 +4,7 @@ import { Controller } from 'mo/react/controller';
 import { panelService } from 'mo/services';
 import { singleton } from 'tsyringe';
 import { PANEL_PROBLEMS } from 'mo/model/workbench/panel';
-import { STATUS_PROBLEMS,STATUS_NOTIFICATIONS,STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
+import { STATUS_PROBLEMS } from 'mo/model/workbench/statusBar';
 
 export interface IStatusBarController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
@@ -29,10 +29,6 @@ export class StatusBarController
                 } else {
                     panelService.showHide();
                 }
-                break;
-            case STATUS_NOTIFICATIONS.id:  /** MoNotification */ 
-                break;
-            case STATUS_EDITOR_INFO.id: /** MoEditorInfo */  
                 break;
             default:
         }

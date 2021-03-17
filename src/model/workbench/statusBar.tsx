@@ -11,16 +11,12 @@ export interface ILineColumnItem {
     ln: number;
     col: number;
 }
-export interface INotifications {
-    title: string;
-    message: string;
-}
 export interface IStatusBarItem<T = any> extends HTMLElementProps {
     id: string;
     sortIndex: number;
-    data: T;
+    data?: T;
     onClick?(e: React.MouseEvent, item?: IStatusBarItem);
-    render?: (item:T) => ReactNode;
+    render?: (item:IStatusBarItem) => ReactNode;
     name?: string;
 }
 
@@ -38,28 +34,17 @@ export const STATUS_PROBLEMS: IStatusBarItem = {
         info: 0,
     },
     name: 'Problems',
-    render: (item: IProblems) => (
-        <React.Fragment>
+    render: ({ data }:IStatusBarItem) => {
+        return (<React.Fragment>
             <Icon type="error" />
-            {` ${item.error} `}
+            {` ${data.error} `}
             <Icon type="warning" />
-            {` ${item.warn} `}
+            {` ${data.warn} `}
             <Icon type="info" />
-            {` ${item.info}`}
+            {` ${data.info}`}
         </React.Fragment>
-    ),
-};
-
-export const STATUS_NOTIFICATIONS: IStatusBarItem = {
-    id: 'MoNotification',
-    sortIndex: 1,
-    data: [],
-    name: 'Notification',
-    render: (item: INotifications[]) => (
-        <React.Fragment>
-            {item.length ? <Icon type="bell-dot" /> : <Icon type="bell" />}
-        </React.Fragment>
-    ),
+         )
+    }
 };
 
 export const STATUS_EDITOR_INFO: IStatusBarItem = {
@@ -70,9 +55,11 @@ export const STATUS_EDITOR_INFO: IStatusBarItem = {
         col: 0,
     },
     name: 'Go to Line/Column',
-    render: (item: ILineColumnItem) => (
-        <span>{`Ln ${item.ln}, Col ${item.col}`}</span>
-    ),
+    render: ({ data }:IStatusBarItem) =>{
+        return (
+            <span>{`Ln ${data.ln}, Col ${data.col}`}</span>
+        )
+    },
 };
 
 /**
@@ -91,8 +78,5 @@ export enum StatusBarEvent {
 @injectable()
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[] = [STATUS_PROBLEMS];
-    public rightItems: IStatusBarItem[] = [
-        STATUS_NOTIFICATIONS,
-        STATUS_EDITOR_INFO,
-    ];
+    public rightItems: IStatusBarItem[] = [STATUS_EDITOR_INFO];
 }

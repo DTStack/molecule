@@ -5,7 +5,7 @@ import {
     IActivityBarItem,
     sideBarService,
     explorerService,
-    menuBarService
+    menuBarService,
 } from 'mo';
 import * as React from 'react';
 import { IFolderTree } from 'mo/model';
@@ -57,7 +57,7 @@ export class ExplorerController
             console.log('Search Pane onClick:', e, item);
             const { hidden } = sideBarService.getState();
             if (item.id === exploreActiveItem.id) {
-                const isShow = hidden ? !hidden : hidden
+                const isShow = hidden ? !hidden : hidden;
                 sideBarService.setState({
                     current: explorePane.id,
                     hidden: isShow,

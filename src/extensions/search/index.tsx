@@ -34,12 +34,12 @@ function init() {
     activityBarService.onSelect((e, item: IActivityBarItem) => {
         const { hidden } = sideBarService.getState();
         if (item.id === searchActivityItem.id) {
-            const isShow = hidden ? !hidden : hidden
+            const isShow = hidden ? !hidden : hidden;
             sideBarService.setState({
                 current: searchSidePane.id,
-                hidden: isShow
+                hidden: isShow,
             });
-        
+
             menuBarService.update(MENU_VIEW_SIDEBAR, {
                 icon: 'check',
             });

@@ -6,15 +6,15 @@ import {
     SidebarModel,
 } from 'mo/model/workbench/sidebar';
 
-export interface ISideBarService extends Component<ISidebar> {
+export interface ISidebarService extends Component<ISidebar> {
     showHide(): void;
     push(data: ISidebarPane): void;
 }
 
 @singleton()
-export class SideBarService
+export class SidebarService
     extends Component<ISidebar>
-    implements ISideBarService {
+    implements ISidebarService {
     protected state: ISidebar;
 
     constructor() {

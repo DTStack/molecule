@@ -1,22 +1,13 @@
 import * as React from 'react';
 import { injectable } from 'tsyringe';
-import { Icon } from 'mo/components/icon';
-
-export interface IProblems {
-    warn: number;
-    error: number;
-    info: number;
-}
-export interface ILineColumnItem {
-    ln: number;
-    col: number;
-}
+import { EditorInfo } from 'mo/workbench/statusBar/editor';
+import { Problems } from 'mo/workbench/statusBar/problems';
 export interface IStatusBarItem<T = any> extends HTMLElementProps {
     id: string;
     sortIndex: number;
     data?: T;
     onClick?(e: React.MouseEvent, item?: IStatusBarItem);
-    render?: (item:IStatusBarItem) => ReactNode;
+    render?: (item: IStatusBarItem) => ReactNode;
     name?: string;
 }
 
@@ -34,17 +25,7 @@ export const STATUS_PROBLEMS: IStatusBarItem = {
         info: 0,
     },
     name: 'Problems',
-    render: ({ data }:IStatusBarItem) => {
-        return (<React.Fragment>
-            <Icon type="error" />
-            {` ${data.error} `}
-            <Icon type="warning" />
-            {` ${data.warn} `}
-            <Icon type="info" />
-            {` ${data.info}`}
-        </React.Fragment>
-         )
-    }
+    render: (item: IStatusBarItem) => <Problems {...item}/>,
 };
 
 export const STATUS_EDITOR_INFO: IStatusBarItem = {
@@ -55,11 +36,7 @@ export const STATUS_EDITOR_INFO: IStatusBarItem = {
         col: 0,
     },
     name: 'Go to Line/Column',
-    render: ({ data }:IStatusBarItem) =>{
-        return (
-            <span>{`Ln ${data.ln}, Col ${data.col}`}</span>
-        )
-    },
+    render: (item: IStatusBarItem) => <EditorInfo {...item}/>,
 };
 
 /**

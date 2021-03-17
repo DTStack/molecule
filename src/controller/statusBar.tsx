@@ -20,7 +20,7 @@ export class StatusBarController
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
         const { id } = item;
         switch (id) {
-            case STATUS_PROBLEMS.id: /** Problems */
+            case STATUS_PROBLEMS.id /** Problems */:
                 const { current, hidden } = panelService.getState();
                 if (hidden) {
                     panelService.showHide();

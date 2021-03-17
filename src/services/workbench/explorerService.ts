@@ -23,6 +23,7 @@ export interface IExplorerService extends Component<IExplorer> {
     removeRootFolder(id: number): void;
     setActive(id: number): void;
     updateFile(file: ITreeNodeItem, callback?: Function): void;
+    updateFileValue(id?: number, value?: string): void;
     newFile(id?: number, callback?: Function): void;
     newFolder(id?: number, callback?: Function): void;
     rename(id: number, callback?: Function): void;
@@ -231,6 +232,22 @@ export class ExplorerService
             folderTree: { ...folderTree, data: cloneData },
         });
         if (callback) callback();
+    }
+
+    public updateFileValue(id: number, value: string) {
+        const { folderTree } = this.state;
+        const cloneData: ITreeNodeItem[] = folderTree?.data || [];
+        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
+            id
+        );
+        const tree = new TreeViewUtil(currentRootFolder);
+        tree.update(id, {
+            value,
+        });
+        if (index > -1) cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: { ...folderTree, data: cloneData },
+        });
     }
 
     public rename(id: number, callback?: Function) {

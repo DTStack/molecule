@@ -4,13 +4,15 @@ import { classNames } from 'mo/common/className';
 import {
     defaultSearchClassName,
     searchContainerClassName,
-    searchToolBarClassName
+    searchToolBarClassName,
 } from './base';
 
 export interface ISearchInput {
+    setSearchValue?: (value?: string) => void;
 }
 
-export function SearchInput<T>(props: ISearchInput) {
+export function SearchInput<T>(props: any) {
+    const { setSearchValue } = props;
     const addons = [
         {
             id: 'MatchCase',
@@ -29,13 +31,28 @@ export function SearchInput<T>(props: ISearchInput) {
             disabled: false,
             title: 'Use Regular Expression',
             iconName: 'codicon-regex',
-        }
-    ]
+        },
+    ];
     const onClick = (e, item) => {
         console.log('onClick:', e, item);
     };
-    return <div className={classNames(defaultSearchClassName, searchContainerClassName)}>
-        <input />
-        <Toolbar className={searchToolBarClassName} data={addons} onClick={onClick} />
-    </div>
+    return (
+        <div
+            className={classNames(
+                defaultSearchClassName,
+                searchContainerClassName
+            )}
+        >
+            <input
+                onChange={(e) => {
+                    setSearchValue?.(e.target.value);
+                }}
+            />
+            <Toolbar
+                className={searchToolBarClassName}
+                data={addons}
+                onClick={onClick}
+            />
+        </div>
+    );
 }

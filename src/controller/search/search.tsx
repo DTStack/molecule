@@ -3,9 +3,12 @@ import { singleton } from 'tsyringe';
 import { activityBarService, IActivityBarItem, sidebarService } from 'mo';
 import * as React from 'react';
 import { SearchPanelView } from 'mo/workbench/sidebar/search';
-// TODO: 自依赖问题 connect 失效，暂时手动引入 Controller 往 View 层传递
 import { searchController } from 'mo/controller';
-export interface ISearchController {}
+import { searchService } from 'mo';
+export interface ISearchController {
+    setSearchValue?: (value?: string) => void;
+    convertFoldToSearchTree?: <T = any>(data?: T[]) => T[];
+}
 
 @singleton()
 export class SearchController extends Controller implements ISearchController {
@@ -41,4 +44,12 @@ export class SearchController extends Controller implements ISearchController {
             }
         });
     }
+
+    public readonly setSearchValue = (value?: string) => {
+        searchService.setSearchValue?.(value);
+    };
+
+    public readonly convertFoldToSearchTree = (data): any => {
+        return searchService.convertFoldToSearchTree?.(data);
+    };
 }

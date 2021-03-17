@@ -3,10 +3,7 @@ import { useState } from 'react';
 import { ReplaceInput } from './replaceInput';
 import { SearchInput } from './searchInput';
 import { classNames } from 'mo/common/className';
-import {
-    defaultSearchClassName,
-    replaceBtnClassName
-} from './base';
+import { defaultSearchClassName, replaceBtnClassName } from './base';
 
 export interface ISearch<T> extends React.ComponentProps<any> {
     className?: string;
@@ -14,10 +11,7 @@ export interface ISearch<T> extends React.ComponentProps<any> {
 }
 
 export function SearchWidget<T>(props: ISearch<T>) {
-    const {
-        className = '',
-        style
-    } = props;
+    const { className = '', style } = props;
 
     const [isShowReplace, setShowReplace] = useState(false);
     const toggleReplaceBtnClassName = classNames(
@@ -27,12 +21,20 @@ export function SearchWidget<T>(props: ISearch<T>) {
     );
 
     const onToggleReplaceBtn = () => {
-        setShowReplace(!isShowReplace)
+        setShowReplace(!isShowReplace);
     };
 
-    return <div style={style} className={classNames(defaultSearchClassName, className)}>
-        <a className={toggleReplaceBtnClassName} onClick={onToggleReplaceBtn}></a>
-        <SearchInput />
-        {isShowReplace && <ReplaceInput />}
-    </div>
+    return (
+        <div
+            style={style}
+            className={classNames(defaultSearchClassName, className)}
+        >
+            <a
+                className={toggleReplaceBtnClassName}
+                onClick={onToggleReplaceBtn}
+            ></a>
+            <SearchInput {...props} />
+            {isShowReplace && <ReplaceInput {...props} />}
+        </div>
+    );
 }

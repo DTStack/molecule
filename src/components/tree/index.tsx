@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { memo } from 'react';
 import RcTree, { TreeNode as RcTreeNode } from 'rc-tree';
 import { DataNode, IconType, Key, EventDataNode } from 'rc-tree/lib/interface';
@@ -27,6 +27,7 @@ export interface ITreeNodeItem {
     readonly id?: number;
     icon?: string | React.ReactNode;
     modify?: boolean; // Edit status
+    value?: string; // editor content
     className?: string;
 }
 
@@ -52,11 +53,11 @@ export interface ITreeProps {
     expandedKeys?: Key[];
     defaultCheckedKeys?: Key[];
     checkedKeys?:
-        | Key[]
-        | {
-              checked: Key[];
-              halfChecked: Key[];
-          };
+    | Key[]
+    | {
+        checked: Key[];
+        halfChecked: Key[];
+    };
     defaultSelectedKeys?: Key[];
     selectedKeys?: Key[];
     titleRender?: (node: DataNode) => React.ReactNode;
@@ -135,11 +136,11 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         renderTitle, // custom title
         ...restProps
     } = props;
-    const [expandedKeys, setExpandedKeys] = useState([]);
-    const onExpand = (expandedKeys) => {
-        console.log('onExpand', expandedKeys);
-        setExpandedKeys(expandedKeys);
-    };
+    // const [expandedKeys, setExpandedKeys] = useState([]);
+    // const onExpand = (expandedKeys) => {
+    //     console.log('onExpand', expandedKeys);
+    //     setExpandedKeys(expandedKeys);
+    // };
 
     const onDrop = (info) => {
         if (!draggable) return;
@@ -227,8 +228,8 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     draggable={draggable}
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
-                    expandedKeys={expandedKeys}
-                    onExpand={onExpand}
+                    // expandedKeys={expandedKeys}
+                    // onExpand={onExpand}
                     onSelect={(selectedKeys, e: any) => {
                         const { fileType, modify } = e.node.data;
                         const isFile = fileType === FileTypes.file;

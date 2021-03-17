@@ -2,10 +2,13 @@
 
 // =============== Tree =============== //
 #{$search} {
-
     input {
         background-color: var(--list-activeSelectionBackground);
         border-width: 0;
         color: inherit;
+    }
+
+    &__treeNode--match {
+        background-color: var(--search-matchValueBackground);
     }
 }

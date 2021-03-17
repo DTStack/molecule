@@ -53,29 +53,33 @@ export class FolderTreeController
     public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
         const tabData = {
             ...file,
-            id: `${file.id}`,
+            // 切割 id
+            id: `${file.id}`?.split('_')?.[0],
             modified: false,
             data: {
-                value: `hello tree ${file.id}`,
+                value: file.value,
                 path: 'desktop/molecule/editor1',
-                language: 'ini',
+                language: 'sql',
             },
             breadcrumb: [{ id: `${file.id}`, name: 'editor.js' }],
         };
+        const editorState = editorService.getState();
+
+        const { id, data = [] } = editorState?.current || ({} as any);
         if (isAuto) {
             // 更新文件自动回调
-            const editorState = editorService.getState();
-
-            const { id, data = [] } = editorState?.current || {};
             const tabId = file.id;
             const index = data?.findIndex((tab) => tab.id == tabId);
             if (index > -1) {
                 if (id) editorService.updateTab(tabData, id);
             } else {
                 editorService.open(tabData);
+                new EditorController()?.onSelectTab(tabData.id, id);
             }
         } else {
+            console.log('object', tabData);
             editorService.open(tabData);
+            new EditorController()?.onSelectTab(tabData.id, id);
         }
     };
 

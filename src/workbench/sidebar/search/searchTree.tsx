@@ -1,50 +1,32 @@
 import * as React from 'react';
 import { memo } from 'react';
-import { editorService } from 'mo';
 import Tree, { ITreeProps } from 'mo/components/tree';
-import {
-    prefixClaName,
-    getBEMElement,
-    getBEMModifier,
-} from 'mo/common/className';
+import { folderTreeController } from 'mo/controller';
+import { matchSearchValueClassName } from './base';
 export interface SearchTreeProps extends ITreeProps {
-    searchValue?: string;
+    value?: string;
+    convertFoldToSearchTree?: (data) => any[];
 }
 
-const serviceProps = {
-    onSelectFile: function (fileData) {
-        const tabData = {
-            ...fileData,
-            activeTab: fileData.id,
-            data: {
-                modified: false,
-            },
-        };
-        editorService.open(tabData, tabData.activeTab);
-    },
-};
 const SearchTree: React.FunctionComponent<SearchTreeProps> = (
     props: SearchTreeProps
 ) => {
-    const treeNodeSearchValClassName = getBEMModifier(
-        getBEMElement(prefixClaName('tree'), 'treeNode'),
-        'search'
-    );
-    const { data, searchValue, ...restProps } = props;
+    const { data, value, convertFoldToSearchTree, ...restProps } = props;
+    console.log('SearchTree => Props', props);
     return (
         <Tree
-            data={data}
+            data={convertFoldToSearchTree?.(data) || []}
             renderTitle={(node, index) => {
                 const { name } = node;
-                const searchIndex = name.indexOf(searchValue);
+                const searchIndex = name.indexOf(value);
                 const beforeStr = name.substr(0, searchIndex);
-                const afterStr = name.substr(searchIndex + searchValue?.length);
+                const afterStr = name.substr(searchIndex + value?.length);
                 const title =
                     searchIndex > -1 ? (
                         <span>
                             {beforeStr}
-                            <span className={treeNodeSearchValClassName}>
-                                {searchValue}
+                            <span className={matchSearchValueClassName}>
+                                {value}
                             </span>
                             {afterStr}
                         </span>
@@ -53,7 +35,7 @@ const SearchTree: React.FunctionComponent<SearchTreeProps> = (
                     );
                 return title;
             }}
-            onSelectFile={serviceProps.onSelectFile}
+            onSelectFile={folderTreeController.onSelectFile}
             {...restProps}
         />
     );

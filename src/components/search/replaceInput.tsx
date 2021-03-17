@@ -4,11 +4,10 @@ import { classNames } from 'mo/common/className';
 import {
     defaultSearchClassName,
     replaceContainerClassName,
-    searchToolBarClassName
+    searchToolBarClassName,
 } from './base';
 
-export interface IReplaceInput {
-}
+export interface IReplaceInput {}
 
 export function ReplaceInput(props: IReplaceInput) {
     const addons = [
@@ -23,13 +22,24 @@ export function ReplaceInput(props: IReplaceInput) {
             title: 'ReplaceAll',
             disabled: false,
             iconName: 'codicon-replace-all',
-        }
-    ]
+        },
+    ];
     const onClick = (e, item) => {
         console.log('onClick:', e, item);
     };
-    return <div className={classNames(defaultSearchClassName, replaceContainerClassName)}>
-        <input />
-        <Toolbar className={searchToolBarClassName} data={addons} onClick={onClick} />
-    </div>
+    return (
+        <div
+            className={classNames(
+                defaultSearchClassName,
+                replaceContainerClassName
+            )}
+        >
+            <input />
+            <Toolbar
+                className={searchToolBarClassName}
+                data={addons}
+                onClick={onClick}
+            />
+        </div>
+    );
 }

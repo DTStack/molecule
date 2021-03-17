@@ -6,47 +6,49 @@
     width: auto;
 
     input {
-        width: 100%;
         height: 23px;
+        width: 100%;
     }
 
     &__toolbar {
-        position: absolute;
-        top: 0;
-        right: 0;
         height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
         #{$actionBar}__label {
             height: auto;
+
             &.codicon {
                 color: inherit;
                 line-height: 23px;
             }
         }
     }
-    
+
     &__search {
-        position: relative;
         margin-left: 18px;
+        position: relative;
     }
 
     &__replace {
-        position: relative;
-        margin-top: 6px;
         margin-left: 18px;
+        margin-top: 6px;
+        position: relative;
+
         &__button {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 16px;
-            height: 100%;
-            color: inherit;
-            box-sizing: border-box;
+            align-items: center;
             background-position: 50%;
             background-repeat: no-repeat;
+            box-sizing: border-box;
+            color: inherit;
             cursor: pointer;
             display: flex !important;
-            align-items: center;
+            height: 100%;
             justify-content: center;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 16px;
         }
     }
 }

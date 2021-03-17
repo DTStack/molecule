@@ -5,11 +5,13 @@ import {
     IActivityBarItem,
     sideBarService,
     explorerService,
+    menuBarService
 } from 'mo';
 import * as React from 'react';
 import { IFolderTree } from 'mo/model';
 import { ExplorerView, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IActionBarItem } from 'mo/components/actionBar';
+import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
 // TODO: 自依赖问题 connect 失效，暂时手动引入 Controller 往 View 层传递
 import { folderTreeController, explorerController } from 'mo/controller';
 export interface IExplorerController {
@@ -55,9 +57,13 @@ export class ExplorerController
             console.log('Search Pane onClick:', e, item);
             const { hidden } = sideBarService.getState();
             if (item.id === exploreActiveItem.id) {
+                const isShow = hidden ? !hidden : hidden
                 sideBarService.setState({
                     current: explorePane.id,
-                    hidden: hidden ? !hidden : hidden,
+                    hidden: isShow,
+                });
+                menuBarService.update(MENU_VIEW_SIDEBAR, {
+                    icon: 'check',
                 });
             }
         });

@@ -8,6 +8,7 @@ import {
 } from 'mo/model/workbench/activityBar';
 
 export interface IActivityBarService extends Component<IActivityBar> {
+    showHide(): void;
     reset(): void;
     addBar(data: IActivityBarItem | IActivityBarItem[]): void;
     remove(index: number): void;
@@ -34,6 +35,13 @@ export class ActivityBarService
         this.setState({
             data: [],
             selected: '',
+            hidden: false,
+        });
+    }
+
+    public showHide(): void {
+        this.setState({
+            hidden: !this.state.hidden,
         });
     }
 

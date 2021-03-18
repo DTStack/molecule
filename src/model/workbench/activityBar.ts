@@ -33,6 +33,7 @@ export interface IActivityBarItem {
 export interface IActivityBar {
     data?: IActivityBarItem[];
     selected?: string;
+    hidden?: boolean;
 }
 
 export const CONTEXT_MENU_COMMAND_PALETTE = {
@@ -78,12 +79,14 @@ export const initialActivityBarData: IActivityBarItem[] = [
 export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
     public selected: string;
-
+    public hidden = false;
     constructor(
         data: IActivityBarItem[] = initialActivityBarData,
-        selected: string = ''
+        selected: string = '',
+        hidden = false
     ) {
         this.data = data;
         this.selected = selected;
+        this.hidden = hidden;
     }
 }

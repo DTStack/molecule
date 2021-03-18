@@ -2,11 +2,13 @@ import * as React from 'react';
 import {
     activityBarService,
     sidebarService,
+    menuBarService,
     IExtensionService,
     IActivityBarItem,
     editorService,
     EditorEvent,
 } from 'mo';
+import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
 import { IExtension } from 'mo/model/extension';
 import SearchPane from './searchPane';
 
@@ -30,9 +32,16 @@ function init() {
     activityBarService.addBar(searchActivityItem);
 
     activityBarService.onSelect((e, item: IActivityBarItem) => {
+        const { hidden } = sidebarService.getState();
         if (item.id === searchActivityItem.id) {
+            const isShow = hidden ? !hidden : hidden;
             sidebarService.setState({
                 current: searchSidePane.id,
+                hidden: isShow,
+            });
+
+            menuBarService.update(MENU_VIEW_SIDEBAR, {
+                icon: 'check',
             });
         }
     });

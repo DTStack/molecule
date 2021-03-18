@@ -7,6 +7,7 @@ import {
 } from 'mo/model/workbench/sidebar';
 
 export interface ISidebarService extends Component<ISidebar> {
+    showHide(): void;
     push(data: ISidebarPane): void;
 }
 
@@ -24,5 +25,11 @@ export class SidebarService
     public push(data: ISidebarPane) {
         const original = this.state.panes;
         original?.push(data);
+    }
+
+    public showHide(): void {
+        this.setState({
+            hidden: !this.state.hidden,
+        });
     }
 }

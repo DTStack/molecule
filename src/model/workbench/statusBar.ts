@@ -9,8 +9,9 @@ export interface IStatusBarItem extends HTMLElementProps {
 }
 
 export interface IStatusBar {
-    rightItems: IStatusBarItem[];
-    leftItems: IStatusBarItem[];
+    rightItems?: IStatusBarItem[];
+    leftItems?: IStatusBarItem[];
+    hidden?: boolean;
 }
 
 /**
@@ -30,12 +31,15 @@ export enum StatusBarEvent {
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[];
     public rightItems: IStatusBarItem[];
+    public hidden = false;
 
     constructor(
         leftItems: IStatusBarItem[] = [],
-        rightItems: IStatusBarItem[] = []
+        rightItems: IStatusBarItem[] = [],
+        hidden = false
     ) {
         this.leftItems = leftItems;
         this.rightItems = rightItems;
+        this.hidden = hidden;
     }
 }

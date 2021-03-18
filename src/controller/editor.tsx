@@ -7,8 +7,8 @@ import {
     EDITOR_MENU_CLOSE_TO_RIGHT,
     EDITOR_MENU_CLOSE_TO_LEFT,
     EDITOR_MENU_CLOSE_ALL,
-    undoRedoMenu,
 } from 'mo/model/workbench/editor';
+import { undoRedoMenu } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 import { editorService, statusBarService } from 'mo/services';
 import { IMenuItem } from 'mo/components/menu';

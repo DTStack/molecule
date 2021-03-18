@@ -218,7 +218,10 @@ export class EditorController extends Controller implements IEditorController {
                 },
                 groupId
             );
-            explorerService.updateFileContent(current?.tab?.id as any, newValue);
+            explorerService.updateFileContent(
+                current?.tab?.id as any,
+                newValue
+            );
             this.updateStatusBar(editorInstance);
         });
 

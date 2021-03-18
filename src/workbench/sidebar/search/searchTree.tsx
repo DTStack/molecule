@@ -87,8 +87,8 @@ const SearchTree: React.FunctionComponent<SearchTreeProps> = (
                             {afterStr}
                         </span>
                     ) : (
-                            name
-                        );
+                        name
+                    );
                 return title;
             }}
             onSelectFile={folderTreeController.onSelectFile}

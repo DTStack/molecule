@@ -143,7 +143,7 @@ export class SearchService
         });
     }
 
-    public triggerQueryChange() { }
+    public triggerQueryChange() {}
 
-    public openSearchView() { }
+    public openSearchView() {}
 }

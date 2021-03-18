@@ -52,6 +52,7 @@ export class StatusBarService
 
     public showHide(): void {
         this.setState({
+            ...this.state,
             hidden: !this.state.hidden,
         });
     }

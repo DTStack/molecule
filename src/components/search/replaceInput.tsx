@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Toolbar from 'mo/components/toolbar';
+import { IActionBarItem } from 'mo/components/actionBar';
 import { classNames } from 'mo/common/className';
 import {
     defaultSearchClassName,
@@ -7,26 +8,20 @@ import {
     searchToolBarClassName,
 } from './base';
 
-export interface IReplaceInput {}
+export interface IReplaceInput {
+    replaceAddons?: IActionBarItem[];
+    setReplaceValue?: (value?: string) => void;
+    onToggleAddon?: (addon) => void;
+}
 
 export function ReplaceInput(props: IReplaceInput) {
-    const addons = [
-        {
-            id: 'PreserveCase',
-            title: 'Preserve Case',
-            disabled: false,
-            iconName: 'codicon-preserve-case',
-        },
-        {
-            id: 'Replace All',
-            title: 'ReplaceAll',
-            disabled: false,
-            iconName: 'codicon-replace-all',
-        },
-    ];
+    const { replaceAddons = [], setReplaceValue, onToggleAddon } = props;
+
     const onClick = (e, item) => {
-        console.log('onClick:', e, item);
+        console.log('onClick:', item);
+        onToggleAddon?.(item)
     };
+
     return (
         <div
             className={classNames(
@@ -34,10 +29,12 @@ export function ReplaceInput(props: IReplaceInput) {
                 replaceContainerClassName
             )}
         >
-            <input />
+            <input placeholder='Replace' onChange={(e) => {
+                setReplaceValue?.(e.target.value)
+            }} />
             <Toolbar
                 className={searchToolBarClassName}
-                data={addons}
+                data={replaceAddons}
                 onClick={onClick}
             />
         </div>

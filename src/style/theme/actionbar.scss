@@ -5,4 +5,8 @@
     background-color: var(--listFilterWidget-background);
     color: var(--button-foreground);
     outline-color: var(--listFilterWidget-outline);
+
+    &__item--checked {
+        background-color: var(--actionBar-checkedBackground);
+    }
 }

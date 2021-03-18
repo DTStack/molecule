@@ -10,6 +10,7 @@ import SearchTree from './searchTree';
 interface ISearchPaneToolBar {
     headerToolBar?: IActivityBarItem[];
     value?: string;
+    convertFoldToSearchTree?: <T>(data) => T[];
 }
 
 const explorerState = explorerService.getState();
@@ -24,7 +25,7 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
     };
 
     render() {
-        const { headerToolBar = [], value } = this.props;
+        const { headerToolBar = [], value, convertFoldToSearchTree } = this.props;
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header
@@ -37,7 +38,7 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
                     <SearchWidget {...this.props} />
                     {value && (
                         <SearchTree
-                            data={explorerState?.folderTree?.data}
+                            data={convertFoldToSearchTree?.(explorerState?.folderTree?.data)}
                             {...this.props}
                         />
                     )}

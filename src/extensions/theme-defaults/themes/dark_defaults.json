@@ -27,7 +27,8 @@
         "tabItem.border": "rgb(37, 37, 38)",
         "tabItem.activeBackground": "rgb(30, 30, 30)",
         "tabItem.activeForeground": "rgb(255, 255, 255)",
-        "search.matchValueBackground": "rgba(234, 92, 0, 0.33)"
+        "search.matchValueBackground": "rgba(234, 92, 0, 0.33)",
+        "actionBar.checkedBackground": "rgba(0, 127, 212, 0.4)"
     },
     "semanticHighlighting": true
 }

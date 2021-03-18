@@ -6,11 +6,15 @@ import { FileTypes } from 'mo/components/tree';
 
 export interface ISearchService extends Component<ISearch> {
     setSearchValue?: (value?: string) => void;
+    setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: <T = any>(data: T[]) => T[];
-    toggleWholeWord?: () => void;
-    toggleRegex?: () => void;
-    togglePreserveCase?: () => void;
-    toggleCaseSensitive?: () => void;
+    toggleCaseSensitive?: (addonId: string) => void;
+    toggleWholeWord?: (addonId: string) => void;
+    toggleRegex?: (addonId: string) => void;
+    togglePreserveCase?: (addonId: string) => void;
+    toggleReplaceAll?: (addonId: string) => void;
+    updateSearchAddonsCheckedStats?: (addonId: string, checked: boolean) => void;
+    updateReplaceAddonsCheckedStats?: (addonId: string, checked: boolean) => void;
     openSearchView?: () => void;
 }
 
@@ -30,9 +34,15 @@ export class SearchService
         });
     }
 
+    public setReplaceValue(value?: string) {
+        this.setState({
+            replaceValue: value,
+        });
+    }
+
     public convertFoldToSearchTree<T = any>(data: T[]) {
         const searchTreeData: T[] = [];
-        const generate = (tree) => {
+        const buildSearchTreeData = (tree) => {
             tree?.forEach((treeItem) => {
                 if (treeItem.fileType === FileTypes.file) {
                     const treeNode = {
@@ -57,21 +67,78 @@ export class SearchService
                         });
                     searchTreeData.push(treeNode);
                 }
-                if (treeItem.children) generate(treeItem.children);
+                if (treeItem.children) buildSearchTreeData(treeItem.children);
             });
         };
-        generate(data);
-        console.log('searchTreeData', searchTreeData);
+        buildSearchTreeData(data);
         return searchTreeData;
     }
 
-    public toggleWholeWord() {}
+    public toggleCaseSensitive(addonId: string) {
+        const { isCaseSensitive } = this.state;
+        this.setState({
+            isCaseSensitive: !isCaseSensitive,
+        });
+        this.updateSearchAddonsCheckedStats(addonId, isCaseSensitive)
+    }
 
-    public toggleRegex() {}
+    public toggleWholeWord(addonId: string) {
+        const { isWholeWords } = this.state;
+        this.setState({
+            isWholeWords: !isWholeWords,
+        });
+        this.updateSearchAddonsCheckedStats(addonId, isWholeWords)
+    }
 
-    public togglePreserveCase() {}
+    public toggleRegex(addonId) {
+        const { isRegex } = this.state;
+        this.setState({
+            isRegex: !isRegex,
+        });
+        this.updateSearchAddonsCheckedStats(addonId, isRegex)
+    }
 
-    public toggleCaseSensitive() {}
+    public togglePreserveCase(addonId: string) {
+        const { preserveCase } = this.state;
+        this.setState({
+            preserveCase: !preserveCase,
+        });
+        this.updateReplaceAddonsCheckedStats(addonId, preserveCase)
+    }
 
-    public openSearchView() {}
+    public toggleReplaceAll() {
+        console.log('toggleReplaceAll')
+    }
+
+    public updateSearchAddonsCheckedStats(addonId: string, checked?: boolean) {
+        const { searchAddons } = this.state;
+        const newAddons = searchAddons?.map(addon => {
+            return {
+                ...addon,
+                checked: addon.id === addonId ? !checked : addon.checked
+            }
+        })
+        this.setState({
+            searchAddons: newAddons
+        })
+    }
+
+    public updateReplaceAddonsCheckedStats(addonId: string, checked?: boolean) {
+        const { replaceAddons } = this.state;
+        const newAddons = replaceAddons?.map(addon => {
+            return {
+                ...addon,
+                checked: addon.id === addonId ? !checked : addon.checked
+            }
+        })
+        this.setState({
+            replaceAddons: newAddons
+        })
+    }
+
+    public triggerQueryChange() {
+
+    }
+
+    public openSearchView() { }
 }

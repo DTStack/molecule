@@ -136,11 +136,6 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         renderTitle, // custom title
         ...restProps
     } = props;
-    // const [expandedKeys, setExpandedKeys] = useState([]);
-    // const onExpand = (expandedKeys) => {
-    //     console.log('onExpand', expandedKeys);
-    //     setExpandedKeys(expandedKeys);
-    // };
 
     const onDrop = (info) => {
         if (!draggable) return;
@@ -228,14 +223,8 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     draggable={draggable}
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
-                    // expandedKeys={expandedKeys}
-                    // onExpand={onExpand}
                     onSelect={(selectedKeys, e: any) => {
-                        const { fileType, modify } = e.node.data;
-                        const isFile = fileType === FileTypes.file;
-                        if (isFile && !modify && props.onSelectFile) {
-                            props.onSelectFile(e.node.data);
-                        }
+                        props.onSelectFile?.(e.node.data);
                         onSelectTree?.(e.node?.data?.id);
                     }}
                     onRightClick={onRightClick}

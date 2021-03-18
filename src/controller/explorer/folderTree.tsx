@@ -48,12 +48,14 @@ export class FolderTreeController
         this.initView();
     }
 
-    private initView() {}
+    private initView() { }
 
     public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
+        const { fileType, modify } = file;
+        const isFile = fileType === FileTypes.file;
+        if (!isFile || modify) return;
         const tabData = {
             ...file,
-            // 切割 id
             id: `${file.id}`?.split('_')?.[0],
             modified: false,
             data: {
@@ -77,7 +79,6 @@ export class FolderTreeController
                 new EditorController()?.onSelectTab(tabData.id, id);
             }
         } else {
-            console.log('object', tabData);
             editorService.open(tabData);
             new EditorController()?.onSelectTab(tabData.id, id);
         }

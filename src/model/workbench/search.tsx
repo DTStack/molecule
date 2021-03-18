@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { injectable } from 'tsyringe';
 import { IActivityBarItem } from 'mo/model';
-import { IActionBarItem } from 'mo/components/actionBar'
+import { IActionBarItem } from 'mo/components/actionBar';
 
 export interface ISearch {
     headerToolBar?: IActivityBarItem[];

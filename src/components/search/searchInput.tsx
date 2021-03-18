@@ -19,7 +19,7 @@ export function SearchInput<T>(props: ISearchInput) {
 
     const onClick = (e, item) => {
         console.log('onClick:', item);
-        onToggleAddon?.(item)
+        onToggleAddon?.(item);
     };
 
     return (
@@ -30,7 +30,7 @@ export function SearchInput<T>(props: ISearchInput) {
             )}
         >
             <input
-                placeholder='Search'
+                placeholder="Search"
                 onChange={(e) => {
                     setSearchValue?.(e.target.value);
                 }}

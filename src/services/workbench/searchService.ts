@@ -13,8 +13,14 @@ export interface ISearchService extends Component<ISearch> {
     toggleRegex?: (addonId: string) => void;
     togglePreserveCase?: (addonId: string) => void;
     toggleReplaceAll?: (addonId: string) => void;
-    updateSearchAddonsCheckedStats?: (addonId: string, checked: boolean) => void;
-    updateReplaceAddonsCheckedStats?: (addonId: string, checked: boolean) => void;
+    updateSearchAddonsCheckedStats?: (
+        addonId: string,
+        checked: boolean
+    ) => void;
+    updateReplaceAddonsCheckedStats?: (
+        addonId: string,
+        checked: boolean
+    ) => void;
     openSearchView?: () => void;
 }
 
@@ -61,7 +67,8 @@ export class SearchService
                                 ...treeItem,
                                 ...new TreeNodeModel({
                                     name: item,
-                                    id: `${treeItem.id}_${index}` as any, // id 不能重复..
+                                    value: treeItem.value,
+                                    id: `${treeItem.id}_${index}` as any, // TODO: id 重复问题
                                 }),
                             };
                         });
@@ -79,7 +86,7 @@ export class SearchService
         this.setState({
             isCaseSensitive: !isCaseSensitive,
         });
-        this.updateSearchAddonsCheckedStats(addonId, isCaseSensitive)
+        this.updateSearchAddonsCheckedStats(addonId, isCaseSensitive);
     }
 
     public toggleWholeWord(addonId: string) {
@@ -87,7 +94,7 @@ export class SearchService
         this.setState({
             isWholeWords: !isWholeWords,
         });
-        this.updateSearchAddonsCheckedStats(addonId, isWholeWords)
+        this.updateSearchAddonsCheckedStats(addonId, isWholeWords);
     }
 
     public toggleRegex(addonId) {
@@ -95,7 +102,7 @@ export class SearchService
         this.setState({
             isRegex: !isRegex,
         });
-        this.updateSearchAddonsCheckedStats(addonId, isRegex)
+        this.updateSearchAddonsCheckedStats(addonId, isRegex);
     }
 
     public togglePreserveCase(addonId: string) {
@@ -103,42 +110,40 @@ export class SearchService
         this.setState({
             preserveCase: !preserveCase,
         });
-        this.updateReplaceAddonsCheckedStats(addonId, preserveCase)
+        this.updateReplaceAddonsCheckedStats(addonId, preserveCase);
     }
 
     public toggleReplaceAll() {
-        console.log('toggleReplaceAll')
+        console.log('toggleReplaceAll');
     }
 
     public updateSearchAddonsCheckedStats(addonId: string, checked?: boolean) {
         const { searchAddons } = this.state;
-        const newAddons = searchAddons?.map(addon => {
+        const newAddons = searchAddons?.map((addon) => {
             return {
                 ...addon,
-                checked: addon.id === addonId ? !checked : addon.checked
-            }
-        })
+                checked: addon.id === addonId ? !checked : addon.checked,
+            };
+        });
         this.setState({
-            searchAddons: newAddons
-        })
+            searchAddons: newAddons,
+        });
     }
 
     public updateReplaceAddonsCheckedStats(addonId: string, checked?: boolean) {
         const { replaceAddons } = this.state;
-        const newAddons = replaceAddons?.map(addon => {
+        const newAddons = replaceAddons?.map((addon) => {
             return {
                 ...addon,
-                checked: addon.id === addonId ? !checked : addon.checked
-            }
-        })
+                checked: addon.id === addonId ? !checked : addon.checked,
+            };
+        });
         this.setState({
-            replaceAddons: newAddons
-        })
+            replaceAddons: newAddons,
+        });
     }
 
-    public triggerQueryChange() {
-
-    }
+    public triggerQueryChange() { }
 
     public openSearchView() { }
 }

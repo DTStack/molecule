@@ -11,7 +11,7 @@ import {
     WHOLE_WORD_COMMAND_ID,
     REGULAR_EXPRESSION_COMMAND_ID,
     PRESERVE_CASE_COMMAND_ID,
-    REPLACE_ALL_COMMAND_ID
+    REPLACE_ALL_COMMAND_ID,
 } from 'mo/model/workbench/search';
 export interface ISearchController {
     setSearchValue?: (value?: string) => void;
@@ -91,29 +91,30 @@ export class SearchController extends Controller implements ISearchController {
                 this.onToggleRegex(addonId);
                 break;
             }
-            default: console.log('no addon')
+            default:
+                console.log('no addon');
         }
-    }
+    };
 
     public readonly onToggleCaseSensitive = (addonId: string) => {
-        searchService.toggleCaseSensitive?.(addonId)
-    }
+        searchService.toggleCaseSensitive?.(addonId);
+    };
 
     public readonly onToggleWholeWord = (addonId: string) => {
-        searchService.toggleWholeWord?.(addonId)
-    }
+        searchService.toggleWholeWord?.(addonId);
+    };
 
     public readonly onToggleRegex = (addonId: string) => {
-        searchService.toggleRegex?.(addonId)
-    }
+        searchService.toggleRegex?.(addonId);
+    };
 
     public readonly onTogglePreserveCase = (addonId: string) => {
-        searchService.togglePreserveCase?.(addonId)
-    }
+        searchService.togglePreserveCase?.(addonId);
+    };
 
     public readonly onToggleRepalceAll = (addonId: string) => {
-        searchService.toggleReplaceAll?.(addonId)
-    }
+        searchService.toggleReplaceAll?.(addonId);
+    };
 
     public readonly convertFoldToSearchTree = (data): any => {
         return searchService.convertFoldToSearchTree?.(data);

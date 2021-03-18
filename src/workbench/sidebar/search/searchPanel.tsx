@@ -25,7 +25,11 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
     };
 
     render() {
-        const { headerToolBar = [], value, convertFoldToSearchTree } = this.props;
+        const {
+            headerToolBar = [],
+            value,
+            convertFoldToSearchTree,
+        } = this.props;
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header
@@ -38,7 +42,9 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
                     <SearchWidget {...this.props} />
                     {value && (
                         <SearchTree
-                            data={convertFoldToSearchTree?.(explorerState?.folderTree?.data)}
+                            data={convertFoldToSearchTree?.(
+                                explorerState?.folderTree?.data
+                            )}
                             {...this.props}
                         />
                     )}

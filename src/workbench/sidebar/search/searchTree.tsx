@@ -13,47 +13,61 @@ export interface SearchTreeProps extends ITreeProps {
 const SearchTree: React.FunctionComponent<SearchTreeProps> = (
     props: SearchTreeProps
 ) => {
-    const { data = [], value = '', isCaseSensitive, isWholeWords, isRegex, ...restProps } = props;
+    const {
+        data = [],
+        value = '',
+        isCaseSensitive,
+        isWholeWords,
+        isRegex,
+        ...restProps
+    } = props;
     console.log('SearchTree => Props', props);
 
     const getSeachValueIndex = (queryVal, text) => {
         let searchIndex;
-        const onlycaseSensitiveMatch = isCaseSensitive;
+        const onlyCaseSensitiveMatch = isCaseSensitive;
         const onlyWholeWordsMatch = isWholeWords;
-        const useAllCondtionsMatch = !isCaseSensitive && !isWholeWords;
-        const notUseConditionsMatch = isCaseSensitive && isWholeWords;
+        const useAllCondtionsMatch = isCaseSensitive && isWholeWords;
+        const notUseConditionsMatch = !isCaseSensitive && !isWholeWords;
 
         if (isRegex) {
-            if (onlycaseSensitiveMatch) {
+            if (onlyCaseSensitiveMatch) {
                 searchIndex = text.search(new RegExp(queryVal));
             }
             if (onlyWholeWordsMatch) {
-                searchIndex = text.search(new RegExp("\\b" + queryVal + "\\b"), 'i');
+                searchIndex = text.search(
+                    new RegExp('\\b' + queryVal + '\\b'),
+                    'i'
+                );
             }
             if (useAllCondtionsMatch) {
-                searchIndex = text.search(new RegExp("\\b" + queryVal + "\\b"));
+                searchIndex = text.search(new RegExp('\\b' + queryVal + '\\b'));
             }
             if (notUseConditionsMatch) {
-                searchIndex = text.toLowerCase().search(new RegExp(queryVal, 'i'));
+                searchIndex = text
+                    .toLowerCase()
+                    .search(new RegExp(queryVal, 'i'));
             }
         } else {
-            if (onlycaseSensitiveMatch) {
+            if (onlyCaseSensitiveMatch) {
                 searchIndex = text.indexOf(queryVal);
             }
             // TODO：应使用字符串方法做搜索匹配，暂时使用正则匹配
             if (onlyWholeWordsMatch) {
-                const reg = new RegExp("\\b" + queryVal?.toLowerCase() + "\\b");
+                const reg = new RegExp('\\b' + queryVal?.toLowerCase() + '\\b');
                 searchIndex = text.toLowerCase().search(reg);
             }
             if (useAllCondtionsMatch) {
-                searchIndex = text.search(new RegExp("\\b" + queryVal + "\\b"));
+                searchIndex = text.search(new RegExp('\\b' + queryVal + '\\b'));
             }
             if (notUseConditionsMatch) {
-                searchIndex = text.toLowerCase().indexOf(queryVal?.toLowerCase());
+                searchIndex = text
+                    .toLowerCase()
+                    .indexOf(queryVal?.toLowerCase());
             }
         }
         return searchIndex;
-    }
+    };
     return (
         <Tree
             data={data}

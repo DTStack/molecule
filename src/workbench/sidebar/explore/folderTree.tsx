@@ -93,7 +93,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
 
     const handleUpdateFile = (e, node) => {
         const newName = (e.target as HTMLInputElement).value;
-        explorerService.updateFile(
+        explorerService.updateFileName(
             {
                 ...node,
                 name: newName,
@@ -135,8 +135,8 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-            name
-        );
+                name
+            );
     };
 
     const renderByData = (
@@ -162,7 +162,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                             fileType: 'rootFolder',
                             children: [
                                 new TreeNodeModel({
-                                    name: 'ada',
+                                    name: 'test_sql',
                                     fileType: 'file',
                                     icon: 'symbol-file',
                                     value: `show tables;

@@ -19,7 +19,7 @@ export function ReplaceInput(props: IReplaceInput) {
 
     const onClick = (e, item) => {
         console.log('onClick:', item);
-        onToggleAddon?.(item)
+        onToggleAddon?.(item);
     };
 
     return (
@@ -29,9 +29,12 @@ export function ReplaceInput(props: IReplaceInput) {
                 replaceContainerClassName
             )}
         >
-            <input placeholder='Replace' onChange={(e) => {
-                setReplaceValue?.(e.target.value)
-            }} />
+            <input
+                placeholder="Replace"
+                onChange={(e) => {
+                    setReplaceValue?.(e.target.value);
+                }}
+            />
             <Toolbar
                 className={searchToolBarClassName}
                 data={replaceAddons}

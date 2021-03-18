@@ -13,6 +13,7 @@
 
     &__left-items,
     &__right-items {
+        align-items: center;
         display: flex;
         height: 100%;
     }

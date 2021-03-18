@@ -20,12 +20,12 @@ export const STATUS_PROBLEMS: IStatusBarItem = {
     id: 'MoProblems',
     sortIndex: 1,
     data: {
-        warn: 0,
-        error: 0,
-        info: 0,
+        warnings: 0,
+        errors: 0,
+        infos: 0,
     },
     name: 'Problems',
-    render: (item: IStatusBarItem) => <Problems {...item}/>,
+    render: (item: IStatusBarItem) => <Problems {...item} />,
 };
 
 export const STATUS_EDITOR_INFO: IStatusBarItem = {
@@ -36,7 +36,7 @@ export const STATUS_EDITOR_INFO: IStatusBarItem = {
         col: 0,
     },
     name: 'Go to Line/Column',
-    render: (item: IStatusBarItem) => <EditorInfo {...item}/>,
+    render: (item: IStatusBarItem) => <EditorInfo {...item} />,
 };
 
 /**

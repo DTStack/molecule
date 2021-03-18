@@ -5,11 +5,11 @@ export function Problems(props: any) {
     return (
         <React.Fragment>
             <Icon type="error" />
-            {` ${data.error} `}
+            {` ${data.errors} `}
             <Icon type="warning" />
-            {` ${data.warn} `}
+            {` ${data.warnings} `}
             <Icon type="info" />
-            {` ${data.info}`}
+            {` ${data.infos}`}
         </React.Fragment>
     );
 }

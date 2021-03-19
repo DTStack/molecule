@@ -170,6 +170,7 @@ export class TreeNodeModel implements ITreeNodeItem {
     children?: ITreeNodeItem[];
     icon?: string | React.ReactNode;
     modify?: boolean;
+    value?: string;
 
     constructor(props: ITreeNodeItem = {}) {
         const {
@@ -180,6 +181,7 @@ export class TreeNodeModel implements ITreeNodeItem {
             children = [],
             icon = '',
             modify = false,
+            value = '',
         } = props;
         this.fileType = fileType;
         this.modify = modify;
@@ -188,6 +190,7 @@ export class TreeNodeModel implements ITreeNodeItem {
         this.location = location;
         this.children = children;
         this.icon = icon;
+        this.value = value;
     }
 }
 

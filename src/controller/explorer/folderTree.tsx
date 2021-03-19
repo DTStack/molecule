@@ -3,7 +3,7 @@ import { Controller } from 'mo/react/controller';
 
 import { ITreeNodeItem, FileTypes } from 'mo/components/tree';
 import { editorService, explorerService } from 'mo';
-import { EditorController } from 'mo/controller/editor';
+import { editorController } from 'mo/controller';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
 import {
@@ -51,22 +51,25 @@ export class FolderTreeController
     private initView() {}
 
     public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
+        const { fileType, modify } = file;
+        const isFile = fileType === FileTypes.file;
+        if (!isFile || modify) return;
         const tabData = {
             ...file,
-            id: `${file.id}`,
+            id: `${file.id}`?.split('_')?.[0],
             modified: false,
             data: {
-                value: `hello tree ${file.id}`,
+                value: file.value,
                 path: 'desktop/molecule/editor1',
-                language: 'ini',
+                language: 'sql',
             },
             breadcrumb: [{ id: `${file.id}`, name: 'editor.js' }],
         };
+        const editorState = editorService.getState();
+
+        const { id, data = [] } = editorState?.current || ({} as any);
         if (isAuto) {
             // 更新文件自动回调
-            const editorState = editorService.getState();
-
-            const { id, data = [] } = editorState?.current || {};
             const tabId = file.id;
             const index = data?.findIndex((tab) => tab.id == tabId);
             if (index > -1) {
@@ -116,7 +119,7 @@ export class FolderTreeController
                     content: 'This action is irreversible!',
                     onOk() {
                         explorerService.delete(nodeId, () => {
-                            new EditorController().onCloseTab(
+                            editorController.onCloseTab(
                                 `${nodeId}`,
                                 editorService.getState()?.current?.id
                             );

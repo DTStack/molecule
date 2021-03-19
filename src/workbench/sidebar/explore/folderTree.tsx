@@ -93,7 +93,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
 
     const handleUpdateFile = (e, node) => {
         const newName = (e.target as HTMLInputElement).value;
-        explorerService.updateFile(
+        explorerService.updateFileName(
             {
                 ...node,
                 name: newName,
@@ -103,6 +103,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                     onSelectFile?.(
                         {
                             ...node,
+                            modify: false,
                             name: newName,
                         },
                         true
@@ -155,11 +156,31 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
             you have not yet opened a folder
             <Button
                 onClick={() => {
-                    console.log('test');
+                    // test
                     explorerService.addRootFolder?.(
                         new TreeNodeModel({
                             name: 'molecule_temp',
                             fileType: 'rootFolder',
+                            children: [
+                                new TreeNodeModel({
+                                    name: 'test_sql',
+                                    fileType: 'file',
+                                    icon: 'symbol-file',
+                                    value: `show tables;
+SELECT 1;
+DESC 6d_target_test;
+create table if not exists ods_order_header1213 (
+     order_header_id     string comment '订单头id'
+    ,order_date          bigint comment '订单日期'
+    ,shop_id             string comment '店铺id'
+    ,customer_id         string comment '客户id'
+    ,order_status        bigint comment '订单状态'
+    ,pay_date            bigint comment '支付日期'
+)comment '销售订单明细表'
+PARTITIONED BY (ds string) lifecycle 1000;
+`,
+                                }),
+                            ],
                         })
                     );
                 }}

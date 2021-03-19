@@ -13,6 +13,7 @@ export interface IActionBarItem<T = any> {
     title?: string;
     iconName?: string;
     disabled?: boolean;
+    checked?: boolean;
     data?: T;
     className?: string;
     onClick?(event: React.MouseEvent, item: IActionBarItem): void;
@@ -31,6 +32,7 @@ const containerClassName = getBEMElement(
 );
 const itemClassName = getBEMElement(defaultActionBarClassName, 'item');
 const itemDisabledClassName = getBEMModifier(itemClassName, 'disabled');
+const itemCheckedClassName = getBEMModifier(itemClassName, 'checked');
 const labelClassName = getBEMElement(defaultActionBarClassName, 'label');
 
 export function ActionBarItem(props: IActionBarItem) {
@@ -39,11 +41,13 @@ export function ActionBarItem(props: IActionBarItem) {
         onClick?.(e, props);
     };
     const disabled = props.disabled ? itemDisabledClassName : null;
+    const checked = props.checked ? itemCheckedClassName : null;
     const claNames = classNames(
         labelClassName,
         'codicon',
         props.iconName,
-        disabled
+        disabled,
+        checked
     );
     return (
         <li

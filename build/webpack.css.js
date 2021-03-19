@@ -19,6 +19,7 @@ const styles = [
     'components/tabs/style',
     'components/toolbar/style',
     'components/tree/style',
+    'components/search/style',
     // ============= The Workbench core component =============
     'workbench/style',
     'workbench/activityBar/style',

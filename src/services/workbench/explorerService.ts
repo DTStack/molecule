@@ -22,7 +22,8 @@ export interface IExplorerService extends Component<IExplorer> {
     addRootFolder(folder?: ITreeNodeItem | ITreeNodeItem[]): void;
     removeRootFolder(id: number): void;
     setActive(id: number): void;
-    updateFile(file: ITreeNodeItem, callback?: Function): void;
+    updateFileName(file: ITreeNodeItem, callback?: Function): void;
+    updateFileContent(id?: number, value?: string): void;
     newFile(id?: number, callback?: Function): void;
     newFolder(id?: number, callback?: Function): void;
     rename(id: number, callback?: Function): void;
@@ -125,14 +126,16 @@ export class ExplorerService
         return icon;
     }
 
-    private getCurrentRootFolderAndIndex(id: number) {
+    private getCurrentRootFolderInfo(id: number) {
         const currentRootFolder: ITreeNodeItem = this.getRootFolderById(id);
         const index = this.getRootFolderIndexByRootId(
             (currentRootFolder as any).id
         ) as number;
+        const tree = new TreeViewUtil(currentRootFolder);
         return {
             index,
             currentRootFolder,
+            tree,
         };
     }
 
@@ -201,22 +204,18 @@ export class ExplorerService
 
     public setActive(id: number) {
         const { folderTree } = this.state;
-        const { currentRootFolder } = this.getCurrentRootFolderAndIndex(id);
-        const tree = new TreeViewUtil(currentRootFolder);
+        const { tree } = this.getCurrentRootFolderInfo(id);
         const currentNode = tree.get(id);
         this.setState({
             folderTree: { ...folderTree, current: currentNode },
         });
     }
 
-    public updateFile(file, callback) {
+    public updateFileName(file, callback) {
         const { folderTree } = this.state;
         const { id, name, fileType } = file;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
-            id
-        );
-        const tree = new TreeViewUtil(currentRootFolder);
+        const { tree, index } = this.getCurrentRootFolderInfo(id);
         if (name) {
             tree.update(id, {
                 ...file,
@@ -233,13 +232,23 @@ export class ExplorerService
         if (callback) callback();
     }
 
+    public updateFileContent(id: number, value: string) {
+        const { folderTree } = this.state;
+        const cloneData: ITreeNodeItem[] = folderTree?.data || [];
+        const { tree, index } = this.getCurrentRootFolderInfo(id);
+        tree.update(id, {
+            value,
+        });
+        if (index > -1) cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: { ...folderTree, data: cloneData },
+        });
+    }
+
     public rename(id: number, callback?: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
-            id
-        );
-        const tree = new TreeViewUtil(currentRootFolder);
+        const { tree, index } = this.getCurrentRootFolderInfo(id);
         tree.update(id, {
             modify: true,
         });
@@ -253,10 +262,7 @@ export class ExplorerService
     public delete(id: number, callback?: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
-            id
-        );
-        const tree = new TreeViewUtil(currentRootFolder);
+        const { tree, index } = this.getCurrentRootFolderInfo(id);
         tree.remove(id);
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
@@ -268,10 +274,7 @@ export class ExplorerService
     public newFile(id: number, callback?: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
-            id
-        );
-        const tree = new TreeViewUtil(currentRootFolder);
+        const { tree, index } = this.getCurrentRootFolderInfo(id);
         if (!id) {
             const tabData = {
                 id: `${randomId()}`,
@@ -295,10 +298,7 @@ export class ExplorerService
     public newFolder(id, callback: Function) {
         const { folderTree } = this.state;
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
-        const { currentRootFolder, index } = this.getCurrentRootFolderAndIndex(
-            id
-        );
-        const tree = new TreeViewUtil(currentRootFolder);
+        const { tree, index } = this.getCurrentRootFolderInfo(id);
         this.createTargetNodeById(id, tree, {
             fileType: FileTypes.folder as FileType,
             modify: true,

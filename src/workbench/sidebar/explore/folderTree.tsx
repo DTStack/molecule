@@ -103,6 +103,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                     onSelectFile?.(
                         {
                             ...node,
+                            modify: false,
                             name: newName,
                         },
                         true

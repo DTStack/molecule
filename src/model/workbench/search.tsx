@@ -15,11 +15,12 @@ export interface ISearch {
     preserveCase?: boolean;
 }
 
-export const CASE_SENSITIVE_COMMAND_ID = 'MatchCase';
-export const WHOLE_WORD_COMMAND_ID = 'MatchWholeWord';
-export const REGULAR_EXPRESSION_COMMAND_ID = 'UseRegularExpression';
-export const PRESERVE_CASE_COMMAND_ID = 'PreserveCase';
-export const REPLACE_ALL_COMMAND_ID = 'ReplaceAll';
+export const SEARCH_CASE_SENSITIVE_COMMAND_ID = 'search.matchCase';
+export const SEARCH_WHOLE_WORD_COMMAND_ID = 'search.matchWholeWord';
+export const SEARCH_REGULAR_EXPRESSION_COMMAND_ID =
+    'search.useRegularExpression';
+export const SEARCH_PRESERVE_CASE_COMMAND_ID = 'search.preserveCase';
+export const SEARCH_REPLACE_ALL_COMMAND_ID = 'search.replaceAll';
 
 const builtInHeaderToolbar = [
     {
@@ -40,31 +41,25 @@ const builtInHeaderToolbar = [
         disabled: true,
         iconName: 'codicon-collapse-all',
     },
-    {
-        id: 'test',
-        title: 'test',
-        disabled: true,
-        iconName: 'codicon-case-sensitive',
-    },
 ];
 
 const defaultSearchAddons = [
     {
-        id: CASE_SENSITIVE_COMMAND_ID,
+        id: SEARCH_CASE_SENSITIVE_COMMAND_ID,
         title: 'Match Case',
         disabled: false,
         checked: false,
         iconName: 'codicon-case-sensitive',
     },
     {
-        id: WHOLE_WORD_COMMAND_ID,
+        id: SEARCH_WHOLE_WORD_COMMAND_ID,
         title: 'Match Whole Word',
         disabled: false,
         checked: false,
         iconName: 'codicon-whole-word',
     },
     {
-        id: REGULAR_EXPRESSION_COMMAND_ID,
+        id: SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
         disabled: false,
         checked: false,
         title: 'Use Regular Expression',
@@ -74,14 +69,14 @@ const defaultSearchAddons = [
 
 const defaultReplaceAddons = [
     {
-        id: PRESERVE_CASE_COMMAND_ID,
+        id: SEARCH_PRESERVE_CASE_COMMAND_ID,
         title: 'Preserve Case',
         disabled: false,
         checked: false,
         iconName: 'codicon-preserve-case',
     },
     {
-        id: REPLACE_ALL_COMMAND_ID,
+        id: SEARCH_REPLACE_ALL_COMMAND_ID,
         title: 'Replace All',
         disabled: false,
         checked: false,

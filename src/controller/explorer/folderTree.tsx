@@ -3,7 +3,7 @@ import { Controller } from 'mo/react/controller';
 
 import { ITreeNodeItem, FileTypes } from 'mo/components/tree';
 import { editorService, explorerService } from 'mo';
-import { EditorController } from 'mo/controller/editor';
+import { editorController } from 'mo/controller';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
 import {
@@ -76,11 +76,9 @@ export class FolderTreeController
                 if (id) editorService.updateTab(tabData, id);
             } else {
                 editorService.open(tabData);
-                new EditorController()?.onSelectTab(tabData.id, id);
             }
         } else {
             editorService.open(tabData);
-            new EditorController()?.onSelectTab(tabData.id, id);
         }
     };
 
@@ -121,7 +119,7 @@ export class FolderTreeController
                     content: 'This action is irreversible!',
                     onOk() {
                         explorerService.delete(nodeId, () => {
-                            new EditorController().onCloseTab(
+                            editorController.onCloseTab(
                                 `${nodeId}`,
                                 editorService.getState()?.current?.id
                             );

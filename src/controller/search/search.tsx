@@ -7,11 +7,11 @@ import { IActionBarItem } from 'mo/components/actionBar';
 import { searchController } from 'mo/controller';
 import { searchService } from 'mo';
 import {
-    CASE_SENSITIVE_COMMAND_ID,
-    WHOLE_WORD_COMMAND_ID,
-    REGULAR_EXPRESSION_COMMAND_ID,
-    PRESERVE_CASE_COMMAND_ID,
-    REPLACE_ALL_COMMAND_ID,
+    SEARCH_CASE_SENSITIVE_COMMAND_ID,
+    SEARCH_WHOLE_WORD_COMMAND_ID,
+    SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
+    SEARCH_PRESERVE_CASE_COMMAND_ID,
+    SEARCH_REPLACE_ALL_COMMAND_ID,
 } from 'mo/model/workbench/search';
 export interface ISearchController {
     setSearchValue?: (value?: string) => void;
@@ -71,23 +71,23 @@ export class SearchController extends Controller implements ISearchController {
     public onToggleAddon = (addon?: IActionBarItem) => {
         const addonId = addon?.id;
         switch (addonId) {
-            case CASE_SENSITIVE_COMMAND_ID: {
+            case SEARCH_CASE_SENSITIVE_COMMAND_ID: {
                 this.onToggleCaseSensitive(addonId);
                 break;
             }
-            case WHOLE_WORD_COMMAND_ID: {
+            case SEARCH_WHOLE_WORD_COMMAND_ID: {
                 this.onToggleWholeWord(addonId);
                 break;
             }
-            case REGULAR_EXPRESSION_COMMAND_ID: {
+            case SEARCH_REGULAR_EXPRESSION_COMMAND_ID: {
                 this.onToggleRegex(addonId);
                 break;
             }
-            case PRESERVE_CASE_COMMAND_ID: {
+            case SEARCH_PRESERVE_CASE_COMMAND_ID: {
                 this.onTogglePreserveCase(addonId);
                 break;
             }
-            case REPLACE_ALL_COMMAND_ID: {
+            case SEARCH_REPLACE_ALL_COMMAND_ID: {
                 this.onToggleRegex(addonId);
                 break;
             }

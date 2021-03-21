@@ -34,7 +34,6 @@ const defaultVS = {
     'checkbox.border': Color.white,
     'button.background': '#007ACC',
     'button.foreground': Color.white,
-    // 'button.hoverBackground': Color.fromHex('#007ACC').transparent(0.2),
 
     'badge.background': '#C4C4C4',
     'badge.foreground': '#333',
@@ -67,6 +66,9 @@ const defaultVS = {
     'menu.foreground': '#616161',
     'menu.background': Color.white,
     'menu.separatorBackground': '#888888',
+
+    'panel.background': Color.white,
+    'panel.border': 'rgba(128, 128, 128, 0.35)',
 
     'activityBar.background': 'rgb(51, 51, 51)',
     'activityBar.activeBorder': '#fff',
@@ -105,7 +107,7 @@ const defaultDark = {
     'checkbox.border': '#CECECE',
     'button.background': '#0E639C',
     'button.foreground': Color.white,
-    // 'button.hoverBackground': Color.fromHex('#0E639C').transparent(0.2),
+    'button.hoverBackground': Color.fromHex('#0E639C').transparent(0.2),
 
     'badge.background': '#4D4D4D',
     'badge.foreground': Color.white,
@@ -139,9 +141,8 @@ const defaultDark = {
     'menu.background': '#3C3C3C',
     'menu.separatorBackground': '#BBBBBB',
 
-    'panel.background': 'rgb(37, 37, 38);',
-    'panel.foreground': Color.white,
-    'panel.border': '#CECECE',
+    'panel.background': 'rgb(30, 30, 30)',
+    'panel.border': '#3C3C3C',
 
     'activityBar.background': 'rgb(51, 51, 51)',
     'activityBar.activeBorder': '#fff',

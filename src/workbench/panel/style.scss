@@ -13,6 +13,7 @@
     }
 
     &__header {
+        border-color: inherit;
         border-top-style: solid;
         border-top-width: 1px;
         flex-direction: row;
@@ -22,10 +23,14 @@
         width: 100%;
 
         #{$tabs} {
+            background: inherit;
+            border: 0;
             flex-grow: 1;
         }
 
         #{$tab}__item {
+            background: inherit;
+            border: 0;
             font-size: 11px;
             padding: 0 10px;
             text-transform: uppercase;

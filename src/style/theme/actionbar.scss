@@ -3,7 +3,7 @@
 // =============== Action Bar =============== //
 #{$actionBar} {
     background-color: var(--listFilterWidget-background);
-    color: var(--button-foreground);
+    color: var(--foreground);
     outline-color: var(--listFilterWidget-outline);
 
     &__item--checked {

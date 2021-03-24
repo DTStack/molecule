@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Collapse from 'mo/components/collapse';
 import { Header, Content } from 'mo/workbench/sidebar';
-import { IExplorer } from 'mo/model/workbench/explorer';
+import { IExplorer } from 'mo/model/workbench/explorer/explorer';
 import { IExplorerController } from 'mo/controller/explorer/explorer';
 import ActivityBarItem from 'mo/workbench/activityBar/activityBarItem';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
@@ -18,6 +18,7 @@ export const Explorer: React.FunctionComponent<IExplorer> = (
         headerToolBar = [],
         onHeaderToolbarContextMenuClick,
         onCollapseChange,
+        onCollapseToolbar,
     } = props;
     const renderItems = (item: IActivityBarItem, index: number) => {
         return (
@@ -37,7 +38,11 @@ export const Explorer: React.FunctionComponent<IExplorer> = (
                 toolbar={headerToolBar.map(renderItems)}
             />
             <Content>
-                <Collapse data={data} onCollapseChange={onCollapseChange} />
+                <Collapse
+                    data={data}
+                    onCollapseChange={onCollapseChange}
+                    onCollapseToolbar={onCollapseToolbar}
+                />
             </Content>
         </div>
     );

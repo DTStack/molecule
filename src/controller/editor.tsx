@@ -10,7 +10,11 @@ import {
 } from 'mo/model/workbench/editor';
 import { undoRedoMenu } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
-import { editorService, statusBarService, explorerService } from 'mo/services';
+import {
+    editorService,
+    statusBarService,
+    folderTreeService,
+} from 'mo/services';
 import { IMenuItem } from 'mo/components/menu';
 import { singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
@@ -218,7 +222,7 @@ export class EditorController extends Controller implements IEditorController {
                 },
                 groupId
             );
-            explorerService.updateFileContent(
+            folderTreeService.updateFileContent(
                 current?.tab?.id as any,
                 newValue
             );

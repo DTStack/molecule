@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { memo, useRef, useEffect, useCallback } from 'react';
-import { IFolderTree } from 'mo';
+import { IFolderTreeSubItem } from 'mo';
 import { select } from 'mo/common/dom';
 import Tree, { FileTypes } from 'mo/components/tree';
 import { Menu } from 'mo/components/menu';
@@ -9,11 +9,11 @@ import { Button } from 'mo/components/button';
 import { IFolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
-import { explorerService } from 'mo/services';
+import { folderTreeService } from 'mo/services';
 import { TreeNodeModel, IFolderInputEvent } from 'mo/model';
 
-const FolderTree: React.FunctionComponent<IFolderTree> = (
-    props: IFolderTree & IFolderTreeController
+const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
+    props: IFolderTreeSubItem & IFolderTreeController
 ) => {
     const {
         data = [],
@@ -93,7 +93,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
 
     const handleUpdateFile = (e, node) => {
         const newName = (e.target as HTMLInputElement).value;
-        explorerService.updateFileName(
+        folderTreeService.updateFileName(
             {
                 ...node,
                 name: newName,
@@ -157,7 +157,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
             <Button
                 onClick={() => {
                     // test
-                    explorerService.addRootFolder?.(
+                    folderTreeService.addRootFolder?.(
                         new TreeNodeModel({
                             name: 'molecule_temp',
                             fileType: 'rootFolder',
@@ -166,7 +166,7 @@ const FolderTree: React.FunctionComponent<IFolderTree> = (
                                     name: 'test_sql',
                                     fileType: 'file',
                                     icon: 'symbol-file',
-                                    value: `show tables;
+                                    content: `show tables;
 SELECT 1;
 DESC 6d_target_test;
 create table if not exists ods_order_header1213 (

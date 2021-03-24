@@ -26,7 +26,7 @@ export interface ITreeNodeItem {
     readonly id?: number;
     icon?: string | React.ReactNode;
     modify?: boolean; // Edit status
-    value?: string; // editor content
+    content?: string; // editor content
     className?: string;
 }
 

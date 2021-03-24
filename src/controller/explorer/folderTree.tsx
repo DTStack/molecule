@@ -2,16 +2,16 @@ import { singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
 
 import { ITreeNodeItem, FileTypes } from 'mo/components/tree';
-import { editorService, explorerService } from 'mo';
+import { editorService, folderTreeService } from 'mo';
 import { editorController } from 'mo/controller';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
 import {
     IFolderInputEvent,
     TreeNodeModel,
-    baseContextMenu,
-    rootFolderContextMenu,
-    fileContextMenu,
+    BASE_CONTEXT_MENU,
+    ROOT_FOLDER_CONTEXT_MENU,
+    FILE_CONTEXT_MENU,
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
     RENAME_COMMAND_ID,
@@ -20,6 +20,7 @@ import {
     OPEN_TO_SIDE_COMMAND_ID,
     ADD_ROOT_FOLDER_COMMAND_ID,
 } from 'mo/model';
+
 const confirm = Modal.confirm;
 
 export interface IFolderTreeController {
@@ -59,7 +60,7 @@ export class FolderTreeController
             id: `${file.id}`?.split('_')?.[0],
             modified: false,
             data: {
-                value: file.value,
+                value: file.content,
                 path: 'desktop/molecule/editor1',
                 language: 'sql',
             },
@@ -83,11 +84,11 @@ export class FolderTreeController
     };
 
     public onSelectTree = (id: number) => {
-        explorerService.setActive(id);
+        folderTreeService.setActive(id);
     };
 
     public readonly onDropTree = (treeNode: ITreeNodeItem[]) => {
-        explorerService.onDropTree(treeNode);
+        folderTreeService.onDropTree(treeNode);
     };
 
     public readonly getInputEvent = (
@@ -107,7 +108,7 @@ export class FolderTreeController
         console.log('onClickContextMenu => Item', item);
         switch (menuId) {
             case RENAME_COMMAND_ID: {
-                explorerService.rename(nodeId, () => {
+                folderTreeService.rename(nodeId, () => {
                     events?.setValue?.(name);
                     events?.onFocus();
                 });
@@ -118,7 +119,7 @@ export class FolderTreeController
                     title: `Are you sure you want to delete '${name}' ?`,
                     content: 'This action is irreversible!',
                     onOk() {
-                        explorerService.delete(nodeId, () => {
+                        folderTreeService.delete(nodeId, () => {
                             editorController.onCloseTab(
                                 `${nodeId}`,
                                 editorService.getState()?.current?.id
@@ -129,23 +130,23 @@ export class FolderTreeController
                 break;
             }
             case NEW_FILE_COMMAND_ID: {
-                explorerService.newFile(nodeId, () => {
+                folderTreeService.newFile(nodeId, () => {
                     events?.onFocus();
                 });
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                explorerService.newFolder(nodeId, () => {
+                folderTreeService.newFolder(nodeId, () => {
                     events?.onFocus();
                 });
                 break;
             }
             case REMOVE_COMMAND_ID: {
-                explorerService.removeRootFolder(nodeId);
+                folderTreeService.removeRootFolder(nodeId);
                 break;
             }
             case ADD_ROOT_FOLDER_COMMAND_ID: {
-                explorerService.addRootFolder?.(
+                folderTreeService.addRootFolder?.(
                     new TreeNodeModel({
                         name: `molecule_temp${Math.random()}`,
                         fileType: 'rootFolder',
@@ -166,15 +167,15 @@ export class FolderTreeController
 
         switch (node.fileType) {
             case FileTypes.file: {
-                menu = fileContextMenu.concat(menus);
+                menu = FILE_CONTEXT_MENU.concat(menus);
                 break;
             }
             case FileTypes.folder: {
-                menu = baseContextMenu.concat(menus);
+                menu = BASE_CONTEXT_MENU.concat(menus);
                 break;
             }
             case FileTypes.rootFolder: {
-                menu = baseContextMenu.concat(rootFolderContextMenu);
+                menu = BASE_CONTEXT_MENU.concat(ROOT_FOLDER_CONTEXT_MENU);
                 break;
             }
             default:

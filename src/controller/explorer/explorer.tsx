@@ -5,21 +5,27 @@ import {
     IActivityBarItem,
     sidebarService,
     explorerService,
+    folderTreeService,
     menuBarService,
 } from 'mo';
 import * as React from 'react';
-import { IFolderTree } from 'mo/model';
 import { ExplorerView, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IActionBarItem } from 'mo/components/actionBar';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
-// TODO: 自依赖问题 connect 失效，暂时手动引入 Controller 往 View 层传递
-import { folderTreeController, explorerController } from 'mo/controller';
+import { folderTreeController } from 'mo/controller';
+import {
+    SAMPLE_FOLDER_PANEL,
+    NEW_FILE_COMMAND_ID,
+    NEW_FOLDER_COMMAND_ID,
+} from 'mo/model';
 export interface IExplorerController {
     onHeaderToolbarContextMenuClick?: (
         e: React.MouseEvent,
         item: IActionBarItem
     ) => void;
     onCollapseChange?: (keys) => void;
+    onCollapseToolbar?: (item) => void;
+    onClick?: (event) => void;
 }
 
 @singleton()
@@ -32,9 +38,9 @@ export class ExplorerController
     }
 
     private initView() {
+        const ctx = this;
         const state = activityBarService.getState();
         const sideBarState = sidebarService.getState();
-        const explorerState = explorerService.getState();
         const exploreActiveItem = {
             id: 'active-explorer',
             name: 'Explore',
@@ -45,16 +51,24 @@ export class ExplorerController
             selected: exploreActiveItem.id,
             data: [...state.data!, exploreActiveItem],
         });
+
+        const explorerEvent = {
+            onClick: ctx.onClick,
+            onCollapseChange: ctx.onCollapseChange,
+            onHeaderToolbarContextMenuClick:
+                ctx.onHeaderToolbarContextMenuClick,
+            onCollapseToolbar: ctx.onCollapseToolbar,
+        };
+
         const explorePane = {
             id: 'explore',
             title: 'EXPLORER',
             render() {
-                return <ExplorerView {...explorerController} />;
+                return <ExplorerView {...explorerEvent} />;
             },
         };
 
         activityBarService.onSelect((e, item: IActivityBarItem) => {
-            console.log('Search Pane onClick:', e, item);
             const { hidden } = sidebarService.getState();
             if (item.id === exploreActiveItem.id) {
                 const isShow = hidden ? !hidden : hidden;
@@ -68,76 +82,25 @@ export class ExplorerController
             }
         });
 
-        // sidebarService.push(explorePane);
         sidebarService.setState({
             current: explorePane.id,
             panes: [...sideBarState.panes!, explorePane],
         });
 
-        // TODO: 这里初始化数据应提取到 model, 但由于 renderPanel return View 层，存在依赖关系.
-        const sampleFolderPanel = {
-            id: 'Folders',
-            name: 'Sample Folder',
-            className: 'samplefolder',
-            toolbar: [
-                {
-                    id: 'new_file',
-                    title: 'New File',
-                    iconName: 'codicon-new-file',
-                    onClick: (e) => {
-                        this.createFile(e, 'newFile');
-                    },
-                },
-                {
-                    id: 'new_folder',
-                    title: 'New Folder',
-                    iconName: 'codicon-new-folder',
-                    onClick: (e) => {
-                        this.createFile(e, 'newFolder');
-                    },
-                },
-                {
-                    id: 'refresh',
-                    title: 'Refresh Explorer',
-                    iconName: 'codicon-refresh',
-                },
-                {
-                    id: 'collapse',
-                    title: 'Collapse Folders in Explorer',
-                    iconName: 'codicon-collapse-all',
-                },
-            ],
-            renderPanel: () => {
-                const folderProps: IFolderTree = {
-                    data: explorerState.folderTree?.data,
-                    contextMenu: explorerState.folderTree?.contextMenu,
-                    folderPanelContextMenu:
-                        explorerState.folderTree?.folderPanelContextMenu,
-                };
-                return (
-                    <FolderTreeView
-                        {...folderProps}
-                        {...folderTreeController}
-                    />
-                );
-            },
-        };
-
-        explorerService.addPanel([sampleFolderPanel]);
+        explorerService.addPanel([
+            { ...SAMPLE_FOLDER_PANEL, renderPanel: this.renderFolderTree },
+        ]);
     }
 
-    private createFile = (e, type) => {
-        e.stopPropagation();
-        const explorerState = explorerService.getState();
-        const { data, current } = explorerState?.folderTree || {};
+    private createFileOrFolder = (type) => {
+        const folderTreeState = folderTreeService.getState();
+        const { data, current } = folderTreeState?.folderTree || {};
         // The current selected node id or the first root node
         const nodeId = current?.id || data?.[0]?.id;
-        explorerService[type]?.(nodeId);
+        folderTreeService[type]?.(nodeId);
     };
 
-    public readonly onClick = (event: React.MouseEvent) => {
-        // console.log('onClick:', panelService);
-    };
+    public readonly onClick = (event: React.MouseEvent) => {};
 
     public readonly onHeaderToolbarContextMenuClick = (
         e: React.MouseEvent,
@@ -147,10 +110,36 @@ export class ExplorerController
         console.log('onClick:', e, item);
         const panelId = item.id;
         if (panelId === 'Folders') return;
-        explorerService.addOrRemovePanel(panelId);
+        explorerService.togglePanel(panelId);
     };
 
     public readonly onCollapseChange = (keys) => {
         console.log('keys', keys);
     };
+
+    public readonly onCollapseToolbar = (item) => {
+        console.log('item', item);
+        const toolbarId = item.id;
+        switch (toolbarId) {
+            case NEW_FILE_COMMAND_ID: {
+                this.createFileOrFolder('newFile');
+                break;
+            }
+            case NEW_FOLDER_COMMAND_ID: {
+                this.createFileOrFolder('newFolder');
+                break;
+            }
+            default:
+                console.log('onCollapseToolbar');
+        }
+    };
+
+    public renderFolderTree() {
+        return (
+            <FolderTreeView
+                {...folderTreeService.getState()?.folderTree}
+                {...folderTreeController}
+            />
+        );
+    }
 }

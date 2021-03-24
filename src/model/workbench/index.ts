@@ -3,4 +3,6 @@ export * from './editor';
 export * from './sidebar';
 export * from './statusBar';
 export * from './menuBar';
-export * from './explorer';
+export * from './explorer/explorer';
+export * from './explorer/folderTree';
+export * from './search';

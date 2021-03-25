@@ -13,38 +13,43 @@ export interface IPanelItem<T = any> extends IActivityBarItem {
 
 export interface IExplorer {
     data?: IPanelItem[];
-    headerToolBar?: IActivityBarItem[];
+    headerToolBar?: IActivityBarItem;
 }
 
-const builtInHeaderToolbar: IActivityBarItem[] = [
-    {
-        id: 'explorer-more',
-        name: 'View and More Actions...',
-        iconName: 'codicon-ellipsis',
-        type: 'global',
-        contextMenu: [
-            {
-                id: 'OpenEditors',
-                name: 'Open Editors',
-                icon: 'check',
-            },
-            {
-                id: 'Folders',
-                name: 'Folders',
-                icon: 'check',
-            },
-            {
-                id: 'Outline',
-                name: 'Outline',
-                icon: 'check',
-            },
-        ],
-    },
-];
+export const SAMPLE_FOLDER_PANEL_ID = 'Folders';
+export const EDITOR_PANEL_ID = 'OpenEditors';
+export const OUTLINE_PANEL_ID = 'Outline';
+
+const builtInHeaderToolbar = {
+    id: 'explorer-more',
+    title: 'View and More Actions...',
+    iconName: 'codicon-ellipsis',
+    contextMenu: [
+        {
+            id: EDITOR_PANEL_ID,
+            title: 'Open Editors',
+            name: 'Open Editors',
+            icon: 'check',
+        },
+        {
+            id: SAMPLE_FOLDER_PANEL_ID,
+            title: 'Folders',
+            name: 'Folders',
+            disabled: true,
+            icon: 'check',
+        },
+        {
+            id: OUTLINE_PANEL_ID,
+            title: 'Outline',
+            name: 'Outline',
+            icon: 'check',
+        },
+    ],
+};
 
 // Dedault Panel
 export const EDITOR_PANEL = {
-    id: 'OpenEditors',
+    id: EDITOR_PANEL_ID,
     name: 'OPEN EDITORS',
     toolbar: [
         {
@@ -71,7 +76,7 @@ export const EDITOR_PANEL = {
 };
 
 export const OUTLINE_PANEL = {
-    id: 'Outline',
+    id: OUTLINE_PANEL_ID,
     name: 'OUTLINE',
     toolbar: [
         {
@@ -87,7 +92,7 @@ export const OUTLINE_PANEL = {
     ],
 };
 export const SAMPLE_FOLDER_PANEL = {
-    id: 'Folders',
+    id: SAMPLE_FOLDER_PANEL_ID,
     name: 'Sample Folder',
     className: 'samplefolder',
     toolbar: [
@@ -118,11 +123,11 @@ export const DEFAULT_PANELS = [EDITOR_PANEL, OUTLINE_PANEL];
 @injectable()
 export class IExplorerModel implements IExplorer {
     public data: IPanelItem[] = DEFAULT_PANELS;
-    public headerToolBar: IActivityBarItem[];
+    public headerToolBar: IActivityBarItem;
 
     constructor(
         data: IPanelItem[] = DEFAULT_PANELS,
-        headerToolBar: IActivityBarItem[] = builtInHeaderToolbar
+        headerToolBar: IActivityBarItem = builtInHeaderToolbar
     ) {
         this.data = data;
         this.headerToolBar = headerToolBar;

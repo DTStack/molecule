@@ -11,5 +11,6 @@ export const normalItemsClassName = getBEMElement(defaultClassName, 'normal');
 export const globalItemsClassName = getBEMElement(defaultClassName, 'global');
 export const itemClassName = getBEMElement(defaultClassName, 'item');
 export const itemCheckedClassName = getBEMModifier(itemClassName, 'checked');
+export const itemDisabledClassName = getBEMModifier(itemClassName, 'disabled');
 export const labelClassName = getBEMElement(defaultClassName, 'label');
 export const indicatorClassName = getBEMElement(defaultClassName, 'indicator');

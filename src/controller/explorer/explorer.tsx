@@ -10,7 +10,7 @@ import {
 } from 'mo';
 import * as React from 'react';
 import { ExplorerView, FolderTreeView } from 'mo/workbench/sidebar/explore';
-import { IActionBarItem } from 'mo/components/actionBar';
+import { IMenuItem } from 'mo/components/menu';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
 import { folderTreeController } from 'mo/controller';
 import {
@@ -19,13 +19,13 @@ import {
     NEW_FOLDER_COMMAND_ID,
 } from 'mo/model';
 export interface IExplorerController {
-    onHeaderToolbarContextMenuClick?: (
+    onActionsContextMenuClick?: (
         e: React.MouseEvent,
-        item: IActionBarItem
+        item: IMenuItem | undefined
     ) => void;
     onCollapseChange?: (keys) => void;
     onCollapseToolbar?: (item) => void;
-    onClick?: (event) => void;
+    onClick?: (event, item) => void;
 }
 
 @singleton()
@@ -55,8 +55,7 @@ export class ExplorerController
         const explorerEvent = {
             onClick: ctx.onClick,
             onCollapseChange: ctx.onCollapseChange,
-            onHeaderToolbarContextMenuClick:
-                ctx.onHeaderToolbarContextMenuClick,
+            onActionsContextMenuClick: ctx.onActionsContextMenuClick,
             onCollapseToolbar: ctx.onCollapseToolbar,
         };
 
@@ -100,16 +99,16 @@ export class ExplorerController
         folderTreeService[type]?.(nodeId);
     };
 
-    public readonly onClick = (event: React.MouseEvent) => {};
+    public readonly onClick = (event: React.MouseEvent, item) => {
+        console.log(event, item);
+    };
 
-    public readonly onHeaderToolbarContextMenuClick = (
+    public readonly onActionsContextMenuClick = (
         e: React.MouseEvent,
-        item: IActionBarItem
+        item: IMenuItem | undefined
     ) => {
-        e.stopPropagation();
-        console.log('onClick:', e, item);
-        const panelId = item.id;
-        if (panelId === 'Folders') return;
+        console.log('onActionsContextMenuClick', e, item);
+        const panelId = item?.id;
         explorerService.togglePanel(panelId);
     };
 

@@ -30,6 +30,12 @@
 
     &__item {
         min-width: 120px;
+
+        &--disabled {
+            cursor: default;
+            opacity: 0.4;
+            pointer-events: none;
+        }
     }
 
     &__content {

@@ -13,6 +13,7 @@ import { Menu } from './menu';
 import { IMenuItem } from './menuItem';
 import {
     checkClassName,
+    disabledClassName,
     defaultMenuItemClassName,
     defaultSubMenuClassName,
     indicatorClassName,
@@ -71,6 +72,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
         data = [],
         mode = MenuMode.Vertical,
         icon,
+        disabled = false,
         children,
         onClick,
         ...custom
@@ -195,7 +197,14 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
     };
 
     return (
-        <li className={defaultMenuItemClassName} {...events} {...custom}>
+        <li
+            className={classNames(
+                defaultMenuItemClassName,
+                disabled ? disabledClassName : null
+            )}
+            {...events}
+            {...custom}
+        >
             <a className={menuContentClassName}>
                 <Icon className={checkClassName} type={icon || ''} />
                 <span className={labelClassName}>

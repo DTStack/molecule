@@ -12,11 +12,13 @@ import {
     labelClassName,
     itemClassName,
     itemCheckedClassName,
+    itemDisabledClassName,
 } from './base';
 
 function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
     const {
         checked = false,
+        disabled = false,
         name = '',
         data = {},
         render,
@@ -76,7 +78,8 @@ function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
             className={classNames(
                 className,
                 itemClassName,
-                checked ? itemCheckedClassName : ''
+                checked ? itemCheckedClassName : '',
+                disabled ? itemDisabledClassName : ''
             )}
             data-id={data.id}
         >

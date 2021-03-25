@@ -24,6 +24,7 @@ export interface IActivityBarItem {
     data?: any;
     iconName?: string;
     checked?: boolean;
+    disabled?: boolean;
     type?: 'normal' | 'global';
     contextMenu?: IMenuItem[];
     className?: string;

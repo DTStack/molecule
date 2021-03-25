@@ -1,19 +1,19 @@
 import * as React from 'react';
 import 'reflect-metadata';
 import { injectable } from 'tsyringe';
-import { IActivityBarItem } from '../activityBar';
+import { IActionBarItem } from 'mo/components/actionBar';
 import { NEW_FILE_COMMAND_ID, NEW_FOLDER_COMMAND_ID } from './folderTree';
 export enum ExplorerEvent {
     onClick = 'explorer.onClick',
 }
-export interface IPanelItem<T = any> extends IActivityBarItem {
+export interface IPanelItem<T = any> extends IActionBarItem {
     renderPanel?: (props) => React.ReactNode | JSX.Element;
     toolbar?: T;
 }
 
 export interface IExplorer {
     data?: IPanelItem[];
-    headerToolBar?: IActivityBarItem;
+    headerToolBar?: IActionBarItem;
 }
 
 export const SAMPLE_FOLDER_PANEL_ID = 'Folders';
@@ -123,11 +123,11 @@ export const DEFAULT_PANELS = [EDITOR_PANEL, OUTLINE_PANEL];
 @injectable()
 export class IExplorerModel implements IExplorer {
     public data: IPanelItem[] = DEFAULT_PANELS;
-    public headerToolBar: IActivityBarItem;
+    public headerToolBar: IActionBarItem;
 
     constructor(
         data: IPanelItem[] = DEFAULT_PANELS,
-        headerToolBar: IActivityBarItem = builtInHeaderToolbar
+        headerToolBar: IActionBarItem = builtInHeaderToolbar
     ) {
         this.data = data;
         this.headerToolBar = headerToolBar;

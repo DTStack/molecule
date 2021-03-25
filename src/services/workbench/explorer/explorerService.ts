@@ -4,8 +4,6 @@ import {
     IPanelItem,
     IExplorer,
     IExplorerModel,
-} from 'mo/model/workbench/explorer/explorer';
-import {
     DEFAULT_PANELS,
     SAMPLE_FOLDER_PANEL,
 } from 'mo/model/workbench/explorer/explorer';
@@ -85,7 +83,7 @@ export class ExplorerService
         } else {
             newActions?.push(action);
         }
-        const next: any = { ...headerToolBar, contextMenu: newActions };
+        const next = { ...headerToolBar, contextMenu: newActions };
         this.setState({
             headerToolBar: next,
         });
@@ -98,7 +96,7 @@ export class ExplorerService
         if (index > -1) {
             newActions.splice(index, 1);
         }
-        const next: any = { ...headerToolBar, contextMenu: newActions };
+        const next = { ...headerToolBar, contextMenu: newActions };
         this.setState({
             headerToolBar: next,
         });
@@ -118,7 +116,7 @@ export class ExplorerService
                         : item.icon,
             };
         });
-        const next: any = { ...headerToolBar, contextMenu: newActions };
+        const next = { ...headerToolBar, contextMenu: newActions };
         this.setState({
             headerToolBar: next,
         });

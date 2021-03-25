@@ -12,7 +12,7 @@ import { IMenuItem, Menu } from 'mo/components/menu';
 import { mergeFunctions } from 'mo/common/utils';
 
 export interface IActionBarItem<T = any> {
-    id: string;
+    id?: string;
     name?: string;
     title?: string;
     iconName?: string;

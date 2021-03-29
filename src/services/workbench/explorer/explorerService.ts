@@ -1,12 +1,14 @@
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import {
+    ExplorerEvent,
     IPanelItem,
     IExplorer,
     IExplorerModel,
     DEFAULT_PANELS,
     SAMPLE_FOLDER_PANEL,
 } from 'mo/model/workbench/explorer/explorer';
+import { IActionBarItem } from 'mo/components/actionBar';
 import { searchById } from '../../helper';
 
 export interface IExplorerService extends Component<IExplorer> {
@@ -17,6 +19,7 @@ export interface IExplorerService extends Component<IExplorer> {
     updateActionsCheckStatus(id?: string): void;
     addAction(action): void;
     removeAction(id: string): void;
+    onClick(callback: (e: MouseEvent, item: IActionBarItem) => void);
 }
 
 @singleton()
@@ -57,6 +60,10 @@ export class ExplorerService
         this.setState({
             data: [],
         });
+    }
+
+    public onClick(callback: (e: MouseEvent, item: IActionBarItem) => void) {
+        this.subscribe(ExplorerEvent.onClick, callback);
     }
 
     public togglePanel(id: string) {

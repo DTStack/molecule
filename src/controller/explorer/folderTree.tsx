@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
 
@@ -19,13 +20,13 @@ import {
     DELETE_COMMAND_ID,
     OPEN_TO_SIDE_COMMAND_ID,
     ADD_ROOT_FOLDER_COMMAND_ID,
+    FolderTreeEvent,
 } from 'mo/model';
 
 const confirm = Modal.confirm;
 
 export interface IFolderTreeController {
-    readonly onSelectFile?: (file: ITreeNodeItem, isAuto?: boolean) => void;
-    readonly onSelectTree?: (id: number) => void;
+    readonly onSelectFile?: (file: ITreeNodeItem, isUpdate?: boolean) => void;
     readonly onDropTree?: (treeNode: ITreeNodeItem[]) => void;
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
@@ -51,26 +52,28 @@ export class FolderTreeController
 
     private initView() {}
 
-    public readonly onSelectFile = (file: ITreeNodeItem, isAuto?: boolean) => {
-        const { fileType, modify } = file;
+    public readonly onSelectFile = (
+        file: ITreeNodeItem,
+        isUpdate?: boolean
+    ) => {
+        const { fileType, isEditable } = file;
         const isFile = fileType === FileTypes.file;
-        if (!isFile || modify) return;
+        folderTreeService.setActive(file?.id);
+        if (!isFile || isEditable) return;
         const tabData = {
             ...file,
             id: `${file.id}`?.split('_')?.[0],
             modified: false,
             data: {
                 value: file.content,
-                path: 'desktop/molecule/editor1',
+                path: 'desktop/moslecule/editor1',
                 language: 'sql',
             },
-            breadcrumb: [{ id: `${file.id}`, name: 'editor.js' }],
         };
-        const editorState = editorService.getState();
 
-        const { id, data = [] } = editorState?.current || ({} as any);
-        if (isAuto) {
-            // 更新文件自动回调
+        const { id, data = [] } =
+            editorService.getState()?.current || ({} as any);
+        if (isUpdate) {
             const tabId = file.id;
             const index = data?.findIndex((tab) => tab.id == tabId);
             if (index > -1) {
@@ -81,10 +84,7 @@ export class FolderTreeController
         } else {
             editorService.open(tabData);
         }
-    };
-
-    public onSelectTree = (id: number) => {
-        folderTreeService.setActive(id);
+        this.emit(FolderTreeEvent.onSelectFile, tabData, isUpdate);
     };
 
     public readonly onDropTree = (treeNode: ITreeNodeItem[]) => {

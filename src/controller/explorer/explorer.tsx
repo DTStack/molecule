@@ -1,23 +1,25 @@
+import * as React from 'react';
 import { Controller } from 'mo/react/controller';
 import { singleton } from 'tsyringe';
 import {
     activityBarService,
-    IActivityBarItem,
     sidebarService,
     explorerService,
     folderTreeService,
     menuBarService,
-} from 'mo';
-import * as React from 'react';
+} from 'mo/services';
 import { ExplorerView, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IMenuItem } from 'mo/components/menu';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
+import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import { folderTreeController } from 'mo/controller';
+import { ExplorerEvent } from 'mo/model/workbench/explorer/explorer';
 import {
     SAMPLE_FOLDER_PANEL,
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
 } from 'mo/model';
+import { IActionBarItem } from 'mo/components/actionBar';
 export interface IExplorerController {
     onActionsContextMenuClick?: (
         e: React.MouseEvent,
@@ -99,8 +101,11 @@ export class ExplorerController
         folderTreeService[type]?.(nodeId);
     };
 
-    public readonly onClick = (event: React.MouseEvent, item) => {
-        console.log(event, item);
+    public readonly onClick = (
+        event: React.MouseEvent,
+        item: IActionBarItem
+    ) => {
+        this.emit(ExplorerEvent.onClick, event, item);
     };
 
     public readonly onActionsContextMenuClick = (
@@ -113,7 +118,7 @@ export class ExplorerController
     };
 
     public readonly onCollapseChange = (keys) => {
-        console.log('keys', keys);
+        this.emit(ExplorerEvent.onCollapseChange, keys);
     };
 
     public readonly onCollapseToolbar = (item) => {

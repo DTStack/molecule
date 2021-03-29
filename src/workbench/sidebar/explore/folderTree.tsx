@@ -103,7 +103,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
                     onSelectFile?.(
                         {
                             ...node,
-                            modify: false,
+                            isEditable: false,
                             name: newName,
                         },
                         true
@@ -114,7 +114,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     };
 
     const renderTitle = (node, index) => {
-        const { modify, name } = node;
+        const { isEditable, name } = node;
 
         const handleInputKeyDown = (
             e: React.KeyboardEvent<HTMLInputElement>
@@ -127,7 +127,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
             handleUpdateFile(e, node);
         };
 
-        return modify ? (
+        return isEditable ? (
             <input
                 type="text"
                 ref={inputRef}

@@ -5,6 +5,7 @@ import { IActionBarItem } from 'mo/components/actionBar';
 import { NEW_FILE_COMMAND_ID, NEW_FOLDER_COMMAND_ID } from './folderTree';
 export enum ExplorerEvent {
     onClick = 'explorer.onClick',
+    onCollapseChange = 'explorer.onCollapseChange',
 }
 export interface IPanelItem<T = any> extends IActionBarItem {
     renderPanel?: (props) => React.ReactNode | JSX.Element;

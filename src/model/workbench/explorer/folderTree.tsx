@@ -7,6 +7,7 @@ import { randomId } from 'mo/common/utils';
 
 export enum FolderTreeEvent {
     onClick = 'folderTree.onClick',
+    onSelectFile = 'folderTree.onSelectFile',
 }
 
 export interface IFolderInputEvent {
@@ -90,7 +91,7 @@ export class TreeNodeModel implements ITreeNodeItem {
     fileType?: FileType;
     children?: ITreeNodeItem[];
     icon?: string | React.ReactNode;
-    modify?: boolean;
+    isEditable?: boolean;
     content?: string;
 
     constructor(props: ITreeNodeItem = {}) {
@@ -101,11 +102,11 @@ export class TreeNodeModel implements ITreeNodeItem {
             fileType = FileTypes.file as FileType,
             children = [],
             icon = '',
-            modify = false,
+            isEditable = false,
             content = '',
         } = props;
         this.fileType = fileType;
-        this.modify = modify;
+        this.isEditable = isEditable;
         this.name = name;
         this.id = id || randomId();
         this.location = location;

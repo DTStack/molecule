@@ -1,26 +1,28 @@
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import {
+    FolderTreeEvent,
     IFolderTree,
     IFolderTreeModel,
 } from 'mo/model/workbench/explorer/folderTree';
 import { TreeViewUtil } from '../../helper';
 import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
-import { editorService } from 'mo';
 import { TreeNodeModel } from 'mo/model';
-import { randomId } from 'mo/common/utils';
+import logger from 'mo/common/logger';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
+    initTree?: (data: ITreeNodeItem[]) => void;
     getRootFolderByRootId(id: number): ITreeNodeItem | undefined;
     addRootFolder(folder?: ITreeNodeItem | ITreeNodeItem[]): void;
     removeRootFolder(id: number): void;
-    setActive(id: number): void;
+    setActive(id?: number): void;
     updateFileName(file: ITreeNodeItem, callback?: Function): void;
     updateFileContent(id?: number, value?: string): void;
     newFile(id?: number, callback?: Function): void;
     newFolder(id?: number, callback?: Function): void;
     rename(id: number, callback?: Function): void;
     delete(id: number, callback?: Function): void;
+    onSelectFile(callback: (file: ITreeNodeItem, isUpdate: boolean) => void);
     onDropTree(treeData: ITreeNodeItem[]): void;
 }
 
@@ -100,6 +102,13 @@ export class FolderTreeService
         );
     }
 
+    public initTree = (tree: ITreeNodeItem[]) => {
+        const { folderTree } = this.state;
+        this.setState({
+            folderTree: { ...folderTree, data: tree },
+        });
+    };
+
     public getRootFolderByRootId(id: number): ITreeNodeItem | undefined {
         return this.state.folderTree?.data!.find((folder) => folder.id === id);
     }
@@ -108,9 +117,7 @@ export class FolderTreeService
         let rootNode = {};
         this.state.folderTree?.data?.forEach((folder) => {
             const treeInstance = new TreeViewUtil(folder);
-            if (treeInstance.get(id)) {
-                rootNode = folder;
-            }
+            if (treeInstance.get(id)) rootNode = folder;
         });
         return rootNode;
     }
@@ -158,7 +165,7 @@ export class FolderTreeService
             tree.update(id, {
                 ...file,
                 icon: this.getFileIconByExtensionName(name, fileType),
-                modify: false,
+                isEditable: false,
             });
         } else {
             tree.remove(id);
@@ -188,7 +195,7 @@ export class FolderTreeService
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
         tree.update(id, {
-            modify: true,
+            isEditable: true,
         });
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
@@ -214,17 +221,11 @@ export class FolderTreeService
         const cloneData: ITreeNodeItem[] = folderTree?.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
         if (!id) {
-            const tabData = {
-                id: `${randomId()}`,
-                name: `Untitled`,
-                data: {
-                    modified: false,
-                },
-            };
-            editorService.open(tabData);
+            logger.info('id is missing');
+            return;
         }
         this.createTargetNodeById(id, tree, {
-            modify: true,
+            isEditable: true,
         });
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
@@ -239,13 +240,19 @@ export class FolderTreeService
         const { tree, index } = this.getCurrentRootFolderInfo(id);
         this.createTargetNodeById(id, tree, {
             fileType: FileTypes.folder as FileType,
-            modify: true,
+            isEditable: true,
         });
         if (index > -1) cloneData[index] = tree.obj;
         this.setState({
             folderTree: { ...folderTree, data: cloneData },
         });
         if (callback) callback();
+    }
+
+    public onSelectFile(
+        callback: (file: ITreeNodeItem, isUpdate: boolean) => void
+    ) {
+        this.subscribe(FolderTreeEvent.onSelectFile, callback);
     }
 
     public onDropTree = (treeData: ITreeNodeItem[]) => {

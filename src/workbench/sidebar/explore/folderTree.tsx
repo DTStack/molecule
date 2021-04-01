@@ -136,8 +136,8 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
                 onBlur={handleInputBlur}
             />
         ) : (
-                name
-            );
+            name
+        );
     };
 
     const renderByData = (

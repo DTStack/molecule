@@ -9,6 +9,7 @@ import { TreeViewUtil } from '../../helper';
 import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import { TreeNodeModel } from 'mo/model';
 import logger from 'mo/common/logger';
+import { explorerService } from 'mo/services';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     initTree?: (data: ITreeNodeItem[]) => void;
@@ -133,6 +134,7 @@ export class FolderTreeService
         this.setState({
             folderTree: { ...folderTree, data: next },
         });
+        explorerService.updateRender();
     }
 
     public removeRootFolder(id: number) {

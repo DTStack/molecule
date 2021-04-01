@@ -97,7 +97,7 @@ export function ActionBarItem(props: IActionBarItem) {
         if (onClick) {
             onClick(event, props);
         }
-        if (contextMenu.length > 0 && contextViewMenu) {
+        if (contextMenu.length > -1 && contextViewMenu) {
             contextViewMenu.show({
                 x: event.clientX,
                 y: event.clientY,

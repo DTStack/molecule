@@ -9,6 +9,7 @@ import {
     SAMPLE_FOLDER_PANEL,
 } from 'mo/model/workbench/explorer/explorer';
 import { IActionBarItem } from 'mo/components/actionBar';
+import { IMenuItem } from 'mo/components/menu';
 import { searchById } from '../../helper';
 
 export interface IExplorerService extends Component<IExplorer> {
@@ -17,8 +18,9 @@ export interface IExplorerService extends Component<IExplorer> {
     remove(id: string): void;
     togglePanel(id?: string): void;
     updateActionsCheckStatus(id?: string): void;
-    addAction(action): void;
+    addAction(action: IMenuItem): void;
     removeAction(id: string): void;
+    updateRender(): void;
     onClick(callback: (e: MouseEvent, item: IActionBarItem) => void);
 }
 
@@ -82,7 +84,7 @@ export class ExplorerService
         this.updateActionsCheckStatus(id);
     }
 
-    public addAction(action) {
+    public addAction(action: IMenuItem) {
         const { headerToolBar } = this.state;
         let newActions = headerToolBar?.contextMenu;
         if (Array.isArray(action)) {
@@ -127,5 +129,9 @@ export class ExplorerService
         this.setState({
             headerToolBar: next,
         });
+    }
+
+    public updateRender() {
+        this.render();
     }
 }

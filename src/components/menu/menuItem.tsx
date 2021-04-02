@@ -3,6 +3,7 @@ import { classNames } from 'mo/common/className';
 import { Icon } from '../icon';
 import {
     checkClassName,
+    disabledClassName,
     defaultMenuItemClassName,
     keybindingClassName,
     labelClassName,
@@ -17,6 +18,7 @@ export interface IMenuItem extends HTMLElementProps {
      * Item Name
      */
     name?: ReactNode;
+    disabled?: boolean;
     /**
      * The description of keybinding
      * example: ⇧⌘P
@@ -33,6 +35,7 @@ export interface IMenuItem extends HTMLElementProps {
 export function MenuItem(props: React.PropsWithChildren<IMenuItem>) {
     const {
         icon,
+        disabled = false,
         className,
         onClick,
         keybinding,
@@ -48,7 +51,11 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItem>) {
     };
     return (
         <li
-            className={classNames(defaultMenuItemClassName, className)}
+            className={classNames(
+                defaultMenuItemClassName,
+                className,
+                disabled ? disabledClassName : null
+            )}
             {...events}
             {...custom}
         >

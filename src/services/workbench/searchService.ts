@@ -59,7 +59,7 @@ export class SearchService
                             name: treeItem.name,
                         }),
                     };
-                    treeNode.children = treeItem.value
+                    treeNode.children = treeItem.content
                         ?.split('\n')
                         ?.filter(Boolean)
                         ?.map((item, index) => {
@@ -67,7 +67,7 @@ export class SearchService
                                 ...treeItem,
                                 ...new TreeNodeModel({
                                     name: item,
-                                    value: treeItem.value,
+                                    content: treeItem.content,
                                     id: `${treeItem.id}_${index}` as any, // TODO: id 重复问题
                                 }),
                             };

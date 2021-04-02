@@ -1,12 +1,12 @@
 import { connect } from 'mo/react';
-import { explorerService } from 'mo/services';
+import { explorerService, folderTreeService } from 'mo/services';
 import { explorerController, folderTreeController } from 'mo/controller';
 import { Explorer } from './explore';
 import FolderTree from './folderTree';
 
 const ExplorerView = connect(explorerService, Explorer, explorerController);
 const FolderTreeView = connect(
-    explorerService,
+    folderTreeService,
     FolderTree,
     folderTreeController
 );

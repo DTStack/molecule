@@ -6,7 +6,6 @@ import {
     NodeDragEventParams,
     NodeMouseEventParams,
 } from 'rc-tree/lib/contextTypes';
-import { IMenuItem } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
 
@@ -25,8 +24,8 @@ export interface ITreeNodeItem {
     children?: ITreeNodeItem[];
     readonly id?: number;
     icon?: string | React.ReactNode;
-    modify?: boolean; // Edit status
-    value?: string; // editor content
+    isEditable?: boolean; // Edit status
+    content?: string; // editor content
     className?: string;
 }
 
@@ -119,8 +118,7 @@ export interface ITreeProps {
     draggable?: boolean;
 
     data?: ITreeNodeItem[];
-    onSelectFile?: (IMenuItem, isAuto?) => void;
-    onSelectTree?: (id) => void;
+    onSelectFile?: (ITreeNodeItem, isUpdate?) => void;
     renderTitle?: (node, index) => React.ReactDOM | string;
     onDropTree?(treeNode): void;
 }
@@ -131,7 +129,6 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         draggable,
         onDropTree,
         onRightClick,
-        onSelectTree,
         renderTitle, // custom title
         ...restProps
     } = props;
@@ -195,7 +192,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
     };
     const renderTreeNodes = (data) =>
         data?.map((item, index) => {
-            const { modify, id, icon, children } = item;
+            const { isEditable, id, icon, children } = item;
             return (
                 /**
                  * TODO: antd TreeNode 目前强依赖于 Tree，不好抽离，后续还不支持的话，考虑重写..
@@ -208,7 +205,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     data={item}
                     title={renderTitle?.(item, index)} // dynamic title
                     key={`${id}`}
-                    icon={modify ? '' : <Icon type={icon} />}
+                    icon={isEditable ? '' : <Icon type={icon} />}
                 >
                     {children && renderTreeNodes(children)}
                 </RcTreeNode>
@@ -224,7 +221,6 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
                     switcherIcon={<Icon type="chevron-right" />}
                     onSelect={(selectedKeys, e: any) => {
                         props.onSelectFile?.(e.node.data);
-                        onSelectTree?.(e.node?.data?.id);
                     }}
                     onRightClick={onRightClick}
                     {...restProps}

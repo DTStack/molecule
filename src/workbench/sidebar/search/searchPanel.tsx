@@ -2,10 +2,10 @@ import * as React from 'react';
 import Toolbar from 'mo/components/toolbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
-import { explorerService } from 'mo';
 import { SearchWidget } from 'mo/components/search';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import SearchTree from './searchTree';
+import { folderTreeService } from 'mo/services';
 
 interface ISearchPaneToolBar {
     headerToolBar?: IActivityBarItem[];
@@ -13,7 +13,7 @@ interface ISearchPaneToolBar {
     convertFoldToSearchTree?: <T>(data) => T[];
 }
 
-const explorerState = explorerService.getState();
+const folderTreeState = folderTreeService.getState();
 
 export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
     constructor(props) {
@@ -43,7 +43,7 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
                     {value && (
                         <SearchTree
                             data={convertFoldToSearchTree?.(
-                                explorerState?.folderTree?.data
+                                folderTreeState?.folderTree?.data
                             )}
                             {...this.props}
                         />

@@ -1,10 +1,9 @@
 import 'reflect-metadata';
 import { injectable } from 'tsyringe';
-import { IActivityBarItem } from 'mo/model';
 import { IActionBarItem } from 'mo/components/actionBar';
 
 export interface ISearch {
-    headerToolBar?: IActivityBarItem[];
+    headerToolBar?: IActionBarItem[];
     searchAddons?: IActionBarItem[];
     replaceAddons?: IActionBarItem[];
     value?: string; // queryValue;
@@ -86,7 +85,7 @@ const defaultReplaceAddons = [
 
 @injectable()
 export class ISearchModel implements ISearch {
-    public headerToolBar: IActivityBarItem[];
+    public headerToolBar: IActionBarItem[];
     public searchAddons: IActionBarItem[];
     public replaceAddons: IActionBarItem[];
     public value: string = '';
@@ -97,7 +96,7 @@ export class ISearchModel implements ISearch {
     public preserveCase: boolean = false;
 
     constructor(
-        headerToolBar: IActivityBarItem[] = builtInHeaderToolbar,
+        headerToolBar: IActionBarItem[] = builtInHeaderToolbar,
         searchAddons: IActionBarItem[] = defaultSearchAddons,
         replaceAddons: IActionBarItem[] = defaultReplaceAddons,
         value = '',

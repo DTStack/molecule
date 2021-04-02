@@ -1,4 +1,4 @@
-import { isEmpty } from 'loadsh';
+import { isEmpty } from 'lodash';
 import { APP_PREFIX } from 'mo/common/const';
 /**
  * This function help you prefix a css class name, default is molecule.

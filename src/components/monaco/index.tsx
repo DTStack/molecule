@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { PureComponent } from 'react';
 import * as monaco from 'monaco-editor';
-import { isEqual } from 'loadsh';
+import { isEqual } from 'lodash';
 import { APP_PREFIX } from 'mo/common/const';
 import { monacoService } from 'mo/monaco/monacoService';
 

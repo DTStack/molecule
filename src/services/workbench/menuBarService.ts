@@ -1,4 +1,4 @@
-import { cloneDeep } from 'loadsh';
+import { cloneDeep } from 'lodash';
 
 import {
     IMenuBar,
@@ -49,7 +49,7 @@ export class MenuBarService
         const { data } = this.state;
         const currentMenuItem = this.getMenuById(menuId, data);
         const deepData = cloneDeep(data);
-        for (let menu of deepData) {
+        for (const menu of deepData) {
             this.updateMenu(menu, currentMenuItem!, menuItem);
         }
         this.setState({ data: deepData });
@@ -70,7 +70,7 @@ export class MenuBarService
         menuItem: IMenuBarItem
     ) {
         if (menu?.id === currentMenuItem?.id) {
-            for (let key in menuItem) {
+            for (const key in menuItem) {
                 if (menuItem.hasOwnProperty(key)) {
                     delete menu[key];
                     menu[key] = menuItem[key];
@@ -78,7 +78,7 @@ export class MenuBarService
             }
         } else {
             if (menu?.data?.length) {
-                for (let item of menu?.data) {
+                for (const item of menu?.data) {
                     this.updateMenu(item, currentMenuItem, menuItem);
                 }
             }

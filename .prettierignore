@@ -1,5 +1,7 @@
 # Ignore artifacts:
 lib
+esm
+dist
 .history
 node_modules
 yarn.lock

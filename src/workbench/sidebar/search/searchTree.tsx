@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { memo } from 'react';
 import Tree, { ITreeProps } from 'mo/components/tree';
-import { folderTreeController } from 'mo/controller';
 import { matchSearchValueClassName } from './base';
+import { FolderTreeController } from 'mo/controller/explorer/folderTree';
+import { container } from 'tsyringe';
 export interface SearchTreeProps extends ITreeProps {
     value?: string;
     isCaseSensitive?: boolean;
     isWholeWords?: boolean;
     isRegex?: boolean;
 }
+
+const folderTreeController = container.resolve(FolderTreeController);
 
 const SearchTree: React.FunctionComponent<SearchTreeProps> = (
     props: SearchTreeProps

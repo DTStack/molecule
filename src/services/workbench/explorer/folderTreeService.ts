@@ -9,7 +9,7 @@ import { TreeViewUtil } from '../../helper';
 import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import { TreeNodeModel } from 'mo/model';
 import logger from 'mo/common/logger';
-import { explorerService } from 'mo/services';
+import { ExplorerService, IExplorerService } from './explorerService';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     initTree?: (data: ITreeNodeItem[]) => void;
@@ -32,9 +32,12 @@ export class FolderTreeService
     extends Component<IFolderTree>
     implements IFolderTreeService {
     protected state: IFolderTree;
+    private readonly explorerService: IExplorerService;
+
     constructor() {
         super();
         this.state = container.resolve(IFolderTreeModel);
+        this.explorerService = container.resolve(ExplorerService);
     }
 
     private getFileIconByExtensionName(
@@ -134,7 +137,7 @@ export class FolderTreeService
         this.setState({
             folderTree: { ...folderTree, data: next },
         });
-        explorerService.updateRender();
+        this.explorerService.updateRender();
     }
 
     public removeRootFolder(id: number) {

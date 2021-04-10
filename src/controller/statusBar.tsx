@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { IStatusBarItem, StatusBarEvent } from 'mo';
 import { Controller } from 'mo/react/controller';
-import { panelService } from 'mo/services';
-import { singleton } from 'tsyringe';
+import { container, singleton } from 'tsyringe';
 import { PANEL_PROBLEMS } from 'mo/model/workbench/panel';
 import { STATUS_PROBLEMS } from 'mo/model/workbench/statusBar';
+import { IPanelService, PanelService } from 'mo/services';
 
 export interface IStatusBarController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
@@ -13,21 +13,24 @@ export interface IStatusBarController {
 export class StatusBarController
     extends Controller
     implements IStatusBarController {
+    private readonly panelService: IPanelService;
+
     constructor() {
         super();
+        this.panelService = container.resolve(PanelService);
     }
 
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
         const { id } = item;
         switch (id) {
             case STATUS_PROBLEMS.id /** Problems */:
-                const { current, hidden } = panelService.getState();
+                const { current, hidden } = this.panelService.getState();
                 if (hidden) {
-                    panelService.showHide();
+                    this.panelService.showHide();
                 } else if (current?.id !== PANEL_PROBLEMS.id) {
-                    panelService.open(PANEL_PROBLEMS);
+                    this.panelService.open(PANEL_PROBLEMS);
                 } else {
-                    panelService.showHide();
+                    this.panelService.showHide();
                 }
                 break;
             default:

@@ -1,13 +1,13 @@
 import * as React from 'react';
+import { container, singleton } from 'tsyringe';
 import { IActionBarItem } from 'mo/components/actionBar';
 import { Controller } from 'mo/react/controller';
-import { panelService } from 'mo/services';
-import { singleton } from 'tsyringe';
 import {
     PanelEvent,
     PANEL_TOOLBOX_CLOSE,
     PANEL_TOOLBOX_RESIZE,
 } from 'mo/model/workbench/panel';
+import { IPanelService, PanelService } from 'mo/services';
 
 export interface IPanelController {
     onTabChange(key: string | undefined): void;
@@ -16,14 +16,17 @@ export interface IPanelController {
 
 @singleton()
 export class PanelController extends Controller implements IPanelController {
+    private readonly panelService: IPanelService;
+
     constructor() {
         super();
+        this.panelService = container.resolve(PanelService);
     }
 
     public readonly onTabChange = (key: string | undefined): void => {
-        const state = panelService.getState();
+        const state = this.panelService.getState();
         if (key) {
-            panelService.setState({
+            this.panelService.setState({
                 current: state.data?.find((item) => item.id === key),
             });
         }
@@ -35,9 +38,9 @@ export class PanelController extends Controller implements IPanelController {
         item: IActionBarItem
     ): void => {
         if (item.id === PANEL_TOOLBOX_CLOSE.id) {
-            panelService.showHide();
+            this.panelService.showHide();
         } else if (item.id === PANEL_TOOLBOX_RESIZE.id) {
-            panelService.maximizeRestore();
+            this.panelService.maximizeRestore();
         }
         this.emit(PanelEvent.onToolbarClick, e, item);
     };

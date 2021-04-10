@@ -1,7 +1,6 @@
 // import * as React from 'react';
-import { IExtensionService } from 'mo';
 import { IExtension } from 'mo/model/extension';
-import { statusBarService } from 'mo/services';
+import { statusBarService, IExtensionService } from 'mo';
 
 function init() {
     statusBarService.onClick(function (e, item) {

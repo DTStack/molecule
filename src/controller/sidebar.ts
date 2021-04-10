@@ -1,6 +1,6 @@
 import { Controller } from 'mo/react/controller';
-import { sidebarService } from 'mo/services';
-import { singleton } from 'tsyringe';
+import { container, singleton } from 'tsyringe';
+import { ISidebarService, SidebarService } from 'mo/services';
 
 export interface ISideBarController {}
 
@@ -8,11 +8,14 @@ export interface ISideBarController {}
 export class SidebarController
     extends Controller
     implements ISideBarController {
+    private readonly sidebarService: ISidebarService;
+
     constructor() {
         super();
+        this.sidebarService = container.resolve(SidebarService);
     }
 
     public readonly onClick = (event: React.MouseEvent) => {
-        console.log('onClick:', sidebarService);
+        console.log('onClick:', this.sidebarService);
     };
 }

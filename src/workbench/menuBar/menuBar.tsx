@@ -1,4 +1,3 @@
-import 'mo/workbench/menuBar/style.scss';
 import * as React from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IMenuBar } from 'mo/model/workbench/menuBar';

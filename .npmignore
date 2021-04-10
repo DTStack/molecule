@@ -1,5 +1,8 @@
 storybook-static
 src
+esm/stories
+esm/**/__tests__
+esm/test
 node_modules
 .storybook
 .babelrc.js
@@ -11,5 +14,3 @@ commitlint.config.js
 tsconfig.build.json
 tsconfig.base.json
 jest.config.js
-lib/test
-lib/stories

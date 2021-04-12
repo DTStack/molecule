@@ -11,7 +11,7 @@ import {
     SAMPLE_FOLDER_PANEL,
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
-    exploreActiveItem,
+    EXPLORER_ACTIVITY_ITEM,
 } from 'mo/model';
 import { IActionBarItem } from 'mo/components/actionBar';
 import {
@@ -65,8 +65,8 @@ export class ExplorerController
         const state = this.activityBarService.getState();
         const sideBarState = this.sidebarService.getState();
         this.activityBarService.setState({
-            selected: exploreActiveItem.id,
-            data: [...state.data!, exploreActiveItem],
+            selected: EXPLORER_ACTIVITY_ITEM.id,
+            data: [...state.data!, EXPLORER_ACTIVITY_ITEM],
         });
 
         const explorerEvent = {
@@ -86,7 +86,7 @@ export class ExplorerController
 
         this.activityBarService.onSelect((e, item: IActivityBarItem) => {
             const { hidden } = this.sidebarService.getState();
-            if (item.id === exploreActiveItem.id) {
+            if (item.id === EXPLORER_ACTIVITY_ITEM.id) {
                 const isShow = hidden ? !hidden : hidden;
                 this.sidebarService.setState({
                     current: explorePane.id,

@@ -9,6 +9,7 @@ import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 import ActivityBarItem from './activityBarItem';
 import { Scrollable } from 'mo/components/scrollable';
 import { IActivityBarController } from 'mo/controller/activityBar';
+import { mergeFunctions } from 'mo/common/utils';
 
 import {
     containerClassName,
@@ -49,7 +50,10 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
             <ActivityBarItem
                 key={item.id}
                 {...item}
-                onManageContextMenuClick={onManageContextMenuClick}
+                onContextMenuClick={mergeFunctions(
+                    onContextMenuClick,
+                    onManageContextMenuClick
+                )}
                 onClick={onClickBar}
                 data-index={index}
                 checked={selected === item.id}

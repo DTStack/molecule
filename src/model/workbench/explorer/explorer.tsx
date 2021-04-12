@@ -19,7 +19,7 @@ export const SAMPLE_FOLDER_PANEL_ID = 'Folders';
 export const EDITOR_PANEL_ID = 'OpenEditors';
 export const OUTLINE_PANEL_ID = 'Outline';
 
-export const exploreActiveItem = {
+export const EXPLORER_ACTIVITY_ITEM = {
     id: 'active-explorer',
     name: 'Explore',
     iconName: 'codicon-files',

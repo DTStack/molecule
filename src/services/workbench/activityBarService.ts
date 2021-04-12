@@ -7,8 +7,8 @@ import {
     IActivityBar,
     IActivityBarItem,
 } from 'mo/model/workbench/activityBar';
-import { exploreActiveItem } from 'mo/model/workbench/explorer/explorer';
-import { searchActivityItem } from 'mo/model/workbench/search';
+import { EXPLORER_ACTIVITY_ITEM } from 'mo/model/workbench/explorer/explorer';
+import { SEARCH_ACTIVITY_ITEM } from 'mo/model/workbench/search';
 import { searchById } from '../helper';
 import { IMenuBarItem } from 'mo/model';
 
@@ -85,9 +85,10 @@ export class ActivityBarService
         if (index > -1) {
             this.remove(id);
         } else {
-            const existBar = [exploreActiveItem, searchActivityItem].find(
-                searchById(id)
-            );
+            const existBar = [
+                EXPLORER_ACTIVITY_ITEM,
+                SEARCH_ACTIVITY_ITEM,
+            ].find(searchById(id));
             if (!existBar) return;
             this.addBar(existBar);
         }

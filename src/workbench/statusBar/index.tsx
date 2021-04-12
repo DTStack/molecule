@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { connect } from 'mo/react';
 import StatusBar from './statusBar';
 import { StatusBarService } from 'mo/services';

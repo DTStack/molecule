@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import SplitPane from 'react-split-pane';
 import Pane from 'react-split-pane/lib/Pane';

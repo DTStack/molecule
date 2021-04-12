@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { IMenuItem } from 'mo/components/menu';
 import {
     ActivityBarEvent,

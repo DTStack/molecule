@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { localize } from 'monaco-editor/esm/vs/nls';
 import {
     IQuickInputService,

@@ -1,8 +1,9 @@
+import 'reflect-metadata';
+import { container, singleton } from 'tsyringe';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { connect, IStatusBarItem } from 'mo';
 import { Controller } from 'mo/react/controller';
-import { container, singleton } from 'tsyringe';
 import { Notification } from 'mo/workbench/statusBar/notification';
 import { NotificationPanel } from 'mo/workbench/statusBar/notification/notificationPanel';
 

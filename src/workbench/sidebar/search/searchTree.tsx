@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import { memo } from 'react';
 import Tree, { ITreeProps } from 'mo/components/tree';

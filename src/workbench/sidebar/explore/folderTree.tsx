@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import { memo, useRef, useEffect, useCallback } from 'react';
 import { IFolderTreeSubItem } from 'mo';

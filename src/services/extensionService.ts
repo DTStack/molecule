@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { singleton, inject, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension } from 'mo/model/extension';

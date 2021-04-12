@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { connect } from 'mo/react';
 import { ActivityBarController } from 'mo/controller/activityBar';
 

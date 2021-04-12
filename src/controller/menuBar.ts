@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { container, singleton } from 'tsyringe';
 import { IActivityBarItem, IMenuBarItem } from 'mo/model';
 import {
     MENU_FILE_REDO,
@@ -21,7 +23,6 @@ import {
     StatusBarService,
 } from 'mo/services';
 
-import { container, singleton } from 'tsyringe';
 export interface IMenuBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick: (event: React.MouseEvent<any, any>, item: IMenuBarItem) => void;

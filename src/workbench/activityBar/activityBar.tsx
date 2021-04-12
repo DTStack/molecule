@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { useCallback, useEffect } from 'react';
+import { useContextMenu } from 'mo/components/contextMenu';
+import { select } from 'mo/common/dom';
+import { IMenuItem, Menu } from 'mo/components/menu';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
@@ -16,10 +20,12 @@ import {
 export function ActivityBar(props: IActivityBar & IActivityBarController) {
     const {
         data = [],
+        contextMenu = [],
         selected,
         onClick,
         onSelect,
         onContextMenuClick,
+        onManageContextMenuClick,
     } = props;
 
     const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
@@ -43,13 +49,37 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
             <ActivityBarItem
                 key={item.id}
                 {...item}
-                onContextMenuClick={onContextMenuClick}
+                onManageContextMenuClick={onManageContextMenuClick}
                 onClick={onClickBar}
                 data-index={index}
                 checked={selected === item.id}
             />
         );
     };
+
+    let contextViewMenu;
+    const onClickMenuItem = useCallback(
+        (e: React.MouseEvent, item: IMenuItem | undefined) => {
+            onContextMenuClick?.(e, item);
+            contextViewMenu?.dispose();
+        },
+        [contextMenu]
+    );
+    const renderContextMenu = () => (
+        <Menu onClick={onClickMenuItem} data={contextMenu} />
+    );
+
+    useEffect(() => {
+        if (contextMenu.length > 0) {
+            contextViewMenu = useContextMenu({
+                anchor: select(`#${ID_ACTIVITY_BAR}`),
+                render: renderContextMenu,
+            });
+        }
+        return function cleanup() {
+            contextViewMenu?.dispose();
+        };
+    });
 
     return (
         <div className={defaultClassName} id={ID_ACTIVITY_BAR}>

@@ -1,0 +1,23 @@
+.mo-input {
+  display: inline-block;
+  font-size: 13px;
+  min-width: 0;
+  padding: 4px 11px;
+  position: relative;
+  transition: all 0.3s;
+  width: calc(100% - 16px);
+}
+.mo-input--lg {
+  font-size: 16px;
+  height: 40px;
+  padding: 6px 11px;
+}
+.mo-input--disabled {
+  cursor: not-allowed;
+}
+.mo-input__textarea--show-count::after {
+  color: rgba(0, 0, 0, 0.45);
+  content: attr(data-count);
+  display: block;
+  text-align: right;
+}

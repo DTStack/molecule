@@ -7,12 +7,17 @@ import {
     IActivityBar,
     IActivityBarItem,
 } from 'mo/model/workbench/activityBar';
+import { exploreActiveItem } from 'mo/model/workbench/explorer/explorer';
+import { searchActivityItem } from 'mo/model/workbench/search';
+import { searchById } from '../helper';
 
 export interface IActivityBarService extends Component<IActivityBar> {
     showHide(): void;
     reset(): void;
     addBar(data: IActivityBarItem | IActivityBarItem[]): void;
-    remove(index: number): void;
+    remove(id: string): void;
+    toggleBar(id?: string): void;
+    updateContextMenuCheckStatus(id?: string): void;
     /**
      * Add click event listener
      * @param callback
@@ -58,11 +63,51 @@ export class ActivityBarService
         });
     }
 
-    public remove(index: number) {
-        if (this.state.data) {
-            const data = this.state.data;
-            data.splice(index, 1);
+    public remove(id: string) {
+        const { data } = this.state;
+        const next = [...data!];
+        const index = next.findIndex(searchById(id));
+        if (index > -1) {
+            next.splice(index, 1);
         }
+        this.setState({
+            data: next,
+        });
+    }
+
+    public toggleBar(id: string) {
+        const { data } = this.state;
+        const next = [...data!];
+        const index = next.findIndex(searchById(id));
+        if (index > -1) {
+            this.remove(id);
+        } else {
+            const existBar = [exploreActiveItem, searchActivityItem].find(
+                searchById(id)
+            );
+            if (!existBar) return;
+            this.addBar(existBar);
+        }
+        this.updateContextMenuCheckStatus(id);
+    }
+
+    public updateContextMenuCheckStatus(id: string) {
+        const { contextMenu, data } = this.state;
+        const existBar = data?.find(searchById(id));
+        const newActions = contextMenu?.map((item) => {
+            return {
+                ...item,
+                icon:
+                    item.id === id
+                        ? Boolean(existBar)
+                            ? 'check'
+                            : ''
+                        : item.icon,
+            };
+        });
+        this.setState({
+            contextMenu: newActions,
+        });
     }
 
     // ====== The belows for subscribe activity bar events ======

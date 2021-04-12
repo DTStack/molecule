@@ -1,0 +1,51 @@
+.mo-collapse {
+  font-size: 13px;
+}
+.mo-collapse__content--padding {
+  padding: 10px;
+}
+.mo-collapse .rc-collapse {
+  background-color: inherit;
+}
+.mo-collapse .rc-collapse-anim-active {
+  transition: height 0.2s ease-out;
+}
+.mo-collapse .rc-collapse-item {
+  border-top: 0;
+}
+.mo-collapse .rc-collapse-item:last-child .rc-collapse-content {
+  border-radius: 0 0 3px 3px;
+}
+.mo-collapse .rc-collapse-header {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 11px;
+  font-weight: bold;
+  height: 22px;
+  outline: none;
+  padding: 1px 5px;
+}
+.mo-collapse .rc-collapse-header-collapsable-only {
+  cursor: default;
+}
+.mo-collapse .rc-collapse-header-text {
+  cursor: pointer;
+}
+.mo-collapse .rc-collapse-extra {
+  margin: 0 0 0 auto;
+}
+.mo-collapse .rc-collapse-extra .mo-action-bar__label.codicon {
+  height: inherit;
+  line-height: inherit;
+}
+.mo-collapse .rc-collapse-content {
+  overflow: auto;
+}
+.mo-collapse .rc-collapse-content-box {
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.mo-collapse .rc-collapse-content-inactive {
+  display: none;
+}

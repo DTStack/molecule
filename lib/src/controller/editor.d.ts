@@ -1,0 +1,50 @@
+import * as React from 'react';
+import { IEditorTab } from 'mo/model/workbench/editor';
+import { Controller } from 'mo/react/controller';
+import { IMenuItem } from 'mo/components/menu';
+import * as monaco from 'monaco-editor';
+import { IMonacoEditorProps } from 'mo/components/monaco';
+export interface IEditorController {
+    groupSplitPos?: string[];
+    open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
+    onClickContextMenu?: (e: React.MouseEvent, item: IMenuItem, tabItem?: IEditorTab) => void;
+    onCloseAll?: (group: number) => void;
+    onCloseTab?: (tabId: string, group: number) => void;
+    onCloseToLeft?: (tab: IEditorTab, group: number) => void;
+    onCloseToRight?: (tab: IEditorTab, group: number) => void;
+    onCloseOthers?: (tab: IEditorTab, group: number) => void;
+    onCloseSaved?: (group: number) => void;
+    onChangeEditorProps?: (preProps: IMonacoEditorProps, nextProps: IMonacoEditorProps) => void;
+    onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: number) => void;
+    onSelectTab?: (tabId: string, group: number) => void;
+    onSplitEditorRight?: () => void;
+    onUpdateEditorIns?: (editorInstance: any, groupId: number) => void;
+    onPaneSizeChange?: (newSize: number) => void;
+}
+declare type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
+export declare class EditorController extends Controller implements IEditorController {
+    groupSplitPos: string[];
+    private editorStates;
+    constructor();
+    open<T>(tab: IEditorTab<any>, groupId?: number): void;
+    onClickContextMenu: (e: React.MouseEvent, item: IMenuItem, tabItem?: IEditorTab<any> | undefined) => void;
+    onCloseAll: (groupId: number) => void;
+    updateCurrentValue: () => void;
+    onCloseTab: (tabId?: string | undefined, groupId?: number | undefined) => void;
+    onCloseToRight: (tabItem: IEditorTab, groupId: number) => void;
+    onCloseToLeft: (tabItem: IEditorTab, groupId: number) => void;
+    onCloseOthers: (tabItem: IEditorTab, groupId: number) => void;
+    onMoveTab: (updateTabs: IEditorTab<any>[], groupId: number) => void;
+    onSelectTab: (tabId: string, groupId: number) => void;
+    onUpdateEditorIns: (editorInstance: monaco.editor.IStandaloneCodeEditor, groupId: number) => void;
+    private registerActions;
+    onSplitEditorRight: () => void;
+    onPaneSizeChange: (newSize: any) => void;
+    private initEditorEvents;
+    onChangeEditorProps: (prevProps: IMonacoEditorProps, props: IMonacoEditorProps) => void;
+    private openFile;
+    private initializeFile;
+    private updateStatusBar;
+    updateEditorLineColumnInfo(editorInstance: IStandaloneCodeEditor): void;
+}
+export {};

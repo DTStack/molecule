@@ -1,0 +1,120 @@
+.mo-modal {
+  box-sizing: border-box;
+  font-size: 14px;
+  margin: 0 auto;
+  max-width: calc(100vw - 32px);
+  padding: 0 0 24px;
+  pointer-events: none;
+  position: relative;
+  top: 100px;
+  width: auto;
+}
+.mo-modal-mask {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+.mo-modal-mask-hidden {
+  display: none;
+}
+.mo-modal-wrap {
+  bottom: 0;
+  left: 0;
+  outline: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+.mo-modal--centered {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.mo-modal-content {
+  font-size: 18px;
+  padding: 0 15px;
+  pointer-events: auto;
+  position: relative;
+}
+.mo-modal-header {
+  font-size: 24px;
+  padding: 16px 0;
+}
+.mo-modal-footer {
+  display: flex;
+  font-size: 13px;
+  justify-content: flex-end;
+  padding: 20px 10px 10px;
+}
+.mo-modal-footer .mo-botton {
+  width: fit-content;
+}
+.mo-modal-close {
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+  outline: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  text-decoration: none;
+  top: 0;
+  transition: color 0.3s;
+  z-index: 10;
+}
+.mo-modal__close--x {
+  display: block;
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  width: 40px;
+}
+
+.mo-confirm__container {
+  display: flex;
+  flex-flow: column wrap;
+  font-size: 14px;
+  padding: 25px 10px 10px;
+}
+.mo-confirm__indicator {
+  float: left;
+  height: 48px;
+  margin-right: 16px;
+  width: 48px;
+}
+.mo-confirm__indicator .codicon {
+  font-size: 48px !important;
+}
+.mo-confirm__content {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.mo-confirm__message {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mo-confirm__message--text {
+  font-size: 18px;
+  margin-bottom: 8px;
+  min-height: 24px;
+  white-space: normal;
+  word-wrap: break-word;
+}
+.mo-confirm__message--detail {
+  font-size: 13px;
+}
+.mo-confirm__btns {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 10px 10px;
+}

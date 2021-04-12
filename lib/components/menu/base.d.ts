@@ -1,0 +1,10 @@
+export declare const defaultMenuClassName: string;
+export declare const defaultSubMenuClassName: string;
+export declare const verticalMenuClassName: string;
+export declare const horizontalMenuClassName: string;
+export declare const defaultMenuItemClassName: string;
+export declare const checkClassName: string;
+export declare const labelClassName: string;
+export declare const menuContentClassName: string;
+export declare const keybindingClassName: string;
+export declare const indicatorClassName: string;

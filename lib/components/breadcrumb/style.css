@@ -1,0 +1,25 @@
+.mo-breadcrumb {
+  display: flex;
+}
+.mo-breadcrumb__item {
+  align-items: center;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  justify-content: left;
+  text-decoration: none;
+}
+.mo-breadcrumb__item:hover {
+  opacity: 0.8;
+}
+.mo-breadcrumb__label {
+  align-items: center;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
+}

@@ -1,0 +1,89 @@
+.mo-tree {
+  font-size: 13px;
+}
+.mo-tree .rc-tree {
+  border: 1px solid transparent;
+  margin: 0;
+}
+.mo-tree .rc-tree-treenode {
+  cursor: pointer;
+  height: 22px;
+  line-height: 22px;
+  list-style: none;
+  margin: 0;
+  outline: 0;
+  padding: 0 0 0 8px;
+  white-space: nowrap;
+}
+.mo-tree .rc-tree-treenode .draggable {
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+  user-select: none;
+}
+.mo-tree .rc-tree-treenode ul {
+  margin: 0;
+  padding: 0 0 0 18px;
+}
+.mo-tree .rc-tree-treenode span.rc-tree-switcher {
+  background-attachment: scroll;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: 0 none;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  line-height: 16px;
+  margin-right: 2px;
+  outline: none;
+  vertical-align: middle;
+  width: 16px;
+}
+.mo-tree .rc-tree-treenode span.rc-tree-switcher-noop {
+  cursor: auto;
+  display: none;
+}
+.mo-tree .rc-tree-treenode span.rc-tree-switcher_open {
+  margin-top: -2px;
+  transform: rotate(90deg);
+}
+.mo-tree .rc-tree-treenode-disabled > span:not(.rc-tree-switcher),
+.mo-tree .rc-tree-treenode-disabled > a > a span {
+  color: #767676;
+  cursor: not-allowed;
+}
+.mo-tree .rc-tree-node-content-wrapper {
+  cursor: pointer;
+  display: inline-block;
+  height: 22px;
+  margin: 0;
+  text-decoration: none;
+  vertical-align: top;
+}
+.mo-tree .rc-tree-child-tree {
+  display: none;
+}
+.mo-tree .rc-tree-child-tree-open {
+  display: block;
+}
+.mo-tree .rc-tree-icon__open {
+  background-position: -110px -16px;
+  margin-right: 2px;
+  vertical-align: top;
+}
+.mo-tree .rc-tree-icon__close, .mo-tree .rc-tree-icon__docu, .mo-tree .rc-tree-icon__customize {
+  margin-right: 2px;
+  vertical-align: top;
+}
+.mo-tree .rc-tree-icon__customize {
+  background-image: none;
+}
+.mo-tree .rc-tree-icon__customize .codicon {
+  margin-top: 4px;
+  transform: scale(0.8);
+}
+.mo-tree .rc-tree-indent-unit {
+  display: inline-block;
+  padding-left: 7px;
+  width: 0;
+}

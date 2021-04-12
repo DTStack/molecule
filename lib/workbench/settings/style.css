@@ -1,0 +1,15 @@
+.mo-settings {
+  align-items: center;
+  bottom: 26px;
+  cursor: pointer;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  width: 48px;
+  z-index: 2;
+}
+.mo-settings__action.codicon {
+  font-size: 24px;
+}

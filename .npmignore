@@ -1,7 +1,6 @@
 storybook-static
 src
 esm/stories
-esm/**/__tests__
 esm/test
 node_modules
 .storybook

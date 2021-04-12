@@ -116,7 +116,7 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
 }
 
 @injectable()
-export class EditorModel<T> implements IEditor {
+export class EditorModel implements IEditor {
     public current: IEditorGroup | null;
     public groups: IEditorGroup[];
 

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { IActivityBarItem } from 'mo';

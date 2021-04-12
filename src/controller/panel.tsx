@@ -1,5 +1,6 @@
-import * as React from 'react';
+import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
+import * as React from 'react';
 import { IActionBarItem } from 'mo/components/actionBar';
 import { Controller } from 'mo/react/controller';
 import {

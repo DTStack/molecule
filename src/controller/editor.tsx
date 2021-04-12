@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { container, singleton } from 'tsyringe';
 import * as React from 'react';
 import {
     EditorEvent,
@@ -12,7 +14,6 @@ import { undoRedoMenu } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 
 import { IMenuItem } from 'mo/components/menu';
-import { container, singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
 import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';

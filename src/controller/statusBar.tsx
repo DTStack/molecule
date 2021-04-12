@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import { IStatusBarItem, StatusBarEvent } from 'mo';
 import { Controller } from 'mo/react/controller';

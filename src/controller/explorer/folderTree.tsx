@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import { container, singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';

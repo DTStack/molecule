@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { connect } from 'mo/react';
 import { IPanelService, PanelService } from 'mo/services';

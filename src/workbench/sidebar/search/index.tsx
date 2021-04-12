@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { connect } from 'mo/react';
 import SearchPanel from './searchPanel';
 import { FolderTreeService, SearchService } from 'mo/services';

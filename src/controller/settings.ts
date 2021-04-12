@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { IPanelService, PanelService } from 'mo/services';
 import { container, singleton } from 'tsyringe';

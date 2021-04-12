@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 export * from './sidebar';
 import { Sidebar } from './sidebar';
 import { connect } from 'mo/react';

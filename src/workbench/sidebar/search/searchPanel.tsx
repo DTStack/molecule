@@ -3,17 +3,15 @@ import Toolbar from 'mo/components/toolbar';
 import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { SearchWidget } from 'mo/components/search';
-import { IActivityBarItem } from 'mo/model/workbench/activityBar';
+import { ISearch } from 'mo/model/workbench/search';
+import { IFolderTree } from 'mo/model/workbench/explorer/folderTree';
 import SearchTree from './searchTree';
-import { folderTreeService } from 'mo/services';
 
-interface ISearchPaneToolBar {
-    headerToolBar?: IActivityBarItem[];
-    value?: string;
+export interface ISearchPaneToolBar {
+    search?: ISearch;
+    folderTree?: IFolderTree;
     convertFoldToSearchTree?: <T>(data) => T[];
 }
-
-const folderTreeState = folderTreeService.getState();
 
 export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
     constructor(props) {
@@ -25,27 +23,26 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
     };
 
     render() {
-        const {
-            headerToolBar = [],
-            value,
-            convertFoldToSearchTree,
-        } = this.props;
+        const { search, folderTree, convertFoldToSearchTree } = this.props;
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header
                     title="Search"
                     toolbar={
-                        <Toolbar data={headerToolBar} onClick={this.onClick} />
+                        <Toolbar
+                            data={search?.headerToolBar || []}
+                            onClick={this.onClick}
+                        />
                     }
                 />
                 <Content>
-                    <SearchWidget {...this.props} />
-                    {value && (
+                    <SearchWidget {...this.props} {...search} />
+                    {search?.value && (
                         <SearchTree
                             data={convertFoldToSearchTree?.(
-                                folderTreeState?.folderTree?.data
+                                folderTree?.folderTree?.data
                             )}
-                            {...this.props}
+                            {...search}
                         />
                     )}
                 </Content>

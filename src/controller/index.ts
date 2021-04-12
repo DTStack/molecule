@@ -1,11 +1,11 @@
-// import { container } from 'tsyringe';
+import { container } from 'tsyringe';
 // import { ActivityBarController } from './activityBar';
 // import { EditorController } from './editor';
 // import { ExplorerController } from './explorer/explorer';
 // import { FolderTreeController } from './explorer/folderTree';
 // import { SearchController } from './search/search';
 // import { MenuBarController } from './menuBar';
-// import { NotificationController } from './notification';
+import { NotificationController } from './notification';
 // import { PanelController } from './panel';
 // import { SettingsController } from './settings';
 // import { SidebarController } from './sidebar';
@@ -23,4 +23,4 @@
 // export const settingsController = container.resolve(SettingsController);
 // export const folderTreeController = container.resolve(FolderTreeController);
 // export const workbenchController = container.resolve(WorkbenchController);
-// export const notificationController = container.resolve(NotificationController);
+export const notificationController = container.resolve(NotificationController);

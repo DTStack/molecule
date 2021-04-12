@@ -1,6 +1,4 @@
 import * as React from 'react';
-import 'reflect-metadata';
-import { injectable } from 'tsyringe';
 import { IActionBarItem } from 'mo/components/actionBar';
 import { NEW_FILE_COMMAND_ID, NEW_FOLDER_COMMAND_ID } from './folderTree';
 export enum ExplorerEvent {
@@ -121,7 +119,6 @@ export const SAMPLE_FOLDER_PANEL = {
 };
 
 export const DEFAULT_PANELS = [EDITOR_PANEL, OUTLINE_PANEL];
-@injectable()
 export class IExplorerModel implements IExplorer {
     public data: IPanelItem[] = DEFAULT_PANELS;
     public headerToolBar: IActionBarItem;

@@ -8,6 +8,8 @@ export * from 'mo/provider';
 export * from 'mo/workbench';
 export * from 'mo/common/event';
 
+import 'mo/controller';
+
 import {
     ActivityBarService,
     IActivityBarService,

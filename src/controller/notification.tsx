@@ -39,9 +39,9 @@ export class NotificationController
 
     constructor() {
         super();
-        this.init();
         this.notificationService = container.resolve(NotificationService);
         this.statusBarService = container.resolve(StatusBarService);
+        this.init();
     }
 
     public onCloseNotification(item: INotificationItem<any>): void {

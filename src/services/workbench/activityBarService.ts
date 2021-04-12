@@ -10,6 +10,7 @@ import {
 import { exploreActiveItem } from 'mo/model/workbench/explorer/explorer';
 import { searchActivityItem } from 'mo/model/workbench/search';
 import { searchById } from '../helper';
+import { IMenuBarItem } from 'mo/model';
 
 export interface IActivityBarService extends Component<IActivityBar> {
     showHide(): void;
@@ -18,6 +19,8 @@ export interface IActivityBarService extends Component<IActivityBar> {
     remove(id: string): void;
     toggleBar(id?: string): void;
     updateContextMenuCheckStatus(id?: string): void;
+    addConextMenu(contextMenu: IMenuBarItem | IMenuBarItem[]): void;
+    removeContextMenu(id: string): void;
     /**
      * Add click event listener
      * @param callback
@@ -107,6 +110,30 @@ export class ActivityBarService
         });
         this.setState({
             contextMenu: newActions,
+        });
+    }
+
+    public addConextMenu(contextMenu: IMenuBarItem | IMenuBarItem[]) {
+        let next = [...this.state.contextMenu!];
+        if (Array.isArray(contextMenu)) {
+            next = next?.concat(contextMenu);
+        } else {
+            next?.push(contextMenu);
+        }
+        this.setState({
+            contextMenu: next,
+        });
+    }
+
+    public removeContextMenu(id: string) {
+        const { contextMenu } = this.state;
+        const next = [...contextMenu!];
+        const index = next.findIndex(searchById(id));
+        if (index > -1) {
+            next.splice(index, 1);
+        }
+        this.setState({
+            contextMenu: next,
         });
     }
 

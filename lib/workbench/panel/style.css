@@ -1,0 +1,37 @@
+.mo-panel {
+  display: flex;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+.mo-panel__header, .mo-panel__tabs, .mo-panel__toolbar {
+  display: flex;
+}
+.mo-panel__header {
+  border-top-style: solid;
+  border-top-width: 1px;
+  flex-direction: row;
+  height: 35px;
+  justify-content: space-between;
+  padding: 0 8px;
+  width: 100%;
+}
+.mo-panel__header .mo-tabs {
+  flex-grow: 1;
+}
+.mo-panel__header .mo-tab__item {
+  font-size: 11px;
+  padding: 0 10px;
+  text-transform: uppercase;
+}
+.mo-panel__container {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 35px;
+  width: 100%;
+}
+.mo-panel__toolbar {
+  min-width: 60px;
+}

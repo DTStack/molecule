@@ -2,6 +2,10 @@ import 'reflect-metadata';
 import { IMenuItem } from 'mo/components/menu';
 import {
     ActivityBarEvent,
+    CONTEXT_MENU_MENU,
+    CONTEXT_MENU_EXPLORER,
+    CONTEXT_MENU_SEARCH,
+    CONTEXT_MENU_HIDE,
     CONTEXT_MENU_COLOR_THEME,
     CONTEXT_MENU_COMMAND_PALETTE,
     CONTEXT_MENU_SETTINGS,
@@ -13,13 +17,19 @@ import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 import {
     ActivityBarService,
     EditorService,
+    MenuBarService,
     IActivityBarService,
     IEditorService,
+    IMenuBarService,
 } from 'mo/services';
 export interface IActivityBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
     onContextMenuClick?: (
+        e: React.MouseEvent,
+        item: IMenuItem | undefined
+    ) => void;
+    onManageContextMenuClick?: (
         e: React.MouseEvent,
         item: IMenuItem | undefined
     ) => void;
@@ -31,10 +41,12 @@ export class ActivityBarController
     implements IActivityBarController {
     private readonly activityBarService: IActivityBarService;
     private readonly editorService: IEditorService;
+    private readonly menuBarService: IMenuBarService;
     constructor() {
         super();
         this.activityBarService = container.resolve(ActivityBarService);
         this.editorService = container.resolve(EditorService);
+        this.menuBarService = container.resolve(MenuBarService);
     }
 
     public readonly onSelect = (
@@ -76,7 +88,35 @@ export class ActivityBarController
         });
     }
 
+    // TODO: Menu 按钮是否提取至 activityBar 外
     public readonly onContextMenuClick = (
+        e: React.MouseEvent,
+        item: IMenuItem | undefined
+    ) => {
+        const contextMenuId = item?.id;
+        switch (contextMenuId) {
+            case CONTEXT_MENU_MENU.id: {
+                this.menuBarService.showHide();
+                break;
+            }
+            case CONTEXT_MENU_EXPLORER.id: {
+                this.activityBarService.toggleBar(contextMenuId);
+                break;
+            }
+            case CONTEXT_MENU_SEARCH.id: {
+                this.activityBarService.toggleBar(contextMenuId);
+                break;
+            }
+            case CONTEXT_MENU_HIDE.id: {
+                this.activityBarService.showHide();
+                break;
+            }
+            default: {
+            }
+        }
+    };
+
+    public readonly onManageContextMenuClick = (
         e: React.MouseEvent,
         item: IMenuItem | undefined
     ) => {

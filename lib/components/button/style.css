@@ -1,0 +1,24 @@
+.mo-btn {
+  align-items: center;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin: 4px 5px;
+  outline-offset: 2px;
+  padding: 4px 10px;
+  text-align: center;
+}
+.mo-btn--normal {
+  padding: 4px 15px;
+}
+.mo-btn--large {
+  font-size: 16px;
+  padding: 8px 15px;
+}
+.mo-btn--disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+  pointer-events: none;
+}

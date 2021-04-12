@@ -1,0 +1,18 @@
+import { ActivityBarController } from './activityBar';
+import { EditorController } from './editor';
+import { ExplorerController } from './explorer/explorer';
+import { FolderTreeController } from './explorer/folderTree';
+import { MenuBarController } from './menuBar';
+import { PanelController } from './panel';
+import { SettingsController } from './settings';
+import { SidebarController } from './sidebar';
+import { StatusBarController } from './statusBar';
+export declare const activityBarController: ActivityBarController;
+export declare const editorController: EditorController;
+export declare const menuBarController: MenuBarController;
+export declare const panelController: PanelController;
+export declare const sidebarController: SidebarController;
+export declare const explorerController: ExplorerController;
+export declare const statusBarController: StatusBarController;
+export declare const settingsController: SettingsController;
+export declare const folderTreeController: FolderTreeController;

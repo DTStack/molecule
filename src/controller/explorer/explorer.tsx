@@ -11,6 +11,7 @@ import {
     SAMPLE_FOLDER_PANEL,
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
+    exploreActiveItem,
 } from 'mo/model';
 import { IActionBarItem } from 'mo/components/actionBar';
 import {
@@ -63,12 +64,6 @@ export class ExplorerController
         const ctx = this;
         const state = this.activityBarService.getState();
         const sideBarState = this.sidebarService.getState();
-        const exploreActiveItem = {
-            id: 'active-explorer',
-            name: 'Explore',
-            iconName: 'codicon-files',
-        };
-
         this.activityBarService.setState({
             selected: exploreActiveItem.id,
             data: [...state.data!, exploreActiveItem],

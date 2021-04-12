@@ -27,7 +27,7 @@ function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
         onClick,
         contextMenu = [],
         className,
-        onContextMenuClick,
+        onManageContextMenuClick,
     } = props;
     let content: React.ReactNode = '';
     if (render) {
@@ -38,7 +38,7 @@ function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
 
     const onClickMenuItem = useCallback(
         (e: React.MouseEvent, item: IMenuItem | undefined) => {
-            onContextMenuClick?.(e, item);
+            onManageContextMenuClick?.(e, item);
             contextViewMenu?.dispose();
         },
         [contextMenu]

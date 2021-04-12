@@ -18,6 +18,12 @@ export const SEARCH_REGULAR_EXPRESSION_COMMAND_ID =
 export const SEARCH_PRESERVE_CASE_COMMAND_ID = 'search.preserveCase';
 export const SEARCH_REPLACE_ALL_COMMAND_ID = 'search.replaceAll';
 
+export const searchActivityItem = {
+    id: 'search',
+    name: 'Search',
+    iconName: 'codicon-search',
+};
+
 const builtInHeaderToolbar = [
     {
         id: 'Refresh',

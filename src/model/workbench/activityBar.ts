@@ -31,9 +31,36 @@ export interface IActivityBarItem {
 
 export interface IActivityBar {
     data?: IActivityBarItem[];
+    contextMenu?: IMenuItem[];
     selected?: string;
     hidden?: boolean;
 }
+
+export const CONTEXT_MENU_MENU = {
+    id: 'Menu',
+    name: 'Menu',
+    icon: 'check',
+};
+export const CONTEXT_MENU_EXPLORER = {
+    id: 'active-explorer',
+    name: 'Explorer',
+    icon: 'check',
+};
+export const CONTEXT_MENU_SEARCH = {
+    id: 'search',
+    name: 'Search',
+    icon: 'check',
+};
+export const CONTEXT_MENU_HIDE = {
+    id: 'hide',
+    name: 'Hide Activity Bar',
+};
+export const DEFAULT_CONTEXT_MENU = [
+    CONTEXT_MENU_MENU,
+    CONTEXT_MENU_EXPLORER,
+    CONTEXT_MENU_SEARCH,
+    CONTEXT_MENU_HIDE,
+];
 
 export const CONTEXT_MENU_COMMAND_PALETTE = {
     id: 'CommandPalette',
@@ -76,14 +103,17 @@ export const initialActivityBarData: IActivityBarItem[] = [
 
 export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
+    public contextMenu: IMenuItem[];
     public selected: string;
     public hidden = false;
     constructor(
         data: IActivityBarItem[] = initialActivityBarData,
+        contextMenu: IMenuItem[] = DEFAULT_CONTEXT_MENU,
         selected: string = '',
         hidden = false
     ) {
         this.data = data;
+        this.contextMenu = contextMenu;
         this.selected = selected;
         this.hidden = hidden;
     }

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { injectable } from 'tsyringe';
 import { EditorMarkers } from 'mo/workbench/statusBar/editor';
 import { ProblemsMarkers } from 'mo/workbench/statusBar/problems';
 export interface IStatusBarItem<T = any> extends HTMLElementProps {
@@ -53,7 +52,6 @@ export enum StatusBarEvent {
      */
     DataChanged = 'statusBar.data',
 }
-@injectable()
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[] = [];
     public rightItems: IStatusBarItem[] = [];

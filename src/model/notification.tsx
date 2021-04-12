@@ -1,7 +1,6 @@
 import { IActionBarItem } from 'mo/components/actionBar';
 import { Icon } from 'mo/components/icon';
 import * as React from 'react';
-import { injectable } from 'tsyringe';
 import { IStatusBarItem } from './workbench/statusBar';
 
 export enum NotificationStatus {
@@ -33,7 +32,6 @@ export const NOTIFICATION_HIDE: IActionBarItem = {
     iconName: 'codicon-chevron-down',
 };
 
-@injectable()
 export class NotificationModel<T> implements INotification<T> {
     static readonly ID = 'MO_NOTIFICATION';
     static readonly NAME = 'Notification';

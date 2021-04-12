@@ -1,6 +1,4 @@
-import 'reflect-metadata';
 import { ITab } from 'mo/components/tabs/tab';
-import { injectable } from 'tsyringe';
 import { ITabs } from 'mo/components/tabs';
 import { IMenuItem } from 'mo/components/menu';
 import { IBreadcrumbItem } from 'mo/components/breadcrumb';
@@ -115,7 +113,6 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     }
 }
 
-@injectable()
 export class EditorModel implements IEditor {
     public current: IEditorGroup | null;
     public groups: IEditorGroup[];

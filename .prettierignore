@@ -1,7 +1,6 @@
 # Ignore artifacts:
-lib
 esm
-dist
+umd
 .history
 node_modules
 yarn.lock

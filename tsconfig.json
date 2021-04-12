@@ -1,7 +1,7 @@
 {
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
-        "outDir": "lib",
+        "outDir": "esm",
         "rootDirs": ["src", "stories"]
     },
     "include": ["src/**/*", "test/**/*", "stories/**/*"]

@@ -13,3 +13,7 @@ commitlint.config.js
 tsconfig.build.json
 tsconfig.base.json
 jest.config.js
+.history
+.github
+.vscode
+stories

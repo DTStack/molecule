@@ -1,13 +1,9 @@
-import 'reflect-metadata';
+import 'mo/workbench/menuBar/style.scss';
+import { menuBarService } from 'mo/services';
 import { connect } from 'mo/react';
 
 import MenuBar from './menuBar';
-import { MenuBarService } from 'mo/services';
-import { container } from 'tsyringe';
-import { MenuBarController } from 'mo/controller/menuBar';
-
-const menuBarService = container.resolve(MenuBarService);
-const menuBarController = container.resolve(MenuBarController);
+import { menuBarController } from 'mo/controller';
 
 const MenuBarView = connect(menuBarService, MenuBar, menuBarController);
 

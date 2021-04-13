@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { IMenuItem } from 'mo/components/menu';
 import {
     ActivityBarEvent,
@@ -8,14 +7,9 @@ import {
     IActivityBarItem,
 } from 'mo/model';
 import { Controller } from 'mo/react/controller';
-import { container, singleton } from 'tsyringe';
+import { activityBarService, editorService } from 'mo/services';
+import { singleton } from 'tsyringe';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
-import {
-    ActivityBarService,
-    EditorService,
-    IActivityBarService,
-    IEditorService,
-} from 'mo/services';
 export interface IActivityBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
@@ -29,12 +23,8 @@ export interface IActivityBarController {
 export class ActivityBarController
     extends Controller
     implements IActivityBarController {
-    private readonly activityBarService: IActivityBarService;
-    private readonly editorService: IEditorService;
     constructor() {
         super();
-        this.activityBarService = container.resolve(ActivityBarService);
-        this.editorService = container.resolve(EditorService);
     }
 
     public readonly onSelect = (
@@ -42,7 +32,7 @@ export class ActivityBarController
         item?: IActivityBarItem | undefined
     ) => {
         if (item && item.type !== 'global') {
-            this.activityBarService.setState({
+            activityBarService.setState({
                 selected: key,
             });
         }
@@ -58,19 +48,19 @@ export class ActivityBarController
 
     private gotoQuickCommand() {
         const actionId = 'editor.action.quickCommand';
-        this.editorService.editorInstance?.focus(); // The QuickCommand action requires the editor focusing
-        this.editorService.editorInstance?.getAction(actionId).run();
+        editorService.editorInstance?.focus(); // The QuickCommand action requires the editor focusing
+        editorService.editorInstance?.getAction(actionId).run();
     }
 
     private onSelectColorTheme = () => {
-        this.editorService.editorInstance?.focus(); // The QuickCommand action requires the editor focusing
-        this.editorService.editorInstance
+        editorService.editorInstance?.focus(); // The QuickCommand action requires the editor focusing
+        editorService.editorInstance
             ?.getAction(SelectColorThemeAction.ID)
             .run();
     };
 
     private gotoSettings() {
-        this.editorService.open({
+        editorService.open({
             id: 'Settings',
             name: 'Settings',
         });

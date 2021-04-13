@@ -1,4 +1,7 @@
+import 'reflect-metadata';
+import { injectable } from 'tsyringe';
 import { IActionBarItem } from 'mo/components/actionBar';
+
 export interface ISearch {
     headerToolBar?: IActionBarItem[];
     searchAddons?: IActionBarItem[];
@@ -80,6 +83,7 @@ const defaultReplaceAddons = [
     },
 ];
 
+@injectable()
 export class ISearchModel implements ISearch {
     public headerToolBar: IActionBarItem[];
     public searchAddons: IActionBarItem[];

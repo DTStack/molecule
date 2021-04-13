@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-import { container, singleton } from 'tsyringe';
 import * as React from 'react';
 import {
     EditorEvent,
@@ -12,19 +10,16 @@ import {
 } from 'mo/model/workbench/editor';
 import { undoRedoMenu } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
-
+import {
+    editorService,
+    statusBarService,
+    folderTreeService,
+} from 'mo/services';
 import { IMenuItem } from 'mo/components/menu';
+import { singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';
 import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';
-import {
-    EditorService,
-    FolderTreeService,
-    IEditorService,
-    IFolderTreeService,
-    IStatusBarService,
-    StatusBarService,
-} from 'mo/services';
 
 export interface IEditorController {
     groupSplitPos?: string[];
@@ -57,19 +52,13 @@ export class EditorController extends Controller implements IEditorController {
     // Group Pos locate here temporary, we can move it to state or localStorage in future.
     public groupSplitPos: string[] = [];
     private editorStates = new Map();
-    private readonly editorService: IEditorService;
-    private readonly statusBarService: IStatusBarService;
-    private readonly folderTreeService: IFolderTreeService;
 
     constructor() {
         super();
-        this.editorService = container.resolve(EditorService);
-        this.statusBarService = container.resolve(StatusBarService);
-        this.folderTreeService = container.resolve(FolderTreeService);
     }
 
     public open<T>(tab: IEditorTab<any>, groupId?: number) {
-        this.editorService.open<T>(tab, groupId);
+        editorService.open<T>(tab, groupId);
     }
 
     public onClickContextMenu = (
@@ -79,7 +68,7 @@ export class EditorController extends Controller implements IEditorController {
     ) => {
         const menuId = item?.id;
         const tabId = tabItem?.id!;
-        const { current } = this.editorService.getState();
+        const { current } = editorService.getState();
         const groupId = current?.id!;
         switch (menuId) {
             case EDITOR_MENU_CLOSE: {
@@ -106,12 +95,12 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     public onCloseAll = (groupId: number) => {
-        this.editorService.closeAll(groupId);
+        editorService.closeAll(groupId);
         this.emit(EditorEvent.OnCloseAll, groupId);
     };
 
     public updateCurrentValue = () => {
-        const { current } = this.editorService.getState();
+        const { current } = editorService.getState();
         const newValue = current?.tab?.data?.value;
         const model = current?.editorInstance?.getModel();
         model?.pushEditOperations(
@@ -128,39 +117,39 @@ export class EditorController extends Controller implements IEditorController {
 
     public onCloseTab = (tabId?: string, groupId?: number) => {
         if (tabId && groupId) {
-            this.editorService.closeTab(tabId, groupId);
+            editorService.closeTab(tabId, groupId);
             this.updateCurrentValue();
             this.emit(EditorEvent.OnCloseTab, tabId, groupId);
         }
     };
 
     public onCloseToRight = (tabItem: IEditorTab, groupId: number) => {
-        this.editorService.closeToRight(tabItem, groupId);
+        editorService.closeToRight(tabItem, groupId);
         this.updateCurrentValue();
         this.emit(EditorEvent.OnCloseToRight, tabItem, groupId);
     };
 
     public onCloseToLeft = (tabItem: IEditorTab, groupId: number) => {
-        this.editorService.closeToLeft(tabItem, groupId);
+        editorService.closeToLeft(tabItem, groupId);
         this.updateCurrentValue();
         this.emit(EditorEvent.OnCloseToLeft, tabItem, groupId);
     };
 
     public onCloseOthers = (tabItem: IEditorTab, groupId: number) => {
-        this.editorService.closeOthers(tabItem, groupId);
+        editorService.closeOthers(tabItem, groupId);
         this.updateCurrentValue();
         this.emit(EditorEvent.OnCloseOthers, tabItem, groupId);
     };
 
     public onMoveTab = (updateTabs: IEditorTab<any>[], groupId: number) => {
-        this.editorService.updateGroup(groupId, {
+        editorService.updateGroup(groupId, {
             data: updateTabs,
         });
         this.emit(EditorEvent.OnMoveTab, updateTabs, groupId);
     };
 
     public onSelectTab = (tabId: string, groupId: number) => {
-        this.editorService.setActive(groupId, tabId);
+        editorService.setActive(groupId, tabId);
         this.updateCurrentValue();
         this.emit(EditorEvent.OnSelectTab, tabId, groupId);
     };
@@ -172,12 +161,12 @@ export class EditorController extends Controller implements IEditorController {
         if (!editorInstance) return;
         this.initEditorEvents(editorInstance, groupId);
         this.registerActions(editorInstance);
-        this.editorService.updateGroup(groupId, {
+        editorService.updateGroup(groupId, {
             editorInstance: editorInstance,
         });
-        this.editorService.updateCurrentGroup({ editorInstance });
+        editorService.updateCurrentGroup({ editorInstance });
 
-        const { current } = this.editorService.getState();
+        const { current } = editorService.getState();
         const tab = current?.tab;
         this.openFile(
             editorInstance,
@@ -202,7 +191,7 @@ export class EditorController extends Controller implements IEditorController {
         });
     };
     public onSplitEditorRight = () => {
-        this.editorService.cloneGroup();
+        editorService.cloneGroup();
         this.emit(EditorEvent.OnSplitEditorRight);
     };
 
@@ -218,11 +207,11 @@ export class EditorController extends Controller implements IEditorController {
 
         editorInstance.onDidChangeModelContent((event: any) => {
             const newValue = editorInstance.getModel()?.getValue();
-            const { current } = this.editorService.getState();
+            const { current } = editorService.getState();
             const tab = current?.tab;
             if (!tab) return;
             const notSave = newValue !== tab?.data?.value;
-            this.editorService.updateTab(
+            editorService.updateTab(
                 {
                     id: tab.id,
                     data: {
@@ -233,7 +222,7 @@ export class EditorController extends Controller implements IEditorController {
                 },
                 groupId
             );
-            this.folderTreeService.updateFileContent(
+            folderTreeService.updateFileContent(
                 current?.tab?.id as any,
                 newValue
             );
@@ -241,9 +230,9 @@ export class EditorController extends Controller implements IEditorController {
         });
 
         editorInstance.onDidFocusEditorText(() => {
-            const group = this.editorService.getGroupById(groupId);
+            const group = editorService.getGroupById(groupId);
             if (group?.tab!.id) {
-                this.editorService.setActive(groupId, group.tab.id);
+                editorService.setActive(groupId, group.tab.id);
                 this.updateEditorLineColumnInfo(editorInstance);
             }
         });
@@ -259,7 +248,7 @@ export class EditorController extends Controller implements IEditorController {
     ) => {
         const { path, options } = props;
         if (prevProps?.path !== path) {
-            const { current } = this.editorService.getState();
+            const { current } = editorService.getState();
             const editorInstance = current?.editorInstance;
             this.editorStates.set(
                 prevProps.path,
@@ -328,7 +317,7 @@ export class EditorController extends Controller implements IEditorController {
     public updateEditorLineColumnInfo(editorInstance: IStandaloneCodeEditor) {
         if (editorInstance) {
             const position = editorInstance.getPosition();
-            this.statusBarService.updateItem(
+            statusBarService.updateItem(
                 Object.assign(STATUS_EDITOR_INFO, {
                     data: {
                         ln: position?.lineNumber,

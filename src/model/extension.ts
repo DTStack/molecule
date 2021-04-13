@@ -1,4 +1,4 @@
-import { IExtensionService } from 'mo';
+import { IExtensionService } from 'mo/services';
 import { IColorTheme } from './colorTheme';
 import { IIconTheme } from './iconTheme';
 

@@ -1,3 +1,5 @@
+import { injectable } from 'tsyringe';
+
 /**
  * The activity bar event definition
  */
@@ -143,6 +145,7 @@ export const undoRedoMenu = [
         label: 'Redo',
     },
 ];
+@injectable()
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];
     public hidden = false;

@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { injectable } from 'tsyringe';
 import { IMenuItem } from 'mo/components/menu';
 
 /**
@@ -74,6 +76,7 @@ export const initialActivityBarData: IActivityBarItem[] = [
     ACTIVITY_BAR_GLOBAL_SETTINGS,
 ];
 
+@injectable()
 export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
     public selected: string;

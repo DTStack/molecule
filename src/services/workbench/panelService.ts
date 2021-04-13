@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import {

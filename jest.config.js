@@ -11,7 +11,7 @@ module.exports = {
         '**/__tests__/**/(*.)+(spec|test).[jt]s?(x)',
         '**/test/**/(*.)+(spec|test).[jt]s?(x)',
     ],
-    testPathIgnorePatterns: ['/node_modules/', 'esm', 'umd'],
+    testPathIgnorePatterns: ['/node_modules/', 'lib'],
     // The directory where Jest should output its coverage files
     coverageDirectory: 'coverage',
     transformIgnorePatterns: ['node_modules/(?!(monaco-editor|.*dnd.*)/)'],

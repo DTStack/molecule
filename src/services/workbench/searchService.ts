@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import { ISearch, ISearchModel } from 'mo/model/workbench/search';

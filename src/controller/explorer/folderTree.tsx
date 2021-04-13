@@ -1,9 +1,10 @@
-import 'reflect-metadata';
 import * as React from 'react';
-import { container, singleton } from 'tsyringe';
+import { singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
 
 import { ITreeNodeItem, FileTypes } from 'mo/components/tree';
+import { editorService, folderTreeService } from 'mo';
+import { editorController } from 'mo/controller';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
 import {
@@ -21,12 +22,6 @@ import {
     ADD_ROOT_FOLDER_COMMAND_ID,
     FolderTreeEvent,
 } from 'mo/model';
-import {
-    EditorService,
-    FolderTreeService,
-    IEditorService,
-    IFolderTreeService,
-} from 'mo/services';
 
 const confirm = Modal.confirm;
 
@@ -50,12 +45,8 @@ export interface IFolderTreeController {
 export class FolderTreeController
     extends Controller
     implements IFolderTreeController {
-    private readonly folderTreeService: IFolderTreeService;
-    private readonly editorService: IEditorService;
     constructor() {
         super();
-        this.folderTreeService = container.resolve(FolderTreeService);
-        this.editorService = container.resolve(EditorService);
         this.initView();
     }
 
@@ -67,7 +58,7 @@ export class FolderTreeController
     ) => {
         const { fileType, isEditable } = file;
         const isFile = fileType === FileTypes.file;
-        this.folderTreeService.setActive(file?.id);
+        folderTreeService.setActive(file?.id);
         if (!isFile || isEditable) return;
         const tabData = {
             ...file,
@@ -81,23 +72,23 @@ export class FolderTreeController
         };
 
         const { id, data = [] } =
-            this.editorService.getState()?.current || ({} as any);
+            editorService.getState()?.current || ({} as any);
         if (isUpdate) {
             const tabId = file.id;
             const index = data?.findIndex((tab) => tab.id == tabId);
             if (index > -1) {
-                if (id) this.editorService.updateTab(tabData, id);
+                if (id) editorService.updateTab(tabData, id);
             } else {
-                this.editorService.open(tabData);
+                editorService.open(tabData);
             }
         } else {
-            this.editorService.open(tabData);
+            editorService.open(tabData);
         }
         this.emit(FolderTreeEvent.onSelectFile, tabData, isUpdate);
     };
 
     public readonly onDropTree = (treeNode: ITreeNodeItem[]) => {
-        this.folderTreeService.onDropTree(treeNode);
+        folderTreeService.onDropTree(treeNode);
     };
 
     public readonly getInputEvent = (
@@ -113,12 +104,11 @@ export class FolderTreeController
         events?: IFolderInputEvent
     ) => {
         const menuId = item.id;
-        const ctx = this;
         const { id: nodeId, name } = node as any;
         console.log('onClickContextMenu => Item', item);
         switch (menuId) {
             case RENAME_COMMAND_ID: {
-                this.folderTreeService.rename(nodeId, () => {
+                folderTreeService.rename(nodeId, () => {
                     events?.setValue?.(name);
                     events?.onFocus();
                 });
@@ -129,35 +119,34 @@ export class FolderTreeController
                     title: `Are you sure you want to delete '${name}' ?`,
                     content: 'This action is irreversible!',
                     onOk() {
-                        ctx.folderTreeService.delete(nodeId, () => {
-                            // TODO Refactor the below, there needs listen to the CloseTab by the editorService
-                            // ctx.editorController!.onCloseTab(
-                            //     `${nodeId}`,
-                            //     ctx.editorService.getState()?.current?.id
-                            // );
+                        folderTreeService.delete(nodeId, () => {
+                            editorController.onCloseTab(
+                                `${nodeId}`,
+                                editorService.getState()?.current?.id
+                            );
                         });
                     },
                 });
                 break;
             }
             case NEW_FILE_COMMAND_ID: {
-                this.folderTreeService.newFile(nodeId, () => {
+                folderTreeService.newFile(nodeId, () => {
                     events?.onFocus();
                 });
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                this.folderTreeService.newFolder(nodeId, () => {
+                folderTreeService.newFolder(nodeId, () => {
                     events?.onFocus();
                 });
                 break;
             }
             case REMOVE_COMMAND_ID: {
-                this.folderTreeService.removeRootFolder(nodeId);
+                folderTreeService.removeRootFolder(nodeId);
                 break;
             }
             case ADD_ROOT_FOLDER_COMMAND_ID: {
-                this.folderTreeService.addRootFolder?.(
+                folderTreeService.addRootFolder?.(
                     new TreeNodeModel({
                         name: `molecule_temp${Math.random()}`,
                         fileType: 'rootFolder',

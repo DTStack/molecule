@@ -1,18 +1,16 @@
 {
     "name": "molecule",
-    "version": "0.9.0-alpha.1",
+    "version": "0.9.0",
     "description": "A Web IDE UI Framework built by React.js, inspired by VSCode.",
-    "module": "./esm/index.js",
-    "typings": "./esm/index.d.ts",
+    "main": "lib/index.js",
     "scripts": {
         "preinstall": "node ./build/preinstall.js",
         "test": "jest --no-cache --coverage",
         "dev": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
         "build-css": "webpack --config ./build/webpack.css.js",
-        "build-umd": "rm -rf umd & webpack --config ./build/webpack.umd.js",
         "check-types": "tsc",
-        "build": "rm -rf esm & tsc -p tsconfig.build.json & yarn build-css",
+        "build": "rm -rf lib & tsc --project tsconfig.build.json & yarn build-css",
         "eslint": "eslint ./src/**/*.ts ./src/**/*.tsx",
         "stylelint": "stylelint **/*.{css,scss,sass}",
         "prettier": "prettier --ignore-unknown .",
@@ -26,26 +24,26 @@
         "ui",
         "ide"
     ],
-    "author": "DTStack Corporation",
-    "license": "MIT",
+    "author": "Ziv",
+    "license": "ISC",
     "dependencies": {
-        "@dtinsight/dt-utils": "^1.0.3",
-        "@types/react": "^17.0.3",
-        "@types/react-dom": "^17.0.3",
+        "@types/react": "^16.9.35",
+        "@types/react-dom": "^16.9.9",
         "immutability-helper": "^3.1.1",
-        "lodash": "^4.17.21",
         "monaco-editor": "^0.21.2",
         "rc-collapse": "~2.0.1",
         "rc-dialog": "8.2.1",
         "rc-textarea": "~0.3.1",
         "rc-tree": "~3.10.0",
         "rc-util": "~5.5.0",
+        "react": "^16.13.1",
         "react-dnd": "^9.3.4",
         "react-dnd-html5-backend": "^9.3.4",
+        "react-dom": "^16.13.1",
         "react-scrollbars-custom": "^4.0.25",
         "react-split-pane": "^2.0.3",
         "reflect-metadata": "^0.1.13",
-        "tsyringe": "^4.5.0",
+        "tsyringe": "^4.3.0",
         "vscode-codicons": "^0.0.12"
     },
     "devDependencies": {
@@ -58,6 +56,7 @@
         "@babel/preset-typescript": "^7.12.16",
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
+        "@dtinsight/dt-utils": "^1.0.1",
         "@storybook/addon-actions": "6.1.10",
         "@storybook/addon-knobs": "^6.1.10",
         "@storybook/addon-links": "6.1.10",
@@ -69,7 +68,6 @@
         "@typescript-eslint/eslint-plugin": "^3.1.0",
         "@typescript-eslint/parser": "^3.1.0",
         "babel-loader": "^8.2.2",
-        "copy-webpack-plugin": "6",
         "css-loader": "^4.3.0",
         "eslint": "^7.1.0",
         "eslint-config-google": "^0.14.0",
@@ -82,7 +80,7 @@
         "monaco-editor-webpack-plugin": "^2.0.0",
         "prettier": "^2.1.2",
         "pretty-quick": "^3.1.0",
-        "react-test-renderer": "^16.14.0",
+        "react-test-renderer": "^17.0.1",
         "sass": "^1.26.10",
         "sass-loader": "^10.0.2",
         "standard-version": "^9.0.0",
@@ -106,8 +104,6 @@
         }
     },
     "peerDependencies": {
-        "react": "^16.14.0",
-        "react-dom": "^16.14.0"
-    },
-    "repository": "https://github.com/DTStack/molecule"
+        "lodash": "^4.17.21"
+    }
 }

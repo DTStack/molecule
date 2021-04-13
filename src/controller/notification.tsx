@@ -1,9 +1,9 @@
-import 'reflect-metadata';
-import { container, singleton } from 'tsyringe';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { connect, IStatusBarItem } from 'mo';
 import { Controller } from 'mo/react/controller';
+import { notificationService, statusBarService } from 'mo/services';
+import { singleton } from 'tsyringe';
 import { Notification } from 'mo/workbench/statusBar/notification';
 import { NotificationPanel } from 'mo/workbench/statusBar/notification/notificationPanel';
 
@@ -15,11 +15,6 @@ import {
 } from 'mo/model/notification';
 import { select } from 'mo/common/dom';
 import { ID_APP } from 'mo/common/id';
-import {
-    INotificationService,
-    NotificationService,
-} from 'mo/services/notificationService';
-import { IStatusBarService, StatusBarService } from 'mo/services';
 
 export interface INotificationController {
     onCloseNotification(item: INotificationItem): void;
@@ -34,19 +29,14 @@ export interface INotificationController {
 export class NotificationController
     extends Controller
     implements INotificationController {
-    private readonly notificationService: INotificationService;
-    private readonly statusBarService: IStatusBarService;
-
     constructor() {
         super();
-        this.notificationService = container.resolve(NotificationService);
-        this.statusBarService = container.resolve(StatusBarService);
         this.init();
     }
 
     public onCloseNotification(item: INotificationItem<any>): void {
         if (typeof item.id === 'number') {
-            this.notificationService.removeNotification(item.id);
+            notificationService.removeNotification(item.id);
         }
     }
 
@@ -56,7 +46,7 @@ export class NotificationController
         if (!this._notificationPanel) {
             this.renderNotificationPanel();
         }
-        this.notificationService.showHideNotifications();
+        notificationService.showHideNotifications();
     }
 
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
@@ -69,28 +59,25 @@ export class NotificationController
     ) => {
         const action = item.id;
         if (action === NOTIFICATION_CLEAR_ALL.id) {
-            this.notificationService.showHideNotifications();
+            notificationService.showHideNotifications();
         } else if (action === NOTIFICATION_HIDE.id) {
             this.showHideNotifications();
         }
     };
 
     private init() {
-        const notificationItem = this.notificationService.getState();
-        const NotificationView = connect(
-            this.notificationService,
-            Notification
-        );
-        this.notificationService.setState({
+        const notificationItem = notificationService.getState();
+        const NotificationView = connect(notificationService, Notification);
+        notificationService.setState({
             ...notificationItem,
             render: () => <NotificationView onClick={this.onClick} />,
         });
-        this.statusBarService.appendRightItem(notificationItem);
+        statusBarService.appendRightItem(notificationItem);
     }
 
     public renderNotificationPanel() {
         const NotificationPanelView = connect(
-            this.notificationService,
+            notificationService,
             NotificationPanel
         );
         const root = select('#' + ID_APP);

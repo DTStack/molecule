@@ -1,6 +1,7 @@
 .history
 node_modules
-umd
+lib
+dist
 esm
 coverage
 .DS_Store

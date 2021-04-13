@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { activityBarService, colorThemeService, panelService } from 'mo';
-import { editorService, notificationService } from 'mo';
+import { editorService, notificationService } from 'mo/services';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';

@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { ISettings, SettingModel } from 'mo/model/settings';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';

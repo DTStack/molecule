@@ -1,13 +1,9 @@
-import 'reflect-metadata';
 import { singleton, inject, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension } from 'mo/model/extension';
+import { colorThemeService } from 'mo';
 import { IColorTheme } from 'mo/model/colorTheme';
 import logger from 'mo/common/logger';
-import {
-    ColorThemeService,
-    IColorThemeService,
-} from './theme/colorThemeService';
 
 export interface IExtensionService {
     /**
@@ -27,11 +23,9 @@ export interface IExtensionService {
 @singleton()
 export class ExtensionService implements IExtensionService {
     public extensions: IExtension[] = [];
-    private readonly colorThemeService: IColorThemeService;
 
     constructor(@inject('Extensions') extensions: IExtension[] = []) {
         this.load(extensions);
-        this.colorThemeService = container.resolve(ColorThemeService);
     }
 
     public load(extensions: IExtension[] = []) {
@@ -61,7 +55,7 @@ export class ExtensionService implements IExtensionService {
                 case IContributeType.Themes: {
                     const themes: IColorTheme[] | undefined = contributes[type];
                     if (themes) {
-                        this.colorThemeService.load(themes);
+                        colorThemeService.load(themes);
                     }
                 }
             }

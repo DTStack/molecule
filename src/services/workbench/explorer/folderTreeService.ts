@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import {
@@ -10,7 +9,7 @@ import { TreeViewUtil } from '../../helper';
 import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import { TreeNodeModel } from 'mo/model';
 import logger from 'mo/common/logger';
-import { ExplorerService, IExplorerService } from './explorerService';
+import { explorerService } from 'mo/services';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     initTree?: (data: ITreeNodeItem[]) => void;
@@ -33,12 +32,9 @@ export class FolderTreeService
     extends Component<IFolderTree>
     implements IFolderTreeService {
     protected state: IFolderTree;
-    private readonly explorerService: IExplorerService;
-
     constructor() {
         super();
         this.state = container.resolve(IFolderTreeModel);
-        this.explorerService = container.resolve(ExplorerService);
     }
 
     private getFileIconByExtensionName(
@@ -138,7 +134,7 @@ export class FolderTreeService
         this.setState({
             folderTree: { ...folderTree, data: next },
         });
-        this.explorerService.updateRender();
+        explorerService.updateRender();
     }
 
     public removeRootFolder(id: number) {

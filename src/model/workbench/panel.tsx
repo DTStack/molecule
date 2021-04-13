@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { IActionBarItem } from 'mo/components/actionBar';
 import { ITab } from 'mo/components/tabs/tab';
-import { injectable } from 'tsyringe';
 import Output from 'mo/workbench/panel/output';
 import Problems from 'mo/workbench/panel/problems';
 
@@ -52,7 +51,6 @@ export interface IPanel {
     maximize?: boolean;
 }
 
-@injectable()
 export class PanelModel implements IPanel {
     public current: IPanelItem | undefined;
     public data: IPanelItem[];

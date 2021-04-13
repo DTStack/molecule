@@ -1,6 +1,8 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import SplitPane from 'react-split-pane';
 import Pane from 'react-split-pane/lib/Pane';
+import { container } from 'tsyringe';
 
 import { classNames, prefixClaName } from 'mo/common/className';
 
@@ -13,21 +15,29 @@ import { PanelView } from 'mo/workbench/panel';
 import { ID_APP } from 'mo/common/id';
 import { Utils } from '@dtinsight/dt-utils';
 import { APP_PREFIX } from 'mo/common/const';
-import {
-    panelService,
-    activityBarService,
-    menuBarService,
-    sidebarService,
-    statusBarService,
-} from 'mo/services';
+
 import { connect } from 'mo/react';
 import { IPanel } from 'mo/model/workbench/panel';
 import { IActivityBar } from 'mo/model/workbench/activityBar';
 import { ISidebar } from 'mo/model/workbench/sidebar';
 import { IMenuBar } from 'mo/model/workbench/menuBar';
 import { IStatusBar } from 'mo/model/workbench/statusBar';
-import { workbenchController } from 'mo/controller';
-import { IWorkbenchController } from 'mo/controller/workbench';
+import {
+    IWorkbenchController,
+    WorkbenchController,
+} from 'mo/controller/workbench';
+import {
+    ActivityBarService,
+    IActivityBarService,
+    IMenuBarService,
+    IPanelService,
+    ISidebarService,
+    IStatusBarService,
+    MenuBarService,
+    PanelService,
+    SidebarService,
+    StatusBarService,
+} from 'mo/services';
 
 export interface IWorkbench {
     panel: IPanel;
@@ -40,6 +50,15 @@ export interface IWorkbench {
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
 const appClassName = classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '');
+
+const panelService = container.resolve<IPanelService>(PanelService);
+const sidebarService = container.resolve<ISidebarService>(SidebarService);
+const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
+const activityBarService = container.resolve<IActivityBarService>(
+    ActivityBarService
+);
+const workbenchController = container.resolve(WorkbenchController);
+const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
 
 export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
     const {

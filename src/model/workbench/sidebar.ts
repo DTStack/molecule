@@ -1,5 +1,3 @@
-import { injectable } from 'tsyringe';
-
 export interface ISidebarPane {
     id: string;
     title?: string;
@@ -21,7 +19,6 @@ export interface ISidebar {
     hidden?: boolean;
 }
 
-@injectable()
 export class SidebarModel implements ISidebar {
     public current: string;
     public panes: ISidebarPane[];

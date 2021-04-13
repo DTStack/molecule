@@ -1,11 +1,10 @@
+import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
-import { singleton } from 'tsyringe';
-import { activityBarService, IActivityBarItem, sidebarService } from 'mo';
+import { container, singleton } from 'tsyringe';
+import { IActivityBarItem } from 'mo';
 import * as React from 'react';
 import { SearchPanelView } from 'mo/workbench/sidebar/search';
 import { IActionBarItem } from 'mo/components/actionBar';
-import { searchController } from 'mo/controller';
-import { searchService } from 'mo';
 import {
     SEARCH_CASE_SENSITIVE_COMMAND_ID,
     SEARCH_WHOLE_WORD_COMMAND_ID,
@@ -13,6 +12,14 @@ import {
     SEARCH_PRESERVE_CASE_COMMAND_ID,
     SEARCH_REPLACE_ALL_COMMAND_ID,
 } from 'mo/model/workbench/search';
+import {
+    ActivityBarService,
+    IActivityBarService,
+    ISearchService,
+    ISidebarService,
+    SearchService,
+    SidebarService,
+} from 'mo/services';
 export interface ISearchController {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
@@ -27,21 +34,31 @@ export interface ISearchController {
 
 @singleton()
 export class SearchController extends Controller implements ISearchController {
+    private readonly activityBarService: IActivityBarService;
+    private readonly sidebarService: ISidebarService;
+    private readonly searchService: ISearchService;
+    private readonly searchController: ISearchController;
+
     constructor() {
         super();
+        this.activityBarService = container.resolve(ActivityBarService);
+        this.sidebarService = container.resolve(SidebarService);
+        this.searchService = container.resolve(SearchService);
+        this.searchController = container.resolve(SearchController);
         this.initView();
     }
 
-    private initView() {
+    private initView = () => {
+        const ctx = this;
         const searchSidePane = {
             id: 'searchPane',
             title: 'SEARCH',
             render() {
-                return <SearchPanelView {...searchController} />;
+                return <SearchPanelView {...ctx.searchController} />;
             },
         };
 
-        sidebarService.push(searchSidePane);
+        this.sidebarService.push(searchSidePane);
 
         const searchActivityItem = {
             id: 'search',
@@ -49,23 +66,23 @@ export class SearchController extends Controller implements ISearchController {
             iconName: 'codicon-search',
         };
 
-        activityBarService.addBar(searchActivityItem);
+        this.activityBarService.addBar(searchActivityItem);
 
-        activityBarService.onSelect((e, item: IActivityBarItem) => {
+        this.activityBarService.onSelect((e, item: IActivityBarItem) => {
             if (item.id === searchActivityItem.id) {
-                sidebarService.setState({
+                this.sidebarService.setState({
                     current: searchSidePane.id,
                 });
             }
         });
-    }
+    };
 
     public readonly setSearchValue = (value?: string) => {
-        searchService.setSearchValue?.(value);
+        this.searchService.setSearchValue?.(value);
     };
 
     public readonly setReplaceValue = (value?: string) => {
-        searchService.setReplaceValue?.(value);
+        this.searchService.setReplaceValue?.(value);
     };
 
     public onToggleAddon = (addon?: IActionBarItem) => {
@@ -97,26 +114,26 @@ export class SearchController extends Controller implements ISearchController {
     };
 
     public readonly onToggleCaseSensitive = (addonId: string) => {
-        searchService.toggleCaseSensitive?.(addonId);
+        this.searchService.toggleCaseSensitive?.(addonId);
     };
 
     public readonly onToggleWholeWord = (addonId: string) => {
-        searchService.toggleWholeWord?.(addonId);
+        this.searchService.toggleWholeWord?.(addonId);
     };
 
     public readonly onToggleRegex = (addonId: string) => {
-        searchService.toggleRegex?.(addonId);
+        this.searchService.toggleRegex?.(addonId);
     };
 
     public readonly onTogglePreserveCase = (addonId: string) => {
-        searchService.togglePreserveCase?.(addonId);
+        this.searchService.togglePreserveCase?.(addonId);
     };
 
     public readonly onToggleRepalceAll = (addonId: string) => {
-        searchService.toggleReplaceAll?.(addonId);
+        this.searchService.toggleReplaceAll?.(addonId);
     };
 
     public readonly convertFoldToSearchTree = (data): any => {
-        return searchService.convertFoldToSearchTree?.(data);
+        return this.searchService.convertFoldToSearchTree?.(data);
     };
 }

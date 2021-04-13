@@ -1,10 +1,12 @@
 import 'reflect-metadata';
 import { connect } from 'mo/react';
 import { container } from 'tsyringe';
-import { editorService } from 'mo/services';
 import { EditorController } from 'mo/controller/editor';
 
 import { Editor } from './editor';
+import { EditorService } from 'mo/services';
+
+const editorService = container.resolve(EditorService);
 
 const editorController = container.resolve(EditorController);
 

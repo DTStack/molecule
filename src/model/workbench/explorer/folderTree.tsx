@@ -1,6 +1,5 @@
 import * as React from 'react';
 import 'reflect-metadata';
-import { injectable } from 'tsyringe';
 import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
 import { IMenuItem } from 'mo/components/menu';
 import { randomId } from 'mo/common/utils';
@@ -123,7 +122,6 @@ const builtInFolderTree = {
     data: [],
 };
 
-@injectable()
 export class IFolderTreeModel implements IFolderTree {
     public folderTree: IFolderTreeSubItem;
 

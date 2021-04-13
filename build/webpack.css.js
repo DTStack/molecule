@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 // There list the SASS style files manually
 const styles = [
@@ -49,8 +51,7 @@ module.exports = function () {
         mode: 'development',
         entry: [...getSassEntries()],
         output: {
-            path: path.resolve(__dirname, '../lib'),
-            publicPath: 'lib/',
+            path: path.resolve(__dirname, '../esm'),
         },
         resolve: {
             extensions: ['.css', '.scss'],
@@ -97,5 +98,23 @@ module.exports = function () {
                 },
             ],
         },
+        plugins: [
+            new webpack.DefinePlugin({
+                __DEVELOPMENT__: false,
+            }),
+            new CopyPlugin({
+                patterns: [
+                    {
+                        from: path.resolve(__dirname, '../src/extensions'),
+                        to: path.resolve(__dirname, '../esm/extensions'),
+                        globOptions: {
+                            dot: true,
+                            gitignore: true,
+                            ignore: ['**/*.ts', '**/*.tsx'],
+                        },
+                    },
+                ],
+            }),
+        ],
     };
 };

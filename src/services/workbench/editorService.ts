@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import * as monaco from 'monaco-editor';
 

@@ -1,7 +1,8 @@
+import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
-import { singleton } from 'tsyringe';
-import { explorerService } from 'mo';
+import { container, singleton } from 'tsyringe';
 import React from 'react';
+import { ExplorerService, IExplorerService } from 'mo/services';
 
 export interface IOutlineController {}
 
@@ -9,8 +10,11 @@ export interface IOutlineController {}
 export class OutlineController
     extends Controller
     implements IOutlineController {
+    private readonly explorerService: IExplorerService;
+
     constructor() {
         super();
+        this.explorerService = container.resolve(ExplorerService);
         this.initView();
     }
 
@@ -31,7 +35,7 @@ export class OutlineController
                 },
             ],
         };
-        explorerService.addPanel(outlinePanel);
+        this.explorerService.addPanel(outlinePanel);
     }
 
     public readonly onClick = (event: React.MouseEvent) => {

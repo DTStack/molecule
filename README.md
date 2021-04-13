@@ -1,19 +1,57 @@
 # Molecule
 
-A Web IDE UI library built by React.js, inspired by VSCode.
+A Web IDE UI library built by React.js, inspired by the Visual Studio Code.
 
-## Goals
+## Features
 
--   Free customize IDE by Assemble React components
--   Allow you create features by extension
--   Alow Users customize settings
+-   Provides the default IDE Workbench same as the Visual Studio Code
+-   Allow to extends the default IDE Workbench
+-   Supports customize the IDE Workbench by React Component easily
+
+## Installation
+
+```bash
+npm install molecule
+# Or
+yarn add molecule
+```
+
+## Basic Usage
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { MoleculeProvider, Workbench } from 'molecule';
+import 'molecule/esm/style/mo.css';
+
+const App = () => (
+    <MoleculeProvider extension={[]}>
+        <Workbench />
+    </MoleculeProvider>
+);
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+For more complex examples please read the below document.
+
+## Document
+
+-   Basic React UI Components
+-   Workbench Parts
+-   Extension Services
+-   Advanced Usage
+
+## TODO
+
+-   Allow Users to customize settings
 -   Support internationalization, default includes zhCN, English
 -   Support alter keybinding
 
-## Root Directory
+## Contributing
 
-Unify the root path name from **molecule** to **mo**.
+Refer to the [CONTRIBUTING](./CONTRIBUTING.md).
 
-## References
+## Licence
 
--   [vscode codicons online address](https://microsoft.github.io/vscode-codicons/dist/codicon.html)
+MIT

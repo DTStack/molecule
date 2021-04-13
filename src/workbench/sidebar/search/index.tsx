@@ -1,7 +1,13 @@
+import 'reflect-metadata';
 import { connect } from 'mo/react';
-import { searchService, folderTreeService } from 'mo/services';
-import { searchController } from 'mo/controller';
 import SearchPanel from './searchPanel';
+import { FolderTreeService, SearchService } from 'mo/services';
+import { container } from 'tsyringe';
+import { SearchController } from 'mo/controller/search/search';
+
+const searchService = container.resolve(SearchService);
+const folderTreeService = container.resolve(FolderTreeService);
+const searchController = container.resolve(SearchController);
 
 const SearchPanelView = connect(
     {

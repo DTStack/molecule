@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import { memo, useRef, useEffect, useCallback } from 'react';
 import { IFolderTreeSubItem } from 'mo';
@@ -9,8 +10,11 @@ import { Button } from 'mo/components/button';
 import { IFolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
-import { folderTreeService } from 'mo/services';
 import { TreeNodeModel, IFolderInputEvent } from 'mo/model';
+import { FolderTreeService } from 'mo/services';
+import { container } from 'tsyringe';
+
+const folderTreeService = container.resolve(FolderTreeService);
 
 const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     props: IFolderTreeSubItem & IFolderTreeController

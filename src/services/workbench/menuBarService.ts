@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { cloneDeep } from 'lodash';
 
 import {

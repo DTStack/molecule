@@ -3,6 +3,7 @@
  * https://code.visualstudio.com/api/references/theme-color
  */
 
+import 'reflect-metadata';
 import { IColorTheme } from 'mo/model/colorTheme';
 import { container, inject, singleton } from 'tsyringe';
 import * as monaco from 'monaco-editor';

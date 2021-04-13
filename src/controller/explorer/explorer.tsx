@@ -1,18 +1,11 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import { Controller } from 'mo/react/controller';
-import { singleton } from 'tsyringe';
-import {
-    activityBarService,
-    sidebarService,
-    explorerService,
-    folderTreeService,
-    menuBarService,
-} from 'mo/services';
+import { container, singleton } from 'tsyringe';
 import { ExplorerView, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IMenuItem } from 'mo/components/menu';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
-import { folderTreeController } from 'mo/controller';
 import { ExplorerEvent } from 'mo/model/workbench/explorer/explorer';
 import {
     SAMPLE_FOLDER_PANEL,
@@ -20,6 +13,19 @@ import {
     NEW_FOLDER_COMMAND_ID,
 } from 'mo/model';
 import { IActionBarItem } from 'mo/components/actionBar';
+import {
+    IExplorerService,
+    ISidebarService,
+    IActivityBarService,
+    IFolderTreeService,
+    ActivityBarService,
+    SidebarService,
+    ExplorerService,
+    FolderTreeService,
+    MenuBarService,
+    IMenuBarService,
+} from 'mo/services';
+import { FolderTreeController, IFolderTreeController } from './folderTree';
 export interface IExplorerController {
     onActionsContextMenuClick?: (
         e: React.MouseEvent,
@@ -34,22 +40,36 @@ export interface IExplorerController {
 export class ExplorerController
     extends Controller
     implements IExplorerController {
+    private readonly activityBarService: IActivityBarService;
+    private readonly sidebarService: ISidebarService;
+    private readonly explorerService: IExplorerService;
+    private readonly folderTreeService: IFolderTreeService;
+    private readonly menuBarService: IMenuBarService;
+    private readonly folderTreeController: IFolderTreeController;
+
     constructor() {
         super();
+        this.activityBarService = container.resolve(ActivityBarService);
+        this.sidebarService = container.resolve(SidebarService);
+        this.explorerService = container.resolve(ExplorerService);
+        this.folderTreeService = container.resolve(FolderTreeService);
+        this.menuBarService = container.resolve(MenuBarService);
+        this.folderTreeController = container.resolve(FolderTreeController);
+
         this.initView();
     }
 
     private initView() {
         const ctx = this;
-        const state = activityBarService.getState();
-        const sideBarState = sidebarService.getState();
+        const state = this.activityBarService.getState();
+        const sideBarState = this.sidebarService.getState();
         const exploreActiveItem = {
             id: 'active-explorer',
             name: 'Explore',
             iconName: 'codicon-files',
         };
 
-        activityBarService.setState({
+        this.activityBarService.setState({
             selected: exploreActiveItem.id,
             data: [...state.data!, exploreActiveItem],
         });
@@ -69,36 +89,36 @@ export class ExplorerController
             },
         };
 
-        activityBarService.onSelect((e, item: IActivityBarItem) => {
-            const { hidden } = sidebarService.getState();
+        this.activityBarService.onSelect((e, item: IActivityBarItem) => {
+            const { hidden } = this.sidebarService.getState();
             if (item.id === exploreActiveItem.id) {
                 const isShow = hidden ? !hidden : hidden;
-                sidebarService.setState({
+                this.sidebarService.setState({
                     current: explorePane.id,
                     hidden: isShow,
                 });
-                menuBarService.update(MENU_VIEW_SIDEBAR, {
+                this.menuBarService.update(MENU_VIEW_SIDEBAR, {
                     icon: 'check',
                 });
             }
         });
 
-        sidebarService.setState({
+        this.sidebarService.setState({
             current: explorePane.id,
             panes: [...sideBarState.panes!, explorePane],
         });
 
-        explorerService.addPanel([
+        this.explorerService.addPanel([
             { ...SAMPLE_FOLDER_PANEL, renderPanel: this.renderFolderTree },
         ]);
     }
 
     private createFileOrFolder = (type) => {
-        const folderTreeState = folderTreeService.getState();
+        const folderTreeState = this.folderTreeService.getState();
         const { data, current } = folderTreeState?.folderTree || {};
         // The current selected node id or the first root node
         const nodeId = current?.id || data?.[0]?.id;
-        folderTreeService[type]?.(nodeId);
+        this.folderTreeService[type]?.(nodeId);
     };
 
     public readonly onClick = (
@@ -114,7 +134,7 @@ export class ExplorerController
     ) => {
         console.log('onActionsContextMenuClick', e, item);
         const panelId = item?.id;
-        explorerService.togglePanel(panelId);
+        this.explorerService.togglePanel(panelId);
     };
 
     public readonly onCollapseChange = (keys) => {
@@ -141,8 +161,8 @@ export class ExplorerController
     public renderFolderTree() {
         return (
             <FolderTreeView
-                {...folderTreeService.getState()?.folderTree}
-                {...folderTreeController}
+                {...this.folderTreeService.getState()?.folderTree}
+                {...this.folderTreeController}
             />
         );
     }

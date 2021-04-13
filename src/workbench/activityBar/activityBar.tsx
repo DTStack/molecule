@@ -9,7 +9,6 @@ import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 import ActivityBarItem from './activityBarItem';
 import { Scrollable } from 'mo/components/scrollable';
 import { IActivityBarController } from 'mo/controller/activityBar';
-import { mergeFunctions } from 'mo/common/utils';
 
 import {
     containerClassName,
@@ -26,7 +25,6 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
         onClick,
         onSelect,
         onContextMenuClick,
-        onManageContextMenuClick,
     } = props;
 
     const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
@@ -50,10 +48,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
             <ActivityBarItem
                 key={item.id}
                 {...item}
-                onContextMenuClick={mergeFunctions(
-                    onContextMenuClick,
-                    onManageContextMenuClick
-                )}
+                onContextMenuClick={onContextMenuClick}
                 onClick={onClickBar}
                 data-index={index}
                 checked={selected === item.id}

@@ -29,10 +29,6 @@ export interface IActivityBarController {
         e: React.MouseEvent,
         item: IMenuItem | undefined
     ) => void;
-    onManageContextMenuClick?: (
-        e: React.MouseEvent,
-        item: IMenuItem | undefined
-    ) => void;
 }
 
 @singleton()
@@ -95,6 +91,7 @@ export class ActivityBarController
     ) => {
         const contextMenuId = item?.id;
         switch (contextMenuId) {
+            // activityBar contextMenu
             case CONTEXT_MENU_MENU.id: {
                 this.menuBarService.showHide();
                 break;
@@ -111,17 +108,7 @@ export class ActivityBarController
                 this.activityBarService.showHide();
                 break;
             }
-            default: {
-            }
-        }
-    };
-
-    public readonly onManageContextMenuClick = (
-        e: React.MouseEvent,
-        item: IMenuItem | undefined
-    ) => {
-        const contextMenu = item?.id;
-        switch (contextMenu) {
+            // manage button contextMenu
             case CONTEXT_MENU_COMMAND_PALETTE.id: {
                 this.gotoQuickCommand();
                 break;
@@ -135,7 +122,6 @@ export class ActivityBarController
                 break;
             }
             default: {
-                // Do Something()
             }
         }
     };

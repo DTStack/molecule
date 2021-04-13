@@ -1317,13 +1317,12 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
 
-"@dtinsight/dt-utils@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@dtinsight/dt-utils/-/dt-utils-1.0.1.tgz#90066e16e85cc4a22e5d744f1e2224e6eb0efe91"
-  integrity sha512-LO9I9lZ16Nssk8SrlPRY1HvTlJkDTMtjYx3WyW38bTp2V4O1kdHcMvh0//+5OLarHtx9n4EwPhINQYTI/oKeww==
+"@dtinsight/dt-utils@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@dtinsight/dt-utils/-/dt-utils-1.0.3.tgz#72fc9e55d3707875c3258c5c639aaf3fc6c54a24"
+  integrity sha512-1HGkj5tMrckH3Rqms94KS4rJqdpji82hUNgG8s1eijS+VqU0rzYn3oN2Kiq4uqB7GsU1/JuXZkf7gsAjCS6DUQ==
   dependencies:
     lodash "^4.17.15"
-    moment "^2.27.0"
 
 "@emotion/cache@^10.0.27", "@emotion/cache@^10.0.9":
   version "10.0.29"
@@ -10242,11 +10241,6 @@ modify-values@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
-
-moment@^2.27.0:
-  version "2.29.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
-  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
 
 monaco-editor-webpack-plugin@^2.0.0:
   version "2.1.0"

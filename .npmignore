@@ -1,5 +1,9 @@
 storybook-static
 src
+build
+coverage
+mock
+test
 esm/stories
 esm/test
 node_modules

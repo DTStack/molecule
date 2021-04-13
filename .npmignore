@@ -1,6 +1,5 @@
 storybook-static
 src
-build
 coverage
 mock
 test

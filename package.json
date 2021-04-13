@@ -31,6 +31,7 @@
     "dependencies": {
         "@types/react": "^17.0.3",
         "@types/react-dom": "^17.0.3",
+        "@dtinsight/dt-utils": "^1.0.3",
         "immutability-helper": "^3.1.1",
         "lodash": "^4.17.21",
         "monaco-editor": "^0.21.2",
@@ -57,7 +58,6 @@
         "@babel/preset-typescript": "^7.12.16",
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@dtinsight/dt-utils": "^1.0.1",
         "@storybook/addon-actions": "6.1.10",
         "@storybook/addon-knobs": "^6.1.10",
         "@storybook/addon-links": "6.1.10",

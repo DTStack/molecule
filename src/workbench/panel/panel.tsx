@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { memo } from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IPanel } from 'mo/model/workbench/panel';
 import { IPanelController } from 'mo/controller/panel';
@@ -40,4 +39,4 @@ function Panel(props: IPanel & IPanelController) {
     );
 }
 
-export default memo(Panel);
+export default Panel;

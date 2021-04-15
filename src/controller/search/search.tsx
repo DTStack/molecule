@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
-import { IActivityBarItem } from 'mo';
+import { connect, IActivityBarItem } from 'mo';
 import * as React from 'react';
-import { SearchPanelView } from 'mo/workbench/sidebar/search';
+import { SearchPanel } from 'mo/workbench/sidebar/search';
 import { IActionBarItem } from 'mo/components/actionBar';
 import {
     SEARCH_CASE_SENSITIVE_COMMAND_ID,
@@ -17,6 +17,8 @@ import {
     ActivityBarService,
     IActivityBarService,
     ISearchService,
+    FolderTreeService,
+    IFolderTreeService,
     ISidebarService,
     SearchService,
     SidebarService,
@@ -38,24 +40,43 @@ export class SearchController extends Controller implements ISearchController {
     private readonly activityBarService: IActivityBarService;
     private readonly sidebarService: ISidebarService;
     private readonly searchService: ISearchService;
-    private readonly searchController: ISearchController;
+    private readonly folderTreeService: IFolderTreeService;
 
     constructor() {
         super();
         this.activityBarService = container.resolve(ActivityBarService);
         this.sidebarService = container.resolve(SidebarService);
         this.searchService = container.resolve(SearchService);
-        this.searchController = container.resolve(SearchController);
+        this.folderTreeService = container.resolve(FolderTreeService);
         this.initView();
     }
 
-    private initView = () => {
-        const ctx = this;
+    private initView() {
+        const SearchPanelView = connect(
+            {
+                search: this.searchService,
+                folderTree: this.folderTreeService,
+            },
+            SearchPanel
+        );
+
+        const searchEvent = {
+            setSearchValue: this.setSearchValue,
+            setReplaceValue: this.setReplaceValue,
+            onToggleAddon: this.onToggleAddon,
+            onToggleCaseSensitive: this.onToggleCaseSensitive,
+            onToggleWholeWord: this.onToggleWholeWord,
+            onToggleRegex: this.onToggleRegex,
+            onTogglePreserveCase: this.onTogglePreserveCase,
+            onToggleRepalceAll: this.onToggleRepalceAll,
+            convertFoldToSearchTree: this.convertFoldToSearchTree,
+        };
+
         const searchSidePane = {
             id: 'searchPane',
             title: 'SEARCH',
             render() {
-                return <SearchPanelView {...ctx.searchController} />;
+                return <SearchPanelView {...searchEvent} />;
             },
         };
 
@@ -70,7 +91,7 @@ export class SearchController extends Controller implements ISearchController {
                 });
             }
         });
-    };
+    }
 
     public readonly setSearchValue = (value?: string) => {
         this.searchService.setSearchValue?.(value);

@@ -2,7 +2,8 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
-import { ExplorerView, FolderTreeView } from 'mo/workbench/sidebar/explore';
+import { connect } from 'mo';
+import { Explorer, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IMenuItem } from 'mo/components/menu';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
@@ -75,6 +76,8 @@ export class ExplorerController
             onActionsContextMenuClick: ctx.onActionsContextMenuClick,
             onCollapseToolbar: ctx.onCollapseToolbar,
         };
+
+        const ExplorerView = connect(this.explorerService, Explorer);
 
         const explorePane = {
             id: 'explore',
@@ -153,12 +156,12 @@ export class ExplorerController
         }
     };
 
-    public renderFolderTree() {
+    public renderFolderTree = () => {
         return (
             <FolderTreeView
                 {...this.folderTreeService.getState()?.folderTree}
                 {...this.folderTreeController}
             />
         );
-    }
+    };
 }

@@ -126,7 +126,9 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         const targetIndex = panes?.findIndex(searchById(data.id));
         if (targetIndex !== undefined && targetIndex > -1) {
             Object.assign(panes[targetIndex], data);
-            this.render();
+            this.setState({
+                data: [...panes],
+            });
             return panes[targetIndex];
         }
         return undefined;

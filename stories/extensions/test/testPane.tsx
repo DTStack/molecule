@@ -65,6 +65,10 @@ export default class TestPane extends React.Component {
             panelService.showHide();
         };
 
+        const updateOutput = () => {
+            panelService.appendOutput('Number: ' + Math.random() * 10);
+        };
+
         const newEditor = function () {
             const key = (Math.random() * 10 + 1).toFixed(2);
             const tabData: IEditorTab = {
@@ -111,6 +115,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                     <h2>Add a new Panel:</h2>
                     <Button onClick={addPanel}>Add Panel</Button>
                     <Button onClick={showHidePanel}>Show/Hide Panel</Button>
+                    <Button onClick={updateOutput}>Update Output</Button>
                 </div>
                 <div style={{ margin: '50px 20px' }}>
                     <h2>Notification:</h2>

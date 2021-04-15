@@ -25,6 +25,7 @@ import {
     IStatusBarService,
     StatusBarService,
 } from 'mo/services';
+import { FolderTreeEvent } from 'mo/model/workbench/explorer/folderTree';
 
 export interface IEditorController {
     groupSplitPos?: string[];
@@ -233,7 +234,8 @@ export class EditorController extends Controller implements IEditorController {
                 },
                 groupId
             );
-            this.folderTreeService.updateFileContent(
+            this.emit(
+                FolderTreeEvent.onUpdateFileContent,
                 current?.tab?.id as any,
                 newValue
             );

@@ -1,3 +1,5 @@
+import { ITreeNodeItem } from 'mo/components/tree';
+
 export function searchById(id) {
     return (item) => item.id === id;
 }
@@ -13,11 +15,30 @@ export interface IIndex<T> {
 export interface IIndexs<T> {
     [index: number]: IIndex<T>;
 }
-export interface ITreeInterface<T> {
+export interface ITreeInterface<T = any> {
     count: number;
     obj: T;
     indexes: IIndexs<T>;
     childNodeName: string;
+}
+
+export interface ITreeInstance<T = any> {
+    count: number;
+    obj: T;
+    indexes: IIndexs<T>;
+    childNodeName: string;
+    generate: (obj) => void;
+    getIndex: (index: number) => void;
+    removeIndex: (index: number) => void;
+    get: (id: number) => void;
+    remove: (id: number) => void;
+    update: (id: number, extra) => void;
+    updateChildren: (children: IIndex<T>) => void;
+    insert: (obj: T, parentId: number, i: number) => void;
+    insertBefore: (obj: T, destId: number) => void;
+    insertAfter: (obj: T, destId: number) => void;
+    prepend: (obj: T, destId: number) => void;
+    append: (obj: T, destId: number) => void;
 }
 
 export class TreeViewUtil<T = any> implements ITreeInterface<T> {

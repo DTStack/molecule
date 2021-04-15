@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { container, singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
-
 import { ITreeNodeItem, FileTypes } from 'mo/components/tree';
 import { IMenuItem } from 'mo/components/menu';
 import Modal from 'mo/components/dialog';
@@ -21,18 +20,11 @@ import {
     ADD_ROOT_FOLDER_COMMAND_ID,
     FolderTreeEvent,
 } from 'mo/model';
-import {
-    EditorService,
-    FolderTreeService,
-    IEditorService,
-    IFolderTreeService,
-} from 'mo/services';
+import { FolderTreeService, IFolderTreeService } from 'mo/services';
 
 const confirm = Modal.confirm;
 
 export interface IFolderTreeController {
-    readonly onSelectFile?: (file: ITreeNodeItem, isUpdate?: boolean) => void;
-    readonly onDropTree?: (treeNode: ITreeNodeItem[]) => void;
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
         item: IMenuItem,
@@ -44,6 +36,14 @@ export interface IFolderTreeController {
         treeNode: ITreeNodeItem
     ) => IMenuItem[];
     readonly getInputEvent?: (events: IFolderInputEvent) => IFolderInputEvent;
+    readonly onNewFile?: (id: number) => void;
+    readonly onNewFolder?: (id: number) => void;
+    readonly onRename?: (id: number) => void;
+    readonly onDelete?: (id: number) => void;
+    readonly onUpdateFileName?: (file: ITreeNodeItem) => void;
+    readonly onUpdateFileContent?: (id: number, value?: string) => void;
+    readonly onSelectFile?: (file: ITreeNodeItem, isUpdate?: boolean) => void;
+    readonly onDropTree?: (treeNode: ITreeNodeItem[]) => void;
 }
 
 @singleton()
@@ -51,59 +51,53 @@ export class FolderTreeController
     extends Controller
     implements IFolderTreeController {
     private readonly folderTreeService: IFolderTreeService;
-    private readonly editorService: IEditorService;
     constructor() {
         super();
         this.folderTreeService = container.resolve(FolderTreeService);
-        this.editorService = container.resolve(EditorService);
         this.initView();
     }
 
     private initView() {}
 
-    public readonly onSelectFile = (
-        file: ITreeNodeItem,
-        isUpdate?: boolean
-    ) => {
-        const { fileType, isEditable } = file;
-        const isFile = fileType === FileTypes.file;
-        this.folderTreeService.setActive(file?.id);
-        if (!isFile || isEditable) return;
-        const tabData = {
-            ...file,
-            id: `${file.id}`?.split('_')?.[0],
-            modified: false,
-            data: {
-                value: file.content,
-                path: 'desktop/moslecule/editor1',
-                language: 'sql',
-            },
-        };
-
-        const { id, data = [] } =
-            this.editorService.getState()?.current || ({} as any);
-        if (isUpdate) {
-            const tabId = file.id;
-            const index = data?.findIndex((tab) => tab.id == tabId);
-            if (index > -1) {
-                if (id) this.editorService.updateTab(tabData, id);
-            } else {
-                this.editorService.open(tabData);
-            }
-        } else {
-            this.editorService.open(tabData);
-        }
-        this.emit(FolderTreeEvent.onSelectFile, tabData, isUpdate);
-    };
-
-    public readonly onDropTree = (treeNode: ITreeNodeItem[]) => {
-        this.folderTreeService.onDropTree(treeNode);
-    };
-
     public readonly getInputEvent = (
         events: IFolderInputEvent
     ): IFolderInputEvent => {
         return events;
+    };
+
+    public onRename = (id: number) => {
+        this.emit(FolderTreeEvent.onRename, id);
+    };
+
+    public onDelete = (id: number) => {
+        this.emit(FolderTreeEvent.onDelete, id);
+    };
+
+    public onNewFile = (id: number) => {
+        this.emit(FolderTreeEvent.onNewFile, id);
+    };
+
+    public onNewFolder = (id: number) => {
+        this.emit(FolderTreeEvent.onNewFolder, id);
+    };
+
+    public onUpdateFileName = (file: ITreeNodeItem) => {
+        this.emit(FolderTreeEvent.onUpdateFileName, file);
+    };
+
+    public onUpdateFileContent = (id: number, value?: string) => {
+        this.emit(FolderTreeEvent.onUpdateFileContent, id, value);
+    };
+
+    public readonly onSelectFile = (
+        file: ITreeNodeItem,
+        isUpdate?: boolean
+    ) => {
+        this.emit(FolderTreeEvent.onSelectFile, file, isUpdate);
+    };
+
+    public readonly onDropTree = (treeNode: ITreeNodeItem[]) => {
+        this.folderTreeService.onDropTree(treeNode);
     };
 
     public readonly onClickContextMenu = (
@@ -118,10 +112,7 @@ export class FolderTreeController
         console.log('onClickContextMenu => Item', item);
         switch (menuId) {
             case RENAME_COMMAND_ID: {
-                this.folderTreeService.rename(nodeId, () => {
-                    events?.setValue?.(name);
-                    events?.onFocus();
-                });
+                this.onRename(nodeId);
                 break;
             }
             case DELETE_COMMAND_ID: {
@@ -129,27 +120,17 @@ export class FolderTreeController
                     title: `Are you sure you want to delete '${name}' ?`,
                     content: 'This action is irreversible!',
                     onOk() {
-                        ctx.folderTreeService.delete(nodeId, () => {
-                            // TODO Refactor the below, there needs listen to the CloseTab by the editorService
-                            // ctx.editorController!.onCloseTab(
-                            //     `${nodeId}`,
-                            //     ctx.editorService.getState()?.current?.id
-                            // );
-                        });
+                        ctx.onDelete(nodeId);
                     },
                 });
                 break;
             }
             case NEW_FILE_COMMAND_ID: {
-                this.folderTreeService.newFile(nodeId, () => {
-                    events?.onFocus();
-                });
+                this.onNewFile(nodeId);
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                this.folderTreeService.newFolder(nodeId, () => {
-                    events?.onFocus();
-                });
+                this.onNewFolder(nodeId);
                 break;
             }
             case REMOVE_COMMAND_ID: {

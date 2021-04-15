@@ -7,6 +7,12 @@ import { randomId } from 'mo/common/utils';
 export enum FolderTreeEvent {
     onClick = 'folderTree.onClick',
     onSelectFile = 'folderTree.onSelectFile',
+    onNewFile = 'folderTree.onNewFile',
+    onNewFolder = 'folderTree.onNewFolder',
+    onDelete = 'folderTree.onDelete',
+    onRename = 'folderTree.onRename',
+    onUpdateFileName = 'folderTree.onUpdateFileName',
+    onUpdateFileContent = 'folderTree.onUpdateFileContent',
 }
 
 export interface IFolderInputEvent {

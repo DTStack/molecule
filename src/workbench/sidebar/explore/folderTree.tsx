@@ -3,7 +3,7 @@ import * as React from 'react';
 import { memo, useRef, useEffect, useCallback } from 'react';
 import { IFolderTreeSubItem } from 'mo';
 import { select } from 'mo/common/dom';
-import Tree, { FileTypes } from 'mo/components/tree';
+import Tree from 'mo/components/tree';
 import { Menu } from 'mo/components/menu';
 import { getEventPosition } from 'mo/common/dom';
 import { Button } from 'mo/components/button';
@@ -23,6 +23,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         data = [],
         contextMenu = [],
         folderPanelContextMenu = [],
+        onUpdateFileName,
         onSelectFile,
         onDropTree,
         filterContextMenu,
@@ -97,24 +98,10 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
 
     const handleUpdateFile = (e, node) => {
         const newName = (e.target as HTMLInputElement).value;
-        folderTreeService.updateFileName(
-            {
-                ...node,
-                name: newName,
-            },
-            () => {
-                if (node?.fileType === FileTypes.file && newName) {
-                    onSelectFile?.(
-                        {
-                            ...node,
-                            isEditable: false,
-                            name: newName,
-                        },
-                        true
-                    );
-                }
-            }
-        );
+        onUpdateFileName?.({
+            ...node,
+            name: newName,
+        });
     };
 
     const renderTitle = (node, index) => {

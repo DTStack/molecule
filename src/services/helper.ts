@@ -1,5 +1,3 @@
-import { ITreeNodeItem } from 'mo/components/tree';
-
 export function searchById(id) {
     return (item) => item.id === id;
 }

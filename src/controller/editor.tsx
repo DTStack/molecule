@@ -19,9 +19,7 @@ import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';
 import {
     EditorService,
-    FolderTreeService,
     IEditorService,
-    IFolderTreeService,
     IStatusBarService,
     StatusBarService,
 } from 'mo/services';
@@ -60,13 +58,11 @@ export class EditorController extends Controller implements IEditorController {
     private editorStates = new Map();
     private readonly editorService: IEditorService;
     private readonly statusBarService: IStatusBarService;
-    private readonly folderTreeService: IFolderTreeService;
 
     constructor() {
         super();
         this.editorService = container.resolve(EditorService);
         this.statusBarService = container.resolve(StatusBarService);
-        this.folderTreeService = container.resolve(FolderTreeService);
     }
 
     public open<T>(tab: IEditorTab<any>, groupId?: number) {

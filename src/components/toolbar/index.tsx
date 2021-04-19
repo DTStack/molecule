@@ -1,4 +1,3 @@
-import './style.scss';
 import * as React from 'react';
 import { prefixClaName, classNames } from 'mo/common/className';
 import ActionBar, { IActionBar } from 'mo/components/actionBar';

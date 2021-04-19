@@ -37,9 +37,10 @@ export class MenuBarService
     public add(menuItem: IMenuBarItem, parentId: string) {
         const { data } = this.state;
         const parentMenu = this.getMenuById(parentId);
+        if (!parentMenu) return;
         const deepData = cloneDeep(data);
         for (const menu of deepData) {
-            this.addMenu(menu, menuItem, parentMenu!);
+            this.addMenu(menu, menuItem, parentId!);
         }
         this.setState({ data: deepData });
     }
@@ -47,16 +48,15 @@ export class MenuBarService
     public addMenu(
         menu: IMenuBarItem,
         menuItem: IMenuBarItem,
-        parentMenu: IMenuBarItem
+        parentId: string
     ): void {
-        const parentMenuId = parentMenu?.id;
-        if (menu?.id === parentMenuId) {
+        if (menu?.id === parentId) {
             const parentMenu = menu.data || [];
             parentMenu.push(menuItem);
         } else {
             if (menu?.data?.length) {
                 for (const item of menu?.data) {
-                    this.addMenu(item, menuItem, parentMenu);
+                    this.addMenu(item, menuItem, parentId);
                 }
             }
         }
@@ -65,9 +65,10 @@ export class MenuBarService
     public remove(menuId: string): void {
         const { data } = this.state;
         const currentMenuItem = this.getMenuById(menuId);
+        if (!currentMenuItem) return;
         const deepData = cloneDeep(data);
         for (const menu of deepData) {
-            this.removeMenu(deepData, menu, currentMenuItem!);
+            this.removeMenu(deepData, menu, menuId);
         }
         this.setState({ data: deepData });
     }
@@ -75,9 +76,8 @@ export class MenuBarService
     public removeMenu(
         data: IMenuBarItem[],
         menu: IMenuBarItem,
-        currentMenuItem: IMenuBarItem
+        currentMenuId: string
     ): void {
-        const currentMenuId = currentMenuItem?.id;
         if (menu?.id === currentMenuId) {
             const menuItem = data.find((menu) => menu.id === currentMenuId);
             const idx = data.indexOf(menuItem!);
@@ -85,7 +85,7 @@ export class MenuBarService
         } else {
             if (menu?.data?.length) {
                 for (const item of menu?.data) {
-                    this.removeMenu(menu?.data, item, currentMenuItem);
+                    this.removeMenu(menu?.data, item, currentMenuId);
                 }
             }
         }

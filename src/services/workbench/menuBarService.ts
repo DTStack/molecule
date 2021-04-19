@@ -14,6 +14,7 @@ export interface IMenuBarService extends Component<IMenuBar> {
     add(menuItem: IMenuBarItem, parentId: string): void;
     remove(menuId: string): void;
     getState(): IMenuBar;
+    getMenuById(menuId: string): IMenuBarItem | undefined;
     update(menuId: string, menuItem: IMenuBarItem): void;
 }
 @singleton()
@@ -35,15 +36,15 @@ export class MenuBarService
 
     public add(menuItem: IMenuBarItem, parentId: string) {
         const { data } = this.state;
-        const parentMenu = this.getMenuById(parentId, data!);
+        const parentMenu = this.getMenuById(parentId);
         const deepData = cloneDeep(data);
         for (const menu of deepData) {
-            this.appendMenu(menu, menuItem, parentMenu!);
+            this.addMenu(menu, menuItem, parentMenu!);
         }
         this.setState({ data: deepData });
     }
 
-    public appendMenu(
+    public addMenu(
         menu: IMenuBarItem,
         menuItem: IMenuBarItem,
         parentMenu: IMenuBarItem
@@ -55,7 +56,7 @@ export class MenuBarService
         } else {
             if (menu?.data?.length) {
                 for (const item of menu?.data) {
-                    this.appendMenu(item, menuItem, parentMenu);
+                    this.addMenu(item, menuItem, parentMenu);
                 }
             }
         }
@@ -63,7 +64,7 @@ export class MenuBarService
 
     public remove(menuId: string): void {
         const { data } = this.state;
-        const currentMenuItem = this.getMenuById(menuId, data!);
+        const currentMenuItem = this.getMenuById(menuId);
         const deepData = cloneDeep(data);
         for (const menu of deepData) {
             this.removeMenu(deepData, menu, currentMenuItem!);
@@ -92,7 +93,7 @@ export class MenuBarService
 
     public update(menuId: string, menuItem: IMenuBarItem = {}): void {
         const { data } = this.state;
-        const currentMenuItem = this.getMenuById(menuId, data!);
+        const currentMenuItem = this.getMenuById(menuId);
         const deepData = cloneDeep(data);
         for (const menu of deepData) {
             this.updateMenu(menu, currentMenuItem!, menuItem);
@@ -100,7 +101,8 @@ export class MenuBarService
         this.setState({ data: deepData });
     }
 
-    public getMenuById(menuId: string, data: IMenuBarItem[]) {
+    public getMenuById(menuId: string): any {
+        const { data } = this.state;
         const queue = [...data];
         while (queue.length) {
             const menu = queue.shift();

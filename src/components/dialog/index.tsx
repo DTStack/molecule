@@ -1,4 +1,3 @@
-import './style.scss';
 import OriginModal, { IModalFuncProps, destroyFns } from './modal';
 import confirm, {
     withWarn,

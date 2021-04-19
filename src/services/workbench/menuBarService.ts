@@ -16,7 +16,7 @@ export interface IMenuBarService extends Component<IMenuBar> {
     add(menuItem: IMenuBarItem, parentId: string): void;
     remove(menuId: string): void;
     getState(): IMenuBar;
-    getMenuById(menuId: string): IMenuBarItem | undefined;
+    getMenuById(menuId: string): IMenuBarItem;
     update(menuId: string, menuItem: IMenuBarItem): void;
 }
 @singleton()
@@ -111,7 +111,7 @@ export class MenuBarService
 
     public getMenuById(menuId: string): any {
         const { data } = this.state;
-        const queue = [...data];
+        const queue = cloneDeep(data);
         while (queue.length) {
             const menu = queue.shift();
             if (menu?.id === menuId) return menu;
@@ -142,7 +142,7 @@ export class MenuBarService
 
     public addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void {
         const { data } = this.state;
-        let next = [...data];
+        let next = cloneDeep(data);
         if (Array.isArray(menu)) {
             next = next?.concat(menu);
         } else {

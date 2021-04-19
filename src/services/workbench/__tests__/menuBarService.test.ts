@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { IMenuBarService, MenuBarService } from '../menuBarService';
 
-describe('Test panelService', () => {
+describe('Test menubarService', () => {
     const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
     const builtMenuData = [
         {

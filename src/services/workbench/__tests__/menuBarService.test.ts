@@ -1,9 +1,8 @@
-import { builtMenuData } from 'mo/model/workbench/menuBar';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { IMenuBarService, MenuBarService } from '../menuBarService';
 
-describe('Test menubarService', () => {
+describe('Test menuBarService', () => {
     const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
     const builtMenuData = [
         {

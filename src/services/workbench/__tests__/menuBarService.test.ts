@@ -22,14 +22,13 @@ describe('Test menuBarService', () => {
         },
     ];
 
-    menuBarService.initMenu(builtMenuData);
-
     test('Test menuBarService Class instance', () => {
         expect(menuBarService).not.toBeUndefined();
         expect(menuBarService.getState().data).not.toBeUndefined();
     });
 
     test('Test menuBarService init menuBarData', () => {
+        menuBarService.initMenu(builtMenuData);
         const result = menuBarService.getState();
         expect(result.data).toEqual(builtMenuData);
     });

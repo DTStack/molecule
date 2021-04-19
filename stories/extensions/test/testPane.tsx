@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { activityBarService, colorThemeService, panelService } from 'mo';
+import {
+    activityBarService,
+    colorThemeService,
+    menuBarService,
+    panelService,
+} from 'mo';
 import { editorService, notificationService } from 'mo';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
@@ -100,6 +105,27 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         };
 
         const openCommand = function () {};
+
+        const appendMenu = function () {
+            const id = Math.random() * 10 + 1;
+            menuBarService.add(
+                {
+                    id: id + '',
+                    name: 'menuBar' + id,
+                    iconName: '',
+                },
+                'Edit'
+            );
+        };
+
+        const removeMenu = function () {
+            menuBarService.remove('SelectAll');
+        };
+
+        const updateMenu = function () {
+            menuBarService.update('SelectAll', { icon: 'check' });
+        };
+
         return (
             <div>
                 <div style={{ margin: '50px 20px' }}>
@@ -125,6 +151,12 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                     <Button onClick={removeNotification}>
                         Remove A Notification
                     </Button>
+                </div>
+                <div style={{ margin: '50px 20px' }}>
+                    <h2>MenuBar:</h2>
+                    <Button onClick={appendMenu}>Add MenuBar</Button>
+                    <Button onClick={removeMenu}>Remove MenuBar</Button>
+                    <Button onClick={updateMenu}>Update MenuBar</Button>
                 </div>
             </div>
         );

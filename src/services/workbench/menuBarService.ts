@@ -11,8 +11,8 @@ import { singleton, container } from 'tsyringe';
 
 export interface IMenuBarService extends Component<IMenuBar> {
     showHide(): void;
-    push(data: IMenuBarItem | IMenuBarItem[]): void;
-    remove(index: number): void;
+    add(menuItem: IMenuBarItem, parentId: string): void;
+    remove(menuId: string): void;
     getState(): IMenuBar;
     update(menuId: string, menuItem: IMenuBarItem): void;
 }
@@ -33,22 +33,66 @@ export class MenuBarService
         });
     }
 
-    public push(item: IMenuBarItem | IMenuBarItem[]) {
-        let original = this.state.data || [];
-        if (Array.isArray(item)) {
-            original = original.concat(item);
+    public add(menuItem: IMenuBarItem, parentId: string) {
+        const { data } = this.state;
+        const parentMenu = this.getMenuById(parentId, data!);
+        const deepData = cloneDeep(data);
+        for (const menu of deepData) {
+            this.appendMenu(menu, menuItem, parentMenu!);
+        }
+        this.setState({ data: deepData });
+    }
+
+    public appendMenu(
+        menu: IMenuBarItem,
+        menuItem: IMenuBarItem,
+        parentMenu: IMenuBarItem
+    ): void {
+        const parentMenuId = parentMenu?.id;
+        if (menu?.id === parentMenuId) {
+            const parentMenu = menu.data || [];
+            parentMenu.push(menuItem);
         } else {
-            original.push(item);
+            if (menu?.data?.length) {
+                for (const item of menu?.data) {
+                    this.appendMenu(item, menuItem, parentMenu);
+                }
+            }
         }
     }
 
-    public remove(index: number) {
-        this.state.data!.splice(index, 1);
+    public remove(menuId: string): void {
+        const { data } = this.state;
+        const currentMenuItem = this.getMenuById(menuId, data!);
+        const deepData = cloneDeep(data);
+        for (const menu of deepData) {
+            this.removeMenu(deepData, menu, currentMenuItem!);
+        }
+        this.setState({ data: deepData });
     }
 
-    public update(menuId: string, menuItem = {}) {
+    public removeMenu(
+        data: IMenuBarItem[],
+        menu: IMenuBarItem,
+        currentMenuItem: IMenuBarItem
+    ): void {
+        const currentMenuId = currentMenuItem?.id;
+        if (menu?.id === currentMenuId) {
+            const menuItem = data.find((menu) => menu.id === currentMenuId);
+            const idx = data.indexOf(menuItem!);
+            idx >= 0 && data.splice(idx, 1);
+        } else {
+            if (menu?.data?.length) {
+                for (const item of menu?.data) {
+                    this.removeMenu(menu?.data, item, currentMenuItem);
+                }
+            }
+        }
+    }
+
+    public update(menuId: string, menuItem: IMenuBarItem = {}): void {
         const { data } = this.state;
-        const currentMenuItem = this.getMenuById(menuId, data);
+        const currentMenuItem = this.getMenuById(menuId, data!);
         const deepData = cloneDeep(data);
         for (const menu of deepData) {
             this.updateMenu(menu, currentMenuItem!, menuItem);
@@ -56,17 +100,17 @@ export class MenuBarService
         this.setState({ data: deepData });
     }
 
-    public getMenuById(menuId: string, data) {
+    public getMenuById(menuId: string, data: IMenuBarItem[]) {
         const queue = [...data];
         while (queue.length) {
             const menu = queue.shift();
-            if (menu.id === menuId) return menu;
-            queue.push(...(menu.data || []));
+            if (menu?.id === menuId) return menu;
+            queue.push(...(menu?.data || []));
         }
     }
 
     public updateMenu(
-        menu,
+        menu: IMenuBarItem,
         currentMenuItem: IMenuBarItem,
         menuItem: IMenuBarItem
     ) {

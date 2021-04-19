@@ -11,6 +11,8 @@ import { singleton, container } from 'tsyringe';
 
 export interface IMenuBarService extends Component<IMenuBar> {
     showHide(): void;
+    initMenu(data: IMenuBarItem[]): void;
+    addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void;
     add(menuItem: IMenuBarItem, parentId: string): void;
     remove(menuId: string): void;
     getState(): IMenuBar;
@@ -33,6 +35,12 @@ export class MenuBarService
             hidden: !this.state.hidden,
         });
     }
+
+    public initMenu = (menuData: IMenuBarItem[]) => {
+        this.setState({
+            data: menuData,
+        });
+    };
 
     public add(menuItem: IMenuBarItem, parentId: string) {
         const { data } = this.state;
@@ -130,5 +138,18 @@ export class MenuBarService
                 }
             }
         }
+    }
+
+    public addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void {
+        const { data } = this.state;
+        let next = [...data];
+        if (Array.isArray(menu)) {
+            next = next?.concat(menu);
+        } else {
+            next?.push(menu);
+        }
+        this.setState({
+            data: next,
+        });
     }
 }

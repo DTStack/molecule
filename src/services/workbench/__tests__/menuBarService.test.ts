@@ -4,7 +4,7 @@ import { IMenuBarService, MenuBarService } from '../menuBarService';
 
 describe('Test menuBarService', () => {
     const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
-    const builtMenuData = [
+    const builtInMenuData = [
         {
             id: '1',
             name: 'root',
@@ -28,9 +28,9 @@ describe('Test menuBarService', () => {
     });
 
     test('Test menuBarService init menuBarData', () => {
-        menuBarService.initMenu(builtMenuData);
+        menuBarService.initMenu(builtInMenuData);
         const result = menuBarService.getState();
-        expect(result.data).toEqual(builtMenuData);
+        expect(result.data).toEqual(builtInMenuData);
     });
 
     test('Test menuBarService add for menuBar', () => {

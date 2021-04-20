@@ -28,7 +28,7 @@ export const MENU_VIEW_SIDEBAR = 'workbench.action.showSideBar';
 export const MENU_VIEW_ACTIVITYBAR = 'workbench.action.showActivityBar';
 export const MENU_VIEW_STATUSBAR = 'workbench.action.showStatusBar';
 
-export const builtMenuData = [
+export const builtInMenuData = [
     {
         id: 'File',
         name: 'File',
@@ -147,7 +147,7 @@ export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];
     public hidden = false;
 
-    constructor(data: IMenuBarItem[] = builtMenuData, hidden = false) {
+    constructor(data: IMenuBarItem[] = builtInMenuData, hidden = false) {
         this.data = data;
         this.hidden = hidden;
     }

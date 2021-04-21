@@ -87,8 +87,14 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
             <EditorBreadcrumb breadcrumbs={tab.breadcrumb} />
             <div className={groupContainerClassName}>
                 {
-                    // Default we use monaco editor, but also you can customize by renderPanel() function
-                    tab.renderPanel || (
+                    // Default we use monaco editor, but also you can customize by renderPanel() function or a react element
+                    tab.renderPanel ? (
+                        typeof tab.renderPanel === 'function' ? (
+                            tab.renderPanel(tab.data)
+                        ) : (
+                            tab.renderPanel
+                        )
+                    ) : (
                         <MonacoEditor
                             options={{
                                 value: tab.data?.value,

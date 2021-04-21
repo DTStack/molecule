@@ -93,7 +93,7 @@ export function Tabs<T>(props: ITabs<T>) {
                                         activeTab === tab.id,
                                 })}
                             >
-                                {tab.renderPanel}
+                                {tab.renderPane}
                             </div>
                         );
                     })}

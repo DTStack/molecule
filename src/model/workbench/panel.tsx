@@ -21,14 +21,14 @@ export const PANEL_PROBLEMS: IPanelItem = {
     id: 'ProblemsPane',
     name: 'problems',
     data: null,
-    renderPanel: (item) => <Problems {...item} />,
+    renderPane: (item) => <Problems {...item} />,
 };
 
 export const PANEL_OUTPUT: IPanelItem = {
     id: 'OutputPane',
     name: 'output',
     data: 'output',
-    renderPanel: (item) => <Output {...item} />,
+    renderPane: (item) => <Output {...item} />,
 };
 
 export const PANEL_TOOLBOX_CLOSE = {

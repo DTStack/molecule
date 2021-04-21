@@ -22,7 +22,7 @@ export interface ITab<T = any, P = any> {
     index?: number;
     id?: string;
     name?: string;
-    renderPanel?: ((item: P) => ReactNode) | ReactNode;
+    renderPane?: ((item: P) => ReactNode) | ReactNode;
     data?: T;
 }
 export interface ITabEvent {

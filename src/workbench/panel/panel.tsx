@@ -20,9 +20,9 @@ function Panel(props: IPanel & IPanelController) {
     }
 
     const content =
-        typeof current?.renderPanel === 'function'
-            ? current?.renderPanel?.(current)
-            : current?.renderPanel;
+        typeof current?.renderPane === 'function'
+            ? current?.renderPane?.(current)
+            : current?.renderPane;
 
     return (
         <div className={defaultClassName}>

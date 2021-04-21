@@ -11,9 +11,12 @@ import { singleton, container } from 'tsyringe';
 
 export interface IMenuBarService extends Component<IMenuBar> {
     showHide(): void;
-    push(data: IMenuBarItem | IMenuBarItem[]): void;
-    remove(index: number): void;
+    initMenu(data: IMenuBarItem[]): void;
+    addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void;
+    add(menuItem: IMenuBarItem, parentId: string): void;
+    remove(menuId: string): void;
     getState(): IMenuBar;
+    getMenuById(menuId: string): IMenuBarItem;
     update(menuId: string, menuItem: IMenuBarItem): void;
 }
 @singleton()
@@ -33,22 +36,72 @@ export class MenuBarService
         });
     }
 
-    public push(item: IMenuBarItem | IMenuBarItem[]) {
-        let original = this.state.data || [];
-        if (Array.isArray(item)) {
-            original = original.concat(item);
+    public initMenu = (menuData: IMenuBarItem[]) => {
+        this.setState({
+            data: menuData,
+        });
+    };
+
+    public add(menuItem: IMenuBarItem, parentId: string) {
+        const { data } = this.state;
+        const parentMenu = this.getMenuById(parentId);
+        if (!parentMenu) return;
+        const deepData = cloneDeep(data);
+        for (const menu of deepData) {
+            this.addMenu(menu, menuItem, parentId!);
+        }
+        this.setState({ data: deepData });
+    }
+
+    public addMenu(
+        menu: IMenuBarItem,
+        menuItem: IMenuBarItem,
+        parentId: string
+    ): void {
+        if (menu?.id === parentId) {
+            const parentMenu = menu.data || [];
+            parentMenu.push(menuItem);
         } else {
-            original.push(item);
+            if (menu?.data?.length) {
+                for (const item of menu?.data) {
+                    this.addMenu(item, menuItem, parentId);
+                }
+            }
         }
     }
 
-    public remove(index: number) {
-        this.state.data!.splice(index, 1);
+    public remove(menuId: string): void {
+        const { data } = this.state;
+        const currentMenuItem = this.getMenuById(menuId);
+        if (!currentMenuItem) return;
+        const deepData = cloneDeep(data);
+        for (const menu of deepData) {
+            this.removeMenu(deepData, menu, menuId);
+        }
+        this.setState({ data: deepData });
     }
 
-    public update(menuId: string, menuItem = {}) {
+    public removeMenu(
+        data: IMenuBarItem[],
+        menu: IMenuBarItem,
+        currentMenuId: string
+    ): void {
+        if (menu?.id === currentMenuId) {
+            const menuItem = data.find((menu) => menu.id === currentMenuId);
+            const idx = data.indexOf(menuItem!);
+            idx >= 0 && data.splice(idx, 1);
+        } else {
+            if (menu?.data?.length) {
+                for (const item of menu?.data) {
+                    this.removeMenu(menu?.data, item, currentMenuId);
+                }
+            }
+        }
+    }
+
+    public update(menuId: string, menuItem: IMenuBarItem = {}): void {
         const { data } = this.state;
-        const currentMenuItem = this.getMenuById(menuId, data);
+        const currentMenuItem = this.getMenuById(menuId);
         const deepData = cloneDeep(data);
         for (const menu of deepData) {
             this.updateMenu(menu, currentMenuItem!, menuItem);
@@ -56,17 +109,18 @@ export class MenuBarService
         this.setState({ data: deepData });
     }
 
-    public getMenuById(menuId: string, data) {
-        const queue = [...data];
+    public getMenuById(menuId: string): any {
+        const { data } = this.state;
+        const queue = cloneDeep(data);
         while (queue.length) {
             const menu = queue.shift();
-            if (menu.id === menuId) return menu;
-            queue.push(...(menu.data || []));
+            if (menu?.id === menuId) return menu;
+            queue.push(...(menu?.data || []));
         }
     }
 
     public updateMenu(
-        menu,
+        menu: IMenuBarItem,
         currentMenuItem: IMenuBarItem,
         menuItem: IMenuBarItem
     ) {
@@ -84,5 +138,18 @@ export class MenuBarService
                 }
             }
         }
+    }
+
+    public addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void {
+        const { data } = this.state;
+        let next = cloneDeep(data);
+        if (Array.isArray(menu)) {
+            next = next?.concat(menu);
+        } else {
+            next?.push(menu);
+        }
+        this.setState({
+            data: next,
+        });
     }
 }

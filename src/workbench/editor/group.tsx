@@ -88,11 +88,11 @@ function EditorGroup(props: IEditorGroupProps & IEditorController) {
             <div className={groupContainerClassName}>
                 {
                     // Default we use monaco editor, but also you can customize by renderPanel() function or a react element
-                    tab.renderPanel ? (
-                        typeof tab.renderPanel === 'function' ? (
-                            tab.renderPanel(tab.data)
+                    tab.renderPane ? (
+                        typeof tab.renderPane === 'function' ? (
+                            tab.renderPane(tab.data)
                         ) : (
-                            tab.renderPanel
+                            tab.renderPane
                         )
                     ) : (
                         <MonacoEditor

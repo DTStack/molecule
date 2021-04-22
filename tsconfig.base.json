@@ -25,8 +25,8 @@
         "resolveJsonModule": true,
         "downlevelIteration": true,
         "paths": {
-            "mo": ["./src/index.ts"],
             "mo/*": ["./src/*"],
+            "mo": ["./src/index.ts"],
             "@stories": ["./stories/*"]
         },
         "typeRoots": ["node", "node_modules/@types", "src/typings"]

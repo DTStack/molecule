@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import * as React from 'react';
 import { memo, useRef, useEffect, useCallback } from 'react';
-import { IFolderTreeSubItem } from 'mo';
+import { IFolderTreeSubItem } from 'mo/model';
 import { select } from 'mo/common/dom';
 import Tree from 'mo/components/tree';
 import { Menu } from 'mo/components/menu';

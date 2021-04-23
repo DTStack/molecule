@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import { MoleculeProvider } from 'mo';
+import { MoleculeProvider } from 'mo/provider';
 
 import { Workbench } from '../index';
 

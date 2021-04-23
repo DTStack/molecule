@@ -1,6 +1,6 @@
-// import * as React from 'react';
 import { IExtension } from 'mo/model/extension';
-import { statusBarService, IExtensionService } from 'mo';
+import { IExtensionService } from 'mo/services';
+import { statusBarService } from 'mo/index';
 
 function init() {
     statusBarService.onClick(function (e, item) {

@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
-import { connect } from 'mo';
+import { connect } from 'mo/react';
 import { Explorer, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IMenuItem } from 'mo/components/menu';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';

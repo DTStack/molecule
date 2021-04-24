@@ -57,7 +57,6 @@ module.exports = function () {
             extensions: ['.css', '.scss'],
             alias: {
                 mo: path.resolve(__dirname, '../src'),
-                '@stories': path.resolve(__dirname, '../stories'),
             },
         },
         module: {
@@ -99,9 +98,6 @@ module.exports = function () {
             ],
         },
         plugins: [
-            new webpack.DefinePlugin({
-                __DEVELOPMENT__: false,
-            }),
             new CopyPlugin({
                 patterns: [
                     {

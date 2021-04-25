@@ -4,6 +4,7 @@ import * as monaco from 'monaco-editor';
 
 import { Component } from 'mo/react';
 import {
+    EditorEvent,
     EditorModel,
     EditorGroupModel,
     IEditor,
@@ -30,6 +31,7 @@ export interface IEditorService extends Component<IEditor> {
     closeAll(groupId: number): void;
     getGroupById(groupId: number): IEditorGroup | undefined;
     cloneGroup(groupId?: number): IEditorGroup;
+    onUpdateTab(callback: (newValue: string, groupId: number) => void);
     /**
      * Set active group and tab
      * @param groupId Target group ID
@@ -279,5 +281,9 @@ export class EditorService
             groups: [...groups, cloneGroup],
         });
         return cloneGroup;
+    }
+
+    public onUpdateTab(callback: (newValue: string, groupId?: number) => void) {
+        this.subscribe(EditorEvent.OnUpdateTab, callback);
     }
 }

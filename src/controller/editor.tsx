@@ -218,18 +218,7 @@ export class EditorController extends Controller implements IEditorController {
             const { current } = this.editorService.getState();
             const tab = current?.tab;
             if (!tab) return;
-            const notSave = newValue !== tab?.data?.value;
-            this.editorService.updateTab(
-                {
-                    id: tab.id,
-                    data: {
-                        ...tab.data,
-                        modified: notSave,
-                        value: newValue,
-                    },
-                },
-                groupId
-            );
+            this.emit(EditorEvent.OnUpdateTab, newValue, groupId);
             this.emit(
                 FolderTreeEvent.onUpdateFileContent,
                 current?.tab?.id as any,

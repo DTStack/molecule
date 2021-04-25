@@ -33,7 +33,7 @@ export function randomId() {
     return Date.now() + Math.round(Math.random() * 1000);
 }
 
-export function mergeObjects(source: object, target: object) {
+export function mergeObjects<T>(source: object, target: object): T {
     for (const prop in target) {
         if (typeof source[prop] === 'object' && target[prop]) {
             source[prop] = mergeObjects(source[prop], target[prop]);
@@ -41,11 +41,11 @@ export function mergeObjects(source: object, target: object) {
             source[prop] = target[prop];
         }
     }
-    return source;
+    return source as any;
 }
 
 /**
- * It's used convert an object to a flatted object,
+ * It's converts an object to a flatted object,
  * eg: { a: { b: 'test' }}, result is : { 'a.b': 'test' }
  * @param target flat target
  */
@@ -69,7 +69,7 @@ export function flatObject(target: object): object {
 }
 
 /**
- * It's used convert a flatted object to a normal object,
+ * It's converts a flatted object to a normal object,
  *  eg: { 'a.b': 'test' }, result is : { a: { b: 'test' }}
  * @param target flat target
  */

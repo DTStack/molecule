@@ -31,7 +31,13 @@ export interface IEditorService extends Component<IEditor> {
     closeAll(groupId: number): void;
     getGroupById(groupId: number): IEditorGroup | undefined;
     cloneGroup(groupId?: number): IEditorGroup;
-    onUpdateTab(callback: (newValue: string, groupId: number) => void);
+    onUpdateTab(
+        callback: (
+            newValue: string,
+            groupId: number,
+            originValue?: string
+        ) => void
+    );
     /**
      * Set active group and tab
      * @param groupId Target group ID
@@ -283,7 +289,13 @@ export class EditorService
         return cloneGroup;
     }
 
-    public onUpdateTab(callback: (newValue: string, groupId?: number) => void) {
+    public onUpdateTab(
+        callback: (
+            newValue: string,
+            groupId: number,
+            originValue?: string
+        ) => void
+    ) {
         this.subscribe(EditorEvent.OnUpdateTab, callback);
     }
 }

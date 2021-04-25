@@ -217,8 +217,19 @@ export class EditorController extends Controller implements IEditorController {
             const newValue = editorInstance.getModel()?.getValue();
             const { current } = this.editorService.getState();
             const tab = current?.tab;
+            const originValue = tab?.data?.value;
             if (!tab) return;
-            this.emit(EditorEvent.OnUpdateTab, newValue, groupId);
+            this.editorService.updateTab(
+                {
+                    id: tab.id,
+                    data: {
+                        ...tab.data,
+                        value: newValue,
+                    },
+                },
+                groupId
+            );
+            this.emit(EditorEvent.OnUpdateTab, newValue, groupId, originValue);
             this.emit(
                 FolderTreeEvent.onUpdateFileContent,
                 current?.tab?.id as any,

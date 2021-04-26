@@ -38,6 +38,15 @@ export interface IEditorService extends Component<IEditor> {
             originValue?: string
         ) => void
     );
+    onMoveTab(
+        callback: (updateTabs: IEditorTab<any>[], groupId?: number) => void
+    );
+    onSelectTab(callback: (tabId: string, groupId?: number) => void);
+    onCloseAll(callback: (groupId?: number) => void);
+    onCloseTab(callback: (tabId: string, groupId?: number) => void);
+    onCloseOthers(callback: (tabItem: IEditorTab, groupId?: number) => void);
+    onCloseToLeft(callback: (tabItem: IEditorTab, groupId?: number) => void);
+    onCloseToRight(callback: (tabItem: IEditorTab, groupId?: number) => void);
     /**
      * Set active group and tab
      * @param groupId Target group ID
@@ -297,5 +306,41 @@ export class EditorService
         ) => void
     ) {
         this.subscribe(EditorEvent.OnUpdateTab, callback);
+    }
+
+    public onMoveTab(
+        callback: (updateTabs: IEditorTab<any>[], groupId?: number) => void
+    ) {
+        this.subscribe(EditorEvent.OnMoveTab, callback);
+    }
+
+    public onSelectTab(callback: (tabId: string, groupId?: number) => void) {
+        this.subscribe(EditorEvent.OnSelectTab, callback);
+    }
+
+    public onCloseAll(callback: (groupId?: number) => void) {
+        this.subscribe(EditorEvent.OnCloseAll, callback);
+    }
+
+    public onCloseTab(callback: (tabId: string, groupId?: number) => void) {
+        this.subscribe(EditorEvent.OnCloseTab, callback);
+    }
+
+    public onCloseOthers(
+        callback: (tabItem: IEditorTab, groupId?: number) => void
+    ) {
+        this.subscribe(EditorEvent.OnCloseOthers, callback);
+    }
+
+    public onCloseToLeft(
+        callback: (tabItem: IEditorTab, groupId?: number) => void
+    ) {
+        this.subscribe(EditorEvent.OnCloseToLeft, callback);
+    }
+
+    public onCloseToRight(
+        callback: (tabItem: IEditorTab, groupId?: number) => void
+    ) {
+        this.subscribe(EditorEvent.OnCloseToRight, callback);
     }
 }

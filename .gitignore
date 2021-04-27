@@ -7,3 +7,4 @@ coverage
 storybook-static
 .yarn-error.log
 lib
+docs/api

@@ -1,7 +1,16 @@
 import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
-import { IPanelService, PanelService } from 'mo/services';
+import {
+    BuiltInSettingsTab,
+    EditorService,
+    IEditorService,
+    IPanelService,
+    ISettingsService,
+    PanelService,
+    SettingsService,
+} from 'mo/services';
 import { container, singleton } from 'tsyringe';
+import { SettingsEvent } from 'mo/model/settings';
 
 export interface ISettingsController {}
 
@@ -10,10 +19,28 @@ export class SettingsController
     extends Controller
     implements ISettingsController {
     private readonly panelService: IPanelService;
+    private readonly editorService: IEditorService;
+    private readonly settingsService: ISettingsService;
 
     constructor() {
         super();
         this.panelService = container.resolve(PanelService);
+        this.editorService = container.resolve(EditorService);
+        this.settingsService = container.resolve(SettingsService);
+
+        this.initial();
+    }
+
+    private initial() {
+        this.editorService.onUpdateTab((tab) => {
+            if (tab.id === BuiltInSettingsTab.id) {
+                this.emit(SettingsEvent.OnChange, tab);
+                const config = this.settingsService.normalizeFlatObject(
+                    tab.data?.value || ''
+                );
+                this.settingsService.update(config);
+            }
+        });
     }
 
     public readonly onClick = (event: React.MouseEvent) => {

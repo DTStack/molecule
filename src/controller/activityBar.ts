@@ -21,6 +21,8 @@ import {
     IActivityBarService,
     IEditorService,
     IMenuBarService,
+    ISettingsService,
+    SettingsService,
 } from 'mo/services';
 export interface IActivityBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
@@ -38,11 +40,14 @@ export class ActivityBarController
     private readonly activityBarService: IActivityBarService;
     private readonly editorService: IEditorService;
     private readonly menuBarService: IMenuBarService;
+    private readonly settingsService: ISettingsService;
+
     constructor() {
         super();
         this.activityBarService = container.resolve(ActivityBarService);
         this.editorService = container.resolve(EditorService);
         this.menuBarService = container.resolve(MenuBarService);
+        this.settingsService = container.resolve(SettingsService);
     }
 
     public readonly onSelect = (
@@ -77,13 +82,6 @@ export class ActivityBarController
             .run();
     };
 
-    private gotoSettings() {
-        this.editorService.open({
-            id: 'Settings',
-            name: 'Settings',
-        });
-    }
-
     // TODO: Menu 按钮是否提取至 activityBar 外
     public readonly onContextMenuClick = (
         e: React.MouseEvent,
@@ -114,7 +112,7 @@ export class ActivityBarController
                 break;
             }
             case CONTEXT_MENU_SETTINGS.id: {
-                this.gotoSettings();
+                this.settingsService.openSettingsInEditor();
                 break;
             }
             case CONTEXT_MENU_COLOR_THEME.id: {

@@ -4,12 +4,12 @@ import * as monaco from 'monaco-editor';
 
 import { Component } from 'mo/react';
 import {
-    EditorEvent,
     EditorModel,
     EditorGroupModel,
     IEditor,
     IEditorGroup,
     IEditorTab,
+    EditorEvent,
 } from 'mo/model';
 import { searchById } from '../helper';
 export interface IEditorService extends Component<IEditor> {
@@ -31,13 +31,11 @@ export interface IEditorService extends Component<IEditor> {
     closeAll(groupId: number): void;
     getGroupById(groupId: number): IEditorGroup | undefined;
     cloneGroup(groupId?: number): IEditorGroup;
-    onUpdateTab(
-        callback: (
-            newValue: string,
-            groupId: number,
-            originValue?: string
-        ) => void
-    );
+    /**
+     * Listen to the Editor Tab changed event.
+     * @param tab the changed tab
+     */
+    onUpdateTab(callback: (tab: IEditorTab) => void): void;
     onMoveTab(
         callback: (updateTabs: IEditorTab<any>[], groupId?: number) => void
     );
@@ -90,7 +88,8 @@ export class EditorService
                 const tabIndex = group.data!.findIndex(searchById(tab.id));
                 if (tabIndex > -1) {
                     const tabData = group.data![tabIndex];
-                    group.data![tabIndex] = Object.assign({}, tabData, tab);
+                    const newTab = Object.assign({}, tabData, tab);
+                    group.data![tabIndex] = newTab;
                     this.render();
                 }
             }
@@ -298,13 +297,7 @@ export class EditorService
         return cloneGroup;
     }
 
-    public onUpdateTab(
-        callback: (
-            newValue: string,
-            groupId: number,
-            originValue?: string
-        ) => void
-    ) {
+    public onUpdateTab(callback: (tab: IEditorTab) => void) {
         this.subscribe(EditorEvent.OnUpdateTab, callback);
     }
 

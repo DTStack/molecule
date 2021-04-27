@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { activityBarService, IActivityBarItem, sidebarService } from 'mo';
+import {
+    activityBarService,
+    IActivityBarItem,
+    sidebarService,
+    settingsService,
+} from 'mo';
 import { IExtension } from 'mo/model/extension';
 
 import TestPane from './testPane';
@@ -28,6 +33,10 @@ export const ExtendTestPane: IExtension = {
                     current: testSidePane.id,
                 });
             }
+        });
+
+        settingsService.onChangeConfiguration((value) => {
+            console.log('onChangeConfiguration:', value);
         });
     },
 };

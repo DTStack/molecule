@@ -5,6 +5,7 @@ import {
     colorThemeService,
     menuBarService,
     panelService,
+    settingsService,
 } from 'mo';
 import { editorService, notificationService } from 'mo';
 import { Button } from 'mo/components/button';
@@ -93,39 +94,37 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             editorService.open(tabData);
         };
 
-        editorService.onUpdateTab(
-            (newValue: string, groupId: number, originValue?: string) => {
-                const { current } = editorService.getState();
-                const tab = current?.tab!;
-                const notSave = newValue !== originValue;
-                editorService.updateTab(
-                    {
-                        id: tab.id,
-                        data: {
-                            ...tab.data,
-                            modified: notSave,
-                        },
+        editorService.onUpdateTab((newTab) => {
+            const { current } = editorService.getState();
+            const tab = current?.tab!;
+            editorService.updateTab(
+                {
+                    id: tab.id,
+                    data: {
+                        ...tab.data,
+                        modified: true,
                     },
-                    groupId
-                );
-                current?.editorInstance.addCommand(
-                    monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
-                    () => {
-                        // ctrl + s
-                        editorService.updateTab(
-                            {
-                                id: tab.id,
-                                data: {
-                                    ...tab.data,
-                                    modified: false,
-                                },
+                },
+                current?.id || -1
+            );
+            // TODO editorService add onSaveEditor() event.
+            current?.editorInstance.addCommand(
+                monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
+                () => {
+                    // ctrl + s
+                    editorService.updateTab(
+                        {
+                            id: tab.id,
+                            data: {
+                                ...tab.data,
+                                modified: false,
                             },
-                            groupId
-                        );
-                    }
-                );
-            }
-        );
+                        },
+                        current?.id || -1
+                    );
+                }
+            );
+        });
         let notify;
         const addANotification = function () {
             notify = notificationService.addNotification<string>({
@@ -160,6 +159,16 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             menuBarService.update('SelectAll', { icon: 'check' });
         };
 
+        const addSettingsItem = function () {
+            settingsService.append({
+                project: {
+                    a: {
+                        name: `${Math.floor(Math.random() * 10) + 1}`,
+                    },
+                },
+            });
+        };
+
         return (
             <div>
                 <div style={{ margin: '50px 20px' }}>
@@ -191,6 +200,9 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                     <Button onClick={appendMenu}>Add MenuBar</Button>
                     <Button onClick={removeMenu}>Remove MenuBar</Button>
                     <Button onClick={updateMenu}>Update MenuBar</Button>
+                    <Button onClick={addSettingsItem}>
+                        Append Settings Item
+                    </Button>
                 </div>
             </div>
         );

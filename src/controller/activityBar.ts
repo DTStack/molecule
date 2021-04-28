@@ -14,6 +14,8 @@ import {
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
+import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
+
 import {
     ActivityBarService,
     EditorService,
@@ -24,6 +26,7 @@ import {
     ISettingsService,
     SettingsService,
 } from 'mo/services';
+import { GotoLineAction } from 'mo/monaco/gotoLineAction';
 export interface IActivityBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
@@ -70,16 +73,11 @@ export class ActivityBarController
     };
 
     private gotoQuickCommand() {
-        const actionId = 'editor.action.quickCommand';
-        this.editorService.editorInstance?.focus(); // The QuickCommand action requires the editor focusing
-        this.editorService.editorInstance?.getAction(actionId).run();
+        CommandsRegistry.getCommand(GotoLineAction.ID).handler();
     }
 
     private onSelectColorTheme = () => {
-        this.editorService.editorInstance?.focus(); // The QuickCommand action requires the editor focusing
-        this.editorService.editorInstance
-            ?.getAction(SelectColorThemeAction.ID)
-            .run();
+        CommandsRegistry.getCommand(SelectColorThemeAction.ID).handler();
     };
 
     // TODO: Menu 按钮是否提取至 activityBar 外

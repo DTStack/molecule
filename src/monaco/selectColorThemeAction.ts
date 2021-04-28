@@ -5,19 +5,19 @@ import {
     QuickPickInput,
 } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 import { IColorTheme } from 'mo/model/colorTheme';
-import {
-    EditorAction,
-    registerEditorAction,
-} from 'monaco-editor/esm/vs/editor/browser/editorExtensions';
+import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
 import * as monaco from 'monaco-editor';
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 import { ColorThemeService, IColorThemeService } from 'mo/services';
-import { container } from 'tsyringe';
+import { container, singleton } from 'tsyringe';
+import { monacoService } from './monacoService';
+import { Action } from 'monaco-editor/esm/vs/base/common/actions';
 
-export class SelectColorThemeAction extends EditorAction {
+@singleton()
+export class SelectColorThemeAction extends Action {
     static readonly ID = 'workbench.action.selectTheme';
     static readonly LABEL = localize('selectTheme.label', 'Color Theme');
-    private quickInputService: IQuickInputService;
+    private readonly quickInputService: IQuickInputService;
     private readonly colorThemeService: IColorThemeService;
 
     constructor() {
@@ -33,10 +33,10 @@ export class SelectColorThemeAction extends EditorAction {
             },
         });
         this.colorThemeService = container.resolve(ColorThemeService);
+        this.quickInputService = monacoService.services.get(IQuickInputService);
     }
 
-    run(accessor): Promise<void> {
-        this.quickInputService = accessor.get(IQuickInputService);
+    run(): Promise<void> {
         const themes = this.colorThemeService.getThemes();
         const currentTheme = this.colorThemeService.getColorTheme();
 
@@ -120,4 +120,10 @@ function toEntries(
     return entries;
 }
 
-registerEditorAction(SelectColorThemeAction);
+CommandsRegistry.registerCommand(
+    SelectColorThemeAction.ID,
+    (serviceAccessor) => {
+        const selectColorAction = container.resolve(SelectColorThemeAction);
+        selectColorAction.run();
+    }
+);

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import * as React from 'react';
-import { IStatusBarItem, StatusBarEvent } from 'mo';
+import { IStatusBarItem, StatusBarEvent } from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { PANEL_PROBLEMS } from 'mo/model/workbench/panel';

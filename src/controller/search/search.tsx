@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
-import { connect, IActivityBarItem } from 'mo';
+import { connect } from 'mo/react';
+import { IActivityBarItem } from 'mo/model';
 import * as React from 'react';
 import { SearchPanel } from 'mo/workbench/sidebar/search';
 import { IActionBarItem } from 'mo/components/actionBar';

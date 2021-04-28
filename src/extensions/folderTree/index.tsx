@@ -1,4 +1,4 @@
-import { folderTreeService, editorService } from 'mo';
+import { folderTreeService, editorService } from 'mo/index';
 import { IExtension } from 'mo/model/extension';
 import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
 import { TreeNodeModel } from 'mo/model';

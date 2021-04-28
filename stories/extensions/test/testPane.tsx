@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as monaco from 'monaco-editor';
 import {
     activityBarService,
     colorThemeService,
@@ -92,6 +93,39 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             editorService.open(tabData);
         };
 
+        editorService.onUpdateTab(
+            (newValue: string, groupId: number, originValue?: string) => {
+                const { current } = editorService.getState();
+                const tab = current?.tab!;
+                const notSave = newValue !== originValue;
+                editorService.updateTab(
+                    {
+                        id: tab.id,
+                        data: {
+                            ...tab.data,
+                            modified: notSave,
+                        },
+                    },
+                    groupId
+                );
+                current?.editorInstance.addCommand(
+                    monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
+                    () => {
+                        // ctrl + s
+                        editorService.updateTab(
+                            {
+                                id: tab.id,
+                                data: {
+                                    ...tab.data,
+                                    modified: false,
+                                },
+                            },
+                            groupId
+                        );
+                    }
+                );
+            }
+        );
         let notify;
         const addANotification = function () {
             notify = notificationService.addNotification<string>({

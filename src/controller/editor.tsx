@@ -111,15 +111,13 @@ export class EditorController extends Controller implements IEditorController {
         const { current } = this.editorService.getState();
         const newValue = current?.tab?.data?.value;
         const model = current?.editorInstance?.getModel();
-        model?.pushEditOperations(
-            [],
-            [
-                {
-                    range: model?.getFullModelRange(),
-                    text: newValue!,
-                },
-            ]
-        );
+        current?.editorInstance?.executeEdits('update-value', [
+            {
+                range: model.getFullModelRange(),
+                text: newValue,
+                forceMoveMarkers: true,
+            },
+        ]);
         current?.editorInstance?.focus();
     };
 
@@ -217,19 +215,19 @@ export class EditorController extends Controller implements IEditorController {
             const newValue = editorInstance.getModel()?.getValue();
             const { current } = this.editorService.getState();
             const tab = current?.tab;
+            const originValue = tab?.data?.value;
             if (!tab) return;
-            const notSave = newValue !== tab?.data?.value;
             this.editorService.updateTab(
                 {
                     id: tab.id,
                     data: {
                         ...tab.data,
-                        modified: notSave,
                         value: newValue,
                     },
                 },
                 groupId
             );
+            this.emit(EditorEvent.OnUpdateTab, newValue, groupId, originValue);
             this.emit(
                 FolderTreeEvent.onUpdateFileContent,
                 current?.tab?.id as any,
@@ -273,7 +271,7 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     private openFile(
-        editorInstance,
+        editorInstance: IStandaloneCodeEditor,
         path: string,
         value: string,
         language: string
@@ -291,18 +289,15 @@ export class EditorController extends Controller implements IEditorController {
 
     private initializeFile(path: string, value: string, language: string) {
         let model = monaco.editor.getModel(monaco.Uri.parse(path));
-
+        const { current } = this.editorService.getState();
         if (model) {
-            model?.pushEditOperations(
-                [],
-                [
-                    {
-                        range: model?.getFullModelRange(),
-                        text: value!,
-                    },
-                ],
-                [] as any
-            );
+            current?.editorInstance?.executeEdits('update-value', [
+                {
+                    range: model.getFullModelRange(),
+                    text: value,
+                    forceMoveMarkers: true,
+                },
+            ]);
         } else {
             model = monaco.editor.createModel(
                 value,

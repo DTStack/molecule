@@ -127,7 +127,7 @@ export class ProblemsService
         let warnings = 0;
         let errors = 0;
         let infos = 0;
-        let hint = 0;
+        // let hint = 0;
         const loopTreeNode = (tree: IProblemsItem[]) => {
             tree.forEach((element: IProblemsItem) => {
                 switch (element.value.status) {
@@ -141,7 +141,7 @@ export class ProblemsService
                         warnings += 1;
                         break;
                     default:
-                        hint += 1;
+                    // hint += 1;
                 }
                 if (element.children && element.children.length) {
                     loopTreeNode(element.children);

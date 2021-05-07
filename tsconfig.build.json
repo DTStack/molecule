@@ -7,10 +7,7 @@
         "declaration": true,
         "preserveConstEnums": true,
         "sourceMap": false,
-        "rootDirs": ["src"],
-        "paths": {
-            "mo/*": ["./src/*"]
-        }
+        "rootDirs": ["src"]
     },
     "include": ["src/**/*"]
 }

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { EditorMarkers } from 'mo/workbench/statusBar/editor';
-import { ProblemsMarkers } from 'mo/workbench/statusBar/problems';
+import EditorStatusBarView from 'mo/workbench/editor/statusBarView';
 export interface IStatusBarItem<T = any> extends HTMLElementProps {
     id: string;
     sortIndex: number;
@@ -16,18 +15,6 @@ export interface IStatusBar {
     hidden?: boolean;
 }
 
-export const STATUS_PROBLEMS: IStatusBarItem = {
-    id: 'MoProblems',
-    sortIndex: 1,
-    data: {
-        warnings: 0,
-        errors: 0,
-        infos: 0,
-    },
-    name: 'Problems',
-    render: (item: IStatusBarItem) => <ProblemsMarkers {...item} />,
-};
-
 export const STATUS_EDITOR_INFO: IStatusBarItem = {
     id: 'MoEditorInfo',
     sortIndex: 2,
@@ -36,7 +23,7 @@ export const STATUS_EDITOR_INFO: IStatusBarItem = {
         col: 0,
     },
     name: 'Go to Line/Column',
-    render: (item: IStatusBarItem) => <EditorMarkers {...item} />,
+    render: (item: IStatusBarItem) => <EditorStatusBarView {...item} />,
 };
 
 /**
@@ -58,7 +45,7 @@ export class StatusBarModel implements IStatusBar {
     public hidden = false;
 
     constructor(
-        leftItems: IStatusBarItem[] = [STATUS_PROBLEMS],
+        leftItems: IStatusBarItem[] = [],
         rightItems: IStatusBarItem[] = [STATUS_EDITOR_INFO],
         hidden = false
     ) {

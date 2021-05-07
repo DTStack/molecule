@@ -10,7 +10,9 @@ import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
 
 export interface INotificationService extends Component<INotification> {
-    addNotification<T>(item: INotificationItem<T>): null | INotificationItem<T>;
+    addNotifications<T>(
+        items: INotificationItem<T>[]
+    ): null | INotificationItem<T>[];
     removeNotification(id: number): void;
     updateNotification<T>(
         item: INotificationItem<T>
@@ -69,19 +71,22 @@ export class NotificationService
         }
     }
 
-    public addNotification<T>(
-        item: INotificationItem<T>
-    ): null | INotificationItem<T> {
+    public addNotifications<T>(
+        items: INotificationItem<any>[]
+    ): null | INotificationItem<T>[] {
         const { data = [] } = this.state;
-        if (item) {
-            if (item.id === undefined) item.id = data.length;
-            item.status = NotificationStatus.WaitRead;
-            const arr = [...data, item];
+
+        if (items && items.length) {
+            items.forEach((item) => {
+                if (item.id === undefined) item.id = data.length;
+                item.status = NotificationStatus.WaitRead;
+            });
+            const arr = [...data, ...items];
             this.setState({
                 ...this.state,
                 data: arr,
             });
-            return item;
+            return items;
         }
         return null;
     }

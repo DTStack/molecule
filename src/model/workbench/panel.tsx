@@ -2,8 +2,6 @@ import * as React from 'react';
 import { IActionBarItem } from 'mo/components/actionBar';
 import { ITab } from 'mo/components/tabs/tab';
 import Output from 'mo/workbench/panel/output';
-import Problems from 'mo/workbench/panel/problems';
-
 export interface IPanelItem<T = any> extends ITab<any> {
     id: string;
     title?: string;
@@ -16,13 +14,6 @@ export enum PanelEvent {
     onTabChange = 'panel.onTabChange',
     onToolbarClick = 'panel.onToolbarClick',
 }
-
-export const PANEL_PROBLEMS: IPanelItem = {
-    id: 'ProblemsPane',
-    name: 'problems',
-    data: null,
-    renderPane: (item) => <Problems {...item} />,
-};
 
 export const PANEL_OUTPUT: IPanelItem = {
     id: 'OutputPane',
@@ -60,7 +51,7 @@ export class PanelModel implements IPanel {
 
     constructor(
         current: IPanelItem = PANEL_OUTPUT,
-        data: IPanelItem[] = ([] = [PANEL_PROBLEMS, PANEL_OUTPUT]),
+        data: IPanelItem[] = ([] = [PANEL_OUTPUT]),
         hidden = false,
         maximize = false,
         toolbox: IActionBarItem[] = [PANEL_TOOLBOX_RESIZE, PANEL_TOOLBOX_CLOSE]

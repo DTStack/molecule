@@ -10666,10 +10666,10 @@ monaco-editor-webpack-plugin@^2.0.0:
   dependencies:
     loader-utils "^2.0.0"
 
-monaco-editor@^0.21.2:
-  version "0.21.3"
-  resolved "https://registry.npm.taobao.org/monaco-editor/download/monaco-editor-0.21.3.tgz#3381b66614b64d1c5e3b77dd5564ad496d1b4e5d"
-  integrity sha1-M4G2ZhS2TRxeO3fdVWStSW0bTl0=
+monaco-editor@0.21.2:
+  version "0.21.2"
+  resolved "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.21.2.tgz#37054e63e480d51a2dd17d609dcfb192304d5605"
+  integrity sha512-jS51RLuzMaoJpYbu7F6TPuWpnWTLD4kjRW0+AZzcryvbxrTwhNy1KC9yboyKpgMTahpUbDUsuQULoo0GV1EPqg==
 
 moo-color@^1.0.2:
   version "1.0.2"

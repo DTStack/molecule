@@ -7,7 +7,6 @@ import {
     PanelEvent,
     PanelModel,
     PANEL_OUTPUT,
-    PANEL_PROBLEMS,
     PANEL_TOOLBOX_RESIZE,
 } from 'mo/model/workbench/panel';
 
@@ -22,8 +21,6 @@ export interface IPanelService extends Component<IPanel> {
     appendOutput(content: string): void;
     updateOutput(data: IPanelItem): IPanelItem | undefined;
     clearOutput(): void;
-    updateProblems(data: IPanelItem): IPanelItem | undefined;
-    clearProblems(): void;
     showHide(): void;
     maximizeRestore(): void;
     onTabChange(callback: (key: string) => void): void;
@@ -88,15 +85,6 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     public updateOutput(data: IPanelItem<any>): IPanelItem | undefined {
         return this.update(Object.assign(PANEL_OUTPUT, data));
     }
-
-    public updateProblems(data: IPanelItem<any>): IPanelItem | undefined {
-        return this.update(Object.assign(PANEL_PROBLEMS, data));
-    }
-
-    public clearProblems(): void {
-        this.updateOutput(Object.assign(PANEL_PROBLEMS, { data: null }));
-    }
-
     public appendOutput(content: string): void {
         const output = this.getById(PANEL_OUTPUT.id);
         if (output) {

@@ -5,9 +5,6 @@ import * as ReactDOM from 'react-dom';
 import { connect } from 'mo/react';
 import { IStatusBarItem } from 'mo/model';
 import { Controller } from 'mo/react/controller';
-import { Notification } from 'mo/workbench/statusBar/notification';
-import { NotificationPanel } from 'mo/workbench/statusBar/notification/notificationPanel';
-
 import { IActionBarItem } from 'mo/components/actionBar';
 import {
     INotificationItem,
@@ -17,10 +14,15 @@ import {
 import { select } from 'mo/common/dom';
 import { ID_APP } from 'mo/common/id';
 import {
+    NotificationPanel,
+    NotificationStatusBarView,
+} from 'mo/workbench/notification';
+import {
+    IStatusBarService,
+    StatusBarService,
     INotificationService,
     NotificationService,
-} from 'mo/services/notificationService';
-import { IStatusBarService, StatusBarService } from 'mo/services';
+} from 'mo/services';
 
 export interface INotificationController {
     onCloseNotification(item: INotificationItem): void;
@@ -45,11 +47,11 @@ export class NotificationController
         this.init();
     }
 
-    public onCloseNotification(item: INotificationItem<any>): void {
+    public onCloseNotification = (item: INotificationItem<any>): void => {
         if (typeof item.id === 'number') {
             this.notificationService.removeNotification(item.id);
         }
-    }
+    };
 
     private _notificationPanel: HTMLDivElement | undefined = undefined;
 
@@ -80,7 +82,7 @@ export class NotificationController
         const notificationItem = this.notificationService.getState();
         const NotificationView = connect(
             this.notificationService,
-            Notification
+            NotificationStatusBarView
         );
         this.notificationService.setState({
             ...notificationItem,

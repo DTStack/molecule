@@ -11,6 +11,7 @@ export enum NotificationStatus {
 export interface INotificationItem<T = any> {
     id?: number;
     value: T;
+    render?(item: INotificationItem): ReactNode;
     status?: NotificationStatus;
 }
 

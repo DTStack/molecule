@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Icon } from 'mo/components/icon';
-export function ProblemsMarkers(props: any) {
+import { IStatusBarItem } from 'mo/model/workbench/statusBar';
+
+export function ProblemsStatusBarView(props: IStatusBarItem) {
     const { data = { errors: 0, warnings: 0, infos: 0 } } = props;
     return (
         <React.Fragment>
@@ -13,3 +15,4 @@ export function ProblemsMarkers(props: any) {
         </React.Fragment>
     );
 }
+export default React.memo(ProblemsStatusBarView);

@@ -37,6 +37,8 @@ import {
     ExtensionService,
     ISettingsService,
     SettingsService,
+    IProblemsService,
+    ProblemsService,
 } from 'mo/services';
 
 /**
@@ -59,6 +61,7 @@ const panelService = container.resolve<IPanelService>(PanelService);
 const notificationService = container.resolve<INotificationService>(
     NotificationService
 );
+const problemsService = container.resolve<IProblemsService>(ProblemsService);
 
 /**
  * The ColorTheme service,
@@ -92,4 +95,5 @@ export {
     colorThemeService,
     settingsService,
     notificationService,
+    problemsService,
 };

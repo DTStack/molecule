@@ -127,9 +127,11 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         });
         let notify;
         const addANotification = function () {
-            notify = notificationService.addNotification<string>({
-                value: 'Test Notification!',
-            });
+            notify = notificationService.addNotifications<string>([
+                {
+                    value: 'Test Notification!',
+                },
+            ]);
             console.log('Add Notification index:', notify);
         };
 

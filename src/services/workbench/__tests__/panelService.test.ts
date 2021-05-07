@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { IPanelService, PanelService } from '../panelService';
-import { PANEL_OUTPUT, PANEL_PROBLEMS } from 'mo/model/workbench/panel';
+import { PANEL_OUTPUT } from 'mo/model/workbench/panel';
+import { PANEL_PROBLEMS } from 'mo/model/problems';
 
 describe('Test panelService', () => {
     const panelService = container.resolve<IPanelService>(PanelService);

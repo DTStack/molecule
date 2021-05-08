@@ -2,10 +2,7 @@ import * as React from 'react';
 import { injectable } from 'tsyringe';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import { IPanelItem } from 'mo/model/workbench/panel';
-import {
-    ProblemsStatusBarView,
-    ProblemsPanelView,
-} from 'mo/workbench/problems';
+import { ProblemsStatusBarView, ProblemsPaneView } from 'mo/workbench/problems';
 
 export enum MarkerSeverity {
     Hint = 1,
@@ -50,7 +47,7 @@ export const PANEL_PROBLEMS: IPanelItem = {
     id: 'ProblemsPane',
     name: 'problems',
     data: null,
-    renderPane: (item) => <ProblemsPanelView {...item} />,
+    renderPane: (item) => <ProblemsPaneView {...item} />,
 };
 
 @injectable()

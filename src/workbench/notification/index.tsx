@@ -1,4 +1,4 @@
-import NotificationPanel from './notificationPanel';
+import NotificationPane from './notificationPane';
 import NotificationStatusBarView from './statusBarView';
 
-export { NotificationPanel, NotificationStatusBarView };
+export { NotificationPane, NotificationStatusBarView };

@@ -10,7 +10,6 @@ import {
 import ActionBar from 'mo/components/actionBar';
 import { shadowClassName } from 'mo/components/contextView';
 import { Icon } from 'mo/components/icon';
-import './style.scss';
 
 const defaultNotificationClassName = prefixClaName('notification');
 const notificationHeaderClassName = getBEMElement(
@@ -26,7 +25,7 @@ const notificationCloseClassName = getBEMModifier(
     'close'
 );
 
-export function NotificationPanel(
+export function NotificationPane(
     props: INotification & INotificationController
 ) {
     const {
@@ -70,4 +69,4 @@ export function NotificationPanel(
         </div>
     );
 }
-export default React.memo(NotificationPanel);
+export default React.memo(NotificationPane);

@@ -8,12 +8,15 @@ import {
 } from 'mo/model/problems';
 import { IPanelItem } from 'mo/model/workbench/panel';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
-import { PanelService, StatusBarService } from 'mo/services';
+import {
+    PanelService,
+    IPanelService,
+    StatusBarService,
+    IStatusBarService,
+} from 'mo/services';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
-const panelService = container.resolve(PanelService);
-const statusBarService = container.resolve(StatusBarService);
 export interface IProblemsService extends Component<IProblems> {
     updateStatus<T>(item: IStatusBarItem<T>): void;
     updatePanel<T>(item: IStatusBarItem<T>): void;
@@ -31,10 +34,13 @@ export class ProblemsService
     extends Component<IProblems>
     implements IProblemsService {
     protected state: IProblems;
-
+    private readonly panelService: IPanelService;
+    private readonly statusBarService: IStatusBarService;
     constructor() {
         super();
         this.state = container.resolve(ProblemsModel);
+        this.panelService = container.resolve(PanelService);
+        this.statusBarService = container.resolve(StatusBarService);
     }
 
     public showHideProblems(): void {
@@ -116,10 +122,10 @@ export class ProblemsService
         this.updatePanel(Object.assign(PANEL_PROBLEMS, { data }));
     }
     public updateStatus<T>(item: IStatusBarItem<T>): void {
-        statusBarService.updateItem(item);
+        this.statusBarService.updateItem(item);
     }
     public updatePanel<T>(item: IPanelItem<T>): void {
-        panelService.update(item);
+        this.panelService.update(item);
     }
     public getProblemsMarkers = (
         data: IProblemsItem[]
@@ -127,7 +133,6 @@ export class ProblemsService
         let warnings = 0;
         let errors = 0;
         let infos = 0;
-        // let hint = 0;
         const loopTreeNode = (tree: IProblemsItem[]) => {
             tree.forEach((element: IProblemsItem) => {
                 switch (element.value.status) {
@@ -141,7 +146,6 @@ export class ProblemsService
                         warnings += 1;
                         break;
                     default:
-                    // hint += 1;
                 }
                 if (element.children && element.children.length) {
                     loopTreeNode(element.children);

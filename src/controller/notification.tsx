@@ -14,7 +14,7 @@ import {
 import { select } from 'mo/common/dom';
 import { ID_APP } from 'mo/common/id';
 import {
-    NotificationPanel,
+    NotificationPane,
     NotificationStatusBarView,
 } from 'mo/workbench/notification';
 import {
@@ -53,11 +53,11 @@ export class NotificationController
         }
     };
 
-    private _notificationPanel: HTMLDivElement | undefined = undefined;
+    private _notificationPane: HTMLDivElement | undefined = undefined;
 
     private showHideNotifications() {
-        if (!this._notificationPanel) {
-            this.renderNotificationPanel();
+        if (!this._notificationPane) {
+            this.renderNotificationPane();
         }
         this.notificationService.showHideNotifications();
     }
@@ -91,21 +91,21 @@ export class NotificationController
         this.statusBarService.appendRightItem(notificationItem);
     }
 
-    public renderNotificationPanel() {
-        const NotificationPanelView = connect(
+    public renderNotificationPane() {
+        const NotificationPaneView = connect(
             this.notificationService,
-            NotificationPanel
+            NotificationPane
         );
         const root = select('#' + ID_APP);
         const container = document.createElement('div');
         root?.appendChild(container);
         ReactDOM.render(
-            <NotificationPanelView
+            <NotificationPaneView
                 onActionBarClick={this.onActionBarClick}
                 onCloseNotification={this.onCloseNotification}
             />,
             container
         );
-        this._notificationPanel = container;
+        this._notificationPane = container;
     }
 }

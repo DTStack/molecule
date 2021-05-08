@@ -1,4 +1,4 @@
 import ProblemsStatusBarView from './statusBarView';
-import ProblemsPanelView from './panelView';
+import ProblemsPaneView from './paneView';
 
-export { ProblemsStatusBarView, ProblemsPanelView };
+export { ProblemsStatusBarView, ProblemsPaneView };

@@ -29,10 +29,13 @@ export class ProblemsController
         const { current, hidden } = this.panelService.getState();
         if (hidden) {
             this.panelService.showHide();
-        } else if (current?.id !== PANEL_PROBLEMS.id) {
             this.panelService.open(PANEL_PROBLEMS);
         } else {
-            this.panelService.showHide();
+            if (current?.id !== PANEL_PROBLEMS.id) {
+                this.panelService.open(PANEL_PROBLEMS);
+            } else {
+                this.panelService.showHide();
+            }
         }
     }
 

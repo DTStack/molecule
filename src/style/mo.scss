@@ -31,8 +31,9 @@
 @import 'mo/workbench/settings/style';
 @import 'mo/workbench/sidebar/style';
 @import 'mo/workbench/statusBar/style';
-// @import 'mo/workbench/statusBar/notification/style';
+@import 'mo/workbench/notification/style';
 @import 'mo/workbench/sidebar/explore/style';
+@import 'mo/workbench/problems/style';
 
 .#{$prefix} {
     bottom: 0;

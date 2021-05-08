@@ -40,6 +40,7 @@ $statusBar: prefix('statusBar');
 $workbench: prefix('workbench');
 $mainBench: prefix('mainBench');
 $notification: prefix('notification');
+$problems: prefix('problems');
 
 // The Naming of BEM Element
 @function bem-ele($block, $element) {

@@ -72,7 +72,7 @@ export class NotificationService
     }
 
     public addNotifications<T>(
-        items: INotificationItem<any>[]
+        items: INotificationItem<T>[]
     ): null | INotificationItem<T>[] {
         const { data = [] } = this.state;
 

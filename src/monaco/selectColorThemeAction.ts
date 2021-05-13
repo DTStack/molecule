@@ -5,35 +5,40 @@ import {
     QuickPickInput,
 } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 import { IColorTheme } from 'mo/model/colorTheme';
-import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
-import * as monaco from 'monaco-editor';
+import { KeyMod, KeyCode } from 'mo/monaco';
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 import { ColorThemeService, IColorThemeService } from 'mo/services';
-import { container, singleton } from 'tsyringe';
-import { monacoService } from './monacoService';
-import { Action } from 'monaco-editor/esm/vs/base/common/actions';
+import { container } from 'tsyringe';
+import { IMonacoService, MonacoService } from './monacoService';
+import { Action2, KeybindingWeight } from './common';
 
-@singleton()
-export class SelectColorThemeAction extends Action {
+export class SelectColorThemeAction extends Action2 {
     static readonly ID = 'workbench.action.selectTheme';
     static readonly LABEL = localize('selectTheme.label', 'Color Theme');
     private readonly quickInputService: IQuickInputService;
     private readonly colorThemeService: IColorThemeService;
+    private readonly monacoService!: IMonacoService;
 
     constructor() {
         super({
             id: SelectColorThemeAction.ID,
             label: SelectColorThemeAction.LABEL,
+            title: SelectColorThemeAction.LABEL,
             alias: 'Color Theme',
             precondition: undefined,
-            kbOpts: {
-                kbExpr: undefined,
+            f1: true,
+            keybinding: {
+                when: undefined,
+                weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
-                primary: KeyChord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_K),
+                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KEY_K),
             },
         });
+        this.monacoService = container.resolve(MonacoService);
+        this.quickInputService = this.monacoService.services.get(
+            IQuickInputService
+        );
         this.colorThemeService = container.resolve(ColorThemeService);
-        this.quickInputService = monacoService.services.get(IQuickInputService);
     }
 
     run(): Promise<void> {
@@ -119,11 +124,3 @@ function toEntries(
     }
     return entries;
 }
-
-CommandsRegistry.registerCommand(
-    SelectColorThemeAction.ID,
-    (serviceAccessor) => {
-        const selectColorAction = container.resolve(SelectColorThemeAction);
-        selectColorAction.run();
-    }
-);

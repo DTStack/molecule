@@ -6,6 +6,10 @@ import { ContextKeyExpr } from 'monaco-editor/esm/vs/platform/contextkey/common/
 import { KeybindingsRegistry } from 'monaco-editor/esm/vs/platform/keybinding/common/keybindingsRegistry';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
+import {
+    MenuRegistry,
+    MenuId,
+} from 'monaco-editor/esm/vs/platform/actions/common/actions';
 
 export enum KeybindingWeight {
     EditorCore = 0,
@@ -35,6 +39,31 @@ export function registerAction2(ctor: { new (): Action2 }): IDisposable {
             description: description,
         })
     );
+
+    // menu
+    if (Array.isArray(menu)) {
+        disposables.add(
+            MenuRegistry.appendMenuItems(
+                menu.map((item) => ({
+                    id: item.id,
+                    item: { command, ...item },
+                }))
+            )
+        );
+    } else if (menu) {
+        disposables.add(
+            MenuRegistry.appendMenuItem(menu.id, { command, ...menu })
+        );
+    }
+    if (f1) {
+        disposables.add(
+            MenuRegistry.appendMenuItem(MenuId.CommandPalette, {
+                command,
+                when: command.precondition,
+            })
+        );
+        disposables.add(MenuRegistry.addCommand(command));
+    }
 
     // keybinding
     if (Array.isArray(keybinding)) {

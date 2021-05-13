@@ -14,9 +14,10 @@ import { undoRedoMenu } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 
 import { IMenuItem } from 'mo/components/menu';
-import * as monaco from 'monaco-editor';
 import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';
+import { editor as monacoEditor, Uri } from 'mo/monaco';
+
 import {
     EditorService,
     IEditorService,
@@ -48,8 +49,6 @@ export interface IEditorController {
     onUpdateEditorIns?: (editorInstance: any, groupId: number) => void;
     onPaneSizeChange?: (newSize: number) => void;
 }
-
-type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 @singleton()
 export class EditorController extends Controller implements IEditorController {
     // Group Pos locate here temporary, we can move it to state or localStorage in future.
@@ -160,7 +159,7 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     public onUpdateEditorIns = (
-        editorInstance: monaco.editor.IStandaloneCodeEditor,
+        editorInstance: IStandaloneCodeEditor,
         groupId: number
     ) => {
         if (!editorInstance) return;
@@ -263,7 +262,7 @@ export class EditorController extends Controller implements IEditorController {
         language: string
     ) {
         this.initializeFile(path, value, language);
-        const model = monaco.editor.getModel(monaco.Uri.parse(path));
+        const model = monacoEditor.getModel(Uri.parse(path));
         editorInstance.setModel(model!);
         // Restore the editor state for the file
         const editorState = this.editorStates.get(path);
@@ -274,7 +273,7 @@ export class EditorController extends Controller implements IEditorController {
     }
 
     private initializeFile(path: string, value: string, language: string) {
-        let model = monaco.editor.getModel(monaco.Uri.parse(path));
+        let model = monacoEditor.getModel(Uri.parse(path));
         const { current } = this.editorService.getState();
         if (model) {
             current?.editorInstance?.executeEdits('update-value', [
@@ -285,11 +284,7 @@ export class EditorController extends Controller implements IEditorController {
                 },
             ]);
         } else {
-            model = monaco.editor.createModel(
-                value,
-                language,
-                monaco.Uri.parse(path)
-            );
+            model = monacoEditor.createModel(value, language, Uri.parse(path));
         }
     }
 

@@ -14,19 +14,17 @@ import {
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
-import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
 
 import {
     ActivityBarService,
-    EditorService,
     MenuBarService,
     IActivityBarService,
-    IEditorService,
     IMenuBarService,
     ISettingsService,
     SettingsService,
 } from 'mo/services';
-import { GotoLineAction } from 'mo/monaco/gotoLineAction';
+import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
+import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 export interface IActivityBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
@@ -41,16 +39,16 @@ export class ActivityBarController
     extends Controller
     implements IActivityBarController {
     private readonly activityBarService: IActivityBarService;
-    private readonly editorService: IEditorService;
     private readonly menuBarService: IMenuBarService;
     private readonly settingsService: ISettingsService;
+    private readonly monacoService: IMonacoService;
 
     constructor() {
         super();
         this.activityBarService = container.resolve(ActivityBarService);
-        this.editorService = container.resolve(EditorService);
         this.menuBarService = container.resolve(MenuBarService);
         this.settingsService = container.resolve(SettingsService);
+        this.monacoService = container.resolve(MonacoService);
     }
 
     public readonly onSelect = (
@@ -73,11 +71,15 @@ export class ActivityBarController
     };
 
     private gotoQuickCommand() {
-        CommandsRegistry.getCommand(GotoLineAction.ID).handler();
+        this.monacoService.commandService.executeCommand(
+            CommandQuickAccessViewAction.ID
+        );
     }
 
     private onSelectColorTheme = () => {
-        CommandsRegistry.getCommand(SelectColorThemeAction.ID).handler();
+        this.monacoService.commandService.executeCommand(
+            SelectColorThemeAction.ID
+        );
     };
 
     // TODO: Menu 按钮是否提取至 activityBar 外

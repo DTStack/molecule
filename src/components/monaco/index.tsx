@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import * as React from 'react';
 import { PureComponent } from 'react';
-import * as monaco from 'monaco-editor';
 import { isEqual } from 'lodash';
 import { APP_PREFIX } from 'mo/common/const';
-import { monacoService } from 'mo/monaco/monacoService';
+import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
+import { container } from 'tsyringe';
 
 export const SYMBOL_MONACO_EDITOR = `${APP_PREFIX}-monaco-editor`;
 
@@ -39,13 +39,16 @@ export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
      */
     private monacoDom!: HTMLDivElement;
 
+    private readonly monacoService: IMonacoService;
+
     constructor(props) {
         super(props);
+        this.monacoService = container.resolve<IMonacoService>(MonacoService);
     }
 
     componentDidMount() {
         const { options = {}, override, editorInstanceRef } = this.props;
-        this.monacoInstance = monacoService?.create(
+        this.monacoInstance = this.monacoService?.create(
             this.monacoDom,
             options,
             override

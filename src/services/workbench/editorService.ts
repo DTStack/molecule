@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
-import * as monaco from 'monaco-editor';
 
 import { Component } from 'mo/react';
 import {
@@ -12,6 +11,7 @@ import {
     EditorEvent,
 } from 'mo/model';
 import { searchById } from '../helper';
+
 export interface IEditorService extends Component<IEditor> {
     /**
      * Open a new tab in indicated group instance
@@ -56,7 +56,7 @@ export interface IEditorService extends Component<IEditor> {
     /**
      * The Instance of Editor
      */
-    readonly editorInstance: monaco.editor.IStandaloneCodeEditor;
+    readonly editorInstance: IStandaloneCodeEditor;
 }
 @singleton()
 export class EditorService

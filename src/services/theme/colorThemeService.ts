@@ -6,7 +6,7 @@
 import 'reflect-metadata';
 import { IColorTheme } from 'mo/model/colorTheme';
 import { container, inject, singleton } from 'tsyringe';
-import * as monaco from 'monaco-editor';
+import { editor as monacoEditor } from 'mo/monaco';
 import { applyStyleSheetRules } from 'mo/common/css';
 import { getThemeData, convertToCSSVars } from './helper';
 import logger from 'mo/common/logger';
@@ -81,8 +81,8 @@ export class ColorThemeService implements IColorThemeService {
             applyStyleSheetRules(styleSheetContent, DEFAULT_THEME_CLASS_NAME);
 
             // Update monaco-editor theme
-            monaco.editor.defineTheme(DEFAULT_THEME_CLASS_NAME, themeData);
-            monaco.editor.setTheme(DEFAULT_THEME_CLASS_NAME);
+            monacoEditor.defineTheme(DEFAULT_THEME_CLASS_NAME, themeData);
+            monacoEditor.setTheme(DEFAULT_THEME_CLASS_NAME);
         } else {
             logger.error(`Can't get any theme by this id:` + id);
         }

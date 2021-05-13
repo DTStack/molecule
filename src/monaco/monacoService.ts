@@ -11,6 +11,7 @@ import {
     SimpleLayoutService,
 } from 'monaco-editor/esm/vs/editor/standalone/browser/simpleServices';
 import { ITextModelService } from 'monaco-editor/esm/vs/editor/common/services/resolverService';
+
 import {
     StaticServices,
     IEditorOverrideServices,
@@ -32,35 +33,48 @@ import { QuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/brow
 import { IQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 import { ILayoutService } from 'monaco-editor/esm/vs/platform/layout/browser/layoutService';
 import { ServiceCollection } from 'monaco-editor/esm/vs/platform/instantiation/common/serviceCollection';
-
-import { ID_APP } from 'mo/common/id';
+import { IModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
+import { IModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
 
 export interface IMonacoService {
     readonly services: ServiceCollection;
+    readonly commandService: ICommandService;
     readonly container: HTMLElement | null;
     create(
         domElement: HTMLElement,
         options?: IStandaloneEditorConstructionOptions,
         overrides?: IEditorOverrideServices
     ): IStandaloneCodeEditor;
+    /**
+     * Initial the Workspace, like Services and editor config.
+     * @param container The Container element of Molecule
+     */
+    initWorkspace(container: HTMLElement): void;
 }
 
 @singleton()
 export class MonacoService implements IMonacoService {
     private _services: ServiceCollection;
+    private _container!: HTMLElement | null;
     private simpleEditorModelResolverService: SimpleEditorModelResolverService | null = null;
 
     constructor() {}
 
+    initWorkspace(container: HTMLElement) {
+        this._container = container;
+        this._services = this.createStandaloneServices();
+    }
+
     get services() {
-        if (!this._services) {
-            this._services = this.createStandaloneServices();
-        }
         return this._services;
     }
 
+    get commandService() {
+        return this.services.get(ICommandService);
+    }
+
     get container() {
-        return document.getElementById(ID_APP);
+        return this._container;
     }
 
     private mergeEditorServices(overrides?: IEditorOverrideServices) {
@@ -83,8 +97,18 @@ export class MonacoService implements IMonacoService {
         overrides?: IEditorOverrideServices
     ): IStandaloneCodeEditor {
         const services = this.services;
+        if (!services) return;
 
         this.mergeEditorServices(overrides);
+        if (!services.has(ITextModelService)) {
+            this.simpleEditorModelResolverService = new SimpleEditorModelResolverService(
+                StaticServices.modelService.get()
+            );
+            services.set(
+                ITextModelService,
+                this.simpleEditorModelResolverService
+            );
+        }
 
         const standaloneEditor = new StandaloneEditor(
             domElement,
@@ -99,29 +123,21 @@ export class MonacoService implements IMonacoService {
             services.get(IStandaloneThemeService),
             services.get(INotificationService),
             services.get(IConfigurationService),
-            services.get(IAccessibilityService)
+            services.get(IAccessibilityService),
+            services.get(IModelService),
+            services.get(IModeService)
         );
 
         if (this.simpleEditorModelResolverService) {
             this.simpleEditorModelResolverService.setEditor(standaloneEditor);
         }
+
         return standaloneEditor;
     }
 
     private createStandaloneServices(): ServiceCollection {
         const services = new DynamicStandaloneServices(this.container);
-
-        this.overrideServices(services);
-
-        if (!services.has(ITextModelService)) {
-            this.simpleEditorModelResolverService = new SimpleEditorModelResolverService(
-                StaticServices.modelService.get()
-            );
-            services.set(
-                ITextModelService,
-                this.simpleEditorModelResolverService
-            );
-        }
+        const instantiationService = services.get(IInstantiationService);
 
         if (!services.has(IOpenerService)) {
             services.set(
@@ -132,12 +148,6 @@ export class MonacoService implements IMonacoService {
                 )
             );
         }
-
-        return services;
-    }
-
-    private overrideServices(services) {
-        const instantiationService = services.get(IInstantiationService);
 
         const quickInputService = instantiationService.createInstance(
             QuickInputService
@@ -152,6 +162,8 @@ export class MonacoService implements IMonacoService {
 
         // Override quickPickService
         services.set(IQuickInputService, quickInputService);
+
+        return services;
     }
 }
 

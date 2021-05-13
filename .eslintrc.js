@@ -35,6 +35,7 @@ module.exports = {
         'valid-jsdoc': 0,
         'no-unused-vars': 0,
         'no-invalid-this': 0,
+        'spaced-comment': 0,
         'react/display-name': 0,
     },
 };

@@ -72,7 +72,7 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
     } = props;
 
     return (
-        <div id={ID_APP} className={appClassName}>
+        <div id={ID_APP} className={appClassName} tabIndex={0}>
             <div className={workbenchClassName}>
                 {!menuBar.hidden && <MenuBarView />}
                 {!activityBar.hidden && <ActivityBarView />}

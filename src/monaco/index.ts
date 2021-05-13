@@ -22,5 +22,3 @@ import 'monaco-editor/esm/vs/editor/standalone/browser/toggleHighContrast/toggle
  * export * from 'monaco-editor/esm/vs/editor/editor.api.js';
  */
 export * from './monaco.api';
-
-// export { editor } from 'monaco-editor';

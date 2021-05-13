@@ -1,4 +1,3 @@
-import * as monaco from 'monaco-editor';
 export interface IConfiguration {
     [key: string]: any;
 }
@@ -16,9 +15,6 @@ export enum SettingsEvent {
 const initialWorkbenchSetting = {
     colorTheme: 'Default Dark+',
 };
-
-export type IEditorSettings = monaco.editor.IEditorOptions &
-    monaco.editor.IGlobalEditorOptions;
 
 const initialEditorSetting: IEditorSettings = {
     renderWhitespace: 'none',

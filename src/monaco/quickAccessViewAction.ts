@@ -24,13 +24,11 @@ import {
 } from 'monaco-editor/esm/vs/platform/actions/common/actions';
 import { stripIcons } from 'monaco-editor/esm/vs/base/common/iconLabels';
 
-import { IMonacoService, MonacoService } from './monacoService';
 import { KeyMod, KeyCode } from 'mo/monaco';
 import { container } from 'tsyringe';
-import { Action2, KeybindingWeight } from './common';
 import { EditorService, IEditorService } from 'mo/services';
-
-const monacoService = container.resolve<IMonacoService>(MonacoService);
+import { Action2, KeybindingWeight } from './common';
+import { IMonacoService, MonacoService } from './monacoService';
 
 export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAccessProvider {
     static PREFIX = '>';
@@ -39,7 +37,11 @@ export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAcces
         return this.editorService?.editorInstance;
     }
 
-    constructor() {
+    constructor(
+        protected readonly monacoService: IMonacoService = container.resolve(
+            MonacoService
+        )
+    ) {
         super(
             {
                 showAlias: false,
@@ -169,7 +171,11 @@ export class CommandQuickAccessViewAction extends Action2 {
     static ID = 'workbench.action.quickCommand';
     private readonly quickInputService: IQuickInputService;
 
-    constructor() {
+    constructor(
+        protected readonly monacoService: IMonacoService = container.resolve(
+            MonacoService
+        )
+    ) {
         super({
             id: CommandQuickAccessViewAction.ID,
             label: QuickCommandNLS.quickCommandActionLabel,
@@ -191,7 +197,9 @@ export class CommandQuickAccessViewAction extends Action2 {
                 order: 1,
             },
         });
-        this.quickInputService = monacoService.services.get(IQuickInputService);
+        this.quickInputService = monacoService?.services.get(
+            IQuickInputService
+        );
     }
 
     run(): void {

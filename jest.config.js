@@ -20,6 +20,7 @@ module.exports = {
         '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
             '<rootDir>/mock/fileMock.js',
         '\\.(css|scss|less)$': '<rootDir>/mock/styleMock.js',
+        '^mo/monaco$': '<rootDir>/mock/monacoMock.js',
         '^mo/(.*)$': '<rootDir>/src/$1',
         '^mo$': '<rootDir>/src/index.ts',
         '^monaco-editor$': '<rootDir>/mock/monacoMock.js',

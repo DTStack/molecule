@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { injectable } from 'tsyringe';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import { IPanelItem } from 'mo/model/workbench/panel';
 import { ProblemsStatusBarView, ProblemsPaneView } from 'mo/workbench/problems';
@@ -50,7 +49,6 @@ export const PANEL_PROBLEMS: IPanelItem = {
     renderPane: (item) => <ProblemsPaneView {...item} />,
 };
 
-@injectable()
 export class ProblemsModel<T> implements IProblems<T> {
     static readonly ID = 'MO_PROBLEMS';
     static readonly NAME = 'Problems';

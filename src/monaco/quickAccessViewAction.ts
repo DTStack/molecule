@@ -10,7 +10,10 @@ import {
 } from 'monaco-editor/esm/vs/platform/quickinput/common/quickAccess';
 import { ICommandQuickPick } from 'monaco-editor/esm/vs/platform/quickinput/browser/commandsQuickAccess';
 import { AbstractEditorCommandsQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/commandsQuickAccess';
-import { IInstantiationService } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
+import {
+    IInstantiationService,
+    ServicesAccessor,
+} from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { IKeybindingService } from 'monaco-editor/esm/vs/platform/keybinding/common/keybinding';
 import { ICommandService } from 'monaco-editor/esm/vs/platform/commands/common/commands';
 import { ITelemetryService } from 'monaco-editor/esm/vs/platform/telemetry/common/telemetry';
@@ -169,13 +172,8 @@ Registry.as<IQuickAccessRegistry>(
 
 export class CommandQuickAccessViewAction extends Action2 {
     static ID = 'workbench.action.quickCommand';
-    private readonly quickInputService: IQuickInputService;
 
-    constructor(
-        protected readonly monacoService: IMonacoService = container.resolve(
-            MonacoService
-        )
-    ) {
+    constructor() {
         super({
             id: CommandQuickAccessViewAction.ID,
             label: QuickCommandNLS.quickCommandActionLabel,
@@ -197,14 +195,11 @@ export class CommandQuickAccessViewAction extends Action2 {
                 order: 1,
             },
         });
-        this.quickInputService = monacoService?.services.get(
-            IQuickInputService
-        );
     }
 
-    run(): void {
-        this.quickInputService.quickAccess.show(
-            CommandQuickAccessProvider.PREFIX
-        );
+    run(accessor: ServicesAccessor): void {
+        accessor
+            .get(IQuickInputService)
+            .quickAccess.show(CommandQuickAccessProvider.PREFIX);
     }
 }

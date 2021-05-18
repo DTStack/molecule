@@ -8,16 +8,14 @@ import { IColorTheme } from 'mo/model/colorTheme';
 import { KeyMod, KeyCode } from 'mo/monaco';
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 import { ColorThemeService, IColorThemeService } from 'mo/services';
+import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { container } from 'tsyringe';
-import { IMonacoService, MonacoService } from './monacoService';
 import { Action2, KeybindingWeight } from './common';
 
 export class SelectColorThemeAction extends Action2 {
     static readonly ID = 'workbench.action.selectTheme';
     static readonly LABEL = localize('selectTheme.label', 'Color Theme');
-    private readonly quickInputService: IQuickInputService;
     private readonly colorThemeService: IColorThemeService;
-    private readonly monacoService!: IMonacoService;
 
     constructor() {
         super({
@@ -34,14 +32,11 @@ export class SelectColorThemeAction extends Action2 {
                 primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KEY_K),
             },
         });
-        this.monacoService = container.resolve(MonacoService);
-        this.quickInputService = this.monacoService.services.get(
-            IQuickInputService
-        );
         this.colorThemeService = container.resolve(ColorThemeService);
     }
 
-    run(): Promise<void> {
+    run(accessor: ServicesAccessor): Promise<void> {
+        const quickInputService = accessor.get(IQuickInputService);
         const themes = this.colorThemeService.getThemes();
         const currentTheme = this.colorThemeService.getColorTheme();
 
@@ -72,7 +67,7 @@ export class SelectColorThemeAction extends Action2 {
             const autoFocusIndex = picks.findIndex(
                 (p) => p.id === currentTheme.id
             );
-            const quickPick = this.quickInputService.createQuickPick<IColorTheme>();
+            const quickPick = quickInputService.createQuickPick<IColorTheme>();
             quickPick.items = picks;
             quickPick.placeholder = localize(
                 'themes.selectTheme',

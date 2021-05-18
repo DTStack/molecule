@@ -65,28 +65,3 @@ if (
         ],
     });
 }
-
-(<any>self).MonacoEnvironment = {
-    getWorkerUrl: function (moduleId, label) {
-        switch (label) {
-            case 'css': {
-                return './css.worker.js';
-            }
-            case 'typescript': {
-                return './typescript.worker.js';
-            }
-            case 'javascript': {
-                return './javascript.worker.js';
-            }
-            case 'html': {
-                return './html.worker.js';
-            }
-            case 'json': {
-                return './json.worker.js';
-            }
-            default: {
-                return './editor.worker.js';
-            }
-        }
-    },
-};

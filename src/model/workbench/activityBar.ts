@@ -54,7 +54,6 @@ export const CONTEXT_MENU_SEARCH = {
 export const CONTEXT_MENU_HIDE = {
     id: 'hide',
     name: 'Hide Activity Bar',
-    icon: 'check',
 };
 export const DEFAULT_CONTEXT_MENU = [
     CONTEXT_MENU_MENU,

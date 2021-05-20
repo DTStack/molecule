@@ -123,7 +123,6 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
         if (workbench.colorTheme) {
             this.colorThemeService.applyTheme(workbench.colorTheme);
         }
-
         this.editorService.editorInstance?.updateOptions({
             ...editor,
         });

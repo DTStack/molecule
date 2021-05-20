@@ -1,4 +1,4 @@
-import { IActionBarItem } from 'mo/components/actionBar';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import { Icon } from 'mo/components/icon';
 import * as React from 'react';
 import { IStatusBarItem } from './workbench/statusBar';
@@ -18,16 +18,16 @@ export interface INotificationItem<T = any> {
 export interface INotification<T = any> extends IStatusBarItem {
     data?: INotificationItem<T>[];
     showNotifications?: boolean;
-    actionBar?: IActionBarItem[];
+    actionBar?: IActionBarItemProps[];
 }
 
-export const NOTIFICATION_CLEAR_ALL: IActionBarItem = {
+export const NOTIFICATION_CLEAR_ALL: IActionBarItemProps = {
     id: 'ClearAll',
     title: 'Clear All Notifications',
     iconName: 'codicon-clear-all',
 };
 
-export const NOTIFICATION_HIDE: IActionBarItem = {
+export const NOTIFICATION_HIDE: IActionBarItemProps = {
     id: 'HideNotifications',
     title: 'Hide Notifications',
     iconName: 'codicon-chevron-down',
@@ -43,7 +43,7 @@ export class NotificationModel<T> implements INotification<T> {
     public sortIndex: number;
     public render: () => ReactNode;
     public showNotifications: boolean;
-    public actionBar: IActionBarItem[];
+    public actionBar: IActionBarItemProps[];
 
     constructor(
         id: string = NotificationModel.ID,
@@ -51,7 +51,7 @@ export class NotificationModel<T> implements INotification<T> {
         data: INotificationItem<T>[] = [],
         sortIndex: number = 1,
         showNotifications: boolean = false,
-        actionBar: IActionBarItem[] = [
+        actionBar: IActionBarItemProps[] = [
             NOTIFICATION_CLEAR_ALL,
             NOTIFICATION_HIDE,
         ],

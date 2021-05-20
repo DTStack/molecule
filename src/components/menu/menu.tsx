@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from 'mo/common/className';
 import { MenuItem } from './menuItem';
-import { ISubMenu, MenuMode, SubMenu } from './subMenu';
+import { ISubMenuProps, MenuMode, SubMenu } from './subMenu';
 import {
     defaultMenuClassName,
     horizontalMenuClassName,
@@ -10,9 +10,9 @@ import {
 import { mergeFunctions } from 'mo/common/utils';
 import { cloneReactChildren } from 'mo/react';
 
-export interface IMenu extends ISubMenu {}
+export interface IMenuProps extends ISubMenuProps {}
 
-export function Menu(props: React.PropsWithChildren<IMenu>) {
+export function Menu(props: React.PropsWithChildren<IMenuProps>) {
     const {
         className,
         mode = MenuMode.Vertical,
@@ -30,8 +30,8 @@ export function Menu(props: React.PropsWithChildren<IMenu>) {
     const claNames = classNames(defaultMenuClassName, modeClassName, className);
 
     if (data.length > 0) {
-        const renderMenusByData = (menus: IMenu[]) => {
-            return menus.map((item: IMenu) => {
+        const renderMenusByData = (menus: IMenuProps[]) => {
+            return menus.map((item: IMenuProps) => {
                 const handleClick = mergeFunctions(onClick, item.onClick);
                 if (item.data && item.data.length > 0) {
                     return (

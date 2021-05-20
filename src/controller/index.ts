@@ -1,3 +1,14 @@
+export * from './activityBar';
+export * from './editor';
+export * from './menuBar';
+export * from './notification';
+export * from './panel';
+export * from './problems';
+export * from './settings';
+export * from './sidebar';
+export * from './statusBar';
+export * from './workbench';
+
 import { container } from 'tsyringe';
 import { ExplorerController } from './explorer/explorer';
 import { FolderTreeController } from './explorer/folderTree';

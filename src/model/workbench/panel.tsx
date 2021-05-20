@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { IActionBarItem } from 'mo/components/actionBar';
-import { ITab } from 'mo/components/tabs/tab';
+import { IActionBarItemProps } from 'mo/components/actionBar';
+import { ITabProps } from 'mo/components/tabs/tab';
 import Output from 'mo/workbench/panel/output';
-export interface IPanelItem<T = any> extends ITab<any> {
+export interface IPanelItem<T = any> extends ITabProps<any> {
     id: string;
     title?: string;
-    toolbox?: IActionBarItem[];
+    toolbox?: IActionBarItemProps[];
     data?: T;
     render?(item: IPanelItem): ReactNode;
 }
@@ -37,7 +37,7 @@ export const PANEL_TOOLBOX_RESIZE = {
 export interface IPanel {
     current?: IPanelItem;
     data?: IPanelItem[];
-    toolbox?: IActionBarItem[];
+    toolbox?: IActionBarItemProps[];
     hidden?: boolean;
     maximize?: boolean;
 }
@@ -47,14 +47,17 @@ export class PanelModel implements IPanel {
     public data: IPanelItem[];
     public hidden = false;
     public maximize = false;
-    public toolbox: IActionBarItem[];
+    public toolbox: IActionBarItemProps[];
 
     constructor(
         current: IPanelItem = PANEL_OUTPUT,
         data: IPanelItem[] = ([] = [PANEL_OUTPUT]),
         hidden = false,
         maximize = false,
-        toolbox: IActionBarItem[] = [PANEL_TOOLBOX_RESIZE, PANEL_TOOLBOX_CLOSE]
+        toolbox: IActionBarItemProps[] = [
+            PANEL_TOOLBOX_RESIZE,
+            PANEL_TOOLBOX_CLOSE,
+        ]
     ) {
         this.current = current;
         this.data = data;

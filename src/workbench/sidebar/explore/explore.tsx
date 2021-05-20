@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Collapse from 'mo/components/collapse';
+import { Collapse } from 'mo/components/collapse';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { IExplorer } from 'mo/model/workbench/explorer/explorer';
 import { IExplorerController } from 'mo/controller/explorer/explorer';
-import Toolbar from 'mo/components/toolbar';
+import { Toolbar } from 'mo/components/toolbar';
 import { defaultExplorerClassName } from './base';
 
 export const Explorer: React.FunctionComponent<IExplorer> = (

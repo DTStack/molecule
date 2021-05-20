@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Collapse from 'mo/components/collapse';
+import { Collapse } from 'mo/components/collapse';
 
 export default {
     title: 'Collapse',

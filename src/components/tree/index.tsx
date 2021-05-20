@@ -17,11 +17,11 @@ export enum FileTypes {
 
 export type FileType = keyof typeof FileTypes;
 
-export interface ITreeNodeItem {
+export interface ITreeNodeItemProps {
     name?: string;
     location?: string;
     fileType?: FileType;
-    children?: ITreeNodeItem[];
+    children?: ITreeNodeItemProps[];
     readonly id?: number;
     icon?: string | React.ReactNode;
     isEditable?: boolean; // Edit status
@@ -117,8 +117,8 @@ export interface ITreeProps {
     className?: string;
     draggable?: boolean;
 
-    data?: ITreeNodeItem[];
-    onSelectFile?: (ITreeNodeItem, isUpdate?) => void;
+    data?: ITreeNodeItemProps[];
+    onSelectFile?: (ITreeNodeItemProps, isUpdate?) => void;
     renderTitle?: (node, index) => React.ReactDOM | string;
     onDropTree?(treeNode): void;
 }

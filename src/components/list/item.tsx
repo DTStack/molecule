@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
-import { defaultListClassName, IList } from './list';
+import { defaultListClassName, IListProps } from './list';
 
-export interface IItem<T = any> extends IList {
+export interface IItemProps<T = any> extends IListProps {
     icon?: string;
     disabled?: boolean;
     data?: T;
@@ -13,7 +13,7 @@ const labelClassName = getBEMElement(defaultListClassName, 'label');
 const itemActiveClassName = getBEMModifier(itemClassName, 'active');
 const itemDisabledClassName = getBEMModifier(itemClassName, 'disabled');
 
-export function Item(props: React.PropsWithChildren<IItem>) {
+export function Item(props: React.PropsWithChildren<IItemProps>) {
     const {
         id,
         onClick,

@@ -29,7 +29,7 @@ export interface IMonacoEditorProps extends React.ComponentProps<any> {
     ) => void;
 }
 
-export default class MonacoEditor extends PureComponent<IMonacoEditorProps> {
+export class MonacoEditor extends PureComponent<IMonacoEditorProps> {
     /**
      * The instance of monaco
      */

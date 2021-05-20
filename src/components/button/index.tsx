@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 
 type BtnSizeType = 'normal' | 'large';
-export interface IButton extends React.ComponentProps<'a'> {
+export interface IButtonProps extends React.ComponentProps<'a'> {
     disabled?: boolean;
     size?: BtnSizeType;
     onClick?(event: React.MouseEvent): void;
@@ -16,7 +16,7 @@ const disableButtonClassName = getBEMModifier(
     'disabled'
 );
 
-export function Button(props: React.PropsWithChildren<IButton>) {
+export function Button(props: React.PropsWithChildren<IButtonProps>) {
     const { className, children, size = 'normal', ...custom } = props;
 
     const disabled = props.disabled ? disableButtonClassName : null;

@@ -4,7 +4,7 @@ import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
 import { Explorer, FolderTreeView } from 'mo/workbench/sidebar/explore';
-import { IMenuItem } from 'mo/components/menu';
+import { IMenuItemProps } from 'mo/components/menu';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import { ExplorerEvent } from 'mo/model/workbench/explorer/explorer';
@@ -14,7 +14,7 @@ import {
     NEW_FOLDER_COMMAND_ID,
     EXPLORER_ACTIVITY_ITEM,
 } from 'mo/model';
-import { IActionBarItem } from 'mo/components/actionBar';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
     IExplorerService,
     ISidebarService,
@@ -31,7 +31,7 @@ import { FolderTreeController, IFolderTreeController } from './folderTree';
 export interface IExplorerController {
     onActionsContextMenuClick?: (
         e: React.MouseEvent,
-        item: IMenuItem | undefined
+        item: IMenuItemProps | undefined
     ) => void;
     onCollapseChange?: (keys) => void;
     onCollapseToolbar?: (item) => void;
@@ -121,14 +121,14 @@ export class ExplorerController
 
     public readonly onClick = (
         event: React.MouseEvent,
-        item: IActionBarItem
+        item: IActionBarItemProps
     ) => {
         this.emit(ExplorerEvent.onClick, event, item);
     };
 
     public readonly onActionsContextMenuClick = (
         e: React.MouseEvent,
-        item: IMenuItem | undefined
+        item: IMenuItemProps | undefined
     ) => {
         console.log('onActionsContextMenuClick', e, item);
         const panelId = item?.id;

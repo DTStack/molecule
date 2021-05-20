@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render } from '@testing-library/react';
 import { MoleculeProvider } from 'mo/provider';
 
-import { Workbench } from '../index';
+import { Workbench } from '../workbench';
 
 describe('Test Workbench Component', () => {
     test('The Workbench DOM Testing', () => {

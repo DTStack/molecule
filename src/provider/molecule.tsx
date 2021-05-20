@@ -15,18 +15,18 @@ import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { registerAction2 } from 'mo/monaco/common';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 
-interface Props {
+export interface IMoleculeProps {
     extensions?: IExtension[];
     locales?: ILocalization[];
     colorTheme?: IColorTheme[];
 }
 
 export const MoleculeCtx = React.createContext({});
-export class MoleculeProvider extends React.Component<Props> {
+export class MoleculeProvider extends React.Component<IMoleculeProps> {
     private readonly extensionService!: IExtensionService;
     private readonly monacoService!: IMonacoService;
 
-    constructor(props) {
+    constructor(props: IMoleculeProps) {
         super(props);
         console.log('Molecule constructed.');
         this.extensionService = container.resolve(ExtensionService);

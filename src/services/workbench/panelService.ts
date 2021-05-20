@@ -11,7 +11,7 @@ import {
 } from 'mo/model/workbench/panel';
 
 import { searchById } from '../helper';
-import { IActionBarItem } from 'mo/components/actionBar';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 export interface IPanelService extends Component<IPanel> {
     open(data: IPanelItem): void;
     getById(id: string): IPanelItem | undefined;
@@ -25,7 +25,7 @@ export interface IPanelService extends Component<IPanel> {
     maximizeRestore(): void;
     onTabChange(callback: (key: string) => void): void;
     onToolbarClick(
-        callback: (e: React.MouseEvent, item: IActionBarItem) => void
+        callback: (e: React.MouseEvent, item: IActionBarItemProps) => void
     ): void;
 }
 
@@ -141,7 +141,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     }
 
     public onToolbarClick(
-        callback: (e: React.MouseEvent, item: IActionBarItem) => void
+        callback: (e: React.MouseEvent, item: IActionBarItemProps) => void
     ) {
         this.subscribe(PanelEvent.onToolbarClick, callback);
     }

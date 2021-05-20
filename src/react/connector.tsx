@@ -11,13 +11,13 @@ export type ControllerObject = {
     [index: string]: Controller;
 };
 
-export function connect(
+export function connect<T = any>(
     Service: IComponent | ServiceObject,
     View: React.ComponentType<any>,
     Controller?: Controller | ControllerObject,
     watchFiled?: object
-) {
-    return class Connector extends React.Component<any, any> {
+): React.ComponentType<T> {
+    return class Connector extends React.Component<T, any> {
         state: { lastUpdated: number };
         constructor(props) {
             super(props);

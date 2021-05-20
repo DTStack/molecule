@@ -1,7 +1,7 @@
 import 'reflect-metadata';
+import { container, singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
 import {
-    BuiltInSettingsTab,
     EditorService,
     IEditorService,
     IPanelService,
@@ -9,8 +9,7 @@ import {
     PanelService,
     SettingsService,
 } from 'mo/services';
-import { container, singleton } from 'tsyringe';
-import { SettingsEvent } from 'mo/model/settings';
+import { SettingsEvent, BuiltInSettingsTab } from 'mo/model/settings';
 
 export interface ISettingsController {}
 

@@ -1,21 +1,20 @@
 import * as React from 'react';
 import { prefixClaName, classNames, getBEMElement } from 'mo/common/className';
 import { ComponentProps } from 'react';
-import { Icon } from '../icon';
-
-export interface IBreadcrumbItem {
+import { Icon } from 'mo/components';
+export interface IBreadcrumbItemProps {
     id: string;
     href?: string;
     name?: string;
-    icon?: typeof Icon;
+    icon?: ReactNode;
     className?: string;
-    render?(item: IBreadcrumbItem): ReactNode;
+    render?(item: IBreadcrumbItemProps): ReactNode;
 }
 
-export interface IBreadcrumb extends ComponentProps<'div'> {
-    routes: IBreadcrumbItem[];
-    separator?: typeof Icon;
-    onClick?(event: React.MouseEvent, item?: IBreadcrumbItem): void;
+export interface IBreadcrumbProps extends ComponentProps<'div'> {
+    routes: IBreadcrumbItemProps[];
+    separator?: ReactNode;
+    onClick?(event: React.MouseEvent, item?: IBreadcrumbItemProps): void;
 }
 
 export const defaultBreadcrumbClassName = prefixClaName('breadcrumb');
@@ -30,10 +29,10 @@ export const breadcrumbLabelClassName = getBEMElement(
     'label'
 );
 
-export function Breadcrumb(props: IBreadcrumb) {
+export function Breadcrumb(props: IBreadcrumbProps) {
     const { onClick, className, separator, routes = [], ...extra } = props;
 
-    const getEvents = (item: IBreadcrumbItem) => {
+    const getEvents = (item: IBreadcrumbItemProps) => {
         return {
             onClick: function (e: React.MouseEvent) {
                 onClick?.(e, item);
@@ -46,7 +45,7 @@ export function Breadcrumb(props: IBreadcrumb) {
     const sep = separator || <Icon type="chevron-right" />;
     return (
         <div className={claNames} {...extra}>
-            {routes.map((route: IBreadcrumbItem, index: number) => (
+            {routes.map((route: IBreadcrumbItemProps, index: number) => (
                 <a
                     key={route.id}
                     className={classNames(

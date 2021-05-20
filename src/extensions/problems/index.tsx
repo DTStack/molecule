@@ -1,6 +1,6 @@
-import { IExtensionService } from 'mo';
-import { IExtension } from 'mo/model/extension';
-import { problemsService } from 'mo';
+import { IExtensionService } from 'mo/services';
+import { IExtension } from 'mo/model';
+import molecule from 'mo';
 
 function init() {
     const MockItem = {
@@ -32,7 +32,7 @@ function init() {
             },
         ],
     };
-    problemsService.addProblems(MockItem);
+    molecule.problems.addProblems(MockItem);
 }
 
 export const ExtendProblems: IExtension = {

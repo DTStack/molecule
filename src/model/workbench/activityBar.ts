@@ -1,4 +1,4 @@
-import { IMenuItem } from 'mo/components/menu';
+import { IMenuItemProps } from 'mo/components/menu';
 
 /**
  * The activity bar event definition
@@ -24,14 +24,14 @@ export interface IActivityBarItem {
     checked?: boolean;
     disabled?: boolean;
     type?: 'normal' | 'global';
-    contextMenu?: IMenuItem[];
+    contextMenu?: IMenuItemProps[];
     className?: string;
     render?: () => React.ReactNode | JSX.Element;
 }
 
 export interface IActivityBar {
     data?: IActivityBarItem[];
-    contextMenu?: IMenuItem[];
+    contextMenu?: IMenuItemProps[];
     selected?: string;
     hidden?: boolean;
 }
@@ -103,12 +103,12 @@ export const initialActivityBarData: IActivityBarItem[] = [
 
 export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
-    public contextMenu: IMenuItem[];
+    public contextMenu: IMenuItemProps[];
     public selected: string;
     public hidden = false;
     constructor(
         data: IActivityBarItem[] = initialActivityBarData,
-        contextMenu: IMenuItem[] = DEFAULT_CONTEXT_MENU,
+        contextMenu: IMenuItemProps[] = DEFAULT_CONTEXT_MENU,
         selected: string = '',
         hidden = false
     ) {

@@ -8,10 +8,10 @@ import {
 } from 'mo/common/className';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { select } from 'mo/common/dom';
-import { IMenuItem, Menu } from 'mo/components/menu';
+import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { mergeFunctions } from 'mo/common/utils';
 
-export interface IActionBarItem<T = any> {
+export interface IActionBarItemProps<T = any> {
     id?: string;
     name?: string;
     title?: string;
@@ -19,23 +19,23 @@ export interface IActionBarItem<T = any> {
     disabled?: boolean;
     checked?: boolean;
     data?: T;
-    contextMenu?: IMenuItem[];
+    contextMenu?: IMenuItemProps[];
     className?: string;
     onContextMenuClick?: (
         e: React.MouseEvent,
-        item: IMenuItem | undefined
+        item: IMenuItemProps | undefined
     ) => void;
-    onClick?(event: React.MouseEvent, item: IActionBarItem): void;
+    onClick?(event: React.MouseEvent, item: IActionBarItemProps): void;
 }
 
-export interface IActionBar<T = any> {
-    data: IActionBarItem<T>[];
+export interface IActionBarProps<T = any> {
+    data: IActionBarItemProps<T>[];
     className?: string;
     onContextMenuClick?: (
         e: React.MouseEvent,
-        item: IMenuItem | undefined
+        item: IMenuItemProps | undefined
     ) => void;
-    onClick?(event: React.MouseEvent, item: IActionBarItem): void;
+    onClick?(event: React.MouseEvent, item: IActionBarItemProps): void;
 }
 
 const defaultActionBarClassName = prefixClaName('action-bar');
@@ -48,7 +48,7 @@ const itemDisabledClassName = getBEMModifier(itemClassName, 'disabled');
 const itemCheckedClassName = getBEMModifier(itemClassName, 'checked');
 const labelClassName = getBEMElement(defaultActionBarClassName, 'label');
 
-export function ActionBarItem(props: IActionBarItem) {
+export function ActionBarItem(props: IActionBarItemProps) {
     const {
         id,
         title,
@@ -71,7 +71,7 @@ export function ActionBarItem(props: IActionBarItem) {
     let contextViewMenu;
 
     const onClickMenuItem = useCallback(
-        (e: React.MouseEvent, item: IMenuItem | undefined) => {
+        (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
             onContextMenuClick?.(e, item);
             contextViewMenu?.dispose();
         },
@@ -118,7 +118,7 @@ export function ActionBarItem(props: IActionBarItem) {
     );
 }
 
-export default function ActionBar<T = any>(props: IActionBar<T>) {
+export function ActionBar<T = any>(props: IActionBarProps<T>) {
     const {
         data = [],
         onClick,
@@ -129,7 +129,7 @@ export default function ActionBar<T = any>(props: IActionBar<T>) {
 
     const claNames = classNames(defaultActionBarClassName, className);
 
-    const items = data.map((item: IActionBarItem<T>, index) => (
+    const items = data.map((item: IActionBarItemProps<T>, index) => (
         <ActionBarItem
             key={item.id}
             {...item}

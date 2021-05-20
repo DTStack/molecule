@@ -5,7 +5,7 @@ import * as ReactDOM from 'react-dom';
 import { connect } from 'mo/react';
 import { IStatusBarItem } from 'mo/model';
 import { Controller } from 'mo/react/controller';
-import { IActionBarItem } from 'mo/components/actionBar';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
     INotificationItem,
     NOTIFICATION_CLEAR_ALL,
@@ -29,7 +29,7 @@ export interface INotificationController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
     onActionBarClick?(
         event: React.MouseEvent<Element, MouseEvent>,
-        item: IActionBarItem<any>
+        item: IActionBarItemProps<any>
     ): void;
 }
 
@@ -68,7 +68,7 @@ export class NotificationController
 
     public onActionBarClick = (
         event: React.MouseEvent<Element, MouseEvent>,
-        item: IActionBarItem<any>
+        item: IActionBarItemProps<any>
     ) => {
         const action = item.id;
         if (action === NOTIFICATION_CLEAR_ALL.id) {

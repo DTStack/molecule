@@ -3,7 +3,7 @@ import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IPanel } from 'mo/model/workbench/panel';
 import { IPanelController } from 'mo/controller/panel';
 import { Tabs } from 'mo/components/tabs';
-import ActionBar from 'mo/components/actionBar';
+import { ActionBar } from 'mo/components/actionBar';
 
 const defaultClassName = prefixClaName('panel');
 const panelHeaderClassName = getBEMElement(defaultClassName, 'header');
@@ -12,7 +12,7 @@ const panelToolbarClassName = getBEMElement(defaultClassName, 'toolbar');
 
 const panelContainerClassName = getBEMElement(defaultClassName, 'container');
 
-function Panel(props: IPanel & IPanelController) {
+export function Panel(props: IPanel & IPanelController) {
     const { data, current, toolbox = [], onTabChange, onToolbarClick } = props;
     let toolboxData = toolbox;
     if (current && current.toolbox) {

@@ -18,7 +18,7 @@
         "prettier": "prettier --ignore-unknown .",
         "pretty-quick": "pretty-quick",
         "release": "standard-version",
-        "docs": "typedoc --entryPoints src/index.ts --out docs/api",
+        "docs": "typedoc --entryPoints src/index.ts --out docs/api --name 'Molecule API'",
         "web": "webpack serve --env prod --config ./build/web.js"
     },
     "keywords": [

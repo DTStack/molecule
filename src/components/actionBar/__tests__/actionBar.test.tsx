@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 
-import ActionBar from '../index';
+import { ActionBar } from '../index';
 
 const mockData = [
     {

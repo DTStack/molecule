@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file. See [standa
 -   explorer service add ([9963180](https://github.com/DTStack/molecule/commit/9963180e4007f5182ebf4f305e505ef79e54d864))
 -   export the shadowClassName of contextView ([7875f19](https://github.com/DTStack/molecule/commit/7875f19107ba0c63fc81fd62c86fbcefe2cca82e))
 -   extract editor modified logic to extensions ([#138](https://github.com/DTStack/molecule/issues/138)) ([70aafcf](https://github.com/DTStack/molecule/commit/70aafcf30ccb9af536babdb5fbb7c5961050de68))
--   extract ITab interface to tabComponent ([3645f46](https://github.com/DTStack/molecule/commit/3645f466bb4cd05647140e1eb16c780bb0f7e3d3))
+-   extract ITabProps interface to tabComponent ([3645f46](https://github.com/DTStack/molecule/commit/3645f466bb4cd05647140e1eb16c780bb0f7e3d3))
 -   extract logic to extensions ([cd47341](https://github.com/DTStack/molecule/commit/cd473417a31870132bee8add434ebb2e0631b545))
 -   extract overside tabDataInterface ([c7a6857](https://github.com/DTStack/molecule/commit/c7a6857be5f5a02812b1913b365dbfb645a1bcc1))
 -   extract TreeViewUtil to help file ([883de0f](https://github.com/DTStack/molecule/commit/883de0fba6241c1378a399608cd251cc710149ab))

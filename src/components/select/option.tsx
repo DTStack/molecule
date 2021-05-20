@@ -4,7 +4,7 @@ import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
 
 import { selectClassName } from './select';
 
-export interface ISelectOption extends ComponentProps<'option'> {
+export interface ISelectOptionProps extends ComponentProps<'option'> {
     value?: string;
     name?: string;
     description?: string;
@@ -17,7 +17,7 @@ const selectOptionDisabledClassName = getBEMModifier(
     'disabled'
 );
 
-export function Option(props: ISelectOption) {
+export function Option(props: ISelectOptionProps) {
     const {
         className,
         value,

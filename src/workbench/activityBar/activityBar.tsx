@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useCallback, useEffect } from 'react';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { select } from 'mo/common/dom';
-import { IMenuItem, Menu } from 'mo/components/menu';
+import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
@@ -58,7 +58,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
 
     let contextViewMenu;
     const onClickMenuItem = useCallback(
-        (e: React.MouseEvent, item: IMenuItem | undefined) => {
+        (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
             onContextMenuClick?.(e, item);
             contextViewMenu?.dispose();
         },

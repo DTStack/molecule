@@ -1,8 +1,8 @@
-import { IActionBarItem } from 'mo/components/actionBar';
-export interface ISearch {
-    headerToolBar?: IActionBarItem[];
-    searchAddons?: IActionBarItem[];
-    replaceAddons?: IActionBarItem[];
+import { IActionBarItemProps } from 'mo/components/actionBar';
+export interface ISearchProps {
+    headerToolBar?: IActionBarItemProps[];
+    searchAddons?: IActionBarItemProps[];
+    replaceAddons?: IActionBarItemProps[];
     value?: string; // queryValue;
     replaceValue?: string;
     isRegex?: boolean;
@@ -86,10 +86,10 @@ const defaultReplaceAddons = [
     },
 ];
 
-export class ISearchModel implements ISearch {
-    public headerToolBar: IActionBarItem[];
-    public searchAddons: IActionBarItem[];
-    public replaceAddons: IActionBarItem[];
+export class ISearchModel implements ISearchProps {
+    public headerToolBar: IActionBarItemProps[];
+    public searchAddons: IActionBarItemProps[];
+    public replaceAddons: IActionBarItemProps[];
     public value: string = '';
     public replaceValue: string = '';
     public isRegex: boolean = false;
@@ -98,9 +98,9 @@ export class ISearchModel implements ISearch {
     public preserveCase: boolean = false;
 
     constructor(
-        headerToolBar: IActionBarItem[] = builtInHeaderToolbar,
-        searchAddons: IActionBarItem[] = defaultSearchAddons,
-        replaceAddons: IActionBarItem[] = defaultReplaceAddons,
+        headerToolBar: IActionBarItemProps[] = builtInHeaderToolbar,
+        searchAddons: IActionBarItemProps[] = defaultSearchAddons,
+        replaceAddons: IActionBarItemProps[] = defaultReplaceAddons,
         value = '',
         replaceValue = '',
         isCaseSensitive = false,

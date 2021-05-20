@@ -1,2 +1,38 @@
-export * from './workbench';
-export * from 'mo/workbench/activityBar';
+export { WorkbenchView as Workbench } from './workbench';
+export { ActivityBar } from 'mo/workbench/activityBar';
+export { ActivityBarItem } from 'mo/workbench/activityBar/activityBarItem';
+export { Editor } from 'mo/workbench/editor/editor';
+export { EditorGroup } from 'mo/workbench/editor/group';
+export { MenuBar } from 'mo/workbench/menuBar/menuBar';
+export { Panel } from 'mo/workbench/panel/panel';
+export { Sidebar } from 'mo/workbench/sidebar';
+export { StatusBar } from 'mo/workbench/statusBar';
+
+export {
+    IWorkbench,
+    IActivityBar,
+    IActivityBarItem,
+    IEditor,
+    IEditorGroup,
+    IMenuBar,
+    IPanel,
+    ISidebar,
+    IStatusBar,
+    IProblems,
+    IProblemsItem,
+    INotification,
+    INotificationItem,
+} from 'mo/model';
+
+export {
+    IActivityBarController,
+    IWorkbenchController,
+    IEditorController,
+    ISideBarController,
+    IMenuBarController,
+    ISettingsController,
+    INotificationController,
+    IPanelController,
+    IProblemsController,
+    IStatusBarController,
+} from 'mo/controller';

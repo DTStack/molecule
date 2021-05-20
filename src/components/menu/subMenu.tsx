@@ -10,7 +10,7 @@ import { em2Px } from 'mo/common/css';
 import { Icon } from 'mo/components/icon';
 
 import { Menu } from './menu';
-import { IMenuItem } from './menuItem';
+import { IMenuItemProps } from './menuItem';
 import {
     checkClassName,
     disabledClassName,
@@ -34,13 +34,13 @@ export function isVertical(mode: MenuMode) {
     return mode === MenuMode.Horizontal;
 }
 
-export interface ISubMenu extends IMenuItem {
+export interface ISubMenuProps extends IMenuItemProps {
     /**
      * The event of show subMenu, default value is 'hover'
      */
     trigger?: TriggerEvent;
     icon?: string;
-    data?: ISubMenu[];
+    data?: ISubMenuProps[];
     mode?: MenuMode;
 }
 
@@ -64,7 +64,7 @@ const hideAfterLeftWindow = () => {
     }
 };
 
-export function SubMenu(props: React.PropsWithChildren<ISubMenu>) {
+export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
     const {
         className,
         name,

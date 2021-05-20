@@ -1,13 +1,13 @@
 import * as React from 'react';
-import RcTextArea, { TextAreaProps as RcTextAreaProps } from 'rc-textarea';
+import RcTextArea, { TextAreaProps } from 'rc-textarea';
+import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import { useEffect, useRef } from 'react';
 import { omit } from 'lodash';
 
 import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
-import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import { fixControlledValue, inputClassName, resolveOnChange } from './input';
 
-export interface TextAreaProps extends RcTextAreaProps {
+export interface ITextAreaProps extends TextAreaProps {
     showCount?: boolean;
     maxLength?: number;
     onChange?: (e) => void;
@@ -23,7 +23,7 @@ export const TextArea = ({
     style,
     onChange,
     ...props
-}: TextAreaProps) => {
+}: ITextAreaProps) => {
     const innerRef = useRef(null);
 
     const [value, setValue] = useMergedState(props.defaultValue, {

@@ -1,4 +1,4 @@
-import MonacoEditor from 'mo/components/monaco';
+import { MonacoEditor } from 'mo/components/monaco';
 import { Scrollable } from 'mo/components/scrollable';
 import { Tabs } from 'mo/components/tabs';
 import { IEditorGroup } from 'mo/model';
@@ -21,7 +21,7 @@ export interface IEditorGroupProps extends IEditorGroup {
     currentGroup?: IEditorGroup;
 }
 
-function EditorGroup(props: IEditorGroupProps & IEditorController) {
+export function EditorGroup(props: IEditorGroupProps & IEditorController) {
     const {
         id,
         data,

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Button, IButton } from 'mo/components/button';
-export interface ActionButtonProps extends IButton {
+import { Button, IButtonProps } from 'mo/components/button';
+export interface ActionButtonProps extends IButtonProps {
     actionFn?: (...args: any[]) => any | PromiseLike<any>;
     closeModal: Function;
 }

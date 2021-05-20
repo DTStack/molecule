@@ -9,7 +9,7 @@ import {
     labelClassName,
     menuContentClassName,
 } from './base';
-export interface IMenuItem extends HTMLElementProps {
+export interface IMenuItemProps extends HTMLElementProps {
     /**
      * The name of icon
      */
@@ -27,12 +27,12 @@ export interface IMenuItem extends HTMLElementProps {
     /**
      * Custom render
      */
-    render?: (data: IMenuItem) => ReactNode;
-    onClick?: (e: React.MouseEvent, item?: IMenuItem) => void;
+    render?: (data: IMenuItemProps) => ReactNode;
+    onClick?: (e: React.MouseEvent, item?: IMenuItemProps) => void;
     sortIndex?: number;
 }
 
-export function MenuItem(props: React.PropsWithChildren<IMenuItem>) {
+export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
     const {
         icon,
         disabled = false,

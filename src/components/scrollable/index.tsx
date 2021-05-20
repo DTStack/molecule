@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Scrollbar, ScrollbarProps } from 'react-scrollbars-custom';
 import { prefixClaName, classNames } from 'mo/common/className';
 
-interface IScrollbar extends ScrollbarProps {
+export interface IScrollbarProps extends ScrollbarProps {
     autoHideThumb?: boolean;
 }
 
@@ -14,7 +14,7 @@ const defaultSrollableClassName = prefixClaName('scrollable');
  * the below implementation from this issue:
  * https://github.com/xobotyi/react-scrollbars-custom/issues/46
  */
-export function Scrollable(props: IScrollbar) {
+export function Scrollable(props: IScrollbarProps) {
     const { className, children, ...custom } = props;
 
     const [isScrolling, setIsScrolling] = useState(false);

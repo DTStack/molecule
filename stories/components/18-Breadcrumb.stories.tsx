@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { Breadcrumb, IBreadcrumbItem } from 'mo/components/breadcrumb';
+import { Breadcrumb, IBreadcrumbItemProps } from 'mo/components/breadcrumb';
 
 const stories = storiesOf('Breadcrumb', module);
 stories.addDecorator(withKnobs);
@@ -25,7 +25,7 @@ stories.add(
             console.log('onClick breadcrumb item.', e, item);
         };
 
-        const data: IBreadcrumbItem[] = [
+        const data: IBreadcrumbItemProps[] = [
             {
                 id: 'item1',
                 name: 'item1',

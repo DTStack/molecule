@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Toolbar from 'mo/components/toolbar';
-import { IActionBarItem } from 'mo/components/actionBar';
+import { Toolbar } from 'mo/components/toolbar';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import { classNames } from 'mo/common/className';
 import {
     defaultSearchClassName,
@@ -8,13 +8,13 @@ import {
     searchToolBarClassName,
 } from './base';
 
-export interface ISearchInput {
-    searchAddons?: IActionBarItem[];
+export interface ISearchInputProps {
+    searchAddons?: IActionBarItemProps[];
     setSearchValue?: (value?: string) => void;
     onToggleAddon?: (addon) => void;
 }
 
-export function SearchInput<T>(props: ISearchInput) {
+export function SearchInput<T>(props: ISearchInputProps) {
     const { setSearchValue, searchAddons = [], onToggleAddon } = props;
 
     const onClick = (e, item) => {

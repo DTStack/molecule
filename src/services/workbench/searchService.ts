@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
-import { ISearch, ISearchModel } from 'mo/model/workbench/search';
+import { ISearchProps, ISearchModel } from 'mo/model/workbench/search';
 import { TreeNodeModel } from 'mo/model';
 import { FileTypes } from 'mo/components/tree';
 
-export interface ISearchService extends Component<ISearch> {
+export interface ISearchService extends Component<ISearchProps> {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: <T = any>(data: T[]) => T[];
@@ -27,9 +27,9 @@ export interface ISearchService extends Component<ISearch> {
 
 @singleton()
 export class SearchService
-    extends Component<ISearch>
+    extends Component<ISearchProps>
     implements ISearchService {
-    protected state: ISearch;
+    protected state: ISearchProps;
     constructor() {
         super();
         this.state = container.resolve(ISearchModel);

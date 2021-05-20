@@ -1,13 +1,7 @@
 import * as React from 'react';
 import * as monaco from 'mo/monaco';
-import {
-    activityBarService,
-    colorThemeService,
-    menuBarService,
-    panelService,
-    settingsService,
-} from 'mo';
-import { editorService, notificationService } from 'mo';
+import molecule from 'mo';
+
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
@@ -25,13 +19,13 @@ export default class TestPane extends React.Component {
     onChangeTheme = (e, option) => {
         if (option && option.value) {
             console.log('onChangeTheme:', option.value);
-            colorThemeService.applyTheme(option.value);
+            molecule.colorTheme.applyTheme(option.value);
         }
     };
 
     renderColorThemes() {
-        const colorThemes = colorThemeService.getThemes();
-        const defaultTheme = colorThemeService.colorTheme;
+        const colorThemes = molecule.colorTheme.getThemes();
+        const defaultTheme = molecule.colorTheme.colorTheme;
         const options = colorThemes.map((theme: IColorTheme) => {
             return (
                 <Option key={theme.id} value={theme.id}>
@@ -52,7 +46,7 @@ export default class TestPane extends React.Component {
     render() {
         const addABar = function () {
             const id = Math.random() * 10 + 1;
-            activityBarService.addBar({
+            molecule.activityBar.addBar({
                 id: id + '',
                 name: 'folder' + id,
                 iconName: 'codicon-edit',
@@ -61,7 +55,7 @@ export default class TestPane extends React.Component {
 
         const addPanel = function () {
             const id = Math.random() * 10 + 1;
-            panelService.open({
+            molecule.panel.open({
                 id: 'Pane' + id,
                 name: 'Panel' + id,
                 render: () => <h1>Test Pane</h1>,
@@ -69,11 +63,11 @@ export default class TestPane extends React.Component {
         };
 
         const showHidePanel = function () {
-            panelService.showHide();
+            molecule.panel.showHide();
         };
 
         const updateOutput = () => {
-            panelService.appendOutput('Number: ' + Math.random() * 10);
+            molecule.panel.appendOutput('Number: ' + Math.random() * 10);
         };
 
         const newEditor = function () {
@@ -91,13 +85,13 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                 breadcrumb: [{ id: `${key}`, name: `editor.ts` }],
             };
             console.log('open editor:', tabData);
-            editorService.open(tabData);
+            molecule.editor.open(tabData);
         };
 
-        editorService.onUpdateTab((newTab) => {
-            const { current } = editorService.getState();
+        molecule.editor.onUpdateTab((newTab) => {
+            const { current } = molecule.editor.getState();
             const tab = current?.tab!;
-            editorService.updateTab(
+            molecule.editor.updateTab(
                 {
                     id: tab.id,
                     data: {
@@ -112,7 +106,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                 monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
                 () => {
                     // ctrl + s
-                    editorService.updateTab(
+                    molecule.editor.updateTab(
                         {
                             id: tab.id,
                             data: {
@@ -127,7 +121,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         });
         let notify;
         const addANotification = function () {
-            notify = notificationService.addNotifications<string>([
+            notify = molecule.notification.addNotifications<string>([
                 {
                     value: 'Test Notification!',
                 },
@@ -136,14 +130,14 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         };
 
         const removeNotification = function () {
-            notificationService.removeNotification(notify.id);
+            molecule.notification.removeNotification(notify.id);
         };
 
         const openCommand = function () {};
 
         const appendMenu = function () {
             const id = Math.random() * 10 + 1;
-            menuBarService.add(
+            molecule.menuBar.add(
                 {
                     id: id + '',
                     name: 'menuBar' + id,
@@ -154,15 +148,15 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         };
 
         const removeMenu = function () {
-            menuBarService.remove('SelectAll');
+            molecule.menuBar.remove('SelectAll');
         };
 
         const updateMenu = function () {
-            menuBarService.update('SelectAll', { icon: 'check' });
+            molecule.menuBar.update('SelectAll', { icon: 'check' });
         };
 
         const addSettingsItem = function () {
-            settingsService.append({
+            molecule.settings.append({
                 project: {
                     a: {
                         name: `${Math.floor(Math.random() * 10) + 1}`,
@@ -205,6 +199,12 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                     <Button onClick={addSettingsItem}>
                         Append Settings Item
                     </Button>
+                </div>
+                <div>
+                    <molecule.component.Button>AAA</molecule.component.Button>
+                </div>
+                <div style={{ margin: '50px 20px' }}>
+                    <molecule.MenuBar onClick={() => {}} />
                 </div>
             </div>
         );

@@ -13,7 +13,7 @@ import {
 import { undoRedoMenu } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 
-import { IMenuItem } from 'mo/components/menu';
+import { IMenuItemProps } from 'mo/components/menu';
 import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';
 import { editor as monacoEditor, Uri } from 'mo/monaco';
@@ -30,7 +30,7 @@ export interface IEditorController {
     open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
     onClickContextMenu?: (
         e: React.MouseEvent,
-        item: IMenuItem,
+        item: IMenuItemProps,
         tabItem?: IEditorTab
     ) => void;
     onCloseAll?: (group: number) => void;
@@ -69,7 +69,7 @@ export class EditorController extends Controller implements IEditorController {
 
     public onClickContextMenu = (
         e: React.MouseEvent,
-        item: IMenuItem,
+        item: IMenuItemProps,
         tabItem?: IEditorTab<any>
     ) => {
         const menuId = item?.id;

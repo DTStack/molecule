@@ -9,15 +9,15 @@ import {
     getBEMModifier,
 } from 'mo/common/className';
 import { Icon } from 'mo/components/icon';
-import { Button, IButton } from 'mo/components/button';
+import { Button, IButtonProps } from 'mo/components/button';
 export interface IModalProps extends IDialogPropTypes {
     onOk?: (e: React.MouseEvent<HTMLElement>) => void;
     onCancel?: (e: React.SyntheticEvent<Element, Event>) => void;
     centered?: boolean;
     cancelText?: React.ReactNode;
     okText?: React.ReactNode;
-    okButtonProps?: IButton;
-    cancelButtonProps?: IButton;
+    okButtonProps?: IButtonProps;
+    cancelButtonProps?: IButtonProps;
     okCancel?: boolean;
 }
 export interface IModalFuncProps extends IDialogPropTypes {
@@ -27,8 +27,8 @@ export interface IModalFuncProps extends IDialogPropTypes {
     content?: React.ReactNode;
     onOk?: (...args: any[]) => any;
     onCancel?: (...args: any[]) => void;
-    okButtonProps?: IButton;
-    cancelButtonProps?: IButton;
+    okButtonProps?: IButtonProps;
+    cancelButtonProps?: IButtonProps;
     centered?: boolean;
     okCancel?: boolean;
     type?: string;
@@ -61,7 +61,7 @@ const closeIconToRender = (
     </span>
 );
 
-const Modal: React.FC<IModalProps> = (props) => {
+export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
     const handleCancel = (e: React.SyntheticEvent<Element, Event>) => {
         const { onCancel } = props;
         onCancel?.(e);
@@ -115,5 +115,3 @@ const Modal: React.FC<IModalProps> = (props) => {
         />
     );
 };
-
-export default Modal;

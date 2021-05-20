@@ -9,20 +9,20 @@ import {
     classNames,
 } from 'mo/common/className';
 
-import { Tab, ITab, tabItemClassName } from './tab';
+import { Tab, ITabProps, tabItemClassName } from './tab';
 import DragAndDrop from './dragAndDrop';
 
 export type TabsType = 'line' | 'card';
-export interface ITabs<T> extends React.ComponentProps<any> {
+export interface ITabsProps<T> extends React.ComponentProps<any> {
     className?: string;
     closable?: boolean;
     editable?: boolean;
-    data?: ITab<T>[];
+    data?: ITabProps<T>[];
     activeTab?: string;
     type?: TabsType;
     style?: React.CSSProperties;
     onCloseTab?: (key?: string) => void;
-    onMoveTab?: (tabs: ITab<T>[]) => void;
+    onMoveTab?: (tabs: ITabProps<T>[]) => void;
     onSelectTab?: (key?: string) => void;
 }
 
@@ -32,7 +32,7 @@ export const tabsContent = getBEMElement(tabsClassName, 'content');
 export const tabsContentItem = getBEMElement(tabsContent, 'item');
 export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close');
 
-export function Tabs<T>(props: ITabs<T>) {
+export function Tabs<T>(props: ITabsProps<T>) {
     const {
         activeTab,
         className,
@@ -68,7 +68,7 @@ export function Tabs<T>(props: ITabs<T>) {
                 )}
             >
                 <div className={tabsHeader}>
-                    {data?.map((tab: ITab<T>, index: number) => {
+                    {data?.map((tab: ITabProps<T>, index: number) => {
                         return (
                             <Tab
                                 id={tab.id}
@@ -84,7 +84,7 @@ export function Tabs<T>(props: ITabs<T>) {
                     })}
                 </div>
                 <div className={tabsContent}>
-                    {data?.map((tab: ITab<T>) => {
+                    {data?.map((tab: ITabProps<T>) => {
                         return (
                             <div
                                 key={tab.id}

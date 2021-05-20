@@ -2,9 +2,9 @@ import * as React from 'react';
 import { prefixClaName, classNames, getBEMModifier } from 'mo/common/className';
 import { ComponentProps } from 'react';
 import { cloneReactChildren } from 'mo/react';
-import { IItem } from './item';
+import { IItemProps } from './item';
 
-export interface IList<T = any> extends ComponentProps<any> {
+export interface IListProps<T = any> extends ComponentProps<any> {
     /**
      * Default is vertical mode
      */
@@ -13,7 +13,7 @@ export interface IList<T = any> extends ComponentProps<any> {
      * Current active
      */
     active?: string;
-    onClick?(event: React.MouseEvent, item?: IItem): void;
+    onClick?(event: React.MouseEvent, item?: IItemProps): void;
 }
 
 export const defaultListClassName = prefixClaName('list');
@@ -26,7 +26,7 @@ export const horizontalClassName = prefixClaName(
     'horizontal'
 );
 
-export function List<T = any>(props: React.PropsWithChildren<IList<T>>) {
+export function List<T = any>(props: React.PropsWithChildren<IListProps<T>>) {
     const {
         children,
         active,
@@ -40,7 +40,7 @@ export function List<T = any>(props: React.PropsWithChildren<IList<T>>) {
     const claNames = classNames(defaultListClassName, className, modeClassName);
     return (
         <ul {...others} className={claNames}>
-            {cloneReactChildren<IList>(children, { active, onClick })}
+            {cloneReactChildren<IListProps>(children, { active, onClick })}
         </ul>
     );
 }

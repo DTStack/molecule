@@ -1,4 +1,9 @@
-import OriginModal, { IModalFuncProps, destroyFns } from './modal';
+import {
+    Modal as OriginModal,
+    IModalProps,
+    IModalFuncProps,
+    destroyFns,
+} from './modal';
 import confirm, {
     withWarn,
     withConfirm,
@@ -31,4 +36,4 @@ Modal.destroyAll = function destroyAllFn() {
     }
 };
 
-export default Modal;
+export { Modal, IModalFuncProps, IModalProps };

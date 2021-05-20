@@ -1,13 +1,14 @@
-import { classNames, prefixClaName } from 'mo/common/className';
 import * as React from 'react';
+import { classNames, prefixClaName } from 'mo/common/className';
 import 'vscode-codicons/dist/codicon.css';
+import { ComponentProps } from 'react';
 
-export interface IIcon extends HTMLElementProps {
+export interface IIconProps extends ComponentProps<'span'> {
     type: string;
     onClick?: (e: React.MouseEvent) => void;
 }
 
-export function Icon(props: IIcon): React.ReactElement {
+export function Icon(props: IIconProps) {
     const { className, type, ...restProps } = props;
     return (
         <span

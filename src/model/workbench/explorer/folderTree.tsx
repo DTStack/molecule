@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'reflect-metadata';
-import { ITreeNodeItem, FileType, FileTypes } from 'mo/components/tree';
-import { IMenuItem } from 'mo/components/menu';
+import { ITreeNodeItemProps, FileType, FileTypes } from 'mo/components/tree';
+import { IMenuItemProps } from 'mo/components/menu';
 import { randomId } from 'mo/common/utils';
 
 export enum FolderTreeEvent {
@@ -21,10 +21,10 @@ export interface IFolderInputEvent {
 }
 
 export interface IFolderTreeSubItem {
-    data?: ITreeNodeItem[];
-    contextMenu?: IMenuItem[];
-    folderPanelContextMenu?: IMenuItem[];
-    current?: ITreeNodeItem | null;
+    data?: ITreeNodeItemProps[];
+    contextMenu?: IMenuItemProps[];
+    folderPanelContextMenu?: IMenuItemProps[];
+    current?: ITreeNodeItemProps | null;
 }
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
@@ -89,17 +89,17 @@ export const FOLDER_PANEL_CONTEXT_MENU = [
     },
 ];
 
-export class TreeNodeModel implements ITreeNodeItem {
+export class TreeNodeModel implements ITreeNodeItemProps {
     id?: number;
     name?: string;
     location?: string;
     fileType?: FileType;
-    children?: ITreeNodeItem[];
+    children?: ITreeNodeItemProps[];
     icon?: string | React.ReactNode;
     isEditable?: boolean;
     content?: string;
 
-    constructor(props: ITreeNodeItem = {}) {
+    constructor(props: ITreeNodeItemProps = {}) {
         const {
             id,
             name = '',

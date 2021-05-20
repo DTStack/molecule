@@ -1,11 +1,12 @@
-import { classNames } from 'mo/common/className';
-import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import * as React from 'react';
 import { memo } from 'react';
+import { classNames } from 'mo/common/className';
+import { IStatusBarItem } from 'mo/model/workbench/statusBar';
+import { IStatusBarController } from 'mo/controller/statusBar';
 import { itemClassName } from './base';
 
-function StatusItem(props: IStatusBarItem) {
-    const { className, onClick, name, data, render, ...extra } = props;
+function StatusItem(props: IStatusBarItem & IStatusBarController) {
+    const { className, onClick, id, name, data, render, ...extra } = props;
     const clsName = classNames(itemClassName, className);
     const events = {
         onClick: function (e: React.MouseEvent) {
@@ -14,7 +15,7 @@ function StatusItem(props: IStatusBarItem) {
     };
 
     return (
-        <div className={clsName} {...extra}>
+        <div className={clsName} id={id} {...extra}>
             <a tabIndex={-1} title={name} {...events}>
                 {render ? render(props) : name}
             </a>

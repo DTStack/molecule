@@ -1,5 +1,6 @@
 import * as React from 'react';
 import EditorStatusBarView from 'mo/workbench/editor/statusBarView';
+import { IMenuItem } from 'mo/components/menu';
 export interface IStatusBarItem<T = any> extends HTMLElementProps {
     id: string;
     sortIndex: number;
@@ -12,6 +13,7 @@ export interface IStatusBarItem<T = any> extends HTMLElementProps {
 export interface IStatusBar {
     rightItems: IStatusBarItem[];
     leftItems: IStatusBarItem[];
+    contextMenu?: IMenuItem[];
     hidden?: boolean;
 }
 
@@ -39,18 +41,28 @@ export enum StatusBarEvent {
      */
     DataChanged = 'statusBar.data',
 }
+
+export const CONTEXT_MENU_HIDE = {
+    id: 'hide',
+    name: 'Hide Status Bar',
+};
+
+export const DEFAULT_CONTEXT_MENU = [CONTEXT_MENU_HIDE];
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[] = [];
     public rightItems: IStatusBarItem[] = [];
+    public contextMenu: IMenuItem[];
     public hidden = false;
 
     constructor(
         leftItems: IStatusBarItem[] = [],
         rightItems: IStatusBarItem[] = [STATUS_EDITOR_INFO],
+        contextMenu: IMenuItem[] = DEFAULT_CONTEXT_MENU,
         hidden = false
     ) {
         this.leftItems = leftItems;
         this.rightItems = rightItems;
+        this.contextMenu = contextMenu;
         this.hidden = hidden;
     }
 }

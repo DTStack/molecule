@@ -3,14 +3,14 @@ import * as React from 'react';
 import { IStatusBarItem, StatusBarEvent } from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import { menuBarController } from 'mo/controller';
-import { IMenuItem } from 'mo/components/menu';
+import { IMenuItemProps } from 'mo/components/menu';
 import { CONTEXT_MENU_HIDE_STATUS_BAR } from 'mo/model/workbench/statusBar';
 import { singleton } from 'tsyringe';
 export interface IStatusBarController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
     onContextMenuClick?: (
         e: React.MouseEvent,
-        item: IMenuItem | undefined
+        item: IMenuItemProps | undefined
     ) => void;
 }
 @singleton()
@@ -27,7 +27,7 @@ export class StatusBarController
 
     public readonly onContextMenuClick = (
         e: React.MouseEvent,
-        item: IMenuItem | undefined
+        item: IMenuItemProps | undefined
     ) => {
         const menuId = item?.id;
         switch (menuId) {

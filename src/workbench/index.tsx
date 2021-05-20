@@ -8,7 +8,7 @@ export { Panel } from 'mo/workbench/panel/panel';
 export { Sidebar } from 'mo/workbench/sidebar';
 export { StatusBar } from 'mo/workbench/statusBar';
 
-export {
+export type {
     IWorkbench,
     IActivityBar,
     IActivityBarItem,
@@ -24,7 +24,7 @@ export {
     INotificationItem,
 } from 'mo/model';
 
-export {
+export type {
     IActivityBarController,
     IWorkbenchController,
     IEditorController,

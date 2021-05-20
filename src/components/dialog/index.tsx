@@ -36,4 +36,6 @@ Modal.destroyAll = function destroyAllFn() {
     }
 };
 
-export { Modal, IModalFuncProps, IModalProps };
+export { Modal };
+
+export type { IModalFuncProps, IModalProps };

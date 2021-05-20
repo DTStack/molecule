@@ -42,12 +42,10 @@ export enum StatusBarEvent {
     DataChanged = 'statusBar.data',
 }
 
-export const CONTEXT_MENU_HIDE = {
+export const CONTEXT_MENU_HIDE_STATUS_BAR = {
     id: 'hide',
     name: 'Hide Status Bar',
 };
-
-export const DEFAULT_CONTEXT_MENU = [CONTEXT_MENU_HIDE];
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[] = [];
     public rightItems: IStatusBarItem[] = [];
@@ -57,7 +55,7 @@ export class StatusBarModel implements IStatusBar {
     constructor(
         leftItems: IStatusBarItem[] = [],
         rightItems: IStatusBarItem[] = [STATUS_EDITOR_INFO],
-        contextMenu: IMenuItem[] = DEFAULT_CONTEXT_MENU,
+        contextMenu: IMenuItem[] = [CONTEXT_MENU_HIDE_STATUS_BAR],
         hidden = false
     ) {
         this.leftItems = leftItems;

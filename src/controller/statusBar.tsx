@@ -4,7 +4,7 @@ import { IStatusBarItem, StatusBarEvent } from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import { menuBarController } from 'mo/controller';
 import { IMenuItem } from 'mo/components/menu';
-import { CONTEXT_MENU_HIDE } from 'mo/model/workbench/statusBar';
+import { CONTEXT_MENU_HIDE_STATUS_BAR } from 'mo/model/workbench/statusBar';
 import { singleton } from 'tsyringe';
 export interface IStatusBarController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
@@ -31,7 +31,7 @@ export class StatusBarController
     ) => {
         const menuId = item?.id;
         switch (menuId) {
-            case CONTEXT_MENU_HIDE.id:
+            case CONTEXT_MENU_HIDE_STATUS_BAR.id:
                 menuBarController.updateStatusBar();
                 break;
         }

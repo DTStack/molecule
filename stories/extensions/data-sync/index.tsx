@@ -1,4 +1,4 @@
-import { activityBarService } from 'mo';
+import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
 
 export const ExtendDataSync: IExtension = {
@@ -9,6 +9,6 @@ export const ExtendDataSync: IExtension = {
             name: '数据同步',
         };
         console.log('extend a new activity bar item:', newItem);
-        activityBarService.addBar(newItem);
+        molecule.activityBar.addBar(newItem);
     },
 };

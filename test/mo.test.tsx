@@ -1,7 +1,7 @@
-import { extensionService } from 'mo';
+import molecule from 'mo';
 
 describe('Test Mo Entry', () => {
     test('Instance the extensionService', () => {
-        expect(extensionService).not.toBeNull();
+        expect(molecule.extension).not.toBeNull();
     });
 });

@@ -22,6 +22,15 @@ const initialEditorSetting: IEditorSettings = {
     fontSize: 14,
 };
 
+export const BuiltInSettingsTab = {
+    id: 'Settings',
+    name: 'settings.json',
+    data: {
+        language: 'json',
+        value: '',
+    },
+};
+
 export type IWorkbenchSettings = typeof initialWorkbenchSetting;
 
 export interface ISettings extends IConfiguration {

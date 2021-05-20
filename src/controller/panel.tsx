@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import * as React from 'react';
-import { IActionBarItem } from 'mo/components/actionBar';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import { Controller } from 'mo/react/controller';
 import {
     PanelEvent,
@@ -12,7 +12,7 @@ import { IPanelService, PanelService } from 'mo/services';
 
 export interface IPanelController {
     onTabChange(key: string | undefined): void;
-    onToolbarClick(e: React.MouseEvent, item: IActionBarItem): void;
+    onToolbarClick(e: React.MouseEvent, item: IActionBarItemProps): void;
 }
 
 @singleton()
@@ -36,7 +36,7 @@ export class PanelController extends Controller implements IPanelController {
 
     public readonly onToolbarClick = (
         e: React.MouseEvent,
-        item: IActionBarItem
+        item: IActionBarItemProps
     ): void => {
         if (item.id === PANEL_TOOLBOX_CLOSE.id) {
             this.panelService.showHide();

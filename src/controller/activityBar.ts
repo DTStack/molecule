@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { IMenuItem } from 'mo/components/menu';
+import { IMenuItemProps } from 'mo/components/menu';
 import {
     ActivityBarEvent,
     CONTEXT_MENU_MENU,
@@ -30,7 +30,7 @@ export interface IActivityBarController {
     onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
     onContextMenuClick?: (
         e: React.MouseEvent,
-        item: IMenuItem | undefined
+        item: IMenuItemProps | undefined
     ) => void;
 }
 
@@ -85,7 +85,7 @@ export class ActivityBarController
     // TODO: Menu 按钮是否提取至 activityBar 外
     public readonly onContextMenuClick = (
         e: React.MouseEvent,
-        item: IMenuItem | undefined
+        item: IMenuItemProps | undefined
     ) => {
         const contextMenuId = item?.id;
         switch (contextMenuId) {

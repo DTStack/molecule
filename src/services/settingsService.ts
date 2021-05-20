@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import {
+    BuiltInSettingsTab,
     IConfiguration,
     ISettings,
     SettingsEvent,
@@ -16,15 +17,6 @@ import { EditorService, IEditorService } from './workbench';
 import { GlobalEvent } from 'mo/common/event';
 import { IEditorTab } from 'mo/model';
 import { ColorThemeService } from './theme/colorThemeService';
-
-export const BuiltInSettingsTab = {
-    id: 'Settings',
-    name: 'settings.json',
-    data: {
-        language: 'json',
-        value: '',
-    },
-};
 
 export type BuiltInSettingsTabType = typeof BuiltInSettingsTab;
 

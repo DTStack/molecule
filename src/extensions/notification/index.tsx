@@ -1,9 +1,10 @@
 import React from 'react';
 import { IExtension } from 'mo/model/extension';
-import { IExtensionService, notificationService } from 'mo';
+import { IExtensionService } from 'mo/services';
+import molecule from 'mo';
 import { Button } from 'mo/components/button';
 function init() {
-    notificationService.addNotifications([
+    molecule.notification.addNotifications([
         {
             id: 1,
             value: '测试消息模块1',

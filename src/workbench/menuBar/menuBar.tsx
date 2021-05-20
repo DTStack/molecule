@@ -10,7 +10,7 @@ import { Icon } from 'mo/components/icon';
 const defaultClassName = prefixClaName('menuBar');
 const actionClassName = getBEMElement(defaultClassName, 'action');
 
-function MenuBar(props: IMenuBar & IMenuBarController) {
+export function MenuBar(props: IMenuBar & IMenuBarController) {
     const { data, onClick } = props;
     const childRef = React.useRef();
     const handleClick = (e: React.MouseEvent, item) => {

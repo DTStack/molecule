@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { prefixClaName, classNames } from 'mo/common/className';
-import ActionBar, { IActionBar } from 'mo/components/actionBar';
+import { ActionBar, IActionBarProps } from 'mo/components/actionBar';
 
-export interface IToolBar<T = any> extends IActionBar {}
+export interface IToolbarProps<T = any> extends IActionBarProps {}
 
 const rootClassName = 'tool-bar';
 
-export default function ToolBar<T = any>(props: IToolBar<T>) {
+export function Toolbar<T = any>(props: IToolbarProps<T>) {
     const { className, ...custom } = props;
 
     return (

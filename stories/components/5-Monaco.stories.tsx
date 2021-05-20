@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import MonacoEditor from 'mo/components/monaco';
+import { MonacoEditor } from 'mo/components/monaco';
 
 import '../demo.scss';
 

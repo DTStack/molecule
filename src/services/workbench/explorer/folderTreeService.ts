@@ -7,25 +7,27 @@ import {
     IFolderTreeModel,
 } from 'mo/model/workbench/explorer/folderTree';
 import { TreeViewUtil, ITreeInstance } from '../../helper';
-import { ITreeNodeItem, FileTypes, FileType } from 'mo/components/tree';
+import { ITreeNodeItemProps, FileTypes, FileType } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
-    initTree?: (data: ITreeNodeItem[]) => void;
+    initTree?: (data: ITreeNodeItemProps[]) => void;
     onNewFile(callback: (id: number) => void);
     onNewFolder(callback: (id: number) => void);
     onRename(callback: (id: number) => void);
     onDelete(callback: (id: number) => void);
-    onUpdateFileName(callback: (file: ITreeNodeItem) => void);
+    onUpdateFileName(callback: (file: ITreeNodeItemProps) => void);
     onUpdateFileContent(callback: (id: number, value?: string) => void);
-    onSelectFile(callback: (file: ITreeNodeItem, isUpdate: boolean) => void);
-    getRootFolderByRootId(id: number): ITreeNodeItem | undefined;
-    getRootFolderIndexByRootId(id: number): ITreeNodeItem | undefined;
+    onSelectFile(
+        callback: (file: ITreeNodeItemProps, isUpdate: boolean) => void
+    );
+    getRootFolderByRootId(id: number): ITreeNodeItemProps | undefined;
+    getRootFolderIndexByRootId(id: number): ITreeNodeItemProps | undefined;
     getCurrentRootFolderInfo?: any;
-    addRootFolder(folder?: ITreeNodeItem | ITreeNodeItem[]): void;
+    addRootFolder(folder?: ITreeNodeItemProps | ITreeNodeItemProps[]): void;
     removeRootFolder(id: number): void;
     setActive(id?: number): void;
-    onDropTree(treeData: ITreeNodeItem[]): void;
+    onDropTree(treeData: ITreeNodeItemProps[]): void;
     getFileIconByExtensionName(name: string, fileType: FileType): void;
 }
 
@@ -76,10 +78,12 @@ export class FolderTreeService
         id: number
     ): {
         index: number;
-        currentRootFolder: ITreeNodeItem;
+        currentRootFolder: ITreeNodeItemProps;
         tree: ITreeInstance;
     } {
-        const currentRootFolder: ITreeNodeItem = this.getRootFolderById(id);
+        const currentRootFolder: ITreeNodeItemProps = this.getRootFolderById(
+            id
+        );
         const index = this.getRootFolderIndexByRootId(
             (currentRootFolder as any).id
         ) as number;
@@ -97,11 +101,11 @@ export class FolderTreeService
         );
     }
 
-    public getRootFolderByRootId(id: number): ITreeNodeItem | undefined {
+    public getRootFolderByRootId(id: number): ITreeNodeItemProps | undefined {
         return this.state.folderTree?.data!.find((folder) => folder.id === id);
     }
 
-    private getRootFolderById(id: number): ITreeNodeItem {
+    private getRootFolderById(id: number): ITreeNodeItemProps {
         let rootNode = {};
         this.state.folderTree?.data?.forEach((folder) => {
             const treeInstance = new TreeViewUtil(folder);
@@ -110,14 +114,14 @@ export class FolderTreeService
         return rootNode;
     }
 
-    public initTree = (tree: ITreeNodeItem[]) => {
+    public initTree = (tree: ITreeNodeItemProps[]) => {
         const { folderTree } = this.state;
         this.setState({
             folderTree: { ...folderTree, data: tree },
         });
     };
 
-    public addRootFolder(folder: ITreeNodeItem | ITreeNodeItem[]) {
+    public addRootFolder(folder: ITreeNodeItemProps | ITreeNodeItemProps[]) {
         const { folderTree } = this.state;
         let next = [...folderTree?.data!];
         if (Array.isArray(folder)) {
@@ -169,7 +173,7 @@ export class FolderTreeService
         this.subscribe(FolderTreeEvent.onNewFolder, callback);
     }
 
-    public onUpdateFileName(callback: (file: ITreeNodeItem) => void) {
+    public onUpdateFileName(callback: (file: ITreeNodeItemProps) => void) {
         this.subscribe(FolderTreeEvent.onUpdateFileName, callback);
     }
 
@@ -178,12 +182,12 @@ export class FolderTreeService
     }
 
     public onSelectFile(
-        callback: (file: ITreeNodeItem, isUpdate: boolean) => void
+        callback: (file: ITreeNodeItemProps, isUpdate: boolean) => void
     ) {
         this.subscribe(FolderTreeEvent.onSelectFile, callback);
     }
 
-    public onDropTree = (treeData: ITreeNodeItem[]) => {
+    public onDropTree = (treeData: ITreeNodeItemProps[]) => {
         this.setState({
             folderTree: Object.assign(this.state.folderTree?.data, {
                 data: treeData,

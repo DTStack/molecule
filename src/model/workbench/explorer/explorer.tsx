@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { IActionBarItem } from 'mo/components/actionBar';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import { NEW_FILE_COMMAND_ID, NEW_FOLDER_COMMAND_ID } from './folderTree';
 export enum ExplorerEvent {
     onClick = 'explorer.onClick',
     onCollapseChange = 'explorer.onCollapseChange',
 }
-export interface IPanelItem<T = any> extends IActionBarItem {
+export interface IExplorerPanelItem<T = any> extends IActionBarItemProps {
     renderPanel?: (props) => React.ReactNode | JSX.Element;
     toolbar?: T;
 }
 
 export interface IExplorer {
-    data?: IPanelItem[];
-    headerToolBar?: IActionBarItem;
+    data?: IExplorerPanelItem[];
+    headerToolBar?: IActionBarItemProps;
 }
 
 export const SAMPLE_FOLDER_PANEL_ID = 'Folders';
@@ -126,12 +126,12 @@ export const SAMPLE_FOLDER_PANEL = {
 
 export const DEFAULT_PANELS = [EDITOR_PANEL, OUTLINE_PANEL];
 export class IExplorerModel implements IExplorer {
-    public data: IPanelItem[] = DEFAULT_PANELS;
-    public headerToolBar: IActionBarItem;
+    public data: IExplorerPanelItem[] = DEFAULT_PANELS;
+    public headerToolBar: IActionBarItemProps;
 
     constructor(
-        data: IPanelItem[] = DEFAULT_PANELS,
-        headerToolBar: IActionBarItem = builtInHeaderToolbar
+        data: IExplorerPanelItem[] = DEFAULT_PANELS,
+        headerToolBar: IActionBarItemProps = builtInHeaderToolbar
     ) {
         this.data = data;
         this.headerToolBar = headerToolBar;

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { getBEMElement } from 'mo/common/className';
 import { Icon } from 'mo/components/icon';
-export interface TabExtraProps {
+export interface ITabExtraProps {
     modified?: boolean;
     active?: boolean;
     buttonHover?: boolean;
@@ -17,7 +17,7 @@ export default function TabExtra({
     onClick,
     active = false,
     buttonHover = false,
-}: TabExtraProps) {
+}: ITabExtraProps) {
     const [hover, setHover] = useState(false);
 
     const handleMouseOver = () => {

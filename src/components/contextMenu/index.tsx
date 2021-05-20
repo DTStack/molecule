@@ -2,12 +2,12 @@ import * as React from 'react';
 import { HTMLElementType } from 'mo/common/dom';
 import { useContextView } from 'mo/components/contextView';
 
-export interface IContextMenu {
+export interface IContextMenuProps {
     anchor: HTMLElementType;
     render: () => React.ReactNode;
 }
 
-export function useContextMenu(props: IContextMenu) {
+export function useContextMenu(props: IContextMenuProps) {
     const { anchor, render } = props;
 
     if (!anchor) {

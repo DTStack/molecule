@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import ActionBar, { IActionBarItem } from 'mo/components/actionBar';
+import { ActionBar, IActionBarItemProps } from 'mo/components/actionBar';
 
 const stories = storiesOf('ActionBar', module);
 stories.addDecorator(withKnobs);
@@ -21,7 +21,7 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
-        const data: IActionBarItem<any>[] = [
+        const data: IActionBarItemProps<any>[] = [
             {
                 id: '1',
                 title: 'bar1',

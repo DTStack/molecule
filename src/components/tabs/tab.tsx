@@ -15,7 +15,17 @@ import {
     prefixClaName,
 } from 'mo/common/className';
 import TabExtra from './tabExtra';
-export interface ITab<T = any, P = any> {
+
+export interface ITabEvent {
+    onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
+    onCloseTab?: (key?: string) => void;
+    onSelectTab?: (key?: string) => void;
+    onContextMenu?: <T = any>(
+        event: React.MouseEvent,
+        tab: ITabProps<T>
+    ) => void;
+}
+export interface ITabProps<T = any, P = any> extends ITabEvent {
     active?: boolean;
     closable?: boolean;
     editable?: boolean;
@@ -25,16 +35,11 @@ export interface ITab<T = any, P = any> {
     renderPane?: ((item: P) => ReactNode) | ReactNode;
     data?: T;
 }
-export interface ITabEvent {
-    onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
-    onCloseTab?: (key?: string) => void;
-    onSelectTab?: (key?: string) => void;
-    onContextMenu?: <T = any>(event: React.MouseEvent, tab: ITab<T>) => void;
-}
+
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
 
-export function Tab<T>(props: ITab & ITabEvent) {
+export function Tab<T>(props: ITabProps) {
     const {
         active,
         name,

@@ -5,7 +5,7 @@ import { KeyCodes } from 'mo/common/keyCodes';
 import { TextArea } from './textArea';
 
 type SizeType = 'normal' | 'large';
-export interface InputProps {
+export interface IInputProps {
     disabled?: boolean;
     size?: SizeType;
     type?: LiteralUnion<
@@ -67,7 +67,7 @@ export interface InputState {
     prevValue: any;
 }
 
-export class Input extends React.Component<InputProps, InputState> {
+export class Input extends React.Component<IInputProps, InputState> {
     static TextArea: typeof TextArea;
 
     static defaultProps = {
@@ -76,7 +76,7 @@ export class Input extends React.Component<InputProps, InputState> {
 
     input: any;
 
-    constructor(props: InputProps) {
+    constructor(props: IInputProps) {
         super(props);
         const value =
             typeof props.value === 'undefined'
@@ -89,7 +89,7 @@ export class Input extends React.Component<InputProps, InputState> {
     }
 
     static getDerivedStateFromProps(
-        nextProps: InputProps,
+        nextProps: IInputProps,
         { prevValue }: InputState
     ) {
         const newState: Partial<InputState> = { prevValue: nextProps.value };

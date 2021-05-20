@@ -11,7 +11,7 @@ import {
     statusBarClassName,
 } from './base';
 import { useContextMenu } from 'mo/components/contextMenu';
-import { IMenuItem, Menu } from 'mo/components/menu';
+import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { ID_STATUS_BAR } from 'mo/common/id';
 import { select } from 'mo/common/dom';
 
@@ -26,7 +26,7 @@ function StatusBar(props: IStatusBar & IStatusBarController) {
 
     let contextViewMenu;
     const onClickMenuItem = useCallback(
-        (e: React.MouseEvent, item: IMenuItem | undefined) => {
+        (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
             onContextMenuClick?.(e, item);
             contextViewMenu?.dispose();
         },

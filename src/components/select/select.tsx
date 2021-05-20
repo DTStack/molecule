@@ -16,10 +16,10 @@ import { cloneReactChildren } from 'mo/react';
 import { getAttr } from 'mo/common/dom';
 import { IContextView, useContextView } from 'mo/components/contextView';
 
-import { ISelectOption } from './option';
+import { ISelectOptionProps } from './option';
 import { Icon } from '../icon';
 
-export interface ISelect extends ComponentProps<any> {
+export interface ISelectProps extends ComponentProps<any> {
     value?: string;
     style?: React.CSSProperties;
     className?: string;
@@ -27,7 +27,7 @@ export interface ISelect extends ComponentProps<any> {
     placeholder?: string;
     showArrow?: boolean;
     children?: ReactNode;
-    onSelect?(e: React.MouseEvent, selectedOption?: ISelectOption): void;
+    onSelect?(e: React.MouseEvent, selectedOption?: ISelectOptionProps): void;
 }
 
 const initialValue = {
@@ -41,7 +41,7 @@ const initialValue = {
 
 type IState = {
     isOpen: boolean;
-    option: ISelectOption;
+    option: ISelectOptionProps;
 };
 
 export const selectClassName = prefixClaName('select');
@@ -52,7 +52,7 @@ const inputClassName = getBEMElement(selectClassName, 'input');
 const selectActiveClassName = getBEMModifier(selectClassName, 'active');
 const selectArrowClassName = getBEMElement(selectClassName, 'arrow');
 
-export class Select extends PureComponent<ISelect, IState> {
+export class Select extends PureComponent<ISelectProps, IState> {
     private contextView: IContextView;
     public state: IState;
     private selectElm: RefObject<HTMLDivElement>;
@@ -79,12 +79,12 @@ export class Select extends PureComponent<ISelect, IState> {
     }
 
     public getDefaultState(props) {
-        let defaultSelectedOption: ISelectOption = {};
+        let defaultSelectedOption: ISelectOptionProps = {};
         const defaultValue = props.value || props.defaultValue;
         const options = Children.toArray(props.children);
         for (const option of options) {
             if (isValidElement(option)) {
-                const optionProps = option.props as ISelectOption;
+                const optionProps = option.props as ISelectOptionProps;
                 if (optionProps.value && optionProps.value === defaultValue) {
                     defaultSelectedOption = {
                         ...optionProps,
@@ -108,7 +108,7 @@ export class Select extends PureComponent<ISelect, IState> {
         const name = getAttr(option, 'data-name');
         const desc = getAttr(option, 'data-desc');
         if (name) {
-            const optionItem: ISelectOption = {
+            const optionItem: ISelectOptionProps = {
                 value: value,
                 name: name,
                 description: desc,
@@ -160,7 +160,7 @@ export class Select extends PureComponent<ISelect, IState> {
                         onMouseOver={this.handleOnHoverOption}
                     >
                         <div className={selectOptionsClassName}>
-                            {cloneReactChildren<ISelectOption>(children, {
+                            {cloneReactChildren<ISelectOptionProps>(children, {
                                 onClick: this.handleOnClickOption,
                             })}
                         </div>

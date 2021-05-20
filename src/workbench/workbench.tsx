@@ -17,11 +17,7 @@ import { Utils } from '@dtinsight/dt-utils';
 import { APP_PREFIX } from 'mo/common/const';
 
 import { connect } from 'mo/react';
-import { IPanel } from 'mo/model/workbench/panel';
-import { IActivityBar } from 'mo/model/workbench/activityBar';
-import { ISidebar } from 'mo/model/workbench/sidebar';
-import { IMenuBar } from 'mo/model/workbench/menuBar';
-import { IStatusBar } from 'mo/model/workbench/statusBar';
+
 import {
     IWorkbenchController,
     WorkbenchController,
@@ -38,14 +34,7 @@ import {
     SidebarService,
     StatusBarService,
 } from 'mo/services';
-
-export interface IWorkbench {
-    panel: IPanel;
-    activityBar: IActivityBar;
-    menuBar: IMenuBar;
-    statusBar: IStatusBar;
-    sideBar: ISidebar;
-}
+import { IWorkbench } from 'mo/model';
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
@@ -131,5 +120,3 @@ export const Workbench = connect(
     WorkbenchView,
     workbenchController
 );
-
-export default Workbench;

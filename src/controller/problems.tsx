@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import * as React from 'react';
-import { IStatusBarItem } from 'mo';
+import { IStatusBarItem } from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import {
     IPanelService,

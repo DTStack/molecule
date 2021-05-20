@@ -3,26 +3,26 @@ import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import {
     ExplorerEvent,
-    IPanelItem,
+    IExplorerPanelItem,
     IExplorer,
     IExplorerModel,
     DEFAULT_PANELS,
     SAMPLE_FOLDER_PANEL,
 } from 'mo/model/workbench/explorer/explorer';
-import { IActionBarItem } from 'mo/components/actionBar';
-import { IMenuItem } from 'mo/components/menu';
+import { IActionBarItemProps } from 'mo/components/actionBar';
+import { IMenuItemProps } from 'mo/components/menu';
 import { searchById } from '../../helper';
 
 export interface IExplorerService extends Component<IExplorer> {
-    addPanel(panel: IPanelItem | IPanelItem[]): void;
+    addPanel(panel: IExplorerPanelItem | IExplorerPanelItem[]): void;
     reset(): void;
     remove(id: string): void;
     togglePanel(id?: string): void;
     updateActionsCheckStatus(id?: string): void;
-    addAction(action: IMenuItem): void;
+    addAction(action: IMenuItemProps): void;
     removeAction(id: string): void;
     updateRender(): void;
-    onClick(callback: (e: MouseEvent, item: IActionBarItem) => void);
+    onClick(callback: (e: MouseEvent, item: IActionBarItemProps) => void);
 }
 
 @singleton()
@@ -35,7 +35,7 @@ export class ExplorerService
         this.state = container.resolve(IExplorerModel);
     }
 
-    public addPanel(data: IPanelItem | IPanelItem[]) {
+    public addPanel(data: IExplorerPanelItem | IExplorerPanelItem[]) {
         let next = [...this.state.data!];
         if (Array.isArray(data)) {
             next = next?.concat(data);
@@ -65,7 +65,9 @@ export class ExplorerService
         });
     }
 
-    public onClick(callback: (e: MouseEvent, item: IActionBarItem) => void) {
+    public onClick(
+        callback: (e: MouseEvent, item: IActionBarItemProps) => void
+    ) {
         this.subscribe(ExplorerEvent.onClick, callback);
     }
 
@@ -85,7 +87,7 @@ export class ExplorerService
         this.updateActionsCheckStatus(id);
     }
 
-    public addAction(action: IMenuItem) {
+    public addAction(action: IMenuItemProps) {
         const { headerToolBar } = this.state;
         let newActions = headerToolBar?.contextMenu;
         if (Array.isArray(action)) {

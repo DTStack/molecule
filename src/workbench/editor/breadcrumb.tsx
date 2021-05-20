@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { memo } from 'react';
 import { groupBreadcrumbClassName } from './base';
-import { Breadcrumb, IBreadcrumbItem } from 'mo/components/breadcrumb';
+import { Breadcrumb, IBreadcrumbItemProps } from 'mo/components/breadcrumb';
 
 export interface IEditorBreadcrumbProps {
-    breadcrumbs?: IBreadcrumbItem[];
+    breadcrumbs?: IBreadcrumbItemProps[];
 }
 
 function EditorBreadcrumb(props: IEditorBreadcrumbProps) {

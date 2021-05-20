@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-import RcCollapse, { Panel } from 'rc-collapse';
-import Toolbar from 'mo/components/toolbar';
+import RcCollapse, { Panel as CollapsePanel } from 'rc-collapse';
+import { Toolbar } from 'mo/components/toolbar';
 import { Icon } from 'mo/components/icon';
 import {
     prefixClaName,
@@ -32,9 +32,8 @@ export const contentPaddingClassName = getBEMModifier(
 const initState = {
     activePanelKeys: [],
 };
-const Collapse: React.FunctionComponent<ICollapseProps> = (
-    props: ICollapseProps
-) => {
+
+export function Collapse(props: ICollapseProps) {
     const [state, setState] = useState<IState>(initState);
     const {
         className,
@@ -76,7 +75,7 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
                 )}
             >
                 {data.map((panel) => (
-                    <Panel
+                    <CollapsePanel
                         key={panel.id}
                         header={panel.name}
                         className={panel.className}
@@ -91,12 +90,11 @@ const Collapse: React.FunctionComponent<ICollapseProps> = (
                         }
                     >
                         {render(panel.renderPanel)}
-                    </Panel>
+                    </CollapsePanel>
                 ))}
             </RcCollapse>
         </div>
     );
-};
+}
 
-export { Panel };
-export default Collapse;
+export { CollapsePanel };

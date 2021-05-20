@@ -1,7 +1,7 @@
-import { ITab } from 'mo/components/tabs/tab';
-import { ITabs } from 'mo/components/tabs';
-import { IMenuItem } from 'mo/components/menu';
-import { IBreadcrumbItem } from 'mo/components/breadcrumb';
+import { ITabProps } from 'mo/components/tabs/tab';
+import { ITabsProps } from 'mo/components/tabs';
+import { IMenuItemProps } from 'mo/components/menu';
+import { IBreadcrumbItemProps } from 'mo/components/breadcrumb';
 
 export enum EditorEvent {
     OnCloseTab = 'editor.closeTab',
@@ -22,21 +22,21 @@ interface BuiltInEditorTabDataType {
     modified?: boolean;
 }
 
-export interface IEditorTab<T = BuiltInEditorTabDataType> extends ITab<T> {
-    breadcrumb?: IBreadcrumbItem[];
+export interface IEditorTab<T = BuiltInEditorTabDataType> extends ITabProps<T> {
+    breadcrumb?: IBreadcrumbItemProps[];
 }
 export interface IEditorAction {
-    actions?: IMenuItem[];
-    menu?: IMenuItem[];
+    actions?: IMenuItemProps[];
+    menu?: IMenuItemProps[];
 }
-export interface IEditorGroup<E = any, T = any> extends ITabs<T> {
+export interface IEditorGroup<E = any, T = any> extends ITabsProps<T> {
     id?: number;
     /**
      * Current editor group tab
      */
     tab?: IEditorTab<T>;
-    actions?: IMenuItem[];
-    menu?: IMenuItem[];
+    actions?: IMenuItemProps[];
+    menu?: IMenuItemProps[];
     editorInstance?: E;
 }
 export interface IEditor {
@@ -61,7 +61,7 @@ const baseMenu = [
     },
 ];
 
-const initialActions: IMenuItem[] = [
+const initialActions: IMenuItemProps[] = [
     {
         id: EDITOR_MENU_SHOW_OPENEDITORS,
         name: 'Show Opened Editors',
@@ -69,7 +69,7 @@ const initialActions: IMenuItem[] = [
     ...baseMenu,
 ];
 
-const initialMenu: IMenuItem[] = [
+const initialMenu: IMenuItemProps[] = [
     {
         id: EDITOR_MENU_CLOSE,
         name: 'Close',
@@ -93,16 +93,16 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     id: number;
     tab: IEditorTab<T>;
     data: IEditorTab<T>[];
-    actions: IMenuItem[];
-    menu: IMenuItem[];
+    actions: IMenuItemProps[];
+    menu: IMenuItemProps[];
     editorInstance: E | undefined;
 
     constructor(
         id: number,
         tab: IEditorTab<T>,
         data: IEditorTab<T>[],
-        actions: IMenuItem[] = initialActions,
-        menu: IMenuItem[] = initialMenu,
+        actions: IMenuItemProps[] = initialActions,
+        menu: IMenuItemProps[] = initialMenu,
         editorInstance?: E
     ) {
         this.id = id;

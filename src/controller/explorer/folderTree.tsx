@@ -2,9 +2,9 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { container, singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
-import { ITreeNodeItem, FileTypes } from 'mo/components/tree';
-import { IMenuItem } from 'mo/components/menu';
-import Modal from 'mo/components/dialog';
+import { ITreeNodeItemProps, FileTypes } from 'mo/components/tree';
+import { IMenuItemProps } from 'mo/components/menu';
+import { Modal } from 'mo/components/dialog';
 import {
     IFolderInputEvent,
     TreeNodeModel,
@@ -27,23 +27,26 @@ const confirm = Modal.confirm;
 export interface IFolderTreeController {
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
-        item: IMenuItem,
-        node?: ITreeNodeItem,
+        item: IMenuItemProps,
+        node?: ITreeNodeItemProps,
         events?: IFolderInputEvent
     ) => void;
     readonly filterContextMenu?: (
-        menus: IMenuItem[],
-        treeNode: ITreeNodeItem
-    ) => IMenuItem[];
+        menus: IMenuItemProps[],
+        treeNode: ITreeNodeItemProps
+    ) => IMenuItemProps[];
     readonly getInputEvent?: (events: IFolderInputEvent) => IFolderInputEvent;
     readonly onNewFile?: (id: number) => void;
     readonly onNewFolder?: (id: number) => void;
     readonly onRename?: (id: number) => void;
     readonly onDelete?: (id: number) => void;
-    readonly onUpdateFileName?: (file: ITreeNodeItem) => void;
+    readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
     readonly onUpdateFileContent?: (id: number, value?: string) => void;
-    readonly onSelectFile?: (file: ITreeNodeItem, isUpdate?: boolean) => void;
-    readonly onDropTree?: (treeNode: ITreeNodeItem[]) => void;
+    readonly onSelectFile?: (
+        file: ITreeNodeItemProps,
+        isUpdate?: boolean
+    ) => void;
+    readonly onDropTree?: (treeNode: ITreeNodeItemProps[]) => void;
 }
 
 @singleton()
@@ -81,7 +84,7 @@ export class FolderTreeController
         this.emit(FolderTreeEvent.onNewFolder, id);
     };
 
-    public onUpdateFileName = (file: ITreeNodeItem) => {
+    public onUpdateFileName = (file: ITreeNodeItemProps) => {
         this.emit(FolderTreeEvent.onUpdateFileName, file);
     };
 
@@ -90,19 +93,19 @@ export class FolderTreeController
     };
 
     public readonly onSelectFile = (
-        file: ITreeNodeItem,
+        file: ITreeNodeItemProps,
         isUpdate?: boolean
     ) => {
         this.emit(FolderTreeEvent.onSelectFile, file, isUpdate);
     };
 
-    public readonly onDropTree = (treeNode: ITreeNodeItem[]) => {
+    public readonly onDropTree = (treeNode: ITreeNodeItemProps[]) => {
         this.folderTreeService.onDropTree(treeNode);
     };
 
     public readonly onClickContextMenu = (
         e: React.MouseEvent,
-        item: IMenuItem,
+        item: IMenuItemProps,
         node = {},
         events?: IFolderInputEvent
     ) => {

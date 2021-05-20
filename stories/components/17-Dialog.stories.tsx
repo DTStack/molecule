@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import Modal from 'mo/components/dialog';
+import { Modal } from 'mo/components/dialog';
 import { Button } from 'mo/components/button';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';

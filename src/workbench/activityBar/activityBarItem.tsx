@@ -4,7 +4,7 @@ import { classNames } from 'mo/common/className';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { select } from 'mo/common/dom';
-import { IMenuItem, Menu } from 'mo/components/menu';
+import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { IActivityBarController } from 'mo/controller/activityBar';
 
 import {
@@ -15,7 +15,9 @@ import {
     itemDisabledClassName,
 } from './base';
 
-function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
+export function ActivityBarItem(
+    props: IActivityBarItem & IActivityBarController
+) {
     const {
         checked = false,
         disabled = false,
@@ -37,7 +39,7 @@ function ActivityBarItem(props: IActivityBarItem & IActivityBarController) {
     let contextViewMenu;
 
     const onClickMenuItem = useCallback(
-        (e: React.MouseEvent, item: IMenuItem | undefined) => {
+        (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
             onContextMenuClick?.(e, item);
             contextViewMenu?.dispose();
         },

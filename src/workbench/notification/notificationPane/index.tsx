@@ -7,7 +7,7 @@ import {
     getBEMModifier,
     prefixClaName,
 } from 'mo/common/className';
-import ActionBar from 'mo/components/actionBar';
+import { ActionBar } from 'mo/components/actionBar';
 import { shadowClassName } from 'mo/components/contextView';
 import { Icon } from 'mo/components/icon';
 

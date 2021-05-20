@@ -5,7 +5,7 @@ import {
     getBEMModifier,
     prefixClaName,
 } from 'mo/common/className';
-import Dialog, { IModalFuncProps } from './modal';
+import { Modal as Dialog, IModalFuncProps } from './modal';
 import ActionButton from './actionButton';
 
 interface ConfirmDialogProps extends IModalFuncProps {

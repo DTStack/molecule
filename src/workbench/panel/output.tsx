@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { prefixClaName } from 'mo/common/className';
 import { IPanelItem } from 'mo/model/workbench/panel';
-import MonacoEditor from 'mo/components/monaco';
+import { MonacoEditor } from 'mo/components/monaco';
 
 const defaultClassName = prefixClaName('output');
 

@@ -8,7 +8,7 @@ import {
     MenuMode,
     MenuItem,
     SubMenu,
-    IMenuItem,
+    IMenuItemProps,
 } from 'mo/components/menu';
 const stories = storiesOf('Menu', module);
 stories.addDecorator(withKnobs);
@@ -131,7 +131,7 @@ stories.add(
             },
         ];
 
-        const handleClick = (e: React.MouseEvent, item?: IMenuItem) => {
+        const handleClick = (e: React.MouseEvent, item?: IMenuItemProps) => {
             console.log('click Menu', e, item);
         };
 

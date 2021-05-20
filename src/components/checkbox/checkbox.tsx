@@ -2,18 +2,18 @@ import * as React from 'react';
 import { ComponentProps } from 'react';
 import { prefixClaName, classNames, getBEMElement } from 'mo/common/className';
 
-export interface ICheckbox extends ComponentProps<any> {
+export interface ICheckboxProps extends ComponentProps<any> {
     id: string;
     value?: string;
     children?: ReactNode;
-    onChange?(e: React.ChangeEvent, options?: ICheckbox): void;
+    onChange?(e: React.ChangeEvent, options?: ICheckboxProps): void;
 }
 
 export const checkboxClassName = prefixClaName('checkbox');
 const checkboxLabelClassName = getBEMElement(checkboxClassName, 'label');
 const checkboxInputClassName = getBEMElement(checkboxClassName, 'input');
 
-export function Checkbox(props: ICheckbox) {
+export function Checkbox(props: ICheckboxProps) {
     const { className, id, children, value, onChange, ...custom } = props;
 
     const claNames = classNames(checkboxClassName, className);

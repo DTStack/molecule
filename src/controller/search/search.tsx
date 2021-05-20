@@ -5,7 +5,7 @@ import { connect } from 'mo/react';
 import { IActivityBarItem } from 'mo/model';
 import * as React from 'react';
 import { SearchPanel } from 'mo/workbench/sidebar/search';
-import { IActionBarItem } from 'mo/components/actionBar';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
     SEARCH_CASE_SENSITIVE_COMMAND_ID,
     SEARCH_WHOLE_WORD_COMMAND_ID,
@@ -28,7 +28,7 @@ export interface ISearchController {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: <T = any>(data?: T[]) => T[];
-    onToggleAddon?: (addon?: IActionBarItem) => void;
+    onToggleAddon?: (addon?: IActionBarItemProps) => void;
     onToggleCaseSensitive?: (addonId: string) => void;
     onToggleWholeWord?: (addonId: string) => void;
     onToggleRegex?: (addonId: string) => void;
@@ -102,7 +102,7 @@ export class SearchController extends Controller implements ISearchController {
         this.searchService.setReplaceValue?.(value);
     };
 
-    public onToggleAddon = (addon?: IActionBarItem) => {
+    public onToggleAddon = (addon?: IActionBarItemProps) => {
         const addonId = addon?.id;
         switch (addonId) {
             case SEARCH_CASE_SENSITIVE_COMMAND_ID: {

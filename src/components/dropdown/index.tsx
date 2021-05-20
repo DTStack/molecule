@@ -8,7 +8,7 @@ import {
     getPositionByPlacement,
 } from 'mo/common/dom';
 
-export interface IDropDown extends React.ComponentProps<'div'> {
+export interface IDropDownProps extends React.ComponentProps<'div'> {
     overlay: ReactNode;
     trigger?: TriggerEvent;
     placement?: PlacementType;
@@ -18,7 +18,7 @@ export interface IDropDown extends React.ComponentProps<'div'> {
 const defaultDropDownClassName = prefixClaName('drop-down');
 
 export const DropDown = React.forwardRef(
-    (props: React.PropsWithChildren<IDropDown>, ref) => {
+    (props: React.PropsWithChildren<IDropDownProps>, ref) => {
         const {
             className,
             overlay,

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { memo, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { IStatusBar, IStatusBarItem } from 'mo/model/workbench/statusBar';
-import StatusItem from './item';
+import { StatusItem } from './item';
 import { mergeFunctions } from 'mo/common/utils';
 import { IStatusBarController } from 'mo/controller/statusBar';
 import {
@@ -15,7 +15,7 @@ import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { ID_STATUS_BAR } from 'mo/common/id';
 import { select } from 'mo/common/dom';
 
-function StatusBar(props: IStatusBar & IStatusBarController) {
+export function StatusBar(props: IStatusBar & IStatusBarController) {
     const {
         leftItems = [],
         contextMenu = [],
@@ -66,5 +66,3 @@ function StatusBar(props: IStatusBar & IStatusBarController) {
         </div>
     );
 }
-
-export default memo(StatusBar);

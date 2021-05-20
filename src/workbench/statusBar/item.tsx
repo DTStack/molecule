@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { memo } from 'react';
 import { classNames } from 'mo/common/className';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import { IStatusBarController } from 'mo/controller/statusBar';
 import { itemClassName } from './base';
 
-function StatusItem(props: IStatusBarItem & IStatusBarController) {
+export function StatusItem(props: IStatusBarItem & IStatusBarController) {
     const { className, onClick, id, name, data, render, ...extra } = props;
     const clsName = classNames(itemClassName, className);
     const events = {
@@ -22,5 +21,3 @@ function StatusItem(props: IStatusBarItem & IStatusBarController) {
         </div>
     );
 }
-
-export default memo(StatusItem);

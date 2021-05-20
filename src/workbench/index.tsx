@@ -6,7 +6,7 @@ export { EditorGroup } from 'mo/workbench/editor/group';
 export { MenuBar } from 'mo/workbench/menuBar/menuBar';
 export { Panel } from 'mo/workbench/panel/panel';
 export { Sidebar } from 'mo/workbench/sidebar';
-export { StatusBar } from 'mo/workbench/statusBar';
+export { StatusBar, StatusItem } from 'mo/workbench/statusBar';
 
 export type {
     IWorkbench,
@@ -18,6 +18,7 @@ export type {
     IPanel,
     ISidebar,
     IStatusBar,
+    IStatusBarItem,
     IProblems,
     IProblemsItem,
     INotification,

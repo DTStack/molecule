@@ -89,35 +89,35 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         };
 
         molecule.editor.onUpdateTab((newTab) => {
-            const { current } = molecule.editor.getState();
-            const tab = current?.tab!;
-            molecule.editor.updateTab(
-                {
-                    id: tab.id,
-                    data: {
-                        ...tab.data,
-                        modified: true,
-                    },
-                },
-                current?.id || -1
-            );
-            // TODO editorService add onSaveEditor() event.
-            current?.editorInstance.addCommand(
-                monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
-                () => {
-                    // ctrl + s
-                    molecule.editor.updateTab(
-                        {
-                            id: tab.id,
-                            data: {
-                                ...tab.data,
-                                modified: false,
-                            },
-                        },
-                        current?.id || -1
-                    );
-                }
-            );
+            // const { current } = molecule.editor.getState();
+            // const tab = current?.tab!;
+            // molecule.editor.updateTab(
+            //     {
+            //         id: tab.id,
+            //         data: {
+            //             ...tab.data,
+            //             modified: true,
+            //         },
+            //     },
+            //     current?.id || -1
+            // );
+            // // TODO editorService add onSaveEditor() event.
+            // current?.editorInstance.addCommand(
+            //     monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
+            //     () => {
+            //         // ctrl + s
+            //         molecule.editor.updateTab(
+            //             {
+            //                 id: tab.id,
+            //                 data: {
+            //                     ...tab.data,
+            //                     modified: false,
+            //                 },
+            //             },
+            //             current?.id || -1
+            //         );
+            //     }
+            // );
         });
         let notify;
         const addANotification = function () {

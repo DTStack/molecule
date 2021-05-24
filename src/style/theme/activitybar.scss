@@ -13,6 +13,7 @@
         #{$activityBar}__label {
             background-color: var(--activityBar-activeBackground);
             border-color: var(--activityBar-activeFocusBorder);
+            color: var(--activityBar-activeBorder);
         }
     }
 

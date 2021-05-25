@@ -2,11 +2,18 @@
 
 #{$search} {
     color: inherit;
+    font-size: 13px;
+    margin: 0 12px 0 2px;
     position: relative;
     width: auto;
 
     input {
+        box-sizing: border-box;
+        font-size: inherit;
         height: 23px;
+        padding: 3px;
+        padding-right: 4px;
+        text-indent: 4px;
         width: 100%;
     }
 
@@ -25,15 +32,23 @@
         }
     }
 
-    &__search {
+    &__target {
         margin-left: 18px;
         position: relative;
+
+        > input {
+            padding-right: 96px;
+        }
     }
 
     &__replace {
         margin-left: 18px;
         margin-top: 6px;
         position: relative;
+
+        > input {
+            padding-right: 64px;
+        }
 
         &__button {
             align-items: center;

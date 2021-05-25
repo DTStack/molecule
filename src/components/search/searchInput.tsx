@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { Toolbar } from 'mo/components/toolbar';
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import { classNames } from 'mo/common/className';
-import {
-    defaultSearchClassName,
-    searchContainerClassName,
-    searchToolBarClassName,
-} from './base';
+import { searchTargetContainerClassName, searchToolBarClassName } from './base';
 
 export interface ISearchInputProps {
     searchAddons?: IActionBarItemProps[];
@@ -23,12 +18,7 @@ export function SearchInput<T>(props: ISearchInputProps) {
     };
 
     return (
-        <div
-            className={classNames(
-                defaultSearchClassName,
-                searchContainerClassName
-            )}
-        >
+        <div className={searchTargetContainerClassName}>
             <input
                 placeholder="Search"
                 onChange={(e) => {

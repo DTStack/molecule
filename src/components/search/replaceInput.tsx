@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { Toolbar } from 'mo/components/toolbar';
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import { classNames } from 'mo/common/className';
-import {
-    defaultSearchClassName,
-    replaceContainerClassName,
-    searchToolBarClassName,
-} from './base';
+import { replaceContainerClassName, searchToolBarClassName } from './base';
 
 export interface IReplaceInputProps {
     replaceAddons?: IActionBarItemProps[];
@@ -23,12 +18,7 @@ export function ReplaceInput(props: IReplaceInputProps) {
     };
 
     return (
-        <div
-            className={classNames(
-                defaultSearchClassName,
-                replaceContainerClassName
-            )}
-        >
+        <div className={replaceContainerClassName}>
             <input
                 placeholder="Replace"
                 onChange={(e) => {

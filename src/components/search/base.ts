@@ -12,9 +12,9 @@ export const replaceContainerClassName = getBEMElement(
     'replace'
 );
 
-export const searchContainerClassName = getBEMElement(
+export const searchTargetContainerClassName = getBEMElement(
     defaultSearchClassName,
-    'search'
+    'target'
 );
 
 export const replaceBtnClassName = getBEMElement(

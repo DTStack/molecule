@@ -18,12 +18,3 @@
         opacity: 1;
     }
 }
-
-#{$prefix} {
-    input {
-        background: var(--input-background);
-        border-color: var(--input-border);
-        color: var(--input-foreground);
-        outline: none;
-    }
-}

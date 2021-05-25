@@ -27,7 +27,11 @@ export function Panel(props: IPanel & IPanelController) {
     return (
         <div className={defaultClassName}>
             <div className={panelHeaderClassName}>
-                <Tabs data={data} onSelectTab={onTabChange} />
+                <Tabs
+                    activeTab={current?.id}
+                    data={data}
+                    onSelectTab={onTabChange}
+                />
                 <ActionBar
                     className={panelToolbarClassName}
                     data={toolboxData || []}

@@ -10,10 +10,6 @@
     #{$rcCollapse} {
         background-color: inherit;
 
-        &-anim-active {
-            transition: height 0.2s ease-out;
-        }
-
         &-item {
             border-top: 0;
 

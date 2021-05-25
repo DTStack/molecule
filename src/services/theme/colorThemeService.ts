@@ -82,6 +82,7 @@ export class ColorThemeService implements IColorThemeService {
 
             // Update monaco-editor theme
             monacoEditor.defineTheme(DEFAULT_THEME_CLASS_NAME, themeData);
+            console.log('themeData:', themeData);
             monacoEditor.setTheme(DEFAULT_THEME_CLASS_NAME);
         } else {
             logger.error(`Can't get any theme by this id:` + id);

@@ -10,7 +10,7 @@ const defaultVS = {
     errorForeground: '#A1260D',
     descriptionForeground: '#717171',
     'icon.foreground': '#424242',
-    focusBorder: Color.fromHex('#007ACC').transparent(0.4),
+    focusBorder: '#3794FF',
     'widget.shadow': '#A8A8A8',
 
     'textSeparator.foreground': '#0000002e',
@@ -85,7 +85,7 @@ const defaultDark = {
     errorForeground: '#F48771',
     descriptionForeground: Color.fromHex('#CCCCCC').transparent(0.7),
     'icon.foreground': '#C5C5C5',
-    focusBorder: Color.fromHex('#0E639C').transparent(0.8),
+    focusBorder: '#3794FF',
 
     'textSeparator.foreground': '#ffffff2e',
     'textLink.foreground': '#3794FF',

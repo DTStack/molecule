@@ -4,6 +4,7 @@
 #{$activityBar} {
     background-color: var(--activityBar-background);
     border-color: var(--activityBar-border);
+    color: var(--activityBar-foreground);
 
     &__indicator {
         background: var(--activityBar-activeBorder);
@@ -17,12 +18,14 @@
         }
     }
 
-    #{$activityBar}__item {
-        color: var(--activityBar-foreground);
+    &__item {
+        color: var(--activityBar-inactiveForeground);
 
-        &:hover {
+        &:hover,
+        &__label .codicon {
             background-color: var(--activityBar-activeBackground);
-            color: var(--activityBar-foreground);
+            border-color: var(--activityBar-activeBorder);
+            color: var(--activityBar-activeBorder);
         }
     }
 }

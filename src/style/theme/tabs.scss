@@ -4,34 +4,30 @@
 #{$tabs} {
     background-color: var(--editorGroupHeader-tabsBackground);
 
-    &__content {
-        color: var(--tabItem-foreground);
-    }
-
     &--line {
-        border-bottom: 1px solid var(--tabHeader-border);
+        border-bottom: 1px solid var(--tab-border);
     }
 
     #{$tab} {
         &__item {
-            background: var(--tabItem-background);
-            border-right: 1px solid var(--tabItem-border);
-            color: var(--tabItem-foreground);
+            background: var(--tab-inactiveBackground);
+            border-right: 1px solid var(--tab-border);
+            color: var(--tab-inactiveForeground);
 
             &__op {
                 &__dot::after {
-                    background: var(--tabItem-activeForeground);
+                    background: var(--tab-activeForeground);
                 }
             }
 
             &--active {
-                background: var(--tabItem-activeBackground);
-                border-bottom-color: var(--tabItem-activeForeground);
-                color: var(--tabItem-activeForeground);
+                background: var(--tab-activeBackground);
+                border-bottom-color: var(--tab-activeBorder);
+                color: var(--tab-activeForeground);
             }
 
             &--close {
-                color: var(--tabItem-activeForeground);
+                color: var(--tab-activeForeground);
             }
         }
     }

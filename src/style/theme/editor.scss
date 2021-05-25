@@ -2,6 +2,8 @@
 
 // =============== Editor =============== //
 #{$editor} {
+    background: var(--editorGroup-background);
+
     &__group-breadcrumb,
     &__group-container {
         background-color: var(--editor-background);

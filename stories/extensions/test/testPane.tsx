@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as monaco from 'mo/monaco';
+// import * as monaco from 'mo/monaco';
 import molecule from 'mo';
 
 import { Button } from 'mo/components/button';

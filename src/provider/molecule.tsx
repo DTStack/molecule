@@ -13,6 +13,7 @@ import { ID_APP } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { registerAction2 } from 'mo/monaco/common';
+import { QuickAccessSettings } from 'mo/monaco/quickAccessSettingsAction';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 
 export interface IMoleculeProps {
@@ -54,6 +55,7 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
         );
         registerAction2(CommandQuickAccessViewAction);
         registerAction2(SelectColorThemeAction);
+        registerAction2(QuickAccessSettings);
     }
 
     public render() {

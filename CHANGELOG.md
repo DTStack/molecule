@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-alpha.2.1](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.2...v0.9.0-alpha.2.1) (2021-05-26)
+
+### ⚠ BREAKING CHANGES
+
+-   **api:** different invoke methods based on molecule API
+
+### Features
+
+-   access the color themes globally ([1a627d5](https://github.com/DTStack/molecule/commit/1a627d5c8ae7e92f127be760254992b419f9d945))
+-   access the CommandPalette globally ([f37989b](https://github.com/DTStack/molecule/commit/f37989bef65bfa325d1b23102622f87e8975acd4))
+-   add checked color for activityBar item ([e09f07d](https://github.com/DTStack/molecule/commit/e09f07df8bd52a6c5f24ef4bd9ab898a80905728))
+-   add CommandQuickAccessProvider and CommandQuickAccessViewAction ([5a42e22](https://github.com/DTStack/molecule/commit/5a42e223af8c7db377d86b2093bd44bba178c293))
+-   add the quickAccess for the Settings ([458a4ca](https://github.com/DTStack/molecule/commit/458a4ca067acaee6d6ec54f806390cea2e0e6df2))
+-   alter the Workbench tabIndex default to 0 ([f1c278b](https://github.com/DTStack/molecule/commit/f1c278bdec5cb8088cd18322a8ad62ba6c15cbc6))
+-   encapsulate Action2 for workbench ([39d9e07](https://github.com/DTStack/molecule/commit/39d9e07f593501dc9a39ce9c4f9d0b93aeb62e15))
+-   encapsulate common workspace Actions API based on moanco api ([1d49058](https://github.com/DTStack/molecule/commit/1d4905853d9e788348c3c527192e434edeb6805e))
+-   encapsulate the quickAccessProvider ([223ea3c](https://github.com/DTStack/molecule/commit/223ea3cf163452fc1100ef0b6e48cff9f3946fdc))
+-   remove the default active animation ([b3ee198](https://github.com/DTStack/molecule/commit/b3ee1980e4746ac8530cc1816da7a6ddc2f21df9))
+-   support show or hide statusBar when rightClik statusBar panel ([#154](https://github.com/DTStack/molecule/issues/154)) ([b26c532](https://github.com/DTStack/molecule/commit/b26c532a9529da4802e91b57b56df9c0c154f441))
+-   update builtin color theme ([d02f552](https://github.com/DTStack/molecule/commit/d02f5527e81c5c2d605b946836bd8645caba889a))
+-   **notification:** modify styles for notification panel ([8d20149](https://github.com/DTStack/molecule/commit/8d20149955142c4717962463ad02bf862f1656e2))
+-   **panel service:** modify panel service test code ([c808b12](https://github.com/DTStack/molecule/commit/c808b12cccb319926790d531b4c82105a7554ea8))
+-   **problems and notification:** modify problems and notification styles and rename panel ([7c1a08d](https://github.com/DTStack/molecule/commit/7c1a08d31b30f53e5411aed1d6fbc890c39353f8))
+-   **problems and notification:** update problems and notification code ([aa6b32d](https://github.com/DTStack/molecule/commit/aa6b32d6018e591a49062c3b8ced25506045aaa3)), closes [#103](https://github.com/DTStack/molecule/issues/103)
+-   **tsconfig:** modify tsconfig for yarn build esm ([6c9e308](https://github.com/DTStack/molecule/commit/6c9e3086ead35c749373c5873a57cd94fae3bf0a))
+
+### Bug Fixes
+
+-   add animation for expand the collapse ([17995c9](https://github.com/DTStack/molecule/commit/17995c9befa8a97a83c0a1461cb5d4f80fe72598))
+-   add the keyword type when exporting the interface or type object ([b3966f9](https://github.com/DTStack/molecule/commit/b3966f99e3c76e91740c38750e536d4bea4b8fe3))
+-   adjust the margin of Sidebar search control ([ad5319f](https://github.com/DTStack/molecule/commit/ad5319ffaf93a03e8045ad22dbe0931db61452bd))
+-   disable update the tab when onUpdateTab ([aa25528](https://github.com/DTStack/molecule/commit/aa25528d059410b9888c00ce54a54c5f3c523646))
+-   remove the updateTab action ([a95e4db](https://github.com/DTStack/molecule/commit/a95e4db789b9962b2a12bddfac597e1a2931d83c))
+-   remove the useless injectable decorator ([ec61d0f](https://github.com/DTStack/molecule/commit/ec61d0fbe9f6a117368c4aabecf1cca8a6072598))
+-   update the color theme ([58df79b](https://github.com/DTStack/molecule/commit/58df79b8c519b9ab4e415f4cc6acb0ecf95e64d8))
+-   **monaco:** import default language contributions ([6d0fdbc](https://github.com/DTStack/molecule/commit/6d0fdbc1a6382e926053bea1f48be94f388b93ac))
+
+-   **api:** refactor the molecule API and interfaces ([fa01143](https://github.com/DTStack/molecule/commit/fa0114304c9d511775131e0d1b0d36f8900a7f36)), closes [#143](https://github.com/DTStack/molecule/issues/143) [#153](https://github.com/DTStack/molecule/issues/153)
+
 ## 0.9.0-alpha.2 (2021-05-06)
 
 ### Features

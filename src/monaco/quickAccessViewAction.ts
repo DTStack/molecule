@@ -4,10 +4,7 @@ import { DisposableStore } from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { QuickCommandNLS } from 'monaco-editor/esm/vs/editor/common/standaloneStrings';
 import { CancellationToken } from 'monaco-editor/esm/vs/base/common/cancellation';
 import { IQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
-import {
-    IQuickAccessRegistry,
-    Extensions,
-} from 'monaco-editor/esm/vs/platform/quickinput/common/quickAccess';
+
 import { ICommandQuickPick } from 'monaco-editor/esm/vs/platform/quickinput/browser/commandsQuickAccess';
 import { AbstractEditorCommandsQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/commandsQuickAccess';
 import {
@@ -18,7 +15,6 @@ import { IKeybindingService } from 'monaco-editor/esm/vs/platform/keybinding/com
 import { ICommandService } from 'monaco-editor/esm/vs/platform/commands/common/commands';
 import { ITelemetryService } from 'monaco-editor/esm/vs/platform/telemetry/common/telemetry';
 import { INotificationService } from 'monaco-editor/esm/vs/platform/notification/common/notification';
-import { Registry } from 'monaco-editor/esm/vs/platform/registry/common/platform';
 import { Codicon } from 'monaco-editor/esm/vs/base/common/codicons';
 import { TriggerAction } from 'monaco-editor/esm/vs/platform/quickinput/browser/pickerQuickAccess';
 import {
@@ -31,7 +27,8 @@ import { KeyMod, KeyCode } from 'mo/monaco';
 import { container } from 'tsyringe';
 import { EditorService, IEditorService } from 'mo/services';
 import { Action2, KeybindingWeight } from './common';
-import { IMonacoService, MonacoService } from './monacoService';
+import { MonacoService } from './monacoService';
+import { registerQuickAccessProvider } from './quickAccessProvider';
 
 export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAccessProvider {
     static PREFIX = '>';
@@ -40,11 +37,11 @@ export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAcces
         return this.editorService?.editorInstance;
     }
 
-    constructor(
-        protected readonly monacoService: IMonacoService = container.resolve(
-            MonacoService
-        )
-    ) {
+    protected static get services() {
+        return container.resolve(MonacoService).services;
+    }
+
+    constructor() {
         super(
             {
                 showAlias: false,
@@ -53,11 +50,11 @@ export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAcces
                     commandId: '',
                 },
             },
-            monacoService.services.get(IInstantiationService),
-            monacoService.services.get(IKeybindingService),
-            monacoService.services.get(ICommandService),
-            monacoService.services.get(ITelemetryService),
-            monacoService.services.get(INotificationService)
+            CommandQuickAccessProvider.services.get(IInstantiationService),
+            CommandQuickAccessProvider.services.get(IKeybindingService),
+            CommandQuickAccessProvider.services.get(ICommandService),
+            CommandQuickAccessProvider.services.get(ITelemetryService),
+            CommandQuickAccessProvider.services.get(INotificationService)
         );
         this.editorService = container.resolve(EditorService);
     }
@@ -150,9 +147,7 @@ export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAcces
     }
 }
 
-Registry.as<IQuickAccessRegistry>(
-    Extensions.Quickaccess
-).registerQuickAccessProvider({
+registerQuickAccessProvider({
     ctor: CommandQuickAccessProvider,
     prefix: CommandQuickAccessProvider.PREFIX,
     placeholder: localize(

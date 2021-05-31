@@ -57,9 +57,10 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
         sideBar,
         statusBar,
         onPaneSizeChange,
+        onHorizontalPaneSizeChange,
         splitPanePos,
+        horizontalSplitPanePos,
     } = props;
-
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
             <div className={workbenchClassName}>
@@ -71,6 +72,7 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
                         primary="first"
                         allowResize={true}
                         onChange={onPaneSizeChange}
+                        defaultSize="40%"
                     >
                         {!sideBar.hidden && (
                             <Pane
@@ -85,10 +87,15 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
                             primary="first"
                             split="horizontal"
                             allowResize={true}
+                            onChange={onHorizontalPaneSizeChange}
                         >
                             {!panel.maximize ? (
                                 <Pane
-                                    initialSize="70%"
+                                    initialSize={
+                                        panel.hidden
+                                            ? '100%'
+                                            : horizontalSplitPanePos[0]
+                                    }
                                     maxSize="99%"
                                     minSize="10%"
                                 >

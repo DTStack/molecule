@@ -72,7 +72,6 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
                         primary="first"
                         allowResize={true}
                         onChange={onPaneSizeChange}
-                        defaultSize="40%"
                     >
                         {!sideBar.hidden && (
                             <Pane

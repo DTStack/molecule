@@ -107,8 +107,8 @@ export class EditorController extends Controller implements IEditorController {
 
     public updateCurrentValue = () => {
         const { current } = this.editorService.getState();
-        const newValue = current?.tab?.data?.value;
         const model = current?.editorInstance?.getModel();
+        const newValue = model.getValue();
         current?.editorInstance?.executeEdits('update-value', [
             {
                 range: model.getFullModelRange(),

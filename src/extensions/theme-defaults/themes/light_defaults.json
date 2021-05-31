@@ -23,7 +23,7 @@
         "tab.border": "#333",
         "tab.inactiveBackground": "rgb(236, 236, 236)",
         "tab.inactiveForeground": "rgba(51, 51, 51, 0.7)",
-        "tab.activeForeground": "rgb(255, 255, 255)",
+        "tab.activeForeground": "rgb(255, 255, 255)"
     },
     "semanticHighlighting": true
 }

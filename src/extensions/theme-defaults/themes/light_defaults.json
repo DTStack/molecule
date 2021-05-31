@@ -24,7 +24,6 @@
         "tab.inactiveBackground": "rgb(236, 236, 236)",
         "tab.inactiveForeground": "rgba(51, 51, 51, 0.7)",
         "tab.activeForeground": "rgb(255, 255, 255)",
-        "tabItem.activeForeground": "rgb(51, 51, 51)"
     },
     "semanticHighlighting": true
 }

@@ -1,11 +1,31 @@
 @import 'mo/style/common';
 
 #{$search} {
-    color: inherit;
-    font-size: 13px;
+    display: grid;
+    grid-template-columns: 16px auto;
+    grid-gap: 2px;
     margin: 6px 12px 0 2px;
-    position: relative;
-    width: auto;
+    font-size: 13px;
+
+    &__replace {
+        // toggle button
+        &__button {
+            height: 100%;
+            box-sizing: border-box;
+            color: inherit;
+            transition: background 0.3s;
+            cursor: pointer;
+
+            &.codicon {
+                display: flex;
+                align-items: center;
+            }
+
+            &:hover {
+                background: var(--input-background);
+            }
+        }
+    }
 
     input {
         box-sizing: border-box;
@@ -18,52 +38,28 @@
     }
 
     &__toolbar {
-        height: 100%;
         position: absolute;
         right: 0;
         top: 0;
-        #{$actionBar}__label {
-            height: auto;
+        height: 100%;
 
-            &.codicon {
-                color: inherit;
-                line-height: 23px;
+        #{$actionBar} {
+            &__label {
+                opacity: 0.7;
+                transition: opacity 0.3s;
+
+                &:hover {
+                    opacity: 1;
+                }
             }
         }
     }
 
-    &__target {
-        margin-left: 18px;
+    &__input {
         position: relative;
-
-        > input {
-            padding-right: 96px;
-        }
     }
 
-    &__replace {
-        margin-left: 18px;
-        margin-top: 6px;
-        position: relative;
-
-        > input {
-            padding-right: 64px;
-        }
-
-        &__button {
-            align-items: center;
-            background-position: 50%;
-            background-repeat: no-repeat;
-            box-sizing: border-box;
-            color: inherit;
-            cursor: pointer;
-            display: flex !important;
-            height: 100%;
-            justify-content: center;
-            left: 0;
-            position: absolute;
-            top: 0;
-            width: 16px;
-        }
+    &__group &__input + &__input {
+        margin-top: 5px;
     }
 }

@@ -11,6 +11,8 @@ export interface ISearchPaneToolBar {
     search?: ISearchProps;
     folderTree?: IFolderTree;
     convertFoldToSearchTree?: <T>(data) => T[];
+    setSearchValue?: (value?: string) => void;
+    setReplaceValue?: (value?: string) => void;
 }
 
 export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
@@ -23,7 +25,15 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
     };
 
     render() {
-        const { search, folderTree, convertFoldToSearchTree } = this.props;
+        const {
+            search = {},
+            folderTree,
+            convertFoldToSearchTree,
+            setSearchValue,
+            setReplaceValue,
+        } = this.props;
+        const { value, replaceValue, searchAddons, replaceAddons } = search;
+
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header
@@ -36,8 +46,14 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
                     }
                 />
                 <Content>
-                    <Search {...this.props} {...search} />
-                    {search?.value && (
+                    <Search
+                        {...this.props}
+                        values={[value, replaceValue]}
+                        addons={[searchAddons, replaceAddons]}
+                        onSearchChange={setSearchValue}
+                        onReplaceChange={setReplaceValue}
+                    />
+                    {value && (
                         <SearchTree
                             data={convertFoldToSearchTree?.(
                                 folderTree?.folderTree?.data

@@ -1,6 +1,7 @@
 @import 'mo/style/common';
 
 #{$actionBar} {
+    height: 100%;
     overflow: hidden;
     text-align: right;
     white-space: nowrap;
@@ -8,9 +9,11 @@
     &__container {
         display: flex;
         justify-content: flex-end;
+        align-items: center;
         margin: 0 auto;
         padding: 0;
         width: 100%;
+        height: 100%;
     }
 
     &__item {
@@ -31,7 +34,6 @@
         background-position: center center;
         background-repeat: no-repeat;
         background-size: 16px;
-        height: 35px;
         justify-content: center;
         margin-right: 4px;
         min-width: 28px;
@@ -40,8 +42,8 @@
 
     #{$actionBar}__label {
         &.codicon {
+            display: flex;
             color: inherit;
-            line-height: 35px;
         }
     }
 }

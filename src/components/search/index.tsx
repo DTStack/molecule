@@ -1,25 +1,47 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { IActionBarItemProps } from '../actionBar';
-import { ReplaceInput } from './replaceInput';
-import { SearchInput } from './searchInput';
+import Input from './Input';
 import { classNames } from 'mo/common/className';
-import { defaultSearchClassName, replaceBtnClassName } from './base';
+import {
+    baseInputClassName,
+    defaultSearchClassName,
+    replaceBtnClassName,
+    replaceContainerClassName,
+    searchTargetContainerClassName,
+} from './base';
 
-export interface ISearchProps<T> extends React.ComponentProps<any> {
-    searchAddons?: IActionBarItemProps[];
-    replaceAddons?: IActionBarItemProps[];
-    setSearchValue?: (value?: string) => void;
-    setReplaceValue?: (value?: string) => void;
-    onToggleAddon?: (addon) => void;
-    className?: string;
+export interface ISearchProps extends React.ComponentProps<any> {
     style?: React.CSSProperties;
+    className?: string;
+    values?: (string | undefined)[];
+    placeholders?: string[];
+    addons?: (IActionBarItemProps[] | undefined)[];
+    onAddonClick?: (addon) => void;
+    onSearchChange?: (value?: string) => void;
+    onReplaceChange?: (value?: string) => void;
 }
 
-export function Search<T>(props: ISearchProps<T>) {
-    const { className = '', style, ...restProps } = props;
+export function Search(props: ISearchProps) {
+    const {
+        className = '',
+        style,
+        placeholders = [],
+        onSearchChange,
+        onReplaceChange,
+        addons = [],
+        onAddonClick,
+        values = [],
+    } = props;
+    const [
+        searchPlaceholder = 'Search',
+        replacePlaceholder = 'Replace',
+    ] = placeholders;
+    const [searchAddons, replaceAddons] = addons;
+    const [searchVal, replaceVal] = values;
 
     const [isShowReplace, setShowReplace] = useState(false);
+
     const toggleReplaceBtnClassName = classNames(
         replaceBtnClassName,
         'codicon',
@@ -39,8 +61,32 @@ export function Search<T>(props: ISearchProps<T>) {
                 className={toggleReplaceBtnClassName}
                 onClick={onToggleReplaceBtn}
             ></a>
-            <SearchInput {...restProps} />
-            {isShowReplace && <ReplaceInput {...restProps} />}
+            <Input.Group>
+                <Input
+                    value={searchVal}
+                    className={classNames(
+                        baseInputClassName,
+                        searchTargetContainerClassName
+                    )}
+                    placeholder={searchPlaceholder}
+                    onChange={onSearchChange}
+                    toolbarData={searchAddons}
+                    onToolbarClick={onAddonClick}
+                />
+                {isShowReplace && (
+                    <Input
+                        value={replaceVal}
+                        className={classNames(
+                            baseInputClassName,
+                            replaceContainerClassName
+                        )}
+                        placeholder={replacePlaceholder}
+                        onChange={onReplaceChange}
+                        toolbarData={replaceAddons}
+                        onToolbarClick={onAddonClick}
+                    />
+                )}
+            </Input.Group>
         </div>
     );
 }

@@ -8,7 +8,7 @@ export interface IBaseInputProps {
     className?: string;
     placeholder?: string;
     toolbarData?: IActionBarItemProps[];
-    onChange?: (value?: string) => void;
+    onChange?: (value: string) => void;
     onToolbarClick?: (addon) => void;
 }
 
@@ -16,19 +16,16 @@ function Input(props: IBaseInputProps) {
     const { className, placeholder, toolbarData = [], onChange, value } = props;
 
     const onToolbarClick = (e, item) => {
-        console.log('onClick:', item);
         props.onToolbarClick?.(item);
     };
-
-    const valObj = value ? { value } : {};
 
     return (
         <div className={className}>
             <input
-                {...valObj}
+                value={value || ''}
                 placeholder={placeholder}
                 onChange={(e) => {
-                    onChange?.(e.target.value);
+                    onChange?.(e.target.value || '');
                 }}
             />
             <Toolbar

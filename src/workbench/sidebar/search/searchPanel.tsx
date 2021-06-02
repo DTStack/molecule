@@ -5,6 +5,7 @@ import { Header, Content } from 'mo/workbench/sidebar';
 import { Search } from 'mo/components/search';
 import { ISearchProps } from 'mo/model/workbench/search';
 import { IFolderTree } from 'mo/model/workbench/explorer/folderTree';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import SearchTree from './searchTree';
 
 export interface ISearchPaneToolBar {
@@ -13,6 +14,7 @@ export interface ISearchPaneToolBar {
     convertFoldToSearchTree?: <T>(data) => T[];
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
+    onToggleAddon: (addon?: IActionBarItemProps) => void;
 }
 
 export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
@@ -24,13 +26,19 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
         console.log('onClick:', e, item);
     };
 
+    handleSearchChange = (values) => {
+        const { setSearchValue, setReplaceValue } = this.props;
+        const [searchVal, replaceVal] = values;
+        setSearchValue?.(searchVal);
+        setReplaceValue?.(replaceVal);
+    };
+
     render() {
         const {
             search = {},
             folderTree,
             convertFoldToSearchTree,
-            setSearchValue,
-            setReplaceValue,
+            onToggleAddon,
         } = this.props;
         const { value, replaceValue, searchAddons, replaceAddons } = search;
 
@@ -50,8 +58,8 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
                         {...this.props}
                         values={[value, replaceValue]}
                         addons={[searchAddons, replaceAddons]}
-                        onSearchChange={setSearchValue}
-                        onReplaceChange={setReplaceValue}
+                        onChange={this.handleSearchChange}
+                        onAddonClick={onToggleAddon}
                     />
                     {value && (
                         <SearchTree

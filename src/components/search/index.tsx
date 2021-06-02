@@ -18,8 +18,14 @@ export interface ISearchProps extends React.ComponentProps<any> {
     placeholders?: string[];
     addons?: (IActionBarItemProps[] | undefined)[];
     onAddonClick?: (addon) => void;
-    onSearchChange?: (value?: string) => void;
-    onReplaceChange?: (value?: string) => void;
+    /**
+     * onChange only oberseves the values of inputs
+     */
+    onChange?: (value?: (string | undefined)[]) => void;
+    /**
+     * onSearch always be triggered behind onChange or onClick
+     */
+    onSearch?: (queryVal: string | undefined, replaceVal?: string) => void;
 }
 
 export function Search(props: ISearchProps) {
@@ -27,11 +33,11 @@ export function Search(props: ISearchProps) {
         className = '',
         style,
         placeholders = [],
-        onSearchChange,
-        onReplaceChange,
         addons = [],
-        onAddonClick,
         values = [],
+        onAddonClick,
+        onChange,
+        onSearch,
     } = props;
     const [
         searchPlaceholder = 'Search',
@@ -50,6 +56,21 @@ export function Search(props: ISearchProps) {
 
     const onToggleReplaceBtn = () => {
         setShowReplace(!isShowReplace);
+        onSearch?.(searchVal, replaceVal);
+    };
+
+    const handleSearchChange = (value: string, tag: 'search' | 'replace') => {
+        if (onChange) {
+            const values =
+                tag === 'search' ? [value, replaceVal] : [searchVal, value];
+            onChange(values);
+            onSearch?.(searchVal, replaceVal);
+        }
+    };
+
+    const handleToolbarClick = (addon) => {
+        onAddonClick?.(addon);
+        onSearch?.(searchVal, replaceVal);
     };
 
     return (
@@ -69,9 +90,9 @@ export function Search(props: ISearchProps) {
                         searchTargetContainerClassName
                     )}
                     placeholder={searchPlaceholder}
-                    onChange={onSearchChange}
+                    onChange={(v) => handleSearchChange(v, 'search')}
                     toolbarData={searchAddons}
-                    onToolbarClick={onAddonClick}
+                    onToolbarClick={handleToolbarClick}
                 />
                 {isShowReplace && (
                     <Input
@@ -81,9 +102,9 @@ export function Search(props: ISearchProps) {
                             replaceContainerClassName
                         )}
                         placeholder={replacePlaceholder}
-                        onChange={onReplaceChange}
+                        onChange={(v) => handleSearchChange(v, 'replace')}
                         toolbarData={replaceAddons}
-                        onToolbarClick={onAddonClick}
+                        onToolbarClick={handleToolbarClick}
                     />
                 )}
             </Input.Group>

@@ -2,23 +2,23 @@
 
 #{$search} {
     display: grid;
-    grid-template-columns: 16px auto;
-    grid-gap: 2px;
-    margin: 6px 12px 0 2px;
     font-size: 13px;
+    grid-gap: 2px;
+    grid-template-columns: 16px auto;
+    margin: 6px 12px 0 2px;
 
     &__replace {
         // toggle button
         &__button {
-            height: 100%;
             box-sizing: border-box;
             color: inherit;
-            transition: background 0.3s;
             cursor: pointer;
+            height: 100%;
+            transition: background 0.3s;
 
             &.codicon {
-                display: flex;
                 align-items: center;
+                display: flex;
             }
 
             &:hover {
@@ -38,10 +38,10 @@
     }
 
     &__toolbar {
+        height: 100%;
         position: absolute;
         right: 0;
         top: 0;
-        height: 100%;
 
         #{$actionBar} {
             &__label {

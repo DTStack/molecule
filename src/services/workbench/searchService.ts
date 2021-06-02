@@ -9,6 +9,7 @@ export interface ISearchService extends Component<ISearchProps> {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: <T = any>(data: T[]) => T[];
+    toggleMode: (status: boolean) => void;
     toggleCaseSensitive?: (addonId: string) => void;
     toggleWholeWord?: (addonId: string) => void;
     toggleRegex?: (addonId: string) => void;
@@ -80,6 +81,12 @@ export class SearchService
         };
         buildSearchTreeData(data);
         return searchTreeData;
+    }
+
+    public toggleMode(status: boolean) {
+        this.setState({
+            replaceMode: status,
+        });
     }
 
     public toggleCaseSensitive(addonId: string) {

@@ -15,6 +15,7 @@ export interface ISearchPaneToolBar {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     onToggleAddon: (addon?: IActionBarItemProps) => void;
+    onToggleMode: (status: boolean) => void;
 }
 
 export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
@@ -31,6 +32,10 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
         const [searchVal, replaceVal] = values;
         setSearchValue?.(searchVal);
         setReplaceValue?.(replaceVal);
+    };
+
+    handleToggleButton = (status: boolean) => {
+        this.props.onToggleMode(status);
     };
 
     render() {
@@ -60,6 +65,7 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
                         addons={[searchAddons, replaceAddons]}
                         onChange={this.handleSearchChange}
                         onAddonClick={onToggleAddon}
+                        onButtonClick={this.handleToggleButton}
                     />
                     {value && (
                         <SearchTree

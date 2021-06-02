@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { IActionBarItemProps } from '../actionBar';
-import Input from './Input';
+import Input from './input';
 import { classNames } from 'mo/common/className';
 import {
     baseInputClassName,
@@ -10,7 +10,6 @@ import {
     replaceContainerClassName,
     searchTargetContainerClassName,
 } from './base';
-
 export interface ISearchProps extends React.ComponentProps<any> {
     style?: React.CSSProperties;
     className?: string;
@@ -18,8 +17,13 @@ export interface ISearchProps extends React.ComponentProps<any> {
     placeholders?: string[];
     addons?: (IActionBarItemProps[] | undefined)[];
     onAddonClick?: (addon) => void;
+    onButtonClick?: (status: boolean) => void;
     /**
      * onChange only oberseves the values of inputs
+     *
+     * first value is from query input
+     *
+     * second value is from replace input
      */
     onChange?: (value?: (string | undefined)[]) => void;
     /**
@@ -36,6 +40,7 @@ export function Search(props: ISearchProps) {
         addons = [],
         values = [],
         onAddonClick,
+        onButtonClick,
         onChange,
         onSearch,
     } = props;
@@ -56,13 +61,17 @@ export function Search(props: ISearchProps) {
 
     const onToggleReplaceBtn = () => {
         setShowReplace(!isShowReplace);
+        onButtonClick?.(!isShowReplace);
         onSearch?.(searchVal, replaceVal);
     };
 
-    const handleSearchChange = (value: string, tag: 'search' | 'replace') => {
+    const handleSearchChange = (
+        value: string,
+        source: 'search' | 'replace'
+    ) => {
         if (onChange) {
             const values =
-                tag === 'search' ? [value, replaceVal] : [searchVal, value];
+                source === 'search' ? [value, replaceVal] : [searchVal, value];
             onChange(values);
             onSearch?.(searchVal, replaceVal);
         }

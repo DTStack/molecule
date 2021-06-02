@@ -28,6 +28,7 @@ export interface ISearchController {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: <T = any>(data?: T[]) => T[];
+    onToggleMode?: (status: boolean) => void;
     onToggleAddon?: (addon?: IActionBarItemProps) => void;
     onToggleCaseSensitive?: (addonId: string) => void;
     onToggleWholeWord?: (addonId: string) => void;
@@ -64,6 +65,7 @@ export class SearchController extends Controller implements ISearchController {
         const searchEvent = {
             setSearchValue: this.setSearchValue,
             setReplaceValue: this.setReplaceValue,
+            onToggleMode: this.onToggleMode,
             onToggleAddon: this.onToggleAddon,
             onToggleCaseSensitive: this.onToggleCaseSensitive,
             onToggleWholeWord: this.onToggleWholeWord,
@@ -128,6 +130,10 @@ export class SearchController extends Controller implements ISearchController {
             default:
                 console.log('no addon');
         }
+    };
+
+    public readonly onToggleMode = (status: boolean) => {
+        this.searchService.toggleMode?.(status);
     };
 
     public readonly onToggleCaseSensitive = (addonId: string) => {

@@ -5,6 +5,7 @@ export interface ISearchProps {
     replaceAddons?: IActionBarItemProps[];
     value?: string; // queryValue;
     replaceValue?: string;
+    replaceMode?: boolean;
     isRegex?: boolean;
     isCaseSensitive?: boolean;
     isWholeWords?: boolean;
@@ -92,6 +93,7 @@ export class ISearchModel implements ISearchProps {
     public replaceAddons: IActionBarItemProps[];
     public value: string = '';
     public replaceValue: string = '';
+    public replaceMode: boolean = false;
     public isRegex: boolean = false;
     public isCaseSensitive: boolean = false;
     public isWholeWords: boolean = false;
@@ -103,6 +105,7 @@ export class ISearchModel implements ISearchProps {
         replaceAddons: IActionBarItemProps[] = defaultReplaceAddons,
         value = '',
         replaceValue = '',
+        replaceMode = false,
         isCaseSensitive = false,
         isWholeWords = false,
         isRegex = false,
@@ -113,6 +116,7 @@ export class ISearchModel implements ISearchProps {
         this.replaceAddons = replaceAddons;
         this.value = value;
         this.replaceValue = replaceValue;
+        this.replaceMode = replaceMode;
         this.isCaseSensitive = isCaseSensitive;
         this.isWholeWords = isWholeWords;
         this.isRegex = isRegex;

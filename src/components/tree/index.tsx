@@ -2,47 +2,42 @@ import * as React from 'react';
 import RcTree, { TreeNode as RcTreeNode, TreeProps } from 'rc-tree';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
-
-export enum FileTypes {
-    file = 'file',
-    folder = 'folder',
-    rootFolder = 'rootFolder',
-}
+import { DataNode } from 'rc-tree/lib/interface';
 
 type Key = number | string;
-
-export type FileType = keyof typeof FileTypes;
-
 export interface ITreeNodeItemProps {
+    disabled?: boolean;
+    icon?: React.ReactNode;
+    isLeaf?: boolean;
+    key?: string;
     name?: string;
-    location?: string;
-    fileType?: FileType;
-    children?: ITreeNodeItemProps[];
-    readonly id?: number;
-    icon?: string | React.ReactNode;
     isEditable?: boolean; // Edit status
-    content?: string; // editor content
-    className?: string;
+    children?: ITreeNodeItemProps[];
+
+    [key: string]: any;
 }
 
 export interface ITreeProps extends Partial<TreeProps> {
     data?: ITreeNodeItemProps[];
     onSelectFile?: (file: ITreeNodeItemProps, isUpdate?) => void;
-    renderTitle?: (node, index, isLeaf) => JSX.Element;
-    onDropTree?(treeNode): void;
+    renderTitle?: (
+        node: ITreeNodeItemProps,
+        index: number,
+        isLeaf: boolean
+    ) => JSX.Element | string;
+    onDropTree?(treeNode: ITreeNodeItemProps[]): void;
 }
 
-const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
-    const {
-        className,
-        data = [],
-        draggable,
-        onDropTree,
-        onRightClick,
-        renderTitle, // custom title
-        ...restProps
-    } = props;
-
+const TreeView = ({
+    className,
+    data = [],
+    draggable,
+    onDropTree,
+    onRightClick,
+    renderTitle, // custom title
+    onSelectFile,
+    ...restProps
+}: ITreeProps) => {
     const [selectedKeys, setKeys] = React.useState<Key[]>([]);
     const treeRef = React.useRef<RcTree>(null);
 
@@ -101,33 +96,43 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
             }
         }
         console.log('treeData', treeData);
-        onDropTree && onDropTree(treeData);
+        onDropTree?.(treeData);
     };
 
-    const renderTreeNodes = (data: any[], indent) =>
+    const renderTreeNodes = (data: ITreeNodeItemProps[], indent: number) =>
         data?.map((item, index) => {
-            const { isEditable, id, icon, children } = item;
+            const {
+                id,
+                disabled = false,
+                isEditable = false,
+                // compute key automatic when data don't has key
+                // take id as backup
+                key = id || `${index}_${indent}`,
+                icon,
+                children,
+            } = item;
             const isLeaf = !item.children?.length;
+            const IconComponent =
+                typeof icon === 'string' ? <Icon type={icon} /> : icon;
             return (
-                <>
-                    {/**
-                     * TODO: antd TreeNode 目前强依赖于 Tree，不好抽离，后续还不支持的话，考虑重写..
-                     * https://github.com/ant-design/ant-design/issues/4688
-                     * https://github.com/ant-design/ant-design/issues/4853
-                     */}
-                    <RcTreeNode
-                        data-id={`mo_treeNode_${id}`}
-                        isLeaf={isLeaf}
-                        data-index={index}
-                        data-indent={indent}
-                        data={item}
-                        title={renderTitle?.(item, index, isLeaf)} // dynamic title
-                        key={`${id}`}
-                        icon={isEditable ? '' : <Icon type={icon} />}
-                    >
-                        {children && renderTreeNodes(children, indent + 1)}
-                    </RcTreeNode>
-                </>
+                /**
+                 * TODO: antd TreeNode 目前强依赖于 Tree，不好抽离，后续还不支持的话，考虑重写..
+                 * https://github.com/ant-design/ant-design/issues/4688
+                 * https://github.com/ant-design/ant-design/issues/4853
+                 */
+                <RcTreeNode
+                    data-id={`mo_treeNode_${key}`}
+                    isLeaf={isLeaf}
+                    data-index={index}
+                    data-indent={indent}
+                    data={item as DataNode}
+                    disabled={disabled}
+                    title={renderTitle?.(item, index, isLeaf)} // dynamic title
+                    key={key}
+                    icon={isEditable ? '' : IconComponent}
+                >
+                    {children && renderTreeNodes(children, indent + 1)}
+                </RcTreeNode>
             );
         });
 
@@ -137,7 +142,7 @@ const TreeView: React.FunctionComponent<ITreeProps> = (props: ITreeProps) => {
         setKeys(currentNodeKey);
         if (node.isLeaf) {
             // only leaf node can trigger onselect event
-            props.onSelectFile?.(node.data);
+            onSelectFile?.(node.data);
         } else {
             const expanded = treeRef.current?.state.expandedKeys || [];
             if (expanded.includes(node.key)) {

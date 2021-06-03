@@ -2,12 +2,14 @@ import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import {
+    FileTypes,
+    FileType,
     FolderTreeEvent,
     IFolderTree,
     IFolderTreeModel,
 } from 'mo/model/workbench/explorer/folderTree';
 import { TreeViewUtil, ITreeInstance } from '../../helper';
-import { ITreeNodeItemProps, FileTypes, FileType } from 'mo/components/tree';
+import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
 
 export interface IFolderTreeService extends Component<IFolderTree> {

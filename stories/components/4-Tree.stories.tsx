@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { FileType, FileTypes } from 'mo/components/tree';
-
 import Tree from 'mo/components/tree';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
+import { FileType, FileTypes } from 'mo/model';
 const stories = storiesOf('Tree', module);
 stories.addDecorator(withKnobs);
 

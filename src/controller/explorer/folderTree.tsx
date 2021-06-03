@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { container, singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
-import { ITreeNodeItemProps, FileTypes } from 'mo/components/tree';
+import { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps } from 'mo/components/menu';
 import { Modal } from 'mo/components/dialog';
 import {
@@ -19,11 +19,11 @@ import {
     OPEN_TO_SIDE_COMMAND_ID,
     ADD_ROOT_FOLDER_COMMAND_ID,
     FolderTreeEvent,
+    FileTypes,
 } from 'mo/model';
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
 
 const confirm = Modal.confirm;
-
 export interface IFolderTreeController {
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
@@ -143,7 +143,7 @@ export class FolderTreeController
             case ADD_ROOT_FOLDER_COMMAND_ID: {
                 this.folderTreeService.addRootFolder?.(
                     new TreeNodeModel({
-                        name: `molecule_temp${Math.random()}`,
+                        title: `molecule_temp${Math.random()}`,
                         fileType: 'rootFolder',
                     })
                 );

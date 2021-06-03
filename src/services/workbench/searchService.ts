@@ -2,8 +2,7 @@ import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import { ISearchProps, ISearchModel } from 'mo/model/workbench/search';
-import { TreeNodeModel } from 'mo/model';
-import { FileTypes } from 'mo/components/tree';
+import { FileTypes, TreeNodeModel } from 'mo/model';
 
 export interface ISearchService extends Component<ISearchProps> {
     setSearchValue?: (value?: string) => void;

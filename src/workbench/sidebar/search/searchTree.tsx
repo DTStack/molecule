@@ -100,7 +100,7 @@ const SearchTree = (props: SearchTreeProps) => {
             className={treeContentClassName}
             data={data}
             renderTitle={(node, _, isLeaf) => {
-                const { name } = node;
+                const { name = '' } = node;
                 if (!isLeaf) {
                     return name;
                 }

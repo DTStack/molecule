@@ -4,14 +4,22 @@ import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { Search } from 'mo/components/search';
 import { ISearchProps } from 'mo/model/workbench/search';
-import { IFolderTree } from 'mo/model/workbench/explorer/folderTree';
+import {
+    IFolderTree,
+    TreeNodeModel,
+} from 'mo/model/workbench/explorer/folderTree';
 import { IActionBarItemProps } from 'mo/components/actionBar';
+import { ITreeNodeItemProps } from 'mo/components';
 import SearchTree from './searchTree';
 
 export interface ISearchPaneToolBar {
     search?: ISearchProps;
     folderTree?: IFolderTree;
-    convertFoldToSearchTree?: <T>(data) => T[];
+    convertFoldToSearchTree?: (
+        data: TreeNodeModel[],
+        queryVal?: string
+    ) => ITreeNodeItemProps[];
+    getSearchIndex: (text: string, queryVal?: string) => number;
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     onToggleAddon: (addon?: IActionBarItemProps) => void;
@@ -44,6 +52,7 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
             folderTree,
             convertFoldToSearchTree,
             onToggleAddon,
+            getSearchIndex,
         } = this.props;
         const { value, replaceValue, searchAddons, replaceAddons } = search;
 
@@ -70,8 +79,10 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
                     {value && (
                         <SearchTree
                             data={convertFoldToSearchTree?.(
-                                folderTree?.folderTree?.data
+                                folderTree?.folderTree?.data || [],
+                                value
                             )}
+                            getSearchIndex={getSearchIndex}
                             {...search}
                         />
                     )}

@@ -19,6 +19,10 @@ export interface SearchTreeProps extends ITreeProps {
     isCaseSensitive?: boolean;
     isWholeWords?: boolean;
     isRegex?: boolean;
+    /**
+     * Returns the position of the first occurrence of a substring.
+     */
+    getSearchIndex: (text: string, queryVal?: string) => number;
 }
 
 const folderTreeController = container.resolve(FolderTreeController);
@@ -40,6 +44,7 @@ const SearchTree = (props: SearchTreeProps) => {
         isRegex,
         emptyText,
         replaceValue,
+        getSearchIndex,
         ...restProps
     } = props;
 
@@ -48,51 +53,6 @@ const SearchTree = (props: SearchTreeProps) => {
         return <Empty title={emptyText} />;
     }
 
-    const getSeachValueIndex = (queryVal, text) => {
-        let searchIndex;
-        const onlyCaseSensitiveMatch = isCaseSensitive;
-        const onlyWholeWordsMatch = isWholeWords;
-        const useAllCondtionsMatch = isCaseSensitive && isWholeWords;
-        const notUseConditionsMatch = !isCaseSensitive && !isWholeWords;
-
-        if (isRegex) {
-            if (onlyCaseSensitiveMatch) {
-                searchIndex = text.search(new RegExp(queryVal));
-            }
-            if (onlyWholeWordsMatch) {
-                searchIndex = text.search(
-                    new RegExp('\\b' + queryVal + '\\b'),
-                    'i'
-                );
-            }
-            if (useAllCondtionsMatch) {
-                searchIndex = text.search(new RegExp('\\b' + queryVal + '\\b'));
-            }
-            if (notUseConditionsMatch) {
-                searchIndex = text
-                    .toLowerCase()
-                    .search(new RegExp(queryVal, 'i'));
-            }
-        } else {
-            if (onlyCaseSensitiveMatch) {
-                searchIndex = text.indexOf(queryVal);
-            }
-            // TODO：应使用字符串方法做搜索匹配，暂时使用正则匹配
-            if (onlyWholeWordsMatch) {
-                const reg = new RegExp('\\b' + queryVal?.toLowerCase() + '\\b');
-                searchIndex = text.toLowerCase().search(reg);
-            }
-            if (useAllCondtionsMatch) {
-                searchIndex = text.search(new RegExp('\\b' + queryVal + '\\b'));
-            }
-            if (notUseConditionsMatch) {
-                searchIndex = text
-                    .toLowerCase()
-                    .indexOf(queryVal?.toLowerCase());
-            }
-        }
-        return searchIndex;
-    };
     return (
         <Tree
             showLine
@@ -104,7 +64,7 @@ const SearchTree = (props: SearchTreeProps) => {
                 if (!isLeaf) {
                     return name;
                 }
-                const searchIndex = getSeachValueIndex(value, name);
+                const searchIndex = getSearchIndex(name, value);
                 const beforeStr = name.substr(0, searchIndex);
                 const currentValue = name.substr(searchIndex, value?.length);
                 const afterStr = name.substr(searchIndex + value?.length);

@@ -29,7 +29,7 @@ export interface IFolderInputEvent {
 }
 
 export interface IFolderTreeSubItem {
-    data?: ITreeNodeItemProps[];
+    data?: TreeNodeModel[];
     contextMenu?: IMenuItemProps[];
     folderPanelContextMenu?: IMenuItemProps[];
     current?: ITreeNodeItemProps | null;

@@ -8,7 +8,27 @@
         color: inherit;
     }
 
+    &__tree {
+        margin-top: 5px;
+    }
+
+    &__treeNode--empty {
+        margin: 6px 12px 0 18px;
+    }
+
+    &__treeNode--delete {
+        text-decoration: line-through;
+    }
+
     &__treeNode--match {
         background-color: var(--search-matchValueBackground);
+
+        &#{$search}__treeNode--delete {
+            background-color: var(--search-matchReplaceValueBackground);
+        }
+    }
+
+    &__treeNode--replace {
+        background-color: var(--search-replaceValueBackground);
     }
 }

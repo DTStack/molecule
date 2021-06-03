@@ -27,6 +27,8 @@
         "tab.activeBackground": "rgb(30, 30, 30)",
         "tab.activeForeground": "rgb(255, 255, 255)",
         "search.matchValueBackground": "rgba(234, 92, 0, 0.33)",
+        "search.matchReplaceValueBackground": "#721212",
+        "search.replaceValueBackground": "rgba(44, 167, 3, 0.3)",
         "actionBar.checkedBackground": "rgba(0, 127, 212, 0.4)"
     },
     "semanticHighlighting": true

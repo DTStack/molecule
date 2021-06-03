@@ -60,7 +60,11 @@ stories.add('Basic Usage', () => {
             </p>
 
             <h3>使用示例 Tree</h3>
-            <Tree data={treeData} draggable renderTitle={(node) => node.name} />
+            <Tree
+                data={treeData}
+                draggable
+                renderTitle={(node) => node.name || ''}
+            />
         </div>
     );
 });

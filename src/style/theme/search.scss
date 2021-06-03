@@ -21,14 +21,14 @@
     }
 
     &__treeNode--match {
-        background-color: var(--search-matchValueBackground);
+        background-color: var(--editor-findMatchHighlightBackground);
 
         &#{$search}__treeNode--delete {
-            background-color: var(--search-matchReplaceValueBackground);
+            background-color: var(--diffEditor-removedTextBackground);
         }
     }
 
     &__treeNode--replace {
-        background-color: var(--search-replaceValueBackground);
+        background-color: var(--diffEditor-insertedTextBackground);
     }
 }

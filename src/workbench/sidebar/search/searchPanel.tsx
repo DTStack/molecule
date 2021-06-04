@@ -38,21 +38,8 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
     };
 
     handleSearchChange = (values) => {
-        const {
-            setSearchValue,
-            setReplaceValue,
-            validateValue,
-            setValidateInfo,
-        } = this.props;
+        const { setSearchValue, setReplaceValue } = this.props;
         const [searchVal, replaceVal] = values;
-        if (!validateValue(searchVal).valid) {
-            setValidateInfo({
-                type: 'error',
-                text: validateValue(searchVal).errMessage,
-            });
-        } else {
-            setValidateInfo('');
-        }
         setSearchValue?.(searchVal);
         setReplaceValue?.(replaceVal);
     };

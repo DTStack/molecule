@@ -22,6 +22,8 @@ export interface ISearchPaneToolBar {
     getSearchIndex: (text: string, queryVal?: string) => number;
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
+    setValidateInfo: (info) => void;
+    validateValue: (value: string) => { valid: boolean; errMessage?: string };
     onToggleAddon: (addon?: IActionBarItemProps) => void;
     onToggleMode: (status: boolean) => void;
 }
@@ -36,10 +38,36 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
     };
 
     handleSearchChange = (values) => {
-        const { setSearchValue, setReplaceValue } = this.props;
+        const {
+            setSearchValue,
+            setReplaceValue,
+            validateValue,
+            setValidateInfo,
+        } = this.props;
         const [searchVal, replaceVal] = values;
+        if (!validateValue(searchVal).valid) {
+            setValidateInfo({
+                type: 'error',
+                text: validateValue(searchVal).errMessage,
+            });
+        } else {
+            setValidateInfo('');
+        }
         setSearchValue?.(searchVal);
         setReplaceValue?.(replaceVal);
+    };
+
+    handleSearch = (values) => {
+        const { validateValue, setValidateInfo } = this.props;
+        const [searchVal] = values;
+        if (!validateValue(searchVal).valid) {
+            setValidateInfo({
+                type: 'error',
+                text: validateValue(searchVal).errMessage,
+            });
+        } else {
+            setValidateInfo('');
+        }
     };
 
     handleToggleButton = (status: boolean) => {
@@ -54,7 +82,13 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
             onToggleAddon,
             getSearchIndex,
         } = this.props;
-        const { value, replaceValue, searchAddons, replaceAddons } = search;
+        const {
+            value,
+            replaceValue,
+            searchAddons,
+            replaceAddons,
+            validationInfo,
+        } = search;
 
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
@@ -72,7 +106,9 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
                         {...this.props}
                         values={[value, replaceValue]}
                         addons={[searchAddons, replaceAddons]}
+                        validationInfo={validationInfo}
                         onChange={this.handleSearchChange}
+                        onSearch={this.handleSearch}
                         onAddonClick={onToggleAddon}
                         onButtonClick={this.handleToggleButton}
                     />

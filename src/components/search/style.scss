@@ -28,6 +28,7 @@
     }
 
     input {
+        border: 1px solid transparent;
         box-sizing: border-box;
         font-size: inherit;
         height: 23px;
@@ -35,6 +36,11 @@
         padding-right: 4px;
         text-indent: 4px;
         width: 100%;
+
+        &:focus,
+        &:active {
+            outline: none;
+        }
     }
 
     &__toolbar {
@@ -45,12 +51,22 @@
 
         #{$actionBar} {
             &__label {
+                height: 19px;
+                margin: 2px 1px;
+                min-width: auto;
                 opacity: 0.7;
+                padding: 0;
                 transition: opacity 0.3s;
+                width: 22px;
 
                 &:hover {
                     opacity: 1;
                 }
+            }
+
+            &__item--checked {
+                background: var(--inputOption-activeBackground);
+                opacity: 1;
             }
         }
     }
@@ -61,5 +77,56 @@
 
     &__group &__input + &__input {
         margin-top: 5px;
+    }
+
+    // validation styles
+    &__base {
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+
+        &:not(input) {
+            margin-top: -1px;
+            width: calc(100% - 12px);
+        }
+    }
+
+    & &__info {
+        border: 1px solid var(--inputValidation-infoBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-infoBorder);
+        }
+
+        &:not(input) {
+            background: var(--inputValidation-infoBackground);
+        }
+    }
+
+    & &__warning {
+        border: 1px solid var(--inputValidation-warningBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-warningBorder);
+        }
+
+        &:not(input) {
+            background: var(--inputValidation-warningBackground);
+        }
+    }
+
+    & &__error {
+        border: 1px solid var(--inputValidation-errorBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-errorBorder);
+        }
+
+        &:not(input) {
+            background: var(--inputValidation-errorBackground);
+        }
     }
 }

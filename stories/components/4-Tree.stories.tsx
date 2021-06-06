@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { FileType, FileTypes } from 'mo/components/tree';
-
 import Tree from 'mo/components/tree';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
+import { FileType, FileTypes } from 'mo/model';
 const stories = storiesOf('Tree', module);
 stories.addDecorator(withKnobs);
 
@@ -61,7 +60,11 @@ stories.add('Basic Usage', () => {
             </p>
 
             <h3>使用示例 Tree</h3>
-            <Tree data={treeData} draggable renderTitle={(node) => node.name} />
+            <Tree
+                data={treeData}
+                draggable
+                renderTitle={(node) => node.name || ''}
+            />
         </div>
     );
 });

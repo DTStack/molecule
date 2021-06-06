@@ -1,8 +1,16 @@
 import * as React from 'react';
 import 'reflect-metadata';
-import { ITreeNodeItemProps, FileType, FileTypes } from 'mo/components/tree';
+import { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps } from 'mo/components/menu';
 import { randomId } from 'mo/common/utils';
+
+export enum FileTypes {
+    file = 'file',
+    folder = 'folder',
+    rootFolder = 'rootFolder',
+}
+
+export type FileType = keyof typeof FileTypes;
 
 export enum FolderTreeEvent {
     onClick = 'folderTree.onClick',
@@ -21,7 +29,7 @@ export interface IFolderInputEvent {
 }
 
 export interface IFolderTreeSubItem {
-    data?: ITreeNodeItemProps[];
+    data?: TreeNodeModel[];
     contextMenu?: IMenuItemProps[];
     folderPanelContextMenu?: IMenuItemProps[];
     current?: ITreeNodeItemProps | null;

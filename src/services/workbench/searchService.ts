@@ -2,13 +2,17 @@ import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 import { ISearchProps, ISearchModel } from 'mo/model/workbench/search';
-import { TreeNodeModel } from 'mo/model';
-import { FileTypes } from 'mo/components/tree';
+import { FileTypes, TreeNodeModel } from 'mo/model';
+import { ITreeNodeItemProps } from 'mo/components';
 
 export interface ISearchService extends Component<ISearchProps> {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
-    convertFoldToSearchTree?: <T = any>(data: T[]) => T[];
+    convertFoldToSearchTree?: (
+        data: TreeNodeModel[],
+        queryVal?: string
+    ) => ITreeNodeItemProps[];
+    getSearchIndex: (text: string, queryVal?: string) => number;
     toggleMode: (status: boolean) => void;
     toggleCaseSensitive?: (addonId: string) => void;
     toggleWholeWord?: (addonId: string) => void;
@@ -48,37 +52,105 @@ export class SearchService
         });
     }
 
-    public convertFoldToSearchTree<T = any>(data: T[]) {
-        const searchTreeData: T[] = [];
-        const buildSearchTreeData = (tree) => {
+    /**
+     * Returns the position of the first occurrence of a substring.
+     * @param text Current string
+     * @param queryVal The substring to search for in the string
+     * @returns
+     */
+    public getSearchIndex(text: string, queryVal: string = '') {
+        let searchIndex: number = -1;
+        const { isCaseSensitive, isWholeWords, isRegex } = this.state;
+        const onlyCaseSensitiveMatch = isCaseSensitive;
+        const onlyWholeWordsMatch = isWholeWords;
+        const useAllCondtionsMatch = isCaseSensitive && isWholeWords;
+        const notUseConditionsMatch = !isCaseSensitive && !isWholeWords;
+
+        try {
+            if (isRegex) {
+                if (onlyCaseSensitiveMatch) {
+                    searchIndex = text.search(new RegExp(queryVal));
+                }
+                if (onlyWholeWordsMatch) {
+                    searchIndex = text.search(
+                        new RegExp('\\b' + queryVal + '\\b', 'i')
+                    );
+                }
+                if (useAllCondtionsMatch) {
+                    searchIndex = text.search(
+                        new RegExp('\\b' + queryVal + '\\b')
+                    );
+                }
+                if (notUseConditionsMatch) {
+                    searchIndex = text
+                        .toLowerCase()
+                        .search(new RegExp(queryVal, 'i'));
+                }
+            } else {
+                if (onlyCaseSensitiveMatch) {
+                    searchIndex = text.indexOf(queryVal);
+                }
+                // TODO：应使用字符串方法做搜索匹配，暂时使用正则匹配
+                if (onlyWholeWordsMatch) {
+                    const reg = new RegExp(
+                        '\\b' + queryVal?.toLowerCase() + '\\b'
+                    );
+                    searchIndex = text.toLowerCase().search(reg);
+                }
+                if (useAllCondtionsMatch) {
+                    searchIndex = text.search(
+                        new RegExp('\\b' + queryVal + '\\b')
+                    );
+                }
+                if (notUseConditionsMatch) {
+                    searchIndex = text
+                        .toLowerCase()
+                        .indexOf(queryVal?.toLowerCase());
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        return searchIndex;
+    }
+
+    public convertFoldToSearchTree(
+        data: TreeNodeModel[],
+        queryVal?: string
+    ): ITreeNodeItemProps[] {
+        const searchTreeData: ITreeNodeItemProps[] = [];
+
+        const buildSearchTreeData = (tree?: TreeNodeModel[]) => {
             tree?.forEach((treeItem) => {
                 if (treeItem.fileType === FileTypes.file) {
-                    const treeNode = {
-                        ...treeItem,
-                        ...new TreeNodeModel({
-                            fileType: FileTypes.folder,
-                            id: treeItem.id,
-                            name: treeItem.name,
-                        }),
-                    };
-                    treeNode.children = treeItem.content
+                    const children = treeItem.content
                         ?.split('\n')
-                        ?.filter(Boolean)
-                        ?.map((item, index) => {
-                            return {
-                                ...treeItem,
-                                ...new TreeNodeModel({
-                                    name: item,
-                                    content: treeItem.content,
-                                    id: `${treeItem.id}_${index}` as any, // TODO: id 重复问题
-                                }),
-                            };
-                        });
-                    searchTreeData.push(treeNode);
+                        .filter(
+                            (text) => this.getSearchIndex(text, queryVal) !== -1
+                        );
+
+                    if (children?.length) {
+                        // this file contains result
+                        const treeNode: ITreeNodeItemProps = {
+                            key: treeItem.id?.toString(),
+                            name: treeItem.name,
+                            isLeaf: false,
+                            isEditable: treeItem.isEditable,
+                            originalData: treeItem,
+                            children: children.map((item, index) => ({
+                                key: `${treeItem.id?.toString()}_${index}`,
+                                name: item,
+                                isLeaf: true,
+                                isEditable: false,
+                            })),
+                        };
+                        searchTreeData.push(treeNode);
+                    }
                 }
                 if (treeItem.children) buildSearchTreeData(treeItem.children);
             });
         };
+
         buildSearchTreeData(data);
         return searchTreeData;
     }

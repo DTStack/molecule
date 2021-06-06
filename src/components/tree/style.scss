@@ -17,6 +17,7 @@ $switch: #{$rcTree}-switcher;
             margin: 0;
             outline: 0;
             padding: 0 0 0 8px;
+            user-select: none;
             white-space: nowrap;
 
             .draggable {
@@ -69,8 +70,11 @@ $switch: #{$rcTree}-switcher;
             display: inline-block;
             height: 22px;
             margin: 0;
+            overflow: hidden;
             text-decoration: none;
+            text-overflow: ellipsis;
             vertical-align: top;
+            width: calc(100% - 20px);
         }
 
         &-child {

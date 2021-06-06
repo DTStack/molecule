@@ -1,7 +1,7 @@
 import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
-import { ITreeNodeItemProps, FileTypes, FileType } from 'mo/components/tree';
-import { TreeNodeModel } from 'mo/model';
+import { ITreeNodeItemProps } from 'mo/components/tree';
+import { FileType, FileTypes, TreeNodeModel } from 'mo/model';
 export const ExtendFolderTree: IExtension = {
     activate() {
         const createTargetNodeById = (

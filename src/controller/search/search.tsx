@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
-import { IActivityBarItem } from 'mo/model';
+import { IActivityBarItem, TreeNodeModel } from 'mo/model';
 import * as React from 'react';
 import { SearchPanel } from 'mo/workbench/sidebar/search';
 import { IActionBarItemProps } from 'mo/components/actionBar';
@@ -24,10 +24,15 @@ import {
     SearchService,
     SidebarService,
 } from 'mo/services';
+import { ITreeNodeItemProps } from 'mo/components';
 export interface ISearchController {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
-    convertFoldToSearchTree?: <T = any>(data?: T[]) => T[];
+    convertFoldToSearchTree?: (
+        data: TreeNodeModel[],
+        queryVal?: string
+    ) => ITreeNodeItemProps[];
+    getSearchIndex: (text: string, queryVal?: string) => number;
     onToggleMode?: (status: boolean) => void;
     onToggleAddon?: (addon?: IActionBarItemProps) => void;
     onToggleCaseSensitive?: (addonId: string) => void;
@@ -73,6 +78,7 @@ export class SearchController extends Controller implements ISearchController {
             onTogglePreserveCase: this.onTogglePreserveCase,
             onToggleRepalceAll: this.onToggleRepalceAll,
             convertFoldToSearchTree: this.convertFoldToSearchTree,
+            getSearchIndex: this.getSearchIndex,
         };
 
         const searchSidePane = {
@@ -156,7 +162,11 @@ export class SearchController extends Controller implements ISearchController {
         this.searchService.toggleReplaceAll?.(addonId);
     };
 
-    public readonly convertFoldToSearchTree = (data): any => {
-        return this.searchService.convertFoldToSearchTree?.(data);
+    public readonly convertFoldToSearchTree = (data, queryVal): any => {
+        return this.searchService.convertFoldToSearchTree?.(data, queryVal);
+    };
+
+    public readonly getSearchIndex = (text: string, queryVal?: string) => {
+        return this.searchService.getSearchIndex(text, queryVal);
     };
 }

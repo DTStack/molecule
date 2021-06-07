@@ -27,6 +27,10 @@ export interface IBaseInputProps {
     onToolbarClick?: (addon) => void;
 }
 
+/**
+ * Mock an Input by textarea
+ * 'Cause we have to achieve text wrap and input cannot achieve it
+ */
 function Input(props: IBaseInputProps) {
     const {
         className,
@@ -38,11 +42,11 @@ function Input(props: IBaseInputProps) {
     } = props;
 
     const [focusStatus, setFocus] = React.useState(false);
-    const inputRef = React.useRef<HTMLInputElement>(null);
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
     const onToolbarClick = (e, item) => {
         // toolbar click can trigger input focus
-        inputRef.current?.focus();
+        textareaRef.current?.focus();
         props.onToolbarClick?.(item);
     };
 
@@ -67,18 +71,46 @@ function Input(props: IBaseInputProps) {
         setFocus(false);
     };
 
+    const handleInputChange = (e) => {
+        if (textareaRef.current) {
+            // base height
+            textareaRef.current.style.height = '24px';
+            const curretnScollerHeight = textareaRef.current.scrollHeight;
+            // count the lines
+            const lines = curretnScollerHeight / 24;
+            const maxLines = 5;
+            if (lines > maxLines) {
+                textareaRef.current.style.height = `${24 * maxLines}px`;
+            } else {
+                textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+            }
+        }
+        onChange?.(e.target.value || '');
+    };
+
+    const handleInputKeyPress = (e) => {
+        // detect Enter press
+        if (e.keyCode === 13) {
+            onChange?.(e.target.value || '');
+            e.preventDefault();
+        }
+    };
+
     return (
         <div className={className}>
-            <input
-                ref={inputRef}
+            <textarea
+                ref={textareaRef}
+                spellCheck={false}
+                autoCorrect="off"
+                autoCapitalize="off"
                 className={classNames(getInfoClassName(info?.type || ''))}
                 value={value || ''}
                 placeholder={placeholder}
+                title={placeholder}
+                onKeyDown={handleInputKeyPress}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
-                onChange={(e) => {
-                    onChange?.(e.target.value || '');
-                }}
+                onChange={handleInputChange}
             />
             {info && focusStatus && (
                 <div

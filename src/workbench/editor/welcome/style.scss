@@ -7,4 +7,9 @@
     justify-content: center;
     text-align: center;
     width: 100%;
+
+    > h1 {
+        font-family: monospace;
+        opacity: 0.6;
+    }
 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { localize } from 'mo/i18n/localize';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { ITabProps } from 'mo/components/tabs/tab';
 import Output from 'mo/workbench/panel/output';
@@ -15,24 +16,10 @@ export enum PanelEvent {
     onToolbarClick = 'panel.onToolbarClick',
 }
 
-export const PANEL_OUTPUT: IPanelItem = {
-    id: 'OutputPane',
-    name: 'output',
-    data: 'output',
-    renderPane: (item) => <Output {...item} />,
-};
-
-export const PANEL_TOOLBOX_CLOSE = {
-    id: 'Close',
-    title: 'Close Panel',
-    iconName: 'codicon-close',
-};
-
-export const PANEL_TOOLBOX_RESIZE = {
-    id: 'Resize',
-    title: 'Maximize Panel Size',
-    iconName: 'codicon-chevron-up',
-};
+export const PANEL_TOOLBOX_CLOSE = 'panel.toolbox.closePanel';
+export const PANEL_TOOLBOX_RESIZE = 'panel.toolbox.maximize';
+export const PANEL_TOOLBOX_RESTORE_SIZE = 'panel.toolbox.restoreSize';
+export const PANEL_OUTPUT = 'panel.output.title';
 
 export interface IPanel {
     current?: IPanelItem;
@@ -40,6 +27,34 @@ export interface IPanel {
     toolbox?: IActionBarItemProps[];
     hidden?: boolean;
     maximize?: boolean;
+}
+
+export function builtInOutputPanel() {
+    return {
+        id: PANEL_OUTPUT,
+        name: localize(PANEL_OUTPUT, 'output'),
+        data: 'output',
+        renderPane: (item) => <Output {...item} />,
+    };
+}
+
+export function builtInPanelToolboxResize(): IActionBarItemProps {
+    return {
+        id: PANEL_TOOLBOX_RESIZE,
+        title: localize(PANEL_TOOLBOX_RESIZE, 'Maximize Panel Size'),
+        iconName: 'codicon-chevron-up',
+    };
+}
+
+export function builtInPanelToolbox(): IActionBarItemProps[] {
+    return [
+        builtInPanelToolboxResize(),
+        {
+            id: PANEL_TOOLBOX_CLOSE,
+            title: localize(PANEL_TOOLBOX_CLOSE, 'Close Panel'),
+            iconName: 'codicon-close',
+        },
+    ];
 }
 
 export class PanelModel implements IPanel {
@@ -50,14 +65,11 @@ export class PanelModel implements IPanel {
     public toolbox: IActionBarItemProps[];
 
     constructor(
-        current: IPanelItem = PANEL_OUTPUT,
-        data: IPanelItem[] = ([] = [PANEL_OUTPUT]),
+        current: IPanelItem | undefined = undefined,
+        data: IPanelItem[] = [],
         hidden = false,
         maximize = false,
-        toolbox: IActionBarItemProps[] = [
-            PANEL_TOOLBOX_RESIZE,
-            PANEL_TOOLBOX_CLOSE,
-        ]
+        toolbox: IActionBarItemProps[] = []
     ) {
         this.current = current;
         this.data = data;

@@ -2,8 +2,10 @@ import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { FileType, FileTypes, TreeNodeModel } from 'mo/model';
-export const ExtendFolderTree: IExtension = {
+
+export const ExtendsFolderTree: IExtension = {
     activate() {
+        // TODO: Move the folderTree logic to stories test
         const createTargetNodeById = (
             id: number,
             treeInstance,

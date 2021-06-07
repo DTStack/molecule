@@ -64,6 +64,9 @@ export class ExtensionService implements IExtensionService {
                         this.colorThemeService.load(themes);
                     }
                 }
+                case IContributeType.Commands: {
+                    // registerAction2();
+                }
             }
         });
     }

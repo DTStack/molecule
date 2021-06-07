@@ -179,3 +179,6 @@ export class FolderTreeController
         return menu;
     };
 }
+
+// Register singleton
+container.resolve(FolderTreeController);

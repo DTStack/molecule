@@ -61,6 +61,7 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
         splitPanePos,
         horizontalSplitPanePos,
     } = props;
+
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
             <div className={workbenchClassName}>

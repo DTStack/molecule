@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { memo, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { classNames } from 'mo/common/className';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import { useContextMenu } from 'mo/components/contextMenu';
-import { select } from 'mo/common/dom';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { IActivityBarController } from 'mo/controller/activityBar';
 
@@ -21,7 +20,7 @@ export function ActivityBarItem(
     const {
         checked = false,
         disabled = false,
-        name = '',
+        title = '',
         data = {},
         render,
         iconName = '',
@@ -37,6 +36,7 @@ export function ActivityBarItem(
     }
 
     let contextViewMenu;
+    const currentElem = useRef<HTMLLIElement>(null);
 
     const onClickMenuItem = useCallback(
         (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
@@ -52,7 +52,7 @@ export function ActivityBarItem(
     useEffect(() => {
         if (contextMenu.length > 0) {
             contextViewMenu = useContextMenu({
-                anchor: select(`#${id}`),
+                anchor: currentElem.current,
                 render: renderContextMenu,
             });
         }
@@ -76,6 +76,7 @@ export function ActivityBarItem(
     return (
         <li
             id={id}
+            ref={currentElem}
             onClick={onClickItem}
             className={classNames(
                 className,
@@ -86,7 +87,7 @@ export function ActivityBarItem(
             data-id={data.id}
         >
             <a
-                title={name}
+                title={title}
                 className={classNames(labelClassName, 'codicon', iconName)}
             >
                 {content}
@@ -95,5 +96,3 @@ export function ActivityBarItem(
         </li>
     );
 }
-
-export default memo(ActivityBarItem);

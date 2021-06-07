@@ -7,9 +7,14 @@ import { Explorer, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IMenuItemProps } from 'mo/components/menu';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
-import { ExplorerEvent } from 'mo/model/workbench/explorer/explorer';
 import {
-    SAMPLE_FOLDER_PANEL,
+    builtInExplorerActivityItem,
+    builtInExplorerFolderPanel,
+    builtInExplorerEditorPanel,
+    ExplorerEvent,
+    builtInExplorerHeaderToolbar,
+} from 'mo/model/workbench/explorer/explorer';
+import {
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
     EXPLORER_ACTIVITY_ITEM,
@@ -65,9 +70,10 @@ export class ExplorerController
         const ctx = this;
         const state = this.activityBarService.getState();
         const sideBarState = this.sidebarService.getState();
+        const { data = [] } = state;
         this.activityBarService.setState({
-            selected: EXPLORER_ACTIVITY_ITEM.id,
-            data: [...state.data!, EXPLORER_ACTIVITY_ITEM],
+            selected: EXPLORER_ACTIVITY_ITEM,
+            data: [...data, builtInExplorerActivityItem()],
         });
 
         const explorerEvent = {
@@ -89,7 +95,7 @@ export class ExplorerController
 
         this.activityBarService.onSelect((e, item: IActivityBarItem) => {
             const { hidden } = this.sidebarService.getState();
-            if (item.id === EXPLORER_ACTIVITY_ITEM.id) {
+            if (item.id === EXPLORER_ACTIVITY_ITEM) {
                 const isShow = hidden ? !hidden : hidden;
                 this.sidebarService.setState({
                     current: explorePane.id,
@@ -105,10 +111,16 @@ export class ExplorerController
             current: explorePane.id,
             panes: [...sideBarState.panes!, explorePane],
         });
-
-        this.explorerService.addPanel([
-            { ...SAMPLE_FOLDER_PANEL, renderPanel: this.renderFolderTree },
-        ]);
+        this.explorerService.setState({
+            data: [
+                { ...builtInExplorerEditorPanel() },
+                {
+                    ...builtInExplorerFolderPanel(),
+                    renderPanel: this.renderFolderTree,
+                },
+            ],
+            headerToolBar: builtInExplorerHeaderToolbar(),
+        });
     }
 
     private createFileOrFolder = (type) => {
@@ -165,3 +177,6 @@ export class ExplorerController
         );
     };
 }
+
+// Register singleton
+container.resolve(ExplorerController);

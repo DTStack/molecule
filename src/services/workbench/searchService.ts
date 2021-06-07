@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
-import { ISearchProps, ISearchModel } from 'mo/model/workbench/search';
+
+import { ISearchProps, SearchModel } from 'mo/model/workbench/search';
 import { FileTypes, TreeNodeModel } from 'mo/model';
 import { ITreeNodeItemProps } from 'mo/components';
 
@@ -42,7 +43,7 @@ export class SearchService
     protected state: ISearchProps;
     constructor() {
         super();
-        this.state = container.resolve(ISearchModel);
+        this.state = container.resolve(SearchModel);
     }
 
     /**

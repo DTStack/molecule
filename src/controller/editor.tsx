@@ -180,6 +180,7 @@ export class EditorController extends Controller implements IEditorController {
         );
     };
 
+    // TODO: Remove the below action register ?, because of the monaco Editor have integrated the undo/redo action
     private registerActions = (editorInstance) => {
         undoRedoMenu.forEach(({ id, label }) => {
             editorInstance?.addAction({

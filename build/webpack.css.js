@@ -109,6 +109,13 @@ module.exports = function () {
                             ignore: ['**/*.ts', '**/*.tsx'],
                         },
                     },
+                    {
+                        from: path.resolve(
+                            __dirname,
+                            '../src/i18n/locale/zh-CN.json'
+                        ),
+                        to: path.resolve(__dirname, '../esm/i18n/locale/'),
+                    },
                 ],
             }),
         ],

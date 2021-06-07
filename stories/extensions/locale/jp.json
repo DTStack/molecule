@@ -1,0 +1,9 @@
+{
+    "id": "japanese",
+    "name": "日本語",
+    "inherit": "zh-CN",
+    "source": {
+        "sidebar.explore.title": "ブラウジングテスト",
+        "test.id": "测试 Locale"
+    }
+}

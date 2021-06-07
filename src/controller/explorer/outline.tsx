@@ -3,6 +3,7 @@ import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import React from 'react';
 import { ExplorerService, IExplorerService } from 'mo/services';
+import { localize } from 'mo/i18n/localize';
 
 export interface IOutlineController {}
 
@@ -21,16 +22,19 @@ export class OutlineController
     private initView() {
         const outlinePanel = {
             id: 'outline',
-            name: 'OUTLINE',
+            name: localize('sidebar.explore.outline', 'OUTLINE'),
             toolbar: [
                 {
                     id: 'outline-collapse',
-                    title: 'Collapse All',
+                    title: localize('toolbar.collapseAll', 'Collapse All'),
                     iconName: 'codicon-collapse-all',
                 },
                 {
                     id: 'outline-more',
-                    title: 'More Actions...',
+                    title: localize(
+                        'sidebar.explore.outlineMore',
+                        'More Actions...'
+                    ),
                     iconName: 'codicon-ellipsis',
                 },
             ],
@@ -42,3 +46,6 @@ export class OutlineController
         // console.log('onClick:', panelService);
     };
 }
+
+// Register singleton
+container.resolve(OutlineController);

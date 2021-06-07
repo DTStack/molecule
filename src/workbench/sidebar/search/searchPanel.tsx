@@ -11,6 +11,7 @@ import {
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { ITreeNodeItemProps } from 'mo/components';
 import SearchTree from './searchTree';
+import { localize } from 'mo/i18n/localize';
 
 export interface ISearchPaneToolBar {
     search?: ISearchProps;
@@ -80,7 +81,7 @@ export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
         return (
             <div className={prefixClaName('search-pane', 'sidebar')}>
                 <Header
-                    title="Search"
+                    title={localize('sidebar.search.title', 'Search')}
                     toolbar={
                         <Toolbar
                             data={search?.headerToolBar || []}

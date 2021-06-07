@@ -109,3 +109,6 @@ export class NotificationController
         this._notificationPane = container;
     }
 }
+
+// Register a singleton
+container.resolve(NotificationController);

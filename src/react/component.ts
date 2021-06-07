@@ -8,6 +8,7 @@ export interface IComponent<S = any> {
     setState(values: S, callback?: (prevState: S, nextState: S) => void): void;
     render(nextState?: S): void;
     onUpdateState(callback: (prevState: S, nextState: S) => void): void;
+    forceUpdate(): void;
     getState(): S;
     /**
      * Subscribe the component event
@@ -51,6 +52,10 @@ export abstract class Component<S = any>
 
     public onUpdateState(callback: (prevState: S, nextState: S) => void) {
         this._event.subscribe(componentEvents.Update, callback);
+    }
+
+    public forceUpdate() {
+        this.setState(Object.assign({}, this.state));
     }
 
     public getState(): S {

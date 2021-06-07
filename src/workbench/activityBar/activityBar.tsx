@@ -6,7 +6,7 @@ import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
-import ActivityBarItem from './activityBarItem';
+import { ActivityBarItem } from './activityBarItem';
 import { Scrollable } from 'mo/components/scrollable';
 import { IActivityBarController } from 'mo/controller/activityBar';
 

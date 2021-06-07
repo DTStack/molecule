@@ -7,8 +7,8 @@ import {
     IActivityBar,
     IActivityBarItem,
 } from 'mo/model/workbench/activityBar';
-import { EXPLORER_ACTIVITY_ITEM } from 'mo/model/workbench/explorer/explorer';
-import { SEARCH_ACTIVITY_ITEM } from 'mo/model/workbench/search';
+import { builtInExplorerActivityItem } from 'mo/model/workbench/explorer/explorer';
+import { builtInSearchActivityItem } from 'mo/model/workbench/search';
 import { searchById } from '../helper';
 import { IMenuItemProps } from 'mo/components/menu';
 
@@ -19,7 +19,7 @@ export interface IActivityBarService extends Component<IActivityBar> {
     remove(id: string): void;
     toggleBar(id?: string): void;
     updateContextMenuCheckStatus(id?: string): void;
-    addConextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]): void;
+    addContextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]): void;
     removeContextMenu(id: string): void;
     /**
      * Add click event listener
@@ -85,9 +85,10 @@ export class ActivityBarService
         if (index > -1) {
             this.remove(id);
         } else {
+            // TODO 这个existBar 逻辑应该有问题
             const existBar = [
-                EXPLORER_ACTIVITY_ITEM,
-                SEARCH_ACTIVITY_ITEM,
+                builtInExplorerActivityItem(),
+                builtInSearchActivityItem(),
             ].find(searchById(id));
             if (!existBar) return;
             this.addBar(existBar);
@@ -114,7 +115,7 @@ export class ActivityBarService
         });
     }
 
-    public addConextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]) {
+    public addContextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]) {
         let next = [...this.state.contextMenu!];
         if (Array.isArray(contextMenu)) {
             next = next?.concat(contextMenu);

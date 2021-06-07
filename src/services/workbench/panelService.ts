@@ -1,17 +1,21 @@
 import 'reflect-metadata';
-import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
+import { Component } from 'mo/react';
 import {
+    builtInOutputPanel,
+    builtInPanelToolboxResize,
     IPanel,
     IPanelItem,
     PanelEvent,
     PanelModel,
     PANEL_OUTPUT,
     PANEL_TOOLBOX_RESIZE,
+    PANEL_TOOLBOX_RESTORE_SIZE,
 } from 'mo/model/workbench/panel';
 
 import { searchById } from '../helper';
 import { IActionBarItemProps } from 'mo/components/actionBar';
+import { localize } from 'mo/i18n/localize';
 export interface IPanelService extends Component<IPanel> {
     open(data: IPanelItem): void;
     getById(id: string): IPanelItem | undefined;
@@ -48,17 +52,20 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         const maximize = !this.state.maximize;
         const { toolbox = [] } = this.state;
         const resizeBtnIndex = toolbox?.findIndex(
-            searchById(PANEL_TOOLBOX_RESIZE.id)
+            searchById(PANEL_TOOLBOX_RESIZE)
         );
         const resizeBtn = toolbox[resizeBtnIndex];
         if (resizeBtn) {
             if (maximize) {
                 toolbox[resizeBtnIndex] = Object.assign({}, resizeBtn, {
-                    title: 'Restore Panel Size',
+                    title: localize(
+                        PANEL_TOOLBOX_RESTORE_SIZE,
+                        'Restore Panel Size'
+                    ),
                     iconName: 'codicon-chevron-down',
                 });
             } else {
-                toolbox[resizeBtnIndex] = PANEL_TOOLBOX_RESIZE;
+                toolbox[resizeBtnIndex] = builtInPanelToolboxResize();
             }
             this.setState({
                 maximize: !this.state.maximize,
@@ -83,10 +90,10 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     }
 
     public updateOutput(data: IPanelItem<any>): IPanelItem | undefined {
-        return this.update(Object.assign(PANEL_OUTPUT, data));
+        return this.update(Object.assign(builtInOutputPanel(), data));
     }
     public appendOutput(content: string): void {
-        const output = this.getById(PANEL_OUTPUT.id);
+        const output = this.getById(PANEL_OUTPUT);
         if (output) {
             output.data = output.data + content;
             this.updateOutput(output);
@@ -94,7 +101,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     }
 
     public clearOutput(): void {
-        this.updateOutput(Object.assign(PANEL_OUTPUT, { data: '' }));
+        this.updateOutput(Object.assign(builtInOutputPanel(), { data: '' }));
     }
 
     public add(data: IPanelItem | IPanelItem[]) {

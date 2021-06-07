@@ -1,12 +1,9 @@
 @import 'mo/style/common';
 
 #{$activityBar} {
-    bottom: 22px;
-    left: 0;
-    position: absolute;
-    top: 35px;
+    flex: 1;
+    padding-bottom: 20px;
     width: 48px;
-    z-index: 1;
 
     &__container {
         display: flex;

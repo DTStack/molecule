@@ -13,7 +13,7 @@
             box-sizing: border-box;
             color: inherit;
             cursor: pointer;
-            height: 100%;
+            height: calc(100% - 3px);
             transition: background 0.3s;
 
             &.codicon {
@@ -27,20 +27,34 @@
         }
     }
 
-    input {
+    textarea {
+        background: var(--input-background);
         border: 1px solid transparent;
         box-sizing: border-box;
+        color: var(--input-foreground);
+        font-family: inherit;
         font-size: inherit;
-        height: 23px;
-        padding: 3px;
-        padding-right: 4px;
-        text-indent: 4px;
+        height: 24px;
+        line-height: 18px;
+        outline: none;
+        padding: 3px 62px 3px 4px;
+        resize: none;
         width: 100%;
 
-        &:focus,
-        &:active {
-            outline: none;
+        &:focus {
+            border-color: var(--focusBorder);
         }
+
+        // TODO: better to mock a scoll bar
+        // invisible scroll bar
+        &::-webkit-scrollbar {
+            opacity: 0;
+        }
+    }
+
+    .scrollbar-invisible {
+        position: absolute;
+        right: 0;
     }
 
     &__toolbar {

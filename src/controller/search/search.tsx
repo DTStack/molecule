@@ -26,6 +26,10 @@ import {
 } from 'mo/services';
 import { ITreeNodeItemProps } from 'mo/components';
 export interface ISearchController {
+    /**
+     * Validate value if is valid
+     */
+    validateValue: (value: string) => { valid: boolean; errMessage?: string };
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: (
@@ -68,6 +72,8 @@ export class SearchController extends Controller implements ISearchController {
         );
 
         const searchEvent = {
+            validateValue: this.validateValue,
+            setValidateInfo: this.setValidateInfo,
             setSearchValue: this.setSearchValue,
             setReplaceValue: this.setReplaceValue,
             onToggleMode: this.onToggleMode,
@@ -101,6 +107,14 @@ export class SearchController extends Controller implements ISearchController {
             }
         });
     }
+
+    public readonly validateValue = (value: string) => {
+        return this.searchService.validateValue(value);
+    };
+
+    public readonly setValidateInfo = (info) => {
+        this.searchService.setValidateInfo?.(info);
+    };
 
     public readonly setSearchValue = (value?: string) => {
         this.searchService.setSearchValue?.(value);

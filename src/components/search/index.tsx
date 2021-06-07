@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { IActionBarItemProps } from '../actionBar';
-import Input from './input';
+import Input, { InfoTypeEnum } from './input';
 import { classNames } from 'mo/common/className';
 import {
     baseInputClassName,
@@ -16,6 +16,7 @@ export interface ISearchProps extends React.ComponentProps<any> {
     values?: (string | undefined)[];
     placeholders?: string[];
     addons?: (IActionBarItemProps[] | undefined)[];
+    validationInfo?: string | { type: keyof typeof InfoTypeEnum; text: string };
     onAddonClick?: (addon) => void;
     onButtonClick?: (status: boolean) => void;
     /**
@@ -29,7 +30,7 @@ export interface ISearchProps extends React.ComponentProps<any> {
     /**
      * onSearch always be triggered behind onChange or onClick
      */
-    onSearch?: (queryVal: string | undefined, replaceVal?: string) => void;
+    onSearch?: (value?: (string | undefined)[]) => void;
 }
 
 export function Search(props: ISearchProps) {
@@ -37,6 +38,7 @@ export function Search(props: ISearchProps) {
         className = '',
         style,
         placeholders = [],
+        validationInfo: rawInfo,
         addons = [],
         values = [],
         onAddonClick,
@@ -62,7 +64,7 @@ export function Search(props: ISearchProps) {
     const onToggleReplaceBtn = () => {
         setShowReplace(!isShowReplace);
         onButtonClick?.(!isShowReplace);
-        onSearch?.(searchVal, replaceVal);
+        onSearch?.([searchVal, replaceVal]);
     };
 
     const handleSearchChange = (
@@ -73,15 +75,26 @@ export function Search(props: ISearchProps) {
             const values =
                 source === 'search' ? [value, replaceVal] : [searchVal, value];
             onChange(values);
-            onSearch?.(searchVal, replaceVal);
+            onSearch?.(values);
         }
     };
 
     const handleToolbarClick = (addon) => {
         onAddonClick?.(addon);
-        onSearch?.(searchVal, replaceVal);
+        onSearch?.([searchVal, replaceVal]);
     };
 
+    const getInfoFromRaw = () => {
+        if (rawInfo) {
+            if (typeof rawInfo === 'string') {
+                return { type: InfoTypeEnum.info, text: rawInfo };
+            }
+            return rawInfo;
+        }
+        return undefined;
+    };
+
+    const validationInfo = getInfoFromRaw();
     return (
         <div
             style={style}
@@ -98,6 +111,7 @@ export function Search(props: ISearchProps) {
                         baseInputClassName,
                         searchTargetContainerClassName
                     )}
+                    info={validationInfo}
                     placeholder={searchPlaceholder}
                     onChange={(v) => handleSearchChange(v, 'search')}
                     toolbarData={searchAddons}

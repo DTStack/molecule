@@ -6,6 +6,11 @@ import { FileTypes, TreeNodeModel } from 'mo/model';
 import { ITreeNodeItemProps } from 'mo/components';
 
 export interface ISearchService extends Component<ISearchProps> {
+    /**
+     * Validate value if is valid
+     */
+    validateValue: (value: string) => { valid: boolean; errMessage?: string };
+    setValidateInfo: (info: ISearchProps['validationInfo']) => void;
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: (
@@ -38,6 +43,34 @@ export class SearchService
     constructor() {
         super();
         this.state = container.resolve(ISearchModel);
+    }
+
+    /**
+     * Validate value if is valid
+     */
+    public validateValue(value: string) {
+        if (this.state.isRegex) {
+            try {
+                new RegExp(value);
+                return {
+                    valid: true,
+                };
+            } catch (e) {
+                return {
+                    valid: false,
+                    errMessage: e.message,
+                };
+            }
+        }
+        return {
+            valid: true,
+        };
+    }
+
+    public setValidateInfo(info: ISearchProps['validationInfo']) {
+        this.setState({
+            validationInfo: info,
+        });
     }
 
     public setSearchValue(value?: string) {

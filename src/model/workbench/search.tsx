@@ -1,4 +1,5 @@
 import { IActionBarItemProps } from 'mo/components/actionBar';
+import { InfoTypeEnum } from 'mo/components/search/input';
 export interface ISearchProps {
     headerToolBar?: IActionBarItemProps[];
     searchAddons?: IActionBarItemProps[];
@@ -6,6 +7,7 @@ export interface ISearchProps {
     value?: string; // queryValue;
     replaceValue?: string;
     replaceMode?: boolean;
+    validationInfo?: string | { type: keyof typeof InfoTypeEnum; text: string };
     isRegex?: boolean;
     isCaseSensitive?: boolean;
     isWholeWords?: boolean;
@@ -98,6 +100,7 @@ export class ISearchModel implements ISearchProps {
     public isCaseSensitive: boolean = false;
     public isWholeWords: boolean = false;
     public preserveCase: boolean = false;
+    public validationInfo: string = '';
 
     constructor(
         headerToolBar: IActionBarItemProps[] = builtInHeaderToolbar,
@@ -109,7 +112,8 @@ export class ISearchModel implements ISearchProps {
         isCaseSensitive = false,
         isWholeWords = false,
         isRegex = false,
-        preserveCase = false
+        preserveCase = false,
+        validationInfo = ''
     ) {
         this.headerToolBar = headerToolBar;
         this.searchAddons = searchAddons;
@@ -121,5 +125,6 @@ export class ISearchModel implements ISearchProps {
         this.isWholeWords = isWholeWords;
         this.isRegex = isRegex;
         this.preserveCase = preserveCase;
+        this.validationInfo = validationInfo;
     }
 }

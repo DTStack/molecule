@@ -31,3 +31,23 @@ export const replaceBtnClassName = getBEMElement(
     replaceContainerClassName,
     'button'
 );
+
+export const validationBaseInputClassName = getBEMElement(
+    defaultSearchClassName,
+    'base'
+);
+
+export const validationInfoInputClassName = getBEMElement(
+    defaultSearchClassName,
+    'info'
+);
+
+export const validationWarningInputClassName = getBEMElement(
+    defaultSearchClassName,
+    'warning'
+);
+
+export const validationErrorInputClassName = getBEMElement(
+    defaultSearchClassName,
+    'error'
+);

@@ -113,7 +113,7 @@ export class LocaleService extends Component implements ILocaleService {
 
         let result;
         if (locale !== undefined) {
-            result = locale?.source.get(id);
+            result = locale.source.get(id);
         }
         return result || defaultValue;
     }

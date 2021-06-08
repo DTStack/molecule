@@ -15,7 +15,7 @@ export interface ILocaleService {
     initialize(locales: ILocale[], localeId?: string): void;
     appendLocales(locales: ILocale[]): void;
     removeLocale(id: string): ILocale | undefined;
-    localize(id: string, defaultValue: string): string;
+    localize(sourceKey: string, defaultValue: string): string;
     /**
      * Current localization changed
      * @param callback
@@ -107,13 +107,13 @@ export class LocaleService extends Component implements ILocaleService {
         this.subscribe(LocalizationEvent.OnChange, callback);
     }
 
-    public localize(id: string, defaultValue: string = ''): string {
+    public localize(sourceKey: string, defaultValue: string = ''): string {
         const locale = this._current;
         if (!locale) return defaultValue;
 
         let result;
         if (locale !== undefined) {
-            result = locale.source.get(id);
+            result = locale.source.get(sourceKey);
         }
         return result || defaultValue;
     }

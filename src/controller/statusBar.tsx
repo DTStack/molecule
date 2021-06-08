@@ -17,7 +17,7 @@ export interface IStatusBarController {
 export class StatusBarController
     extends Controller
     implements IStatusBarController {
-    protected menuBarController;
+    private readonly menuBarController;
 
     constructor() {
         super();

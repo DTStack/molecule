@@ -12,8 +12,8 @@ export interface ILocaleService {
     getCurrentLocale(): ILocale | undefined;
     getLocales(): ILocale[];
     getLocale(id: string): ILocale | undefined;
-    initialize(locals: ILocale[], localeId?: string): void;
-    appendLocales(locals: ILocale[]): void;
+    initialize(locales: ILocale[], localeId?: string): void;
+    appendLocales(locales: ILocale[]): void;
     removeLocale(id: string): ILocale | undefined;
     localize(id: string, defaultValue: string): string;
     /**
@@ -26,7 +26,7 @@ export interface ILocaleService {
 @singleton()
 export class LocaleService extends Component implements ILocaleService {
     state = {};
-    private _locals: Map<string, ILocale> = new Map();
+    private _locales: Map<string, ILocale> = new Map();
     private _current: ILocale | undefined;
 
     constructor() {
@@ -35,11 +35,11 @@ export class LocaleService extends Component implements ILocaleService {
     }
 
     public getLocales(): ILocale[] {
-        return Array.from(this._locals.values());
+        return Array.from(this._locales.values());
     }
 
-    public initialize(locals: ILocale[], localeId?: string) {
-        this.appendLocales(locals);
+    public initialize(locales: ILocale[], localeId?: string) {
+        this.appendLocales(locales);
         if (localeId) {
             this.setCurrentLocale(localeId);
         }
@@ -50,23 +50,23 @@ export class LocaleService extends Component implements ILocaleService {
     }
 
     public getLocale(id: string): ILocale | undefined {
-        return this._locals.get(id);
+        return this._locales.get(id);
     }
 
     public removeLocale(id: string): ILocale | undefined {
-        const locale = this._locals.get(id);
+        const locale = this._locales.get(id);
         if (locale !== undefined) {
             if (this._current && this._current.id === locale.id) {
                 this._current = defaultZhCn;
             }
-            this._locals.delete(id);
+            this._locales.delete(id);
         }
         return locale;
     }
 
     public setCurrentLocale(id: string): boolean {
         if (this._current && this._current.id === id) return true;
-        const current = this._locals.get(id);
+        const current = this._locales.get(id);
         if (current) {
             this.emit(LocalizationEvent.OnChange, this._current, current);
             this._current = current;
@@ -80,7 +80,7 @@ export class LocaleService extends Component implements ILocaleService {
         newLocale.source = new Map(Object.entries(locale.source));
         // If current locale inherit an exist, merge the parent.
         if (newLocale.inherit) {
-            const parent = this._locals.get(newLocale.inherit);
+            const parent = this._locales.get(newLocale.inherit);
             if (parent) {
                 newLocale.source = new Map([
                     ...parent.source,
@@ -91,10 +91,10 @@ export class LocaleService extends Component implements ILocaleService {
         return newLocale;
     }
 
-    public appendLocales(locals: ILocale[]): void {
-        if (locals.length > 0) {
-            const origin = this._locals;
-            locals.forEach((locale: ILocale) => {
+    public appendLocales(locales: ILocale[]): void {
+        if (locales.length > 0) {
+            const origin = this._locales;
+            locales.forEach((locale: ILocale) => {
                 const key = locale.id;
                 if (!origin.has(key)) {
                     origin.set(key, this.transformLocaleData(locale));

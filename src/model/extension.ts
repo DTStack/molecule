@@ -9,7 +9,7 @@ export enum IExtensionType {
     Theme = 'Themes',
     Normal = 'normal',
     Settings = 'settings',
-    Locals = 'locals',
+    Locals = 'locales',
     Menus = 'menus',
     Workbench = 'workbench',
 }

@@ -112,9 +112,9 @@ module.exports = function () {
                     {
                         from: path.resolve(
                             __dirname,
-                            '../src/i18n/locale/zh-CN.json'
+                            '../src/i18n/source/zh-CN.json'
                         ),
-                        to: path.resolve(__dirname, '../esm/i18n/locale/'),
+                        to: path.resolve(__dirname, '../esm/i18n/source/'),
                     },
                 ],
             }),

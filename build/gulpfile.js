@@ -10,7 +10,7 @@ function replacePath(code, filePath, importOptions) {
     const targetPath = path.resolve(output);
     const relativePath = path.relative(sourcePath, targetPath);
     const finalPath = relativePath ? './' + relativePath + '/' : './';
-    return code.replace(/([from|import]\s+)'mo\//g, "$1'" + finalPath);
+    return code.replace(/([from|import]\s+)'(mo\/|\bmo\b)/g, "$1'" + finalPath);
 }
 
 function relativeImport(compilerOptions) {

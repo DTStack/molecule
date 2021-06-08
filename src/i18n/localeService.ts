@@ -12,7 +12,7 @@ export interface ILocaleService {
     getCurrentLocale(): ILocale | undefined;
     getLocales(): ILocale[];
     getLocale(id: string): ILocale | undefined;
-    initialize(locals: ILocale[], locale?: string): void;
+    initialize(locals: ILocale[], localeId?: string): void;
     appendLocales(locals: ILocale[]): void;
     removeLocale(id: string): ILocale | undefined;
     localize(id: string, defaultValue: string): string;
@@ -38,10 +38,10 @@ export class LocaleService extends Component implements ILocaleService {
         return Array.from(this._locals.values());
     }
 
-    public initialize(locals: ILocale[], locale?: string) {
+    public initialize(locals: ILocale[], localeId?: string) {
         this.appendLocales(locals);
-        if (locale) {
-            this.setCurrentLocale(locale);
+        if (localeId) {
+            this.setCurrentLocale(localeId);
         }
     }
 

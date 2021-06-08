@@ -5,6 +5,7 @@ import { IExplorer } from 'mo/model/workbench/explorer/explorer';
 import { IExplorerController } from 'mo/controller/explorer/explorer';
 import { Toolbar } from 'mo/components/toolbar';
 import { defaultExplorerClassName } from './base';
+import { localize } from 'mo/i18n/localize';
 
 export const Explorer: React.FunctionComponent<IExplorer> = (
     props: IExplorer & IExplorerController
@@ -20,7 +21,7 @@ export const Explorer: React.FunctionComponent<IExplorer> = (
     return (
         <div className={defaultExplorerClassName}>
             <Header
-                title={'Explorer'}
+                title={localize('sidebar.explore.title', 'Explorer')}
                 toolbar={
                     <Toolbar
                         data={[headerToolBar!]}

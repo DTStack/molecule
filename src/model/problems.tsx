@@ -2,6 +2,7 @@ import * as React from 'react';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import { IPanelItem } from 'mo/model/workbench/panel';
 import { ProblemsStatusBarView, ProblemsPaneView } from 'mo/workbench/problems';
+import { localize } from 'mo/i18n/localize';
 
 export enum MarkerSeverity {
     Hint = 1,
@@ -31,23 +32,31 @@ export interface IProblems<T = any> {
     data: IProblemsItem<T>[];
     show?: boolean;
 }
-export const STATUS_PROBLEMS: IStatusBarItem = {
-    id: 'MoProblems',
-    sortIndex: 1,
-    data: {
-        warnings: 0,
-        errors: 0,
-        infos: 0,
-    },
-    name: 'Problems',
-    render: (item: IStatusBarItem) => <ProblemsStatusBarView {...item} />,
-};
-export const PANEL_PROBLEMS: IPanelItem = {
-    id: 'ProblemsPane',
-    name: 'problems',
-    data: null,
-    renderPane: (item) => <ProblemsPaneView {...item} />,
-};
+export const PANEL_PROBLEMS = 'panel.problems.title';
+export const STATUS_PROBLEMS = 'statusbar.problems.title';
+
+export function builtInStatusProblems(): IStatusBarItem {
+    return {
+        id: STATUS_PROBLEMS,
+        sortIndex: 1,
+        data: {
+            warnings: 0,
+            errors: 0,
+            infos: 0,
+        },
+        name: 'Problems',
+        render: (item: IStatusBarItem) => <ProblemsStatusBarView {...item} />,
+    };
+}
+
+export function builtInPanelProblems(): IPanelItem {
+    return {
+        id: PANEL_PROBLEMS,
+        name: localize(PANEL_PROBLEMS, 'problems'),
+        data: null,
+        renderPane: (item) => <ProblemsPaneView {...item} />,
+    };
+}
 
 export class ProblemsModel<T> implements IProblems<T> {
     static readonly ID = 'MO_PROBLEMS';

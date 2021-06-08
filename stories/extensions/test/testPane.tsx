@@ -1,11 +1,12 @@
 import * as React from 'react';
-// import * as monaco from 'mo/monaco';
 import molecule from 'mo';
 
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
 import { IEditorTab } from 'mo/model';
+import { ILocale } from 'mo/i18n/localization';
+import { localize } from 'mo/i18n/localize';
 
 export default class TestPane extends React.Component {
     constructor(props) {
@@ -22,6 +23,30 @@ export default class TestPane extends React.Component {
             molecule.colorTheme.applyTheme(option.value);
         }
     };
+
+    onChangeLocale = (e, option) => {
+        if (option && option.value) {
+            console.log('onChangeLocale:', option.value);
+            molecule.il8n.setCurrentLocale(option.value);
+        }
+    };
+
+    renderLocales() {
+        const data = molecule.il8n.getLocales();
+        const current = molecule.il8n.getCurrentLocale();
+        const options = data.map((item: ILocale) => {
+            return (
+                <Option key={item.id} value={item.id}>
+                    {item.name}
+                </Option>
+            );
+        });
+        return (
+            <Select defaultValue={current?.id} onSelect={this.onChangeLocale}>
+                {options}
+            </Select>
+        );
+    }
 
     renderColorThemes() {
         const colorThemes = molecule.colorTheme.getThemes();
@@ -175,6 +200,11 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                 <div style={{ margin: '50px 20px' }}>
                     <h1>Select a ColorTheme:</h1>
                     {this.renderColorThemes()}
+                </div>
+                <div style={{ margin: '50px 20px' }}>
+                    <h1>Select a localization language:</h1>
+                    {this.renderLocales()}
+                    {localize('test.id', 'aaaa')}
                 </div>
                 <div style={{ margin: '50px 20px' }}>
                     <h2>Add a new Panel:</h2>

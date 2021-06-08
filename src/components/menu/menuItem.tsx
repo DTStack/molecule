@@ -60,7 +60,12 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
             {...custom}
         >
             <a className={menuContentClassName}>
-                <Icon className={checkClassName} type={icon || ''} />
+                <Icon
+                    className={checkClassName}
+                    type={typeof icon === 'string' ? icon : ''}
+                >
+                    {typeof icon === 'object' ? icon : ''}
+                </Icon>
                 <span className={labelClassName} title={name as string}>
                     {render ? render(props) : children}
                 </span>

@@ -6,6 +6,7 @@ export * as react from 'mo/react';
 export * as component from 'mo/components';
 export * from 'mo/workbench';
 export * from 'mo/services';
+export {} from 'mo/i18n';
 
 export {
     IExtension,
@@ -46,6 +47,13 @@ import {
     IProblemsService,
     ProblemsService,
 } from 'mo/services';
+
+import { ILocaleService, LocaleService } from './i18n/localeService';
+
+/**
+ * Register the Locales service first
+ */
+export const il8n = container.resolve<ILocaleService>(LocaleService);
 
 /**
  * The Services of Workbench

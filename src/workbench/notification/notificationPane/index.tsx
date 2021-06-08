@@ -10,6 +10,7 @@ import {
 import { ActionBar } from 'mo/components/actionBar';
 import { shadowClassName } from 'mo/components/contextView';
 import { Icon } from 'mo/components/icon';
+import { localize } from 'mo/i18n/localize';
 
 const defaultNotificationClassName = prefixClaName('notification');
 const notificationHeaderClassName = getBEMElement(
@@ -36,7 +37,9 @@ export function NotificationPane(
         onCloseNotification,
     } = props;
     const hasNotifications = data.length > 0;
-    const title = hasNotifications ? 'notifications' : 'no new notifications';
+    const title = hasNotifications
+        ? localize('notification.title', 'notifications')
+        : localize('notification.title.no', 'no new notifications');
     const display = showNotifications ? 'block' : 'none';
 
     return (

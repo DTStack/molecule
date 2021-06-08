@@ -35,7 +35,7 @@ function init() {
     molecule.problems.addProblems(MockItem);
 }
 
-export const ExtendProblems: IExtension = {
+export const ExtendsProblems: IExtension = {
     activate(extensionCtx: IExtensionService) {
         init();
     },

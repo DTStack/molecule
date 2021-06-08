@@ -6,8 +6,7 @@ import {
     IExplorerPanelItem,
     IExplorer,
     IExplorerModel,
-    DEFAULT_PANELS,
-    SAMPLE_FOLDER_PANEL,
+    builtInExplorerPanel,
 } from 'mo/model/workbench/explorer/explorer';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { IMenuItemProps } from 'mo/components/menu';
@@ -78,9 +77,7 @@ export class ExplorerService
         if (index > -1) {
             this.remove(id);
         } else {
-            const existPanel = DEFAULT_PANELS.concat([
-                SAMPLE_FOLDER_PANEL,
-            ]).find(searchById(id));
+            const existPanel = builtInExplorerPanel().find(searchById(id));
             if (!existPanel) return;
             this.addPanel(existPanel);
         }

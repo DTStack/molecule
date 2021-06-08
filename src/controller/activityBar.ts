@@ -90,32 +90,32 @@ export class ActivityBarController
         const contextMenuId = item?.id;
         switch (contextMenuId) {
             // activityBar contextMenu
-            case CONTEXT_MENU_MENU.id: {
+            case CONTEXT_MENU_MENU: {
                 this.menuBarService.showHide();
                 break;
             }
-            case CONTEXT_MENU_EXPLORER.id: {
+            case CONTEXT_MENU_EXPLORER: {
                 this.activityBarService.toggleBar(contextMenuId);
                 break;
             }
-            case CONTEXT_MENU_SEARCH.id: {
+            case CONTEXT_MENU_SEARCH: {
                 this.activityBarService.toggleBar(contextMenuId);
                 break;
             }
-            case CONTEXT_MENU_HIDE.id: {
+            case CONTEXT_MENU_HIDE: {
                 this.activityBarService.showHide();
                 break;
             }
             // manage button contextMenu
-            case CONTEXT_MENU_COMMAND_PALETTE.id: {
+            case CONTEXT_MENU_COMMAND_PALETTE: {
                 this.gotoQuickCommand();
                 break;
             }
-            case CONTEXT_MENU_SETTINGS.id: {
+            case CONTEXT_MENU_SETTINGS: {
                 this.settingsService.openSettingsInEditor();
                 break;
             }
-            case CONTEXT_MENU_COLOR_THEME.id: {
+            case CONTEXT_MENU_COLOR_THEME: {
                 this.onSelectColorTheme();
                 break;
             }

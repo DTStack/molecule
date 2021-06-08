@@ -2,6 +2,7 @@ import { ITabProps } from 'mo/components/tabs/tab';
 import { ITabsProps } from 'mo/components/tabs';
 import { IMenuItemProps } from 'mo/components/menu';
 import { IBreadcrumbItemProps } from 'mo/components/breadcrumb';
+import { localize } from 'mo/i18n/localize';
 
 export enum EditorEvent {
     OnCloseTab = 'editor.closeTab',
@@ -54,40 +55,46 @@ export const EDITOR_MENU_CLOSE_OTHERS = 'editor.closeOthers';
 export const EDITOR_MENU_CLOSE = 'editor.close';
 export const EDITOR_MENU_SHOW_OPENEDITORS = 'editor.showOpenEditors';
 
-const baseMenu = [
-    {
-        id: EDITOR_MENU_CLOSE_ALL,
-        name: 'Close All',
-    },
-];
+export function getBaseMenu() {
+    return [
+        {
+            id: EDITOR_MENU_CLOSE_ALL,
+            name: localize(EDITOR_MENU_CLOSE_ALL, 'Close All'),
+        },
+    ];
+}
 
-const initialActions: IMenuItemProps[] = [
-    {
-        id: EDITOR_MENU_SHOW_OPENEDITORS,
-        name: 'Show Opened Editors',
-    },
-    ...baseMenu,
-];
+export function getEditorInitialActions(): IMenuItemProps[] {
+    return [
+        {
+            id: EDITOR_MENU_SHOW_OPENEDITORS,
+            name: 'Show Opened Editors',
+        },
+        ...getBaseMenu(),
+    ];
+}
 
-const initialMenu: IMenuItemProps[] = [
-    {
-        id: EDITOR_MENU_CLOSE,
-        name: 'Close',
-    },
-    {
-        id: EDITOR_MENU_CLOSE_OTHERS,
-        name: 'Close Others',
-    },
-    {
-        id: EDITOR_MENU_CLOSE_TO_RIGHT,
-        name: 'Close To Right',
-    },
-    {
-        id: EDITOR_MENU_CLOSE_TO_LEFT,
-        name: 'Close To Left',
-    },
-    ...baseMenu,
-];
+export function getEditorInitialMenu(): IMenuItemProps[] {
+    return [
+        {
+            id: EDITOR_MENU_CLOSE,
+            name: localize(EDITOR_MENU_CLOSE, 'Close'),
+        },
+        {
+            id: EDITOR_MENU_CLOSE_OTHERS,
+            name: localize(EDITOR_MENU_CLOSE_OTHERS, 'Close Others'),
+        },
+        {
+            id: EDITOR_MENU_CLOSE_TO_RIGHT,
+            name: localize(EDITOR_MENU_CLOSE_TO_RIGHT, 'Close To Right'),
+        },
+        {
+            id: EDITOR_MENU_CLOSE_TO_LEFT,
+            name: localize(EDITOR_MENU_CLOSE_TO_LEFT, 'Close To Left'),
+        },
+        ...getBaseMenu(),
+    ];
+}
 
 export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     id: number;
@@ -101,8 +108,8 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
         id: number,
         tab: IEditorTab<T>,
         data: IEditorTab<T>[],
-        actions: IMenuItemProps[] = initialActions,
-        menu: IMenuItemProps[] = initialMenu,
+        actions: IMenuItemProps[] = getEditorInitialActions(),
+        menu: IMenuItemProps[] = getEditorInitialMenu(),
         editorInstance?: E
     ) {
         this.id = id;

@@ -8,8 +8,8 @@ export interface IIconProps extends ComponentProps<'span'> {
     onClick?: (e: React.MouseEvent) => void;
 }
 
-export function Icon(props: IIconProps) {
-    const { className, type, ...restProps } = props;
+export function Icon(props: React.PropsWithChildren<IIconProps>) {
+    const { className, type, children, ...restProps } = props;
     return (
         <span
             className={classNames(
@@ -18,6 +18,8 @@ export function Icon(props: IIconProps) {
                 prefixClaName(type, 'codicon')
             )}
             {...restProps}
-        ></span>
+        >
+            {children}
+        </span>
     );
 }

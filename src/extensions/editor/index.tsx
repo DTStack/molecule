@@ -3,7 +3,7 @@ import { IExtension } from 'mo/model/extension';
 
 function init() {}
 
-export const ExtendEditor: IExtension = {
+export const ExtendsEditor: IExtension = {
     activate(extensionCtx: IExtensionService) {
         init();
     },

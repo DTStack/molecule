@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { IStatusBarItem, StatusBarEvent } from 'mo/model';
 import { Controller } from 'mo/react/controller';
-import { menuBarController } from 'mo/controller';
+import { MenuBarController } from 'mo/controller';
 import { IMenuItemProps } from 'mo/components/menu';
 import { CONTEXT_MENU_HIDE_STATUS_BAR } from 'mo/model/workbench/statusBar';
-import { singleton } from 'tsyringe';
+import { container, singleton } from 'tsyringe';
 export interface IStatusBarController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
     onContextMenuClick?: (
@@ -17,8 +17,11 @@ export interface IStatusBarController {
 export class StatusBarController
     extends Controller
     implements IStatusBarController {
+    private readonly menuBarController;
+
     constructor() {
         super();
+        this.menuBarController = container.resolve(MenuBarController);
     }
 
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
@@ -32,7 +35,7 @@ export class StatusBarController
         const menuId = item?.id;
         switch (menuId) {
             case CONTEXT_MENU_HIDE_STATUS_BAR.id:
-                menuBarController.updateStatusBar();
+                this.menuBarController.updateStatusBar();
                 break;
         }
     };

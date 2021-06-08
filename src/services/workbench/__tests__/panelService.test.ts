@@ -1,8 +1,11 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { IPanelService, PanelService } from '../panelService';
-import { PANEL_OUTPUT } from 'mo/model/workbench/panel';
-import { PANEL_PROBLEMS } from 'mo/model/problems';
+import { builtInOutputPanel } from 'mo/model/workbench/panel';
+import { builtInPanelProblems } from 'mo/model/problems';
+
+const paneOutput = builtInOutputPanel();
+const panelProblems = builtInPanelProblems();
 
 describe('Test panelService', () => {
     const panelService = container.resolve<IPanelService>(PanelService);
@@ -17,7 +20,7 @@ describe('Test panelService', () => {
             data: [],
         });
         panelService.add(
-            Object.assign({}, PANEL_OUTPUT, {
+            Object.assign({}, paneOutput, {
                 id: 'test1',
             })
         );
@@ -26,7 +29,7 @@ describe('Test panelService', () => {
     });
 
     test('Test panelService add multiple Panels', () => {
-        panelService.add([PANEL_OUTPUT, PANEL_PROBLEMS]);
+        panelService.add([paneOutput, panelProblems]);
         const result = panelService.getState();
         expect(result.data?.length).toEqual(3);
     });
@@ -35,15 +38,15 @@ describe('Test panelService', () => {
         panelService.setState({
             data: [],
         });
-        panelService.add([PANEL_OUTPUT, PANEL_PROBLEMS]);
+        panelService.add([paneOutput, panelProblems]);
         expect(panelService.getState().data?.length).toEqual(2);
-        panelService.remove(PANEL_OUTPUT.id);
+        panelService.remove(paneOutput.id);
         const result = panelService.getState();
         expect(result.data?.length).toEqual(1);
     });
 
     test('Test panelService update one panel', () => {
-        const expectedValue = Object.assign(PANEL_PROBLEMS, {
+        const expectedValue = Object.assign(panelProblems, {
             data: 'testData',
             name: 'testName',
         });
@@ -51,30 +54,30 @@ describe('Test panelService', () => {
         panelService.update(expectedValue);
         const result = panelService.getState();
         const updated = result.data!.find(
-            (item) => item.id === PANEL_PROBLEMS.id
+            (item) => item.id === panelProblems.id
         );
         expect(updated).not.toBeUndefined();
         expect(updated!).toEqual(expectedValue);
     });
 
     test('Test panelService getById method', () => {
-        panelService.add(PANEL_OUTPUT);
-        const result = panelService.getById(PANEL_OUTPUT.id);
+        panelService.add(paneOutput);
+        const result = panelService.getById(paneOutput.id);
         expect(result).not.toBeUndefined();
     });
 
     test('Test panelService updateOutput method', () => {
-        const expectedValue = Object.assign(PANEL_OUTPUT, {
+        const expectedValue = Object.assign(paneOutput, {
             data: 'testData',
             name: 'testName',
         });
         panelService.updateOutput(expectedValue);
-        const result = panelService.getById(PANEL_OUTPUT.id);
+        const result = panelService.getById(paneOutput.id);
         expect(result).toEqual(expectedValue);
     });
 
     test('Test panelService appendOutput method', () => {
-        const expectedValue = Object.assign(PANEL_OUTPUT, {
+        const expectedValue = Object.assign(paneOutput, {
             data: 'testData',
             name: 'testName',
         });
@@ -82,7 +85,7 @@ describe('Test panelService', () => {
         const appendContent = 'Append Content';
         panelService.appendOutput(appendContent);
         expectedValue.data = expectedValue.data + appendContent;
-        const result = panelService.getById(PANEL_OUTPUT.id);
+        const result = panelService.getById(paneOutput.id);
         expect(result).toEqual(expectedValue);
     });
     test('Test panelService open method', () => {

@@ -1,4 +1,6 @@
+import * as React from 'react';
 import { IMenuItemProps } from 'mo/components/menu';
+import { localize } from 'mo/i18n/localize';
 
 /**
  * The activity bar event definition
@@ -18,7 +20,8 @@ export enum ActivityBarEvent {
 
 export interface IActivityBarItem {
     id: string;
-    name?: string;
+    name?: ReactNode;
+    title?: string;
     data?: any;
     iconName?: string;
     checked?: boolean;
@@ -36,70 +39,75 @@ export interface IActivityBar {
     hidden?: boolean;
 }
 
-export const CONTEXT_MENU_MENU = {
-    id: 'Menu',
-    name: 'Menu',
-    icon: 'check',
-};
-export const CONTEXT_MENU_EXPLORER = {
-    id: 'active-explorer',
-    name: 'Explorer',
-    icon: 'check',
-};
-export const CONTEXT_MENU_SEARCH = {
-    id: 'search',
-    name: 'Search',
-    icon: 'check',
-};
-export const CONTEXT_MENU_HIDE = {
-    id: 'hide',
-    name: 'Hide Activity Bar',
-};
-export const DEFAULT_CONTEXT_MENU = [
-    CONTEXT_MENU_MENU,
-    CONTEXT_MENU_EXPLORER,
-    CONTEXT_MENU_SEARCH,
-    CONTEXT_MENU_HIDE,
-];
+export const ACTIVITY_BAR_GLOBAL_SETTINGS = 'global.menu.settings';
+export const ACTIVITY_BAR_GLOBAL_ACCOUNT = 'global.menu.account';
 
-export const CONTEXT_MENU_COMMAND_PALETTE = {
-    id: 'CommandPalette',
-    name: 'Command Palette...',
-};
+export const CONTEXT_MENU_COMMAND_PALETTE = 'menu.commandPalette';
+export const CONTEXT_MENU_SETTINGS = 'menu.settings';
+export const CONTEXT_MENU_COLOR_THEME = 'menu.colorTheme';
 
-export const CONTEXT_MENU_SETTINGS = {
-    id: 'Settings',
-    name: 'Settings',
-};
+export const CONTEXT_MENU_MENU = 'menubar';
+export const CONTEXT_MENU_EXPLORER = 'sidebar.explore.title';
+export const CONTEXT_MENU_SEARCH = 'sidebar.search.title';
+export const CONTEXT_MENU_HIDE = 'menu.hideActivityBar';
 
-export const CONTEXT_MENU_COLOR_THEME = {
-    id: 'ColorTheme',
-    name: 'Color Theme',
-};
+export function builtInActivityBar(): IActivityBar {
+    const activityBarData: IActivityBarItem[] = [
+        {
+            id: ACTIVITY_BAR_GLOBAL_ACCOUNT,
+            name: localize('menu.account', 'Account'),
+            iconName: 'codicon-account',
+            type: 'global',
+        },
+        {
+            id: ACTIVITY_BAR_GLOBAL_SETTINGS,
+            name: localize('menu.colorTheme', 'Color Theme'),
+            iconName: 'codicon-settings-gear',
+            type: 'global',
+            contextMenu: [
+                {
+                    id: CONTEXT_MENU_COMMAND_PALETTE,
+                    name: localize('menu.commandPalette', 'Command Palette'),
+                },
+                {
+                    id: CONTEXT_MENU_SETTINGS,
+                    name: localize('menu.settings', 'Settings'),
+                },
+                {
+                    id: CONTEXT_MENU_COLOR_THEME,
+                    name: localize('menu.colorTheme', 'Color Theme'),
+                },
+            ],
+        },
+    ];
 
-export const ACTIVITY_BAR_GLOBAL_SETTINGS: IActivityBarItem = {
-    id: 'global-settings',
-    name: 'Settings',
-    iconName: 'codicon-settings-gear',
-    type: 'global',
-    contextMenu: [
-        CONTEXT_MENU_COMMAND_PALETTE,
-        CONTEXT_MENU_SETTINGS,
-        CONTEXT_MENU_COLOR_THEME,
-    ],
-};
+    const contextMenuData: IMenuItemProps[] = [
+        {
+            id: CONTEXT_MENU_MENU,
+            name: localize('menubar', 'Menu'),
+            icon: 'check',
+        },
+        {
+            id: CONTEXT_MENU_EXPLORER,
+            name: localize('sidebar.explore.title', 'Explorer'),
+            icon: 'check',
+        },
+        {
+            id: CONTEXT_MENU_SEARCH,
+            name: localize('sidebar.search.title', 'Search'),
+            icon: 'check',
+        },
+        {
+            id: CONTEXT_MENU_HIDE,
+            name: localize('menu.hideActivityBar', 'Hide Activity Bar'),
+        },
+    ];
 
-export const ACTIVITY_BAR_GLOBAL_ACCOUNT: IActivityBarItem = {
-    id: 'global-Account',
-    name: 'Account',
-    iconName: 'codicon-account',
-    type: 'global',
-};
-
-export const initialActivityBarData: IActivityBarItem[] = [
-    ACTIVITY_BAR_GLOBAL_ACCOUNT,
-    ACTIVITY_BAR_GLOBAL_SETTINGS,
-];
+    return {
+        data: activityBarData,
+        contextMenu: contextMenuData,
+    };
+}
 
 export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
@@ -107,8 +115,8 @@ export class ActivityBarModel implements IActivityBar {
     public selected: string;
     public hidden = false;
     constructor(
-        data: IActivityBarItem[] = initialActivityBarData,
-        contextMenu: IMenuItemProps[] = DEFAULT_CONTEXT_MENU,
+        data: IActivityBarItem[] = [],
+        contextMenu: IMenuItemProps[] = [],
         selected: string = '',
         hidden = false
     ) {

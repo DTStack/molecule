@@ -38,9 +38,9 @@ export class PanelController extends Controller implements IPanelController {
         e: React.MouseEvent,
         item: IActionBarItemProps
     ): void => {
-        if (item.id === PANEL_TOOLBOX_CLOSE.id) {
+        if (item.id === PANEL_TOOLBOX_CLOSE) {
             this.panelService.showHide();
-        } else if (item.id === PANEL_TOOLBOX_RESIZE.id) {
+        } else if (item.id === PANEL_TOOLBOX_RESIZE) {
             this.panelService.maximizeRestore();
         }
         this.emit(PanelEvent.onToolbarClick, e, item);

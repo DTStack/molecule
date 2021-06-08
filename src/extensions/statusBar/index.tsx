@@ -8,7 +8,7 @@ function init() {
     });
 }
 
-export const ExtendStatusBar: IExtension = {
+export const ExtendsStatusBar: IExtension = {
     activate(extensionCtx: IExtensionService) {
         init();
     },

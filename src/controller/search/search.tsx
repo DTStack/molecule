@@ -13,6 +13,7 @@ import {
     SEARCH_PRESERVE_CASE_COMMAND_ID,
     SEARCH_REPLACE_ALL_COMMAND_ID,
     SEARCH_ACTIVITY_ITEM,
+    builtInSearchActivityItem,
 } from 'mo/model/workbench/search';
 import {
     ActivityBarService,
@@ -97,10 +98,10 @@ export class SearchController extends Controller implements ISearchController {
 
         this.sidebarService.push(searchSidePane);
 
-        this.activityBarService.addBar(SEARCH_ACTIVITY_ITEM);
+        this.activityBarService.addBar(builtInSearchActivityItem());
 
         this.activityBarService.onSelect((e, item: IActivityBarItem) => {
-            if (item.id === SEARCH_ACTIVITY_ITEM.id) {
+            if (item.id === SEARCH_ACTIVITY_ITEM) {
                 this.sidebarService.setState({
                     current: searchSidePane.id,
                 });
@@ -184,3 +185,6 @@ export class SearchController extends Controller implements ISearchController {
         return this.searchService.getSearchIndex(text, queryVal);
     };
 }
+
+// Register a singleton
+container.resolve(SearchController);

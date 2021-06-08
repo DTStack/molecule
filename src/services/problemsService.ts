@@ -2,9 +2,9 @@ import {
     IProblems,
     IProblemsItem,
     ProblemsModel,
-    STATUS_PROBLEMS,
-    PANEL_PROBLEMS,
     MarkerSeverity,
+    builtInStatusProblems,
+    builtInPanelProblems,
 } from 'mo/model/problems';
 import { IPanelItem } from 'mo/model/workbench/panel';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
@@ -108,18 +108,18 @@ export class ProblemsService
             ...this.state,
             data: [],
         });
-        this.updateStatus(STATUS_PROBLEMS);
-        this.updatePanel(PANEL_PROBLEMS);
+        this.updateStatus(builtInStatusProblems());
+        this.updatePanel(builtInPanelProblems());
     }
     public update<T>(): void {
         const { data = [] } = this.state;
         const markersData = this.getProblemsMarkers(data);
         this.updateStatus(
-            Object.assign(STATUS_PROBLEMS, {
+            Object.assign(builtInStatusProblems(), {
                 data: markersData,
             })
         );
-        this.updatePanel(Object.assign(PANEL_PROBLEMS, { data }));
+        this.updatePanel(Object.assign(builtInPanelProblems(), { data }));
     }
     public updateStatus<T>(item: IStatusBarItem<T>): void {
         this.statusBarService.updateItem(item);

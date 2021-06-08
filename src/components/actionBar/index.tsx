@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import {
     prefixClaName,
     classNames,
@@ -7,13 +7,12 @@ import {
     getBEMModifier,
 } from 'mo/common/className';
 import { useContextMenu } from 'mo/components/contextMenu';
-import { select } from 'mo/common/dom';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { mergeFunctions } from 'mo/common/utils';
 
 export interface IActionBarItemProps<T = any> {
     id?: string;
-    name?: string;
+    name?: ReactNode;
     title?: string;
     iconName?: string;
     disabled?: boolean;
@@ -60,6 +59,8 @@ export function ActionBarItem(props: IActionBarItemProps) {
     } = props;
     const disabled = props.disabled ? itemDisabledClassName : null;
     const checked = props.checked ? itemCheckedClassName : null;
+    const refItem = useRef(null);
+
     const claNames = classNames(
         labelClassName,
         'codicon',
@@ -84,7 +85,7 @@ export function ActionBarItem(props: IActionBarItemProps) {
     useEffect(() => {
         if (contextMenu.length > 0) {
             contextViewMenu = useContextMenu({
-                anchor: select(`#${id}`),
+                anchor: refItem.current,
                 render: renderContextMenu,
             });
         }
@@ -107,6 +108,7 @@ export function ActionBarItem(props: IActionBarItemProps) {
     return (
         <li
             id={id}
+            ref={refItem}
             className={classNames(itemClassName, disabled)}
             onClick={onClickItem}
             data-id={data.id}

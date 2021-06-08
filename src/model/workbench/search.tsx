@@ -1,10 +1,11 @@
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { InfoTypeEnum } from 'mo/components/search/input';
+import { localize } from 'mo/i18n/localize';
 export interface ISearchProps {
     headerToolBar?: IActionBarItemProps[];
     searchAddons?: IActionBarItemProps[];
     replaceAddons?: IActionBarItemProps[];
-    value?: string; // queryValue;
+    value?: string;
     replaceValue?: string;
     replaceMode?: boolean;
     validationInfo?: string | { type: keyof typeof InfoTypeEnum; text: string };
@@ -20,76 +21,92 @@ export const SEARCH_REGULAR_EXPRESSION_COMMAND_ID =
     'search.useRegularExpression';
 export const SEARCH_PRESERVE_CASE_COMMAND_ID = 'search.preserveCase';
 export const SEARCH_REPLACE_ALL_COMMAND_ID = 'search.replaceAll';
+export const SEARCH_ACTIVITY_ITEM = 'sidebar.search.title';
 
-export const SEARCH_ACTIVITY_ITEM = {
-    id: 'search',
-    name: 'Search',
-    iconName: 'codicon-search',
-};
+export const SEARCH_TOOLBAR_REFRESH = 'search.toolbar.refresh';
+export const SEARCH_TOOLBAR_CLEAR = 'search.toolbar.clearAll';
+export const SEARCH_TOOLBAR_COLLAPSE = 'search.toolbar.collapseAll';
 
-const builtInHeaderToolbar = [
-    {
-        id: 'Refresh',
-        title: 'Refresh',
-        disabled: true,
-        iconName: 'codicon-refresh',
-    },
-    {
-        id: 'Clear',
-        disabled: true,
-        title: 'Clear all',
-        iconName: 'codicon-clear-all',
-    },
-    {
-        id: 'Collapse',
-        title: 'Collapse all',
-        disabled: true,
-        iconName: 'codicon-collapse-all',
-    },
-];
+export function builtInSearchActivityItem() {
+    return {
+        id: SEARCH_ACTIVITY_ITEM,
+        name: localize(SEARCH_ACTIVITY_ITEM, 'Search'),
+        iconName: 'codicon-search',
+    };
+}
 
-const defaultSearchAddons = [
-    {
-        id: SEARCH_CASE_SENSITIVE_COMMAND_ID,
-        title: 'Match Case',
-        disabled: false,
-        checked: false,
-        iconName: 'codicon-case-sensitive',
-    },
-    {
-        id: SEARCH_WHOLE_WORD_COMMAND_ID,
-        title: 'Match Whole Word',
-        disabled: false,
-        checked: false,
-        iconName: 'codicon-whole-word',
-    },
-    {
-        id: SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
-        disabled: false,
-        checked: false,
-        title: 'Use Regular Expression',
-        iconName: 'codicon-regex',
-    },
-];
+export function builtInHeaderToolbar() {
+    return [
+        {
+            id: SEARCH_TOOLBAR_REFRESH,
+            title: localize(SEARCH_TOOLBAR_REFRESH, 'Refresh'),
+            disabled: true,
+            iconName: 'codicon-refresh',
+        },
+        {
+            id: SEARCH_TOOLBAR_CLEAR,
+            disabled: true,
+            title: localize(SEARCH_TOOLBAR_CLEAR, 'Clear all'),
+            iconName: 'codicon-clear-all',
+        },
+        {
+            id: SEARCH_TOOLBAR_COLLAPSE,
+            title: localize(SEARCH_TOOLBAR_COLLAPSE, 'Collapse all'),
+            disabled: true,
+            iconName: 'codicon-collapse-all',
+        },
+    ];
+}
 
-const defaultReplaceAddons = [
-    {
-        id: SEARCH_PRESERVE_CASE_COMMAND_ID,
-        title: 'Preserve Case',
-        disabled: false,
-        checked: false,
-        iconName: 'codicon-preserve-case',
-    },
-    {
-        id: SEARCH_REPLACE_ALL_COMMAND_ID,
-        title: 'Replace All',
-        disabled: false,
-        checked: false,
-        iconName: 'codicon-replace-all',
-    },
-];
+export function builtInSearchAddons() {
+    return [
+        {
+            id: SEARCH_CASE_SENSITIVE_COMMAND_ID,
+            title: localize(SEARCH_CASE_SENSITIVE_COMMAND_ID, 'Match Case'),
+            disabled: false,
+            checked: false,
+            iconName: 'codicon-case-sensitive',
+        },
+        {
+            id: SEARCH_WHOLE_WORD_COMMAND_ID,
+            title: localize(SEARCH_WHOLE_WORD_COMMAND_ID, 'Match Whole Word'),
+            disabled: false,
+            checked: false,
+            iconName: 'codicon-whole-word',
+        },
+        {
+            id: SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
+            disabled: false,
+            checked: false,
+            title: localize(
+                SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
+                'Use Regular Expression'
+            ),
+            iconName: 'codicon-regex',
+        },
+    ];
+}
 
-export class ISearchModel implements ISearchProps {
+export function builtInReplaceAddons() {
+    return [
+        {
+            id: SEARCH_PRESERVE_CASE_COMMAND_ID,
+            title: localize(SEARCH_PRESERVE_CASE_COMMAND_ID, 'Preserve Case'),
+            disabled: false,
+            checked: false,
+            iconName: 'codicon-preserve-case',
+        },
+        {
+            id: SEARCH_REPLACE_ALL_COMMAND_ID,
+            title: localize(SEARCH_REPLACE_ALL_COMMAND_ID, 'Replace All'),
+            disabled: false,
+            checked: false,
+            iconName: 'codicon-replace-all',
+        },
+    ];
+}
+
+export class SearchModel implements ISearchProps {
     public headerToolBar: IActionBarItemProps[];
     public searchAddons: IActionBarItemProps[];
     public replaceAddons: IActionBarItemProps[];
@@ -103,9 +120,9 @@ export class ISearchModel implements ISearchProps {
     public validationInfo: string = '';
 
     constructor(
-        headerToolBar: IActionBarItemProps[] = builtInHeaderToolbar,
-        searchAddons: IActionBarItemProps[] = defaultSearchAddons,
-        replaceAddons: IActionBarItemProps[] = defaultReplaceAddons,
+        headerToolBar: IActionBarItemProps[] = [],
+        searchAddons: IActionBarItemProps[] = [],
+        replaceAddons: IActionBarItemProps[] = [],
         value = '',
         replaceValue = '',
         replaceMode = false,

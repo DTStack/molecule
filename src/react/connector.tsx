@@ -1,7 +1,9 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import Logger from 'mo/common/logger';
 import { IComponent } from './component';
 import { Controller } from './controller';
+import { container } from 'tsyringe';
 
 export type ServiceObject = {
     [index: string]: IComponent;
@@ -44,7 +46,7 @@ export function connect<T = any>(
         }
 
         onChange(prevState, nextState) {
-            Logger.info(prevState, nextState);
+            Logger.info(prevState, nextState, (container as any)._registry);
             if (!watchFiled) {
                 this.update();
             } else {

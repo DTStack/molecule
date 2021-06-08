@@ -31,7 +31,7 @@ function init() {
     ]);
 }
 
-export const ExtendNotification: IExtension = {
+export const ExtendsNotification: IExtension = {
     activate(extensionCtx: IExtensionService) {
         init();
     },

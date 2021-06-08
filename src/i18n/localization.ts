@@ -1,7 +1,7 @@
 import defaultEN from './locale/en';
 export const defaultZhCn = require('./locale/zh-CN.json');
 
-export type LocaleSourceIdType = typeof defaultEN.source & string;
+export type LocaleSourceIdType = keyof typeof defaultEN.source;
 
 export const builtInLocales = [defaultEN, defaultZhCn];
 

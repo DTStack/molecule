@@ -18,10 +18,7 @@ import { APP_PREFIX } from 'mo/common/const';
 
 import { connect } from 'mo/react';
 
-import {
-    IWorkbenchController,
-    WorkbenchController,
-} from 'mo/controller/workbench';
+import { ILayoutController, LayoutController } from 'mo/controller/layout';
 import {
     ActivityBarService,
     IActivityBarService,
@@ -29,12 +26,14 @@ import {
     IPanelService,
     ISidebarService,
     IStatusBarService,
+    LayoutService,
     MenuBarService,
     PanelService,
     SidebarService,
     StatusBarService,
 } from 'mo/services';
 import { IWorkbench } from 'mo/model';
+import { ILayout } from 'mo/model/workbench/layout';
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
@@ -47,10 +46,11 @@ const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
 const activityBarService = container.resolve<IActivityBarService>(
     ActivityBarService
 );
-const workbenchController = container.resolve(WorkbenchController);
-const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
+const layoutController = container.resolve(LayoutController);
 
-export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
+const layoutService = container.resolve(LayoutService);
+const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
+export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
     const {
         activityBar,
         menuBar,
@@ -59,9 +59,9 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
         statusBar,
         onPaneSizeChange,
         onHorizontalPaneSizeChange,
-        splitPanePos,
-        horizontalSplitPanePos,
+        layout: { splitPanePos, horizontalSplitPanePos },
     } = props;
+    console.log(horizontalSplitPanePos);
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
             <div className={workbenchClassName}>
@@ -121,11 +121,12 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
 export const Workbench = connect(
     {
         panel: panelService,
+        layout: layoutService,
         activityBar: activityBarService,
         menuBar: menuBarService,
         sideBar: sidebarService,
         statusBar: statusBarService,
     },
     WorkbenchView,
-    workbenchController
+    layoutController
 );

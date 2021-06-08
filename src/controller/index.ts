@@ -7,7 +7,7 @@ export * from './problems';
 export * from './settings';
 export * from './sidebar';
 export * from './statusBar';
-export * from './workbench';
+export * from './layout';
 
 import { container } from 'tsyringe';
 import { ExplorerController } from './explorer/explorer';

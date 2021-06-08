@@ -27,7 +27,7 @@ export type {
 
 export type {
     IActivityBarController,
-    IWorkbenchController,
+    ILayoutController,
     IEditorController,
     ISideBarController,
     IMenuBarController,

@@ -1,3 +1,4 @@
+import { ILayout } from 'mo/model/workbench/layout';
 import { IActivityBar, IMenuBar, IPanel, ISidebar, IStatusBar } from 'mo/model';
 
 export * from './activityBar';
@@ -15,4 +16,5 @@ export interface IWorkbench {
     menuBar: IMenuBar;
     statusBar: IStatusBar;
     sideBar: ISidebar;
+    layout: ILayout;
 }

@@ -7,10 +7,12 @@ import {
     FolderTreeEvent,
     IFolderTree,
     IFolderTreeModel,
+    TreeNodeModel,
 } from 'mo/model/workbench/explorer/folderTree';
 import { TreeViewUtil, ITreeInstance } from '../../helper';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
+import { SAMPLE_FOLDER_PANEL_ID } from 'mo/model';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     initTree?: (data: ITreeNodeItemProps[]) => void;
@@ -26,11 +28,19 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     getRootFolderByRootId(id: number): ITreeNodeItemProps | undefined;
     getRootFolderIndexByRootId(id: number): ITreeNodeItemProps | undefined;
     getCurrentRootFolderInfo?: any;
+    /**
+     * add a root folder for project
+     * **Attention**, each project only has one root folder
+     */
     addRootFolder(folder?: ITreeNodeItemProps | ITreeNodeItemProps[]): void;
     removeRootFolder(id: number): void;
     setActive(id?: number): void;
     onDropTree(treeData: ITreeNodeItemProps[]): void;
     getFileIconByExtensionName(name: string, fileType: FileType): void;
+    /**
+     * add a file or folder into file systems
+     */
+    addNode(data: ITreeNodeItemProps): void;
 }
 
 @singleton()
@@ -44,6 +54,70 @@ export class FolderTreeService
         super();
         this.state = container.resolve(IFolderTreeModel);
         this.explorerService = container.resolve(ExplorerService);
+    }
+
+    private getParentNode(data: TreeNodeModel[], current: TreeNodeModel) {
+        const stack: TreeNodeModel[] = [];
+        if (data.find((item) => item === current)) {
+            // keep same as others
+            return { children: data };
+        } else {
+            stack.push(...data.filter((i) => i.fileType !== 'file'));
+        }
+        let res: TreeNodeModel | null = null;
+        while (stack.length) {
+            const folder = stack.shift()!;
+            const target = folder.children?.find((item) => item === current);
+            if (target) {
+                res = folder;
+                break;
+            } else {
+                stack.push(
+                    ...(folder.children?.filter((f) => f.fileType !== 'file') ||
+                        [])
+                );
+            }
+        }
+        return res;
+    }
+
+    public addNode(data: ITreeNodeItemProps): void {
+        const { data: folderData = [], current } = this.state.folderTree || {};
+        if (!folderData.length) {
+            console.warn(
+                'Please create a root folder before creating a file or folder'
+            );
+            return;
+        }
+        if (current) {
+            console.log('current', current);
+            if (current.fileType === 'file') {
+                // add new data as a sibling of current file
+                const currentParent = this.getParentNode(folderData, current);
+                // currentParent is a reference type
+                currentParent?.children?.push(data);
+            } else {
+                // add data as a child of current folder
+                // current is a reference type
+                current.children?.push(data);
+            }
+            console.log('folderData;', folderData);
+            this.setState({
+                folderTree: {
+                    ...this.state.folderTree,
+                    data: folderData,
+                },
+            });
+        } else {
+            const folders = folderData[0].children;
+            folders?.push(data);
+            this.setState({
+                folderTree: {
+                    ...this.state.folderTree,
+                    data: folderData,
+                },
+            });
+        }
     }
 
     public getFileIconByExtensionName(
@@ -123,18 +197,25 @@ export class FolderTreeService
         });
     };
 
-    public addRootFolder(folder: ITreeNodeItemProps | ITreeNodeItemProps[]) {
+    public addRootFolder(folder: TreeNodeModel) {
         const { folderTree } = this.state;
-        let next = [...folderTree?.data!];
-        if (Array.isArray(folder)) {
-            next = next?.concat(folder);
-        } else {
-            next?.push(folder);
+        const {} = this.explorerService;
+        if (folderTree?.data?.length) {
+            // if root folder exists, then do nothing
+            return;
         }
         this.setState({
-            folderTree: { ...folderTree, data: next },
+            folderTree: { ...folderTree, data: [folder] },
         });
-        this.explorerService.updateRender();
+        const { data = [] } = this.explorerService.getState();
+        this.explorerService.editPanel(
+            data.map((item) => {
+                if (item.id === SAMPLE_FOLDER_PANEL_ID) {
+                    item.name = folder.name || 'Default Root Folder';
+                }
+                return item;
+            })
+        );
     }
 
     public removeRootFolder(id: number) {

@@ -10,11 +10,7 @@ import { Button } from 'mo/components/button';
 import { IFolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
-import { TreeNodeModel, IFolderInputEvent } from 'mo/model';
-import { FolderTreeService } from 'mo/services';
-import { container } from 'tsyringe';
-
-const folderTreeService = container.resolve(FolderTreeService);
+import { IFolderInputEvent } from 'mo/model';
 
 const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     props: IFolderTreeSubItem & IFolderTreeController
@@ -133,9 +129,10 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
 
     const renderByData = (
         <Tree
-            data={data}
+            // root folder do not render
+            data={data[0]?.children || []}
             draggable
-            onSelectFile={onSelectFile}
+            onSelectNode={onSelectFile}
             onRightClick={handleRightClick}
             renderTitle={renderTitle}
             {...restProps}
@@ -143,43 +140,12 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     );
 
     const renderInitial = (
-        <span>
+        <div style={{ padding: '10px 5px' }}>
             you have not yet opened a folder
-            <Button
-                onClick={() => {
-                    // test
-                    folderTreeService.addRootFolder?.(
-                        new TreeNodeModel({
-                            name: 'molecule_temp',
-                            fileType: 'rootFolder',
-                            children: [
-                                new TreeNodeModel({
-                                    name: 'test_sql',
-                                    fileType: 'file',
-                                    icon: 'symbol-file',
-                                    content: `show tables;
-SELECT 1;
-DESC 6d_target_test;
-create table if not exists ods_order_header1213 (
-     order_header_id     string comment '订单头id'
-    ,order_date          bigint comment '订单日期'
-    ,shop_id             string comment '店铺id'
-    ,customer_id         string comment '客户id'
-    ,order_status        bigint comment '订单状态'
-    ,pay_date            bigint comment '支付日期'
-)comment '销售订单明细表'
-PARTITIONED BY (ds string) lifecycle 1000;
-`,
-                                }),
-                            ],
-                        })
-                    );
-                }}
-            >
-                Add Folder
-            </Button>
-        </span>
+            <Button>Add Folder</Button>
+        </div>
     );
+
     return data?.length > 0 ? renderByData : renderInitial;
 };
 export default memo(FolderTree);

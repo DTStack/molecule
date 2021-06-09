@@ -3,6 +3,7 @@ import { useState } from 'react';
 import RcCollapse, { Panel as CollapsePanel } from 'rc-collapse';
 import { Toolbar } from 'mo/components/toolbar';
 import { Icon } from 'mo/components/icon';
+import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
     prefixClaName,
     classNames,
@@ -10,88 +11,109 @@ import {
     getBEMModifier,
 } from 'mo/common/className';
 
-export interface IExpandProps {
-    isActive?: boolean;
-}
-export interface ICollapseProps<T = any> {
-    data?: T;
+type RenderFunctionProps = (data: DataBaseProps) => JSX.Element | null;
+
+interface DataBaseProps {
+    id: React.Key;
+    name: string;
     className?: string;
-    onCollapseChange?: (keys) => void;
-    onCollapseToolbar?: (item) => void;
+    hidden?: boolean;
+    toolbar?: IActionBarItemProps[];
+    renderPanel?: RenderFunctionProps;
+
+    [key: string]: any;
 }
 
-interface IState {
-    activePanelKeys: React.Key[];
+export interface ICollapseProps {
+    data?: Partial<DataBaseProps>[];
+    className?: string;
+    onCollapseChange?: (keys: React.Key[]) => void;
+    onToolbarClick?: (
+        item: IActionBarItemProps,
+        parentPanel: DataBaseProps
+    ) => void;
 }
+
 const defaultCollapseClassName = prefixClaName('collapse');
-export const contentPaddingClassName = getBEMModifier(
+const toolbarCollapseClassName = getBEMModifier(
     getBEMElement(defaultCollapseClassName, 'content'),
-    'padding'
+    'toolbar'
 );
 
-const initState = {
-    activePanelKeys: [],
-};
-
 export function Collapse(props: ICollapseProps) {
-    const [state, setState] = useState<IState>(initState);
+    const [activePanelKeys, setActivePanelKeys] = useState<React.Key[]>([]);
+
     const {
         className,
         data = [],
         onCollapseChange,
-        onCollapseToolbar,
+        onToolbarClick,
         ...restProps
     } = props;
-    const onChangeCallback = (key: React.Key[]) => {
+
+    const handleChangeCallback = (key: React.Key[]) => {
         onCollapseChange?.(key);
-        setState((state: IState) => ({ ...state, activePanelKeys: key }));
+        setActivePanelKeys(key || []);
     };
-    const onClick = (e, item) => {
+
+    const handleToolbarClick = (
+        e: React.MouseEvent,
+        item: IActionBarItemProps,
+        panel: DataBaseProps
+    ) => {
         e.stopPropagation();
-        onCollapseToolbar?.(item);
-        console.log('onClick:', e, item);
+        onToolbarClick?.(item, panel);
     };
-    const render = (render) => {
+
+    const renderPanels = (
+        data: DataBaseProps,
+        render?: RenderFunctionProps
+    ) => {
         if (render) {
-            return render();
-        } else {
-            return (
-                <span className={contentPaddingClassName}>
-                    Cannot provide...
-                </span>
-            );
+            return render(data);
         }
+        return null;
     };
-    const { activePanelKeys } = state;
+
+    const filterData = data.filter((panel) => panel.id) as DataBaseProps[];
+    if (filterData.length !== filterData.length) {
+        console.warn(new SyntaxError('collapse data must have id'));
+    }
+
     return (
         <div className={classNames(defaultCollapseClassName, className)}>
             <RcCollapse
-                {...restProps}
-                onChange={(activeKeys: React.Key[]) => {
-                    onChangeCallback(activeKeys);
-                }}
-                expandIcon={({ isActive }: IExpandProps) => (
+                onChange={handleChangeCallback}
+                expandIcon={({ isActive }: { isActive: boolean }) => (
                     <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
                 )}
+                {...restProps}
             >
-                {data.map((panel) => (
-                    <CollapsePanel
-                        key={panel.id}
-                        header={panel.name}
-                        className={panel.className}
-                        extra={
-                            activePanelKeys?.includes(panel.id) && (
-                                <Toolbar
-                                    key={panel.id}
-                                    data={panel.toolbar}
-                                    onClick={onClick}
-                                />
-                            )
-                        }
-                    >
-                        {render(panel.renderPanel)}
-                    </CollapsePanel>
-                ))}
+                {filterData
+                    .filter((p) => !p.hidden)
+                    .map((panel) => (
+                        <CollapsePanel
+                            tabIndex={-1}
+                            key={panel.id}
+                            panelKey={panel.id}
+                            header={panel.name}
+                            className={panel.className}
+                            extra={
+                                activePanelKeys.includes(panel.id) && (
+                                    <Toolbar
+                                        className={toolbarCollapseClassName}
+                                        key={panel.id}
+                                        data={panel.toolbar || []}
+                                        onClick={(e, item) =>
+                                            handleToolbarClick(e, item, panel)
+                                        }
+                                    />
+                                )
+                            }
+                        >
+                            {renderPanels(panel, panel.renderPanel)}
+                        </CollapsePanel>
+                    ))}
             </RcCollapse>
         </div>
     );

@@ -2,6 +2,7 @@
 
 #{$collapse} {
     font-size: 13px;
+    height: 100%;
 
     &__content--padding {
         padding: 10px;
@@ -9,15 +10,28 @@
 
     #{$rcCollapse} {
         background-color: inherit;
+        height: 100%;
 
         &-anim-active {
             transition: height 0.2s ease-out;
         }
 
         &-item {
-            border-top: 0;
+            border-bottom: 1px solid var(--sideBarSectionHeader-border);
+
+            &-active {
+                display: flex;
+                flex-direction: column;
+
+                &:hover {
+                    #{$collapse}__content--toolbar {
+                        opacity: 1;
+                    }
+                }
+            }
 
             &:last-child {
+                border-bottom-color: transparent;
                 #{$rcCollapse}-content {
                     border-radius: 0 0 3px 3px;
                 }
@@ -26,6 +40,7 @@
 
         &-header {
             align-items: center;
+            border: 1px solid transparent;
             cursor: pointer;
             display: flex;
             font-size: 11px;
@@ -33,6 +48,7 @@
             height: 22px;
             outline: none;
             padding: 1px 2px;
+            user-select: none;
 
             &-collapsable-only {
                 cursor: default;
@@ -41,10 +57,22 @@
             &-text {
                 cursor: pointer;
             }
+
+            &:focus {
+                border-color: var(--list-focusOutline);
+
+                #{$collapse}__content--toolbar {
+                    opacity: 1;
+                }
+            }
         }
 
         &-extra {
             margin: 0 0 0 auto;
+
+            #{$collapse}__content--toolbar {
+                opacity: 0;
+            }
 
             #{$actionBar}__label.codicon {
                 height: inherit;
@@ -57,18 +85,10 @@
 
             &-box {
                 font-size: 12px;
-                margin-bottom: 8px;
             }
 
             &-inactive {
-                display: none;
-            }
-        }
-
-        // test
-        .samplefolder {
-            #{$rcCollapse}-content {
-                height: 600px;
+                height: 0;
             }
         }
     }

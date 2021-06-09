@@ -16,7 +16,7 @@ export const Explorer: React.FunctionComponent<IExplorer> = (
         onClick,
         onActionsContextMenuClick,
         onCollapseChange,
-        onCollapseToolbar,
+        onToolbarClick,
     } = props;
     return (
         <div className={defaultExplorerClassName}>
@@ -34,7 +34,7 @@ export const Explorer: React.FunctionComponent<IExplorer> = (
                 <Collapse
                     data={data}
                     onCollapseChange={onCollapseChange}
-                    onCollapseToolbar={onCollapseToolbar}
+                    onToolbarClick={onToolbarClick}
                 />
             </Content>
         </div>

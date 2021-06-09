@@ -54,6 +54,7 @@ export class FolderTreeController
     extends Controller
     implements IFolderTreeController {
     private readonly folderTreeService: IFolderTreeService;
+
     constructor() {
         super();
         this.folderTreeService = container.resolve(FolderTreeService);

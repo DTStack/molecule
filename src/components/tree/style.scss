@@ -6,10 +6,10 @@ $switch: #{$rcTree}-switcher;
     font-size: 13px;
 
     #{$rcTree} {
-        border: 1px solid transparent;
         margin: 0;
 
         &-treenode {
+            border: 1px solid transparent;
             cursor: pointer;
             height: 22px;
             line-height: 22px;
@@ -62,6 +62,11 @@ $switch: #{$rcTree}-switcher;
                     color: #767676;
                     cursor: not-allowed;
                 }
+            }
+
+            &-selected {
+                background: var(--list-activeSelectionBackground);
+                border-color: var(--list-focusOutline);
             }
         }
 

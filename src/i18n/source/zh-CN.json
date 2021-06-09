@@ -25,6 +25,7 @@
         "menu.showStatusBar": "显示状态栏",
         "menu.showActivityBar": "显示活动栏",
         "menu.hideActivityBar": "隐藏活动栏",
+        "menu.defaultProjectName": "无打开文件夹",
         "menu.run": "运行",
         "menu.runTask": "运行任务",
         "menu.help": "帮助",

@@ -3,8 +3,6 @@ import RcTree, { TreeNode as RcTreeNode, TreeProps } from 'rc-tree';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
 import { DataNode } from 'rc-tree/lib/interface';
-
-type Key = number | string;
 export interface ITreeNodeItemProps {
     disabled?: boolean;
     icon?: React.ReactNode;
@@ -19,7 +17,7 @@ export interface ITreeNodeItemProps {
 
 export interface ITreeProps extends Partial<TreeProps> {
     data?: ITreeNodeItemProps[];
-    onSelectFile?: (file: ITreeNodeItemProps, isUpdate?) => void;
+    onSelectNode?: (file: ITreeNodeItemProps, isUpdate?) => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
         index: number,
@@ -35,10 +33,10 @@ const TreeView = ({
     onDropTree,
     onRightClick,
     renderTitle, // custom title
-    onSelectFile,
+    onSelectNode,
     ...restProps
 }: ITreeProps) => {
-    const [selectedKeys, setKeys] = React.useState<Key[]>([]);
+    const [selectedKeys, setKeys] = React.useState<React.Key[]>([]);
     const treeRef = React.useRef<RcTree>(null);
 
     const onDrop = (info) => {
@@ -111,7 +109,7 @@ const TreeView = ({
                 icon,
                 children,
             } = item;
-            const isLeaf = !item.children?.length;
+            const isLeaf = item.fileType === 'file';
             const IconComponent =
                 typeof icon === 'string' ? <Icon type={icon} /> : icon;
             return (
@@ -140,10 +138,7 @@ const TreeView = ({
         // always select current click node
         const currentNodeKey = [node.key];
         setKeys(currentNodeKey);
-        if (node.isLeaf) {
-            // only leaf node can trigger onselect event
-            onSelectFile?.(node.data);
-        } else {
+        if (!node.isLeaf) {
             const expanded = treeRef.current?.state.expandedKeys || [];
             if (expanded.includes(node.key)) {
                 // difference set, remove current node key from expanded collection
@@ -159,6 +154,7 @@ const TreeView = ({
                 );
             }
         }
+        onSelectNode?.(node.data);
     };
 
     return (

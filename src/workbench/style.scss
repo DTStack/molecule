@@ -3,20 +3,24 @@
 #{$workbench} {
     bottom: 0;
     left: 0;
-    padding-bottom: 22px;
     position: absolute;
     right: 0;
     top: 0;
     z-index: 1;
 }
 
+#{$compositeBar} {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    width: auto;
+}
+
 #{$mainBench} {
-    bottom: 22px;
-    height: auto;
-    left: 48px;
-    position: absolute;
-    right: 0;
-    top: 0;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    left: 0;
     width: auto;
 
     /* stylelint-disable */

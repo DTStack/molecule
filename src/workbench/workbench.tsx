@@ -38,6 +38,7 @@ import { IWorkbench } from 'mo/model';
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
+const compositeBarClassName = prefixClaName('compositeBar');
 const appClassName = classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '');
 
 const panelService = container.resolve<IPanelService>(PanelService);
@@ -65,9 +66,11 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
             <div className={workbenchClassName}>
-                {!menuBar.hidden && <MenuBarView />}
-                {!activityBar.hidden && <ActivityBarView />}
                 <div className={mainBenchClassName}>
+                    <div className={compositeBarClassName}>
+                        {!menuBar.hidden && <MenuBarView />}
+                        {!activityBar.hidden && <ActivityBarView />}
+                    </div>
                     <SplitPane
                         split="vertical"
                         primary="first"
@@ -96,7 +99,7 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
                                             ? '100%'
                                             : horizontalSplitPanePos[0]
                                     }
-                                    maxSize="99%"
+                                    maxSize="100%"
                                     minSize="10%"
                                 >
                                     <EditorView />

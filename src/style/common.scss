@@ -30,7 +30,7 @@ $breadcrumb: prefix('breadcrumb');
 $search: prefix('search');
 
 // ============= The Workbench core component =============
-$activityBar: prefix('activityBar');
+$compositeBar: prefix('compositeBar');
 $editor: prefix('editor');
 $menuBar: prefix('menuBar');
 $panel: prefix('panel');
@@ -39,6 +39,7 @@ $sidebar: prefix('sidebar');
 $statusBar: prefix('statusBar');
 $workbench: prefix('workbench');
 $mainBench: prefix('mainBench');
+$activityBar: prefix('activityBar');
 $notification: prefix('notification');
 $problems: prefix('problems');
 

@@ -22,10 +22,10 @@ import {
 export interface IMenuBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick: (event: React.MouseEvent<any, any>, item: IMenuBarItem) => void;
-    updateStatusBar: () => void;
-    updateMenuBar: () => void;
-    updateActivityBar: () => void;
-    updateSideBar: () => void;
+    updateStatusBar?: () => void;
+    updateMenuBar?: () => void;
+    updateActivityBar?: () => void;
+    updateSideBar?: () => void;
 }
 
 @singleton()

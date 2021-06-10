@@ -101,7 +101,7 @@ export class ExplorerController
                 this.sidebarService.setState({
                     current: explorePane.id,
                 });
-                this.menuBarController.updateSideBar();
+                this.menuBarController.updateSideBar!();
                 this.menuBarService.update(MENU_VIEW_SIDEBAR, {
                     icon: 'check',
                 });

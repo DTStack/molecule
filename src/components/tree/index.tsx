@@ -110,8 +110,12 @@ const TreeView = ({
                 key = id || `${index}_${indent}`,
                 icon,
                 children,
+                isLeaf: itemIsLeaf,
             } = item;
-            const isLeaf = item.fileType === FileTypes.File;
+            const isLeaf =
+                typeof itemIsLeaf === 'boolean'
+                    ? itemIsLeaf
+                    : item.fileType === FileTypes.File;
             const IconComponent =
                 typeof icon === 'string' ? <Icon type={icon} /> : icon;
             return (

@@ -91,29 +91,39 @@ export function Collapse(props: ICollapseProps) {
             >
                 {filterData
                     .filter((p) => !p.hidden)
-                    .map((panel) => (
-                        <CollapsePanel
-                            tabIndex={-1}
-                            key={panel.id}
-                            panelKey={panel.id}
-                            header={panel.name}
-                            className={panel.className}
-                            extra={
-                                activePanelKeys.includes(panel.id) && (
-                                    <Toolbar
-                                        className={toolbarCollapseClassName}
-                                        key={panel.id}
-                                        data={panel.toolbar || []}
-                                        onClick={(e, item) =>
-                                            handleToolbarClick(e, item, panel)
-                                        }
-                                    />
-                                )
-                            }
-                        >
-                            {renderPanels(panel, panel.renderPanel)}
-                        </CollapsePanel>
-                    ))}
+                    .map((panel) => {
+                        const content = renderPanels(panel, panel.renderPanel);
+                        return (
+                            <CollapsePanel
+                                tabIndex={-1}
+                                key={panel.id}
+                                panelKey={panel.id}
+                                header={panel.name}
+                                className={classNames(
+                                    panel.className,
+                                    content === null && 'empty'
+                                )}
+                                extra={
+                                    activePanelKeys.includes(panel.id) && (
+                                        <Toolbar
+                                            className={toolbarCollapseClassName}
+                                            key={panel.id}
+                                            data={panel.toolbar || []}
+                                            onClick={(e, item) =>
+                                                handleToolbarClick(
+                                                    e,
+                                                    item,
+                                                    panel
+                                                )
+                                            }
+                                        />
+                                    )
+                                }
+                            >
+                                {content}
+                            </CollapsePanel>
+                        );
+                    })}
             </RcCollapse>
         </div>
     );

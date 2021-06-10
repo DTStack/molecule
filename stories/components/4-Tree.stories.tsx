@@ -6,8 +6,8 @@ import { FileType, FileTypes } from 'mo/model';
 const stories = storiesOf('Tree', module);
 stories.addDecorator(withKnobs);
 
-const folder = FileTypes.folder as FileType;
-const file = FileTypes.file as FileType;
+const folder = FileTypes.Folder as FileType;
+const file = FileTypes.File as FileType;
 
 stories.add('Basic Usage', () => {
     const treeData = [

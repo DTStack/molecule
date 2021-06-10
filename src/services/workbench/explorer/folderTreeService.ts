@@ -26,8 +26,23 @@ export interface IFolderTreeService extends Component<IFolderTree> {
         callback: (file: ITreeNodeItemProps, isUpdate: boolean) => void
     );
     getRootFolderByRootId(id: number): ITreeNodeItemProps | undefined;
-    getRootFolderIndexByRootId(id: number): ITreeNodeItemProps | undefined;
-    getCurrentRootFolderInfo?: any;
+    /**
+     * Returns the index of the root folder with equals id
+     */
+    getRootFolderIndexByRootId(id: number): number;
+    /**
+     * Returns an object within
+     * - the node of current root folder
+     * - the index of current root folder
+     * - the instance of current root folder
+     */
+    getCurrentRootFolderInfo(
+        id: number
+    ): {
+        currentRootFolder: ITreeNodeItemProps;
+        index: number;
+        tree: ITreeInstance<TreeNodeModel>;
+    };
     /**
      * add a root folder for project
      * **Attention**, each project only has one root folder
@@ -38,9 +53,9 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     onDropTree(treeData: ITreeNodeItemProps[]): void;
     getFileIconByExtensionName(name: string, fileType: FileType): void;
     /**
-     * add a file or folder into file systems
+     * insert `data` into foder tree in where the `id` is
      */
-    addNode(data: ITreeNodeItemProps): void;
+    addNode(id: number, data: TreeNodeModel): void;
 }
 
 @singleton()
@@ -56,67 +71,25 @@ export class FolderTreeService
         this.explorerService = container.resolve(ExplorerService);
     }
 
-    private getParentNode(data: TreeNodeModel[], current: TreeNodeModel) {
-        const stack: TreeNodeModel[] = [];
-        if (data.find((item) => item === current)) {
-            // keep same as others
-            return { children: data };
-        } else {
-            stack.push(...data.filter((i) => i.fileType !== 'file'));
-        }
-        let res: TreeNodeModel | null = null;
-        while (stack.length) {
-            const folder = stack.shift()!;
-            const target = folder.children?.find((item) => item === current);
-            if (target) {
-                res = folder;
-                break;
+    public addNode(id: number, data: TreeNodeModel): void {
+        const cloneData = this.state.folderTree?.data || [];
+        const { tree, index } = this.getCurrentRootFolderInfo(id);
+        // this index is root folder index
+        if (index > -1) {
+            // TODO: this is not an index, it's an obj
+            // TODO: this function has incorrect return type
+            const currentIndex: any = tree.getIndex(id);
+            if (currentIndex?.node?.fileType === FileTypes.File) {
+                tree.prepend(data, currentIndex.parent);
             } else {
-                stack.push(
-                    ...(folder.children?.filter((f) => f.fileType !== 'file') ||
-                        [])
-                );
+                tree.append(data, id);
             }
-        }
-        return res;
-    }
-
-    public addNode(data: ITreeNodeItemProps): void {
-        const { data: folderData = [], current } = this.state.folderTree || {};
-        if (!folderData.length) {
-            console.warn(
-                'Please create a root folder before creating a file or folder'
-            );
-            return;
-        }
-        if (current) {
-            console.log('current', current);
-            if (current.fileType === 'file') {
-                // add new data as a sibling of current file
-                const currentParent = this.getParentNode(folderData, current);
-                // currentParent is a reference type
-                currentParent?.children?.push(data);
-            } else {
-                // add data as a child of current folder
-                // current is a reference type
-                current.children?.push(data);
-            }
-            console.log('folderData;', folderData);
+            cloneData[index] = tree.obj;
             this.setState({
-                folderTree: {
-                    ...this.state.folderTree,
-                    data: folderData,
-                },
+                folderTree: { ...this.state.folderTree, data: cloneData },
             });
         } else {
-            const folders = folderData[0].children;
-            folders?.push(data);
-            this.setState({
-                folderTree: {
-                    ...this.state.folderTree,
-                    data: folderData,
-                },
-            });
+            console.warn('Please check id again, there is not folder tree');
         }
     }
 
@@ -124,7 +97,7 @@ export class FolderTreeService
         name: string,
         fileType: FileType
     ): string {
-        if (fileType === FileTypes.folder) return '';
+        if (fileType === FileTypes.Folder) return '';
         const fileExtension = name && name.split('.')?.[1];
         let icon = 'symbol-file';
         switch (fileExtension) {
@@ -153,36 +126,36 @@ export class FolderTreeService
     public getCurrentRootFolderInfo(
         id: number
     ): {
-        index: number;
         currentRootFolder: ITreeNodeItemProps;
-        tree: ITreeInstance;
+        index: number;
+        tree: ITreeInstance<TreeNodeModel>;
     } {
-        const currentRootFolder: ITreeNodeItemProps = this.getRootFolderById(
-            id
-        );
-        const index = this.getRootFolderIndexByRootId(
-            (currentRootFolder as any).id
-        ) as number;
-        const tree = new TreeViewUtil(currentRootFolder);
+        const currentRootFolder = this.getRootFolderById(id);
+        const index = this.getRootFolderIndexByRootId(currentRootFolder.id!);
+        const tree = new TreeViewUtil<TreeNodeModel>(currentRootFolder);
         return {
-            index,
             currentRootFolder,
+            index,
             tree,
         };
     }
 
-    public getRootFolderIndexByRootId(id: number): any {
-        return this.state.folderTree?.data!.findIndex(
+    public getRootFolderIndexByRootId(id: number) {
+        const index = this.state.folderTree?.data!.findIndex(
             (folder) => folder.id === id
         );
+        return typeof index === 'number' ? index : -1;
     }
 
     public getRootFolderByRootId(id: number): ITreeNodeItemProps | undefined {
         return this.state.folderTree?.data!.find((folder) => folder.id === id);
     }
 
-    private getRootFolderById(id: number): ITreeNodeItemProps {
-        let rootNode = {};
+    /**
+     * Returns the node of root folder in folderTree
+     */
+    private getRootFolderById(id: number) {
+        let rootNode: TreeNodeModel = {};
         this.state.folderTree?.data?.forEach((folder) => {
             const treeInstance = new TreeViewUtil(folder);
             if (treeInstance.get(id)) rootNode = folder;
@@ -221,7 +194,7 @@ export class FolderTreeService
     public removeRootFolder(id: number) {
         const { folderTree } = this.state;
         const next = [...folderTree?.data!];
-        const index = this.getRootFolderIndexByRootId(id) as number;
+        const index = this.getRootFolderIndexByRootId(id);
         if (index > -1) {
             next.splice(index, 1);
         }

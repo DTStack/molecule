@@ -156,7 +156,7 @@ export class SearchService
 
         const buildSearchTreeData = (tree?: TreeNodeModel[]) => {
             tree?.forEach((treeItem) => {
-                if (treeItem.fileType === FileTypes.file) {
+                if (treeItem.fileType === FileTypes.File) {
                     const children = treeItem.content
                         ?.split('\n')
                         .filter(

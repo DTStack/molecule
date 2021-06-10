@@ -3,6 +3,8 @@ import RcTree, { TreeNode as RcTreeNode, TreeProps } from 'rc-tree';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
 import { DataNode } from 'rc-tree/lib/interface';
+import { FileTypes } from 'mo/model';
+
 export interface ITreeNodeItemProps {
     disabled?: boolean;
     icon?: React.ReactNode;
@@ -109,7 +111,7 @@ const TreeView = ({
                 icon,
                 children,
             } = item;
-            const isLeaf = item.fileType === 'file';
+            const isLeaf = item.fileType === FileTypes.File;
             const IconComponent =
                 typeof icon === 'string' ? <Icon type={icon} /> : icon;
             return (

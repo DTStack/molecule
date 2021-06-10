@@ -76,7 +76,7 @@ export function Collapse(props: ICollapseProps) {
     };
 
     const filterData = data.filter((panel) => panel.id) as DataBaseProps[];
-    if (filterData.length !== filterData.length) {
+    if (filterData.length < data.length) {
         console.warn(new SyntaxError('collapse data must have id'));
     }
 

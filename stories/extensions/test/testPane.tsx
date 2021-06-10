@@ -4,7 +4,7 @@ import molecule from 'mo';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
-import { IEditorTab, TreeNodeModel } from 'mo/model';
+import { FileTypes, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
 import { localize } from 'mo/i18n/localize';
 
@@ -214,11 +214,11 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             molecule.folderTree.addRootFolder?.(
                 new TreeNodeModel({
                     name: 'molecule_temp',
-                    fileType: 'rootFolder',
+                    fileType: FileTypes.RootFolder,
                     children: [
                         new TreeNodeModel({
                             name: 'test_sql.txt',
-                            fileType: 'file',
+                            fileType: FileTypes.File,
                             content: `show tables;
 SELECT 1;
 DESC 6d_target_test;

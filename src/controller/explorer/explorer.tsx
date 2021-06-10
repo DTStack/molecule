@@ -19,7 +19,8 @@ import {
     NEW_FOLDER_COMMAND_ID,
     EXPLORER_ACTIVITY_ITEM,
     REMOVE_COMMAND_ID,
-    TreeNodeModel,
+    FileTypes,
+    FolderTreeEvent,
 } from 'mo/model';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
@@ -128,13 +129,13 @@ export class ExplorerController
         });
     }
 
-    private createFileOrFolder = (type: 'file' | 'folder') => {
-        const data = new TreeNodeModel({
-            name: 'testtesttest',
-            fileType: type,
-            children: type === 'file' ? undefined : [],
-        });
-        this.folderTreeService.addNode(data);
+    private createFileOrFolder = (type: keyof typeof FileTypes) => {
+        const folderTreeState = this.folderTreeService.getState();
+        const { data, current } = folderTreeState?.folderTree || {};
+        // The current selected node id or the first root node
+        const nodeId = current?.id || data?.[0]?.id;
+        // emit onNewFile or onNewFolder event
+        this.emit(FolderTreeEvent[`onNew${type}`], nodeId);
     };
 
     public readonly onClick = (
@@ -165,11 +166,11 @@ export class ExplorerController
         const toolbarId = item.id;
         switch (toolbarId) {
             case NEW_FILE_COMMAND_ID: {
-                this.createFileOrFolder('file');
+                this.createFileOrFolder(FileTypes.File);
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                this.createFileOrFolder('folder');
+                this.createFileOrFolder(FileTypes.Folder);
                 break;
             }
             case REMOVE_COMMAND_ID: {

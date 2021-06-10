@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import * as monaco from 'mo/monaco';
 import molecule from 'mo';
 
 import { Button } from 'mo/components/button';
@@ -63,7 +62,7 @@ export default class TestPane extends React.Component {
         };
 
         const showHidePanel = function () {
-            molecule.panel.showHide();
+            molecule.layout.setPanelHidden();
         };
 
         const updateOutput = () => {

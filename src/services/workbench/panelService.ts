@@ -9,6 +9,7 @@ import {
     PANEL_OUTPUT,
     PANEL_TOOLBOX_RESIZE,
 } from 'mo/model/workbench/panel';
+import { LayoutService } from 'mo/services';
 
 import { searchById } from '../helper';
 import { IActionBarItemProps } from 'mo/components/actionBar';
@@ -21,7 +22,6 @@ export interface IPanelService extends Component<IPanel> {
     appendOutput(content: string): void;
     updateOutput(data: IPanelItem): IPanelItem | undefined;
     clearOutput(): void;
-    showHide(): void;
     maximizeRestore(): void;
     onTabChange(callback: (key: string) => void): void;
     onToolbarClick(
@@ -32,27 +32,23 @@ export interface IPanelService extends Component<IPanel> {
 @singleton()
 export class PanelService extends Component<IPanel> implements IPanelService {
     protected state: IPanel;
+    private readonly layoutService: LayoutService;
 
     constructor() {
         super();
         this.state = container.resolve(PanelModel);
-    }
-
-    public showHide(): void {
-        this.setState({
-            hidden: !this.state.hidden,
-        });
+        this.layoutService = container.resolve(LayoutService);
     }
 
     public maximizeRestore(): void {
-        const maximize = !this.state.maximize;
+        const panelMaximized = this.layoutService.isPanelMaximized();
         const { toolbox = [] } = this.state;
         const resizeBtnIndex = toolbox?.findIndex(
             searchById(PANEL_TOOLBOX_RESIZE.id)
         );
         const resizeBtn = toolbox[resizeBtnIndex];
         if (resizeBtn) {
-            if (maximize) {
+            if (panelMaximized) {
                 toolbox[resizeBtnIndex] = Object.assign({}, resizeBtn, {
                     title: 'Restore Panel Size',
                     iconName: 'codicon-chevron-down',
@@ -60,9 +56,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
             } else {
                 toolbox[resizeBtnIndex] = PANEL_TOOLBOX_RESIZE;
             }
-            this.setState({
-                maximize: !this.state.maximize,
-            });
+            this.layoutService.togglePanelMaximized();
         }
     }
 

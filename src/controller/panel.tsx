@@ -8,7 +8,12 @@ import {
     PANEL_TOOLBOX_CLOSE,
     PANEL_TOOLBOX_RESIZE,
 } from 'mo/model/workbench/panel';
-import { IPanelService, PanelService } from 'mo/services';
+import {
+    IPanelService,
+    PanelService,
+    ILayoutService,
+    LayoutService,
+} from 'mo/services';
 
 export interface IPanelController {
     onTabChange(key: string | undefined): void;
@@ -18,10 +23,12 @@ export interface IPanelController {
 @singleton()
 export class PanelController extends Controller implements IPanelController {
     private readonly panelService: IPanelService;
+    private readonly layoutService: ILayoutService;
 
     constructor() {
         super();
         this.panelService = container.resolve(PanelService);
+        this.layoutService = container.resolve(LayoutService);
     }
 
     public readonly onTabChange = (key: string | undefined): void => {
@@ -39,7 +46,7 @@ export class PanelController extends Controller implements IPanelController {
         item: IActionBarItemProps
     ): void => {
         if (item.id === PANEL_TOOLBOX_CLOSE.id) {
-            this.panelService.showHide();
+            this.layoutService.setPanelHidden();
         } else if (item.id === PANEL_TOOLBOX_RESIZE.id) {
             this.panelService.maximizeRestore();
         }

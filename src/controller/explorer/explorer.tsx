@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
+import { menuBarController } from 'mo/controller';
 import { Explorer, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IMenuItemProps } from 'mo/components/menu';
 import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
@@ -88,13 +89,11 @@ export class ExplorerController
         };
 
         this.activityBarService.onSelect((e, item: IActivityBarItem) => {
-            const { hidden } = this.sidebarService.getState();
             if (item.id === EXPLORER_ACTIVITY_ITEM.id) {
-                const isShow = hidden ? !hidden : hidden;
                 this.sidebarService.setState({
                     current: explorePane.id,
-                    hidden: isShow,
                 });
+                menuBarController.updateSideBar();
                 this.menuBarService.update(MENU_VIEW_SIDEBAR, {
                     icon: 'check',
                 });

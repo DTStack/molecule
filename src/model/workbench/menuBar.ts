@@ -18,7 +18,6 @@ export interface IMenuBarItem {
 }
 export interface IMenuBar {
     data?: IMenuBarItem[];
-    hidden?: boolean;
 }
 
 export const MENU_FILE_UNDO = 'undo';
@@ -145,10 +144,8 @@ export const undoRedoMenu = [
 ];
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];
-    public hidden = false;
 
     constructor(data: IMenuBarItem[] = builtInMenuData, hidden = false) {
         this.data = data;
-        this.hidden = hidden;
     }
 }

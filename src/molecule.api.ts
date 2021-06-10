@@ -31,6 +31,8 @@ import {
     MenuBarService,
     IStatusBarService,
     StatusBarService,
+    ILayoutService,
+    LayoutService,
     EditorService,
     IEditorService,
     IPanelService,
@@ -47,6 +49,10 @@ import {
     ProblemsService,
 } from 'mo/services';
 
+/**
+ * layout service
+ */
+export const layout = container.resolve<ILayoutService>(LayoutService);
 /**
  * The Services of Workbench
  */

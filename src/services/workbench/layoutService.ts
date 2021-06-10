@@ -1,17 +1,17 @@
-import { horizontalSplitPanePos } from './../../model/layout';
-import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import { Component } from 'mo/react';
 import { ILayout, LayoutModel } from 'mo/model/workbench/layout';
 
 export interface ILayoutService extends Component<ILayout> {
-    setEditorHidden(hidden: boolean): void;
-    setSideBarHidden(hidden: boolean): void;
-    setPanelHidden(hidden: boolean): void;
-    setActivityBarHidden(hidden: boolean): void;
-    setStatusBarHidden(hidden: boolean): void;
-    setPaneSize(splitPanePos: number | string): void;
-    setHorizontalPaneSize(horizontalSplitPanePos: number | string): void;
+    setMenuBarHidden(): void;
+    setSideBarHidden(): void;
+    setPanelHidden(): void;
+    setActivityBarHidden(): void;
+    setStatusBarHidden(): void;
+    setPaneSize(splitPanePos: string[]): void;
+    setHorizontalPaneSize(horizontalSplitPanePos: string[]): void;
+    togglePanelMaximized(): void;
+    isPanelMaximized(): boolean | undefined;
 }
 
 @singleton()
@@ -21,18 +21,42 @@ export class LayoutService extends Component<any> implements ILayoutService {
         super();
         this.state = container.resolve(LayoutModel);
     }
-    public setEditorHidden(): void {}
-    public setPanelHidden(): void {}
-    public setSideBarHidden(): void {}
-    public setActivityBarHidden(): void {}
-    public setStatusBarHidden(): void {}
-    public setPaneSize(splitPanePos: number | string): void {
+    public setMenuBarHidden(): void {
+        const wasHidden = this.state.menuBar.hidden;
+        this.setState({ menuBar: { hidden: !wasHidden } });
+    }
+    public setPanelHidden(): void {
+        const wasHidden = this.state.panel.hidden;
+        this.setState({ panel: { hidden: !wasHidden } });
+    }
+    public setSideBarHidden(): void {
+        const wasHidden = this.state.sideBar.hidden;
+        this.setState({ sideBar: { hidden: !wasHidden } });
+    }
+    public setActivityBarHidden(): void {
+        const wasHidden = this.state.activityBar.hidden;
+        this.setState({ activityBar: { hidden: !wasHidden } });
+    }
+    public setStatusBarHidden(): void {
+        const wasHidden = this.state.statusBar.hidden;
+        this.setState({ statusBar: { hidden: !wasHidden } });
+    }
+    public togglePanelMaximized(): void {
+        const panelViewState = this.state.panel;
+        this.setState({
+            panel: {
+                ...panelViewState,
+                panelMaximized: !panelViewState.panelMaximized,
+            },
+        });
+    }
+    public isPanelMaximized(): boolean {
+        return this.state.panel?.panelMaximized!;
+    }
+    public setPaneSize(splitPanePos: string[]): void {
         this.setState({ splitPanePos });
     }
-    public setHorizontalPaneSize(
-        horizontalSplitPanePos: number | string
-    ): void {
-        console.log(horizontalSplitPanePos);
+    public setHorizontalPaneSize(horizontalSplitPanePos: string[]): void {
         this.setState({ horizontalSplitPanePos });
     }
 }

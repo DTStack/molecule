@@ -38,22 +38,16 @@ export interface IPanel {
     current?: IPanelItem;
     data?: IPanelItem[];
     toolbox?: IActionBarItemProps[];
-    hidden?: boolean;
-    maximize?: boolean;
 }
 
 export class PanelModel implements IPanel {
     public current: IPanelItem | undefined;
     public data: IPanelItem[];
-    public hidden = false;
-    public maximize = false;
     public toolbox: IActionBarItemProps[];
-
+    x;
     constructor(
         current: IPanelItem = PANEL_OUTPUT,
         data: IPanelItem[] = ([] = [PANEL_OUTPUT]),
-        hidden = false,
-        maximize = false,
         toolbox: IActionBarItemProps[] = [
             PANEL_TOOLBOX_RESIZE,
             PANEL_TOOLBOX_CLOSE,
@@ -61,8 +55,6 @@ export class PanelModel implements IPanel {
     ) {
         this.current = current;
         this.data = data;
-        this.hidden = hidden;
-        this.maximize = maximize;
         this.toolbox = toolbox;
     }
 }

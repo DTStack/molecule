@@ -5,6 +5,8 @@ import { Controller } from 'mo/react/controller';
 import {
     IPanelService,
     PanelService,
+    ILayoutService,
+    LayoutService,
     IStatusBarService,
     StatusBarService,
 } from 'mo/services';
@@ -19,22 +21,27 @@ export class ProblemsController
     implements IProblemsController {
     private readonly panelService: IPanelService;
     private readonly statusBarService: IStatusBarService;
+    private readonly layoutService: ILayoutService;
     constructor() {
         super();
         this.panelService = container.resolve(PanelService);
         this.statusBarService = container.resolve(StatusBarService);
+        this.layoutService = container.resolve(LayoutService);
         this.init();
     }
     private showHideProblems() {
-        const { current, hidden } = this.panelService.getState();
+        const { current } = this.panelService.getState();
+        const {
+            panel: { hidden },
+        } = this.layoutService.getState();
         if (hidden) {
-            this.panelService.showHide();
+            this.layoutService.setPanelHidden();
             this.panelService.open(PANEL_PROBLEMS);
         } else {
             if (current?.id !== PANEL_PROBLEMS.id) {
                 this.panelService.open(PANEL_PROBLEMS);
             } else {
-                this.panelService.showHide();
+                this.layoutService.setPanelHidden();
             }
         }
     }

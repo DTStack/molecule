@@ -233,9 +233,9 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                 <div>
                     <molecule.component.Button>AAA</molecule.component.Button>
                 </div>
-                <div style={{ margin: '50px 20px' }}>
+                {/* <div style={{ margin: '50px 20px' }}>
                     <molecule.MenuBar onClick={() => {}} />
-                </div>
+                </div> */}
             </div>
         );
     }

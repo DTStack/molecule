@@ -9,7 +9,6 @@ import { Component } from 'mo/react';
 import { container, singleton } from 'tsyringe';
 
 export interface IStatusBarService extends Component<IStatusBar> {
-    showHide(): void;
     appendLeftItem(item: IStatusBarItem): void;
     appendRightItem(item: IStatusBarItem): void;
     updateItem(item: IStatusBarItem): void;
@@ -49,13 +48,6 @@ export class StatusBarService
 
     onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void) {
         this.subscribe(StatusBarEvent.onClick, callback);
-    }
-
-    public showHide(): void {
-        this.setState({
-            ...this.state,
-            hidden: !this.state.hidden,
-        });
     }
 
     private remove(id: string, arr: IStatusBarItem[]): IStatusBarItem {

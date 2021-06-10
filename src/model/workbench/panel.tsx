@@ -25,8 +25,6 @@ export interface IPanel {
     current?: IPanelItem;
     data?: IPanelItem[];
     toolbox?: IActionBarItemProps[];
-    hidden?: boolean;
-    maximize?: boolean;
 }
 
 export function builtInOutputPanel() {
@@ -67,14 +65,10 @@ export class PanelModel implements IPanel {
     constructor(
         current: IPanelItem | undefined = undefined,
         data: IPanelItem[] = [],
-        hidden = false,
-        maximize = false,
         toolbox: IActionBarItemProps[] = []
     ) {
         this.current = current;
         this.data = data;
-        this.hidden = hidden;
-        this.maximize = maximize;
         this.toolbox = toolbox;
     }
 }

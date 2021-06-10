@@ -41,11 +41,12 @@ export const ExtendTestPane: IExtension = {
             molecule.settings.update(value);
             const config = await molecule.settings.getConfiguration();
             const workbench: any = config.workbench;
+            const layoutViewState = molecule.layout.getState();
             if (workbench?.activityBar) {
-                const hidden = workbench?.activityBar.hidden;
-                molecule.activityBar.setState({
-                    ...molecule.activityBar.getState(),
-                    hidden,
+                const hidden = workbench?.activityBar.hidden!;
+                molecule.layout.setState({
+                    ...layoutViewState,
+                    sideBar: { ...layoutViewState.sideBar, hidden },
                 });
                 molecule.menuBar.update(MENU_VIEW_ACTIVITYBAR, {
                     icon: hidden ? '' : 'check',
@@ -53,30 +54,33 @@ export const ExtendTestPane: IExtension = {
             }
             if (workbench?.menuBar) {
                 const hidden = workbench?.menuBar.hidden;
-                molecule.menuBar.setState({
-                    ...molecule.menuBar.getState(),
-                    hidden,
+                molecule.layout.setState({
+                    ...layoutViewState,
+                    menuBar: { ...layoutViewState.menuBar, hidden },
                 });
+
                 molecule.menuBar.update(MENU_VIEW_MENUBAR, {
                     icon: hidden ? '' : 'check',
                 });
             }
             if (workbench?.sidebar) {
                 const hidden = workbench?.sidebar.hidden;
-                molecule.sidebar.setState({
-                    ...molecule.sidebar.getState(),
-                    hidden,
+                molecule.layout.setState({
+                    ...layoutViewState,
+                    sideBar: { ...layoutViewState.sideBar, hidden },
                 });
+
                 molecule.menuBar.update(MENU_VIEW_SIDEBAR, {
                     icon: hidden ? '' : 'check',
                 });
             }
             if (workbench?.statusBar) {
                 const hidden = workbench?.statusBar.hidden;
-                molecule.statusBar.setState({
-                    ...molecule.statusBar.getState(),
-                    hidden,
+                molecule.layout.setState({
+                    ...layoutViewState,
+                    statusBar: { ...layoutViewState.statusBar, hidden },
                 });
+
                 molecule.menuBar.update(MENU_VIEW_STATUSBAR, {
                     icon: hidden ? '' : 'check',
                 });

@@ -16,6 +16,8 @@ import {
 import { searchById } from '../helper';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { localize } from 'mo/i18n/localize';
+import { LayoutService } from 'mo/services';
+
 export interface IPanelService extends Component<IPanel> {
     open(data: IPanelItem): void;
     getById(id: string): IPanelItem | undefined;
@@ -36,27 +38,26 @@ export interface IPanelService extends Component<IPanel> {
 @singleton()
 export class PanelService extends Component<IPanel> implements IPanelService {
     protected state: IPanel;
+    private readonly layoutService: LayoutService;
 
     constructor() {
         super();
         this.state = container.resolve(PanelModel);
+        this.layoutService = container.resolve(LayoutService);
     }
-
-    public showHide(): void {
-        this.setState({
-            hidden: !this.state.hidden,
-        });
+    showHide(): void {
+        throw new Error('Method not implemented.');
     }
 
     public maximizeRestore(): void {
-        const maximize = !this.state.maximize;
+        const panelMaximized = this.layoutService.isPanelMaximized();
         const { toolbox = [] } = this.state;
         const resizeBtnIndex = toolbox?.findIndex(
             searchById(PANEL_TOOLBOX_RESIZE)
         );
         const resizeBtn = toolbox[resizeBtnIndex];
         if (resizeBtn) {
-            if (maximize) {
+            if (panelMaximized) {
                 toolbox[resizeBtnIndex] = Object.assign({}, resizeBtn, {
                     title: localize(
                         PANEL_TOOLBOX_RESTORE_SIZE,
@@ -67,9 +68,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
             } else {
                 toolbox[resizeBtnIndex] = builtInPanelToolboxResize();
             }
-            this.setState({
-                maximize: !this.state.maximize,
-            });
+            this.layoutService.togglePanelMaximized();
         }
     }
 

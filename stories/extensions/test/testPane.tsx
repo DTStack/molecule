@@ -88,7 +88,7 @@ export default class TestPane extends React.Component {
         };
 
         const showHidePanel = function () {
-            molecule.panel.showHide();
+            molecule.layout.setPanelHidden();
         };
 
         const updateOutput = () => {

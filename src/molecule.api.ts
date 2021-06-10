@@ -18,6 +18,8 @@ export {
 } from 'mo/model';
 
 import {
+    ILayoutService,
+    LayoutService,
     ActivityBarService,
     IActivityBarService,
     ExplorerService,
@@ -49,6 +51,10 @@ import {
 } from 'mo/services';
 
 import { ILocaleService, LocaleService } from './i18n/localeService';
+/**
+ * layout service
+ */
+export const layout = container.resolve<ILayoutService>(LayoutService);
 
 /**
  * Register the Locales service first

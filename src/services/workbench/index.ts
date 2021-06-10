@@ -7,3 +7,4 @@ export * from './explorer/explorerService';
 export * from './explorer/folderTreeService';
 export * from './searchService';
 export * from './panelService';
+export * from './layoutService';

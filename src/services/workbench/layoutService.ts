@@ -15,7 +15,7 @@ export interface ILayoutService extends Component<ILayout> {
     /**
      * Returns the workbench application rootNode, if there is one.
      */
-    getContainer(domId: string): HTMLElement | undefined;
+    getContainer(domId: string): HTMLElement;
 }
 
 @singleton()

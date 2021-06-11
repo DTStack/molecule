@@ -219,6 +219,10 @@ export class ExplorerService
     public reset() {
         this.setState({
             data: [],
+            headerToolBar: {
+                ...this.state.headerToolBar,
+                contextMenu: [],
+            },
         });
     }
 

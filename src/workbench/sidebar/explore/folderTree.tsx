@@ -1,16 +1,34 @@
 import 'reflect-metadata';
-import * as React from 'react';
-import { memo, useRef, useEffect, useCallback } from 'react';
-import { IFolderTreeSubItem } from 'mo/model';
-import { select } from 'mo/common/dom';
+import React, { memo, useRef, useEffect, useCallback } from 'react';
+import { IFolderInputEvent, IFolderTreeSubItem } from 'mo/model';
+import { select, getEventPosition } from 'mo/common/dom';
 import Tree from 'mo/components/tree';
 import { Menu } from 'mo/components/menu';
-import { getEventPosition } from 'mo/common/dom';
 import { Button } from 'mo/components/button';
 import { IFolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
-import { IFolderInputEvent } from 'mo/model';
+import {
+    folderTreeClassName,
+    folderTreeEditClassName,
+    folderTreeInputClassName,
+} from './base';
+import { classNames } from 'mo/common/className';
+
+const detectHasEditableStatus = (data) => {
+    const stack = [...data];
+    let res = false;
+    while (stack.length) {
+        const headElm = stack.pop();
+        if (headElm?.isEditable) {
+            res = true;
+            break;
+        } else {
+            stack.push(...(headElm?.children || []));
+        }
+    }
+    return res;
+};
 
 const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     props: IFolderTreeSubItem & IFolderTreeController
@@ -30,6 +48,9 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const inputRef = useRef<any>(null);
 
     const contextView = useContextView();
+
+    // to detect current tree whether is editable
+    const hasEditable = detectHasEditableStatus(data);
 
     let contextViewMenu;
     const onClickMenuItem = useCallback(
@@ -116,7 +137,9 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
 
         return isEditable ? (
             <input
+                className={folderTreeInputClassName}
                 type="text"
+                defaultValue={name}
                 ref={inputRef}
                 onKeyDown={handleInputKeyDown}
                 autoComplete="off"
@@ -131,6 +154,10 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         <Tree
             // root folder do not render
             data={data[0]?.children || []}
+            className={classNames(
+                folderTreeClassName,
+                hasEditable && folderTreeEditClassName
+            )}
             draggable
             onSelectNode={onSelectFile}
             onRightClick={handleRightClick}

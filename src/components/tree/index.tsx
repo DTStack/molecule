@@ -121,6 +121,7 @@ const TreeView = ({
             return (
                 /**
                  * TODO: antd TreeNode 目前强依赖于 Tree，不好抽离，后续还不支持的话，考虑重写..
+                 * TODO: 由于依赖 rc-tree，无法针对具体的 div 元素添加 tabindex，从而无法做 :focus 的样式
                  * https://github.com/ant-design/ant-design/issues/4688
                  * https://github.com/ant-design/ant-design/issues/4853
                  */

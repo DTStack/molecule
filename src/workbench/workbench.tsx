@@ -72,6 +72,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                             primary="first"
                             split="horizontal"
                             allowResize={true}
+                            // react-split-pane onChange: (newSizes: [size, ratio]) => void；
                             onChange={onHorizontalPaneSizeChange as any}
                         >
                             {!panel.panelMaximized ? (

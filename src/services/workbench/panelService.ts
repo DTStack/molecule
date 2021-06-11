@@ -27,7 +27,6 @@ export interface IPanelService extends Component<IPanel> {
     appendOutput(content: string): void;
     updateOutput(data: IPanelItem): IPanelItem | undefined;
     clearOutput(): void;
-    showHide(): void;
     maximizeRestore(): void;
     onTabChange(callback: (key: string) => void): void;
     onToolbarClick(
@@ -44,9 +43,6 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         super();
         this.state = container.resolve(PanelModel);
         this.layoutService = container.resolve(LayoutService);
-    }
-    showHide(): void {
-        throw new Error('Method not implemented.');
     }
 
     public maximizeRestore(): void {

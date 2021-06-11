@@ -174,7 +174,7 @@ export class ExplorerController
                 break;
             }
             case REMOVE_COMMAND_ID: {
-                this.explorerService.removePanel(parentPanel.id);
+                this.emit(ExplorerEvent.onDeletePanel, parentPanel);
                 break;
             }
             default:

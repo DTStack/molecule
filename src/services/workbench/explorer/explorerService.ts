@@ -22,7 +22,10 @@ export interface IExplorerService extends Component<IExplorer> {
      */
     addPanel(panel: IExplorerPanelItem | IExplorerPanelItem[]): void;
     reset(): void;
-    removePanel(id: React.Key): void;
+    /**
+     * Delete a panel via id, as well as delete corresponding action bar
+     */
+    deletePanel(id: React.Key): void;
     /**
      * toggle panel hidden, as well as toggle the toolbar status
      */
@@ -38,6 +41,10 @@ export interface IExplorerService extends Component<IExplorer> {
     removeAction(id: React.Key): void;
     updateRender(): void;
     onClick(callback: (e: MouseEvent, item: IActionBarItemProps) => void);
+    /**
+     * it execs when delete an explorer panel
+     */
+    onDeletePanel(callback: (panel: IExplorerPanelItem) => void): void;
 }
 
 @singleton()
@@ -144,7 +151,7 @@ export class ExplorerService
         });
     }
 
-    public removePanel(id: React.Key) {
+    public deletePanel(id: React.Key) {
         const { data } = this.state;
         const next = [...data!];
         const index = next.findIndex(searchById(id));
@@ -219,5 +226,9 @@ export class ExplorerService
         callback: (e: MouseEvent, item: IActionBarItemProps) => void
     ) {
         this.subscribe(ExplorerEvent.onClick, callback);
+    }
+
+    public onDeletePanel(callback: (panel: IExplorerPanelItem) => void) {
+        this.subscribe(ExplorerEvent.onDeletePanel, callback);
     }
 }

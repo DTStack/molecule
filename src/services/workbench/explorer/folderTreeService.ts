@@ -51,7 +51,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     removeRootFolder(id: number): void;
     setActive(id?: number): void;
     onDropTree(treeData: ITreeNodeItemProps[]): void;
-    getFileIconByExtensionName(name: string, fileType: FileType): void;
+    getFileIconByExtensionName(name: string, fileType: FileType): string;
     /**
      * insert `data` into foder tree in where the `id` is
      */

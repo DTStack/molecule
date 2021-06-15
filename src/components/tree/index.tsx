@@ -104,7 +104,6 @@ const TreeView = ({
             const {
                 id,
                 disabled = false,
-                isEditable = false,
                 // compute key automatic when data don't has key
                 // take id as backup
                 key = id || `${index}_${indent}`,
@@ -134,7 +133,7 @@ const TreeView = ({
                     disabled={disabled}
                     title={renderTitle?.(item, index, isLeaf)} // dynamic title
                     key={key}
-                    icon={isEditable ? '' : IconComponent}
+                    icon={IconComponent}
                 >
                     {children && renderTreeNodes(children, indent + 1)}
                 </RcTreeNode>

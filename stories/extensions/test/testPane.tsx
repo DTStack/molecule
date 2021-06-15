@@ -219,6 +219,10 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                         new TreeNodeModel({
                             name: 'test_sql.txt',
                             fileType: FileTypes.File,
+                            icon: molecule.folderTree.getFileIconByExtensionName(
+                                'test_sql.txt',
+                                FileTypes.File
+                            ),
                             content: `show tables;
 SELECT 1;
 DESC 6d_target_test;

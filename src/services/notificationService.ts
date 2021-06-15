@@ -8,6 +8,7 @@ import {
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
+import { randomId } from 'mo/common/utils';
 
 export interface INotificationService extends Component<INotification> {
     addNotifications<T>(
@@ -78,7 +79,7 @@ export class NotificationService
 
         if (items && items.length) {
             items.forEach((item) => {
-                if (item.id === undefined) item.id = data.length;
+                if (item.id === undefined) item.id = randomId();
                 item.status = NotificationStatus.WaitRead;
             });
             const arr = [...data, ...items];

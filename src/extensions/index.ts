@@ -1,6 +1,5 @@
 import { ExtendsStatusBar } from './statusBar';
 import { ExtendsEditor } from './editor';
-import { ExtendsNotification } from './notification';
 import { ExtendsProblems } from './problems';
 import { ExtendsFolderTree } from './folderTree';
 import { ExtendsMenuBar } from './menuBar';
@@ -22,7 +21,6 @@ export const defaultExtensions = [
     ExtendsMenuBar,
     ExtendsStatusBar,
     ExtendsProblems,
-    ExtendsNotification,
     // ExtendsExplorer,
     defaultColorThemeExtension,
     monokaiColorThemeExtension,

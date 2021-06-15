@@ -6,7 +6,7 @@ import { localize } from 'mo/i18n/localize';
 export enum ExplorerEvent {
     onClick = 'explorer.onClick',
     onCollapseChange = 'explorer.onCollapseChange',
-    onDeletePanel = 'explorer,onDeletePanel',
+    onDeletePanel = 'explorer.onDeletePanel',
 }
 
 export type RenderFunctionProps = (props) => JSX.Element | null;

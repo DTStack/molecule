@@ -174,7 +174,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
                 ref={inputRef}
                 onKeyDown={(e) => handleInputKeyDown(e, node)}
                 autoComplete="off"
-                // autoFocus
+                autoFocus
                 onBlur={(e) => handleInputBlur(e, node)}
             />
         ) : (

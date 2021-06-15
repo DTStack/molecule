@@ -144,18 +144,20 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             //     }
             // );
         });
-        let notify;
         const addANotification = function () {
-            notify = molecule.notification.addNotifications<string>([
+            molecule.notification.addNotifications<string>([
                 {
                     value: 'Test Notification!',
                 },
             ]);
-            console.log('Add Notification index:', notify);
         };
 
         const removeNotification = function () {
-            molecule.notification.removeNotification(notify.id);
+            const { data = [] } = molecule.notification.getState();
+            const lastItemId = data[data.length - 1]?.id;
+            if (lastItemId) {
+                molecule.notification.removeNotification(lastItemId);
+            }
         };
 
         const openCommand = function () {};

@@ -7,8 +7,12 @@ export interface ViewVisibility {
     hidden?: boolean;
 }
 
-export interface IStatusBarViewState extends ViewVisibility {
+export interface IPanelViewState extends ViewVisibility {
     panelMaximized?: boolean;
+}
+
+export interface ISideBarViewState extends ViewVisibility {
+    position?: Position;
 }
 
 export function positionToString(position: Position): string {
@@ -37,9 +41,9 @@ export interface ILayout {
     splitPanePos: string[];
     horizontalSplitPanePos: string[];
     activityBar: ViewVisibility;
-    panel: IStatusBarViewState;
+    panel: IPanelViewState;
     statusBar: ViewVisibility;
-    sideBar: ViewVisibility;
+    sideBar: ISideBarViewState;
     menuBar: ViewVisibility;
 }
 
@@ -47,9 +51,9 @@ export class LayoutModel implements ILayout {
     public splitPanePos: string[];
     public horizontalSplitPanePos: string[];
     public activityBar: ViewVisibility;
-    public panel: IStatusBarViewState;
+    public panel: IPanelViewState;
     public statusBar: ViewVisibility;
-    public sideBar: ViewVisibility;
+    public sideBar: ISideBarViewState;
     public menuBar: ViewVisibility;
     constructor(
         splitPanePos: string[] = ['300px', 'auto'],
@@ -57,7 +61,7 @@ export class LayoutModel implements ILayout {
         activityBar = { hidden: false },
         panel = { hidden: false, panelMaximized: false },
         statusBar = { hidden: false },
-        sideBar = { hidden: false },
+        sideBar = { hidden: false, position: Position.LEFT },
         menuBar = { hidden: false }
     ) {
         this.splitPanePos = splitPanePos;

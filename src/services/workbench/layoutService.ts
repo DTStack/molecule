@@ -1,6 +1,6 @@
 import { container, singleton } from 'tsyringe';
 import { Component } from 'mo/react';
-import { ILayout, LayoutModel } from 'mo/model/workbench/layout';
+import { ILayout, Position, LayoutModel } from 'mo/model/workbench/layout';
 
 export interface ILayoutService extends Component<ILayout> {
     setMenuBarHidden(): void;
@@ -10,6 +10,8 @@ export interface ILayoutService extends Component<ILayout> {
     setStatusBarHidden(): void;
     setPaneSize(splitPanePos: string[]): void;
     setHorizontalPaneSize(horizontalSplitPanePos: string[]): void;
+    setSideBarPosition(position: Position): void;
+    getSideBarPosition(): Position;
     togglePanelMaximized(): void;
     isPanelMaximized(): boolean | undefined;
     /**
@@ -26,43 +28,66 @@ export class LayoutService extends Component<any> implements ILayoutService {
         this.state = container.resolve(LayoutModel);
     }
 
-    public getContainer(domId) {
+    public getContainer(domId: string) {
         return document.getElementById(domId) || document.body;
     }
     /**
      * Set menubar hidden or not
      */
     public setMenuBarHidden(): void {
-        const wasHidden = this.state.menuBar.hidden;
-        this.setState({ menuBar: { hidden: !wasHidden } });
+        const { menuBar } = this.state;
+        const wasHidden = menuBar?.hidden;
+        this.setState({ menuBar: { ...menuBar, hidden: !wasHidden } });
     }
     /**
      * Set panel hidden or not
      */
     public setPanelHidden(): void {
-        const wasHidden = this.state.panel.hidden;
-        this.setState({ panel: { hidden: !wasHidden } });
+        const { panel } = this.state;
+        const wasHidden = panel?.hidden;
+        this.setState({ panel: { ...panel, hidden: !wasHidden } });
     }
     /**
      * Set sidebar hidden or not
      */
     public setSideBarHidden(): void {
-        const wasHidden = this.state.sideBar.hidden;
-        this.setState({ sideBar: { hidden: !wasHidden } });
+        const { sideBar } = this.state;
+        const wasHidden = sideBar.hidden;
+        this.setState({ sideBar: { ...sideBar, hidden: !wasHidden } });
     }
     /**
      * Set activity bar hidden or not
      */
     public setActivityBarHidden(): void {
-        const wasHidden = this.state.activityBar.hidden;
-        this.setState({ activityBar: { hidden: !wasHidden } });
+        const { activityBar } = this.state;
+        const wasHidden = activityBar.hidden;
+        this.setState({ activityBar: { ...activityBar, hidden: !wasHidden } });
     }
     /**
      * Set status bar hidden or not
      */
     public setStatusBarHidden(): void {
-        const wasHidden = this.state.statusBar.hidden;
-        this.setState({ statusBar: { hidden: !wasHidden } });
+        const { statusBar } = this.state;
+        const wasHidden = statusBar.hidden;
+        this.setState({ statusBar: { ...statusBar, hidden: !wasHidden } });
+    }
+
+    public setSideBarPosition(newPosition: Position): void {
+        const { sideBar } = this.state;
+        const position = sideBar?.position;
+        const wasHidden = sideBar.hidden;
+        const newPositionValue =
+            newPosition === Position.LEFT ? 'left' : 'right';
+        const oldPositionValue = position === Position.LEFT ? 'left' : 'right';
+        if (newPositionValue !== oldPositionValue && !wasHidden) {
+            this.setState({
+                sidebar: { ...sideBar, hidden: !wasHidden },
+            });
+        }
+    }
+
+    public getSideBarPosition(): Position {
+        return this.state.sideBar.position!;
     }
     /**
      * Toggle Panel Maximized

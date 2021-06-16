@@ -107,8 +107,7 @@ export class FolderTreeController
     public readonly onClickContextMenu = (
         e: React.MouseEvent,
         item: IMenuItemProps,
-        node = {},
-        events?: IFolderInputEvent
+        node = {}
     ) => {
         const menuId = item.id;
         const ctx = this;

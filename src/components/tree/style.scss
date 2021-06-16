@@ -9,8 +9,10 @@ $switch: #{$rcTree}-switcher;
         margin: 0;
 
         &-treenode {
+            align-items: center;
             border: 1px solid transparent;
             cursor: pointer;
+            display: flex;
             height: 22px;
             line-height: 22px;
             list-style: none;
@@ -72,18 +74,11 @@ $switch: #{$rcTree}-switcher;
 
         &-node-content-wrapper {
             cursor: pointer;
-            display: inline-grid;
-            grid-gap: 2px;
-            grid-template-columns: 14px auto;
-            grid-template-rows: 22px;
+            flex: 1;
             height: 22px;
             margin: 0;
-            text-decoration: none;
-            width: calc(100% - 7px);
-        }
-
-        &-title {
             overflow: hidden;
+            text-decoration: none;
             text-overflow: ellipsis;
             white-space: pre;
         }
@@ -101,7 +96,6 @@ $switch: #{$rcTree}-switcher;
         &-icon {
             &__open {
                 background-position: -110px -16px;
-                margin-right: 2px;
                 vertical-align: top;
             }
 

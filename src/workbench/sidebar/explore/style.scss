@@ -11,8 +11,13 @@
                 border-color: transparent;
             }
 
-            &-title {
+            &-node-content-wrapper {
                 overflow: visible;
+            }
+
+            &-treenode {
+                background-color: var(--list-hoverBackground);
+                color: var(--list-hoverForeground);
             }
 
             #{$folderTree}--input {
@@ -20,17 +25,22 @@
                 font-family: inherit;
                 font-size: 13px;
                 height: 22px;
+                left: -1px;
                 margin: 0;
                 outline: none;
                 padding: 0;
                 position: relative;
                 top: -1px;
-                width: calc(100% - 2px);
+                width: calc(100% - 16px);
 
                 &:focus,
                 &:active {
                     border-color: var(--list-focusOutline);
                     outline: inherit;
+                }
+
+                &::selection {
+                    background: rgb(90, 126, 167);
                 }
             }
         }

@@ -1,11 +1,18 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Logger from 'mo/common/logger';
-import RcCollapse, { Panel as CollapsePanel } from 'rc-collapse';
 import { Toolbar } from 'mo/components/toolbar';
 import { Icon } from 'mo/components/icon';
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import { prefixClaName, classNames, getBEMElement } from 'mo/common/className';
+import { classNames } from 'mo/common/className';
+import {
+    defaultCollapseClassName,
+    collapseItemClassName,
+    collapseActiveClassName,
+    collapseHeaderClassName,
+    collapseExtraClassName,
+    collapseContentClassName,
+} from './base';
 
 type RenderFunctionProps = (data: DataBaseProps) => React.ReactNode;
 
@@ -30,14 +37,12 @@ export interface ICollapseProps {
     ) => void;
 }
 
-const defaultCollapseClassName = prefixClaName('collapse');
-const toolbarCollapseClassName = getBEMElement(
-    defaultCollapseClassName,
-    'toolbar'
-);
+// default collapse height, only contains header
+const HEADER_HEIGTH = 26;
 
 export function Collapse(props: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] = useState<React.Key[]>([]);
+    const wrapper = React.useRef<HTMLDivElement>(null);
 
     const {
         className,
@@ -47,9 +52,25 @@ export function Collapse(props: ICollapseProps) {
         ...restProps
     } = props;
 
-    const handleChangeCallback = (key: React.Key[]) => {
-        onCollapseChange?.(key);
-        setActivePanelKeys(key || []);
+    const handleResize = React.useCallback(() => {
+        // just want to trigger rerender
+        setActivePanelKeys((keys) => keys.concat());
+    }, []);
+
+    React.useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const handleChangeCallback = (key: React.Key) => {
+        const currentKeys = activePanelKeys.concat();
+        if (currentKeys.includes(key)) {
+            currentKeys.splice(currentKeys.indexOf(key), 1);
+        } else {
+            currentKeys.push(key);
+        }
+        onCollapseChange?.(currentKeys);
+        setActivePanelKeys(currentKeys);
     };
 
     const handleToolbarClick = (
@@ -76,33 +97,129 @@ export function Collapse(props: ICollapseProps) {
         Logger.warn(new SyntaxError('collapse data must have id'));
     }
 
+    // to save position temporarily, empty array when rerender
+    const _cachePosition: number[][] = [];
+    let _cacheWrapperHeight = React.useRef(0);
+    /**
+     * Calculate the position of the panel in view
+     * @param keys Current active keys
+     * @param panel Current panel
+     * @param panels All panels array
+     * @returns Tuple - [height, top]
+     */
+    const calcPosition = (
+        keys: React.Key[],
+        panel: DataBaseProps,
+        panels: DataBaseProps[]
+    ) => {
+        // init a Tuple save height and top
+        const res = [0, 0];
+        const isActive = keys.includes(panel.id);
+        // calculate height for current panel
+        if (!isActive || panel._isEmpty) {
+            // the height of inactive panel or empty panel is a fixed value
+            res[0] = HEADER_HEIGTH;
+        } else {
+            // total height
+            const wrapperHeight =
+                wrapper.current?.getBoundingClientRect().height ||
+                _cacheWrapperHeight.current;
+            _cacheWrapperHeight.current = wrapperHeight;
+            // count active panels
+            const activeCount = keys.length;
+            // count the height for active panels
+            const activePanelHeight =
+                wrapperHeight - HEADER_HEIGTH * (panels.length - activeCount);
+            // count the non-empty & active panels in active panels
+            const nonEmptyAndActivePanels = keys.filter((key) => {
+                const targetPanel = panels.find((panel) => panel.id === key);
+                if (!targetPanel) {
+                    return false;
+                } else if (typeof targetPanel._isEmpty === 'boolean') {
+                    return !targetPanel._isEmpty;
+                } else {
+                    const content = renderPanels(panel, panel.renderPanel);
+                    return !!content;
+                }
+            });
+
+            // the height for active panels is divided equally by non-empty & active panels
+            res[0] =
+                (activePanelHeight -
+                    HEADER_HEIGTH *
+                        (keys.length - nonEmptyAndActivePanels.length)) /
+                nonEmptyAndActivePanels.length;
+        }
+
+        // calculate top for current panel
+        let topCount = 0;
+        for (let index = 0; index < panels.length; index++) {
+            const element = panels[index];
+            // only count the position of front panel
+            if (element === panel) {
+                break;
+            }
+            // if this element is a active panel, then get height via cache
+            // else count default height in
+            if (keys.includes(element.id)) {
+                const [cacheHeight] = _cachePosition[index];
+                topCount += cacheHeight;
+            } else {
+                topCount += HEADER_HEIGTH;
+            }
+        }
+        res[1] = topCount;
+        return res;
+    };
+
     return (
-        <div className={classNames(defaultCollapseClassName, className)}>
-            <RcCollapse
-                onChange={handleChangeCallback}
-                expandIcon={({ isActive }: { isActive: boolean }) => (
-                    <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
-                )}
-                {...restProps}
-            >
-                {filterData
-                    .filter((p) => !p.hidden)
-                    .map((panel) => {
-                        const content = renderPanels(panel, panel.renderPanel);
-                        return (
-                            <CollapsePanel
-                                tabIndex={-1}
-                                key={panel.id}
-                                panelKey={panel.id}
-                                header={panel.name}
-                                className={classNames(
-                                    panel.className,
-                                    content === null && 'empty'
-                                )}
-                                extra={
-                                    activePanelKeys.includes(panel.id) && (
+        <div
+            className={classNames(defaultCollapseClassName, className)}
+            ref={wrapper}
+            {...restProps}
+        >
+            {filterData
+                .filter((p) => !p.hidden)
+                .map((panel) => {
+                    const content = renderPanels(panel, panel.renderPanel);
+                    // mark current panel empty and content
+                    panel._content = content;
+                    panel._isEmpty = !content;
+                    const isActive = activePanelKeys.includes(panel.id);
+                    const [height, top] = calcPosition(
+                        activePanelKeys,
+                        panel,
+                        filterData
+                    );
+                    _cachePosition.push([height, top]);
+                    return (
+                        <div
+                            className={classNames(
+                                collapseItemClassName,
+                                isActive && collapseActiveClassName
+                            )}
+                            style={{
+                                height,
+                                top,
+                            }}
+                            key={panel.id}
+                        >
+                            <div
+                                className={collapseHeaderClassName}
+                                tabIndex={0}
+                                onClick={() => handleChangeCallback(panel.id)}
+                            >
+                                <Icon
+                                    type={
+                                        isActive
+                                            ? 'chevron-down'
+                                            : 'chevron-right'
+                                    }
+                                />
+                                {panel.name}
+                                <div className={collapseExtraClassName}>
+                                    {isActive && (
                                         <Toolbar
-                                            className={toolbarCollapseClassName}
                                             key={panel.id}
                                             data={panel.toolbar || []}
                                             onClick={(e, item) =>
@@ -113,16 +230,18 @@ export function Collapse(props: ICollapseProps) {
                                                 )
                                             }
                                         />
-                                    )
-                                }
+                                    )}
+                                </div>
+                            </div>
+                            <div
+                                className={collapseContentClassName}
+                                tabIndex={0}
                             >
                                 {content}
-                            </CollapsePanel>
-                        );
-                    })}
-            </RcCollapse>
+                            </div>
+                        </div>
+                    );
+                })}
         </div>
     );
 }
-
-export { CollapsePanel };

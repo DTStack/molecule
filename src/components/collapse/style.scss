@@ -1,119 +1,80 @@
 @import 'mo/style/common';
 
-#{$collapse} {
-    font-size: 13px;
-    height: 100%;
+$collapse__extra: #{$collapse}__extra;
 
-    &__content--padding {
-        padding: 10px;
+#{$collapse} {
+    height: 100%;
+    position: relative;
+
+    &:focus-within {
+        #{$collapse__extra} {
+            opacity: 1;
+        }
     }
 
-    #{$rcCollapse} {
-        background-color: inherit;
+    &__item {
+        border-bottom: 1px solid var(--sideBarSectionHeader-border);
         display: flex;
         flex-direction: column;
-        height: 100%;
+        line-height: 22px;
+        overflow: hidden;
+        position: absolute;
+        transition: top ease-in-out 0.2s, height ease-in-out 0.2s;
+        width: 100%;
 
-        &-anim-active {
-            transition: height 0.2s ease-out;
-        }
-
-        &-item {
-            border-bottom: 1px solid var(--sideBarSectionHeader-border);
-
-            &-active {
-                overflow: hidden;
-
-                &:not(.empty) {
-                    flex: 1;
-                }
-
-                &:hover {
-                    #{$collapse}__toolbar {
-                        opacity: 1;
-                    }
-                }
-            }
-
-            &:last-child {
-                border-bottom-color: transparent;
-                #{$rcCollapse}-content {
-                    border-radius: 0 0 3px 3px;
-                }
-            }
-
-            // empty content do not unfold
-            &.empty {
-                #{$rcCollapse}-content {
-                    height: 0;
-                    min-height: 0;
-                }
+        &:hover {
+            #{$collapse__extra} {
+                opacity: 1;
             }
         }
 
-        &-header {
-            align-items: center;
-            border: 1px solid transparent;
-            cursor: pointer;
-            display: flex;
-            font-size: 11px;
-            font-weight: bold;
-            height: 22px;
-            outline: none;
-            padding: 1px 2px;
-            user-select: none;
+        &:last-child {
+            border-bottom-color: transparent;
+        }
+    }
 
-            &-collapsable-only {
-                cursor: default;
-            }
+    &--active {
+        overflow: auto;
+    }
 
-            &-text {
-                cursor: pointer;
-            }
+    &__header {
+        align-items: center;
+        border: 1px solid transparent;
+        cursor: pointer;
+        display: flex;
+        font-size: 11px;
+        font-weight: bold;
+        height: 22px;
+        outline: none;
+        padding: 1px 2px;
+        user-select: none;
 
-            &:focus {
-                border-color: var(--list-focusOutline);
+        &:focus {
+            border-color: var(--list-focusOutline);
+        }
+    }
 
-                #{$collapse}__toolbar {
-                    opacity: 1;
-                }
+    &__extra {
+        margin: 0 0 0 auto;
+        opacity: 0;
+
+        #{$actionBar}__label.codicon {
+            color: var(--activityBar-inactiveForeground);
+            height: inherit;
+            line-height: inherit;
+
+            &:hover {
+                color: var(--activityBar-activeBorder);
             }
         }
+    }
 
-        &-extra {
-            margin: 0 0 0 auto;
+    &__content {
+        border: 1px solid transparent;
+        flex: 1;
 
-            #{$collapse}__toolbar {
-                opacity: 0;
-            }
-
-            #{$actionBar}__label.codicon {
-                color: var(--activityBar-inactiveForeground);
-                height: inherit;
-                line-height: inherit;
-
-                &:hover {
-                    color: var(--activityBar-activeBorder);
-                }
-            }
-        }
-
-        &-content {
-            // transition do not support a non-specific value like auto、100% and so on
-            // TODO: so set a specific value just for height transition
-            height: 500px;
-            min-height: calc(100% - 24px);
-            overflow: auto;
-
-            &-box {
-                font-size: 12px;
-                height: 100%;
-            }
-
-            &-inactive {
-                height: 0;
-                min-height: 0;
-            }
+        &:focus {
+            border-color: var(--list-focusOutline);
         }
     }
 }

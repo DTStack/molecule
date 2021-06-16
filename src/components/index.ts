@@ -16,7 +16,7 @@ export type { IButtonProps } from './button';
 export { Checkbox } from './checkbox';
 export type { ICheckboxProps } from './checkbox';
 
-export { Collapse, CollapsePanel } from './collapse';
+export { Collapse } from './collapse';
 export type { ICollapseProps } from './collapse';
 
 export { useContextMenu } from './contextMenu';

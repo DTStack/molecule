@@ -43,7 +43,6 @@ export class ActivityBarService
         this.setState({
             data: [],
             selected: '',
-            // hidden: false,
         });
     }
 

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { singleton } from 'tsyringe';
+import { container, singleton } from 'tsyringe';
 
 import {
     IStandaloneEditorConstructionOptions,
@@ -35,6 +35,7 @@ import { ILayoutService } from 'monaco-editor/esm/vs/platform/layout/browser/lay
 import { ServiceCollection } from 'monaco-editor/esm/vs/platform/instantiation/common/serviceCollection';
 import { IModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
 import { IModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
+import { LayoutService } from 'mo/services';
 
 export interface IMonacoService {
     readonly services: ServiceCollection;
@@ -47,20 +48,25 @@ export interface IMonacoService {
     ): IStandaloneCodeEditor;
     /**
      * Initial the Workspace, like Services and editor config.
-     * @param container The Container element of Molecule
      */
-    initWorkspace(container: HTMLElement): void;
+    initWorkspace(): void;
 }
 @singleton()
 export class MonacoService implements IMonacoService {
     private _services: ServiceCollection;
-    private _container!: HTMLElement | null;
     private simpleEditorModelResolverService: SimpleEditorModelResolverService | null = null;
 
     constructor() {}
 
-    public initWorkspace(container: HTMLElement) {
-        this._container = container;
+    public get container() {
+        return this.layoutService.initWorkbenchContainer();
+    }
+
+    private get layoutService() {
+        return container.resolve(LayoutService);
+    }
+
+    public initWorkspace() {
         this._services = this.createStandaloneServices();
     }
 
@@ -70,10 +76,6 @@ export class MonacoService implements IMonacoService {
 
     get commandService() {
         return this.services.get(ICommandService);
-    }
-
-    get container() {
-        return this._container;
     }
 
     private mergeEditorServices(overrides?: IEditorOverrideServices) {

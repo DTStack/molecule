@@ -1,5 +1,6 @@
 import { container, singleton } from 'tsyringe';
 import { Component } from 'mo/react';
+import { ID_APP } from 'mo/common/id';
 import { ILayout, Position, LayoutModel } from 'mo/model/workbench/layout';
 
 export interface ILayoutService extends Component<ILayout> {
@@ -14,10 +15,7 @@ export interface ILayoutService extends Component<ILayout> {
     getSideBarPosition(): Position;
     togglePanelMaximized(): void;
     isPanelMaximized(): boolean | undefined;
-    /**
-     * Returns the workbench application rootNode, if there is one.
-     */
-    getContainer(domId: string): HTMLElement;
+    initWorkbenchContainer(): void;
 }
 
 @singleton()
@@ -28,8 +26,8 @@ export class LayoutService extends Component<any> implements ILayoutService {
         this.state = container.resolve(LayoutModel);
     }
 
-    public getContainer(domId: string) {
-        return document.getElementById(domId) || document.body;
+    public initWorkbenchContainer() {
+        return document.getElementById(ID_APP) || document.body;
     }
     /**
      * Set menubar hidden or not

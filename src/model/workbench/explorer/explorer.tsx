@@ -9,7 +9,7 @@ export enum ExplorerEvent {
     onDeletePanel = 'explorer.onDeletePanel',
 }
 
-export type RenderFunctionProps = (props) => JSX.Element | null;
+export type RenderFunctionProps = (props) => React.ReactNode;
 export interface IExplorerPanelItem {
     /**
      * It must be unique in the Explorer Panel Data

@@ -1,17 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
+import Logger from 'mo/common/logger';
 import RcCollapse, { Panel as CollapsePanel } from 'rc-collapse';
 import { Toolbar } from 'mo/components/toolbar';
 import { Icon } from 'mo/components/icon';
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import {
-    prefixClaName,
-    classNames,
-    getBEMElement,
-    getBEMModifier,
-} from 'mo/common/className';
+import { prefixClaName, classNames, getBEMElement } from 'mo/common/className';
 
-type RenderFunctionProps = (data: DataBaseProps) => JSX.Element | null;
+type RenderFunctionProps = (data: DataBaseProps) => React.ReactNode;
 
 interface DataBaseProps {
     id: React.Key;
@@ -35,8 +31,8 @@ export interface ICollapseProps {
 }
 
 const defaultCollapseClassName = prefixClaName('collapse');
-const toolbarCollapseClassName = getBEMModifier(
-    getBEMElement(defaultCollapseClassName, 'content'),
+const toolbarCollapseClassName = getBEMElement(
+    defaultCollapseClassName,
     'toolbar'
 );
 
@@ -77,7 +73,7 @@ export function Collapse(props: ICollapseProps) {
 
     const filterData = data.filter((panel) => panel.id) as DataBaseProps[];
     if (filterData.length < data.length) {
-        console.warn(new SyntaxError('collapse data must have id'));
+        Logger.warn(new SyntaxError('collapse data must have id'));
     }
 
     return (

@@ -29,7 +29,7 @@
                 }
 
                 &:hover {
-                    #{$collapse}__content--toolbar {
+                    #{$collapse}__toolbar {
                         opacity: 1;
                     }
                 }
@@ -74,7 +74,7 @@
             &:focus {
                 border-color: var(--list-focusOutline);
 
-                #{$collapse}__content--toolbar {
+                #{$collapse}__toolbar {
                     opacity: 1;
                 }
             }
@@ -83,7 +83,7 @@
         &-extra {
             margin: 0 0 0 auto;
 
-            #{$collapse}__content--toolbar {
+            #{$collapse}__toolbar {
                 opacity: 0;
             }
 

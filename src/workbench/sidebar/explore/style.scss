@@ -1,1 +1,38 @@
 @import 'mo/style/common';
+
+#{$folderTree} {
+    height: 100%;
+
+    &--editable {
+        background: rgba(0, 0, 0, 0.3);
+        #{$rcTree} {
+            &-treenode-selected {
+                background: transparent;
+                border-color: transparent;
+            }
+
+            &-title {
+                overflow: visible;
+            }
+
+            #{$folderTree}--input {
+                border: 1px solid var(--list-focusOutline);
+                font-family: inherit;
+                font-size: 13px;
+                height: 22px;
+                margin: 0;
+                outline: none;
+                padding: 0;
+                position: relative;
+                top: -1px;
+                width: calc(100% - 2px);
+
+                &:focus,
+                &:active {
+                    border-color: var(--list-focusOutline);
+                    outline: inherit;
+                }
+            }
+        }
+    }
+}

@@ -57,7 +57,7 @@ const sampleFolderPanel = {
         },
     ],
     renderPanel: () => {
-        return "hello i'm tree~~~";
+        return <span>"hello i'm tree~~~"</span>;
     },
 };
 

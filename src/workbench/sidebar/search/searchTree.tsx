@@ -92,7 +92,7 @@ const SearchTree = (props: SearchTreeProps) => {
                     );
                 return title;
             }}
-            onSelectFile={folderTreeController.onSelectFile}
+            onSelectNode={folderTreeController.onSelectFile}
             {...restProps}
         />
     );

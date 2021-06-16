@@ -12,12 +12,15 @@ import {
     builtInExplorerFolderPanel,
     builtInExplorerEditorPanel,
     ExplorerEvent,
-    builtInExplorerHeaderToolbar,
+    IExplorerPanelItem,
 } from 'mo/model/workbench/explorer/explorer';
 import {
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
     EXPLORER_ACTIVITY_ITEM,
+    REMOVE_COMMAND_ID,
+    FileTypes,
+    FolderTreeEvent,
 } from 'mo/model';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
@@ -36,10 +39,13 @@ import { FolderTreeController, IFolderTreeController } from './folderTree';
 export interface IExplorerController {
     onActionsContextMenuClick?: (
         e: React.MouseEvent,
-        item: IMenuItemProps | undefined
+        item?: IMenuItemProps
     ) => void;
     onCollapseChange?: (keys) => void;
-    onCollapseToolbar?: (item) => void;
+    onToolbarClick?: (
+        item: IActionBarItemProps,
+        panel: IExplorerPanelItem
+    ) => void;
     onClick?: (event, item) => void;
 }
 
@@ -67,7 +73,6 @@ export class ExplorerController
     }
 
     private initView() {
-        const ctx = this;
         const state = this.activityBarService.getState();
         const sideBarState = this.sidebarService.getState();
         const { data = [] } = state;
@@ -77,10 +82,10 @@ export class ExplorerController
         });
 
         const explorerEvent = {
-            onClick: ctx.onClick,
-            onCollapseChange: ctx.onCollapseChange,
-            onActionsContextMenuClick: ctx.onActionsContextMenuClick,
-            onCollapseToolbar: ctx.onCollapseToolbar,
+            onClick: this.onClick,
+            onCollapseChange: this.onCollapseChange,
+            onActionsContextMenuClick: this.onActionsContextMenuClick,
+            onToolbarClick: this.onToolbarClick,
         };
 
         const ExplorerView = connect(this.explorerService, Explorer);
@@ -111,24 +116,26 @@ export class ExplorerController
             current: explorePane.id,
             panes: [...sideBarState.panes!, explorePane],
         });
-        this.explorerService.setState({
-            data: [
-                { ...builtInExplorerEditorPanel() },
-                {
-                    ...builtInExplorerFolderPanel(),
-                    renderPanel: this.renderFolderTree,
-                },
-            ],
-            headerToolBar: builtInExplorerHeaderToolbar(),
+
+        // add folder panel
+        this.explorerService.addPanel({
+            ...builtInExplorerFolderPanel(),
+            renderPanel: this.renderFolderTree,
+        });
+
+        // add editor panel
+        this.explorerService.addPanel({
+            ...builtInExplorerEditorPanel(),
         });
     }
 
-    private createFileOrFolder = (type) => {
+    private createFileOrFolder = (type: keyof typeof FileTypes) => {
         const folderTreeState = this.folderTreeService.getState();
         const { data, current } = folderTreeState?.folderTree || {};
         // The current selected node id or the first root node
         const nodeId = current?.id || data?.[0]?.id;
-        this.folderTreeService[type]?.(nodeId);
+        // emit onNewFile or onNewFolder event
+        this.emit(FolderTreeEvent[`onNew${type}`], nodeId);
     };
 
     public readonly onClick = (
@@ -140,27 +147,34 @@ export class ExplorerController
 
     public readonly onActionsContextMenuClick = (
         e: React.MouseEvent,
-        item: IMenuItemProps | undefined
+        item?: IMenuItemProps
     ) => {
-        console.log('onActionsContextMenuClick', e, item);
         const panelId = item?.id;
-        this.explorerService.togglePanel(panelId);
+        if (panelId) {
+            this.explorerService.togglePanel(panelId);
+        }
     };
 
     public readonly onCollapseChange = (keys) => {
         this.emit(ExplorerEvent.onCollapseChange, keys);
     };
 
-    public readonly onCollapseToolbar = (item) => {
-        console.log('item', item);
+    public readonly onToolbarClick = (
+        item: IActionBarItemProps,
+        parentPanel: IExplorerPanelItem
+    ) => {
         const toolbarId = item.id;
         switch (toolbarId) {
             case NEW_FILE_COMMAND_ID: {
-                this.createFileOrFolder('newFile');
+                this.createFileOrFolder(FileTypes.File);
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                this.createFileOrFolder('newFolder');
+                this.createFileOrFolder(FileTypes.Folder);
+                break;
+            }
+            case REMOVE_COMMAND_ID: {
+                this.emit(ExplorerEvent.onDeletePanel, parentPanel);
                 break;
             }
             default:

@@ -5,9 +5,9 @@ import { IMenuItemProps } from 'mo/components/menu';
 import { randomId } from 'mo/common/utils';
 
 export enum FileTypes {
-    file = 'file',
-    folder = 'folder',
-    rootFolder = 'rootFolder',
+    File = 'File',
+    Folder = 'Folder',
+    RootFolder = 'RootFolder',
 }
 
 export type FileType = keyof typeof FileTypes;
@@ -32,7 +32,7 @@ export interface IFolderTreeSubItem {
     data?: TreeNodeModel[];
     contextMenu?: IMenuItemProps[];
     folderPanelContextMenu?: IMenuItemProps[];
-    current?: ITreeNodeItemProps | null;
+    current?: TreeNodeModel | null;
 }
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
@@ -102,7 +102,7 @@ export class TreeNodeModel implements ITreeNodeItemProps {
     name?: string;
     location?: string;
     fileType?: FileType;
-    children?: ITreeNodeItemProps[];
+    children?: TreeNodeModel[];
     icon?: string | React.ReactNode;
     isEditable?: boolean;
     content?: string;
@@ -112,7 +112,7 @@ export class TreeNodeModel implements ITreeNodeItemProps {
             id,
             name = '',
             location = '',
-            fileType = FileTypes.file as FileType,
+            fileType = FileTypes.File,
             children = [],
             icon = '',
             isEditable = false,

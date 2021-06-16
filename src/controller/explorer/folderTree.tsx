@@ -54,6 +54,7 @@ export class FolderTreeController
     extends Controller
     implements IFolderTreeController {
     private readonly folderTreeService: IFolderTreeService;
+
     constructor() {
         super();
         this.folderTreeService = container.resolve(FolderTreeService);
@@ -161,15 +162,15 @@ export class FolderTreeController
         let menu;
 
         switch (node.fileType) {
-            case FileTypes.file: {
+            case FileTypes.File: {
                 menu = FILE_CONTEXT_MENU.concat(menus);
                 break;
             }
-            case FileTypes.folder: {
+            case FileTypes.Folder: {
                 menu = BASE_CONTEXT_MENU.concat(menus);
                 break;
             }
-            case FileTypes.rootFolder: {
+            case FileTypes.RootFolder: {
                 menu = BASE_CONTEXT_MENU.concat(ROOT_FOLDER_CONTEXT_MENU);
                 break;
             }

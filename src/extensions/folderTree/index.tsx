@@ -1,58 +1,25 @@
 import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
 import { ITreeNodeItemProps } from 'mo/components/tree';
-import { FileType, FileTypes, TreeNodeModel } from 'mo/model';
+import { FileTypes } from 'mo/model';
 
 export const ExtendsFolderTree: IExtension = {
     activate() {
-        // TODO: Move the folderTree logic to stories test
-        const createTargetNodeById = (
-            id: number,
-            treeInstance,
-            extra?: ITreeNodeItemProps
-        ) => {
-            const currentIndex = treeInstance.getIndex(id);
-            // If the node type of the current id is a file, insert it at the parent node above it
-            if (currentIndex?.node?.fileType === FileTypes.file) {
-                treeInstance.prepend(
-                    new TreeNodeModel(extra),
-                    currentIndex?.parent
-                );
-            } else {
-                treeInstance.append(new TreeNodeModel(extra), id);
-            }
-        };
-
         molecule.folderTree.onNewFile((id: number) => {
-            const { folderTree } = molecule.folderTree.getState();
-            const cloneData: ITreeNodeItemProps[] = folderTree?.data || [];
-            const {
-                tree,
-                index,
-            } = molecule.folderTree.getCurrentRootFolderInfo(id);
-            createTargetNodeById(id, tree, {
+            // work through addNode function
+            molecule.folderTree.addNode(id, {
+                name: '',
+                fileType: FileTypes.File,
                 isEditable: true,
-            });
-            if (index > -1) cloneData[index] = tree.obj;
-            molecule.folderTree.setState({
-                folderTree: { ...folderTree, data: cloneData },
             });
         });
 
         molecule.folderTree.onNewFolder((id: number) => {
-            const { folderTree } = molecule.folderTree.getState();
-            const cloneData: ITreeNodeItemProps[] = folderTree?.data || [];
-            const {
-                tree,
-                index,
-            } = molecule.folderTree.getCurrentRootFolderInfo(id);
-            createTargetNodeById(id, tree, {
-                fileType: FileTypes.folder as FileType,
+            // work through addNode function
+            molecule.folderTree.addNode(id, {
+                name: '',
+                fileType: FileTypes.Folder,
                 isEditable: true,
-            });
-            if (index > -1) cloneData[index] = tree.obj;
-            molecule.folderTree.setState({
-                folderTree: { ...folderTree, data: cloneData },
             });
         });
 
@@ -89,7 +56,7 @@ export const ExtendsFolderTree: IExtension = {
         molecule.folderTree.onSelectFile(
             (file: ITreeNodeItemProps, isUpdate?: boolean) => {
                 const { fileType, isEditable } = file;
-                const isFile = fileType === FileTypes.file;
+                const isFile = fileType === FileTypes.File;
                 molecule.folderTree.setActive(file?.id);
                 if (!isFile || isEditable) return;
                 const tabData = {
@@ -143,7 +110,7 @@ export const ExtendsFolderTree: IExtension = {
             molecule.folderTree.setState({
                 folderTree: { ...folderTree, data: cloneData },
             });
-            if (file?.fileType === FileTypes.file && file.name) {
+            if (file?.fileType === FileTypes.File && file.name) {
                 // emit onSelectFile
             }
         });

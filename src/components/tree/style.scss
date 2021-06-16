@@ -6,10 +6,10 @@ $switch: #{$rcTree}-switcher;
     font-size: 13px;
 
     #{$rcTree} {
-        border: 1px solid transparent;
         margin: 0;
 
         &-treenode {
+            border: 1px solid transparent;
             cursor: pointer;
             height: 22px;
             line-height: 22px;
@@ -63,18 +63,29 @@ $switch: #{$rcTree}-switcher;
                     cursor: not-allowed;
                 }
             }
+
+            &-selected {
+                background: var(--list-activeSelectionBackground);
+                border-color: var(--list-focusOutline);
+            }
         }
 
         &-node-content-wrapper {
             cursor: pointer;
-            display: inline-block;
+            display: inline-grid;
+            grid-gap: 2px;
+            grid-template-columns: 14px auto;
+            grid-template-rows: 22px;
             height: 22px;
             margin: 0;
-            overflow: hidden;
             text-decoration: none;
+            width: calc(100% - 7px);
+        }
+
+        &-title {
+            overflow: hidden;
             text-overflow: ellipsis;
-            vertical-align: top;
-            width: calc(100% - 20px);
+            white-space: pre;
         }
 
         &-child {
@@ -97,7 +108,6 @@ $switch: #{$rcTree}-switcher;
             &__close,
             &__docu,
             &__customize {
-                margin-right: 2px;
                 vertical-align: top;
             }
 

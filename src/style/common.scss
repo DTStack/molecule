@@ -42,6 +42,7 @@ $mainBench: prefix('mainBench');
 $activityBar: prefix('activityBar');
 $notification: prefix('notification');
 $problems: prefix('problems');
+$folderTree: prefix('folderTree');
 
 // The Naming of BEM Element
 @function bem-ele($block, $element) {

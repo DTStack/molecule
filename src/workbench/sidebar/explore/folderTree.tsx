@@ -1,20 +1,34 @@
 import 'reflect-metadata';
-import * as React from 'react';
-import { memo, useRef, useEffect, useCallback } from 'react';
-import { IFolderTreeSubItem } from 'mo/model';
-import { select } from 'mo/common/dom';
+import React, { memo, useRef, useEffect, useCallback } from 'react';
+import { IFolderInputEvent, IFolderTreeSubItem } from 'mo/model';
+import { select, getEventPosition } from 'mo/common/dom';
 import Tree from 'mo/components/tree';
 import { Menu } from 'mo/components/menu';
-import { getEventPosition } from 'mo/common/dom';
 import { Button } from 'mo/components/button';
 import { IFolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
-import { TreeNodeModel, IFolderInputEvent } from 'mo/model';
-import { FolderTreeService } from 'mo/services';
-import { container } from 'tsyringe';
+import {
+    folderTreeClassName,
+    folderTreeEditClassName,
+    folderTreeInputClassName,
+} from './base';
+import { classNames } from 'mo/common/className';
 
-const folderTreeService = container.resolve(FolderTreeService);
+const detectHasEditableStatus = (data) => {
+    const stack = [...data];
+    let res = false;
+    while (stack.length) {
+        const headElm = stack.pop();
+        if (headElm?.isEditable) {
+            res = true;
+            break;
+        } else {
+            stack.push(...(headElm?.children || []));
+        }
+    }
+    return res;
+};
 
 const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     props: IFolderTreeSubItem & IFolderTreeController
@@ -34,6 +48,9 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const inputRef = useRef<any>(null);
 
     const contextView = useContextView();
+
+    // to detect current tree whether is editable
+    const hasEditable = detectHasEditableStatus(data);
 
     let contextViewMenu;
     const onClickMenuItem = useCallback(
@@ -120,7 +137,9 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
 
         return isEditable ? (
             <input
+                className={folderTreeInputClassName}
                 type="text"
+                defaultValue={name}
                 ref={inputRef}
                 onKeyDown={handleInputKeyDown}
                 autoComplete="off"
@@ -133,9 +152,14 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
 
     const renderByData = (
         <Tree
-            data={data}
+            // root folder do not render
+            data={data[0]?.children || []}
+            className={classNames(
+                folderTreeClassName,
+                hasEditable && folderTreeEditClassName
+            )}
             draggable
-            onSelectFile={onSelectFile}
+            onSelectNode={onSelectFile}
             onRightClick={handleRightClick}
             renderTitle={renderTitle}
             {...restProps}
@@ -143,43 +167,12 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     );
 
     const renderInitial = (
-        <span>
+        <div style={{ padding: '10px 5px' }}>
             you have not yet opened a folder
-            <Button
-                onClick={() => {
-                    // test
-                    folderTreeService.addRootFolder?.(
-                        new TreeNodeModel({
-                            name: 'molecule_temp',
-                            fileType: 'rootFolder',
-                            children: [
-                                new TreeNodeModel({
-                                    name: 'test_sql',
-                                    fileType: 'file',
-                                    icon: 'symbol-file',
-                                    content: `show tables;
-SELECT 1;
-DESC 6d_target_test;
-create table if not exists ods_order_header1213 (
-     order_header_id     string comment '订单头id'
-    ,order_date          bigint comment '订单日期'
-    ,shop_id             string comment '店铺id'
-    ,customer_id         string comment '客户id'
-    ,order_status        bigint comment '订单状态'
-    ,pay_date            bigint comment '支付日期'
-)comment '销售订单明细表'
-PARTITIONED BY (ds string) lifecycle 1000;
-`,
-                                }),
-                            ],
-                        })
-                    );
-                }}
-            >
-                Add Folder
-            </Button>
-        </span>
+            <Button>Add Folder</Button>
+        </div>
     );
+
     return data?.length > 0 ? renderByData : renderInitial;
 };
 export default memo(FolderTree);

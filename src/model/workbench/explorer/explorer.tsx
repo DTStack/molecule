@@ -6,10 +6,34 @@ import { localize } from 'mo/i18n/localize';
 export enum ExplorerEvent {
     onClick = 'explorer.onClick',
     onCollapseChange = 'explorer.onCollapseChange',
+    onDeletePanel = 'explorer.onDeletePanel',
 }
-export interface IExplorerPanelItem<T = any> extends IActionBarItemProps {
-    renderPanel?: (props) => React.ReactNode | JSX.Element;
-    toolbar?: T;
+
+export type RenderFunctionProps = (props) => React.ReactNode;
+export interface IExplorerPanelItem {
+    /**
+     * It must be unique in the Explorer Panel Data
+     */
+    id: React.Key;
+    /**
+     * @requires true
+     * explorer panel's title
+     */
+    name: string;
+    /**
+     * specify panel order
+     * the bigger the number is ranked previous
+     */
+    sortIndex?: number;
+    className?: string;
+    toolbar?: IActionBarItemProps[];
+    renderPanel?: RenderFunctionProps;
+    /**
+     * whether hidden in explorer
+     */
+    hidden?: boolean;
+
+    [key: string]: any;
 }
 export interface IExplorer {
     data?: IExplorerPanelItem[];
@@ -36,41 +60,18 @@ export function builtInExplorerActivityItem() {
 }
 
 export function builtInExplorerHeaderToolbar() {
-    const openEditorLabel = localize(EDITOR_PANEL_ID, 'Open Editors');
-    const foldersLabel = localize(SAMPLE_FOLDER_PANEL_ID, 'Folders');
-    const outlineLabel = localize(OUTLINE_PANEL_ID, 'Outline');
-
     return {
         id: EXPLORER_ACTION_TITLE,
         title: localize(EXPLORER_ACTION_TITLE, 'View and More Actions...'),
         iconName: 'codicon-ellipsis',
-        contextMenu: [
-            {
-                id: EDITOR_PANEL_ID,
-                title: openEditorLabel,
-                name: openEditorLabel,
-                icon: 'check',
-            },
-            {
-                id: SAMPLE_FOLDER_PANEL_ID,
-                title: foldersLabel,
-                name: foldersLabel,
-                disabled: true,
-                icon: 'check',
-            },
-            {
-                id: OUTLINE_PANEL_ID,
-                title: outlineLabel,
-                name: outlineLabel,
-                icon: 'check',
-            },
-        ],
+        contextMenu: [],
     };
 }
 
 export function builtInExplorerEditorPanel() {
     return {
         id: EDITOR_PANEL_ID,
+        sortIndex: 9,
         name: localize(EDITOR_PANEL_ID, 'OPEN EDITORS'),
         toolbar: [
             {
@@ -94,9 +95,6 @@ export function builtInExplorerEditorPanel() {
                 iconName: 'codicon-close-all',
             },
         ],
-        renderPanel: () => {
-            return <span>editors</span>;
-        },
     };
 }
 
@@ -122,7 +120,8 @@ export function builtInExplorerOutlinePanel() {
 export function builtInExplorerFolderPanel() {
     return {
         id: SAMPLE_FOLDER_PANEL_ID,
-        name: 'Sample Folder',
+        sortIndex: 8,
+        name: localize('menu.defaultProjectName', 'No Open Folder'),
         className: 'samplefolder',
         toolbar: [
             {
@@ -152,21 +151,13 @@ export function builtInExplorerFolderPanel() {
     };
 }
 
-export function builtInExplorerPanel() {
-    return [
-        builtInExplorerEditorPanel(),
-        builtInExplorerOutlinePanel(),
-        builtInExplorerFolderPanel(),
-    ];
-}
-
 export class IExplorerModel implements IExplorer {
     public data: IExplorerPanelItem[];
     public headerToolBar: IActionBarItemProps;
 
     constructor(
         data: IExplorerPanelItem[] = [],
-        headerToolBar: IActionBarItemProps = {}
+        headerToolBar: IActionBarItemProps = builtInExplorerHeaderToolbar()
     ) {
         this.data = data;
         this.headerToolBar = headerToolBar;

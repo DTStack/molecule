@@ -4,7 +4,7 @@ import molecule from 'mo';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
-import { IEditorTab } from 'mo/model';
+import { FileTypes, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
 import { localize } from 'mo/i18n/localize';
 
@@ -192,6 +192,52 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             });
         };
 
+        const addExplorer = () => {
+            const id = ~~(Math.random() * 10) + new Date().getTime();
+            const panels = [
+                {
+                    id: `Panel-${id}`,
+                    name: 'Panel-' + id,
+                    toolbar: [
+                        {
+                            iconName: 'codicon-remove',
+                            id: 'explorer.remove',
+                            title: 'remove this panel',
+                        },
+                    ],
+                },
+            ];
+            molecule.explorer.addPanel(panels);
+        };
+
+        const addRootFolder = () => {
+            molecule.folderTree.addRootFolder?.(
+                new TreeNodeModel({
+                    name: 'molecule_temp',
+                    fileType: FileTypes.RootFolder,
+                    children: [
+                        new TreeNodeModel({
+                            name: 'test_sql.txt',
+                            fileType: FileTypes.File,
+                            content: `show tables;
+SELECT 1;
+DESC 6d_target_test;
+create table if not exists ods_order_header1213 (
+order_header_id     string comment '订单头id'
+,order_date          bigint comment '订单日期'
+,shop_id             string comment '店铺id'
+,customer_id         string comment '客户id'
+,order_status        bigint comment '订单状态'
+,pay_date            bigint comment '支付日期'
+)comment '销售订单明细表'
+PARTITIONED BY (ds string) lifecycle 1000;
+`,
+                        }),
+                    ],
+                })
+            );
+        };
+
         return (
             <div>
                 <div style={{ margin: '50px 20px' }}>
@@ -231,6 +277,11 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                     <Button onClick={addSettingsItem}>
                         Append Settings Item
                     </Button>
+                </div>
+                <div style={{ margin: '50px 20px' }}>
+                    <h2>Exploer:</h2>
+                    <Button onClick={addExplorer}>Add Explorer Panel</Button>
+                    <Button onClick={addRootFolder}>Add Root Folder</Button>
                 </div>
                 <div>
                     <molecule.component.Button>AAA</molecule.component.Button>

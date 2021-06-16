@@ -2,6 +2,7 @@
 
 #{$collapse} {
     font-size: 13px;
+    height: 100%;
 
     &__content--padding {
         padding: 10px;
@@ -9,23 +10,50 @@
 
     #{$rcCollapse} {
         background-color: inherit;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
 
         &-anim-active {
             transition: height 0.2s ease-out;
         }
 
         &-item {
-            border-top: 0;
+            border-bottom: 1px solid var(--sideBarSectionHeader-border);
+
+            &-active {
+                overflow: hidden;
+
+                &:not(.empty) {
+                    flex: 1;
+                }
+
+                &:hover {
+                    #{$collapse}__toolbar {
+                        opacity: 1;
+                    }
+                }
+            }
 
             &:last-child {
+                border-bottom-color: transparent;
                 #{$rcCollapse}-content {
                     border-radius: 0 0 3px 3px;
+                }
+            }
+
+            // empty content do not unfold
+            &.empty {
+                #{$rcCollapse}-content {
+                    height: 0;
+                    min-height: 0;
                 }
             }
         }
 
         &-header {
             align-items: center;
+            border: 1px solid transparent;
             cursor: pointer;
             display: flex;
             font-size: 11px;
@@ -33,6 +61,7 @@
             height: 22px;
             outline: none;
             padding: 1px 2px;
+            user-select: none;
 
             &-collapsable-only {
                 cursor: default;
@@ -41,34 +70,48 @@
             &-text {
                 cursor: pointer;
             }
+
+            &:focus {
+                border-color: var(--list-focusOutline);
+
+                #{$collapse}__toolbar {
+                    opacity: 1;
+                }
+            }
         }
 
         &-extra {
             margin: 0 0 0 auto;
 
+            #{$collapse}__toolbar {
+                opacity: 0;
+            }
+
             #{$actionBar}__label.codicon {
+                color: var(--activityBar-inactiveForeground);
                 height: inherit;
                 line-height: inherit;
+
+                &:hover {
+                    color: var(--activityBar-activeBorder);
+                }
             }
         }
 
         &-content {
+            // transition do not support a non-specific value like auto、100% and so on
+            // TODO: so set a specific value just for height transition
+            height: 500px;
+            min-height: calc(100% - 24px);
             overflow: auto;
 
             &-box {
                 font-size: 12px;
-                margin-bottom: 8px;
+                height: 100%;
             }
 
             &-inactive {
-                display: none;
-            }
-        }
-
-        // test
-        .samplefolder {
-            #{$rcCollapse}-content {
-                height: 600px;
+                height: 0;
             }
         }
     }

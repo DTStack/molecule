@@ -10,4 +10,8 @@ export default {
     error(...args) {
         console.error(...args);
     },
+
+    warn(...args) {
+        console.warn(...args);
+    },
 };

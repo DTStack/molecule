@@ -5,5 +5,6 @@ export * from './editorService';
 export * from './statusBarService';
 export * from './explorer/explorerService';
 export * from './explorer/folderTreeService';
+export * from './explorer/editorTreeService';
 export * from './searchService';
 export * from './panelService';

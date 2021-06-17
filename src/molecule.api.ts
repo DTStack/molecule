@@ -46,6 +46,8 @@ import {
     SettingsService,
     IProblemsService,
     ProblemsService,
+    IEditorTreeService,
+    EditorTreeService,
 } from 'mo/services';
 
 import { ILocaleService, LocaleService } from './i18n/localeService';
@@ -68,6 +70,10 @@ export const explorer: IExplorerService = container.resolve<IExplorerService>(
 );
 export const folderTree: IFolderTreeService = container.resolve<IFolderTreeService>(
     FolderTreeService
+);
+
+export const editorTree = container.resolve<IEditorTreeService>(
+    EditorTreeService
 );
 
 export const search = container.resolve<ISearchService>(SearchService);

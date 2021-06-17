@@ -10,7 +10,6 @@ import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import {
     builtInExplorerActivityItem,
     builtInExplorerFolderPanel,
-    builtInExplorerEditorPanel,
     ExplorerEvent,
     IExplorerPanelItem,
 } from 'mo/model/workbench/explorer/explorer';
@@ -36,6 +35,7 @@ import {
     IMenuBarService,
 } from 'mo/services';
 import { FolderTreeController, IFolderTreeController } from './folderTree';
+
 export interface IExplorerController {
     onActionsContextMenuClick?: (
         e: React.MouseEvent,
@@ -121,11 +121,6 @@ export class ExplorerController
         this.explorerService.addPanel({
             ...builtInExplorerFolderPanel(),
             renderPanel: this.renderFolderTree,
-        });
-
-        // add editor panel
-        this.explorerService.addPanel({
-            ...builtInExplorerEditorPanel(),
         });
     }
 

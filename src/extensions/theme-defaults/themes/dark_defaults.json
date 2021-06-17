@@ -12,6 +12,7 @@
         "editorGroupHeader.tabsBackground": "rgb(37, 37, 38)",
         "list.dropBackground": "#383B3D",
         "list.activeSelectionBackground": "#094771",
+        "list.inactiveSelectionBackground": "#37373D",
         "list.focusOutline": "#007FD4",
         "activityBarBadge.background": "#007ACC",
         "sidebarTitle.foreground": "#BBBBBB",

@@ -1,7 +1,21 @@
 import React from 'react';
 import { IEditorTreeController } from 'mo/controller';
-import { FileTypes, IEditor, IEditorGroup } from 'mo/model';
-import { Icon, ITabProps } from 'mo/components';
+import {
+    EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
+    EXPLORER_TOGGLE_SAVE_GROUP,
+    FileTypes,
+    IEditor,
+    IEditorGroup,
+} from 'mo/model';
+import {
+    IActionBarItemProps,
+    Icon,
+    IMenuItemProps,
+    ITabProps,
+    Menu,
+    Toolbar,
+    useContextView,
+} from 'mo/components';
 import { IFolderTreeService } from 'mo/services';
 import {
     editorTreeActiveItemClassName,
@@ -14,22 +28,49 @@ import {
     editorTreeItemClassName,
 } from './base';
 import { classNames } from 'mo/common/className';
+import { getEventPosition } from 'mo/common/dom';
 
-type UnionEditor = IEditor & IEditorTreeController;
-
-interface IOpenEditProps extends UnionEditor {
+// override onContextMenu
+type UnionEditor = Omit<IEditor & IEditorTreeController, 'onContextMenu'>;
+export interface IOpenEditProps extends UnionEditor {
     getFileIconByExtensionName: IFolderTreeService['getFileIconByExtensionName'];
+    /**
+     * Group Header toolbar
+     */
+    groupToolbar?: IActionBarItemProps<IEditorGroup>[];
+    /**
+     * Item context menus
+     */
+    contextMenu?: IMenuItemProps[];
+    /**
+     * Group Header context menus
+     * It'll use the value of contextMenu if specify contextMenu but not specify headerContextMenu
+     */
+    headerContextMenu?: IMenuItemProps[];
+    onContextMenu?: (
+        menu: IMenuItemProps,
+        groupId: number,
+        file?: ITabProps
+    ) => void;
 }
 
 const EditorTree = (props: IOpenEditProps) => {
     const {
         current,
         groups,
+        groupToolbar,
+        contextMenu = [],
+        headerContextMenu,
         getFileIconByExtensionName,
         onSelect,
+        onSaveGroup,
+        onContextMenu,
+        onCloseGroup,
         onClose,
     } = props;
     if (!groups || !groups.length) return null;
+
+    const contextView = useContextView();
 
     const handleCloseClick = (group: IEditorGroup, file: ITabProps) => {
         onClose?.(file.id!, group.id!);
@@ -39,6 +80,43 @@ const EditorTree = (props: IOpenEditProps) => {
         if (group.id !== current?.id || file.id !== current?.tab?.id) {
             onSelect?.(file.id!, group.id!);
         }
+    };
+
+    const handleOnMenuClick = (
+        menu: IMenuItemProps,
+        group: IEditorGroup,
+        file?: ITabProps
+    ) => {
+        contextView.hide();
+        onContextMenu?.(menu, group.id!, file);
+    };
+
+    const handleRightClick = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        group: IEditorGroup,
+        file: ITabProps
+    ) => {
+        e.preventDefault();
+        contextView.show(getEventPosition(e), () => (
+            <Menu
+                onClick={(_, item) => handleOnMenuClick(item!, group, file)}
+                data={contextMenu}
+            />
+        ));
+    };
+
+    const handleHeaderRightClick = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        group: IEditorGroup
+    ) => {
+        e.preventDefault();
+        const groupHeaderContext = headerContextMenu || contextMenu;
+        contextView.show(getEventPosition(e), () => (
+            <Menu
+                onClick={(_, item) => handleOnMenuClick(item!, group)}
+                data={groupHeaderContext}
+            />
+        ));
     };
 
     // click group title will open the first file in this group
@@ -51,6 +129,25 @@ const EditorTree = (props: IOpenEditProps) => {
         }
     };
 
+    const handleToolBarClick = (
+        e: React.MouseEvent<Element, MouseEvent>,
+        item: IActionBarItemProps,
+        group: IEditorGroup
+    ) => {
+        e.stopPropagation();
+        switch (item.id) {
+            case EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS:
+                onCloseGroup?.(group.id!);
+                break;
+            case EXPLORER_TOGGLE_SAVE_GROUP:
+                onSaveGroup?.(group.id!);
+                break;
+            default:
+                // default behavior
+                break;
+        }
+    };
+
     return (
         <div className={editorTreeClassName}>
             {groups.map((group, index) => {
@@ -60,9 +157,20 @@ const EditorTree = (props: IOpenEditProps) => {
                             <div
                                 className={editorTreeGroupClassName}
                                 onClick={(e) => handleGroupClick(e, group)}
+                                onContextMenu={(e) =>
+                                    handleHeaderRightClick(e, group)
+                                }
                                 key={index}
                             >
                                 {`第 ${index + 1} 组`}
+                                {groupToolbar && (
+                                    <Toolbar
+                                        data={groupToolbar}
+                                        onClick={(e, item) =>
+                                            handleToolBarClick(e, item, group)
+                                        }
+                                    />
+                                )}
                             </div>
                         )}
                         {group.data?.map((file) => {
@@ -80,6 +188,9 @@ const EditorTree = (props: IOpenEditProps) => {
                                     tabIndex={0}
                                     key={`${index}_${file.id}`}
                                     onClick={() => handleItemClick(group, file)}
+                                    onContextMenu={(e) =>
+                                        handleRightClick(e, group, file)
+                                    }
                                 >
                                     <Icon
                                         className={editorTreeCloseIconClassName}

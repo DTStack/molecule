@@ -11,6 +11,9 @@ import {
     builtInExplorerActivityItem,
     builtInExplorerFolderPanel,
     ExplorerEvent,
+    EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
+    EXPLORER_TOGGLE_SAVE_ALL,
+    EXPLORER_TOGGLE_VERTICAL,
     IExplorerPanelItem,
 } from 'mo/model/workbench/explorer/explorer';
 import {
@@ -20,6 +23,7 @@ import {
     REMOVE_COMMAND_ID,
     FileTypes,
     FolderTreeEvent,
+    EditorTreeEvent,
 } from 'mo/model';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
@@ -171,6 +175,17 @@ export class ExplorerController
             case REMOVE_COMMAND_ID: {
                 this.emit(ExplorerEvent.onDeletePanel, parentPanel);
                 break;
+            }
+            case EXPLORER_TOGGLE_CLOSE_ALL_EDITORS: {
+                this.emit(EditorTreeEvent.onCloseAll);
+                break;
+            }
+            case EXPLORER_TOGGLE_SAVE_ALL: {
+                this.emit(EditorTreeEvent.onSaveAll);
+                break;
+            }
+            case EXPLORER_TOGGLE_VERTICAL: {
+                this.emit(EditorTreeEvent.onSplitEditorLayout);
             }
             default:
                 console.log('onCollapseToolbar');

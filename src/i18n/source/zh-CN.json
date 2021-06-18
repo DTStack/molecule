@@ -52,6 +52,7 @@
         "editor.closeToLeft": "关闭左边",
         "editor.closeAll": "关闭所有",
         "editor.closeOthers": "关闭其他",
+        "editor.closeSaved": "关闭已保存",
         "editor.close": "关闭",
         "editor.showOpenEditors": "展示已打开的编辑器"
     }

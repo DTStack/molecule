@@ -53,6 +53,7 @@ export default {
         'editor.closeToRight': 'Close To Right',
         'editor.closeToLeft': 'Close To Left',
         'editor.closeAll': 'Close All',
+        'editor.closeSaved': 'Close Saved',
         'editor.closeOthers': 'Close Others',
         'editor.close': 'Close',
         'editor.showOpenEditors': 'Show Opened Editors',

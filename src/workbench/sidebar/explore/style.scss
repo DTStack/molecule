@@ -111,6 +111,8 @@
     }
 
     &__group {
+        align-items: center;
+        display: flex;
         font-size: 11px;
         height: 22px;
         line-height: 22px;
@@ -119,6 +121,23 @@
 
         &:hover {
             background-color: var(--list-hoverBackground);
+
+            #{$toolBar} {
+                opacity: 1;
+            }
+        }
+
+        #{$toolBar} {
+            margin-left: auto;
+            opacity: 0;
+
+            .codicon {
+                color: var(--activityBar-inactiveForeground);
+
+                &:hover {
+                    color: var(--activityBar-activeBorder);
+                }
+            }
         }
     }
 

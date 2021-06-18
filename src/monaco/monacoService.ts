@@ -35,7 +35,6 @@ import { ILayoutService } from 'monaco-editor/esm/vs/platform/layout/browser/lay
 import { ServiceCollection } from 'monaco-editor/esm/vs/platform/instantiation/common/serviceCollection';
 import { IModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
 import { IModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
-import { LayoutService } from 'mo/services';
 
 export interface IMonacoService {
     readonly services: ServiceCollection;
@@ -49,24 +48,19 @@ export interface IMonacoService {
     /**
      * Initial the Workspace, like Services and editor config.
      */
-    initWorkspace(): void;
+    initWorkspace(container: HTMLElement): void;
 }
 @singleton()
 export class MonacoService implements IMonacoService {
     private _services: ServiceCollection;
     private simpleEditorModelResolverService: SimpleEditorModelResolverService | null = null;
+    private _container!: HTMLElement | null;
 
     constructor() {}
+    container: HTMLElement | null;
 
-    public get container() {
-        return this.layoutService.initWorkbenchContainer();
-    }
-
-    private get layoutService() {
-        return container.resolve(LayoutService);
-    }
-
-    public initWorkspace() {
+    public initWorkspace(container: HTMLElement) {
+        this._container = container;
         this._services = this.createStandaloneServices();
     }
 

@@ -15,19 +15,21 @@ export interface ILayoutService extends Component<ILayout> {
     getSideBarPosition(): Position;
     togglePanelMaximized(): void;
     isPanelMaximized(): boolean | undefined;
-    initWorkbenchContainer(): void;
+    container: HTMLElement | null;
 }
 
 @singleton()
 export class LayoutService extends Component<any> implements ILayoutService {
     protected state: ILayout;
+    private _container!: HTMLElement | null;
     constructor() {
         super();
         this.state = container.resolve(LayoutModel);
+        this._container = document.getElementById(ID_APP) || document.body;
     }
 
-    public initWorkbenchContainer() {
-        return document.getElementById(ID_APP) || document.body;
+    public get container() {
+        return this._container;
     }
     /**
      * Set menubar hidden or not

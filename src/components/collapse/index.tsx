@@ -52,6 +52,16 @@ export function Collapse(props: ICollapseProps) {
         ...restProps
     } = props;
 
+    // assets data must have id
+    const filterData = data.filter((panel) => panel.id) as DataBaseProps[];
+    if (filterData.length < data.length) {
+        Logger.warn(new SyntaxError('collapse data must have id'));
+    }
+
+    // to save position temporarily, empty array when rerender
+    const _cachePosition: number[][] = [];
+    let _cacheWrapperHeight = React.useRef(0);
+
     const handleResize = React.useCallback(() => {
         // just want to trigger rerender
         setActivePanelKeys((keys) => keys.concat());
@@ -61,6 +71,33 @@ export function Collapse(props: ICollapseProps) {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    React.useLayoutEffect(() => {
+        filterData.forEach((panel) => {
+            const isActive = activePanelKeys.includes(panel.id);
+            let isEmpty = true;
+            if (isActive) {
+                const contentDom = document.querySelector(
+                    `.${collapseContentClassName}[data-content='${panel.id}']`
+                );
+                isEmpty = !contentDom?.hasChildNodes();
+            }
+            panel._isEmpty = isEmpty;
+            const [height, top] = calcPosition(
+                activePanelKeys,
+                panel,
+                filterData
+            );
+            _cachePosition.push([height, top]);
+            const dom = document.querySelector<HTMLElement>(
+                `.${collapseItemClassName}[data-content='${panel.id}']`
+            );
+            if (dom) {
+                dom.style.height = `${height}px`;
+                dom.style.top = `${top}px`;
+            }
+        });
+    }, [activePanelKeys]);
 
     const handleChangeCallback = (key: React.Key) => {
         const currentKeys = activePanelKeys.concat();
@@ -92,14 +129,6 @@ export function Collapse(props: ICollapseProps) {
         return null;
     };
 
-    const filterData = data.filter((panel) => panel.id) as DataBaseProps[];
-    if (filterData.length < data.length) {
-        Logger.warn(new SyntaxError('collapse data must have id'));
-    }
-
-    // to save position temporarily, empty array when rerender
-    const _cachePosition: number[][] = [];
-    let _cacheWrapperHeight = React.useRef(0);
     /**
      * Calculate the position of the panel in view
      * @param keys Current active keys
@@ -181,27 +210,14 @@ export function Collapse(props: ICollapseProps) {
             {filterData
                 .filter((p) => !p.hidden)
                 .map((panel) => {
-                    const content = renderPanels(panel, panel.renderPanel);
-                    // mark current panel empty and content
-                    panel._content = content;
-                    panel._isEmpty = !content;
                     const isActive = activePanelKeys.includes(panel.id);
-                    const [height, top] = calcPosition(
-                        activePanelKeys,
-                        panel,
-                        filterData
-                    );
-                    _cachePosition.push([height, top]);
                     return (
                         <div
                             className={classNames(
                                 collapseItemClassName,
                                 isActive && collapseActiveClassName
                             )}
-                            style={{
-                                height,
-                                top,
-                            }}
+                            data-content={panel.id}
                             key={panel.id}
                         >
                             <div
@@ -235,9 +251,10 @@ export function Collapse(props: ICollapseProps) {
                             </div>
                             <div
                                 className={collapseContentClassName}
+                                data-content={panel.id}
                                 tabIndex={0}
                             >
-                                {content}
+                                {renderPanels(panel, panel.renderPanel)}
                             </div>
                         </div>
                     );

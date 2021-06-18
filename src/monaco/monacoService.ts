@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { container, singleton } from 'tsyringe';
+import { singleton } from 'tsyringe';
 
 import {
     IStandaloneEditorConstructionOptions,
@@ -57,11 +57,14 @@ export class MonacoService implements IMonacoService {
     private _container!: HTMLElement | null;
 
     constructor() {}
-    container: HTMLElement | null;
 
     public initWorkspace(container: HTMLElement) {
         this._container = container;
         this._services = this.createStandaloneServices();
+    }
+
+    get container() {
+        return this._container;
     }
 
     get services() {

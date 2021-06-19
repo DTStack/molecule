@@ -13,6 +13,7 @@ import {
     collapseExtraClassName,
     collapseContentClassName,
 } from './base';
+import { Scrollable } from '../scrollable';
 
 type RenderFunctionProps = (data: DataBaseProps) => React.ReactNode;
 
@@ -249,13 +250,15 @@ export function Collapse(props: ICollapseProps) {
                                     )}
                                 </div>
                             </div>
-                            <div
-                                className={collapseContentClassName}
-                                data-content={panel.id}
-                                tabIndex={0}
-                            >
-                                {renderPanels(panel, panel.renderPanel)}
-                            </div>
+                            <Scrollable noScrollX isShowShadow>
+                                <div
+                                    className={collapseContentClassName}
+                                    data-content={panel.id}
+                                    tabIndex={0}
+                                >
+                                    {renderPanels(panel, panel.renderPanel)}
+                                </div>
+                            </Scrollable>
                         </div>
                     );
                 })}

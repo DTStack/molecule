@@ -7,6 +7,7 @@ import { IColorTheme } from 'mo/model/colorTheme';
 import { FileTypes, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
 import { localize } from 'mo/i18n/localize';
+import { Scrollable } from 'mo/components';
 
 export default class TestPane extends React.Component {
     constructor(props) {
@@ -211,19 +212,17 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         };
 
         const addRootFolder = () => {
-            molecule.folderTree.addRootFolder?.(
-                new TreeNodeModel({
-                    name: 'molecule_temp',
-                    fileType: FileTypes.RootFolder,
-                    children: [
-                        new TreeNodeModel({
-                            name: 'test_sql.txt',
-                            fileType: FileTypes.File,
-                            icon: molecule.folderTree.getFileIconByExtensionName(
-                                'test_sql.txt',
-                                FileTypes.File
-                            ),
-                            content: `show tables;
+            const children = new Array(50).fill(1).map(
+                (_, index) =>
+                    new TreeNodeModel({
+                        id: index,
+                        name: `test_sql_${index}.txt`,
+                        fileType: FileTypes.File,
+                        icon: molecule.folderTree.getFileIconByExtensionName(
+                            'test_sql.txt',
+                            FileTypes.File
+                        ),
+                        content: `show tables;
 SELECT 1;
 DESC 6d_target_test;
 create table if not exists ods_order_header1213 (
@@ -236,64 +235,75 @@ order_header_id     string comment '订单头id'
 )comment '销售订单明细表'
 PARTITIONED BY (ds string) lifecycle 1000;
 `,
-                        }),
-                    ],
+                    })
+            );
+            molecule.folderTree.addRootFolder?.(
+                new TreeNodeModel({
+                    name: 'molecule_temp',
+                    fileType: FileTypes.RootFolder,
+                    children,
                 })
             );
         };
 
         return (
-            <div>
-                <div style={{ margin: '50px 20px' }}>
-                    <Button onClick={addABar}>Add Bar</Button>
-                    <Button onClick={newEditor}>New Editor</Button>
-                    <Button onClick={openCommand}>Command Palette</Button>
-                </div>
-                <div style={{ margin: '50px 20px' }}>
-                    <h1>Select a ColorTheme:</h1>
-                    {this.renderColorThemes()}
-                </div>
-                <div style={{ margin: '50px 20px' }}>
-                    <h1>Select a localization language:</h1>
-                    {this.renderLocales()}
-                    {localize('test.id', 'aaaa')}
-                </div>
-                <div style={{ margin: '50px 20px' }}>
-                    <h2>Add a new Panel:</h2>
-                    <Button onClick={addPanel}>Add Panel</Button>
-                    <Button onClick={showHidePanel}>Show/Hide Panel</Button>
-                    <Button onClick={updateOutput}>Update Output</Button>
-                </div>
-                <div style={{ margin: '50px 20px' }}>
-                    <h2>Notification:</h2>
-                    <Button onClick={addANotification}>
-                        Add A Notification
-                    </Button>
-                    <Button onClick={removeNotification}>
-                        Remove A Notification
-                    </Button>
-                </div>
-                <div style={{ margin: '50px 20px' }}>
-                    <h2>MenuBar:</h2>
-                    <Button onClick={appendMenu}>Add MenuBar</Button>
-                    <Button onClick={removeMenu}>Remove MenuBar</Button>
-                    <Button onClick={updateMenu}>Update MenuBar</Button>
-                    <Button onClick={addSettingsItem}>
-                        Append Settings Item
-                    </Button>
-                </div>
-                <div style={{ margin: '50px 20px' }}>
-                    <h2>Exploer:</h2>
-                    <Button onClick={addExplorer}>Add Explorer Panel</Button>
-                    <Button onClick={addRootFolder}>Add Root Folder</Button>
-                </div>
+            <Scrollable>
                 <div>
-                    <molecule.component.Button>AAA</molecule.component.Button>
+                    <div style={{ margin: '50px 20px' }}>
+                        <Button onClick={addABar}>Add Bar</Button>
+                        <Button onClick={newEditor}>New Editor</Button>
+                        <Button onClick={openCommand}>Command Palette</Button>
+                    </div>
+                    <div style={{ margin: '50px 20px' }}>
+                        <h1>Select a ColorTheme:</h1>
+                        {this.renderColorThemes()}
+                    </div>
+                    <div style={{ margin: '50px 20px' }}>
+                        <h1>Select a localization language:</h1>
+                        {this.renderLocales()}
+                        {localize('test.id', 'aaaa')}
+                    </div>
+                    <div style={{ margin: '50px 20px' }}>
+                        <h2>Add a new Panel:</h2>
+                        <Button onClick={addPanel}>Add Panel</Button>
+                        <Button onClick={showHidePanel}>Show/Hide Panel</Button>
+                        <Button onClick={updateOutput}>Update Output</Button>
+                    </div>
+                    <div style={{ margin: '50px 20px' }}>
+                        <h2>Notification:</h2>
+                        <Button onClick={addANotification}>
+                            Add A Notification
+                        </Button>
+                        <Button onClick={removeNotification}>
+                            Remove A Notification
+                        </Button>
+                    </div>
+                    <div style={{ margin: '50px 20px' }}>
+                        <h2>MenuBar:</h2>
+                        <Button onClick={appendMenu}>Add MenuBar</Button>
+                        <Button onClick={removeMenu}>Remove MenuBar</Button>
+                        <Button onClick={updateMenu}>Update MenuBar</Button>
+                        <Button onClick={addSettingsItem}>
+                            Append Settings Item
+                        </Button>
+                    </div>
+                    <div style={{ margin: '50px 20px' }}>
+                        <h2>Exploer:</h2>
+                        <Button onClick={addExplorer}>
+                            Add Explorer Panel
+                        </Button>
+                        <Button onClick={addRootFolder}>Add Root Folder</Button>
+                    </div>
+                    <div>
+                        <molecule.component.Button>
+                            AAA
+                        </molecule.component.Button>
+                    </div>
+                    <div style={{ margin: '50px 20px' }}>
+                        <molecule.MenuBar onClick={() => {}} />
+                    </div>
                 </div>
-                <div style={{ margin: '50px 20px' }}>
-                    <molecule.MenuBar onClick={() => {}} />
-                </div>
-            </div>
+            </Scrollable>
         );
     }
 }

@@ -1,5 +1,15 @@
 @import 'mo/style/common';
 
-// #{prefix($scrollbar)} {
-//     pointer-events: none;
-// }
+#{$scrollbar} {
+    .shadow.top {
+        box-shadow: none;
+        height: 3px;
+        position: absolute;
+        top: 0;
+        width: 100%;
+
+        &.active {
+            box-shadow: #000 0 6px 6px -6px inset;
+        }
+    }
+}

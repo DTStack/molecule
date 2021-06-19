@@ -5,9 +5,10 @@ import { prefixClaName, classNames } from 'mo/common/className';
 
 export interface IScrollbarProps extends ScrollbarProps {
     autoHideThumb?: boolean;
+    isShowShadow?: boolean;
 }
 
-const defaultSrollableClassName = prefixClaName('scrollable');
+const defaultSrollableClassName = prefixClaName('scrollbar');
 
 /**
  * The react-scrollbars-custom component default not supports auto hide thumb option,
@@ -15,7 +16,8 @@ const defaultSrollableClassName = prefixClaName('scrollable');
  * https://github.com/xobotyi/react-scrollbars-custom/issues/46
  */
 export function Scrollable(props: IScrollbarProps) {
-    const { className, children, ...custom } = props;
+    const { className, children, isShowShadow = false, ...custom } = props;
+    const scroller = React.useRef<Scrollbar>(null);
 
     const [isScrolling, setIsScrolling] = useState(false);
     const [isMouseOver, setIsMouseOver] = useState(false);
@@ -58,15 +60,28 @@ export function Scrollable(props: IScrollbarProps) {
     return (
         <Scrollbar
             className={claNames}
+            ref={scroller}
             {...(custom as any)}
             wrapperProps={{
-                renderer: ({ elementRef, style, ...restProps }: any) => (
-                    <div
-                        {...restProps}
-                        ref={elementRef}
-                        style={{ ...style, right: 0 }}
-                    />
-                ),
+                renderer: ({ elementRef, style, ...restProps }) => {
+                    const currentTop = scroller.current?.scrollTop || 0;
+                    return (
+                        <>
+                            <div
+                                {...restProps}
+                                ref={elementRef}
+                                style={{ ...style, right: 0 }}
+                            />
+                            <div
+                                className={classNames(
+                                    'shadow',
+                                    'top',
+                                    isShowShadow && currentTop > 0 && 'active'
+                                )}
+                            />
+                        </>
+                    );
+                },
             }}
             trackXProps={trackProps}
             trackYProps={trackProps}

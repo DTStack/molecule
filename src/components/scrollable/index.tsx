@@ -63,10 +63,10 @@ export function Scrollable(props: IScrollbarProps) {
             ref={scroller}
             {...(custom as any)}
             wrapperProps={{
-                renderer: ({ elementRef, style, ...restProps }) => {
+                renderer: ({ elementRef, style, key, ...restProps }) => {
                     const currentTop = scroller.current?.scrollTop || 0;
                     return (
-                        <>
+                        <React.Fragment key={key}>
                             <div
                                 {...restProps}
                                 ref={elementRef}
@@ -79,7 +79,7 @@ export function Scrollable(props: IScrollbarProps) {
                                     isShowShadow && currentTop > 0 && 'active'
                                 )}
                             />
-                        </>
+                        </React.Fragment>
                     );
                 },
             }}

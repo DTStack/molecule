@@ -13,7 +13,6 @@ import { searchById } from '../helper';
 import { IMenuItemProps } from 'mo/components/menu';
 
 export interface IActivityBarService extends Component<IActivityBar> {
-    showHide(): void;
     reset(): void;
     addBar(data: IActivityBarItem | IActivityBarItem[]): void;
     remove(id: string): void;
@@ -44,13 +43,6 @@ export class ActivityBarService
         this.setState({
             data: [],
             selected: '',
-            hidden: false,
-        });
-    }
-
-    public showHide(): void {
-        this.setState({
-            hidden: !this.state.hidden,
         });
     }
 

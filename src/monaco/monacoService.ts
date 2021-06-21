@@ -47,15 +47,14 @@ export interface IMonacoService {
     ): IStandaloneCodeEditor;
     /**
      * Initial the Workspace, like Services and editor config.
-     * @param container The Container element of Molecule
      */
     initWorkspace(container: HTMLElement): void;
 }
 @singleton()
 export class MonacoService implements IMonacoService {
     private _services: ServiceCollection;
-    private _container!: HTMLElement | null;
     private simpleEditorModelResolverService: SimpleEditorModelResolverService | null = null;
+    private _container!: HTMLElement | null;
 
     constructor() {}
 
@@ -64,16 +63,16 @@ export class MonacoService implements IMonacoService {
         this._services = this.createStandaloneServices();
     }
 
+    get container() {
+        return this._container;
+    }
+
     get services() {
         return this._services;
     }
 
     get commandService() {
         return this.services.get(ICommandService);
-    }
-
-    get container() {
-        return this._container;
     }
 
     private mergeEditorServices(overrides?: IEditorOverrideServices) {

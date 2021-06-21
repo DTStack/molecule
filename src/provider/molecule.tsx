@@ -10,13 +10,13 @@ import {
     ExtensionService,
     IExtensionService,
 } from 'mo/services/extensionService';
-import { ID_APP } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { registerAction2 } from 'mo/monaco/common';
 import { QuickAccessSettings } from 'mo/monaco/quickAccessSettingsAction';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 import { ILocaleService, LocaleService } from 'mo/i18n/localeService';
+import { ILayoutService, LayoutService } from 'mo/services';
 import { SelectLocaleAction } from 'mo/i18n/selectLocaleAction';
 export interface IMoleculeProps {
     extensions?: IExtension[];
@@ -34,13 +34,14 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
     private readonly extensionService!: IExtensionService;
     private readonly monacoService!: IMonacoService;
     private readonly localeService!: ILocaleService;
+    private readonly layoutService!: ILayoutService;
 
     constructor(props: IMoleculeProps) {
         super(props);
         this.localeService = container.resolve(LocaleService);
         this.monacoService = container.resolve(MonacoService);
         this.extensionService = container.resolve(ExtensionService);
-
+        this.layoutService = container.resolve(LayoutService);
         this.preloadLocales();
     }
 
@@ -48,19 +49,19 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
         this.initialize();
     }
 
-    public get container() {
-        return document.getElementById(ID_APP) || document.body;
-    }
-
     preloadLocales() {
         const { locales = [], locale } = this.props;
         this.localeService.initialize(locales, locale);
     }
 
+    public get container() {
+        return this.layoutService.container;
+    }
+
     initialize() {
         const { extensions = [] } = this.props;
 
-        this.monacoService.initWorkspace(this.container);
+        this.monacoService.initWorkspace(this.container!);
         this.extensionService.load(defaultExtensions);
         this.extensionService.load(extensions);
 

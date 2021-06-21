@@ -10,7 +10,6 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 
 export interface IMenuBarService extends Component<IMenuBar> {
-    showHide(): void;
     initMenu(data: IMenuBarItem[]): void;
     addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void;
     add(menuItem: IMenuBarItem, parentId: string): void;
@@ -28,12 +27,6 @@ export class MenuBarService
     constructor() {
         super();
         this.state = container.resolve(MenuBarModel);
-    }
-
-    public showHide(): void {
-        this.setState({
-            hidden: !this.state.hidden,
-        });
     }
 
     public initMenu = (menuData: IMenuBarItem[]) => {

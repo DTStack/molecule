@@ -11,40 +11,36 @@ import {
 } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 import {
-    ActivityBarService,
     EditorService,
-    IActivityBarService,
     IEditorService,
     IMenuBarService,
-    ISidebarService,
-    IStatusBarService,
+    ILayoutService,
     MenuBarService,
-    SidebarService,
-    StatusBarService,
+    LayoutService,
 } from 'mo/services';
 
 export interface IMenuBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick: (event: React.MouseEvent<any, any>, item: IMenuBarItem) => void;
+    updateStatusBar?: () => void;
+    updateMenuBar?: () => void;
+    updateActivityBar?: () => void;
+    updateSideBar?: () => void;
 }
 
 @singleton()
 export class MenuBarController
     extends Controller
     implements IMenuBarController {
-    private readonly activityBarService: IActivityBarService;
     private readonly editorService: IEditorService;
     private readonly menuBarService: IMenuBarService;
-    private readonly statusBarService: IStatusBarService;
-    private readonly sidebarService: ISidebarService;
+    private readonly layoutService: ILayoutService;
 
     constructor() {
         super();
-        this.activityBarService = container.resolve(ActivityBarService);
         this.editorService = container.resolve(EditorService);
         this.menuBarService = container.resolve(MenuBarService);
-        this.statusBarService = container.resolve(StatusBarService);
-        this.sidebarService = container.resolve(SidebarService);
+        this.layoutService = container.resolve(LayoutService);
     }
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
@@ -80,32 +76,40 @@ export class MenuBarController
     };
 
     public updateActivityBar = () => {
-        this.activityBarService.showHide();
-        const { hidden } = this.activityBarService.getState();
+        this.layoutService.setActivityBarHidden();
+        const {
+            activityBar: { hidden },
+        } = this.layoutService.getState();
         this.menuBarService.update(MENU_VIEW_ACTIVITYBAR, {
             icon: hidden ? '' : 'check',
         });
     };
 
     public updateMenuBar = () => {
-        this.menuBarService.showHide();
-        const { hidden } = this.menuBarService.getState();
+        this.layoutService.setMenuBarHidden();
+        const {
+            menuBar: { hidden },
+        } = this.layoutService.getState();
         this.menuBarService.update(MENU_VIEW_MENUBAR, {
             icon: hidden ? '' : 'check',
         });
     };
 
     public updateStatusBar = () => {
-        this.statusBarService.showHide();
-        const { hidden } = this.statusBarService.getState();
+        this.layoutService.setStatusBarHidden();
+        const {
+            statusBar: { hidden },
+        } = this.layoutService.getState();
         this.menuBarService.update(MENU_VIEW_STATUSBAR, {
             icon: hidden ? '' : 'check',
         });
     };
 
     public updateSideBar = () => {
-        this.sidebarService.showHide();
-        const { hidden } = this.sidebarService.getState();
+        this.layoutService.setSideBarHidden();
+        const {
+            sideBar: { hidden },
+        } = this.layoutService.getState();
         this.menuBarService.update(MENU_VIEW_SIDEBAR, {
             icon: hidden ? '' : 'check',
         });

@@ -7,6 +7,8 @@ import {
     PanelService,
     IStatusBarService,
     StatusBarService,
+    ILayoutService,
+    LayoutService,
 } from 'mo/services';
 import { singleton, container } from 'tsyringe';
 import { builtInPanelProblems, builtInStatusProblems } from 'mo/model/problems';
@@ -19,24 +21,29 @@ export class ProblemsController
     implements IProblemsController {
     private readonly panelService: IPanelService;
     private readonly statusBarService: IStatusBarService;
+    private readonly layoutService: ILayoutService;
 
     constructor() {
         super();
         this.panelService = container.resolve(PanelService);
         this.statusBarService = container.resolve(StatusBarService);
+        this.layoutService = container.resolve(LayoutService);
         this.init();
     }
 
     private showHideProblems() {
-        const { current, hidden } = this.panelService.getState();
+        const { current } = this.panelService.getState();
+        const {
+            panel: { hidden },
+        } = this.layoutService.getState();
         if (hidden) {
-            this.panelService.showHide();
+            this.layoutService.setPanelHidden();
             this.panelService.open(builtInPanelProblems());
         } else {
             if (current?.id !== builtInPanelProblems().id) {
                 this.panelService.open(builtInPanelProblems());
             } else {
-                this.panelService.showHide();
+                this.layoutService.setPanelHidden();
             }
         }
     }

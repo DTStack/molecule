@@ -14,7 +14,6 @@ export interface IStatusBar {
     rightItems: IStatusBarItem[];
     leftItems: IStatusBarItem[];
     contextMenu?: IMenuItemProps[];
-    hidden?: boolean;
 }
 
 export const STATUS_EDITOR_INFO: IStatusBarItem = {
@@ -50,17 +49,14 @@ export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[] = [];
     public rightItems: IStatusBarItem[] = [];
     public contextMenu: IMenuItemProps[];
-    public hidden = false;
 
     constructor(
         leftItems: IStatusBarItem[] = [],
         rightItems: IStatusBarItem[] = [STATUS_EDITOR_INFO],
-        contextMenu: IMenuItemProps[] = [CONTEXT_MENU_HIDE_STATUS_BAR],
-        hidden = false
+        contextMenu: IMenuItemProps[] = [CONTEXT_MENU_HIDE_STATUS_BAR]
     ) {
         this.leftItems = leftItems;
         this.rightItems = rightItems;
         this.contextMenu = contextMenu;
-        this.hidden = hidden;
     }
 }

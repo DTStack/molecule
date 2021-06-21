@@ -1,4 +1,7 @@
 import 'reflect-metadata';
+import { Controller } from 'mo/react/controller';
+import { container, singleton } from 'tsyringe';
+import { MenuBarController, IMenuBarController } from 'mo/controller';
 import { IMenuItemProps } from 'mo/components/menu';
 import {
     ActivityBarEvent,
@@ -11,15 +14,11 @@ import {
     CONTEXT_MENU_SETTINGS,
     IActivityBarItem,
 } from 'mo/model';
-import { Controller } from 'mo/react/controller';
-import { container, singleton } from 'tsyringe';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 
 import {
     ActivityBarService,
-    MenuBarService,
     IActivityBarService,
-    IMenuBarService,
     ISettingsService,
     SettingsService,
 } from 'mo/services';
@@ -39,16 +38,16 @@ export class ActivityBarController
     extends Controller
     implements IActivityBarController {
     private readonly activityBarService: IActivityBarService;
-    private readonly menuBarService: IMenuBarService;
     private readonly settingsService: ISettingsService;
     private readonly monacoService: IMonacoService;
+    private readonly menuBarController: IMenuBarController;
 
     constructor() {
         super();
         this.activityBarService = container.resolve(ActivityBarService);
-        this.menuBarService = container.resolve(MenuBarService);
         this.settingsService = container.resolve(SettingsService);
         this.monacoService = container.resolve(MonacoService);
+        this.menuBarController = container.resolve(MenuBarController);
     }
 
     public readonly onSelect = (
@@ -91,7 +90,7 @@ export class ActivityBarController
         switch (contextMenuId) {
             // activityBar contextMenu
             case CONTEXT_MENU_MENU: {
-                this.menuBarService.showHide();
+                this.menuBarController.updateMenuBar!();
                 break;
             }
             case CONTEXT_MENU_EXPLORER: {
@@ -103,7 +102,7 @@ export class ActivityBarController
                 break;
             }
             case CONTEXT_MENU_HIDE: {
-                this.activityBarService.showHide();
+                this.menuBarController.updateActivityBar!();
                 break;
             }
             // manage button contextMenu

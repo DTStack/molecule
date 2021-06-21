@@ -36,7 +36,6 @@ export interface IActivityBar {
     data?: IActivityBarItem[];
     contextMenu?: IMenuItemProps[];
     selected?: string;
-    hidden?: boolean;
 }
 
 export const ACTIVITY_BAR_GLOBAL_SETTINGS = 'global.menu.settings';
@@ -113,16 +112,13 @@ export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
     public contextMenu: IMenuItemProps[];
     public selected: string;
-    public hidden = false;
     constructor(
         data: IActivityBarItem[] = [],
         contextMenu: IMenuItemProps[] = [],
-        selected: string = '',
-        hidden = false
+        selected: string = ''
     ) {
         this.data = data;
         this.contextMenu = contextMenu;
         this.selected = selected;
-        this.hidden = hidden;
     }
 }

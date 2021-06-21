@@ -18,22 +18,10 @@ import { APP_PREFIX } from 'mo/common/const';
 
 import { connect } from 'mo/react';
 
-import {
-    IWorkbenchController,
-    WorkbenchController,
-} from 'mo/controller/workbench';
-import {
-    ActivityBarService,
-    IActivityBarService,
-    IMenuBarService,
-    IPanelService,
-    ISidebarService,
-    IStatusBarService,
-    MenuBarService,
-    PanelService,
-    SidebarService,
-    StatusBarService,
-} from 'mo/services';
+import { ILayoutController, LayoutController } from 'mo/controller/layout';
+import { LayoutService } from 'mo/services';
+import { ILayout } from 'mo/model/workbench/layout';
+
 import { IWorkbench } from 'mo/model';
 
 const mainBenchClassName = prefixClaName('mainBench');
@@ -41,16 +29,10 @@ const workbenchClassName = prefixClaName('workbench');
 const compositeBarClassName = prefixClaName('compositeBar');
 const appClassName = classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '');
 
-const panelService = container.resolve<IPanelService>(PanelService);
-const sidebarService = container.resolve<ISidebarService>(SidebarService);
-const menuBarService = container.resolve<IMenuBarService>(MenuBarService);
-const activityBarService = container.resolve<IActivityBarService>(
-    ActivityBarService
-);
-const workbenchController = container.resolve(WorkbenchController);
-const statusBarService = container.resolve<IStatusBarService>(StatusBarService);
+const layoutController = container.resolve(LayoutController);
+const layoutService = container.resolve(LayoutService);
 
-export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
+export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
     const {
         activityBar,
         menuBar,
@@ -75,7 +57,7 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
                         split="vertical"
                         primary="first"
                         allowResize={true}
-                        onChange={onPaneSizeChange}
+                        onChange={onPaneSizeChange as any}
                     >
                         {!sideBar.hidden && (
                             <Pane
@@ -90,9 +72,10 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
                             primary="first"
                             split="horizontal"
                             allowResize={true}
-                            onChange={onHorizontalPaneSizeChange}
+                            // react-split-pane onChange: (newSizes: [size, ratio]) => void；
+                            onChange={onHorizontalPaneSizeChange as any}
                         >
-                            {!panel.maximize ? (
+                            {!panel.panelMaximized ? (
                                 <Pane
                                     initialSize={
                                         panel.hidden
@@ -120,13 +103,7 @@ export function WorkbenchView(props: IWorkbench & IWorkbenchController) {
 }
 
 export const Workbench = connect(
-    {
-        panel: panelService,
-        activityBar: activityBarService,
-        menuBar: menuBarService,
-        sideBar: sidebarService,
-        statusBar: statusBarService,
-    },
+    layoutService,
     WorkbenchView,
-    workbenchController
+    layoutController
 );

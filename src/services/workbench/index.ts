@@ -8,3 +8,4 @@ export * from './explorer/folderTreeService';
 export * from './explorer/editorTreeService';
 export * from './searchService';
 export * from './panelService';
+export * from './layoutService';

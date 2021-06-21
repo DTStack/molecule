@@ -7,7 +7,7 @@ export * from './problems';
 export * from './settings';
 export * from './sidebar';
 export * from './statusBar';
-export * from './workbench';
+export * from './layout';
 export * from './explorer/explorer';
 export * from './explorer/folderTree';
 export * from './explorer/editorTree';

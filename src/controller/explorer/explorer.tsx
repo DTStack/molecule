@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import * as React from 'react';
 import { Controller } from 'mo/react/controller';
+import { MenuBarController, IMenuBarController } from 'mo/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
 import { Explorer, FolderTreeView } from 'mo/workbench/sidebar/explore';
@@ -63,6 +64,7 @@ export class ExplorerController
     private readonly folderTreeService: IFolderTreeService;
     private readonly menuBarService: IMenuBarService;
     private readonly folderTreeController: IFolderTreeController;
+    private readonly menuBarController: IMenuBarController;
 
     constructor() {
         super();
@@ -72,6 +74,7 @@ export class ExplorerController
         this.folderTreeService = container.resolve(FolderTreeService);
         this.menuBarService = container.resolve(MenuBarService);
         this.folderTreeController = container.resolve(FolderTreeController);
+        this.menuBarController = container.resolve(MenuBarController);
 
         this.initView();
     }
@@ -103,13 +106,11 @@ export class ExplorerController
         };
 
         this.activityBarService.onSelect((e, item: IActivityBarItem) => {
-            const { hidden } = this.sidebarService.getState();
             if (item.id === EXPLORER_ACTIVITY_ITEM) {
-                const isShow = hidden ? !hidden : hidden;
                 this.sidebarService.setState({
                     current: explorePane.id,
-                    hidden: isShow,
                 });
+                this.menuBarController.updateSideBar!();
                 this.menuBarService.update(MENU_VIEW_SIDEBAR, {
                     icon: 'check',
                 });

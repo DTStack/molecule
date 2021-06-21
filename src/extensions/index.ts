@@ -6,6 +6,7 @@ import { ExtendsMenuBar } from './menuBar';
 import { ExtendsActivityBar } from './activityBar';
 import { ExtendsPanel } from './panel';
 import { ExtendsExplorer } from './explorer';
+import { ExtendsEditorTree } from './editorTree';
 
 import { defaultColorThemeExtension } from './theme-defaults';
 import { monokaiColorThemeExtension } from './theme-monokai';
@@ -22,6 +23,7 @@ export const defaultExtensions = [
     ExtendsStatusBar,
     ExtendsProblems,
     ExtendsExplorer,
+    ExtendsEditorTree,
     defaultColorThemeExtension,
     monokaiColorThemeExtension,
     paleNightColorThemeExtension,

@@ -10,5 +10,6 @@ export * from './statusBar';
 export * from './workbench';
 export * from './explorer/explorer';
 export * from './explorer/folderTree';
+export * from './explorer/editorTree';
 export * from './explorer/outline';
 export * from './search/search';

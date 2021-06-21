@@ -50,6 +50,9 @@ export const EXPLORER_TOGGLE_VERTICAL = 'sidebar.explore.toggleVertical';
 export const EXPLORER_TOGGLE_SAVE_ALL = 'sidebar.explore.saveALL';
 export const EXPLORER_TOGGLE_CLOSE_ALL_EDITORS =
     'sidebar.explore.closeAllEditors';
+export const EXPLORER_TOGGLE_SAVE_GROUP = 'sidebar.explore.saveGroup';
+export const EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS =
+    'sidebar.explore.closeGroupEditors';
 
 export function builtInExplorerActivityItem() {
     return {
@@ -77,13 +80,11 @@ export function builtInExplorerEditorPanel() {
             {
                 id: EXPLORER_TOGGLE_VERTICAL,
                 title: localize(EXPLORER_TOGGLE_VERTICAL, 'Toggle Vertical'),
-                disabled: true,
                 iconName: 'codicon-editor-layout',
             },
             {
                 id: EXPLORER_TOGGLE_SAVE_ALL,
                 title: localize(EXPLORER_TOGGLE_SAVE_ALL, 'Save All'),
-                disabled: true,
                 iconName: 'codicon-save-all',
             },
             {
@@ -91,6 +92,21 @@ export function builtInExplorerEditorPanel() {
                 title: localize(
                     EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
                     'Close All Editors'
+                ),
+                iconName: 'codicon-close-all',
+            },
+        ],
+        groupToolbar: [
+            {
+                id: EXPLORER_TOGGLE_SAVE_GROUP,
+                title: localize(EXPLORER_TOGGLE_SAVE_GROUP, 'Save Group'),
+                iconName: 'codicon-save-all',
+            },
+            {
+                id: EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
+                title: localize(
+                    EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
+                    'Close Group Editors'
                 ),
                 iconName: 'codicon-close-all',
             },

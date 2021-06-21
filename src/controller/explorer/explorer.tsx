@@ -10,8 +10,10 @@ import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import {
     builtInExplorerActivityItem,
     builtInExplorerFolderPanel,
-    builtInExplorerEditorPanel,
     ExplorerEvent,
+    EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
+    EXPLORER_TOGGLE_SAVE_ALL,
+    EXPLORER_TOGGLE_VERTICAL,
     IExplorerPanelItem,
 } from 'mo/model/workbench/explorer/explorer';
 import {
@@ -21,6 +23,7 @@ import {
     REMOVE_COMMAND_ID,
     FileTypes,
     FolderTreeEvent,
+    EditorTreeEvent,
 } from 'mo/model';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
@@ -36,6 +39,7 @@ import {
     IMenuBarService,
 } from 'mo/services';
 import { FolderTreeController, IFolderTreeController } from './folderTree';
+
 export interface IExplorerController {
     onActionsContextMenuClick?: (
         e: React.MouseEvent,
@@ -122,11 +126,6 @@ export class ExplorerController
             ...builtInExplorerFolderPanel(),
             renderPanel: this.renderFolderTree,
         });
-
-        // add editor panel
-        this.explorerService.addPanel({
-            ...builtInExplorerEditorPanel(),
-        });
     }
 
     private createFileOrFolder = (type: keyof typeof FileTypes) => {
@@ -176,6 +175,17 @@ export class ExplorerController
             case REMOVE_COMMAND_ID: {
                 this.emit(ExplorerEvent.onDeletePanel, parentPanel);
                 break;
+            }
+            case EXPLORER_TOGGLE_CLOSE_ALL_EDITORS: {
+                this.emit(EditorTreeEvent.onCloseAll);
+                break;
+            }
+            case EXPLORER_TOGGLE_SAVE_ALL: {
+                this.emit(EditorTreeEvent.onSaveAll);
+                break;
+            }
+            case EXPLORER_TOGGLE_VERTICAL: {
+                this.emit(EditorTreeEvent.onSplitEditorLayout);
             }
             default:
                 console.log('onCollapseToolbar');

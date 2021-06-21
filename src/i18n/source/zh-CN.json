@@ -32,6 +32,7 @@
         "menu.about": "关于",
         "sidebar.explore.title": "浏览",
         "sidebar.explore.openEditor": "打开的编辑器",
+        "sidebar.explore.openEditor.group": "第 ${i} 组",
         "sidebar.explore.outline": "轮廓",
         "sidebar.explore.outlineMore": "更多操作...",
         "sidebar.explore.refresh": "刷新浏览",

@@ -27,6 +27,7 @@ export default {
         'sidebar.explore.title': 'Explorer',
         'sidebar.explore.folders': 'Folders',
         'sidebar.explore.openEditor': 'Open Editors',
+        'sidebar.explore.openEditor.group': 'Group ${i}',
         'sidebar.explore.outline': 'Outline',
         'sidebar.search.title': 'Search',
         'sidebar.replace.placement': 'Replace',

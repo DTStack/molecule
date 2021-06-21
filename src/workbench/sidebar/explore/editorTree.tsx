@@ -29,6 +29,7 @@ import {
 } from './base';
 import { classNames } from 'mo/common/className';
 import { getEventPosition } from 'mo/common/dom';
+import { localize } from 'mo/i18n/localize';
 
 // override onContextMenu
 type UnionEditor = Omit<IEditor & IEditorTreeController, 'onContextMenu'>;
@@ -162,7 +163,11 @@ const EditorTree = (props: IOpenEditProps) => {
                                 }
                                 key={index}
                             >
-                                {`第 ${index + 1} 组`}
+                                {localize(
+                                    'sidebar.explore.openEditor.group',
+                                    'Group',
+                                    (index + 1).toString()
+                                )}
                                 {groupToolbar && (
                                     <Toolbar
                                         data={groupToolbar}

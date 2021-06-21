@@ -25,10 +25,12 @@ export class LayoutService extends Component<any> implements ILayoutService {
     constructor() {
         super();
         this.state = container.resolve(LayoutModel);
-        this._container = document.getElementById(ID_APP) || document.body;
     }
 
     public get container() {
+        if (!this.container) {
+            this._container = document.getElementById(ID_APP) || document.body;
+        }
         return this._container;
     }
     /**

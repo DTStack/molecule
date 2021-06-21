@@ -28,7 +28,7 @@ export class LayoutService extends Component<any> implements ILayoutService {
     }
 
     public get container() {
-        if (!this.container) {
+        if (!this._container) {
             this._container = document.getElementById(ID_APP) || document.body;
         }
         return this._container;

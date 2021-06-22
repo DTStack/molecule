@@ -30,10 +30,10 @@ export interface IFolderInputEvent {
 }
 
 export interface IFolderTreeSubItem {
-    data?: TreeNodeModel[];
+    data?: ITreeNodeItemProps[];
     contextMenu?: IMenuItemProps[];
     folderPanelContextMenu?: IMenuItemProps[];
-    current?: TreeNodeModel | null;
+    current?: ITreeNodeItemProps | null;
 }
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
@@ -102,7 +102,7 @@ export class TreeNodeModel implements ITreeNodeItemProps {
     name?: string;
     location?: string;
     fileType?: FileType;
-    children?: TreeNodeModel[];
+    children?: ITreeNodeItemProps[];
     icon?: string | React.ReactNode;
     isEditable?: boolean;
     content?: string;

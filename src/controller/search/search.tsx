@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
-import { IActivityBarItem, TreeNodeModel } from 'mo/model';
+import { IActivityBarItem } from 'mo/model';
 import * as React from 'react';
 import { SearchPanel } from 'mo/workbench/sidebar/search';
 import { IActionBarItemProps } from 'mo/components/actionBar';
@@ -34,7 +34,7 @@ export interface ISearchController {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: (
-        data: TreeNodeModel[],
+        data: ITreeNodeItemProps[],
         queryVal?: string
     ) => ITreeNodeItemProps[];
     getSearchIndex: (text: string, queryVal?: string) => number;

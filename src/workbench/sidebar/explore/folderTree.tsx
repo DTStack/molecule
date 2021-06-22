@@ -6,7 +6,7 @@ import React, {
     useCallback,
     useLayoutEffect,
 } from 'react';
-import { IFolderTreeSubItem, TreeNodeModel } from 'mo/model';
+import { IFolderTreeSubItem } from 'mo/model';
 import { select, getEventPosition } from 'mo/common/dom';
 import Tree, { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
@@ -113,7 +113,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const handleOnMenuClick = (
         e: React.MouseEvent,
         item: IMenuItemProps,
-        data: TreeNodeModel
+        data: IFolderTreeSubItem
     ) => {
         onClickContextMenu?.(e, item, data);
         contextView.hide();

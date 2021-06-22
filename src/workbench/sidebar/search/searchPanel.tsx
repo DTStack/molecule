@@ -4,10 +4,7 @@ import { prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { Search } from 'mo/components/search';
 import { ISearchProps } from 'mo/model/workbench/search';
-import {
-    IFolderTree,
-    TreeNodeModel,
-} from 'mo/model/workbench/explorer/folderTree';
+import { IFolderTree } from 'mo/model/workbench/explorer/folderTree';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { ITreeNodeItemProps } from 'mo/components';
 import SearchTree from './searchTree';
@@ -17,7 +14,7 @@ export interface ISearchPaneToolBar {
     search?: ISearchProps;
     folderTree?: IFolderTree;
     convertFoldToSearchTree?: (
-        data: TreeNodeModel[],
+        data: ITreeNodeItemProps[],
         queryVal?: string
     ) => ITreeNodeItemProps[];
     getSearchIndex: (text: string, queryVal?: string) => number;

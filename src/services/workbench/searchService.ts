@@ -3,7 +3,7 @@ import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 
 import { ISearchProps, SearchModel } from 'mo/model/workbench/search';
-import { FileTypes, TreeNodeModel } from 'mo/model';
+import { FileTypes } from 'mo/model';
 import { ITreeNodeItemProps } from 'mo/components';
 
 export interface ISearchService extends Component<ISearchProps> {
@@ -15,7 +15,7 @@ export interface ISearchService extends Component<ISearchProps> {
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
     convertFoldToSearchTree?: (
-        data: TreeNodeModel[],
+        data: ITreeNodeItemProps[],
         queryVal?: string
     ) => ITreeNodeItemProps[];
     getSearchIndex: (text: string, queryVal?: string) => number;
@@ -149,12 +149,12 @@ export class SearchService
     }
 
     public convertFoldToSearchTree(
-        data: TreeNodeModel[],
+        data: ITreeNodeItemProps[],
         queryVal?: string
     ): ITreeNodeItemProps[] {
         const searchTreeData: ITreeNodeItemProps[] = [];
 
-        const buildSearchTreeData = (tree?: TreeNodeModel[]) => {
+        const buildSearchTreeData = (tree?: ITreeNodeItemProps[]) => {
             tree?.forEach((treeItem) => {
                 if (treeItem.fileType === FileTypes.File) {
                     const children = treeItem.content

@@ -8,7 +8,8 @@ import {
 } from 'mo/model/workbench/sidebar';
 
 export interface ISidebarService extends Component<ISidebar> {
-    push(data: ISidebarPane): void;
+    addPane(data: ISidebarPane, isActive?: boolean): void;
+    setActive(id?: string): void;
 }
 
 @singleton()
@@ -22,8 +23,22 @@ export class SidebarService
         this.state = container.resolve(SidebarModel);
     }
 
-    public push(data: ISidebarPane) {
-        const original = this.state.panes;
-        original?.push(data);
+    public addPane(data: ISidebarPane, isActive = false) {
+        const oldPanes = this.state.panes?.concat() || [];
+        oldPanes.push(data);
+        if (isActive) {
+            this.setState({
+                current: data.id,
+            });
+        }
+        this.setState({
+            panes: oldPanes,
+        });
+    }
+
+    public setActive(id?: string) {
+        this.setState({
+            current: id,
+        });
     }
 }

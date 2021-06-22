@@ -6,35 +6,29 @@ import {
     MENU_VIEW_SIDEBAR,
     MENU_VIEW_STATUSBAR,
 } from 'mo/model/workbench/menuBar';
-import { IExtension, IActivityBarItem } from 'mo/model';
+import { IExtension } from 'mo/model';
 
 import TestPane from './testPane';
 
 export const ExtendTestPane: IExtension = {
     activate() {
+        const TEST_PANE_ID = 'ActivityBarTestPane';
         const testSidePane = {
-            id: 'testPane',
+            id: TEST_PANE_ID,
             title: 'TEST',
             render() {
                 return <TestPane />;
             },
         };
 
-        molecule.sidebar.push(testSidePane);
         const newItem = {
-            id: 'ActivityBarTestPane',
+            id: TEST_PANE_ID,
             iconName: 'codicon-beaker',
             name: '测试',
         };
-        molecule.activityBar.addBar(newItem);
 
-        molecule.activityBar.onSelect((e, item: IActivityBarItem) => {
-            if (item.id === newItem.id) {
-                molecule.sidebar.setState({
-                    current: testSidePane.id,
-                });
-            }
-        });
+        molecule.activityBar.addBar(newItem);
+        molecule.sidebar.addPane(testSidePane);
 
         molecule.settings.onChangeConfiguration(async (value) => {
             console.log('onChangeConfiguration:', value);

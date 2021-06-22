@@ -6,11 +6,8 @@ import { localize } from 'mo/i18n/localize';
  * The activity bar event definition
  */
 export enum ActivityBarEvent {
-    /**
-     * Selected an activity bar
-     */
-    Selected = 'activityBar.selected',
     OnClick = 'activityBar.onClick',
+    OnChange = 'activityBar.onChange',
     /**
      * Activity bar data changed
      */

@@ -23,14 +23,17 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
         contextMenu = [],
         selected,
         onClick,
-        onSelect,
+        onChange,
         onContextMenuClick,
     } = props;
 
-    const onClickBar = (e: React.MouseEvent, item: IActivityBarItem) => {
-        if (onClick) onClick(e, item);
-        if (onSelect) {
-            onSelect(item.id || '', item);
+    const onClickBar = (key: string, item: IActivityBarItem) => {
+        if (onClick) onClick(key, item);
+        if (onChange) {
+            // only normal item trigger onChange event
+            if (item.type !== 'global') {
+                onChange(selected, key);
+            }
         }
     };
 

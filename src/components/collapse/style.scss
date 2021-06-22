@@ -71,7 +71,6 @@ $collapse__extra: #{$collapse}__extra;
 
     &__content {
         border: 1px solid transparent;
-        height: calc(100% - 2px);
         width: calc(100% - 3px);
 
         &:focus {

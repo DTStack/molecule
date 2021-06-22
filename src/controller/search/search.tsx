@@ -14,6 +14,9 @@ import {
     SEARCH_REPLACE_ALL_COMMAND_ID,
     SEARCH_ACTIVITY_ITEM,
     builtInSearchActivityItem,
+    builtInHeaderToolbar,
+    builtInSearchAddons,
+    builtInReplaceAddons,
 } from 'mo/model/workbench/search';
 import {
     ActivityBarService,
@@ -97,6 +100,12 @@ export class SearchController extends Controller implements ISearchController {
         };
 
         this.sidebarService.push(searchSidePane);
+
+        this.searchService.setState({
+            headerToolBar: builtInHeaderToolbar(),
+            searchAddons: builtInSearchAddons(),
+            replaceAddons: builtInReplaceAddons(),
+        });
 
         this.activityBarService.addBar(builtInSearchActivityItem());
 

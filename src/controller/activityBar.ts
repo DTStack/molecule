@@ -25,8 +25,14 @@ import {
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 export interface IActivityBarController {
-    onSelect?: (key: string, item?: IActivityBarItem) => void;
-    onClick?: (event: React.MouseEvent, item: IActivityBarItem) => void;
+    /**
+     * Called when activity bar item is clicked
+     */
+    onClick?: (selectedKey: string, selectedNode: IActivityBarItem) => void;
+    /**
+     * Called when activity bar item which is not global is changed
+     */
+    onChange?: (prevSelected?: string, nextSelected?: string) => void;
     onContextMenuClick?: (
         e: React.MouseEvent,
         item: IMenuItemProps | undefined
@@ -50,23 +56,18 @@ export class ActivityBarController
         this.menuBarController = container.resolve(MenuBarController);
     }
 
-    public readonly onSelect = (
-        key: string,
-        item?: IActivityBarItem | undefined
+    public readonly onClick = (
+        selectedKey: string,
+        selctedNode: IActivityBarItem
     ) => {
-        if (item && item.type !== 'global') {
-            this.activityBarService.setState({
-                selected: key,
-            });
-        }
-        this.emit(ActivityBarEvent.Selected, key, item);
+        this.emit(ActivityBarEvent.OnClick, selectedKey, selctedNode);
     };
 
-    public readonly onClick = (
-        event: React.MouseEvent,
-        item: IActivityBarItem
+    public readonly onChange = (
+        prevSelected?: string,
+        nextSelected?: string
     ) => {
-        this.emit(ActivityBarEvent.OnClick, event, item);
+        this.emit(ActivityBarEvent.OnChange, prevSelected, nextSelected);
     };
 
     private gotoQuickCommand() {

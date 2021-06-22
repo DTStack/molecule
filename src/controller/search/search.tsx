@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
-import { IActivityBarItem } from 'mo/model';
 import * as React from 'react';
 import { SearchPanel } from 'mo/workbench/sidebar/search';
 import { IActionBarItemProps } from 'mo/components/actionBar';
@@ -12,7 +11,6 @@ import {
     SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
     SEARCH_PRESERVE_CASE_COMMAND_ID,
     SEARCH_REPLACE_ALL_COMMAND_ID,
-    SEARCH_ACTIVITY_ITEM,
     builtInSearchActivityItem,
     builtInHeaderToolbar,
     builtInSearchAddons,
@@ -92,14 +90,12 @@ export class SearchController extends Controller implements ISearchController {
         };
 
         const searchSidePane = {
-            id: 'searchPane',
+            id: builtInSearchActivityItem().id,
             title: 'SEARCH',
             render() {
                 return <SearchPanelView {...searchEvent} />;
             },
         };
-
-        this.sidebarService.push(searchSidePane);
 
         this.searchService.setState({
             headerToolBar: builtInHeaderToolbar(),
@@ -107,15 +103,8 @@ export class SearchController extends Controller implements ISearchController {
             replaceAddons: builtInReplaceAddons(),
         });
 
+        this.sidebarService.addPane(searchSidePane);
         this.activityBarService.addBar(builtInSearchActivityItem());
-
-        this.activityBarService.onSelect((e, item: IActivityBarItem) => {
-            if (item.id === SEARCH_ACTIVITY_ITEM) {
-                this.sidebarService.setState({
-                    current: searchSidePane.id,
-                });
-            }
-        });
     }
 
     public readonly validateValue = (value: string) => {

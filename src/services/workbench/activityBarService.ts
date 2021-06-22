@@ -14,7 +14,18 @@ import { IMenuItemProps } from 'mo/components/menu';
 
 export interface IActivityBarService extends Component<IActivityBar> {
     reset(): void;
-    addBar(data: IActivityBarItem | IActivityBarItem[]): void;
+    /**
+     *
+     * @param isActive If provide, Activity Bar will set data active automatically. Only works in one data
+     */
+    addBar(
+        data: IActivityBarItem | IActivityBarItem[],
+        isActive?: boolean
+    ): void;
+    /**
+     * set active bar
+     */
+    setActive(id?: string): void;
     remove(id: string): void;
     toggleBar(id?: string): void;
     updateContextMenuCheckStatus(id?: string): void;
@@ -24,8 +35,13 @@ export interface IActivityBarService extends Component<IActivityBar> {
      * Add click event listener
      * @param callback
      */
-    onClick(callback: (key: React.MouseEvent, item: IActivityBarItem) => void);
-    onSelect(callback: (key: React.MouseEvent, item: IActivityBarItem) => void);
+    onClick(callback: (selectedKey: string, item: IActivityBarItem) => void);
+    /**
+     * Called when activity bar item which is not global is changed
+     */
+    onChange(
+        callback: (prevSelectedKey?: string, nextSelectedKey?: string) => void
+    );
 }
 
 @singleton()
@@ -38,6 +54,11 @@ export class ActivityBarService
         super();
         this.state = container.resolve(ActivityBarModel);
     }
+    public setActive(id?: string) {
+        this.setState({
+            selected: id,
+        });
+    }
 
     public reset() {
         this.setState({
@@ -46,12 +67,18 @@ export class ActivityBarService
         });
     }
 
-    public addBar(data: IActivityBarItem | IActivityBarItem[]) {
+    public addBar(
+        data: IActivityBarItem | IActivityBarItem[],
+        isActive = false
+    ) {
         let next = [...this.state.data!];
         if (Array.isArray(data)) {
             next = next?.concat(data);
         } else {
             next?.push(data);
+            if (isActive) {
+                this.setActive(data.id);
+            }
         }
         this.setState({
             data: next,
@@ -132,13 +159,15 @@ export class ActivityBarService
     }
 
     // ====== The belows for subscribe activity bar events ======
-    public onClick(callback: Function) {
+    public onClick(
+        callback: (selectedKey: string, item: IActivityBarItem) => void
+    ) {
         this.subscribe(ActivityBarEvent.OnClick, callback);
     }
 
-    public onSelect(
-        callback: (key: React.MouseEvent, item: IActivityBarItem) => void
+    public onChange(
+        callback: (prevSelectedKey?: string, nextSelectedKey?: string) => void
     ) {
-        this.subscribe(ActivityBarEvent.Selected, callback);
+        this.subscribe(ActivityBarEvent.OnChange, callback);
     }
 }

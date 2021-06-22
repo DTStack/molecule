@@ -1,13 +1,10 @@
 import 'reflect-metadata';
 import * as React from 'react';
 import { Controller } from 'mo/react/controller';
-import { MenuBarController, IMenuBarController } from 'mo/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
 import { Explorer, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IMenuItemProps } from 'mo/components/menu';
-import { MENU_VIEW_SIDEBAR } from 'mo/model/workbench/menuBar';
-import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import {
     builtInExplorerActivityItem,
     builtInExplorerFolderPanel,
@@ -20,7 +17,6 @@ import {
 import {
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
-    EXPLORER_ACTIVITY_ITEM,
     REMOVE_COMMAND_ID,
     FileTypes,
     EditorTreeEvent,
@@ -35,8 +31,6 @@ import {
     SidebarService,
     ExplorerService,
     FolderTreeService,
-    MenuBarService,
-    IMenuBarService,
 } from 'mo/services';
 import { FolderTreeController, IFolderTreeController } from './folderTree';
 
@@ -61,9 +55,7 @@ export class ExplorerController
     private readonly sidebarService: ISidebarService;
     private readonly explorerService: IExplorerService;
     private readonly folderTreeService: IFolderTreeService;
-    private readonly menuBarService: IMenuBarService;
     private readonly folderTreeController: IFolderTreeController;
-    private readonly menuBarController: IMenuBarController;
 
     constructor() {
         super();
@@ -71,22 +63,12 @@ export class ExplorerController
         this.sidebarService = container.resolve(SidebarService);
         this.explorerService = container.resolve(ExplorerService);
         this.folderTreeService = container.resolve(FolderTreeService);
-        this.menuBarService = container.resolve(MenuBarService);
         this.folderTreeController = container.resolve(FolderTreeController);
-        this.menuBarController = container.resolve(MenuBarController);
 
         this.initView();
     }
 
     private initView() {
-        const state = this.activityBarService.getState();
-        const sideBarState = this.sidebarService.getState();
-        const { data = [] } = state;
-        this.activityBarService.setState({
-            selected: EXPLORER_ACTIVITY_ITEM,
-            data: [...data, builtInExplorerActivityItem()],
-        });
-
         const explorerEvent = {
             onClick: this.onClick,
             onCollapseChange: this.onCollapseChange,
@@ -97,30 +79,15 @@ export class ExplorerController
         const ExplorerView = connect(this.explorerService, Explorer);
 
         const explorePane = {
-            id: 'explore',
+            id: builtInExplorerActivityItem().id,
             title: 'EXPLORER',
             render() {
                 return <ExplorerView {...explorerEvent} />;
             },
         };
 
-        this.activityBarService.onSelect((e, item: IActivityBarItem) => {
-            if (item.id === EXPLORER_ACTIVITY_ITEM) {
-                this.sidebarService.setState({
-                    current: explorePane.id,
-                });
-                this.menuBarController.updateSideBar!();
-                this.menuBarService.update(MENU_VIEW_SIDEBAR, {
-                    icon: 'check',
-                });
-            }
-        });
-
-        this.sidebarService.setState({
-            current: explorePane.id,
-            panes: [...sideBarState.panes!, explorePane],
-        });
-
+        this.activityBarService.addBar(builtInExplorerActivityItem(), true);
+        this.sidebarService.addPane(explorePane, true);
         // add folder panel
         this.explorerService.addPanel({
             ...builtInExplorerFolderPanel(),

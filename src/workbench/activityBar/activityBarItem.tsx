@@ -63,7 +63,7 @@ export function ActivityBarItem(
 
     const onClickItem = function (event) {
         if (onClick) {
-            onClick(event, props);
+            onClick(props.id, props);
         }
         if (contextMenu.length > 0 && contextViewMenu) {
             contextViewMenu.show({

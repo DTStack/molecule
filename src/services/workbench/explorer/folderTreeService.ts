@@ -18,6 +18,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     initTree?: (data: ITreeNodeItemProps[]) => void;
     onNewFile(callback: (id: number) => void);
     onNewFolder(callback: (id: number) => void);
+    onNewRootFolder(callback: (id: number) => void);
     onRename(callback: (id: number) => void);
     onDelete(callback: (id: number) => void);
     onUpdateFileName(callback: (file: ITreeNodeItemProps) => void);
@@ -47,7 +48,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * add a root folder for project
      * **Attention**, each project only has one root folder
      */
-    addRootFolder(folder?: ITreeNodeItemProps | ITreeNodeItemProps[]): void;
+    addRootFolder(folder?: TreeNodeModel): void;
     removeRootFolder(id: number): void;
     setActive(id?: number): void;
     onDropTree(treeData: ITreeNodeItemProps[]): void;
@@ -223,6 +224,10 @@ export class FolderTreeService
 
     public onNewFile(callback: (id: number) => void) {
         this.subscribe(FolderTreeEvent.onNewFile, callback);
+    }
+
+    public onNewRootFolder(callback: (id: number) => void) {
+        this.subscribe(FolderTreeEvent.onNewRootFolder, callback);
     }
 
     public onNewFolder(callback: (id: number) => void) {

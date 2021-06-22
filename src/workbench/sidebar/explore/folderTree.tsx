@@ -78,6 +78,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         onDropTree,
         filterContextMenu,
         onClickContextMenu,
+        onNewRootFolder,
         getInputEvent,
         ...restProps
     } = props;
@@ -94,7 +95,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const onClickMenuItem = useCallback(
         (e, item) => {
             onClickContextMenu?.(e, item);
-            contextMenu.current?.dispose();
+            contextMenu.current?.hide();
         },
         [folderPanelContextMenu]
     );
@@ -163,6 +164,10 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         }
     };
 
+    const handlAddRootFolder = () => {
+        onNewRootFolder?.();
+    };
+
     const renderTitle = (node: ITreeNodeItemProps) => {
         const { isEditable, name } = node;
 
@@ -189,7 +194,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         return () => {
             contextMenu.current?.dispose();
         };
-    }, []);
+    }, [data?.length]);
 
     const renderByData = (
         <Tree
@@ -210,7 +215,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const renderInitial = (
         <div style={{ padding: '10px 5px' }}>
             you have not yet opened a folder
-            <Button>Add Folder</Button>
+            <Button onClick={handlAddRootFolder}>Add Folder</Button>
         </div>
     );
 

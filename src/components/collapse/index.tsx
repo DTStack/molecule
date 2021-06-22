@@ -112,9 +112,13 @@ export function Collapse(props: ICollapseProps) {
             const dom = select<HTMLElement>(
                 `.${collapseItemClassName}[data-content='${panel.id}']`
             );
-            if (dom) {
+            const contentDom = select<HTMLElement>(
+                `.${collapseContentClassName}[data-content='${panel.id}']`
+            );
+            if (dom && contentDom) {
                 dom.style.height = `${height}px`;
                 dom.style.top = `${top}px`;
+                contentDom.style.height = `${height - HEADER_HEIGTH - 2}px`;
             }
         });
     }, [filterData]);

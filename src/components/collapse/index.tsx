@@ -14,6 +14,7 @@ import {
     collapseContentClassName,
 } from './base';
 import { Scrollable } from '../scrollable';
+import { select } from 'mo/common/dom';
 
 type RenderFunctionProps = (data: DataBaseProps) => React.ReactNode;
 interface DataBaseProps {
@@ -26,7 +27,7 @@ interface DataBaseProps {
 
     // detect the collapse panel whether empty
     _isEmpty?: boolean;
-    _config?: {
+    config?: {
         /**
          * Specify how much of the remaining space should be assigned to the item, default is 1
          *
@@ -96,7 +97,7 @@ export function Collapse(props: ICollapseProps) {
             const isActive = activePanelKeys.includes(panel.id);
             let isEmpty = true;
             if (isActive) {
-                const contentDom = document.querySelector(
+                const contentDom = select(
                     `.${collapseContentClassName}[data-content='${panel.id}']`
                 );
                 isEmpty = !contentDom?.hasChildNodes();
@@ -108,7 +109,7 @@ export function Collapse(props: ICollapseProps) {
                 filterData
             );
             _cachePosition.push([height, top]);
-            const dom = document.querySelector<HTMLElement>(
+            const dom = select<HTMLElement>(
                 `.${collapseItemClassName}[data-content='${panel.id}']`
             );
             if (dom) {
@@ -152,8 +153,8 @@ export function Collapse(props: ICollapseProps) {
      * Returns the grow of data, or 1
      */
     const getGrow = (data: DataBaseProps) => {
-        if (typeof data._config?.grow === 'number') {
-            return data._config.grow;
+        if (typeof data.config?.grow === 'number') {
+            return data.config.grow;
         } else {
             return 1;
         }
@@ -169,7 +170,7 @@ export function Collapse(props: ICollapseProps) {
         return keys.filter((key) => {
             const targetPanel = panels.find((panel) => panel.id === key);
             if (targetPanel) {
-                return targetPanel._config?.grow === 0;
+                return targetPanel.config?.grow === 0;
             }
             return false;
         });
@@ -180,7 +181,7 @@ export function Collapse(props: ICollapseProps) {
      */
     const getContentHeightsByKeys = (data: React.Key[]) => {
         return data.map((key) => {
-            const contentDom = document.querySelector(
+            const contentDom = select(
                 `.${collapseContentClassName}[data-content='${key}']`
             );
             if (contentDom) {
@@ -215,9 +216,9 @@ export function Collapse(props: ICollapseProps) {
             // the height of inactive panel or empty panel is a fixed value
             res[0] = HEADER_HEIGTH;
         } else {
-            if (panel._config?.grow === 0) {
+            if (panel.config?.grow === 0) {
                 // to get current panel content
-                const contentDom = document.querySelector(
+                const contentDom = select(
                     `.${collapseContentClassName}[data-content='${panel.id}']`
                 );
                 if (contentDom) {
@@ -264,7 +265,7 @@ export function Collapse(props: ICollapseProps) {
                             return !target._isEmpty;
                         }
                         // In general, the following code will not be excuted
-                        const contentDom = document.querySelector(
+                        const contentDom = select(
                             `.${collapseContentClassName}[data-content='${panel.id}']`
                         );
                         return contentDom?.hasChildNodes();

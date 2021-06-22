@@ -111,7 +111,7 @@ export function builtInExplorerEditorPanel() {
                 iconName: 'codicon-close-all',
             },
         ],
-        _config: {
+        config: {
             grow: 0,
         },
     };
@@ -167,7 +167,7 @@ export function builtInExplorerFolderPanel() {
                 iconName: 'codicon-collapse-all',
             },
         ],
-        _config: {
+        config: {
             grow: 2,
         },
     };

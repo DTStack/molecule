@@ -112,13 +112,20 @@ export function Collapse(props: ICollapseProps) {
             const dom = select<HTMLElement>(
                 `.${collapseItemClassName}[data-content='${panel.id}']`
             );
-            const contentDom = select<HTMLElement>(
-                `.${collapseContentClassName}[data-content='${panel.id}']`
-            );
-            if (dom && contentDom) {
+
+            // Only set content height for non-grow-zero panel
+            // 'Cause when you set height for grow-zero panel, you'll get wrong height next render time
+            if (panel.config?.grow !== 0) {
+                const contentDom = select<HTMLElement>(
+                    `.${collapseContentClassName}[data-content='${panel.id}']`
+                );
+                if (contentDom) {
+                    contentDom.style.height = `${height - HEADER_HEIGTH - 2}px`;
+                }
+            }
+            if (dom) {
                 dom.style.height = `${height}px`;
                 dom.style.top = `${top}px`;
-                contentDom.style.height = `${height - HEADER_HEIGTH - 2}px`;
             }
         });
     }, [filterData]);

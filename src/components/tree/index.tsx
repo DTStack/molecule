@@ -163,7 +163,7 @@ const TreeView = ({
         onSelectNode?.(node.data);
     };
 
-    const handRightClick = (info) => {
+    const handleRightClick = (info) => {
         setKeys([info.node.key]);
         onRightClick?.(info);
     };
@@ -179,7 +179,7 @@ const TreeView = ({
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
                     onSelect={handleSelect}
-                    onRightClick={handRightClick}
+                    onRightClick={handleRightClick}
                     {...restProps}
                 >
                     {renderTreeNodes(data, 0)}

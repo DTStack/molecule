@@ -164,7 +164,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         }
     };
 
-    const handlAddRootFolder = () => {
+    const handleAddRootFolder = () => {
         onNewRootFolder?.();
     };
 
@@ -215,7 +215,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const renderInitial = (
         <div style={{ padding: '10px 5px' }}>
             you have not yet opened a folder
-            <Button onClick={handlAddRootFolder}>Add Folder</Button>
+            <Button onClick={handleAddRootFolder}>Add Folder</Button>
         </div>
     );
 

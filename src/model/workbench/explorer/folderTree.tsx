@@ -17,6 +17,7 @@ export enum FolderTreeEvent {
     onSelectFile = 'folderTree.onSelectFile',
     onNewFile = 'folderTree.onNewFile',
     onNewFolder = 'folderTree.onNewFolder',
+    onNewRootFolder = 'folderTree.onNewRootFolder',
     onDelete = 'folderTree.onDelete',
     onRename = 'folderTree.onRename',
     onUpdateFileName = 'folderTree.onUpdateFileName',
@@ -29,10 +30,10 @@ export interface IFolderInputEvent {
 }
 
 export interface IFolderTreeSubItem {
-    data?: TreeNodeModel[];
+    data?: ITreeNodeItemProps[];
     contextMenu?: IMenuItemProps[];
     folderPanelContextMenu?: IMenuItemProps[];
-    current?: TreeNodeModel | null;
+    current?: ITreeNodeItemProps | null;
 }
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
@@ -44,7 +45,6 @@ export const RENAME_COMMAND_ID = 'explorer.rename';
 export const REMOVE_COMMAND_ID = 'explorer.remove';
 export const DELETE_COMMAND_ID = 'explorer.delete';
 export const OPEN_TO_SIDE_COMMAND_ID = 'explorer.openToSide';
-export const ADD_ROOT_FOLDER_COMMAND_ID = 'addRootFolder';
 export const FIND_IN_WORKSPACE_ID = 'filesExplorer.findInWorkspace';
 export const DOWNLOAD_COMMAND_ID = 'explorer.download';
 
@@ -84,7 +84,7 @@ export const FILE_CONTEXT_MENU = [
 // Sample folder panel area ContextMenu
 export const FOLDER_PANEL_CONTEXT_MENU = [
     {
-        id: ADD_ROOT_FOLDER_COMMAND_ID,
+        id: NEW_FOLDER_COMMAND_ID,
         name: 'Add Folder to Workspace...',
     },
     {
@@ -102,7 +102,7 @@ export class TreeNodeModel implements ITreeNodeItemProps {
     name?: string;
     location?: string;
     fileType?: FileType;
-    children?: TreeNodeModel[];
+    children?: ITreeNodeItemProps[];
     icon?: string | React.ReactNode;
     isEditable?: boolean;
     content?: string;

@@ -1,26 +1,45 @@
 import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
 import { ITreeNodeItemProps } from 'mo/components/tree';
-import { FileTypes } from 'mo/model';
+import { FileTypes, TreeNodeModel } from 'mo/model';
+import { randomId } from 'mo/common/utils';
 
 export const ExtendsFolderTree: IExtension = {
     activate() {
         molecule.folderTree.onNewFile((id: number) => {
             // work through addNode function
-            molecule.folderTree.addNode(id, {
-                name: '',
-                fileType: FileTypes.File,
-                isEditable: true,
-            });
+            molecule.folderTree.addNode(
+                id,
+                new TreeNodeModel({
+                    id: randomId(),
+                    name: '',
+                    fileType: FileTypes.File,
+                    isEditable: true,
+                })
+            );
         });
 
         molecule.folderTree.onNewFolder((id: number) => {
             // work through addNode function
-            molecule.folderTree.addNode(id, {
-                name: '',
-                fileType: FileTypes.Folder,
-                isEditable: true,
-            });
+            molecule.folderTree.addNode(
+                id,
+                new TreeNodeModel({
+                    id: randomId(),
+                    name: '',
+                    fileType: FileTypes.Folder,
+                    isEditable: true,
+                })
+            );
+        });
+
+        molecule.folderTree.onNewRootFolder((id: number) => {
+            molecule.folderTree.addRootFolder?.(
+                new TreeNodeModel({
+                    id,
+                    name: 'molecule',
+                    fileType: FileTypes.RootFolder,
+                })
+            );
         });
 
         molecule.folderTree.onDelete((id: number) => {

@@ -9,9 +9,12 @@
     pointer-events: none;
     position: relative;
     top: 100px;
+    user-select: none;
     width: auto;
+
     // TODO rc-dialog提pr解决
     &-mask {
+        background-color: transparent;
         bottom: 0;
         height: 100%;
         left: 0;
@@ -44,6 +47,8 @@
     }
 
     &-content {
+        background-color: var(--workbenchBackground);
+        box-shadow: var(--widget-shadow) 0 0 10px 2px;
         font-size: 18px;
         padding: 0 15px;
         pointer-events: auto;

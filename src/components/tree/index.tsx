@@ -163,6 +163,11 @@ const TreeView = ({
         onSelectNode?.(node.data);
     };
 
+    const handleRightClick = (info) => {
+        setKeys([info.node.key]);
+        onRightClick?.(info);
+    };
+
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
@@ -174,7 +179,7 @@ const TreeView = ({
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
                     onSelect={handleSelect}
-                    onRightClick={onRightClick}
+                    onRightClick={handleRightClick}
                     {...restProps}
                 >
                     {renderTreeNodes(data, 0)}

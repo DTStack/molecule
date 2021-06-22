@@ -6,7 +6,7 @@ import React, {
     useCallback,
     useLayoutEffect,
 } from 'react';
-import { IFolderTreeSubItem, TreeNodeModel } from 'mo/model';
+import { IFolderTreeSubItem } from 'mo/model';
 import { select, getEventPosition } from 'mo/common/dom';
 import Tree, { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
@@ -78,6 +78,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         onDropTree,
         filterContextMenu,
         onClickContextMenu,
+        onNewRootFolder,
         getInputEvent,
         ...restProps
     } = props;
@@ -94,7 +95,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const onClickMenuItem = useCallback(
         (e, item) => {
             onClickContextMenu?.(e, item);
-            contextMenu.current?.dispose();
+            contextMenu.current?.hide();
         },
         [folderPanelContextMenu]
     );
@@ -112,7 +113,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const handleOnMenuClick = (
         e: React.MouseEvent,
         item: IMenuItemProps,
-        data: TreeNodeModel
+        data: IFolderTreeSubItem
     ) => {
         onClickContextMenu?.(e, item, data);
         contextView.hide();
@@ -163,6 +164,10 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         }
     };
 
+    const handleAddRootFolder = () => {
+        onNewRootFolder?.();
+    };
+
     const renderTitle = (node: ITreeNodeItemProps) => {
         const { isEditable, name } = node;
 
@@ -189,7 +194,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         return () => {
             contextMenu.current?.dispose();
         };
-    }, []);
+    }, [data?.length]);
 
     const renderByData = (
         <Tree
@@ -210,7 +215,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
     const renderInitial = (
         <div style={{ padding: '10px 5px' }}>
             you have not yet opened a folder
-            <Button>Add Folder</Button>
+            <Button onClick={handleAddRootFolder}>Add Folder</Button>
         </div>
     );
 

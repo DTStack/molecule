@@ -7,7 +7,6 @@ import {
     FolderTreeEvent,
     IFolderTree,
     IFolderTreeModel,
-    TreeNodeModel,
 } from 'mo/model/workbench/explorer/folderTree';
 import { TreeViewUtil, ITreeInstance } from '../../helper';
 import { ITreeNodeItemProps } from 'mo/components/tree';
@@ -18,6 +17,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     initTree?: (data: ITreeNodeItemProps[]) => void;
     onNewFile(callback: (id: number) => void);
     onNewFolder(callback: (id: number) => void);
+    onNewRootFolder(callback: (id: number) => void);
     onRename(callback: (id: number) => void);
     onDelete(callback: (id: number) => void);
     onUpdateFileName(callback: (file: ITreeNodeItemProps) => void);
@@ -41,13 +41,13 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     ): {
         currentRootFolder: ITreeNodeItemProps;
         index: number;
-        tree: ITreeInstance<TreeNodeModel>;
+        tree: ITreeInstance<ITreeNodeItemProps>;
     };
     /**
      * add a root folder for project
      * **Attention**, each project only has one root folder
      */
-    addRootFolder(folder?: ITreeNodeItemProps | ITreeNodeItemProps[]): void;
+    addRootFolder(folder?: ITreeNodeItemProps): void;
     removeRootFolder(id: number): void;
     setActive(id?: number): void;
     onDropTree(treeData: ITreeNodeItemProps[]): void;
@@ -55,7 +55,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     /**
      * insert `data` into foder tree in where the `id` is
      */
-    addNode(id: number, data: TreeNodeModel): void;
+    addNode(id: number, data: ITreeNodeItemProps): void;
 }
 
 @singleton()
@@ -71,7 +71,7 @@ export class FolderTreeService
         this.explorerService = container.resolve(ExplorerService);
     }
 
-    public addNode(id: number, data: TreeNodeModel): void {
+    public addNode(id: number, data: ITreeNodeItemProps): void {
         const cloneData = this.state.folderTree?.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
         // this index is root folder index
@@ -128,11 +128,11 @@ export class FolderTreeService
     ): {
         currentRootFolder: ITreeNodeItemProps;
         index: number;
-        tree: ITreeInstance<TreeNodeModel>;
+        tree: ITreeInstance<ITreeNodeItemProps>;
     } {
         const currentRootFolder = this.getRootFolderById(id);
         const index = this.getRootFolderIndexByRootId(currentRootFolder.id!);
-        const tree = new TreeViewUtil<TreeNodeModel>(currentRootFolder);
+        const tree = new TreeViewUtil<ITreeNodeItemProps>(currentRootFolder);
         return {
             currentRootFolder,
             index,
@@ -155,7 +155,7 @@ export class FolderTreeService
      * Returns the node of root folder in folderTree
      */
     private getRootFolderById(id: number) {
-        let rootNode: TreeNodeModel = {};
+        let rootNode: ITreeNodeItemProps = {};
         this.state.folderTree?.data?.forEach((folder) => {
             const treeInstance = new TreeViewUtil(folder);
             if (treeInstance.get(id)) rootNode = folder;
@@ -170,7 +170,7 @@ export class FolderTreeService
         });
     };
 
-    public addRootFolder(folder: TreeNodeModel) {
+    public addRootFolder(folder: ITreeNodeItemProps) {
         const { folderTree } = this.state;
         const {} = this.explorerService;
         if (folderTree?.data?.length) {
@@ -223,6 +223,10 @@ export class FolderTreeService
 
     public onNewFile(callback: (id: number) => void) {
         this.subscribe(FolderTreeEvent.onNewFile, callback);
+    }
+
+    public onNewRootFolder(callback: (id: number) => void) {
+        this.subscribe(FolderTreeEvent.onNewRootFolder, callback);
     }
 
     public onNewFolder(callback: (id: number) => void) {

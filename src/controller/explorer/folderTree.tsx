@@ -7,24 +7,23 @@ import { IMenuItemProps } from 'mo/components/menu';
 import { Modal } from 'mo/components/dialog';
 import {
     IFolderInputEvent,
-    TreeNodeModel,
     BASE_CONTEXT_MENU,
     ROOT_FOLDER_CONTEXT_MENU,
     FILE_CONTEXT_MENU,
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
     RENAME_COMMAND_ID,
-    REMOVE_COMMAND_ID,
     DELETE_COMMAND_ID,
     OPEN_TO_SIDE_COMMAND_ID,
-    ADD_ROOT_FOLDER_COMMAND_ID,
     FolderTreeEvent,
     FileTypes,
 } from 'mo/model';
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
+import { randomId } from 'mo/common/utils';
 
 const confirm = Modal.confirm;
 export interface IFolderTreeController {
+    readonly createFileOrFolder?: (type: keyof typeof FileTypes) => void;
     readonly onClickContextMenu?: (
         e: React.MouseEvent,
         item: IMenuItemProps,
@@ -38,6 +37,10 @@ export interface IFolderTreeController {
     readonly getInputEvent?: (events: IFolderInputEvent) => IFolderInputEvent;
     readonly onNewFile?: (id: number) => void;
     readonly onNewFolder?: (id: number) => void;
+    /**
+     * If not provide id, it will use a random id
+     */
+    readonly onNewRootFolder?: (id?: number) => void;
     readonly onRename?: (id: number) => void;
     readonly onDelete?: (id: number) => void;
     readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
@@ -63,6 +66,15 @@ export class FolderTreeController
 
     private initView() {}
 
+    public createFileOrFolder = (type: keyof typeof FileTypes) => {
+        const folderTreeState = this.folderTreeService.getState();
+        const { data, current } = folderTreeState?.folderTree || {};
+        // The current selected node id or the first root node
+        const nodeId = current?.id || data?.[0]?.id;
+        // emit onNewFile or onNewFolder event
+        this.emit(FolderTreeEvent[`onNew${type}`], nodeId);
+    };
+
     public readonly getInputEvent = (
         events: IFolderInputEvent
     ): IFolderInputEvent => {
@@ -83,6 +95,10 @@ export class FolderTreeController
 
     public onNewFolder = (id: number) => {
         this.emit(FolderTreeEvent.onNewFolder, id);
+    };
+
+    public onNewRootFolder = (id?: number) => {
+        this.emit(FolderTreeEvent.onNewRootFolder, id || randomId());
     };
 
     public onUpdateFileName = (file: ITreeNodeItemProps) => {
@@ -107,12 +123,11 @@ export class FolderTreeController
     public readonly onClickContextMenu = (
         e: React.MouseEvent,
         item: IMenuItemProps,
-        node = {}
+        node?: ITreeNodeItemProps
     ) => {
         const menuId = item.id;
         const ctx = this;
-        const { id: nodeId, name } = node as any;
-        console.log('onClickContextMenu => Item', item);
+        const { id: nodeId, name } = node || {};
         switch (menuId) {
             case RENAME_COMMAND_ID: {
                 this.onRename(nodeId);
@@ -129,30 +144,16 @@ export class FolderTreeController
                 break;
             }
             case NEW_FILE_COMMAND_ID: {
-                this.onNewFile(nodeId);
+                this.createFileOrFolder(FileTypes.File);
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                this.onNewFolder(nodeId);
-                break;
-            }
-            case REMOVE_COMMAND_ID: {
-                this.folderTreeService.removeRootFolder(nodeId);
-                break;
-            }
-            case ADD_ROOT_FOLDER_COMMAND_ID: {
-                this.folderTreeService.addRootFolder?.(
-                    new TreeNodeModel({
-                        title: `molecule_temp${Math.random()}`,
-                        fileType: 'rootFolder',
-                    })
-                );
+                this.createFileOrFolder(FileTypes.Folder);
                 break;
             }
             case OPEN_TO_SIDE_COMMAND_ID: {
-                console.log('OpenTab');
+                this.onSelectFile(node!, false);
                 break;
-                // editorService.open();
             }
         }
     };

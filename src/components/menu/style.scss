@@ -85,6 +85,14 @@
         }
     }
 
+    &__keybinding {
+        display: inline-block;
+        flex: 2 1 auto;
+        line-height: 1;
+        padding: 0 2em;
+        text-align: right;
+    }
+
     &__separator {
         height: 1px;
         width: 100%;

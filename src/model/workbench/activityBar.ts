@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { IMenuItemProps } from 'mo/components/menu';
 import { localize } from 'mo/i18n/localize';
+import {
+    ACTION_QUICK_ACCESS_SETTINGS,
+    ACTION_QUICK_COMMAND,
+    ACTION_SELECT_THEME,
+} from '../keybinding';
 
 /**
  * The activity bar event definition
@@ -38,10 +43,6 @@ export interface IActivityBar {
 export const ACTIVITY_BAR_GLOBAL_SETTINGS = 'global.menu.settings';
 export const ACTIVITY_BAR_GLOBAL_ACCOUNT = 'global.menu.account';
 
-export const CONTEXT_MENU_COMMAND_PALETTE = 'menu.commandPalette';
-export const CONTEXT_MENU_SETTINGS = 'menu.settings';
-export const CONTEXT_MENU_COLOR_THEME = 'menu.colorTheme';
-
 export const CONTEXT_MENU_MENU = 'menubar';
 export const CONTEXT_MENU_EXPLORER = 'sidebar.explore.title';
 export const CONTEXT_MENU_SEARCH = 'sidebar.search.title';
@@ -62,15 +63,15 @@ export function builtInActivityBar(): IActivityBar {
             type: 'global',
             contextMenu: [
                 {
-                    id: CONTEXT_MENU_COMMAND_PALETTE,
+                    id: ACTION_QUICK_COMMAND,
                     name: localize('menu.commandPalette', 'Command Palette'),
                 },
                 {
-                    id: CONTEXT_MENU_SETTINGS,
+                    id: ACTION_QUICK_ACCESS_SETTINGS,
                     name: localize('menu.settings', 'Settings'),
                 },
                 {
-                    id: CONTEXT_MENU_COLOR_THEME,
+                    id: ACTION_SELECT_THEME,
                     name: localize('menu.colorTheme', 'Color Theme'),
                 },
             ],

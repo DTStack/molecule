@@ -16,16 +16,22 @@ import {
     globalItemsClassName,
     normalItemsClassName,
 } from './base';
+import { IKeybindingController } from 'mo/controller';
 
-export function ActivityBar(props: IActivityBar & IActivityBarController) {
+export type UnionController = {
+    activityBarController: IActivityBarController;
+    keybindingController: IKeybindingController;
+};
+
+export function ActivityBar(props: IActivityBar & UnionController) {
     const {
         data = [],
         contextMenu = [],
         selected,
-        onClick,
-        onChange,
-        onContextMenuClick,
+        activityBarController,
+        keybindingController,
     } = props;
+    const { onClick, onChange, onContextMenuClick } = activityBarController;
 
     const onClickBar = (key: string, item: IActivityBarItem) => {
         if (onClick) onClick(key, item);
@@ -51,6 +57,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
             <ActivityBarItem
                 key={item.id}
                 {...item}
+                {...keybindingController}
                 onContextMenuClick={onContextMenuClick}
                 onClick={onClickBar}
                 data-index={index}

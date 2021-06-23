@@ -299,9 +299,6 @@ PARTITIONED BY (ds string) lifecycle 1000;
                             AAA
                         </molecule.component.Button>
                     </div>
-                    <div style={{ margin: '50px 20px' }}>
-                        <molecule.MenuBar onClick={() => {}} />
-                    </div>
                 </div>
             </Scrollable>
         );

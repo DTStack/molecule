@@ -6,9 +6,10 @@ import { ISettingsService, SettingsService } from 'mo/services';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { container } from 'tsyringe';
 import { Action2, KeybindingWeight } from './common';
+import { ACTION_QUICK_ACCESS_SETTINGS } from 'mo/model/keybinding';
 
 export class QuickAccessSettings extends Action2 {
-    static readonly ID = 'workbench.action.quickAccessSettings';
+    static readonly ID = ACTION_QUICK_ACCESS_SETTINGS;
     static readonly LABEL = localize(
         'quickAccessSettings.label',
         'Open Settings (JSON)'

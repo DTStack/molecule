@@ -11,9 +11,10 @@ import { ColorThemeService, IColorThemeService } from 'mo/services';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { container } from 'tsyringe';
 import { Action2, KeybindingWeight } from './common';
+import { ACTION_SELECT_THEME } from 'mo/model/keybinding';
 
 export class SelectColorThemeAction extends Action2 {
-    static readonly ID = 'workbench.action.selectTheme';
+    static readonly ID = ACTION_SELECT_THEME;
     static readonly LABEL = localize('selectTheme.label', 'Color Theme');
     private readonly colorThemeService: IColorThemeService;
 

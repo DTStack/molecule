@@ -129,7 +129,6 @@ export function getPositionByPlacement(
         x = domRect.x + domRect.width;
         y = domRect.y + domRect.height;
     }
-    console.log('getPositionByPlacement', x, y);
     return { x, y };
 }
 

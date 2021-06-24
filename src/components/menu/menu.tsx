@@ -13,7 +13,7 @@ import {
 import { mergeFunctions } from 'mo/common/utils';
 import { cloneReactChildren } from 'mo/react';
 import { em2Px } from 'mo/common/css';
-import { getRelativePosition } from 'mo/common/dom';
+import { getRelativePosition, triggerEvent } from 'mo/common/dom';
 
 export type IMenuProps = ISubMenuProps;
 
@@ -67,7 +67,10 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         ...custom
     } = props;
     const menuRef = React.useRef<HTMLUListElement>(null);
+    const isMouseInMenu = React.useRef(false);
     let content = cloneReactChildren(children, { onClick });
+    // Only when the trigger is hover need to set the delay
+    const delay = trigger === 'hover' ? 200 : 0;
 
     const modeClassName =
         mode === MenuMode.Horizontal
@@ -114,61 +117,51 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
     };
 
     const detectDomElementByEvent = debounce((e) => {
-        const doms = document.elementsFromPoint(
-            e.pageX,
-            e.pageY
-        ) as HTMLElement[];
-        const ulDom = doms.find((dom) => dom.nodeName === 'UL');
-        const liDom = doms.find((dom) => dom.nodeName === 'LI');
-        // clear current ul children style
-        if (ulDom) {
-            ulDom.querySelectorAll('ul').forEach((ul) => {
-                ul.style.opacity = '0';
-                ul.style.pointerEvents = 'none';
-            });
-            ulDom.querySelectorAll(`li.${activeClassName}`).forEach((li) => {
-                li.classList.remove(activeClassName);
-            });
+        // ensure only when mouse in menu can the submenu toggle visibility
+        if (isMouseInMenu.current) {
+            const doms = document.elementsFromPoint(
+                e.pageX,
+                e.pageY
+            ) as HTMLElement[];
+            const ulDom = doms.find((dom) => dom.nodeName === 'UL');
+            const liDom = doms.find((dom) => dom.nodeName === 'LI');
+            // clear current ul children style
+            if (ulDom) {
+                ulDom.querySelectorAll('ul').forEach((ul) => {
+                    ul.style.opacity = '0';
+                    ul.style.pointerEvents = 'none';
+                });
+                ulDom
+                    .querySelectorAll(`li.${activeClassName}`)
+                    .forEach((li) => {
+                        li.classList.remove(activeClassName);
+                    });
+            }
+            visibleMenuItem(liDom);
+            const subMenu = liDom?.querySelector('ul') || undefined;
+            setPositionForSubMenu(liDom, subMenu, isHorizontal(mode));
         }
-        visibleMenuItem(liDom);
-        const subMenu = liDom?.querySelector('ul') || undefined;
-        setPositionForSubMenu(liDom, subMenu, isHorizontal(mode));
-    }, 200);
+    }, delay);
 
-    const handleMouseMove = (e) => {
-        e.persist();
-        detectDomElementByEvent(e);
-    };
-
-    const handleClick = (e) => {
-        e.persist();
-        e.stopPropagation();
-        detectDomElementByEvent(e);
-    };
-    const handleContextMenu = (e) => {
+    const handleTriggerEvent = (e) => {
         e.preventDefault();
         e.persist();
         e.stopPropagation();
+        isMouseInMenu.current = true;
         detectDomElementByEvent(e);
     };
 
-    // Different events trigger should listen different events
+    const handleMouseOut = () => {
+        isMouseInMenu.current = false;
+    };
+
     const getEventListener = () => {
         // sub menu do not listen any event
         if (claNames?.includes(defaultSubMenuClassName)) return {};
-        if (trigger === 'hover') {
-            return {
-                onMouseMove: handleMouseMove,
-            };
-        } else if (trigger === 'click') {
-            return {
-                onClick: handleClick,
-            };
-        } else {
-            return {
-                onContextMenu: handleContextMenu,
-            };
-        }
+        return {
+            [triggerEvent(trigger)]: handleTriggerEvent,
+            onMouseOut: handleMouseOut,
+        };
     };
 
     const hideAfterLeftWindow = React.useCallback(() => {

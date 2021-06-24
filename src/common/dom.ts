@@ -96,6 +96,9 @@ export function triggerEvent(trigger: TriggerEvent) {
         case 'hover': {
             return 'onMouseOver';
         }
+        case 'contextmenu': {
+            return 'onContextMenu';
+        }
         default: {
             return trigger;
         }

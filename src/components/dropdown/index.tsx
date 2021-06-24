@@ -12,13 +12,16 @@ export interface IDropDownProps extends React.ComponentProps<'div'> {
     overlay: ReactNode;
     trigger?: TriggerEvent;
     placement?: PlacementType;
-    ref?: React.RefObject<any>;
 }
+
+export type DropDownRef = {
+    dispose: () => void;
+};
 
 const defaultDropDownClassName = prefixClaName('drop-down');
 
-export const DropDown = React.forwardRef(
-    (props: React.PropsWithChildren<IDropDownProps>, ref) => {
+export const DropDown = React.forwardRef<DropDownRef, IDropDownProps>(
+    (props, ref) => {
         const {
             className,
             overlay,

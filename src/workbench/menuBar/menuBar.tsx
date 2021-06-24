@@ -4,7 +4,7 @@ import { IMenuBar } from 'mo/model/workbench/menuBar';
 import { IMenuBarController } from 'mo/controller/menuBar';
 
 import { Menu } from 'mo/components/menu';
-import { DropDown } from 'mo/components/dropdown';
+import { DropDown, DropDownRef } from 'mo/components/dropdown';
 import { Icon } from 'mo/components/icon';
 
 const defaultClassName = prefixClaName('menuBar');
@@ -12,7 +12,7 @@ const actionClassName = getBEMElement(defaultClassName, 'action');
 
 export function MenuBar(props: IMenuBar & IMenuBarController) {
     const { data, onClick } = props;
-    const childRef = React.useRef();
+    const childRef = React.useRef<DropDownRef>(null);
     const handleClick = (e: React.MouseEvent, item) => {
         onClick?.(e, item);
         (childRef.current as any)!.dispose();

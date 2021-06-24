@@ -4,13 +4,13 @@
 #{$menu} {
     &__item {
         &:hover {
-            background-color: var(--button-background);
-            color: var(--button-foreground);
+            background-color: var(--menu-selectionBackground);
+            color: #fff;
         }
 
-        &-active {
+        &--active {
             background-color: var(--menu-selectionBackground);
-            color: var(--menu-selectionForeground);
+            color: #fff;
         }
     }
 

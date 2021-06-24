@@ -5,12 +5,12 @@
     &__item {
         &:hover {
             background-color: var(--menu-selectionBackground);
-            color: #fff;
+            color: var(--button-foreground);
         }
 
         &--active {
             background-color: var(--menu-selectionBackground);
-            color: #fff;
+            color: var(--button-foreground);
         }
     }
 

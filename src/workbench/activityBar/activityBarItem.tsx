@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useCallback, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { classNames } from 'mo/common/className';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
-import { useContextMenu } from 'mo/components/contextMenu';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { IActivityBarController } from 'mo/controller/activityBar';
 
@@ -13,6 +12,8 @@ import {
     itemCheckedClassName,
     itemDisabledClassName,
 } from './base';
+import { DropDown } from 'mo/components';
+import { DropDownRef } from 'mo/components/dropdown';
 
 export function ActivityBarItem(
     props: IActivityBarItem & IActivityBarController
@@ -30,53 +31,38 @@ export function ActivityBarItem(
         className,
         onContextMenuClick,
     } = props;
-    let content: React.ReactNode = '';
-    if (render) {
-        content = render();
-    }
 
-    let contextViewMenu;
-    const currentElem = useRef<HTMLLIElement>(null);
+    const contextMenuRef = useRef<DropDownRef>(null);
 
-    const onClickMenuItem = useCallback(
-        (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
-            onContextMenuClick?.(e, item);
-            contextViewMenu?.dispose();
-        },
-        [contextMenu]
-    );
-    const renderContextMenu = () => (
-        <Menu onClick={onClickMenuItem} data={contextMenu} />
-    );
-
-    useEffect(() => {
-        if (contextMenu.length > 0) {
-            contextViewMenu = useContextMenu({
-                anchor: currentElem.current,
-                render: renderContextMenu,
-            });
-        }
-        return function cleanup() {
-            contextViewMenu?.dispose();
-        };
-    });
+    const onClickMenuItem = (
+        e: React.MouseEvent,
+        item: IMenuItemProps | undefined
+    ) => {
+        onContextMenuClick?.(e, item);
+        contextMenuRef.current?.dispose();
+    };
 
     const onClickItem = function (event) {
         if (onClick) {
             onClick(props.id, props);
         }
-        if (contextMenu.length > 0 && contextViewMenu) {
-            contextViewMenu.show({
-                x: event.clientX,
-                y: event.clientY,
-            });
-        }
     };
+
+    const content = (
+        <a
+            title={title}
+            className={classNames(labelClassName, 'codicon', iconName)}
+        >
+            {render?.() || null}
+        </a>
+    );
+    const overlay = <Menu onClick={onClickMenuItem} data={contextMenu} />;
+
+    const hasContextMenu = contextMenu.length > 0;
 
     return (
         <li
             id={id}
-            ref={currentElem}
             onClick={onClickItem}
             className={classNames(
                 className,
@@ -86,12 +72,18 @@ export function ActivityBarItem(
             )}
             data-id={data.id}
         >
-            <a
-                title={title}
-                className={classNames(labelClassName, 'codicon', iconName)}
-            >
-                {content}
-            </a>
+            {hasContextMenu ? (
+                <DropDown
+                    ref={contextMenuRef}
+                    trigger="click"
+                    placement="rightBottom"
+                    overlay={overlay}
+                >
+                    {content}
+                </DropDown>
+            ) : (
+                content
+            )}
             {checked ? <div className={indicatorClassName}></div> : null}
         </li>
     );

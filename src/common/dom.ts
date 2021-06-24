@@ -1,6 +1,9 @@
 export type HTMLElementType = HTMLElement | null;
 export type TriggerEvent = 'click' | 'contextmenu' | 'hover';
-export type PlacementType = 'top' | 'right' | 'bottom' | 'left';
+/**
+ * specify `rightBottom` means align to the bottom and keep in right
+ */
+export type PlacementType = 'top' | 'right' | 'bottom' | 'left' | 'rightBottom';
 export const select = document.querySelector.bind(document);
 export const selectAll = document.querySelectorAll.bind(document);
 
@@ -122,8 +125,10 @@ export function getPositionByPlacement(
         y = domRect.y + domRect.height;
     } else if (placement === 'left') {
         x = domRect.x - domRect.width;
+    } else if (placement === 'rightBottom') {
+        x = domRect.x + domRect.width;
+        y = domRect.y + domRect.height;
     }
-    console.log('getPositionByPlacement', x, y);
     return { x, y };
 }
 

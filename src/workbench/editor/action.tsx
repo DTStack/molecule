@@ -2,7 +2,7 @@ import * as React from 'react';
 import { memo, useCallback } from 'react';
 import { Icon } from 'mo/components/icon';
 import { Menu } from 'mo/components/menu';
-import { DropDown } from 'mo/components/dropdown';
+import { DropDown, DropDownRef } from 'mo/components/dropdown';
 import { IEditorAction } from 'mo/model';
 import { groupActionsClassName, groupActionsItemClassName } from './base';
 import { IEditorController } from 'mo/controller/editor';
@@ -19,7 +19,7 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
         onSplitEditorRight,
     } = props;
 
-    const childRef = React.useRef();
+    const childRef = React.useRef<DropDownRef>(null);
 
     const handleOnMenuClick = (e: React.MouseEvent, item) => {
         onClickContextMenu?.(e, item);

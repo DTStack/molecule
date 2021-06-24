@@ -3,6 +3,7 @@ import { ResolvedKeybindingItem } from 'monaco-editor/esm/vs/platform/keybinding
 import { KeybindingsRegistry } from 'monaco-editor/esm/vs/platform/keybinding/common/keybindingsRegistry';
 import { singleton } from 'tsyringe';
 import { ISimpleKeybinding, KeyCodeString } from 'mo/model/keybinding';
+import { Utils } from '@dtinsight/dt-utils/lib';
 
 export interface IKeybindingController {
     /**
@@ -33,8 +34,11 @@ export interface IKeybindingController {
 export class KeybindingController
     extends Controller
     implements IKeybindingController {
+    private isMac = false;
+
     constructor() {
         super();
+        this.isMac = Utils.isMacOs();
     }
 
     public queryGlobalKeybinding = (id: string) => {
@@ -64,23 +68,23 @@ export class KeybindingController
         return (
             keybinding
                 .map((key) => {
-                    let res = '';
+                    const res: string[] = [];
                     if (key.altKey) {
-                        res += '⌥';
+                        res.push(this.isMac ? '⌥' : 'Alt');
                     }
                     if (key.ctrlKey) {
-                        res += '⌃';
+                        res.push(this.isMac ? '⌃' : 'Ctrl');
                     }
                     if (key.metaKey) {
-                        res += '⌘';
+                        res.push(this.isMac ? '⌘' : 'Meta');
                     }
                     if (key.shiftKey) {
-                        res += '⇧';
+                        res.push(this.isMac ? '⇧' : 'Shift');
                     }
                     if (key.keyCode) {
-                        res += KeyCodeString[key.keyCode] || '';
+                        res.push(KeyCodeString[key.keyCode] || '');
                     }
-                    return res;
+                    return res.join(this.isMac ? '' : '+');
                 })
                 // Insert a space between chord key
                 .join(' ')

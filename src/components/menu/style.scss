@@ -94,5 +94,6 @@
 #{$subMenu} {
     display: block;
     position: fixed;
+    transition: opacity 100ms ease-in-out;
     z-index: 1;
 }

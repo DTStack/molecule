@@ -1,4 +1,4 @@
-export * from './extensionService';
+export type { IExtensionService } from './extensionService';
 export * from './theme/colorThemeService';
 export * from './workbench';
 export * from './settingsService';

@@ -1,11 +1,9 @@
-import { Controller } from 'mo/react';
 import { ResolvedKeybindingItem } from 'monaco-editor/esm/vs/platform/keybinding/common/resolvedKeybindingItem';
 import { KeybindingsRegistry } from 'monaco-editor/esm/vs/platform/keybinding/common/keybindingsRegistry';
-import { singleton } from 'tsyringe';
-import { ISimpleKeybinding, KeyCodeString } from 'mo/model/keybinding';
 import { Utils } from '@dtinsight/dt-utils/lib';
-
-export interface IKeybindingController {
+import { ISimpleKeybinding, KeyCodeString } from 'mo/model/keybinding';
+export interface IKeybinding {
+    _isMac: boolean;
     /**
      * Query global keybingding
      * @example
@@ -30,18 +28,10 @@ export interface IKeybindingController {
     ) => string;
 }
 
-@singleton()
-export class KeybindingController
-    extends Controller
-    implements IKeybindingController {
-    private isMac = false;
+export const KeybindingHelper: IKeybinding = {
+    _isMac: Utils.isMacOs(),
 
-    constructor() {
-        super();
-        this.isMac = Utils.isMacOs();
-    }
-
-    public queryGlobalKeybinding = (id: string) => {
+    queryGlobalKeybinding: (id: string) => {
         const defaultKeybindings: ResolvedKeybindingItem[] = KeybindingsRegistry.getDefaultKeybindings();
         const globalKeybindings = defaultKeybindings.filter((key) => !key.when);
 
@@ -60,34 +50,32 @@ export class KeybindingController
             return keybindings;
         }
         return null;
-    };
+    },
 
-    public convertSimpleKeybindingToString = (
-        keybinding: ISimpleKeybinding[] = []
-    ) => {
+    convertSimpleKeybindingToString: (keybinding: ISimpleKeybinding[] = []) => {
         return (
             keybinding
                 .map((key) => {
                     const res: string[] = [];
                     if (key.altKey) {
-                        res.push(this.isMac ? '⌥' : 'Alt');
+                        res.push(KeybindingHelper._isMac ? '⌥' : 'Alt');
                     }
                     if (key.ctrlKey) {
-                        res.push(this.isMac ? '⌃' : 'Ctrl');
+                        res.push(KeybindingHelper._isMac ? '⌃' : 'Ctrl');
                     }
                     if (key.metaKey) {
-                        res.push(this.isMac ? '⌘' : 'Meta');
+                        res.push(KeybindingHelper._isMac ? '⌘' : 'Meta');
                     }
                     if (key.shiftKey) {
-                        res.push(this.isMac ? '⇧' : 'Shift');
+                        res.push(KeybindingHelper._isMac ? '⇧' : 'Shift');
                     }
                     if (key.keyCode) {
                         res.push(KeyCodeString[key.keyCode] || '');
                     }
-                    return res.join(this.isMac ? '' : '+');
+                    return res.join(KeybindingHelper._isMac ? '' : '+');
                 })
                 // Insert a space between chord key
                 .join(' ')
         );
-    };
-}
+    },
+};

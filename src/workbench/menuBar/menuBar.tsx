@@ -5,20 +5,14 @@ import { IMenuBarController } from 'mo/controller/menuBar';
 import { DropDown, DropDownRef } from 'mo/components/dropdown';
 import { IMenuProps, Menu } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
-import { IKeybindingController } from 'mo/controller';
+import { KeybindingHelper } from 'mo/services/keybinding';
 
 const defaultClassName = prefixClaName('menuBar');
 const actionClassName = getBEMElement(defaultClassName, 'action');
 
-type UnionController = {
-    menuBarController: IMenuBarController;
-    keybindingController: IKeybindingController;
-};
-
-export function MenuBar(props: IMenuBar & UnionController) {
-    const { data, menuBarController, keybindingController } = props;
+export function MenuBar(props: IMenuBar & IMenuBarController) {
+    const { data, onClick } = props;
     const childRef = React.useRef<DropDownRef>(null);
-    const { onClick } = menuBarController;
 
     const addKeybindingForData = (
         rawData: IMenuBarItem[] = []
@@ -32,10 +26,9 @@ export function MenuBar(props: IMenuBar & UnionController) {
                     stack.push(...head.data);
                 } else {
                     const simplyKeybinding =
-                        keybindingController.queryGlobalKeybinding(head.id!) ||
-                        [];
+                        KeybindingHelper.queryGlobalKeybinding(head.id!) || [];
                     if (simplyKeybinding.length) {
-                        head.keybinding = keybindingController.convertSimpleKeybindingToString(
+                        head.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
                             simplyKeybinding
                         );
                     }

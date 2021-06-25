@@ -8,6 +8,7 @@ import {
     ColorThemeService,
     IColorThemeService,
 } from './theme/colorThemeService';
+import { Action2, registerAction2 } from 'mo/monaco/common';
 
 export interface IExtensionService {
     /**
@@ -22,6 +23,15 @@ export interface IExtensionService {
     load(extensions: IExtension[]);
     loadContributes(contributes: IContribute);
     unload(extension: IExtension);
+    /**
+     * Register action based in Action2,
+     * @example
+     * ```ts
+     * const action = class Action extends Action2 {};
+     * registerAction(action);
+     * ```
+     */
+    registerAction(actionClass: { new (): Action2 }): void;
 }
 
 @singleton()
@@ -69,6 +79,10 @@ export class ExtensionService implements IExtensionService {
                 }
             }
         });
+    }
+
+    public registerAction(actionClass: { new (): Action2 }) {
+        registerAction2(actionClass);
     }
 
     unload(extension: IExtension) {

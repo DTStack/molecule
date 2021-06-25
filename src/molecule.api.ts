@@ -50,8 +50,6 @@ import {
     ProblemsService,
     IEditorTreeService,
     EditorTreeService,
-    KeybindingService,
-    IKeybindingService,
 } from 'mo/services';
 
 import { ILocaleService, LocaleService } from './i18n/localeService';
@@ -101,10 +99,6 @@ export const problems = container.resolve<IProblemsService>(ProblemsService);
  */
 export const colorTheme = container.resolve<IColorThemeService>(
     ColorThemeService
-);
-
-export const keybinding = container.resolve<IKeybindingService>(
-    KeybindingService
 );
 
 /**

@@ -14,10 +14,10 @@ import {
 } from './base';
 import { DropDown } from 'mo/components';
 import { DropDownRef } from 'mo/components/dropdown';
-import { IKeybindingController } from 'mo/controller';
+import { KeybindingHelper } from 'mo/services/keybinding';
 
 export function ActivityBarItem(
-    props: IActivityBarItem & IActivityBarController & IKeybindingController
+    props: IActivityBarItem & IActivityBarController
 ) {
     const {
         checked = false,
@@ -31,8 +31,6 @@ export function ActivityBarItem(
         contextMenu = [],
         className,
         onContextMenuClick,
-        queryGlobalKeybinding,
-        convertSimpleKeybindingToString,
     } = props;
 
     const contextMenuRef = useRef<DropDownRef>(null);
@@ -64,9 +62,11 @@ export function ActivityBarItem(
             onClick={onClickMenuItem}
             data={contextMenu.map((menu) => {
                 if (menu.id) {
-                    const keybindingObj = queryGlobalKeybinding(menu.id);
+                    const keybindingObj = KeybindingHelper.queryGlobalKeybinding(
+                        menu.id
+                    );
                     if (keybindingObj) {
-                        menu.keybinding = convertSimpleKeybindingToString(
+                        menu.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
                             keybindingObj
                         );
                     }

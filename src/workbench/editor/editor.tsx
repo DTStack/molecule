@@ -13,6 +13,7 @@ export function Editor(props: IEditor & IEditorController) {
     const {
         groups = [],
         current,
+        entry = <Welcome />,
         onClickContextMenu,
         onCloseTab,
         onMoveTab,
@@ -73,7 +74,7 @@ export function Editor(props: IEditor & IEditorController) {
 
     return (
         <div className={defaultEditorClassName}>
-            {current ? renderGroups() : <Welcome />}
+            {current ? renderGroups() : entry}
         </div>
     );
 }

@@ -9,6 +9,7 @@ import {
 import { IExtension } from 'mo/model';
 
 import TestPane from './testPane';
+import { Entry } from './entry';
 
 export const ExtendTestPane: IExtension = {
     activate() {
@@ -29,6 +30,8 @@ export const ExtendTestPane: IExtension = {
 
         molecule.activityBar.addBar(newItem);
         molecule.sidebar.addPane(testSidePane);
+
+        molecule.editor.setEntry(<Entry />);
 
         molecule.settings.onChangeConfiguration(async (value) => {
             console.log('onChangeConfiguration:', value);

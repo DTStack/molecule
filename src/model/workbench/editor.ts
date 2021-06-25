@@ -46,6 +46,7 @@ export interface IEditor {
      */
     current?: IEditorGroup | null;
     groups?: IEditorGroup[];
+    entry?: React.ReactNode;
 }
 
 export const EDITOR_MENU_CLOSE_TO_RIGHT = 'editor.closeToRight';
@@ -125,12 +126,15 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
 export class EditorModel implements IEditor {
     public current: IEditorGroup | null;
     public groups: IEditorGroup[];
+    public entry: React.ReactNode;
 
     constructor(
         current: IEditorGroup | null = null,
-        groups: IEditorGroup[] = []
+        groups: IEditorGroup[] = [],
+        entry: React.ReactNode
     ) {
         this.current = current;
         this.groups = groups;
+        this.entry = entry;
     }
 }

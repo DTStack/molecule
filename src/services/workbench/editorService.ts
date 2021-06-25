@@ -24,6 +24,10 @@ export interface IEditorService extends Component<IEditor> {
         group: IEditorGroup
     ): IEditorTab<T> | undefined;
     updateTab(tab: IEditorTab, groupId: number): IEditorTab;
+    /**
+     * Specify a entry page for editor
+     */
+    setEntry(component: React.ReactNode): void;
     closeTab(tabId: string, groupId: number): void;
     closeOthers(tab: IEditorTab, groupId: number): void;
     closeToRight(tab: IEditorTab, groupId: number): void;
@@ -66,6 +70,12 @@ export class EditorService
     constructor() {
         super();
         this.state = container.resolve(EditorModel);
+    }
+
+    public setEntry(component: React.ReactNode) {
+        this.setState({
+            entry: component,
+        });
     }
 
     public getTabById<T>(

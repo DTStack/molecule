@@ -1,0 +1,35 @@
+.entry {
+    align-items: center;
+    background-color: var(--panel-background);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+
+    * {
+        font-family: monospace;
+    }
+
+    dl {
+        border-collapse: separate;
+        border-spacing: 13px 17px;
+        color: hsla(0, 0%, 100%, 0.6);
+        cursor: default;
+        display: table-row;
+        font-size: 13px;
+        margin: 0;
+
+        dt {
+            display: table-cell;
+            letter-spacing: 0.04em;
+            text-align: right;
+        }
+
+        dd {
+            display: table-cell;
+            margin-left: 12px;
+            text-align: left;
+        }
+    }
+}

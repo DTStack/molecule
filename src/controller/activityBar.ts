@@ -9,9 +9,6 @@ import {
     CONTEXT_MENU_EXPLORER,
     CONTEXT_MENU_SEARCH,
     CONTEXT_MENU_HIDE,
-    CONTEXT_MENU_COLOR_THEME,
-    CONTEXT_MENU_COMMAND_PALETTE,
-    CONTEXT_MENU_SETTINGS,
     IActivityBarItem,
 } from 'mo/model';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
@@ -24,6 +21,12 @@ import {
 } from 'mo/services';
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
+import {
+    ACTION_QUICK_COMMAND,
+    ACTION_QUICK_ACCESS_SETTINGS,
+    ACTION_SELECT_THEME,
+} from 'mo/model/keybinding';
+
 export interface IActivityBarController {
     /**
      * Called when activity bar item is clicked
@@ -107,15 +110,15 @@ export class ActivityBarController
                 break;
             }
             // manage button contextMenu
-            case CONTEXT_MENU_COMMAND_PALETTE: {
+            case ACTION_QUICK_COMMAND: {
                 this.gotoQuickCommand();
                 break;
             }
-            case CONTEXT_MENU_SETTINGS: {
+            case ACTION_QUICK_ACCESS_SETTINGS: {
                 this.settingsService.openSettingsInEditor();
                 break;
             }
-            case CONTEXT_MENU_COLOR_THEME: {
+            case ACTION_SELECT_THEME: {
                 this.onSelectColorTheme();
                 break;
             }

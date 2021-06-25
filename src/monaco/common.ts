@@ -20,7 +20,15 @@ export enum KeybindingWeight {
 }
 
 export abstract class Action2 {
-    constructor(readonly desc: Readonly<any>) {}
+    constructor(
+        readonly desc: Readonly<{
+            /**
+             * Specify visible in quick access view
+             */
+            f1: boolean;
+            [key: string]: any;
+        }>
+    ) {}
     abstract run(accessor: ServicesAccessor, ...args: any[]): any;
 }
 

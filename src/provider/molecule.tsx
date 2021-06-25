@@ -11,13 +11,9 @@ import {
     IExtensionService,
 } from 'mo/services/extensionService';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
-import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
-import { registerAction2 } from 'mo/monaco/common';
-import { QuickAccessSettings } from 'mo/monaco/quickAccessSettingsAction';
-import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 import { ILocaleService, LocaleService } from 'mo/i18n/localeService';
 import { ILayoutService, LayoutService } from 'mo/services';
-import { SelectLocaleAction } from 'mo/i18n/selectLocaleAction';
+
 export interface IMoleculeProps {
     extensions?: IExtension[];
     locales?: ILocale[];
@@ -64,18 +60,6 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
         this.monacoService.initWorkspace(this.container!);
         this.extensionService.load(defaultExtensions);
         this.extensionService.load(extensions);
-
-        this.initWorkbenchActions();
-    }
-
-    /**
-     * TODO: move the register of actions to extensionService
-     */
-    initWorkbenchActions() {
-        registerAction2(CommandQuickAccessViewAction);
-        registerAction2(SelectColorThemeAction);
-        registerAction2(QuickAccessSettings);
-        registerAction2(SelectLocaleAction);
     }
 
     public render() {

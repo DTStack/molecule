@@ -9,9 +9,11 @@ import { Action2 } from 'mo/monaco/common';
 import { localize } from './localize';
 import { ILocaleService, LocaleService } from './localeService';
 import { ILocale } from './localization';
+import { KeyCode, KeyMod } from 'mo/monaco';
+import { ACTION_SELECT_LOCALE } from 'mo/model/keybinding';
 
 export class SelectLocaleAction extends Action2 {
-    static readonly ID = 'workbench.action.selectLocale';
+    static readonly ID = ACTION_SELECT_LOCALE;
     static readonly LABEL = localize(
         'select.locale',
         'Select Display Language'
@@ -29,6 +31,10 @@ export class SelectLocaleAction extends Action2 {
             alias: 'Select Display Language',
             precondition: undefined,
             f1: true,
+            keybinding: {
+                when: undefined,
+                primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KEY_L,
+            },
         });
     }
 

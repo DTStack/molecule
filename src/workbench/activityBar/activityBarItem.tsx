@@ -14,6 +14,7 @@ import {
 } from './base';
 import { DropDown } from 'mo/components';
 import { DropDownRef } from 'mo/components/dropdown';
+import { KeybindingHelper } from 'mo/services/keybinding';
 
 export function ActivityBarItem(
     props: IActivityBarItem & IActivityBarController
@@ -56,7 +57,24 @@ export function ActivityBarItem(
             {render?.() || null}
         </a>
     );
-    const overlay = <Menu onClick={onClickMenuItem} data={contextMenu} />;
+    const overlay = (
+        <Menu
+            onClick={onClickMenuItem}
+            data={contextMenu.map((menu) => {
+                if (menu.id) {
+                    const keybindingObj = KeybindingHelper.queryGlobalKeybinding(
+                        menu.id
+                    );
+                    if (keybindingObj) {
+                        menu.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
+                            keybindingObj
+                        );
+                    }
+                }
+                return menu;
+            })}
+        />
+    );
 
     const hasContextMenu = contextMenu.length > 0;
 

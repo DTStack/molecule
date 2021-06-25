@@ -42,8 +42,6 @@ import {
     NotificationService,
     IColorThemeService,
     ColorThemeService,
-    IExtensionService,
-    ExtensionService,
     ISettingsService,
     SettingsService,
     IProblemsService,
@@ -100,12 +98,6 @@ export const problems = container.resolve<IProblemsService>(ProblemsService);
 export const colorTheme = container.resolve<IColorThemeService>(
     ColorThemeService
 );
-
-/**
- * Note: The extension service depends on other workbench services,
- * So it need initialized be last one.
- */
-export const extension = container.resolve<IExtensionService>(ExtensionService);
 
 /**
  * Settings service

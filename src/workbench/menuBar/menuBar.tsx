@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
-import { IMenuBar } from 'mo/model/workbench/menuBar';
+import { IMenuBar, IMenuBarItem } from 'mo/model/workbench/menuBar';
 import { IMenuBarController } from 'mo/controller/menuBar';
-
-import { Menu } from 'mo/components/menu';
 import { DropDown, DropDownRef } from 'mo/components/dropdown';
+import { IMenuProps, Menu } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
+import { KeybindingHelper } from 'mo/services/keybinding';
 
 const defaultClassName = prefixClaName('menuBar');
 const actionClassName = getBEMElement(defaultClassName, 'action');
@@ -13,12 +13,41 @@ const actionClassName = getBEMElement(defaultClassName, 'action');
 export function MenuBar(props: IMenuBar & IMenuBarController) {
     const { data, onClick } = props;
     const childRef = React.useRef<DropDownRef>(null);
+
+    const addKeybindingForData = (
+        rawData: IMenuBarItem[] = []
+    ): IMenuProps[] => {
+        const resData: IMenuProps[] = rawData.concat();
+        const stack = [...resData];
+        while (stack.length) {
+            const head = stack.pop();
+            if (head) {
+                if (head?.data) {
+                    stack.push(...head.data);
+                } else {
+                    const simplyKeybinding =
+                        KeybindingHelper.queryGlobalKeybinding(head.id!) || [];
+                    if (simplyKeybinding.length) {
+                        head.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
+                            simplyKeybinding
+                        );
+                    }
+                }
+            }
+        }
+        return resData;
+    };
+
     const handleClick = (e: React.MouseEvent, item) => {
         onClick?.(e, item);
         (childRef.current as any)!.dispose();
     };
     const overlay = (
-        <Menu onClick={handleClick} style={{ width: 200 }} data={data} />
+        <Menu
+            onClick={handleClick}
+            style={{ width: 200 }}
+            data={addKeybindingForData(data)}
+        />
     );
     return (
         <div className={defaultClassName}>

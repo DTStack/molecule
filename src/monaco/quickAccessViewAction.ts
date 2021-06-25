@@ -29,6 +29,7 @@ import { EditorService, IEditorService } from 'mo/services';
 import { Action2, KeybindingWeight } from './common';
 import { MonacoService } from './monacoService';
 import { registerQuickAccessProvider } from './quickAccessProvider';
+import { ACTION_QUICK_COMMAND } from 'mo/model/keybinding';
 
 export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAccessProvider {
     static PREFIX = '>';
@@ -166,7 +167,7 @@ registerQuickAccessProvider({
 });
 
 export class CommandQuickAccessViewAction extends Action2 {
-    static ID = 'workbench.action.quickCommand';
+    static ID = ACTION_QUICK_COMMAND;
 
     constructor() {
         super({

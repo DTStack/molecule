@@ -46,24 +46,26 @@ export class CommandQuickSideBarViewAction extends Action2 {
         this.sideBarService = container.resolve(SidebarService);
     }
     run(accessor: ServicesAccessor, ...args) {
-        const sidebarId = args.length ? args[0] : this._preActivityBar;
+        const sidebarId = args[0];
         const { sideBar } = this.layoutService.getState();
         const { selected } = this.activityBarService.getState();
-        if (!sideBar.hidden) {
-            this.activityBarService.setActive();
-            this.menuBarService.update(CommandQuickSideBarViewAction.ID, {
-                icon: '',
-            });
-            this._preActivityBar = selected;
-        } else {
-            this.activityBarService.setActive(sidebarId);
-            // If args have sidebar id, then sidebar should active the panel after visible
-            sidebarId && this.sideBarService.setActive(sidebarId);
+        if (sideBar.hidden) {
+            this.activityBarService.setActive(
+                sidebarId || this._preActivityBar
+            );
+            this.sideBarService.setActive(sidebarId || this._preActivityBar);
             this.menuBarService.update(CommandQuickSideBarViewAction.ID, {
                 icon: 'check',
             });
-            this._preActivityBar = undefined;
+            this.layoutService.setSideBarHidden();
+        } else {
+            this.activityBarService.setActive();
+            this.sideBarService.setActive();
+            this.menuBarService.update(CommandQuickSideBarViewAction.ID, {
+                icon: '',
+            });
+            this.layoutService.setSideBarHidden();
+            this._preActivityBar = selected;
         }
-        this.layoutService.setSideBarHidden();
     }
 }

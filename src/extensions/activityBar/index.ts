@@ -11,10 +11,22 @@ export const ExtendsActivityBar: IExtension = {
         molecule.activityBar.addContextMenu(contextMenu);
 
         molecule.activityBar.onChange((pre, cur) => {
-            extensionCtx.executeCommand(CommandQuickSideBarViewAction.ID);
             if (cur !== pre) {
                 molecule.activityBar.setActive(cur);
                 molecule.sidebar.setActive(cur);
+
+                const { sideBar } = molecule.layout.getState();
+                if (sideBar.hidden) {
+                    extensionCtx.executeCommand(
+                        CommandQuickSideBarViewAction.ID,
+                        cur
+                    );
+                }
+            } else {
+                extensionCtx.executeCommand(
+                    CommandQuickSideBarViewAction.ID,
+                    cur
+                );
             }
         });
     },

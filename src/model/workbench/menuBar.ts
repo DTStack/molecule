@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { localize } from 'mo/i18n/localize';
+import { ID_SIDE_BAR } from 'mo/common/id';
 
 /**
  * The activity bar event definition
@@ -26,7 +27,6 @@ export interface IMenuBar {
 export const MENU_FILE_UNDO = 'undo';
 export const MENU_FILE_REDO = 'redo';
 export const MENU_VIEW_MENUBAR = 'workbench.action.showMenuBar';
-export const MENU_VIEW_SIDEBAR = 'workbench.action.showSideBar';
 export const MENU_VIEW_ACTIVITYBAR = 'workbench.action.showActivityBar';
 export const MENU_VIEW_STATUSBAR = 'workbench.action.showStatusBar';
 
@@ -97,7 +97,7 @@ export function builtInMenuBarData() {
                         },
                         {
                             icon: 'check',
-                            id: MENU_VIEW_SIDEBAR,
+                            id: ID_SIDE_BAR,
                             name: localize('menu.showSideBar', 'Show Side Bar'),
                         },
                         {

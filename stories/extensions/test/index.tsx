@@ -3,13 +3,13 @@ import molecule from 'mo';
 import {
     MENU_VIEW_ACTIVITYBAR,
     MENU_VIEW_MENUBAR,
-    MENU_VIEW_SIDEBAR,
     MENU_VIEW_STATUSBAR,
 } from 'mo/model/workbench/menuBar';
 import { IExtension } from 'mo/model';
 
 import TestPane from './testPane';
 import { Entry } from './entry';
+import { ID_SIDE_BAR } from 'mo/common/id';
 
 export const ExtendTestPane: IExtension = {
     activate() {
@@ -67,7 +67,7 @@ export const ExtendTestPane: IExtension = {
                     sideBar: { ...layoutViewState.sideBar, hidden },
                 });
 
-                molecule.menuBar.update(MENU_VIEW_SIDEBAR, {
+                molecule.menuBar.update(ID_SIDE_BAR, {
                     icon: hidden ? '' : 'check',
                 });
             }

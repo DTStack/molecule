@@ -7,7 +7,6 @@ import {
     MENU_VIEW_ACTIVITYBAR,
     MENU_VIEW_MENUBAR,
     MENU_VIEW_STATUSBAR,
-    MENU_VIEW_SIDEBAR,
 } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 import {
@@ -18,6 +17,9 @@ import {
     MenuBarService,
     LayoutService,
 } from 'mo/services';
+import { ID_SIDE_BAR } from 'mo/common/id';
+import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
+import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
 
 export interface IMenuBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
@@ -35,12 +37,14 @@ export class MenuBarController
     private readonly editorService: IEditorService;
     private readonly menuBarService: IMenuBarService;
     private readonly layoutService: ILayoutService;
+    private readonly monacoService: IMonacoService;
 
     constructor() {
         super();
         this.editorService = container.resolve(EditorService);
         this.menuBarService = container.resolve(MenuBarService);
         this.layoutService = container.resolve(LayoutService);
+        this.monacoService = container.resolve(MonacoService);
     }
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
@@ -61,7 +65,7 @@ export class MenuBarController
             case MENU_VIEW_STATUSBAR:
                 this.updateStatusBar();
                 break;
-            case MENU_VIEW_SIDEBAR:
+            case ID_SIDE_BAR:
                 this.updateSideBar();
                 break;
         }
@@ -106,12 +110,8 @@ export class MenuBarController
     };
 
     public updateSideBar = () => {
-        this.layoutService.setSideBarHidden();
-        const {
-            sideBar: { hidden },
-        } = this.layoutService.getState();
-        this.menuBarService.update(MENU_VIEW_SIDEBAR, {
-            icon: hidden ? '' : 'check',
-        });
+        this.monacoService.commandService.executeCommand(
+            CommandQuickSideBarViewAction.ID
+        );
     };
 }

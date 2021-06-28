@@ -9,7 +9,7 @@ import { IExtension } from 'mo/model';
 
 import TestPane from './testPane';
 import { Entry } from './entry';
-import { ID_SIDE_BAR } from 'mo/common/id';
+import { Position } from 'mo/model/workbench/layout';
 
 export const ExtendTestPane: IExtension = {
     activate() {
@@ -34,7 +34,6 @@ export const ExtendTestPane: IExtension = {
         molecule.editor.setEntry(<Entry />);
 
         molecule.settings.onChangeConfiguration(async (value) => {
-            console.log('onChangeConfiguration:', value);
             molecule.settings.update(value);
             const config = await molecule.settings.getConfiguration();
             const workbench: any = config.workbench;
@@ -60,16 +59,17 @@ export const ExtendTestPane: IExtension = {
                     icon: hidden ? '' : 'check',
                 });
             }
-            if (workbench?.sidebar) {
-                const hidden = workbench?.sidebar.hidden;
-                molecule.layout.setState({
-                    ...layoutViewState,
-                    sideBar: { ...layoutViewState.sideBar, hidden },
-                });
-
-                molecule.menuBar.update(ID_SIDE_BAR, {
-                    icon: hidden ? '' : 'check',
-                });
+            if (workbench.sidebar) {
+                switch (workbench.sidebar) {
+                    case 'left':
+                        molecule.layout.setSideBarPosition(Position.LEFT);
+                        break;
+                    case 'right':
+                        molecule.layout.setSideBarPosition(Position.RIGHT);
+                        break;
+                    default:
+                        break;
+                }
             }
             if (workbench?.statusBar) {
                 const hidden = workbench?.statusBar.hidden;

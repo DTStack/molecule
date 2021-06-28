@@ -6,6 +6,7 @@ import { ContextKeyExpr } from 'monaco-editor/esm/vs/platform/contextkey/common/
 import { KeybindingsRegistry } from 'monaco-editor/esm/vs/platform/keybinding/common/keybindingsRegistry';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
+import { localize } from 'monaco-editor/esm/vs/nls';
 import {
     MenuRegistry,
     MenuId,
@@ -18,6 +19,27 @@ export enum KeybindingWeight {
     BuiltinExtension = 300,
     ExternalExtension = 400,
 }
+
+export const CATEGORIES = {
+    View: { value: localize('view', 'View'), original: 'View' },
+    Help: { value: localize('help', 'Help'), original: 'Help' },
+    Preferences: {
+        value: localize('preferences', 'Preferences'),
+        original: 'Preferences',
+    },
+    Developer: {
+        value: localize(
+            {
+                key: 'developer',
+                comment: [
+                    'A developer on Code itself or someone diagnosing issues in Code',
+                ],
+            },
+            'Developer'
+        ),
+        original: 'Developer',
+    },
+};
 
 export abstract class Action2 {
     constructor(

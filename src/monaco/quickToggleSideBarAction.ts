@@ -2,7 +2,7 @@ import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/co
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 import { localize } from 'mo/i18n/localize';
 import { KeyMod, KeyCode } from 'mo/monaco';
-import { Action2, KeybindingWeight } from './common';
+import { Action2, CATEGORIES, KeybindingWeight } from './common';
 import { container } from 'tsyringe';
 import {
     ActivityBarService,
@@ -18,7 +18,10 @@ import { ID_SIDE_BAR } from 'mo/common/id';
 
 export class CommandQuickSideBarViewAction extends Action2 {
     static readonly ID = ID_SIDE_BAR;
-    static readonly label = localize('menu.showSideBar', 'Show Side Bar');
+    static readonly LABEL = localize(
+        'menu.showSideBar.label',
+        'Toggle Side Bar Visibility'
+    );
     private readonly layoutService: ILayoutService;
     private readonly activityBarService: IActivityBarService;
     private readonly menuBarService: IMenuBarService;
@@ -28,11 +31,12 @@ export class CommandQuickSideBarViewAction extends Action2 {
     constructor() {
         super({
             id: CommandQuickSideBarViewAction.ID,
-            label: CommandQuickSideBarViewAction.label,
-            title: CommandQuickSideBarViewAction.label,
-            alias: 'Show Side Bar',
+            label: CommandQuickSideBarViewAction.LABEL,
+            title: CommandQuickSideBarViewAction.LABEL,
+            category: CATEGORIES.View,
+            alias: 'Toggle Side Bar',
             precondition: undefined,
-            f1: false,
+            f1: true,
             keybinding: {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,

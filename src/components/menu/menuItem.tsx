@@ -14,6 +14,7 @@ export interface IMenuItemProps extends HTMLElementProps {
      * The name of icon
      */
     icon?: string;
+    type?: 'divider';
     /**
      * Item Name
      */

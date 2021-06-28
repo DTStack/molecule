@@ -6,12 +6,22 @@
     line-height: 13px;
 }
 
+#{$menu}__divider {
+    border-bottom: 1px solid rgb(187, 187, 187);
+    flex: 1;
+    font-size: inherit;
+    height: 0;
+    margin: 0 0.8em 0.2em;
+    padding: 0.2em 0 0;
+}
+
 #{$menu} {
     display: flex;
     list-style: none;
     margin: 0;
     min-width: 200px;
     padding: 0;
+    user-select: none;
 
     &--vertical {
         flex-direction: column;
@@ -30,6 +40,9 @@
     }
 
     &__item {
+        align-items: center;
+        border: thin solid transparent;
+        display: flex;
         min-width: 120px;
 
         &--disabled {

@@ -7,10 +7,10 @@ import {
     IActivityBar,
     IActivityBarItem,
 } from 'mo/model/workbench/activityBar';
-import { builtInExplorerActivityItem } from 'mo/model/workbench/explorer/explorer';
-import { builtInSearchActivityItem } from 'mo/model/workbench/search';
 import { searchById } from '../helper';
 import { IMenuItemProps } from 'mo/components/menu';
+import logger from 'mo/common/logger';
+import { ISidebarService, SidebarService } from './sidebarService';
 
 export interface IActivityBarService extends Component<IActivityBar> {
     reset(): void;
@@ -27,8 +27,8 @@ export interface IActivityBarService extends Component<IActivityBar> {
      */
     setActive(id?: string): void;
     remove(id: string): void;
-    toggleBar(id?: string): void;
-    updateContextMenuCheckStatus(id?: string): void;
+    toggleBar(id: string): void;
+    toggleContextMenuCheckStatus(id: string): void;
     addContextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]): void;
     removeContextMenu(id: string): void;
     /**
@@ -49,10 +49,12 @@ export class ActivityBarService
     extends Component<IActivityBar>
     implements IActivityBarService {
     protected state: IActivityBar;
+    private sidebarService: ISidebarService;
 
     constructor() {
         super();
         this.state = container.resolve(ActivityBarModel);
+        this.sidebarService = container.resolve(SidebarService);
     }
     public setActive(id?: string) {
         this.setState({
@@ -98,40 +100,37 @@ export class ActivityBarService
     }
 
     public toggleBar(id: string) {
-        const { data } = this.state;
-        const next = [...data!];
+        const { data = [], selected } = this.state;
+        const next = data.concat();
         const index = next.findIndex(searchById(id));
-        if (index > -1) {
-            this.remove(id);
+        const target = next[index];
+        if (target) {
+            target.hidden = !target.hidden;
+            if (id === selected) {
+                const nextIndex = (index + 1) % next.length;
+                this.setActive(next[nextIndex].id);
+                this.sidebarService.setActive(next[nextIndex].id);
+            }
+            this.setState({
+                data: next,
+            });
         } else {
-            // TODO 这个existBar 逻辑应该有问题
-            const existBar = [
-                builtInExplorerActivityItem(),
-                builtInSearchActivityItem(),
-            ].find(searchById(id));
-            if (!existBar) return;
-            this.addBar(existBar);
+            logger.error('Toggle activity bar failed, please check your id');
         }
-        this.updateContextMenuCheckStatus(id);
     }
 
-    public updateContextMenuCheckStatus(id: string) {
-        const { contextMenu, data } = this.state;
-        const existBar = data?.find(searchById(id));
-        const newActions = contextMenu?.map((item) => {
-            return {
-                ...item,
-                icon:
-                    item.id === id
-                        ? Boolean(existBar)
-                            ? 'check'
-                            : ''
-                        : item.icon,
-            };
-        });
-        this.setState({
-            contextMenu: newActions,
-        });
+    public toggleContextMenuCheckStatus(id: string) {
+        const { contextMenu = [] } = this.state;
+        const newActions = contextMenu.concat();
+        const target = newActions.find(searchById(id));
+        if (target) {
+            target.icon = target.icon === 'check' ? '' : 'check';
+            this.setState({
+                contextMenu: newActions,
+            });
+        } else {
+            logger.error('toggle context menu failed, please check your id');
+        }
     }
 
     public addContextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]) {

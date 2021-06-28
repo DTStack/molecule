@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { useCallback, useEffect } from 'react';
-import { useContextMenu } from 'mo/components/contextMenu';
-import { select } from 'mo/common/dom';
+import { useCallback } from 'react';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
@@ -14,8 +12,10 @@ import {
     containerClassName,
     defaultClassName,
     globalItemsClassName,
+    itemClassName,
     normalItemsClassName,
 } from './base';
+import { useContextView } from 'mo/components';
 
 export function ActivityBar(props: IActivityBar & IActivityBarController) {
     const {
@@ -37,14 +37,12 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
         }
     };
 
-    const normalBarItems =
-        data?.filter(
-            (item: IActivityBarItem) => !item.type || item.type === 'normal'
-        ) || [];
-    const globalBarItems =
-        data?.filter(
-            (item: IActivityBarItem) => item.type && item.type === 'global'
-        ) || [];
+    const normalBarItems = data.filter(
+        (item) => item.type !== 'global' && !item.hidden
+    );
+    const globalBarItems = data.filter(
+        (item) => item.type === 'global' && !item.hidden
+    );
 
     const renderItems = (item: IActivityBarItem, index: number) => {
         return (
@@ -59,32 +57,66 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
         );
     };
 
-    let contextViewMenu;
-    const onClickMenuItem = useCallback(
-        (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
-            onContextMenuClick?.(e, item);
-            contextViewMenu?.dispose();
-        },
-        [contextMenu]
-    );
     const renderContextMenu = () => (
         <Menu onClick={onClickMenuItem} data={contextMenu} />
     );
 
-    useEffect(() => {
-        if (contextMenu.length > 0) {
-            contextViewMenu = useContextMenu({
-                anchor: select(`#${ID_ACTIVITY_BAR}`),
-                render: renderContextMenu,
-            });
-        }
-        return function cleanup() {
-            contextViewMenu?.dispose();
-        };
+    const contextView = useContextView({
+        render: renderContextMenu,
     });
 
+    const onClickMenuItem = useCallback(
+        (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
+            onContextMenuClick?.(e, item);
+            contextView?.hide();
+        },
+        [contextMenu]
+    );
+
+    const handleRightClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const doms = document.elementsFromPoint(e.pageX, e.pageY);
+        const itemDom = doms.find((dom) =>
+            dom.classList.contains(itemClassName)
+        );
+        if (itemDom) {
+            const rect = itemDom.getBoundingClientRect();
+            const extraContextMenu = contextMenu.concat();
+            const targetContextMenu = contextMenu.find(
+                (menu) => menu.id === itemDom?.id
+            );
+            targetContextMenu &&
+                extraContextMenu.unshift(
+                    ...([
+                        {
+                            id: itemDom.id,
+                            icon: 'check',
+                            name: targetContextMenu.name,
+                        },
+                        {
+                            type: 'divider',
+                        },
+                    ] as IMenuItemProps[])
+                );
+            contextView.show(
+                {
+                    x: rect.x + rect.width / 2,
+                    y: rect.y + rect.height,
+                },
+                () => <Menu onClick={onClickMenuItem} data={extraContextMenu} />
+            );
+        } else {
+            contextView.show({ x: e.pageX, y: e.pageY });
+        }
+    };
+
     return (
-        <div className={defaultClassName} id={ID_ACTIVITY_BAR}>
+        <div
+            className={defaultClassName}
+            onContextMenu={handleRightClick}
+            id={ID_ACTIVITY_BAR}
+        >
             <div className={containerClassName}>
                 <Scrollable className={normalItemsClassName}>
                     <ul>{normalBarItems.map(renderItems)}</ul>

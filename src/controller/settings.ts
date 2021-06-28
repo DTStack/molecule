@@ -46,3 +46,6 @@ export class SettingsController
         console.log('onClick:', this.panelService);
     };
 }
+
+// Register singleton
+container.resolve(SettingsController);

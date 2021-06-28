@@ -30,6 +30,7 @@
         "menu.background": "#252526",
         "menu.foreground": "#CCCCCC",
         "menu.selectionBackground": "#094771",
+        "menu.separatorBackground": "#BBBBBB",
         "statusBarItem.remoteForeground": "#FFF",
         "statusBarItem.remoteBackground": "#16825D",
         "sidebarSectionHeader.background": "#0000",

@@ -7,7 +7,7 @@
 }
 
 #{$menu}__divider {
-    border-bottom: 1px solid rgb(187, 187, 187);
+    border-bottom: 1px solid var(--menu-separatorBackground);
     flex: 1;
     font-size: inherit;
     height: 0;

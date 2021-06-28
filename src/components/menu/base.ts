@@ -20,6 +20,10 @@ export const defaultMenuItemClassName = getBEMElement(
     defaultMenuClassName,
     'item'
 );
+export const defaultDividerClassName = getBEMElement(
+    defaultMenuClassName,
+    'divider'
+);
 export const checkClassName = getBEMElement(defaultMenuClassName, 'check');
 export const disabledClassName = getBEMModifier(
     defaultMenuItemClassName,

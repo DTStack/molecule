@@ -14,6 +14,7 @@ import { mergeFunctions } from 'mo/common/utils';
 import { cloneReactChildren } from 'mo/react';
 import { em2Px } from 'mo/common/css';
 import { getRelativePosition, triggerEvent } from 'mo/common/dom';
+import { Divider } from './divider';
 
 export type IMenuProps = ISubMenuProps;
 
@@ -81,6 +82,7 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
     if (data.length > 0) {
         const renderMenusByData = (menus: IMenuProps[]) => {
             return menus.map((item: IMenuProps) => {
+                if (item.type === 'divider') return <Divider />;
                 const handleClick = mergeFunctions(onClick, item.onClick);
                 if (item.data && item.data.length > 0) {
                     return (
@@ -159,6 +161,16 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         // sub menu do not listen any event
         if (claNames?.includes(defaultSubMenuClassName)) return {};
         return {
+            onContextMenu: (e) => {
+                e.preventDefault();
+                e.persist();
+                e.stopPropagation();
+            },
+            onClick: (e) => {
+                e.preventDefault();
+                e.persist();
+                e.stopPropagation();
+            },
             [triggerEvent(trigger)]: handleTriggerEvent,
             onMouseOut: handleMouseOut,
         };

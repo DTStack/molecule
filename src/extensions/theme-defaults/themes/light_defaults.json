@@ -36,6 +36,7 @@
         "sidebarSectionHeader.border": "#61616130",
         "tab.border": "#333",
         "menu.selectionBackground": "#0060C0",
+        "menu.separatorBackground": "#888888",
         "tab.inactiveBackground": "rgb(236, 236, 236)",
         "tab.inactiveForeground": "rgba(51, 51, 51, 0.7)",
         "tab.activeForeground": "rgb(255, 255, 255)"

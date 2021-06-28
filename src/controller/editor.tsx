@@ -20,7 +20,9 @@ import { editor as monacoEditor, Uri } from 'mo/monaco';
 
 import {
     EditorService,
+    ExplorerService,
     IEditorService,
+    IExplorerService,
     IStatusBarService,
     StatusBarService,
 } from 'mo/services';
@@ -56,11 +58,13 @@ export class EditorController extends Controller implements IEditorController {
     private editorStates = new Map();
     private readonly editorService: IEditorService;
     private readonly statusBarService: IStatusBarService;
+    private readonly explorerService: IExplorerService;
 
     constructor() {
         super();
         this.editorService = container.resolve(EditorService);
         this.statusBarService = container.resolve(StatusBarService);
+        this.explorerService = container.resolve(ExplorerService);
     }
 
     public open<T>(tab: IEditorTab<any>, groupId?: number) {
@@ -107,21 +111,24 @@ export class EditorController extends Controller implements IEditorController {
 
     public updateCurrentValue = () => {
         const { current } = this.editorService.getState();
-        const model = current?.editorInstance?.getModel();
-        const newValue = model.getValue();
-        current?.editorInstance?.executeEdits('update-value', [
-            {
-                range: model.getFullModelRange(),
-                text: newValue,
-                forceMoveMarkers: true,
-            },
-        ]);
-        current?.editorInstance?.focus();
+        if (current) {
+            const model = current?.editorInstance?.getModel();
+            const newValue = model.getValue();
+            current?.editorInstance?.executeEdits('update-value', [
+                {
+                    range: model.getFullModelRange(),
+                    text: newValue,
+                    forceMoveMarkers: true,
+                },
+            ]);
+            current?.editorInstance?.focus();
+        }
     };
 
     public onCloseTab = (tabId?: string, groupId?: number) => {
         if (tabId && groupId) {
             this.editorService.closeTab(tabId, groupId);
+            this.explorerService.forceUpdate();
             this.updateCurrentValue();
             this.emit(EditorEvent.OnCloseTab, tabId, groupId);
         }

@@ -95,14 +95,17 @@ export class ActivityBarController
             // activityBar contextMenu
             case CONTEXT_MENU_MENU: {
                 this.menuBarController.updateMenuBar!();
+                this.activityBarService.toggleContextMenuCheckStatus(
+                    contextMenuId
+                );
                 break;
             }
-            case CONTEXT_MENU_EXPLORER: {
-                this.activityBarService.toggleBar(contextMenuId);
-                break;
-            }
+            case CONTEXT_MENU_EXPLORER:
             case CONTEXT_MENU_SEARCH: {
                 this.activityBarService.toggleBar(contextMenuId);
+                this.activityBarService.toggleContextMenuCheckStatus(
+                    contextMenuId
+                );
                 break;
             }
             case CONTEXT_MENU_HIDE: {

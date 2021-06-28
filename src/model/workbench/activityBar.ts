@@ -24,6 +24,7 @@ export interface IActivityBarItem {
     id: string;
     name?: ReactNode;
     title?: string;
+    hidden?: boolean;
     data?: any;
     iconName?: string;
     checked?: boolean;

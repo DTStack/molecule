@@ -20,6 +20,7 @@ export default {
         'menu.appearance': 'Appearance',
         'menu.showMenuBar': 'Show Menu Bar',
         'menu.showSideBar': 'Show Side bar',
+        'menu.showSideBar.label': 'Toggle Side Bar Visibility',
         'menu.showStatusBar': 'Show Status Bar',
         'menu.showActivityBar': 'Show Activity Bar',
         'menu.run': 'Run',

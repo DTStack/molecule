@@ -9,6 +9,7 @@ import {
     IColorThemeService,
 } from './theme/colorThemeService';
 import { Action2, registerAction2 } from 'mo/monaco/common';
+import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 
 export interface IExtensionService {
     /**
@@ -32,16 +33,19 @@ export interface IExtensionService {
      * ```
      */
     registerAction(actionClass: { new (): Action2 }): void;
+    executeCommand(id: string, ...args: any): void;
 }
 
 @singleton()
 export class ExtensionService implements IExtensionService {
     public extensions: IExtension[] = [];
     private readonly colorThemeService: IColorThemeService;
+    private readonly monacoService: IMonacoService;
 
     constructor(@inject('Extensions') extensions: IExtension[] = []) {
         this.load(extensions);
         this.colorThemeService = container.resolve(ColorThemeService);
+        this.monacoService = container.resolve(MonacoService);
     }
 
     public load(extensions: IExtension[] = []) {
@@ -83,6 +87,10 @@ export class ExtensionService implements IExtensionService {
 
     public registerAction(actionClass: { new (): Action2 }) {
         registerAction2(actionClass);
+    }
+
+    public executeCommand(id, ...args) {
+        this.monacoService.commandService.executeCommand(id, ...args);
     }
 
     unload(extension: IExtension) {

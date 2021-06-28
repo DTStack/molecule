@@ -3,13 +3,13 @@ import molecule from 'mo';
 import {
     MENU_VIEW_ACTIVITYBAR,
     MENU_VIEW_MENUBAR,
-    MENU_VIEW_SIDEBAR,
     MENU_VIEW_STATUSBAR,
 } from 'mo/model/workbench/menuBar';
 import { IExtension } from 'mo/model';
 
 import TestPane from './testPane';
 import { Entry } from './entry';
+import { Position } from 'mo/model/workbench/layout';
 
 export const ExtendTestPane: IExtension = {
     activate() {
@@ -34,7 +34,6 @@ export const ExtendTestPane: IExtension = {
         molecule.editor.setEntry(<Entry />);
 
         molecule.settings.onChangeConfiguration(async (value) => {
-            console.log('onChangeConfiguration:', value);
             molecule.settings.update(value);
             const config = await molecule.settings.getConfiguration();
             const workbench: any = config.workbench;
@@ -60,16 +59,17 @@ export const ExtendTestPane: IExtension = {
                     icon: hidden ? '' : 'check',
                 });
             }
-            if (workbench?.sidebar) {
-                const hidden = workbench?.sidebar.hidden;
-                molecule.layout.setState({
-                    ...layoutViewState,
-                    sideBar: { ...layoutViewState.sideBar, hidden },
-                });
-
-                molecule.menuBar.update(MENU_VIEW_SIDEBAR, {
-                    icon: hidden ? '' : 'check',
-                });
+            if (workbench.sidebar) {
+                switch (workbench.sidebar) {
+                    case 'left':
+                        molecule.layout.setSideBarPosition(Position.LEFT);
+                        break;
+                    case 'right':
+                        molecule.layout.setSideBarPosition(Position.RIGHT);
+                        break;
+                    default:
+                        break;
+                }
             }
             if (workbench?.statusBar) {
                 const hidden = workbench?.statusBar.hidden;

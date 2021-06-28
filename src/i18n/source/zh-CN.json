@@ -22,6 +22,7 @@
         "menu.appearance": "外观",
         "menu.showMenuBar": "显示菜单栏",
         "menu.showSideBar": "显示边栏",
+        "menu.showSideBar.label": "切换侧边栏",
         "menu.showStatusBar": "显示状态栏",
         "menu.showActivityBar": "显示活动栏",
         "menu.hideActivityBar": "隐藏活动栏",

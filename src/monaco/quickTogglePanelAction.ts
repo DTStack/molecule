@@ -29,6 +29,7 @@ export class QuickTogglePanelAction extends Action2 {
             keybinding: {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
+                // eslint-disable-next-line new-cap
                 primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KEY_J),
             },
         });

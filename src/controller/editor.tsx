@@ -181,7 +181,7 @@ export class EditorController extends Controller implements IEditorController {
         const tab = current?.tab;
         this.openFile(
             editorInstance,
-            tab?.name!,
+            tab?.id!,
             tab?.data?.value!,
             tab?.data?.language!
         );

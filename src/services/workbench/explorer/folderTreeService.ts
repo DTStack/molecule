@@ -50,6 +50,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     addRootFolder(folder?: ITreeNodeItemProps): void;
     removeRootFolder(id: number): void;
     setActive(id?: number): void;
+    setEntry(entry: React.ReactNode): void;
     onDropTree(treeData: ITreeNodeItemProps[]): void;
     getFileIconByExtensionName(name: string, fileType: FileType): string;
     /**
@@ -210,6 +211,12 @@ export class FolderTreeService
         const currentNode = tree.get(id) as any;
         this.setState({
             folderTree: { ...folderTree, current: currentNode },
+        });
+    }
+
+    public setEntry(entry: React.ReactNode) {
+        this.setState({
+            entry,
         });
     }
 

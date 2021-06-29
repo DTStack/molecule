@@ -6,12 +6,12 @@ import React, {
     useCallback,
     useLayoutEffect,
 } from 'react';
-import { IFolderTreeSubItem } from 'mo/model';
+import { IFolderTree, IFolderTreeSubItem } from 'mo/model';
 import { select, getEventPosition } from 'mo/common/dom';
 import Tree, { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { Button } from 'mo/components/button';
-import { IFolderTreeController } from 'mo/controller/explorer/folderTree';
+import { FolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
 import {
@@ -66,13 +66,12 @@ const Input = React.forwardRef(
     }
 );
 
-const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
-    props: IFolderTreeSubItem & IFolderTreeController
-) => {
+const FolderTree: React.FunctionComponent<
+    FolderTreeController & IFolderTree
+> = (props) => {
     const {
-        data = [],
-        contextMenu: rawContextMenu = [],
-        folderPanelContextMenu = [],
+        folderTree = {},
+        entry,
         onUpdateFileName,
         onSelectFile,
         onDropTree,
@@ -82,6 +81,28 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         getInputEvent,
         ...restProps
     } = props;
+
+    const {
+        data = [],
+        contextMenu: rawContextMenu = [],
+        folderPanelContextMenu = [],
+    } = folderTree;
+
+    const handleAddRootFolder = () => {
+        onNewRootFolder?.();
+    };
+
+    const welcomePage = entry ? (
+        <>{entry}</>
+    ) : (
+        <div style={{ padding: '10px 5px' }}>
+            you have not yet opened a folder
+            <Button onClick={handleAddRootFolder}>Add Folder</Button>
+        </div>
+    );
+
+    if (!data.length) return welcomePage;
+
     const inputRef = useRef<HTMLInputElement>(null);
     // tree context view
     const contextMenu = useRef<ReturnType<typeof useContextMenu>>();
@@ -164,10 +185,6 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         }
     };
 
-    const handleAddRootFolder = () => {
-        onNewRootFolder?.();
-    };
-
     const renderTitle = (node: ITreeNodeItemProps) => {
         const { isEditable, name } = node;
 
@@ -194,9 +211,9 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
         return () => {
             contextMenu.current?.dispose();
         };
-    }, [data?.length]);
+    }, [data.length]);
 
-    const renderByData = (
+    return (
         <Tree
             // root folder do not render
             data={data[0]?.children || []}
@@ -211,14 +228,5 @@ const FolderTree: React.FunctionComponent<IFolderTreeSubItem> = (
             {...restProps}
         />
     );
-
-    const renderInitial = (
-        <div style={{ padding: '10px 5px' }}>
-            you have not yet opened a folder
-            <Button onClick={handleAddRootFolder}>Add Folder</Button>
-        </div>
-    );
-
-    return data?.length > 0 ? renderByData : renderInitial;
 };
 export default memo(FolderTree);

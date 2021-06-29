@@ -141,7 +141,6 @@ export function builtInExplorerFolderPanel() {
         id: SAMPLE_FOLDER_PANEL_ID,
         sortIndex: 8,
         name: localize('menu.defaultProjectName', 'No Open Folder'),
-        className: 'samplefolder',
         toolbar: [
             {
                 id: NEW_FILE_COMMAND_ID,

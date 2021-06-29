@@ -5,6 +5,7 @@ import { QuickAccessSettings } from 'mo/monaco/quickAccessSettingsAction';
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
+import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 
 export const ExtendsKeybinding: IExtension = {
     activate(extensionCtx: IExtensionService) {
@@ -13,5 +14,6 @@ export const ExtendsKeybinding: IExtension = {
         extensionCtx.registerAction(QuickAccessSettings);
         extensionCtx.registerAction(SelectLocaleAction);
         extensionCtx.registerAction(CommandQuickSideBarViewAction);
+        extensionCtx.registerAction(QuickTogglePanelAction);
     },
 };

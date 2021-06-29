@@ -23,6 +23,8 @@ export default {
         'menu.showSideBar.label': 'Toggle Side Bar Visibility',
         'menu.showStatusBar': 'Show Status Bar',
         'menu.showActivityBar': 'Show Activity Bar',
+        'menu.showPanel': 'Show Panel',
+        'menu.showPanel.title': 'Toggle Panel',
         'menu.run': 'Run',
         'menu.help': 'Help',
         'sidebar.explore.title': 'Explorer',

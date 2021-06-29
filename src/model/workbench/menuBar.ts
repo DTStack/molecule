@@ -29,6 +29,7 @@ export const MENU_FILE_REDO = 'redo';
 export const MENU_VIEW_MENUBAR = 'workbench.action.showMenuBar';
 export const MENU_VIEW_ACTIVITYBAR = 'workbench.action.showActivityBar';
 export const MENU_VIEW_STATUSBAR = 'workbench.action.showStatusBar';
+export const MENU_VIEW_PANEL = 'workbench.action.showPanel';
 
 export function builtInMenuBarData() {
     return [
@@ -115,6 +116,11 @@ export function builtInMenuBarData() {
                                 'menu.showActivityBar',
                                 'Show Activity Bar'
                             ),
+                        },
+                        {
+                            icon: 'check',
+                            id: MENU_VIEW_PANEL,
+                            name: localize('menu.showPanel', 'Show Panel'),
                         },
                     ],
                 },

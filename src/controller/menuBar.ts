@@ -6,6 +6,7 @@ import {
     MENU_FILE_UNDO,
     MENU_VIEW_ACTIVITYBAR,
     MENU_VIEW_MENUBAR,
+    MENU_VIEW_PANEL,
     MENU_VIEW_STATUSBAR,
 } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
@@ -20,6 +21,7 @@ import {
 import { ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
+import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 
 export interface IMenuBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
@@ -68,6 +70,9 @@ export class MenuBarController
             case ID_SIDE_BAR:
                 this.updateSideBar();
                 break;
+            case MENU_VIEW_PANEL:
+                this.updatePanel();
+                break;
         }
     };
 
@@ -112,6 +117,12 @@ export class MenuBarController
     public updateSideBar = () => {
         this.monacoService.commandService.executeCommand(
             CommandQuickSideBarViewAction.ID
+        );
+    };
+
+    private updatePanel = () => {
+        this.monacoService.commandService.executeCommand(
+            QuickTogglePanelAction.ID
         );
     };
 }

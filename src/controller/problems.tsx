@@ -12,6 +12,8 @@ import {
 } from 'mo/services';
 import { singleton, container } from 'tsyringe';
 import { builtInPanelProblems, builtInStatusProblems } from 'mo/model/problems';
+import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
+import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 export interface IProblemsController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
 }
@@ -22,29 +24,29 @@ export class ProblemsController
     private readonly panelService: IPanelService;
     private readonly statusBarService: IStatusBarService;
     private readonly layoutService: ILayoutService;
+    private readonly monacoService: IMonacoService;
 
     constructor() {
         super();
         this.panelService = container.resolve(PanelService);
         this.statusBarService = container.resolve(StatusBarService);
+        this.monacoService = container.resolve(MonacoService);
         this.layoutService = container.resolve(LayoutService);
         this.init();
     }
 
     private showHideProblems() {
+        const { panel } = this.layoutService.getState();
+        if (panel.hidden) {
+            this.monacoService.commandService.executeCommand(
+                QuickTogglePanelAction.ID
+            );
+        }
         const { current } = this.panelService.getState();
-        const {
-            panel: { hidden },
-        } = this.layoutService.getState();
-        if (hidden) {
-            this.layoutService.setPanelHidden();
+        if (current?.id !== builtInPanelProblems().id) {
             this.panelService.open(builtInPanelProblems());
         } else {
-            if (current?.id !== builtInPanelProblems().id) {
-                this.panelService.open(builtInPanelProblems());
-            } else {
-                this.layoutService.setPanelHidden();
-            }
+            this.layoutService.setPanelHidden();
         }
     }
 

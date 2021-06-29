@@ -103,8 +103,6 @@ const FolderTree: React.FunctionComponent<
 
     if (!data.length) return welcomePage;
 
-    console.log('folderTree:', folderTree);
-
     const inputRef = useRef<HTMLInputElement>(null);
     // tree context view
     const contextMenu = useRef<ReturnType<typeof useContextMenu>>();

@@ -26,11 +26,9 @@ import {
     IExplorerService,
     ISidebarService,
     IActivityBarService,
-    IFolderTreeService,
     ActivityBarService,
     SidebarService,
     ExplorerService,
-    FolderTreeService,
 } from 'mo/services';
 import { FolderTreeController, IFolderTreeController } from './folderTree';
 
@@ -54,7 +52,6 @@ export class ExplorerController
     private readonly activityBarService: IActivityBarService;
     private readonly sidebarService: ISidebarService;
     private readonly explorerService: IExplorerService;
-    private readonly folderTreeService: IFolderTreeService;
     private readonly folderTreeController: IFolderTreeController;
 
     constructor() {
@@ -62,7 +59,6 @@ export class ExplorerController
         this.activityBarService = container.resolve(ActivityBarService);
         this.sidebarService = container.resolve(SidebarService);
         this.explorerService = container.resolve(ExplorerService);
-        this.folderTreeService = container.resolve(FolderTreeService);
         this.folderTreeController = container.resolve(FolderTreeController);
 
         this.initView();
@@ -153,12 +149,7 @@ export class ExplorerController
     };
 
     public renderFolderTree = () => {
-        return (
-            <FolderTreeView
-                {...this.folderTreeService.getState()?.folderTree}
-                {...this.folderTreeController}
-            />
-        );
+        return <FolderTreeView />;
     };
 }
 

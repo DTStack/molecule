@@ -37,6 +37,7 @@ export interface IFolderTreeSubItem {
 }
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
+    entry?: React.ReactNode;
 }
 
 export const NEW_FILE_COMMAND_ID = 'explorer.newFile';
@@ -138,8 +139,13 @@ const builtInFolderTree = {
 
 export class IFolderTreeModel implements IFolderTree {
     public folderTree: IFolderTreeSubItem;
+    public entry: React.ReactNode;
 
-    constructor(folderTree: IFolderTreeSubItem = builtInFolderTree) {
+    constructor(
+        folderTree: IFolderTreeSubItem = builtInFolderTree,
+        entry?: React.ReactNode
+    ) {
         this.folderTree = folderTree;
+        this.entry = entry;
     }
 }

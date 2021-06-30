@@ -161,7 +161,6 @@ export class EditorController extends Controller implements IEditorController {
 
     public onSelectTab = (tabId: string, groupId: number) => {
         this.editorService.setActive(groupId, tabId);
-        this.updateCurrentValue();
         this.emit(EditorEvent.OnSelectTab, tabId, groupId);
     };
 
@@ -282,15 +281,8 @@ export class EditorController extends Controller implements IEditorController {
 
     private initializeFile(path: string, value: string, language: string) {
         let model = monacoEditor.getModel(Uri.parse(path));
-        const { current } = this.editorService.getState();
         if (model) {
-            current?.editorInstance?.executeEdits('update-value', [
-                {
-                    range: model.getFullModelRange(),
-                    text: value,
-                    forceMoveMarkers: true,
-                },
-            ]);
+            model.setValue(value);
         } else {
             model = monacoEditor.createModel(value, language, Uri.parse(path));
         }

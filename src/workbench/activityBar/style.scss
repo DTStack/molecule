@@ -46,6 +46,7 @@
 
     &__label {
         box-sizing: border-box;
+        color: inherit;
         display: flex;
         height: 48px;
         margin-right: 0;
@@ -55,6 +56,7 @@
 
         &.codicon {
             align-items: center;
+            color: inherit;
             display: flex;
             font-size: 24px;
             justify-content: center;

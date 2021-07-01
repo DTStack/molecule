@@ -113,7 +113,7 @@ export class EditorController extends Controller implements IEditorController {
         const { current } = this.editorService.getState();
         if (current) {
             const model = current?.editorInstance?.getModel();
-            const newValue = model.getValue();
+            const newValue = current.tab?.data.value || '';
             current?.editorInstance?.executeEdits('update-value', [
                 {
                     range: model.getFullModelRange(),
@@ -164,6 +164,9 @@ export class EditorController extends Controller implements IEditorController {
         this.emit(EditorEvent.OnSelectTab, tabId, groupId);
     };
 
+    /**
+     * Called when open a new group
+     */
     public onUpdateEditorIns = (
         editorInstance: IStandaloneCodeEditor,
         groupId: number
@@ -178,7 +181,7 @@ export class EditorController extends Controller implements IEditorController {
 
         const { current } = this.editorService.getState();
         const tab = current?.tab;
-        this.openFile(
+        this.openTab(
             editorInstance,
             tab?.id!,
             tab?.data?.value!,
@@ -241,6 +244,9 @@ export class EditorController extends Controller implements IEditorController {
         });
     }
 
+    /**
+     * Called when Editor props changed
+     */
     public onChangeEditorProps = (
         prevProps: IMonacoEditorProps,
         props: IMonacoEditorProps
@@ -253,7 +259,7 @@ export class EditorController extends Controller implements IEditorController {
                 prevProps.path,
                 editorInstance?.saveViewState()
             );
-            this.openFile(
+            this.openTab(
                 editorInstance,
                 path!,
                 options?.value!,
@@ -262,30 +268,31 @@ export class EditorController extends Controller implements IEditorController {
         }
     };
 
-    private openFile(
+    /**
+     * Open a tab via instance.
+     * Actually, one tab to one Model, so that
+     * - the action to open a exist tab equals to switch the model in instance
+     * - the action to open a new tab equals to create a new model in instance
+     */
+    private openTab(
         editorInstance: IStandaloneCodeEditor,
         path: string,
         value: string,
         language: string
     ) {
-        this.initializeFile(path, value, language);
-        const model = monacoEditor.getModel(Uri.parse(path));
-        editorInstance.setModel(model!);
-        // Restore the editor state for the file
+        let model = monacoEditor.getModel(Uri.parse(path));
+        if (!model) {
+            model = monacoEditor.createModel(value, language, Uri.parse(path));
+        }
+        // 1. switch model
+        editorInstance.setModel(model);
+        // 2. Restore view state
         const editorState = this.editorStates.get(path);
         if (editorState) {
+            // viewState contains: scroller info, cursor info, contributions info
             editorInstance.restoreViewState(editorState);
         }
         editorInstance?.focus();
-    }
-
-    private initializeFile(path: string, value: string, language: string) {
-        let model = monacoEditor.getModel(Uri.parse(path));
-        if (model) {
-            model.setValue(value);
-        } else {
-            model = monacoEditor.createModel(value, language, Uri.parse(path));
-        }
     }
 
     private updateStatusBar(editorInstance: IStandaloneCodeEditor) {

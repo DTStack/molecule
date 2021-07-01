@@ -2,6 +2,9 @@ const path = require('path');
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const through = require('through2');
+const rimraf = require('rimraf');
+const sass = require('gulp-sass')(require('sass'));
+const aliasImporter = require('node-sass-alias-importer');
 const tsProject = ts.createProject('../tsconfig.build.json');
 const output = '../esm';
 
@@ -30,6 +33,10 @@ function relativeImport(compilerOptions) {
     });
 }
 
+gulp.task('clean', function (cb) {
+    rimraf(output, cb);
+});
+
 gulp.task('build:esm', function () {
     return tsProject
         .src()
@@ -40,3 +47,52 @@ gulp.task('build:esm', function () {
         })
         .pipe(gulp.dest(output));
 });
+
+gulp.task('build:sass', function () {
+    return gulp
+        .src('../src/**/*.scss')
+        .pipe(
+            sass({
+                importer: aliasImporter({
+                    mo: path.resolve(__dirname, '../src'),
+                }),
+            })
+        )
+        .pipe(gulp.dest(output));
+});
+
+gulp.task('build:extensions', function () {
+    // [issues]: I don't know why ignore doesn't work
+    const extensionPath = '../src/extensions/**';
+    return gulp
+        .src(
+            [
+                path.resolve(extensionPath, '*.svg'),
+                path.resolve(extensionPath, '*.json'),
+                path.resolve(extensionPath, '*.png'),
+                path.resolve(extensionPath, '*.md'),
+            ],
+            {
+                dot: true,
+                // ignore: ['*.ts', '*.tsx'],
+            }
+        )
+        .pipe(gulp.dest(path.resolve(output, 'extensions')));
+});
+
+gulp.task('build:i18n', function () {
+    return gulp
+        .src('../src/i18n/**/*.json')
+        .pipe(gulp.dest(path.resolve(output, 'i18n')));
+});
+
+gulp.task(
+    'default',
+    gulp.series(
+        'clean',
+        'build:esm',
+        'build:sass',
+        'build:extensions',
+        'build:i18n'
+    )
+);

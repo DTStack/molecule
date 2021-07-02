@@ -17,11 +17,9 @@ $react-custom-scrollbars: '.ScrollbarsCustom';
 }
 
 #{$react-custom-scrollbars} {
-    &-Scroller {
-        height: 100%;
-    }
-
-    &-Content {
+    &-Scroller,
+    &-Content,
+    &-Wrapper {
         height: 100%;
     }
 }

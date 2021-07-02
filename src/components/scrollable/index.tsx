@@ -6,6 +6,7 @@ import { prefixClaName, classNames } from 'mo/common/className';
 export interface IScrollbarProps extends ScrollbarProps {
     autoHideThumb?: boolean;
     isShowShadow?: boolean;
+    trackStyle?: React.CSSProperties;
 }
 
 const defaultSrollableClassName = prefixClaName('scrollbar');
@@ -16,7 +17,13 @@ const defaultSrollableClassName = prefixClaName('scrollbar');
  * https://github.com/xobotyi/react-scrollbars-custom/issues/46
  */
 export function Scrollable(props: IScrollbarProps) {
-    const { className, children, isShowShadow = false, ...custom } = props;
+    const {
+        className,
+        children,
+        isShowShadow = false,
+        trackStyle,
+        ...custom
+    } = props;
     const scroller = React.useRef<Scrollbar>(null);
 
     const [isScrolling, setIsScrolling] = useState(false);
@@ -40,27 +47,33 @@ export function Scrollable(props: IScrollbarProps) {
 
     const trackProps = useMemo(
         () => ({
-            renderer: ({ elementRef, style, ...restProps }: any) => (
-                <span
-                    {...restProps}
-                    ref={elementRef}
-                    style={{
-                        ...style,
-                        opacity: isShow ? 1 : 0,
-                        transition: 'opacity 0.4s ease-in-out',
-                    }}
-                    onMouseEnter={onMouseEnter}
-                    onMouseLeave={onMouseLeave}
-                />
-            ),
+            renderer: ({ elementRef, style, ...restProps }: any) => {
+                // [TODO]: I don't know how to code it in a perfect way
+                restProps.children.props.style.background = '#bfbfbf66';
+                return (
+                    <span
+                        {...restProps}
+                        ref={elementRef}
+                        style={{
+                            ...style,
+                            opacity: isShow ? 1 : 0,
+                            transition: 'opacity 0.4s ease-in-out',
+                            background: 'transparent',
+                            ...trackStyle,
+                        }}
+                    />
+                );
+            },
         }),
-        [isShow, onMouseEnter, onMouseLeave]
+        [isShow, trackStyle]
     );
 
     return (
         <Scrollbar
             className={claNames}
             ref={scroller}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
             {...(custom as any)}
             wrapperProps={{
                 renderer: ({ elementRef, style, key, ...restProps }) => {

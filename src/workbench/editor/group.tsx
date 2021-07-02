@@ -62,13 +62,12 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
         <div className={groupClassName}>
             <div className={groupHeaderClassName}>
                 <div className={groupTabsClassName}>
-                    <Scrollable>
+                    <Scrollable noScrollY trackStyle={{ height: 3 }}>
                         <Tabs
                             editable={true}
                             type="card"
                             data={data}
                             onMoveTab={onMoveTab}
-                            style={{ overflow: 'hidden' }}
                             onSelectTab={onSelectTab}
                             onContextMenu={handleTabContextMenu}
                             activeTab={isActiveGroup ? tab.id : ''}

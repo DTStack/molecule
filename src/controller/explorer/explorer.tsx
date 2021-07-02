@@ -142,9 +142,14 @@ export class ExplorerController
             }
             case EXPLORER_TOGGLE_VERTICAL: {
                 this.emit(EditorTreeEvent.onSplitEditorLayout);
+                break;
             }
             default:
-                console.log('onCollapseToolbar');
+                this.emit(
+                    ExplorerEvent.onPanelToolbarClick,
+                    parentPanel,
+                    toolbarId
+                );
         }
     };
 

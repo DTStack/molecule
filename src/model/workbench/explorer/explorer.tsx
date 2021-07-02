@@ -5,6 +5,7 @@ import { localize } from 'mo/i18n/localize';
 
 export enum ExplorerEvent {
     onClick = 'explorer.onClick',
+    onPanelToolbarClick = 'explorer.onPanelToolbarClick',
     onCollapseChange = 'explorer.onCollapseChange',
     onDeletePanel = 'explorer.onDeletePanel',
 }

@@ -45,6 +45,9 @@ export interface IExplorerService extends Component<IExplorer> {
      * it execs when delete an explorer panel
      */
     onDeletePanel(callback: (panel: IExplorerPanelItem) => void): void;
+    onPanelToolbarClick(
+        callback: (panel: IExplorerPanelItem, toolbarId: string) => void
+    ): void;
 }
 
 @singleton()
@@ -234,5 +237,11 @@ export class ExplorerService
 
     public onDeletePanel(callback: (panel: IExplorerPanelItem) => void) {
         this.subscribe(ExplorerEvent.onDeletePanel, callback);
+    }
+
+    public onPanelToolbarClick(
+        callback: (panel: IExplorerPanelItem, toolbarId: string) => void
+    ) {
+        this.subscribe(ExplorerEvent.onPanelToolbarClick, callback);
     }
 }

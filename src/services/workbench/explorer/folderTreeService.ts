@@ -81,8 +81,12 @@ export class FolderTreeService
             // TODO: this function has incorrect return type
             const currentIndex: any = tree.getIndex(id);
             if (currentIndex?.node?.fileType === FileTypes.File) {
+                const locations = currentIndex.node.location.split('/');
+                locations[locations.length - 1] = data.name;
+                data.location = locations.join('/');
                 tree.prepend(data, currentIndex.parent);
             } else {
+                data.location = `${currentIndex.node.location}/${data.name}`;
                 tree.append(data, id);
             }
             cloneData[index] = tree.obj;

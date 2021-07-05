@@ -225,7 +225,10 @@ export class EditorController extends Controller implements IEditorController {
             const { current } = this.editorService.getState();
             const tab = current?.tab;
             if (!tab) return;
-            const updatedTab = { ...tab, data: { value: newValue } };
+            const updatedTab = {
+                ...tab,
+                data: { ...tab.data, value: newValue },
+            };
             this.editorService.updateTab(updatedTab, groupId);
             this.emit(EditorEvent.OnUpdateTab, updatedTab);
             this.updateStatusBar(editorInstance);

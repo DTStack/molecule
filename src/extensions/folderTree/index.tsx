@@ -37,6 +37,7 @@ export const ExtendsFolderTree: IExtension = {
                 new TreeNodeModel({
                     id,
                     name: 'molecule',
+                    location: 'molecule',
                     fileType: FileTypes.RootFolder,
                 })
             );
@@ -74,18 +75,20 @@ export const ExtendsFolderTree: IExtension = {
 
         molecule.folderTree.onSelectFile(
             (file: ITreeNodeItemProps, isUpdate?: boolean) => {
-                const { fileType, isEditable } = file;
+                const { fileType, name, isEditable } = file;
                 const isFile = fileType === FileTypes.File;
                 molecule.folderTree.setActive(file?.id);
                 if (!isFile || isEditable) return;
+                const nameArr = name?.split('.') || [];
+                const extName = nameArr[nameArr.length - 1] || '';
                 const tabData = {
                     ...file,
                     id: `${file.id}`?.split('_')?.[0],
                     modified: false,
                     data: {
                         value: file.content,
-                        path: 'desktop/moslecule/editor1',
-                        language: 'sql',
+                        path: file.location,
+                        language: extName,
                     },
                 };
 
@@ -108,19 +111,22 @@ export const ExtendsFolderTree: IExtension = {
 
         molecule.folderTree.onUpdateFileName((file: ITreeNodeItemProps) => {
             const { folderTree } = molecule.folderTree.getState();
-            const { id, name, fileType } = file as any;
+            const { id, name, fileType, location } = file as any;
             const cloneData: ITreeNodeItemProps[] = folderTree?.data || [];
             const {
                 tree,
                 index,
             } = molecule.folderTree.getCurrentRootFolderInfo(id);
             if (name) {
+                const newLoc = location.split('/');
+                newLoc[newLoc.length - 1] = name;
                 tree.update(id, {
                     ...file,
                     icon: molecule.folderTree.getFileIconByExtensionName(
                         name,
                         fileType
                     ),
+                    location: newLoc.join('/'),
                     isEditable: false,
                 });
             } else {

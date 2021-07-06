@@ -19,10 +19,13 @@ export function getDocumentRect() {
     const body = document.body;
     const html = document.documentElement;
 
+    const clientWidth = html.clientWidth;
+    const clientHeight = html.clientHeight;
+
     const height = Math.max(
         body.scrollHeight,
         body.offsetHeight,
-        html.clientHeight,
+        clientHeight,
         html.scrollHeight,
         html.offsetHeight
     );
@@ -30,7 +33,7 @@ export function getDocumentRect() {
     const width = Math.max(
         body.scrollWidth,
         body.offsetWidth,
-        html.clientWidth,
+        clientWidth,
         html.scrollWidth,
         html.offsetWidth
     );
@@ -38,6 +41,8 @@ export function getDocumentRect() {
     return {
         height,
         width,
+        clientWidth,
+        clientHeight,
     };
 }
 
@@ -50,12 +55,12 @@ export function getRelativePosition(
     element: HTMLElement,
     relativePos: IPosition
 ) {
-    const page = getDocumentRect();
+    const { clientWidth, clientHeight } = getDocumentRect();
     const anchorX = relativePos.x;
     const anchorY = relativePos.y;
 
-    const marginRight = page.width - anchorX;
-    const marginBottom = page.height - anchorY;
+    const marginRight = clientWidth - anchorX;
+    const marginBottom = clientHeight - anchorY;
 
     const viewHeight = element.offsetHeight;
     const viewWidth = element.offsetWidth;

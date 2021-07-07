@@ -61,6 +61,7 @@ export function Tab<T>(props: ITabProps) {
     const handleMouseOut = () => setHover(false);
     const handleOnContextMenu = useCallback(
         (event: React.MouseEvent) => {
+            event.preventDefault();
             onContextMenu?.(event, props);
         },
         [props]

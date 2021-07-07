@@ -40,11 +40,12 @@ $collapse__extra: #{$collapse}__extra;
     &__header {
         align-items: center;
         border: 1px solid transparent;
+        box-sizing: border-box;
         cursor: pointer;
         display: flex;
         font-size: 11px;
         font-weight: bold;
-        height: 22px;
+        height: 25px;
         outline: none;
         padding: 1px 2px;
         user-select: none;

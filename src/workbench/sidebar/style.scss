@@ -6,6 +6,10 @@
     position: relative;
     width: 100%;
 
+    &-explorer {
+        height: 100%;
+    }
+
     h2 {
         cursor: default;
         font-size: 11px;
@@ -44,7 +48,7 @@
 
     &__content {
         bottom: 0;
-        height: calc(100vh - 57px);
+        height: calc(100% - 35px);
         left: 0;
         position: relative;
         right: 0;

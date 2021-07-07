@@ -172,6 +172,7 @@ export class EditorController extends Controller implements IEditorController {
         groupId: number
     ) => {
         if (!editorInstance) return;
+
         this.initEditorEvents(editorInstance, groupId);
         this.registerActions(editorInstance);
         this.editorService.updateGroup(groupId, {
@@ -181,6 +182,7 @@ export class EditorController extends Controller implements IEditorController {
 
         const { current } = this.editorService.getState();
         const tab = current?.tab;
+
         this.openTab(
             editorInstance,
             tab?.id!,
@@ -221,17 +223,20 @@ export class EditorController extends Controller implements IEditorController {
         if (!editorInstance) return;
 
         editorInstance.onDidChangeModelContent((event: any) => {
-            const newValue = editorInstance.getModel()?.getValue();
             const { current } = this.editorService.getState();
             const tab = current?.tab;
             if (!tab) return;
+
+            const newValue = editorInstance.getModel()?.getValue();
             const updatedTab = {
                 ...tab,
                 data: { ...tab.data, value: newValue },
             };
+
             this.editorService.updateTab(updatedTab, groupId);
-            this.emit(EditorEvent.OnUpdateTab, updatedTab);
             this.updateStatusBar(editorInstance);
+
+            this.emit(EditorEvent.OnUpdateTab, updatedTab);
         });
 
         editorInstance.onDidFocusEditorText(() => {
@@ -258,6 +263,7 @@ export class EditorController extends Controller implements IEditorController {
         if (prevProps?.path !== path) {
             const { current } = this.editorService.getState();
             const editorInstance = current?.editorInstance;
+
             this.editorStates.set(
                 prevProps.path,
                 editorInstance?.saveViewState()
@@ -287,25 +293,23 @@ export class EditorController extends Controller implements IEditorController {
         if (!model) {
             model = monacoEditor.createModel(value, language, Uri.parse(path));
         }
+
         // 1. switch model
         editorInstance.setModel(model);
         // 2. Restore view state
         const editorState = this.editorStates.get(path);
+
         if (editorState) {
             // viewState contains: scroller info, cursor info, contributions info
             editorInstance.restoreViewState(editorState);
         }
+
         editorInstance?.focus();
     }
 
     private updateStatusBar(editorInstance: IStandaloneCodeEditor) {
         if (editorInstance) {
-            const model:
-                | monaco.editor.ITextModel
-                | null
-                | undefined = editorInstance?.getModel();
-            const decorations = model?.getAllDecorations();
-            console.log('decorations:', decorations);
+            // TODO
         }
     }
 

@@ -31,7 +31,7 @@ export function builtInOutputPanel() {
     return {
         id: PANEL_OUTPUT,
         name: localize(PANEL_OUTPUT, 'output'),
-        data: 'output',
+        data: '',
         renderPane: (item) => <Output {...item} />,
     };
 }

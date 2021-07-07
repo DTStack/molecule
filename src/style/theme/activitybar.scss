@@ -10,22 +10,18 @@
         background: var(--activityBar-activeBorder);
     }
 
-    &__item--checked {
-        #{$activityBar}__label {
-            background-color: var(--activityBar-activeBackground);
-            border-color: var(--activityBar-activeFocusBorder);
-            color: var(--activityBar-activeBorder);
-        }
-    }
-
     &__item {
         color: var(--activityBar-inactiveForeground);
 
         &:hover,
-        &__label .codicon {
+        &__label {
             background-color: var(--activityBar-activeBackground);
             border-color: var(--activityBar-activeBorder);
             color: var(--activityBar-activeBorder);
         }
+    }
+
+    &__item--checked {
+        color: var(--activityBar-activeBorder);
     }
 }

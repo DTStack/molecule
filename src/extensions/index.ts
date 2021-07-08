@@ -1,6 +1,5 @@
 import { ExtendsStatusBar } from './statusBar';
 import { ExtendsEditor } from './editor';
-import { ExtendsProblems } from './problems';
 import { ExtendsFolderTree } from './folderTree';
 import { ExtendsMenuBar } from './menuBar';
 import { ExtendsActivityBar } from './activityBar';
@@ -22,7 +21,6 @@ export const defaultExtensions = [
     ExtendsEditor,
     ExtendsMenuBar,
     ExtendsStatusBar,
-    ExtendsProblems,
     ExtendsExplorer,
     ExtendsEditorTree,
     defaultColorThemeExtension,

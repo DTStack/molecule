@@ -9,6 +9,7 @@ import {
     IPanelItem,
     PanelEvent,
     PanelModel,
+    PANEL_OUTPUT,
     PANEL_TOOLBOX_RESIZE,
     PANEL_TOOLBOX_RESTORE_SIZE,
 } from 'mo/model/workbench/panel';
@@ -51,7 +52,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
 
     public get outputEditorInstance() {
         const outputPane: IOutput | undefined = this.state.data?.find(
-            searchById(builtInOutputPanel().id)
+            searchById(PANEL_OUTPUT)
         );
         return outputPane?.outputEditorInstance;
     }

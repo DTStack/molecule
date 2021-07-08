@@ -109,46 +109,26 @@ export class EditorController extends Controller implements IEditorController {
         this.emit(EditorEvent.OnCloseAll, groupId);
     };
 
-    public updateCurrentValue = () => {
-        const { current } = this.editorService.getState();
-        if (current) {
-            const model = current?.editorInstance?.getModel();
-            const newValue = current.tab?.data.value || '';
-            current?.editorInstance?.executeEdits('update-value', [
-                {
-                    range: model.getFullModelRange(),
-                    text: newValue,
-                    forceMoveMarkers: true,
-                },
-            ]);
-            current?.editorInstance?.focus();
-        }
-    };
-
     public onCloseTab = (tabId?: string, groupId?: number) => {
         if (tabId && groupId) {
             this.editorService.closeTab(tabId, groupId);
             this.explorerService.forceUpdate();
-            this.updateCurrentValue();
             this.emit(EditorEvent.OnCloseTab, tabId, groupId);
         }
     };
 
     public onCloseToRight = (tabItem: IEditorTab, groupId: number) => {
         this.editorService.closeToRight(tabItem, groupId);
-        this.updateCurrentValue();
         this.emit(EditorEvent.OnCloseToRight, tabItem, groupId);
     };
 
     public onCloseToLeft = (tabItem: IEditorTab, groupId: number) => {
         this.editorService.closeToLeft(tabItem, groupId);
-        this.updateCurrentValue();
         this.emit(EditorEvent.OnCloseToLeft, tabItem, groupId);
     };
 
     public onCloseOthers = (tabItem: IEditorTab, groupId: number) => {
         this.editorService.closeOthers(tabItem, groupId);
-        this.updateCurrentValue();
         this.emit(EditorEvent.OnCloseOthers, tabItem, groupId);
     };
 

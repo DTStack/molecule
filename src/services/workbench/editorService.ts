@@ -73,6 +73,13 @@ export class EditorService
         this.state = container.resolve(EditorModel);
     }
 
+    private disposeModel(tabs: IEditorTab | IEditorTab[]) {
+        const arr = Array.isArray(tabs) ? tabs : [tabs];
+        arr.forEach((tab) => {
+            monacoEditor.getModel(Uri.parse(tab.id!))?.dispose();
+        });
+    }
+
     public setEntry(component: React.ReactNode) {
         this.setState({
             entry: component,
@@ -129,9 +136,7 @@ export class EditorService
                 nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1];
 
             // the model of closed tab should be disposed after closing
-            monacoEditor
-                .getModel(Uri.parse(nextGroup.data![tabIndex].id!))
-                ?.dispose();
+            this.disposeModel(nextGroup.data![tabIndex]);
             nextGroups.splice(groupIndex, 1);
 
             this.setState({
@@ -150,9 +155,7 @@ export class EditorService
             nextGroup.activeTab = nextTab?.id;
         }
 
-        monacoEditor
-            .getModel(Uri.parse(nextGroup.data![tabIndex].id!))
-            ?.dispose();
+        this.disposeModel(nextGroup.data![tabIndex]);
 
         nextGroup.data!.splice(tabIndex, 1);
         nextGroups[groupIndex] = nextGroup;
@@ -177,10 +180,7 @@ export class EditorService
         // tab data is unlikely to be large enough to affect exec time, so we filter twice for maintainability
         const removedTabs = nextTabData!.filter((item) => item.id !== tabId);
 
-        // dispose the models of other tabs
-        removedTabs.forEach((tab) => {
-            monacoEditor.getModel(Uri.parse(tab.id!))?.dispose();
-        });
+        this.disposeModel(removedTabs);
 
         this.updateGroup(groupId, {
             data: updateTabs,
@@ -204,9 +204,7 @@ export class EditorService
         const updateTabs = nextTabData?.slice(0, tabIndex + 1);
         const removedTabs = nextTabData?.slice(tabIndex + 1);
 
-        removedTabs?.forEach((tab) => {
-            monacoEditor.getModel(Uri.parse(tab.id!))?.dispose();
-        });
+        removedTabs && this.disposeModel(removedTabs);
 
         this.updateGroup(groupId, {
             data: updateTabs,
@@ -230,9 +228,7 @@ export class EditorService
         const updateTabs = nextTabData?.slice(tabIndex, nextTabData.length);
         const removedTabs = nextTabData?.slice(0, tabIndex);
 
-        removedTabs?.forEach((tab) => {
-            monacoEditor.getModel(Uri.parse(tab.id!))?.dispose();
-        });
+        this.disposeModel(removedTabs || []);
 
         this.updateGroup(groupId, {
             data: updateTabs,
@@ -346,9 +342,8 @@ export class EditorService
             let nextCurrentGroup = current;
 
             // dispose all models in specific group
-            nextGroups[groupIndex].data?.forEach((item) => {
-                monacoEditor.getModel(Uri.parse(item.id!))?.dispose();
-            });
+            this.disposeModel(nextGroups[groupIndex].data || []);
+
             nextGroups.splice(groupIndex, 1);
 
             if (current && current.id === groupId) {

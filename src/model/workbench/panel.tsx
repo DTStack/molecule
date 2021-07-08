@@ -27,13 +27,27 @@ export interface IPanel {
     toolbox?: IActionBarItemProps[];
 }
 
+export interface IOutput extends IPanelItem {
+    outputEditorInstance?: IStandaloneCodeEditor;
+    onUpdateEditorIns?(editorInstance: IStandaloneCodeEditor): void;
+}
+
 export function builtInOutputPanel() {
-    return {
+    const outputPane: IOutput = {
         id: PANEL_OUTPUT,
         name: localize(PANEL_OUTPUT, 'output'),
         data: '',
-        renderPane: (item) => <Output {...item} />,
     };
+
+    function onUpdateEditorIns(editorInstance: IStandaloneCodeEditor) {
+        outputPane.outputEditorInstance = editorInstance;
+    }
+
+    outputPane.renderPane = (item) => (
+        <Output onUpdateEditorIns={onUpdateEditorIns} {...item} />
+    );
+
+    return outputPane;
 }
 
 export function builtInPanelToolboxResize(): IActionBarItemProps {

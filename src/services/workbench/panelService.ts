@@ -4,11 +4,11 @@ import { Component } from 'mo/react';
 import {
     builtInOutputPanel,
     builtInPanelToolboxResize,
+    IOutput,
     IPanel,
     IPanelItem,
     PanelEvent,
     PanelModel,
-    PANEL_OUTPUT,
     PANEL_TOOLBOX_RESIZE,
     PANEL_TOOLBOX_RESTORE_SIZE,
 } from 'mo/model/workbench/panel';
@@ -19,6 +19,10 @@ import { localize } from 'mo/i18n/localize';
 import { LayoutService } from 'mo/services';
 
 export interface IPanelService extends Component<IPanel> {
+    /**
+     * The editorInstance of Output
+     */
+    readonly outputEditorInstance: IStandaloneCodeEditor | undefined;
     open(data: IPanelItem): void;
     getById(id: string): IPanelItem | undefined;
     add(data: IPanelItem | IPanelItem[]): void;
@@ -43,6 +47,13 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         super();
         this.state = container.resolve(PanelModel);
         this.layoutService = container.resolve(LayoutService);
+    }
+
+    public get outputEditorInstance() {
+        const outputPane: IOutput | undefined = this.state.data?.find(
+            searchById(builtInOutputPanel().id)
+        );
+        return outputPane?.outputEditorInstance;
     }
 
     public maximizeRestore(): void {
@@ -87,16 +98,14 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     public updateOutput(data: IPanelItem<any>): IPanelItem | undefined {
         return this.update(Object.assign(builtInOutputPanel(), data));
     }
+
     public appendOutput(content: string): void {
-        const output = this.getById(PANEL_OUTPUT);
-        if (output) {
-            output.data = output.data + content;
-            this.updateOutput(output);
-        }
+        const outputValue = this.outputEditorInstance?.getValue();
+        this.outputEditorInstance?.setValue(outputValue + content);
     }
 
     public clearOutput(): void {
-        this.updateOutput(Object.assign(builtInOutputPanel(), { data: '' }));
+        this.outputEditorInstance?.setValue('');
     }
 
     public add(data: IPanelItem | IPanelItem[]) {

@@ -93,7 +93,9 @@ export default class TestPane extends React.Component {
         };
 
         const updateOutput = () => {
-            molecule.panel.appendOutput('Number: ' + Math.random() * 10);
+            const editorIns = molecule.panel.outputEditorInstance;
+            console.log('outputEditorInstance:', editorIns);
+            molecule.panel.appendOutput('Number: ' + Math.random() * 10 + '\n');
         };
 
         const newEditor = function () {

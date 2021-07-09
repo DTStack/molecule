@@ -7,9 +7,7 @@ import { ActionBar } from 'mo/components/actionBar';
 
 const defaultClassName = prefixClaName('panel');
 const panelHeaderClassName = getBEMElement(defaultClassName, 'header');
-
 const panelToolbarClassName = getBEMElement(defaultClassName, 'toolbar');
-
 const panelContainerClassName = getBEMElement(defaultClassName, 'container');
 
 export function Panel(props: IPanel & IPanelController) {

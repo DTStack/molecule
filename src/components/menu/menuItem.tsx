@@ -31,6 +31,8 @@ export interface IMenuItemProps extends HTMLElementProps {
     render?: (data: IMenuItemProps) => ReactNode;
     onClick?: (e: React.MouseEvent, item?: IMenuItemProps) => void;
     sortIndex?: number;
+
+    [key: string]: any;
 }
 
 export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {

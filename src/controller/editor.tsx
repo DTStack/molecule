@@ -101,6 +101,9 @@ export class EditorController extends Controller implements IEditorController {
                 this.onCloseToLeft(tabItem!, groupId);
                 break;
             }
+            default: {
+                this.emit(EditorEvent.onActionsClick, menuId, current);
+            }
         }
     };
 

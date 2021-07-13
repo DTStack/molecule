@@ -9,9 +9,11 @@ import {
     IEditorGroup,
     IEditorTab,
     EditorEvent,
+    getEditorInitialActions,
 } from 'mo/model';
 import { searchById } from '../helper';
 import { editor as monacoEditor, Uri } from 'mo/monaco';
+import { IMenuItemProps } from 'mo/components';
 
 export interface IEditorService extends Component<IEditor> {
     /**
@@ -50,6 +52,9 @@ export interface IEditorService extends Component<IEditor> {
     onCloseOthers(callback: (tabItem: IEditorTab, groupId?: number) => void);
     onCloseToLeft(callback: (tabItem: IEditorTab, groupId?: number) => void);
     onCloseToRight(callback: (tabItem: IEditorTab, groupId?: number) => void);
+    onActionsClick(
+        callback: (menuId: string, currentGroup: IEditorGroup) => void
+    ): void;
     /**
      * Set active group and tab
      * @param groupId Target group ID
@@ -57,6 +62,10 @@ export interface IEditorService extends Component<IEditor> {
      */
     setActive(groupId: number, tabId: string);
     updateGroup(groupId, groupValues: IEditorGroup): void;
+    /**
+     * Update actions in group
+     */
+    updateGroupActions(actions: IMenuItemProps[]): void;
     updateCurrentGroup(currentValues): void;
     /**
      * The Instance of Editor
@@ -68,9 +77,11 @@ export class EditorService
     extends Component<IEditor>
     implements IEditorService {
     protected state: IEditor;
+    protected groupActions: IMenuItemProps[];
     constructor() {
         super();
         this.state = container.resolve(EditorModel);
+        this.groupActions = getEditorInitialActions();
     }
 
     private disposeModel(tabs: IEditorTab | IEditorTab[]) {
@@ -78,6 +89,10 @@ export class EditorService
         arr.forEach((tab) => {
             monacoEditor.getModel(Uri.parse(tab.id!))?.dispose();
         });
+    }
+
+    public updateGroupActions(actions: IMenuItemProps[]): void {
+        this.groupActions = actions;
     }
 
     public setEntry(component: React.ReactNode) {
@@ -323,7 +338,12 @@ export class EditorService
             groups[groupIndex] = { ...currentGroup, tab, activeTab: tabId };
         } else {
             // if group isn't exist, open a new group
-            group = new EditorGroupModel(groups.length + 1, tab, [tab]);
+            group = new EditorGroupModel(
+                groups.length + 1,
+                tab,
+                [tab],
+                this.groupActions
+            );
             groups.push(group);
         }
 
@@ -421,5 +441,11 @@ export class EditorService
         callback: (tabItem: IEditorTab, groupId?: number) => void
     ) {
         this.subscribe(EditorEvent.OnCloseToRight, callback);
+    }
+
+    public onActionsClick(
+        callback: (menuId: string, currentGroup: IEditorGroup) => void
+    ) {
+        this.subscribe(EditorEvent.onActionsClick, callback);
     }
 }

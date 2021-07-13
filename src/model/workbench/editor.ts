@@ -14,6 +14,7 @@ export enum EditorEvent {
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
     OnUpdateTab = 'editor.updateTab',
+    onActionsClick = 'editor.actionsClick',
     OnSplitEditorRight = 'editor.splitEditorRight',
 }
 interface BuiltInEditorTabDataType {

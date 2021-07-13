@@ -5,11 +5,12 @@ import {
     MENU_VIEW_MENUBAR,
     MENU_VIEW_STATUSBAR,
 } from 'mo/model/workbench/menuBar';
-import { IExtension } from 'mo/model';
+import { FileTypes, IExtension, TreeNodeModel } from 'mo/model';
 
 import TestPane from './testPane';
 import { Entry } from './entry';
 import { Position } from 'mo/model/workbench/layout';
+import { randomId } from 'mo/common/utils';
 
 export const ExtendTestPane: IExtension = {
     activate() {
@@ -82,6 +83,43 @@ export const ExtendTestPane: IExtension = {
                     icon: hidden ? '' : 'check',
                 });
             }
+        });
+
+        molecule.folderTree.onNewFile((id: number) => {
+            // work through addNode function
+            molecule.folderTree.addNode(
+                id,
+                new TreeNodeModel({
+                    id: randomId(),
+                    name: '',
+                    fileType: FileTypes.File,
+                    isEditable: true,
+                })
+            );
+        });
+
+        molecule.folderTree.onNewFolder((id: number) => {
+            // work through addNode function
+            molecule.folderTree.addNode(
+                id,
+                new TreeNodeModel({
+                    id: randomId(),
+                    name: '',
+                    fileType: FileTypes.Folder,
+                    isEditable: true,
+                })
+            );
+        });
+
+        molecule.folderTree.onNewRootFolder((id: number) => {
+            molecule.folderTree.addRootFolder?.(
+                new TreeNodeModel({
+                    id,
+                    name: 'molecule',
+                    location: 'molecule',
+                    fileType: FileTypes.RootFolder,
+                })
+            );
         });
     },
 };

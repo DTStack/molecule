@@ -26,6 +26,7 @@
         "inputValidation.warningBorder": "#B89500",
         "inputValidation.errorBackground": "#5A1D1D",
         "inputValidation.errorBorder": "#BE1100",
+        "icon.foreground": "#C5C5C5",
         "settings.textInputBackground": "#292929",
         "settings.numberInputBackground": "#292929",
         "menu.background": "#252526",

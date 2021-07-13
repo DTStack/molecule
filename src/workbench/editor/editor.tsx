@@ -20,7 +20,7 @@ export function Editor(props: IEditor & IEditorController) {
         onSelectTab,
         groupSplitPos = [],
         onChangeEditorProps,
-        onSplitEditorRight,
+        onClickActions,
         onUpdateEditorIns,
         onPaneSizeChange,
     } = props;
@@ -30,7 +30,7 @@ export function Editor(props: IEditor & IEditorController) {
             onMoveTab: (tabs) => onMoveTab?.(tabs, groupId),
             onCloseTab: (tabKey) => onCloseTab?.(tabKey, groupId),
             onSelectTab: (tabKey) => onSelectTab?.(tabKey, groupId),
-            onSplitEditorRight,
+            onClickActions,
             onUpdateEditorIns,
             onChangeEditorProps,
             onClickContextMenu,

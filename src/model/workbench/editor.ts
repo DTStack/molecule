@@ -24,11 +24,19 @@ interface BuiltInEditorTabDataType {
     modified?: boolean;
 }
 
+export interface EditorActionsProps extends IMenuItemProps {
+    id: string;
+    /**
+     * Mark the action placed in More menus or outer
+     */
+    place?: 'outer';
+}
+
 export interface IEditorTab<T = BuiltInEditorTabDataType> extends ITabProps<T> {
     breadcrumb?: IBreadcrumbItemProps[];
 }
 export interface IEditorAction {
-    actions?: IMenuItemProps[];
+    actions?: EditorActionsProps[];
     menu?: IMenuItemProps[];
 }
 export interface IEditorGroup<E = any, T = any> extends ITabsProps<T> {
@@ -37,7 +45,7 @@ export interface IEditorGroup<E = any, T = any> extends ITabsProps<T> {
      * Current editor group tab
      */
     tab?: IEditorTab<T>;
-    actions?: IMenuItemProps[];
+    actions?: EditorActionsProps[];
     menu?: IMenuItemProps[];
     editorInstance?: E;
 }
@@ -57,6 +65,7 @@ export const EDITOR_MENU_CLOSE_OTHERS = 'editor.closeOthers';
 export const EDITOR_MENU_CLOSE_SAVED = 'editor.closeSaved';
 export const EDITOR_MENU_CLOSE = 'editor.close';
 export const EDITOR_MENU_SHOW_OPENEDITORS = 'editor.showOpenEditors';
+export const EDITOR_MENU_SPILIT = 'editor.split';
 
 export function getBaseMenu() {
     return [
@@ -67,8 +76,14 @@ export function getBaseMenu() {
     ];
 }
 
-export function getEditorInitialActions(): IMenuItemProps[] {
+export function getEditorInitialActions(): EditorActionsProps[] {
     return [
+        {
+            id: EDITOR_MENU_SPILIT,
+            name: 'Split Editor Right',
+            icon: 'split-horizontal',
+            place: 'outer',
+        },
         {
             id: EDITOR_MENU_SHOW_OPENEDITORS,
             name: 'Show Opened Editors',
@@ -103,7 +118,7 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     id: number;
     tab: IEditorTab<T>;
     data: IEditorTab<T>[];
-    actions: IMenuItemProps[];
+    actions: EditorActionsProps[];
     menu: IMenuItemProps[];
     editorInstance: E | undefined;
 
@@ -111,7 +126,7 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
         id: number,
         tab: IEditorTab<T>,
         data: IEditorTab<T>[],
-        actions: IMenuItemProps[] = getEditorInitialActions(),
+        actions: EditorActionsProps[] = getEditorInitialActions(),
         menu: IMenuItemProps[] = getEditorInitialMenu(),
         editorInstance?: E
     ) {

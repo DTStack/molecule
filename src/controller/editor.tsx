@@ -9,6 +9,9 @@ import {
     EDITOR_MENU_CLOSE_TO_RIGHT,
     EDITOR_MENU_CLOSE_TO_LEFT,
     EDITOR_MENU_CLOSE_ALL,
+    EditorActionsProps,
+    EDITOR_MENU_SHOW_OPENEDITORS,
+    EDITOR_MENU_SPILIT,
 } from 'mo/model/workbench/editor';
 import { undoRedoMenu } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
@@ -47,7 +50,7 @@ export interface IEditorController {
     ) => void;
     onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: number) => void;
     onSelectTab?: (tabId: string, group: number) => void;
-    onSplitEditorRight?: () => void;
+    onClickActions: (action: EditorActionsProps) => void;
     onUpdateEditorIns?: (editorInstance: any, groupId: number) => void;
     onPaneSizeChange?: (newSize: number) => void;
 }
@@ -190,9 +193,28 @@ export class EditorController extends Controller implements IEditorController {
         });
     };
 
-    public onSplitEditorRight = () => {
-        this.editorService.cloneGroup();
-        this.emit(EditorEvent.OnSplitEditorRight);
+    public onClickActions = (action: EditorActionsProps) => {
+        const { current } = this.editorService.getState();
+        if (!current) return;
+
+        switch (action.id) {
+            case EDITOR_MENU_CLOSE_ALL: {
+                this.onCloseAll(current.id!);
+                break;
+            }
+            case EDITOR_MENU_SHOW_OPENEDITORS: {
+                // TODO
+                break;
+            }
+            case EDITOR_MENU_SPILIT: {
+                this.editorService.cloneGroup();
+                this.emit(EditorEvent.OnSplitEditorRight);
+                break;
+            }
+            default: {
+                this.emit(EditorEvent.onActionsClick, action.id, current);
+            }
+        }
     };
 
     public onPaneSizeChange = (newSize) => {

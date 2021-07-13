@@ -93,6 +93,7 @@ export function Collapse(props: ICollapseProps) {
     }, []);
 
     React.useLayoutEffect(() => {
+        // It's necessary to check panel's empty before calculate every panel
         filterData.forEach((panel) => {
             const isActive = activePanelKeys.includes(panel.id);
             let isEmpty = true;
@@ -103,6 +104,9 @@ export function Collapse(props: ICollapseProps) {
                 isEmpty = !contentDom?.hasChildNodes();
             }
             panel._isEmpty = isEmpty;
+        });
+
+        filterData.forEach((panel) => {
             const [height, top] = calcPosition(
                 activePanelKeys,
                 panel,

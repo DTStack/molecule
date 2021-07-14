@@ -4,6 +4,10 @@
     "description": "A Web IDE UI Framework built with React.js, inspired by VSCode.",
     "module": "./esm/index.js",
     "typings": "./esm/index.d.ts",
+    "files": [
+        "esm",
+        "build/preinstall.js"
+    ],
     "scripts": {
         "preinstall": "node ./build/preinstall.js",
         "test": "jest --no-cache --coverage",

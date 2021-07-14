@@ -185,11 +185,6 @@ export class CommandQuickAccessViewAction extends Action2 {
                 primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KEY_P,
                 secondary: [KeyCode.F1],
             },
-            menu: {
-                id: MenuId.EditorContext,
-                group: 'z_commands',
-                order: 1,
-            },
         });
     }
 

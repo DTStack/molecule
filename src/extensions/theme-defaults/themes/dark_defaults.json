@@ -15,6 +15,7 @@
         "list.inactiveSelectionBackground": "#37373D",
         "list.focusOutline": "#007FD4",
         "activityBarBadge.background": "#007ACC",
+        "activityBar.inactiveForeground": "#ffffff66",
         "sidebarTitle.foreground": "#BBBBBB",
         "sideBarSectionHeader.border": "#ccc3",
         "input.placeholderForeground": "#A6A6A6",

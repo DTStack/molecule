@@ -38,12 +38,18 @@
     }
 
     &__container {
+        border: 1px solid transparent;
         bottom: 0;
+        box-sizing: border-box;
         left: 0;
         position: absolute;
         right: 0;
         top: 35px;
         width: 100%;
+
+        &:focus {
+            border-color: var(--list-focusOutline);
+        }
     }
 
     &__toolbar {

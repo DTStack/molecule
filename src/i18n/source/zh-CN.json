@@ -48,6 +48,7 @@
         "toolbar.collapseAll": "折叠所有",
         "panel.output.title": "输出",
         "panel.problems.title": "问题",
+        "panel.problems.empty": "未在工作区检测到问题",
         "panel.toolbox.closePanel": "关闭面板",
         "panel.toolbox.maximize": "最大化面板",
         "notification.title": "通知",

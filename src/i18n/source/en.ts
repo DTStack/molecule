@@ -52,6 +52,8 @@ export default {
         'panel.toolbox.closePanel': 'Close Panel',
         'panel.toolbox.maximize': 'Maximize Panel Size',
         'panel.problems.title': 'Problems',
+        'panel.problems.empty':
+            'No problems have been detected in the workspace.',
         'notification.title': 'Notifications',
         'notification.title.no': 'No new notifications',
         'editor.closeToRight': 'Close To Right',

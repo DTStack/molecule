@@ -108,13 +108,13 @@ const TreeView = ({
                 // take id as backup
                 key = id || `${index}_${indent}`,
                 icon,
-                children,
+                children = [],
                 isLeaf: itemIsLeaf,
             } = item;
             const isLeaf =
                 typeof itemIsLeaf === 'boolean'
                     ? itemIsLeaf
-                    : item.fileType === FileTypes.File;
+                    : item.fileType === FileTypes.File || children.length === 0;
             const IconComponent =
                 typeof icon === 'string' ? <Icon type={icon} /> : icon;
             return (

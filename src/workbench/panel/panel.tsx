@@ -36,7 +36,9 @@ export function Panel(props: IPanel & IPanelController) {
                     onClick={onToolbarClick}
                 />
             </div>
-            <div className={panelContainerClassName}>{content}</div>
+            <div className={panelContainerClassName} tabIndex={0}>
+                {content}
+            </div>
         </div>
     );
 }

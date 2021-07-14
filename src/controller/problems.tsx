@@ -37,17 +37,15 @@ export class ProblemsController
 
     private showHideProblems() {
         const { panel } = this.layoutService.getState();
-        if (panel.hidden) {
+        const { current } = this.panelService.getState();
+
+        if (panel.hidden || current?.id === builtInPanelProblems().id) {
             this.monacoService.commandService.executeCommand(
                 QuickTogglePanelAction.ID
             );
         }
-        const { current } = this.panelService.getState();
-        if (current?.id !== builtInPanelProblems().id) {
-            this.panelService.open(builtInPanelProblems());
-        } else {
-            this.layoutService.setPanelHidden();
-        }
+
+        this.panelService.open(builtInPanelProblems());
     }
 
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {

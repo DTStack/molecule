@@ -64,6 +64,6 @@ export interface ISimpleKeybinding {
 
 export const ACTION_QUICK_ACCESS_SETTINGS =
     'workbench.action.quickAccessSettings';
-export const ACTION_QUICK_COMMAND = 'workbench.action.quickCommand';
+export const ACTION_QUICK_COMMAND = 'editor.action.quickCommand';
 export const ACTION_SELECT_THEME = 'workbench.action.selectTheme';
 export const ACTION_SELECT_LOCALE = 'workbench.action.selectLocale';

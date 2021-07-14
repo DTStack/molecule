@@ -1,5 +1,33 @@
 @import 'mo/style/common';
 
+$badge-size: 18px;
+
 #{$problems} {
     margin: 0 18px;
+
+    &__treeview {
+        &__treeNode {
+            align-items: center;
+            display: flex;
+
+            &__badge {
+                background: var(--badge-background);
+                border-radius: 50%;
+                color: var(--badge-foreground);
+                display: inline-block;
+                height: $badge-size;
+                line-height: $badge-size;
+                margin-left: 10px;
+                text-align: center;
+                width: $badge-size;
+            }
+        }
+
+        &__treeLeaf {
+            &__subInfo {
+                color: var(--activityBar-inactiveForeground);
+                margin-left: 5px;
+            }
+        }
+    }
 }

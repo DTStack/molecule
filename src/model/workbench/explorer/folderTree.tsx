@@ -102,11 +102,14 @@ export class TreeNodeModel implements ITreeNodeItemProps {
     id?: number;
     name?: string;
     location?: string;
+    isLeaf?: boolean;
     fileType?: FileType;
     children?: ITreeNodeItemProps[];
     icon?: string | React.ReactNode;
     isEditable?: boolean;
     content?: string;
+
+    data?: any;
 
     constructor(props: ITreeNodeItemProps = {}) {
         const {
@@ -118,6 +121,8 @@ export class TreeNodeModel implements ITreeNodeItemProps {
             icon = '',
             isEditable = false,
             content = '',
+            isLeaf = true,
+            data,
         } = props;
         this.fileType = fileType;
         this.isEditable = isEditable;
@@ -127,6 +132,8 @@ export class TreeNodeModel implements ITreeNodeItemProps {
         this.children = children;
         this.icon = icon;
         this.content = content;
+        this.data = data;
+        this.isLeaf = isLeaf;
     }
 }
 

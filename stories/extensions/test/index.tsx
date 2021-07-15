@@ -106,6 +106,7 @@ export const ExtendTestPane: IExtension = {
                     id: randomId(),
                     name: '',
                     fileType: FileTypes.Folder,
+                    isLeaf: false,
                     isEditable: true,
                 })
             );

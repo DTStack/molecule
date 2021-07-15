@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
+import cloneDeep from 'lodash/cloneDeep';
 import { Component } from 'mo/react/component';
 import {
     FileTypes,
@@ -91,7 +92,10 @@ export class FolderTreeService
             }
             cloneData[index] = tree.obj;
             this.setState({
-                folderTree: { ...this.state.folderTree, data: cloneData },
+                folderTree: {
+                    ...this.state.folderTree,
+                    data: cloneDeep(cloneData),
+                },
             });
         } else {
             console.warn('Please check id again, there is not folder tree');

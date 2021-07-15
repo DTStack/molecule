@@ -24,7 +24,7 @@ interface BuiltInEditorTabDataType {
     modified?: boolean;
 }
 
-export interface EditorActionsProps extends IMenuItemProps {
+export interface IEditorActionsProps extends IMenuItemProps {
     id: string;
     /**
      * Mark the action placed in More menus or outer
@@ -36,7 +36,7 @@ export interface IEditorTab<T = BuiltInEditorTabDataType> extends ITabProps<T> {
     breadcrumb?: IBreadcrumbItemProps[];
 }
 export interface IEditorAction {
-    actions?: EditorActionsProps[];
+    actions?: IEditorActionsProps[];
     menu?: IMenuItemProps[];
 }
 export interface IEditorGroup<E = any, T = any> extends ITabsProps<T> {
@@ -45,7 +45,7 @@ export interface IEditorGroup<E = any, T = any> extends ITabsProps<T> {
      * Current editor group tab
      */
     tab?: IEditorTab<T>;
-    actions?: EditorActionsProps[];
+    actions?: IEditorActionsProps[];
     menu?: IMenuItemProps[];
     editorInstance?: E;
 }
@@ -76,7 +76,7 @@ export function getBaseMenu() {
     ];
 }
 
-export function getEditorInitialActions(): EditorActionsProps[] {
+export function getEditorInitialActions(): IEditorActionsProps[] {
     return [
         {
             id: EDITOR_MENU_SPILIT,
@@ -118,7 +118,7 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     id: number;
     tab: IEditorTab<T>;
     data: IEditorTab<T>[];
-    actions: EditorActionsProps[];
+    actions: IEditorActionsProps[];
     menu: IMenuItemProps[];
     editorInstance: E | undefined;
 
@@ -126,7 +126,7 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
         id: number,
         tab: IEditorTab<T>,
         data: IEditorTab<T>[],
-        actions: EditorActionsProps[] = getEditorInitialActions(),
+        actions: IEditorActionsProps[] = getEditorInitialActions(),
         menu: IMenuItemProps[] = getEditorInitialMenu(),
         editorInstance?: E
     ) {

@@ -9,7 +9,7 @@ import {
     EDITOR_MENU_CLOSE_TO_RIGHT,
     EDITOR_MENU_CLOSE_TO_LEFT,
     EDITOR_MENU_CLOSE_ALL,
-    EditorActionsProps,
+    IEditorActionsProps,
     EDITOR_MENU_SHOW_OPENEDITORS,
     EDITOR_MENU_SPILIT,
 } from 'mo/model/workbench/editor';
@@ -50,7 +50,7 @@ export interface IEditorController {
     ) => void;
     onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: number) => void;
     onSelectTab?: (tabId: string, group: number) => void;
-    onClickActions: (action: EditorActionsProps) => void;
+    onClickActions: (action: IEditorActionsProps) => void;
     onUpdateEditorIns?: (editorInstance: any, groupId: number) => void;
     onPaneSizeChange?: (newSize: number) => void;
 }
@@ -193,7 +193,7 @@ export class EditorController extends Controller implements IEditorController {
         });
     };
 
-    public onClickActions = (action: EditorActionsProps) => {
+    public onClickActions = (action: IEditorActionsProps) => {
         const { current } = this.editorService.getState();
         if (!current) return;
 

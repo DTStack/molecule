@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Icon } from 'mo/components/icon';
 import { Menu } from 'mo/components/menu';
 import { DropDown, DropDownRef } from 'mo/components/dropdown';
-import { EditorActionsProps, IEditorAction } from 'mo/model';
+import { IEditorActionsProps, IEditorAction } from 'mo/model';
 import {
     groupActionItemDisabledClassName,
     groupActionsClassName,
@@ -18,9 +18,9 @@ export interface IEditorActionProps extends IEditorAction {
 
 const MAX_ACTIONS_LENGTH = 6;
 
-function splitActions(actions: EditorActionsProps[]) {
-    const outerActions: EditorActionsProps[] = [];
-    const ellipsisActions: EditorActionsProps[] = [];
+function splitActions(actions: IEditorActionsProps[]) {
+    const outerActions: IEditorActionsProps[] = [];
+    const ellipsisActions: IEditorActionsProps[] = [];
 
     actions.forEach((action) => {
         if (action.place === 'outer') {

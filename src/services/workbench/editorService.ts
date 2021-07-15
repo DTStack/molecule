@@ -10,7 +10,7 @@ import {
     IEditorTab,
     EditorEvent,
     getEditorInitialActions,
-    EditorActionsProps,
+    IEditorActionsProps,
 } from 'mo/model';
 import { searchById } from '../helper';
 import { editor as monacoEditor, Uri } from 'mo/monaco';
@@ -74,7 +74,7 @@ export interface IEditorService extends Component<IEditor> {
     /**
      * Set default actions when create a new group
      */
-    setDefaultActions(actions: EditorActionsProps[]): void;
+    setDefaultActions(actions: IEditorActionsProps[]): void;
     /**
      * Update actions in specific group
      */
@@ -90,7 +90,7 @@ export class EditorService
     extends Component<IEditor>
     implements IEditorService {
     protected state: IEditor;
-    protected defaultActions: EditorActionsProps[];
+    protected defaultActions: IEditorActionsProps[];
     constructor() {
         super();
         this.state = container.resolve(EditorModel);
@@ -109,11 +109,7 @@ export class EditorService
         return groups.some((group) => this.getTabById(tabId, group));
     }
 
-    public updateGroupActions(actions: IMenuItemProps[]): void {
-        this.groupActions = actions;
-    }
-
-    public setDefaultActions(actions: EditorActionsProps[]): void {
+    public setDefaultActions(actions: IEditorActionsProps[]): void {
         this.defaultActions = actions;
     }
 

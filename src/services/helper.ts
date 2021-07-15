@@ -2,74 +2,61 @@ export function searchById(id) {
     return (item) => item.id === id;
 }
 
+interface BaseProps {
+    id?: number;
+
+    [key: string]: any;
+}
+
 export interface IIndex<T> {
     id?: number;
     node?: T;
     parent?: number;
-    prev?: number;
-    next?: number;
+    prev?: number | null;
+    next?: number | null;
     [x: string]: any; // default: children: []
 }
 export interface IIndexs<T> {
-    [index: number]: IIndex<T>;
+    [index: string]: IIndex<T>;
 }
-export interface ITreeInterface<T = any> {
+export interface ITreeInterface<T extends BaseProps> {
     count: number;
     obj: T;
     indexes: IIndexs<T>;
     childNodeName: string;
 }
 
-export interface ITreeInstance<T = any> {
-    count: number;
-    obj: T;
-    indexes: IIndexs<T>;
-    childNodeName: string;
-    generate: (obj) => void;
-    getIndex: (index: number) => void;
-    removeIndex: (index: number) => void;
-    get: (id: number) => void;
-    remove: (id: number) => void;
-    update: (id: number, extra) => void;
-    updateChildren: (children: IIndex<T>) => void;
-    insert: (obj: T, parentId: number, i: number) => void;
-    insertBefore: (obj: T, destId: number) => void;
-    insertAfter: (obj: T, destId: number) => void;
-    prepend: (obj: T, destId: number) => void;
-    append: (obj: T, destId: number) => void;
-}
-
-export class TreeViewUtil<T = any> implements ITreeInterface<T> {
+export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
     count: number;
     obj: T;
     indexes: IIndexs<T>;
     childNodeName: string;
 
     /**
-     * 
-     * @param obj // tree object
-     * @param childNodeName // loop properties
-     * @example indexes data structure example:
+     *
+     * indexes data structure example:
+     * ```ts
      * {
-            [2]: {
-                id: 2,
-                node: {},
-                parent: 1,
-                prev: null,
-                next: 3
-            },
-            ...
-        }
+     *   [2]: {
+     *      id: 2,
+     *      node: {},
+     *      parent: 1,
+     *      prev: null,
+     *      next: 3
+     *   },
+     *   ...
+     * }
+     * ```
      */
-    constructor(obj?, childNodeName = 'children') {
+    constructor(obj?: T, childNodeName = 'children') {
         this.count = 1; // nodes count
-        this.obj = obj || { [childNodeName]: [] };
+        this.obj = obj || ({ [childNodeName]: [] } as any);
         this.indexes = {};
         this.childNodeName = childNodeName;
         this.generate(this.obj);
     }
 
-    generate(obj) {
+    generate(obj: T) {
         const indexes = this.indexes;
         const startId = obj.id;
         const self = this;
@@ -114,19 +101,16 @@ export class TreeViewUtil<T = any> implements ITreeInterface<T> {
     getIndex(id: number) {
         const index = this.indexes[id + ''];
         if (index) return index;
+        return null;
     }
 
-    removeIndex(index: number) {
-        const self = this;
-        del(index);
-
-        function del(index) {
-            delete self.indexes[index.id + ''];
-            if (index[self.childNodeName]?.length) {
-                index[self.childNodeName].forEach(function (child) {
-                    del(self.getIndex(child));
-                });
-            }
+    removeIndex(index: IIndex<T>) {
+        delete this.indexes[index.id + ''];
+        if (index[this.childNodeName]?.length) {
+            index[this.childNodeName].forEach((child) => {
+                const childIndex = this.getIndex(child);
+                childIndex && this.removeIndex(childIndex);
+            });
         }
     }
 
@@ -138,87 +122,114 @@ export class TreeViewUtil<T = any> implements ITreeInterface<T> {
 
     remove(id: number) {
         const index = this.getIndex(id);
-        const node = this.get(id);
-        const parentIndex = this.getIndex(index.parent);
-        const parentNode = this.get(index.parent);
+        if (index) {
+            const node = this.get(id);
+            const parentIndex = this.getIndex(index.parent!);
+            const parentNode = this.get(index.parent!);
 
-        parentNode[this.childNodeName].splice(
-            parentNode[this.childNodeName].indexOf(node),
-            1
-        );
-        parentIndex[this.childNodeName].splice(
-            parentIndex[this.childNodeName].indexOf(id),
-            1
-        );
-        this.removeIndex(index);
-        this.updateChildren(parentIndex[this.childNodeName]);
+            if (parentNode && parentIndex) {
+                parentNode[this.childNodeName].splice(
+                    parentNode[this.childNodeName].indexOf(node),
+                    1
+                );
+                parentIndex[this.childNodeName].splice(
+                    parentIndex[this.childNodeName].indexOf(id),
+                    1
+                );
+                this.removeIndex(index);
+                this.updateChildren(parentIndex[this.childNodeName]);
 
-        return node;
+                return node;
+            }
+        }
+        return null;
     }
 
     update(id: number, extra = {}) {
         const index = this.getIndex(id);
         const node = this.get(id);
-        const parentIndex = this.getIndex(index.parent);
-        const parentNode = this.get(index.parent);
-        parentNode[this.childNodeName].splice(
-            parentNode[this.childNodeName].indexOf(node),
-            1,
-            {
-                ...node,
-                ...extra,
+        if (index) {
+            const parentIndex = this.getIndex(index.parent!);
+            const parentNode = this.get(index.parent!);
+            if (parentNode && parentIndex) {
+                parentNode[this.childNodeName].splice(
+                    parentNode[this.childNodeName].indexOf(node),
+                    1,
+                    {
+                        ...node,
+                        ...extra,
+                    }
+                );
+                this.updateChildren(parentIndex[this.childNodeName]);
+                return node;
             }
-        );
-        this.updateChildren(parentIndex[this.childNodeName]);
-
-        return node;
+        }
+        return null;
     }
 
     updateChildren(children: IIndex<T>) {
         const self = this;
         children.forEach(function (id, i) {
             const index = self.getIndex(id);
-            index.prev = index.next = null;
-            if (i > 0) index.prev = children[i - 1];
-            if (i < children.length - 1) index.next = children[i + 1];
+            if (index) {
+                index.prev = index.next = null;
+                if (i > 0) index.prev = children[i - 1];
+                if (i < children.length - 1) index.next = children[i + 1];
+            }
         });
     }
 
     insert(obj: T, parentId: number, i: number) {
         const parentIndex = this.getIndex(parentId);
         const parentNode = this.get(parentId);
+        if (parentNode && parentIndex) {
+            const index = this.generate(obj);
+            index.parent = parentId;
 
-        const index = this.generate(obj);
-        index.parent = parentId;
+            (parentNode as BaseProps)[this.childNodeName] =
+                parentNode[this.childNodeName] || [];
+            parentIndex[this.childNodeName] =
+                parentIndex[this.childNodeName] || [];
 
-        parentNode[this.childNodeName] = parentNode[this.childNodeName] || [];
-        parentIndex[this.childNodeName] = parentIndex[this.childNodeName] || [];
+            parentNode[this.childNodeName].splice(i, 0, obj);
+            parentIndex[this.childNodeName].splice(i, 0, index.id);
 
-        parentNode[this.childNodeName].splice(i, 0, obj);
-        parentIndex[this.childNodeName].splice(i, 0, index.id);
+            this.updateChildren(parentIndex[this.childNodeName]);
+            if (parentIndex.parent) {
+                const fartherParent = this.getIndex(parentIndex.parent);
+                fartherParent &&
+                    this.updateChildren(fartherParent[this.childNodeName]);
+            }
 
-        this.updateChildren(parentIndex[this.childNodeName]);
-        if (parentIndex.parent) {
-            this.updateChildren(
-                this.getIndex(parentIndex.parent)[this.childNodeName]
-            );
+            return index;
         }
-
-        return index;
+        return null;
     }
 
     insertBefore(obj: T, destId: number) {
         const destIndex = this.getIndex(destId);
-        const parentId = destIndex.parent;
-        const i = this.getIndex(parentId)[this.childNodeName].indexOf(destId);
-        return this.insert(obj, parentId, i);
+        if (destIndex) {
+            const parentId = destIndex.parent;
+            const parent = this.getIndex(parentId!);
+            if (parent) {
+                const i = parent[this.childNodeName].indexOf(destId);
+                return this.insert(obj, parentId!, i);
+            }
+        }
+        return null;
     }
 
     insertAfter(obj: T, destId: number) {
         const destIndex = this.getIndex(destId);
-        const parentId = destIndex.parent;
-        const i = this.getIndex(parentId)[this.childNodeName].indexOf(destId);
-        return this.insert(obj, parentId, i + 1);
+        if (destIndex) {
+            const parentId = destIndex.parent;
+            const parent = this.getIndex(parentId!);
+            if (parent) {
+                const i = parent[this.childNodeName].indexOf(destId);
+                return this.insert(obj, parentId!, i + 1);
+            }
+        }
+        return null;
     }
 
     prepend(obj: T, destId: number) {
@@ -227,7 +238,14 @@ export class TreeViewUtil<T = any> implements ITreeInterface<T> {
 
     append(obj: T, destId: number) {
         const destIndex = this.getIndex(destId);
-        destIndex[this.childNodeName] = destIndex[this.childNodeName] || [];
-        return this.insert(obj, destId, destIndex[this.childNodeName].length);
+        if (destIndex) {
+            destIndex[this.childNodeName] = destIndex[this.childNodeName] || [];
+            return this.insert(
+                obj,
+                destId,
+                destIndex[this.childNodeName].length
+            );
+        }
+        return null;
     }
 }

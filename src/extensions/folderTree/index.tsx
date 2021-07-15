@@ -93,9 +93,8 @@ export const ExtendsFolderTree: IExtension = {
                     isEditable: false,
                 });
             } else {
-                // TODO: improve tree helper types
-                const node = (tree.get(id) as unknown) as ITreeNodeItemProps;
-                if (node.name) {
+                const node = tree.get(id);
+                if (node?.name) {
                     tree.update(id, {
                         isEditable: false,
                     });

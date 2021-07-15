@@ -14755,9 +14755,9 @@ tsutils@^3.17.1:
   dependencies:
     tslib "^1.8.1"
 
-tsyringe@^4.5.0:
+tsyringe@4.5.0:
   version "4.5.0"
-  resolved "https://registry.npm.taobao.org/tsyringe/download/tsyringe-4.5.0.tgz#fc88cbab57deac47a2a2033bbca94c96d3c2702a"
+  resolved "https://registry.nlark.com/tsyringe/download/tsyringe-4.5.0.tgz#fc88cbab57deac47a2a2033bbca94c96d3c2702a"
   integrity sha1-/IjLq1ferEeiogM7vKlMltPCcCo=
   dependencies:
     tslib "^1.9.3"

@@ -162,7 +162,7 @@ export const undoRedoMenu = [
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];
 
-    constructor(data: IMenuBarItem[] = [], hidden = false) {
+    constructor(data: IMenuBarItem[] = []) {
         this.data = data;
     }
 }

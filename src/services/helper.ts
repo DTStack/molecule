@@ -2,7 +2,7 @@ export function searchById(id) {
     return (item) => item.id === id;
 }
 
-interface baseProps {
+interface BaseProps {
     id?: number;
 
     [key: string]: any;
@@ -19,14 +19,14 @@ export interface IIndex<T> {
 export interface IIndexs<T> {
     [index: string]: IIndex<T>;
 }
-export interface ITreeInterface<T extends baseProps> {
+export interface ITreeInterface<T extends BaseProps> {
     count: number;
     obj: T;
     indexes: IIndexs<T>;
     childNodeName: string;
 }
 
-export class TreeViewUtil<T extends baseProps> implements ITreeInterface<T> {
+export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
     count: number;
     obj: T;
     indexes: IIndexs<T>;
@@ -186,7 +186,7 @@ export class TreeViewUtil<T extends baseProps> implements ITreeInterface<T> {
             const index = this.generate(obj);
             index.parent = parentId;
 
-            (parentNode as baseProps)[this.childNodeName] =
+            (parentNode as BaseProps)[this.childNodeName] =
                 parentNode[this.childNodeName] || [];
             parentIndex[this.childNodeName] =
                 parentIndex[this.childNodeName] || [];

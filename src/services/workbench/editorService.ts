@@ -26,11 +26,19 @@ export interface IEditorService extends Component<IEditor> {
         tabId: string,
         group: IEditorGroup
     ): IEditorTab<T> | undefined;
-    updateTab(tab: IEditorTab, groupId: number): IEditorTab;
+    /**
+     *
+     * @param groupId If not provided, molecule will update in all group
+     */
+    updateTab(tab: IEditorTab, groupId?: number): IEditorTab;
     /**
      * Specify a entry page for editor
      */
     setEntry(component: React.ReactNode): void;
+    /**
+     * Returns whether a specific tab exists
+     */
+    isOpened(tabId: string): boolean;
     closeTab(tabId: string, groupId: number): void;
     closeOthers(tab: IEditorTab, groupId: number): void;
     closeToRight(tab: IEditorTab, groupId: number): void;
@@ -91,6 +99,11 @@ export class EditorService
         });
     }
 
+    public isOpened(tabId: string): boolean {
+        const { groups = [] } = this.state;
+        return groups.some((group) => this.getTabById(tabId, group));
+    }
+
     public updateGroupActions(actions: IMenuItemProps[]): void {
         this.groupActions = actions;
     }
@@ -112,24 +125,47 @@ export class EditorService
         return this.state.current?.editorInstance;
     }
 
-    public updateTab(tab: IEditorTab, groupId: number): IEditorTab {
-        const { groups = [] } = this.state;
-        const index = this.getGroupIndexById(groupId);
+    public updateTab(tab: IEditorTab, groupId?: number): IEditorTab {
+        if (groupId) {
+            const group = this.getGroupById(groupId);
 
-        if (index > -1) {
-            const group = groups[index];
+            if (group?.data?.length) {
+                const tabData = group.data.find(searchById(tab.id));
 
-            if (group.data && group.data.length > 0) {
-                const tabIndex = group.data!.findIndex(searchById(tab.id));
+                if (tabData) {
+                    Object.assign(tabData, tab);
+                }
 
-                if (tabIndex > -1) {
-                    const tabData = group.data![tabIndex];
-                    const newTab = Object.assign({}, tabData, tab);
-                    group.data![tabIndex] = newTab;
+                if (group.activeTab === tab.id) {
+                    Object.assign(group.tab, tab);
+                }
+                this.updateGroup(groupId, group);
 
-                    this.render();
+                if (groupId === this.state.current?.id) {
+                    this.updateCurrentGroup(group);
                 }
             }
+        } else {
+            const { groups = [], current } = this.state;
+            groups.forEach((group) => {
+                const tabData = this.getTabById(tab.id!, group);
+                if (tabData) {
+                    Object.assign(tabData, tab);
+                }
+
+                if (group.activeTab === tab.id) {
+                    Object.assign(group.tab, tab);
+                }
+            });
+
+            if (current?.activeTab === tab.id) {
+                Object.assign(current!.tab, tab);
+            }
+
+            this.setState({
+                current,
+                groups,
+            });
         }
         return tab;
     }

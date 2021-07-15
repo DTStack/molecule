@@ -48,6 +48,7 @@ export const ExtendsFolderTree: IExtension = {
                     id: `${file.id}`?.split('_')?.[0],
                     modified: false,
                     data: {
+                        ...(file.data || {}),
                         value: file.content,
                         path: file.location,
                         language: extName,
@@ -92,12 +93,29 @@ export const ExtendsFolderTree: IExtension = {
                     isEditable: false,
                 });
             } else {
-                tree.remove(id);
+                // TODO: improve tree helper types
+                const node = (tree.get(id) as unknown) as ITreeNodeItemProps;
+                if (node.name) {
+                    tree.update(id, {
+                        isEditable: false,
+                    });
+                } else {
+                    tree.remove(id);
+                }
             }
+
             if (index > -1) cloneData[index] = tree.obj;
             molecule.folderTree.setState({
                 folderTree: { ...folderTree, data: cloneData },
             });
+
+            const isOpened = molecule.editor.isOpened(id.toString());
+            if (isOpened) {
+                molecule.editor.updateTab({
+                    id: id.toString(),
+                    name,
+                });
+            }
             if (file?.fileType === FileTypes.File && file.name) {
                 // emit onSelectFile
             }

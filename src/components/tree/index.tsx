@@ -168,6 +168,31 @@ const TreeView = ({
         onRightClick?.(info);
     };
 
+    React.useLayoutEffect(() => {
+        const cache: { path: string; data: ITreeNodeItemProps }[] = [];
+        data.forEach((item) => {
+            cache.push({ path: `${item.id}`, data: item });
+        });
+
+        while (cache.length) {
+            const { path, data } = cache.pop()!;
+            const editableChild = data.children?.find(
+                (child) => child.isEditable
+            );
+            if (editableChild) {
+                treeRef.current?.setExpandedKeys(path.split('-'));
+                break;
+            } else {
+                const children =
+                    data.children?.map((child) => ({
+                        path: `${path}-${child.id}`,
+                        data: child,
+                    })) || [];
+                cache.push(...children);
+            }
+        }
+    }, [data]);
+
     return (
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>

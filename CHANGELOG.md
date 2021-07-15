@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-alpha.3.1](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.3...v0.9.0-alpha.3.1) (2021-07-15)
+
+### Features
+
+-   improve problems panel ([#242](https://github.com/DTStack/molecule/issues/242)) ([16be69c](https://github.com/DTStack/molecule/commit/16be69c3d85252fb356cc5a7ebe417cf5a645c85))
+
+### Bug Fixes
+
+-   auto adjust the output after resize the panel ([#240](https://github.com/DTStack/molecule/issues/240)) ([7cbe2ed](https://github.com/DTStack/molecule/commit/7cbe2edb27b55c1686d53bd99988bccd35b534d7))
+-   duplicate command palette in editor context menu ([#243](https://github.com/DTStack/molecule/issues/243)) ([111a4cd](https://github.com/DTStack/molecule/commit/111a4cdc915c829db54f6abc52b31f87e7d3f76e))
+-   fix problem panel cannot open after hiding ([#239](https://github.com/DTStack/molecule/issues/239)) ([4d80bf9](https://github.com/DTStack/molecule/commit/4d80bf96e517a12ec8f6635df21b5e298234b61c))
+-   improve editor actions ([#234](https://github.com/DTStack/molecule/issues/234)) ([443d4da](https://github.com/DTStack/molecule/commit/443d4dae10278f56b8f44b54fcdcf6a865192f9a))
+-   improve the timing when to check empty of panels ([#233](https://github.com/DTStack/molecule/issues/233)) ([5ef6a82](https://github.com/DTStack/molecule/commit/5ef6a823177b30cef7195444186aaefb2ee7c204))
+-   improve tree helper types ([#248](https://github.com/DTStack/molecule/issues/248)) ([1dfee56](https://github.com/DTStack/molecule/commit/1dfee561658ebf4c4712c161e8d953a1c68ab67d))
+-   improve unreasonable design ([#232](https://github.com/DTStack/molecule/issues/232)) ([74f8976](https://github.com/DTStack/molecule/commit/74f8976f17c9297aab15744754fa8dcb20be07cf))
+-   update foldertree new folder ([#247](https://github.com/DTStack/molecule/issues/247)) ([c505abe](https://github.com/DTStack/molecule/commit/c505abec149e252d2b529fc1a19abca2418815d6))
+
 ## 0.9.0-alpha.3 (2021-07-10)
 
 ### ⚠ BREAKING CHANGES

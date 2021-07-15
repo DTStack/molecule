@@ -10,6 +10,7 @@ import {
     IEditorTab,
     EditorEvent,
     getEditorInitialActions,
+    IEditorActionsProps,
 } from 'mo/model';
 import { searchById } from '../helper';
 import { editor as monacoEditor, Uri } from 'mo/monaco';
@@ -71,9 +72,13 @@ export interface IEditorService extends Component<IEditor> {
     setActive(groupId: number, tabId: string);
     updateGroup(groupId, groupValues: IEditorGroup): void;
     /**
-     * Update actions in group
+     * Set default actions when create a new group
      */
-    updateGroupActions(actions: IMenuItemProps[]): void;
+    setDefaultActions(actions: IEditorActionsProps[]): void;
+    /**
+     * Update actions in specific group
+     */
+    updateActions(actions: IMenuItemProps[], groupId?: number): void;
     updateCurrentGroup(currentValues): void;
     /**
      * The Instance of Editor
@@ -85,11 +90,11 @@ export class EditorService
     extends Component<IEditor>
     implements IEditorService {
     protected state: IEditor;
-    protected groupActions: IMenuItemProps[];
+    protected defaultActions: IEditorActionsProps[];
     constructor() {
         super();
         this.state = container.resolve(EditorModel);
-        this.groupActions = getEditorInitialActions();
+        this.defaultActions = getEditorInitialActions();
     }
 
     private disposeModel(tabs: IEditorTab | IEditorTab[]) {
@@ -104,8 +109,8 @@ export class EditorService
         return groups.some((group) => this.getTabById(tabId, group));
     }
 
-    public updateGroupActions(actions: IMenuItemProps[]): void {
-        this.groupActions = actions;
+    public setDefaultActions(actions: IEditorActionsProps[]): void {
+        this.defaultActions = actions;
     }
 
     public setEntry(component: React.ReactNode) {
@@ -113,6 +118,30 @@ export class EditorService
             entry: component,
         });
     }
+
+    public updateActions = (actions: IMenuItemProps[], groupId?: number) => {
+        const { current, groups: rawGroups } = this.getState();
+        if (!current) return;
+
+        const groups = rawGroups?.concat() || [];
+        const targetGroup = groups.find(searchById(groupId || current.id));
+
+        if (targetGroup) {
+            const newActions = targetGroup.actions?.concat() || [];
+            newActions.forEach((action) => {
+                const target = actions.find((item) => item.id === action.id);
+                if (target) {
+                    Object.assign(action, target);
+                }
+            });
+            targetGroup.actions = newActions;
+
+            this.setState({
+                current: targetGroup.id === current.id ? targetGroup : current,
+                groups,
+            });
+        }
+    };
 
     public getTabById<T>(
         tabId: string,
@@ -378,7 +407,7 @@ export class EditorService
                 groups.length + 1,
                 tab,
                 [tab],
-                this.groupActions
+                this.defaultActions
             );
             groups.push(group);
         }

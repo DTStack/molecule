@@ -34,7 +34,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
         onClickContextMenu,
         onChangeEditorProps,
         onSelectTab,
-        onSplitEditorRight,
+        onClickActions,
         onUpdateEditorIns,
     } = props;
 
@@ -79,8 +79,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
                     isActiveGroup={isActiveGroup}
                     actions={actions}
                     menu={menu}
-                    onSplitEditorRight={onSplitEditorRight}
-                    onClickContextMenu={onClickContextMenu}
+                    onClickActions={onClickActions}
                 />
             </div>
             <EditorBreadcrumb breadcrumbs={tab.breadcrumb} />

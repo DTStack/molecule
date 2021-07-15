@@ -26,6 +26,7 @@
         "inputValidation.warningBorder": "#B89500",
         "inputValidation.errorBackground": "#F2DEDE",
         "inputValidation.errorBorder": "#BE1100",
+        "icon.foreground": "#424242",
         "searchEditor.textInputBorder": "#CECECE",
         "diffEditor.insertedTextBackground": "#9bb95533",
         "diffEditor.removedTextBackground": "#ff000033",

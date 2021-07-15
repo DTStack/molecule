@@ -1,36 +1,67 @@
 import * as React from 'react';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import { Icon } from 'mo/components/icon';
 import { Menu } from 'mo/components/menu';
 import { DropDown, DropDownRef } from 'mo/components/dropdown';
-import { IEditorAction } from 'mo/model';
-import { groupActionsClassName, groupActionsItemClassName } from './base';
+import { IEditorActionsProps, IEditorAction } from 'mo/model';
+import {
+    groupActionItemDisabledClassName,
+    groupActionsClassName,
+    groupActionsItemClassName,
+} from './base';
 import { IEditorController } from 'mo/controller/editor';
+import { classNames } from 'mo/common/className';
 
 export interface IEditorActionProps extends IEditorAction {
     isActiveGroup: boolean;
 }
 
+const MAX_ACTIONS_LENGTH = 6;
+
+function splitActions(actions: IEditorActionsProps[]) {
+    const outerActions: IEditorActionsProps[] = [];
+    const innerActions: IEditorActionsProps[] = [];
+
+    actions.forEach((action) => {
+        if (action.place === 'outer') {
+            outerActions.push(action);
+        } else {
+            innerActions.push(action);
+        }
+    });
+
+    if (outerActions.length > MAX_ACTIONS_LENGTH) {
+        const surplusActions = outerActions.splice(
+            0,
+            MAX_ACTIONS_LENGTH - outerActions.length
+        );
+
+        innerActions.concat(surplusActions);
+    }
+
+    return [outerActions, innerActions];
+}
+
 function EditorAction(props: IEditorActionProps & IEditorController) {
-    const {
-        actions = [],
-        isActiveGroup = false,
-        onClickContextMenu,
-        onSplitEditorRight,
-    } = props;
+    const { actions = [], isActiveGroup = false, onClickActions } = props;
+    const [outer, inner] = splitActions(actions);
 
     const childRef = React.useRef<DropDownRef>(null);
 
-    const handleOnMenuClick = (e: React.MouseEvent, item) => {
-        onClickContextMenu?.(e, item);
-        (childRef.current as any)!.dispose();
+    const handleOnMenuClick = (_, item) => {
+        onClickActions(item);
+        childRef.current?.dispose();
+    };
+
+    const handleActionsClick = (action) => {
+        onClickActions(action);
     };
 
     const overlay =
-        actions.length > 0 ? (
+        inner.length > 0 ? (
             <Menu
                 style={{ width: 200 }}
-                data={actions}
+                data={inner}
                 onClick={handleOnMenuClick}
             />
         ) : (
@@ -44,33 +75,38 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
             </span>
         );
 
-    const handleSplitEditor = useCallback(
-        (e: React.MouseEvent) => {
-            onSplitEditorRight?.();
-        },
-        [actions]
-    );
     return (
         <div className={groupActionsClassName}>
-            {isActiveGroup ? (
-                <div
-                    onClick={handleSplitEditor}
+            {isActiveGroup &&
+                outer.map((action) => (
+                    <div
+                        key={action.id}
+                        onClick={() => handleActionsClick(action)}
+                        className={classNames(
+                            groupActionsItemClassName,
+                            action.disabled && groupActionItemDisabledClassName
+                        )}
+                        title={action.name?.toString()}
+                    >
+                        {action.icon ? (
+                            <Icon type={action.icon} />
+                        ) : (
+                            action.name
+                        )}
+                    </div>
+                ))}
+            {Boolean(inner.length) && (
+                <DropDown
+                    ref={childRef}
+                    placement="bottom"
                     className={groupActionsItemClassName}
-                    title="Split Editor Right"
+                    trigger="click"
+                    title="More Actions..."
+                    overlay={overlay}
                 >
-                    <Icon type="split-horizontal" />
-                </div>
-            ) : null}
-            <DropDown
-                ref={childRef}
-                placement="bottom"
-                className={groupActionsItemClassName}
-                trigger="click"
-                title="More Actions..."
-                overlay={overlay}
-            >
-                <Icon type="ellipsis" />
-            </DropDown>
+                    <Icon type="ellipsis" />
+                </DropDown>
+            )}
         </div>
     );
 }

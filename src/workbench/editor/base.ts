@@ -1,4 +1,8 @@
-import { getBEMElement, prefixClaName } from 'mo/common/className';
+import {
+    getBEMElement,
+    getBEMModifier,
+    prefixClaName,
+} from 'mo/common/className';
 
 export const defaultEditorClassName = prefixClaName('editor');
 export const groupClassName = getBEMElement(defaultEditorClassName, 'group');
@@ -21,6 +25,11 @@ export const groupActionsClassName = getBEMElement(
 export const groupActionsItemClassName = getBEMElement(
     defaultEditorClassName,
     'group-actions-item'
+);
+
+export const groupActionItemDisabledClassName = getBEMModifier(
+    groupActionsItemClassName,
+    'disabled'
 );
 
 export const groupBreadcrumbClassName = getBEMElement(

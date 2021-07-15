@@ -6,7 +6,7 @@ export * as react from 'mo/react';
 export * as component from 'mo/components';
 export * from 'mo/workbench';
 export * from 'mo/services';
-export {} from 'mo/i18n';
+export * from 'mo/i18n';
 
 export {
     IExtension,

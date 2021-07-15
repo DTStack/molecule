@@ -22,7 +22,7 @@ export const PANEL_TOOLBOX_RESTORE_SIZE = 'panel.toolbox.restoreSize';
 export const PANEL_OUTPUT = 'panel.output.title';
 
 export interface IPanel {
-    current?: IPanelItem;
+    current?: IPanelItem | null;
     data?: IPanelItem[];
     toolbox?: IActionBarItemProps[];
 }
@@ -70,14 +70,14 @@ export function builtInPanelToolbox(): IActionBarItemProps[] {
 }
 
 export class PanelModel implements IPanel {
-    public current: IPanelItem | undefined;
+    public current: IPanelItem | null;
     public data: IPanelItem[];
     public hidden = false;
     public maximize = false;
     public toolbox: IActionBarItemProps[];
 
     constructor(
-        current: IPanelItem | undefined = undefined,
+        current: IPanelItem | null = null,
         data: IPanelItem[] = [],
         toolbox: IActionBarItemProps[] = []
     ) {

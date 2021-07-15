@@ -33,7 +33,7 @@ describe('Test TreeViewUtil Class', () => {
     });
 
     test('custom TreeViewUtil childNodeName', () => {
-        let tree = new TreeViewUtil(null, 'properties');
+        let tree = new TreeViewUtil(undefined, 'properties');
         expect(tree.obj).toEqual({ properties: [] });
         tree = new TreeViewUtil(
             {
@@ -104,7 +104,7 @@ describe('Test TreeViewUtil Class', () => {
         expect(indexes['3']).toEqual({
             id: 3,
             parent: 2,
-            node: obj.children[0].children[0],
+            node: obj.children[0].children?.[0],
         });
 
         expect(indexes['4']).toEqual({
@@ -139,15 +139,15 @@ describe('Test TreeViewUtil Class', () => {
             module: 'root',
             children: [{ id: 4, module: 'b' }],
         });
-        expect(tree.getIndex(2)).toBeUndefined();
-        expect(tree.getIndex(3)).toBeUndefined();
+        expect(tree.getIndex(2)).toBeNull();
+        expect(tree.getIndex(3)).toBeNull();
     });
 
     test('Test TreeViewUtil insert method', () => {
         const tree = createTree();
         const { obj } = tree;
 
-        tree.insert({ id: 5, module: 'd' }, 3, 0);
+        tree.insert({ id: 5, module: 'd', children: [] }, 3, 0);
 
         expect(obj).toEqual({
             id: 1,
@@ -160,7 +160,7 @@ describe('Test TreeViewUtil Class', () => {
                         {
                             id: 3,
                             module: 'c',
-                            children: [{ id: 5, module: 'd' }],
+                            children: [{ id: 5, module: 'd', children: [] }],
                         },
                     ],
                 },
@@ -172,7 +172,7 @@ describe('Test TreeViewUtil Class', () => {
     test('Test TreeViewUtil insertBefore method', () => {
         const tree = createTree();
         const { obj } = tree;
-        tree.insertBefore({ id: 5, module: 'd' }, 3);
+        tree.insertBefore({ id: 5, module: 'd', children: [] }, 3);
 
         expect(obj).toEqual({
             id: 1,
@@ -182,7 +182,7 @@ describe('Test TreeViewUtil Class', () => {
                     id: 2,
                     module: 'a',
                     children: [
-                        { id: 5, module: 'd' },
+                        { id: 5, module: 'd', children: [] },
                         { id: 3, module: 'c' },
                     ],
                 },
@@ -194,7 +194,7 @@ describe('Test TreeViewUtil Class', () => {
     test('Test TreeViewUtil insertAfter method', () => {
         const tree = createTree();
         const { obj } = tree;
-        tree.insertAfter({ id: 5, module: 'd' }, 3);
+        tree.insertAfter({ id: 5, module: 'd', children: [] }, 3);
 
         expect(obj).toEqual({
             id: 1,
@@ -205,7 +205,7 @@ describe('Test TreeViewUtil Class', () => {
                     module: 'a',
                     children: [
                         { id: 3, module: 'c' },
-                        { id: 5, module: 'd' },
+                        { id: 5, module: 'd', children: [] },
                     ],
                 },
                 { id: 4, module: 'b' },
@@ -216,7 +216,7 @@ describe('Test TreeViewUtil Class', () => {
     test('Test TreeViewUtil prepend method', () => {
         const tree = createTree();
         const { obj } = tree;
-        tree.prepend({ id: 5, module: 'd' }, 1);
+        tree.prepend({ id: 5, module: 'd', children: [] }, 1);
 
         expect(obj).toEqual({
             id: 1,
@@ -225,6 +225,7 @@ describe('Test TreeViewUtil Class', () => {
                 {
                     id: 5,
                     module: 'd',
+                    children: [],
                 },
                 {
                     id: 2,
@@ -239,7 +240,7 @@ describe('Test TreeViewUtil Class', () => {
     test('Test TreeViewUtil append method', () => {
         const tree = createTree();
         const { obj } = tree;
-        tree.append({ id: 5, module: 'd' }, 1);
+        tree.append({ id: 5, module: 'd', children: [] }, 1);
 
         expect(obj).toEqual({
             id: 1,
@@ -254,6 +255,7 @@ describe('Test TreeViewUtil Class', () => {
                 {
                     id: 5,
                     module: 'd',
+                    children: [],
                 },
             ],
         });

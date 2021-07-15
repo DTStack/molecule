@@ -9,7 +9,7 @@ import {
     IFolderTree,
     IFolderTreeModel,
 } from 'mo/model/workbench/explorer/folderTree';
-import { TreeViewUtil, ITreeInstance } from '../../helper';
+import { TreeViewUtil } from '../../helper';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
 import { SAMPLE_FOLDER_PANEL_ID } from 'mo/model';
@@ -42,7 +42,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     ): {
         currentRootFolder: ITreeNodeItemProps;
         index: number;
-        tree: ITreeInstance<ITreeNodeItemProps>;
+        tree: TreeViewUtil<ITreeNodeItemProps>;
     };
     /**
      * add a root folder for project
@@ -78,16 +78,14 @@ export class FolderTreeService
         const { tree, index } = this.getCurrentRootFolderInfo(id);
         // this index is root folder index
         if (index > -1) {
-            // TODO: this is not an index, it's an obj
-            // TODO: this function has incorrect return type
-            const currentIndex: any = tree.getIndex(id);
+            const currentIndex = tree.getIndex(id);
             if (currentIndex?.node?.fileType === FileTypes.File) {
                 const locations = currentIndex.node.location.split('/');
                 locations[locations.length - 1] = data.name;
                 data.location = locations.join('/');
-                tree.prepend(data, currentIndex.parent);
+                tree.prepend(data, currentIndex.parent!);
             } else {
-                data.location = `${currentIndex.node.location}/${data.name}`;
+                data.location = `${currentIndex!.node!.location}/${data.name}`;
                 tree.append(data, id);
             }
             cloneData[index] = tree.obj;
@@ -137,7 +135,7 @@ export class FolderTreeService
     ): {
         currentRootFolder: ITreeNodeItemProps;
         index: number;
-        tree: ITreeInstance<ITreeNodeItemProps>;
+        tree: TreeViewUtil<ITreeNodeItemProps>;
     } {
         const currentRootFolder = this.getRootFolderById(id);
         const index = this.getRootFolderIndexByRootId(currentRootFolder.id!);
@@ -166,7 +164,7 @@ export class FolderTreeService
     private getRootFolderById(id: number) {
         let rootNode: ITreeNodeItemProps = {};
         this.state.folderTree?.data?.forEach((folder) => {
-            const treeInstance = new TreeViewUtil(folder);
+            const treeInstance = new TreeViewUtil<ITreeNodeItemProps>(folder);
             if (treeInstance.get(id)) rootNode = folder;
         });
         return rootNode;

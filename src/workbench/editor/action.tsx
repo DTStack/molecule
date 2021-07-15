@@ -20,13 +20,13 @@ const MAX_ACTIONS_LENGTH = 6;
 
 function splitActions(actions: IEditorActionsProps[]) {
     const outerActions: IEditorActionsProps[] = [];
-    const ellipsisActions: IEditorActionsProps[] = [];
+    const innerActions: IEditorActionsProps[] = [];
 
     actions.forEach((action) => {
         if (action.place === 'outer') {
             outerActions.push(action);
         } else {
-            ellipsisActions.push(action);
+            innerActions.push(action);
         }
     });
 
@@ -36,15 +36,15 @@ function splitActions(actions: IEditorActionsProps[]) {
             MAX_ACTIONS_LENGTH - outerActions.length
         );
 
-        ellipsisActions.concat(surplusActions);
+        innerActions.concat(surplusActions);
     }
 
-    return [outerActions, ellipsisActions];
+    return [outerActions, innerActions];
 }
 
 function EditorAction(props: IEditorActionProps & IEditorController) {
     const { actions = [], isActiveGroup = false, onClickActions } = props;
-    const [outer, ellipsis] = splitActions(actions);
+    const [outer, inner] = splitActions(actions);
 
     const childRef = React.useRef<DropDownRef>(null);
 
@@ -58,10 +58,10 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
     };
 
     const overlay =
-        ellipsis.length > 0 ? (
+        inner.length > 0 ? (
             <Menu
                 style={{ width: 200 }}
-                data={ellipsis}
+                data={inner}
                 onClick={handleOnMenuClick}
             />
         ) : (
@@ -95,7 +95,7 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
                         )}
                     </div>
                 ))}
-            {Boolean(ellipsis.length) && (
+            {Boolean(inner.length) && (
                 <DropDown
                     ref={childRef}
                     placement="bottom"

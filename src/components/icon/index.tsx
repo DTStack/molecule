@@ -15,7 +15,8 @@ export function Icon(props: React.PropsWithChildren<IIconProps>) {
             className={classNames(
                 className,
                 'codicon',
-                prefixClaName(type, 'codicon')
+                type.includes('~spin') && 'codicon-spin',
+                prefixClaName(type.split('~spin')[0], 'codicon')
             )}
             {...restProps}
         >

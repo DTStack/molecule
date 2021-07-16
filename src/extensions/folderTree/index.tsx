@@ -48,10 +48,10 @@ export const ExtendsFolderTree: IExtension = {
                     id: `${file.id}`?.split('_')?.[0],
                     modified: false,
                     data: {
-                        ...(file.data || {}),
                         value: file.content,
                         path: file.location,
                         language: extName,
+                        ...(file.data || {}),
                     },
                 };
 

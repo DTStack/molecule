@@ -17,6 +17,7 @@
         "build-umd": "rimraf umd && webpack --config ./build/webpack.umd.js",
         "check-types": "tsc",
         "build": "gulp --gulpfile ./build/gulpfile.js",
+        "watch": "gulp --gulpfile ./build/gulpfile.js watch",
         "eslint": "eslint ./src/**/*.ts ./src/**/*.tsx",
         "stylelint": "stylelint **/*.{css,scss,sass}",
         "prettier": "prettier --ignore-unknown .",

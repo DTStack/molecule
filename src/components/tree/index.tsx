@@ -99,24 +99,32 @@ const TreeView = ({
         onDropTree?.(treeData);
     };
 
-    const renderTreeNodes = (data: ITreeNodeItemProps[], indent: number) =>
+    const renderTreeNodes = (
+        data: ITreeNodeItemProps[],
+        indent: number,
+        parentPath?: string
+    ) =>
         data?.map((item, index) => {
             const {
                 id,
                 disabled = false,
-                // compute key automatic when data don't has key
-                // take id as backup
-                key = id || `${index}_${indent}`,
+                key: rawKey,
                 icon,
                 children = [],
                 isLeaf: itemIsLeaf,
             } = item;
+
             const isLeaf =
                 typeof itemIsLeaf === 'boolean'
                     ? itemIsLeaf
                     : item.fileType === FileTypes.File || children.length === 0;
+
             const IconComponent =
                 typeof icon === 'string' ? <Icon type={icon} /> : icon;
+
+            // calculate key automatically via parent path and self id
+            const key = rawKey || `${parentPath ? parentPath + '_' : ''}${id}`;
+
             return (
                 /**
                  * TODO: antd TreeNode 目前强依赖于 Tree，不好抽离，后续还不支持的话，考虑重写..
@@ -135,7 +143,7 @@ const TreeView = ({
                     key={key}
                     icon={IconComponent}
                 >
-                    {children && renderTreeNodes(children, indent + 1)}
+                    {children && renderTreeNodes(children, indent + 1, key)}
                 </RcTreeNode>
             );
         });

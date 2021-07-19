@@ -96,3 +96,31 @@ gulp.task(
         'build:i18n'
     )
 );
+
+gulp.task(
+    'watch',
+    gulp.series(
+        'clean',
+        'build:esm',
+        'build:sass',
+        'build:extensions',
+        'build:i18n',
+        function watchFiles() {
+            gulp.watch('../src/**/*.scss', gulp.series('build:sass'));
+            gulp.watch(
+                ['../src/**/*.ts', '../src/**/*.tsx'],
+                gulp.series('build:esm')
+            );
+            gulp.watch(
+                [
+                    '../src/extension/**/*.svg',
+                    '../src/extension/**/*.json',
+                    '../src/extension/**/*.png',
+                    '../src/extension/**/*.md',
+                ],
+                gulp.series('build:extensions')
+            );
+            gulp.watch('../src/i18n/**/*.json', gulp.series('build:i18n'));
+        }
+    )
+);

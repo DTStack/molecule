@@ -39,12 +39,18 @@ export function builtInOutputPanel() {
         data: '',
     };
 
-    function onUpdateEditorIns(editorInstance: IStandaloneCodeEditor) {
-        outputPane.outputEditorInstance = editorInstance;
+    function onUpdateEditorIns(
+        editorInstance: IStandaloneCodeEditor,
+        item: IOutput
+    ) {
+        item.outputEditorInstance = editorInstance;
     }
 
     outputPane.renderPane = (item) => (
-        <Output onUpdateEditorIns={onUpdateEditorIns} {...item} />
+        <Output
+            onUpdateEditorIns={(instance) => onUpdateEditorIns(instance, item)}
+            {...item}
+        />
     );
 
     return outputPane;

@@ -102,6 +102,13 @@ export class PanelService extends Component<IPanel> implements IPanelService {
 
     public appendOutput(content: string): void {
         const outputValue = this.outputEditorInstance?.getValue();
+        const data = this.getState().data?.concat() || [];
+        const outputPane = data.find((pane) => pane.id === PANEL_OUTPUT);
+        outputPane!.data = outputValue + content;
+
+        this.setState({
+            data,
+        });
         this.outputEditorInstance?.setValue(outputValue + content);
     }
 

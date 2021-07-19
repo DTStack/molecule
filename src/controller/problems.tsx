@@ -9,11 +9,14 @@ import {
     StatusBarService,
     ILayoutService,
     LayoutService,
+    ProblemsService,
 } from 'mo/services';
 import { singleton, container } from 'tsyringe';
 import { builtInPanelProblems, builtInStatusProblems } from 'mo/model/problems';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
+import { ProblemsPaneView, ProblemsStatusBarView } from 'mo/workbench/problems';
+import { connect } from 'mo/react';
 export interface IProblemsController {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
 }
@@ -25,6 +28,7 @@ export class ProblemsController
     private readonly statusBarService: IStatusBarService;
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
+    private readonly problemsService: ProblemsService;
 
     constructor() {
         super();
@@ -32,6 +36,8 @@ export class ProblemsController
         this.statusBarService = container.resolve(StatusBarService);
         this.monacoService = container.resolve(MonacoService);
         this.layoutService = container.resolve(LayoutService);
+        this.problemsService = container.resolve(ProblemsService);
+
         this.init();
     }
 
@@ -53,12 +59,19 @@ export class ProblemsController
     };
 
     private init() {
-        this.statusBarService.appendLeftItem(
-            Object.assign(builtInStatusProblems(), {
-                onClick: this.onClick,
-            })
-        );
-        this.panelService.add(builtInPanelProblems());
+        const statusProblems = builtInStatusProblems();
+        statusProblems.render = (item) => <ProblemsStatusBarView {...item} />;
+        statusProblems.onClick = this.onClick;
+
+        this.statusBarService.appendLeftItem(statusProblems);
+
+        // keep ProblemsPaneView updated to problems' state
+        const ProblemsView = connect(this.problemsService, ProblemsPaneView);
+
+        const problemsPanel = builtInPanelProblems();
+        problemsPanel.renderPane = () => <ProblemsView />;
+
+        this.panelService.add(problemsPanel);
     }
 }
 

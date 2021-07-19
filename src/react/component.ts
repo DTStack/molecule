@@ -34,7 +34,7 @@ export abstract class Component<S = any>
      * @param values update target state values
      */
     public setState(
-        values: S,
+        values: Partial<S>,
         callback?: (prevState: S, nextState: S) => void
     ) {
         const nextState = Object.assign(this.state, values);

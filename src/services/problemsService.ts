@@ -5,28 +5,17 @@ import {
     ProblemsModel,
     MarkerSeverity,
     builtInStatusProblems,
-    builtInPanelProblems,
 } from 'mo/model/problems';
-import { IPanelItem } from 'mo/model/workbench/panel';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
-import {
-    PanelService,
-    IPanelService,
-    StatusBarService,
-    IStatusBarService,
-} from 'mo/services';
+import { StatusBarService, IStatusBarService } from 'mo/services';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
 export interface IProblemsService extends Component<IProblems> {
-    updateStatus<T>(item: IStatusBarItem<T>): void;
-    updatePanel<T>(item: IStatusBarItem<T>): void;
-    removeProblems(id: number): void;
+    removeProblems(id: number | number[]): void;
     clearProblems(): void;
-    addProblems(item: IProblemsItem): void;
-    updateProblems<T>(item: IProblemsItem<T>): void;
-    updateStatus(item: IStatusBarItem): void;
-    updatePanel(item: IPanelItem): void;
+    addProblems(item: IProblemsItem | IProblemsItem[]): void;
+    updateProblems<T>(item: IProblemsItem<T> | IProblemsItem<T>[]): void;
     showHideProblems(): void;
 }
 
@@ -35,12 +24,10 @@ export class ProblemsService
     extends Component<IProblems>
     implements IProblemsService {
     protected state: IProblems;
-    private readonly panelService: IPanelService;
     private readonly statusBarService: IStatusBarService;
     constructor() {
         super();
         this.state = container.resolve(ProblemsModel);
-        this.panelService = container.resolve(PanelService);
         this.statusBarService = container.resolve(StatusBarService);
     }
 
@@ -50,69 +37,78 @@ export class ProblemsService
             show: !this.state.show,
         });
     }
-    public addProblems<T>(item: IProblemsItem<T>): void {
+    public addProblems<T>(item: IProblemsItem<T> | IProblemsItem<T>[]): void {
+        const problems = Array.isArray(item) ? item : [item];
         const { data } = this.state;
-        const index = data.findIndex(searchById(item.id));
-        if (index > -1) {
-            data.splice(index, 1, item);
-        } else {
-            data.push(item);
-        }
+
+        problems.forEach((problem) => {
+            const index = data.findIndex(searchById(problem.id));
+            if (index > -1) {
+                data.splice(index, 1, problem);
+            } else {
+                data.push(problem);
+            }
+        });
+
         this.setState(
             {
-                ...this.state,
                 data: [...data],
             },
             () => {
-                this.update();
+                this.updateStatusBar();
             }
         );
     }
-    public updateProblems<T>(item: IProblemsItem<T>) {
+    public updateProblems<T>(item: IProblemsItem<T> | IProblemsItem<T>[]) {
+        const problems = Array.isArray(item) ? item : [item];
         const { data } = this.state;
-        const index = data.findIndex(searchById(item.id));
-        if (index > -1) {
-            data.splice(index, 1, item);
-            this.setState(
-                {
-                    ...this.state,
-                    data: [...data],
-                },
-                () => {
-                    this.update();
-                }
-            );
-        } else {
-            this.addProblems(item);
-        }
+
+        problems.forEach((problem) => {
+            const index = data.findIndex(searchById(problem.id));
+            if (index > -1) {
+                data.splice(index, 1, problem);
+            }
+        });
+
+        this.setState(
+            {
+                data: [...data],
+            },
+            () => {
+                this.updateStatusBar();
+            }
+        );
     }
-    public removeProblems(id: number): void {
+    public removeProblems(id: number | number[]): void {
+        const ids = Array.isArray(id) ? id : [id];
+
         const { data = [] } = this.state;
-        if (data.length > -1) {
-            const index = data.findIndex(searchById(id));
+        ids.forEach((problemId) => {
+            const index = data.findIndex(searchById(problemId));
             if (index > -1) {
                 data.splice(index, 1);
-                this.setState(
-                    {
-                        ...this.state,
-                        data: [...data],
-                    },
-                    () => {
-                        this.update();
-                    }
-                );
             }
-        }
+        });
+
+        this.setState(
+            {
+                data: [...data],
+            },
+            () => {
+                this.updateStatusBar();
+            }
+        );
     }
+
     public clearProblems(): void {
         this.setState({
             ...this.state,
             data: [],
         });
         this.updateStatus(builtInStatusProblems());
-        this.updatePanel(builtInPanelProblems());
     }
-    public update<T>(): void {
+
+    private updateStatusBar<T>(): void {
         const { data = [] } = this.state;
         const markersData = this.getProblemsMarkers(data);
         this.updateStatus(
@@ -120,15 +116,13 @@ export class ProblemsService
                 data: markersData,
             })
         );
-        this.updatePanel(Object.assign(builtInPanelProblems(), { data }));
     }
-    public updateStatus<T>(item: IStatusBarItem<T>): void {
+
+    private updateStatus<T>(item: IStatusBarItem<T>): void {
         this.statusBarService.updateItem(item);
     }
-    public updatePanel<T>(item: IPanelItem<T>): void {
-        this.panelService.update(item);
-    }
-    public getProblemsMarkers = (
+
+    private getProblemsMarkers = (
         data: IProblemsItem[]
     ): { warnings: number; errors: number; infos: number } => {
         let warnings = 0;

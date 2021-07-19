@@ -98,6 +98,43 @@ export default class TestPane extends React.Component {
             molecule.panel.appendOutput('Number: ' + Math.random() * 10 + '\n');
         };
 
+        const updateProblem = () => {
+            const problems = molecule.problems.getState().data;
+            molecule.problems.addProblems({
+                id: (problems[problems.length - 1]?.id || 0) + 10,
+                name: 'text.tsx',
+                value: {
+                    code: 'text.tsx',
+                    message: '文件夹',
+                    startLineNumber: 0,
+                    startColumn: 1,
+                    endLineNumber: 0,
+                    endColumn: 1,
+                    status: 1,
+                },
+                children: [
+                    {
+                        id: (problems[problems.length - 1]?.id || 0) + 1,
+                        name: '0-1',
+                        value: {
+                            code: 'endLineNumber',
+                            message: '语法错误',
+                            startLineNumber: 0,
+                            startColumn: 1,
+                            endLineNumber: 0,
+                            endColumn: 1,
+                            status: 2,
+                        },
+                        children: [],
+                    },
+                ],
+            });
+        };
+
+        const clearProblems = () => {
+            molecule.problems.clearProblems();
+        };
+
         const newEditor = function () {
             const key = (Math.random() * 10 + 1).toFixed(2);
             const tabData: IEditorTab = {
@@ -270,6 +307,8 @@ PARTITIONED BY (ds string) lifecycle 1000;
                         <Button onClick={addPanel}>Add Panel</Button>
                         <Button onClick={showHidePanel}>Show/Hide Panel</Button>
                         <Button onClick={updateOutput}>Update Output</Button>
+                        <Button onClick={updateProblem}>Update Problem</Button>
+                        <Button onClick={clearProblems}>Clear Problem</Button>
                     </div>
                     <div style={{ margin: '50px 20px' }}>
                         <h2>Notification:</h2>

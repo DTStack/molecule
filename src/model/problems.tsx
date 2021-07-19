@@ -1,7 +1,5 @@
-import * as React from 'react';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import { IPanelItem } from 'mo/model/workbench/panel';
-import { ProblemsStatusBarView, ProblemsPaneView } from 'mo/workbench/problems';
 import { localize } from 'mo/i18n/localize';
 
 export enum MarkerSeverity {
@@ -45,7 +43,6 @@ export function builtInStatusProblems(): IStatusBarItem {
             infos: 0,
         },
         name: 'Problems',
-        render: (item: IStatusBarItem) => <ProblemsStatusBarView {...item} />,
     };
 }
 
@@ -54,7 +51,6 @@ export function builtInPanelProblems(): IPanelItem {
         id: PANEL_PROBLEMS,
         name: localize(PANEL_PROBLEMS, 'problems'),
         data: null,
-        renderPane: (item) => <ProblemsPaneView {...item} />,
     };
 }
 

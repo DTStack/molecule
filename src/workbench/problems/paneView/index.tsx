@@ -2,6 +2,7 @@ import * as React from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import TreeView from 'mo/components/tree';
 import { localize } from 'mo/i18n/localize';
+import { Scrollable } from 'mo/components';
 
 const defaultClassName = prefixClaName('problems');
 const treeClassName = getBEMElement(defaultClassName, 'treeview');
@@ -23,32 +24,35 @@ function ProblemsPaneView(props: any) {
         );
 
     return (
-        <div className={defaultClassName}>
-            <TreeView
-                className={treeClassName}
-                data={data}
-                renderTitle={({ children, name, value }, _, isLeaf) => {
-                    return !isLeaf ? (
-                        <span className={treeNodeClassName}>
-                            {value.code}
-                            <span className={treeNodeBadgeClassName}>
-                                {children?.length}
-                            </span>
-                        </span>
-                    ) : (
-                        <span className={treeLeafClassName}>
-                            {value.message}
-                            <span className={treeLeafSubInfoClassName}>
+        <Scrollable>
+            <div className={defaultClassName}>
+                <TreeView
+                    className={treeClassName}
+                    data={data}
+                    renderTitle={({ children, name, value }, _, isLeaf) => {
+                        return !isLeaf ? (
+                            <span className={treeNodeClassName}>
                                 {value.code}
+                                <span className={treeNodeBadgeClassName}>
+                                    {children?.length}
+                                </span>
                             </span>
-                            <span className={treeLeafSubInfoClassName}>
-                                [{value.startLineNumber}, {value.startColumn}]
+                        ) : (
+                            <span className={treeLeafClassName}>
+                                {value.message}
+                                <span className={treeLeafSubInfoClassName}>
+                                    {value.code}
+                                </span>
+                                <span className={treeLeafSubInfoClassName}>
+                                    [{value.startLineNumber},{' '}
+                                    {value.startColumn}]
+                                </span>
                             </span>
-                        </span>
-                    );
-                }}
-            />
-        </div>
+                        );
+                    }}
+                />
+            </div>
+        </Scrollable>
     );
 }
 

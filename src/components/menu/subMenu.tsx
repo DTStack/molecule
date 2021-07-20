@@ -33,7 +33,7 @@ export interface ISubMenuProps extends IMenuItemProps {
      * The event of show subMenu, default value is 'hover'
      */
     trigger?: TriggerEvent;
-    icon?: string;
+    icon?: React.ReactNode;
     data?: ISubMenuProps[];
     mode?: MenuMode;
 }
@@ -84,7 +84,11 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
             {...custom}
         >
             <a className={menuContentClassName}>
-                <Icon className={checkClassName} type={icon || ''} />
+                {typeof icon === 'string' ? (
+                    <Icon className={checkClassName} type={icon || ''} />
+                ) : (
+                    icon
+                )}
                 <span className={labelClassName}>
                     {render ? render(props) : name}
                 </span>

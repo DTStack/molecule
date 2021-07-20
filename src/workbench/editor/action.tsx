@@ -89,7 +89,11 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
                         title={action.name?.toString()}
                     >
                         {action.icon ? (
-                            <Icon type={action.icon} />
+                            typeof action.icon === 'string' ? (
+                                <Icon type={action.icon} />
+                            ) : (
+                                action.icon
+                            )
                         ) : (
                             action.name
                         )}

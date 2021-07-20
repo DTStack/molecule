@@ -204,7 +204,7 @@ export class ExplorerService
         const nextMenu = headerToolBar?.contextMenu?.concat() || [];
         const currentMenu = nextMenu.find(searchById(id));
         if (currentMenu) {
-            currentMenu.icon = this.toggleIcon(currentMenu.icon);
+            currentMenu.icon = this.toggleIcon(currentMenu.icon as string);
             const next = {
                 ...headerToolBar,
                 contextMenu: nextMenu,

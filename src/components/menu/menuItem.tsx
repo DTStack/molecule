@@ -13,7 +13,7 @@ export interface IMenuItemProps extends HTMLElementProps {
     /**
      * The name of icon
      */
-    icon?: string;
+    icon?: React.ReactNode;
     type?: 'divider';
     /**
      * Item Name

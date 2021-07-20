@@ -43,6 +43,8 @@ export function builtInOutputPanel() {
         editorInstance: IStandaloneCodeEditor,
         item: IOutput
     ) {
+        // Please notice the problem about memory out
+        // 'Cause we didn't dispose the older instance
         item.outputEditorInstance = editorInstance;
     }
 

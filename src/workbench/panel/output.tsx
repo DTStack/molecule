@@ -6,12 +6,7 @@ import { MonacoEditor } from 'mo/components/monaco';
 const defaultClassName = prefixClaName('output');
 
 function Output(props: IOutput) {
-    const { id, data = '', onUpdateEditorIns, outputEditorInstance } = props;
-    const editorDidMount = React.useRef(false);
-
-    if (!editorDidMount.current && outputEditorInstance) {
-        outputEditorInstance.dispose();
-    }
+    const { id, data = '', onUpdateEditorIns } = props;
 
     return (
         <div className={defaultClassName}>
@@ -29,7 +24,6 @@ function Output(props: IOutput) {
                 }}
                 editorInstanceRef={(editorInstance) => {
                     onUpdateEditorIns?.(editorInstance);
-                    editorDidMount.current = true;
                 }}
             />
         </div>

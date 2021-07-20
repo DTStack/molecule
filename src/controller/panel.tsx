@@ -40,7 +40,9 @@ export class PanelController extends Controller implements IPanelController {
     };
 
     public readonly onClose = (key?: string) => {
-        key && this.panelService.remove(key);
+        if (key) {
+            this.emit(PanelEvent.onTabClose, key);
+        }
     };
 
     public readonly onToolbarClick = (

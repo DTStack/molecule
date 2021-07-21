@@ -11,6 +11,7 @@ import {
 } from './base';
 import { IEditorController } from 'mo/controller/editor';
 import { classNames } from 'mo/common/className';
+import Tooltip from 'mo/components/tooltip';
 
 export interface IEditorActionProps extends IEditorAction {
     isActiveGroup: boolean;
@@ -79,25 +80,27 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
         <div className={groupActionsClassName}>
             {isActiveGroup &&
                 outer.map((action) => (
-                    <div
-                        key={action.id}
-                        onClick={() => handleActionsClick(action)}
-                        className={classNames(
-                            groupActionsItemClassName,
-                            action.disabled && groupActionItemDisabledClassName
-                        )}
-                        title={action.name?.toString()}
-                    >
-                        {action.icon ? (
-                            typeof action.icon === 'string' ? (
-                                <Icon type={action.icon} />
+                    <Tooltip overlay={action.title}>
+                        <div
+                            key={action.id}
+                            onClick={() => handleActionsClick(action)}
+                            className={classNames(
+                                groupActionsItemClassName,
+                                action.disabled &&
+                                    groupActionItemDisabledClassName
+                            )}
+                        >
+                            {action.icon ? (
+                                typeof action.icon === 'string' ? (
+                                    <Icon type={action.icon} />
+                                ) : (
+                                    action.icon
+                                )
                             ) : (
-                                action.icon
-                            )
-                        ) : (
-                            action.name
-                        )}
-                    </div>
+                                action.name
+                            )}
+                        </div>
+                    </Tooltip>
                 ))}
             {Boolean(inner.length) && (
                 <DropDown

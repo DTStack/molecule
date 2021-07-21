@@ -62,6 +62,7 @@ export default {
         'editor.closeSaved': 'Close Saved',
         'editor.closeOthers': 'Close Others',
         'editor.close': 'Close',
+        'editor.actions.splitRight': 'Split Editor Right',
         'editor.showOpenEditors': 'Show Opened Editors',
     },
 };

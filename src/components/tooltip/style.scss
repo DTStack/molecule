@@ -1,0 +1,23 @@
+@import 'mo/style/common';
+
+#{$rcTooltip} {
+    box-sizing: border-box;
+    color: #333;
+    margin: 0;
+    opacity: 1;
+    padding: 0;
+
+    &-inner {
+        background-color: rgba(0, 0, 0, 0.75);
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+        box-sizing: border-box;
+        min-width: 30px;
+        padding: 6px 8px;
+    }
+}
+
+#{$rcTooltip}-placement-bottom #{$rcTooltip}-arrow {
+    border-bottom-color: #000;
+    top: -5px;
+}

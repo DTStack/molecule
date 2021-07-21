@@ -84,6 +84,7 @@ export default class TestPane extends React.Component {
             molecule.panel.open({
                 id: 'Pane' + id,
                 name: 'Panel' + id,
+                closable: true,
                 render: () => <h1>Test Pane</h1>,
             });
         };

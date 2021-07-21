@@ -15,6 +15,7 @@ import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 export interface IPanelController {
     onTabChange(key: string | undefined): void;
     onToolbarClick(e: React.MouseEvent, item: IActionBarItemProps): void;
+    onClose(key?: string): void;
 }
 
 @singleton()
@@ -36,6 +37,12 @@ export class PanelController extends Controller implements IPanelController {
             });
         }
         this.emit(PanelEvent.onTabChange, key);
+    };
+
+    public readonly onClose = (key?: string) => {
+        if (key) {
+            this.emit(PanelEvent.onTabClose, key);
+        }
     };
 
     public readonly onToolbarClick = (

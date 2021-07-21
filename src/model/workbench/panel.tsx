@@ -14,6 +14,7 @@ export interface IPanelItem<T = any> extends ITabProps<any> {
 export enum PanelEvent {
     onTabChange = 'panel.onTabChange',
     onToolbarClick = 'panel.onToolbarClick',
+    onTabClose = 'panel.onTabClose',
 }
 
 export const PANEL_TOOLBOX_CLOSE = 'panel.toolbox.closePanel';

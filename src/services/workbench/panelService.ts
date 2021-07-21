@@ -37,6 +37,7 @@ export interface IPanelService extends Component<IPanel> {
     onToolbarClick(
         callback: (e: React.MouseEvent, item: IActionBarItemProps) => void
     ): void;
+    onTabClose(callback: (key: string) => void): void;
 }
 
 @singleton()
@@ -160,5 +161,9 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         callback: (e: React.MouseEvent, item: IActionBarItemProps) => void
     ) {
         this.subscribe(PanelEvent.onToolbarClick, callback);
+    }
+
+    public onTabClose(callback: (key: string) => void) {
+        this.subscribe(PanelEvent.onTabClose, callback);
     }
 }

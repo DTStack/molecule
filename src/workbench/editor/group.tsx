@@ -94,6 +94,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
                         )
                     ) : (
                         <MonacoEditor
+                            key={tab.id}
                             options={{
                                 value: tab.data?.value,
                                 language: tab.data?.language,

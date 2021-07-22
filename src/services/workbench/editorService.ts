@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
-
+import cloneDeep from 'lodash/cloneDeep';
 import { Component } from 'mo/react';
 import {
     EditorModel,
@@ -104,8 +104,11 @@ export class EditorService
         });
     }
 
-    public isOpened(tabId: string): boolean {
-        const { groups = [] } = this.state;
+    public isOpened(
+        tabId: string,
+        filterGroups?: IEditorGroup<any, any>[]
+    ): boolean {
+        const groups = filterGroups || this.state.groups || [];
         return groups.some((group) => this.getTabById(tabId, group));
     }
 
@@ -207,6 +210,8 @@ export class EditorService
         const nextGroups = [...groups];
         const nextGroup = nextGroups[groupIndex];
         const tabIndex = nextGroup.data!.findIndex(searchById(tabId));
+
+        const tab = cloneDeep(nextGroup.data![tabIndex]);
         if (tabIndex === -1) return;
 
         if (nextGroup.data!.length === 1 && tabIndex === 0) {
@@ -215,14 +220,19 @@ export class EditorService
             const activeGroup =
                 nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1];
 
-            // the model of closed tab should be disposed after closing
-            this.disposeModel(nextGroup.data![tabIndex]);
             nextGroups.splice(groupIndex, 1);
 
-            this.setState({
-                groups: nextGroups,
-                current: nextGroups?.length === 0 ? undefined : activeGroup,
-            });
+            this.setState(
+                {
+                    groups: nextGroups,
+                    current: nextGroups?.length === 0 ? undefined : activeGroup,
+                },
+                () => {
+                    const isOpened = this.isOpened(tabId);
+                    // the model of closed tab should be disposed after closing
+                    !isOpened && this.disposeModel(tab);
+                }
+            );
             return;
         }
 
@@ -235,15 +245,19 @@ export class EditorService
             nextGroup.activeTab = nextTab?.id;
         }
 
-        this.disposeModel(nextGroup.data![tabIndex]);
-
         nextGroup.data!.splice(tabIndex, 1);
         nextGroups[groupIndex] = nextGroup;
 
-        this.setState({
-            current: nextGroup,
-            groups: nextGroups,
-        });
+        this.setState(
+            {
+                current: nextGroup,
+                groups: nextGroups,
+            },
+            () => {
+                const isOpened = this.isOpened(tabId);
+                !isOpened && this.disposeModel(tab);
+            }
+        );
     }
 
     public closeOthers(tab: IEditorTab, groupId: number) {
@@ -258,14 +272,23 @@ export class EditorService
 
         const updateTabs = nextTabData!.filter(searchById(tabId));
         // tab data is unlikely to be large enough to affect exec time, so we filter twice for maintainability
-        const removedTabs = nextTabData!.filter((item) => item.id !== tabId);
-
-        this.disposeModel(removedTabs);
+        const removedTabs = cloneDeep(
+            nextTabData!.filter(
+                (item) =>
+                    item.id !== tabId &&
+                    !this.isOpened(
+                        item.id!,
+                        nextGroups.filter((g) => g.id !== groupId)
+                    )
+            )
+        );
 
         this.updateGroup(groupId, {
             data: updateTabs,
         });
         this.setActive(groupId, tabId!);
+
+        this.disposeModel(removedTabs);
     }
 
     public closeToRight(tab: IEditorTab, groupId: number) {
@@ -282,14 +305,21 @@ export class EditorService
         if (tabIndex <= -1) return;
 
         const updateTabs = nextTabData?.slice(0, tabIndex + 1);
-        const removedTabs = nextTabData?.slice(tabIndex + 1);
-
-        removedTabs && this.disposeModel(removedTabs);
+        const removedTabs = cloneDeep(
+            nextTabData?.slice(tabIndex + 1).filter(
+                (item) =>
+                    !this.isOpened(
+                        item.id!,
+                        nextGroups.filter((g) => g.id !== groupId)
+                    )
+            )
+        );
 
         this.updateGroup(groupId, {
             data: updateTabs,
         });
         this.setActive(groupId, tabId!);
+        this.disposeModel(removedTabs || []);
     }
 
     public closeToLeft(tab: IEditorTab, groupId: number) {
@@ -306,14 +336,21 @@ export class EditorService
         if (tabIndex <= -1) return;
 
         const updateTabs = nextTabData?.slice(tabIndex, nextTabData.length);
-        const removedTabs = nextTabData?.slice(0, tabIndex);
-
-        this.disposeModel(removedTabs || []);
+        const removedTabs = cloneDeep(
+            nextTabData?.slice(0, tabIndex).filter(
+                (item) =>
+                    !this.isOpened(
+                        item.id!,
+                        nextGroups.filter((g) => g.id !== groupId)
+                    )
+            )
+        );
 
         this.updateGroup(groupId, {
             data: updateTabs,
         });
         this.setActive(groupId, tabId!);
+        this.disposeModel(removedTabs || []);
     }
 
     public getGroupById(groupId: number): IEditorGroup | undefined {
@@ -426,19 +463,29 @@ export class EditorService
             const nextGroups = [...groups];
             let nextCurrentGroup = current;
 
-            // dispose all models in specific group
-            this.disposeModel(nextGroups[groupIndex].data || []);
+            const removedGroup = nextGroups.splice(groupIndex, 1);
 
-            nextGroups.splice(groupIndex, 1);
+            const removed = cloneDeep(
+                removedGroup[0].data?.filter(
+                    (item) => !this.isOpened(item.id!, nextGroups)
+                ) || []
+            );
 
             if (current && current.id === groupId) {
-                nextCurrentGroup = groups[groupIndex - 1];
+                nextCurrentGroup =
+                    groups[groupIndex + 1] || groups[groupIndex - 1];
             }
 
-            this.setState({
-                groups: nextGroups,
-                current: nextCurrentGroup,
-            });
+            this.setState(
+                {
+                    groups: nextGroups,
+                    current: nextCurrentGroup,
+                },
+                () => {
+                    // dispose all models in specific group
+                    this.disposeModel(removed);
+                }
+            );
         }
     }
 

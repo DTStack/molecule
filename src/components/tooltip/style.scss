@@ -2,13 +2,13 @@
 
 #{$rcTooltip} {
     box-sizing: border-box;
-    color: #333;
+    color: var(--tooltip-color);
     margin: 0;
     opacity: 1;
     padding: 0;
 
     &-inner {
-        background-color: rgba(0, 0, 0, 0.75);
+        background-color: var(--tooltip-background);
         border-radius: 2px;
         box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
         box-sizing: border-box;
@@ -18,6 +18,6 @@
 }
 
 #{$rcTooltip}-placement-bottom #{$rcTooltip}-arrow {
-    border-bottom-color: #000;
+    border-bottom-color: var(--tooltip-background);
     top: -5px;
 }

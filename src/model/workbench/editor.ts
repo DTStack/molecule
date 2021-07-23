@@ -81,6 +81,7 @@ export function getEditorInitialActions(): IEditorActionsProps[] {
         {
             id: EDITOR_MENU_SPILIT,
             name: 'Split Editor Right',
+            title: localize('editor.actions.splitRight', 'Split Editor Right'),
             icon: 'split-horizontal',
             place: 'outer',
         },

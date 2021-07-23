@@ -65,5 +65,8 @@ export type { ITabProps } from './tabs/tab';
 export { Toolbar } from './toolbar';
 export type { IToolbarProps } from './toolbar';
 
+export { default as Tooltip } from './tooltip';
+export type { IToolTipProps } from './tooltip';
+
 export { default as TreeView } from './tree';
 export type { ITreeProps, ITreeNodeItemProps } from './tree';

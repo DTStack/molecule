@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 
 import { ActionBar } from '../index';
 
 const mockData = [
     {
-        id: '1',
+        id: 'm1',
         title: 'mockDataTitle',
         iconName: 'codicon-add',
     },
@@ -20,7 +20,11 @@ describe('Test ActionBar Component', () => {
     });
 
     test('Test the ActionBar by the data Props', () => {
-        render(<ActionBar data={mockData} />);
-        expect(screen.getByTitle(/mockDataTitle/)).not.toBeNull();
+        const wrapper = render(<ActionBar data={mockData} />);
+        const liDom = wrapper.container.querySelector('#m1');
+        const iconDom = liDom?.querySelector('a.codicon-add');
+
+        expect(liDom).not.toBeNull();
+        expect(iconDom).not.toBeNull();
     });
 });

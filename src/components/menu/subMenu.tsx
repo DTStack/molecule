@@ -49,6 +49,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
         disabled = false,
         children,
         onClick,
+        title,
         ...custom
     } = props;
     const cNames = classNames(defaultSubMenuClassName, className);
@@ -81,6 +82,8 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
                 disabled ? disabledClassName : null
             )}
             data-submenu
+            // prevent render JSX title in HTMLElement
+            {...(typeof title === 'string' ? { title } : {})}
             {...custom}
         >
             <a className={menuContentClassName}>

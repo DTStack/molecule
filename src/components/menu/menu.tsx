@@ -65,6 +65,7 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         children,
         onClick,
         trigger = 'hover',
+        title,
         ...custom
     } = props;
     const menuRef = React.useRef<HTMLUListElement>(null);
@@ -197,6 +198,8 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         <ul
             className={claNames}
             ref={menuRef}
+            // prevent JSX render in HTMLElement
+            {...(typeof title === 'string' ? { title } : {})}
             {...getEventListener()}
             {...custom}
         >

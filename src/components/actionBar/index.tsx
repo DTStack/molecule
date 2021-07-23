@@ -9,6 +9,7 @@ import {
 import { useContextMenu } from 'mo/components/contextMenu';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { mergeFunctions } from 'mo/common/utils';
+import Tooltip from '../tooltip';
 
 export interface IActionBarItemProps<T = any> {
     id?: string;
@@ -113,9 +114,9 @@ export function ActionBarItem(props: IActionBarItemProps) {
             onClick={onClickItem}
             data-id={data.id}
         >
-            <a className={claNames} title={title}>
-                {name}
-            </a>
+            <Tooltip overlay={<span>{title}</span>}>
+                <a className={claNames}>{name}</a>
+            </Tooltip>
         </li>
     );
 }

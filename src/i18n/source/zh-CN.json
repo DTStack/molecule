@@ -59,6 +59,7 @@
         "editor.closeOthers": "关闭其他",
         "editor.closeSaved": "关闭已保存",
         "editor.close": "关闭",
+        "editor.actions.splitRight": "向右拆分编辑器",
         "editor.showOpenEditors": "展示已打开的编辑器"
     }
 }

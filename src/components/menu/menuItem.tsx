@@ -9,7 +9,8 @@ import {
     labelClassName,
     menuContentClassName,
 } from './base';
-export interface IMenuItemProps extends HTMLElementProps {
+
+export interface IMenuItemProps extends Omit<HTMLElementProps, 'title'> {
     /**
      * The name of icon
      */
@@ -19,6 +20,7 @@ export interface IMenuItemProps extends HTMLElementProps {
      * Item Name
      */
     name?: ReactNode;
+    title?: React.ReactNode;
     disabled?: boolean;
     /**
      * The description of keybinding
@@ -45,13 +47,16 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
         render,
         children,
         name,
+        title,
         ...custom
     } = props;
+
     const events = {
         onClick: function (e: React.MouseEvent) {
             onClick?.(e, props);
         },
     };
+
     return (
         <li
             className={classNames(
@@ -59,6 +64,8 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
                 className,
                 disabled ? disabledClassName : null
             )}
+            // prevent render JSX title in HTMLElement
+            {...(typeof title === 'string' ? { title } : {})}
             {...events}
             {...custom}
         >

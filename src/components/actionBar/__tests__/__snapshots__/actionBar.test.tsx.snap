@@ -9,12 +9,13 @@ exports[`Test ActionBar Component Test the ActionBar Snapshot 1`] = `
   >
     <li
       className="mo-action-bar__item"
-      id="1"
+      id="m1"
       onClick={[Function]}
     >
       <a
         className="mo-action-bar__label codicon codicon-add"
-        title="mockDataTitle"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
       />
     </li>
   </ul>

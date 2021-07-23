@@ -1,11 +1,11 @@
 import React from 'react';
-import Tooltip from 'rc-tooltip';
+import { default as RcTooltip } from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap.css';
 import { TooltipProps } from 'rc-tooltip/lib/Tooltip';
 
-interface IToolTipProps extends TooltipProps {}
+export interface IToolTipProps extends TooltipProps {}
 
-export default ({
+const Tooltip = ({
     overlay,
     children,
     placement = 'bottom',
@@ -14,7 +14,7 @@ export default ({
 }: IToolTipProps) => {
     if (overlay) {
         return (
-            <Tooltip
+            <RcTooltip
                 placement={placement}
                 trigger={trigger}
                 overlay={overlay}
@@ -22,9 +22,11 @@ export default ({
                 {...rest}
             >
                 {children}
-            </Tooltip>
+            </RcTooltip>
         );
     } else {
         return children || null;
     }
 };
+
+export default Tooltip;

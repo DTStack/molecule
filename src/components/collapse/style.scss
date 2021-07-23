@@ -60,13 +60,8 @@ $collapse__extra: #{$collapse}__extra;
         opacity: 0;
 
         #{$actionBar}__label.codicon {
-            color: var(--activityBar-inactiveForeground);
             height: inherit;
             line-height: inherit;
-
-            &:hover {
-                color: var(--activityBar-activeBorder);
-            }
         }
     }
 

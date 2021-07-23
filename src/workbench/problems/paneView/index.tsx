@@ -2,7 +2,8 @@ import * as React from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import TreeView from 'mo/components/tree';
 import { localize } from 'mo/i18n/localize';
-import { Scrollable } from 'mo/components';
+import { Icon, Scrollable } from 'mo/components';
+import { IProblems, MarkerSeverity } from 'mo/model';
 
 const defaultClassName = prefixClaName('problems');
 const treeClassName = getBEMElement(defaultClassName, 'treeview');
@@ -11,9 +12,9 @@ const treeNodeBadgeClassName = getBEMElement(treeNodeClassName, 'badge');
 const treeLeafClassName = getBEMElement(treeClassName, 'treeLeaf');
 const treeLeafSubInfoClassName = getBEMElement(treeLeafClassName, 'subInfo');
 
-function ProblemsPaneView(props: any) {
+function ProblemsPaneView(props: IProblems) {
     const { data } = props;
-    if (!data?.length)
+    if (!data?.length) {
         return (
             <div style={{ margin: '0 18px', userSelect: 'none' }}>
                 {localize(
@@ -22,6 +23,24 @@ function ProblemsPaneView(props: any) {
                 )}
             </div>
         );
+    }
+
+    const getIcon = (status: number) => {
+        switch (status) {
+            case MarkerSeverity.Error: {
+                return <Icon type="error" />;
+            }
+            case MarkerSeverity.Warning: {
+                return <Icon type="warning" />;
+            }
+            case MarkerSeverity.Info: {
+                return <Icon type="info" />;
+            }
+            default: {
+                return '';
+            }
+        }
+    };
 
     return (
         <Scrollable>
@@ -39,7 +58,8 @@ function ProblemsPaneView(props: any) {
                             </span>
                         ) : (
                             <span className={treeLeafClassName}>
-                                {value.message}
+                                {getIcon(value.status)}
+                                <span>{value.message}</span>
                                 <span className={treeLeafSubInfoClassName}>
                                     {value.code}
                                 </span>

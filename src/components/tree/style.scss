@@ -33,6 +33,7 @@ $switch: #{$rcTree}-switcher;
                 margin: 0;
                 padding: 0 0 0 18px;
             }
+
             span#{$switch} {
                 background-attachment: scroll;
                 background-color: transparent;
@@ -64,11 +65,6 @@ $switch: #{$rcTree}-switcher;
                     color: #767676;
                     cursor: not-allowed;
                 }
-            }
-
-            &-selected {
-                background: var(--list-activeSelectionBackground);
-                border-color: var(--list-focusOutline);
             }
         }
 

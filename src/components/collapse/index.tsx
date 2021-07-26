@@ -49,15 +49,16 @@ export interface ICollapseProps {
 }
 
 // default collapse height, only contains header
-const HEADER_HEIGTH = 26;
+export const HEADER_HEIGTH = 26;
 /**
  * It's the max height for the item which set the grow to 0
  */
-const MAX_GROW_HEIGHT = 220;
+export const MAX_GROW_HEIGHT = 220;
 
 export function Collapse(props: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] = useState<React.Key[]>([]);
     const wrapper = React.useRef<HTMLDivElement>(null);
+    const requestAF = React.useRef<number>();
 
     const {
         className,
@@ -117,22 +118,20 @@ export function Collapse(props: ICollapseProps) {
                 `.${collapseItemClassName}[data-content='${panel.id}']`
             );
 
-            // Only set content height for non-grow-zero panel
-            // 'Cause when you set height for grow-zero panel, you'll get wrong height next render time
-            if (panel.config?.grow !== 0) {
-                const contentDom = select(
-                    `.${collapseContentClassName}[data-content='${panel.id}']`
-                )?.querySelector<HTMLElement>(`[data-content='${panel.id}']`);
-
-                if (contentDom) {
-                    contentDom.style.height = `${height - HEADER_HEIGTH - 2}px`;
-                }
-            }
             if (dom) {
-                dom.style.height = `${height}px`;
-                dom.style.top = `${top}px`;
+                requestAF.current = requestAnimationFrame(() => {
+                    dom.style.height = `${height}px`;
+                    dom.style.top = `${top}px`;
+                });
             }
         });
+
+        return () => {
+            if (requestAF.current) {
+                cancelAnimationFrame(requestAF.current);
+                requestAF.current = undefined;
+            }
+        };
     }, [filterData]);
 
     const handleChangeCallback = (key: React.Key) => {
@@ -212,7 +211,10 @@ export function Collapse(props: ICollapseProps) {
             }
 
             // border-top-width + border-bottom-width = 2
-            return parseInt(contentHeight.toFixed(0)) - 2 + HEADER_HEIGTH;
+            const height =
+                parseInt(contentHeight.toFixed(0)) - 2 + HEADER_HEIGTH;
+
+            return height > MAX_GROW_HEIGHT ? MAX_GROW_HEIGHT : height;
         });
     };
 

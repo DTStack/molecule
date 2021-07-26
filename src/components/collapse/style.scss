@@ -68,8 +68,11 @@ $collapse__extra: #{$collapse}__extra;
 
     &__content {
         border: 1px solid transparent;
-        flex: 1;
         width: calc(100% - 3px);
+
+        &:not(:empty) {
+            flex: 1;
+        }
 
         &:focus {
             border-color: var(--list-focusOutline);

@@ -38,6 +38,10 @@ export interface ITabProps<T = any, P = any> extends ITabEvent {
 
 export const tabClassName = prefixClaName('tab');
 export const tabItemClassName = getBEMElement(tabClassName, 'item');
+export const tabItemActiveClassName = getBEMModifier(
+    tabItemClassName,
+    'active'
+);
 
 export function Tab<T>(props: ITabProps) {
     const {
@@ -115,7 +119,7 @@ export function Tab<T>(props: ITabProps) {
         <div
             ref={ref}
             className={classNames(tabItemClassName, {
-                [getBEMModifier(tabItemClassName, 'active')]: active,
+                [tabItemActiveClassName]: active,
             })}
             onClick={(event: React.MouseEvent) => onSelectTab?.(id)}
             onMouseOver={handleMouseOver}

@@ -16,6 +16,8 @@ import { IEditorController } from 'mo/controller/editor';
 import { Menu } from 'mo/components/menu';
 import { useContextView } from 'mo/components/contextView';
 import { getEventPosition } from 'mo/common/dom';
+import Scrollbar from 'react-scrollbars-custom';
+import { tabItemActiveClassName } from 'mo/components/tabs/tab';
 
 export interface IEditorGroupProps extends IEditorGroup {
     currentGroup?: IEditorGroup;
@@ -38,6 +40,9 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
         onUpdateEditorIns,
     } = props;
 
+    const scrollable = React.useRef<Scrollbar>(null);
+    const groupTabs = React.useRef<HTMLDivElement>(null);
+
     const isActiveGroup = id === currentGroup?.id;
 
     const contextView = useContextView();
@@ -58,11 +63,30 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
             contextView?.dispose();
         };
     });
+
+    // scoller into view
+    React.useLayoutEffect(() => {
+        const activeItem = groupTabs.current?.querySelector<HTMLDivElement>(
+            `.${tabItemActiveClassName}`
+        );
+        if (activeItem) {
+            const width = groupTabs.current?.clientWidth || 0;
+            const left = activeItem.offsetLeft;
+            if (left > width) {
+                scrollable.current?.scrollTo(left, 0);
+            }
+        }
+    }, [currentGroup?.id && currentGroup.tab?.id]);
+
     return (
         <div className={groupClassName}>
             <div className={groupHeaderClassName}>
-                <div className={groupTabsClassName}>
-                    <Scrollable noScrollY trackStyle={{ height: 3 }}>
+                <div className={groupTabsClassName} ref={groupTabs}>
+                    <Scrollable
+                        noScrollY
+                        trackStyle={{ height: 3 }}
+                        ref={scrollable}
+                    >
                         <Tabs
                             editable={true}
                             type="card"

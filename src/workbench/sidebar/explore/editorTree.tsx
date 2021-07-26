@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { IEditorTreeController } from 'mo/controller';
 import {
     EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
@@ -31,7 +31,12 @@ import {
 import { classNames } from 'mo/common/className';
 import { getEventPosition } from 'mo/common/dom';
 import { localize } from 'mo/i18n/localize';
-import { DataBaseProps } from 'mo/components/collapse';
+import {
+    DataBaseProps,
+    HEADER_HEIGTH,
+    MAX_GROW_HEIGHT,
+} from 'mo/components/collapse';
+import Scrollbar from 'react-scrollbars-custom';
 
 // override onContextMenu
 type UnionEditor = Omit<IEditor & IEditorTreeController, 'onContextMenu'>;
@@ -73,6 +78,24 @@ const EditorTree = (props: IOpenEditProps) => {
         onCloseGroup,
         onClose,
     } = props;
+
+    const wrapper = useRef<HTMLDivElement>(null);
+    const scrollable = useRef<Scrollbar>(null);
+
+    // scroll into view
+    useLayoutEffect(() => {
+        const scrollHeight = scrollable.current?.scrollHeight || 0;
+        if (scrollHeight > MAX_GROW_HEIGHT - HEADER_HEIGTH) {
+            const activeItem = wrapper.current?.querySelector<HTMLDivElement>(
+                `.${editorTreeActiveItemClassName}`
+            );
+            if (activeItem) {
+                const top = activeItem.offsetTop;
+                scrollable.current?.scrollTo(0, top);
+            }
+        }
+    }, [current?.id && current.tab?.id]);
+
     if (!groups || !groups.length) return null;
 
     const contextView = useContextView();
@@ -154,8 +177,12 @@ const EditorTree = (props: IOpenEditProps) => {
     };
 
     return (
-        <Scrollable noScrollX isShowShadow>
-            <div className={editorTreeClassName} data-content={panel.id}>
+        <Scrollable noScrollX isShowShadow ref={scrollable}>
+            <div
+                className={editorTreeClassName}
+                ref={wrapper}
+                data-content={panel.id}
+            >
                 {groups.map((group, index) => {
                     return (
                         <React.Fragment key={index}>

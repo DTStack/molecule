@@ -20,6 +20,12 @@ import {
     folderTreeInputClassName,
 } from './base';
 import { classNames } from 'mo/common/className';
+import { Scrollable } from 'mo/components';
+import { DataBaseProps } from 'mo/components/collapse';
+
+interface IFolderTreeProps extends FolderTreeController, IFolderTree {
+    panel: DataBaseProps;
+}
 
 const detectHasEditableStatus = (data) => {
     const stack = [...data];
@@ -66,12 +72,11 @@ const Input = React.forwardRef(
     }
 );
 
-const FolderTree: React.FunctionComponent<
-    FolderTreeController & IFolderTree
-> = (props) => {
+const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     const {
         folderTree = {},
         entry,
+        panel,
         onUpdateFileName,
         onSelectFile,
         onDropTree,
@@ -214,19 +219,23 @@ const FolderTree: React.FunctionComponent<
     }, [data.length]);
 
     return (
-        <Tree
-            // root folder do not render
-            data={data[0]?.children || []}
-            className={classNames(
-                folderTreeClassName,
-                hasEditable && folderTreeEditClassName
-            )}
-            draggable={!hasEditable}
-            onSelectNode={onSelectFile}
-            onRightClick={handleRightClick}
-            renderTitle={renderTitle}
-            {...restProps}
-        />
+        <Scrollable noScrollX isShowShadow>
+            <div data-content={panel.id}>
+                <Tree
+                    // root folder do not render
+                    data={data[0]?.children || []}
+                    className={classNames(
+                        folderTreeClassName,
+                        hasEditable && folderTreeEditClassName
+                    )}
+                    draggable={!hasEditable}
+                    onSelectNode={onSelectFile}
+                    onRightClick={handleRightClick}
+                    renderTitle={renderTitle}
+                    {...restProps}
+                />
+            </div>
+        </Scrollable>
     );
 };
 export default memo(FolderTree);

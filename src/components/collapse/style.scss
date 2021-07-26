@@ -33,10 +33,6 @@ $collapse__extra: #{$collapse}__extra;
         }
     }
 
-    &--active {
-        overflow: auto;
-    }
-
     &__header {
         align-items: center;
         border: 1px solid transparent;
@@ -72,6 +68,7 @@ $collapse__extra: #{$collapse}__extra;
 
     &__content {
         border: 1px solid transparent;
+        flex: 1;
         width: calc(100% - 3px);
 
         &:focus {

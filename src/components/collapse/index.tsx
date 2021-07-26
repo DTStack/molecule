@@ -13,11 +13,10 @@ import {
     collapseExtraClassName,
     collapseContentClassName,
 } from './base';
-import { Scrollable } from '../scrollable';
 import { select } from 'mo/common/dom';
 
 type RenderFunctionProps = (data: DataBaseProps) => React.ReactNode;
-interface DataBaseProps {
+export interface DataBaseProps {
     id: React.Key;
     name: string;
     className?: string;
@@ -100,7 +99,8 @@ export function Collapse(props: ICollapseProps) {
             if (isActive) {
                 const contentDom = select(
                     `.${collapseContentClassName}[data-content='${panel.id}']`
-                );
+                )?.querySelector(`[data-content='${panel.id}']`);
+
                 isEmpty = !contentDom?.hasChildNodes();
             }
             panel._isEmpty = isEmpty;
@@ -120,9 +120,10 @@ export function Collapse(props: ICollapseProps) {
             // Only set content height for non-grow-zero panel
             // 'Cause when you set height for grow-zero panel, you'll get wrong height next render time
             if (panel.config?.grow !== 0) {
-                const contentDom = select<HTMLElement>(
+                const contentDom = select(
                     `.${collapseContentClassName}[data-content='${panel.id}']`
-                );
+                )?.querySelector<HTMLElement>(`[data-content='${panel.id}']`);
+
                 if (contentDom) {
                     contentDom.style.height = `${height - HEADER_HEIGTH - 2}px`;
                 }
@@ -199,15 +200,19 @@ export function Collapse(props: ICollapseProps) {
             const contentDom = select(
                 `.${collapseContentClassName}[data-content='${key}']`
             );
-            if (contentDom) {
-                // border-top-width + border-bottom-width = 2
-                const basisHeight =
-                    contentDom.getBoundingClientRect().height -
-                    2 +
-                    HEADER_HEIGTH;
-                return basisHeight > 220 ? 220 : basisHeight;
+
+            const childrenDom = contentDom?.querySelector(
+                `[data-content='${key}']`
+            );
+
+            let contentHeight = contentDom?.getBoundingClientRect().height || 0;
+
+            if (childrenDom) {
+                contentHeight = childrenDom.getBoundingClientRect().height;
             }
-            return 0;
+
+            // border-top-width + border-bottom-width = 2
+            return parseInt(contentHeight.toFixed(0)) - 2 + HEADER_HEIGTH;
         });
     };
 
@@ -235,7 +240,8 @@ export function Collapse(props: ICollapseProps) {
                 // to get current panel content
                 const contentDom = select(
                     `.${collapseContentClassName}[data-content='${panel.id}']`
-                );
+                )?.querySelector(`[data-content='${panel.id}']`);
+
                 if (contentDom) {
                     const height =
                         contentDom.getBoundingClientRect().height +
@@ -282,7 +288,7 @@ export function Collapse(props: ICollapseProps) {
                         // In general, the following code will not be excuted
                         const contentDom = select(
                             `.${collapseContentClassName}[data-content='${panel.id}']`
-                        );
+                        )?.querySelector(`[data-content='${panel.id}']`);
                         return contentDom?.hasChildNodes();
                     }
                     return false;
@@ -375,15 +381,13 @@ export function Collapse(props: ICollapseProps) {
                                     )}
                                 </div>
                             </div>
-                            <Scrollable noScrollX isShowShadow>
-                                <div
-                                    className={collapseContentClassName}
-                                    data-content={panel.id}
-                                    tabIndex={0}
-                                >
-                                    {renderPanels(panel, panel.renderPanel)}
-                                </div>
-                            </Scrollable>
+                            <div
+                                className={collapseContentClassName}
+                                data-content={panel.id}
+                                tabIndex={0}
+                            >
+                                {renderPanels(panel, panel.renderPanel)}
+                            </div>
                         </div>
                     );
                 })}

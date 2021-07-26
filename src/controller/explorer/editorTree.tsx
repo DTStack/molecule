@@ -65,8 +65,9 @@ export class EditorTreeController
 
         this.explorerService.addPanel({
             ...restEditor,
-            renderPanel: () => (
+            renderPanel: (panel) => (
                 <EditorTreeView
+                    panel={panel}
                     contextMenu={contextMenu}
                     headerContextMenu={headerContextMenu}
                     groupToolbar={groupToolbar}

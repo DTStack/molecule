@@ -13,6 +13,7 @@ import {
     IMenuItemProps,
     ITabProps,
     Menu,
+    Scrollable,
     Toolbar,
     useContextView,
 } from 'mo/components';
@@ -30,6 +31,7 @@ import {
 import { classNames } from 'mo/common/className';
 import { getEventPosition } from 'mo/common/dom';
 import { localize } from 'mo/i18n/localize';
+import { DataBaseProps } from 'mo/components/collapse';
 
 // override onContextMenu
 type UnionEditor = Omit<IEditor & IEditorTreeController, 'onContextMenu'>;
@@ -53,6 +55,7 @@ export interface IOpenEditProps extends UnionEditor {
         groupId: number,
         file?: ITabProps
     ) => void;
+    panel: DataBaseProps;
 }
 
 const EditorTree = (props: IOpenEditProps) => {
@@ -62,6 +65,7 @@ const EditorTree = (props: IOpenEditProps) => {
         groupToolbar,
         contextMenu = [],
         headerContextMenu,
+        panel,
         getFileIconByExtensionName,
         onSelect,
         onSaveGroup,
@@ -150,84 +154,100 @@ const EditorTree = (props: IOpenEditProps) => {
     };
 
     return (
-        <div className={editorTreeClassName}>
-            {groups.map((group, index) => {
-                return (
-                    <React.Fragment key={index}>
-                        {groups.length !== 1 && (
-                            <div
-                                className={editorTreeGroupClassName}
-                                onClick={(e) => handleGroupClick(e, group)}
-                                onContextMenu={(e) =>
-                                    handleHeaderRightClick(e, group)
-                                }
-                                key={index}
-                            >
-                                {localize(
-                                    'sidebar.explore.openEditor.group',
-                                    'Group',
-                                    (index + 1).toString()
-                                )}
-                                {groupToolbar && (
-                                    <Toolbar
-                                        data={groupToolbar}
-                                        onClick={(e, item) =>
-                                            handleToolBarClick(e, item, group)
-                                        }
-                                    />
-                                )}
-                            </div>
-                        )}
-                        {group.data?.map((file) => {
-                            const isActive =
-                                group.id === current?.id &&
-                                file.id === current?.tab?.id;
-                            return (
+        <Scrollable noScrollX isShowShadow>
+            <div className={editorTreeClassName} data-content={panel.id}>
+                {groups.map((group, index) => {
+                    return (
+                        <React.Fragment key={index}>
+                            {groups.length !== 1 && (
                                 <div
-                                    title={`${file.data.path}/${file.name}`}
-                                    className={classNames(
-                                        editorTreeItemClassName,
-                                        isActive &&
-                                            editorTreeActiveItemClassName
-                                    )}
-                                    tabIndex={0}
-                                    key={`${index}_${file.id}`}
-                                    onClick={() => handleItemClick(group, file)}
+                                    className={editorTreeGroupClassName}
+                                    onClick={(e) => handleGroupClick(e, group)}
                                     onContextMenu={(e) =>
-                                        handleRightClick(e, group, file)
+                                        handleHeaderRightClick(e, group)
                                     }
+                                    key={index}
                                 >
-                                    <Icon
-                                        className={editorTreeCloseIconClassName}
-                                        onClick={() =>
-                                            handleCloseClick(group, file)
-                                        }
-                                        type="close"
-                                    />
-                                    <Icon
-                                        className={editorTreeFileIconClassName}
-                                        type={getFileIconByExtensionName(
-                                            file.name!,
-                                            FileTypes.File
-                                        )}
-                                    />
-                                    <span
-                                        className={editorTreeFileNameClassName}
-                                    >
-                                        {file.name}
-                                    </span>
-                                    <span
-                                        className={editorTreeFilePathClassName}
-                                    >
-                                        {file.data.path}
-                                    </span>
+                                    {localize(
+                                        'sidebar.explore.openEditor.group',
+                                        'Group',
+                                        (index + 1).toString()
+                                    )}
+                                    {groupToolbar && (
+                                        <Toolbar
+                                            data={groupToolbar}
+                                            onClick={(e, item) =>
+                                                handleToolBarClick(
+                                                    e,
+                                                    item,
+                                                    group
+                                                )
+                                            }
+                                        />
+                                    )}
                                 </div>
-                            );
-                        })}
-                    </React.Fragment>
-                );
-            })}
-        </div>
+                            )}
+                            {group.data?.map((file) => {
+                                const isActive =
+                                    group.id === current?.id &&
+                                    file.id === current?.tab?.id;
+                                return (
+                                    <div
+                                        title={`${file.data.path}/${file.name}`}
+                                        className={classNames(
+                                            editorTreeItemClassName,
+                                            isActive &&
+                                                editorTreeActiveItemClassName
+                                        )}
+                                        tabIndex={0}
+                                        key={`${index}_${file.id}`}
+                                        onClick={() =>
+                                            handleItemClick(group, file)
+                                        }
+                                        onContextMenu={(e) =>
+                                            handleRightClick(e, group, file)
+                                        }
+                                    >
+                                        <Icon
+                                            className={
+                                                editorTreeCloseIconClassName
+                                            }
+                                            onClick={() =>
+                                                handleCloseClick(group, file)
+                                            }
+                                            type="close"
+                                        />
+                                        <Icon
+                                            className={
+                                                editorTreeFileIconClassName
+                                            }
+                                            type={getFileIconByExtensionName(
+                                                file.name!,
+                                                FileTypes.File
+                                            )}
+                                        />
+                                        <span
+                                            className={
+                                                editorTreeFileNameClassName
+                                            }
+                                        >
+                                            {file.name}
+                                        </span>
+                                        <span
+                                            className={
+                                                editorTreeFilePathClassName
+                                            }
+                                        >
+                                            {file.data.path}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </React.Fragment>
+                    );
+                })}
+            </div>
+        </Scrollable>
     );
 };
 

@@ -1,0 +1,12 @@
+/.vscode/
+/src/
+/test/
+/stories/
+/.npmignore
+/.prettierrc.json
+/.prettierignore
+/.editorconfig
+/.history
+/mock
+/build
+/node_modules

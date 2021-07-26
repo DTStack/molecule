@@ -31,6 +31,7 @@ Unify the Service methods basic prefix naming:
 -   find, prefix for Find sth.
 -   move, prefix for Move sth.
 -   append, prefix for Append sth.
+-   toggle, prefix for Toggle sth.
 
 ## Git Work flow
 

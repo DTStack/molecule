@@ -16,7 +16,10 @@ const defaultSrollableClassName = prefixClaName('scrollbar');
  * the below implementation from this issue:
  * https://github.com/xobotyi/react-scrollbars-custom/issues/46
  */
-export function Scrollable(props: IScrollbarProps) {
+const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
+    props,
+    ref
+) {
     const {
         className,
         children,
@@ -25,6 +28,8 @@ export function Scrollable(props: IScrollbarProps) {
         ...custom
     } = props;
     const scroller = React.useRef<Scrollbar>(null);
+
+    React.useImperativeHandle(ref, () => scroller.current!);
 
     const [isScrolling, setIsScrolling] = useState(false);
     const [isMouseOver, setIsMouseOver] = useState(false);
@@ -105,4 +110,6 @@ export function Scrollable(props: IScrollbarProps) {
             {children}
         </Scrollbar>
     );
-}
+});
+
+export { Scrollable };

@@ -2,15 +2,39 @@
 
 ## Development
 
+Start to development
+
 ```bash
-# install dependencies
-yarn
+yarn # install dependencies
+
 yarn dev
 ```
 
-## Tutorials
+Running a web preview version:
 
-## Extension
+```bash
+yarn build
+yarn web
+```
+
+## Naming
+
+Unify the Service methods basic prefix naming:
+
+-   add, prefix for Add sth.
+-   remove, prefix for Remove sth.
+-   update, prefix for Update sth.
+-   get, prefix for Get sth.
+-   set, prefix for Set sth.
+-   create, perfix for create sth.
+-   on, prefix for listen to the event.
+-   find, prefix for Find sth.
+-   move, prefix for Move sth.
+-   append, prefix for Append sth.
+
+## Git Work flow
+
+[Branch-based Workflow](https://guides.github.com/introduction/flow/)
 
 ### Reference
 

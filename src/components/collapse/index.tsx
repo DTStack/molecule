@@ -13,11 +13,10 @@ import {
     collapseExtraClassName,
     collapseContentClassName,
 } from './base';
-import { Scrollable } from '../scrollable';
 import { select } from 'mo/common/dom';
 
 type RenderFunctionProps = (data: DataBaseProps) => React.ReactNode;
-interface DataBaseProps {
+export interface DataBaseProps {
     id: React.Key;
     name: string;
     className?: string;
@@ -50,15 +49,16 @@ export interface ICollapseProps {
 }
 
 // default collapse height, only contains header
-const HEADER_HEIGTH = 26;
+export const HEADER_HEIGTH = 26;
 /**
  * It's the max height for the item which set the grow to 0
  */
-const MAX_GROW_HEIGHT = 220;
+export const MAX_GROW_HEIGHT = 220;
 
 export function Collapse(props: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] = useState<React.Key[]>([]);
     const wrapper = React.useRef<HTMLDivElement>(null);
+    const requestAF = React.useRef<number>();
 
     const {
         className,
@@ -98,9 +98,14 @@ export function Collapse(props: ICollapseProps) {
             const isActive = activePanelKeys.includes(panel.id);
             let isEmpty = true;
             if (isActive) {
-                const contentDom = select(
-                    `.${collapseContentClassName}[data-content='${panel.id}']`
-                );
+                const contentDom =
+                    select(
+                        `.${collapseContentClassName}[data-content='${panel.id}']`
+                    )?.querySelector(`[data-content='${panel.id}']`) ||
+                    select(
+                        `.${collapseContentClassName}[data-content='${panel.id}']`
+                    );
+
                 isEmpty = !contentDom?.hasChildNodes();
             }
             panel._isEmpty = isEmpty;
@@ -117,21 +122,20 @@ export function Collapse(props: ICollapseProps) {
                 `.${collapseItemClassName}[data-content='${panel.id}']`
             );
 
-            // Only set content height for non-grow-zero panel
-            // 'Cause when you set height for grow-zero panel, you'll get wrong height next render time
-            if (panel.config?.grow !== 0) {
-                const contentDom = select<HTMLElement>(
-                    `.${collapseContentClassName}[data-content='${panel.id}']`
-                );
-                if (contentDom) {
-                    contentDom.style.height = `${height - HEADER_HEIGTH - 2}px`;
-                }
-            }
             if (dom) {
-                dom.style.height = `${height}px`;
-                dom.style.top = `${top}px`;
+                requestAF.current = requestAnimationFrame(() => {
+                    dom.style.height = `${height}px`;
+                    dom.style.top = `${top}px`;
+                });
             }
         });
+
+        return () => {
+            if (requestAF.current) {
+                cancelAnimationFrame(requestAF.current);
+                requestAF.current = undefined;
+            }
+        };
     }, [filterData]);
 
     const handleChangeCallback = (key: React.Key) => {
@@ -199,15 +203,22 @@ export function Collapse(props: ICollapseProps) {
             const contentDom = select(
                 `.${collapseContentClassName}[data-content='${key}']`
             );
-            if (contentDom) {
-                // border-top-width + border-bottom-width = 2
-                const basisHeight =
-                    contentDom.getBoundingClientRect().height -
-                    2 +
-                    HEADER_HEIGTH;
-                return basisHeight > 220 ? 220 : basisHeight;
+
+            const childrenDom = contentDom?.querySelector(
+                `[data-content='${key}']`
+            );
+
+            let contentHeight = contentDom?.getBoundingClientRect().height || 0;
+
+            if (childrenDom) {
+                contentHeight = childrenDom.getBoundingClientRect().height;
             }
-            return 0;
+
+            // border-top-width + border-bottom-width = 2
+            const height =
+                parseInt(contentHeight.toFixed(0)) - 2 + HEADER_HEIGTH;
+
+            return height > MAX_GROW_HEIGHT ? MAX_GROW_HEIGHT : height;
         });
     };
 
@@ -235,10 +246,12 @@ export function Collapse(props: ICollapseProps) {
                 // to get current panel content
                 const contentDom = select(
                     `.${collapseContentClassName}[data-content='${panel.id}']`
-                );
+                )?.querySelector(`[data-content='${panel.id}']`);
+
                 if (contentDom) {
                     const height =
                         contentDom.getBoundingClientRect().height +
+                        2 +
                         HEADER_HEIGTH;
                     res[0] =
                         height > MAX_GROW_HEIGHT ? MAX_GROW_HEIGHT : height;
@@ -282,7 +295,7 @@ export function Collapse(props: ICollapseProps) {
                         // In general, the following code will not be excuted
                         const contentDom = select(
                             `.${collapseContentClassName}[data-content='${panel.id}']`
-                        );
+                        )?.querySelector(`[data-content='${panel.id}']`);
                         return contentDom?.hasChildNodes();
                     }
                     return false;
@@ -375,15 +388,13 @@ export function Collapse(props: ICollapseProps) {
                                     )}
                                 </div>
                             </div>
-                            <Scrollable noScrollX isShowShadow>
-                                <div
-                                    className={collapseContentClassName}
-                                    data-content={panel.id}
-                                    tabIndex={0}
-                                >
-                                    {renderPanels(panel, panel.renderPanel)}
-                                </div>
-                            </Scrollable>
+                            <div
+                                className={collapseContentClassName}
+                                data-content={panel.id}
+                                tabIndex={0}
+                            >
+                                {renderPanels(panel, panel.renderPanel)}
+                            </div>
                         </div>
                     );
                 })}

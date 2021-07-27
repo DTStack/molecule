@@ -153,8 +153,8 @@ export class ExplorerController
         }
     };
 
-    public renderFolderTree = () => {
-        return <FolderTreeView />;
+    public renderFolderTree = (panel) => {
+        return <FolderTreeView panel={panel} />;
     };
 }
 

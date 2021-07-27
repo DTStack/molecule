@@ -1,7 +1,13 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
-import { IActivityBarItem, IMenuBarItem } from 'mo/model';
 import {
+    IActivityBarItem,
+    IMenuBarItem,
+    FileTypes,
+    FolderTreeEvent,
+} from 'mo/model';
+import {
+    MENU_FILE_CREATE,
     MENU_FILE_REDO,
     MENU_FILE_UNDO,
     MENU_VIEW_ACTIVITYBAR,
@@ -17,6 +23,7 @@ import {
     ILayoutService,
     MenuBarService,
     LayoutService,
+    FolderTreeService,
 } from 'mo/services';
 import { ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
@@ -40,6 +47,7 @@ export class MenuBarController
     private readonly menuBarService: IMenuBarService;
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
+    private readonly folderTreeService: FolderTreeService;
 
     constructor() {
         super();
@@ -47,11 +55,14 @@ export class MenuBarController
         this.menuBarService = container.resolve(MenuBarService);
         this.layoutService = container.resolve(LayoutService);
         this.monacoService = container.resolve(MonacoService);
+        this.folderTreeService = container.resolve(FolderTreeService);
     }
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
         const menuId = item.id;
         switch (menuId) {
+            case MENU_FILE_CREATE:
+                this.createFileOrFolder(FileTypes.File);
             case MENU_FILE_UNDO:
                 this.undo();
                 break;
@@ -74,6 +85,15 @@ export class MenuBarController
                 this.updatePanel();
                 break;
         }
+    };
+
+    public createFileOrFolder = (type: keyof typeof FileTypes) => {
+        const folderTreeState = this.folderTreeService.getState();
+        const { data, current } = folderTreeState?.folderTree || {};
+        // The current selected node id or the first root node
+        const nodeId = current?.id || data?.[0]?.id;
+        // emit onNewFile or onNewFolder event
+        this.emit(FolderTreeEvent[`onNew${type}`], nodeId);
     };
 
     public undo = () => {

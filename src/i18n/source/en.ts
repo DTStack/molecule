@@ -51,6 +51,7 @@ export default {
         'panel.output.title': 'output',
         'panel.toolbox.closePanel': 'Close Panel',
         'panel.toolbox.maximize': 'Maximize Panel Size',
+        'panel.toolbox.restoreSize': 'Restore Panel Size',
         'panel.problems.title': 'Problems',
         'panel.problems.empty':
             'No problems have been detected in the workspace.',

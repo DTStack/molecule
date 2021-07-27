@@ -67,6 +67,8 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         const resizeBtn = toolbox[resizeBtnIndex];
         if (resizeBtn) {
             if (panelMaximized) {
+                toolbox[resizeBtnIndex] = builtInPanelToolboxResize();
+            } else {
                 toolbox[resizeBtnIndex] = Object.assign({}, resizeBtn, {
                     title: localize(
                         PANEL_TOOLBOX_RESTORE_SIZE,
@@ -74,8 +76,6 @@ export class PanelService extends Component<IPanel> implements IPanelService {
                     ),
                     iconName: 'codicon-chevron-down',
                 });
-            } else {
-                toolbox[resizeBtnIndex] = builtInPanelToolboxResize();
             }
             this.layoutService.togglePanelMaximized();
         }

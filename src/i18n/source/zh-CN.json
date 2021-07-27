@@ -51,6 +51,7 @@
         "panel.problems.empty": "未在工作区检测到问题",
         "panel.toolbox.closePanel": "关闭面板",
         "panel.toolbox.maximize": "最大化面板",
+        "panel.toolbox.restoreSize": "恢复面板大小",
         "notification.title": "通知",
         "notification.title.no": "没有新通知",
         "editor.closeToRight": "关闭右边",

@@ -98,9 +98,13 @@ export function Collapse(props: ICollapseProps) {
             const isActive = activePanelKeys.includes(panel.id);
             let isEmpty = true;
             if (isActive) {
-                const contentDom = select(
-                    `.${collapseContentClassName}[data-content='${panel.id}']`
-                )?.querySelector(`[data-content='${panel.id}']`);
+                const contentDom =
+                    select(
+                        `.${collapseContentClassName}[data-content='${panel.id}']`
+                    )?.querySelector(`[data-content='${panel.id}']`) ||
+                    select(
+                        `.${collapseContentClassName}[data-content='${panel.id}']`
+                    );
 
                 isEmpty = !contentDom?.hasChildNodes();
             }
@@ -247,6 +251,7 @@ export function Collapse(props: ICollapseProps) {
                 if (contentDom) {
                     const height =
                         contentDom.getBoundingClientRect().height +
+                        2 +
                         HEADER_HEIGTH;
                     res[0] =
                         height > MAX_GROW_HEIGHT ? MAX_GROW_HEIGHT : height;

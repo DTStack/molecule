@@ -96,13 +96,16 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     const handleAddRootFolder = () => {
         onNewRootFolder?.();
     };
-
-    const welcomePage = entry ? (
-        <>{entry}</>
-    ) : (
-        <div style={{ padding: '10px 5px' }}>
-            you have not yet opened a folder
-            <Button onClick={handleAddRootFolder}>Add Folder</Button>
+    const welcomePage = (
+        <div data-content={panel.id}>
+            {entry ? (
+                <>{entry}</>
+            ) : (
+                <div style={{ padding: '10px 5px' }}>
+                    you have not yet opened a folder
+                    <Button onClick={handleAddRootFolder}>Add Folder</Button>
+                </div>
+            )}
         </div>
     );
 

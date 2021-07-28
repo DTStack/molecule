@@ -46,7 +46,6 @@ export interface IExplorerService extends Component<IExplorer> {
      * @param id action id
      */
     removeAction(id: React.Key): void;
-    updateRender(): void;
     /**
      * Listen to the Explorer header toolbar click event
      * @param callback
@@ -229,10 +228,6 @@ export class ExplorerService
                 headerToolBar: next,
             });
         }
-    }
-
-    public updateRender() {
-        this.render();
     }
 
     public reset() {

@@ -208,7 +208,7 @@ export class FolderTreeService
         this.setState({
             folderTree: { ...folderTree, data: next },
         });
-        this.explorerService.updateRender();
+        this.explorerService.render();
     }
 
     public setActive(id: number) {

@@ -68,7 +68,7 @@ export const ExtendsFolderTree: IExtension = {
                 } else {
                     molecule.editor.open(tabData);
                 }
-                molecule.explorer.updateRender();
+                molecule.explorer.render();
             }
         );
 

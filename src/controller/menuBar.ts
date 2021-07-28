@@ -10,6 +10,9 @@ import {
     MENU_FILE_CREATE,
     MENU_FILE_REDO,
     MENU_FILE_UNDO,
+    MENU_SELECT_ALL,
+    MENU_COPY_LINE_UP,
+    MENU_QUICK_COMMAND,
     MENU_VIEW_ACTIVITYBAR,
     MENU_VIEW_MENUBAR,
     MENU_VIEW_PANEL,
@@ -28,6 +31,7 @@ import {
 import { ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
+import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 
 export interface IMenuBarController {
@@ -69,6 +73,11 @@ export class MenuBarController
             case MENU_FILE_REDO:
                 this.redo();
                 break;
+            case MENU_SELECT_ALL:
+                this.selectAll();
+                break;
+            case MENU_COPY_LINE_UP:
+                this.copyLineUp();
             case MENU_VIEW_ACTIVITYBAR:
                 this.updateActivityBar();
                 break;
@@ -77,6 +86,9 @@ export class MenuBarController
                 break;
             case MENU_VIEW_STATUSBAR:
                 this.updateStatusBar();
+                break;
+            case MENU_QUICK_COMMAND:
+                this.gotoQuickCommand();
                 break;
             case ID_SIDE_BAR:
                 this.updateSideBar();
@@ -96,12 +108,22 @@ export class MenuBarController
         this.emit(FolderTreeEvent[`onNew${type}`], nodeId);
     };
 
+    public selectAll = () => {
+        this.editorService.editorInstance?.getAction('selectAll').run();
+    };
+
     public undo = () => {
         this.editorService.editorInstance?.getAction('undo').run();
     };
 
     public redo = () => {
         this.editorService.editorInstance?.getAction('redo').run();
+    };
+
+    public gotoQuickCommand = () => {
+        this.monacoService.commandService.executeCommand(
+            CommandQuickAccessViewAction.ID
+        );
     };
 
     public updateActivityBar = () => {
@@ -112,6 +134,12 @@ export class MenuBarController
         this.menuBarService.update(MENU_VIEW_ACTIVITYBAR, {
             icon: hidden ? '' : 'check',
         });
+    };
+
+    public copyLineUp = () => {
+        this.editorService.editorInstance
+            ?.getAction('editor.action.copyLinesUpAction')
+            .run();
     };
 
     public updateMenuBar = () => {

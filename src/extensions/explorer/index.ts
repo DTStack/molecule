@@ -3,8 +3,8 @@ import { IExtension } from 'mo/model/extension';
 
 export const ExtendsExplorer: IExtension = {
     activate() {
-        molecule.explorer.onDeletePanel((panel) => {
-            molecule.explorer.deletePanel(panel.id);
+        molecule.explorer.onRemovePanel((panel) => {
+            molecule.explorer.removePanel(panel.id);
         });
     },
 };

@@ -188,7 +188,7 @@ export class FolderTreeService
             folderTree: { ...folderTree, data: [folder] },
         });
         const { data = [] } = this.explorerService.getState();
-        this.explorerService.editPanel(
+        this.explorerService.updatePanel(
             data.map((item) => {
                 if (item.id === SAMPLE_FOLDER_PANEL_ID) {
                     item.name = folder.name || 'Default Root Folder';

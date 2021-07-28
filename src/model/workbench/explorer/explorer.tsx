@@ -7,7 +7,7 @@ export enum ExplorerEvent {
     onClick = 'explorer.onClick',
     onPanelToolbarClick = 'explorer.onPanelToolbarClick',
     onCollapseChange = 'explorer.onCollapseChange',
-    onDeletePanel = 'explorer.onDeletePanel',
+    onRemovePanel = 'explorer.onRemovePanel',
 }
 
 export type RenderFunctionProps = (props) => React.ReactNode;

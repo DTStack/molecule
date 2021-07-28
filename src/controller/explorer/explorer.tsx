@@ -129,7 +129,7 @@ export class ExplorerController
                 break;
             }
             case REMOVE_COMMAND_ID: {
-                this.emit(ExplorerEvent.onDeletePanel, parentPanel);
+                this.emit(ExplorerEvent.onRemovePanel, parentPanel);
                 break;
             }
             case EXPLORER_TOGGLE_CLOSE_ALL_EDITORS: {

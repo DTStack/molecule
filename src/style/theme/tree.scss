@@ -29,9 +29,14 @@
     }
 
     .rc-tree-treenode-selected {
-        background: var(--button-background);
+        background: var(--list-activeSelectionBackground);
+        border-color: var(--list-focusOutline);
 
         .rc-tree-node-content-wrapper {
+            color: var(--list-activeSelectionForeground);
+        }
+
+        .rc-tree-switcher {
             color: var(--list-activeSelectionForeground);
         }
     }

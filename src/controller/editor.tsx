@@ -14,7 +14,12 @@ import {
     EDITOR_MENU_SHOW_OPENEDITORS,
     EDITOR_MENU_SPILIT,
 } from 'mo/model/workbench/editor';
-import { undoRedoMenu } from 'mo/model/workbench/menuBar';
+import {
+    MENU_FILE_UNDO,
+    MENU_FILE_REDO,
+    MENU_SELECT_ALL,
+    menuActionRegistrar,
+} from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 
 import { IMenuItemProps } from 'mo/components/menu';
@@ -63,6 +68,14 @@ export class EditorController extends Controller implements IEditorController {
     private readonly editorService: IEditorService;
     private readonly statusBarService: IStatusBarService;
     private readonly explorerService: IExplorerService;
+    private _actionAutomaton = {
+        [MENU_FILE_UNDO]: (editorInstance: IStandaloneCodeEditor, id: string) =>
+            this.actionForUndoOrReDo(editorInstance, id),
+        [MENU_FILE_REDO]: (editorInstance: IStandaloneCodeEditor, id: string) =>
+            this.actionForUndoOrReDo(editorInstance, id),
+        [MENU_SELECT_ALL]: (editorInstance: IStandaloneCodeEditor) =>
+            this.actionSelectAll(editorInstance),
+    };
 
     constructor() {
         super();
@@ -178,18 +191,30 @@ export class EditorController extends Controller implements IEditorController {
         );
     };
 
-    // TODO: Remove the below action register ?, because of the monaco Editor have integrated the undo/redo action
-    private registerActions = (editorInstance) => {
-        undoRedoMenu.forEach(({ id, label }) => {
+    private actionForUndoOrReDo = (
+        editorInstance: IStandaloneCodeEditor,
+        id: string
+    ) => {
+        editorInstance!.focus();
+        if (!document.execCommand(id)) {
+            editorInstance?.getModel()?.[id]();
+        }
+    };
+
+    private actionSelectAll = (editorInstance: IStandaloneCodeEditor) => {
+        editorInstance!.focus();
+        editorInstance.setSelection(
+            editorInstance!.getModel()!.getFullModelRange()
+        );
+    };
+
+    // Register actions not included in monaco actions
+    private registerActions = (editorInstance: IStandaloneCodeEditor) => {
+        menuActionRegistrar.forEach(({ id, label }) => {
             editorInstance?.addAction({
                 id,
                 label,
-                run: () => {
-                    editorInstance!.focus();
-                    if (!document.execCommand(id)) {
-                        editorInstance?.getModel()?.[id]();
-                    }
-                },
+                run: () => this._actionAutomaton[id](editorInstance, id),
             });
         });
     };

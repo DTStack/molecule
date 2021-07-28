@@ -45,6 +45,32 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         horizontalSplitPanePos,
     } = props;
 
+    const getContent = (panelMaximized: boolean, panelHidden: boolean) => {
+        const editor = (
+            <Pane
+                initialSize={panelHidden ? '100%' : horizontalSplitPanePos[0]}
+                maxSize="100%"
+                minSize="10%"
+            >
+                <EditorView />
+            </Pane>
+        );
+
+        const panel = (
+            <Pane>
+                <PanelView />
+            </Pane>
+        );
+
+        if (panelHidden) {
+            return editor;
+        }
+        if (panelMaximized) {
+            return panel;
+        }
+        return [editor, panel];
+    };
+
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
             <div className={workbenchClassName}>
@@ -75,24 +101,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                             // react-split-pane onChange: (newSizes: [size, ratio]) => void；
                             onChange={onHorizontalPaneSizeChange as any}
                         >
-                            {!panel.panelMaximized ? (
-                                <Pane
-                                    initialSize={
-                                        panel.hidden
-                                            ? '100%'
-                                            : horizontalSplitPanePos[0]
-                                    }
-                                    maxSize="100%"
-                                    minSize="10%"
-                                >
-                                    <EditorView />
-                                </Pane>
-                            ) : null}
-                            {!panel.hidden ? (
-                                <Pane>
-                                    <PanelView />
-                                </Pane>
-                            ) : null}
+                            {getContent(!!panel.panelMaximized, !!panel.hidden)}
                         </SplitPane>
                     </SplitPane>
                 </div>

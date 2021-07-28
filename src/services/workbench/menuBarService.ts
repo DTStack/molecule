@@ -10,10 +10,32 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 
 export interface IMenuBarService extends Component<IMenuBar> {
+    /**
+     * Initialize the MenuBar state
+     * @param data
+     */
     initMenus(data: IMenuBarItem[]): void;
+    /**
+     * Add a new menu item
+     * @param menuItem menu item data
+     * @param parentId parent menu item id
+     */
     add(menuItem: IMenuBarItem, parentId: string): void;
+    /**
+     * Remove the specific menu item
+     * @param menuId
+     */
     remove(menuId: string): void;
+    /**
+     * Get the specific menu item
+     * @param menuId
+     */
     getMenuById(menuId: string): IMenuBarItem;
+    /**
+     * Update the specific menu item data
+     * @param menuId
+     * @param menuItem
+     */
     update(menuId: string, menuItem: IMenuBarItem): void;
 }
 @singleton()

@@ -10,11 +10,9 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 
 export interface IMenuBarService extends Component<IMenuBar> {
-    initMenu(data: IMenuBarItem[]): void;
-    addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void;
+    initMenus(data: IMenuBarItem[]): void;
     add(menuItem: IMenuBarItem, parentId: string): void;
     remove(menuId: string): void;
-    getState(): IMenuBar;
     getMenuById(menuId: string): IMenuBarItem;
     update(menuId: string, menuItem: IMenuBarItem): void;
 }
@@ -29,7 +27,7 @@ export class MenuBarService
         this.state = container.resolve(MenuBarModel);
     }
 
-    public initMenu = (menuData: IMenuBarItem[]) => {
+    public initMenus = (menuData: IMenuBarItem[]) => {
         this.setState({
             data: menuData,
         });
@@ -131,18 +129,5 @@ export class MenuBarService
                 }
             }
         }
-    }
-
-    public addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void {
-        const { data } = this.state;
-        let next = cloneDeep(data);
-        if (Array.isArray(menu)) {
-            next = next?.concat(menu);
-        } else {
-            next?.push(menu);
-        }
-        this.setState({
-            data: next,
-        });
     }
 }

@@ -14,37 +14,52 @@ import React from 'react';
 
 export interface IExplorerService extends Component<IExplorer> {
     /**
-     * Edit panels data, as well as modify toolbar data
+     * Reset the ExplorerService state, it's mainly for customizing the Explorer
      */
-    editPanel(data: IExplorerPanelItem[]): void;
-    /**
-     * add a new panel, as well as add a new data for toolbar data
-     */
-    addPanel(panel: IExplorerPanelItem | IExplorerPanelItem[]): void;
     reset(): void;
     /**
-     * Delete a panel via id, as well as delete corresponding action bar
+     * Update the panels data, as well as modify toolbar data
      */
-    deletePanel(id: React.Key): void;
+    updatePanel(data: IExplorerPanelItem[]): void;
     /**
-     * toggle panel hidden, as well as toggle the toolbar status
+     * Add a new panel, as well as add a new data for toolbar data
+     */
+    addPanel(panel: IExplorerPanelItem | IExplorerPanelItem[]): void;
+    /**
+     * Remove a panel via id, as well as remove the corresponding action bar
+     */
+    removePanel(id: React.Key): void;
+    /**
+     * Toggle panel hidden, as well as toggle the toolbar status
      */
     togglePanel(id: React.Key): void;
     /**
-     * only toggle the toolbar status
+     * Only toggle the toolbar status
      */
     toggleHeaderBar(id: React.Key): void;
     /**
      * Only add an action in toolbar actions
      */
     addAction(action: IMenuItemProps): void;
+    /**
+     * Remove the specific header toolbar action
+     * @param id action id
+     */
     removeAction(id: React.Key): void;
-    updateRender(): void;
+    /**
+     * Listen to the Explorer header toolbar click event
+     * @param callback
+     */
     onClick(callback: (e: MouseEvent, item: IActionBarItemProps) => void);
     /**
-     * it execs when delete an explorer panel
+     * Listen to the Explorer panel remove event
+     * @param callback
      */
-    onDeletePanel(callback: (panel: IExplorerPanelItem) => void): void;
+    onRemovePanel(callback: (panel: IExplorerPanelItem) => void): void;
+    /**
+     * Listen to the Explorer panel toolbar click event
+     * @param callback
+     */
     onPanelToolbarClick(
         callback: (panel: IExplorerPanelItem, toolbarId: string) => void
     ): void;
@@ -64,7 +79,7 @@ export class ExplorerService
         return icon === 'check' ? '' : 'check';
     }
 
-    public editPanel(data: IExplorerPanelItem[]) {
+    public updatePanel(data: IExplorerPanelItem[]) {
         const next = data.concat();
         const contextMenu = this.state.headerToolBar?.contextMenu || [];
 
@@ -154,7 +169,7 @@ export class ExplorerService
         });
     }
 
-    public deletePanel(id: React.Key) {
+    public removePanel(id: React.Key) {
         const { data } = this.state;
         const next = [...data!];
         const index = next.findIndex(searchById(id));
@@ -215,10 +230,6 @@ export class ExplorerService
         }
     }
 
-    public updateRender() {
-        this.render();
-    }
-
     public reset() {
         this.setState({
             data: [],
@@ -235,8 +246,8 @@ export class ExplorerService
         this.subscribe(ExplorerEvent.onClick, callback);
     }
 
-    public onDeletePanel(callback: (panel: IExplorerPanelItem) => void) {
-        this.subscribe(ExplorerEvent.onDeletePanel, callback);
+    public onRemovePanel(callback: (panel: IExplorerPanelItem) => void) {
+        this.subscribe(ExplorerEvent.onRemovePanel, callback);
     }
 
     public onPanelToolbarClick(

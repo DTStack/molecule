@@ -85,7 +85,6 @@ export class ActivityBarController
         );
     };
 
-    // TODO: Menu 按钮是否提取至 activityBar 外
     public readonly onContextMenuClick = (
         e: React.MouseEvent,
         item: IMenuItemProps | undefined
@@ -95,17 +94,13 @@ export class ActivityBarController
             // activityBar contextMenu
             case CONTEXT_MENU_MENU: {
                 this.menuBarController.updateMenuBar!();
-                this.activityBarService.toggleContextMenuCheckStatus(
-                    contextMenuId
-                );
+                this.activityBarService.toggleContextMenuChecked(contextMenuId);
                 break;
             }
             case CONTEXT_MENU_EXPLORER:
             case CONTEXT_MENU_SEARCH: {
                 this.activityBarService.toggleBar(contextMenuId);
-                this.activityBarService.toggleContextMenuCheckStatus(
-                    contextMenuId
-                );
+                this.activityBarService.toggleContextMenuChecked(contextMenuId);
                 break;
             }
             case CONTEXT_MENU_HIDE: {

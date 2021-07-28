@@ -13,20 +13,44 @@ import logger from 'mo/common/logger';
 import { ISidebarService, SidebarService } from './sidebarService';
 
 export interface IActivityBarService extends Component<IActivityBar> {
+    /**
+     * Reset the activityBar state data,
+     * if you want to whole customize the activityBar, you can reset it first,
+     * and then using the activityBar.add() method to fill the data you need.
+     */
     reset(): void;
     /**
-     *
+     * Add IActivityBarItem data
      * @param isActive If provide, Activity Bar will set data active automatically. Only works in one data
      */
     add(data: IActivityBarItem | IActivityBarItem[], isActive?: boolean): void;
     /**
-     * set active bar
+     * Set active bar
      */
     setActive(id?: string): void;
+    /**
+     * Remove the specify activity bar by id
+     * @param id
+     */
     remove(id: string): void;
+    /**
+     * Toggle the specify activity bar between the display or hidden
+     * @param id activity bar id
+     */
     toggleBar(id: string): void;
-    toggleContextMenuCheckStatus(id: string): void;
-    addContextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]): void;
+    /**
+     * Toggle the contextMenu between checked or unchecked
+     * @param id contextmenu id
+     */
+    toggleContextMenuChecked(id: string): void;
+    /**
+     * Add new contextMenus for the activityBar
+     */
+    addContextMenu(data: IMenuItemProps | IMenuItemProps[]): void;
+    /**
+     * Remove the specify contextMenu item by id
+     * @param id contextmenu id
+     */
     removeContextMenu(id: string): void;
     /**
      * Add click event listener
@@ -113,7 +137,7 @@ export class ActivityBarService
         }
     }
 
-    public toggleContextMenuCheckStatus(id: string) {
+    public toggleContextMenuChecked(id: string) {
         const { contextMenu = [] } = this.state;
         const newActions = contextMenu.concat();
         const target = newActions.find(searchById(id));
@@ -123,7 +147,10 @@ export class ActivityBarService
                 contextMenu: newActions,
             });
         } else {
-            logger.error('toggle context menu failed, please check your id');
+            throw new Error(
+                'Toggle the contextmenu failed, can not found any menu by id' +
+                    id
+            );
         }
     }
 

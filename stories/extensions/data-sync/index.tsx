@@ -9,6 +9,6 @@ export const ExtendDataSync: IExtension = {
             name: '数据同步',
         };
         console.log('extend a new activity bar item:', newItem);
-        molecule.activityBar.addBar(newItem);
+        molecule.activityBar.add(newItem);
     },
 };

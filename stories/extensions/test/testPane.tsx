@@ -72,7 +72,7 @@ export default class TestPane extends React.Component {
     render() {
         const addABar = function () {
             const id = Math.random() * 10 + 1;
-            molecule.activityBar.addBar({
+            molecule.activityBar.add({
                 id: id + '',
                 name: 'folder' + id,
                 iconName: 'codicon-edit',

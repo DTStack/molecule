@@ -18,10 +18,7 @@ export interface IActivityBarService extends Component<IActivityBar> {
      *
      * @param isActive If provide, Activity Bar will set data active automatically. Only works in one data
      */
-    addBar(
-        data: IActivityBarItem | IActivityBarItem[],
-        isActive?: boolean
-    ): void;
+    add(data: IActivityBarItem | IActivityBarItem[], isActive?: boolean): void;
     /**
      * set active bar
      */
@@ -69,10 +66,7 @@ export class ActivityBarService
         });
     }
 
-    public addBar(
-        data: IActivityBarItem | IActivityBarItem[],
-        isActive = false
-    ) {
+    public add(data: IActivityBarItem | IActivityBarItem[], isActive = false) {
         let next = [...this.state.data!];
         if (Array.isArray(data)) {
             next = next?.concat(data);

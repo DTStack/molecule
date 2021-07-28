@@ -79,7 +79,7 @@ export class SearchController extends Controller implements ISearchController {
         });
 
         this.sidebarService.add(searchSidePane);
-        this.activityBarService.addBar(builtInSearchActivityItem());
+        this.activityBarService.add(builtInSearchActivityItem());
     }
 
     public validateValue = (

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { localize } from 'mo/i18n/localize';
 import { ID_SIDE_BAR } from 'mo/common/id';
-
 /**
  * The activity bar event definition
  */
@@ -23,8 +22,20 @@ export interface IMenuBar {
     data?: IMenuBarItem[];
 }
 
+/**
+ * menu preset action
+ */
+export const MENU_FILE_CREATE = 'newFile';
+export const MENU_FILE_OPEN = 'openFile'; // default encoding with utf-8 ?
+
 export const MENU_FILE_UNDO = 'undo';
 export const MENU_FILE_REDO = 'redo';
+
+export const MENU_SELECT_ALL = 'selectAll';
+export const MENU_COPY_LINE_UP = 'copyLineUp';
+
+export const MENU_QUICK_COMMAND = 'editor.action.quickCommand';
+
 export const MENU_VIEW_MENUBAR = 'workbench.action.showMenuBar';
 export const MENU_VIEW_ACTIVITYBAR = 'workbench.action.showActivityBar';
 export const MENU_VIEW_STATUSBAR = 'workbench.action.showStatusBar';
@@ -37,11 +48,11 @@ export function builtInMenuBarData() {
             name: localize('menu.file', 'File'),
             data: [
                 {
-                    id: 'New File',
+                    id: MENU_FILE_CREATE,
                     name: localize('menu.newFile', 'New File'),
                 },
                 {
-                    id: 'OpenFile',
+                    id: MENU_FILE_OPEN,
                     name: localize('menu.open', 'Open'),
                 },
             ],
@@ -65,11 +76,11 @@ export function builtInMenuBarData() {
             name: localize('menu.selection', 'Selection'),
             data: [
                 {
-                    id: 'SelectAll',
+                    id: MENU_SELECT_ALL,
                     name: localize('menu.selectAll', 'Select All'),
                 },
                 {
-                    id: 'CopyLineUp',
+                    id: MENU_COPY_LINE_UP,
                     name: localize('menu.copyLineUp', 'Copy Line Up'),
                 },
             ],
@@ -79,7 +90,7 @@ export function builtInMenuBarData() {
             name: localize('menu.view', 'View'),
             data: [
                 {
-                    id: 'Command Palette',
+                    id: MENU_QUICK_COMMAND,
                     name: localize('menu.commandPalette', 'Command Palette'),
                 },
                 {
@@ -148,7 +159,7 @@ export function builtInMenuBarData() {
     ];
 }
 
-export const undoRedoMenu = [
+export const menuActionRegistrar = [
     {
         id: MENU_FILE_UNDO,
         label: localize('menu.undo', 'Undo'),
@@ -157,7 +168,12 @@ export const undoRedoMenu = [
         id: MENU_FILE_REDO,
         label: localize('menu.redo', 'Redo'),
     },
+    {
+        id: MENU_SELECT_ALL,
+        label: localize('menu.redo', 'Redo'),
+    },
 ];
+
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];
 

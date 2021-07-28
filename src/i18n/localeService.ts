@@ -8,16 +8,48 @@ import { Component } from 'mo/react';
 import { singleton } from 'tsyringe';
 
 export interface ILocaleService {
-    setCurrentLocale(id: string): boolean;
-    getCurrentLocale(): ILocale | undefined;
-    getLocales(): ILocale[];
-    getLocale(id: string): ILocale | undefined;
+    /**
+     * Initialize the locales data, and the default current locale language
+     * @param locales
+     * @param localeId
+     */
     initialize(locales: ILocale[], localeId?: string): void;
+    /**
+     * Set the current locale language by id
+     * @param id
+     */
+    setCurrentLocale(id: string): boolean;
+    /**
+     * Get the current locale language
+     */
+    getCurrentLocale(): ILocale | undefined;
+    /**
+     * Get All locale languages
+     */
+    getLocales(): ILocale[];
+    /**
+     * Get a locale language by the id
+     * @param id
+     */
+    getLocale(id: string): ILocale | undefined;
+    /**
+     * Append multiple local languages
+     * @param locales
+     */
     appendLocales(locales: ILocale[]): void;
+    /**
+     * Remove a locale language by the id
+     * @param id
+     */
     removeLocale(id: string): ILocale | undefined;
+    /**
+     * Return a value which localized by the indicated sourceKey
+     * @param sourceKey
+     * @param defaultValue
+     */
     localize(sourceKey: string, defaultValue: string): string;
     /**
-     * Current localization changed
+     * Listen to the local language changed event
      * @param callback
      */
     onChange(callback: (prev: ILocale, next: ILocale) => void): void;

@@ -4,9 +4,9 @@ import { container } from 'tsyringe';
 export * as event from 'mo/common/event';
 export * as react from 'mo/react';
 export * as component from 'mo/components';
+export * as i18n from 'mo/i18n';
 export * from 'mo/workbench';
 export * from 'mo/services';
-export * from 'mo/i18n';
 
 export {
     IExtension,
@@ -50,25 +50,25 @@ import {
     EditorTreeService,
 } from 'mo/services';
 
-import { ILocaleService, LocaleService } from './i18n/localeService';
-/**
- * layout service
- */
-export const layout = container.resolve<ILayoutService>(LayoutService);
+import { ILocaleService, LocaleService } from 'mo/i18n';
 
 /**
- * Register the Locales service first
+ * The locale service
  */
 export const il8n = container.resolve<ILocaleService>(LocaleService);
 
 /**
- * The Services of Workbench
+ * The layout service
+ */
+export const layout = container.resolve<ILayoutService>(LayoutService);
+
+/**
+ * The activityBar service
  */
 export const activityBar: IActivityBarService = container.resolve<IActivityBarService>(
     ActivityBarService
 );
 
-// explorer service
 export const explorer: IExplorerService = container.resolve<IExplorerService>(
     ExplorerService
 );
@@ -93,13 +93,13 @@ export const notification = container.resolve<INotificationService>(
 export const problems = container.resolve<IProblemsService>(ProblemsService);
 
 /**
- * The ColorTheme service,
+ * The ColorTheme service
  */
 export const colorTheme = container.resolve<IColorThemeService>(
     ColorThemeService
 );
 
 /**
- * Settings service
+ * The Settings service
  */
 export const settings = container.resolve<ISettingsService>(SettingsService);

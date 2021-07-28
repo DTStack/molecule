@@ -87,9 +87,17 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * Listen to create a node for folder tree
      * @param callback
      */
+<<<<<<< HEAD
     onCreate(
         callback: (type: keyof typeof FileTypes, nodeId?: number) => void
     ): void;
+=======
+    addNode(id: number, data: ITreeNodeItemProps): void;
+    /**
+     * File or folder operation
+     */
+    createFileOrFolder(type: keyof typeof FileTypes): void;
+>>>>>>> perf: move create file or folder function in service
 }
 
 @singleton()

@@ -7,34 +7,37 @@ import {
 } from 'mo/model/workbench/statusBar';
 import { Component } from 'mo/react';
 import { container, singleton } from 'tsyringe';
-
+import { searchById } from '../helper';
 export interface IStatusBarService extends Component<IStatusBar> {
-    appendLeftItem(item: IStatusBarItem): void;
-    appendRightItem(item: IStatusBarItem): void;
-    updateItem(item: IStatusBarItem): void;
-    findById(id: string): IStatusBarItem | null;
     /**
-     * Remove the left item of StatusBar,
-     * return the removed item.
+     * Add a new StatusBar item
+     * @param item
+     * @param float position the item to left or right
+     */
+    add(item: IStatusBarItem, float: 'left' | 'right');
+    /**
+     * Remove the specific StatusBar item, return the removed item if success,
+     * or return the undefined
      * @param id
      */
-    removeLeftItem(id: string): IStatusBarItem;
+    remove(id: string): IStatusBarItem | undefined;
     /**
-     * Remove the right item of StatusBar,
-     * return the removed item.
+     * Update the specific StatusBar item
+     * @param item the id field is required
+     */
+    update(item: IStatusBarItem): void;
+    /**
+     * Get the specific StatusBar item
      * @param id
      */
-    removeRightItem(id: string): IStatusBarItem;
+    getStatusBarItem(id: string): IStatusBarItem | null;
     /**
-     * Listen to the statusbar onclick event
+     * Listen to the StatusBar click event
      * @param callback
      */
     onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void);
 }
 
-function searchById(id: string) {
-    return (item: IStatusBarItem) => item.id === id;
-}
 @singleton()
 export class StatusBarService
     extends Component<IStatusBar>
@@ -46,25 +49,23 @@ export class StatusBarService
         this.state = container.resolve(StatusBarModel);
     }
 
-    onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void) {
-        this.subscribe(StatusBarEvent.onClick, callback);
+    public add(item: IStatusBarItem<any>, float: 'left' | 'right') {
+        if (float === 'right') {
+            this.appendRightItem(item);
+        } else {
+            this.appendLeftItem(item);
+        }
     }
 
-    private remove(id: string, arr: IStatusBarItem[]): IStatusBarItem {
-        const index = arr.findIndex(searchById(id));
-        const result = arr.splice(index, 1);
-        return result[0];
+    public update(item: IStatusBarItem): void {
+        const original = this.getStatusBarItem(item.id);
+        if (original) {
+            Object.assign(original, item);
+            this.render();
+        }
     }
 
-    removeLeftItem(id: string): IStatusBarItem {
-        return this.remove(id, this.state.leftItems!);
-    }
-
-    removeRightItem(id: string): IStatusBarItem {
-        return this.remove(id, this.state.rightItems!);
-    }
-
-    findById(id: string): IStatusBarItem {
+    public getStatusBarItem(id: string): IStatusBarItem {
         let result;
         const { leftItems, rightItems } = this.state;
         result = leftItems!.find(searchById(id));
@@ -74,21 +75,35 @@ export class StatusBarService
         return result;
     }
 
-    appendLeftItem(item: IStatusBarItem): void {
+    public onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void) {
+        this.subscribe(StatusBarEvent.onClick, callback);
+    }
+
+    public remove(id: string): IStatusBarItem | undefined {
+        const { leftItems, rightItems } = this.state;
+        let result = this.removeArrayItem(id, leftItems);
+        if (!result) result = this.removeArrayItem(id, rightItems);
+        return result ? result[0] : result;
+    }
+
+    private removeArrayItem(
+        id: string,
+        arr: IStatusBarItem[]
+    ): IStatusBarItem | undefined {
+        const index = arr!.findIndex(searchById(id));
+        if (index > -1) {
+            return arr.splice(index, 1)[0];
+        }
+        return undefined;
+    }
+
+    private appendLeftItem(item: IStatusBarItem): void {
         this.state.leftItems!.push(item);
         this.render();
     }
 
-    appendRightItem(item: IStatusBarItem): void {
+    private appendRightItem(item: IStatusBarItem): void {
         this.state.rightItems!.push(item);
         this.render();
-    }
-
-    updateItem(item: IStatusBarItem): void {
-        const original = this.findById(item.id);
-        if (original) {
-            Object.assign(original, item);
-            this.render();
-        }
     }
 }

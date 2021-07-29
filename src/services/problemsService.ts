@@ -12,10 +12,28 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
 export interface IProblemsService extends Component<IProblems> {
-    add(item: IProblemsItem | IProblemsItem[]): void;
+    /**
+     * Add single or multiple items data
+     * @param data
+     */
+    add(data: IProblemsItem | IProblemsItem[]): void;
+    /**
+     * Remove the specific problem items
+     * @param id single or multiple ids
+     */
     remove(id: number | number[]): void;
+    /**
+     * Reset the ProblemsService state data
+     */
     clear(): void;
-    update<T>(item: IProblemsItem<T> | IProblemsItem<T>[]): void;
+    /**
+     * Update the specific data
+     * @param data single or multiple problems
+     */
+    update<T>(data: IProblemsItem<T> | IProblemsItem<T>[]): void;
+    /**
+     * Toggle the Problems view between display or hidden
+     */
     toggleProblems(): void;
 }
 

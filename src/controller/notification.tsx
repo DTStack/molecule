@@ -49,7 +49,7 @@ export class NotificationController
 
     public onCloseNotification = (item: INotificationItem<any>): void => {
         if (typeof item.id === 'number') {
-            this.notificationService.removeNotification(item.id);
+            this.notificationService.remove(item.id);
         }
     };
 
@@ -59,7 +59,7 @@ export class NotificationController
         if (!this._notificationPane) {
             this.renderNotificationPane();
         }
-        this.notificationService.showHideNotifications();
+        this.notificationService.toggleProblems();
     }
 
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
@@ -72,7 +72,7 @@ export class NotificationController
     ) => {
         const action = item.id;
         if (action === NOTIFICATION_CLEAR_ALL.id) {
-            this.notificationService.showHideNotifications();
+            this.notificationService.toggleProblems();
         } else if (action === NOTIFICATION_HIDE.id) {
             this.showHideNotifications();
         }

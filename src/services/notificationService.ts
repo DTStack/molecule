@@ -11,14 +11,10 @@ import { searchById } from './helper';
 import { randomId } from 'mo/common/utils';
 
 export interface INotificationService extends Component<INotification> {
-    addNotifications<T>(
-        items: INotificationItem<T>[]
-    ): null | INotificationItem<T>[];
-    removeNotification(id: number): void;
-    updateNotification<T>(
-        item: INotificationItem<T>
-    ): null | INotificationItem<T>;
-    showHideNotifications(): void;
+    add<T>(items: INotificationItem<T>[]): null | INotificationItem<T>[];
+    remove(id: number): void;
+    update<T>(item: INotificationItem<T>): null | INotificationItem<T>;
+    toggleProblems(): void;
 }
 
 @singleton()
@@ -32,16 +28,14 @@ export class NotificationService
         this.state = container.resolve(NotificationModel);
     }
 
-    public showHideNotifications(): void {
+    public toggleProblems(): void {
         this.setState({
             ...this.state,
             showNotifications: !this.state.showNotifications,
         });
     }
 
-    public updateNotification<T>(
-        item: INotificationItem<T>
-    ): INotificationItem<T> | null {
+    public update<T>(item: INotificationItem<T>): INotificationItem<T> | null {
         const { data = [] } = this.state;
         if (data.length > -1) {
             const index = data.findIndex(searchById(item.id));
@@ -58,7 +52,7 @@ export class NotificationService
         return null;
     }
 
-    public removeNotification(id: number): void {
+    public remove(id: number): void {
         const { data = [] } = this.state;
         if (data.length > -1) {
             const index = data.findIndex(searchById(id));
@@ -72,7 +66,7 @@ export class NotificationService
         }
     }
 
-    public addNotifications<T>(
+    public add<T>(
         items: INotificationItem<T>[]
     ): null | INotificationItem<T>[] {
         const { data = [] } = this.state;

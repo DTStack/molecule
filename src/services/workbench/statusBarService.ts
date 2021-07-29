@@ -83,6 +83,7 @@ export class StatusBarService
         const { leftItems, rightItems } = this.state;
         let result = this.removeArrayItem(id, leftItems);
         if (!result) result = this.removeArrayItem(id, rightItems);
+        this.render();
         return result ? result[0] : result;
     }
 

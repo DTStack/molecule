@@ -8,6 +8,7 @@ import { FileTypes, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
 import { localize } from 'mo/i18n/localize';
 import { Scrollable } from 'mo/components';
+import { randomId } from 'mo/common/utils';
 
 export default class TestPane extends React.Component {
     constructor(props) {
@@ -77,6 +78,24 @@ export default class TestPane extends React.Component {
                 name: 'folder' + id,
                 iconName: 'codicon-edit',
             });
+        };
+
+        let globalTempId;
+
+        const addStatusBar = function () {
+            globalTempId = randomId();
+            molecule.statusBar.add(
+                {
+                    id: globalTempId,
+                    name: 'test' + globalTempId,
+                    sortIndex: 2,
+                },
+                'right'
+            );
+        };
+
+        const removeStatusBar = function () {
+            molecule.statusBar.remove(globalTempId);
         };
 
         const addPanel = function () {
@@ -337,8 +356,12 @@ PARTITIONED BY (ds string) lifecycle 1000;
                         <Button onClick={addRootFolder}>Add Root Folder</Button>
                     </div>
                     <div>
-                        <molecule.component.Button>
-                            AAA
+                        <h2>StatusBar:</h2>
+                        <molecule.component.Button onClick={addStatusBar}>
+                            Add a StatusBar
+                        </molecule.component.Button>
+                        <molecule.component.Button onClick={removeStatusBar}>
+                            Remove a StatusBar
                         </molecule.component.Button>
                     </div>
                 </div>

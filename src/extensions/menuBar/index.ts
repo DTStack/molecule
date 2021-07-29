@@ -5,6 +5,6 @@ import { builtInMenuBarData } from 'mo/model';
 
 export const ExtendsMenuBar: IExtension = {
     activate(extensionCtx: IExtensionService) {
-        molecule.menuBar.initMenu(builtInMenuBarData());
+        molecule.menuBar.initMenus(builtInMenuBarData());
     },
 };

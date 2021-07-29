@@ -10,12 +10,32 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 
 export interface IMenuBarService extends Component<IMenuBar> {
-    initMenu(data: IMenuBarItem[]): void;
-    addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void;
+    /**
+     * Initialize the MenuBar state
+     * @param data
+     */
+    initMenus(data: IMenuBarItem[]): void;
+    /**
+     * Add a new menu item
+     * @param menuItem menu item data
+     * @param parentId parent menu item id
+     */
     add(menuItem: IMenuBarItem, parentId: string): void;
+    /**
+     * Remove the specific menu item
+     * @param menuId
+     */
     remove(menuId: string): void;
-    getState(): IMenuBar;
+    /**
+     * Get the specific menu item
+     * @param menuId
+     */
     getMenuById(menuId: string): IMenuBarItem;
+    /**
+     * Update the specific menu item data
+     * @param menuId
+     * @param menuItem
+     */
     update(menuId: string, menuItem: IMenuBarItem): void;
 }
 @singleton()
@@ -29,7 +49,7 @@ export class MenuBarService
         this.state = container.resolve(MenuBarModel);
     }
 
-    public initMenu = (menuData: IMenuBarItem[]) => {
+    public initMenus = (menuData: IMenuBarItem[]) => {
         this.setState({
             data: menuData,
         });
@@ -131,18 +151,5 @@ export class MenuBarService
                 }
             }
         }
-    }
-
-    public addRootMenu(menu: IMenuBarItem | IMenuBarItem[]): void {
-        const { data } = this.state;
-        let next = cloneDeep(data);
-        if (Array.isArray(menu)) {
-            next = next?.concat(menu);
-        } else {
-            next?.push(menu);
-        }
-        this.setState({
-            data: next,
-        });
     }
 }

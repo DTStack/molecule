@@ -27,8 +27,8 @@ describe('Test menuBarService', () => {
         expect(menuBarService.getState().data).not.toBeUndefined();
     });
 
-    test('Test menuBarService init menuBarData', () => {
-        menuBarService.initMenu(builtInMenuData);
+    test('Test menuBarService initMenus', () => {
+        menuBarService.initMenus(builtInMenuData);
         const result = menuBarService.getState();
         expect(result.data).toEqual(builtInMenuData);
     });
@@ -85,6 +85,7 @@ describe('Test menuBarService', () => {
             },
         ]);
     });
+
     test('Test menuBarService update for menuBar', () => {
         menuBarService.update('3', {
             id: '3',
@@ -110,6 +111,7 @@ describe('Test menuBarService', () => {
             },
         ]);
     });
+
     test('Test menuBarService getMenuById for menuBar', () => {
         const currentMenu = menuBarService.getMenuById('3');
         expect(currentMenu).toEqual({
@@ -117,31 +119,5 @@ describe('Test menuBarService', () => {
             name: 'modifierc',
             icon: 'check',
         });
-    });
-
-    test('Test menuBarService addRootMenu for menuBar', () => {
-        menuBarService.addRootMenu({ id: '10', name: 'root10' });
-        const result = menuBarService.getState();
-        expect(result.data).toEqual([
-            {
-                id: '1',
-                name: 'root',
-                data: [
-                    {
-                        id: '2',
-                        name: 'a',
-                        data: [{ id: '3', name: 'modifierc', icon: 'check' }],
-                    },
-                    {
-                        id: '4',
-                        name: 'b',
-                    },
-                ],
-            },
-            {
-                id: '10',
-                name: 'root10',
-            },
-        ]);
     });
 });

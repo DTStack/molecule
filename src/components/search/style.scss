@@ -1,5 +1,4 @@
 @import 'mo/style/common';
-$icon-size: 20px;
 
 #{$search} {
     display: grid;
@@ -59,22 +58,16 @@ $icon-size: 20px;
     }
 
     &__toolbar {
+        height: auto;
         position: absolute;
-        right: 0;
+        right: 2px;
         top: 2px;
 
         #{$actionBar} {
-            &__label {
-                height: $icon-size;
-                min-width: auto;
-                opacity: 0.7;
-                padding: 0;
-                transition: opacity 0.3s;
-                width: $icon-size;
-            }
-
             &__item {
                 color: var(--activityBar-foreground);
+                opacity: 0.7;
+                transition: opacity 0.3s;
 
                 &--checked {
                     background: var(--inputOption-activeBackground);

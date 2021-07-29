@@ -4,6 +4,7 @@ import { IPanel } from 'mo/model/workbench/panel';
 import { IPanelController } from 'mo/controller/panel';
 import { Tabs } from 'mo/components/tabs';
 import { ActionBar } from 'mo/components/actionBar';
+import { Scrollable } from 'mo/components';
 
 const defaultClassName = prefixClaName('panel');
 const panelHeaderClassName = getBEMElement(defaultClassName, 'header');
@@ -32,12 +33,14 @@ export function Panel(props: IPanel & IPanelController) {
     return (
         <div className={defaultClassName}>
             <div className={panelHeaderClassName}>
-                <Tabs
-                    activeTab={current?.id}
-                    data={data}
-                    onSelectTab={onTabChange}
-                    onCloseTab={onClose}
-                />
+                <Scrollable noScrollY isShowShadow>
+                    <Tabs
+                        activeTab={current?.id}
+                        data={data}
+                        onSelectTab={onTabChange}
+                        onCloseTab={onClose}
+                    />
+                </Scrollable>
                 <ActionBar
                     className={panelToolbarClassName}
                     data={toolboxData || []}

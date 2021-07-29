@@ -12,11 +12,11 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
 export interface IProblemsService extends Component<IProblems> {
-    removeProblems(id: number | number[]): void;
-    clearProblems(): void;
-    addProblems(item: IProblemsItem | IProblemsItem[]): void;
-    updateProblems<T>(item: IProblemsItem<T> | IProblemsItem<T>[]): void;
-    showHideProblems(): void;
+    add(item: IProblemsItem | IProblemsItem[]): void;
+    remove(id: number | number[]): void;
+    clear(): void;
+    update<T>(item: IProblemsItem<T> | IProblemsItem<T>[]): void;
+    toggleProblems(): void;
 }
 
 @singleton()
@@ -31,13 +31,13 @@ export class ProblemsService
         this.statusBarService = container.resolve(StatusBarService);
     }
 
-    public showHideProblems(): void {
+    public toggleProblems(): void {
         this.setState({
             ...this.state,
             show: !this.state.show,
         });
     }
-    public addProblems<T>(item: IProblemsItem<T> | IProblemsItem<T>[]): void {
+    public add<T>(item: IProblemsItem<T> | IProblemsItem<T>[]): void {
         const problems = Array.isArray(item) ? item : [item];
         const { data } = this.state;
 
@@ -59,7 +59,7 @@ export class ProblemsService
             }
         );
     }
-    public updateProblems<T>(item: IProblemsItem<T> | IProblemsItem<T>[]) {
+    public update<T>(item: IProblemsItem<T> | IProblemsItem<T>[]) {
         const problems = Array.isArray(item) ? item : [item];
         const { data } = this.state;
 
@@ -79,7 +79,7 @@ export class ProblemsService
             }
         );
     }
-    public removeProblems(id: number | number[]): void {
+    public remove(id: number | number[]): void {
         const ids = Array.isArray(id) ? id : [id];
 
         const { data = [] } = this.state;
@@ -100,7 +100,7 @@ export class ProblemsService
         );
     }
 
-    public clearProblems(): void {
+    public clear(): void {
         this.setState({
             ...this.state,
             data: [],

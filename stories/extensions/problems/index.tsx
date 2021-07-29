@@ -60,7 +60,7 @@ function init() {
             },
         ],
     };
-    molecule.problems.addProblems(MockItem);
+    molecule.problems.add(MockItem);
 }
 
 export const ExtendsProblems: IExtension = {

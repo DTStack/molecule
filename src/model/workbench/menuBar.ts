@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { localize } from 'mo/i18n/localize';
 import { ID_SIDE_BAR } from 'mo/common/id';
+import {
+    ACTION_QUICK_SELECT_ALL,
+    ACTION_QUICK_COPY_LINE_UP,
+} from 'mo/model/keybinding';
 /**
  * The activity bar event definition
  */
@@ -30,9 +34,6 @@ export const MENU_FILE_OPEN = 'openFile'; // default encoding with utf-8 ?
 
 export const MENU_FILE_UNDO = 'undo';
 export const MENU_FILE_REDO = 'redo';
-
-export const MENU_SELECT_ALL = 'selectAll';
-export const MENU_COPY_LINE_UP = 'copyLineUp';
 
 export const MENU_QUICK_COMMAND = 'editor.action.quickCommand';
 
@@ -76,11 +77,11 @@ export function builtInMenuBarData() {
             name: localize('menu.selection', 'Selection'),
             data: [
                 {
-                    id: MENU_SELECT_ALL,
+                    id: ACTION_QUICK_SELECT_ALL,
                     name: localize('menu.selectAll', 'Select All'),
                 },
                 {
-                    id: MENU_COPY_LINE_UP,
+                    id: ACTION_QUICK_COPY_LINE_UP,
                     name: localize('menu.copyLineUp', 'Copy Line Up'),
                 },
             ],
@@ -166,10 +167,6 @@ export const menuActionRegistrar = [
     },
     {
         id: MENU_FILE_REDO,
-        label: localize('menu.redo', 'Redo'),
-    },
-    {
-        id: MENU_SELECT_ALL,
         label: localize('menu.redo', 'Redo'),
     },
 ];

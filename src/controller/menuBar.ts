@@ -7,11 +7,13 @@ import {
     FolderTreeEvent,
 } from 'mo/model';
 import {
+    ACTION_QUICK_SELECT_ALL,
+    ACTION_QUICK_COPY_LINE_UP,
+} from 'mo/model/keybinding';
+import {
     MENU_FILE_CREATE,
     MENU_FILE_REDO,
     MENU_FILE_UNDO,
-    MENU_SELECT_ALL,
-    MENU_COPY_LINE_UP,
     MENU_QUICK_COMMAND,
     MENU_VIEW_ACTIVITYBAR,
     MENU_VIEW_MENUBAR,
@@ -31,6 +33,9 @@ import {
 import { ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
+import { QuickSelectAllAction } from 'mo/monaco/quickSelectAllAction';
+import { QuickCopyLineUp } from 'mo/monaco/quickCopyLineUp';
+
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 
@@ -73,10 +78,10 @@ export class MenuBarController
             case MENU_FILE_REDO:
                 this.redo();
                 break;
-            case MENU_SELECT_ALL:
+            case ACTION_QUICK_SELECT_ALL:
                 this.selectAll();
                 break;
-            case MENU_COPY_LINE_UP:
+            case ACTION_QUICK_COPY_LINE_UP:
                 this.copyLineUp();
             case MENU_VIEW_ACTIVITYBAR:
                 this.updateActivityBar();
@@ -108,10 +113,6 @@ export class MenuBarController
         this.emit(FolderTreeEvent[`onNew${type}`], nodeId);
     };
 
-    public selectAll = () => {
-        this.editorService.editorInstance?.getAction('selectAll').run();
-    };
-
     public undo = () => {
         this.editorService.editorInstance?.getAction('undo').run();
     };
@@ -136,10 +137,14 @@ export class MenuBarController
         });
     };
 
+    public selectAll = () => {
+        this.monacoService.commandService.executeCommand(
+            QuickSelectAllAction.ID
+        );
+    };
+
     public copyLineUp = () => {
-        this.editorService.editorInstance
-            ?.getAction('editor.action.copyLinesUpAction')
-            .run();
+        this.monacoService.commandService.executeCommand(QuickCopyLineUp.ID);
     };
 
     public updateMenuBar = () => {

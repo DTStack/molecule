@@ -17,11 +17,9 @@ import {
 import {
     MENU_FILE_UNDO,
     MENU_FILE_REDO,
-    MENU_SELECT_ALL,
     menuActionRegistrar,
 } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
-
 import { IMenuItemProps } from 'mo/components/menu';
 import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';
@@ -73,8 +71,6 @@ export class EditorController extends Controller implements IEditorController {
             this.actionForUndoOrReDo(editorInstance, id),
         [MENU_FILE_REDO]: (editorInstance: IStandaloneCodeEditor, id: string) =>
             this.actionForUndoOrReDo(editorInstance, id),
-        [MENU_SELECT_ALL]: (editorInstance: IStandaloneCodeEditor) =>
-            this.actionSelectAll(editorInstance),
     };
 
     constructor() {
@@ -199,13 +195,6 @@ export class EditorController extends Controller implements IEditorController {
         if (!document.execCommand(id)) {
             editorInstance?.getModel()?.[id]();
         }
-    };
-
-    private actionSelectAll = (editorInstance: IStandaloneCodeEditor) => {
-        editorInstance!.focus();
-        editorInstance.setSelection(
-            editorInstance!.getModel()!.getFullModelRange()
-        );
     };
 
     // Register actions not included in monaco actions

@@ -5,6 +5,8 @@ export const KeyCodeString: Partial<{ [key in KeyCode]: string }> = {
     [KeyCode.Backspace]: '⌫',
     [KeyCode.Tab]: '⇥',
     [KeyCode.Enter]: '↩︎',
+    [KeyCode.PageUp]: '↑',
+    [KeyCode.PageDown]: '↓',
     [KeyCode.KEY_0]: '0',
     [KeyCode.KEY_1]: '1',
     [KeyCode.KEY_2]: '2',
@@ -64,6 +66,7 @@ export interface ISimpleKeybinding {
 
 export const ACTION_QUICK_COMMAND = 'editor.action.quickCommand';
 export const ACTION_QUICK_SELECT_ALL = 'editor.action.quickSelectAll';
+export const ACTION_QUICK_COPY_LINE_UP = 'editor.action.quickCopyLinesUpAction';
 
 export const ACTION_QUICK_ACCESS_SETTINGS =
     'workbench.action.quickAccessSettings';

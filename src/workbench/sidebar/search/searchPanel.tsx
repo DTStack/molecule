@@ -1,114 +1,142 @@
 import * as React from 'react';
 import { Toolbar } from 'mo/components/toolbar';
-import { prefixClaName } from 'mo/common/className';
+import { classNames, prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { Search } from 'mo/components/search';
+import type { SearchValues } from 'mo/components/search';
 import { ISearchProps } from 'mo/model/workbench/search';
-import { IFolderTree } from 'mo/model/workbench/explorer/folderTree';
-import { IActionBarItemProps } from 'mo/components/actionBar';
-import { ITreeNodeItemProps } from 'mo/components';
 import SearchTree from './searchTree';
 import { localize } from 'mo/i18n/localize';
+import { ISearchController } from 'mo/controller';
+import {
+    deleteSearchValueClassName,
+    emptyTextValueClassName,
+    matchSearchValueClassName,
+    replaceSearchValueClassName,
+} from './base';
 
-export interface ISearchPaneToolBar {
-    search?: ISearchProps;
-    folderTree?: IFolderTree;
-    convertFoldToSearchTree?: (
-        data: ITreeNodeItemProps[],
-        queryVal?: string
-    ) => ITreeNodeItemProps[];
-    getSearchIndex: (text: string, queryVal?: string) => number;
-    setSearchValue?: (value?: string) => void;
-    setReplaceValue?: (value?: string) => void;
-    setValidateInfo: (info) => void;
-    validateValue: (value: string) => { valid: boolean; errMessage?: string };
-    onToggleAddon: (addon?: IActionBarItemProps) => void;
-    onToggleMode: (status: boolean) => void;
-}
+export interface ISearchPaneToolBar extends ISearchController, ISearchProps {}
 
-export default class SearchPanel extends React.Component<ISearchPaneToolBar> {
-    constructor(props) {
-        super(props);
-    }
-
-    onClick = (e, item) => {
+const SearchPanel = ({
+    value = '',
+    replaceValue,
+    searchAddons,
+    replaceAddons,
+    validationInfo,
+    headerToolBar,
+    result,
+    toggleAddon,
+    onResultClick,
+    validateValue,
+    setValidateInfo,
+    onSearch,
+    getSearchIndex,
+    setSearchValue,
+    setReplaceValue,
+    onChange,
+    toggleMode,
+}: ISearchPaneToolBar) => {
+    const onClick = (e, item) => {
         console.log('onClick:', e, item);
     };
 
-    handleSearchChange = (values) => {
-        const { setSearchValue, setReplaceValue } = this.props;
+    const handleSearchChange = (values: SearchValues = []) => {
         const [searchVal, replaceVal] = values;
-        setSearchValue?.(searchVal);
-        setReplaceValue?.(replaceVal);
+        setSearchValue(searchVal);
+        setReplaceValue(replaceVal);
+        onChange(searchVal || '', replaceVal || '');
     };
 
-    handleSearch = (values) => {
-        const { validateValue, setValidateInfo } = this.props;
-        const [searchVal] = values;
-        if (!validateValue(searchVal).valid) {
-            setValidateInfo({
-                type: 'error',
-                text: validateValue(searchVal).errMessage,
-            });
-        } else {
-            setValidateInfo('');
+    const handleToggleButton = (status: boolean) => {
+        toggleMode(status);
+    };
+
+    const renderTitle = (node, _, isLeaf) => {
+        const { name = '' } = node;
+        if (!isLeaf) {
+            return name;
+        }
+        const searchIndex = getSearchIndex(name, value);
+        const beforeStr = name.substr(0, searchIndex);
+        const currentValue = name.substr(searchIndex, value.length);
+        const afterStr = name.substr(searchIndex + value.length);
+        const title =
+            searchIndex > -1 ? (
+                <span>
+                    {beforeStr}
+                    <span
+                        className={classNames(
+                            matchSearchValueClassName,
+                            replaceValue && deleteSearchValueClassName
+                        )}
+                    >
+                        {currentValue}
+                    </span>
+                    {replaceValue && (
+                        <span className={replaceSearchValueClassName}>
+                            {replaceValue}
+                        </span>
+                    )}
+                    {afterStr}
+                </span>
+            ) : (
+                name
+            );
+        return title;
+    };
+
+    const handleSearch = (values: SearchValues = []) => {
+        const [value, replaceVal] = values;
+        validateValue(value || '', (err) => {
+            if (err) {
+                setValidateInfo({
+                    type: 'error',
+                    text: err.message,
+                });
+            } else {
+                onSearch(value || '', replaceVal || '');
+            }
+        });
+    };
+
+    const handleTreeSelect = (item) => {
+        if (item.isLeaf) {
+            onResultClick(item, result);
         }
     };
 
-    handleToggleButton = (status: boolean) => {
-        this.props.onToggleMode(status);
-    };
-
-    render() {
-        const {
-            search = {},
-            folderTree,
-            convertFoldToSearchTree,
-            onToggleAddon,
-            getSearchIndex,
-        } = this.props;
-        const {
-            value,
-            replaceValue,
-            searchAddons,
-            replaceAddons,
-            validationInfo,
-        } = search;
-
-        return (
-            <div className={prefixClaName('search-pane', 'sidebar')}>
-                <Header
-                    title={localize('sidebar.search.title', 'Search')}
-                    toolbar={
-                        <Toolbar
-                            data={search?.headerToolBar || []}
-                            onClick={this.onClick}
-                        />
-                    }
+    return (
+        <div className={prefixClaName('search-pane', 'sidebar')}>
+            <Header
+                title={localize('sidebar.search.title', 'Search')}
+                toolbar={
+                    <Toolbar data={headerToolBar || []} onClick={onClick} />
+                }
+            />
+            <Content>
+                <Search
+                    values={[value, replaceValue]}
+                    addons={[searchAddons, replaceAddons]}
+                    validationInfo={validationInfo}
+                    onChange={handleSearchChange}
+                    onSearch={handleSearch}
+                    onAddonClick={toggleAddon}
+                    onButtonClick={handleToggleButton}
                 />
-                <Content>
-                    <Search
-                        {...this.props}
-                        values={[value, replaceValue]}
-                        addons={[searchAddons, replaceAddons]}
-                        validationInfo={validationInfo}
-                        onChange={this.handleSearchChange}
-                        onSearch={this.handleSearch}
-                        onAddonClick={onToggleAddon}
-                        onButtonClick={this.handleToggleButton}
+                {value && result.length === 0 ? (
+                    <div className={emptyTextValueClassName}>
+                        未找到结果，请重新修改您的搜索条件
+                    </div>
+                ) : (
+                    <SearchTree
+                        data={result}
+                        renderTitle={renderTitle}
+                        onSelectNode={handleTreeSelect}
                     />
-                    {value && (
-                        <SearchTree
-                            data={convertFoldToSearchTree?.(
-                                folderTree?.folderTree?.data || [],
-                                value
-                            )}
-                            getSearchIndex={getSearchIndex}
-                            {...search}
-                        />
-                    )}
-                </Content>
-            </div>
-        );
-    }
-}
+                )}
+            </Content>
+        </div>
+    );
+};
+
+export default SearchPanel;

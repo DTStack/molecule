@@ -2,38 +2,92 @@ import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { Component } from 'mo/react/component';
 
-import { ISearchProps, SearchModel } from 'mo/model/workbench/search';
-import { FileTypes } from 'mo/model';
+import {
+    ISearchProps,
+    SearchEvent,
+    SearchModel,
+    SEARCH_CASE_SENSITIVE_COMMAND_ID,
+    SEARCH_PRESERVE_CASE_COMMAND_ID,
+    SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
+    SEARCH_WHOLE_WORD_COMMAND_ID,
+} from 'mo/model/workbench/search';
 import { ITreeNodeItemProps } from 'mo/components';
+import { searchById } from '../helper';
 
 export interface ISearchService extends Component<ISearchProps> {
     /**
-     * Validate value if is valid
+     * Set informations about validating,
+     * @param info - If provided a string, molecule will set it type as `info`
      */
-    validateValue: (value: string) => { valid: boolean; errMessage?: string };
-    setValidateInfo: (info: ISearchProps['validationInfo']) => void;
-    setSearchValue?: (value?: string) => void;
-    setReplaceValue?: (value?: string) => void;
-    convertFoldToSearchTree?: (
-        data: ITreeNodeItemProps[],
-        queryVal?: string
-    ) => ITreeNodeItemProps[];
-    getSearchIndex: (text: string, queryVal?: string) => number;
+    setValidateInfo: (info: string | ISearchProps['validationInfo']) => void;
+    /**
+     * Set search value for search input
+     */
+    setSearchValue: (value?: string) => void;
+    /**
+     * Set replace value for replace input
+     */
+    setReplaceValue: (value?: string) => void;
+    /**
+     * Set result data for searching result
+     */
+    setResult: (value?: ITreeNodeItemProps[]) => void;
+    /**
+     * Toggle search mode, `true` for replace mode
+     */
     toggleMode: (status: boolean) => void;
-    toggleCaseSensitive?: (addonId: string) => void;
-    toggleWholeWord?: (addonId: string) => void;
-    toggleRegex?: (addonId: string) => void;
-    togglePreserveCase?: (addonId: string) => void;
-    toggleReplaceAll?: (addonId: string) => void;
-    updateSearchAddonsCheckedStats?: (
-        addonId: string,
-        checked: boolean
-    ) => void;
-    updateReplaceAddonsCheckedStats?: (
-        addonId: string,
-        checked: boolean
-    ) => void;
-    openSearchView?: () => void;
+    /**
+     * Toggle the rule for case senstitive when searching
+     */
+    toggleCaseSensitive: () => void;
+    /**
+     * Toggle the rule for finding whole word when searching
+     */
+    toggleWholeWord: () => void;
+    /**
+     * Toggle the rule for enabling regex when searching
+     */
+    toggleRegex: () => void;
+    /**
+     * Toggle the rule for preserving case when replacing
+     */
+    togglePreserveCase: () => void;
+    /**
+     * Update the status of specific addon icon to `checked`
+     */
+    updateStatus: (addonId: string, checked: boolean) => void;
+    /**
+     * Listen to the event about the value of search input changed
+     */
+    onChange(callback: (value: string, replaceValue: string) => void): void;
+    /**
+     * Listen to the event about going to search result via values or config changed
+     */
+    onSearch(
+        callback: (
+            value: string,
+            replaceValue: string,
+            config: {
+                isRegex: boolean;
+                isCaseSensitive: boolean;
+                isWholeWords: boolean;
+                preserveCase: boolean;
+            }
+        ) => void
+    ): void;
+    /**
+     * Listen to the event about replace all text in result
+     */
+    onReplaceAll(callback: () => void): void;
+    /**
+     * Listen to the click event in result data
+     */
+    onResultClick(
+        callback: (
+            item: ITreeNodeItemProps,
+            resultData: ITreeNodeItemProps[]
+        ) => void
+    ): void;
 }
 
 @singleton()
@@ -46,31 +100,15 @@ export class SearchService
         this.state = container.resolve(SearchModel);
     }
 
-    /**
-     * Validate value if is valid
-     */
-    public validateValue(value: string) {
-        if (this.state.isRegex) {
-            try {
-                new RegExp(value);
-                return {
-                    valid: true,
-                };
-            } catch (e) {
-                return {
-                    valid: false,
-                    errMessage: e.message,
-                };
-            }
-        }
-        return {
-            valid: true,
-        };
-    }
-
-    public setValidateInfo(info: ISearchProps['validationInfo']) {
+    public setValidateInfo(info: string | ISearchProps['validationInfo']) {
         this.setState({
-            validationInfo: info,
+            validationInfo:
+                typeof info === 'string'
+                    ? {
+                          type: 'info',
+                          text: info,
+                      }
+                    : info,
         });
     }
 
@@ -86,107 +124,10 @@ export class SearchService
         });
     }
 
-    /**
-     * Returns the position of the first occurrence of a substring.
-     * @param text Current string
-     * @param queryVal The substring to search for in the string
-     * @returns
-     */
-    public getSearchIndex(text: string, queryVal: string = '') {
-        let searchIndex: number = -1;
-        const { isCaseSensitive, isWholeWords, isRegex } = this.state;
-        const onlyCaseSensitiveMatch = isCaseSensitive;
-        const onlyWholeWordsMatch = isWholeWords;
-        const useAllCondtionsMatch = isCaseSensitive && isWholeWords;
-        const notUseConditionsMatch = !isCaseSensitive && !isWholeWords;
-
-        try {
-            if (isRegex) {
-                if (onlyCaseSensitiveMatch) {
-                    searchIndex = text.search(new RegExp(queryVal));
-                }
-                if (onlyWholeWordsMatch) {
-                    searchIndex = text.search(
-                        new RegExp('\\b' + queryVal + '\\b', 'i')
-                    );
-                }
-                if (useAllCondtionsMatch) {
-                    searchIndex = text.search(
-                        new RegExp('\\b' + queryVal + '\\b')
-                    );
-                }
-                if (notUseConditionsMatch) {
-                    searchIndex = text
-                        .toLowerCase()
-                        .search(new RegExp(queryVal, 'i'));
-                }
-            } else {
-                if (onlyCaseSensitiveMatch) {
-                    searchIndex = text.indexOf(queryVal);
-                }
-                // TODO：应使用字符串方法做搜索匹配，暂时使用正则匹配
-                if (onlyWholeWordsMatch) {
-                    const reg = new RegExp(
-                        '\\b' + queryVal?.toLowerCase() + '\\b'
-                    );
-                    searchIndex = text.toLowerCase().search(reg);
-                }
-                if (useAllCondtionsMatch) {
-                    searchIndex = text.search(
-                        new RegExp('\\b' + queryVal + '\\b')
-                    );
-                }
-                if (notUseConditionsMatch) {
-                    searchIndex = text
-                        .toLowerCase()
-                        .indexOf(queryVal?.toLowerCase());
-                }
-            }
-        } catch (e) {
-            console.error(e);
-        }
-        return searchIndex;
-    }
-
-    public convertFoldToSearchTree(
-        data: ITreeNodeItemProps[],
-        queryVal?: string
-    ): ITreeNodeItemProps[] {
-        const searchTreeData: ITreeNodeItemProps[] = [];
-
-        const buildSearchTreeData = (tree?: ITreeNodeItemProps[]) => {
-            tree?.forEach((treeItem) => {
-                if (treeItem.fileType === FileTypes.File) {
-                    const children = treeItem.content
-                        ?.split('\n')
-                        .filter(
-                            (text) => this.getSearchIndex(text, queryVal) !== -1
-                        );
-
-                    if (children?.length) {
-                        // this file contains result
-                        const treeNode: ITreeNodeItemProps = {
-                            key: treeItem.id?.toString(),
-                            name: treeItem.name,
-                            isLeaf: false,
-                            isEditable: treeItem.isEditable,
-                            originalData: treeItem,
-                            children: children.map((item, index) => ({
-                                key: `${treeItem.id?.toString()}_${index}`,
-                                name: item,
-                                isLeaf: true,
-                                isEditable: false,
-                            })),
-                        };
-                        searchTreeData.push(treeNode);
-                    }
-                }
-                if (treeItem.children) buildSearchTreeData(treeItem.children);
-            });
-        };
-
-        buildSearchTreeData(data);
-        return searchTreeData;
+    public setResult(value?: ITreeNodeItemProps[]) {
+        this.setState({
+            result: value || [],
+        });
     }
 
     public toggleMode(status: boolean) {
@@ -195,69 +136,84 @@ export class SearchService
         });
     }
 
-    public toggleCaseSensitive(addonId: string) {
+    public toggleCaseSensitive() {
         const { isCaseSensitive } = this.state;
         this.setState({
             isCaseSensitive: !isCaseSensitive,
         });
-        this.updateSearchAddonsCheckedStats(addonId, isCaseSensitive);
+        this.updateStatus(SEARCH_CASE_SENSITIVE_COMMAND_ID, !isCaseSensitive);
     }
 
-    public toggleWholeWord(addonId: string) {
+    public toggleWholeWord() {
         const { isWholeWords } = this.state;
         this.setState({
             isWholeWords: !isWholeWords,
         });
-        this.updateSearchAddonsCheckedStats(addonId, isWholeWords);
+        this.updateStatus(SEARCH_WHOLE_WORD_COMMAND_ID, !isWholeWords);
     }
 
-    public toggleRegex(addonId) {
+    public toggleRegex() {
         const { isRegex } = this.state;
         this.setState({
             isRegex: !isRegex,
         });
-        this.updateSearchAddonsCheckedStats(addonId, isRegex);
+        this.updateStatus(SEARCH_REGULAR_EXPRESSION_COMMAND_ID, !isRegex);
     }
 
-    public togglePreserveCase(addonId: string) {
+    public togglePreserveCase() {
         const { preserveCase } = this.state;
         this.setState({
             preserveCase: !preserveCase,
         });
-        this.updateReplaceAddonsCheckedStats(addonId, preserveCase);
+        this.updateStatus(SEARCH_PRESERVE_CASE_COMMAND_ID, !preserveCase);
     }
 
-    public toggleReplaceAll() {
-        console.log('toggleReplaceAll');
+    public updateStatus(addonId: string, checked: boolean) {
+        const { replaceAddons = [], searchAddons = [] } = this.state;
+        const target =
+            replaceAddons.find(searchById(addonId)) ||
+            searchAddons.find(searchById(addonId));
+
+        if (target) {
+            target.checked = checked;
+            this.setState({
+                replaceAddons: replaceAddons.concat(),
+                searchAddons: searchAddons.concat(),
+            });
+        }
     }
 
-    public updateSearchAddonsCheckedStats(addonId: string, checked?: boolean) {
-        const { searchAddons } = this.state;
-        const newAddons = searchAddons?.map((addon) => {
-            return {
-                ...addon,
-                checked: addon.id === addonId ? !checked : addon.checked,
-            };
-        });
-        this.setState({
-            searchAddons: newAddons,
-        });
+    public onReplaceAll(callback: () => void): void {
+        this.subscribe(SearchEvent.onReplaceAll, callback);
     }
 
-    public updateReplaceAddonsCheckedStats(addonId: string, checked?: boolean) {
-        const { replaceAddons } = this.state;
-        const newAddons = replaceAddons?.map((addon) => {
-            return {
-                ...addon,
-                checked: addon.id === addonId ? !checked : addon.checked,
-            };
-        });
-        this.setState({
-            replaceAddons: newAddons,
-        });
+    public onChange(
+        callback: (value: string, replaceValue: string) => void
+    ): void {
+        this.subscribe(SearchEvent.onChange, callback);
     }
 
-    public triggerQueryChange() {}
+    public onSearch(
+        callback: (
+            value: string,
+            replaceValue: string,
+            config: {
+                isRegex: boolean;
+                isCaseSensitive: boolean;
+                isWholeWords: boolean;
+                preserveCase: boolean;
+            }
+        ) => void
+    ): void {
+        this.subscribe(SearchEvent.onSearch, callback);
+    }
 
-    public openSearchView() {}
+    public onResultClick(
+        callback: (
+            item: ITreeNodeItemProps,
+            resultData: ITreeNodeItemProps[]
+        ) => void
+    ): void {
+        this.subscribe(SearchEvent.onResultClick, callback);
+    }
 }

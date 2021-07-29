@@ -103,7 +103,9 @@ function Input(props: IBaseInputProps) {
                 spellCheck={false}
                 autoCorrect="off"
                 autoCapitalize="off"
-                className={classNames(getInfoClassName(info?.type || ''))}
+                className={classNames(
+                    info?.text && getInfoClassName(info?.type || '')
+                )}
                 value={value || ''}
                 placeholder={placeholder}
                 title={placeholder}
@@ -112,7 +114,7 @@ function Input(props: IBaseInputProps) {
                 onBlur={handleInputBlur}
                 onChange={handleInputChange}
             />
-            {info && focusStatus && (
+            {info?.text && focusStatus && (
                 <div
                     className={classNames(
                         validationBaseInputClassName,

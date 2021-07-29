@@ -122,5 +122,40 @@ export const ExtendTestPane: IExtension = {
                 })
             );
         });
+
+        molecule.search.onSearch((value) => {
+            const children = new Array(5).fill(1).map((_, index) => ({
+                key: index.toFixed(),
+                isLeaf: true,
+                name: `${value}-${index}`,
+            }));
+
+            molecule.search.setResult(
+                value
+                    ? [
+                          {
+                              key: 'molecule',
+                              name: 'molecule.test.js',
+                              isLeaf: false,
+                              children,
+                          },
+                      ]
+                    : []
+            );
+
+            molecule.search.setValidateInfo(
+                value
+                    ? {
+                          type: 'warning',
+                          text:
+                              '结果集仅包含所有匹配项的子集，请使你的搜索更加精准',
+                      }
+                    : ''
+            );
+        });
+
+        molecule.search.onResultClick((item) => {
+            console.log('item:', item);
+        });
     },
 };

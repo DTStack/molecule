@@ -15,37 +15,36 @@ import {
     builtInHeaderToolbar,
     builtInSearchAddons,
     builtInReplaceAddons,
+    SearchEvent,
 } from 'mo/model/workbench/search';
 import {
     ActivityBarService,
     IActivityBarService,
     ISearchService,
-    FolderTreeService,
-    IFolderTreeService,
     ISidebarService,
     SearchService,
     SidebarService,
 } from 'mo/services';
-import { ITreeNodeItemProps } from 'mo/components';
+import { ISearchProps, ITreeNodeItemProps } from 'mo/components';
+
 export interface ISearchController {
-    /**
-     * Validate value if is valid
-     */
-    validateValue: (value: string) => { valid: boolean; errMessage?: string };
-    setSearchValue?: (value?: string) => void;
-    setReplaceValue?: (value?: string) => void;
-    convertFoldToSearchTree?: (
-        data: ITreeNodeItemProps[],
-        queryVal?: string
-    ) => ITreeNodeItemProps[];
     getSearchIndex: (text: string, queryVal?: string) => number;
-    onToggleMode?: (status: boolean) => void;
-    onToggleAddon?: (addon?: IActionBarItemProps) => void;
-    onToggleCaseSensitive?: (addonId: string) => void;
-    onToggleWholeWord?: (addonId: string) => void;
-    onToggleRegex?: (addonId: string) => void;
-    onTogglePreserveCase?: (addonId: string) => void;
-    onToggleReplaceAll?: (addonId: string) => void;
+    setSearchValue: (value?: string) => void;
+    setReplaceValue: (value?: string) => void;
+    setValidateInfo: (info: string | ISearchProps['validationInfo']) => void;
+    toggleMode: (status: boolean) => void;
+    toggleAddon?: (addon?: IActionBarItemProps) => void;
+    validateValue: (
+        value: string,
+        callback: (err: void | Error) => void
+    ) => void;
+
+    onResultClick: (
+        item: ITreeNodeItemProps,
+        resultData: ITreeNodeItemProps[]
+    ) => void;
+    onChange: (value: string, replaceValue: string) => void;
+    onSearch: (value: string, replaceValue: string) => void;
 }
 
 @singleton()
@@ -53,47 +52,23 @@ export class SearchController extends Controller implements ISearchController {
     private readonly activityBarService: IActivityBarService;
     private readonly sidebarService: ISidebarService;
     private readonly searchService: ISearchService;
-    private readonly folderTreeService: IFolderTreeService;
 
     constructor() {
         super();
         this.activityBarService = container.resolve(ActivityBarService);
         this.sidebarService = container.resolve(SidebarService);
         this.searchService = container.resolve(SearchService);
-        this.folderTreeService = container.resolve(FolderTreeService);
         this.initView();
     }
 
     private initView() {
-        const SearchPanelView = connect(
-            {
-                search: this.searchService,
-                folderTree: this.folderTreeService,
-            },
-            SearchPanel
-        );
-
-        const searchEvent = {
-            validateValue: this.validateValue,
-            setValidateInfo: this.setValidateInfo,
-            setSearchValue: this.setSearchValue,
-            setReplaceValue: this.setReplaceValue,
-            onToggleMode: this.onToggleMode,
-            onToggleAddon: this.onToggleAddon,
-            onToggleCaseSensitive: this.onToggleCaseSensitive,
-            onToggleWholeWord: this.onToggleWholeWord,
-            onToggleRegex: this.onToggleRegex,
-            onTogglePreserveCase: this.onTogglePreserveCase,
-            onToggleRepalceAll: this.onToggleRepalceAll,
-            convertFoldToSearchTree: this.convertFoldToSearchTree,
-            getSearchIndex: this.getSearchIndex,
-        };
+        const SearchPanelView = connect(this.searchService, SearchPanel, this);
 
         const searchSidePane = {
             id: builtInSearchActivityItem().id,
             title: 'SEARCH',
             render() {
-                return <SearchPanelView {...searchEvent} />;
+                return <SearchPanelView />;
             },
         };
 
@@ -107,43 +82,117 @@ export class SearchController extends Controller implements ISearchController {
         this.activityBarService.addBar(builtInSearchActivityItem());
     }
 
-    public readonly validateValue = (value: string) => {
-        return this.searchService.validateValue(value);
+    public validateValue = (
+        value: string,
+        callback: (err: void | Error) => void
+    ) => {
+        const { isRegex } = this.searchService.getState();
+        if (isRegex) {
+            try {
+                new RegExp(value);
+                return callback();
+            } catch (e) {
+                return callback(e);
+            }
+        }
+        return callback();
     };
 
-    public readonly setValidateInfo = (info) => {
-        this.searchService.setValidateInfo?.(info);
+    public getSearchIndex = (text: string, queryVal: string = '') => {
+        let searchIndex: number = -1;
+        const {
+            isCaseSensitive,
+            isWholeWords,
+            isRegex,
+        } = this.searchService.getState();
+        const onlyCaseSensitiveMatch = isCaseSensitive;
+        const onlyWholeWordsMatch = isWholeWords;
+        const useAllCondtionsMatch = isCaseSensitive && isWholeWords;
+        const notUseConditionsMatch = !isCaseSensitive && !isWholeWords;
+
+        try {
+            if (isRegex) {
+                if (onlyCaseSensitiveMatch) {
+                    searchIndex = text.search(new RegExp(queryVal));
+                }
+                if (onlyWholeWordsMatch) {
+                    searchIndex = text.search(
+                        new RegExp('\\b' + queryVal + '\\b', 'i')
+                    );
+                }
+                if (useAllCondtionsMatch) {
+                    searchIndex = text.search(
+                        new RegExp('\\b' + queryVal + '\\b')
+                    );
+                }
+                if (notUseConditionsMatch) {
+                    searchIndex = text
+                        .toLowerCase()
+                        .search(new RegExp(queryVal, 'i'));
+                }
+            } else {
+                if (onlyCaseSensitiveMatch) {
+                    searchIndex = text.indexOf(queryVal);
+                }
+                // TODO：应使用字符串方法做搜索匹配，暂时使用正则匹配
+                if (onlyWholeWordsMatch) {
+                    const reg = new RegExp(
+                        '\\b' + queryVal?.toLowerCase() + '\\b'
+                    );
+                    searchIndex = text.toLowerCase().search(reg);
+                }
+                if (useAllCondtionsMatch) {
+                    searchIndex = text.search(
+                        new RegExp('\\b' + queryVal + '\\b')
+                    );
+                }
+                if (notUseConditionsMatch) {
+                    searchIndex = text
+                        .toLowerCase()
+                        .indexOf(queryVal?.toLowerCase());
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        return searchIndex;
+    };
+
+    public readonly setValidateInfo = (
+        info: string | ISearchProps['validationInfo']
+    ) => {
+        this.searchService.setValidateInfo(info);
     };
 
     public readonly setSearchValue = (value?: string) => {
-        this.searchService.setSearchValue?.(value);
+        this.searchService.setSearchValue(value);
     };
 
     public readonly setReplaceValue = (value?: string) => {
-        this.searchService.setReplaceValue?.(value);
+        this.searchService.setReplaceValue(value);
     };
 
-    public onToggleAddon = (addon?: IActionBarItemProps) => {
+    public toggleAddon = (addon?: IActionBarItemProps) => {
         const addonId = addon?.id;
         switch (addonId) {
             case SEARCH_CASE_SENSITIVE_COMMAND_ID: {
-                this.onToggleCaseSensitive(addonId);
+                this.searchService.toggleCaseSensitive();
                 break;
             }
             case SEARCH_WHOLE_WORD_COMMAND_ID: {
-                this.onToggleWholeWord(addonId);
+                this.searchService.toggleWholeWord();
                 break;
             }
             case SEARCH_REGULAR_EXPRESSION_COMMAND_ID: {
-                this.onToggleRegex(addonId);
+                this.searchService.toggleRegex();
                 break;
             }
             case SEARCH_PRESERVE_CASE_COMMAND_ID: {
-                this.onTogglePreserveCase(addonId);
+                this.searchService.togglePreserveCase();
                 break;
             }
             case SEARCH_REPLACE_ALL_COMMAND_ID: {
-                this.onToggleRegex(addonId);
+                this.emit(SearchEvent.onReplaceAll);
                 break;
             }
             default:
@@ -151,36 +200,35 @@ export class SearchController extends Controller implements ISearchController {
         }
     };
 
-    public readonly onToggleMode = (status: boolean) => {
-        this.searchService.toggleMode?.(status);
+    public readonly toggleMode = (status: boolean) => {
+        this.searchService.toggleMode(status);
     };
 
-    public readonly onToggleCaseSensitive = (addonId: string) => {
-        this.searchService.toggleCaseSensitive?.(addonId);
+    public onChange = (value: string = '', replaceValue: string = '') => {
+        this.emit(SearchEvent.onChange, value, replaceValue);
     };
 
-    public readonly onToggleWholeWord = (addonId: string) => {
-        this.searchService.toggleWholeWord?.(addonId);
+    public onSearch = (value: string = '', replaceValue: string = '') => {
+        const {
+            isRegex,
+            isCaseSensitive,
+            isWholeWords,
+            preserveCase,
+        } = this.searchService.getState();
+
+        this.emit(SearchEvent.onSearch, value, replaceValue, {
+            isRegex,
+            isCaseSensitive,
+            isWholeWords,
+            preserveCase,
+        });
     };
 
-    public readonly onToggleRegex = (addonId: string) => {
-        this.searchService.toggleRegex?.(addonId);
-    };
-
-    public readonly onTogglePreserveCase = (addonId: string) => {
-        this.searchService.togglePreserveCase?.(addonId);
-    };
-
-    public readonly onToggleRepalceAll = (addonId: string) => {
-        this.searchService.toggleReplaceAll?.(addonId);
-    };
-
-    public readonly convertFoldToSearchTree = (data, queryVal): any => {
-        return this.searchService.convertFoldToSearchTree?.(data, queryVal);
-    };
-
-    public readonly getSearchIndex = (text: string, queryVal?: string) => {
-        return this.searchService.getSearchIndex(text, queryVal);
+    public onResultClick = (
+        item: ITreeNodeItemProps,
+        resultData: ITreeNodeItemProps[]
+    ) => {
+        this.emit(SearchEvent.onResultClick, item, resultData);
     };
 }
 

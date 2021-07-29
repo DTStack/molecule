@@ -101,7 +101,7 @@ export default class TestPane extends React.Component {
 
         const updateProblem = () => {
             const problems = molecule.problems.getState().data;
-            molecule.problems.addProblems({
+            molecule.problems.add({
                 id: (problems[problems.length - 1]?.id || 0) + 10,
                 name: 'text.tsx',
                 value: {
@@ -133,7 +133,7 @@ export default class TestPane extends React.Component {
         };
 
         const clearProblems = () => {
-            molecule.problems.clearProblems();
+            molecule.problems.clear();
         };
 
         const newEditor = function () {

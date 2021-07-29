@@ -10,10 +10,13 @@ import {
     replaceContainerClassName,
     searchTargetContainerClassName,
 } from './base';
+
+export type SearchValues = (string | undefined)[];
+
 export interface ISearchProps extends React.ComponentProps<any> {
     style?: React.CSSProperties;
     className?: string;
-    values?: (string | undefined)[];
+    values?: SearchValues;
     placeholders?: string[];
     addons?: (IActionBarItemProps[] | undefined)[];
     validationInfo?: string | { type: keyof typeof InfoTypeEnum; text: string };
@@ -26,11 +29,11 @@ export interface ISearchProps extends React.ComponentProps<any> {
      *
      * second value is from replace input
      */
-    onChange?: (value?: (string | undefined)[]) => void;
+    onChange?: (value?: SearchValues) => void;
     /**
      * onSearch always be triggered behind onChange or onClick
      */
-    onSearch?: (value?: (string | undefined)[]) => void;
+    onSearch?: (value?: SearchValues) => void;
 }
 
 export function Search(props: ISearchProps) {
@@ -46,10 +49,12 @@ export function Search(props: ISearchProps) {
         onChange,
         onSearch,
     } = props;
+
     const [
         searchPlaceholder = 'Search',
         replacePlaceholder = 'Replace',
     ] = placeholders;
+
     const [searchAddons, replaceAddons] = addons;
     const [searchVal, replaceVal] = values;
 

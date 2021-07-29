@@ -1,14 +1,24 @@
+import { ITreeNodeItemProps } from 'mo/components';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { InfoTypeEnum } from 'mo/components/search/input';
 import { localize } from 'mo/i18n/localize';
+
+export enum SearchEvent {
+    onChange = 'search.onChange',
+    onSearch = 'search.onSearch',
+    onReplaceAll = 'search.onReplaceAll',
+    onResultClick = 'search.onResultClick',
+}
+
 export interface ISearchProps {
     headerToolBar?: IActionBarItemProps[];
     searchAddons?: IActionBarItemProps[];
     replaceAddons?: IActionBarItemProps[];
+    result: ITreeNodeItemProps[];
     value?: string;
     replaceValue?: string;
     replaceMode?: boolean;
-    validationInfo?: string | { type: keyof typeof InfoTypeEnum; text: string };
+    validationInfo?: { type: keyof typeof InfoTypeEnum; text: string };
     isRegex?: boolean;
     isCaseSensitive?: boolean;
     isWholeWords?: boolean;
@@ -110,6 +120,7 @@ export class SearchModel implements ISearchProps {
     public headerToolBar: IActionBarItemProps[];
     public searchAddons: IActionBarItemProps[];
     public replaceAddons: IActionBarItemProps[];
+    public result: ITreeNodeItemProps[] = [];
     public value: string = '';
     public replaceValue: string = '';
     public replaceMode: boolean = false;
@@ -117,12 +128,16 @@ export class SearchModel implements ISearchProps {
     public isCaseSensitive: boolean = false;
     public isWholeWords: boolean = false;
     public preserveCase: boolean = false;
-    public validationInfo: string = '';
+    public validationInfo: { type: keyof typeof InfoTypeEnum; text: string } = {
+        type: 'info',
+        text: '',
+    };
 
     constructor(
         headerToolBar: IActionBarItemProps[] = [],
         searchAddons: IActionBarItemProps[] = [],
         replaceAddons: IActionBarItemProps[] = [],
+        result = [],
         value = '',
         replaceValue = '',
         replaceMode = false,
@@ -130,7 +145,10 @@ export class SearchModel implements ISearchProps {
         isWholeWords = false,
         isRegex = false,
         preserveCase = false,
-        validationInfo = ''
+        validationInfo: { type: keyof typeof InfoTypeEnum; text: string } = {
+            type: 'info',
+            text: '',
+        }
     ) {
         this.headerToolBar = headerToolBar;
         this.searchAddons = searchAddons;
@@ -142,6 +160,7 @@ export class SearchModel implements ISearchProps {
         this.isWholeWords = isWholeWords;
         this.isRegex = isRegex;
         this.preserveCase = preserveCase;
+        this.result = result;
         this.validationInfo = validationInfo;
     }
 }

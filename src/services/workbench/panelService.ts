@@ -21,23 +21,69 @@ import { LayoutService } from 'mo/services';
 
 export interface IPanelService extends Component<IPanel> {
     /**
-     * The editorInstance of Output
+     * Open a new or existing panel item as the active in Panel view
+     * @param panel
      */
-    readonly outputEditorInstance: IStandaloneCodeEditor | undefined;
     open(panel: IPanelItem): void;
+    /**
+     * Get the specific panel
+     * @param id
+     */
     getPanel(id: string): IPanelItem | undefined;
+    /**
+     * Add new Panel items
+     * @param data
+     */
     add(data: IPanelItem | IPanelItem[]): void;
+    /**
+     * Update the specific panel
+     * @param panel the id field is required
+     */
     update(panel: IPanelItem): IPanelItem | undefined;
+    /**
+     * Remove the specific panel
+     * @param id
+     */
     remove(id: string): IPanelItem | undefined;
+    /**
+     * Toggle the panel between maximized or normal
+     */
     toggleMaximize(): void;
+    /**
+     * Listen to the Panel tabs onChange event
+     * @param callback
+     */
     onTabChange(callback: (panelId: string) => void): void;
+    /**
+     * Listen to the Panel toolbar click event
+     * @param callback
+     */
     onToolbarClick(
         callback: (e: React.MouseEvent, item: IActionBarItemProps) => void
     ): void;
+    /**
+     * Listen to the Panel tabs close event
+     * @param callback
+     */
     onTabClose(callback: (panelId: string) => void): void;
+    /**
+     * The editorInstance of Output
+     */
+    readonly outputEditorInstance: IStandaloneCodeEditor | undefined;
+    /**
+     * Append the content into Output panel
+     * @param content
+     */
     appendOutput(content: string): void;
+    /**
+     * Update the Output panel item
+     * @param panel
+     */
     updateOutput(panel: IPanelItem): IPanelItem | undefined;
-    clearOutput(): void;
+    /**
+     * Clean the Output content
+     */
+    cleanOutput(): void;
 }
 
 @singleton()
@@ -110,7 +156,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         this.outputEditorInstance?.setValue(outputValue + content);
     }
 
-    public clearOutput(): void {
+    public cleanOutput(): void {
         this.outputEditorInstance?.setValue('');
     }
 

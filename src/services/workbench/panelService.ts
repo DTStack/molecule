@@ -21,6 +21,11 @@ import { LayoutService } from 'mo/services';
 
 export interface IPanelService extends Component<IPanel> {
     /**
+     * Set the current active panel
+     * @param id target panel id
+     */
+    setActive(id: string): void;
+    /**
      * Open a new or existing panel item as the active in Panel view
      * @param panel
      */
@@ -95,6 +100,10 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         super();
         this.state = container.resolve(PanelModel);
         this.layoutService = container.resolve(LayoutService);
+    }
+
+    public setActive(id: string): void {
+        this.open({ id });
     }
 
     public get outputEditorInstance() {

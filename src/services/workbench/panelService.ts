@@ -24,20 +24,20 @@ export interface IPanelService extends Component<IPanel> {
      * The editorInstance of Output
      */
     readonly outputEditorInstance: IStandaloneCodeEditor | undefined;
-    open(data: IPanelItem): void;
-    getById(id: string): IPanelItem | undefined;
+    open(panel: IPanelItem): void;
+    getPanel(id: string): IPanelItem | undefined;
     add(data: IPanelItem | IPanelItem[]): void;
-    update(data: IPanelItem): IPanelItem | undefined;
+    update(panel: IPanelItem): IPanelItem | undefined;
     remove(id: string): IPanelItem | undefined;
-    appendOutput(content: string): void;
-    updateOutput(data: IPanelItem): IPanelItem | undefined;
-    clearOutput(): void;
-    maximizeRestore(): void;
-    onTabChange(callback: (key: string) => void): void;
+    toggleMaximize(): void;
+    onTabChange(callback: (panelId: string) => void): void;
     onToolbarClick(
         callback: (e: React.MouseEvent, item: IActionBarItemProps) => void
     ): void;
-    onTabClose(callback: (key: string) => void): void;
+    onTabClose(callback: (panelId: string) => void): void;
+    appendOutput(content: string): void;
+    updateOutput(panel: IPanelItem): IPanelItem | undefined;
+    clearOutput(): void;
 }
 
 @singleton()
@@ -58,7 +58,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         return outputPane?.outputEditorInstance;
     }
 
-    public maximizeRestore(): void {
+    public toggleMaximize(): void {
         const panelMaximized = this.layoutService.isPanelMaximized();
         const { toolbox = [] } = this.state;
         const resizeBtnIndex = toolbox?.findIndex(
@@ -82,7 +82,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     }
 
     public open(data: IPanelItem<any>): void {
-        let current = this.getById(data.id);
+        let current = this.getPanel(data.id);
         if (!current) {
             this.add(data);
             current = data;
@@ -92,7 +92,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         });
     }
 
-    public getById(id: string): IPanelItem<any> | undefined {
+    public getPanel(id: string): IPanelItem<any> | undefined {
         const { data = [] } = this.state;
         return data.find(searchById(id));
     }

@@ -54,7 +54,7 @@ export class PanelController extends Controller implements IPanelController {
                 QuickTogglePanelAction.ID
             );
         } else if (item.id === PANEL_TOOLBOX_RESIZE) {
-            this.panelService.maximizeRestore();
+            this.panelService.toggleMaximize();
         }
         this.emit(PanelEvent.onToolbarClick, e, item);
     };

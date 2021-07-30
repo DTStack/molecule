@@ -5,6 +5,9 @@ import { ITabProps } from 'mo/components/tabs/tab';
 import Output from 'mo/workbench/panel/output';
 export interface IPanelItem<T = any> extends ITabProps<T> {
     id: string;
+    /**
+     * The same as HTMLElement title attribute
+     */
     title?: string;
     toolbox?: IActionBarItemProps[];
     data?: T;

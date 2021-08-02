@@ -258,10 +258,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                         id: index,
                         name: `test_sql_${index}.txt`,
                         fileType: FileTypes.File,
-                        icon: molecule.folderTree.getFileIconByExtensionName(
-                            'test_sql.txt',
-                            FileTypes.File
-                        ),
+                        isLeaf: true,
                         content: `show tables;
 SELECT 1;
 DESC 6d_target_test;
@@ -277,7 +274,7 @@ PARTITIONED BY (ds string) lifecycle 1000;
 `,
                     })
             );
-            molecule.folderTree.addRootFolder?.(
+            molecule.folderTree.add(
                 new TreeNodeModel({
                     name: 'molecule_temp',
                     fileType: FileTypes.RootFolder,

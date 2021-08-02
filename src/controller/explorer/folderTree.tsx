@@ -1,12 +1,10 @@
 import 'reflect-metadata';
-import * as React from 'react';
 import { container, singleton } from 'tsyringe';
+import cloneDeep from 'lodash/cloneDeep';
 import { Controller } from 'mo/react/controller';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps } from 'mo/components/menu';
-import { Modal } from 'mo/components/dialog';
 import {
-    IFolderInputEvent,
     BASE_CONTEXT_MENU,
     ROOT_FOLDER_CONTEXT_MENU,
     FILE_CONTEXT_MENU,
@@ -19,37 +17,18 @@ import {
     FileTypes,
 } from 'mo/model';
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
-import { randomId } from 'mo/common/utils';
 
-const confirm = Modal.confirm;
 export interface IFolderTreeController {
-    readonly createFileOrFolder?: (type: keyof typeof FileTypes) => void;
-    readonly onClickContextMenu?: (
-        e: React.MouseEvent,
-        item: IMenuItemProps,
-        node?: ITreeNodeItemProps,
-        events?: IFolderInputEvent
-    ) => void;
-    readonly filterContextMenu?: (
-        menus: IMenuItemProps[],
+    readonly createTreeNode: (type: keyof typeof FileTypes) => void;
+    readonly onClickContextMenu: (
+        contextMenu: IMenuItemProps,
         treeNode: ITreeNodeItemProps
-    ) => IMenuItemProps[];
-    readonly getInputEvent?: (events: IFolderInputEvent) => IFolderInputEvent;
-    readonly onNewFile?: (id: number) => void;
-    readonly onNewFolder?: (id: number) => void;
-    /**
-     * If not provide id, it will use a random id
-     */
-    readonly onNewRootFolder?: (id?: number) => void;
-    readonly onRename?: (id: number) => void;
-    readonly onDelete?: (id: number) => void;
-    readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
-    readonly onUpdateFileContent?: (id: number, value?: string) => void;
-    readonly onSelectFile?: (
-        file: ITreeNodeItemProps,
-        isUpdate?: boolean
     ) => void;
+    readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
+    readonly onSelectFile: (file: ITreeNodeItemProps) => void;
     readonly onDropTree?: (treeNode: ITreeNodeItemProps[]) => void;
+
+    onRightClick(treeNode: ITreeNodeItemProps): IMenuItemProps[];
 }
 
 @singleton()
@@ -61,125 +40,110 @@ export class FolderTreeController
     constructor() {
         super();
         this.folderTreeService = container.resolve(FolderTreeService);
-        this.initView();
     }
 
-    private initView() {}
+    private getContextMenu = (treeNode: ITreeNodeItemProps) => {
+        const menus: IMenuItemProps[] = cloneDeep(
+            this.folderTreeService.getState().folderTree?.contextMenu || []
+        );
+        switch (treeNode.fileType) {
+            case FileTypes.File: {
+                menus.unshift(...FILE_CONTEXT_MENU);
+                break;
+            }
+            case FileTypes.Folder: {
+                menus.unshift(...BASE_CONTEXT_MENU);
+                break;
+            }
+            case FileTypes.RootFolder: {
+                // In general, root folder have no contextMenu, because it can't be clicked
+                return BASE_CONTEXT_MENU.concat(
+                    ROOT_FOLDER_CONTEXT_MENU
+                ) as IMenuItemProps[];
+            }
+            default:
+                break;
+        }
 
-    public createFileOrFolder = (type: keyof typeof FileTypes) => {
+        return menus;
+    };
+
+    public createTreeNode = (type: keyof typeof FileTypes) => {
         const folderTreeState = this.folderTreeService.getState();
         const { data, current } = folderTreeState?.folderTree || {};
         // The current selected node id or the first root node
         const nodeId = current?.id || data?.[0]?.id;
-        // emit onNewFile or onNewFolder event
-        this.emit(FolderTreeEvent[`onNew${type}`], nodeId);
-    };
-
-    public readonly getInputEvent = (
-        events: IFolderInputEvent
-    ): IFolderInputEvent => {
-        return events;
-    };
-
-    public onRename = (id: number) => {
-        this.emit(FolderTreeEvent.onRename, id);
-    };
-
-    public onDelete = (id: number) => {
-        this.emit(FolderTreeEvent.onDelete, id);
-    };
-
-    public onNewFile = (id: number) => {
-        this.emit(FolderTreeEvent.onNewFile, id);
-    };
-
-    public onNewFolder = (id: number) => {
-        this.emit(FolderTreeEvent.onNewFolder, id);
-    };
-
-    public onNewRootFolder = (id?: number) => {
-        this.emit(FolderTreeEvent.onNewRootFolder, id || randomId());
-    };
-
-    public onUpdateFileName = (file: ITreeNodeItemProps) => {
-        this.emit(FolderTreeEvent.onUpdateFileName, file);
-    };
-
-    public onUpdateFileContent = (id: number, value?: string) => {
-        this.emit(FolderTreeEvent.onUpdateFileContent, id, value);
-    };
-
-    public readonly onSelectFile = (
-        file: ITreeNodeItemProps,
-        isUpdate?: boolean
-    ) => {
-        this.emit(FolderTreeEvent.onSelectFile, file, isUpdate);
-    };
-
-    public readonly onDropTree = (treeNode: ITreeNodeItemProps[]) => {
-        this.folderTreeService.onDropTree(treeNode);
+        this.emit(FolderTreeEvent.onCreate, type, nodeId);
     };
 
     public readonly onClickContextMenu = (
-        e: React.MouseEvent,
-        item: IMenuItemProps,
-        node?: ITreeNodeItemProps
+        contextMenu: IMenuItemProps,
+        treeNode: ITreeNodeItemProps
     ) => {
-        const menuId = item.id;
-        const ctx = this;
-        const { id: nodeId, name } = node || {};
+        const menuId = contextMenu.id;
+        const { id: nodeId } = treeNode;
         switch (menuId) {
             case RENAME_COMMAND_ID: {
                 this.onRename(nodeId);
                 break;
             }
             case DELETE_COMMAND_ID: {
-                confirm({
-                    title: `Are you sure you want to delete '${name}' ?`,
-                    content: 'This action is irreversible!',
-                    onOk() {
-                        ctx.onDelete(nodeId);
-                    },
-                });
+                this.onDelete(nodeId);
                 break;
             }
             case NEW_FILE_COMMAND_ID: {
-                this.createFileOrFolder(FileTypes.File);
+                this.createTreeNode(FileTypes.File);
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                this.createFileOrFolder(FileTypes.Folder);
+                this.createTreeNode(FileTypes.Folder);
                 break;
             }
             case OPEN_TO_SIDE_COMMAND_ID: {
-                this.onSelectFile(node!, false);
+                this.onSelectFile(treeNode);
                 break;
+            }
+            default: {
+                this.onContextMenuClick(treeNode, contextMenu);
             }
         }
     };
 
-    public readonly filterContextMenu = (menus, node) => {
-        let menu;
+    public onRightClick = (treeNode: ITreeNodeItemProps) => {
+        const menus = this.getContextMenu(treeNode);
+        this.emit(FolderTreeEvent.onRightClick, treeNode, menus);
 
-        switch (node.fileType) {
-            case FileTypes.File: {
-                menu = FILE_CONTEXT_MENU.concat(menus);
-                break;
-            }
-            case FileTypes.Folder: {
-                menu = BASE_CONTEXT_MENU.concat(menus);
-                break;
-            }
-            case FileTypes.RootFolder: {
-                menu = BASE_CONTEXT_MENU.concat(ROOT_FOLDER_CONTEXT_MENU);
-                break;
-            }
-            default:
-                menu = menus;
+        return menus;
+    };
+
+    public readonly onDropTree = (treeNode: ITreeNodeItemProps[]) => {
+        this.folderTreeService.onDropTree(treeNode);
+    };
+
+    public onUpdateFileName = (file: ITreeNodeItemProps) => {
+        this.emit(FolderTreeEvent.onUpdateFileName, file);
+    };
+
+    public readonly onSelectFile = (file: ITreeNodeItemProps) => {
+        this.folderTreeService.setActive(file.id);
+        // editing file won't emit onSelectFile
+        if (!file.isEditable && file.fileType === FileTypes.File) {
+            this.emit(FolderTreeEvent.onSelectFile, file);
         }
-        return menu;
+    };
+
+    private onContextMenuClick = (
+        treeNode: ITreeNodeItemProps,
+        contextMenu: IMenuItemProps
+    ) => {
+        this.emit(FolderTreeEvent.onContextMenuClick, treeNode, contextMenu);
+    };
+
+    private onRename = (id: number) => {
+        this.emit(FolderTreeEvent.onRename, id);
+    };
+
+    private onDelete = (id: number) => {
+        this.emit(FolderTreeEvent.onDelete, id);
     };
 }
-
-// Register singleton
-container.resolve(FolderTreeController);

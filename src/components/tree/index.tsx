@@ -141,7 +141,7 @@ const TreeView = ({
                     disabled={disabled}
                     title={renderTitle?.(item, index, isLeaf)} // dynamic title
                     key={key}
-                    icon={IconComponent}
+                    icon={itemIsLeaf && IconComponent}
                 >
                     {children && renderTreeNodes(children, indent + 1, key)}
                 </RcTreeNode>

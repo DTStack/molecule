@@ -13,15 +13,13 @@ export enum FileTypes {
 export type FileType = keyof typeof FileTypes;
 
 export enum FolderTreeEvent {
-    onClick = 'folderTree.onClick',
     onSelectFile = 'folderTree.onSelectFile',
-    onNewFile = 'folderTree.onNewFile',
-    onNewFolder = 'folderTree.onNewFolder',
-    onNewRootFolder = 'folderTree.onNewRootFolder',
     onDelete = 'folderTree.onDelete',
     onRename = 'folderTree.onRename',
     onUpdateFileName = 'folderTree.onUpdateFileName',
-    onUpdateFileContent = 'folderTree.onUpdateFileContent',
+    onRightClick = 'folderTree.onRightClick',
+    onContextMenuClick = 'folderTree.onContextMenuClick',
+    onCreate = 'folderTree.onCreate',
 }
 
 export interface IFolderInputEvent {

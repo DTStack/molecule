@@ -15,7 +15,6 @@ import {
 import { searchById } from '../helper';
 import { editor as MonacoEditor, Uri } from 'mo/monaco';
 import { IMenuItemProps } from 'mo/components';
-import { ACTION_QUICK_COPY_LINE_UP } from 'mo/model/keybinding';
 
 export interface IEditorService extends Component<IEditor> {
     /**
@@ -81,11 +80,6 @@ export interface IEditorService extends Component<IEditor> {
      */
     updateActions(actions: IMenuItemProps[], groupId?: number): void;
     updateCurrentGroup(currentValues): void;
-    /**
-     * Functional expansion
-     */
-    selectAll(): void;
-    quickCopyLineUp(): void;
     /**
      * The Instance of Editor
      */
@@ -162,17 +156,6 @@ export class EditorService
     public get editorInstance() {
         return this.state.current?.editorInstance;
     }
-
-    public selectAll = () => {
-        this.editorInstance!.focus();
-        this.editorInstance.setSelection(
-            this.editorInstance!.getModel()!.getFullModelRange()
-        );
-    };
-
-    public quickCopyLineUp = () => {
-        this.editorInstance?.getAction(ACTION_QUICK_COPY_LINE_UP).run();
-    };
 
     public updateTab(tab: IEditorTab, groupId?: number): IEditorTab {
         if (groupId) {

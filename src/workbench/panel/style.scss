@@ -1,4 +1,5 @@
 @import 'mo/style/common';
+$icon-size: 35px;
 
 #{$panel} {
     display: flex;
@@ -53,7 +54,12 @@
     }
 
     &__toolbar {
-        min-width: 60px;
+        .codicon {
+            height: $icon-size;
+            line-height: $icon-size;
+            margin-right: 4px;
+            min-width: 28px;
+        }
     }
 }
 

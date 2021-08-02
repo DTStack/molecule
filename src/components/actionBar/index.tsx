@@ -46,7 +46,6 @@ const containerClassName = getBEMElement(
 const itemClassName = getBEMElement(defaultActionBarClassName, 'item');
 const itemDisabledClassName = getBEMModifier(itemClassName, 'disabled');
 const itemCheckedClassName = getBEMModifier(itemClassName, 'checked');
-const labelClassName = getBEMElement(defaultActionBarClassName, 'label');
 
 export function ActionBarItem(props: IActionBarItemProps) {
     const {
@@ -62,13 +61,7 @@ export function ActionBarItem(props: IActionBarItemProps) {
     const checked = props.checked ? itemCheckedClassName : null;
     const refItem = useRef(null);
 
-    const claNames = classNames(
-        labelClassName,
-        'codicon',
-        props.iconName,
-        disabled,
-        checked
-    );
+    const claNames = classNames('codicon', props.iconName);
 
     let contextViewMenu;
 
@@ -110,7 +103,7 @@ export function ActionBarItem(props: IActionBarItemProps) {
         <li
             id={id}
             ref={refItem}
-            className={classNames(itemClassName, disabled)}
+            className={classNames(itemClassName, disabled, checked)}
             onClick={onClickItem}
             data-id={data.id}
         >

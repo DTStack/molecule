@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Toolbar } from 'mo/components/toolbar';
-import { IActionBarItemProps } from 'mo/components/actionBar';
+import { ActionBar, IActionBarItemProps } from 'mo/components/actionBar';
 import {
     inputGroupClassName,
     searchToolBarClassName,
@@ -124,7 +123,7 @@ function Input(props: IBaseInputProps) {
                     {info.text}
                 </div>
             )}
-            <Toolbar
+            <ActionBar
                 className={searchToolBarClassName}
                 data={toolbarData}
                 onClick={onToolbarClick}

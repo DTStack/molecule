@@ -9,18 +9,22 @@ import { ACTION_QUICK_COPY_LINE_UP } from 'mo/model/keybinding';
 export class QuickCopyLineUp extends Action2 {
     static readonly ID = ACTION_QUICK_COPY_LINE_UP;
     static readonly LABEL = localize('menu.copyLineUp', 'Copy Line Up');
+    static readonly DESC = 'Copy Line Up';
     private readonly editorService: IEditorService;
 
     constructor() {
         super({
             id: QuickCopyLineUp.ID,
+            title: {
+                value: QuickCopyLineUp.LABEL,
+                original: QuickCopyLineUp.DESC,
+            },
             label: QuickCopyLineUp.LABEL,
-            title: QuickCopyLineUp.LABEL,
-            alias: 'Copy Line Up',
-            f1: false,
+            alias: QuickCopyLineUp.DESC,
+            f1: true,
             keybinding: {
                 when: undefined,
-                weight: KeybindingWeight.BuiltinExtension,
+                weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
                 primary: KeyMod.Alt | KeyMod.Shift | KeyCode.PageUp,
             },
@@ -29,6 +33,8 @@ export class QuickCopyLineUp extends Action2 {
     }
 
     run() {
-        this.editorService.quickCopyLineUp();
+        this.editorService.editorInstance
+            ?.getAction(ACTION_QUICK_COPY_LINE_UP)
+            .run();
     }
 }

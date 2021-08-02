@@ -29,12 +29,12 @@ export interface IActivityBarService extends Component<IActivityBar> {
      */
     setActive(id?: string): void;
     /**
-     * Remove the specify activity bar by id
+     * Remove the specific activity bar by id
      * @param id
      */
     remove(id: string): void;
     /**
-     * Toggle the specify activity bar between the display or hidden
+     * Toggle the specific activity bar between show or hide
      * @param id activity bar id
      */
     toggleBar(id: string): void;
@@ -48,7 +48,7 @@ export interface IActivityBarService extends Component<IActivityBar> {
      */
     addContextMenu(data: IMenuItemProps | IMenuItemProps[]): void;
     /**
-     * Remove the specify contextMenu item by id
+     * Remove the specific contextMenu item by id
      * @param id contextmenu id
      */
     removeContextMenu(id: string): void;

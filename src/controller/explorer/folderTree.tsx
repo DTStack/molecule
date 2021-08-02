@@ -15,6 +15,7 @@ import {
     OPEN_TO_SIDE_COMMAND_ID,
     FolderTreeEvent,
     FileTypes,
+    FileType,
 } from 'mo/model';
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
 

@@ -8,6 +8,9 @@ import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarActio
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 import { QuickSelectAllAction } from 'mo/monaco/quickSelectAllAction';
 import { QuickCopyLineUp } from 'mo/monaco/quickCopyLineUp';
+import { QuickRedo } from 'mo/monaco/quickRedo';
+import { QuickUndo } from 'mo/monaco/quickUndo';
+import { QuickCreateFile } from 'mo/monaco/quickCreateFile';
 
 export const ExtendsKeybinding: IExtension = {
     activate(extensionCtx: IExtensionService) {
@@ -19,5 +22,8 @@ export const ExtendsKeybinding: IExtension = {
         extensionCtx.registerAction(QuickTogglePanelAction);
         extensionCtx.registerAction(QuickSelectAllAction);
         extensionCtx.registerAction(QuickCopyLineUp);
+        extensionCtx.registerAction(QuickUndo);
+        extensionCtx.registerAction(QuickRedo);
+        extensionCtx.registerAction(QuickCreateFile);
     },
 };

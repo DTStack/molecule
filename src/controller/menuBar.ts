@@ -1,19 +1,15 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
-import {
-    IActivityBarItem,
-    IMenuBarItem,
-    FileTypes,
-    FolderTreeEvent,
-} from 'mo/model';
+import { IActivityBarItem, IMenuBarItem } from 'mo/model';
 import {
     ACTION_QUICK_SELECT_ALL,
     ACTION_QUICK_COPY_LINE_UP,
+    ACTION_QUICK_COMMAND,
+    ACTION_QUICK_UNDO,
+    ACTION_QUICK_REDO,
+    ACTION_QUICK_CREATE_FILE,
 } from 'mo/model/keybinding';
 import {
-    MENU_FILE_CREATE,
-    MENU_FILE_REDO,
-    MENU_FILE_UNDO,
     MENU_QUICK_COMMAND,
     MENU_VIEW_ACTIVITYBAR,
     MENU_VIEW_MENUBAR,
@@ -22,23 +18,15 @@ import {
 } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 import {
-    EditorService,
-    IEditorService,
     IMenuBarService,
     ILayoutService,
     MenuBarService,
     LayoutService,
-    FolderTreeService,
 } from 'mo/services';
 import { ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
-import { QuickSelectAllAction } from 'mo/monaco/quickSelectAllAction';
-import { QuickCopyLineUp } from 'mo/monaco/quickCopyLineUp';
-
-import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
-
 export interface IMenuBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick: (event: React.MouseEvent<any, any>, item: IMenuBarItem) => void;
@@ -52,30 +40,26 @@ export interface IMenuBarController {
 export class MenuBarController
     extends Controller
     implements IMenuBarController {
-    private readonly editorService: IEditorService;
     private readonly menuBarService: IMenuBarService;
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
-    private readonly folderTreeService: FolderTreeService;
 
     constructor() {
         super();
-        this.editorService = container.resolve(EditorService);
         this.menuBarService = container.resolve(MenuBarService);
         this.layoutService = container.resolve(LayoutService);
         this.monacoService = container.resolve(MonacoService);
-        this.folderTreeService = container.resolve(FolderTreeService);
     }
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
         const menuId = item.id;
         switch (menuId) {
-            case MENU_FILE_CREATE:
-                this.createFileOrFolder(FileTypes.File);
-            case MENU_FILE_UNDO:
+            case ACTION_QUICK_CREATE_FILE:
+                this.createFile();
+            case ACTION_QUICK_UNDO:
                 this.undo();
                 break;
-            case MENU_FILE_REDO:
+            case ACTION_QUICK_REDO:
                 this.redo();
                 break;
             case ACTION_QUICK_SELECT_ALL:
@@ -104,27 +88,22 @@ export class MenuBarController
         }
     };
 
-    public createFileOrFolder = (type: keyof typeof FileTypes) => {
-        const folderTreeState = this.folderTreeService.getState();
-        const { data, current } = folderTreeState?.folderTree || {};
-        // The current selected node id or the first root node
-        const nodeId = current?.id || data?.[0]?.id;
-        // emit onNewFile or onNewFolder event
-        this.emit(FolderTreeEvent[`onNew${type}`], nodeId);
+    public createFile = () => {
+        this.monacoService.commandService.executeCommand(
+            ACTION_QUICK_CREATE_FILE
+        );
     };
 
     public undo = () => {
-        this.editorService.editorInstance?.getAction('undo').run();
+        this.monacoService.commandService.executeCommand(ACTION_QUICK_UNDO);
     };
 
     public redo = () => {
-        this.editorService.editorInstance?.getAction('redo').run();
+        this.monacoService.commandService.executeCommand(ACTION_QUICK_REDO);
     };
 
     public gotoQuickCommand = () => {
-        this.monacoService.commandService.executeCommand(
-            CommandQuickAccessViewAction.ID
-        );
+        this.monacoService.commandService.executeCommand(ACTION_QUICK_COMMAND);
     };
 
     public updateActivityBar = () => {
@@ -139,12 +118,14 @@ export class MenuBarController
 
     public selectAll = () => {
         this.monacoService.commandService.executeCommand(
-            QuickSelectAllAction.ID
+            ACTION_QUICK_SELECT_ALL
         );
     };
 
     public copyLineUp = () => {
-        this.monacoService.commandService.executeCommand(QuickCopyLineUp.ID);
+        this.monacoService.commandService.executeCommand(
+            ACTION_QUICK_COPY_LINE_UP
+        );
     };
 
     public updateMenuBar = () => {

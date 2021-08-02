@@ -14,11 +14,6 @@ import {
     EDITOR_MENU_SHOW_OPENEDITORS,
     EDITOR_MENU_SPILIT,
 } from 'mo/model/workbench/editor';
-import {
-    MENU_FILE_UNDO,
-    MENU_FILE_REDO,
-    menuActionRegistrar,
-} from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 import { IMenuItemProps } from 'mo/components/menu';
 import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
@@ -66,12 +61,6 @@ export class EditorController extends Controller implements IEditorController {
     private readonly editorService: IEditorService;
     private readonly statusBarService: IStatusBarService;
     private readonly explorerService: IExplorerService;
-    private _actionAutomaton = {
-        [MENU_FILE_UNDO]: (editorInstance: IStandaloneCodeEditor, id: string) =>
-            this.actionForUndoOrReDo(editorInstance, id),
-        [MENU_FILE_REDO]: (editorInstance: IStandaloneCodeEditor, id: string) =>
-            this.actionForUndoOrReDo(editorInstance, id),
-    };
 
     constructor() {
         super();
@@ -170,7 +159,6 @@ export class EditorController extends Controller implements IEditorController {
         if (!editorInstance) return;
 
         this.initEditorEvents(editorInstance, groupId);
-        this.registerActions(editorInstance);
         this.editorService.updateGroup(groupId, {
             editorInstance: editorInstance,
         });
@@ -185,27 +173,6 @@ export class EditorController extends Controller implements IEditorController {
             tab?.data?.value!,
             tab?.data?.language!
         );
-    };
-
-    private actionForUndoOrReDo = (
-        editorInstance: IStandaloneCodeEditor,
-        id: string
-    ) => {
-        editorInstance!.focus();
-        if (!document.execCommand(id)) {
-            editorInstance?.getModel()?.[id]();
-        }
-    };
-
-    // Register actions not included in monaco actions
-    private registerActions = (editorInstance: IStandaloneCodeEditor) => {
-        menuActionRegistrar.forEach(({ id, label }) => {
-            editorInstance?.addAction({
-                id,
-                label,
-                run: () => this._actionAutomaton[id](editorInstance, id),
-            });
-        });
     };
 
     public onClickActions = (action: IEditorActionsProps) => {

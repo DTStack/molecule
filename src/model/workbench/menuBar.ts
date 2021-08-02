@@ -4,6 +4,9 @@ import { ID_SIDE_BAR } from 'mo/common/id';
 import {
     ACTION_QUICK_SELECT_ALL,
     ACTION_QUICK_COPY_LINE_UP,
+    ACTION_QUICK_UNDO,
+    ACTION_QUICK_REDO,
+    ACTION_QUICK_CREATE_FILE,
 } from 'mo/model/keybinding';
 /**
  * The activity bar event definition
@@ -32,9 +35,6 @@ export interface IMenuBar {
 export const MENU_FILE_CREATE = 'newFile';
 export const MENU_FILE_OPEN = 'openFile'; // default encoding with utf-8 ?
 
-export const MENU_FILE_UNDO = 'undo';
-export const MENU_FILE_REDO = 'redo';
-
 export const MENU_QUICK_COMMAND = 'editor.action.quickCommand';
 
 export const MENU_VIEW_MENUBAR = 'workbench.action.showMenuBar';
@@ -49,7 +49,7 @@ export function builtInMenuBarData() {
             name: localize('menu.file', 'File'),
             data: [
                 {
-                    id: MENU_FILE_CREATE,
+                    id: ACTION_QUICK_CREATE_FILE,
                     name: localize('menu.newFile', 'New File'),
                 },
                 {
@@ -63,11 +63,11 @@ export function builtInMenuBarData() {
             name: localize('menu.edit', 'Edit'),
             data: [
                 {
-                    id: MENU_FILE_UNDO,
+                    id: ACTION_QUICK_UNDO,
                     name: localize('menu.undo', 'Undo'),
                 },
                 {
-                    id: MENU_FILE_REDO,
+                    id: ACTION_QUICK_REDO,
                     name: localize('menu.redo', 'Redo'),
                 },
             ],
@@ -159,17 +159,6 @@ export function builtInMenuBarData() {
         },
     ];
 }
-
-export const menuActionRegistrar = [
-    {
-        id: MENU_FILE_UNDO,
-        label: localize('menu.undo', 'Undo'),
-    },
-    {
-        id: MENU_FILE_REDO,
-        label: localize('menu.redo', 'Redo'),
-    },
-];
 
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];

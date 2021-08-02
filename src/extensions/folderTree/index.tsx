@@ -15,25 +15,6 @@ export const ExtendsFolderTree: IExtension = {
             });
         });
 
-        molecule.folderTree.onSelectFile((file: ITreeNodeItemProps) => {
-            const { name } = file;
-            const nameArr = name?.split('.') || [];
-            const extName = nameArr[nameArr.length - 1] || '';
-            const tabData = {
-                ...file,
-                id: `${file.id}`?.split('_')?.[0],
-                modified: false,
-                data: {
-                    value: file.content,
-                    path: file.location,
-                    language: extName,
-                    ...(file.data || {}),
-                },
-            };
-            molecule.editor.open(tabData);
-            molecule.explorer.render();
-        });
-
         molecule.folderTree.onUpdateFileName((file: ITreeNodeItemProps) => {
             const { id, name, location } = file;
             if (name) {

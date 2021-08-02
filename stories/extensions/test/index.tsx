@@ -145,5 +145,23 @@ export const ExtendTestPane: IExtension = {
         molecule.search.onResultClick((item) => {
             console.log('item:', item);
         });
+
+        molecule.folderTree.onSelectFile((file) => {
+            const { name } = file;
+            const nameArr = name?.split('.') || [];
+            const extName = nameArr[nameArr.length - 1] || '';
+            const tabData = {
+                ...file,
+                id: `${file.id}`?.split('_')?.[0],
+                modified: false,
+                data: {
+                    value: file.content,
+                    path: file.location,
+                    language: extName,
+                    ...(file.data || {}),
+                },
+            };
+            molecule.editor.open(tabData);
+        });
     },
 };

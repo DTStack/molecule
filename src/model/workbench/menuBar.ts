@@ -15,7 +15,7 @@ export enum MenuBarEvent {
     /**
      * Selected an activity bar
      */
-    onClick = 'menuBar.onClick',
+    onSelect = 'menuBar.onSelect',
 }
 
 export interface IMenuBarItem {

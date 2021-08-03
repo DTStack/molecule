@@ -38,6 +38,6 @@ export class QuickCreateFile extends Action2 {
     }
 
     run() {
-        this.folderTreeController.createFileOrFolder?.(FileTypes.File);
+        this.folderTreeController.createTreeNode?.(FileTypes.File);
     }
 }

@@ -23,8 +23,8 @@ export interface IMenuBarService extends Component<IMenuBar> {
      */
     add(menuItem: IMenuBarItem, parentId: string): void;
     /**
-     * Select the execution of the menu
-     * @param callback
+     * Select an item in the menu
+     * @param menuId
      */
     onSelect(callback: (menuId: string) => void): void;
     /**

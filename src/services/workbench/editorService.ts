@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
+import * as monaco from 'monaco-editor';
 import cloneDeep from 'lodash/cloneDeep';
 import { Component } from 'mo/react';
 import {
@@ -83,7 +84,7 @@ export interface IEditorService extends Component<IEditor> {
     /**
      * The Instance of Editor
      */
-    readonly editorInstance: IStandaloneCodeEditor;
+    readonly editorInstance: monaco.editor.IStandaloneCodeEditor;
 }
 @singleton()
 export class EditorService

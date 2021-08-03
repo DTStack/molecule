@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import * as monaco from 'monaco-editor';
 import { localize } from 'monaco-editor/esm/vs/nls';
 import { DisposableStore } from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { QuickCommandNLS } from 'monaco-editor/esm/vs/editor/common/standaloneStrings';
@@ -34,7 +35,9 @@ import { ACTION_QUICK_COMMAND } from 'mo/model/keybinding';
 export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAccessProvider {
     static PREFIX = '>';
     protected readonly editorService: IEditorService | undefined;
-    protected get activeTextEditorControl(): IStandaloneCodeEditor | undefined {
+    protected get activeTextEditorControl():
+        | monaco.editor.IStandaloneCodeEditor
+        | undefined {
         return this.editorService?.editorInstance;
     }
 

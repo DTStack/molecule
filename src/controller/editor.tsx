@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import * as React from 'react';
+import * as monaco from 'monaco-editor';
+
 import {
     EditorEvent,
     IEditorTab,
@@ -154,7 +156,7 @@ export class EditorController extends Controller implements IEditorController {
      * Called when open a new group
      */
     public onUpdateEditorIns = (
-        editorInstance: IStandaloneCodeEditor,
+        editorInstance: monaco.editor.IStandaloneCodeEditor,
         groupId: number
     ) => {
         if (!editorInstance) return;
@@ -222,7 +224,7 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     private initEditorEvents(
-        editorInstance: IStandaloneCodeEditor,
+        editorInstance: monaco.editor.IStandaloneCodeEditor,
         groupId: number
     ) {
         if (!editorInstance) return;
@@ -289,7 +291,7 @@ export class EditorController extends Controller implements IEditorController {
      * - the action to open a new tab equals to create a new model in instance
      */
     private openTab(
-        editorInstance: IStandaloneCodeEditor,
+        editorInstance: monaco.editor.IStandaloneCodeEditor,
         path: string,
         value: string,
         language: string
@@ -312,13 +314,17 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance?.focus();
     }
 
-    private updateStatusBar(editorInstance: IStandaloneCodeEditor) {
+    private updateStatusBar(
+        editorInstance: monaco.editor.IStandaloneCodeEditor
+    ) {
         if (editorInstance) {
             // TODO
         }
     }
 
-    public updateEditorLineColumnInfo(editorInstance: IStandaloneCodeEditor) {
+    public updateEditorLineColumnInfo(
+        editorInstance: monaco.editor.IStandaloneCodeEditor
+    ) {
         if (editorInstance) {
             const position = editorInstance.getPosition();
             this.statusBarService.updateItem(

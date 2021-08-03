@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as monaco from 'monaco-editor';
+
 import { localize } from 'mo/i18n/localize';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { ITabProps } from 'mo/components/tabs/tab';
@@ -31,8 +33,10 @@ export interface IPanel {
 }
 
 export interface IOutput extends IPanelItem {
-    outputEditorInstance?: IStandaloneCodeEditor;
-    onUpdateEditorIns?(editorInstance: IStandaloneCodeEditor): void;
+    outputEditorInstance?: monaco.editor.IStandaloneCodeEditor;
+    onUpdateEditorIns?(
+        editorInstance: monaco.editor.IStandaloneCodeEditor
+    ): void;
 }
 
 export function builtInOutputPanel() {
@@ -43,7 +47,7 @@ export function builtInOutputPanel() {
     };
 
     function onUpdateEditorIns(
-        editorInstance: IStandaloneCodeEditor,
+        editorInstance: monaco.editor.IStandaloneCodeEditor,
         item: IOutput
     ) {
         // Please notice the problem about memory out

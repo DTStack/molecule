@@ -6,7 +6,7 @@ export interface IStatusBarItem<T = any> extends HTMLElementProps {
     sortIndex: number;
     data?: T;
     onClick?(e: React.MouseEvent, item?: IStatusBarItem);
-    render?: (item: IStatusBarItem) => ReactNode;
+    render?: (item: IStatusBarItem) => React.ReactNode;
     name?: string;
 }
 

@@ -1,5 +1,3 @@
-/// <reference path="../../node_modules/monaco-editor/monaco.d.ts" />
-
 /**
  * Global flag for development
  */
@@ -11,8 +9,6 @@ declare let __DEVELOPMENT__: boolean;
 declare const window: Window;
 
 declare const define: any;
-
-type ReactNode = React.ReactNode;
 interface HTMLElementProps<T = any> {
     id?: string;
     title?: string;
@@ -21,7 +17,3 @@ interface HTMLElementProps<T = any> {
 }
 
 type LiteralUnion<T extends U, U> = T | (U & {});
-
-type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
-type IEditorSettings = monaco.editor.IEditorOptions &
-    monaco.editor.IGlobalEditorOptions;

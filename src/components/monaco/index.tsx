@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import * as React from 'react';
 import { PureComponent } from 'react';
+import * as monaco from 'monaco-editor';
+
 import { isEqual } from 'lodash';
 import { APP_PREFIX } from 'mo/common/const';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
@@ -33,7 +35,7 @@ export class MonacoEditor extends PureComponent<IMonacoEditorProps> {
     /**
      * The instance of monaco
      */
-    private monacoInstance!: monaco.editor.IStandaloneCodeEditor;
+    private monacoInstance!: monaco.editor.IStandaloneCodeEditor | undefined;
     /**
      * The dom element of editor container
      */

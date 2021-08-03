@@ -1,5 +1,6 @@
 import { IColorTheme } from 'mo/model/colorTheme';
 import { getBuiltInColors } from 'mo/services/theme/colorRegistry';
+import * as monaco from 'monaco-editor';
 
 /**
  * This function convert colors object to CSS variables, and add it to the :root {}.

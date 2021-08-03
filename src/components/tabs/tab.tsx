@@ -32,7 +32,7 @@ export interface ITabProps<T = any, P = any> extends ITabEvent {
     index?: number;
     id?: string;
     name?: string;
-    renderPane?: ((item: P) => ReactNode) | ReactNode;
+    renderPane?: ((item: P) => React.ReactNode) | React.ReactNode;
     data?: T;
 }
 

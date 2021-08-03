@@ -22,7 +22,7 @@ export enum ActivityBarEvent {
 
 export interface IActivityBarItem {
     id: string;
-    name?: ReactNode;
+    name?: React.ReactNode;
     title?: string;
     hidden?: boolean;
     data?: any;

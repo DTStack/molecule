@@ -1,6 +1,11 @@
+import * as monaco from 'monaco-editor';
+
 export interface IConfiguration {
     [key: string]: any;
 }
+
+export type IEditorSettings = monaco.editor.IEditorOptions &
+    monaco.editor.IGlobalEditorOptions;
 
 /**
  * The Settings configuration event definition

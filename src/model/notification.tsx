@@ -11,7 +11,7 @@ export enum NotificationStatus {
 export interface INotificationItem<T = any> {
     id?: number;
     value: T;
-    render?(item: INotificationItem): ReactNode;
+    render?(item: INotificationItem): React.ReactNode;
     status?: NotificationStatus;
 }
 
@@ -41,7 +41,7 @@ export class NotificationModel<T> implements INotification<T> {
     public name: string;
     public data: INotificationItem<T>[];
     public sortIndex: number;
-    public render: () => ReactNode;
+    public render: () => React.ReactNode;
     public showNotifications: boolean;
     public actionBar: IActionBarItemProps[];
 
@@ -55,7 +55,7 @@ export class NotificationModel<T> implements INotification<T> {
             NOTIFICATION_CLEAR_ALL,
             NOTIFICATION_HIDE,
         ],
-        render: () => ReactNode = () => <Icon type="bell" />
+        render: () => React.ReactNode = () => <Icon type="bell" />
     ) {
         this.id = id;
         this.name = name;

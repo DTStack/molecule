@@ -13,5 +13,7 @@ export const rightItemsClassName = getBEMElement(
 export const itemClassName = getBEMElement(statusBarClassName, 'item');
 
 export function sortByIndex(a: IStatusBarItem, b: IStatusBarItem) {
-    return a.sortIndex - b.sortIndex;
+    return a.sortIndex !== undefined && b.sortIndex !== undefined
+        ? a.sortIndex - b.sortIndex
+        : 0;
 }

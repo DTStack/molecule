@@ -51,9 +51,7 @@
         "tab.activeForeground": "#fff",
         "diffEditor.insertedTextBackground": "#9bb95533",
         "diffEditor.removedTextBackground": "#ff000033",
-        "actionBar.checkedBackground": "rgba(0, 127, 212, 0.4)",
-        "tooltip.color": "#333",
-        "tooltip.background": "rgba(0, 0, 0, 0.75)"
+        "actionBar.checkedBackground": "rgba(0, 127, 212, 0.4)"
     },
     "semanticHighlighting": true
 }

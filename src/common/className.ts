@@ -1,3 +1,4 @@
+import { Utils } from '@dtinsight/dt-utils/lib';
 import { isEmpty } from 'lodash';
 import { APP_PREFIX } from 'mo/common/const';
 /**
@@ -54,4 +55,12 @@ export function getBEMElement(block: string, element: string) {
  */
 export function getBEMModifier(blockOrElement: string, modifier: string) {
     return `${blockOrElement}--${modifier}`;
+}
+
+/**
+ * Returns the className of font-family in mac
+ * @returns
+ */
+export function getFontInMac() {
+    return Utils.isMacOs() ? 'mac' : '';
 }

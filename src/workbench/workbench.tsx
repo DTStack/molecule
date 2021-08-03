@@ -4,7 +4,7 @@ import SplitPane from 'react-split-pane';
 import Pane from 'react-split-pane/lib/Pane';
 import { container } from 'tsyringe';
 
-import { classNames, prefixClaName } from 'mo/common/className';
+import { classNames, getFontInMac, prefixClaName } from 'mo/common/className';
 
 import { EditorView } from 'mo/workbench/editor';
 import { SidebarView } from 'mo/workbench/sidebar';
@@ -13,7 +13,6 @@ import { ActivityBarView } from 'mo/workbench/activityBar';
 import { StatusBarView } from 'mo/workbench/statusBar';
 import { PanelView } from 'mo/workbench/panel';
 import { ID_APP } from 'mo/common/id';
-import { Utils } from '@dtinsight/dt-utils';
 import { APP_PREFIX } from 'mo/common/const';
 
 import { connect } from 'mo/react';
@@ -27,7 +26,7 @@ import { IWorkbench } from 'mo/model';
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
 const compositeBarClassName = prefixClaName('compositeBar');
-const appClassName = classNames(APP_PREFIX, Utils.isMacOs() ? 'mac' : '');
+const appClassName = classNames(APP_PREFIX, getFontInMac());
 
 const layoutController = container.resolve(LayoutController);
 const layoutService = container.resolve(LayoutService);

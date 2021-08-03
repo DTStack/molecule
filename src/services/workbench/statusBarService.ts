@@ -57,7 +57,7 @@ export class StatusBarService
     }
 
     public update(item: IStatusBarItem): void {
-        const { leftItems, rightItems } = this.state;
+        const { leftItems = [], rightItems = [] } = this.state;
         let result = this.updateArrayItem(leftItems, item);
         if (result) {
             this.setState({
@@ -76,10 +76,10 @@ export class StatusBarService
 
     public getStatusBarItem(id: string): IStatusBarItem {
         let result;
-        const { leftItems, rightItems } = this.state;
-        result = leftItems!.find(searchById(id));
+        const { leftItems = [], rightItems = [] } = this.state;
+        result = leftItems.find(searchById(id));
         if (!result) {
-            result = rightItems!.find(searchById(id));
+            result = rightItems.find(searchById(id));
         }
         return result;
     }
@@ -89,7 +89,7 @@ export class StatusBarService
     }
 
     public remove(id: string): void {
-        const { leftItems, rightItems } = this.state;
+        const { leftItems = [], rightItems = [] } = this.state;
         let result = this.removeArrayItem(leftItems, id);
         if (result) {
             this.setState({
@@ -128,7 +128,7 @@ export class StatusBarService
         targetArray: IStatusBarItem[],
         id: string
     ): IStatusBarItem[] | undefined {
-        const index = targetArray!.findIndex(searchById(id));
+        const index = targetArray.findIndex(searchById(id));
         if (index > -1) {
             const nextArray = targetArray.concat();
             nextArray.splice(index, 1)[0];

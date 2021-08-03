@@ -3,12 +3,14 @@ import { localize } from 'mo/i18n/localize';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { ITabProps } from 'mo/components/tabs/tab';
 import Output from 'mo/workbench/panel/output';
-export interface IPanelItem<T = any> extends ITabProps<any> {
+export interface IPanelItem<T = any> extends ITabProps<T> {
     id: string;
+    /**
+     * The same as HTMLElement title attribute
+     */
     title?: string;
     toolbox?: IActionBarItemProps[];
     data?: T;
-    render?(item: IPanelItem): ReactNode;
 }
 
 export enum PanelEvent {

@@ -21,23 +21,74 @@ import { LayoutService } from 'mo/services';
 
 export interface IPanelService extends Component<IPanel> {
     /**
-     * The editorInstance of Output
+     * Set the current active panel
+     * @param id target panel id
      */
-    readonly outputEditorInstance: IStandaloneCodeEditor | undefined;
-    open(data: IPanelItem): void;
-    getById(id: string): IPanelItem | undefined;
+    setActive(id: string): void;
+    /**
+     * Open a new or existing panel item as the active in Panel view
+     * @param panel
+     */
+    open(panel: IPanelItem): void;
+    /**
+     * Get the specific panel
+     * @param id
+     */
+    getPanel(id: string): IPanelItem | undefined;
+    /**
+     * Add new Panel items
+     * @param data
+     */
     add(data: IPanelItem | IPanelItem[]): void;
-    update(data: IPanelItem): IPanelItem | undefined;
+    /**
+     * Update the specific panel
+     * @param panel the id field is required
+     */
+    update(panel: IPanelItem): IPanelItem | undefined;
+    /**
+     * Remove the specific panel
+     * @param id
+     */
     remove(id: string): IPanelItem | undefined;
-    appendOutput(content: string): void;
-    updateOutput(data: IPanelItem): IPanelItem | undefined;
-    clearOutput(): void;
-    maximizeRestore(): void;
-    onTabChange(callback: (key: string) => void): void;
+    /**
+     * Toggle the panel between maximized or normal
+     */
+    toggleMaximize(): void;
+    /**
+     * Listen to the Panel tabs onChange event
+     * @param callback
+     */
+    onTabChange(callback: (panelId: string) => void): void;
+    /**
+     * Listen to the Panel toolbar click event
+     * @param callback
+     */
     onToolbarClick(
         callback: (e: React.MouseEvent, item: IActionBarItemProps) => void
     ): void;
-    onTabClose(callback: (key: string) => void): void;
+    /**
+     * Listen to the Panel tabs close event
+     * @param callback
+     */
+    onTabClose(callback: (panelId: string) => void): void;
+    /**
+     * The editorInstance of Output
+     */
+    readonly outputEditorInstance: IStandaloneCodeEditor | undefined;
+    /**
+     * Append the content into Output panel
+     * @param content
+     */
+    appendOutput(content: string): void;
+    /**
+     * Update the Output panel item
+     * @param panel
+     */
+    updateOutput(panel: IPanelItem): IPanelItem | undefined;
+    /**
+     * Clean the Output content
+     */
+    cleanOutput(): void;
 }
 
 @singleton()
@@ -51,6 +102,10 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         this.layoutService = container.resolve(LayoutService);
     }
 
+    public setActive(id: string): void {
+        this.open({ id });
+    }
+
     public get outputEditorInstance() {
         const outputPane: IOutput | undefined = this.state.data?.find(
             searchById(PANEL_OUTPUT)
@@ -58,7 +113,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         return outputPane?.outputEditorInstance;
     }
 
-    public maximizeRestore(): void {
+    public toggleMaximize(): void {
         const panelMaximized = this.layoutService.isPanelMaximized();
         const { toolbox = [] } = this.state;
         const resizeBtnIndex = toolbox?.findIndex(
@@ -82,7 +137,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     }
 
     public open(data: IPanelItem<any>): void {
-        let current = this.getById(data.id);
+        let current = this.getPanel(data.id);
         if (!current) {
             this.add(data);
             current = data;
@@ -92,7 +147,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         });
     }
 
-    public getById(id: string): IPanelItem<any> | undefined {
+    public getPanel(id: string): IPanelItem<any> | undefined {
         const { data = [] } = this.state;
         return data.find(searchById(id));
     }
@@ -110,7 +165,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         this.outputEditorInstance?.setValue(outputValue + content);
     }
 
-    public clearOutput(): void {
+    public cleanOutput(): void {
         this.outputEditorInstance?.setValue('');
     }
 

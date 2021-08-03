@@ -62,7 +62,7 @@ describe('Test panelService', () => {
 
     test('Test panelService getById method', () => {
         panelService.add(paneOutput);
-        const result = panelService.getById(paneOutput.id);
+        const result = panelService.getPanel(paneOutput.id);
         expect(result).not.toBeUndefined();
     });
 
@@ -72,7 +72,7 @@ describe('Test panelService', () => {
             name: 'testName',
         });
         panelService.updateOutput(expectedValue);
-        const result = panelService.getById(paneOutput.id);
+        const result = panelService.getPanel(paneOutput.id);
         expect(result).toEqual(expectedValue);
     });
 
@@ -85,7 +85,7 @@ describe('Test panelService', () => {
         const appendContent = 'Append Content';
         panelService.appendOutput(appendContent);
         expectedValue.data = expectedValue.data + appendContent;
-        const result = panelService.getById(paneOutput.id);
+        const result = panelService.getPanel(paneOutput.id);
         expect(result).toEqual(expectedValue);
     });
     test('Test panelService open method', () => {

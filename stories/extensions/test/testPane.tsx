@@ -98,6 +98,14 @@ export default class TestPane extends React.Component {
             molecule.statusBar.remove(globalTempId);
         };
 
+        const updateStatusBar = function () {
+            globalTempId = randomId();
+            molecule.statusBar.update({
+                id: globalTempId,
+                name: 'testUpdate' + randomId(),
+            });
+        };
+
         const addPanel = function () {
             const id = Math.random() * 10 + 1;
             molecule.panel.open({
@@ -362,6 +370,9 @@ PARTITIONED BY (ds string) lifecycle 1000;
                         </molecule.component.Button>
                         <molecule.component.Button onClick={removeStatusBar}>
                             Remove a StatusBar
+                        </molecule.component.Button>
+                        <molecule.component.Button onClick={updateStatusBar}>
+                            Update a StatusBar
                         </molecule.component.Button>
                     </div>
                 </div>

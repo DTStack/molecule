@@ -186,7 +186,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             // );
         });
         const addANotification = function () {
-            molecule.notification.addNotifications<string>([
+            molecule.notification.add<string>([
                 {
                     value: 'Test Notification!',
                 },
@@ -197,7 +197,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             const { data = [] } = molecule.notification.getState();
             const lastItemId = data[data.length - 1]?.id;
             if (lastItemId) {
-                molecule.notification.removeNotification(lastItemId);
+                molecule.notification.remove(lastItemId);
             }
         };
 

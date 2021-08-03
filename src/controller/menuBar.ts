@@ -16,6 +16,7 @@ import {
     MENU_VIEW_PANEL,
     MENU_VIEW_STATUSBAR,
 } from 'mo/model/workbench/menuBar';
+import { MenuBarEvent } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 import {
     IMenuBarService,
@@ -27,6 +28,7 @@ import { ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
+
 export interface IMenuBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick: (event: React.MouseEvent<any, any>, item: IMenuBarItem) => void;
@@ -43,6 +45,19 @@ export class MenuBarController
     private readonly menuBarService: IMenuBarService;
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
+    private automation = {
+        [ACTION_QUICK_CREATE_FILE]: () => this.createFile(),
+        [ACTION_QUICK_UNDO]: () => this.undo(),
+        [ACTION_QUICK_REDO]: () => this.redo(),
+        [ACTION_QUICK_SELECT_ALL]: () => this.selectAll(),
+        [ACTION_QUICK_COPY_LINE_UP]: () => this.copyLineUp(),
+        [MENU_VIEW_ACTIVITYBAR]: () => this.updateActivityBar(),
+        [MENU_VIEW_MENUBAR]: () => this.updateMenuBar(),
+        [MENU_VIEW_STATUSBAR]: () => this.updateStatusBar(),
+        [MENU_QUICK_COMMAND]: () => this.gotoQuickCommand(),
+        [ID_SIDE_BAR]: () => this.updateSideBar(),
+        [MENU_VIEW_PANEL]: () => this.updatePanel(),
+    };
 
     constructor() {
         super();
@@ -52,40 +67,15 @@ export class MenuBarController
     }
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
-        const menuId = item.id;
-        switch (menuId) {
-            case ACTION_QUICK_CREATE_FILE:
-                this.createFile();
-            case ACTION_QUICK_UNDO:
-                this.undo();
-                break;
-            case ACTION_QUICK_REDO:
-                this.redo();
-                break;
-            case ACTION_QUICK_SELECT_ALL:
-                this.selectAll();
-                break;
-            case ACTION_QUICK_COPY_LINE_UP:
-                this.copyLineUp();
-            case MENU_VIEW_ACTIVITYBAR:
-                this.updateActivityBar();
-                break;
-            case MENU_VIEW_MENUBAR:
-                this.updateMenuBar();
-                break;
-            case MENU_VIEW_STATUSBAR:
-                this.updateStatusBar();
-                break;
-            case MENU_QUICK_COMMAND:
-                this.gotoQuickCommand();
-                break;
-            case ID_SIDE_BAR:
-                this.updateSideBar();
-                break;
-            case MENU_VIEW_PANEL:
-                this.updatePanel();
-                break;
-        }
+        const menuId = item.id || '';
+
+        /**
+         * TODO: Two issues remain to be addressed
+         * 1、the default event is executed twice
+         * 2、we have no way of knowing whether user-defined events are executed internally
+         */
+        this.emit(MenuBarEvent.onSelect, menuId);
+        this.automation[menuId]?.();
     };
 
     public createFile = () => {

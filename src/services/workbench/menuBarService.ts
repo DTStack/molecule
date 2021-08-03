@@ -6,6 +6,7 @@ import {
     IMenuBarItem,
     MenuBarModel,
 } from 'mo/model/workbench/menuBar';
+import { MenuBarEvent } from 'mo/model/workbench/menuBar';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 
@@ -21,6 +22,7 @@ export interface IMenuBarService extends Component<IMenuBar> {
      * @param parentId parent menu item id
      */
     add(menuItem: IMenuBarItem, parentId: string): void;
+    onSelect(callback: (menuId: string) => void): void;
     /**
      * Remove the specific menu item
      * @param menuId
@@ -53,6 +55,10 @@ export class MenuBarService
         this.setState({
             data: menuData,
         });
+    };
+
+    public onSelect = (callback: (menuId: string) => void) => {
+        this.subscribe(MenuBarEvent.onSelect, callback);
     };
 
     public add(menuItem: IMenuBarItem, parentId: string) {

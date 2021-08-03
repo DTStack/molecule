@@ -8,7 +8,16 @@ import {
 } from 'mo/model/workbench/sidebar';
 
 export interface ISidebarService extends Component<ISidebar> {
-    add(data: ISidebarPane, isActive?: boolean): void;
+    /**
+     * Add a new Sidebar pane
+     * @param pane
+     * @param isActive Whether to activate the current pane
+     */
+    add(pane: ISidebarPane, isActive?: boolean): void;
+    /**
+     * Set the specific pane as active
+     * @param id
+     */
     setActive(id?: string): void;
 }
 

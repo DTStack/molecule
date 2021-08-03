@@ -78,7 +78,7 @@ export class SearchController extends Controller implements ISearchController {
             replaceAddons: builtInReplaceAddons(),
         });
 
-        this.sidebarService.addPane(searchSidePane);
+        this.sidebarService.add(searchSidePane);
         this.activityBarService.addBar(builtInSearchActivityItem());
     }
 

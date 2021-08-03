@@ -83,7 +83,7 @@ export class ExplorerController
         };
 
         this.activityBarService.addBar(builtInExplorerActivityItem(), true);
-        this.sidebarService.addPane(explorePane, true);
+        this.sidebarService.add(explorePane, true);
         // add folder panel
         this.explorerService.addPanel({
             ...builtInExplorerFolderPanel(),

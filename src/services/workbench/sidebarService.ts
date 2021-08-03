@@ -8,7 +8,16 @@ import {
 } from 'mo/model/workbench/sidebar';
 
 export interface ISidebarService extends Component<ISidebar> {
-    addPane(data: ISidebarPane, isActive?: boolean): void;
+    /**
+     * Add a new Sidebar pane
+     * @param pane
+     * @param isActive Whether to activate the current pane
+     */
+    add(pane: ISidebarPane, isActive?: boolean): void;
+    /**
+     * Set the specific pane as active
+     * @param id
+     */
     setActive(id?: string): void;
 }
 
@@ -23,7 +32,7 @@ export class SidebarService
         this.state = container.resolve(SidebarModel);
     }
 
-    public addPane(data: ISidebarPane, isActive = false) {
+    public add(data: ISidebarPane, isActive = false) {
         const oldPanes = this.state.panes?.concat() || [];
         oldPanes.push(data);
         if (isActive) {

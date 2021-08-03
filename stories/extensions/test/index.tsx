@@ -30,7 +30,7 @@ export const ExtendTestPane: IExtension = {
         };
 
         molecule.activityBar.addBar(newItem);
-        molecule.sidebar.addPane(testSidePane);
+        molecule.sidebar.add(testSidePane);
 
         molecule.editor.setEntry(<Entry />);
 

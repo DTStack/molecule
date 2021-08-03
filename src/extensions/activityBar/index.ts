@@ -7,7 +7,7 @@ import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarActio
 export const ExtendsActivityBar: IExtension = {
     activate(extensionCtx: IExtensionService) {
         const { data = [], contextMenu = [] } = builtInActivityBar();
-        molecule.activityBar.addBar(data);
+        molecule.activityBar.add(data);
         molecule.activityBar.addContextMenu(contextMenu);
 
         molecule.activityBar.onChange((pre, cur) => {

@@ -82,7 +82,7 @@ export class ExplorerController
             },
         };
 
-        this.activityBarService.addBar(builtInExplorerActivityItem(), true);
+        this.activityBarService.add(builtInExplorerActivityItem(), true);
         this.sidebarService.add(explorePane, true);
         // add folder panel
         this.explorerService.addPanel({

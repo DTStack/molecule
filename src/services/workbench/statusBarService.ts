@@ -16,11 +16,10 @@ export interface IStatusBarService extends Component<IStatusBar> {
      */
     add(item: IStatusBarItem, float: 'left' | 'right');
     /**
-     * Remove the specific StatusBar item, return the removed item if success,
-     * or return the undefined
+     * Remove the specific StatusBar item
      * @param id
      */
-    remove(id: string): IStatusBarItem | undefined;
+    remove(id: string): void;
     /**
      * Update the specific StatusBar item
      * @param item the id field is required
@@ -58,10 +57,20 @@ export class StatusBarService
     }
 
     public update(item: IStatusBarItem): void {
-        const original = this.getStatusBarItem(item.id);
-        if (original) {
-            Object.assign(original, item);
-            this.render();
+        const { leftItems, rightItems } = this.state;
+        let result = this.updateArrayItem(leftItems, item);
+        if (result) {
+            this.setState({
+                leftItems: result,
+            });
+            return;
+        }
+        // Try to update target item in rightItems
+        result = this.updateArrayItem(rightItems, item);
+        if (result) {
+            this.setState({
+                rightItems: result,
+            });
         }
     }
 
@@ -79,32 +88,74 @@ export class StatusBarService
         this.subscribe(StatusBarEvent.onClick, callback);
     }
 
-    public remove(id: string): IStatusBarItem | undefined {
+    public remove(id: string): void {
         const { leftItems, rightItems } = this.state;
-        let result = this.removeArrayItem(id, leftItems);
-        if (!result) result = this.removeArrayItem(id, rightItems);
-        this.render();
-        return result ? result[0] : result;
+        let result = this.removeArrayItem(leftItems, id);
+        if (result) {
+            this.setState({
+                leftItems: result,
+            });
+            return;
+        } else {
+            result = this.removeArrayItem(rightItems, id);
+            if (result) {
+                this.setState({
+                    rightItems: result,
+                });
+            }
+        }
+    }
+
+    /**
+     * Update a specific array item, and return the array object
+     * @param arr
+     * @param target The update target
+     * @returns The new updated IStatusBarItem Array object
+     */
+    private updateArrayItem(
+        targetArray: IStatusBarItem[],
+        target: IStatusBarItem
+    ): IStatusBarItem[] | undefined {
+        const index = targetArray.findIndex(searchById(target.id));
+        if (index > -1) {
+            const nextArray = targetArray.concat();
+            nextArray[index] = Object.assign({}, nextArray[index], target);
+            return nextArray;
+        }
+        return undefined;
     }
 
     private removeArrayItem(
-        id: string,
-        arr: IStatusBarItem[]
-    ): IStatusBarItem | undefined {
-        const index = arr!.findIndex(searchById(id));
+        targetArray: IStatusBarItem[],
+        id: string
+    ): IStatusBarItem[] | undefined {
+        const index = targetArray!.findIndex(searchById(id));
         if (index > -1) {
-            return arr.splice(index, 1)[0];
+            const nextArray = targetArray.concat();
+            nextArray.splice(index, 1)[0];
+            return nextArray;
         }
         return undefined;
     }
 
     private appendLeftItem(item: IStatusBarItem): void {
-        this.state.leftItems!.push(item);
-        this.render();
+        this.setState({
+            leftItems: this.appendArrayItem(this.state.leftItems, item),
+        });
     }
 
     private appendRightItem(item: IStatusBarItem): void {
-        this.state.rightItems!.push(item);
-        this.render();
+        this.setState({
+            rightItems: this.appendArrayItem(this.state.rightItems, item),
+        });
+    }
+
+    private appendArrayItem(
+        targetArray: IStatusBarItem[],
+        item: IStatusBarItem
+    ): IStatusBarItem[] {
+        const nextItems = targetArray.concat();
+        nextItems.push(item);
+        return nextItems;
     }
 }

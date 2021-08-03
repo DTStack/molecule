@@ -36,7 +36,7 @@ export class QuickRedo extends Action2 {
         const editorInstance = this.editorService.editorInstance;
         editorInstance!.focus();
         if (!document.execCommand(QuickRedo.DESC)) {
-            editorInstance?.getModel()?.[QuickRedo.DESC]();
+            editorInstance?.getModel()?.[QuickRedo.DESC]?.();
         }
     }
 }

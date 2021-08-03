@@ -36,7 +36,7 @@ export class QuickUndo extends Action2 {
         const editorInstance = this.editorService.editorInstance;
         editorInstance!.focus();
         if (!document.execCommand(QuickUndo.DESC)) {
-            editorInstance?.getModel()?.[QuickUndo.DESC]();
+            editorInstance?.getModel()?.[QuickUndo.DESC]?.();
         }
     }
 }

@@ -123,6 +123,9 @@ export class FolderTreeService
             // if root folder exists, then do nothing
             return;
         }
+        this.setState({
+            folderTree: { ...folderTree, data: [folder] },
+        });
         const { data = [] } = this.explorerService.getState();
         this.explorerService.updatePanel(
             data.map((item) => {

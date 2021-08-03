@@ -27,7 +27,7 @@ export interface INotificationService extends Component<INotification> {
      */
     update<T>(item: INotificationItem<T>): null | INotificationItem<T>;
     /**
-     * Toggle the Problems view between display and hidden
+     * Toggle the Problems view between display or hidden
      */
     toggleProblems(): void;
 }

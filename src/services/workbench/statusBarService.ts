@@ -63,14 +63,14 @@ export class StatusBarService
             this.setState({
                 leftItems: result,
             });
-            return;
-        }
-        // Try to update target item in rightItems
-        result = this.updateArrayItem(rightItems, item);
-        if (result) {
-            this.setState({
-                rightItems: result,
-            });
+        } else {
+            // Try to update target item in rightItems
+            result = this.updateArrayItem(rightItems, item);
+            if (result) {
+                this.setState({
+                    rightItems: result,
+                });
+            }
         }
     }
 
@@ -95,7 +95,6 @@ export class StatusBarService
             this.setState({
                 leftItems: result,
             });
-            return;
         } else {
             result = this.removeArrayItem(rightItems, id);
             if (result) {

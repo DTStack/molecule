@@ -3,7 +3,6 @@ import { IEditorTreeController } from 'mo/controller';
 import {
     EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
     EXPLORER_TOGGLE_SAVE_GROUP,
-    FileTypes,
     IEditor,
     IEditorGroup,
 } from 'mo/model';
@@ -17,7 +16,6 @@ import {
     Toolbar,
     useContextView,
 } from 'mo/components';
-import { IFolderTreeService } from 'mo/services';
 import {
     editorTreeActiveItemClassName,
     editorTreeClassName,
@@ -41,7 +39,6 @@ import Scrollbar from 'react-scrollbars-custom';
 // override onContextMenu
 type UnionEditor = Omit<IEditor & IEditorTreeController, 'onContextMenu'>;
 export interface IOpenEditProps extends UnionEditor {
-    getFileIconByExtensionName: IFolderTreeService['getFileIconByExtensionName'];
     /**
      * Group Header toolbar
      */
@@ -71,7 +68,6 @@ const EditorTree = (props: IOpenEditProps) => {
         contextMenu = [],
         headerContextMenu,
         panel,
-        getFileIconByExtensionName,
         onSelect,
         onSaveGroup,
         onContextMenu,
@@ -248,10 +244,7 @@ const EditorTree = (props: IOpenEditProps) => {
                                             className={
                                                 editorTreeFileIconClassName
                                             }
-                                            type={getFileIconByExtensionName(
-                                                file.name!,
-                                                FileTypes.File
-                                            )}
+                                            type={file.data.icon || ''}
                                         />
                                         <span
                                             className={

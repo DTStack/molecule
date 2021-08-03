@@ -7,7 +7,7 @@ import {
     builtInEditorTreeHeaderContextMenu,
     EditorTreeEvent,
 } from 'mo/model/workbench/explorer/editorTree';
-import { EditorService, ExplorerService, FolderTreeService } from 'mo/services';
+import { EditorService, ExplorerService } from 'mo/services';
 import {
     builtInExplorerEditorPanel,
     EDITOR_MENU_CLOSE,
@@ -43,14 +43,12 @@ export class EditorTreeController
     extends Controller
     implements IEditorTreeController {
     private readonly explorerService: ExplorerService;
-    private readonly folderTreeService: FolderTreeService;
     private readonly editService: EditorService;
 
     constructor() {
         super();
         this.editService = container.resolve(EditorService);
         this.explorerService = container.resolve(ExplorerService);
-        this.folderTreeService = container.resolve(FolderTreeService);
         this.initView();
     }
 
@@ -76,9 +74,6 @@ export class EditorTreeController
                     onCloseGroup={this.onCloseGroup}
                     onSaveGroup={this.onSaveGroup}
                     onContextMenu={this.onContextMenu}
-                    getFileIconByExtensionName={
-                        this.folderTreeService.getFileIconByExtensionName
-                    }
                 />
             ),
         });

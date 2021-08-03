@@ -85,42 +85,30 @@ export const ExtendTestPane: IExtension = {
             }
         });
 
-        molecule.folderTree.onNewFile((id: number) => {
-            // work through addNode function
-            molecule.folderTree.addNode(
-                id,
-                new TreeNodeModel({
-                    id: randomId(),
-                    name: '',
-                    fileType: FileTypes.File,
-                    isEditable: true,
-                })
-            );
-        });
-
-        molecule.folderTree.onNewFolder((id: number) => {
-            // work through addNode function
-            molecule.folderTree.addNode(
-                id,
-                new TreeNodeModel({
-                    id: randomId(),
-                    name: '',
-                    fileType: FileTypes.Folder,
-                    isLeaf: false,
-                    isEditable: true,
-                })
-            );
-        });
-
-        molecule.folderTree.onNewRootFolder((id: number) => {
-            molecule.folderTree.addRootFolder?.(
-                new TreeNodeModel({
-                    id,
-                    name: 'molecule',
-                    location: 'molecule',
-                    fileType: FileTypes.RootFolder,
-                })
-            );
+        molecule.folderTree.onCreate((type, nodeId) => {
+            if (type === 'RootFolder') {
+                molecule.folderTree.add(
+                    new TreeNodeModel({
+                        id: randomId(),
+                        name: 'molecule',
+                        isLeaf: false,
+                        location: 'molecule',
+                        fileType: FileTypes.RootFolder,
+                    })
+                );
+            } else {
+                molecule.folderTree.add(
+                    new TreeNodeModel({
+                        id: randomId(),
+                        name: '',
+                        fileType: type,
+                        icon: 'file-code',
+                        isLeaf: type === 'File',
+                        isEditable: true,
+                    }),
+                    nodeId
+                );
+            }
         });
 
         molecule.search.onSearch((value) => {
@@ -156,6 +144,24 @@ export const ExtendTestPane: IExtension = {
 
         molecule.search.onResultClick((item) => {
             console.log('item:', item);
+        });
+
+        molecule.folderTree.onSelectFile((file) => {
+            const { name } = file;
+            const nameArr = name?.split('.') || [];
+            const extName = nameArr[nameArr.length - 1] || '';
+            const tabData = {
+                ...file,
+                id: `${file.id}`?.split('_')?.[0],
+                modified: false,
+                data: {
+                    value: file.content,
+                    path: file.location,
+                    language: extName,
+                    ...(file.data || {}),
+                },
+            };
+            molecule.editor.open(tabData);
         });
     },
 };

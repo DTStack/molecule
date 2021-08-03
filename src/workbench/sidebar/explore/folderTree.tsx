@@ -1,11 +1,5 @@
 import 'reflect-metadata';
-import React, {
-    memo,
-    useRef,
-    useEffect,
-    useCallback,
-    useLayoutEffect,
-} from 'react';
+import React, { memo, useRef, useEffect, useLayoutEffect } from 'react';
 import { IFolderTree, IFolderTreeSubItem } from 'mo/model';
 import { select, getEventPosition } from 'mo/common/dom';
 import Tree, { ITreeNodeItemProps } from 'mo/components/tree';
@@ -80,22 +74,18 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         onUpdateFileName,
         onSelectFile,
         onDropTree,
-        filterContextMenu,
         onClickContextMenu,
-        onNewRootFolder,
-        getInputEvent,
+        onRightClick,
+        createTreeNode,
         ...restProps
     } = props;
 
-    const {
-        data = [],
-        contextMenu: rawContextMenu = [],
-        folderPanelContextMenu = [],
-    } = folderTree;
+    const { data = [], folderPanelContextMenu = [] } = folderTree;
 
     const handleAddRootFolder = () => {
-        onNewRootFolder?.();
+        createTreeNode('RootFolder');
     };
+
     const welcomePage = (
         <div data-content={panel.id}>
             {entry ? (
@@ -121,13 +111,10 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     // to detect current tree whether is editable
     const hasEditable = detectHasEditableStatus(data);
 
-    const onClickMenuItem = useCallback(
-        (e, item) => {
-            onClickContextMenu?.(e, item);
-            contextMenu.current?.hide();
-        },
-        [folderPanelContextMenu]
-    );
+    const onClickMenuItem = (e, item) => {
+        onClickContextMenu?.(e, item);
+        contextMenu.current?.hide();
+    };
 
     // init context menu
     const initContextMenu = () => {
@@ -139,22 +126,21 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         });
     };
 
-    const handleOnMenuClick = (
-        e: React.MouseEvent,
+    const handleMenuClick = (
         item: IMenuItemProps,
         data: IFolderTreeSubItem
     ) => {
-        onClickContextMenu?.(e, item, data);
+        onClickContextMenu(item, data);
         contextView.hide();
     };
 
     const handleRightClick = ({ event, node }) => {
         const { data } = node;
-        const menuItems = filterContextMenu?.(rawContextMenu, data);
+        const menuItems = onRightClick(data);
 
         contextView?.show(getEventPosition(event), () => (
             <Menu
-                onClick={(e, item) => handleOnMenuClick(e, item!, data)}
+                onClick={(_, item) => handleMenuClick(item!, data)}
                 data={menuItems}
             />
         ));

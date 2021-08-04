@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import * as monaco from 'monaco-editor';
 import { localize } from 'monaco-editor/esm/vs/nls';
 import { DisposableStore } from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { QuickCommandNLS } from 'monaco-editor/esm/vs/editor/common/standaloneStrings';
@@ -24,7 +23,7 @@ import {
 } from 'monaco-editor/esm/vs/platform/actions/common/actions';
 import { stripIcons } from 'monaco-editor/esm/vs/base/common/iconLabels';
 
-import { KeyMod, KeyCode } from 'mo/monaco';
+import { KeyMod, KeyCode, editor as MonacoEditor } from 'mo/monaco';
 import { container } from 'tsyringe';
 import { EditorService, IEditorService } from 'mo/services';
 import { Action2, KeybindingWeight } from './common';
@@ -36,7 +35,7 @@ export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAcces
     static PREFIX = '>';
     protected readonly editorService: IEditorService | undefined;
     protected get activeTextEditorControl():
-        | monaco.editor.IStandaloneCodeEditor
+        | MonacoEditor.IStandaloneCodeEditor
         | undefined {
         return this.editorService?.editorInstance;
     }

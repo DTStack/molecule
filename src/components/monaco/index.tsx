@@ -1,8 +1,7 @@
 import 'reflect-metadata';
 import * as React from 'react';
 import { PureComponent } from 'react';
-import * as monaco from 'monaco-editor';
-
+import { editor } from 'monaco-editor';
 import { isEqual } from 'lodash';
 import { APP_PREFIX } from 'mo/common/const';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
@@ -18,13 +17,13 @@ export interface IMonacoEditorProps extends React.ComponentProps<any> {
     /**
      * The option of monaco editor
      */
-    options?: monaco.editor.IStandaloneEditorConstructionOptions;
+    options?: editor.IStandaloneEditorConstructionOptions;
     path?: string;
     /**
      * The override for monaco editor
      */
-    override?: monaco.editor.IEditorOverrideServices;
-    editorInstanceRef?: (instance: monaco.editor.IStandaloneCodeEditor) => void;
+    override?: editor.IEditorOverrideServices;
+    editorInstanceRef?: (instance: editor.IStandaloneCodeEditor) => void;
     onChangeEditorProps?: (
         props: IMonacoEditorProps,
         nextProps: IMonacoEditorProps
@@ -35,7 +34,7 @@ export class MonacoEditor extends PureComponent<IMonacoEditorProps> {
     /**
      * The instance of monaco
      */
-    private monacoInstance!: monaco.editor.IStandaloneCodeEditor | undefined;
+    private monacoInstance!: editor.IStandaloneCodeEditor | undefined;
     /**
      * The dom element of editor container
      */

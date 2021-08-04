@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
-import * as monaco from 'monaco-editor';
+import { editor as MonacoEditor } from 'monaco-editor';
 import { Component } from 'mo/react';
 import {
     builtInOutputPanel,
@@ -76,7 +76,7 @@ export interface IPanelService extends Component<IPanel> {
      * The editorInstance of Output
      */
     readonly outputEditorInstance:
-        | monaco.editor.IStandaloneCodeEditor
+        | MonacoEditor.IStandaloneCodeEditor
         | undefined;
     /**
      * Append the content into Output panel

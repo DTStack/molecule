@@ -1,6 +1,6 @@
 import { IColorTheme } from 'mo/model/colorTheme';
 import { getBuiltInColors } from 'mo/services/theme/colorRegistry';
-import * as monaco from 'monaco-editor';
+import { editor as MonacoEditor } from 'monaco-editor';
 
 /**
  * This function convert colors object to CSS variables, and add it to the :root {}.
@@ -29,7 +29,7 @@ export function convertToCSSVars(colors: object) {
 
 export function getThemeData(
     theme: IColorTheme
-): monaco.editor.IStandaloneThemeData {
+): MonacoEditor.IStandaloneThemeData {
     const builtInColors = getBuiltInColors(theme);
     const colors = Object.assign({}, builtInColors, theme.colors);
 
@@ -46,7 +46,7 @@ export function getThemeData(
     }
 
     const tokens = theme.tokenColors;
-    const rules: monaco.editor.ITokenThemeRule[] = [];
+    const rules: MonacoEditor.ITokenThemeRule[] = [];
 
     const updateRules = (s, token) => {
         const index = rules.findIndex((r) => r.token === s);

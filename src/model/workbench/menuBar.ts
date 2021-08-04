@@ -8,6 +8,7 @@ import {
     ACTION_QUICK_REDO,
     ACTION_QUICK_CREATE_FILE,
 } from 'mo/model/keybinding';
+
 /**
  * The activity bar event definition
  */
@@ -29,11 +30,7 @@ export interface IMenuBar {
     data?: IMenuBarItem[];
 }
 
-/**
- * menu preset action
- */
-export const MENU_FILE_CREATE = 'newFile';
-export const MENU_FILE_OPEN = 'openFile'; // default encoding with utf-8 ?
+export const MENU_FILE_OPEN = 'openFile';
 
 export const MENU_QUICK_COMMAND = 'editor.action.quickCommand';
 

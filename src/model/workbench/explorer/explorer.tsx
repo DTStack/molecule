@@ -59,7 +59,7 @@ export function builtInExplorerActivityItem() {
     return {
         id: EXPLORER_ACTIVITY_ITEM,
         name: localize(EXPLORER_ACTIVITY_ITEM, 'Explore'),
-        iconName: 'codicon-files',
+        icon: 'files',
     };
 }
 
@@ -67,7 +67,7 @@ export function builtInExplorerHeaderToolbar() {
     return {
         id: EXPLORER_ACTION_TITLE,
         title: localize(EXPLORER_ACTION_TITLE, 'View and More Actions...'),
-        iconName: 'codicon-ellipsis',
+        icon: 'ellipsis',
         contextMenu: [],
     };
 }
@@ -81,12 +81,12 @@ export function builtInExplorerEditorPanel() {
             {
                 id: EXPLORER_TOGGLE_VERTICAL,
                 title: localize(EXPLORER_TOGGLE_VERTICAL, 'Toggle Vertical'),
-                iconName: 'codicon-editor-layout',
+                icon: 'editor-layout',
             },
             {
                 id: EXPLORER_TOGGLE_SAVE_ALL,
                 title: localize(EXPLORER_TOGGLE_SAVE_ALL, 'Save All'),
-                iconName: 'codicon-save-all',
+                icon: 'save-all',
             },
             {
                 id: EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
@@ -94,14 +94,14 @@ export function builtInExplorerEditorPanel() {
                     EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
                     'Close All Editors'
                 ),
-                iconName: 'codicon-close-all',
+                icon: 'close-all',
             },
         ],
         groupToolbar: [
             {
                 id: EXPLORER_TOGGLE_SAVE_GROUP,
                 title: localize(EXPLORER_TOGGLE_SAVE_GROUP, 'Save Group'),
-                iconName: 'codicon-save-all',
+                icon: 'save-all',
             },
             {
                 id: EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
@@ -109,7 +109,7 @@ export function builtInExplorerEditorPanel() {
                     EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
                     'Close Group Editors'
                 ),
-                iconName: 'codicon-close-all',
+                icon: 'close-all',
             },
         ],
         config: {
@@ -126,12 +126,12 @@ export function builtInExplorerOutlinePanel() {
             {
                 id: 'outline-collapse',
                 title: localize('toolbar.collapseAll', 'Collapse All'),
-                iconName: 'codicon-collapse-all',
+                icon: 'collapse-all',
             },
             {
                 id: OUTLINE_PANEL_MORE_DESC,
                 title: localize(OUTLINE_PANEL_MORE_DESC, 'More Actions...'),
-                iconName: 'codicon-ellipsis',
+                icon: 'ellipsis',
             },
         ],
     };
@@ -146,17 +146,17 @@ export function builtInExplorerFolderPanel() {
             {
                 id: NEW_FILE_COMMAND_ID,
                 title: localize('menu.newFile', 'New File'),
-                iconName: 'codicon-new-file',
+                icon: 'new-file',
             },
             {
                 id: NEW_FOLDER_COMMAND_ID,
                 title: localize('menu.newFolder', 'New Folder'),
-                iconName: 'codicon-new-folder',
+                icon: 'new-folder',
             },
             {
                 id: 'refresh',
                 title: localize('sidebar.explore.refresh', 'Refresh Explorer'),
-                iconName: 'codicon-refresh',
+                icon: 'refresh',
             },
             {
                 id: 'collapse',
@@ -164,7 +164,7 @@ export function builtInExplorerFolderPanel() {
                     'sidebar.explore.collapseFolders',
                     'Collapse Folders in Explorer'
                 ),
-                iconName: 'codicon-collapse-all',
+                icon: 'collapse-all',
             },
         ],
         config: {

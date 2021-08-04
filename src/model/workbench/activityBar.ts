@@ -26,7 +26,7 @@ export interface IActivityBarItem {
     title?: string;
     hidden?: boolean;
     data?: any;
-    iconName?: string;
+    icon?: string | JSX.Element;
     checked?: boolean;
     disabled?: boolean;
     type?: 'normal' | 'global';
@@ -54,13 +54,13 @@ export function builtInActivityBar(): IActivityBar {
         {
             id: ACTIVITY_BAR_GLOBAL_ACCOUNT,
             name: localize('menu.account', 'Account'),
-            iconName: 'codicon-account',
+            icon: 'account',
             type: 'global',
         },
         {
             id: ACTIVITY_BAR_GLOBAL_SETTINGS,
             name: localize('menu.colorTheme', 'Color Theme'),
-            iconName: 'codicon-settings-gear',
+            icon: 'settings-gear',
             type: 'global',
             contextMenu: [
                 {

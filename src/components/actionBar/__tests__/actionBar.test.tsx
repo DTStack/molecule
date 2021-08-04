@@ -8,7 +8,7 @@ const mockData = [
     {
         id: 'm1',
         title: 'mockDataTitle',
-        iconName: 'codicon-add',
+        icon: 'add',
     },
 ];
 

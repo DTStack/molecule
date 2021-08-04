@@ -41,7 +41,7 @@ export function builtInSearchActivityItem() {
     return {
         id: SEARCH_ACTIVITY_ITEM,
         name: localize(SEARCH_ACTIVITY_ITEM, 'Search'),
-        iconName: 'codicon-search',
+        icon: 'search',
     };
 }
 
@@ -51,19 +51,19 @@ export function builtInHeaderToolbar() {
             id: SEARCH_TOOLBAR_REFRESH,
             title: localize(SEARCH_TOOLBAR_REFRESH, 'Refresh'),
             disabled: true,
-            iconName: 'codicon-refresh',
+            icon: 'refresh',
         },
         {
             id: SEARCH_TOOLBAR_CLEAR,
             disabled: true,
             title: localize(SEARCH_TOOLBAR_CLEAR, 'Clear all'),
-            iconName: 'codicon-clear-all',
+            icon: 'clear-all',
         },
         {
             id: SEARCH_TOOLBAR_COLLAPSE,
             title: localize(SEARCH_TOOLBAR_COLLAPSE, 'Collapse all'),
             disabled: true,
-            iconName: 'codicon-collapse-all',
+            icon: 'collapse-all',
         },
     ];
 }
@@ -75,14 +75,14 @@ export function builtInSearchAddons() {
             title: localize(SEARCH_CASE_SENSITIVE_COMMAND_ID, 'Match Case'),
             disabled: false,
             checked: false,
-            iconName: 'codicon-case-sensitive',
+            icon: 'case-sensitive',
         },
         {
             id: SEARCH_WHOLE_WORD_COMMAND_ID,
             title: localize(SEARCH_WHOLE_WORD_COMMAND_ID, 'Match Whole Word'),
             disabled: false,
             checked: false,
-            iconName: 'codicon-whole-word',
+            icon: 'whole-word',
         },
         {
             id: SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
@@ -92,7 +92,7 @@ export function builtInSearchAddons() {
                 SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
                 'Use Regular Expression'
             ),
-            iconName: 'codicon-regex',
+            icon: 'regex',
         },
     ];
 }
@@ -104,14 +104,14 @@ export function builtInReplaceAddons() {
             title: localize(SEARCH_PRESERVE_CASE_COMMAND_ID, 'Preserve Case'),
             disabled: false,
             checked: false,
-            iconName: 'codicon-preserve-case',
+            icon: 'preserve-case',
         },
         {
             id: SEARCH_REPLACE_ALL_COMMAND_ID,
             title: localize(SEARCH_REPLACE_ALL_COMMAND_ID, 'Replace All'),
             disabled: false,
             checked: false,
-            iconName: 'codicon-replace-all',
+            icon: 'replace-all',
         },
     ];
 }

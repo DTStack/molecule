@@ -13,18 +13,18 @@ const editorPanel = {
             id: 'toggle',
             title: 'Toggle Vertical',
             disabled: true,
-            iconName: 'codicon-editor-layout',
+            icon: 'editor-layout',
         },
         {
             id: 'save',
             title: 'Save All',
             disabled: true,
-            iconName: 'codicon-save-all',
+            icon: 'save-all',
         },
         {
             id: 'close',
             title: 'Close All Editors',
-            iconName: 'codicon-close-all',
+            icon: 'close-all',
         },
     ],
     renderPanel: () => {
@@ -38,22 +38,22 @@ const sampleFolderPanel = {
         {
             id: 'new_file',
             title: 'New File',
-            iconName: 'codicon-new-file',
+            icon: 'new-file',
         },
         {
             id: 'new_folder',
             title: 'New Folder',
-            iconName: 'codicon-new-folder',
+            icon: 'new-folder',
         },
         {
             id: 'refresh',
             title: 'Refresh Explorer',
-            iconName: 'codicon-refresh',
+            icon: 'refresh',
         },
         {
             id: 'collapse',
             title: 'Collapse Folders in Explorer',
-            iconName: 'codicon-collapse-all',
+            icon: 'collapse-all',
         },
     ],
     renderPanel: () => {

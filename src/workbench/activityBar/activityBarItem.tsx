@@ -12,7 +12,7 @@ import {
     itemCheckedClassName,
     itemDisabledClassName,
 } from './base';
-import { DropDown } from 'mo/components';
+import { DropDown, Icon } from 'mo/components';
 import { DropDownRef } from 'mo/components/dropdown';
 import { KeybindingHelper } from 'mo/services/keybinding';
 
@@ -25,7 +25,7 @@ export function ActivityBarItem(
         title = '',
         data = {},
         render,
-        iconName = '',
+        icon,
         id,
         onClick,
         contextMenu = [],
@@ -49,14 +49,19 @@ export function ActivityBarItem(
         }
     };
 
-    const content = (
-        <a
-            title={title}
-            className={classNames(labelClassName, 'codicon', iconName)}
-        >
-            {render?.() || null}
-        </a>
-    );
+    const getIcon = () => {
+        if (icon) {
+            return typeof icon === 'string' ? (
+                <Icon title={title} className={labelClassName} type={icon} />
+            ) : (
+                icon
+            );
+        }
+        return null;
+    };
+
+    const content = getIcon() || <span>{render?.() || null}</span>;
+
     const overlay = (
         <Menu
             onClick={onClickMenuItem}

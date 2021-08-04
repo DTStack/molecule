@@ -10,6 +10,7 @@ import {
     replaceContainerClassName,
     searchTargetContainerClassName,
 } from './base';
+import { Icon } from '../icon';
 
 export type SearchValues = (string | undefined)[];
 
@@ -60,12 +61,6 @@ export function Search(props: ISearchProps) {
 
     const [isShowReplace, setShowReplace] = useState(false);
 
-    const toggleReplaceBtnClassName = classNames(
-        replaceBtnClassName,
-        'codicon',
-        `codicon-chevron-${isShowReplace ? 'down' : 'right'}`
-    );
-
     const onToggleReplaceBtn = () => {
         setShowReplace(!isShowReplace);
         onButtonClick?.(!isShowReplace);
@@ -105,10 +100,11 @@ export function Search(props: ISearchProps) {
             style={style}
             className={classNames(defaultSearchClassName, className)}
         >
-            <a
-                className={toggleReplaceBtnClassName}
+            <Icon
+                className={replaceBtnClassName}
+                type={isShowReplace ? 'chevron-down' : 'chevron-right'}
                 onClick={onToggleReplaceBtn}
-            ></a>
+            />
             <Input.Group>
                 <Input
                     value={searchVal}

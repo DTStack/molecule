@@ -14,7 +14,7 @@ export interface IMenuItemProps extends Omit<HTMLElementProps, 'title'> {
     /**
      * The name of icon
      */
-    icon?: React.ReactNode;
+    icon?: JSX.Element | string;
     type?: 'divider';
     /**
      * Item Name
@@ -57,6 +57,17 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
         },
     };
 
+    const getIcon = () => {
+        if (icon) {
+            return typeof icon === 'string' ? (
+                <Icon className={checkClassName} type={icon} />
+            ) : (
+                icon
+            );
+        }
+        return null;
+    };
+
     return (
         <li
             className={classNames(
@@ -70,12 +81,7 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
             {...custom}
         >
             <a className={menuContentClassName}>
-                <Icon
-                    className={checkClassName}
-                    type={typeof icon === 'string' ? icon : ''}
-                >
-                    {typeof icon === 'object' ? icon : ''}
-                </Icon>
+                {getIcon()}
                 <span className={labelClassName} title={name as string}>
                     {render ? render(props) : children}
                 </span>

@@ -24,13 +24,13 @@ export interface INotification<T = any> extends IStatusBarItem {
 export const NOTIFICATION_CLEAR_ALL: IActionBarItemProps = {
     id: 'ClearAll',
     title: 'Clear All Notifications',
-    iconName: 'codicon-clear-all',
+    icon: 'clear-all',
 };
 
 export const NOTIFICATION_HIDE: IActionBarItemProps = {
     id: 'HideNotifications',
     title: 'Hide Notifications',
-    iconName: 'codicon-chevron-down',
+    icon: 'chevron-down',
 };
 
 export class NotificationModel<T> implements INotification<T> {

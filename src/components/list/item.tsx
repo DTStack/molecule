@@ -3,7 +3,6 @@ import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
 import { defaultListClassName, IListProps } from './list';
 
 export interface IItemProps<T = any> extends IListProps {
-    icon?: string;
     disabled?: boolean;
     data?: T;
 }

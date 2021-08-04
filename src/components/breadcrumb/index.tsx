@@ -6,7 +6,7 @@ export interface IBreadcrumbItemProps {
     id: string;
     href?: string;
     name?: string;
-    icon?: React.ReactNode;
+    icon?: string | JSX.Element;
     className?: string;
     render?(item: IBreadcrumbItemProps): React.ReactNode;
 }
@@ -43,6 +43,14 @@ export function Breadcrumb(props: IBreadcrumbProps) {
     const claNames = classNames(defaultBreadcrumbClassName, className);
     const len = routes.length;
     const sep = separator || <Icon type="chevron-right" />;
+
+    const getIcon = (icon?: string | JSX.Element) => {
+        if (icon) {
+            return typeof icon === 'string' ? <Icon type={icon} /> : icon;
+        }
+        return null;
+    };
+
     return (
         <div className={claNames} {...extra}>
             {routes.map((route: IBreadcrumbItemProps, index: number) => (
@@ -55,7 +63,7 @@ export function Breadcrumb(props: IBreadcrumbProps) {
                     href={route.href}
                     {...getEvents(route)}
                 >
-                    {route.icon}
+                    {getIcon(route.icon)}
                     <span className={breadcrumbLabelClassName}>
                         {route.render ? route.render(route) : route.name}
                     </span>

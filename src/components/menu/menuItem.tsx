@@ -14,7 +14,7 @@ export interface IMenuItemProps extends Omit<HTMLElementProps, 'title'> {
     /**
      * The name of icon
      */
-    icon?: JSX.Element | string;
+    icon?: string | JSX.Element;
     type?: 'divider';
     /**
      * Item Name

@@ -88,7 +88,7 @@ export class NotificationController
             ...notificationItem,
             render: () => <NotificationView onClick={this.onClick} />,
         });
-        this.statusBarService.appendRightItem(notificationItem);
+        this.statusBarService.add(notificationItem, 'right');
     }
 
     public renderNotificationPane() {

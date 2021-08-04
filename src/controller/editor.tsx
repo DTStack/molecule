@@ -321,7 +321,7 @@ export class EditorController extends Controller implements IEditorController {
     public updateEditorLineColumnInfo(editorInstance: IStandaloneCodeEditor) {
         if (editorInstance) {
             const position = editorInstance.getPosition();
-            this.statusBarService.updateItem(
+            this.statusBarService.update(
                 Object.assign(STATUS_EDITOR_INFO, {
                     data: {
                         ln: position?.lineNumber,

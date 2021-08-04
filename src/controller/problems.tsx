@@ -63,7 +63,7 @@ export class ProblemsController
         statusProblems.render = (item) => <ProblemsStatusBarView {...item} />;
         statusProblems.onClick = this.onClick;
 
-        this.statusBarService.appendLeftItem(statusProblems);
+        this.statusBarService.add(statusProblems, 'left');
 
         // keep ProblemsPaneView updated to problems' state
         const ProblemsView = connect(this.problemsService, ProblemsPaneView);

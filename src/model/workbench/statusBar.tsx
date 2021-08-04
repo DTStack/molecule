@@ -3,7 +3,7 @@ import EditorStatusBarView from 'mo/workbench/editor/statusBarView';
 import { IMenuItemProps } from 'mo/components/menu';
 export interface IStatusBarItem<T = any> extends HTMLElementProps {
     id: string;
-    sortIndex: number;
+    sortIndex?: number;
     data?: T;
     onClick?(e: React.MouseEvent, item?: IStatusBarItem);
     render?: (item: IStatusBarItem) => ReactNode;

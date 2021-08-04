@@ -137,7 +137,7 @@ export class ProblemsService
     }
 
     private updateStatus<T>(item: IStatusBarItem<T>): void {
-        this.statusBarService.updateItem(item);
+        this.statusBarService.update(item);
     }
 
     private getProblemsMarkers = (

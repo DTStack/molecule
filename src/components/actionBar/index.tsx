@@ -100,13 +100,6 @@ export function ActionBarItem(props: IActionBarItemProps) {
         }
     };
 
-    const getIcon = () => {
-        if (icon) {
-            return typeof icon === 'string' ? <Icon type={icon} /> : icon;
-        }
-        return null;
-    };
-
     return (
         <li
             id={id}
@@ -116,7 +109,7 @@ export function ActionBarItem(props: IActionBarItemProps) {
             data-id={data.id}
         >
             <Tooltip overlay={<span>{title}</span>}>
-                {getIcon() || <span>{name}</span>}
+                <Icon type={icon}>{name}</Icon>
             </Tooltip>
         </li>
     );

@@ -49,18 +49,11 @@ export function ActivityBarItem(
         }
     };
 
-    const getIcon = () => {
-        if (icon) {
-            return typeof icon === 'string' ? (
-                <Icon title={title} className={labelClassName} type={icon} />
-            ) : (
-                icon
-            );
-        }
-        return null;
-    };
-
-    const content = getIcon() || <span>{render?.() || null}</span>;
+    const content = (
+        <Icon type={icon} className={labelClassName} title={title}>
+            {render?.() || null}
+        </Icon>
+    );
 
     const overlay = (
         <Menu

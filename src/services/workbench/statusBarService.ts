@@ -84,10 +84,6 @@ export class StatusBarService
         return result;
     }
 
-    public onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void) {
-        this.subscribe(StatusBarEvent.onClick, callback);
-    }
-
     public remove(id: string): void {
         const { leftItems = [], rightItems = [] } = this.state;
         let result = this.removeArrayItem(leftItems, id);
@@ -156,5 +152,9 @@ export class StatusBarService
         const nextItems = targetArray.concat();
         nextItems.push(item);
         return nextItems;
+    }
+
+    public onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void) {
+        this.subscribe(StatusBarEvent.onClick, callback);
     }
 }

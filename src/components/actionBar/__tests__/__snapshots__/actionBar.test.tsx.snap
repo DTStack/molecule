@@ -12,7 +12,7 @@ exports[`Test ActionBar Component Test the ActionBar Snapshot 1`] = `
       id="m1"
       onClick={[Function]}
     >
-      <a
+      <span
         className="codicon codicon-add"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}

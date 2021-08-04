@@ -22,7 +22,7 @@ describe('Test ActionBar Component', () => {
     test('Test the ActionBar by the data Props', () => {
         const wrapper = render(<ActionBar data={mockData} />);
         const liDom = wrapper.container.querySelector('#m1');
-        const iconDom = liDom?.querySelector('a.codicon-add');
+        const iconDom = liDom?.querySelector('span.codicon-add');
 
         expect(liDom).not.toBeNull();
         expect(iconDom).not.toBeNull();

@@ -6,14 +6,14 @@ export interface IBreadcrumbItemProps {
     id: string;
     href?: string;
     name?: string;
-    icon?: ReactNode;
+    icon?: React.ReactNode;
     className?: string;
-    render?(item: IBreadcrumbItemProps): ReactNode;
+    render?(item: IBreadcrumbItemProps): React.ReactNode;
 }
 
 export interface IBreadcrumbProps extends ComponentProps<'div'> {
     routes: IBreadcrumbItemProps[];
-    separator?: ReactNode;
+    separator?: React.ReactNode;
     onClick?(event: React.MouseEvent, item?: IBreadcrumbItemProps): void;
 }
 

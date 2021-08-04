@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { singleton } from 'tsyringe';
+import { editor as MonacoEditor } from 'monaco-editor';
 
 import {
     IStandaloneEditorConstructionOptions,
-    IStandaloneCodeEditor,
     StandaloneEditor,
 } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
 import {
@@ -44,7 +44,7 @@ export interface IMonacoService {
         domElement: HTMLElement,
         options?: IStandaloneEditorConstructionOptions,
         overrides?: IEditorOverrideServices
-    ): IStandaloneCodeEditor;
+    ): MonacoEditor.IStandaloneCodeEditor;
     /**
      * Initial the Workspace, like Services and editor config.
      */
@@ -93,9 +93,8 @@ export class MonacoService implements IMonacoService {
         domElement: HTMLElement,
         options?: IStandaloneEditorConstructionOptions,
         overrides?: IEditorOverrideServices
-    ): IStandaloneCodeEditor {
+    ): MonacoEditor.IStandaloneCodeEditor {
         const services = this.services;
-        if (!services) return;
 
         this.mergeEditorServices(overrides);
         if (!services.has(ITextModelService)) {

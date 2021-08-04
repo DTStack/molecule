@@ -4,7 +4,7 @@ import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { ISidebar, ISidebarPane } from 'mo/model/workbench/sidebar';
 
 export interface IHeaderProps {
-    title: ReactNode;
+    title: React.ReactNode;
     toolbar: React.ReactNode;
 }
 

@@ -23,7 +23,7 @@ import {
 } from 'monaco-editor/esm/vs/platform/actions/common/actions';
 import { stripIcons } from 'monaco-editor/esm/vs/base/common/iconLabels';
 
-import { KeyMod, KeyCode } from 'mo/monaco';
+import { KeyMod, KeyCode, editor as MonacoEditor } from 'mo/monaco';
 import { container } from 'tsyringe';
 import { EditorService, IEditorService } from 'mo/services';
 import { Action2, KeybindingWeight } from './common';
@@ -34,7 +34,9 @@ import { ACTION_QUICK_COMMAND } from 'mo/model/keybinding';
 export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAccessProvider {
     static PREFIX = '>';
     protected readonly editorService: IEditorService | undefined;
-    protected get activeTextEditorControl(): IStandaloneCodeEditor | undefined {
+    protected get activeTextEditorControl():
+        | MonacoEditor.IStandaloneCodeEditor
+        | undefined {
         return this.editorService?.editorInstance;
     }
 

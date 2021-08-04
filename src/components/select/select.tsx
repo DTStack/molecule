@@ -26,7 +26,7 @@ export interface ISelectProps extends ComponentProps<any> {
     defaultValue?: string;
     placeholder?: string;
     showArrow?: boolean;
-    children?: ReactNode;
+    children?: React.ReactNode;
     onSelect?(e: React.MouseEvent, selectedOption?: ISelectOptionProps): void;
 }
 

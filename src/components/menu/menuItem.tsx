@@ -19,7 +19,7 @@ export interface IMenuItemProps extends Omit<HTMLElementProps, 'title'> {
     /**
      * Item Name
      */
-    name?: ReactNode;
+    name?: React.ReactNode;
     title?: React.ReactNode;
     disabled?: boolean;
     /**
@@ -30,7 +30,7 @@ export interface IMenuItemProps extends Omit<HTMLElementProps, 'title'> {
     /**
      * Custom render
      */
-    render?: (data: IMenuItemProps) => ReactNode;
+    render?: (data: IMenuItemProps) => React.ReactNode;
     onClick?: (e: React.MouseEvent, item?: IMenuItemProps) => void;
     sortIndex?: number;
 

@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import * as React from 'react';
+
 import {
     EditorEvent,
     IEditorTab,
@@ -19,7 +20,7 @@ import { Controller } from 'mo/react/controller';
 import { IMenuItemProps } from 'mo/components/menu';
 import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';
-import { editor as monacoEditor, Uri } from 'mo/monaco';
+import { editor as MonacoEditor, Uri } from 'mo/monaco';
 
 import {
     EditorService,
@@ -154,7 +155,7 @@ export class EditorController extends Controller implements IEditorController {
      * Called when open a new group
      */
     public onUpdateEditorIns = (
-        editorInstance: IStandaloneCodeEditor,
+        editorInstance: MonacoEditor.IStandaloneCodeEditor,
         groupId: number
     ) => {
         if (!editorInstance) return;
@@ -222,7 +223,7 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     private initEditorEvents(
-        editorInstance: IStandaloneCodeEditor,
+        editorInstance: MonacoEditor.IStandaloneCodeEditor,
         groupId: number
     ) {
         if (!editorInstance) return;
@@ -289,14 +290,14 @@ export class EditorController extends Controller implements IEditorController {
      * - the action to open a new tab equals to create a new model in instance
      */
     private openTab(
-        editorInstance: IStandaloneCodeEditor,
+        editorInstance: MonacoEditor.IStandaloneCodeEditor,
         path: string,
         value: string,
         language: string
     ) {
-        let model = monacoEditor.getModel(Uri.parse(path));
+        let model = MonacoEditor.getModel(Uri.parse(path));
         if (!model) {
-            model = monacoEditor.createModel(value, language, Uri.parse(path));
+            model = MonacoEditor.createModel(value, language, Uri.parse(path));
         }
 
         // 1. switch model
@@ -312,13 +313,17 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance?.focus();
     }
 
-    private updateStatusBar(editorInstance: IStandaloneCodeEditor) {
+    private updateStatusBar(
+        editorInstance: MonacoEditor.IStandaloneCodeEditor
+    ) {
         if (editorInstance) {
             // TODO
         }
     }
 
-    public updateEditorLineColumnInfo(editorInstance: IStandaloneCodeEditor) {
+    public updateEditorLineColumnInfo(
+        editorInstance: MonacoEditor.IStandaloneCodeEditor
+    ) {
         if (editorInstance) {
             const position = editorInstance.getPosition();
             this.statusBarService.update(

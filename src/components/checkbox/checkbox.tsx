@@ -5,7 +5,7 @@ import { prefixClaName, classNames, getBEMElement } from 'mo/common/className';
 export interface ICheckboxProps extends ComponentProps<any> {
     id: string;
     value?: string;
-    children?: ReactNode;
+    children?: React.ReactNode;
     onChange?(e: React.ChangeEvent, options?: ICheckboxProps): void;
 }
 

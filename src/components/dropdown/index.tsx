@@ -9,7 +9,7 @@ import {
 } from 'mo/common/dom';
 
 export interface IDropDownProps extends React.ComponentProps<'div'> {
-    overlay: ReactNode;
+    overlay: React.ReactNode;
     trigger?: TriggerEvent;
     placement?: PlacementType;
 }

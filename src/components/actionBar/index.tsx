@@ -13,7 +13,7 @@ import Tooltip from '../tooltip';
 
 export interface IActionBarItemProps<T = any> {
     id?: string;
-    name?: ReactNode;
+    name?: React.ReactNode;
     title?: string;
     iconName?: string;
     disabled?: boolean;

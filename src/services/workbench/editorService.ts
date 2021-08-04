@@ -13,7 +13,7 @@ import {
     IEditorActionsProps,
 } from 'mo/model';
 import { searchById } from '../helper';
-import { editor as monacoEditor, Uri } from 'mo/monaco';
+import { editor as MonacoEditor, Uri } from 'mo/monaco';
 import { IMenuItemProps } from 'mo/components';
 
 export interface IEditorService extends Component<IEditor> {
@@ -83,7 +83,7 @@ export interface IEditorService extends Component<IEditor> {
     /**
      * The Instance of Editor
      */
-    readonly editorInstance: IStandaloneCodeEditor;
+    readonly editorInstance: MonacoEditor.IStandaloneCodeEditor;
 }
 @singleton()
 export class EditorService
@@ -100,7 +100,7 @@ export class EditorService
     private disposeModel(tabs: IEditorTab | IEditorTab[]) {
         const arr = Array.isArray(tabs) ? tabs : [tabs];
         arr.forEach((tab) => {
-            monacoEditor.getModel(Uri.parse(tab.id!))?.dispose();
+            MonacoEditor.getModel(Uri.parse(tab.id!))?.dispose();
         });
     }
 

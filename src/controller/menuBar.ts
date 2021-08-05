@@ -2,17 +2,23 @@ import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import { IActivityBarItem, IMenuBarItem } from 'mo/model';
 import {
-    MENU_FILE_REDO,
-    MENU_FILE_UNDO,
+    ACTION_QUICK_SELECT_ALL,
+    ACTION_QUICK_COPY_LINE_UP,
+    ACTION_QUICK_COMMAND,
+    ACTION_QUICK_UNDO,
+    ACTION_QUICK_REDO,
+    ACTION_QUICK_CREATE_FILE,
+} from 'mo/model/keybinding';
+import {
+    MENU_QUICK_COMMAND,
     MENU_VIEW_ACTIVITYBAR,
     MENU_VIEW_MENUBAR,
     MENU_VIEW_PANEL,
     MENU_VIEW_STATUSBAR,
 } from 'mo/model/workbench/menuBar';
+import { MenuBarEvent } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
 import {
-    EditorService,
-    IEditorService,
     IMenuBarService,
     ILayoutService,
     MenuBarService,
@@ -36,52 +42,58 @@ export interface IMenuBarController {
 export class MenuBarController
     extends Controller
     implements IMenuBarController {
-    private readonly editorService: IEditorService;
     private readonly menuBarService: IMenuBarService;
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
+    private automation = {
+        [ACTION_QUICK_CREATE_FILE]: () => this.createFile(),
+        [ACTION_QUICK_UNDO]: () => this.undo(),
+        [ACTION_QUICK_REDO]: () => this.redo(),
+        [ACTION_QUICK_SELECT_ALL]: () => this.selectAll(),
+        [ACTION_QUICK_COPY_LINE_UP]: () => this.copyLineUp(),
+        [MENU_VIEW_ACTIVITYBAR]: () => this.updateActivityBar(),
+        [MENU_VIEW_MENUBAR]: () => this.updateMenuBar(),
+        [MENU_VIEW_STATUSBAR]: () => this.updateStatusBar(),
+        [MENU_QUICK_COMMAND]: () => this.gotoQuickCommand(),
+        [ID_SIDE_BAR]: () => this.updateSideBar(),
+        [MENU_VIEW_PANEL]: () => this.updatePanel(),
+    };
 
     constructor() {
         super();
-        this.editorService = container.resolve(EditorService);
         this.menuBarService = container.resolve(MenuBarService);
         this.layoutService = container.resolve(LayoutService);
         this.monacoService = container.resolve(MonacoService);
     }
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
-        const menuId = item.id;
-        switch (menuId) {
-            case MENU_FILE_UNDO:
-                this.undo();
-                break;
-            case MENU_FILE_REDO:
-                this.redo();
-                break;
-            case MENU_VIEW_ACTIVITYBAR:
-                this.updateActivityBar();
-                break;
-            case MENU_VIEW_MENUBAR:
-                this.updateMenuBar();
-                break;
-            case MENU_VIEW_STATUSBAR:
-                this.updateStatusBar();
-                break;
-            case ID_SIDE_BAR:
-                this.updateSideBar();
-                break;
-            case MENU_VIEW_PANEL:
-                this.updatePanel();
-                break;
-        }
+        const menuId = item.id || '';
+
+        /**
+         * TODO: Two issues remain to be addressed
+         * 1、the default event is executed twice
+         * 2、we have no way of knowing whether user-defined events are executed internally
+         */
+        this.emit(MenuBarEvent.onSelect, menuId);
+        this.automation[menuId]?.();
+    };
+
+    public createFile = () => {
+        this.monacoService.commandService.executeCommand(
+            ACTION_QUICK_CREATE_FILE
+        );
     };
 
     public undo = () => {
-        this.editorService.editorInstance?.getAction('undo').run();
+        this.monacoService.commandService.executeCommand(ACTION_QUICK_UNDO);
     };
 
     public redo = () => {
-        this.editorService.editorInstance?.getAction('redo').run();
+        this.monacoService.commandService.executeCommand(ACTION_QUICK_REDO);
+    };
+
+    public gotoQuickCommand = () => {
+        this.monacoService.commandService.executeCommand(ACTION_QUICK_COMMAND);
     };
 
     public updateActivityBar = () => {
@@ -92,6 +104,18 @@ export class MenuBarController
         this.menuBarService.update(MENU_VIEW_ACTIVITYBAR, {
             icon: hidden ? '' : 'check',
         });
+    };
+
+    public selectAll = () => {
+        this.monacoService.commandService.executeCommand(
+            ACTION_QUICK_SELECT_ALL
+        );
+    };
+
+    public copyLineUp = () => {
+        this.monacoService.commandService.executeCommand(
+            ACTION_QUICK_COPY_LINE_UP
+        );
     };
 
     public updateMenuBar = () => {

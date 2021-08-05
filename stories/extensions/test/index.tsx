@@ -6,6 +6,7 @@ import {
     MENU_VIEW_STATUSBAR,
 } from 'mo/model/workbench/menuBar';
 import { FileTypes, IExtension, TreeNodeModel } from 'mo/model';
+import { MENU_FILE_OPEN } from 'mo/model/workbench/menuBar';
 
 import TestPane from './testPane';
 import { Entry } from './entry';
@@ -85,6 +86,67 @@ export const ExtendTestPane: IExtension = {
             }
         });
 
+        molecule.menuBar.onSelect((menuId: string) => {
+            const openFile = () => {
+                const input = document.createElement('input');
+                const getFile = (event: Event) => {
+                    const input = event.target as HTMLInputElement;
+                    const file = (input.files?.[0] || {
+                        arrayBuffer: Promise.resolve(null),
+                    }) as File;
+
+                    input?.remove();
+                    if (!file) return;
+                    file.arrayBuffer().then((res) => {
+                        if (!res) return;
+                        /**
+                         * TODO: Also need to deal with the display of static resources such as pictures
+                         */
+
+                        const decoder = new TextDecoder();
+                        const nameArr = file.name?.split('.') || [];
+                        const extName = nameArr[nameArr.length - 1] || '';
+                        const typeAutomation = {
+                            js: 'javascript',
+                            jsx: 'javascript',
+                            ts: 'typescript',
+                            tsx: 'typescript',
+                            html: 'html',
+                            css: 'css',
+                            scss: 'css',
+                            less: 'css',
+                            json: 'json',
+                        };
+                        const contentFile = {
+                            data: {
+                                value: decoder.decode(res),
+                                languages: typeAutomation[extName] || '',
+                            },
+                            fileType: 'File',
+                            icon: 'file-code',
+                            id: file.lastModified.toString() + file.name,
+                            location: `molecule/${file.name}`,
+                            name: file.name,
+                        };
+
+                        molecule.editor.open(contentFile);
+                    });
+                };
+
+                input.type = 'file';
+                input.hidden = true;
+                input.addEventListener('change', getFile, { once: true });
+                document.body.append(input);
+                input.click();
+            };
+
+            switch (menuId) {
+                case MENU_FILE_OPEN:
+                    openFile();
+                    break;
+            }
+        });
+
         molecule.folderTree.onCreate((type, nodeId) => {
             if (type === 'RootFolder') {
                 molecule.folderTree.add(
@@ -110,7 +172,6 @@ export const ExtendTestPane: IExtension = {
                 );
             }
         });
-
         molecule.search.onSearch((value) => {
             const children = new Array(5).fill(1).map((_, index) => ({
                 key: index.toFixed(),

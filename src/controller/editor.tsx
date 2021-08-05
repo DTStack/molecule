@@ -14,9 +14,7 @@ import {
     EDITOR_MENU_SHOW_OPENEDITORS,
     EDITOR_MENU_SPILIT,
 } from 'mo/model/workbench/editor';
-import { undoRedoMenu } from 'mo/model/workbench/menuBar';
 import { Controller } from 'mo/react/controller';
-
 import { IMenuItemProps } from 'mo/components/menu';
 import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';
@@ -161,7 +159,6 @@ export class EditorController extends Controller implements IEditorController {
         if (!editorInstance) return;
 
         this.initEditorEvents(editorInstance, groupId);
-        this.registerActions(editorInstance);
         this.editorService.updateGroup(groupId, {
             editorInstance: editorInstance,
         });
@@ -176,22 +173,6 @@ export class EditorController extends Controller implements IEditorController {
             tab?.data?.value!,
             tab?.data?.language!
         );
-    };
-
-    // TODO: Remove the below action register ?, because of the monaco Editor have integrated the undo/redo action
-    private registerActions = (editorInstance) => {
-        undoRedoMenu.forEach(({ id, label }) => {
-            editorInstance?.addAction({
-                id,
-                label,
-                run: () => {
-                    editorInstance!.focus();
-                    if (!document.execCommand(id)) {
-                        editorInstance?.getModel()?.[id]();
-                    }
-                },
-            });
-        });
     };
 
     public onClickActions = (action: IEditorActionsProps) => {

@@ -17,11 +17,11 @@ export enum SettingsEvent {
     OnChange = 'settings.onchange',
 }
 
-const initialWorkbenchSetting = {
+export const initialWorkbenchSetting = {
     colorTheme: 'Default Dark+',
 };
 
-const initialEditorSetting: IEditorSettings = {
+export const initialEditorSetting: IEditorSettings = {
     renderWhitespace: 'none',
     tabSize: 4,
     fontSize: 14,
@@ -47,8 +47,8 @@ export class SettingsModel implements ISettings {
     editor: IEditorSettings;
 
     constructor(
-        workbench: IWorkbenchSettings = initialWorkbenchSetting,
-        editor: IEditorSettings = initialEditorSetting
+        workbench: IWorkbenchSettings = { ...initialWorkbenchSetting },
+        editor: IEditorSettings = { ...initialEditorSetting }
     ) {
         this.workbench = workbench;
         this.editor = editor;

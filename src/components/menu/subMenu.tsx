@@ -33,7 +33,7 @@ export interface ISubMenuProps extends IMenuItemProps {
      * The event of show subMenu, default value is 'hover'
      */
     trigger?: TriggerEvent;
-    icon?: React.ReactNode;
+    icon?: string | JSX.Element;
     data?: ISubMenuProps[];
     mode?: MenuMode;
 }

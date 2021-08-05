@@ -76,7 +76,7 @@ export default class TestPane extends React.Component {
             molecule.activityBar.add({
                 id: id + '',
                 name: 'folder' + id,
-                iconName: 'codicon-edit',
+                icon: 'edit',
             });
         };
 
@@ -236,7 +236,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                 {
                     id: id + '',
                     name: 'menuBar' + id,
-                    iconName: '',
+                    icon: '',
                 },
                 'Edit'
             );
@@ -268,7 +268,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                     name: 'Panel-' + id,
                     toolbar: [
                         {
-                            iconName: 'codicon-remove',
+                            icon: 'remove',
                             id: 'explorer.remove',
                             title: 'remove this panel',
                         },

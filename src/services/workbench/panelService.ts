@@ -132,7 +132,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
                         PANEL_TOOLBOX_RESTORE_SIZE,
                         'Restore Panel Size'
                     ),
-                    iconName: 'codicon-chevron-down',
+                    icon: 'chevron-down',
                 });
             }
             this.layoutService.togglePanelMaximized();

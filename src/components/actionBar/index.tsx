@@ -10,12 +10,13 @@ import { useContextMenu } from 'mo/components/contextMenu';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { mergeFunctions } from 'mo/common/utils';
 import Tooltip from '../tooltip';
+import { Icon } from '../icon';
 
 export interface IActionBarItemProps<T = any> {
     id?: string;
     name?: React.ReactNode;
     title?: string;
-    iconName?: string;
+    icon?: string | JSX.Element;
     disabled?: boolean;
     checked?: boolean;
     data?: T;
@@ -55,13 +56,12 @@ export function ActionBarItem(props: IActionBarItemProps) {
         data = {},
         contextMenu = [],
         onClick,
+        icon,
         onContextMenuClick,
     } = props;
     const disabled = props.disabled ? itemDisabledClassName : null;
     const checked = props.checked ? itemCheckedClassName : null;
     const refItem = useRef(null);
-
-    const claNames = classNames('codicon', props.iconName);
 
     let contextViewMenu;
 
@@ -99,6 +99,7 @@ export function ActionBarItem(props: IActionBarItemProps) {
             });
         }
     };
+
     return (
         <li
             id={id}
@@ -108,7 +109,7 @@ export function ActionBarItem(props: IActionBarItemProps) {
             data-id={data.id}
         >
             <Tooltip overlay={<span>{title}</span>}>
-                <a className={claNames}>{name}</a>
+                <Icon type={icon}>{name}</Icon>
             </Tooltip>
         </li>
     );

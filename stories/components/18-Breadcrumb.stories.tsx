@@ -30,6 +30,7 @@ stories.add(
                 id: 'item1',
                 name: 'item1',
                 href: '#',
+                icon: 'test',
             },
             {
                 id: 'item2',

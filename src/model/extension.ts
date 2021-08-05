@@ -69,7 +69,7 @@ export interface IExtension {
     /**
      * The Icon of extension
      */
-    icon?: string;
+    icon?: string | JSX.Element;
     /**
      * The description of extension
      */

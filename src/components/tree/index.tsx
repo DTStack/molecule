@@ -7,7 +7,7 @@ import { FileTypes } from 'mo/model';
 
 export interface ITreeNodeItemProps {
     disabled?: boolean;
-    icon?: React.ReactNode;
+    icon?: string | JSX.Element;
     isLeaf?: boolean;
     key?: string;
     name?: string;

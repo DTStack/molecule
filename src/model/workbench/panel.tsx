@@ -69,7 +69,7 @@ export function builtInPanelToolboxResize(): IActionBarItemProps {
     return {
         id: PANEL_TOOLBOX_RESIZE,
         title: localize(PANEL_TOOLBOX_RESIZE, 'Maximize Panel Size'),
-        iconName: 'codicon-chevron-up',
+        icon: 'chevron-up',
     };
 }
 
@@ -79,7 +79,7 @@ export function builtInPanelToolbox(): IActionBarItemProps[] {
         {
             id: PANEL_TOOLBOX_CLOSE,
             title: localize(PANEL_TOOLBOX_CLOSE, 'Close Panel'),
-            iconName: 'codicon-close',
+            icon: 'close',
         },
     ];
 }

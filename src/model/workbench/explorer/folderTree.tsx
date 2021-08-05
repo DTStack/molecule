@@ -103,7 +103,7 @@ export class TreeNodeModel implements ITreeNodeItemProps {
     isLeaf?: boolean;
     fileType?: FileType;
     children?: ITreeNodeItemProps[];
-    icon?: string | React.ReactNode;
+    icon?: string | JSX.Element;
     isEditable?: boolean;
     content?: string;
 

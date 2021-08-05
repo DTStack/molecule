@@ -25,7 +25,7 @@ export const ExtendTestPane: IExtension = {
 
         const newItem = {
             id: TEST_PANE_ID,
-            iconName: 'codicon-beaker',
+            icon: 'beaker',
             name: '测试',
         };
 

@@ -2,11 +2,12 @@ import * as React from 'react';
 import { prefixClaName, classNames, getBEMElement } from 'mo/common/className';
 import { ComponentProps } from 'react';
 import { Icon } from 'mo/components';
+
 export interface IBreadcrumbItemProps {
     id: string;
     href?: string;
     name?: string;
-    icon?: React.ReactNode;
+    icon?: string | JSX.Element;
     className?: string;
     render?(item: IBreadcrumbItemProps): React.ReactNode;
 }
@@ -43,6 +44,7 @@ export function Breadcrumb(props: IBreadcrumbProps) {
     const claNames = classNames(defaultBreadcrumbClassName, className);
     const len = routes.length;
     const sep = separator || <Icon type="chevron-right" />;
+
     return (
         <div className={claNames} {...extra}>
             {routes.map((route: IBreadcrumbItemProps, index: number) => (
@@ -55,7 +57,7 @@ export function Breadcrumb(props: IBreadcrumbProps) {
                     href={route.href}
                     {...getEvents(route)}
                 >
-                    {route.icon}
+                    <Icon type={route.icon} />
                     <span className={breadcrumbLabelClassName}>
                         {route.render ? route.render(route) : route.name}
                     </span>

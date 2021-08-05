@@ -23,7 +23,7 @@ export interface IModalProps extends IDialogPropTypes {
 export interface IModalFuncProps extends IDialogPropTypes {
     cancelText?: React.ReactNode;
     okText?: React.ReactNode;
-    icon?: React.ReactNode;
+    icon?: string | JSX.Element;
     content?: React.ReactNode;
     onOk?: (...args: any[]) => any;
     onCancel?: (...args: any[]) => void;

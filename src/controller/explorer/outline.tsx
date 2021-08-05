@@ -27,7 +27,7 @@ export class OutlineController
                 {
                     id: 'outline-collapse',
                     title: localize('toolbar.collapseAll', 'Collapse All'),
-                    iconName: 'codicon-collapse-all',
+                    icon: 'collapse-all',
                 },
                 {
                     id: 'outline-more',
@@ -35,7 +35,7 @@ export class OutlineController
                         'sidebar.explore.outlineMore',
                         'More Actions...'
                     ),
-                    iconName: 'codicon-ellipsis',
+                    icon: 'ellipsis',
                 },
             ],
         };

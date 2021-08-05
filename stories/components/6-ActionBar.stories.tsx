@@ -25,17 +25,17 @@ stories.add(
             {
                 id: '1',
                 title: 'bar1',
-                iconName: 'codicon-add',
+                icon: 'add',
             },
             {
                 id: '2',
                 title: 'bar2',
-                iconName: 'codicon-chrome-restore',
+                icon: 'chrome-restore',
             },
             {
                 id: '3',
                 title: 'bar3',
-                iconName: 'codicon-check',
+                icon: 'check',
             },
         ];
 

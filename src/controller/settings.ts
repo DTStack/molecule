@@ -9,7 +9,12 @@ import {
     PanelService,
     SettingsService,
 } from 'mo/services';
-import { SettingsEvent, BuiltInSettingsTab } from 'mo/model/settings';
+import {
+    SettingsEvent,
+    BuiltInSettingsTab,
+    initialEditorSetting,
+    initialWorkbenchSetting,
+} from 'mo/model/settings';
 
 export interface ISettingsController {}
 
@@ -37,6 +42,11 @@ export class SettingsController
                 const config = this.settingsService.normalizeFlatObject(
                     tab.data?.value || ''
                 );
+                config.editor = { ...initialEditorSetting, ...config.editor };
+                config.workbench = {
+                    ...initialWorkbenchSetting,
+                    ...config.workbench,
+                };
                 this.settingsService.update(config);
             }
         });

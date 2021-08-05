@@ -95,26 +95,36 @@ export const ExtendTestPane: IExtension = {
                         arrayBuffer: Promise.resolve(null),
                     }) as File;
 
-                    document.removeEventListener('click', getFile);
-                    document.getElementById('upload')?.remove();
+                    input?.remove();
                     if (!file) return;
                     file.arrayBuffer().then((res) => {
                         if (!res) return;
+                        /**
+                         * TODO: Also need to deal with the display of static resources such as pictures
+                         */
 
                         const decoder = new TextDecoder();
                         const nameArr = file.name?.split('.') || [];
                         const extName = nameArr[nameArr.length - 1] || '';
-                        /**
-                         * TODO: Also need to deal with the display of static resources such as pictures
-                         */
+                        const typeAutomation = {
+                            js: 'javascript',
+                            jsx: 'javascript',
+                            ts: 'typescript',
+                            tsx: 'typescript',
+                            html: 'html',
+                            css: 'css',
+                            scss: 'css',
+                            less: 'css',
+                            json: 'json',
+                        };
                         const contentFile = {
                             data: {
                                 value: decoder.decode(res),
-                                language: extName,
+                                languages: typeAutomation[extName] || '',
                             },
                             fileType: 'File',
                             icon: 'file-code',
-                            id: file.lastModified.toString(),
+                            id: file.lastModified.toString() + file.name,
                             location: `molecule/${file.name}`,
                             name: file.name,
                         };
@@ -124,9 +134,8 @@ export const ExtendTestPane: IExtension = {
                 };
 
                 input.type = 'file';
-                input.id = 'upload';
                 input.hidden = true;
-                input.addEventListener('change', getFile);
+                input.addEventListener('change', getFile, { once: true });
                 document.body.append(input);
                 input.click();
             };

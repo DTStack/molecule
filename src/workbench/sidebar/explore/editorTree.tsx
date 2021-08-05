@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { IEditorTreeController } from 'mo/controller';
 import {
     EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
@@ -29,15 +29,17 @@ import {
 import { classNames } from 'mo/common/className';
 import { getEventPosition } from 'mo/common/dom';
 import { localize } from 'mo/i18n/localize';
-import {
-    DataBaseProps,
-    HEADER_HEIGTH,
-    MAX_GROW_HEIGHT,
-} from 'mo/components/collapse';
+import { DataBaseProps, HEADER_HEIGTH } from 'mo/components/collapse';
 import Scrollbar from 'react-scrollbars-custom';
 
 // override onContextMenu
 type UnionEditor = Omit<IEditor & IEditorTreeController, 'onContextMenu'>;
+
+/**
+ * It's the max height for the item which set the grow to 0
+ */
+const MAX_GROW_HEIGHT = 220;
+
 export interface IOpenEditProps extends UnionEditor {
     /**
      * Group Header toolbar
@@ -77,6 +79,7 @@ const EditorTree = (props: IOpenEditProps) => {
 
     const wrapper = useRef<HTMLDivElement>(null);
     const scrollable = useRef<Scrollbar>(null);
+    const [height, setHeight] = useState(0);
 
     // scroll into view
     useLayoutEffect(() => {
@@ -90,6 +93,9 @@ const EditorTree = (props: IOpenEditProps) => {
                 scrollable.current?.scrollTo(0, top);
             }
         }
+
+        const height = wrapper.current?.getBoundingClientRect().height || 0;
+        setHeight(height > MAX_GROW_HEIGHT ? MAX_GROW_HEIGHT : height);
     }, [current?.id && current.tab?.id]);
 
     if (!groups || !groups.length) return null;
@@ -173,7 +179,14 @@ const EditorTree = (props: IOpenEditProps) => {
     };
 
     return (
-        <Scrollable noScrollX isShowShadow ref={scrollable}>
+        <Scrollable
+            style={{
+                height,
+            }}
+            noScrollX
+            isShowShadow
+            ref={scrollable}
+        >
             <div
                 className={editorTreeClassName}
                 ref={wrapper}

@@ -6,20 +6,13 @@ $collapse__extra: #{$collapse}__extra;
     height: 100%;
     position: relative;
 
-    &:focus-within {
-        #{$collapse__extra} {
-            opacity: 1;
-        }
+    .pane {
+        transition: all ease-in-out 0.3s;
     }
 
     &__item {
-        border-bottom: 1px solid var(--sideBarSectionHeader-border);
-        display: flex;
-        flex-direction: column;
-        line-height: 22px;
+        height: 100%;
         overflow: hidden;
-        position: absolute;
-        transition: top ease-in-out 0.2s, height ease-in-out 0.2s;
         width: 100%;
 
         &:hover {
@@ -27,27 +20,31 @@ $collapse__extra: #{$collapse}__extra;
                 opacity: 1;
             }
         }
-
-        &:last-child {
-            border-bottom-color: transparent;
-        }
     }
 
     &__header {
         align-items: center;
-        border: 1px solid transparent;
+        border-top: 1px solid var(--sideBarSectionHeader-border);
         box-sizing: border-box;
         cursor: pointer;
         display: flex;
         font-size: 11px;
-        font-weight: bold;
-        height: 25px;
-        outline: none;
-        padding: 1px 2px;
+        font-weight: 700;
+        height: 22px;
+        outline-color: transparent;
+        outline-offset: -1px;
+        outline-style: solid;
+        outline-width: 1px;
+        overflow: hidden;
+        text-transform: uppercase;
         user-select: none;
 
         &:focus {
-            border-color: var(--list-focusOutline);
+            outline-color: var(--list-focusOutline);
+
+            #{$collapse__extra} {
+                opacity: 1;
+            }
         }
     }
 
@@ -62,15 +59,24 @@ $collapse__extra: #{$collapse}__extra;
     }
 
     &__content {
-        border: 1px solid transparent;
-        width: calc(100% - 3px);
+        max-height: 0;
+        outline-color: transparent;
+        outline-offset: -1px;
+        outline-style: solid;
+        outline-width: 1px;
+        transition: max-height ease-in-out 0.3s;
 
         &:not(:empty) {
-            flex: 1;
+            height: calc(100% - 22px);
+            padding: 1px;
         }
 
         &:focus {
-            border-color: var(--list-focusOutline);
+            outline-color: var(--list-focusOutline);
+        }
+
+        &.active {
+            max-height: 100vh;
         }
     }
 }

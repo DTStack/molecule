@@ -113,7 +113,8 @@ export function builtInExplorerEditorPanel() {
             },
         ],
         config: {
-            grow: 0,
+            size: 'auto',
+            resizable: false,
         },
     };
 }
@@ -168,7 +169,7 @@ export function builtInExplorerFolderPanel() {
             },
         ],
         config: {
-            grow: 2,
+            size: '2',
         },
     };
 }

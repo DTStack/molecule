@@ -20,7 +20,7 @@ import {
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
 
 export interface IFolderTreeController {
-    readonly createTreeNode: (type: keyof typeof FileTypes) => void;
+    readonly createTreeNode: (type: FileType) => void;
     readonly onClickContextMenu: (
         contextMenu: IMenuItemProps,
         treeNode: ITreeNodeItemProps
@@ -69,7 +69,7 @@ export class FolderTreeController
         return menus;
     };
 
-    public createTreeNode = (type: keyof typeof FileTypes) => {
+    public createTreeNode = (type: FileType) => {
         const folderTreeState = this.folderTreeService.getState();
         const { data, current } = folderTreeState?.folderTree || {};
         // The current selected node id or the first root node

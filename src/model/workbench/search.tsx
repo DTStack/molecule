@@ -18,7 +18,7 @@ export interface ISearchProps {
     value?: string;
     replaceValue?: string;
     replaceMode?: boolean;
-    validationInfo?: { type: keyof typeof InfoTypeEnum; text: string };
+    validationInfo?: { type: InfoTypeEnum; text: string };
     isRegex?: boolean;
     isCaseSensitive?: boolean;
     isWholeWords?: boolean;
@@ -128,7 +128,7 @@ export class SearchModel implements ISearchProps {
     public isCaseSensitive: boolean = false;
     public isWholeWords: boolean = false;
     public preserveCase: boolean = false;
-    public validationInfo: { type: keyof typeof InfoTypeEnum; text: string } = {
+    public validationInfo: { type: InfoTypeEnum; text: string } = {
         type: 'info',
         text: '',
     };
@@ -145,7 +145,7 @@ export class SearchModel implements ISearchProps {
         isWholeWords = false,
         isRegex = false,
         preserveCase = false,
-        validationInfo: { type: keyof typeof InfoTypeEnum; text: string } = {
+        validationInfo: { type: InfoTypeEnum; text: string } = {
             type: 'info',
             text: '',
         }

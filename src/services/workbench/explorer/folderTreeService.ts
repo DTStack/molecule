@@ -4,6 +4,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { Component } from 'mo/react/component';
 import {
     FileTypes,
+    FileType,
     FolderTreeEvent,
     IFolderTree,
     IFolderTreeModel,
@@ -87,9 +88,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * Listen to create a node for folder tree
      * @param callback
      */
-    onCreate(
-        callback: (type: keyof typeof FileTypes, nodeId?: number) => void
-    ): void;
+    onCreate(callback: (type: FileType, nodeId?: number) => void): void;
 }
 
 @singleton()
@@ -274,9 +273,7 @@ export class FolderTreeService
         this.subscribe(FolderTreeEvent.onRightClick, callback);
     };
 
-    public onCreate = (
-        callback: (type: keyof typeof FileTypes, nodeId?: number) => void
-    ) => {
+    public onCreate = (callback: (type: FileType, nodeId?: number) => void) => {
         this.subscribe(FolderTreeEvent.onCreate, callback);
     };
 }

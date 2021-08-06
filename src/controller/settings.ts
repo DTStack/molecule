@@ -32,13 +32,12 @@ export class SettingsController
         this.editorService = container.resolve(EditorService);
         this.settingsService = container.resolve(SettingsService);
 
-        this.initial();
+        this.initialize();
     }
 
-    private initial() {
+    private initialize() {
         this.editorService.onUpdateTab((tab) => {
             if (tab.id === BuiltInSettingsTab.id) {
-                this.emit(SettingsEvent.OnChange, tab);
                 const config = this.settingsService.normalizeFlatObject(
                     tab.data?.value || ''
                 );
@@ -48,6 +47,7 @@ export class SettingsController
                     ...config.workbench,
                 };
                 this.settingsService.update(config);
+                this.emit(SettingsEvent.OnChange, tab);
             }
         });
     }

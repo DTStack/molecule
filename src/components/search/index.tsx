@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { IActionBarItemProps } from '../actionBar';
-import Input, { InfoTypeEnum } from './input';
+import Input, { InfoTypeEnum, InfoTypeEnums } from './input';
 import { classNames } from 'mo/common/className';
 import {
     baseInputClassName,
@@ -20,7 +20,7 @@ export interface ISearchProps extends React.ComponentProps<any> {
     values?: SearchValues;
     placeholders?: string[];
     addons?: (IActionBarItemProps[] | undefined)[];
-    validationInfo?: string | { type: keyof typeof InfoTypeEnum; text: string };
+    validationInfo?: string | { type: InfoTypeEnum; text: string };
     onAddonClick?: (addon) => void;
     onButtonClick?: (status: boolean) => void;
     /**
@@ -87,7 +87,7 @@ export function Search(props: ISearchProps) {
     const getInfoFromRaw = () => {
         if (rawInfo) {
             if (typeof rawInfo === 'string') {
-                return { type: InfoTypeEnum.info, text: rawInfo };
+                return { type: InfoTypeEnums.info, text: rawInfo };
             }
             return rawInfo;
         }

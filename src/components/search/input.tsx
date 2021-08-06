@@ -10,18 +10,19 @@ import {
 } from './base';
 import { classNames } from 'mo/common/className';
 
-export enum InfoTypeEnum {
+export enum InfoTypeEnums {
     info = 'info',
     warning = 'warning',
     error = 'error',
 }
+export type InfoTypeEnum = keyof typeof InfoTypeEnums;
 
 export interface IBaseInputProps {
     value?: string;
     className?: string;
     placeholder?: string;
     toolbarData?: IActionBarItemProps[];
-    info?: { type: keyof typeof InfoTypeEnum; text: string };
+    info?: { type: InfoTypeEnum; text: string };
     onChange?: (value: string) => void;
     onToolbarClick?: (addon) => void;
 }
@@ -51,11 +52,11 @@ function Input(props: IBaseInputProps) {
 
     const getInfoClassName = (classname: string) => {
         switch (classname) {
-            case InfoTypeEnum.info:
+            case InfoTypeEnums.info:
                 return validationInfoInputClassName;
-            case InfoTypeEnum.warning:
+            case InfoTypeEnums.warning:
                 return validationWarningInputClassName;
-            case InfoTypeEnum.error:
+            case InfoTypeEnums.error:
                 return validationErrorInputClassName;
             default:
                 return '';

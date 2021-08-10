@@ -56,12 +56,14 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
         ReactDOM.render(<>{renderContent()}</>, content, () => {
             // Notice: if want to get the computed offsetHeight of contextView,
             // must display contextView ahead.
-            contextView!.style.display = 'visible';
-            const position = getRelativePosition(contextView!, anchorPos);
-            contextView!.style.cssText = `
-                top: ${position.y}px;
-                left: ${position.x}px;
-            `;
+            if (contextView) {
+                const position = getRelativePosition(contextView, anchorPos);
+                contextView.style.cssText = `
+                    visibility: visible;
+                    top: ${position.y}px;
+                    left: ${position.x}px;
+                `;
+            }
         });
     };
 

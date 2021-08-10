@@ -11,6 +11,8 @@ export interface PaneProps {
     initialSize?: string | number;
     maxSize?: string | number;
     priority?: LayoutPriority;
+
+    className?: string;
 }
 
 export interface PaneInstanceProps extends PaneProps {
@@ -18,6 +20,10 @@ export interface PaneInstanceProps extends PaneProps {
     setVisible(visible: boolean, size?: number): void;
 }
 
-export function Pane({ children }: PropsWithChildren<PaneProps>) {
-    return <>{children}</>;
+export function Pane({ children, className }: PropsWithChildren<PaneProps>) {
+    return className ? (
+        <div className={className}>{children}</div>
+    ) : (
+        <>{children}</>
+    );
 }

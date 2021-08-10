@@ -68,7 +68,10 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
     const hide = () => {
         if (contextView) {
             contextView.style.visibility = 'hidden';
-            ReactDOM.unmountComponentAtNode(select('.' + contentClassName)!);
+            const contentContainer = select('.' + contentClassName);
+            if (contentContainer) {
+                ReactDOM.unmountComponentAtNode(contentContainer);
+            }
             Emitter.emit(ContextViewEvent.onHide);
         }
     };

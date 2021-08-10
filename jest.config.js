@@ -5,7 +5,7 @@ module.exports = {
     // Automatically clear mock calls and instances between every test
     clearMocks: true,
     globals: {
-        __DEVELOPMENT__: true,
+        __DEVELOPMENT__: false,
     },
     testMatch: [
         '**/__tests__/**/(*.)+(spec|test).[jt]s?(x)',

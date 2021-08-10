@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test ActionBar Component Test the ActionBar Snapshot 1`] = `
+exports[`Test ActionBar Component The ActionBar snapshot 1`] = `
 <div
   className="mo-action-bar"
 >
@@ -8,8 +8,8 @@ exports[`Test ActionBar Component Test the ActionBar Snapshot 1`] = `
     className="mo-action-bar__container"
   >
     <li
-      className="mo-action-bar__item"
-      id="m1"
+      className="mo-action-bar__item mo-action-bar__item--checked"
+      id="test-action-item-id"
       onClick={[Function]}
     >
       <span

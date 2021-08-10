@@ -89,6 +89,10 @@ export function ActionBarItem(props: IActionBarItemProps) {
     });
 
     const onClickItem = function (event) {
+        if (props.disabled) {
+            event.preventDefault();
+            return;
+        }
         if (onClick) {
             onClick(event, props);
         }

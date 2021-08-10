@@ -10,14 +10,14 @@ import {
 } from '../index';
 
 describe('Test Button Component', () => {
-    test('the Button Snapshot', () => {
+    test('The Button Snapshot', () => {
         const component = renderer.create(<Button />);
         const tree = component.toJSON();
 
         expect(tree).toMatchSnapshot();
     });
 
-    test('the Button setting disabled', () => {
+    test('The Button setting disabled', () => {
         const wrapper = render(<Button data-testid="button" disabled />);
         const element = wrapper.getByTestId('button');
         const classExist = element?.classList.contains(disableButtonClassName);
@@ -25,7 +25,7 @@ describe('Test Button Component', () => {
         expect(classExist).toBeTruthy();
     });
 
-    test('the Button is not set disabled', () => {
+    test('The Button is not set disabled', () => {
         const wrapper = render(<Button data-testid="button" />);
         const element = wrapper.getByTestId('button');
         const classExist = element?.classList.contains(disableButtonClassName);

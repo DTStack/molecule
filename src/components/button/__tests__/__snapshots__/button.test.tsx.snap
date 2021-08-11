@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Button Component The Button Snapshot 1`] = `
+<a
+  className="mo-btn mo-btn--normal"
+/>
+`;

@@ -8,10 +8,16 @@ export interface IButtonProps extends React.ComponentProps<'a'> {
     onClick?(event: React.MouseEvent): void;
 }
 
-const defaultButtonClassName = prefixClaName('btn');
-const normalButtonClassName = getBEMModifier(defaultButtonClassName, 'normal');
-const largeButtonClassName = getBEMModifier(defaultButtonClassName, 'large');
-const disableButtonClassName = getBEMModifier(
+export const defaultButtonClassName = prefixClaName('btn');
+export const normalButtonClassName = getBEMModifier(
+    defaultButtonClassName,
+    'normal'
+);
+export const largeButtonClassName = getBEMModifier(
+    defaultButtonClassName,
+    'large'
+);
+export const disableButtonClassName = getBEMModifier(
     defaultButtonClassName,
     'disabled'
 );

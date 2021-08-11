@@ -11,14 +11,9 @@ export const SYMBOL_MONACO_EDITOR = `${APP_PREFIX}-monaco-editor`;
 
 export interface IMonacoEditorProps extends React.ComponentProps<any> {
     /**
-     * The value of monaco editor
-     */
-    value?: string;
-    /**
      * The option of monaco editor
      */
     options?: editor.IStandaloneEditorConstructionOptions;
-    path?: string;
     /**
      * The override for monaco editor
      */

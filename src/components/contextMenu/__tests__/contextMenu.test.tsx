@@ -8,6 +8,14 @@ describe('Test ContextMenu Component', () => {
     const anchorEle = container.getByTestId('anchor');
     let contextMenu: IContextMenu | undefined;
 
+    test('Test the useContextMenu anchor is null', () => {
+        contextMenu = useContextMenu({
+            anchor: null,
+            render: () => <></>,
+        });
+        expect(contextMenu).toBeUndefined();
+    });
+
     test('Test the useContextMenu method', () => {
         contextMenu = useContextMenu({
             anchor: anchorEle,

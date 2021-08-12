@@ -5,7 +5,11 @@ import { KeyCodes } from 'mo/common/keyCodes';
 import { TextArea } from './textArea';
 
 type SizeType = 'normal' | 'large';
-export interface IInputProps {
+export interface IInputProps
+    extends Omit<
+        React.InputHTMLAttributes<HTMLInputElement>,
+        'size' | 'onChange' | 'onKeyDown' | 'onPressEnter'
+    > {
     disabled?: boolean;
     size?: SizeType;
     type?: LiteralUnion<
@@ -13,12 +17,10 @@ export interface IInputProps {
         string
     >;
     placeholder?: string;
-    value?: any;
+    value?: string;
     style?: React.CSSProperties;
-    defaultValue?: any;
+    defaultValue?: string;
     className?: string;
-    onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     onChange?: (
@@ -26,6 +28,9 @@ export interface IInputProps {
     ) => void;
 }
 export const inputClassName = prefixClaName('input');
+export const normalClassName = getBEMModifier(inputClassName, 'normal');
+export const largetClassName = getBEMModifier(inputClassName, 'lg');
+export const disabledClassName = getBEMModifier(inputClassName, 'disabled');
 
 export function fixControlledValue<T>(value: T) {
     if (typeof value === 'undefined' || value === null) return '';
@@ -33,7 +38,7 @@ export function fixControlledValue<T>(value: T) {
 }
 
 export function resolveOnChange(
-    target: HTMLInputElement | HTMLTextAreaElement,
+    _: HTMLInputElement | HTMLTextAreaElement | null,
     e:
         | React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
         | React.MouseEvent<HTMLElement, MouseEvent>,
@@ -49,16 +54,12 @@ export function resolveOnChange(
     }
 }
 
-export function getInputClassName(
-    prefixCls: string,
-    size?: SizeType,
-    disabled?: boolean
-) {
+export function getInputClassName(size?: SizeType, disabled?: boolean) {
     return classNames(
-        prefixCls,
-        { [getBEMModifier(prefixCls, 'normal')]: size === 'normal' },
-        { [getBEMModifier(prefixCls, 'lg')]: size === 'large' },
-        { [getBEMModifier(prefixCls, 'disabled')]: disabled }
+        inputClassName,
+        { [normalClassName]: size === 'normal' },
+        { [largetClassName]: size === 'large' },
+        { [disabledClassName]: disabled }
     );
 }
 
@@ -74,7 +75,7 @@ export class Input extends React.Component<IInputProps, InputState> {
         type: 'text',
     };
 
-    input: any;
+    input: HTMLInputElement | HTMLTextAreaElement | null = null;
 
     constructor(props: IInputProps) {
         super(props);
@@ -130,9 +131,8 @@ export class Input extends React.Component<IInputProps, InputState> {
             size = 'normal',
             disabled = false,
             placeholder,
-            onFocus,
-            onBlur,
             style,
+            ...props
         } = this.props;
         return (
             <input
@@ -140,14 +140,13 @@ export class Input extends React.Component<IInputProps, InputState> {
                 style={style}
                 placeholder={placeholder}
                 onChange={this.handleChange}
-                onFocus={(e) => onFocus?.(e)}
-                onBlur={(e) => onBlur?.(e)}
                 onKeyDown={this.handleKeyDown}
                 className={classNames(
                     className,
-                    getInputClassName(inputClassName, size, disabled)
+                    getInputClassName(size, disabled)
                 )}
                 ref={this.saveInput}
+                {...props}
             />
         );
     }

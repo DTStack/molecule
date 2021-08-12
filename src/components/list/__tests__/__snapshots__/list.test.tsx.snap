@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test the List Component Match the List snapshot 1`] = `
+<ul
+  className="mo-list testList horizontal-mo-list"
+  data-testid="myList"
+>
+  <li
+    className="mo-list__item"
+    data-testid="myLi1"
+    id="1"
+    onClick={[Function]}
+  >
+    <span
+      className="mo-list__label"
+    >
+      1
+    </span>
+  </li>
+  <li
+    className="mo-list__item mo-list__item--active"
+    data-testid="myLi2"
+    id="2"
+    onClick={[Function]}
+  >
+    <span
+      className="mo-list__label"
+    >
+      2
+    </span>
+  </li>
+</ul>
+`;

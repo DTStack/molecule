@@ -8,7 +8,7 @@ const mockData = {
     id: 'm1',
 };
 
-const flag = 'molecule';
+const TEST_FLAG = 'molecule';
 
 describe('Test ActionBar Component', () => {
     test('Checkbox renders correctly', () => {
@@ -18,10 +18,10 @@ describe('Test ActionBar Component', () => {
     });
 
     test('Checkbox id attribute correctly', () => {
-        const component = renderer.create(<Checkbox id={flag} />);
+        const component = renderer.create(<Checkbox id={TEST_FLAG} />);
         const componentInstance = component.root;
 
-        expect(componentInstance.findByType('input').props.id).toBe(flag);
+        expect(componentInstance.findByType('input').props.id).toBe(TEST_FLAG);
     });
 
     test('Checkbox value attribute correctly', () => {
@@ -36,7 +36,7 @@ describe('Test ActionBar Component', () => {
 
     test('Checkbox children render correctly', () => {
         function SubComponent() {
-            return <p className="sub">{flag}</p>;
+            return <p className="sub">{TEST_FLAG}</p>;
         }
         const component = renderer.create(
             <Checkbox {...mockData}>
@@ -47,7 +47,7 @@ describe('Test ActionBar Component', () => {
         const nodeParagraph = componentInstance.findByType('label').children[0]
             .children[0];
 
-        expect(nodeParagraph.children).toEqual([flag]);
+        expect(nodeParagraph.children).toEqual([TEST_FLAG]);
     });
 
     test('Checkbox classname attribute correctly', () => {
@@ -67,33 +67,29 @@ describe('Test ActionBar Component', () => {
     });
 
     test('Checkbox change event correctly', () => {
-        let [id, value] = ['', ''];
+        const mockCallback = jest.fn();
         const testValue = 'mo';
 
         render(
             <Checkbox
                 value={testValue}
-                id={flag}
-                onChange={(_, target) => {
-                    id = target?.id || '';
-                    value = target?.value || '';
-                }}
+                id={TEST_FLAG}
+                onChange={mockCallback}
             />
         );
         fireEvent.click(screen.getByText(/.*/i, { selector: 'label' }));
-        expect(id).toBe(flag);
-        expect(value).toBe(testValue);
+        expect(mockCallback).toBeCalled();
     });
 
     test('Checkbox customer properties correctly', () => {
         const customProps = {
-            ['data-meta']: flag,
+            ['data-meta']: TEST_FLAG,
         };
         const wrapper = render(
             <Checkbox data-testid="checkbox" {...mockData} {...customProps} />
         );
         const metaData = wrapper.getByTestId('checkbox').dataset.meta;
 
-        expect(metaData).toBe(flag);
+        expect(metaData).toBe(TEST_FLAG);
     });
 });

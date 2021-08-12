@@ -23,7 +23,7 @@ export function Checkbox(props: ICheckboxProps) {
     };
 
     return (
-        <div className={claNames} {...(custom as any)}>
+        <div className={claNames} {...custom}>
             <input
                 id={id}
                 type="checkbox"

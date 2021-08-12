@@ -2343,7 +2343,7 @@
 
 "@testing-library/jest-dom@^5.14.1":
   version "5.14.1"
-  resolved "http://registry.npm.dtstack.com/@testing-library%2fjest-dom/-/jest-dom-5.14.1.tgz#8501e16f1e55a55d675fe73eecee32cdaddb9766"
+  resolved "https://registry.nlark.com/@testing-library/jest-dom/download/@testing-library/jest-dom-5.14.1.tgz#8501e16f1e55a55d675fe73eecee32cdaddb9766"
   integrity sha1-hQHhbx5VpV1nX+c+7O4yza3bl2Y=
   dependencies:
     "@babel/runtime" "^7.9.2"
@@ -2504,9 +2504,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@*":
-  version "26.0.24"
-  resolved "http://registry.npm.dtstack.com/@types%2fjest/-/jest-26.0.24.tgz#943d11976b16739185913a1936e0de0c4a7d595a"
-  integrity sha1-lD0Rl2sWc5GFkToZNuDeDEp9WVo=
+  version "27.0.0"
+  resolved "https://registry.nlark.com/@types/jest/download/@types/jest-27.0.0.tgz#f1c28f741371739c7cd0e8edb5ed8e67acfa6c35"
+  integrity sha1-8cKPdBNxc5x80Ojtte2OZ6z6bDU=
   dependencies:
     jest-diff "^26.0.0"
     pretty-format "^26.0.0"
@@ -2689,7 +2689,7 @@
 
 "@types/testing-library__jest-dom@^5.9.1":
   version "5.14.1"
-  resolved "http://registry.npm.dtstack.com/@types%2ftesting-library__jest-dom/-/testing-library__jest-dom-5.14.1.tgz#014162a5cee6571819d48e999980694e2f657c3c"
+  resolved "https://registry.nlark.com/@types/testing-library__jest-dom/download/@types/testing-library__jest-dom-5.14.1.tgz#014162a5cee6571819d48e999980694e2f657c3c"
   integrity sha1-AUFipc7mVxgZ1I6ZmYBpTi9lfDw=
   dependencies:
     "@types/jest" "*"
@@ -5924,12 +5924,12 @@ css-what@^3.2.1:
 
 css.escape@^1.5.1:
   version "1.5.1"
-  resolved "http://registry.npm.dtstack.com/css.escape/-/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
+  resolved "https://registry.nlark.com/css.escape/download/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
   integrity sha1-QuJ9T6BK4y+TGktNQZH6nN3ul8s=
 
 css@^3.0.0:
   version "3.0.0"
-  resolved "http://registry.npm.dtstack.com/css/-/css-3.0.0.tgz#4447a4d58fdd03367c516ca9f64ae365cee4aa5d"
+  resolved "https://registry.nlark.com/css/download/css-3.0.0.tgz#4447a4d58fdd03367c516ca9f64ae365cee4aa5d"
   integrity sha1-REek1Y/dAzZ8UWyp9krjZc7kql0=
   dependencies:
     inherits "^2.0.4"
@@ -6326,7 +6326,7 @@ dom-accessibility-api@^0.5.4:
 
 dom-accessibility-api@^0.5.6:
   version "0.5.7"
-  resolved "http://registry.npm.dtstack.com/dom-accessibility-api/-/dom-accessibility-api-0.5.7.tgz#8c2aa6325968f2933160a0b7dbb380893ddf3e7d"
+  resolved "https://registry.nlark.com/dom-accessibility-api/download/dom-accessibility-api-0.5.7.tgz?cache=0&sync_timestamp=1628161580016&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdom-accessibility-api%2Fdownload%2Fdom-accessibility-api-0.5.7.tgz#8c2aa6325968f2933160a0b7dbb380893ddf3e7d"
   integrity sha1-jCqmMllo8pMxYKC327OAiT3fPn0=
 
 dom-align@^1.7.0:
@@ -13840,7 +13840,7 @@ source-map-resolve@^0.5.0:
 
 source-map-resolve@^0.6.0:
   version "0.6.0"
-  resolved "http://registry.npm.dtstack.com/source-map-resolve/-/source-map-resolve-0.6.0.tgz#3d9df87e236b53f16d01e58150fc7711138e5ed2"
+  resolved "https://registry.nlark.com/source-map-resolve/download/source-map-resolve-0.6.0.tgz#3d9df87e236b53f16d01e58150fc7711138e5ed2"
   integrity sha1-PZ34fiNrU/FtAeWBUPx3EROOXtI=
   dependencies:
     atob "^2.1.2"

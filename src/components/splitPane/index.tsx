@@ -129,11 +129,22 @@ const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
         return 0;
     };
 
-    const componentDidMount = async () => {
+    /**
+     * Once a pane append into Split, SplitPane will push these new panes into workInProgressPanes
+     * And add panes into view via componentDidMount
+     */
+    const componentDidMount = async (
+        workInProgressPanes: {
+            child: typeof children[number];
+            dom: HTMLDivElement;
+        }[]
+    ) => {
         const splitview = splitviewRef.current;
         const parentSize = getParentSize();
+
         const initSizes = await Promise.all(
-            React.Children.map(children, (child, index) => {
+            workInProgressPanes.map((children, index) => {
+                const { child, dom } = children;
                 return new Promise<number | null>((resolve) => {
                     if (child?.type === Pane) {
                         const {
@@ -142,7 +153,6 @@ const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
                             maxSize = parentSize,
                             priority = LayoutPriority.Normal,
                         } = child.props;
-                        const dom = getWrapper(index);
                         const initSize = getSize(initialSize, parentSize);
                         splitview.addView(
                             {
@@ -157,7 +167,7 @@ const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
                             },
                             initSize,
                             undefined,
-                            index !== children.length - 1
+                            index !== workInProgressPanes.length - 1
                         );
                     } else {
                         resolve(null);
@@ -165,12 +175,18 @@ const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
                 });
             })
         );
-        sizes.current = (initSizes.filter(Boolean) as number[]).concat();
+        sizes.current = sizes.current.concat(
+            initSizes.filter(Boolean) as number[]
+        );
         forceUpdate((i) => !i);
         onDidMount?.();
     };
 
     const renderChildren = () => {
+        const workInProgressPanes: {
+            child: typeof children[number];
+            dom: HTMLDivElement;
+        }[] = [];
         React.Children.map(children, (child, index) => {
             if (child?.type === Pane) {
                 const { hidden } = child.props;
@@ -178,9 +194,12 @@ const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
                 const dom = getWrapper(index);
                 className && dom.classList.add(className);
 
+                if (isFirstRender) {
+                    workInProgressPanes.push({ child, dom });
+                }
                 ReactDOM.render(child, dom, () => {
                     if (isFirstRender && index === children.length - 1) {
-                        componentDidMount();
+                        componentDidMount(workInProgressPanes);
                     }
 
                     setViewVisible(index, !hidden);

@@ -10,7 +10,9 @@ import { fixControlledValue, inputClassName, resolveOnChange } from './input';
 export interface ITextAreaProps extends TextAreaProps {
     showCount?: boolean;
     maxLength?: number;
-    onChange?: (e) => void;
+    onChange?: (
+        e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    ) => void;
 }
 
 const textAreaClassName = getBEMElement(inputClassName, 'textarea');

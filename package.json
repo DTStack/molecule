@@ -71,6 +71,7 @@
         "@storybook/addon-notes": "^5.3.21",
         "@storybook/addons": "6.1.10",
         "@storybook/react": "6.1.10",
+        "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^11.2.5",
         "@types/jest": "^26.0.0",
         "@typescript-eslint/eslint-plugin": "^3.1.0",

@@ -36,7 +36,7 @@ export const verticalClassName = getBEMModifier(
     defaultListClassName,
     'vertical'
 );
-export const horizontalClassName = prefixClaName(
+export const horizontalClassName = getBEMModifier(
     defaultListClassName,
     'horizontal'
 );
@@ -49,7 +49,7 @@ export function List(props: React.PropsWithChildren<IListProps>) {
         onClick,
         onSelect,
         className,
-        mode = 'vertical',
+        mode,
         ...restProps
     } = props;
 

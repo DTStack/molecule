@@ -6,7 +6,7 @@ exports[`Test the List Component Match the List snapshot 1`] = `
   data-testid="myList"
 >
   <li
-    className="mo-list__item"
+    className="mo-list__item mo-list__item--disabled"
     data-testid="myLi1"
     id="1"
     onClick={[Function]}
@@ -27,6 +27,18 @@ exports[`Test the List Component Match the List snapshot 1`] = `
       className="mo-list__label"
     >
       2
+    </span>
+  </li>
+  <li
+    className="mo-list__item"
+    data-testid="myLi3"
+    id="3"
+    onClick={[Function]}
+  >
+    <span
+      className="mo-list__label"
+    >
+      3
     </span>
   </li>
 </ul>

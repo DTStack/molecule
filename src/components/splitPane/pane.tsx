@@ -13,6 +13,7 @@ export interface PaneProps {
     priority?: LayoutPriority;
 
     className?: string;
+    hidden?: boolean;
 }
 
 export interface PaneInstanceProps extends PaneProps {

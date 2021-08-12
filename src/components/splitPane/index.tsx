@@ -5,19 +5,26 @@ import React, {
     useRef,
     useState,
     useEffect,
+    useCallback,
 } from 'react';
 import { SplitView as MonacoSplitView } from 'monaco-editor/esm/vs/base/browser/ui/splitview/splitview';
 import ReactDOM from 'react-dom';
 import logger from 'mo/common/logger';
 import { LayoutPriority, Pane, PaneInstanceProps, PaneProps } from './pane';
 
+export enum Orientation {
+    VERTICAL,
+    HORIZONTAL,
+}
+
 interface SplitPaneProps {
     children: React.ReactElement<PaneProps>[];
     className?: string;
-    split?: 'vertical' | 'horizontal';
-    allowResize?: boolean;
+    split?: Orientation.VERTICAL | Orientation.HORIZONTAL;
+    proportionalLayout?: boolean;
     onChange?: (sizes: number[]) => void;
-    layoutHeight?: number | string;
+    onWillUnMount?: () => void;
+    onDidMount?: () => void;
 }
 
 function getSize(size: string | number | undefined, total: number) {
@@ -35,13 +42,20 @@ export interface SplitPaneRef {
     splitView: MonacoSplitView;
     getView(index: number): PaneInstanceProps;
     getViews(): PaneInstanceProps[];
-    setSizes(sizes: number[]): void;
     getViewCachedVisibleSize(index: number): number | undefined;
     setViewVisible(index: number, visible: boolean, size?: number): void;
 }
 
 const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
-    { children, onChange, className, layoutHeight },
+    {
+        children,
+        onChange,
+        className,
+        onDidMount,
+        onWillUnMount,
+        split,
+        proportionalLayout,
+    },
     ref
 ) {
     const container = useRef<HTMLDivElement>(null);
@@ -50,35 +64,46 @@ const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
     const sizes = useRef<number[]>([]);
     const [update, forceUpdate] = useState(false);
 
+    const getView = (index: number) => {
+        return getViews()[index];
+    };
+
+    const getViews = () => {
+        return splitviewRef.current.viewItems;
+    };
+
+    const getViewCachedVisibleSize = (index: number): number | undefined => {
+        const viewItem = getView(index);
+
+        return viewItem._cachedVisibleSize;
+    };
+
+    const setViewVisible = (index: number, visible: boolean, size?: number) => {
+        const viewItem = getView(index);
+        // There will be undefined if get viewItem before componentDidMount
+        if (viewItem) {
+            viewItem.setVisible(visible, size);
+
+            splitviewRef.current.distributeEmptySpace(index);
+            splitviewRef.current.layoutViews();
+            splitviewRef.current.saveProportions();
+        }
+    };
+
     useImperativeHandle(
         ref,
         () =>
             ({
                 splitView: splitviewRef.current,
-                getView(index: number) {
-                    return this.getViews()[index];
-                },
-                getViews() {
-                    return splitviewRef.current.viewItems;
-                },
-                getViewCachedVisibleSize(index: number): number | undefined {
-                    const viewItem = this.getView(index);
-
-                    return viewItem._cachedVisibleSize;
-                },
-                setViewVisible(index: number, visible: boolean, size?: number) {
-                    const viewItem = this.getView(index);
-                    viewItem.setVisible(visible, size);
-
-                    splitviewRef.current.distributeEmptySpace(index);
-                    splitviewRef.current.layoutViews();
-                    splitviewRef.current.saveProportions();
-                },
-                setSizes(sizes: number[]): void {
-                    sizes.forEach((size, index) => {
-                        splitviewRef.current.resizeView(index, size);
-                    });
-                },
+                getView: (index: number) => getView(index),
+                getViews: () => getViews(),
+                getViewCachedVisibleSize: (index: number) =>
+                    getViewCachedVisibleSize(index),
+                setViewVisible: (
+                    index: number,
+                    visible: boolean,
+                    size?: number
+                ) => setViewVisible(index, visible, size),
             } as SplitPaneRef)
     );
 
@@ -92,64 +117,109 @@ const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
         return div;
     };
 
-    const renderChildren = (splitview, parentHeight) => {
-        return React.Children.map(children, (child, index) => {
-            if (child?.type === Pane) {
-                const {
-                    minSize = 0,
-                    initialSize = 200,
-                    maxSize = parentHeight,
-                    priority = LayoutPriority.Normal,
-                } = child.props;
+    const getParentSize = () => {
+        if (container.current) {
+            const {
+                height = 0,
+                width = 0,
+            } = container.current.getBoundingClientRect();
+            const size = split === Orientation.VERTICAL ? height : width;
+            return size;
+        }
+        return 0;
+    };
 
+    const componentDidMount = async () => {
+        const splitview = splitviewRef.current;
+        const parentSize = getParentSize();
+        const initSizes = await Promise.all(
+            React.Children.map(children, (child, index) => {
+                return new Promise<number | null>((resolve) => {
+                    if (child?.type === Pane) {
+                        const {
+                            minSize = 0,
+                            initialSize = 200,
+                            maxSize = parentSize,
+                            priority = LayoutPriority.Normal,
+                        } = child.props;
+                        const dom = getWrapper(index);
+                        const initSize = getSize(initialSize, parentSize);
+                        splitview.addView(
+                            {
+                                onDidChange: () => {},
+                                element: dom,
+                                minimumSize: getSize(minSize, parentSize),
+                                maximumSize: getSize(maxSize, parentSize),
+                                priority,
+                                layout: (size: number) => {
+                                    resolve(size);
+                                },
+                            },
+                            initSize,
+                            undefined,
+                            index !== children.length - 1
+                        );
+                    } else {
+                        resolve(null);
+                    }
+                });
+            })
+        );
+        sizes.current = (initSizes.filter(Boolean) as number[]).concat();
+        forceUpdate((i) => !i);
+        onDidMount?.();
+    };
+
+    const renderChildren = () => {
+        React.Children.map(children, (child, index) => {
+            if (child?.type === Pane) {
+                const { hidden } = child.props;
                 const isFirstRender = !wrapper.current[index];
                 const dom = getWrapper(index);
                 className && dom.classList.add(className);
 
                 ReactDOM.render(child, dom, () => {
-                    if (isFirstRender) {
-                        splitview.addView(
-                            {
-                                onDidChange: () => {},
-                                element: dom,
-                                minimumSize: getSize(minSize, parentHeight),
-                                maximumSize: getSize(maxSize, parentHeight),
-                                priority,
-                                layout: (size: number) => {
-                                    sizes.current[index] = size;
-                                    if (index === children.length - 1) {
-                                        forceUpdate((i) => !i);
-                                    }
-                                },
-                            },
-                            getSize(initialSize, parentHeight),
-                            undefined,
-                            index !== children.length - 1
-                        );
+                    if (isFirstRender && index === children.length - 1) {
+                        componentDidMount();
                     }
+
+                    setViewVisible(index, !hidden);
                 });
-
-                return getSize(initialSize, parentHeight);
+            } else {
+                logger.warn(
+                    'Please use Pane component as the children of SplitPane'
+                );
             }
-
-            logger.warn(
-                'Please use Pane component as the children of SplitPane'
-            );
-            return 0;
         });
     };
 
-    useLayoutEffect(() => {
-        const splitview = new MonacoSplitView(container.current, {});
-        const parentHeight =
-            container.current?.getBoundingClientRect().height || 0;
-        splitview.layout(getSize(layoutHeight, parentHeight) || parentHeight);
-        const initSizes = renderChildren(splitview, parentHeight);
-        sizes.current = initSizes;
-        splitviewRef.current = splitview;
+    const catchError = useCallback(function (event) {
+        if (event.reason && event.reason.name === 'Canceled') {
+            // monaco editor promise cancelation
+            event.preventDefault();
+        }
+    }, []);
 
+    const handleResize = useCallback(() => {
+        const parentSize = getParentSize();
+        splitviewRef.current.layout(parentSize);
+    }, []);
+
+    useLayoutEffect(() => {
+        if (container.current) {
+            const splitview = new MonacoSplitView(container.current, {
+                orientation: split || Orientation.VERTICAL,
+                proportionalLayout: proportionalLayout || true,
+            });
+            const parentSize = getParentSize();
+            splitview.layout(parentSize);
+            renderChildren();
+
+            splitviewRef.current = splitview;
+        }
         return () => {
-            splitview.dispose();
+            onWillUnMount?.();
+            splitviewRef.current?.dispose();
         };
     }, []);
 
@@ -158,13 +228,19 @@ const InternalSplit = forwardRef<SplitPaneRef, SplitPaneProps>(function (
     }, [update]);
 
     useEffect(() => {
-        const splitview = splitviewRef.current;
-        const parentHeight =
-            container.current?.getBoundingClientRect().height || 0;
-        if (splitview) {
-            renderChildren(splitview, parentHeight);
-        }
+        renderChildren();
     }, [children]);
+
+    useEffect(() => {
+        // [TODO]: fixed in monaco-editor@^0.24.0 (#2382)[https://github.com/Microsoft/monaco-editor/issues/2382]
+        window.addEventListener('unhandledrejection', catchError);
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('unhandledrejection', catchError);
+        };
+    }, []);
 
     return <div ref={container} style={{ height: '100%' }}></div>;
 });

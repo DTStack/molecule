@@ -2,7 +2,7 @@
 
 exports[`Test the List Component Match the List snapshot 1`] = `
 <ul
-  className="mo-list testList horizontal-mo-list"
+  className="mo-list testList mo-list--horizontal"
   data-testid="myList"
 >
   <li

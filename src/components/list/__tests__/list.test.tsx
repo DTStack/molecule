@@ -87,4 +87,14 @@ describe('Test the List Component', () => {
 
         expect(getByTestId('myLi3').className).toContain('disabled');
     });
+
+    test('Change the List mode', () => {
+        const { rerender, getByTestId } = render(
+            <TestList mode="horizontal" />
+        );
+
+        rerender(<TestList mode="vertical" />);
+        expect(getByTestId('myList').className).not.toContain('horizontal');
+        expect(getByTestId('myList').className).toContain('vertical');
+    });
 });

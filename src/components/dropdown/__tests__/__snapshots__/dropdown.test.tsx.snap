@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Dropdown Component Test the Dropdown snapshot 1`] = `
+<div
+  className="mo-drop-down mo-drop-down--bottom test"
+  data-testid="dropdown"
+  onClick={[Function]}
+  style={
+    Object {
+      "height": 100,
+      "position": "absolute",
+      "top": 50,
+      "width": 200,
+    }
+  }
+>
+  <span
+    data-testid="button"
+  >
+    test
+  </span>
+</div>
+`;

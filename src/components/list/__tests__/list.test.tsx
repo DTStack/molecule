@@ -80,11 +80,11 @@ describe('Test the List Component', () => {
 
     test('Change the disabled item', () => {
         const { rerender, getByTestId } = render(<TestList disable="2" />);
-
+        expect(getByTestId('myLi1').className).toContain('disabled');
         expect(getByTestId('myLi2').className).toContain('disabled');
-
+        expect(getByTestId('myLi3').className).not.toContain('disabled');
         rerender(<TestList disable="3" />);
-
+        expect(getByTestId('myLi2').className).not.toContain('disabled');
         expect(getByTestId('myLi3').className).toContain('disabled');
     });
 

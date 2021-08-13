@@ -10,13 +10,13 @@ exports[`Test Input Component Input snapshot 1`] = `
 />
 `;
 
-exports[`Test Input Component The Input snapshot 1`] = `
-<input
-  className="mo-input mo-input--normal"
-  onBlur={[Function]}
+exports[`Test TextArea Component TextArea snapshot 1`] = `
+<textarea
+  className="mo-input"
   onChange={[Function]}
-  onFocus={[Function]}
   onKeyDown={[Function]}
   placeholder="basic usage"
+  style={Object {}}
+  value=""
 />
 `;

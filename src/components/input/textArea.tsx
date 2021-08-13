@@ -69,6 +69,7 @@ export const TextArea = ({
 
     let val = fixControlledValue(value) as string;
     const hasMaxLength = Number(maxLength) > 0;
+
     val = hasMaxLength ? [...val].slice(0, maxLength).join('') : val;
     // Only show text area wrapper when needed
     if (showCount) {

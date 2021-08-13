@@ -83,6 +83,7 @@ export class Input extends React.Component<IInputProps, InputState> {
             typeof props.value === 'undefined'
                 ? props.defaultValue
                 : props.value;
+
         this.state = {
             value,
             prevValue: props.value,
@@ -94,6 +95,7 @@ export class Input extends React.Component<IInputProps, InputState> {
         { prevValue }: InputState
     ) {
         const newState: Partial<InputState> = { prevValue: nextProps.value };
+
         if (nextProps.value !== undefined || prevValue !== nextProps.value) {
             newState.value = nextProps.value;
         }
@@ -112,12 +114,15 @@ export class Input extends React.Component<IInputProps, InputState> {
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { onChange } = this.props;
+
         this.setValue(e.target.value);
-        resolveOnChange(this.input, e, onChange);
+        if (typeof onChange === 'function')
+            resolveOnChange(this.input, e, onChange);
     };
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const { onPressEnter, onKeyDown } = this.props;
+
         if (e.key === KeyCodes.ENTER) {
             onPressEnter?.(e);
         }
@@ -134,6 +139,7 @@ export class Input extends React.Component<IInputProps, InputState> {
             style,
             ...props
         } = this.props;
+
         return (
             <input
                 value={value}

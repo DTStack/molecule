@@ -44,8 +44,9 @@ describe('Test ActionBar Component', () => {
             </Checkbox>
         );
         const componentInstance = component.root;
-        const nodeParagraph = componentInstance.findByType('label').children[0]
-            .children[0];
+        const nodeParagraph = (componentInstance.findByType('label')
+            .children[0] as renderer.ReactTestInstance)
+            .children[0] as renderer.ReactTestInstance;
 
         expect(nodeParagraph.children).toEqual([TEST_FLAG]);
     });

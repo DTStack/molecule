@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Input Component Input snapshot 1`] = `
+<input
+  className="mo-input mo-input--normal"
+  onChange={[Function]}
+  onKeyDown={[Function]}
+  placeholder="basic usage"
+  type="text"
+/>
+`;
+
+exports[`Test TextArea Component TextArea snapshot 1`] = `
+<textarea
+  className="mo-input"
+  onChange={[Function]}
+  onKeyDown={[Function]}
+  placeholder="basic usage"
+  style={Object {}}
+  value=""
+/>
+`;

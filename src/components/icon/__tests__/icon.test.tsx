@@ -34,6 +34,20 @@ describe('Test Icon Component', () => {
         expect(body.getByTestId('myIcon').className).toContain(expected);
     });
 
+    test('The both of Icon children and type are undefined', () => {
+        const body = render(<Icon data-testid="myIcon" />);
+        expect(body.queryByTestId('myIcon')).toBeNull();
+    });
+
+    test('Custom the Icon children', () => {
+        const body = render(
+            <Icon data-testid="myIcon">
+                <span>ss</span>
+            </Icon>
+        );
+        expect(body.getByText(/ss/)).not.toBeNull();
+    });
+
     test('Spin a Icon', () => {
         const body = render(<Icon data-testid="myIcon" type="beaker ~spin" />);
         expect(body.getByTestId('myIcon').className).toContain('spin');

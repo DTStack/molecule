@@ -21,20 +21,21 @@ export type DropDownRef = {
 const defaultDropDownClassName = prefixClaName('drop-down');
 
 export const DropDown = React.forwardRef<DropDownRef, IDropDownProps>(
-    (props, ref) => {
+    (props: IDropDownProps, ref) => {
         const {
             className,
             overlay,
             children,
             placement = 'right',
             trigger = 'click',
-            ...extra
+            ...restProps
         } = props;
         const contextView = useContextView({
             render: () => overlay,
         });
 
         React.useImperativeHandle(ref, () => ({
+            contextView,
             dispose: () => {
                 contextView!.hide();
             },
@@ -64,7 +65,7 @@ export const DropDown = React.forwardRef<DropDownRef, IDropDownProps>(
         };
 
         return (
-            <div className={claNames} {...events} {...extra}>
+            <div className={claNames} {...events} {...restProps}>
                 {children}
             </div>
         );

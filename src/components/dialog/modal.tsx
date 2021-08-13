@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Dialog from 'rc-dialog';
 import { IDialogPropTypes } from 'rc-dialog/lib/IDialogPropTypes';
 
@@ -49,10 +49,6 @@ const getClickPosition = (e: MouseEvent) => {
     }, 100);
 };
 
-if (typeof window !== 'undefined' && window.document?.documentElement) {
-    document.documentElement.addEventListener('click', getClickPosition, true);
-}
-
 const closeClassName = getBEMElement(modalClassName, 'close');
 const closeDescriptorClassName = getBEMModifier(`${closeClassName}`, 'x');
 const closeIconToRender = (
@@ -62,6 +58,21 @@ const closeIconToRender = (
 );
 
 export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
+    useEffect(() => {
+        document.documentElement.addEventListener(
+            'click',
+            getClickPosition,
+            true
+        );
+        return () => {
+            document.documentElement.removeEventListener(
+                'click',
+                getClickPosition,
+                true
+            );
+        };
+    }, []);
+
     const handleCancel = (e: React.SyntheticEvent<Element, Event>) => {
         const { onCancel } = props;
         onCancel?.(e);
@@ -71,6 +82,7 @@ export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
         const { onOk } = props;
         onOk?.(e);
     };
+
     const {
         footer,
         visible,

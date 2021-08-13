@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { IContextView, useContextView, shadowClassName } from '../index';
@@ -12,9 +13,19 @@ describe('Test ContextView Component', () => {
         const contextView: IContextView = useContextView({
             render: () => <div id="contextViewId">Hello</div>,
         });
+        contextView.show({ x: 10, y: 10 });
         expect(
             contextView.view?.querySelector('#contextViewId')
-        ).not.toBeUndefined();
+        ).not.toBeNull();
+        contextView.dispose();
+        expect(contextView.view?.querySelector('#contextViewId')).toBeNull();
+    });
+
+    test('The render props is required', () => {
+        const contextView: IContextView = useContextView({});
+        expect(() => {
+            contextView.show({ x: 10, y: 10 });
+        }).toThrow(' the render parameter is required!');
     });
 
     test('Disable the contextView shadow style', () => {
@@ -34,6 +45,7 @@ describe('Test ContextView Component', () => {
             x: 10,
             y: 10,
         });
+        expect(contextView.view?.style.top).toEqual('10px');
         expect(contextView.view?.style.visibility).toEqual('visible');
     });
 
@@ -84,5 +96,48 @@ describe('Test ContextView Component', () => {
         contextView.hide();
 
         expect(mockFun).toHaveBeenCalled();
+    });
+
+    test('Append the contextView to the molecule element', () => {
+        document.body.innerHTML = `<div id="molecule"></div>`;
+
+        const contextView: IContextView = useContextView({
+            render: () => <div>test</div>,
+        });
+        contextView.show({
+            x: 10,
+            y: 10,
+        });
+
+        const root = document.getElementById('molecule');
+        expect(root).not.toBeNull();
+
+        const view = root?.querySelector('.mo-context-view');
+        expect(view).not.toBeNull();
+    });
+
+    test('Click the Mask overlay', async () => {
+        const contextView: IContextView = useContextView({
+            render: () => <div>test</div>,
+        });
+        const mockFun = jest.fn();
+        contextView.onHide(mockFun);
+
+        contextView.show({
+            x: 10,
+            y: 10,
+        });
+
+        const maskLayer = document.querySelector<HTMLDivElement>(
+            '.mo-context-view__block'
+        );
+
+        if (maskLayer) {
+            maskLayer.click();
+        }
+
+        await waitFor(() => {
+            expect(mockFun).toHaveBeenCalled();
+        });
     });
 });

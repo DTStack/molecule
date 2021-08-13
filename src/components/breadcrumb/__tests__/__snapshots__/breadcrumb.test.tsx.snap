@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Breadcrumb Component Should render Breadcrumb multiply levels 1`] = `
+<div
+  className="mo-breadcrumb"
+>
+  <a
+    className="mo-breadcrumb__item"
+    onClick={[Function]}
+  >
+    <span
+      className="mo-breadcrumb__label"
+    >
+      name0
+    </span>
+    <span
+      className="codicon codicon-chevron-right"
+    />
+  </a>
+  <a
+    className="mo-breadcrumb__item"
+    onClick={[Function]}
+  >
+    <span
+      className="mo-breadcrumb__label"
+    >
+      name1
+    </span>
+    <span
+      className="codicon codicon-chevron-right"
+    />
+  </a>
+  <a
+    className="mo-breadcrumb__item"
+    onClick={[Function]}
+  >
+    <span
+      className="mo-breadcrumb__label"
+    >
+      name2
+    </span>
+  </a>
+</div>
+`;

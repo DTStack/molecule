@@ -24,16 +24,18 @@ export default function confirm(config: IModalFuncProps) {
     let currentConfig = { ...config, close, visible: true } as any;
 
     function destroy(...args: any[]) {
-        const unmountResult = ReactDOM.unmountComponentAtNode(div);
-        if (unmountResult && div.parentNode) {
-            div.parentNode.removeChild(div);
-        }
         const triggerCancel = args.some(
             (param) => param && param.triggerCancel
         );
         if (config.onCancel && triggerCancel) {
             config.onCancel(...args);
         }
+
+        const unmountResult = ReactDOM.unmountComponentAtNode(div);
+        if (unmountResult && div.parentNode) {
+            div.parentNode.removeChild(div);
+        }
+
         for (let i = 0; i < destroyFns.length; i++) {
             const fn = destroyFns[i];
             // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -45,6 +47,9 @@ export default function confirm(config: IModalFuncProps) {
     }
 
     function render({ okText, cancelText, ...props }: any) {
+        /**
+         * TODO: Please determine if this really needs to be a macro task
+         */
         setTimeout(() => {
             ReactDOM.render(
                 <ConfirmDialog

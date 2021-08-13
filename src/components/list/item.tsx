@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
 import { defaultListClassName } from './list';
 
@@ -30,12 +30,15 @@ export function Item(props: React.PropsWithChildren<IItemProps>) {
         onClick?.(e, props);
     };
 
-    const disabledClassName =
-        disable === id
-            ? itemDisabledClassName
-            : disabled !== undefined || disabled === true
-            ? itemDisabledClassName
-            : '';
+    let disabledClassName = '';
+    if (disabled !== undefined || disabled === true) {
+        disabledClassName = itemDisabledClassName;
+    }
+
+    // If the value of disable eqs with the id, attach the disabled class name
+    if (disable === id) {
+        disabledClassName = itemDisabledClassName;
+    }
 
     const claNames = classNames(
         itemClassName,

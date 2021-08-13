@@ -110,6 +110,7 @@ const TreeView = ({
                 disabled = false,
                 key: rawKey,
                 icon,
+                name,
                 children = [],
                 isLeaf: itemIsLeaf,
             } = item;
@@ -139,7 +140,7 @@ const TreeView = ({
                     data-indent={indent}
                     data={item as DataNode}
                     disabled={disabled}
-                    title={renderTitle?.(item, index, isLeaf)} // dynamic title
+                    title={renderTitle?.(item, index, isLeaf) || name} // dynamic title
                     key={key}
                     icon={itemIsLeaf && IconComponent}
                 >

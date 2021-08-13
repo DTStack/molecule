@@ -115,7 +115,7 @@ describe('Test Breadcrumb Component', () => {
         doms.forEach((dom) => {
             fireEvent.click(dom);
         });
-        expect(mockFn).toBeCalledTimes(3);
+        expect(mockFn).toBeCalledTimes(data.length);
     });
 
     test('Should pass through the property of HTMLDivElement correctly', () => {

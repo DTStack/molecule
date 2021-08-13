@@ -2,12 +2,13 @@
 
 exports[`Test Dropdown Component Test the Dropdown snapshot 1`] = `
 <div
-  className="mo-drop-down mo-drop-down--bottom test"
+  className="mo-drop-down mo-drop-down--right test"
   data-testid="dropdown"
   onClick={[Function]}
   style={
     Object {
       "height": 100,
+      "left": 50,
       "position": "absolute",
       "top": 50,
       "width": 200,

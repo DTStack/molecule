@@ -23,6 +23,20 @@ const mockData: ITreeNodeItemProps[] = [
     },
 ];
 
+function dragToTargetNode(source: HTMLElement, target: HTMLElement) {
+    fireEvent.dragStart(source);
+    fireEvent.dragOver(target);
+    fireEvent.drop(target);
+    fireEvent.dragEnd(source);
+}
+
+async function dragExpect(fn: jest.Mock, result: any) {
+    await waitFor(() => {
+        expect(fn).toBeCalled();
+        expect(fn.mock.calls[0][0]).toEqual(result);
+    });
+}
+
 describe('Test the Tree component', () => {
     afterEach(cleanup);
 
@@ -189,5 +203,67 @@ describe('Test the Tree component', () => {
         const { findByTitle } = render(<TreeView data={data} />);
 
         expect(await findByTitle('test2')).toBeInTheDocument();
+    });
+
+    test('Should support to sort via drag', async () => {
+        const data = [
+            { id: '1', name: 'test1' },
+            { id: '2', name: 'test2' },
+            { id: '3', name: 'test3' },
+        ];
+        const mockFn = jest.fn();
+        const { findByTitle } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
+        );
+
+        dragToTargetNode(
+            await findByTitle('test3'),
+            await findByTitle('test1')
+        );
+
+        await dragExpect(mockFn, [
+            { id: '1', name: 'test1' },
+            { id: '3', name: 'test3' },
+            { id: '2', name: 'test2' },
+        ]);
+    });
+
+    test('Should support to drag into children', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [{ id: '1-1', name: 'test1-1' }],
+            },
+            {
+                id: '2',
+                name: 'test2',
+            },
+        ];
+        const mockFn = jest.fn();
+        const { findByTitle } = render(
+            <TreeView
+                draggable
+                onDropTree={mockFn}
+                defaultExpandAll
+                data={data}
+            />
+        );
+
+        dragToTargetNode(
+            await findByTitle('test2'),
+            await findByTitle('test1-1')
+        );
+
+        await dragExpect(mockFn, [
+            {
+                id: '1',
+                name: 'test1',
+                children: [
+                    { id: '1-1', name: 'test1-1' },
+                    { id: '2', name: 'test2' },
+                ],
+            },
+        ]);
     });
 });

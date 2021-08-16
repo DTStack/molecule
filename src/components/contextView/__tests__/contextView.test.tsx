@@ -9,6 +9,7 @@ describe('Test ContextView Component', () => {
     test('Create the contextView by the useContextView', () => {
         const contextView: IContextView = useContextView();
         expect(contextView.view).not.toBeUndefined();
+        contextView.dispose();
     });
 
     test('Create the contextView by the render ReactNode content', () => {
@@ -21,6 +22,7 @@ describe('Test ContextView Component', () => {
         ).not.toBeNull();
         contextView.hide();
         expect(contextView.view?.querySelector('#contextViewId')).toBeNull();
+        contextView.dispose();
     });
 
     test('The render props is required', () => {
@@ -28,6 +30,7 @@ describe('Test ContextView Component', () => {
         expect(() => {
             contextView.show({ x: 10, y: 10 });
         }).toThrow(' the render parameter is required!');
+        contextView.dispose();
     });
 
     test('Disable the contextView shadow style', () => {
@@ -37,6 +40,7 @@ describe('Test ContextView Component', () => {
         expect(
             contextView.view?.querySelector('.' + shadowClassName)
         ).not.toBeUndefined();
+        contextView.dispose();
     });
 
     test('Show the contextView', () => {
@@ -49,6 +53,7 @@ describe('Test ContextView Component', () => {
         });
         expect(contextView.view?.style.top).toEqual('10px');
         expect(contextView.view?.style.visibility).toEqual('visible');
+        contextView.dispose();
     });
 
     test('Render the contextView by the custom content', () => {
@@ -64,6 +69,7 @@ describe('Test ContextView Component', () => {
         );
         expect(contextView.view?.style.visibility).toEqual('visible');
         expect(contextView.view?.querySelector('#testId')).not.toBeUndefined();
+        contextView.dispose();
     });
 
     test('Hide the contextView', () => {
@@ -81,6 +87,7 @@ describe('Test ContextView Component', () => {
         expect(contextView.view?.style.visibility).toEqual('visible');
         contextView.hide();
         expect(contextView.view?.style.visibility).toEqual('hidden');
+        contextView.dispose();
     });
 
     test('Listen to the contextView hide event', () => {
@@ -98,6 +105,7 @@ describe('Test ContextView Component', () => {
         contextView.hide();
 
         expect(mockFun).toHaveBeenCalled();
+        contextView.dispose();
     });
 
     test('Dispose the contextView', async () => {
@@ -139,6 +147,7 @@ describe('Test ContextView Component', () => {
 
         const view = root?.querySelector('.mo-context-view');
         expect(view).not.toBeNull();
+        contextView.dispose();
     });
 
     test('Click the Mask overlay', async () => {
@@ -164,5 +173,6 @@ describe('Test ContextView Component', () => {
         await waitFor(() => {
             expect(mockFun).toHaveBeenCalled();
         });
+        contextView.dispose();
     });
 });

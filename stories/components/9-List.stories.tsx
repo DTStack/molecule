@@ -5,6 +5,7 @@ import { propsTable } from '../common/propsTable';
 
 import { List, Item } from 'mo/components/list';
 import { useState } from 'react';
+import { Button } from 'mo/components';
 
 const stories = storiesOf('List', module);
 stories.addDecorator(withKnobs);
@@ -22,11 +23,15 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
-        const [active, setActive] = useState('1');
+        const [active, setActive] = useState<string | undefined>('1');
+        const [disable, setDisable] = useState<string | undefined>('1');
 
-        const click = (e, item) => {
-            console.log('item.', e, item);
-            setActive(item.id);
+        const click = (e) => {
+            setActive('2');
+        };
+
+        const doDisable = (e) => {
+            setDisable('2');
         };
 
         const itemStyle = {
@@ -45,20 +50,31 @@ stories.add(
                     <List
                         className="custom-list-1"
                         mode="vertical"
+                        current={active}
+                        disable={disable}
                         onClick={click}
-                        active={active}
                     >
                         <Item id="1">Item 1</Item>
-                        <Item id="2">Item 1</Item>
-                        <Item id="3">Item 1</Item>
+                        <Item id="2">Item 2</Item>
+                        <Item id="3" disabled>
+                            Item 3
+                        </Item>
                     </List>
+                    <Button onClick={click}>Click</Button>
+                    <Button onClick={doDisable}>Disable</Button>
                 </div>
                 <div>
                     <h3>Mode - horizontal</h3>
                     <List className="custom-list-2" mode="horizontal">
-                        <Item style={itemStyle}>Item 1</Item>
-                        <Item style={itemStyle}>Item 1</Item>
-                        <Item style={itemStyle}>Item 1</Item>
+                        <Item id="1" style={itemStyle}>
+                            Item 1
+                        </Item>
+                        <Item id="2" style={itemStyle}>
+                            Item 2
+                        </Item>
+                        <Item id="3" style={itemStyle}>
+                            Item 3
+                        </Item>
                     </List>
                 </div>
             </div>

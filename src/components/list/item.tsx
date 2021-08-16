@@ -1,10 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
-import { defaultListClassName, IListProps } from './list';
+import { defaultListClassName } from './list';
 
-export interface IItemProps<T = any> extends IListProps {
+export interface IItemProps extends Omit<React.ComponentProps<'li'>, 'id'> {
+    id: string;
     disabled?: boolean;
-    data?: T;
+    disable?: string;
+    active?: string;
+    onClick?(event: React.MouseEvent, item?: IItemProps): void;
 }
 
 const itemClassName = getBEMElement(defaultListClassName, 'item');
@@ -18,26 +21,34 @@ export function Item(props: React.PropsWithChildren<IItemProps>) {
         onClick,
         disabled,
         active,
+        disable,
         className,
         children,
-        ...others
+        ...restProps
     } = props;
     const click = (e: React.MouseEvent) => {
-        if (onClick) {
-            onClick(e, props);
-        }
+        onClick?.(e, props);
     };
+
+    let disabledClassName = '';
+    if (disabled !== undefined || disabled === true) {
+        disabledClassName = itemDisabledClassName;
+    }
+
+    // If the value of disable eqs with the id, attach the disabled class name
+    if (disable === id) {
+        disabledClassName = itemDisabledClassName;
+    }
+
     const claNames = classNames(
         itemClassName,
         className,
-        disabled ? itemDisabledClassName : '',
+        disabledClassName,
         active === id ? itemActiveClassName : ''
     );
     return (
-        <li className={claNames} key={`${id}`} {...(others as any)}>
-            <a className={labelClassName} onClick={click}>
-                {children}
-            </a>
+        <li id={id} className={claNames} {...restProps} onClick={click}>
+            <span className={labelClassName}>{children}</span>
         </li>
     );
 }

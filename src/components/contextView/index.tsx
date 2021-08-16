@@ -50,8 +50,8 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
         const content = select('.' + contentClassName);
         const renderContent = render || props?.render;
         if (!renderContent)
-            throw Error(
-                'ContextView show Error: the render parameter not allowed be null!'
+            throw new Error(
+                'ContextView show Error: the render parameter is required!'
             );
         ReactDOM.render(<>{renderContent()}</>, content, () => {
             // Notice: if want to get the computed offsetHeight of contextView,
@@ -90,6 +90,7 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
 
     const dispose = () => {
         Emitter.unsubscribe(ContextViewEvent.onHide);
+        hide();
     };
 
     if (!contextView) {
@@ -105,7 +106,7 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
         } else {
             root.appendChild(contextView);
         }
-        const shadowClass = !shadowOutline ? '' : shadowClassName;
+        const shadowClass = shadowOutline === false ? '' : shadowClassName;
 
         ReactDOM.render(
             <>

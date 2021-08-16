@@ -89,8 +89,8 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
     };
 
     const dispose = () => {
-        hide();
         Emitter.unsubscribe(ContextViewEvent.onHide);
+        hide();
     };
 
     if (!contextView) {

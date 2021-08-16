@@ -1,7 +1,9 @@
-import { waitFor } from '@testing-library/react';
+import { cleanup, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { IContextView, useContextView, shadowClassName } from '../index';
+
+afterEach(() => cleanup());
 
 describe('Test ContextView Component', () => {
     test('Create the contextView by the useContextView', () => {

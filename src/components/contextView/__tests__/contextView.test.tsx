@@ -17,7 +17,7 @@ describe('Test ContextView Component', () => {
         expect(
             contextView.view?.querySelector('#contextViewId')
         ).not.toBeNull();
-        contextView.dispose();
+        contextView.hide();
         expect(contextView.view?.querySelector('#contextViewId')).toBeNull();
     });
 
@@ -96,6 +96,29 @@ describe('Test ContextView Component', () => {
         contextView.hide();
 
         expect(mockFun).toHaveBeenCalled();
+    });
+
+    test('Dispose the contextView', async () => {
+        const contextView: IContextView = useContextView({
+            render: () => <div>test</div>,
+        });
+        const mockFun = jest.fn();
+        contextView.onHide(mockFun);
+
+        contextView.show({
+            x: 10,
+            y: 10,
+        });
+
+        contextView.hide();
+        expect(mockFun).toHaveBeenCalled();
+
+        // After the contextView disposed, the view now is hidden,
+        // and the onHide is invalid
+        contextView.dispose();
+        waitFor(async () => {
+            await expect(mockFun).not.toHaveBeenCalled();
+        });
     });
 
     test('Append the contextView to the molecule element', () => {

@@ -43,16 +43,23 @@ const TreeView = ({
 
     const onDrop = (info) => {
         if (!draggable) return;
-        console.log(info);
-        const dropKey = info.node.props.eventKey;
-        const dragKey = info.dragNode.props.eventKey;
-        const dropPos = info.node.props.pos.split('-');
+        const dropId = info.node.data.id;
+        const dragId = info.dragNode.data.id;
+        const dropPos = info.node.pos.split('-');
         const dropPosition =
             info.dropPosition - Number(dropPos[dropPos.length - 1]);
 
-        const loopTree = (data, key, callback) => {
+        const loopTree = (
+            data: ITreeNodeItemProps[],
+            key: string,
+            callback: (
+                item: ITreeNodeItemProps,
+                index: number,
+                arr: ITreeNodeItemProps[]
+            ) => void
+        ) => {
             data.forEach((item, index, arr) => {
-                if (item.key === key) {
+                if (item.id === key) {
                     return callback(item, index, arr);
                 }
                 if (item.children) {
@@ -63,29 +70,29 @@ const TreeView = ({
         const treeData = [...data];
 
         let dragObj;
-        loopTree(treeData, dragKey, (item, index, arr) => {
+        loopTree(treeData, dragId, (item, index, arr) => {
             arr.splice(index, 1);
             dragObj = item;
         });
 
         if (!info.dropToGap) {
-            loopTree(treeData, dropKey, (item) => {
+            loopTree(treeData, dropId, (item) => {
                 item.children = item.children || [];
                 item.children.push(dragObj);
             });
         } else if (
-            (info.node.props.children || []).length > 0 &&
-            info.node.props.expanded &&
+            (info.node.data.children || []).length > 0 &&
+            info.node.expanded &&
             dropPosition === 1
         ) {
-            loopTree(treeData, dropKey, (item) => {
+            loopTree(treeData, dropId, (item) => {
                 item.children = item.children || [];
                 item.children.unshift(dragObj);
             });
         } else {
             let ar;
             let i;
-            loopTree(treeData, dropKey, (item, index, arr) => {
+            loopTree(treeData, dropId, (item, index, arr) => {
                 ar = arr;
                 i = index;
             });
@@ -95,7 +102,6 @@ const TreeView = ({
                 ar.splice(i + 1, 0, dragObj);
             }
         }
-        console.log('treeData', treeData);
         onDropTree?.(treeData);
     };
 

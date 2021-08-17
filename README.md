@@ -1,6 +1,6 @@
 # Molecule
 
-[![Codecov Coverage](https://img.shields.io/codecov/c/github/DTStack/molecule/main.svg?style=flat-square)](https://codecov.io/gh/DTStack/molecule/)
+[![codecov](https://codecov.io/gh/DTStack/molecule/branch/main/graph/badge.svg?token=PDjbCBo6qz)](https://codecov.io/gh/DTStack/molecule)
 
 A Web IDE UI library built by React.js, inspired by the Visual Studio Code.
 

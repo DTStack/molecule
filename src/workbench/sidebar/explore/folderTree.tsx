@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import React, { memo, useRef, useEffect, useLayoutEffect } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 import { IFolderTree, IFolderTreeSubItem } from 'mo/model';
 import { select, getEventPosition } from 'mo/common/dom';
 import Tree, { ITreeNodeItemProps } from 'mo/components/tree';
@@ -198,6 +199,12 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         );
     };
 
+    const handleDropTree = (treeData) => {
+        const newFolderTreeData = cloneDeep(data);
+        newFolderTreeData[0].children = treeData;
+        onDropTree?.(newFolderTreeData);
+    };
+
     useEffect(() => {
         if (folderPanelContextMenu.length > 0) {
             contextMenu.current = initContextMenu();
@@ -218,6 +225,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                         hasEditable && folderTreeEditClassName
                     )}
                     draggable={!hasEditable}
+                    onDropTree={handleDropTree}
                     onSelectNode={onSelectFile}
                     onRightClick={handleRightClick}
                     renderTitle={renderTitle}

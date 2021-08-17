@@ -30,6 +30,10 @@ export const tabsClassName = prefixClaName('tabs');
 export const tabsHeader = getBEMElement(tabsClassName, 'header');
 export const tabsContent = getBEMElement(tabsClassName, 'content');
 export const tabsContentItem = getBEMElement(tabsContent, 'item');
+export const tabsContentActiveClassName = getBEMModifier(
+    tabsContentItem,
+    'active'
+);
 export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close');
 
 export function Tabs<T>(props: ITabsProps<T>) {
@@ -90,11 +94,13 @@ export function Tabs<T>(props: ITabsProps<T>) {
                             <div
                                 key={tab.id}
                                 className={classNames(tabsContentItem, {
-                                    [getBEMModifier(tabsContentItem, 'active')]:
+                                    [tabsContentActiveClassName]:
                                         activeTab === tab.id,
                                 })}
                             >
-                                {tab.renderPane}
+                                {tab.renderPane instanceof Function
+                                    ? tab.renderPane(tab)
+                                    : tab.renderPane}
                             </div>
                         );
                     })}

@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The Tabs Components The snapshot 1`] = `
+<div
+  className="mo-tabs mo-tabs--line"
+>
+  <div
+    className="mo-tabs__header"
+  >
+    <div
+      className="mo-tab__item"
+      onClick={[Function]}
+      onContextMenu={[Function]}
+      onMouseOut={[Function]}
+      onMouseOver={[Function]}
+    >
+      test-title-1
+      <a
+        className="mo-tab__item__op"
+        onMouseOut={[Function]}
+        onMouseOver={[Function]}
+      >
+        <i
+          className="mo-tab__item__op__placeholder"
+        />
+      </a>
+    </div>
+    <div
+      className="mo-tab__item"
+      onClick={[Function]}
+      onContextMenu={[Function]}
+      onMouseOut={[Function]}
+      onMouseOver={[Function]}
+    >
+      test-title-2
+      <a
+        className="mo-tab__item__op"
+        onMouseOut={[Function]}
+        onMouseOver={[Function]}
+      >
+        <i
+          className="mo-tab__item__op__placeholder"
+        />
+      </a>
+    </div>
+  </div>
+  <div
+    className="mo-tabs__content"
+  >
+    <div
+      className="mo-tabs__content__item"
+    >
+      <div
+        data-testid="test1"
+      >
+        test1
+      </div>
+    </div>
+    <div
+      className="mo-tabs__content__item"
+    >
+      <div
+        data-testid="test2"
+      >
+        test2
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
     Children,
     PureComponent,
@@ -19,13 +19,12 @@ import { IContextView, useContextView } from 'mo/components/contextView';
 import { ISelectOptionProps } from './option';
 import { Icon } from '../icon';
 
-export interface ISelectProps extends ComponentProps<any> {
+export interface ISelectProps extends Omit<ComponentProps<'div'>, 'onSelect'> {
     value?: string;
     style?: React.CSSProperties;
     className?: string;
     defaultValue?: string;
     placeholder?: string;
-    showArrow?: boolean;
     children?: React.ReactNode;
     onSelect?(e: React.MouseEvent, selectedOption?: ISelectOptionProps): void;
 }
@@ -48,7 +47,7 @@ export const selectClassName = prefixClaName('select');
 const containerClassName = getBEMElement(selectClassName, 'container');
 const selectOptionsClassName = getBEMElement(selectClassName, 'options');
 const selectDescriptorClassName = getBEMElement(selectClassName, 'descriptor');
-const inputClassName = getBEMElement(selectClassName, 'input');
+export const inputClassName = getBEMElement(selectClassName, 'input');
 const selectActiveClassName = getBEMModifier(selectClassName, 'active');
 const selectArrowClassName = getBEMElement(selectClassName, 'arrow');
 
@@ -68,6 +67,15 @@ export class Select extends PureComponent<ISelectProps, IState> {
         this.selectInput = React.createRef();
     }
 
+    static getDerivedStateFromProps(props, state) {
+        if (props.value !== state.value) {
+            return {
+                option: Select.getSelectOption(props),
+            };
+        }
+        return null;
+    }
+
     public componentDidMount() {
         this.contextView.onHide(() => {
             if (this.state.isOpen) {
@@ -78,7 +86,11 @@ export class Select extends PureComponent<ISelectProps, IState> {
         });
     }
 
-    public getDefaultState(props) {
+    public componentWillUnmount() {
+        this.contextView.dispose();
+    }
+
+    private static getSelectOption(props) {
         let defaultSelectedOption: ISelectOptionProps = {};
         const defaultValue = props.value || props.defaultValue;
         const options = Children.toArray(props.children);
@@ -96,9 +108,13 @@ export class Select extends PureComponent<ISelectProps, IState> {
                 }
             }
         }
+        return defaultSelectedOption;
+    }
+
+    private getDefaultState(props) {
         return {
             ...initialValue,
-            option: { ...defaultSelectedOption },
+            option: { ...Select.getSelectOption(props) },
         };
     }
 
@@ -173,13 +189,12 @@ export class Select extends PureComponent<ISelectProps, IState> {
 
     public render() {
         const { option, isOpen } = this.state;
-        const { className, placeholder, ...custom } = this.props;
+        const { className, placeholder, onSelect, ...restProps } = this.props;
 
         const selectActive = isOpen ? selectActiveClassName : '';
         const claNames = classNames(selectClassName, className, selectActive);
-
         return (
-            <div ref={this.selectElm} className={claNames} {...(custom as any)}>
+            <div ref={this.selectElm} className={claNames} {...restProps}>
                 <input
                     onClick={this.handleOnClickSelect}
                     ref={this.selectInput}

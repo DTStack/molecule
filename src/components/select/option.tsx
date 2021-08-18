@@ -4,7 +4,7 @@ import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
 
 import { selectClassName } from './select';
 
-export interface ISelectOptionProps extends ComponentProps<'option'> {
+export interface ISelectOptionProps extends ComponentProps<'div'> {
     value?: string;
     name?: string;
     description?: string;
@@ -26,7 +26,8 @@ export function Option(props: ISelectOptionProps) {
         description,
         disabled,
         children,
-        ...custom
+        onClick,
+        ...restProps
     } = props;
 
     const claNames = classNames(
@@ -34,6 +35,12 @@ export function Option(props: ISelectOptionProps) {
         className,
         disabled ? selectOptionDisabledClassName : ''
     );
+    const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (!disabled) {
+            onClick?.(e);
+        }
+    };
+
     return (
         <div
             className={claNames}
@@ -41,7 +48,8 @@ export function Option(props: ISelectOptionProps) {
             data-name={name || children}
             data-value={value}
             data-desc={description}
-            {...(custom as any)}
+            onClick={handleClick}
+            {...restProps}
         >
             {children}
         </div>

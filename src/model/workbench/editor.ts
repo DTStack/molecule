@@ -22,6 +22,8 @@ interface BuiltInEditorTabDataType {
     path?: string;
     value?: string;
     modified?: boolean;
+
+    [key: string]: any;
 }
 
 export interface IEditorActionsProps extends IMenuItemProps {

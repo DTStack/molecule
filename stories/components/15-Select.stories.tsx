@@ -75,7 +75,9 @@ stories.add(
                     >
                         <Option value="1">option - 1</Option>
                         <Option value="2">option - 2</Option>
-                        <Option value="3">option - 3</Option>
+                        <Option value="3" disabled>
+                            option - 3
+                        </Option>
                         <Option value="4" description="Test option one">
                             option - 4
                         </Option>

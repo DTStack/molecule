@@ -4,9 +4,7 @@ import { Controller } from 'mo/react/controller';
 import {
     EditorService,
     IEditorService,
-    IPanelService,
     ISettingsService,
-    PanelService,
     SettingsService,
 } from 'mo/services';
 import {
@@ -22,13 +20,11 @@ export interface ISettingsController {}
 export class SettingsController
     extends Controller
     implements ISettingsController {
-    private readonly panelService: IPanelService;
     private readonly editorService: IEditorService;
     private readonly settingsService: ISettingsService;
 
     constructor() {
         super();
-        this.panelService = container.resolve(PanelService);
         this.editorService = container.resolve(EditorService);
         this.settingsService = container.resolve(SettingsService);
 
@@ -51,10 +47,6 @@ export class SettingsController
             }
         });
     }
-
-    public readonly onClick = (event: React.MouseEvent) => {
-        console.log('onClick:', this.panelService);
-    };
 }
 
 // Register singleton

@@ -160,7 +160,7 @@ export default class TestPane extends React.Component {
         };
 
         const clearProblems = () => {
-            molecule.problems.clear();
+            molecule.problems.reset();
         };
 
         const newEditor = function () {

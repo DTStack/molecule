@@ -104,6 +104,22 @@ describe('The Color Theme Service', () => {
         );
     });
 
+    test('Should reload current theme if update the theme', () => {
+        const styleDom = document.querySelector<HTMLStyleElement>(
+            `.${DEFAULT_THEME_CLASS_NAME}`
+        );
+        expect(styleDom?.innerHTML).toContain('--editor-background: #1E1E1E');
+        colorThemeService.updateTheme({
+            ...BUILT_IN_THEME,
+            label: 'Dark Test',
+            colors: {
+                'editor.background': '#000',
+            },
+        });
+
+        expect(styleDom?.innerHTML).toContain('--editor-background: #000');
+    });
+
     test('Should have log error message without id when update theme', () => {
         const originalError = console.error;
         console.error = jest.fn();

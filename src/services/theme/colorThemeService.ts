@@ -16,19 +16,20 @@ import { searchById } from '../helper';
 export interface IColorThemeService {
     /**
      * Add themes into `colorThemes`
+     *
+     * This will update the duplicated themes found in `colorThemes`
      * @param themes
      */
     addThemes(themes: IColorTheme | IColorTheme[]): void;
     /**
      * Set the current Color Theme via id,
      * Please ensure the theme could be found in `colorThemes`
-     * @param id
+     * @param id The `id` is required
      */
     setTheme(id: string): void;
     /**
      * Update specific theme,
-     * Ensure there is `id` in theme
-     * @param themes
+     * @param theme The `id` is required in theme
      */
     updateTheme(theme: IColorTheme): void;
     /**
@@ -44,6 +45,10 @@ export interface IColorThemeService {
      * Get the current Color Theme
      */
     getColorTheme(): IColorTheme;
+    /**
+     * Reload current theme
+     */
+    reload(): void;
     /**
      * Reset theme
      */
@@ -76,7 +81,7 @@ export class ColorThemeService implements IColorThemeService {
     public addThemes(themes: IColorTheme | IColorTheme[]): void {
         const nextThemes = Array.isArray(themes) ? themes : [themes];
         nextThemes.forEach((theme) => {
-            const targetTheme = this.colorThemes.find(searchById(theme.id));
+            const targetTheme = this.getThemeById(theme.id);
             if (targetTheme) {
                 logger.warn(
                     `There has ${theme.name} already in theme, it'll update this theme otherwise please don't add the duplicated theme`
@@ -91,23 +96,26 @@ export class ColorThemeService implements IColorThemeService {
     public updateTheme(theme: IColorTheme) {
         if (!theme.id) {
             logger.error(
-                'Update theme failed! Please ensure there has id property in theme data'
+                "Update the theme failed!  The 'id' is required in the theme data."
             );
         }
         const index = this.colorThemes.findIndex(searchById(theme.id));
         if (index > -1) {
             Object.assign(this.colorThemes[index], theme);
+
+            // If current theme be updated, then reload it
+            if (this.colorThemes[index].id === this.getColorTheme().id) {
+                this.reload();
+            }
         } else {
             logger.error(
-                `Update theme failed! There is no theme be found by ${theme.id}`
+                `Update the theme failed! There is no theme found via '${theme.id}'`
             );
         }
     }
 
     public getThemeById(id: string): IColorTheme | undefined {
-        const target = this.colorThemes.find(
-            (theme: IColorTheme) => theme.id === id
-        );
+        const target = this.colorThemes.find(searchById(id));
         return target ? Object.assign({}, target) : undefined;
     }
 
@@ -133,6 +141,10 @@ export class ColorThemeService implements IColorThemeService {
 
     public getThemes() {
         return this.colorThemes;
+    }
+
+    public reload() {
+        this.setTheme(this.getColorTheme().id);
     }
 
     public reset() {

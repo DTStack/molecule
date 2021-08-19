@@ -15,30 +15,24 @@ describe('Test ExtensionService', () => {
     });
 
     test('Instance the ExtensionService class success', () => {
-        expect(instance.getAllExtensions().length).toEqual(0);
+        expect(instance.getAllExtensions().length).toBe(0);
         expect(instance).not.toBeNull();
     });
 
     test('Load empty extensions', () => {
         instance.load([]);
-        expect(instance.getAllExtensions().length).toEqual(0);
+        expect(instance.getAllExtensions().length).toBe(0);
     });
 
-    test('Reset extensions', () => {
+    test('Load and Reset the extensions', () => {
         instance.load(defaultExtensions);
         expect(instance.getAllExtensions().length).toEqual(
             defaultExtensions.length
         );
         instance.reset();
-        expect(instance.getAllExtensions().length).toEqual(0);
+        expect(instance.getAllExtensions().length).toBe(0);
     });
 
-    test('Load extensions', () => {
-        instance.load(defaultExtensions);
-        expect(instance.getAllExtensions().length).toEqual(
-            defaultExtensions.length
-        );
-    });
 
     test('Load an extension and activate it', () => {
         const ext: IExtension = {
@@ -121,7 +115,7 @@ describe('Test ExtensionService', () => {
                     f1: false,
                 });
             }
-            run() {}
+            run() { }
         }
         instance.registerAction(MyAction);
         const command = CommandsRegistry.getCommand(MyAction.ID);
@@ -129,11 +123,14 @@ describe('Test ExtensionService', () => {
         expect(command.id).toEqual(MyAction.ID);
     });
 
-    test('Execute a command', () => {
+    test('The executeCommand should call the commandService.executeCommand function', () => {
         const testFn = jest.fn();
         const instance: any = new ExtensionService();
-        instance.monacoService.commandService.executeCommand = testFn;
-        instance.executeCommand('test');
+        instance.monacoService.commandService.executeCommand = jest.fn((id, args) => {
+            expect(id).toEqual('test');
+            expect(args).toEqual('args');
+        });
+        instance.executeCommand('test', 'args');
         expect(testFn).toBeCalled();
     });
 });

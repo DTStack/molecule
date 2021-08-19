@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Select Option Component Match the Select snapshot 1`] = `
+<div
+  className="mo-select__option mo-select__option--disabled"
+  data-desc="test"
+  data-name="test"
+  data-value="1"
+  onClick={[Function]}
+  title="test"
+/>
+`;

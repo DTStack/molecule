@@ -11,6 +11,8 @@ import { StatusBarService, IStatusBarService } from 'mo/services';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
+import logger from 'mo/common/logger';
+
 export interface IProblemsService extends Component<IProblems> {
     /**
      * Add single or multiple items data
@@ -25,7 +27,7 @@ export interface IProblemsService extends Component<IProblems> {
     /**
      * Reset the ProblemsService state data
      */
-    clear(): void;
+    reset(): void;
     /**
      * Update the specific data
      * @param data single or multiple problems
@@ -85,6 +87,10 @@ export class ProblemsService
             const index = data.findIndex(searchById(problem.id));
             if (index > -1) {
                 data.splice(index, 1, problem);
+            } else {
+                logger.error(
+                    `Update problems failed, because there is no problem found via ${problem.id}`
+                );
             }
         });
 
@@ -105,6 +111,10 @@ export class ProblemsService
             const index = data.findIndex(searchById(problemId));
             if (index > -1) {
                 data.splice(index, 1);
+            } else {
+                logger.error(
+                    `Remove problems failed, because there is no problem found via ${problemId}`
+                );
             }
         });
 
@@ -118,7 +128,7 @@ export class ProblemsService
         );
     }
 
-    public clear(): void {
+    public reset(): void {
         this.setState({
             ...this.state,
             data: [],

@@ -50,7 +50,7 @@ export function getThemeData(
 
     const updateRules = (s, token) => {
         const index = rules.findIndex((r) => r.token === s);
-        if (index > 0) {
+        if (index >= 0) {
             Object.assign(rules[index], {
                 ...token.settings,
             });

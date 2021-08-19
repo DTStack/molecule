@@ -9,6 +9,7 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
 import { randomId } from 'mo/common/utils';
+import logger from 'mo/common/logger';
 
 export interface INotificationService extends Component<INotification> {
     /**
@@ -30,6 +31,10 @@ export interface INotificationService extends Component<INotification> {
      * Toggle the Problems view between display or hidden
      */
     toggleProblems(): void;
+    /**
+     * Reset notifications, this will clear the pending notifications
+     */
+    reset(): void;
 }
 
 @singleton()
@@ -52,7 +57,7 @@ export class NotificationService
 
     public update<T>(item: INotificationItem<T>): INotificationItem<T> | null {
         const { data = [] } = this.state;
-        if (data.length > -1) {
+        if (data.length) {
             const index = data.findIndex(searchById(item.id));
             if (index > -1) {
                 const original = data[index];
@@ -62,6 +67,10 @@ export class NotificationService
                     data: [...data],
                 });
                 return data[index];
+            } else {
+                logger.error(
+                    'There is no notification be found, please check the id'
+                );
             }
         }
         return null;
@@ -69,7 +78,7 @@ export class NotificationService
 
     public remove(id: number): void {
         const { data = [] } = this.state;
-        if (data.length > -1) {
+        if (data.length) {
             const index = data.findIndex(searchById(id));
             if (index > -1) {
                 data.splice(index, 1);
@@ -77,7 +86,15 @@ export class NotificationService
                     ...this.state,
                     data: [...data],
                 });
+            } else {
+                logger.error(
+                    'There is no notification be found, please check the id'
+                );
             }
+        } else {
+            logger.error(
+                "You can't remove notification because there is no notifications in data."
+            );
         }
     }
 
@@ -93,11 +110,16 @@ export class NotificationService
             });
             const arr = [...data, ...items];
             this.setState({
-                ...this.state,
                 data: arr,
             });
             return items;
         }
         return null;
+    }
+
+    public reset() {
+        this.setState({
+            data: [],
+        });
     }
 }

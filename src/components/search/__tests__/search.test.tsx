@@ -28,7 +28,7 @@ const mockData: IActionBarItemProps[] = [
 ];
 
 describe('Test Input Component', () => {
-    test('Input with Group snapshot', () => {
+    test('Match the Group Input snapshot', () => {
         const componentInput = renderer.create(<Input />);
         const treeInput = componentInput.toJSON();
 
@@ -100,7 +100,7 @@ describe('Test Input Component', () => {
 });
 
 describe('Test Search Component', () => {
-    test('Search snapshot', () => {
+    test('Match the Search snapshot', () => {
         const componentInput = renderer.create(<Search />);
         const search = componentInput.toJSON();
 

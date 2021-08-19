@@ -33,7 +33,6 @@ describe('Test ExtensionService', () => {
         expect(instance.getAllExtensions().length).toBe(0);
     });
 
-
     test('Load an extension and activate it', () => {
         const ext: IExtension = {
             name: 'test',
@@ -115,7 +114,7 @@ describe('Test ExtensionService', () => {
                     f1: false,
                 });
             }
-            run() { }
+            run() {}
         }
         instance.registerAction(MyAction);
         const command = CommandsRegistry.getCommand(MyAction.ID);
@@ -124,12 +123,12 @@ describe('Test ExtensionService', () => {
     });
 
     test('The executeCommand should call the commandService.executeCommand function', () => {
-        const testFn = jest.fn();
-        const instance: any = new ExtensionService();
-        instance.monacoService.commandService.executeCommand = jest.fn((id, args) => {
+        const testFn = jest.fn((id, args) => {
             expect(id).toEqual('test');
             expect(args).toEqual('args');
         });
+        const instance: any = new ExtensionService();
+        instance.monacoService.commandService.executeCommand = testFn;
         instance.executeCommand('test', 'args');
         expect(testFn).toBeCalled();
     });

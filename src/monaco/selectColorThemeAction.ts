@@ -56,7 +56,7 @@ export class SelectColorThemeAction extends Action2 {
                         theme && theme.id !== undefined
                             ? theme.id
                             : currentTheme.id;
-                    this.colorThemeService.applyTheme(themeId);
+                    this.colorThemeService.setTheme(themeId);
                 },
                 applyTheme ? 0 : 200
             );

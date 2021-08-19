@@ -32,15 +32,15 @@
         border: 1px solid transparent;
         box-sizing: border-box;
         color: var(--input-foreground);
+        overflow: hidden;
         font-family: inherit;
         font-size: inherit;
         height: 24px;
-        min-height: 23px;
         line-height: 15px;
+        min-height: 23px;
         outline: none;
         padding: 3px 62px 3px 4px;
         resize: none;
-        overflow: hidden;
         width: 100%;
 
         &:focus {

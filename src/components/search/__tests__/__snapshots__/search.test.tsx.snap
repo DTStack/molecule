@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Input Component Input with Group snapshot 1`] = `
+exports[`Test Input Component Match the Group Input snapshot 1`] = `
 <div>
   <textarea
     autoCapitalize="off"
@@ -23,7 +23,7 @@ exports[`Test Input Component Input with Group snapshot 1`] = `
 </div>
 `;
 
-exports[`Test Input Component Input with Group snapshot 2`] = `
+exports[`Test Input Component Match the Group Input snapshot 2`] = `
 <div
   className="mo-search__group"
 >
@@ -70,7 +70,7 @@ exports[`Test Input Component Input with Group snapshot 2`] = `
 </div>
 `;
 
-exports[`Test Search Component Search snapshot 1`] = `
+exports[`Test Search Component Match the Search snapshot 1`] = `
 <div
   className="mo-search"
 >

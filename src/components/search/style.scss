@@ -35,8 +35,10 @@
         font-family: inherit;
         font-size: inherit;
         height: 24px;
-        line-height: 18px;
+        line-height: 15px;
+        min-height: 23px;
         outline: none;
+        overflow: hidden;
         padding: 3px 62px 3px 4px;
         resize: none;
         width: 100%;

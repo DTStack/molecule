@@ -1,9 +1,14 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import renderer from 'react-test-renderer';
+import '@testing-library/jest-dom';
 
+import { IActionBarItemProps } from '../../actionBar';
 import Input, { InfoTypeEnums } from '../input';
+import { Search } from '../index';
 import {
+    replaceBtnClassName,
+    replaceContainerClassName,
     validationWarningInputClassName,
     validationBaseInputClassName,
 } from '../base';
@@ -12,7 +17,17 @@ const { Group } = Input;
 
 const TEST_ID = 'test';
 
-describe('Input snapshot', () => {
+const mockData: IActionBarItemProps[] = [
+    {
+        id: TEST_ID,
+        name: 'mockDataTitle',
+        title: 'mockDataTitle',
+        icon: 'add',
+        checked: true,
+    },
+];
+
+describe('Test Input Component', () => {
     test('Input with Group snapshot', () => {
         const componentInput = renderer.create(<Input />);
         const treeInput = componentInput.toJSON();
@@ -51,7 +66,7 @@ describe('Input snapshot', () => {
             selector: 'textarea',
         }).parentNode as HTMLDivElement;
 
-        expect(div?.classList).toContain(INPUT_CLASSNAME);
+        expect(div.classList).toContain(INPUT_CLASSNAME);
     });
 
     test('Input placeholder', () => {
@@ -76,10 +91,110 @@ describe('Input snapshot', () => {
         expect(textArea.classList).toContain(validationWarningInputClassName);
 
         fireEvent.focus(textArea);
-        const div = textArea.nextElementSibling;
+        const div = textArea.nextElementSibling as HTMLDivElement;
 
-        expect(div?.textContent).toBe(TEST_ID);
-        expect(div?.classList).toContain(validationBaseInputClassName);
-        expect(div?.classList).toContain(validationWarningInputClassName);
+        expect(div.textContent).toBe(TEST_ID);
+        expect(div.classList).toContain(validationBaseInputClassName);
+        expect(div.classList).toContain(validationWarningInputClassName);
+    });
+});
+
+describe('Test Search Component', () => {
+    test('Search snapshot', () => {
+        const componentInput = renderer.create(<Search />);
+        const search = componentInput.toJSON();
+
+        expect(search).toMatchSnapshot();
+    });
+
+    test('Search className', () => {
+        const INPUT_CLASSNAME = 'test-name';
+        const wrapper = render(<Search className={INPUT_CLASSNAME} />);
+        const div = wrapper.container.firstElementChild as HTMLDivElement;
+
+        expect(div.classList).toContain(INPUT_CLASSNAME);
+    });
+
+    test('Search style', () => {
+        const INPUT_STYLE = { background: 'red' };
+        const wrapper = render(<Search style={INPUT_STYLE} />);
+        const div = wrapper.container.firstElementChild as HTMLDivElement;
+
+        expect(div.getAttribute('style')).toBe('background: red;');
+    });
+
+    test('Search value', () => {
+        const INPUT_VALUE = 'test';
+        const wrapper = render(
+            <Search data-testid={TEST_ID} values={[INPUT_VALUE]} />
+        );
+        const textarea = wrapper.container.querySelector<HTMLTextAreaElement>(
+            `textarea[autoCorrect='off']`
+        );
+
+        expect(textarea!.value).toBe(INPUT_VALUE);
+    });
+
+    test('Search dafult placeholder', () => {
+        const INPUT_VALUE = 'test';
+        const wrapper = render(<Search values={[INPUT_VALUE]} />);
+        const textarea = wrapper.container.querySelector<HTMLTextAreaElement>(
+            `textarea[autoCorrect='off']`
+        );
+
+        expect(textarea!.value).toBe(INPUT_VALUE);
+    });
+
+    test('Search placeholder', () => {
+        const DEFAULT_VALUE = 'Search';
+        const wrapper = render(<Search />);
+        const textarea = wrapper.container.querySelector<HTMLTextAreaElement>(
+            `textarea[autoCorrect='off']`
+        );
+
+        expect(textarea!.placeholder).toBe(DEFAULT_VALUE);
+    });
+
+    test('Search addons', () => {
+        const wrapper = render(<Search addons={[mockData]} />);
+        const li = wrapper.container.querySelector<HTMLLIElement>(
+            `li[id=${TEST_ID}]`
+        );
+
+        expect(li).toBeInTheDocument();
+    });
+
+    test('Search onButtonClick and replace show', () => {
+        const TEST_FN = jest.fn();
+        const INPUT_VALUE = 'test';
+        const wrapper = render(
+            <Search
+                addons={[, mockData]}
+                values={[, INPUT_VALUE]}
+                onButtonClick={TEST_FN}
+            />
+        );
+        const icon = wrapper.container.getElementsByClassName(
+            replaceBtnClassName
+        )[0];
+        expect(icon).not.toBeNull();
+
+        fireEvent.click(icon);
+        expect(TEST_FN).toBeCalled();
+
+        const input = wrapper.container.getElementsByClassName(
+            replaceContainerClassName
+        )[0];
+        expect(input).toBeInTheDocument();
+
+        const textarea = wrapper.container.querySelectorAll<HTMLTextAreaElement>(
+            `textarea[autoCorrect='off']`
+        )[1];
+        expect(textarea!.value).toBe(INPUT_VALUE);
+
+        const li = wrapper.container.querySelector<HTMLLIElement>(
+            `li[id=${TEST_ID}]`
+        );
+        expect(li).toBeInTheDocument();
     });
 });

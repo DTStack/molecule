@@ -13,19 +13,31 @@ import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 
 export interface IExtensionService {
     /**
-     * The extensions
-     */
-    extensions?: IExtension[];
-    /**
-     * Load extensions
-     * @param extensionEntry
-     * @param moleculeCtx
+     * Load the extension objects and then execute them
+     * @param extensions The extension array
      */
     load(extensions: IExtension[]);
-    loadContributes(contributes: IContribute);
-    unload(extension: IExtension);
     /**
-     * Register action based in Action2,
+     * Get an extension by name
+     * @param name The extension name
+     */
+    getExtension(name: string): IExtension | undefined;
+    /**
+     * Get All loaded extensions
+     * @return Extension Array
+     */
+    getAllExtensions(): IExtension[];
+    /**
+     * Remove the specific extension
+     * @param extension The extension name is required
+     */
+    remove(extension: IExtension);
+    /**
+     * Reset the extensions data
+     */
+    reset(): void;
+    /**
+     * Register a new action which is extends the Action2,
      * @example
      * ```ts
      * const action = class Action extends Action2 {};
@@ -33,12 +45,17 @@ export interface IExtensionService {
      * ```
      */
     registerAction(actionClass: { new (): Action2 }): void;
+    /**
+     * Execute the registered command
+     * @param id The command ID
+     * @param args
+     */
     executeCommand(id: string, ...args: any): void;
 }
 
 @singleton()
 export class ExtensionService implements IExtensionService {
-    public extensions: IExtension[] = [];
+    private extensions: IExtension[] = [];
     private readonly colorThemeService: IColorThemeService;
     private readonly monacoService: IMonacoService;
 
@@ -48,7 +65,19 @@ export class ExtensionService implements IExtensionService {
         this.monacoService = container.resolve(MonacoService);
     }
 
-    public load(extensions: IExtension[] = []) {
+    public getExtension(name: string): IExtension | undefined {
+        return this.extensions.find((ext) => ext.name === name);
+    }
+
+    public reset(): void {
+        this.extensions = [];
+    }
+
+    public getAllExtensions(): IExtension[] {
+        return this.extensions.concat();
+    }
+
+    public load(extensions: IExtension[]) {
         try {
             if (extensions?.length === 0) return;
             this.extensions = this.extensions.concat(extensions);
@@ -64,7 +93,7 @@ export class ExtensionService implements IExtensionService {
                 }
             });
         } catch (e) {
-            console.error(ErrorMsg.LoadExtensionFail, e);
+            logger.error(ErrorMsg.LoadExtensionFail);
         }
     }
 
@@ -78,9 +107,10 @@ export class ExtensionService implements IExtensionService {
                         this.colorThemeService.load(themes);
                     }
                 }
-                case IContributeType.Commands: {
-                    // registerAction2();
-                }
+                // TODO: support the Commands type of extension
+                // case IContributeType.Commands: {
+                //     this.registerAction();
+                // }
             }
         });
     }
@@ -93,8 +123,14 @@ export class ExtensionService implements IExtensionService {
         this.monacoService.commandService.executeCommand(id, ...args);
     }
 
-    unload(extension: IExtension) {
-        console.log('unload extension:', extension.name);
+    public remove(extension: IExtension): IExtension[] | undefined {
+        const extIndex = this.extensions.findIndex(
+            (ext) => ext.name === extension.name
+        );
+        if (extIndex > -1) {
+            return this.extensions.splice(extIndex, 1);
+        }
+        return undefined;
     }
 }
 

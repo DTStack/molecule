@@ -51,6 +51,7 @@ export function builtInPanelProblems(): IPanelItem {
         id: PANEL_PROBLEMS,
         name: localize(PANEL_PROBLEMS, 'problems'),
         data: null,
+        sortIndex: 1,
     };
 }
 

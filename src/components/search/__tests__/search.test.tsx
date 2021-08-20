@@ -9,6 +9,7 @@ import { Search } from '../index';
 import {
     replaceBtnClassName,
     replaceContainerClassName,
+    validationInfoInputClassName,
     validationWarningInputClassName,
     validationBaseInputClassName,
 } from '../base';
@@ -97,6 +98,20 @@ describe('Test Input Component', () => {
         expect(div.classList).toContain(validationBaseInputClassName);
         expect(div.classList).toContain(validationWarningInputClassName);
     });
+
+    test('Input change', () => {
+        const TEST_FN = jest.fn();
+        const wrapper = render(<Input onChange={TEST_FN} />);
+        const textarea = wrapper.container.querySelector<HTMLTextAreaElement>(
+            `textarea[autoCorrect='off']`
+        );
+
+        fireEvent.keyDown(textarea!, {
+            key: 'Enter',
+            keyCode: 13,
+        });
+        expect(TEST_FN).toBeCalled();
+    });
 });
 
 describe('Test Search Component', () => {
@@ -162,6 +177,36 @@ describe('Test Search Component', () => {
         );
 
         expect(li).toBeInTheDocument();
+    });
+
+    test('Search validationInfo', () => {
+        const TEST_TEXT = 'molecule';
+        const wrapper = render(<Search validationInfo={TEST_TEXT} />);
+        const textarea = wrapper.container.querySelector<HTMLTextAreaElement>(
+            `textarea[autoCorrect='off']`
+        );
+        expect(textarea!.classList).toContain(validationInfoInputClassName);
+
+        fireEvent.focus(textarea!);
+        const div = textarea!.nextElementSibling as HTMLDivElement;
+        expect(div!.classList).toContain(validationInfoInputClassName);
+        expect(div!.textContent).toContain(TEST_TEXT);
+    });
+
+    test('Search change event', () => {
+        const TEST_CHANGE_FN = jest.fn();
+        const TEST_SEARCH_FN = jest.fn();
+        const TEST_VALUE = 'molecule';
+        const wrapper = render(
+            <Search onChange={TEST_CHANGE_FN} onSearch={TEST_SEARCH_FN} />
+        );
+        const textarea = wrapper.container.querySelector<HTMLTextAreaElement>(
+            `textarea[autoCorrect='off']`
+        );
+
+        fireEvent.change(textarea!, { target: { value: TEST_VALUE } });
+        expect(TEST_CHANGE_FN).toBeCalled();
+        expect(TEST_SEARCH_FN).toBeCalled();
     });
 
     test('Search onButtonClick and replace show', () => {

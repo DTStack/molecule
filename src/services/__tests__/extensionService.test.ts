@@ -82,7 +82,7 @@ describe('Test ExtensionService', () => {
         expect(instance.loadContributes).toBeCalled();
     });
 
-    test('Load the theme contribute', () => {
+    test('Extensions add the themes contribute', () => {
         const theme = [
             {
                 id: 'testTheme',
@@ -92,16 +92,16 @@ describe('Test ExtensionService', () => {
         const instance: any = new ExtensionService();
         const contrib: IContribute = { commands: 'contrib' };
 
-        instance.colorThemeService.load = jest.fn((them) => {
+        instance.colorThemeService.addThemes = jest.fn((them) => {
             expect(them).toEqual(theme);
         });
 
         instance.loadContributes(contrib);
-        expect(instance.colorThemeService.load).not.toBeCalled();
+        expect(instance.colorThemeService.addThemes).not.toBeCalled();
 
         contrib.themes = theme;
         instance.loadContributes(contrib);
-        expect(instance.colorThemeService.load).toBeCalled();
+        expect(instance.colorThemeService.addThemes).toBeCalled();
     });
 
     test('Register an Action', () => {

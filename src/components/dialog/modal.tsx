@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import Dialog from 'rc-dialog';
 import { IDialogPropTypes } from 'rc-dialog/lib/IDialogPropTypes';
 
+import { classNames } from 'mo/common/className';
 import {
-    classNames,
-    prefixClaName,
-    getBEMElement,
-    getBEMModifier,
-} from 'mo/common/className';
+    modalClassName,
+    closeDialogDescriptorClassName,
+    wrapDialogClassNameExtended,
+} from './base';
 import { Icon } from 'mo/components/icon';
 import { Button, IButtonProps } from 'mo/components/button';
 export interface IModalProps extends IDialogPropTypes {
@@ -35,7 +35,6 @@ export interface IModalFuncProps extends IDialogPropTypes {
 }
 
 export const destroyFns: Array<() => void> = [];
-export const modalClassName = prefixClaName('modal');
 
 let mousePosition: any;
 
@@ -49,10 +48,8 @@ const getClickPosition = (e: MouseEvent) => {
     }, 100);
 };
 
-const closeClassName = getBEMElement(modalClassName, 'close');
-const closeDescriptorClassName = getBEMModifier(`${closeClassName}`, 'x');
 const closeIconToRender = (
-    <span className={closeDescriptorClassName}>
+    <span className={closeDialogDescriptorClassName}>
         <Icon type="close" />
     </span>
 );
@@ -96,7 +93,7 @@ export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
     } = props;
 
     const wrapClassNameExtended = classNames(wrapClassName, {
-        [getBEMModifier(`${modalClassName}`, 'centered')]: !!centered,
+        [wrapDialogClassNameExtended]: !!centered,
     });
 
     const renderFooter = () => {

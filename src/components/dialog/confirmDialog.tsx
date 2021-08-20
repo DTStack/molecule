@@ -1,10 +1,16 @@
 import * as React from 'react';
+import { classNames, getBEMElement } from 'mo/common/className';
 import {
-    classNames,
-    getBEMElement,
-    getBEMModifier,
-    prefixClaName,
-} from 'mo/common/className';
+    confirmClassName,
+    containerConfirmClassName,
+    indicatorConfirmClassName,
+    contentConfirmClassName,
+    messageConfirmClassName,
+    btnsConfirmClassName,
+    textConfirmClassName,
+    centeredConfirmClassName,
+    detailConfirmClassName,
+} from './base';
 import { Modal as Dialog, IModalFuncProps } from './modal';
 import ActionButton from './actionButton';
 
@@ -13,13 +19,6 @@ interface ConfirmDialogProps extends IModalFuncProps {
     close: (...args: any[]) => void;
     actions?: React.ReactNode;
 }
-
-export const confirmClassName = prefixClaName('confirm');
-const containerClassName = getBEMElement(confirmClassName, 'container');
-const indicatorClassName = getBEMElement(confirmClassName, 'indicator');
-const contentClassName = getBEMElement(confirmClassName, 'content');
-const messageClassName = getBEMElement(confirmClassName, 'message');
-const btnsClassName = getBEMElement(confirmClassName, 'btns');
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
     const {
@@ -70,10 +69,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
             prefixCls={confirmClassName}
             className={classString}
             wrapClassName={classNames({
-                [getBEMModifier(
-                    confirmClassName,
-                    'centered'
-                )]: !!props.centered,
+                [centeredConfirmClassName]: !!props.centered,
             })}
             onCancel={() => close({ triggerCancel: true })}
             title=""
@@ -87,31 +83,21 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
             closable={closable}
             {...resetProps}
         >
-            <div className={containerClassName} style={bodyStyle}>
-                <div className={contentClassName}>
-                    <div className={indicatorClassName}> {icon} </div>
-                    <div className={messageClassName}>
+            <div className={containerConfirmClassName} style={bodyStyle}>
+                <div className={contentConfirmClassName}>
+                    <div className={indicatorConfirmClassName}> {icon} </div>
+                    <div className={messageConfirmClassName}>
                         {props.title !== undefined && (
-                            <span
-                                className={getBEMModifier(
-                                    messageClassName,
-                                    'text'
-                                )}
-                            >
+                            <span className={textConfirmClassName}>
                                 {props.title}
                             </span>
                         )}
-                        <div
-                            className={getBEMModifier(
-                                messageClassName,
-                                'detail'
-                            )}
-                        >
+                        <div className={detailConfirmClassName}>
                             {props.content}
                         </div>
                     </div>
                 </div>
-                <div className={btnsClassName}>
+                <div className={btnsConfirmClassName}>
                     {actions === undefined ? (
                         <>
                             {cancelButton}

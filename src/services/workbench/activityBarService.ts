@@ -87,6 +87,7 @@ export class ActivityBarService
         this.setState({
             data: [],
             selected: '',
+            contextMenu: [],
         });
     }
 
@@ -111,10 +112,14 @@ export class ActivityBarService
         const index = next.findIndex(searchById(id));
         if (index > -1) {
             next.splice(index, 1);
+            this.setState({
+                data: next,
+            });
+        } else {
+            logger.error(
+                "Remove the bar data failed, because there is no data found in barData via this 'id'"
+            );
         }
-        this.setState({
-            data: next,
-        });
     }
 
     public toggleBar(id: string) {
@@ -147,9 +152,8 @@ export class ActivityBarService
                 contextMenu: newActions,
             });
         } else {
-            throw new Error(
-                'Toggle the contextmenu failed, can not found any menu by id' +
-                    id
+            logger.error(
+                `Toggle the contextmenu failed, can not found any menu by id ${id}`
             );
         }
     }
@@ -172,10 +176,14 @@ export class ActivityBarService
         const index = next.findIndex(searchById(id));
         if (index > -1) {
             next.splice(index, 1);
+            this.setState({
+                contextMenu: next,
+            });
+        } else {
+            logger.error(
+                "Remove the context menus data failed, because there is no data found in context menus via this 'id'"
+            );
         }
-        this.setState({
-            contextMenu: next,
-        });
     }
 
     // ====== The belows for subscribe activity bar events ======

@@ -22,7 +22,7 @@ export default class TestPane extends React.Component {
     onChangeTheme = (e, option) => {
         if (option && option.value) {
             console.log('onChangeTheme:', option.value);
-            molecule.colorTheme.applyTheme(option.value);
+            molecule.colorTheme.setTheme(option.value);
         }
     };
 
@@ -52,7 +52,7 @@ export default class TestPane extends React.Component {
 
     renderColorThemes() {
         const colorThemes = molecule.colorTheme.getThemes();
-        const defaultTheme = molecule.colorTheme.colorTheme;
+        const defaultTheme = molecule.colorTheme.getColorTheme();
         const options = colorThemes.map((theme: IColorTheme) => {
             return (
                 <Option key={theme.id} value={theme.id}>

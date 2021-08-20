@@ -113,7 +113,7 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
     public applyConfiguration() {
         const { workbench, editor }: ISettings = this.getConfiguration();
         if (workbench.colorTheme) {
-            this.colorThemeService.applyTheme(workbench.colorTheme);
+            this.colorThemeService.setTheme(workbench.colorTheme);
         }
         this.editorService.editorInstance?.updateOptions({
             ...editor,

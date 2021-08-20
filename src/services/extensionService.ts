@@ -75,7 +75,7 @@ export class ExtensionService implements IExtensionService {
                 case IContributeType.Themes: {
                     const themes: IColorTheme[] | undefined = contributes[type];
                     if (themes) {
-                        this.colorThemeService.load(themes);
+                        this.colorThemeService.addThemes(themes);
                     }
                 }
                 case IContributeType.Commands: {

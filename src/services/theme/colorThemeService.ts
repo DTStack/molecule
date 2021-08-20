@@ -11,68 +11,119 @@ import { applyStyleSheetRules } from 'mo/common/css';
 import { getThemeData, convertToCSSVars } from './helper';
 import logger from 'mo/common/logger';
 import { prefixClaName } from 'mo/common/className';
+import { searchById } from '../helper';
 
 export interface IColorThemeService {
-    readonly colorThemes: IColorTheme[];
-    readonly colorTheme: IColorTheme;
     /**
-     * Load the themes from the extension
+     * Add themes into `colorThemes`
+     *
+     * This will update the duplicated themes found in `colorThemes`
+     * @param themes
      */
-    load(themes: IColorTheme[]): void;
+    addThemes(themes: IColorTheme | IColorTheme[]): void;
     /**
-     * Apply the theme to the IDE by theme id
-     * @param id theme Id
+     * Set the current Color Theme via id,
+     * Please ensure the theme could be found in `colorThemes`
+     * @param id The `id` is required
      */
-    applyTheme(id: string): void;
+    setTheme(id: string): void;
+    /**
+     * Update specific theme,
+     * @param theme The `id` is required in theme
+     */
+    updateTheme(theme: IColorTheme): void;
+    /**
+     * Get all themes in `colorThemes`
+     */
     getThemes(): IColorTheme[];
+    /**
+     * Get specific theme via id
+     * @param id
+     */
     getThemeById(id: string): void;
     /**
      * Get the current Color Theme
      */
     getColorTheme(): IColorTheme;
+    /**
+     * Reload current theme
+     */
+    reload(): void;
+    /**
+     * Reset theme
+     */
+    reset(): void;
 }
 
-const BUILT_IN_THEME: IColorTheme = {
+export const BUILT_IN_THEME: IColorTheme = {
     id: 'Default Dark+',
     name: 'Default Dark+',
     label: 'Default Dark+',
     uiTheme: 'vs-dark',
 };
-const DEFAULT_THEME_CLASS_NAME = prefixClaName('customize-theme');
+export const DEFAULT_THEME_CLASS_NAME = prefixClaName('customize-theme');
 
 @singleton()
 export class ColorThemeService implements IColorThemeService {
-    colorThemes: IColorTheme[];
-    colorTheme: IColorTheme;
+    private colorThemes: IColorTheme[] = [BUILT_IN_THEME];
+    private colorTheme: IColorTheme = BUILT_IN_THEME;
 
     constructor(
         @inject('ColorThemes') colorThemes: IColorTheme[] = [],
-        @inject('ColorTheme') colorTheme: IColorTheme = BUILT_IN_THEME
+        @inject('ColorTheme') colorTheme?: IColorTheme
     ) {
-        this.colorThemes = colorThemes;
-        this.colorTheme = colorTheme;
-        this.init();
-    }
-    getColorTheme(): IColorTheme {
-        return this.colorTheme;
+        this.addThemes(colorThemes);
+        if (colorTheme) {
+            this.setTheme(colorTheme.id);
+        }
     }
 
-    public init() {
-        this.applyTheme(this.colorTheme.id);
+    public addThemes(themes: IColorTheme | IColorTheme[]): void {
+        const nextThemes = Array.isArray(themes) ? themes : [themes];
+        nextThemes.forEach((theme) => {
+            const targetTheme = this.getThemeById(theme.id);
+            if (targetTheme) {
+                logger.warn(
+                    `There has ${theme.name} already in theme, it'll update this theme otherwise please don't add the duplicated theme`
+                );
+                this.updateTheme(theme);
+            } else {
+                this.colorThemes.push(Object.assign({}, theme));
+            }
+        });
     }
 
-    public load(themes: IColorTheme[]): void {
-        if (themes.length > 0) {
-            this.colorThemes = this.colorThemes.concat(themes);
-            this.init();
+    public updateTheme(theme: IColorTheme) {
+        if (!theme.id) {
+            logger.error(
+                "Update the theme failed!  The 'id' is required in the theme data."
+            );
+        }
+        const index = this.colorThemes.findIndex(searchById(theme.id));
+        if (index > -1) {
+            Object.assign(this.colorThemes[index], theme);
+
+            // If current theme be updated, then reload it
+            if (this.colorThemes[index].id === this.getColorTheme().id) {
+                this.reload();
+            }
+        } else {
+            logger.error(
+                `Update the theme failed! There is no theme found via '${theme.id}'`
+            );
         }
     }
 
     public getThemeById(id: string): IColorTheme | undefined {
-        return this.colorThemes.find((theme: IColorTheme) => theme.id === id);
+        const target = this.colorThemes.find(searchById(id));
+        return target ? Object.assign({}, target) : undefined;
     }
 
-    public applyTheme(id: string) {
+    public getColorTheme(): IColorTheme {
+        return Object.assign({}, this.colorTheme);
+    }
+
+    public setTheme(id: string) {
         const theme = this.getThemeById(id);
         if (theme) {
             this.colorTheme = { ...theme };
@@ -90,6 +141,15 @@ export class ColorThemeService implements IColorThemeService {
 
     public getThemes() {
         return this.colorThemes;
+    }
+
+    public reload() {
+        this.setTheme(this.getColorTheme().id);
+    }
+
+    public reset() {
+        this.colorThemes = [BUILT_IN_THEME];
+        this.setTheme(BUILT_IN_THEME.id);
     }
 }
 

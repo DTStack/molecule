@@ -13,6 +13,10 @@ export interface IPanelItem<T = any> extends ITabProps<T> {
     title?: string;
     toolbox?: IActionBarItemProps[];
     data?: T;
+    /**
+     * The sort of panel item
+     */
+    sortIndex?: number;
 }
 
 export enum PanelEvent {
@@ -44,6 +48,7 @@ export function builtInOutputPanel() {
         id: PANEL_OUTPUT,
         name: localize(PANEL_OUTPUT, 'output'),
         data: '',
+        sortIndex: 2,
     };
 
     function onUpdateEditorIns(

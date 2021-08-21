@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
-import { IPanel } from 'mo/model/workbench/panel';
+import { IPanel, IPanelItem } from 'mo/model/workbench/panel';
 import { IPanelController } from 'mo/controller/panel';
 import { Tabs } from 'mo/components/tabs';
 import { ActionBar } from 'mo/components/actionBar';
@@ -30,13 +30,20 @@ export function Panel(props: IPanel & IPanelController) {
             ? current?.renderPane?.(current)
             : current?.renderPane;
 
+    const sortedPanels = data?.sort((a: IPanelItem, b: IPanelItem) => {
+        if (a.sortIndex && b.sortIndex) {
+            return a.sortIndex - b.sortIndex;
+        }
+        return 1;
+    });
+
     return (
         <div className={defaultClassName}>
             <div className={panelHeaderClassName}>
                 <Scrollable noScrollY isShowShadow>
                     <Tabs
                         activeTab={current?.id}
-                        data={data}
+                        data={sortedPanels}
                         onSelectTab={onTabChange}
                         onCloseTab={onClose}
                     />

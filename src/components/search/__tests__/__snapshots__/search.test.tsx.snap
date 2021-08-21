@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Input Component Match the Group Input snapshot 1`] = `
+<div>
+  <textarea
+    autoCapitalize="off"
+    autoCorrect="off"
+    className=""
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    spellCheck={false}
+    value=""
+  />
+  <div
+    className="mo-action-bar mo-search__toolbar"
+  >
+    <ul
+      className="mo-action-bar__container"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Input Component Match the Group Input snapshot 2`] = `
+<div
+  className="mo-search__group"
+>
+  <div>
+    <textarea
+      autoCapitalize="off"
+      autoCorrect="off"
+      className=""
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      spellCheck={false}
+      value=""
+    />
+    <div
+      className="mo-action-bar mo-search__toolbar"
+    >
+      <ul
+        className="mo-action-bar__container"
+      />
+    </div>
+  </div>
+  <div>
+    <textarea
+      autoCapitalize="off"
+      autoCorrect="off"
+      className=""
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      spellCheck={false}
+      value=""
+    />
+    <div
+      className="mo-action-bar mo-search__toolbar"
+    >
+      <ul
+        className="mo-action-bar__container"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test Search Component Match the Search snapshot 1`] = `
+<div
+  className="mo-search"
+>
+  <span
+    className="mo-search__replace__button codicon codicon-chevron-right"
+    onClick={[Function]}
+  />
+  <div
+    className="mo-search__group"
+  >
+    <div
+      className="mo-search__input mo-search__target"
+    >
+      <textarea
+        autoCapitalize="off"
+        autoCorrect="off"
+        className=""
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Search"
+        spellCheck={false}
+        title="Search"
+        value=""
+      />
+      <div
+        className="mo-action-bar mo-search__toolbar"
+      >
+        <ul
+          className="mo-action-bar__container"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

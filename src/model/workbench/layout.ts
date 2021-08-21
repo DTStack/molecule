@@ -1,41 +1,16 @@
 export enum Position {
-    LEFT,
-    RIGHT,
-    BOTTOM,
+    left = 'left',
+    right = 'right',
 }
 export interface ViewVisibility {
-    hidden?: boolean;
+    hidden: boolean;
 }
-
 export interface IPanelViewState extends ViewVisibility {
-    panelMaximized?: boolean;
+    panelMaximized: boolean;
 }
 
 export interface ISideBarViewState extends ViewVisibility {
-    position?: Position;
-}
-
-export function positionToString(position: Position): string {
-    switch (position) {
-        case Position.LEFT:
-            return 'left';
-        case Position.RIGHT:
-            return 'right';
-        case Position.BOTTOM:
-            return 'bottom';
-        default:
-            return 'bottom';
-    }
-}
-
-const positionsByString: { [key: string]: Position } = {
-    [positionToString(Position.LEFT)]: Position.LEFT,
-    [positionToString(Position.RIGHT)]: Position.RIGHT,
-    [positionToString(Position.BOTTOM)]: Position.BOTTOM,
-};
-
-export function positionFromString(str: string): Position {
-    return positionsByString[str];
+    position: keyof typeof Position;
 }
 export interface ILayout {
     splitPanePos: string[];
@@ -61,7 +36,7 @@ export class LayoutModel implements ILayout {
         activityBar = { hidden: false },
         panel = { hidden: false, panelMaximized: false },
         statusBar = { hidden: false },
-        sideBar = { hidden: false, position: Position.LEFT },
+        sideBar = { hidden: false, position: Position.left },
         menuBar = { hidden: false }
     ) {
         this.splitPanePos = splitPanePos;

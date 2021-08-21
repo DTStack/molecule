@@ -37,10 +37,9 @@ export class QuickTogglePanelAction extends Action2 {
         this.menuBarService = container.resolve(MenuBarService);
     }
     run(accessor: ServicesAccessor) {
-        const { hidden } = this.layoutService.getState().panel;
+        const hidden = this.layoutService.togglePanelVisibility();
         this.menuBarService.update(QuickTogglePanelAction.ID, {
-            icon: hidden ? 'check' : '',
+            icon: hidden ? '' : 'check',
         });
-        this.layoutService.setPanelHidden();
     }
 }

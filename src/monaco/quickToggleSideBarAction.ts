@@ -51,25 +51,17 @@ export class CommandQuickSideBarViewAction extends Action2 {
     }
     run(accessor: ServicesAccessor, ...args) {
         const sidebarId = args[0];
-        const { sideBar } = this.layoutService.getState();
         const { selected } = this.activityBarService.getState();
-        if (sideBar.hidden) {
-            this.activityBarService.setActive(
-                sidebarId || this._preActivityBar
-            );
-            this.sideBarService.setActive(sidebarId || this._preActivityBar);
-            this.menuBarService.update(CommandQuickSideBarViewAction.ID, {
-                icon: 'check',
-            });
-            this.layoutService.setSideBarHidden();
-        } else {
-            this.activityBarService.setActive();
-            this.sideBarService.setActive();
-            this.menuBarService.update(CommandQuickSideBarViewAction.ID, {
-                icon: '',
-            });
-            this.layoutService.setSideBarHidden();
-            this._preActivityBar = selected;
-        }
+
+        const hidden = this.layoutService.toggleSideBarVisibility();
+
+        const activityId = sidebarId || this._preActivityBar;
+        this.activityBarService.setActive(hidden ? undefined : activityId);
+        this.sideBarService.setActive(hidden ? undefined : activityId);
+        this.menuBarService.update(CommandQuickSideBarViewAction.ID, {
+            icon: hidden ? '' : 'check',
+        });
+
+        hidden && (this._preActivityBar = selected);
     }
 }

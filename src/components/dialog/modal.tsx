@@ -8,8 +8,10 @@ import {
     closeDialogDescriptorClassName,
     wrapDialogClassNameExtended,
 } from './base';
+import { ConfrimType } from './';
 import { Icon } from 'mo/components/icon';
 import { Button, IButtonProps } from 'mo/components/button';
+
 export interface IModalProps extends IDialogPropTypes {
     onOk?: (e: React.MouseEvent<HTMLElement>) => void;
     onCancel?: (e: React.SyntheticEvent<Element, Event>) => void;
@@ -31,7 +33,7 @@ export interface IModalFuncProps extends IDialogPropTypes {
     cancelButtonProps?: IButtonProps;
     centered?: boolean;
     okCancel?: boolean;
-    type?: string;
+    type?: ConfrimType;
 }
 
 export const destroyFns: Array<() => void> = [];
@@ -110,6 +112,7 @@ export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
             </>
         );
     };
+
     return (
         <Dialog
             {...restProps}

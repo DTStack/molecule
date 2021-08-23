@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, getBEMElement } from 'mo/common/className';
+import { classNames } from 'mo/common/className';
 import {
     confirmClassName,
     containerConfirmClassName,
@@ -10,6 +10,7 @@ import {
     textConfirmClassName,
     centeredConfirmClassName,
     detailConfirmClassName,
+    iconConfirmClassName,
 } from './base';
 import { Modal as Dialog, IModalFuncProps } from './modal';
 import ActionButton from './actionButton';
@@ -42,13 +43,12 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         maskClosable = false,
         transitionName = 'zoom',
         maskTransitionName = 'fade',
+        type,
         ...resetProps
     } = props;
 
-    const confirmDescriperClassName = getBEMElement(
-        confirmClassName,
-        `${props.type}`
-    );
+    const confirmDescriperClassName = iconConfirmClassName(type);
+
     const classString = classNames(
         confirmClassName,
         confirmDescriperClassName,

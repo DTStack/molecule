@@ -3,6 +3,7 @@ import {
     getBEMModifier,
     prefixClaName,
 } from 'mo/common/className';
+import { ConfrimType, ConfirmState } from './';
 
 export const modalClassName = prefixClaName('modal');
 
@@ -15,7 +16,7 @@ export const closeDialogDescriptorClassName = getBEMModifier(
     'x'
 );
 export const wrapDialogClassNameExtended = getBEMModifier(
-    `${modalClassName}`,
+    modalClassName,
     'centered'
 );
 
@@ -28,6 +29,8 @@ export const indicatorConfirmClassName = getBEMElement(
     confirmClassName,
     'indicator'
 );
+export const iconConfirmClassName = (type: ConfrimType | undefined) =>
+    !!type ? getBEMElement(confirmClassName, ConfirmState[type]) : '';
 
 export const contentConfirmClassName = getBEMElement(
     confirmClassName,

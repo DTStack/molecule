@@ -19,6 +19,13 @@ type ModalType = typeof OriginModal &
 
 const Modal = OriginModal as ModalType;
 
+export enum ConfirmState {
+    warning = 'warning',
+    confirm = 'confirm',
+}
+
+export type ConfrimType = keyof typeof ConfirmState;
+
 Modal.warning = modalWarn;
 
 Modal.warn = modalWarn;

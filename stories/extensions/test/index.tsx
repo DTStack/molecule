@@ -64,10 +64,10 @@ export const ExtendTestPane: IExtension = {
             if (workbench.sidebar) {
                 switch (workbench.sidebar) {
                     case 'left':
-                        molecule.layout.setSideBarPosition(Position.LEFT);
+                        molecule.layout.setSideBarPosition(Position.left);
                         break;
                     case 'right':
-                        molecule.layout.setSideBarPosition(Position.RIGHT);
+                        molecule.layout.setSideBarPosition(Position.right);
                         break;
                     default:
                         break;

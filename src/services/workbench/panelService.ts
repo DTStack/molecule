@@ -5,6 +5,7 @@ import { Component } from 'mo/react';
 import {
     builtInOutputPanel,
     builtInPanelToolboxResize,
+    builtInPanelToolboxReStore,
     IOutput,
     IPanel,
     IPanelItem,
@@ -12,12 +13,10 @@ import {
     PanelModel,
     PANEL_OUTPUT,
     PANEL_TOOLBOX_RESIZE,
-    PANEL_TOOLBOX_RESTORE_SIZE,
 } from 'mo/model/workbench/panel';
 
 import { searchById } from '../helper';
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import { localize } from 'mo/i18n/localize';
 import { LayoutService } from 'mo/services';
 
 export interface IPanelService extends Component<IPanel> {
@@ -117,25 +116,17 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     }
 
     public toggleMaximize(): void {
-        const panelMaximized = this.layoutService.isPanelMaximized();
         const { toolbox = [] } = this.state;
         const resizeBtnIndex = toolbox?.findIndex(
             searchById(PANEL_TOOLBOX_RESIZE)
         );
         const resizeBtn = toolbox[resizeBtnIndex];
         if (resizeBtn) {
-            if (panelMaximized) {
-                toolbox[resizeBtnIndex] = builtInPanelToolboxResize();
-            } else {
-                toolbox[resizeBtnIndex] = Object.assign({}, resizeBtn, {
-                    title: localize(
-                        PANEL_TOOLBOX_RESTORE_SIZE,
-                        'Restore Panel Size'
-                    ),
-                    icon: 'chevron-down',
-                });
-            }
-            this.layoutService.togglePanelMaximized();
+            const panelMaximized = this.layoutService.togglePanelMaximized();
+
+            toolbox[resizeBtnIndex] = panelMaximized
+                ? builtInPanelToolboxReStore()
+                : builtInPanelToolboxResize();
         }
     }
 

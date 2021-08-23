@@ -78,6 +78,13 @@ export function builtInPanelToolboxResize(): IActionBarItemProps {
     };
 }
 
+export function builtInPanelToolboxReStore(): IActionBarItemProps {
+    return {
+        id: PANEL_TOOLBOX_RESIZE,
+        title: localize(PANEL_TOOLBOX_RESTORE_SIZE, 'Restore Panel Siz'),
+        icon: 'chevron-down',
+    };
+}
 export function builtInPanelToolbox(): IActionBarItemProps[] {
     return [
         builtInPanelToolboxResize(),

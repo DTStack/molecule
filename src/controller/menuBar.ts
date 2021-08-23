@@ -97,10 +97,7 @@ export class MenuBarController
     };
 
     public updateActivityBar = () => {
-        this.layoutService.setActivityBarHidden();
-        const {
-            activityBar: { hidden },
-        } = this.layoutService.getState();
+        const hidden = this.layoutService.toggleActivityBarVisibility();
         this.menuBarService.update(MENU_VIEW_ACTIVITYBAR, {
             icon: hidden ? '' : 'check',
         });
@@ -119,20 +116,14 @@ export class MenuBarController
     };
 
     public updateMenuBar = () => {
-        this.layoutService.setMenuBarHidden();
-        const {
-            menuBar: { hidden },
-        } = this.layoutService.getState();
+        const hidden = this.layoutService.toggleMenuBarVisibility();
         this.menuBarService.update(MENU_VIEW_MENUBAR, {
             icon: hidden ? '' : 'check',
         });
     };
 
     public updateStatusBar = () => {
-        this.layoutService.setStatusBarHidden();
-        const {
-            statusBar: { hidden },
-        } = this.layoutService.getState();
+        const hidden = this.layoutService.toggleStatusBarVisibility();
         this.menuBarService.update(MENU_VIEW_STATUSBAR, {
             icon: hidden ? '' : 'check',
         });

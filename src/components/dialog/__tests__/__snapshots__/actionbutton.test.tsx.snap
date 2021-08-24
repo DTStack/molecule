@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test ActionButton Component Match ActionButton Snapshot 1`] = `
+<a
+  className="mo-btn mo-btn--normal"
+  closeModal={[MockFunction]}
+  onClick={[Function]}
+/>
+`;

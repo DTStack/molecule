@@ -36,7 +36,7 @@ const ActionButton: React.FC<ActionButtonProps> = (props) => {
             return;
         }
         let returnValueOfOnOk;
-        if (actionFn.length) {
+        if (actionFn!.length) {
             returnValueOfOnOk = actionFn(closeModal);
             clickedRef.current = false;
         } else {

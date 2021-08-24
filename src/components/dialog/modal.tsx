@@ -6,7 +6,7 @@ import { classNames } from 'mo/common/className';
 import {
     modalClassName,
     closeDialogDescriptorClassName,
-    wrapDialogClassNameExtended,
+    wrapDialogClassName,
 } from './base';
 import { ConfrimType } from './';
 import { Icon } from 'mo/components/icon';
@@ -33,7 +33,7 @@ export interface IModalFuncProps extends IDialogPropTypes {
     cancelButtonProps?: IButtonProps;
     centered?: boolean;
     okCancel?: boolean;
-    type?: ConfrimType;
+    type?: ConfrimType | JSX.Element;
 }
 
 export const destroyFns: Array<() => void> = [];
@@ -95,7 +95,7 @@ export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
     } = props;
 
     const wrapClassNameExtended = classNames(wrapClassName, {
-        [wrapDialogClassNameExtended]: !!centered,
+        [wrapDialogClassName]: !!centered,
     });
 
     const renderFooter = () => {

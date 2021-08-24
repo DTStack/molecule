@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Modal Component Match the Modal snapshot 1`] = `null`;
+
+exports[`Test confirmDialog Match ConfirmDialog Snapshot 1`] = `null`;
+
+exports[`Test confirmDialog The ConfirmDialog Snapshot 1`] = `null`;

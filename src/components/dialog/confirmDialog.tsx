@@ -54,6 +54,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         confirmDescriperClassName,
         className
     );
+
     const cancelButton = okCancel && (
         <ActionButton
             actionFn={onCancel}

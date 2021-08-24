@@ -15,10 +15,7 @@ export const closeDialogDescriptorClassName = getBEMModifier(
     closeDialogClassName,
     'x'
 );
-export const wrapDialogClassNameExtended = getBEMModifier(
-    modalClassName,
-    'centered'
-);
+export const wrapDialogClassName = getBEMModifier(modalClassName, 'centered');
 
 export const containerConfirmClassName = getBEMElement(
     confirmClassName,
@@ -29,8 +26,11 @@ export const indicatorConfirmClassName = getBEMElement(
     confirmClassName,
     'indicator'
 );
-export const iconConfirmClassName = (type: ConfrimType | undefined) =>
-    !!type ? getBEMElement(confirmClassName, ConfirmState[type]) : '';
+
+export const iconConfirmClassName = (type?: ConfrimType | JSX.Element) =>
+    typeof type === 'string'
+        ? getBEMElement(confirmClassName, ConfirmState[type])
+        : '';
 
 export const contentConfirmClassName = getBEMElement(
     confirmClassName,

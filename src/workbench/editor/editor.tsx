@@ -14,6 +14,7 @@ export function Editor(props: IEditor & IEditorController) {
         groups = [],
         current,
         entry = <Welcome />,
+        editorOptions,
         onClickContextMenu,
         onCloseTab,
         onMoveTab,
@@ -41,6 +42,7 @@ export function Editor(props: IEditor & IEditorController) {
         if (groups.length === 1) {
             return (
                 <EditorGroup
+                    editorOptions={editorOptions}
                     currentGroup={current!}
                     {...groups[0]}
                     {...getEvents(groups[0].id!)}
@@ -60,6 +62,7 @@ export function Editor(props: IEditor & IEditorController) {
                             minSize="220px"
                         >
                             <EditorGroup
+                                editorOptions={editorOptions}
                                 currentGroup={current!}
                                 {...g}
                                 {...getEvents(g.id!)}

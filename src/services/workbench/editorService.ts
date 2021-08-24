@@ -11,6 +11,8 @@ import {
     EditorEvent,
     getEditorInitialActions,
     IEditorActionsProps,
+    IEditorOptions,
+    BuiltInEditorOptions,
 } from 'mo/model';
 import { searchById } from '../helper';
 import { editor as MonacoEditor, Uri } from 'mo/monaco';
@@ -18,11 +20,16 @@ import { IMenuItemProps } from 'mo/components';
 
 export interface IEditorService extends Component<IEditor> {
     /**
-     * Open a new tab in indicated group instance
+     * Open a new tab in a specific group instance
      * @param tab Tab data
      * @param groupId group ID
      */
     open<T = any>(tab: IEditorTab<T>, groupId?: number): void;
+    /**
+     * Get a Tab from a specific group via the Tab ID
+     * @param tabId
+     * @param group
+     */
     getTabById<T>(
         tabId: string,
         group: IEditorGroup
@@ -81,6 +88,15 @@ export interface IEditorService extends Component<IEditor> {
     updateActions(actions: IMenuItemProps[], groupId?: number): void;
     updateCurrentGroup(currentValues): void;
     /**
+     * Get the default editor options
+     */
+    getDefaultEditorOptions(): IEditorOptions;
+    /**
+     * Update the editor options
+     * @param options
+     */
+    updateEditorOptions(options: IEditorOptions): void;
+    /**
      * The Instance of Editor
      */
     readonly editorInstance: MonacoEditor.IStandaloneCodeEditor;
@@ -95,6 +111,22 @@ export class EditorService
         super();
         this.state = container.resolve(EditorModel);
         this.defaultActions = getEditorInitialActions();
+    }
+
+    public updateEditorOptions(options: IEditorOptions): void {
+        const editorOptions = Object.assign(
+            {},
+            this.state.editorOptions,
+            options
+        );
+        this.setState({
+            editorOptions,
+        });
+        this.editorInstance?.updateOptions(editorOptions);
+    }
+
+    public getDefaultEditorOptions(): IEditorOptions {
+        return Object.assign({}, BuiltInEditorOptions);
     }
 
     private disposeModel(tabs: IEditorTab | IEditorTab[]) {

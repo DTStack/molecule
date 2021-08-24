@@ -2,7 +2,7 @@ import { cleanup } from '@testing-library/react';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import {
-    BUILT_IN_THEME,
+    BuiltInColorTheme,
     ColorThemeService,
     DEFAULT_THEME_CLASS_NAME,
 } from '../theme/colorThemeService';
@@ -23,15 +23,15 @@ describe('The Color Theme Service', () => {
     });
 
     test('Should when initialize', () => {
-        const service = new ColorThemeService([], BUILT_IN_THEME);
-        expect(service.getColorTheme()).toEqual(BUILT_IN_THEME);
+        const service = new ColorThemeService();
+        expect(service.getColorTheme()).toEqual(BuiltInColorTheme);
     });
 
     test('Should have default theme', () => {
         const currentColorTheme = colorThemeService.getColorTheme();
         const colorThemes = colorThemeService.getThemes();
 
-        expect(currentColorTheme.id).toBe(BUILT_IN_THEME.id);
+        expect(currentColorTheme.id).toBe(BuiltInColorTheme.id);
         expect(colorThemes).toHaveLength(1);
     });
 
@@ -95,13 +95,13 @@ describe('The Color Theme Service', () => {
 
     test('Should update specific theme', () => {
         colorThemeService.updateTheme({
-            ...BUILT_IN_THEME,
+            ...BuiltInColorTheme,
             label: 'Dark Test',
         });
 
-        expect(colorThemeService.getThemeById(BUILT_IN_THEME.id)?.label).toBe(
-            'Dark Test'
-        );
+        expect(
+            colorThemeService.getThemeById(BuiltInColorTheme.id)?.label
+        ).toBe('Dark Test');
     });
 
     test('Should reload current theme if update the theme', () => {
@@ -110,7 +110,7 @@ describe('The Color Theme Service', () => {
         );
         expect(styleDom?.innerHTML).toContain('--editor-background: #1E1E1E');
         colorThemeService.updateTheme({
-            ...BUILT_IN_THEME,
+            ...BuiltInColorTheme,
             label: 'Dark Test',
             colors: {
                 'editor.background': '#000',
@@ -124,7 +124,7 @@ describe('The Color Theme Service', () => {
         const originalError = console.error;
         console.error = jest.fn();
         colorThemeService.updateTheme({
-            ...BUILT_IN_THEME,
+            ...BuiltInColorTheme,
             label: 'Dark Test',
             id: '',
         });

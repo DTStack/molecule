@@ -216,7 +216,7 @@ const EditorTree = (props: IOpenEditProps) => {
                                     file.id === current?.tab?.id;
                                 return (
                                     <div
-                                        title={`${file.data.path}/${file.name}`}
+                                        title={`${file.data?.path}/${file.name}`}
                                         className={classNames(
                                             editorTreeItemClassName,
                                             isActive &&

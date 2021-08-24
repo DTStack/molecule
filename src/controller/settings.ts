@@ -1,18 +1,15 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
+import { debounce } from 'lodash';
+
 import {
     EditorService,
     IEditorService,
     ISettingsService,
     SettingsService,
 } from 'mo/services';
-import {
-    SettingsEvent,
-    BuiltInSettingsTab,
-    initialEditorSetting,
-    initialWorkbenchSetting,
-} from 'mo/model/settings';
+import { SettingsEvent, BuiltInSettingsTab } from 'mo/model/settings';
 
 export interface ISettingsController {}
 
@@ -27,23 +24,25 @@ export class SettingsController
         super();
         this.editorService = container.resolve(EditorService);
         this.settingsService = container.resolve(SettingsService);
-
         this.initialize();
     }
+
+    /**
+     * Delay the each Settings change event 600 milliseconds,
+     * and then call the `update` and `emit` functions;
+     */
+    private onChangeSettings = debounce((args) => {
+        this.settingsService.update(args);
+        this.emit(SettingsEvent.OnChange, args);
+    }, 600);
 
     private initialize() {
         this.editorService.onUpdateTab((tab) => {
             if (tab.id === BuiltInSettingsTab.id) {
-                const config = this.settingsService.normalizeFlatObject(
+                const settingsValue = this.settingsService.normalizeFlatObject(
                     tab.data?.value || ''
                 );
-                config.editor = { ...initialEditorSetting, ...config.editor };
-                config.workbench = {
-                    ...initialWorkbenchSetting,
-                    ...config.workbench,
-                };
-                this.settingsService.update(config);
-                this.emit(SettingsEvent.OnChange, tab);
+                this.onChangeSettings(settingsValue);
             }
         });
     }

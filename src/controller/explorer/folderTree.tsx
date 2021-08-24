@@ -5,9 +5,7 @@ import { Controller } from 'mo/react/controller';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps } from 'mo/components/menu';
 import {
-    BASE_CONTEXT_MENU,
     ROOT_FOLDER_CONTEXT_MENU,
-    FILE_CONTEXT_MENU,
     NEW_FILE_COMMAND_ID,
     NEW_FOLDER_COMMAND_ID,
     RENAME_COMMAND_ID,
@@ -47,18 +45,21 @@ export class FolderTreeController
         const menus: IMenuItemProps[] = cloneDeep(
             this.folderTreeService.getState().folderTree?.contextMenu || []
         );
+
+        const fileContextMenu = this.folderTreeService.getFileContextMenu();
+        const folderContextMenu = this.folderTreeService.getFolderContextMenu();
         switch (treeNode.fileType) {
             case FileTypes.File: {
-                menus.unshift(...FILE_CONTEXT_MENU);
+                menus.unshift(...fileContextMenu);
                 break;
             }
             case FileTypes.Folder: {
-                menus.unshift(...BASE_CONTEXT_MENU);
+                menus.unshift(...folderContextMenu);
                 break;
             }
             case FileTypes.RootFolder: {
                 // In general, root folder have no contextMenu, because it can't be clicked
-                return BASE_CONTEXT_MENU.concat(
+                return folderContextMenu.concat(
                     ROOT_FOLDER_CONTEXT_MENU
                 ) as IMenuItemProps[];
             }

@@ -9,6 +9,8 @@ import {
     IFolderTree,
     IFolderTreeModel,
     IFolderTreeSubItem,
+    BASE_CONTEXT_MENU,
+    FILE_CONTEXT_MENU,
 } from 'mo/model/workbench/explorer/folderTree';
 import { TreeViewUtil } from '../../helper';
 import { ITreeNodeItemProps } from 'mo/components/tree';
@@ -39,6 +41,14 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     get(id: number): ITreeNodeItemProps | null;
     /**
+     * Get the context menus for file
+     */
+    getFileContextMenu: () => IMenuItemProps[];
+    /**
+     * Get the context menus for folder
+     */
+    getFolderContextMenu: () => IMenuItemProps[];
+    /**
      * Active specific node,
      * or unactive any node in folder tree
      * @param id
@@ -49,6 +59,15 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * @param entry
      */
     setEntry(entry: React.ReactNode): void;
+    /**
+     * Set the context menus for file
+     * @param menus
+     */
+    setFileContextMenu: (menus: IMenuItemProps[]) => void;
+    /**
+     * Set the context menus for folder
+     */
+    setFolderContextMenu: (menus: IMenuItemProps[]) => void;
     /**
      * Listen to event about clicking rename button
      * @param callback
@@ -89,6 +108,16 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * @param callback
      */
     onCreate(callback: (type: FileType, nodeId?: number) => void): void;
+    /**
+     * Listen to the click event about the context menu except for built-in menus
+     * @param callback
+     */
+    onContextMenu(
+        callback: (
+            treeNode: ITreeNodeItemProps,
+            contextMenu: IMenuItemProps
+        ) => void
+    ): void;
 }
 
 @singleton()
@@ -97,11 +126,29 @@ export class FolderTreeService
     implements IFolderTreeService {
     protected state: IFolderTree;
     private readonly explorerService: IExplorerService;
+    private fileContextMenu: IMenuItemProps[] = FILE_CONTEXT_MENU;
+    private folderContextMenu: IMenuItemProps[] = BASE_CONTEXT_MENU;
 
     constructor() {
         super();
         this.state = container.resolve(IFolderTreeModel);
         this.explorerService = container.resolve(ExplorerService);
+    }
+
+    public getFileContextMenu() {
+        return this.fileContextMenu;
+    }
+
+    public setFileContextMenu(menus: IMenuItemProps[]) {
+        this.fileContextMenu = menus;
+    }
+
+    public getFolderContextMenu() {
+        return this.folderContextMenu;
+    }
+
+    public setFolderContextMenu(menus: IMenuItemProps[]) {
+        this.folderContextMenu = menus;
     }
 
     /**
@@ -275,5 +322,14 @@ export class FolderTreeService
 
     public onCreate = (callback: (type: FileType, nodeId?: number) => void) => {
         this.subscribe(FolderTreeEvent.onCreate, callback);
+    };
+
+    public onContextMenu = (
+        callback: (
+            treeNode: ITreeNodeItemProps,
+            contextMenu: IMenuItemProps
+        ) => void
+    ) => {
+        this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
     };
 }

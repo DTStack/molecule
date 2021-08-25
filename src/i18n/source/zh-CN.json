@@ -61,6 +61,15 @@
         "editor.closeSaved": "关闭已保存",
         "editor.close": "关闭",
         "editor.actions.splitRight": "向右拆分编辑器",
-        "editor.showOpenEditors": "展示已打开的编辑器"
+        "editor.showOpenEditors": "展示已打开的编辑器",
+        "contextmenu.rename": "重命名",
+        "contextmenu.delete": "删除",
+        "contextmenu.newFile": "新建文件",
+        "contextmenu.newFolder": "新建文件夹",
+        "contextmenu.removeFolder": "删除文件夹",
+        "contextmenu.openToTheSide": "在侧边打开",
+        "contextmenu.addFolderToSpace": "将文件夹添加到工作区...",
+        "contextmenu.findInSpace": "在工作区中寻找...",
+        "contextmenu.download": "下载..."
     }
 }

@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps } from 'mo/components/menu';
 import { randomId } from 'mo/common/utils';
+import { localize } from 'mo/i18n/localize';
 
 export enum FileTypes {
     File = 'File',
@@ -50,49 +51,52 @@ export const DOWNLOAD_COMMAND_ID = 'explorer.download';
 export const COMMON_CONTEXT_MENU = [
     {
         id: RENAME_COMMAND_ID,
-        name: 'Rename',
+        name: localize('contextmenu.rename', 'Rename'),
     },
     {
         id: DELETE_COMMAND_ID,
-        name: 'Delete',
+        name: localize('contextmenu.delete', 'Delete'),
     },
 ];
 export const BASE_CONTEXT_MENU = [
     {
         id: NEW_FILE_COMMAND_ID,
-        name: 'New File',
+        name: localize('contextmenu.newFile', 'New File'),
     },
     {
         id: NEW_FOLDER_COMMAND_ID,
-        name: 'New Folder',
+        name: localize('contextmenu.newFolder', 'New Folder'),
     },
 ];
 
 export const ROOT_FOLDER_CONTEXT_MENU = [
     {
         id: REMOVE_COMMAND_ID,
-        name: 'Remove Folder',
+        name: localize('contextmenu.removeFolder', 'Remove Folder'),
     },
 ];
 export const FILE_CONTEXT_MENU = [
     {
         id: OPEN_TO_SIDE_COMMAND_ID,
-        name: 'Open to the Side',
+        name: localize('contextmenu.openToTheSide', 'Open to the Side'),
     },
 ];
 // Sample folder panel area ContextMenu
 export const FOLDER_PANEL_CONTEXT_MENU = [
     {
         id: NEW_FOLDER_COMMAND_ID,
-        name: 'Add Folder to Workspace...',
+        name: localize(
+            'contextmenu.addFolderToSpace',
+            'Add Folder to Workspace...'
+        ),
     },
     {
         id: FIND_IN_WORKSPACE_ID,
-        name: 'Find in Workspace...',
+        name: localize('contextmenu.findInSpace', 'Find in Workspace...'),
     },
     {
         id: DOWNLOAD_COMMAND_ID,
-        name: 'Download...',
+        name: localize('contextmenu.download', 'Download...'),
     },
 ];
 

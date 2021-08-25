@@ -37,7 +37,6 @@
     "license": "MIT",
     "dependencies": {
         "@dtinsight/dt-utils": "^1.0.3",
-        "@types/lodash": "^4.14.172",
         "@types/react": "^17.0.3",
         "@types/react-dom": "^17.0.3",
         "immutability-helper": "^3.1.1",

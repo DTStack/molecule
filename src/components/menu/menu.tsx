@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { classNames } from 'mo/common/className';
 import { MenuItem } from './menuItem';
 import { isHorizontal, ISubMenuProps, MenuMode, SubMenu } from './subMenu';
@@ -47,14 +47,12 @@ const setPositionForSubMenu = (
         const fontSize = getComputedStyle(subMenu).getPropertyValue(
             'font-size'
         );
-        const paddingTop = em2Px(0.5, parseInt(fontSize.replace('px', ''), 10));
+        const paddingTop = em2Px(0.5, parseInt(fontSize.replace(/px/g, '')));
         pos.y = pos.y - paddingTop;
     }
 
-    subMenu.style.cssText = `
-        left: ${pos.x}px;
-        top: ${pos.y}px;
-    `;
+    subMenu.style.top = `${pos.y}px`;
+    subMenu.style.left = `${pos.x}px`;
 };
 
 export function Menu(props: React.PropsWithChildren<IMenuProps>) {
@@ -146,7 +144,7 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         }
     }, delay);
 
-    const handleTriggerEvent = (e) => {
+    const handleTriggerEvent = (e: React.MouseEvent) => {
         e.preventDefault();
         e.persist();
         e.stopPropagation();

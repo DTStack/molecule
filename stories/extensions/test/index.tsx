@@ -30,9 +30,8 @@ export const ExtendTestPane: IExtension = {
 
         molecule.editor.setEntry(<Entry />);
 
-        molecule.settings.onChangeSettings(async (value) => {
-            const config = await molecule.settings.getSettings();
-            console.log('onChangeSettings:', config);
+        molecule.settings.onChangeSettings((value) => {
+            console.log('onChangeSettings:', value);
         });
 
         molecule.menuBar.onSelect((menuId: string) => {

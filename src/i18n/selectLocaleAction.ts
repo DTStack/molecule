@@ -92,9 +92,6 @@ export class SelectLocaleAction extends Action2 {
                 resolve();
             });
 
-            quickPick.onDidChangeActive((locales) =>
-                onSelect(locales[0], false)
-            );
             quickPick.onDidHide(() => {
                 if (!isCompleted) {
                     onSelect(current, true);

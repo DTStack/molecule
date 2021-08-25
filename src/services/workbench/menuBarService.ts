@@ -9,24 +9,20 @@ import {
 import { MenuBarEvent } from 'mo/model/workbench/menuBar';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
+import logger from 'mo/common/logger';
 
 export interface IMenuBarService extends Component<IMenuBar> {
     /**
-     * Initialize the MenuBar state
+     * Set the menus data
      * @param data
      */
-    initMenus(data: IMenuBarItem[]): void;
+    setMenus(data: IMenuBarItem[]): void;
     /**
-     * Add a new menu item
-     * @param menuItem menu item data
-     * @param parentId parent menu item id
+     * Append a new menu into the specific menu found by `parentId`
+     * @param menuItem the new menu
+     * @param parentId
      */
-    add(menuItem: IMenuBarItem, parentId: string): void;
-    /**
-     * Select an item in the menu
-     * @param menuId
-     */
-    onSelect(callback: (menuId: string) => void): void;
+    append(menuItem: IMenuBarItem, parentId: string): void;
     /**
      * Remove the specific menu item
      * @param menuId
@@ -36,130 +32,139 @@ export interface IMenuBarService extends Component<IMenuBar> {
      * Get the specific menu item
      * @param menuId
      */
-    getMenuById(menuId: string): IMenuBarItem;
+    getMenuById(menuId: string): IMenuBarItem | undefined;
     /**
      * Update the specific menu item data
      * @param menuId
      * @param menuItem
      */
     update(menuId: string, menuItem: IMenuBarItem): void;
+    /**
+     * Reset menu bar data;
+     */
+    reset(): void;
+    /**
+     * listen to the onSelect event in menu
+     * @param menuId
+     */
+    onSelect(callback: (menuId: string) => void): void;
 }
 @singleton()
 export class MenuBarService
     extends Component<IMenuBar>
     implements IMenuBarService {
     protected state: IMenuBar;
+    private sperator = '-';
 
     constructor() {
         super();
         this.state = container.resolve(MenuBarModel);
     }
 
-    public initMenus = (menuData: IMenuBarItem[]) => {
+    /**
+     * Get the specific menu reference type via menuId
+     * @param menuId
+     * @returns source is the target menu and path is the collections of indexs that contain the specific menu position
+     */
+    private getReferenceMenu(menuId: string) {
+        const { data } = this.state;
+        const stack: {
+            source: IMenuBarItem;
+            path: string;
+        }[] = data.map((i, index) => ({ source: i, path: `${index}` }));
+
+        let res: { source: IMenuBarItem; path: string } | undefined;
+        while (stack.length) {
+            const { source, path } = stack.shift()!;
+            if (source.id === menuId) {
+                res = { source, path };
+            } else {
+                stack.push(
+                    ...(source.data || []).map((s, index) => ({
+                        source: s,
+                        path: `${path}${this.sperator}${index}`,
+                    }))
+                );
+            }
+        }
+
+        return res;
+    }
+
+    public getMenuById(menuId: string) {
+        const res = this.getReferenceMenu(menuId);
+        return res ? cloneDeep(res.source) : res;
+    }
+
+    public setMenus = (menuData: IMenuBarItem[]) => {
         this.setState({
-            data: menuData,
+            data: cloneDeep(menuData),
         });
     };
 
-    public onSelect = (callback: (menuId: string) => void) => {
-        this.subscribe(MenuBarEvent.onSelect, callback);
-    };
-
-    public add(menuItem: IMenuBarItem, parentId: string) {
+    public append(menuItem: IMenuBarItem, parentId: string) {
         const { data } = this.state;
-        const parentMenu = this.getMenuById(parentId);
-        if (!parentMenu) return;
-        const deepData = cloneDeep(data);
-        for (const menu of deepData) {
-            this.addMenu(menu, menuItem, parentId!);
+        const menuInfo = this.getReferenceMenu(parentId);
+        if (!menuInfo) {
+            logger.error(`There is no menu found by ${parentId}`);
+            return;
         }
-        this.setState({ data: deepData });
-    }
-
-    public addMenu(
-        menu: IMenuBarItem,
-        menuItem: IMenuBarItem,
-        parentId: string
-    ): void {
-        if (menu?.id === parentId) {
-            const parentMenu = menu.data || [];
-            parentMenu.push(menuItem);
+        const { source: parentMenu } = menuInfo;
+        if (Array.isArray(parentMenu.data)) {
+            parentMenu.data.push(menuItem);
         } else {
-            if (menu?.data?.length) {
-                for (const item of menu?.data) {
-                    this.addMenu(item, menuItem, parentId);
-                }
-            }
+            parentMenu.data = [menuItem];
         }
+        const deepData = cloneDeep(data);
+        this.setState({ data: deepData });
     }
 
     public remove(menuId: string): void {
         const { data } = this.state;
-        const currentMenuItem = this.getMenuById(menuId);
-        if (!currentMenuItem) return;
-        const deepData = cloneDeep(data);
-        for (const menu of deepData) {
-            this.removeMenu(deepData, menu, menuId);
+        const menuInfo = this.getReferenceMenu(menuId);
+        if (!menuInfo) {
+            logger.error(`There is no menu found by ${menuId}`);
+            return;
         }
-        this.setState({ data: deepData });
-    }
+        const { path: paths } = menuInfo;
+        const path = paths.split(this.sperator);
+        // Remove the last one which is the position of the menu going to be removed
+        path.length = path.length - 1;
 
-    public removeMenu(
-        data: IMenuBarItem[],
-        menu: IMenuBarItem,
-        currentMenuId: string
-    ): void {
-        if (menu?.id === currentMenuId) {
-            const menuItem = data.find((menu) => menu.id === currentMenuId);
-            const idx = data.indexOf(menuItem!);
-            idx >= 0 && data.splice(idx, 1);
-        } else {
-            if (menu?.data?.length) {
-                for (const item of menu?.data) {
-                    this.removeMenu(menu?.data, item, currentMenuId);
-                }
-            }
-        }
+        const parentMenu = path.reduce(
+            (pre, cur) => {
+                const { data } = pre;
+                return data[cur];
+            },
+            { data }
+        );
+        const idx = parentMenu.data.findIndex((menu) => menu.id === menuId);
+        parentMenu.data.splice(idx, 1);
+        this.setState({
+            data: cloneDeep(data),
+        });
     }
 
     public update(menuId: string, menuItem: IMenuBarItem = {}): void {
         const { data } = this.state;
-        const currentMenuItem = this.getMenuById(menuId);
-        const deepData = cloneDeep(data);
-        for (const menu of deepData) {
-            this.updateMenu(menu, currentMenuItem!, menuItem);
+        const menuInfo = this.getReferenceMenu(menuId);
+        if (!menuInfo) {
+            logger.error(`There is no menu found by ${menuId}`);
+            return;
         }
+        const currentMenuItem = menuInfo.source;
+        Object.assign(currentMenuItem, menuItem);
+        const deepData = cloneDeep(data);
         this.setState({ data: deepData });
     }
 
-    public getMenuById(menuId: string): any {
-        const { data } = this.state;
-        const queue = cloneDeep(data);
-        while (queue.length) {
-            const menu = queue.shift();
-            if (menu?.id === menuId) return menu;
-            queue.push(...(menu?.data || []));
-        }
+    public reset() {
+        this.setState({
+            data: [],
+        });
     }
 
-    public updateMenu(
-        menu: IMenuBarItem,
-        currentMenuItem: IMenuBarItem,
-        menuItem: IMenuBarItem
-    ) {
-        if (menu?.id === currentMenuItem?.id) {
-            for (const key in menuItem) {
-                if (menuItem.hasOwnProperty(key)) {
-                    delete menu[key];
-                    menu[key] = menuItem[key];
-                }
-            }
-        } else {
-            if (menu?.data?.length) {
-                for (const item of menu?.data) {
-                    this.updateMenu(item, currentMenuItem, menuItem);
-                }
-            }
-        }
-    }
+    public onSelect = (callback: (menuId: string) => void) => {
+        this.subscribe(MenuBarEvent.onSelect, callback);
+    };
 }

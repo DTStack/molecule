@@ -23,11 +23,11 @@ export interface IMenuBarItem {
     id?: string;
     name?: React.ReactNode;
     icon?: string | JSX.Element;
-    data?: any;
+    data?: IMenuBarItem[];
     render?: () => React.ReactNode | JSX.Element;
 }
 export interface IMenuBar {
-    data?: IMenuBarItem[];
+    data: IMenuBarItem[];
 }
 
 export const MENU_FILE_OPEN = 'openFile';

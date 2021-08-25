@@ -232,7 +232,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
 
         const appendMenu = function () {
             const id = Math.random() * 10 + 1;
-            molecule.menuBar.add(
+            molecule.menuBar.append(
                 {
                     id: id + '',
                     name: 'menuBar' + id,

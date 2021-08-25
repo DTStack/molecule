@@ -56,7 +56,7 @@ export function NotificationPane(
             </header>
             <div className={notificationBodyClassName}>
                 {data.map((item) => (
-                    <p key={item.id}>
+                    <div key={item.id}>
                         {typeof item.render === 'function'
                             ? item.render(item)
                             : item.value}
@@ -66,7 +66,7 @@ export function NotificationPane(
                             className={notificationCloseClassName}
                             type="close"
                         />
-                    </p>
+                    </div>
                 ))}
             </div>
         </div>

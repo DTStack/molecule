@@ -42,7 +42,8 @@ $icon-size: 22px;
         padding: 0 8px;
         position: relative;
 
-        p {
+        > div {
+            padding-right: 30px;
             position: relative;
             text-align: left;
         }

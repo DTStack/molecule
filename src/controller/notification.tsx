@@ -31,6 +31,10 @@ export interface INotificationController {
         event: React.MouseEvent<Element, MouseEvent>,
         item: IActionBarItemProps<any>
     ): void;
+    /**
+     * Show or hide the Notification panel
+     */
+    showHideNotifications(): void;
 }
 
 @singleton()
@@ -55,11 +59,11 @@ export class NotificationController
 
     private _notificationPane: HTMLDivElement | undefined = undefined;
 
-    private showHideNotifications() {
+    public showHideNotifications() {
         if (!this._notificationPane) {
             this.renderNotificationPane();
         }
-        this.notificationService.toggleProblems();
+        this.notificationService.toggleNotification();
     }
 
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
@@ -72,7 +76,7 @@ export class NotificationController
     ) => {
         const action = item.id;
         if (action === NOTIFICATION_CLEAR_ALL.id) {
-            this.notificationService.toggleProblems();
+            this.notificationService.toggleNotification();
         } else if (action === NOTIFICATION_HIDE.id) {
             this.showHideNotifications();
         }

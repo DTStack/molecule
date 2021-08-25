@@ -102,7 +102,7 @@ describe('The Notification Service', () => {
     test('Should support to toggle notifications show or hide', () => {
         expect(notificationService.getState().showNotifications).toBeFalsy();
 
-        notificationService.toggleProblems();
+        notificationService.toggleNotification();
         expect(notificationService.getState().showNotifications).toBeTruthy();
     });
 });

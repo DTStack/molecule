@@ -1,0 +1,456 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test the Menu Component Match the List snapshot 1`] = `
+<ul
+  className="mo-menu mo-menu--vertical"
+  onClick={[Function]}
+  onContextMenu={[Function]}
+  onMouseOut={[Function]}
+  onMouseOver={[Function]}
+  style={
+    Object {
+      "width": 200,
+    }
+  }
+>
+  <li
+    className="mo-menu__item"
+    data-submenu={true}
+    id="File"
+  >
+    <a
+      className="mo-menu__content"
+    >
+      <span
+        className="mo-menu__label"
+      >
+        File
+      </span>
+      <span
+        className="mo-menu__indicator codicon codicon-chevron-right"
+      />
+    </a>
+    <ul
+      className="mo-menu mo-menu--vertical mo-sub-menu"
+      id="File"
+      style={
+        Object {
+          "opacity": "0",
+          "pointerEvents": "none",
+        }
+      }
+    >
+      <li
+        className="mo-menu__item"
+        id="New File"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="New File"
+          >
+            New File
+          </span>
+        </a>
+      </li>
+      <li
+        className="mo-menu__item"
+        id="OpenFile"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="Open"
+          >
+            Open
+          </span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li
+    className="mo-menu__item"
+    data-submenu={true}
+    id="Edit"
+  >
+    <a
+      className="mo-menu__content"
+    >
+      <span
+        className="mo-menu__label"
+      >
+        Edit
+      </span>
+      <span
+        className="mo-menu__indicator codicon codicon-chevron-right"
+      />
+    </a>
+    <ul
+      className="mo-menu mo-menu--vertical mo-sub-menu"
+      id="Edit"
+      style={
+        Object {
+          "opacity": "0",
+          "pointerEvents": "none",
+        }
+      }
+    >
+      <li
+        className="mo-menu__item"
+        id="Undo"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="Undo"
+          >
+            Undo
+          </span>
+        </a>
+      </li>
+      <li
+        className="mo-menu__item"
+        id="Redo"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="Redo"
+          >
+            Redo
+          </span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li
+    className="mo-menu__item"
+    data-submenu={true}
+    id="Selection"
+  >
+    <a
+      className="mo-menu__content"
+    >
+      <span
+        className="mo-menu__label"
+      >
+        Selection
+      </span>
+      <span
+        className="mo-menu__indicator codicon codicon-chevron-right"
+      />
+    </a>
+    <ul
+      className="mo-menu mo-menu--vertical mo-sub-menu"
+      id="Selection"
+      style={
+        Object {
+          "opacity": "0",
+          "pointerEvents": "none",
+        }
+      }
+    >
+      <li
+        className="mo-menu__item"
+        id="SelectAll"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="Select All"
+          >
+            Select All
+          </span>
+        </a>
+      </li>
+      <li
+        className="mo-menu__item"
+        id="CopyLineUp"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="Copy Line Up"
+          >
+            Copy Line Up
+          </span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li
+    className="mo-menu__item"
+    data-submenu={true}
+    id="View"
+  >
+    <a
+      className="mo-menu__content"
+    >
+      <span
+        className="mo-menu__label"
+      >
+        View
+      </span>
+      <span
+        className="mo-menu__indicator codicon codicon-chevron-right"
+      />
+    </a>
+    <ul
+      className="mo-menu mo-menu--vertical mo-sub-menu"
+      id="View"
+      style={
+        Object {
+          "opacity": "0",
+          "pointerEvents": "none",
+        }
+      }
+    >
+      <li
+        className="mo-menu__item"
+        id="Command Palette"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="Command Palette"
+          >
+            Command Palette
+          </span>
+        </a>
+      </li>
+      <li
+        className="mo-menu__item"
+        id="OpenView"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="Open View"
+          >
+            Open View
+          </span>
+        </a>
+      </li>
+      <li
+        className="mo-menu__item"
+        data-submenu={true}
+        id="Appearance"
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+          >
+            Appearance
+          </span>
+          <span
+            className="mo-menu__indicator codicon codicon-chevron-right"
+          />
+        </a>
+        <ul
+          className="mo-menu mo-menu--vertical mo-sub-menu"
+          id="Appearance"
+          style={
+            Object {
+              "opacity": "0",
+              "pointerEvents": "none",
+            }
+          }
+        >
+          <li
+            className="mo-menu__item"
+            id="ShowMenuBar"
+            onClick={[Function]}
+          >
+            <a
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__check codicon codicon-check"
+              />
+              <span
+                className="mo-menu__label"
+                title="Show Menu Bar"
+              >
+                Show Menu Bar
+              </span>
+            </a>
+          </li>
+          <li
+            className="mo-menu__item"
+            id="ShowSideBar"
+            onClick={[Function]}
+          >
+            <a
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__check codicon codicon-check"
+              />
+              <span
+                className="mo-menu__label"
+                title="Show Side Bar"
+              >
+                Show Side Bar
+              </span>
+            </a>
+          </li>
+          <li
+            className="mo-menu__item"
+            id="ShowStatusBar"
+            onClick={[Function]}
+          >
+            <a
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__check codicon codicon-check"
+              />
+              <span
+                className="mo-menu__label"
+                title="Show Status Bar"
+              >
+                Show Status Bar
+              </span>
+            </a>
+          </li>
+          <li
+            className="mo-menu__item"
+            id="ShowActivityBar"
+            onClick={[Function]}
+          >
+            <a
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__check codicon codicon-check"
+              />
+              <span
+                className="mo-menu__label"
+                title="Show Activity Bar"
+              >
+                Show Activity Bar
+              </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li
+    className="mo-menu__item"
+    data-submenu={true}
+    id="Run"
+  >
+    <a
+      className="mo-menu__content"
+    >
+      <span
+        className="mo-menu__label"
+      >
+        Run
+      </span>
+      <span
+        className="mo-menu__indicator codicon codicon-chevron-right"
+      />
+    </a>
+    <ul
+      className="mo-menu mo-menu--vertical mo-sub-menu"
+      id="Run"
+      style={
+        Object {
+          "opacity": "0",
+          "pointerEvents": "none",
+        }
+      }
+    >
+      <li
+        className="mo-menu__item"
+        id="RunTask"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="Run Task"
+          >
+            Run Task
+          </span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li
+    className="mo-menu__item"
+    data-submenu={true}
+    id="Help"
+  >
+    <a
+      className="mo-menu__content"
+    >
+      <span
+        className="mo-menu__label"
+      >
+        Help
+      </span>
+      <span
+        className="mo-menu__indicator codicon codicon-chevron-right"
+      />
+    </a>
+    <ul
+      className="mo-menu mo-menu--vertical mo-sub-menu"
+      id="Help"
+      style={
+        Object {
+          "opacity": "0",
+          "pointerEvents": "none",
+        }
+      }
+    >
+      <li
+        className="mo-menu__item"
+        id="About"
+        onClick={[Function]}
+      >
+        <a
+          className="mo-menu__content"
+        >
+          <span
+            className="mo-menu__label"
+            title="About"
+          >
+            About
+          </span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>
+`;

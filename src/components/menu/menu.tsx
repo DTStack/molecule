@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { classNames } from 'mo/common/className';
 import { MenuItem } from './menuItem';
 import { isHorizontal, ISubMenuProps, MenuMode, SubMenu } from './subMenu';
@@ -47,14 +47,12 @@ const setPositionForSubMenu = (
         const fontSize = getComputedStyle(subMenu).getPropertyValue(
             'font-size'
         );
-        const paddingTop = em2Px(0.5, parseInt(fontSize.replace('px', ''), 10));
+        const paddingTop = em2Px(0.5, parseInt(fontSize.replace(/px/g, '')));
         pos.y = pos.y - paddingTop;
     }
 
-    subMenu.style.cssText = `
-        left: ${pos.x}px;
-        top: ${pos.y}px;
-    `;
+    subMenu.style.top = `${pos.y}px`;
+    subMenu.style.left = `${pos.x}px`;
 };
 
 export function Menu(props: React.PropsWithChildren<IMenuProps>) {
@@ -68,12 +66,11 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         title,
         ...custom
     } = props;
-    const menuRef = React.useRef<HTMLUListElement>(null);
-    const isMouseInMenu = React.useRef(false);
+    const menuRef = useRef<HTMLUListElement>(null);
+    const isMouseInMenu = useRef(false);
     let content = cloneReactChildren(children, { onClick });
     // Only when the trigger is hover need to set the delay
     const delay = trigger === 'hover' ? 200 : 0;
-
     const modeClassName =
         mode === MenuMode.Horizontal
             ? horizontalMenuClassName
@@ -121,6 +118,7 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
 
     const detectDomElementByEvent = debounce((e) => {
         // ensure only when mouse in menu can the submenu toggle visibility
+
         if (isMouseInMenu.current) {
             const doms = document.elementsFromPoint(
                 e.pageX,
@@ -146,7 +144,7 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         }
     }, delay);
 
-    const handleTriggerEvent = (e) => {
+    const handleTriggerEvent = (e: React.MouseEvent) => {
         e.preventDefault();
         e.persist();
         e.stopPropagation();
@@ -162,12 +160,12 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         // sub menu do not listen any event
         if (claNames?.includes(defaultSubMenuClassName)) return {};
         return {
-            onContextMenu: (e) => {
+            onContextMenu: (e: React.MouseEvent) => {
                 e.preventDefault();
                 e.persist();
                 e.stopPropagation();
             },
-            onClick: (e) => {
+            onClick: (e: React.MouseEvent) => {
                 e.preventDefault();
                 e.persist();
                 e.stopPropagation();
@@ -177,13 +175,13 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         };
     };
 
-    const hideAfterLeftWindow = React.useCallback(() => {
+    const hideAfterLeftWindow = useCallback(() => {
         if (document.hidden) {
             initialMenuStyle();
         }
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         window.addEventListener('contextmenu', initialMenuStyle);
         window.addEventListener('click', initialMenuStyle);
         window.addEventListener('visibilitychange', hideAfterLeftWindow);

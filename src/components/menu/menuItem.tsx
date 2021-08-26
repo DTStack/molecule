@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { classNames } from 'mo/common/className';
 import { Icon } from '../icon';
 import {
@@ -19,8 +19,8 @@ export interface IMenuItemProps extends Omit<HTMLElementProps, 'title'> {
     /**
      * Item Name
      */
-    name?: React.ReactNode;
-    title?: React.ReactNode;
+    name?: string;
+    title?: string;
     disabled?: boolean;
     /**
      * The description of keybinding
@@ -71,7 +71,10 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
         >
             <a className={menuContentClassName}>
                 <Icon type={icon} className={checkClassName} />
-                <span className={labelClassName} title={name as string}>
+                <span
+                    className={labelClassName}
+                    title={typeof name === 'string' ? name : ''}
+                >
                     {render ? render(props) : children}
                 </span>
                 {keybinding ? (

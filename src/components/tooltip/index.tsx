@@ -1,5 +1,5 @@
 import React from 'react';
-import { default as RcTooltip } from 'rc-tooltip';
+import RcTooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap.css';
 import type { TooltipProps } from 'rc-tooltip/lib/Tooltip';
 import { classNames, getFontInMac } from 'mo/common/className';

@@ -37,5 +37,6 @@ module.exports = {
         'no-invalid-this': 0,
         'spaced-comment': 0,
         'react/display-name': 0,
+        'react/prop-types': 0,
     },
 };

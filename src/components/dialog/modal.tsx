@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import Dialog from 'rc-dialog';
 import { IDialogPropTypes } from 'rc-dialog/lib/IDialogPropTypes';
 
+import { classNames } from 'mo/common/className';
 import {
-    classNames,
-    prefixClaName,
-    getBEMElement,
-    getBEMModifier,
-} from 'mo/common/className';
+    modalClassName,
+    closeDialogDescriptorClassName,
+    wrapDialogClassName,
+} from './base';
+import { ConfrimType } from './';
 import { Icon } from 'mo/components/icon';
 import { Button, IButtonProps } from 'mo/components/button';
+
 export interface IModalProps extends IDialogPropTypes {
     onOk?: (e: React.MouseEvent<HTMLElement>) => void;
     onCancel?: (e: React.SyntheticEvent<Element, Event>) => void;
@@ -31,11 +33,10 @@ export interface IModalFuncProps extends IDialogPropTypes {
     cancelButtonProps?: IButtonProps;
     centered?: boolean;
     okCancel?: boolean;
-    type?: string;
+    type?: ConfrimType;
 }
 
 export const destroyFns: Array<() => void> = [];
-export const modalClassName = prefixClaName('modal');
 
 let mousePosition: any;
 
@@ -49,10 +50,8 @@ const getClickPosition = (e: MouseEvent) => {
     }, 100);
 };
 
-const closeClassName = getBEMElement(modalClassName, 'close');
-const closeDescriptorClassName = getBEMModifier(`${closeClassName}`, 'x');
 const closeIconToRender = (
-    <span className={closeDescriptorClassName}>
+    <span className={closeDialogDescriptorClassName}>
         <Icon type="close" />
     </span>
 );
@@ -96,7 +95,7 @@ export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
     } = props;
 
     const wrapClassNameExtended = classNames(wrapClassName, {
-        [getBEMModifier(`${modalClassName}`, 'centered')]: !!centered,
+        [wrapDialogClassName]: !!centered,
     });
 
     const renderFooter = () => {
@@ -113,6 +112,7 @@ export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
             </>
         );
     };
+
     return (
         <Dialog
             {...restProps}

@@ -454,3 +454,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
   </li>
 </ul>
 `;
+
+exports[`Test the Menu Component Match the divider snapshot 1`] = `
+<li
+  className="mo-menu__item mo-menu__item--disabled"
+  role="separator"
+>
+  <a
+    className="mo-menu__divider"
+  />
+</li>
+`;

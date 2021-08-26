@@ -77,6 +77,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         onDropTree,
         onClickContextMenu,
         onRightClick,
+        onLoadData,
         createTreeNode,
         ...restProps
     } = props;
@@ -229,6 +230,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                     onSelectNode={onSelectFile}
                     onRightClick={handleRightClick}
                     renderTitle={renderTitle}
+                    onLoadData={onLoadData}
                     {...restProps}
                 />
             </div>

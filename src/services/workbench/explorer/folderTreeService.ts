@@ -17,6 +17,7 @@ import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
 import { SAMPLE_FOLDER_PANEL_ID } from 'mo/model';
 import { IMenuItemProps } from 'mo/components';
+import type { LoadEventDaata } from 'mo/controller';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     /**
@@ -118,6 +119,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
             contextMenu: IMenuItemProps
         ) => void
     ): void;
+    onLoadData(callback: (treeNode: LoadEventDaata) => Promise<void>): void;
 }
 
 @singleton()
@@ -331,5 +333,11 @@ export class FolderTreeService
         ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
+    };
+
+    public onLoadData = (
+        callback: (treeNode: LoadEventDaata) => Promise<void>
+    ) => {
+        this.subscribe(FolderTreeEvent.onLoadData, callback);
     };
 }

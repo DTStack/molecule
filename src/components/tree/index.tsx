@@ -2,8 +2,9 @@ import * as React from 'react';
 import RcTree, { TreeNode as RcTreeNode, TreeProps } from 'rc-tree';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
-import { DataNode } from 'rc-tree/lib/interface';
+import type { DataNode } from 'rc-tree/lib/interface';
 import { FileTypes } from 'mo/model';
+import type { LoadEventDaata } from 'mo/controller';
 
 export interface ITreeNodeItemProps {
     disabled?: boolean;
@@ -26,6 +27,7 @@ export interface ITreeProps extends Partial<TreeProps> {
         isLeaf: boolean
     ) => JSX.Element | string;
     onDropTree?(treeNode: ITreeNodeItemProps[]): void;
+    onLoadData?: (treeNode: LoadEventDaata) => Promise<void>;
 }
 
 const TreeView = ({
@@ -36,6 +38,7 @@ const TreeView = ({
     onRightClick,
     renderTitle, // custom title
     onSelectNode,
+    onLoadData,
     ...restProps
 }: ITreeProps) => {
     const [selectedKeys, setKeys] = React.useState<React.Key[]>([]);
@@ -220,6 +223,7 @@ const TreeView = ({
                     switcherIcon={<Icon type="chevron-right" />}
                     onSelect={handleSelect}
                     onRightClick={handleRightClick}
+                    loadData={onLoadData}
                     {...restProps}
                 >
                     {renderTreeNodes(data, 0)}

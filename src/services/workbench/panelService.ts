@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { editor as MonacoEditor } from 'monaco-editor';
+import cloneDeep from 'lodash/cloneDeep';
 import { Component } from 'mo/react';
 import {
     builtInOutputPanel,
@@ -18,10 +19,20 @@ import {
 import { searchById } from '../helper';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { LayoutService } from 'mo/services';
+import logger from 'mo/common/logger';
 
 export interface IPanelService extends Component<IPanel> {
     /**
+     * The editorInstance of Output
+     */
+    readonly outputEditorInstance:
+        | MonacoEditor.IStandaloneCodeEditor
+        | undefined;
+    /**
      * Set the current active panel
+     *
+     * This method will log error when couldn't find target panel in state data.
+     * So if you want to add a panel and meanwhile active it, please use the `open` method
      * @param id target panel id
      */
     setActive(id: string): void;
@@ -72,25 +83,22 @@ export interface IPanelService extends Component<IPanel> {
      */
     onTabClose(callback: (panelId: string) => void): void;
     /**
-     * The editorInstance of Output
+     * Get the value of Output Panel
      */
-    readonly outputEditorInstance:
-        | MonacoEditor.IStandaloneCodeEditor
-        | undefined;
+    getOutputValue(): string;
     /**
      * Append the content into Output panel
      * @param content
      */
     appendOutput(content: string): void;
     /**
-     * Update the Output panel item
-     * @param panel
-     */
-    updateOutput(panel: IPanelItem): IPanelItem | undefined;
-    /**
      * Clean the Output content
      */
     cleanOutput(): void;
+    /**
+     * Reset data in state
+     */
+    reset(): void;
 }
 
 @singleton()
@@ -104,8 +112,8 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         this.layoutService = container.resolve(LayoutService);
     }
 
-    public setActive(id: string): void {
-        this.open({ id });
+    private updateOutput(data: IPanelItem<any>): IPanelItem | undefined {
+        return this.update(Object.assign(builtInOutputPanel(), data));
     }
 
     public get outputEditorInstance() {
@@ -113,6 +121,17 @@ export class PanelService extends Component<IPanel> implements IPanelService {
             searchById(PANEL_OUTPUT)
         );
         return outputPane?.outputEditorInstance;
+    }
+
+    public setActive(id: string): void {
+        const panel = this.getPanel(id);
+        if (panel) {
+            this.open(panel);
+        } else {
+            logger.error(
+                `There is no panel found in data via ${id}. If you want to open a brand-new panel, please use the open method`
+            );
+        }
     }
 
     public toggleMaximize(): void {
@@ -131,27 +150,28 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     }
 
     public open(data: IPanelItem<any>): void {
-        let current = this.getPanel(data.id);
-        if (!current) {
-            this.add(data);
-            current = data;
-        }
+        const { data: stateData = [] } = this.state;
+        const cloneData = cloneDeep(data);
+        const index = stateData.findIndex(searchById(cloneData.id));
+        const current = index === -1 ? cloneData : stateData[index];
+
         this.setState({
-            current: current,
+            current,
         });
     }
 
     public getPanel(id: string): IPanelItem<any> | undefined {
         const { data = [] } = this.state;
-        return data.find(searchById(id));
+        return cloneDeep(data.find(searchById(id)));
     }
 
-    public updateOutput(data: IPanelItem<any>): IPanelItem | undefined {
-        return this.update(Object.assign(builtInOutputPanel(), data));
+    public getOutputValue() {
+        const outputPanel = this.getPanel(PANEL_OUTPUT);
+        return outputPanel?.data || '';
     }
 
     public appendOutput(content: string): void {
-        const outputValue = this.outputEditorInstance?.getValue();
+        const outputValue = this.getOutputValue();
         this.updateOutput({
             id: PANEL_OUTPUT,
             data: outputValue + content,
@@ -165,10 +185,11 @@ export class PanelService extends Component<IPanel> implements IPanelService {
 
     public add(data: IPanelItem | IPanelItem[]) {
         let original = this.state.data || [];
-        if (Array.isArray(data)) {
-            original = original.concat(data);
+        const cloneData = cloneDeep(data);
+        if (Array.isArray(cloneData)) {
+            original = original.concat(cloneData);
         } else {
-            original.push(data);
+            original.push(cloneData);
         }
         this.setState({
             data: original,
@@ -184,8 +205,10 @@ export class PanelService extends Component<IPanel> implements IPanelService {
                 data: [...panes],
             });
             return panes[targetIndex];
+        } else {
+            logger.error(`There is no panel found in data via the ${data.id}`);
+            return undefined;
         }
-        return undefined;
     }
 
     public remove(id: string): IPanelItem | undefined {
@@ -198,8 +221,19 @@ export class PanelService extends Component<IPanel> implements IPanelService {
                 data: data,
             });
             return result[0];
+        } else {
+            logger.error(`There is no panel found in data via the ${id}`);
+            return undefined;
         }
-        return undefined;
+    }
+
+    public reset(): void {
+        this.setState({
+            data: [],
+            current: null,
+            toolbox: [],
+        });
+        this.cleanOutput();
     }
 
     public onTabChange(callback: (key: string) => void) {

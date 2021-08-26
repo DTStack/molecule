@@ -27,7 +27,7 @@ export const indicatorConfirmClassName = getBEMElement(
     'indicator'
 );
 
-export const iconConfirmClassName = (type?: ConfrimType | JSX.Element) =>
+export const iconConfirmClassName = (type?: ConfrimType) =>
     typeof type === 'string'
         ? getBEMElement(confirmClassName, ConfirmState[type])
         : '';

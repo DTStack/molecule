@@ -33,7 +33,7 @@ export interface IModalFuncProps extends IDialogPropTypes {
     cancelButtonProps?: IButtonProps;
     centered?: boolean;
     okCancel?: boolean;
-    type?: ConfrimType | JSX.Element;
+    type?: ConfrimType;
 }
 
 export const destroyFns: Array<() => void> = [];

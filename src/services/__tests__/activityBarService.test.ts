@@ -19,7 +19,7 @@ const mockMenuData: IMenuItemProps = {
 /**
  * Test the action whether log error
  */
-function logErrorFn(action: () => void) {
+export function logErrorFn(action: () => void) {
     const originalLog = logger.error;
     logger.error = jest.fn();
 

@@ -4,7 +4,7 @@ import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
 import type { DataNode } from 'rc-tree/lib/interface';
 import { FileTypes } from 'mo/model';
-import type { LoadEventDaata } from 'mo/controller';
+import type { LoadEventData } from 'mo/controller';
 
 export interface ITreeNodeItemProps {
     disabled?: boolean;
@@ -27,7 +27,7 @@ export interface ITreeProps extends Partial<TreeProps> {
         isLeaf: boolean
     ) => JSX.Element | string;
     onDropTree?(treeNode: ITreeNodeItemProps[]): void;
-    onLoadData?: (treeNode: LoadEventDaata) => Promise<void>;
+    onLoadData?: (treeNode: LoadEventData) => Promise<void>;
 }
 
 const TreeView = ({

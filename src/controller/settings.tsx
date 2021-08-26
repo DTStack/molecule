@@ -13,9 +13,9 @@ import {
 import { SettingsEvent, BuiltInSettingsTab } from 'mo/model/settings';
 import { ILocale, ILocaleService, LocaleService } from 'mo/i18n';
 import { INotificationService, NotificationService } from 'mo/services';
-import { Button } from 'mo/components';
 import { NotificationController } from '.';
 import { INotificationController } from 'mo/workbench';
+import { LocaleNotification } from 'mo/workbench/notification/notificationPane/localeNotification';
 
 export interface ISettingsController {}
 
@@ -63,38 +63,14 @@ export class SettingsController
     }
 
     private notifyLocaleChanged(prev: ILocale, next: ILocale) {
-        const reload = () => {
-            window.location.reload();
-        };
         const notify = {
-            value: '',
-            render() {
-                return (
-                    <div
-                        style={{
-                            lineHeight: '1.5',
-                            width: 350,
-                            textAlign: 'left',
-                        }}
-                    >
-                        <p>
-                            The current locale has changed to {next.id}, click
-                            the button to reload the Page and applying the
-                            changes.
-                        </p>
-                        <p style={{ fontWeight: 'bold' }}>
-                            Notice: Reload the Page could lose the data, Please
-                            confirm you have saved before.
-                        </p>
-                        <Button style={{ width: 150 }} onClick={reload}>
-                            Confirm Reload
-                        </Button>
-                    </div>
-                );
+            value: next,
+            render(value) {
+                return <LocaleNotification key={next.id} locale={next.id} />;
             },
         };
         this.notificationService.add([notify]);
-        this.notificationController.showHideNotifications();
+        this.notificationController.toggleNotifications();
     }
 }
 

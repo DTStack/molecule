@@ -11,8 +11,6 @@ import {
     NOTIFICATION_CLEAR_ALL,
     NOTIFICATION_HIDE,
 } from 'mo/model/notification';
-import { select } from 'mo/common/dom';
-import { ID_APP } from 'mo/common/id';
 import {
     NotificationPane,
     NotificationStatusBarView,
@@ -22,6 +20,8 @@ import {
     StatusBarService,
     INotificationService,
     NotificationService,
+    ILayoutService,
+    LayoutService,
 } from 'mo/services';
 
 export interface INotificationController {
@@ -32,9 +32,9 @@ export interface INotificationController {
         item: IActionBarItemProps<any>
     ): void;
     /**
-     * Show or hide the Notification panel
+     * Toggle the Notifications visibility
      */
-    showHideNotifications(): void;
+    toggleNotifications(): void;
 }
 
 @singleton()
@@ -43,11 +43,13 @@ export class NotificationController
     implements INotificationController {
     private readonly notificationService: INotificationService;
     private readonly statusBarService: IStatusBarService;
+    private readonly layoutService: ILayoutService;
 
     constructor() {
         super();
         this.notificationService = container.resolve(NotificationService);
         this.statusBarService = container.resolve(StatusBarService);
+        this.layoutService = container.resolve(LayoutService);
         this.init();
     }
 
@@ -59,7 +61,7 @@ export class NotificationController
 
     private _notificationPane: HTMLDivElement | undefined = undefined;
 
-    public showHideNotifications() {
+    public toggleNotifications() {
         if (!this._notificationPane) {
             this.renderNotificationPane();
         }
@@ -67,7 +69,7 @@ export class NotificationController
     }
 
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
-        this.showHideNotifications();
+        this.toggleNotifications();
     };
 
     public onActionBarClick = (
@@ -78,7 +80,7 @@ export class NotificationController
         if (action === NOTIFICATION_CLEAR_ALL.id) {
             this.notificationService.toggleNotification();
         } else if (action === NOTIFICATION_HIDE.id) {
-            this.showHideNotifications();
+            this.toggleNotifications();
         }
     };
 
@@ -100,7 +102,7 @@ export class NotificationController
             this.notificationService,
             NotificationPane
         );
-        const root = select('#' + ID_APP);
+        const root = this.layoutService.container;
         const container = document.createElement('div');
         root?.appendChild(container);
         ReactDOM.render(

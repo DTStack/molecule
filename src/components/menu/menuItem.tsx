@@ -19,8 +19,8 @@ export interface IMenuItemProps extends Omit<HTMLElementProps, 'title'> {
     /**
      * Item Name
      */
-    name?: React.ReactNode | string;
-    title?: React.ReactNode | string;
+    name?: string;
+    title?: string;
     disabled?: boolean;
     /**
      * The description of keybinding

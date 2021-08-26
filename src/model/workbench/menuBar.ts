@@ -8,7 +8,8 @@ import {
     ACTION_QUICK_REDO,
     ACTION_QUICK_CREATE_FILE,
 } from 'mo/model/keybinding';
-
+import { ISubMenuProps } from 'mo/components/menu/subMenu';
+import { IMenuItemProps } from 'mo/components/menu';
 /**
  * The activity bar event definition
  */
@@ -21,11 +22,12 @@ export enum MenuBarEvent {
 
 export interface IMenuBarItem {
     id?: string;
-    name?: React.ReactNode;
+    name?: string;
     icon?: string | JSX.Element;
-    data?: IMenuBarItem[];
-    render?: () => React.ReactNode | JSX.Element;
+    data?: ISubMenuProps[];
+    render?: (data: IMenuItemProps) => React.ReactNode | JSX.Element;
 }
+
 export interface IMenuBar {
     data: IMenuBarItem[];
 }

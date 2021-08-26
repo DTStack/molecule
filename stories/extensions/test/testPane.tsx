@@ -4,6 +4,7 @@ import molecule from 'mo';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
+import { ACTION_QUICK_SELECT_ALL } from 'mo/model/keybinding';
 import { FileTypes, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
 import { localize } from 'mo/i18n/localize';
@@ -243,11 +244,11 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         };
 
         const removeMenu = function () {
-            molecule.menuBar.remove('SelectAll');
+            molecule.menuBar.remove(ACTION_QUICK_SELECT_ALL);
         };
 
         const updateMenu = function () {
-            molecule.menuBar.update('SelectAll', { icon: 'check' });
+            molecule.menuBar.update(ACTION_QUICK_SELECT_ALL, { icon: 'check' });
         };
 
         const addSettingsItem = function () {

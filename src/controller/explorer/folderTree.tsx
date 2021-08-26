@@ -16,6 +16,11 @@ import {
     FileType,
 } from 'mo/model';
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
+import type { EventDataNode } from 'rc-tree/lib/interface';
+
+export interface LoadEventData extends EventDataNode {
+    data?: ITreeNodeItemProps;
+}
 
 export interface IFolderTreeController {
     readonly createTreeNode: (type: FileType) => void;
@@ -26,6 +31,7 @@ export interface IFolderTreeController {
     readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
     readonly onSelectFile: (file: ITreeNodeItemProps) => void;
     readonly onDropTree?: (treeNode: ITreeNodeItemProps[]) => void;
+    readonly onLoadData?: (treeNode: LoadEventData) => Promise<void>;
 
     onRightClick(treeNode: ITreeNodeItemProps): IMenuItemProps[];
 }
@@ -147,5 +153,9 @@ export class FolderTreeController
 
     private onDelete = (id: number) => {
         this.emit(FolderTreeEvent.onDelete, id);
+    };
+
+    public onLoadData = async (treeNode: LoadEventData) => {
+        await this.emit(FolderTreeEvent.onLoadData, treeNode);
     };
 }

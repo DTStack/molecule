@@ -21,6 +21,7 @@ export enum FolderTreeEvent {
     onRightClick = 'folderTree.onRightClick',
     onContextMenuClick = 'folderTree.onContextMenuClick',
     onCreate = 'folderTree.onCreate',
+    onLoadData = 'folderTree.onLoadData',
 }
 
 export interface IFolderInputEvent {

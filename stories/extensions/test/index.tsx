@@ -130,23 +130,23 @@ export const ExtendTestPane: IExtension = {
             molecule.search.setResult(
                 value
                     ? [
-                        {
-                            key: 'molecule',
-                            name: 'molecule.test.js',
-                            isLeaf: false,
-                            children,
-                        },
-                    ]
+                          {
+                              key: 'molecule',
+                              name: 'molecule.test.js',
+                              isLeaf: false,
+                              children,
+                          },
+                      ]
                     : []
             );
 
             molecule.search.setValidateInfo(
                 value
                     ? {
-                        type: 'warning',
-                        text:
-                            '结果集仅包含所有匹配项的子集，请使你的搜索更加精准',
-                    }
+                          type: 'warning',
+                          text:
+                              '结果集仅包含所有匹配项的子集，请使你的搜索更加精准',
+                      }
                     : ''
             );
         });

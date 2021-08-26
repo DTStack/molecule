@@ -1,20 +1,15 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
+import { debounce } from 'lodash';
+
 import {
     EditorService,
     IEditorService,
-    IPanelService,
     ISettingsService,
-    PanelService,
     SettingsService,
 } from 'mo/services';
-import {
-    SettingsEvent,
-    BuiltInSettingsTab,
-    initialEditorSetting,
-    initialWorkbenchSetting,
-} from 'mo/model/settings';
+import { SettingsEvent, BuiltInSettingsTab } from 'mo/model/settings';
 
 export interface ISettingsController {}
 
@@ -22,39 +17,35 @@ export interface ISettingsController {}
 export class SettingsController
     extends Controller
     implements ISettingsController {
-    private readonly panelService: IPanelService;
     private readonly editorService: IEditorService;
     private readonly settingsService: ISettingsService;
 
     constructor() {
         super();
-        this.panelService = container.resolve(PanelService);
         this.editorService = container.resolve(EditorService);
         this.settingsService = container.resolve(SettingsService);
-
-        this.initial();
+        this.initialize();
     }
 
-    private initial() {
+    /**
+     * Delay the each Settings change event 600 milliseconds,
+     * and then call the `update` and `emit` functions;
+     */
+    private onChangeSettings = debounce((args) => {
+        this.settingsService.update(args);
+        this.emit(SettingsEvent.OnChange, args);
+    }, 600);
+
+    private initialize() {
         this.editorService.onUpdateTab((tab) => {
             if (tab.id === BuiltInSettingsTab.id) {
-                this.emit(SettingsEvent.OnChange, tab);
-                const config = this.settingsService.normalizeFlatObject(
+                const settingsValue = this.settingsService.normalizeFlatObject(
                     tab.data?.value || ''
                 );
-                config.editor = { ...initialEditorSetting, ...config.editor };
-                config.workbench = {
-                    ...initialWorkbenchSetting,
-                    ...config.workbench,
-                };
-                this.settingsService.update(config);
+                this.onChangeSettings(settingsValue);
             }
         });
     }
-
-    public readonly onClick = (event: React.MouseEvent) => {
-        console.log('onClick:', this.panelService);
-    };
 }
 
 // Register singleton

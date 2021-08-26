@@ -1,8 +1,9 @@
-import { ISettings } from 'mo/model/settings';
+import { BuiltInZhCN } from 'mo/i18n/localization';
+import { BuiltInEditorOptions } from 'mo/model';
+import { ISettings, SettingsEvent } from 'mo/model/settings';
 import 'reflect-metadata';
-import { container } from 'tsyringe';
 import { SettingsService } from '../settingsService';
-// import { EditorService } from '../workbench/editorService';
+import { BuiltInColorTheme } from '../theme/colorThemeService';
 
 const mockData = {
     project: {
@@ -15,40 +16,86 @@ type TestSetting = typeof mockData & ISettings;
 
 jest.setTimeout(60000);
 
-describe('Test SettingsService', () => {
-    const settingsService = container.resolve(SettingsService);
-    // const editorService = container.resolve(EditorService);
-
-    test('getConfiguration(): ISettings', () => {
-        const config = settingsService.getConfiguration();
-        expect(config.workbench).toBeDefined();
-        expect(config.editor).toBeDefined();
+describe('Test the SettingsService', () => {
+    let settingsService = new SettingsService();
+    afterEach(() => {
+        settingsService = new SettingsService();
     });
 
-    test('append(configuration: IConfiguration): void', () => {
+    test('Initialized the built-in Settings', () => {
+        const config = settingsService.getSettings();
+        expect(config.colorTheme).toEqual(BuiltInColorTheme.id);
+        expect(config.editor).toEqual(BuiltInEditorOptions);
+        expect(config.locale).toEqual(BuiltInZhCN.id);
+    });
+
+    test('Append a new setting item', () => {
         settingsService.append(mockData);
-        const config = settingsService.getConfiguration() as TestSetting;
-        expect(config.project).toBeDefined();
+        const config = settingsService.getSettings() as TestSetting;
+        expect(config.project).toEqual(mockData.project);
     });
 
-    test('update(configuration: IConfiguration): void', () => {
-        const expectedName = 'test111';
-        settingsService.update({
-            project: {
-                name: expectedName,
-            },
+    test('Listen to the Settings changed', () => {
+        const expected = {
+            name: 'test',
+        };
+        const onChange = jest.fn((tab) => {
+            expect(tab).toEqual(expected);
         });
-        const config = settingsService.getConfiguration() as TestSetting;
-        expect(config.project.name).toEqual(expectedName);
+        settingsService.onChangeSettings(onChange);
+        settingsService.emit(SettingsEvent.OnChange, expected);
+        expect(onChange).toBeCalled();
     });
 
-    test('flatObject(obj: object): object', () => {
+    test('Update a setting', () => {
+        const expectedSettings = {
+            colorTheme: 'invalidTheme',
+            locale: 'invalidLocale',
+            editor: {
+                tabSize: 6,
+            },
+            project: {
+                name: 'ttt',
+            },
+        };
+        settingsService.update(expectedSettings);
+        const config = settingsService.getSettings() as TestSetting;
+        expect(config.colorTheme).toEqual(BuiltInColorTheme.id);
+        expect(config.locale).toEqual(BuiltInZhCN.id);
+        expect(config.editor?.tabSize).toBe(expectedSettings.editor.tabSize);
+        expect(config.project).toEqual(expectedSettings.project);
+    });
+
+    test('Apply the settings', () => {
+        const expectedSettings = {
+            colorTheme: 'test',
+            locale: 'EN',
+            editor: {
+                tabSize: 6,
+            },
+        };
+        const mySettingService = new SettingsService() as any;
+        mySettingService.colorThemeService.setTheme = jest.fn((value) => {
+            expect(value).toEqual(expectedSettings.colorTheme);
+        });
+        mySettingService.localeService.setCurrentLocale = jest.fn((value) => {
+            expect(value).toEqual(expectedSettings.locale);
+        });
+        mySettingService.editorService.updateEditorOptions = jest.fn(
+            (value) => {
+                expect(value).toEqual(expectedSettings.editor);
+            }
+        );
+        mySettingService.applySettings(expectedSettings);
+    });
+
+    test('Flat an Object ', () => {
         const flatted: any = settingsService.flatObject(mockData);
         expect(flatted['project.id']).toBeDefined();
         expect(flatted['project.name']).toBeDefined();
     });
 
-    test('update(configuration: IConfiguration): void', () => {
+    test('Normalize a FlatObject', () => {
         const obj = {
             'a.b': 1,
             'c.d.e': 2,
@@ -60,29 +107,46 @@ describe('Test SettingsService', () => {
         expect(normalObj.c.d.e).toEqual(2);
     });
 
-    // test('onChangeConfiguration(callback: (tab: IEditorTab<BuiltInSettingsTabType>) => void): void', async done => {
+    test('Normalize a invalid FlatObject', () => {
+        const jsonStr = `{
+            'c.d.e': 2,fefefe
+        }`;
+        function fn() {
+            settingsService.normalizeFlatObject(jsonStr);
+        }
+        expect(fn).toThrowErrorMatchingSnapshot();
+    });
 
-    //     const expected = 'updated';
-    //     settingsService.openSettingsInEditor();
-    //     const currentGroup = editorService.getState().current;
-    //     const groupId = currentGroup?.id || -1;
+    test('Convert to JSON string', () => {
+        const obj = {
+            'a.b': 1,
+            'c.d.e': 2,
+        };
+        const normalObj: string = settingsService.toJSONString(obj);
+        expect(typeof normalObj).toEqual('string');
+        expect(normalObj).toContain('a.b');
+    });
 
-    //     await editorService.updateTab(Object.assign(BuiltInSettingsTab, {
-    //         data: {
-    //             value: expected
-    //         }
-    //     }), groupId);
+    test('Convert invalid object to JSON string', () => {
+        const objB: any = { a: null };
+        const objA: any = { b: null };
+        objA.b = objB;
+        objB.a = objA;
+        function fn() {
+            settingsService.toJSONString(objA);
+        }
+        expect(fn).toThrowErrorMatchingSnapshot();
+    });
 
-    //     function callback(tab) {
-    //         try {
-    //             expect(tab.data?.data.value).toEqual(expected);
-    //             console.log('tab:', tab);
-    //             done();
-    //           } catch (error) {
-    //             done(error);
-    //           }
-    //     }
-
-    //     settingsService.onChangeConfiguration(callback);
-    // });
+    test('Open the Settings in the Editor Panel', () => {
+        (settingsService as any).editorService.open = jest.fn((tab) => {
+            expect(tab.id).toEqual(settingsService.getDefaultSettingsTab().id);
+            expect(tab.data.value).toEqual(
+                settingsService.flatObject2JSONString(
+                    settingsService.getSettings()
+                )
+            );
+        });
+        settingsService.openSettingsInEditor();
+    });
 });

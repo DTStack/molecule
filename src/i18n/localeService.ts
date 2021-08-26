@@ -1,6 +1,6 @@
 import {
-    builtInLocales,
-    defaultZhCn,
+    BuiltInLocales,
+    BuiltInZhCN,
     ILocale,
     LocalizationEvent,
 } from 'mo/i18n/localization';
@@ -22,7 +22,7 @@ export interface ILocaleService {
     /**
      * Get the current locale language
      */
-    getCurrentLocale(): ILocale | undefined;
+    getCurrentLocale(): ILocale;
     /**
      * Get All locale languages
      */
@@ -32,6 +32,10 @@ export interface ILocaleService {
      * @param id
      */
     getLocale(id: string): ILocale | undefined;
+    /**
+     * Get the default locale
+     */
+    getDefaultLocale(): ILocale;
     /**
      * Append multiple local languages
      * @param locales
@@ -63,7 +67,11 @@ export class LocaleService extends Component implements ILocaleService {
 
     constructor() {
         super();
-        this.initialize(builtInLocales, defaultZhCn.id);
+        this.initialize(BuiltInLocales, BuiltInZhCN.id);
+    }
+
+    public getDefaultLocale(): ILocale {
+        return Object.assign({}, BuiltInZhCN);
     }
 
     public getLocales(): ILocale[] {
@@ -77,8 +85,8 @@ export class LocaleService extends Component implements ILocaleService {
         }
     }
 
-    public getCurrentLocale(): ILocale | undefined {
-        return this._current;
+    public getCurrentLocale(): ILocale {
+        return Object.assign({}, this._current || this.getDefaultLocale());
     }
 
     public getLocale(id: string): ILocale | undefined {
@@ -89,7 +97,7 @@ export class LocaleService extends Component implements ILocaleService {
         const locale = this._locales.get(id);
         if (locale !== undefined) {
             if (this._current && this._current.id === locale.id) {
-                this._current = defaultZhCn;
+                this._current = BuiltInZhCN;
             }
             this._locales.delete(id);
         }

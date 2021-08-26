@@ -1,7 +1,7 @@
 import { MonacoEditor } from 'mo/components/monaco';
 import { Scrollable } from 'mo/components/scrollable';
 import { Tabs } from 'mo/components/tabs';
-import { IEditorGroup } from 'mo/model';
+import { IEditorGroup, IEditorOptions } from 'mo/model';
 import * as React from 'react';
 import { memo, useEffect } from 'react';
 import {
@@ -21,6 +21,7 @@ import { tabItemActiveClassName } from 'mo/components/tabs/tab';
 
 export interface IEditorGroupProps extends IEditorGroup {
     currentGroup?: IEditorGroup;
+    editorOptions?: IEditorOptions;
 }
 
 export function EditorGroup(props: IEditorGroupProps & IEditorController) {
@@ -37,6 +38,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
         onChangeEditorProps,
         onSelectTab,
         onClickActions,
+        editorOptions,
         onUpdateEditorIns,
     } = props;
 
@@ -120,6 +122,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
                         <MonacoEditor
                             key={tab.id}
                             options={{
+                                ...editorOptions,
                                 value: tab.data?.value,
                                 language: tab.data?.language,
                                 automaticLayout: true,

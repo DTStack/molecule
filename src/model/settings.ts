@@ -1,11 +1,4 @@
-import { editor as MonacoEditor } from 'monaco-editor';
-
-export interface IConfiguration {
-    [key: string]: any;
-}
-
-export type IEditorSettings = MonacoEditor.IEditorOptions &
-    MonacoEditor.IGlobalEditorOptions;
+import { IEditorOptions } from './workbench';
 
 /**
  * The Settings configuration event definition
@@ -17,16 +10,6 @@ export enum SettingsEvent {
     OnChange = 'settings.onchange',
 }
 
-export const initialWorkbenchSetting = {
-    colorTheme: 'Default Dark+',
-};
-
-export const initialEditorSetting: IEditorSettings = {
-    renderWhitespace: 'none',
-    tabSize: 4,
-    fontSize: 14,
-};
-
 export const BuiltInSettingsTab = {
     id: 'Settings',
     name: 'settings.json',
@@ -36,21 +19,22 @@ export const BuiltInSettingsTab = {
     },
 };
 
-export type IWorkbenchSettings = typeof initialWorkbenchSetting;
-
-export interface ISettings extends IConfiguration {
-    workbench: IWorkbenchSettings;
-    editor: IEditorSettings;
+export interface ISettings {
+    colorTheme?: string;
+    editor?: IEditorOptions;
+    locale?: string;
+    [index: string]: any;
 }
-export class SettingsModel implements ISettings {
-    workbench: IWorkbenchSettings;
-    editor: IEditorSettings;
 
-    constructor(
-        workbench: IWorkbenchSettings = { ...initialWorkbenchSetting },
-        editor: IEditorSettings = { ...initialEditorSetting }
-    ) {
-        this.workbench = workbench;
+export class SettingsModel implements ISettings {
+    colorTheme: string;
+    editor: IEditorOptions;
+    locale: string;
+
+    constructor(colorTheme: string, editor: IEditorOptions, locale: string) {
+        this.colorTheme = colorTheme;
         this.editor = editor;
+        this.locale = locale;
     }
+    [key: string]: any;
 }

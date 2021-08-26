@@ -1,12 +1,10 @@
 import 'reflect-metadata';
 import {
     BuiltInSettingsTab,
-    IConfiguration,
     ISettings,
     SettingsEvent,
     SettingsModel,
 } from 'mo/model/settings';
-import { debounce } from 'lodash';
 import { singleton, container } from 'tsyringe';
 import {
     flatObject,
@@ -16,112 +14,145 @@ import {
 import { EditorService, IEditorService } from './workbench';
 import { GlobalEvent } from 'mo/common/event';
 import { IEditorTab } from 'mo/model';
-import { ColorThemeService } from './theme/colorThemeService';
+import {
+    ColorThemeService,
+    IColorThemeService,
+} from './theme/colorThemeService';
+import { ILocaleService, LocaleService } from 'mo/i18n';
+import { cloneDeep, isEqual } from 'lodash';
 
 export type BuiltInSettingsTabType = typeof BuiltInSettingsTab;
 
 export interface ISettingsService {
     /**
-     * Append a configuration object,
-     * eg: registry({ project: { name: 'test' } })
-     * @param configuration configuration object
+     * Append new Settings object
+     * eg: `
+     *  append({ project: { name: 'example' } })
+     * `
+     * @param settings object
      */
-    append(configuration: IConfiguration): void;
+    append(settings: ISettings): void;
     /**
-     * Update a configuration object, it's going to overwrite
-     * the exist configuration item if exist.
-     * @param configuration
+     * To update a settings object, it's going to overwrite
+     * a settings item if it existed.
+     * @param settings
      */
-    update(configuration: IConfiguration): void;
+    update(settings: ISettings): void;
     /**
-     * Get the configuration object
+     * Get the settings object
      */
-    getConfiguration(): ISettings;
+    getSettings(): ISettings;
     /**
-     * It's converts a object to a flatted object,
+     * It converts an object to a flatted object,
      * eg: { a: { b: 'test' }}, result is : { 'a.b': 'test' }.
      * @param obj object
      */
     flatObject(obj: object): object;
     /**
-     * It's converts a object to a flatted json string,
+     * It converts an object to a flatted json string,
      * eg: { a: { b: 'test' }}, result is : `{ 'a.b': 'test' }`.
      * @param obj object
      */
     flatObject2JSONString(obj: object): string;
     /**
-     * It's convert a flatted JSON string to a normal object,
+     * It converts a flatted JSON string to a normal object,
      * eg: `{ 'a.b': 'test' }` result is : { a: { b: 'test' }}.
      * @param jsonStr string
      * @return T
      */
     normalizeFlatObject<T = ISettings>(jsonStr: string): T;
     /**
-     * It's converts the object to JSON string
+     * It converts an object to JSON string
      */
     toJSONString(obj: object, space?: number): string;
     /**
-     * Open the settings.json in the Editor panel
+     * Open the `settings.json` in the Editor Panel
      */
     openSettingsInEditor(): void;
     /**
-     * Apply the Settings configuration to the Molecule
+     * Apply the nextSettings configuration
+     * @param nextSettings
      */
-    applyConfiguration(): void;
+    applySettings(nextSettings: ISettings): void;
     /**
-     * Listen to the Settings content changed event.
+     * Listen to the Settings change event.
+     * @param callback
      */
-    onChangeConfiguration(
+    onChangeSettings(
         callback: (tab: IEditorTab<BuiltInSettingsTabType>) => void
     ): void;
+    /**
+     * Get the default Settings Tab object
+     */
+    getDefaultSettingsTab(): BuiltInSettingsTabType;
 }
 
 @singleton()
 export class SettingsService extends GlobalEvent implements ISettingsService {
-    protected state: ISettings;
+    protected settings: ISettings;
     private readonly editorService: IEditorService;
-    private readonly colorThemeService: ColorThemeService;
+    private readonly colorThemeService: IColorThemeService;
+    private readonly localeService: ILocaleService;
 
     constructor() {
         super();
-        this.state = container.resolve(SettingsModel);
         this.editorService = container.resolve(EditorService);
+        this.localeService = container.resolve(LocaleService);
         this.colorThemeService = container.resolve(ColorThemeService);
-        this.applyConfiguration();
+        this.settings = this.getBuiltInSettings();
     }
-    private delayApplyConfiguration = debounce(this.applyConfiguration, 600);
 
-    public onChangeConfiguration(
+    private getBuiltInSettings(): ISettings {
+        const editorOptions = this.editorService.getState().editorOptions;
+        const theme = this.colorThemeService.getColorTheme();
+        const locale = this.localeService.getCurrentLocale();
+
+        return new SettingsModel(theme.id, editorOptions!, locale.id);
+    }
+
+    public getDefaultSettingsTab(): BuiltInSettingsTabType {
+        return Object.assign({}, BuiltInSettingsTab);
+    }
+
+    public onChangeSettings(
         callback: (tab: IEditorTab<BuiltInSettingsTabType>) => void
     ): void {
         this.subscribe(SettingsEvent.OnChange, callback);
     }
 
-    public update(configuration: IConfiguration): void {
-        this.state = mergeObjects(this.state, configuration);
-        this.delayApplyConfiguration();
+    public update(settings: ISettings): void {
+        this.applySettings(settings);
+        const oldSettings = cloneDeep(this.settings);
+        this.settings = mergeObjects(oldSettings, settings);
     }
 
-    public append(configuration: IConfiguration): void {
-        this.update(configuration);
+    public append(settings: ISettings): void {
+        this.update(settings);
     }
 
-    public getConfiguration(): ISettings {
-        return { ...this.state };
+    public getSettings(): ISettings {
+        const builtInSettings = this.getBuiltInSettings();
+        return Object.assign({}, this.settings, builtInSettings);
     }
 
-    public applyConfiguration() {
-        const { workbench, editor }: ISettings = this.getConfiguration();
-        if (workbench.colorTheme) {
-            this.colorThemeService.setTheme(workbench.colorTheme);
+    public applySettings(nextSettings: ISettings) {
+        const oldSettings = this.settings;
+        const { colorTheme, locale, editor }: ISettings = nextSettings;
+        if (colorTheme && colorTheme !== oldSettings.colorTheme) {
+            this.colorThemeService.setTheme(colorTheme);
         }
-        this.editorService.editorInstance?.updateOptions({
-            ...editor,
-        });
+        if (locale && locale !== oldSettings.locale) {
+            this.localeService.setCurrentLocale(locale);
+        }
+        if (editor && !isEqual(editor, oldSettings.editor)) {
+            this.editorService.updateEditorOptions(editor);
+        }
     }
 
     public openSettingsInEditor(): void {
-        BuiltInSettingsTab.data.value = this.flatObject2JSONString(this.state);
+        BuiltInSettingsTab.data.value = this.flatObject2JSONString(
+            this.getSettings()
+        );
         this.editorService.open(BuiltInSettingsTab);
     }
 
@@ -131,7 +162,7 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
             return normalizeFlattedObject(obj) as any;
         } catch (e) {
             throw new Error(
-                `SettingsService.normalizeFlatJSONObject JSON string error: ${e}`
+                `SettingsService.normalizeFlatJSONObject error: ${e}`
             );
         }
     }

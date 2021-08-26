@@ -5,7 +5,7 @@
 
 import 'reflect-metadata';
 import { IColorTheme } from 'mo/model/colorTheme';
-import { container, inject, singleton } from 'tsyringe';
+import { singleton } from 'tsyringe';
 import { editor as monacoEditor } from 'mo/monaco';
 import { applyStyleSheetRules } from 'mo/common/css';
 import { getThemeData, convertToCSSVars } from './helper';
@@ -55,7 +55,7 @@ export interface IColorThemeService {
     reset(): void;
 }
 
-export const BUILT_IN_THEME: IColorTheme = {
+export const BuiltInColorTheme: IColorTheme = {
     id: 'Default Dark+',
     name: 'Default Dark+',
     label: 'Default Dark+',
@@ -65,16 +65,12 @@ export const DEFAULT_THEME_CLASS_NAME = prefixClaName('customize-theme');
 
 @singleton()
 export class ColorThemeService implements IColorThemeService {
-    private colorThemes: IColorTheme[] = [BUILT_IN_THEME];
-    private colorTheme: IColorTheme = BUILT_IN_THEME;
+    private colorThemes: IColorTheme[] = [BuiltInColorTheme];
+    private colorTheme: IColorTheme = BuiltInColorTheme;
 
-    constructor(
-        @inject('ColorThemes') colorThemes: IColorTheme[] = [],
-        @inject('ColorTheme') colorTheme?: IColorTheme
-    ) {
-        this.addThemes(colorThemes);
-        if (colorTheme) {
-            this.setTheme(colorTheme.id);
+    constructor() {
+        if (this.colorTheme) {
+            this.setTheme(this.colorTheme.id);
         }
     }
 
@@ -135,7 +131,7 @@ export class ColorThemeService implements IColorThemeService {
             monacoEditor.defineTheme(DEFAULT_THEME_CLASS_NAME, themeData);
             monacoEditor.setTheme(DEFAULT_THEME_CLASS_NAME);
         } else {
-            logger.error(`Can't get any theme by this id:` + id);
+            logger.error(`Can't get the theme by id:` + id);
         }
     }
 
@@ -148,10 +144,7 @@ export class ColorThemeService implements IColorThemeService {
     }
 
     public reset() {
-        this.colorThemes = [BUILT_IN_THEME];
-        this.setTheme(BUILT_IN_THEME.id);
+        this.colorThemes = [BuiltInColorTheme];
+        this.setTheme(BuiltInColorTheme.id);
     }
 }
-
-container.register('ColorThemes', { useValue: [] });
-container.register('ColorTheme', { useValue: BUILT_IN_THEME });

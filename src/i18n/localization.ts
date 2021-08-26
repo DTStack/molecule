@@ -1,9 +1,9 @@
-import defaultEN from './source/en';
-export const defaultZhCn = require('./source/zh-CN.json');
+import BuiltInEN from './source/en';
 
-export type LocaleSourceIdType = keyof typeof defaultEN.source;
-
-export const builtInLocales = [defaultEN, defaultZhCn];
+export const BuiltInZhCN = require('./source/zh-CN.json');
+export { default as BuiltInEN } from './source/en';
+export type LocaleSourceIdType = keyof typeof BuiltInEN.source;
+export const BuiltInLocales = [BuiltInZhCN, BuiltInEN];
 
 /**
  * The Localization configuration event definition

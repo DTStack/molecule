@@ -27,7 +27,7 @@ export interface IMenuBarItem {
     render?: () => React.ReactNode | JSX.Element;
 }
 export interface IMenuBar {
-    data?: IMenuBarItem[];
+    data: IMenuBarItem[];
 }
 
 export const MENU_FILE_OPEN = 'openFile';

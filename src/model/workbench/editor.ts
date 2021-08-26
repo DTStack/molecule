@@ -3,6 +3,7 @@ import { ITabsProps } from 'mo/components/tabs';
 import { IMenuItemProps } from 'mo/components/menu';
 import { IBreadcrumbItemProps } from 'mo/components/breadcrumb';
 import { localize } from 'mo/i18n/localize';
+import { editor as MonacoEditor } from 'monaco-editor';
 
 export enum EditorEvent {
     OnCloseTab = 'editor.closeTab',
@@ -22,9 +23,17 @@ interface BuiltInEditorTabDataType {
     path?: string;
     value?: string;
     modified?: boolean;
-
     [key: string]: any;
 }
+
+export type IEditorOptions = MonacoEditor.IEditorOptions &
+    MonacoEditor.IGlobalEditorOptions;
+
+export const BuiltInEditorOptions: IEditorOptions = {
+    renderWhitespace: 'none',
+    tabSize: 4,
+    fontSize: 12,
+};
 
 export interface IEditorActionsProps extends IMenuItemProps {
     id: string;
@@ -56,8 +65,18 @@ export interface IEditor {
      * Current editor group
      */
     current?: IEditorGroup | null;
+    /**
+     * Editor Groups
+     */
     groups?: IEditorGroup[];
+    /**
+     * The welcome page of editor bench
+     */
     entry?: React.ReactNode;
+    /**
+     * Built-in editor options, there is main apply it to monaco-editor
+     */
+    editorOptions?: IEditorOptions;
 }
 
 export const EDITOR_MENU_CLOSE_TO_RIGHT = 'editor.closeToRight';
@@ -146,14 +165,17 @@ export class EditorModel implements IEditor {
     public current: IEditorGroup | null;
     public groups: IEditorGroup[];
     public entry: React.ReactNode;
+    public editorOptions: IEditorOptions;
 
     constructor(
         current: IEditorGroup | null = null,
         groups: IEditorGroup[] = [],
-        entry: React.ReactNode
+        entry: React.ReactNode,
+        editorOptions: IEditorOptions = BuiltInEditorOptions
     ) {
         this.current = current;
         this.groups = groups;
         this.entry = entry;
+        this.editorOptions = editorOptions;
     }
 }

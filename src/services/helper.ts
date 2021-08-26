@@ -149,20 +149,8 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
         const index = this.getIndex(id);
         const node = this.get(id);
         if (index) {
-            const parentIndex = this.getIndex(index.parent!);
-            const parentNode = this.get(index.parent!);
-            if (parentNode && parentIndex) {
-                parentNode[this.childNodeName].splice(
-                    parentNode[this.childNodeName].indexOf(node),
-                    1,
-                    {
-                        ...node,
-                        ...extra,
-                    }
-                );
-                this.updateChildren(parentIndex[this.childNodeName]);
-                return node;
-            }
+            Object.assign(node, extra);
+            return node;
         }
         return null;
     }

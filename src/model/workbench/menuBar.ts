@@ -23,7 +23,7 @@ export interface IMenuBarItem {
     id?: string;
     name?: React.ReactNode;
     icon?: string | JSX.Element;
-    data?: any;
+    data?: IMenuBarItem[];
     render?: () => React.ReactNode | JSX.Element;
 }
 export interface IMenuBar {

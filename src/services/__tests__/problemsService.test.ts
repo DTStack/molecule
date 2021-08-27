@@ -1,5 +1,5 @@
-import logger from 'mo/common/logger';
 import 'reflect-metadata';
+import { logErrorFn } from '../../../test/utils';
 import { container } from 'tsyringe';
 import { ProblemsService } from '../problemsService';
 
@@ -119,15 +119,10 @@ describe('The Problems Service', () => {
     });
 
     test("Should log error when didn't find the problem in remove", () => {
-        const original = logger.error;
-        logger.error = jest.fn();
-
-        problemsService.add([mockData]);
-        problemsService.remove(2);
-
-        expect(logger.error).toBeCalled();
-
-        logger.error = original;
+        logErrorFn(() => {
+            problemsService.add([mockData]);
+            problemsService.remove(2);
+        });
     });
 
     test('Should support to update a single problem', () => {
@@ -171,15 +166,10 @@ describe('The Problems Service', () => {
     });
 
     test("Should log error when didn't find the problem in update", () => {
-        const original = logger.error;
-        logger.error = jest.fn();
-
-        problemsService.add([mockData]);
-        problemsService.update({ ...mockData, id: 2 });
-
-        expect(logger.error).toBeCalled();
-
-        logger.error = original;
+        logErrorFn(() => {
+            problemsService.add([mockData]);
+            problemsService.update({ ...mockData, id: 2 });
+        });
     });
 
     test('Should support to toggle visibility', () => {

@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { ActivityBarService } from '../workbench';
 import { ActivityBarEvent, IActivityBarItem } from 'mo/model';
-import logger from 'mo/common/logger';
 import type { IMenuItemProps } from 'mo/components';
+import { logErrorFn } from '../../../test/utils';
 
 const activityBarService = container.resolve(ActivityBarService);
 
@@ -15,19 +15,6 @@ const mockBarData: IActivityBarItem = {
 const mockMenuData: IMenuItemProps = {
     id: '1',
 };
-
-/**
- * Test the action whether log error
- */
-function logErrorFn(action: () => void) {
-    const originalLog = logger.error;
-    logger.error = jest.fn();
-
-    action();
-    expect(logger.error).toBeCalled();
-
-    logger.error = originalLog;
-}
 
 describe('The ActivityBar Services', () => {
     afterEach(() => {

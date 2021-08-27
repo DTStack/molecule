@@ -8,7 +8,7 @@ import {
     PanelEvent,
 } from 'mo/model/workbench/panel';
 import { builtInPanelProblems } from 'mo/model/problems';
-import { logErrorFn } from 'test/utils';
+import { logErrorFn } from '../../../test/utils';
 
 const paneOutput = builtInOutputPanel();
 const panelProblems = builtInPanelProblems();
@@ -74,6 +74,43 @@ describe('The PanelService test', () => {
 
         expect(state.data![0]).toEqual({ ...paneOutput, ...nextPanel });
         expect(updated).toEqual({ ...paneOutput, ...nextPanel });
+    });
+
+    test('Should support to update several properties of the Output Panel', () => {
+        const output = { ...paneOutput, renderPane: jest.fn() };
+        panelService.add([output]);
+        expect(panelService.getPanel(output.id)).toEqual(output);
+
+        panelService.updateOutput({
+            title: 'update-output',
+            name: 'test',
+            sortIndex: 999,
+            active: true,
+            closable: true,
+            editable: true,
+        });
+        expect(panelService.getPanel(output.id)).toEqual({
+            ...output,
+            title: 'update-output',
+            name: 'test',
+            sortIndex: 999,
+            active: true,
+            closable: true,
+            editable: true,
+        });
+
+        panelService.updateOutput({
+            data: 'update value will failed',
+        });
+        expect(panelService.getPanel(output.id)).toEqual({
+            ...output,
+            title: 'update-output',
+            name: 'test',
+            sortIndex: 999,
+            active: true,
+            closable: true,
+            editable: true,
+        });
     });
 
     test('Should log error when update failed', () => {

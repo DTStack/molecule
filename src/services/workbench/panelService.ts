@@ -2,9 +2,9 @@ import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { editor as MonacoEditor } from 'monaco-editor';
 import cloneDeep from 'lodash/cloneDeep';
+import pickBy from 'lodash/pickBy';
 import { Component } from 'mo/react';
 import {
-    builtInOutputPanel,
     builtInPanelToolboxResize,
     builtInPanelToolboxReStore,
     IOutput,
@@ -56,6 +56,13 @@ export interface IPanelService extends Component<IPanel> {
      * @param panel the id field is required
      */
     update(panel: IPanelItem): IPanelItem | undefined;
+    /**
+     * Update the Output panel, except the value
+     *
+     * If you want to update the value of this panel, please use the `appendOutput` method
+     * @param panel
+     */
+    updateOutput(panel: IPanelItem): IPanelItem | undefined;
     /**
      * Remove the specific panel
      * @param id
@@ -112,8 +119,13 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         this.layoutService = container.resolve(LayoutService);
     }
 
-    private updateOutput(data: IPanelItem<any>): IPanelItem | undefined {
-        return this.update(Object.assign(builtInOutputPanel(), data));
+    private updateOutputProperty(
+        data: Partial<IPanelItem<string>>
+    ): IPanelItem | undefined {
+        const truthData = pickBy(data, (item) => item !== undefined);
+        return this.update(
+            Object.assign(this.getPanel(PANEL_OUTPUT), truthData)
+        );
     }
 
     public get outputEditorInstance() {
@@ -170,10 +182,24 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         return outputPanel?.data || '';
     }
 
+    /**
+     * Onyl support to update several properties
+     */
+    public updateOutput(data: Partial<IPanelItem>): IPanelItem | undefined {
+        const { title, name, sortIndex, active, closable, editable } = data;
+        return this.updateOutputProperty({
+            title,
+            name,
+            sortIndex,
+            active,
+            closable,
+            editable,
+        });
+    }
+
     public appendOutput(content: string): void {
         const outputValue = this.getOutputValue();
-        this.updateOutput({
-            id: PANEL_OUTPUT,
+        this.updateOutputProperty({
             data: outputValue + content,
         });
         this.outputEditorInstance?.setValue(outputValue + content);

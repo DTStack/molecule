@@ -1,6 +1,6 @@
-import logger from 'mo/common/logger';
 import { NotificationStatus } from 'mo/model';
 import 'reflect-metadata';
+import { logErrorFn } from 'test/utils';
 import { container } from 'tsyringe';
 import { NotificationService } from '..';
 
@@ -44,24 +44,16 @@ describe('The Notification Service', () => {
     });
 
     test('Should check notification before remove', () => {
-        const originalError = logger.error;
-        logger.error = jest.fn();
-
-        notificationService.remove(1);
-        expect(logger.error).toBeCalled();
-
-        logger.error = originalError;
+        logErrorFn(() => {
+            notificationService.remove(1);
+        });
     });
 
     test("Should log error when did't find the notification", () => {
-        const originalError = logger.error;
-        logger.error = jest.fn();
-
-        notificationService.add([mockNotice]);
-        notificationService.remove(2);
-        expect(logger.error).toBeCalled();
-
-        logger.error = originalError;
+        logErrorFn(() => {
+            notificationService.add([mockNotice]);
+            notificationService.remove(2);
+        });
     });
 
     test('Should support to remove notification', () => {
@@ -72,18 +64,14 @@ describe('The Notification Service', () => {
     });
 
     test('Should check params valid before update notifications', () => {
-        const originalError = logger.error;
-        logger.error = jest.fn();
+        logErrorFn(() => {
+            let result = notificationService.update(mockNotice);
+            expect(result).toBeNull();
 
-        let result = notificationService.update(mockNotice);
-        expect(result).toBeNull();
-
-        notificationService.add([mockNotice]);
-        result = notificationService.update({ id: 2, value: 'test' });
-        expect(result).toBeNull();
-        expect(logger.error).toBeCalled();
-
-        logger.error = originalError;
+            notificationService.add([mockNotice]);
+            result = notificationService.update({ id: 2, value: 'test' });
+            expect(result).toBeNull();
+        });
     });
 
     test('Should support to update notification', () => {

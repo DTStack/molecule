@@ -1,5 +1,6 @@
 import { cleanup } from '@testing-library/react';
 import 'reflect-metadata';
+import { logErrorFn } from 'test/utils';
 import { container } from 'tsyringe';
 import {
     BuiltInColorTheme,
@@ -85,12 +86,9 @@ describe('The Color Theme Service', () => {
     });
 
     test('Should log error when set unrecognized theme', () => {
-        const originalError = console.error;
-        console.error = jest.fn();
-        colorThemeService.setTheme(DarkTestTheme.id);
-
-        expect(console.error).toBeCalled();
-        console.error = originalError;
+        logErrorFn(() => {
+            colorThemeService.setTheme(DarkTestTheme.id);
+        });
     });
 
     test('Should update specific theme', () => {
@@ -121,24 +119,18 @@ describe('The Color Theme Service', () => {
     });
 
     test('Should have log error message without id when update theme', () => {
-        const originalError = console.error;
-        console.error = jest.fn();
-        colorThemeService.updateTheme({
-            ...BuiltInColorTheme,
-            label: 'Dark Test',
-            id: '',
+        logErrorFn(() => {
+            colorThemeService.updateTheme({
+                ...BuiltInColorTheme,
+                label: 'Dark Test',
+                id: '',
+            });
         });
-
-        expect(console.error).toBeCalled();
-        console.error = originalError;
     });
 
     test('Should have log error message with no found theme', () => {
-        const originalError = console.error;
-        console.error = jest.fn();
-        colorThemeService.updateTheme(DarkTestTheme);
-
-        expect(console.error).toBeCalled();
-        console.error = originalError;
+        logErrorFn(() => {
+            colorThemeService.updateTheme(DarkTestTheme);
+        });
     });
 });

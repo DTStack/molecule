@@ -4,18 +4,9 @@ export interface ISidebarPane {
     render?: () => React.ReactNode;
 }
 
-/**
- * The Sidebar event definition
- */
-export enum SideBarEvent {
-    /**
-     * Selected an sidebar bar
-     */
-    onClick = 'sidebar.onClick',
-}
 export interface ISidebar {
-    current?: string;
-    panes?: ISidebarPane[];
+    current: string;
+    panes: ISidebarPane[];
 }
 
 export class SidebarModel implements ISidebar {

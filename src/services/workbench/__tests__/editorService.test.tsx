@@ -32,6 +32,8 @@ describe('Test EditorService', () => {
 
         // Open in default Group
         editor.open(mockTab);
+        expect(editor.getState().current?.activeTab).toBe(mockTab.id);
+
         const state = editor.getState();
         expect(
             state.current?.data?.find((tab) => tab.id === mockTab.id)
@@ -116,6 +118,8 @@ describe('Test EditorService', () => {
     test('Update the tab', () => {
         const editor = new EditorService();
         editor.open(mockTab);
+        expect(editor.getState().current?.activeTab).toBe(mockTab.id);
+
         let updated = editor.updateTab(
             Object.assign(mockTab, { name: 'updated' })
         );

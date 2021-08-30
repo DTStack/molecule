@@ -143,10 +143,12 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     actions: IEditorActionsProps[];
     menu: IMenuItemProps[];
     editorInstance: E | undefined;
+    activeTab: string | undefined;
 
     constructor(
         id: number,
         tab: IEditorTab<T>,
+        activeTab: string | undefined,
         data: IEditorTab<T>[],
         actions: IEditorActionsProps[] = getEditorInitialActions(),
         menu: IMenuItemProps[] = getEditorInitialMenu(),
@@ -157,6 +159,7 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
         this.menu = menu;
         this.actions = actions;
         this.tab = tab;
+        this.activeTab = activeTab;
         this.editorInstance = editorInstance;
     }
 }

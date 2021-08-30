@@ -555,6 +555,7 @@ export class EditorService
             group = new EditorGroupModel(
                 groups.length + 1,
                 tab,
+                tab.id,
                 [tab],
                 this.defaultActions
             );

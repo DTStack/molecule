@@ -52,6 +52,16 @@ describe('Test Scrollable Component', () => {
         ).toBe('12px');
     });
 
+    test('Custom the className', () => {
+        const { container, rerender } = render(<TestScrollable />);
+        expect(container.querySelector<HTMLSpanElement>('.myclass')).toBeNull();
+
+        rerender(<TestScrollable className="myclass" />);
+        expect(
+            container.querySelector<HTMLSpanElement>('.myclass')
+        ).not.toBeNull();
+    });
+
     test('Custom the Thumb style', () => {
         const { container, rerender } = render(<TestScrollable />);
         expect(

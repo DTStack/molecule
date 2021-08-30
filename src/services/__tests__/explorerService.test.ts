@@ -4,7 +4,7 @@ import {
     IExplorerPanelItem,
 } from 'mo/model';
 import 'reflect-metadata';
-import { logErrorFn } from '../../../test/utils';
+import { logErrorFn } from '@test/utils';
 import { container } from 'tsyringe';
 import { searchById } from '../helper';
 import { ExplorerService } from '../workbench';

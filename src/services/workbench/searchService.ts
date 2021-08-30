@@ -57,6 +57,10 @@ export interface ISearchService extends Component<ISearchProps> {
      */
     updateStatus: (addonId: string, checked: boolean) => void;
     /**
+     * Reset the search input data
+     */
+    reset(): void;
+    /**
      * Listen to the event about the value of search input changed
      */
     onChange(callback: (value: string, replaceValue: string) => void): void;
@@ -181,6 +185,23 @@ export class SearchService
                 searchAddons: searchAddons.concat(),
             });
         }
+    }
+
+    public reset() {
+        this.setState({
+            headerToolBar: [],
+            searchAddons: [],
+            replaceAddons: [],
+            result: [],
+            value: '',
+            replaceValue: '',
+            replaceMode: false,
+            isRegex: false,
+            isCaseSensitive: false,
+            isWholeWords: false,
+            preserveCase: false,
+            validationInfo: { type: 'info', text: '' },
+        });
     }
 
     public onReplaceAll(callback: () => void): void {

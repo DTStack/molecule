@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { logErrorFn } from '@test/utils';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
 import { ProblemsService } from '../problemsService';
 
@@ -119,7 +119,7 @@ describe('The Problems Service', () => {
     });
 
     test("Should log error when didn't find the problem in remove", () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             problemsService.add([mockData]);
             problemsService.remove(2);
         });
@@ -166,7 +166,7 @@ describe('The Problems Service', () => {
     });
 
     test("Should log error when didn't find the problem in update", () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             problemsService.add([mockData]);
             problemsService.update({ ...mockData, id: 2 });
         });

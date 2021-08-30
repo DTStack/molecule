@@ -3,7 +3,7 @@ import { container } from 'tsyringe';
 import { ActivityBarService } from '../workbench';
 import { ActivityBarEvent, IActivityBarItem } from 'mo/model';
 import type { IMenuItemProps } from 'mo/components';
-import { logErrorFn } from '@test/utils';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 
 const activityBarService = container.resolve(ActivityBarService);
 
@@ -55,7 +55,7 @@ describe('The ActivityBar Services', () => {
     });
 
     test('Should log error when remove failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             activityBarService.remove('1');
         });
     });
@@ -70,7 +70,7 @@ describe('The ActivityBar Services', () => {
     });
 
     test('Should log error when toggleBar failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             activityBarService.toggleBar('1');
         });
     });
@@ -126,7 +126,7 @@ describe('The ActivityBar Services', () => {
     });
 
     test('Should log error when toggle the status failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             activityBarService.toggleContextMenuChecked('1');
         });
     });
@@ -140,7 +140,7 @@ describe('The ActivityBar Services', () => {
     });
 
     test('Should log error when remove context menus failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             activityBarService.removeContextMenu('1');
         });
     });

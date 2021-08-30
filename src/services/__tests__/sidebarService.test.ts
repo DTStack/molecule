@@ -1,6 +1,6 @@
 import type { ISidebarPane } from 'mo/model';
 import 'reflect-metadata';
-import { logErrorFn } from '@test/utils';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
 import { SidebarService } from '../workbench';
 
@@ -35,7 +35,7 @@ describe('The Sidebar Service', () => {
     });
 
     test('Should log error when add failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             sidebarService.add(mockSide);
             sidebarService.add(mockSide);
         });
@@ -64,7 +64,7 @@ describe('The Sidebar Service', () => {
     });
 
     test('Should log error when setActive failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             sidebarService.setActive(mockSide.id);
         });
     });
@@ -86,7 +86,7 @@ describe('The Sidebar Service', () => {
     });
 
     test('Should log error when update failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             sidebarService.update({
                 id: mockSide.id,
                 title: 'update-title',
@@ -123,7 +123,7 @@ describe('The Sidebar Service', () => {
     });
 
     test('Should log error when remove failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             sidebarService.remove(mockSide.id);
         });
     });

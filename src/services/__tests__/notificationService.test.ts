@@ -1,6 +1,6 @@
 import { NotificationStatus } from 'mo/model';
 import 'reflect-metadata';
-import { logErrorFn } from '@test/utils';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
 import { NotificationService } from '..';
 
@@ -44,13 +44,13 @@ describe('The Notification Service', () => {
     });
 
     test('Should check notification before remove', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             notificationService.remove(1);
         });
     });
 
     test("Should log error when did't find the notification", () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             notificationService.add([mockNotice]);
             notificationService.remove(2);
         });
@@ -64,7 +64,7 @@ describe('The Notification Service', () => {
     });
 
     test('Should check params valid before update notifications', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             let result = notificationService.update(mockNotice);
             expect(result).toBeNull();
 

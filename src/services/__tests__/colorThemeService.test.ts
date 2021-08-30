@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react';
 import 'reflect-metadata';
-import { logErrorFn } from '@test/utils';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
 import {
     BuiltInColorTheme,
@@ -86,7 +86,7 @@ describe('The Color Theme Service', () => {
     });
 
     test('Should log error when set unrecognized theme', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             colorThemeService.setTheme(DarkTestTheme.id);
         });
     });
@@ -119,7 +119,7 @@ describe('The Color Theme Service', () => {
     });
 
     test('Should have log error message without id when update theme', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             colorThemeService.updateTheme({
                 ...BuiltInColorTheme,
                 label: 'Dark Test',
@@ -129,7 +129,7 @@ describe('The Color Theme Service', () => {
     });
 
     test('Should have log error message with no found theme', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             colorThemeService.updateTheme(DarkTestTheme);
         });
     });

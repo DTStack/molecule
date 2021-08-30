@@ -10,7 +10,7 @@ import {
     StatusBarEvent,
     STATUS_EDITOR_INFO,
 } from 'mo/model/workbench/statusBar';
-import { logErrorFn } from '../../../test/utils';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 
 const mockStatusData = {
     ...STATUS_EDITOR_INFO,
@@ -56,7 +56,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should log error when add failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             // there is a status item whose id is ${mockStatusData.id}, so it'll add failed
             statusBarService.add(mockStatusData, Float.right);
         });
@@ -103,7 +103,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should log error when update failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             statusBarService.update({
                 id: anotherStatusData.id,
                 sortIndex: 1,
@@ -150,7 +150,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should log error when remove failed', () => {
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             statusBarService.remove(anotherStatusData.id);
         });
     });

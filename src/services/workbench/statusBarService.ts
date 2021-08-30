@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import {
     CONTEXT_MENU_HIDE_STATUS_BAR,
+    Float,
     IStatusBar,
     IStatusBarItem,
     StatusBarEvent,
@@ -12,34 +13,30 @@ import { Component } from 'mo/react';
 import { container, singleton } from 'tsyringe';
 import { searchById } from '../helper';
 import logger from 'mo/common/logger';
-
 export interface IStatusBarService extends Component<IStatusBar> {
     /**
      * Add a new StatusBar item into right or left status
      * @param item
      * @param float position the item to left or right
      */
-    add(item: IStatusBarItem, float: 'left' | 'right'): void;
+    add(item: IStatusBarItem, float: Float): void;
     /**
      * Remove the specific StatusBar item
      * @param id
      * @param float if provided, it'll remove the item in spcific position
      */
-    remove(id: string, float?: 'left' | 'right'): void;
+    remove(id: string, float?: Float): void;
     /**
      * Update the specific StatusBar item, it'll update the item found in left
      * @param item the id field is required
      * @param float if provided, it'll update the item in specific position
      */
-    update(item: IStatusBarItem, float?: 'left' | 'right'): void;
+    update(item: IStatusBarItem, float?: Float): void;
     /**
      * Get the specific StatusBar item
      * @param id
      */
-    getStatusBarItem(
-        id: string,
-        float?: 'left' | 'right'
-    ): IStatusBarItem | null;
+    getStatusBarItem(id: string, float?: Float): IStatusBarItem | null;
     /**
      * Reset the contextMenu data and the StatusBar data , including right and left
      */
@@ -79,10 +76,7 @@ export class StatusBarService
      * @param item
      * @returns
      */
-    private getItem(
-        item: IStatusBarItem,
-        float?: 'left' | 'right'
-    ): StatusBarItemInfos {
+    private getItem(item: IStatusBarItem, float?: Float): StatusBarItemInfos {
         const { rightItems, leftItems } = this.state;
 
         if (!float) {
@@ -115,16 +109,16 @@ export class StatusBarService
             };
         }
         // specific the position
-        const sourceArr = float === 'right' ? rightItems : leftItems;
+        const sourceArr = float === Float.left ? leftItems : rightItems;
         const index = sourceArr.findIndex(searchById(item.id));
         return {
             index,
             item: sourceArr[index] || null,
-            source: float === 'right' ? 'rightItems' : 'leftItems',
+            source: float === Float.left ? 'leftItems' : 'rightItems',
         };
     }
 
-    public add(item: IStatusBarItem<any>, float: 'left' | 'right') {
+    public add(item: IStatusBarItem<any>, float: Float) {
         const target = this.getItem(item, float);
         if (target.item) {
             logger.error(
@@ -132,7 +126,7 @@ export class StatusBarService
             );
             return;
         }
-        const sourceArr = float === 'left' ? 'leftItems' : 'rightItems';
+        const sourceArr = float === Float.left ? 'leftItems' : 'rightItems';
         const nextArr = this.state[sourceArr].concat();
         nextArr.push(item);
         this.setState({
@@ -140,7 +134,7 @@ export class StatusBarService
         });
     }
 
-    public update(item: IStatusBarItem, float?: 'left' | 'right'): void {
+    public update(item: IStatusBarItem, float?: Float): void {
         const workInProgressItem = this.getItem(item, float);
 
         if (!workInProgressItem.source) {
@@ -156,12 +150,12 @@ export class StatusBarService
         });
     }
 
-    public getStatusBarItem(id: string, float?: 'left' | 'right') {
+    public getStatusBarItem(id: string, float?: Float) {
         const itemInfo = this.getItem({ id }, float);
         return itemInfo.source ? cloneDeep(itemInfo.item) : itemInfo.item;
     }
 
-    public remove(id: string, float?: 'left' | 'right') {
+    public remove(id: string, float?: Float) {
         const itemInfo = this.getItem({ id }, float);
         if (!itemInfo.source) {
             logger.error(`There is no status item found whose id is ${id}`);

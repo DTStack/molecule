@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import * as React from 'react';
-import { IStatusBarItem } from 'mo/model';
+import { Float, IStatusBarItem } from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import {
     IPanelService,
@@ -63,7 +63,7 @@ export class ProblemsController
         statusProblems.render = (item) => <ProblemsStatusBarView {...item} />;
         statusProblems.onClick = this.onClick;
 
-        this.statusBarService.add(statusProblems, 'left');
+        this.statusBarService.add(statusProblems, Float.left);
 
         // keep ProblemsPaneView updated to problems' state
         const ProblemsView = connect(this.problemsService, ProblemsPaneView);

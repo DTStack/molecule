@@ -1,6 +1,12 @@
 import * as React from 'react';
 import EditorStatusBarView from 'mo/workbench/editor/statusBarView';
 import { IMenuItemProps } from 'mo/components/menu';
+
+export enum Float {
+    left = 'left',
+    right = 'right',
+}
+
 export interface IStatusBarItem<T = any> extends HTMLElementProps {
     id: string;
     sortIndex?: number;

@@ -6,6 +6,7 @@ import {
 } from '../workbench/statusBarService';
 import {
     CONTEXT_MENU_HIDE_STATUS_BAR,
+    Float,
     StatusBarEvent,
     STATUS_EDITOR_INFO,
 } from 'mo/model/workbench/statusBar';
@@ -44,8 +45,8 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to add a status data into the specific position', () => {
-        statusBarService.add(mockStatusData, 'left');
-        statusBarService.add(anotherStatusData, 'right');
+        statusBarService.add(mockStatusData, Float.left);
+        statusBarService.add(anotherStatusData, Float.right);
 
         let result = statusBarService.getStatusBarItem(mockStatusData.id);
         expect(result).toEqual(mockStatusData);
@@ -57,34 +58,34 @@ describe('Test StatusBarService', () => {
     test('Should log error when add failed', () => {
         logErrorFn(() => {
             // there is a status item whose id is ${mockStatusData.id}, so it'll add failed
-            statusBarService.add(mockStatusData, 'right');
+            statusBarService.add(mockStatusData, Float.right);
         });
     });
 
     test('Should support to update item in specific position', () => {
-        statusBarService.add(mockStatusData, 'left');
+        statusBarService.add(mockStatusData, Float.left);
         statusBarService.update(
             {
                 id: mockStatusData.id,
                 sortIndex: 1,
             },
-            'left'
+            Float.left
         );
 
         const expected = statusBarService.getStatusBarItem(
             mockStatusData.id,
-            'left'
+            Float.left
         );
         expect(expected).toEqual({ ...mockStatusData, sortIndex: 1 });
         // there is already a built-in status item whose id is ${mockStatusData.id},
         // so we should ensure only update the left one, and keep the right one as it is
         expect(
-            statusBarService.getStatusBarItem(mockStatusData.id, 'right')
+            statusBarService.getStatusBarItem(mockStatusData.id, Float.right)
         ).toEqual(mockStatusData);
     });
 
     test('Should support to update left first and then right postion', () => {
-        statusBarService.add(anotherStatusData, 'left');
+        statusBarService.add(anotherStatusData, Float.left);
 
         statusBarService.update({ id: anotherStatusData.id, sortIndex: 1 });
 
@@ -115,36 +116,36 @@ describe('Test StatusBarService', () => {
             statusBarService.getStatusBarItem(STATUS_EDITOR_INFO.id)
         ).not.toBeNull();
 
-        statusBarService.remove(STATUS_EDITOR_INFO.id, 'right');
+        statusBarService.remove(STATUS_EDITOR_INFO.id, Float.right);
         expect(
             statusBarService.getStatusBarItem(STATUS_EDITOR_INFO.id)
         ).toBeNull();
     });
 
     test('Should support to remove a item in left first and the right', () => {
-        statusBarService.add(mockStatusData, 'left');
+        statusBarService.add(mockStatusData, Float.left);
 
         expect(
-            statusBarService.getStatusBarItem(mockStatusData.id, 'left')
+            statusBarService.getStatusBarItem(mockStatusData.id, Float.left)
         ).not.toBeNull();
         expect(
-            statusBarService.getStatusBarItem(mockStatusData.id, 'right')
-        ).not.toBeNull();
-
-        statusBarService.remove(mockStatusData.id);
-        expect(
-            statusBarService.getStatusBarItem(mockStatusData.id, 'left')
-        ).toBeNull();
-        expect(
-            statusBarService.getStatusBarItem(mockStatusData.id, 'right')
+            statusBarService.getStatusBarItem(mockStatusData.id, Float.right)
         ).not.toBeNull();
 
         statusBarService.remove(mockStatusData.id);
         expect(
-            statusBarService.getStatusBarItem(mockStatusData.id, 'left')
+            statusBarService.getStatusBarItem(mockStatusData.id, Float.left)
         ).toBeNull();
         expect(
-            statusBarService.getStatusBarItem(mockStatusData.id, 'right')
+            statusBarService.getStatusBarItem(mockStatusData.id, Float.right)
+        ).not.toBeNull();
+
+        statusBarService.remove(mockStatusData.id);
+        expect(
+            statusBarService.getStatusBarItem(mockStatusData.id, Float.left)
+        ).toBeNull();
+        expect(
+            statusBarService.getStatusBarItem(mockStatusData.id, Float.right)
         ).toBeNull();
     });
 

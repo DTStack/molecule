@@ -1,41 +1,64 @@
 import 'reflect-metadata';
 import {
+    CONTEXT_MENU_HIDE_STATUS_BAR,
+    Float,
     IStatusBar,
     IStatusBarItem,
     StatusBarEvent,
     StatusBarModel,
+    STATUS_EDITOR_INFO,
 } from 'mo/model/workbench/statusBar';
+import cloneDeep from 'lodash/cloneDeep';
 import { Component } from 'mo/react';
 import { container, singleton } from 'tsyringe';
 import { searchById } from '../helper';
+import logger from 'mo/common/logger';
 export interface IStatusBarService extends Component<IStatusBar> {
     /**
-     * Add a new StatusBar item
+     * Add a new StatusBar item into right or left status
      * @param item
      * @param float position the item to left or right
      */
-    add(item: IStatusBarItem, float: 'left' | 'right');
+    add(item: IStatusBarItem, float: Float): void;
     /**
      * Remove the specific StatusBar item
      * @param id
+     * @param float if provided, it'll remove the item in spcific position
      */
-    remove(id: string): void;
+    remove(id: string, float?: Float): void;
     /**
-     * Update the specific StatusBar item
+     * Update the specific StatusBar item, it'll update the item found in left
      * @param item the id field is required
+     * @param float if provided, it'll update the item in specific position
      */
-    update(item: IStatusBarItem): void;
+    update(item: IStatusBarItem, float?: Float): void;
     /**
      * Get the specific StatusBar item
      * @param id
      */
-    getStatusBarItem(id: string): IStatusBarItem | null;
+    getStatusBarItem(id: string, float?: Float): IStatusBarItem | null;
+    /**
+     * Reset the contextMenu data and the StatusBar data , including right and left
+     */
+    reset(): void;
     /**
      * Listen to the StatusBar click event
      * @param callback
      */
     onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void);
 }
+
+type StatusBarItemInfos =
+    | {
+          index: number;
+          item: IStatusBarItem;
+          source: 'leftItems' | 'rightItems';
+      }
+    | {
+          index: -1;
+          item: null;
+          source: null;
+      };
 
 @singleton()
 export class StatusBarService
@@ -48,110 +71,112 @@ export class StatusBarService
         this.state = container.resolve(StatusBarModel);
     }
 
-    public add(item: IStatusBarItem<any>, float: 'left' | 'right') {
-        if (float === 'right') {
-            this.appendRightItem(item);
-        } else {
-            this.appendLeftItem(item);
-        }
-    }
-
-    public update(item: IStatusBarItem): void {
-        const { leftItems = [], rightItems = [] } = this.state;
-        let result = this.updateArrayItem(leftItems, item);
-        if (result) {
-            this.setState({
-                leftItems: result,
-            });
-        } else {
-            // Try to update target item in rightItems
-            result = this.updateArrayItem(rightItems, item);
-            if (result) {
-                this.setState({
-                    rightItems: result,
-                });
-            }
-        }
-    }
-
-    public getStatusBarItem(id: string): IStatusBarItem {
-        let result;
-        const { leftItems = [], rightItems = [] } = this.state;
-        result = leftItems.find(searchById(id));
-        if (!result) {
-            result = rightItems.find(searchById(id));
-        }
-        return result;
-    }
-
-    public remove(id: string): void {
-        const { leftItems = [], rightItems = [] } = this.state;
-        let result = this.removeArrayItem(leftItems, id);
-        if (result) {
-            this.setState({
-                leftItems: result,
-            });
-        } else {
-            result = this.removeArrayItem(rightItems, id);
-            if (result) {
-                this.setState({
-                    rightItems: result,
-                });
-            }
-        }
-    }
-
     /**
-     * Update a specific array item, and return the array object
-     * @param arr
-     * @param target The update target
-     * @returns The new updated IStatusBarItem Array object
+     * Get the item informations in right position or left position
+     * @param item
+     * @returns
      */
-    private updateArrayItem(
-        targetArray: IStatusBarItem[],
-        target: IStatusBarItem
-    ): IStatusBarItem[] | undefined {
-        const index = targetArray.findIndex(searchById(target.id));
-        if (index > -1) {
-            const nextArray = targetArray.concat();
-            nextArray[index] = Object.assign({}, nextArray[index], target);
-            return nextArray;
+    private getItem(item: IStatusBarItem, float?: Float): StatusBarItemInfos {
+        const { rightItems, leftItems } = this.state;
+
+        if (!float) {
+            // find left first
+            let index = leftItems.findIndex(searchById(item.id));
+
+            if (index > -1) {
+                return {
+                    index,
+                    item: leftItems[index],
+                    source: 'leftItems',
+                };
+            }
+
+            // then find the item from right
+            index = rightItems.findIndex(searchById(item.id));
+            if (index > -1) {
+                return {
+                    index,
+                    item: rightItems[index],
+                    source: 'rightItems',
+                };
+            }
+
+            // nothing found both in right and left
+            return {
+                index: -1,
+                item: null,
+                source: null,
+            };
         }
-        return undefined;
+        // specific the position
+        const sourceArr = float === Float.left ? leftItems : rightItems;
+        const index = sourceArr.findIndex(searchById(item.id));
+        return {
+            index,
+            item: sourceArr[index] || null,
+            source: float === Float.left ? 'leftItems' : 'rightItems',
+        };
     }
 
-    private removeArrayItem(
-        targetArray: IStatusBarItem[],
-        id: string
-    ): IStatusBarItem[] | undefined {
-        const index = targetArray.findIndex(searchById(id));
-        if (index > -1) {
-            const nextArray = targetArray.concat();
-            nextArray.splice(index, 1)[0];
-            return nextArray;
+    public add(item: IStatusBarItem<any>, float: Float) {
+        const target = this.getItem(item, float);
+        if (target.item) {
+            logger.error(
+                `There is already a status whose id is ${item.id}, if you want to update it, please use the update method`
+            );
+            return;
         }
-        return undefined;
-    }
-
-    private appendLeftItem(item: IStatusBarItem): void {
+        const sourceArr = float === Float.left ? 'leftItems' : 'rightItems';
+        const nextArr = this.state[sourceArr].concat();
+        nextArr.push(item);
         this.setState({
-            leftItems: this.appendArrayItem(this.state.leftItems, item),
+            [sourceArr]: nextArr,
         });
     }
 
-    private appendRightItem(item: IStatusBarItem): void {
+    public update(item: IStatusBarItem, float?: Float): void {
+        const workInProgressItem = this.getItem(item, float);
+
+        if (!workInProgressItem.source) {
+            logger.error(`There is no status found whose id is ${item.id}`);
+            return;
+        }
+
+        const { index, item: target, source } = workInProgressItem;
+        const next = this.state[source].concat();
+        next[index] = Object.assign({}, target, item);
         this.setState({
-            rightItems: this.appendArrayItem(this.state.rightItems, item),
+            [source]: next,
         });
     }
 
-    private appendArrayItem(
-        targetArray: IStatusBarItem[],
-        item: IStatusBarItem
-    ): IStatusBarItem[] {
-        const nextItems = targetArray.concat();
-        nextItems.push(item);
-        return nextItems;
+    public getStatusBarItem(id: string, float?: Float) {
+        const itemInfo = this.getItem({ id }, float);
+        return itemInfo.source ? cloneDeep(itemInfo.item) : itemInfo.item;
+    }
+
+    public remove(id: string, float?: Float) {
+        const itemInfo = this.getItem({ id }, float);
+        if (!itemInfo.source) {
+            logger.error(`There is no status item found whose id is ${id}`);
+            return;
+        }
+
+        const { index, source } = itemInfo;
+
+        const next = this.state[source].concat();
+        next.splice(index, 1);
+        this.setState({
+            [source]: next,
+        });
+    }
+
+    public reset() {
+        this.setState({
+            rightItems: [STATUS_EDITOR_INFO],
+            leftItems: [],
+            contextMenu: [CONTEXT_MENU_HIDE_STATUS_BAR],
+        });
     }
 
     public onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void) {

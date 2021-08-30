@@ -3,7 +3,7 @@ import { container, singleton } from 'tsyringe';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { connect } from 'mo/react';
-import { IStatusBarItem } from 'mo/model';
+import { Float, IStatusBarItem } from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
@@ -94,7 +94,7 @@ export class NotificationController
             ...notificationItem,
             render: () => <NotificationView onClick={this.onClick} />,
         });
-        this.statusBarService.add(notificationItem, 'right');
+        this.statusBarService.add(notificationItem, Float.right);
     }
 
     public renderNotificationPane() {

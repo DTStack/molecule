@@ -4,7 +4,7 @@ import molecule from 'mo';
 import { Button } from 'mo/components/button';
 import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
-import { FileTypes, IEditorTab, TreeNodeModel } from 'mo/model';
+import { FileTypes, Float, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
 import { localize } from 'mo/i18n/localize';
 import { Scrollable } from 'mo/components';
@@ -90,7 +90,7 @@ export default class TestPane extends React.Component {
                     name: 'test' + globalTempId,
                     sortIndex: 2,
                 },
-                'right'
+                Float.right
             );
         };
 

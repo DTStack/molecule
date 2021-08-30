@@ -269,6 +269,7 @@ export class EditorService
     }
 
     public updateTab(tab: IEditorTab, groupId?: number): IEditorTab {
+        let updatedTab;
         if (groupId) {
             const group = this.getGroupById(groupId);
 
@@ -276,11 +277,11 @@ export class EditorService
                 const tabData = group.data.find(searchById(tab.id));
 
                 if (tabData) {
-                    Object.assign(tabData, tab);
+                    updatedTab = Object.assign(tabData, tab);
                 }
 
                 if (group.activeTab === tab.id) {
-                    Object.assign(group.tab, tab);
+                    updatedTab = Object.assign(group.tab, tab);
                 }
                 this.updateGroup(groupId, group);
 
@@ -293,16 +294,16 @@ export class EditorService
             groups.forEach((group) => {
                 const tabData = this.getTabById(tab.id!, group);
                 if (tabData) {
-                    Object.assign(tabData, tab);
+                    updatedTab = Object.assign(tabData, tab);
                 }
 
                 if (group.activeTab === tab.id) {
-                    Object.assign(group.tab, tab);
+                    updatedTab = Object.assign(group.tab, tab);
                 }
             });
 
             if (current?.activeTab === tab.id) {
-                Object.assign(current!.tab, tab);
+                updatedTab = Object.assign(current!.tab, tab);
             }
 
             this.setState({
@@ -310,7 +311,7 @@ export class EditorService
                 groups,
             });
         }
-        return tab;
+        return updatedTab;
     }
 
     public closeTab(tabId: string, groupId: number) {

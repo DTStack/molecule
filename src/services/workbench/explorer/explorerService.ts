@@ -6,25 +6,24 @@ import {
     IExplorer,
     IExplorerModel,
     ExplorerEvent,
+    builtInExplorerHeaderToolbar,
 } from 'mo/model/workbench/explorer/explorer';
+import cloneDeep from 'lodash/cloneDeep';
 import { IMenuItemProps } from 'mo/components/menu';
 import { searchById } from '../../helper';
 import { IActionBarItemProps } from 'mo/components';
 import React from 'react';
+import logger from 'mo/common/logger';
 
 export interface IExplorerService extends Component<IExplorer> {
-    /**
-     * Reset the ExplorerService state, it's mainly for customizing the Explorer
-     */
-    reset(): void;
-    /**
-     * Update the panels data, as well as modify toolbar data
-     */
-    updatePanel(data: IExplorerPanelItem[]): void;
     /**
      * Add a new panel, as well as add a new data for toolbar data
      */
     addPanel(panel: IExplorerPanelItem | IExplorerPanelItem[]): void;
+    /**
+     * Update the panels data, as well as modify toolbar data
+     */
+    updatePanel(data: Partial<IExplorerPanelItem>): void;
     /**
      * Remove a panel via id, as well as remove the corresponding action bar
      */
@@ -42,10 +41,24 @@ export interface IExplorerService extends Component<IExplorer> {
      */
     addAction(action: IMenuItemProps): void;
     /**
+     * Get the specific action in toolbar actions
+     * @param id
+     */
+    getAction(id: React.Key): IMenuItemProps | undefined;
+    /**
+     * Update the action in toolbar actions
+     * @param action
+     */
+    updateAction(action: Partial<IMenuItemProps>): void;
+    /**
      * Remove the specific header toolbar action
      * @param id action id
      */
     removeAction(id: React.Key): void;
+    /**
+     * Reset the ExplorerService state, it's mainly for customizing the Explorer
+     */
+    reset(): void;
     /**
      * Listen to the Explorer header toolbar click event
      * @param callback
@@ -79,61 +92,85 @@ export class ExplorerService
         return icon === 'check' ? '' : 'check';
     }
 
-    public updatePanel(data: IExplorerPanelItem[]) {
-        const next = data.concat();
-        const contextMenu = this.state.headerToolBar?.contextMenu || [];
+    public getAction(id: React.Key): IMenuItemProps | undefined {
+        const { headerToolBar } = this.state;
+        const action = headerToolBar.contextMenu?.find(searchById(id));
+        return action ? cloneDeep(action) : action;
+    }
 
-        const nextTooBar = contextMenu.map((item) => {
-            const coData = data.find((d) => d.id === item.id);
-            if (coData) {
-                return {
-                    ...item,
-                    name: coData.name,
-                    title: coData.name,
-                    sortIndex: coData.sortIndex,
-                } as IMenuItemProps;
-            }
-            return item;
-        });
+    public updatePanel(data: Partial<IExplorerPanelItem>) {
+        if (!data.id) {
+            logger.error('Must provide id property in update data');
+            return;
+        }
+        const next = this.state.data.concat();
+        const target = next.find(searchById(data.id));
+        if (!target) {
+            logger.error(
+                `There is no panel found in state whose id is ${data.id}`
+            );
+            return;
+        }
 
-        // prevent unsorted in case
-        next.sort(
-            ({ sortIndex: preIndex = 0 }, { sortIndex: nextIndex = 0 }) =>
-                nextIndex - preIndex
-        );
+        Object.assign(target, data);
+
         this.setState({
             data: next,
+        });
+
+        this.updateAction({
+            id: data.id.toString(),
+            name: data.name,
+            title: data.title,
+            sortIndex: data.sortIndex,
+        });
+    }
+
+    public updateAction(action: Partial<IMenuItemProps>) {
+        if (!action.id) {
+            logger.error('Must provide id property in action data');
+            return;
+        }
+        const { headerToolBar } = this.state;
+        const nextActions = headerToolBar.contextMenu?.concat() || [];
+
+        const target = nextActions.find(searchById(action.id));
+        if (!target) {
+            logger.error(
+                `There is no action found in actions whose id is ${action.id}`
+            );
+            return;
+        }
+
+        Object.assign(target, action);
+
+        this.setState({
             headerToolBar: {
-                ...this.state.headerToolBar,
-                contextMenu: nextTooBar,
+                ...headerToolBar,
+                contextMenu: nextActions,
             },
         });
     }
 
     public addPanel(data: IExplorerPanelItem | IExplorerPanelItem[]) {
-        let next = [...this.state.data!];
+        const workInProgressData = Array.isArray(data) ? data : [data];
+        const next = [...this.state.data!];
         const nextActions: IMenuItemProps[] = [];
-        if (Array.isArray(data)) {
-            next = next?.concat(data);
-            nextActions.push(
-                ...data.map((item) => ({
+        workInProgressData.forEach((item) => {
+            const index = next.findIndex(searchById(item.id));
+            if (index !== -1) {
+                logger.error(`There is already a panel whose id is ${item.id}`);
+            } else {
+                next.push(cloneDeep(item));
+                nextActions.push({
                     id: item.id.toString(),
                     name: item.name,
                     title: item.name,
                     icon: 'check',
                     sortIndex: item.sortIndex,
-                }))
-            );
-        } else {
-            next?.push(data);
-            nextActions.push({
-                id: data.id.toString(),
-                name: data.name,
-                title: data.name,
-                icon: 'check',
-                sortIndex: data.sortIndex,
-            });
-        }
+                });
+            }
+        });
 
         // sort by sortIndex
         next.sort(
@@ -144,19 +181,24 @@ export class ExplorerService
         this.setState({
             data: next,
         });
-
         // async add header actions
         this.addAction(nextActions);
     }
 
     public addAction(action: IMenuItemProps | IMenuItemProps[]) {
+        const workInProgressActions = Array.isArray(action) ? action : [action];
         const { headerToolBar } = this.state;
-        let newActions = headerToolBar?.contextMenu || [];
-        if (Array.isArray(action)) {
-            newActions = newActions.concat(action);
-        } else {
-            newActions.push(action);
-        }
+        const newActions = headerToolBar.contextMenu?.concat() || [];
+        workInProgressActions.forEach((action) => {
+            const index = newActions.findIndex(searchById(action.id));
+            if (index !== -1) {
+                logger.error(
+                    `There is already an action whose id is ${action.id}`
+                );
+            } else {
+                newActions.push(action);
+            }
+        });
 
         // sort by sortIndex
         newActions.sort(
@@ -186,7 +228,7 @@ export class ExplorerService
 
     public removeAction(id: React.Key) {
         const { headerToolBar } = this.state;
-        const newActions = headerToolBar?.contextMenu || [];
+        const newActions = headerToolBar.contextMenu || [];
         const index = newActions?.findIndex(searchById(id));
         if (index > -1) {
             newActions.splice(index, 1);
@@ -200,7 +242,7 @@ export class ExplorerService
     // update panel hidden
     public togglePanel(id: React.Key) {
         const { data } = this.state;
-        const next = data?.concat() || [];
+        const next = data.concat();
         // find current panel
         const currentPanel = next.find(searchById(id));
         if (currentPanel) {
@@ -216,7 +258,7 @@ export class ExplorerService
     // update header toolbar status
     public toggleHeaderBar(id: React.Key) {
         const { headerToolBar } = this.state;
-        const nextMenu = headerToolBar?.contextMenu?.concat() || [];
+        const nextMenu = headerToolBar.contextMenu?.concat() || [];
         const currentMenu = nextMenu.find(searchById(id));
         if (currentMenu) {
             currentMenu.icon = this.toggleIcon(currentMenu.icon as string);
@@ -233,10 +275,7 @@ export class ExplorerService
     public reset() {
         this.setState({
             data: [],
-            headerToolBar: {
-                ...this.state.headerToolBar,
-                contextMenu: [],
-            },
+            headerToolBar: builtInExplorerHeaderToolbar(),
         });
     }
 

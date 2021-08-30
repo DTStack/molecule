@@ -174,15 +174,11 @@ export class FolderTreeService
         this.setState({
             folderTree: { ...folderTree, data: [folder] },
         });
-        const { data = [] } = this.explorerService.getState();
-        this.explorerService.updatePanel(
-            data.map((item) => {
-                if (item.id === SAMPLE_FOLDER_PANEL_ID) {
-                    item.name = folder.name || 'Default Root Folder';
-                }
-                return item;
-            })
-        );
+
+        this.explorerService.updatePanel({
+            id: SAMPLE_FOLDER_PANEL_ID,
+            name: folder.name || 'Default Root Folder',
+        });
     }
 
     private getRootFolderIndex(id: number) {

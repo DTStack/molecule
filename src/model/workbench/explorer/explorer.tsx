@@ -37,8 +37,8 @@ export interface IExplorerPanelItem {
     [key: string]: any;
 }
 export interface IExplorer {
-    data?: IExplorerPanelItem[];
-    headerToolBar?: IActionBarItemProps;
+    data: IExplorerPanelItem[];
+    headerToolBar: IActionBarItemProps;
 }
 
 export const SAMPLE_FOLDER_PANEL_ID = 'sidebar.explore.folders';

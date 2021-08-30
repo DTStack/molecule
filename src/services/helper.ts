@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 export function searchById(id) {
     return (item) => item.id === id;
 }
@@ -50,7 +52,7 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
      */
     constructor(obj?: T, childNodeName = 'children') {
         this.count = 1; // nodes count
-        this.obj = obj || ({ [childNodeName]: [] } as any);
+        this.obj = cloneDeep(obj) || ({ [childNodeName]: [] } as any);
         this.indexes = {};
         this.childNodeName = childNodeName;
         this.generate(this.obj);

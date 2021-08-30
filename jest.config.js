@@ -24,6 +24,7 @@ module.exports = {
         '^mo/(.*)$': '<rootDir>/src/$1',
         '^mo$': '<rootDir>/src/index.ts',
         '^monaco-editor$': '<rootDir>/mock/monacoMock.js',
+        '^@test/(.*)$': '<rootDir>/test/$1',
     },
     setupFiles: ['jest-canvas-mock', './test/setupTests.ts'],
 };

@@ -10,6 +10,7 @@ module.exports = {
         alias: {
             mo: path.resolve(__dirname, '../src'),
             '@stories': path.resolve(__dirname, '../stories'),
+            '@test': path.resolve(__dirname, '../test'),
         },
     },
     output: {

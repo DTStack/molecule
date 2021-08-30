@@ -27,7 +27,8 @@
         "paths": {
             "mo": ["./src/index.ts"],
             "mo/*": ["./src/*"],
-            "@stories": ["./stories/*"]
+            "@stories": ["./stories/*"],
+            "@test/*": ["./test/*"]
         },
         "typeRoots": ["node", "node_modules/@types", "src/typings"]
     },

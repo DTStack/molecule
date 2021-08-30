@@ -13,31 +13,12 @@ describe('Test StatusBarService', () => {
     const TEST_ID = 'test-id';
 
     beforeEach(() => {
-        searchBarService.setState({
-            searchAddons: [],
-            replaceAddons: [],
-        });
+        searchBarService.reset();
     });
 
     test('SearchBarService Class instance', () => {
         expect(searchBarService).not.toBeUndefined();
         expect(searchBarService.getState()).not.toBeUndefined();
-    });
-
-    test('Should support to set setValidateInfo', () => {
-        const TEST_DATA = {
-            type: InfoTypeEnums.info,
-            text: InfoTypeEnums.info,
-        };
-
-        searchBarService.setValidateInfo(TEST_DATA);
-        expect(searchBarService.getState().validationInfo).toEqual(TEST_DATA);
-
-        searchBarService.setValidateInfo(TEST_ID);
-        expect(searchBarService.getState().validationInfo).toEqual({
-            text: TEST_ID,
-            type: 'info',
-        });
     });
 
     test('Should support to set setValidateInfo', () => {
@@ -66,7 +47,7 @@ describe('Test StatusBarService', () => {
         expect(searchBarService.getState().replaceValue).toBe(TEST_ID);
     });
 
-    test('SetResult default value', () => {
+    test('Set result default value', () => {
         expect(searchBarService.getState().result).toEqual([]);
     });
 

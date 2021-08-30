@@ -8,7 +8,7 @@ import {
     PanelEvent,
 } from 'mo/model/workbench/panel';
 import { builtInPanelProblems } from 'mo/model/problems';
-import { logErrorFn } from '../../../test/utils';
+import { logErrorFn } from '@test/utils';
 
 const paneOutput = builtInOutputPanel();
 const panelProblems = builtInPanelProblems();

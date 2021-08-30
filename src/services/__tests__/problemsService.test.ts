@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { logErrorFn } from '../../../test/utils';
+import { logErrorFn } from '@test/utils';
 import { container } from 'tsyringe';
 import { ProblemsService } from '../problemsService';
 

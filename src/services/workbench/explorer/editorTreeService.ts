@@ -5,7 +5,7 @@ import { Component } from 'mo/react';
 import { EditorService } from 'mo/services';
 import { container, singleton } from 'tsyringe';
 
-export interface IEditorTreeService {
+export interface IEditorTreeService extends Component<IEditor> {
     /**
      * Callabck for close a certain tab
      */
@@ -59,6 +59,7 @@ export class EditorTreeService
         this.editorService = container.resolve(EditorService);
         this.state = this.editorService.getState();
     }
+
     public onClose(callback: (tabId: string, groupId: number) => void) {
         this.subscribe(EditorTreeEvent.onClose, callback);
     }

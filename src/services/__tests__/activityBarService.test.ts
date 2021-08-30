@@ -3,7 +3,7 @@ import { container } from 'tsyringe';
 import { ActivityBarService } from '../workbench';
 import { ActivityBarEvent, IActivityBarItem } from 'mo/model';
 import type { IMenuItemProps } from 'mo/components';
-import { logErrorFn } from '../../../test/utils';
+import { logErrorFn } from '@test/utils';
 
 const activityBarService = container.resolve(ActivityBarService);
 

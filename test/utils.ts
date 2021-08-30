@@ -1,8 +1,9 @@
 import logger from 'mo/common/logger';
+
 /**
- * Test the action whether log error
+ * Expect the `logger.error` method to be called when exec action
  */
-export function logErrorFn(action: () => void) {
+export function expectLoggerErrorToBeCalled(action: () => void) {
     const originalLog = logger.error;
     logger.error = jest.fn();
 
@@ -12,6 +13,10 @@ export function logErrorFn(action: () => void) {
     logger.error = originalLog;
 }
 
+/**
+ * Expect the `testFn` function to be called when exec action
+ * @param action
+ */
 export function expectFnCalled(
     action: (testFn: (...args: any) => void) => void
 ) {

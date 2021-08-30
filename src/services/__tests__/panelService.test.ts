@@ -8,7 +8,7 @@ import {
     PanelEvent,
 } from 'mo/model/workbench/panel';
 import { builtInPanelProblems } from 'mo/model/problems';
-import { logErrorFn } from '@test/utils';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 
 const paneOutput = builtInOutputPanel();
 const panelProblems = builtInPanelProblems();
@@ -53,7 +53,7 @@ describe('The PanelService test', () => {
 
     test('Should log error when remove the panel failed', () => {
         let removed;
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             removed = panelService.remove(paneOutput.id);
         });
 
@@ -115,7 +115,7 @@ describe('The PanelService test', () => {
 
     test('Should log error when update failed', () => {
         let updated;
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             updated = panelService.update({
                 id: paneOutput.id,
                 data: 'test',
@@ -146,7 +146,7 @@ describe('The PanelService test', () => {
         const state = panelService.getState();
         expect(state.current).toBeNull();
 
-        logErrorFn(() => {
+        expectLoggerErrorToBeCalled(() => {
             panelService.setActive(paneOutput.id);
         });
 

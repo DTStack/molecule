@@ -16,11 +16,14 @@ import { ILayoutService, LayoutService } from 'mo/services';
 
 export interface IMoleculeProps {
     extensions?: IExtension[];
+    /**
+     * Locales data
+     */
     locales?: ILocale[];
     /**
-     * Localization id
+     * Specify a default locale
      */
-    locale?: string;
+    defaultLocale?: string;
     colorTheme?: IColorTheme[];
 }
 export interface IMoleculeState {}
@@ -46,8 +49,8 @@ export class MoleculeProvider extends React.Component<IMoleculeProps> {
     }
 
     preloadLocales() {
-        const { locales = [], locale } = this.props;
-        this.localeService.initialize(locales, locale);
+        const { locales = [], defaultLocale } = this.props;
+        this.localeService.initialize(locales, defaultLocale);
     }
 
     public get container() {

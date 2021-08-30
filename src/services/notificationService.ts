@@ -10,6 +10,7 @@ import { singleton, container } from 'tsyringe';
 import { searchById } from './helper';
 import { randomId } from 'mo/common/utils';
 import logger from 'mo/common/logger';
+import { cloneDeep } from 'lodash';
 
 export interface INotificationService extends Component<INotification> {
     /**
@@ -28,9 +29,9 @@ export interface INotificationService extends Component<INotification> {
      */
     update<T>(item: INotificationItem<T>): null | INotificationItem<T>;
     /**
-     * Toggle the Problems view between display or hidden
+     * Toggle the Notification view between display or hidden
      */
-    toggleProblems(): void;
+    toggleNotification(): void;
     /**
      * Reset notifications, this will clear the pending notifications
      */
@@ -48,11 +49,10 @@ export class NotificationService
         this.state = container.resolve(NotificationModel);
     }
 
-    public toggleProblems(): void {
-        this.setState({
-            ...this.state,
-            showNotifications: !this.state.showNotifications,
-        });
+    public toggleNotification(): void {
+        const next = cloneDeep(this.state);
+        next.showNotifications = !this.state.showNotifications;
+        this.setState(next);
     }
 
     public update<T>(item: INotificationItem<T>): INotificationItem<T> | null {

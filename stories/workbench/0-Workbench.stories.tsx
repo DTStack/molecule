@@ -10,7 +10,7 @@ export const IDEDemo = () => (
     <MoleculeProvider
         extensions={customExtensions}
         locales={[locale]}
-        locale="zh-CN"
+        defaultLocale="zh-CN"
     >
         <Workbench />
     </MoleculeProvider>

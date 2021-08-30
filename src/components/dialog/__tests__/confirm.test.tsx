@@ -1,21 +1,18 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
+import { querySelector } from '@test/utils';
 
 import { ConfirmState, Modal } from '../index';
-
-const { confirm, warn, warning } = Modal;
 import {
     iconConfirmClassName,
     textConfirmClassName,
     detailConfirmClassName,
 } from '../base';
 
+const { confirm, warn, warning } = Modal;
 const TEST_ID = 'test-id';
-describe('Test Confirm Component', () => {
-    function $$(className) {
-        return document.body.querySelector(className);
-    }
 
+describe('Test Confirm Component', () => {
     test('Confirm general display', async () => {
         const className = iconConfirmClassName(ConfirmState.confirm);
         const DESTROY_ID = 'test-destroy';
@@ -65,19 +62,19 @@ describe('Test Confirm Component', () => {
 
         fireEvent.click(wrapper.getByTestId(TEST_ID));
         await waitFor(async () => {
-            const component = $$(`div[class*="${className}"]`);
+            const component = querySelector(`div[class*="${className}"]`);
             expect(component!.classList).toContain(className);
 
-            const icon = $$('.codicon-warning');
+            const icon = querySelector('.codicon-warning');
             expect(icon).not.toBeNull();
 
-            const title = $$('.mo-modal-title');
+            const title = querySelector('.mo-modal-title');
             expect(title?.textContent).toBe(TEST_TITLE);
 
-            const confirmTitle = $$(`.${textConfirmClassName}`);
+            const confirmTitle = querySelector(`.${textConfirmClassName}`);
             expect(confirmTitle?.textContent).toBe(TEST_TITLE);
 
-            const confirmDetail = $$(`.${detailConfirmClassName}`);
+            const confirmDetail = querySelector(`.${detailConfirmClassName}`);
             expect(confirmDetail?.textContent).toBe(TEST_CONTENT);
 
             /**
@@ -85,7 +82,7 @@ describe('Test Confirm Component', () => {
              */
             fireEvent.click(wrapper.getByTestId(DESTROY_ID));
             await waitFor(() => {
-                const component = $$(`div[class*="${className}"]`);
+                const component = querySelector(`div[class*="${className}"]`);
                 expect(component).toBeNull();
             });
         });

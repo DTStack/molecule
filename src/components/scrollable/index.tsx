@@ -33,25 +33,23 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
 
     const [isScrolling, setIsScrolling] = useState(false);
     const [isMouseOver, setIsMouseOver] = useState(false);
-    /* istanbul ignore next */
+    const [scrollTop, setScrollTop] = useState(0);
     const isShow = isScrolling || isMouseOver;
 
     const claNames = classNames(defaultScrollableClassName, className);
 
-    const onScrollStart = useCallback(() => {
-        /* istanbul ignore next */
+    const onScrollStart = useCallback((values) => {
         setIsScrolling(true);
+        setScrollTop(values.scrollTop);
     }, []);
     const onScrollStop = useCallback(() => {
         /* istanbul ignore next */
         setIsScrolling(false);
     }, []);
     const onMouseEnter = useCallback(() => {
-        /* istanbul ignore next */
         setIsMouseOver(true);
     }, []);
     const onMouseLeave = useCallback(() => {
-        /* istanbul ignore next */
         setIsMouseOver(false);
     }, []);
 
@@ -67,9 +65,7 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
                         style={{
                             ...style,
                             borderRadius: 0,
-                            opacity:
-                                /* istanbul ignore next */
-                                isShow ? 1 : 0,
+                            opacity: isShow ? 1 : 0,
                             transition: 'opacity 0.4s ease-in-out',
                             background: 'transparent',
                             ...trackStyle,
@@ -110,7 +106,6 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
             {...(restProps as any)}
             wrapperProps={{
                 renderer: ({ elementRef, style, key, ...restProps }) => {
-                    const currentTop = scroller.current?.scrollTop || 0;
                     return (
                         <React.Fragment key={key}>
                             <div
@@ -123,10 +118,7 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
                                     className={classNames(
                                         'shadow',
                                         'top',
-                                        /* istanbul ignore next */
-                                        isShowShadow &&
-                                            currentTop > 0 &&
-                                            'active'
+                                        scrollTop > 0 && 'active'
                                     )}
                                 />
                             ) : null}

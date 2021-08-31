@@ -311,7 +311,7 @@ PARTITIONED BY (ds string) lifecycle 1000;
         };
 
         return (
-            <Scrollable>
+            <Scrollable isShowShadow>
                 <div>
                     <div style={{ margin: '50px 20px' }}>
                         <Button onClick={addABar}>Add Bar</Button>

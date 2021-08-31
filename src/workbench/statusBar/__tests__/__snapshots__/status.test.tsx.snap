@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The StatusBar Component Match Snapshot 1`] = `
+<div
+  className="mo-statusBar"
+  id="statusBar"
+>
+  <div
+    className="mo-statusBar__left-items"
+  >
+    <div
+      className="mo-statusBar__item"
+      id="MoEditorInfo"
+      sortIndex={2}
+    >
+      <a
+        onClick={[Function]}
+        tabIndex={-1}
+        title="Go to Line/Column"
+      >
+        Go to Line/Column
+      </a>
+    </div>
+  </div>
+  <div
+    className="mo-statusBar__right-items"
+  >
+    <div
+      className="mo-statusBar__item"
+      id="MoEditorInfo"
+      sortIndex={2}
+    >
+      <a
+        onClick={[Function]}
+        tabIndex={-1}
+        title="Go to Line/Column"
+      >
+        Go to Line/Column
+      </a>
+    </div>
+  </div>
+</div>
+`;

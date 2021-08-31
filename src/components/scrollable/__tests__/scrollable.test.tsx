@@ -36,13 +36,13 @@ describe('Test Scrollable Component', () => {
 
     test('Show shadow style', () => {
         const { container, rerender } = render(<TestScrollable />);
-        expect(container.querySelector('.shadow')).toBeNull();
+        expect(container.querySelector('.shadow')).not.toBeInTheDocument();
 
         rerender(<TestScrollable isShowShadow />);
-        expect(container.querySelector('.shadow')).not.toBeNull();
+        expect(container.querySelector('.shadow')).toBeInTheDocument();
 
         rerender(<TestScrollable isShowShadow={false} />);
-        expect(container.querySelector('.shadow')).toBeNull();
+        expect(container.querySelector('.shadow')).not.toBeInTheDocument();
     });
 
     test('Custom the Track style', () => {

@@ -15,7 +15,7 @@ export interface IExplorerPanelItem {
     /**
      * It must be unique in the Explorer Panel Data
      */
-    id: React.Key;
+    id: string;
     /**
      * @requires true
      * explorer panel's title

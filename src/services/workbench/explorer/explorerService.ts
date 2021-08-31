@@ -12,7 +12,6 @@ import cloneDeep from 'lodash/cloneDeep';
 import { IMenuItemProps } from 'mo/components/menu';
 import { searchById } from '../../helper';
 import { IActionBarItemProps } from 'mo/components';
-import React from 'react';
 import logger from 'mo/common/logger';
 
 export interface IExplorerService extends Component<IExplorer> {
@@ -27,15 +26,15 @@ export interface IExplorerService extends Component<IExplorer> {
     /**
      * Remove a panel via id, as well as remove the corresponding action bar
      */
-    removePanel(id: React.Key): void;
+    removePanel(id: string): void;
     /**
      * Toggle panel hidden, as well as toggle the toolbar status
      */
-    togglePanel(id: React.Key): void;
+    togglePanel(id: string): void;
     /**
      * Only toggle the toolbar status
      */
-    toggleHeaderBar(id: React.Key): void;
+    toggleHeaderBar(id: string): void;
     /**
      * Only add an action in toolbar actions
      */
@@ -44,7 +43,7 @@ export interface IExplorerService extends Component<IExplorer> {
      * Get the specific action in toolbar actions
      * @param id
      */
-    getAction(id: React.Key): IMenuItemProps | undefined;
+    getAction(id: string): IMenuItemProps | undefined;
     /**
      * Update the action in toolbar actions
      * @param action
@@ -54,7 +53,7 @@ export interface IExplorerService extends Component<IExplorer> {
      * Remove the specific header toolbar action
      * @param id action id
      */
-    removeAction(id: React.Key): void;
+    removeAction(id: string): void;
     /**
      * Reset the ExplorerService state, it's mainly for customizing the Explorer
      */
@@ -92,7 +91,7 @@ export class ExplorerService
         return icon === 'check' ? '' : 'check';
     }
 
-    public getAction(id: React.Key): IMenuItemProps | undefined {
+    public getAction(id: string): IMenuItemProps | undefined {
         const { headerToolBar } = this.state;
         const action = headerToolBar.contextMenu?.find(searchById(id));
         return action ? cloneDeep(action) : action;
@@ -211,7 +210,7 @@ export class ExplorerService
         });
     }
 
-    public removePanel(id: React.Key) {
+    public removePanel(id: string) {
         const { data } = this.state;
         const next = [...data!];
         const index = next.findIndex(searchById(id));
@@ -226,7 +225,7 @@ export class ExplorerService
         this.removeAction(id);
     }
 
-    public removeAction(id: React.Key) {
+    public removeAction(id: string) {
         const { headerToolBar } = this.state;
         const newActions = headerToolBar.contextMenu || [];
         const index = newActions?.findIndex(searchById(id));
@@ -240,7 +239,7 @@ export class ExplorerService
     }
 
     // update panel hidden
-    public togglePanel(id: React.Key) {
+    public togglePanel(id: string) {
         const { data } = this.state;
         const next = data.concat();
         // find current panel
@@ -256,7 +255,7 @@ export class ExplorerService
     }
 
     // update header toolbar status
-    public toggleHeaderBar(id: React.Key) {
+    public toggleHeaderBar(id: string) {
         const { headerToolBar } = this.state;
         const nextMenu = headerToolBar.contextMenu?.concat() || [];
         const currentMenu = nextMenu.find(searchById(id));

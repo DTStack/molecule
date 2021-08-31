@@ -17,7 +17,7 @@ import { select } from 'mo/common/dom';
 
 type RenderFunctionProps = (data: DataBaseProps) => React.ReactNode;
 export interface DataBaseProps {
-    id: React.Key;
+    id: string;
     name: string;
     className?: string;
     hidden?: boolean;

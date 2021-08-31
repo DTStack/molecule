@@ -4,7 +4,7 @@ import {
     IExplorerPanelItem,
 } from 'mo/model';
 import 'reflect-metadata';
-import { logErrorFn } from '@test/utils';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
 import { searchById } from '../helper';
 import { ExplorerService } from '../workbench';
@@ -67,7 +67,7 @@ describe('Test the Explorer Service', () => {
         });
 
         test('Should log error when add panels failed', () => {
-            logErrorFn(() => {
+            expectLoggerErrorToBeCalled(() => {
                 explorerService.addPanel([panelData]);
                 explorerService.addPanel([panelData]);
             });
@@ -91,13 +91,13 @@ describe('Test the Explorer Service', () => {
         });
 
         test('Should log error when update failed', () => {
-            logErrorFn(() => {
+            expectLoggerErrorToBeCalled(() => {
                 explorerService.updatePanel({
                     name: 'test',
                 });
             });
 
-            logErrorFn(() => {
+            expectLoggerErrorToBeCalled(() => {
                 explorerService.updatePanel({
                     id: 'test',
                     name: 'test',
@@ -163,7 +163,7 @@ describe('Test the Explorer Service', () => {
         });
 
         test('Should log error when add actions failed', () => {
-            logErrorFn(() => {
+            expectLoggerErrorToBeCalled(() => {
                 explorerService.addAction([actionData]);
                 explorerService.addAction([actionData]);
             });
@@ -181,13 +181,13 @@ describe('Test the Explorer Service', () => {
         });
 
         test('Should log error when update the action failed', () => {
-            logErrorFn(() => {
+            expectLoggerErrorToBeCalled(() => {
                 explorerService.updateAction({
                     name: 'test',
                 });
             });
 
-            logErrorFn(() => {
+            expectLoggerErrorToBeCalled(() => {
                 explorerService.updateAction({
                     id: 'test',
                     name: 'test',

@@ -58,7 +58,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
     };
 
     const renderContextMenu = () => (
-        <Menu onClick={onClickMenuItem} data={contextMenu} />
+        <Menu role="menu" onClick={onClickMenuItem} data={contextMenu} />
     );
 
     const contextView = useContextView({
@@ -104,7 +104,13 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
                     x: rect.x + rect.width / 2,
                     y: rect.y + rect.height,
                 },
-                () => <Menu onClick={onClickMenuItem} data={extraContextMenu} />
+                () => (
+                    <Menu
+                        role="menu"
+                        onClick={onClickMenuItem}
+                        data={extraContextMenu}
+                    />
+                )
             );
         } else {
             contextView.show({ x: e.pageX, y: e.pageY });

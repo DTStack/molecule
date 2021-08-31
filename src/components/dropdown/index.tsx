@@ -18,7 +18,7 @@ export type DropDownRef = {
     dispose: () => void;
 };
 
-const defaultDropDownClassName = prefixClaName('drop-down');
+export const defaultDropDownClassName = prefixClaName('drop-down');
 
 export const DropDown = React.forwardRef<DropDownRef, IDropDownProps>(
     (props: IDropDownProps, ref) => {

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The ActivityBar Item Component match the snapshot 1`] = `
+<li
+  className="mo-activityBar__item"
+  id="test"
+  onClick={[Function]}
+/>
+`;

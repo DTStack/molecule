@@ -67,6 +67,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     setFileContextMenu: (menus: IMenuItemProps[]) => void;
     /**
      * Set the context menus for folder
+     * @param menus
      */
     setFolderContextMenu: (menus: IMenuItemProps[]) => void;
     /**
@@ -119,6 +120,10 @@ export interface IFolderTreeService extends Component<IFolderTree> {
             contextMenu: IMenuItemProps
         ) => void
     ): void;
+    /**
+     * Callback for load folder tree data
+     * @param callback
+     */
     onLoadData(callback: (treeNode: LoadEventData) => Promise<void>): void;
 }
 
@@ -167,6 +172,7 @@ export class FolderTreeService
 
     private addRootFolder(folder: ITreeNodeItemProps) {
         const { folderTree } = this.state;
+
         if (folderTree?.data?.length) {
             // if root folder exists, then do nothing
             return;
@@ -197,6 +203,7 @@ export class FolderTreeService
         const currentRootFolder = this.getRootFolderById(id);
         const index = this.getRootFolderIndex(currentRootFolder.id!);
         const tree = new TreeViewUtil<ITreeNodeItemProps>(currentRootFolder);
+
         return {
             currentRootFolder,
             index,
@@ -206,23 +213,36 @@ export class FolderTreeService
 
     public add(data: ITreeNodeItemProps, id?: number): void {
         const isRootFolder = data.fileType === 'RootFolder';
+
         if (isRootFolder) {
             this.addRootFolder(data);
             return;
         }
-        if (!id) throw new Error('File node or folder node both need id');
+        if (!id && id !== 0)
+            throw new Error('File node or folder node both need id');
+
         const cloneData = this.state.folderTree?.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
+
         // this index is root folder index
         if (index > -1) {
             const currentIndex = tree.getIndex(id);
+
             if (currentIndex?.node?.fileType === FileTypes.File) {
-                const locations = currentIndex.node.location.split('/');
-                locations[locations.length - 1] = data.name;
-                data.location = locations.join('/');
+                data.location = currentIndex.node.location.replace(
+                    /(?<=\/)[^\/]+$/,
+                    `${data.name}`
+                );
                 tree.prepend(data, currentIndex.parent!);
             } else {
+                const children = data.children;
+
                 data.location = `${currentIndex!.node!.location}/${data.name}`;
+                if (children) {
+                    children.forEach((child) => {
+                        child.location = `${data.location}/${child.name}`;
+                    });
+                }
                 tree.append(data, id);
             }
             cloneData[index] = tree.obj;
@@ -243,6 +263,7 @@ export class FolderTreeService
         );
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
+
         tree.remove(id);
         if (index > -1) nextData[index] = tree.obj;
         this.setState({
@@ -258,6 +279,7 @@ export class FolderTreeService
         );
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
+
         tree.update(id, restData);
         if (index > -1) nextData[index] = tree.obj;
         this.setState({
@@ -267,12 +289,16 @@ export class FolderTreeService
 
     public get(id: number) {
         const { tree } = this.getCurrentRootFolderInfo(id);
+
+        // if (!tree) return null;
         const node = tree.get(id);
+
         return node;
     }
 
     public setActive(id?: number) {
         const { folderTree } = this.state;
+
         this.setState({
             folderTree: { ...folderTree, current: id ? this.get(id) : null },
         });

@@ -8,35 +8,46 @@ import { container, singleton } from 'tsyringe';
 export interface IEditorTreeService extends Component<IEditor> {
     /**
      * Callabck for close a certain tab
+     * @param callback
      */
     onClose(callback: (tabId: string, groupId: number) => void): void;
     /**
      * Callback for close others tabs except this tabItem
+     * @param callback
      */
     onCloseOthers(
         callback: (tabItem: IEditorTab, groupId: number) => void
     ): void;
     /**
      * Callback for close saved tabs in this group
+     * @param callback
      */
     onCloseSaved(callback: (groupId: number) => void): void;
+    /**
+     * Callback for select tab in this group
+     * @param callback
+     */
     onSelect(callback: (tabId: string, groupId: number) => void): void;
     /**
      * Callback for close all tabs
      * When specify groupId, it'll close that group
+     * @param callback
      */
     onCloseAll(callback: (groupId?: number) => void): void;
     /**
      * Callback for save all tabs
      * When specify groupId, it'll save that group
+     * @param callback
      */
     onSaveAll(callback: (groupId?: number) => void): void;
     /**
      * Callback for adjust editor layout
+     * @param callback
      */
     onLayout(callback: () => void): void;
     /**
      * Callback for context menu click event which isn't in buit-in menus
+     * @param callback
      */
     onContextMenu(
         callback: (

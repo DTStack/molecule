@@ -8,6 +8,7 @@ import {
     getEditorInitialActions,
     IEditorTab,
 } from 'mo/model';
+import { expectFnCalled } from '@test/utils';
 
 describe('Test EditorService', () => {
     let mockTab: IEditorTab;
@@ -355,96 +356,90 @@ describe('Test EditorService', () => {
 
     test('Listen to the Tab update event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((tab) => {
-            expect(tab).toEqual(mockTab);
+        expectFnCalled((testFn) => {
+            editor.onUpdateTab(testFn);
+            editor.emit(EditorEvent.OnUpdateTab, mockTab);
+            expect(testFn.mock.calls[0][0]).toEqual(mockTab);
         });
-        editor.onUpdateTab(fn);
-        editor.emit(EditorEvent.OnUpdateTab, mockTab);
-        expect(fn).toBeCalled();
     });
 
     test('Listen to the Tab move event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((tab, groupId) => {
-            expect(tab).toEqual(mockTab);
-            expect(groupId).toBe(1);
+        expectFnCalled((testFn) => {
+            editor.onMoveTab(testFn);
+            const expected = [mockTab, 1];
+            editor.emit(EditorEvent.OnMoveTab, ...expected);
+            expect(testFn.mock.calls[0]).toEqual(expected);
         });
-        editor.onMoveTab(fn);
-        editor.emit(EditorEvent.OnMoveTab, mockTab, 1);
-        expect(fn).toBeCalled();
     });
 
     test('Listen to the Tab select event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((tab, groupId) => {
-            expect(tab).toEqual(mockTab);
-            expect(groupId).toBe(1);
+        expectFnCalled((testFn) => {
+            editor.onSelectTab(testFn);
+            const expected = [mockTab, 1];
+            editor.emit(EditorEvent.OnSelectTab, ...expected);
+            expect(testFn.mock.calls[0]).toEqual(expected);
         });
-        editor.onSelectTab(fn);
-        editor.emit(EditorEvent.OnSelectTab, mockTab, 1);
-        expect(fn).toBeCalled();
     });
 
     test('Listen to the close all opened Tabs event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((groupId) => {
-            expect(groupId).toBe(1);
+        expectFnCalled((testFn) => {
+            editor.onCloseAll(testFn);
+            const expected = [1];
+            editor.emit(EditorEvent.OnCloseAll, ...expected);
+            expect(testFn.mock.calls[0]).toEqual(expected);
         });
-        editor.onCloseAll(fn);
-        editor.emit(EditorEvent.OnCloseAll, 1);
-        expect(fn).toBeCalled();
     });
 
     test('Listen to the close Tab event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((tabId, groupId) => {
-            expect(groupId).toBe(groupId);
-            expect(tabId).toBe(1);
+        expectFnCalled((testFn) => {
+            editor.onCloseTab(testFn);
+            const expected = [1, 1];
+            editor.emit(EditorEvent.OnCloseTab, ...expected);
+            expect(testFn.mock.calls[0]).toEqual(expected);
         });
-        editor.onCloseTab(fn);
-        editor.emit(EditorEvent.OnCloseTab, 1, 1);
-        expect(fn).toBeCalled();
     });
 
     test('Listen to the close other Tab event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((tab, groupId) => {
-            expect(tab).toEqual(mockTab);
-            expect(groupId).toBe(1);
+        expectFnCalled((testFn) => {
+            editor.onCloseOther(testFn);
+            const expected = [1];
+            editor.emit(EditorEvent.OnCloseOther, ...expected);
+            expect(testFn.mock.calls[0]).toEqual(expected);
         });
-        editor.onCloseOther(fn);
-        editor.emit(EditorEvent.OnCloseOther, mockTab, 1);
-        expect(fn).toBeCalled();
     });
 
     test('Listen to the close to left Tab event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((tab) => {
-            expect(tab).toEqual(mockTab);
+        expectFnCalled((testFn) => {
+            editor.onCloseToLeft(testFn);
+            const expected = [mockTab];
+            editor.emit(EditorEvent.OnCloseToLeft, ...expected);
+            expect(testFn.mock.calls[0]).toEqual(expected);
         });
-        editor.onCloseToLeft(fn);
-        editor.emit(EditorEvent.OnCloseToLeft, mockTab);
-        expect(fn).toBeCalled();
     });
 
     test('Listen to the close to right Tab event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((tab) => {
-            expect(tab).toEqual(mockTab);
+        expectFnCalled((testFn) => {
+            editor.onCloseToRight(testFn);
+            const expected = [mockTab];
+            editor.emit(EditorEvent.OnCloseToRight, ...expected);
+            expect(testFn.mock.calls[0]).toEqual(expected);
         });
-        editor.onCloseToRight(fn);
-        editor.emit(EditorEvent.OnCloseToRight, mockTab);
-        expect(fn).toBeCalled();
     });
 
     test('Listen to the Actions click event', () => {
         const editor = new EditorService();
-        const fn = jest.fn((menuId, group) => {
-            expect(menuId).toBe(1);
-            expect(group).toEqual({ id: 1 });
+        expectFnCalled((testFn) => {
+            editor.onActionsClick(testFn);
+            const expected = [1, { id: 1 }];
+            editor.emit(EditorEvent.onActionsClick, ...expected);
+            expect(testFn.mock.calls[0]).toEqual(expected);
         });
-        editor.onActionsClick(fn);
-        editor.emit(EditorEvent.onActionsClick, 1, { id: 1 });
-        expect(fn).toBeCalled();
     });
 });

@@ -140,7 +140,7 @@ export class TreeNodeModel implements ITreeNodeItemProps {
     }
 }
 
-const builtInFolderTree = {
+export const builtInFolderTree = {
     contextMenu: COMMON_CONTEXT_MENU,
     current: null,
     folderPanelContextMenu: FOLDER_PANEL_CONTEXT_MENU,

@@ -85,10 +85,7 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
         /**
          * This can be removed when the ts definition of the tree is fully available
          */
-        if (!startId)
-            throw new ReferenceError(
-                'unable to find the corresponding node id'
-            );
+        if (!startId) return null;
 
         const self = this;
         const index: IIndex<T> = { id: startId, node: obj };

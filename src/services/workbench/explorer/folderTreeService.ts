@@ -15,11 +15,15 @@ import {
 import { TreeViewUtil } from '../../helper';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
-import { SAMPLE_FOLDER_PANEL_ID } from 'mo/model';
+import { SAMPLE_FOLDER_PANEL_ID, builtInFolderTree } from 'mo/model';
 import { IMenuItemProps } from 'mo/components';
 import type { LoadEventData } from 'mo/controller';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
+    /**
+     * Reset the FolderTreeService state
+     */
+    reset(): void;
     /**
      * Add data into folder tree
      * @param data
@@ -124,7 +128,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * Callback for load folder tree data
      * @param callback
      */
-    onLoadData(callback: (treeNode: LoadEventData) => Promise<void>): void;
+    onLoadData(callback: (treeNode: LoadEventData) => void): void;
 }
 
 @singleton()
@@ -140,6 +144,10 @@ export class FolderTreeService
         super();
         this.state = container.resolve(IFolderTreeModel);
         this.explorerService = container.resolve(ExplorerService);
+    }
+
+    public reset() {
+        this.setState(builtInFolderTree as any);
     }
 
     public getFileContextMenu() {
@@ -225,36 +233,39 @@ export class FolderTreeService
         const { tree, index } = this.getCurrentRootFolderInfo(id);
 
         // this index is root folder index
-        if (index > -1) {
-            const currentIndex = tree.getIndex(id);
-
-            if (currentIndex?.node?.fileType === FileTypes.File) {
-                data.location = currentIndex.node.location.replace(
-                    /(?<=\/)[^\/]+$/,
-                    `${data.name}`
-                );
-                tree.prepend(data, currentIndex.parent!);
-            } else {
-                const children = data.children;
-
-                data.location = `${currentIndex!.node!.location}/${data.name}`;
-                if (children) {
-                    children.forEach((child) => {
-                        child.location = `${data.location}/${child.name}`;
-                    });
-                }
-                tree.append(data, id);
-            }
-            cloneData[index] = tree.obj;
-            this.setState({
-                folderTree: {
-                    ...this.state.folderTree,
-                    data: cloneDeep(cloneData),
-                },
-            });
-        } else {
-            console.warn('Please check id again, there is not folder tree');
+        if (index <= -1) {
+            return console.warn(
+                'Please check id again, there is not folder tree'
+            );
         }
+
+        const currentIndex = tree.getIndex(id);
+
+        if (currentIndex?.node?.fileType === FileTypes.File) {
+            data.location = currentIndex.node.location.replace(
+                /(?<=\/)[^\/]+$/,
+                `${data.name}`
+            );
+            tree.prepend(data, currentIndex.parent!);
+        } else {
+            const children = data.children;
+
+            data.location = `${currentIndex!.node!.location}/${data.name}`;
+            if (children) {
+                children.forEach((child) => {
+                    child.location = `${data.location}/${child.name}`;
+                });
+            }
+            tree.append(data, id);
+        }
+
+        cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: {
+                ...this.state.folderTree,
+                data: cloneDeep(cloneData),
+            },
+        });
     }
 
     public remove(id: number) {
@@ -300,7 +311,10 @@ export class FolderTreeService
         const { folderTree } = this.state;
 
         this.setState({
-            folderTree: { ...folderTree, current: id ? this.get(id) : null },
+            folderTree: {
+                ...folderTree,
+                current: id || id === 0 ? this.get(id) : null,
+            },
         });
     }
 
@@ -357,9 +371,7 @@ export class FolderTreeService
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
     };
 
-    public onLoadData = (
-        callback: (treeNode: LoadEventData) => Promise<void>
-    ) => {
+    public onLoadData = (callback: (treeNode: LoadEventData) => void) => {
         this.subscribe(FolderTreeEvent.onLoadData, callback);
     };
 }

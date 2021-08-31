@@ -203,7 +203,7 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
         const parentNode = this.get(parentId);
         if (parentNode && parentIndex) {
             const index = this.generate(obj);
-            index.parent = parentId;
+            index!.parent = parentId;
 
             (parentNode as BaseProps)[this.childNodeName] =
                 parentNode[this.childNodeName] || [];
@@ -211,7 +211,7 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
                 parentIndex[this.childNodeName] || [];
 
             parentNode[this.childNodeName].splice(i, 0, obj);
-            parentIndex[this.childNodeName].splice(i, 0, index.id);
+            parentIndex[this.childNodeName].splice(i, 0, index?.id);
 
             this.updateChildren(parentIndex[this.childNodeName]);
             if (parentIndex.parent) {

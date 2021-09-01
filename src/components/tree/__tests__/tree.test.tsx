@@ -1,8 +1,8 @@
 import React from 'react';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-
 import TreeView, { ITreeNodeItemProps } from '../index';
+import { dragToTargetNode } from '@test/utils';
 
 const mockData: ITreeNodeItemProps[] = [
     {
@@ -22,13 +22,6 @@ const mockData: ITreeNodeItemProps[] = [
         name: 'test2',
     },
 ];
-
-function dragToTargetNode(source: HTMLElement, target: HTMLElement) {
-    fireEvent.dragStart(source);
-    fireEvent.dragOver(target);
-    fireEvent.drop(target);
-    fireEvent.dragEnd(source);
-}
 
 async function dragExpect(fn: jest.Mock, result: any) {
     await waitFor(() => {

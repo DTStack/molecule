@@ -8,6 +8,7 @@ import {
     tabItemClassName,
 } from '../tab';
 import DragAndDrop from '../dragAndDrop';
+import { dragToTargetNode } from '@test/utils';
 
 const tabData = {
     id: '1',
@@ -22,13 +23,6 @@ function DTab(args: ITabProps & ITabEvent) {
             <Tab {...tabData} {...args} />
         </DragAndDrop>
     );
-}
-
-export function dragToTargetNode(source: HTMLElement, target: HTMLElement) {
-    fireEvent.dragStart(source);
-    fireEvent.dragEnter(target);
-    fireEvent.dragOver(target);
-    fireEvent.drop(target);
 }
 
 function mockClientOffset(boundingRectSize: number, size: number) {

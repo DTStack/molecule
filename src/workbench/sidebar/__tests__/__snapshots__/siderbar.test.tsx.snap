@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The Content Component Match Snapshot 1`] = `
+<div
+  className="mo-sidebar__content"
+>
+  test
+</div>
+`;
+
+exports[`The Header Component Match Snapshot 1`] = `
+<header
+  className="mo-sidebar__header"
+>
+  <div
+    className="mo-sidebar__title"
+  >
+    <h2>
+      test
+    </h2>
+  </div>
+  <div
+    className="mo-sidebar__toolbar"
+  />
+</header>
+`;
+
+exports[`The SideBar Component Match Snapshot 1`] = `
+<div
+  className="mo-sidebar"
+>
+  <div
+    className="mo-sidebar__pane"
+    data-id="test"
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <div
+      data-testid="test"
+    >
+      here is content
+    </div>
+  </div>
+  <div
+    className="mo-sidebar__pane"
+    data-id="another"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+    <div
+      data-testid="another"
+    >
+      here is another content
+    </div>
+  </div>
+</div>
+`;

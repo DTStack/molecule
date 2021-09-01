@@ -166,6 +166,19 @@ export class FolderTreeService
         this.folderContextMenu = menus;
     }
 
+    private setCurrentFolderLocation(data: ITreeNodeItemProps, id: number) {
+        const children = data.children;
+        const { tree } = this.getCurrentRootFolderInfo(id);
+        const parentIndex = tree.getIndex(id);
+
+        data.location = `${parentIndex!.node!.location}/${data.name}`;
+        if (children?.length) {
+            children.forEach((child) => {
+                child.location = `${data.location}/${child.name}`;
+            });
+        }
+    }
+
     /**
      * Returns the node of root folder in folderTree
      */
@@ -248,14 +261,7 @@ export class FolderTreeService
             );
             tree.prepend(data, currentIndex.parent!);
         } else {
-            const children = data.children;
-
-            data.location = `${currentIndex!.node!.location}/${data.name}`;
-            if (children) {
-                children.forEach((child) => {
-                    child.location = `${data.location}/${child.name}`;
-                });
-            }
+            this.setCurrentFolderLocation(data, id);
             tree.append(data, id);
         }
 

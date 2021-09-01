@@ -73,6 +73,7 @@ const EditorTree = (props: IOpenEditProps) => {
         onContextMenu,
         onCloseGroup,
         onClose,
+        onToolbarClick,
     } = props;
 
     const wrapper = useRef<HTMLDivElement>(null);
@@ -123,6 +124,7 @@ const EditorTree = (props: IOpenEditProps) => {
         e.preventDefault();
         contextView.show(getEventPosition(e), () => (
             <Menu
+                role="menu"
                 onClick={(_, item) => handleOnMenuClick(item!, group, file)}
                 data={contextMenu}
             />
@@ -137,6 +139,7 @@ const EditorTree = (props: IOpenEditProps) => {
         const groupHeaderContext = headerContextMenu || contextMenu;
         contextView.show(getEventPosition(e), () => (
             <Menu
+                role="menu"
                 onClick={(_, item) => handleOnMenuClick(item!, group)}
                 data={groupHeaderContext}
             />
@@ -168,6 +171,7 @@ const EditorTree = (props: IOpenEditProps) => {
                 break;
             default:
                 // default behavior
+                onToolbarClick?.(item, group.id!);
                 break;
         }
     };
@@ -216,7 +220,11 @@ const EditorTree = (props: IOpenEditProps) => {
                                     file.id === current?.tab?.id;
                                 return (
                                     <div
-                                        title={`${file.data?.path}/${file.name}`}
+                                        title={
+                                            file.data?.path
+                                                ? `${file.data?.path}/${file.name}`
+                                                : undefined
+                                        }
                                         className={classNames(
                                             editorTreeItemClassName,
                                             isActive &&
@@ -244,7 +252,7 @@ const EditorTree = (props: IOpenEditProps) => {
                                             className={
                                                 editorTreeFileIconClassName
                                             }
-                                            type={file.data.icon || ''}
+                                            type={file.data?.icon || ''}
                                         />
                                         <span
                                             className={
@@ -258,7 +266,7 @@ const EditorTree = (props: IOpenEditProps) => {
                                                 editorTreeFilePathClassName
                                             }
                                         >
-                                            {file.data.path}
+                                            {file.data?.path}
                                         </span>
                                     </div>
                                 );

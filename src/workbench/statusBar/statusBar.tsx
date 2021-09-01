@@ -33,7 +33,7 @@ export function StatusBar(props: IStatusBar & IStatusBarController) {
         [contextMenu]
     );
     const renderContextMenu = () => (
-        <Menu onClick={onClickMenuItem} data={contextMenu} />
+        <Menu role="menu" onClick={onClickMenuItem} data={contextMenu} />
     );
     useEffect(() => {
         if (contextMenu.length > 0) {

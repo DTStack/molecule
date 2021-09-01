@@ -1,0 +1,611 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mo"
+    id="molecule"
+    tabindex="0"
+  >
+    <div
+      class="mo-workbench"
+    >
+      <div
+        class="mo-mainBench"
+      >
+        <div
+          class="mo-compositeBar"
+        >
+          <div
+            class="mo-menuBar"
+          >
+            <div
+              class="mo-drop-down mo-drop-down--right mo-menuBar__action"
+            >
+              <span
+                class="codicon codicon-menu"
+              />
+            </div>
+          </div>
+          <div
+            class="mo-activityBar"
+            id="activityBar"
+          >
+            <div
+              class="mo-activityBar__container"
+            >
+              <div
+                class="ScrollbarsCustom mo-scrollbar mo-activityBar__normal"
+                style="position: relative; width: 100%; height: 100%;"
+              >
+                <div
+                  class="ScrollbarsCustom-Wrapper"
+                  style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden;"
+                >
+                  <div
+                    class="ScrollbarsCustom-Scroller"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow-y: hidden; overflow-x: hidden;"
+                  >
+                    <div
+                      class="ScrollbarsCustom-Content"
+                      style="box-sizing: border-box; padding: 0.05px; min-height: 100%; min-width: 100%;"
+                    >
+                      <ul>
+                        <li
+                          class="mo-activityBar__item mo-activityBar__item--checked"
+                          id="sidebar.explore.title"
+                        >
+                          <span
+                            class="mo-activityBar__label codicon codicon-files"
+                            title=""
+                          />
+                          <div
+                            class="mo-activityBar__indicator"
+                          />
+                        </li>
+                        <li
+                          class="mo-activityBar__item"
+                          id="sidebar.search.title"
+                        >
+                          <span
+                            class="mo-activityBar__label codicon codicon-search"
+                            title=""
+                          />
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <span
+                  axis="y"
+                  class="ScrollbarsCustom-Track ScrollbarsCustom-TrackY"
+                  style="position: absolute; overflow: hidden; border-radius: 0; background: transparent; user-select: none; width: 10px; height: calc(100% - 20px); top: 10px; right: 0px; display: none; opacity: 0; transition: opacity 0.4s ease-in-out;"
+                >
+                  <div
+                    axis="y"
+                    class="ScrollbarsCustom-Thumb ScrollbarsCustom-ThumbY"
+                    style="cursor: pointer; border-radius: 0; width: 100%; height: 0px;"
+                  />
+                </span>
+                <span
+                  axis="x"
+                  class="ScrollbarsCustom-Track ScrollbarsCustom-TrackX"
+                  style="position: absolute; overflow: hidden; border-radius: 0; background: transparent; user-select: none; height: 10px; width: calc(100% - 20px); bottom: 0px; left: 10px; display: none; opacity: 0; transition: opacity 0.4s ease-in-out;"
+                >
+                  <div
+                    axis="x"
+                    class="ScrollbarsCustom-Thumb ScrollbarsCustom-ThumbX"
+                    style="cursor: pointer; border-radius: 0; height: 100%; width: 0px;"
+                  />
+                </span>
+              </div>
+              <ul
+                class="mo-activityBar__global"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="css-1ndrsdj"
+          data-split="vertical"
+          data-type="SplitPane"
+        >
+          <div
+            style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-width: 170px; max-width: calc(80% - 1px*0.8); flex-grow: 0; width: 300px;"
+          >
+            <div
+              class="mo-sidebar"
+            >
+              <div
+                class="mo-sidebar__pane"
+                data-id="sidebar.explore.title"
+                style="display: block;"
+              >
+                <div
+                  class="mo-sidebar-explorer"
+                >
+                  <header
+                    class="mo-sidebar__header"
+                  >
+                    <div
+                      class="mo-sidebar__title"
+                    >
+                      <h2>
+                        浏览
+                      </h2>
+                    </div>
+                    <div
+                      class="mo-sidebar__toolbar"
+                    >
+                      <div
+                        class="mo-tool-bar"
+                      >
+                        <div
+                          class="mo-action-bar"
+                        >
+                          <ul
+                            class="mo-action-bar__container"
+                          >
+                            <li
+                              class="mo-action-bar__item"
+                              id="sidebar.explore.actionDesc"
+                            >
+                              <span
+                                class="codicon codicon-ellipsis"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </header>
+                  <div
+                    class="mo-sidebar__content"
+                  >
+                    <div
+                      class="mo-collapse"
+                    >
+                      <div
+                        class="mo-collapse__item"
+                        data-content="sidebar.explore.openEditor"
+                      >
+                        <div
+                          class="mo-collapse__header"
+                          tabindex="0"
+                        >
+                          <span
+                            class="codicon codicon-chevron-right"
+                          />
+                          打开的编辑器
+                          <div
+                            class="mo-collapse__extra"
+                          />
+                        </div>
+                        <div
+                          class="mo-collapse__content"
+                          data-content="sidebar.explore.openEditor"
+                          tabindex="0"
+                        />
+                      </div>
+                      <div
+                        class="mo-collapse__item"
+                        data-content="sidebar.explore.folders"
+                      >
+                        <div
+                          class="mo-collapse__header"
+                          tabindex="0"
+                        >
+                          <span
+                            class="codicon codicon-chevron-right"
+                          />
+                          无打开文件夹
+                          <div
+                            class="mo-collapse__extra"
+                          />
+                        </div>
+                        <div
+                          class="mo-collapse__content"
+                          data-content="sidebar.explore.folders"
+                          tabindex="0"
+                        >
+                          <div
+                            data-content="sidebar.explore.folders"
+                          >
+                            <div
+                              style="padding: 10px 5px;"
+                            >
+                              you have not yet opened a folder
+                              <a
+                                class="mo-btn mo-btn--normal"
+                              >
+                                Add Folder
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="mo-collapse__item"
+                        data-content="outline"
+                      >
+                        <div
+                          class="mo-collapse__header"
+                          tabindex="0"
+                        >
+                          <span
+                            class="codicon codicon-chevron-right"
+                          />
+                          轮廓
+                          <div
+                            class="mo-collapse__extra"
+                          />
+                        </div>
+                        <div
+                          class="mo-collapse__content"
+                          data-content="outline"
+                          tabindex="0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mo-sidebar__pane"
+                data-id="sidebar.search.title"
+                style="display: none;"
+              >
+                <div
+                  class="sidebar-search-pane"
+                >
+                  <header
+                    class="mo-sidebar__header"
+                  >
+                    <div
+                      class="mo-sidebar__title"
+                    >
+                      <h2>
+                        搜索
+                      </h2>
+                    </div>
+                    <div
+                      class="mo-sidebar__toolbar"
+                    >
+                      <div
+                        class="mo-tool-bar"
+                      >
+                        <div
+                          class="mo-action-bar"
+                        >
+                          <ul
+                            class="mo-action-bar__container"
+                          >
+                            <li
+                              class="mo-action-bar__item mo-action-bar__item--disabled"
+                              id="search.toolbar.refresh"
+                            >
+                              <span
+                                class="codicon codicon-refresh"
+                              />
+                            </li>
+                            <li
+                              class="mo-action-bar__item mo-action-bar__item--disabled"
+                              id="search.toolbar.clearAll"
+                            >
+                              <span
+                                class="codicon codicon-clear-all"
+                              />
+                            </li>
+                            <li
+                              class="mo-action-bar__item mo-action-bar__item--disabled"
+                              id="search.toolbar.collapseAll"
+                            >
+                              <span
+                                class="codicon codicon-collapse-all"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </header>
+                  <div
+                    class="mo-sidebar__content"
+                  >
+                    <div
+                      class="mo-search"
+                    >
+                      <span
+                        class="mo-search__replace__button codicon codicon-chevron-right"
+                      />
+                      <div
+                        class="mo-search__group"
+                      >
+                        <div
+                          class="mo-search__input mo-search__target"
+                        >
+                          <textarea
+                            autocapitalize="off"
+                            autocorrect="off"
+                            class=""
+                            placeholder="Search"
+                            spellcheck="false"
+                            title="Search"
+                          />
+                          <div
+                            class="mo-action-bar mo-search__toolbar"
+                          >
+                            <ul
+                              class="mo-action-bar__container"
+                            >
+                              <li
+                                class="mo-action-bar__item"
+                                id="search.matchCase"
+                              >
+                                <span
+                                  class="codicon codicon-case-sensitive"
+                                />
+                              </li>
+                              <li
+                                class="mo-action-bar__item"
+                                id="search.matchWholeWord"
+                              >
+                                <span
+                                  class="codicon codicon-whole-word"
+                                />
+                              </li>
+                              <li
+                                class="mo-action-bar__item"
+                                id="search.useRegularExpression"
+                              >
+                                <span
+                                  class="codicon codicon-regex"
+                                />
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mo-tree mo-search__tree"
+                    >
+                      <div
+                        class="sidebar-tree"
+                      >
+                        <div
+                          class="rc-tree rc-tree-show-line"
+                        >
+                          <div
+                            role="tree"
+                          >
+                            <input
+                              style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
+                              tabindex="0"
+                              value=""
+                            />
+                          </div>
+                          <div
+                            class="rc-tree-list"
+                            style="position: relative;"
+                          >
+                            <div
+                              class="rc-tree-list-holder"
+                            >
+                              <div>
+                                <div
+                                  class="rc-tree-list-holder-inner"
+                                  style="display: flex; flex-direction: column;"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="sc-htpNat fXAXjb sc-bdVaJa cjjWdp"
+            data-attribute="vertical"
+            data-type="Resizer"
+          />
+          <div
+            style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-width: 0; max-width: calc(100% - 1px*1); flex: 1;"
+          >
+            <div
+              class="css-f7b5xf"
+              data-split="horizontal"
+              data-type="SplitPane"
+            >
+              <div
+                style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-height: calc(10% - 1px*0.1); max-height: calc(100% - 1px*1); flex-grow: 0; height: calc(70% - 1px*0.7);"
+              >
+                <div
+                  class="mo-editor"
+                >
+                  <div
+                    class="mo-welcome"
+                  >
+                    <h1>
+                      Molecule.
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="sc-bwzfXH hEACtv sc-bdVaJa cjjWdp"
+                data-attribute="horizontal"
+                data-type="Resizer"
+              />
+              <div
+                style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-height: 0; max-height: calc(100% - 1px*1); flex: 1;"
+              >
+                <div
+                  class="mo-panel"
+                >
+                  <div
+                    class="mo-panel__header"
+                  >
+                    <div
+                      class="ScrollbarsCustom mo-scrollbar"
+                      style="position: relative; width: 100%; height: 100%;"
+                    >
+                      <div
+                        class="ScrollbarsCustom-Wrapper"
+                        style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden;"
+                      >
+                        <div
+                          class="ScrollbarsCustom-Scroller"
+                          style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow-y: hidden; overflow-x: hidden;"
+                        >
+                          <div
+                            class="ScrollbarsCustom-Content"
+                            style="box-sizing: border-box; padding: 0.05px; min-height: 100%; min-width: 100%;"
+                          >
+                            <div
+                              class="mo-tabs mo-tabs--line"
+                            >
+                              <div
+                                class="mo-tabs__header"
+                              >
+                                <div
+                                  class="mo-tab__item"
+                                  draggable="true"
+                                >
+                                  问题
+                                </div>
+                              </div>
+                              <div
+                                class="mo-tabs__content"
+                              >
+                                <div
+                                  class="mo-tabs__content__item"
+                                >
+                                  <div
+                                    style="margin: 0px 18px; user-select: none;"
+                                  >
+                                    未在工作区检测到问题
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="shadow top"
+                      />
+                      <span
+                        axis="y"
+                        class="ScrollbarsCustom-Track ScrollbarsCustom-TrackY"
+                        style="position: absolute; overflow: hidden; border-radius: 0; background: transparent; user-select: none; width: 10px; height: calc(100% - 20px); top: 10px; right: 0px; display: none; opacity: 0; transition: opacity 0.4s ease-in-out;"
+                      >
+                        <div
+                          axis="y"
+                          class="ScrollbarsCustom-Thumb ScrollbarsCustom-ThumbY"
+                          style="cursor: pointer; border-radius: 0; width: 100%; height: 0px;"
+                        />
+                      </span>
+                      <span
+                        axis="x"
+                        class="ScrollbarsCustom-Track ScrollbarsCustom-TrackX"
+                        style="position: absolute; overflow: hidden; border-radius: 0; background: transparent; user-select: none; height: 10px; width: calc(100% - 20px); bottom: 0px; left: 10px; display: none; opacity: 0; transition: opacity 0.4s ease-in-out;"
+                      >
+                        <div
+                          axis="x"
+                          class="ScrollbarsCustom-Thumb ScrollbarsCustom-ThumbX"
+                          style="cursor: pointer; border-radius: 0; height: 100%; width: 0px;"
+                        />
+                      </span>
+                    </div>
+                    <div
+                      class="mo-action-bar mo-panel__toolbar"
+                    >
+                      <ul
+                        class="mo-action-bar__container"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mo-panel__container"
+                    tabindex="0"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mo-statusBar"
+      id="statusBar"
+    >
+      <div
+        class="mo-statusBar__left-items"
+      >
+        <div
+          class="mo-statusBar__item"
+          id="statusbar.problems.title"
+          sortindex="1"
+        >
+          <a
+            tabindex="-1"
+            title="Problems"
+          >
+            <span
+              class="codicon codicon-error"
+            />
+             0 
+            <span
+              class="codicon codicon-warning"
+            />
+             0 
+            <span
+              class="codicon codicon-info"
+            />
+             0
+          </a>
+        </div>
+      </div>
+      <div
+        class="mo-statusBar__right-items"
+      >
+        <div
+          actionbar="[object Object],[object Object]"
+          class="mo-statusBar__item"
+          id="MO_NOTIFICATION"
+          sortindex="1"
+        >
+          <a
+            tabindex="-1"
+            title="Notification"
+          >
+            <span
+              class="codicon codicon-bell"
+            />
+          </a>
+        </div>
+        <div
+          class="mo-statusBar__item"
+          id="MoEditorInfo"
+          sortindex="2"
+        >
+          <a
+            tabindex="-1"
+            title="Go to Line/Column"
+          >
+            <span>
+              Ln 0, Col 0
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

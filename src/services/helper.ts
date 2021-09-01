@@ -10,9 +10,11 @@ interface BaseProps {
     [key: string]: any;
 }
 
-interface ITreeNodeItem extends ITreeNodeItemProps {
+interface ITreeNodeItem<T> {
     id: number;
     parent?: number;
+    node?: T;
+    [key: string]: any;
 }
 
 export interface IIndex<T> {
@@ -35,6 +37,7 @@ export interface Index<T> {
 export interface IIndexs<T> {
     [index: string]: IIndex<T>;
 }
+
 export interface ITreeInterface<T extends BaseProps> {
     count: number;
     obj: T;
@@ -97,16 +100,19 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
             childWalker(obj[this.childNodeName], index);
         }
 
-        function childWalker(objs: ITreeNodeItem[], parent: IIndex<T>) {
+        function childWalker(
+            objs: (T & ITreeNodeItem<T>)[],
+            parent: IIndex<T>
+        ) {
             const children: number[] = []; // current children ids
 
             objs.forEach((obj) => {
-                const index: ITreeNodeItem = {
+                const index: IIndex<T> = {
                     id: obj.id,
                     node: obj,
                 };
 
-                if (parent) index.parent = parent.id;
+                if (parent.id) index.parent = parent.id;
                 indexes[obj!.id] = index;
                 children.push(obj.id);
                 self.count++;
@@ -117,7 +123,7 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
             parent[self.childNodeName] = children;
 
             /**
-             * TODO: really need a doubly linked list here?
+             * TODO: really need doubly linked here?
              */
             children.forEach((id, i) => {
                 const index = indexes[id];
@@ -136,7 +142,12 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
     }
 
     removeIndex(index: IIndex<T>) {
-        delete this.indexes[index.id + ''];
+        /**
+         * TODO: Do not use the delete operator to delete object properties
+         * This is very convenient, but the impact on performance such as reading is huge
+         * In this application, the reading speed is very important to the experience, so we need to use the hidden class of javascript
+         */
+        if (index.id) delete this.indexes[index.id];
         if (index[this.childNodeName]?.length) {
             index[this.childNodeName].forEach((child) => {
                 const childIndex = this.getIndex(child);
@@ -203,8 +214,8 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
         const parentNode = this.get(parentId);
         if (parentNode && parentIndex) {
             const index = this.generate(obj);
-            index!.parent = parentId;
 
+            index!.parent = parentId;
             (parentNode as BaseProps)[this.childNodeName] =
                 parentNode[this.childNodeName] || [];
             parentIndex[this.childNodeName] =

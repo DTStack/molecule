@@ -53,7 +53,7 @@ export class CommandQuickSideBarViewAction extends Action2 {
         const sidebarId = args[0];
         const { selected } = this.activityBarService.getState();
 
-        const hidden = this.layoutService.toggleSideBarVisibility();
+        const hidden = this.layoutService.toggleSidebarVisibility();
 
         const activityId = sidebarId || this._preActivityBar;
         this.activityBarService.setActive(hidden ? undefined : activityId);

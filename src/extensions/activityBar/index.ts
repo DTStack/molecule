@@ -15,8 +15,8 @@ export const ExtendsActivityBar: IExtension = {
                 molecule.activityBar.setActive(cur);
                 molecule.sidebar.setActive(cur);
 
-                const { sideBar } = molecule.layout.getState();
-                if (sideBar.hidden) {
+                const { sidebar } = molecule.layout.getState();
+                if (sidebar.hidden) {
                     extensionCtx.executeCommand(
                         CommandQuickSideBarViewAction.ID,
                         cur

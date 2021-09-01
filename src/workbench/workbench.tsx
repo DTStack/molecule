@@ -36,7 +36,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         activityBar,
         menuBar,
         panel,
-        sideBar,
+        sidebar,
         statusBar,
         onPaneSizeChange,
         onHorizontalPaneSizeChange,
@@ -84,7 +84,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         allowResize={true}
                         onChange={onPaneSizeChange as any}
                     >
-                        {!sideBar.hidden && (
+                        {!sidebar.hidden && (
                             <Pane
                                 minSize="170px"
                                 initialSize={splitPanePos[0]}

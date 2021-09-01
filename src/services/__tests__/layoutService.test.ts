@@ -50,10 +50,10 @@ describe('The layout service', () => {
 
         test('Should support to toggle side bar visibility', () => {
             const state = layoutService.getState();
-            expect(state.sideBar.hidden).toBeFalsy();
+            expect(state.sidebar.hidden).toBeFalsy();
 
-            layoutService.toggleSideBarVisibility();
-            expect(state.sideBar.hidden).toBeTruthy();
+            layoutService.toggleSidebarVisibility();
+            expect(state.sidebar.hidden).toBeTruthy();
         });
 
         test('Should support to toggle activity bar visibility', () => {
@@ -75,9 +75,9 @@ describe('The layout service', () => {
         test('Should support to set the position of side bar', () => {
             const state = layoutService.getState();
 
-            expect(state.sideBar.position).toBe(Position.left);
+            expect(state.sidebar.position).toBe(Position.left);
             layoutService.setSideBarPosition(Position.right);
-            expect(state.sideBar.position).toBe(Position.right);
+            expect(state.sidebar.position).toBe(Position.right);
         });
 
         test("Should not set the postion while postion did't change", () => {
@@ -85,7 +85,7 @@ describe('The layout service', () => {
             const originalRender = layoutService.render;
             layoutService.render = jest.fn();
 
-            expect(state.sideBar.position).toBe(Position.left);
+            expect(state.sidebar.position).toBe(Position.left);
             layoutService.setSideBarPosition(Position.left);
             expect(layoutService.render).not.toBeCalled();
 

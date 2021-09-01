@@ -58,6 +58,7 @@ export function ActivityBarItem(
     const overlay = (
         <Menu
             onClick={onClickMenuItem}
+            role="menu"
             data={contextMenu.map((menu) => {
                 if (menu.id) {
                     const keybindingObj = KeybindingHelper.queryGlobalKeybinding(

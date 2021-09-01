@@ -31,7 +31,7 @@ export interface IMenuItemProps extends Omit<HTMLElementProps, 'title'> {
      * Custom render
      */
     render?: (data: IMenuItemProps) => React.ReactNode;
-    onClick?: (e: React.MouseEvent, item?: IMenuItemProps) => void;
+    onClick?: (e: React.MouseEvent, item: IMenuItemProps) => void;
     sortIndex?: number;
 
     [key: string]: any;

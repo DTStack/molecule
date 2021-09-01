@@ -15,7 +15,7 @@ export interface IExplorerPanelItem {
     /**
      * It must be unique in the Explorer Panel Data
      */
-    id: React.Key;
+    id: string;
     /**
      * @requires true
      * explorer panel's title
@@ -37,8 +37,8 @@ export interface IExplorerPanelItem {
     [key: string]: any;
 }
 export interface IExplorer {
-    data?: IExplorerPanelItem[];
-    headerToolBar?: IActionBarItemProps;
+    data: IExplorerPanelItem[];
+    headerToolBar: IActionBarItemProps;
 }
 
 export const SAMPLE_FOLDER_PANEL_ID = 'sidebar.explore.folders';

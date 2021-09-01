@@ -1,40 +1,41 @@
-import 'reflect-metadata';
-import { TreeViewUtil } from '../../helper';
-// import { container } from 'tsyringe';
-// import { IExplorerService, ExplorerService } from '../explorerService';
-describe('Test panelService', () => {
-    // TODO: error: Attempted to construct an undefined constructor. Could mean a circular dependency problem. Try using `delay` function...
-    // const explorerService = container.resolve<IExplorerService>(ExplorerService);
-    // console.log('explorerService', explorerService)
+import { searchById, TreeViewUtil } from '../helper';
+
+const mockTreeData = {
+    id: 1,
+    module: 'root',
+    children: [
+        {
+            id: 2,
+            module: 'a',
+            children: [{ id: 3, module: 'c' }],
+        },
+        {
+            id: 4,
+            module: 'b',
+        },
+    ],
+};
+
+describe('Test the searchById function', () => {
+    test('Should return the target', () => {
+        const arr = [{ id: 1 }];
+        const index = arr.findIndex(searchById(1));
+
+        expect(index).toBe(0);
+    });
 });
 
-describe('Test TreeViewUtil Class', () => {
-    const createTree = () => {
-        return new TreeViewUtil({
-            id: 1,
-            module: 'root',
-            children: [
-                {
-                    id: 2,
-                    module: 'a',
-                    children: [{ id: 3, module: 'c' }],
-                },
-                {
-                    id: 4,
-                    module: 'b',
-                },
-            ],
-        });
-    };
-
-    test('empty Tree', () => {
+describe('Test the treeView helper', () => {
+    test('Should support to initial with empty', () => {
         const tree = new TreeViewUtil();
         expect(tree.obj).toEqual({ children: [] });
     });
 
-    test('custom TreeViewUtil childNodeName', () => {
+    test('Should support to customize the childNodeName', () => {
         let tree = new TreeViewUtil(undefined, 'properties');
+
         expect(tree.obj).toEqual({ properties: [] });
+
         tree = new TreeViewUtil(
             {
                 id: 10,
@@ -53,8 +54,8 @@ describe('Test TreeViewUtil Class', () => {
             },
             'properties'
         );
-
         const { obj, indexes } = tree;
+
         expect(indexes['10']).toEqual({
             id: 10,
             node: obj,
@@ -83,8 +84,8 @@ describe('Test TreeViewUtil Class', () => {
         });
     });
 
-    test('Test TreeViewUtil generate method', () => {
-        const tree = createTree();
+    test('Should support to initial with a tree node', () => {
+        const tree = new TreeViewUtil(mockTreeData);
         const { obj, indexes } = tree;
 
         expect(indexes['1']).toEqual({
@@ -115,16 +116,34 @@ describe('Test TreeViewUtil Class', () => {
         });
     });
 
-    test('Test TreeViewUtil get method', () => {
-        const tree = createTree();
+    test('Should support to get a node from tree', () => {
+        const tree = new TreeViewUtil(mockTreeData);
         const { obj } = tree;
 
         expect(tree.get(1)).toEqual(obj);
         expect(tree.get(100)).toBeNull();
     });
 
-    test('Test TreeViewUtil remove method', () => {
-        const tree = createTree();
+    test('Should support to update a node in tree', () => {
+        const tree = new TreeViewUtil(mockTreeData);
+        const node = tree.update(2, { module: 'test' });
+
+        expect(node).toEqual({
+            id: 2,
+            module: 'test',
+            children: [{ id: 3, module: 'c' }],
+        });
+    });
+
+    test('Should get a null when update failed', () => {
+        const tree = new TreeViewUtil(mockTreeData);
+        const node = tree.update(100, { module: 'test' });
+
+        expect(node).toBeNull();
+    });
+
+    test('Should support to remove a node in tree', () => {
+        const tree = new TreeViewUtil(mockTreeData);
         const { obj } = tree;
 
         const node = tree.remove(2);
@@ -134,17 +153,26 @@ describe('Test TreeViewUtil Class', () => {
             module: 'a',
             children: [{ id: 3, module: 'c' }],
         });
+
         expect(obj).toEqual({
             id: 1,
             module: 'root',
             children: [{ id: 4, module: 'b' }],
         });
+
         expect(tree.getIndex(2)).toBeNull();
         expect(tree.getIndex(3)).toBeNull();
     });
 
-    test('Test TreeViewUtil insert method', () => {
-        const tree = createTree();
+    test('Should get null when remove failed', () => {
+        const tree = new TreeViewUtil(mockTreeData);
+        const node = tree.remove(100);
+
+        expect(node).toBeNull();
+    });
+
+    test('Should support to insert a node', () => {
+        const tree = new TreeViewUtil(mockTreeData);
         const { obj } = tree;
 
         tree.insert({ id: 5, module: 'd', children: [] }, 3, 0);
@@ -167,11 +195,16 @@ describe('Test TreeViewUtil Class', () => {
                 { id: 4, module: 'b' },
             ],
         });
+
+        const res = tree.insert({ id: 5, module: 'd', children: [] }, 100, 0);
+
+        expect(res).toBeNull();
     });
 
-    test('Test TreeViewUtil insertBefore method', () => {
-        const tree = createTree();
+    test('Should support to insert before a node', () => {
+        const tree = new TreeViewUtil(mockTreeData);
         const { obj } = tree;
+
         tree.insertBefore({ id: 5, module: 'd', children: [] }, 3);
 
         expect(obj).toEqual({
@@ -189,11 +222,19 @@ describe('Test TreeViewUtil Class', () => {
                 { id: 4, module: 'b' },
             ],
         });
+
+        const res = tree.insertBefore(
+            { id: 5, module: 'd', children: [] },
+            100
+        );
+
+        expect(res).toBeNull();
     });
 
-    test('Test TreeViewUtil insertAfter method', () => {
-        const tree = createTree();
+    test('Should support to insert after a node', () => {
+        const tree = new TreeViewUtil(mockTreeData);
         const { obj } = tree;
+
         tree.insertAfter({ id: 5, module: 'd', children: [] }, 3);
 
         expect(obj).toEqual({
@@ -211,11 +252,16 @@ describe('Test TreeViewUtil Class', () => {
                 { id: 4, module: 'b' },
             ],
         });
+
+        const res = tree.insertAfter({ id: 5, module: 'd', children: [] }, 100);
+
+        expect(res).toBeNull();
     });
 
-    test('Test TreeViewUtil prepend method', () => {
-        const tree = createTree();
+    test('Should support to prepend a node', () => {
+        const tree = new TreeViewUtil(mockTreeData);
         const { obj } = tree;
+
         tree.prepend({ id: 5, module: 'd', children: [] }, 1);
 
         expect(obj).toEqual({
@@ -237,9 +283,10 @@ describe('Test TreeViewUtil Class', () => {
         });
     });
 
-    test('Test TreeViewUtil append method', () => {
-        const tree = createTree();
+    test('Should support to append a node', () => {
+        const tree = new TreeViewUtil(mockTreeData);
         const { obj } = tree;
+
         tree.append({ id: 5, module: 'd', children: [] }, 1);
 
         expect(obj).toEqual({
@@ -259,5 +306,9 @@ describe('Test TreeViewUtil Class', () => {
                 },
             ],
         });
+
+        const res = tree.append({ id: 5, module: 'd', children: [] }, 100);
+
+        expect(res).toBeNull();
     });
 });

@@ -1,4 +1,4 @@
-import { IMenuItemProps, ITabProps } from 'mo/components';
+import { IActionBarItemProps, IMenuItemProps, ITabProps } from 'mo/components';
 import { IEditor, IEditorTab } from 'mo/model';
 import { EditorTreeEvent } from 'mo/model/workbench/explorer/editorTree';
 import { Component } from 'mo/react';
@@ -40,6 +40,14 @@ export interface IEditorTreeService extends Component<IEditor> {
      * @param callback
      */
     onSaveAll(callback: (groupId?: number) => void): void;
+    /**
+     * Callback for the click event from toolbar buttons, except for saving button and closing button,
+     * if you want to subscribe to the click events for these two buttons, please use the methods of `onSaveAll` and `onCloseAll`
+     * @param callback
+     */
+    onToolbarClick(
+        callback: (toolbar: IActionBarItemProps, groupId?: number) => void
+    ): void;
     /**
      * Callback for adjust editor layout
      * @param callback
@@ -95,6 +103,12 @@ export class EditorTreeService
 
     public onSaveAll(callback: (groupId?: number) => void) {
         this.subscribe(EditorTreeEvent.onSaveAll, callback);
+    }
+
+    public onToolbarClick(
+        callback: (toolbar: IActionBarItemProps, groupId?: number) => void
+    ) {
+        this.subscribe(EditorTreeEvent.onToolbarClick, callback);
     }
 
     public onLayout(callback: () => void) {

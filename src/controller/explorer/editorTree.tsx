@@ -20,18 +20,22 @@ import {
     IOpenEditProps,
 } from 'mo/workbench/sidebar/explore/editorTree';
 import { connect } from 'mo/react';
-import { IMenuItemProps, ITabProps } from 'mo/components';
+import { IActionBarItemProps, IMenuItemProps, ITabProps } from 'mo/components';
 
 export interface IEditorTreeController {
-    readonly onClose: (tabId: string, groupId: number) => void;
-    readonly onSelect: (tabId: string, groupId: number) => void;
-    readonly onCloseGroup: (groupId: number) => void;
-    readonly onSaveGroup: (groupId: number) => void;
+    readonly onClose?: (tabId: string, groupId: number) => void;
+    readonly onSelect?: (tabId: string, groupId: number) => void;
+    readonly onCloseGroup?: (groupId: number) => void;
+    readonly onSaveGroup?: (groupId: number) => void;
+    readonly onToolbarClick?: (
+        toolbar: IActionBarItemProps,
+        groupId: number
+    ) => void;
     /**
      * Trigger by context menu click event
      * When click the context menu from group header, it doesn't have file info
      */
-    readonly onContextMenu: (
+    readonly onContextMenu?: (
         menu: IMenuItemProps,
         groupId: number,
         file?: ITabProps
@@ -74,6 +78,7 @@ export class EditorTreeController
                     onCloseGroup={this.onCloseGroup}
                     onSaveGroup={this.onSaveGroup}
                     onContextMenu={this.onContextMenu}
+                    onToolbarClick={this.onToolbarClick}
                 />
             ),
         });
@@ -121,6 +126,10 @@ export class EditorTreeController
 
     public onSaveGroup = (groupId: number) => {
         this.emit(EditorTreeEvent.onSaveAll, groupId);
+    };
+
+    public onToolbarClick = (toolbar: IActionBarItemProps, groupId: number) => {
+        this.emit(EditorTreeEvent.onToolbarClick, toolbar, groupId);
     };
 }
 

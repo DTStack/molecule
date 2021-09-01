@@ -71,4 +71,11 @@ describe('Test StatusBarService', () => {
             editorTreeService.emit(EditorTreeEvent.onContextMenu);
         });
     });
+
+    test('Should support to trigger toolbar click', () => {
+        expectFnCalled((testFn) => {
+            editorTreeService.onToolbarClick(testFn);
+            editorTreeService.emit(EditorTreeEvent.onToolbarClick);
+        });
+    });
 });

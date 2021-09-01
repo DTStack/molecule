@@ -2,14 +2,13 @@ import * as React from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { Scrollbar, ScrollbarProps } from 'react-scrollbars-custom';
 import { prefixClaName, classNames } from 'mo/common/className';
-
 export interface IScrollbarProps extends ScrollbarProps {
-    autoHideThumb?: boolean;
     isShowShadow?: boolean;
     trackStyle?: React.CSSProperties;
+    thumbStyle?: React.CSSProperties;
 }
 
-const defaultSrollableClassName = prefixClaName('scrollbar');
+const defaultScrollableClassName = prefixClaName('scrollbar');
 
 /**
  * The react-scrollbars-custom component default not supports auto hide thumb option,
@@ -23,9 +22,10 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
     const {
         className,
         children,
-        isShowShadow = false,
+        isShowShadow,
         trackStyle,
-        ...custom
+        thumbStyle,
+        ...restProps
     } = props;
     const scroller = React.useRef<Scrollbar>(null);
 
@@ -33,14 +33,17 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
 
     const [isScrolling, setIsScrolling] = useState(false);
     const [isMouseOver, setIsMouseOver] = useState(false);
+    const [scrollTop, setScrollTop] = useState(0);
     const isShow = isScrolling || isMouseOver;
 
-    const claNames = classNames(defaultSrollableClassName, className);
+    const claNames = classNames(defaultScrollableClassName, className);
 
-    const onScrollStart = useCallback(() => {
+    const onScrollStart = useCallback((values) => {
         setIsScrolling(true);
+        setScrollTop(values.scrollTop);
     }, []);
     const onScrollStop = useCallback(() => {
+        /* istanbul ignore next */
         setIsScrolling(false);
     }, []);
     const onMouseEnter = useCallback(() => {
@@ -61,6 +64,7 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
                         ref={elementRef}
                         style={{
                             ...style,
+                            borderRadius: 0,
                             opacity: isShow ? 1 : 0,
                             transition: 'opacity 0.4s ease-in-out',
                             background: 'transparent',
@@ -73,16 +77,35 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
         [isShow, trackStyle]
     );
 
+    const thumbProps = useMemo(
+        () => ({
+            renderer: ({ elementRef, style, ...restProps }: any) => {
+                return (
+                    <div
+                        {...restProps}
+                        ref={elementRef}
+                        style={{
+                            ...style,
+                            background: 'var(--scrollbarSlider-background)',
+                            borderRadius: 0,
+                            ...thumbStyle,
+                        }}
+                    />
+                );
+            },
+        }),
+        [isShow, thumbStyle]
+    );
+
     return (
         <Scrollbar
             className={claNames}
             ref={scroller}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            {...(custom as any)}
+            {...(restProps as any)}
             wrapperProps={{
                 renderer: ({ elementRef, style, key, ...restProps }) => {
-                    const currentTop = scroller.current?.scrollTop || 0;
                     return (
                         <React.Fragment key={key}>
                             <div
@@ -90,19 +113,23 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
                                 ref={elementRef}
                                 style={{ ...style, right: 0 }}
                             />
-                            <div
-                                className={classNames(
-                                    'shadow',
-                                    'top',
-                                    isShowShadow && currentTop > 0 && 'active'
-                                )}
-                            />
+                            {isShowShadow ? (
+                                <div
+                                    className={classNames(
+                                        'shadow',
+                                        'top',
+                                        scrollTop > 0 && 'active'
+                                    )}
+                                />
+                            ) : null}
                         </React.Fragment>
                     );
                 },
             }}
             trackXProps={trackProps}
             trackYProps={trackProps}
+            thumbXProps={thumbProps}
+            thumbYProps={thumbProps}
             onScrollStart={onScrollStart}
             onScrollStop={onScrollStop}
             scrollDetectionThreshold={500} // ms

@@ -4,8 +4,8 @@ import { Controller } from 'mo/react/controller';
 import { ILayoutService, LayoutService } from 'mo/services';
 
 export interface ILayoutController {
-    onPaneSizeChange: (splitPanePos: string[]) => void;
-    onHorizontalPaneSizeChange: (horizontalSplitPanePos: string[]) => void;
+    onPaneSizeChange?: (splitPanePos: string[]) => void;
+    onHorizontalPaneSizeChange?: (horizontalSplitPanePos: string[]) => void;
 }
 
 @singleton()

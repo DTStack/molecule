@@ -47,6 +47,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
     const getContent = (panelMaximized: boolean, panelHidden: boolean) => {
         const editor = (
             <Pane
+                key="editorView"
                 initialSize={panelHidden ? '100%' : horizontalSplitPanePos[0]}
                 maxSize="100%"
                 minSize="10%"
@@ -56,7 +57,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         );
 
         const panel = (
-            <Pane>
+            <Pane key="panelView">
                 <PanelView />
             </Pane>
         );

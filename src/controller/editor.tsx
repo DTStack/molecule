@@ -41,7 +41,7 @@ export interface IEditorController {
     onCloseTab?: (tabId: string, group: number) => void;
     onCloseToLeft?: (tab: IEditorTab, group: number) => void;
     onCloseToRight?: (tab: IEditorTab, group: number) => void;
-    onCloseOthers?: (tab: IEditorTab, group: number) => void;
+    onCloseOther?: (tab: IEditorTab, group: number) => void;
     onCloseSaved?: (group: number) => void;
     onChangeEditorProps?: (
         preProps: IMonacoEditorProps,
@@ -88,7 +88,7 @@ export class EditorController extends Controller implements IEditorController {
                 break;
             }
             case EDITOR_MENU_CLOSE_OTHERS: {
-                this.onCloseOthers(tabItem!, groupId);
+                this.onCloseOther(tabItem!, groupId);
                 break;
             }
             case EDITOR_MENU_CLOSE_ALL: {
@@ -132,9 +132,9 @@ export class EditorController extends Controller implements IEditorController {
         this.emit(EditorEvent.OnCloseToLeft, tabItem, groupId);
     };
 
-    public onCloseOthers = (tabItem: IEditorTab, groupId: number) => {
-        this.editorService.closeOthers(tabItem, groupId);
-        this.emit(EditorEvent.OnCloseOthers, tabItem, groupId);
+    public onCloseOther = (tabItem: IEditorTab, groupId: number) => {
+        this.editorService.closeOther(tabItem, groupId);
+        this.emit(EditorEvent.OnCloseOther, tabItem, groupId);
     };
 
     public onMoveTab = (updateTabs: IEditorTab<any>[], groupId: number) => {

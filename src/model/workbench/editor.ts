@@ -8,7 +8,7 @@ import { editor as MonacoEditor } from 'monaco-editor';
 export enum EditorEvent {
     OnCloseTab = 'editor.closeTab',
     OnCloseAll = 'editor.closeAll',
-    OnCloseOthers = 'editor.closeOthers',
+    OnCloseOther = 'editor.closeOther',
     OnCloseToLeft = 'editor.closeToLeft',
     OnCloseToRight = 'editor.closeToRight',
     OnMoveTab = 'editor.moveTab',
@@ -64,7 +64,7 @@ export interface IEditor {
     /**
      * Current editor group
      */
-    current?: IEditorGroup | null;
+    current?: IEditorGroup;
     /**
      * Editor Groups
      */
@@ -143,10 +143,12 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     actions: IEditorActionsProps[];
     menu: IMenuItemProps[];
     editorInstance: E | undefined;
+    activeTab: string | undefined;
 
     constructor(
         id: number,
         tab: IEditorTab<T>,
+        activeTab: string | undefined,
         data: IEditorTab<T>[],
         actions: IEditorActionsProps[] = getEditorInitialActions(),
         menu: IMenuItemProps[] = getEditorInitialMenu(),
@@ -157,18 +159,19 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
         this.menu = menu;
         this.actions = actions;
         this.tab = tab;
+        this.activeTab = activeTab;
         this.editorInstance = editorInstance;
     }
 }
 
 export class EditorModel implements IEditor {
-    public current: IEditorGroup | null;
+    public current: IEditorGroup | undefined;
     public groups: IEditorGroup[];
     public entry: React.ReactNode;
     public editorOptions: IEditorOptions;
 
     constructor(
-        current: IEditorGroup | null = null,
+        current: IEditorGroup | undefined = undefined,
         groups: IEditorGroup[] = [],
         entry: React.ReactNode,
         editorOptions: IEditorOptions = BuiltInEditorOptions

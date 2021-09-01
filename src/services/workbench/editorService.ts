@@ -20,13 +20,13 @@ import { IMenuItemProps } from 'mo/components';
 
 export interface IEditorService extends Component<IEditor> {
     /**
-     * Open a new tab in a specific group instance
+     * Open a new tab in a specific group
      * @param tab Tab data
-     * @param groupId group ID
+     * @param groupId Group ID
      */
     open<T = any>(tab: IEditorTab<T>, groupId?: number): void;
     /**
-     * Get a Tab from a specific group via the Tab ID
+     * Get a tab from a specific group via the tab ID
      * @param tabId
      * @param group
      */
@@ -35,39 +35,106 @@ export interface IEditorService extends Component<IEditor> {
         group: IEditorGroup
     ): IEditorTab<T> | undefined;
     /**
-     *
-     * @param groupId If not provided, molecule will update in all group
+     * Update the specific tab, if the groupId provide, then update the tab of specific group
+     * @param tab The id is required
+     * @param groupId
      */
     updateTab(tab: IEditorTab, groupId?: number): IEditorTab;
     /**
-     * Specify a entry page for editor
+     * Specify the Entry page of Workbench
      */
     setEntry(component: React.ReactNode): void;
     /**
-     * Returns whether a specific tab exists
+     * Judge the specific tabs whether opened in Editor view
+     * @param tabId The tabId is required
      */
     isOpened(tabId: string): boolean;
+    /**
+     * Close the specific Tab opened in Editor Group view
+     * @param tabId The tabId is required
+     * @param groupId The groupId is required
+     */
     closeTab(tabId: string, groupId: number): void;
-    closeOthers(tab: IEditorTab, groupId: number): void;
+    /**
+     * Close other opened tabs in Editor Group
+     * @param tab The id is required
+     * @param groupId The groupId is required
+     */
+    closeOther(tab: IEditorTab, groupId: number): void;
+    /**
+     * Close the right opened tabs in Editor Group
+     * @param tab The id is required, the start point of close to right
+     * @param groupId The groupId is required
+     */
     closeToRight(tab: IEditorTab, groupId: number): void;
+    /**
+     * Close the left opened Tabs in Editor Group
+     * @param tab The id is required, the start point of close to left
+     * @param groupId The groupId is required
+     */
     closeToLeft(tab: IEditorTab, groupId: number): void;
+    /**
+     * Close the specific group all opened tabs
+     * @param groupId The groupId is required
+     */
     closeAll(groupId: number): void;
+    /**
+     * Get the specific group
+     * @param groupId The groupId is required
+     */
     getGroupById(groupId: number): IEditorGroup | undefined;
+    /**
+     * Clone a specific group, if the argument `groupId` is undefined,
+     * there default clone the current group
+     * @param groupId
+     */
     cloneGroup(groupId?: number): IEditorGroup;
     /**
-     * Listen to the Editor Tab changed event.
-     * @param tab the changed tab
+     * Listen to the Editor tab changed event
+     * @param callback
      */
     onUpdateTab(callback: (tab: IEditorTab) => void): void;
+    /**
+     * Listen to the tab move event
+     * @param callback
+     */
     onMoveTab(
         callback: (updateTabs: IEditorTab<any>[], groupId?: number) => void
     );
+    /**
+     * Listen to the tab select event
+     * @param callback
+     */
     onSelectTab(callback: (tabId: string, groupId?: number) => void);
+    /**
+     * Listen to the all tabs close event
+     * @param callback
+     */
     onCloseAll(callback: (groupId?: number) => void);
+    /**
+     * Listen to the tab close event
+     * @param callback
+     */
     onCloseTab(callback: (tabId: string, groupId?: number) => void);
-    onCloseOthers(callback: (tabItem: IEditorTab, groupId?: number) => void);
+    /**
+     * Listen to the other tabs close event
+     * @param callback
+     */
+    onCloseOther(callback: (tabItem: IEditorTab, groupId?: number) => void);
+    /**
+     * Listen to the left tabs close event
+     * @param callback
+     */
     onCloseToLeft(callback: (tabItem: IEditorTab, groupId?: number) => void);
+    /**
+     * Listen to the right tabs close event
+     * @param callback
+     */
     onCloseToRight(callback: (tabItem: IEditorTab, groupId?: number) => void);
+    /**
+     * Listen to the Group Actions click event
+     * @param callback
+     */
     onActionsClick(
         callback: (menuId: string, currentGroup: IEditorGroup) => void
     ): void;
@@ -77,15 +144,27 @@ export interface IEditorService extends Component<IEditor> {
      * @param tabId Target tab ID
      */
     setActive(groupId: number, tabId: string);
+    /**
+     * Update the specific group
+     * @param groupId
+     * @param groupValues
+     */
     updateGroup(groupId, groupValues: IEditorGroup): void;
     /**
      * Set default actions when create a new group
+     * @param actions
      */
     setDefaultActions(actions: IEditorActionsProps[]): void;
     /**
      * Update actions in specific group
+     * @param actions
+     * @param groupId
      */
     updateActions(actions: IMenuItemProps[], groupId?: number): void;
+    /**
+     * Update the current group
+     * @param currentValues
+     */
     updateCurrentGroup(currentValues): void;
     /**
      * Get the default editor options
@@ -97,7 +176,7 @@ export interface IEditorService extends Component<IEditor> {
      */
     updateEditorOptions(options: IEditorOptions): void;
     /**
-     * The Instance of Editor
+     * The instance of MonacoEditor
      */
     readonly editorInstance: MonacoEditor.IStandaloneCodeEditor;
 }
@@ -190,6 +269,7 @@ export class EditorService
     }
 
     public updateTab(tab: IEditorTab, groupId?: number): IEditorTab {
+        let updatedTab;
         if (groupId) {
             const group = this.getGroupById(groupId);
 
@@ -197,11 +277,11 @@ export class EditorService
                 const tabData = group.data.find(searchById(tab.id));
 
                 if (tabData) {
-                    Object.assign(tabData, tab);
+                    updatedTab = Object.assign(tabData, tab);
                 }
 
                 if (group.activeTab === tab.id) {
-                    Object.assign(group.tab, tab);
+                    updatedTab = Object.assign(group.tab, tab);
                 }
                 this.updateGroup(groupId, group);
 
@@ -214,16 +294,16 @@ export class EditorService
             groups.forEach((group) => {
                 const tabData = this.getTabById(tab.id!, group);
                 if (tabData) {
-                    Object.assign(tabData, tab);
+                    updatedTab = Object.assign(tabData, tab);
                 }
 
                 if (group.activeTab === tab.id) {
-                    Object.assign(group.tab, tab);
+                    updatedTab = Object.assign(group.tab, tab);
                 }
             });
 
             if (current?.activeTab === tab.id) {
-                Object.assign(current!.tab, tab);
+                updatedTab = Object.assign(current!.tab, tab);
             }
 
             this.setState({
@@ -231,7 +311,7 @@ export class EditorService
                 groups,
             });
         }
-        return tab;
+        return updatedTab;
     }
 
     public closeTab(tabId: string, groupId: number) {
@@ -292,7 +372,7 @@ export class EditorService
         );
     }
 
-    public closeOthers(tab: IEditorTab, groupId: number) {
+    public closeOther(tab: IEditorTab, groupId: number): void {
         const groupIndex = this.getGroupIndexById(groupId);
         if (groupIndex <= -1) return;
 
@@ -475,6 +555,7 @@ export class EditorService
             group = new EditorGroupModel(
                 groups.length + 1,
                 tab,
+                tab.id,
                 [tab],
                 this.defaultActions
             );
@@ -569,10 +650,10 @@ export class EditorService
         this.subscribe(EditorEvent.OnCloseTab, callback);
     }
 
-    public onCloseOthers(
+    public onCloseOther(
         callback: (tabItem: IEditorTab, groupId?: number) => void
     ) {
-        this.subscribe(EditorEvent.OnCloseOthers, callback);
+        this.subscribe(EditorEvent.OnCloseOther, callback);
     }
 
     public onCloseToLeft(

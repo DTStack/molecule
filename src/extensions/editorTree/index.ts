@@ -13,7 +13,7 @@ export const ExtendsEditorTree: IExtension = {
         });
 
         molecule.editorTree.onCloseOthers((tabItem, groupId) => {
-            molecule.editor.closeOthers(tabItem, groupId);
+            molecule.editor.closeOther(tabItem, groupId);
             molecule.explorer.forceUpdate();
         });
 

@@ -98,6 +98,33 @@ describe('The EditorTree Component', () => {
         expect(container.innerHTML).toBe('');
     });
 
+    test('Should not render title without path in data', () => {
+        const { container } = render(
+            <PaneEditorTree
+                groups={[
+                    {
+                        id: 1,
+                        tab: {
+                            id: 'tab1',
+                            name: 'tab1',
+                        },
+                        data: [
+                            {
+                                id: 'tab1',
+                                name: 'tab1',
+                            },
+                            {
+                                id: 'tab2',
+                                name: 'tab2',
+                            },
+                        ],
+                    },
+                ]}
+            />
+        );
+        expect(container.querySelector("*[title='tab/tab1']")).toBeNull();
+    });
+
     test('Should support to active the pane', () => {
         const { getByTitle } = render(
             <PaneEditorTree groups={mockGroups} current={mockGroups[0]} />

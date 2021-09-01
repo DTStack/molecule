@@ -137,7 +137,7 @@ describe('Test StatusBarService', () => {
         expectFnCalled((fn) => {
             folderTreeService.onUpdateFileName(fn);
             folderTreeService.emit(FolderTreeEvent.onUpdateFileName, 0);
-            return 0;
+            expect(fn.mock.calls[0][0]).toBe(0);
         });
     });
 

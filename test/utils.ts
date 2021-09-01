@@ -1,5 +1,6 @@
 import logger from 'mo/common/logger';
 import { fireEvent } from '@testing-library/react';
+import { getElementClientCenter } from 'mo/common/dom';
 
 /**
  * Expect the `logger.error` method to be called when exec action
@@ -42,4 +43,65 @@ export function dragToTargetNode(
     fireEvent.dragOver(target);
     fireEvent.drop(target);
     fireEvent.dragEnd(source);
+}
+
+const sleep = (ms) =>
+    new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+
+type DragOptionsType = {
+    to?: {
+        x: number;
+        y: number;
+    };
+    delta?: {
+        x: number;
+        y: number;
+    };
+    steps?: number;
+    duration?: number;
+};
+
+/**
+ * Mock the Drag event for a HTML element,
+ * the `fireEvent.drag` event doesn't works in some situations
+ * @param element Drag target HTML Element
+ * @param options Drag Options
+ */
+export async function drag(element: HTMLElement, options: DragOptionsType) {
+    const { to: inTo, delta, steps = 20, duration = 500 } = options;
+    let to = Object.assign({}, inTo, { x: 0, y: 0 });
+    const from = getElementClientCenter(element);
+
+    if (delta) {
+        to = {
+            x: from.x + delta.x,
+            y: from.y + delta.y,
+        };
+    }
+
+    const step = {
+        x: (to.x - from.x) / steps,
+        y: (to.y - from.y) / steps,
+    };
+
+    const current = {
+        clientX: from.x,
+        clientY: from.y,
+    };
+
+    fireEvent.mouseEnter(element, current);
+    fireEvent.mouseOver(element, current);
+    fireEvent.mouseMove(element, current);
+    fireEvent.mouseDown(element, current);
+
+    for (let i = 0; i < steps; i++) {
+        current.clientX += step.x;
+        current.clientY += step.y;
+        await sleep(duration / steps);
+        fireEvent.mouseMove(element, current);
+    }
+
+    fireEvent.mouseUp(element, current);
 }

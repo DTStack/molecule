@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { WorkbenchView, Workbench } from '../workbench';
@@ -24,6 +24,7 @@ import {
     ViewVisibility,
 } from 'mo/model/workbench/layout';
 import { drag } from '@test/utils';
+import { select } from 'mo/common/dom';
 
 describe('Test Workbench Component', () => {
     function workbenchModel(): IWorkbench & ILayout {
@@ -70,13 +71,13 @@ describe('Test Workbench Component', () => {
      * Should display the Editor, Panel, Sidebar, ActivityBar, StatusBar, and MenuBar so on Views
      * @param container
      */
-    function expectBasicPartsInTheDocument(container: HTMLElement) {
-        expect(container.querySelector('.mo-editor')).toBeInTheDocument();
-        expect(container.querySelector('.mo-panel')).toBeInTheDocument();
-        expect(container.querySelector('.mo-sidebar')).toBeInTheDocument();
-        expect(container.querySelector('.mo-activityBar')).toBeInTheDocument();
-        expect(container.querySelector('.mo-statusBar')).toBeInTheDocument();
-        expect(container.querySelector('.mo-menuBar')).toBeInTheDocument();
+    function expectBasicPartsInTheDocument() {
+        expect(select('.mo-editor')).toBeInTheDocument();
+        expect(select('.mo-panel')).toBeInTheDocument();
+        expect(select('.mo-sidebar')).toBeInTheDocument();
+        expect(select('.mo-activityBar')).toBeInTheDocument();
+        expect(select('.mo-statusBar')).toBeInTheDocument();
+        expect(select('.mo-menuBar')).toBeInTheDocument();
     }
 
     test('Match The WorkbenchView snapshot', () => {
@@ -86,24 +87,20 @@ describe('Test Workbench Component', () => {
     });
 
     test('Workbench should render all basic parts', () => {
-        const { container } = render(<Workbench />);
-        expectBasicPartsInTheDocument(container);
+        render(<Workbench />);
+        expectBasicPartsInTheDocument();
     });
 
     test('WorkbenchView should render all basic parts', async () => {
         const workbench = workbenchModel();
-        const { container } = render(<WorkbenchView {...workbench} />);
-        expectBasicPartsInTheDocument(container);
+        render(<WorkbenchView {...workbench} />);
+        expectBasicPartsInTheDocument();
     });
 
     test('Listen to The WorkbenchView onPaneSizeChange event', async () => {
         const fn = jest.fn();
-        const { container } = render(
-            <WorkbenchView {...workbenchModel()} onPaneSizeChange={fn} />
-        );
-        const source = container.querySelector<HTMLDivElement>(
-            'div[data-type="Resizer"]'
-        );
+        render(<WorkbenchView {...workbenchModel()} onPaneSizeChange={fn} />);
+        const source = select<HTMLDivElement>('div[data-type="Resizer"]');
         if (source) {
             await drag(source, { delta: { x: 100, y: 0 } });
         }
@@ -114,13 +111,13 @@ describe('Test Workbench Component', () => {
 
     test('Listen to The WorkbenchView onHorizontalPaneSizeChange event', async () => {
         const fn = jest.fn();
-        const { container } = render(
+        render(
             <WorkbenchView
                 {...workbenchModel()}
                 onHorizontalPaneSizeChange={fn}
             />
         );
-        const source = container.querySelector<HTMLDivElement>(
+        const source = select<HTMLDivElement>(
             'div[data-attribute="horizontal"]'
         );
         if (source) {
@@ -131,68 +128,56 @@ describe('Test Workbench Component', () => {
 
     test('Hide the Panel view', async () => {
         const workbench = workbenchModel();
-        const { container, rerender } = render(
-            <WorkbenchView {...workbench} />
-        );
-        expect(container.querySelector('.mo-panel')).toBeInTheDocument();
+        const { rerender } = render(<WorkbenchView {...workbench} />);
+        expect(select('.mo-panel')).toBeInTheDocument();
         workbench.panel.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(container.querySelector('.mo-panel')).not.toBeInTheDocument();
+        expect(select('.mo-panel')).not.toBeInTheDocument();
     });
 
     test('Maximize the Panel', async () => {
         const workbench = workbenchModel();
-        const { container, rerender } = render(
-            <WorkbenchView {...workbench} />
-        );
-        expect(container.querySelector('.mo-editor')).toBeInTheDocument();
+        const { rerender } = render(<WorkbenchView {...workbench} />);
+        expect(select('.mo-editor')).toBeInTheDocument();
         workbench.panel.panelMaximized = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(container.querySelector('.mo-editor')).not.toBeInTheDocument();
+        expect(select('.mo-editor')).not.toBeInTheDocument();
 
         workbench.panel.panelMaximized = false;
         rerender(<WorkbenchView {...workbench} />);
-        expect(container.querySelector('.mo-editor')).toBeInTheDocument();
+        expect(select('.mo-editor')).toBeInTheDocument();
     });
 
     test('Set the panel hidden and panelMaximized', async () => {
         const workbench = workbenchModel();
 
         workbench.panel.panelMaximized = true;
-        const { container, rerender } = render(
-            <WorkbenchView {...workbench} />
-        );
-        expect(container.querySelector('.mo-editor')).not.toBeInTheDocument();
-        expect(container.querySelector('.mo-panel')).toBeInTheDocument();
+        const { rerender } = render(<WorkbenchView {...workbench} />);
+        expect(select('.mo-editor')).not.toBeInTheDocument();
+        expect(select('.mo-panel')).toBeInTheDocument();
 
         workbench.panel.hidden = true;
         workbench.panel.panelMaximized = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(container.querySelector('.mo-editor')).toBeInTheDocument();
-        expect(container.querySelector('.mo-panel')).not.toBeInTheDocument();
+        expect(select('.mo-editor')).toBeInTheDocument();
+        expect(select('.mo-panel')).not.toBeInTheDocument();
     });
 
     test('Hide the Sidebar', async () => {
         const workbench = workbenchModel();
-        const { container, rerender } = render(
-            <WorkbenchView {...workbench} />
-        );
-        expect(container.querySelector('.mo-sidebar')).toBeInTheDocument();
+        const { rerender } = render(<WorkbenchView {...workbench} />);
+        expect(select('.mo-sidebar')).toBeInTheDocument();
         workbench.sidebar.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(container.querySelector('.mo-sidebar')).not.toBeInTheDocument();
+        expect(select('.mo-sidebar')).not.toBeInTheDocument();
     });
 
     test('Hide the StatusBar', async () => {
         const workbench = workbenchModel();
-        const { container, rerender } = render(
-            <WorkbenchView {...workbench} />
-        );
-        expect(container.querySelector('.mo-statusBar')).toBeInTheDocument();
+        const { rerender } = render(<WorkbenchView {...workbench} />);
+        expect(select('.mo-statusBar')).toBeInTheDocument();
         workbench.statusBar.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(
-            container.querySelector('.mo-statusBar')
-        ).not.toBeInTheDocument();
+        expect(select('.mo-statusBar')).not.toBeInTheDocument();
     });
 });

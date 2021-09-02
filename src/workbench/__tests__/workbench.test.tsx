@@ -149,6 +149,10 @@ describe('Test Workbench Component', () => {
         workbench.panel.panelMaximized = true;
         rerender(<WorkbenchView {...workbench} />);
         expect(container.querySelector('.mo-editor')).not.toBeInTheDocument();
+
+        workbench.panel.panelMaximized = false;
+        rerender(<WorkbenchView {...workbench} />);
+        expect(container.querySelector('.mo-editor')).toBeInTheDocument();
     });
 
     test('Hide the Sidebar', async () => {

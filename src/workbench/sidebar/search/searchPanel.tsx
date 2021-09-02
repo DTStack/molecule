@@ -42,13 +42,13 @@ const SearchPanel = ({
 
     const handleSearchChange = (values: SearchValues = []) => {
         const [searchVal, replaceVal] = values;
-        setSearchValue(searchVal);
-        setReplaceValue(replaceVal);
-        onChange(searchVal || '', replaceVal || '');
+        setSearchValue?.(searchVal);
+        setReplaceValue?.(replaceVal);
+        onChange?.(searchVal || '', replaceVal || '');
     };
 
     const handleToggleButton = (status: boolean) => {
-        toggleMode(status);
+        toggleMode?.(status);
     };
 
     const renderTitle = (node, _, isLeaf) => {
@@ -56,7 +56,7 @@ const SearchPanel = ({
         if (!isLeaf) {
             return name;
         }
-        const searchIndex = getSearchIndex(name, value);
+        const searchIndex = getSearchIndex ? getSearchIndex(name, value) : -1;
         const beforeStr = name.substr(0, searchIndex);
         const currentValue = name.substr(searchIndex, value.length);
         const afterStr = name.substr(searchIndex + value.length);
@@ -87,21 +87,21 @@ const SearchPanel = ({
 
     const handleSearch = (values: SearchValues = []) => {
         const [value, replaceVal] = values;
-        validateValue(value || '', (err) => {
+        validateValue?.(value || '', (err) => {
             if (err) {
-                setValidateInfo({
+                setValidateInfo?.({
                     type: 'error',
                     text: err.message,
                 });
             } else {
-                onSearch(value || '', replaceVal || '');
+                onSearch?.(value || '', replaceVal || '');
             }
         });
     };
 
     const handleTreeSelect = (item) => {
         if (item.isLeaf) {
-            onResultClick(item, result);
+            onResultClick?.(item, result);
         }
     };
 

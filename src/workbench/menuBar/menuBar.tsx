@@ -7,8 +7,8 @@ import { IMenuProps, Menu } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { KeybindingHelper } from 'mo/services/keybinding';
 
-const defaultClassName = prefixClaName('menuBar');
-const actionClassName = getBEMElement(defaultClassName, 'action');
+export const defaultClassName = prefixClaName('menuBar');
+export const actionClassName = getBEMElement(defaultClassName, 'action');
 
 export function MenuBar(props: IMenuBar & IMenuBarController) {
     const { data, onClick } = props;
@@ -38,12 +38,13 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
         return resData;
     };
 
-    const handleClick = (e: React.MouseEvent, item) => {
+    const handleClick = (e: React.MouseEvent, item: IMenuBarItem) => {
         onClick?.(e, item);
-        (childRef.current as any)!.dispose();
+        childRef.current!.dispose();
     };
     const overlay = (
         <Menu
+            role="menu"
             onClick={handleClick}
             style={{ width: 200 }}
             data={addKeybindingForData(data)}

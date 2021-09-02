@@ -163,9 +163,14 @@ export class PanelService extends Component<IPanel> implements IPanelService {
 
     public open(data: IPanelItem<any>): void {
         const { data: stateData = [] } = this.state;
-        const cloneData = cloneDeep(data);
-        const index = stateData.findIndex(searchById(cloneData.id));
-        const current = index === -1 ? cloneData : stateData[index];
+        let current = cloneDeep(data);
+        const index = stateData.findIndex(searchById(current.id));
+        if (index > -1) {
+            current = stateData[index];
+        } else {
+            // Add the new panel item
+            this.add(current);
+        }
 
         this.setState({
             current,

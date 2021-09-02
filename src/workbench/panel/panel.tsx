@@ -15,14 +15,14 @@ export function Panel(props: IPanel & IPanelController) {
     const {
         data,
         current,
-        toolbox = [],
+        toolbox,
         onTabChange,
         onToolbarClick,
         onClose,
     } = props;
-    let toolboxData = toolbox;
+    let toolboxData = toolbox || [];
     if (current && current.toolbox) {
-        toolboxData = current.toolbox.concat(toolbox);
+        toolboxData = current.toolbox.concat(toolboxData);
     }
 
     const content =
@@ -50,7 +50,7 @@ export function Panel(props: IPanel & IPanelController) {
                 </Scrollable>
                 <ActionBar
                     className={panelToolbarClassName}
-                    data={toolboxData || []}
+                    data={toolboxData}
                     onClick={onToolbarClick}
                 />
             </div>

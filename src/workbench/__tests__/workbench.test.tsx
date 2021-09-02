@@ -155,6 +155,23 @@ describe('Test Workbench Component', () => {
         expect(container.querySelector('.mo-editor')).toBeInTheDocument();
     });
 
+    test('Set the panel hidden and panelMaximized', async () => {
+        const workbench = workbenchModel();
+
+        workbench.panel.panelMaximized = true;
+        const { container, rerender } = render(
+            <WorkbenchView {...workbench} />
+        );
+        expect(container.querySelector('.mo-editor')).not.toBeInTheDocument();
+        expect(container.querySelector('.mo-panel')).toBeInTheDocument();
+
+        workbench.panel.hidden = true;
+        workbench.panel.panelMaximized = true;
+        rerender(<WorkbenchView {...workbench} />);
+        expect(container.querySelector('.mo-editor')).toBeInTheDocument();
+        expect(container.querySelector('.mo-panel')).not.toBeInTheDocument();
+    });
+
     test('Hide the Sidebar', async () => {
         const workbench = workbenchModel();
         const { container, rerender } = render(

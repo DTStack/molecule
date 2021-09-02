@@ -14,15 +14,6 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
         className="mo-tabs__header"
       >
         <div
-          className="mo-tab__item mo-tab__item--active"
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onMouseOut={[Function]}
-          onMouseOver={[Function]}
-        >
-          输出
-        </div>
-        <div
           className="mo-tab__item"
           onClick={[Function]}
           onContextMenu={[Function]}
@@ -31,10 +22,22 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
         >
           问题
         </div>
+        <div
+          className="mo-tab__item mo-tab__item--active"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onMouseOut={[Function]}
+          onMouseOver={[Function]}
+        >
+          输出
+        </div>
       </div>
       <div
         className="mo-tabs__content"
       >
+        <div
+          className="mo-tabs__content__item"
+        />
         <div
           className="mo-tabs__content__item mo-tabs__content__item--active"
         >
@@ -54,9 +57,6 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
             />
           </div>
         </div>
-        <div
-          className="mo-tabs__content__item"
-        />
       </div>
     </div>
     <div

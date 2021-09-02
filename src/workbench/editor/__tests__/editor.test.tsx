@@ -40,6 +40,7 @@ jest.mock('mo/components/scrollable', () => {
         },
     };
 });
+
 jest.mock('mo/components/tabs', () => {
     const originalModule = jest.requireActual('mo/components/tabs');
     return {
@@ -54,7 +55,7 @@ jest.mock('mo/components/tabs', () => {
             } = props;
             return (
                 <div
-                    data-testid={'test-id'}
+                    data-testid={TEST_ID}
                     onClick={() => {
                         onMoveTab?.();
                         onSelectTab?.();
@@ -72,14 +73,14 @@ jest.mock('mo/components/tabs', () => {
 describe('The Editor Component', () => {
     afterEach(cleanup);
 
-    test('match the welcome snapshot', () => {
+    test('Match the welcome snapshot', () => {
         const component = renderer.create(
             <Editor onClickActions={jest.fn()} />
         );
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    test('match the esitor group snapshot', () => {
+    test('Match the esitor group snapshot', () => {
         const groups = [current, Object.assign({}, current, { id: 2 })];
         const component = renderer.create(
             <Editor
@@ -91,7 +92,7 @@ describe('The Editor Component', () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    test('match the status snapshot', () => {
+    test('Match the status snapshot', () => {
         const component = renderer.create(
             <EditorStatusBarView {...mockItems} />
         );

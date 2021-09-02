@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The Editor Component match the esitor group snapshot 1`] = `
+exports[`The Editor Component Match the esitor group snapshot 1`] = `
 <div
   className="mo-editor"
 >
@@ -150,13 +150,13 @@ exports[`The Editor Component match the esitor group snapshot 1`] = `
 </div>
 `;
 
-exports[`The Editor Component match the status snapshot 1`] = `
+exports[`The Editor Component Match the status snapshot 1`] = `
 <span>
   Ln 0, Col 0
 </span>
 `;
 
-exports[`The Editor Component match the welcome snapshot 1`] = `
+exports[`The Editor Component Match the welcome snapshot 1`] = `
 <div
   className="mo-editor"
 >

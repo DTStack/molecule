@@ -131,28 +131,6 @@ describe('The FolderTree Component', () => {
     });
 
     test('Should support to render a input for the editing node', async () => {
-        // const data: ITreeNodeItemProps[] = [
-        //     {
-        //         id: 'root',
-        //         name: 'root',
-        //         isLeaf: false,
-        //         children: [
-        //             {
-        //                 id: 'folder',
-        //                 name: 'folder',
-        //                 isLeaf: false,
-        //                 children: [
-        //                     {
-        //                         id: 'folder-file',
-        //                         name: 'folder-file.tsx',
-        //                         isLeaf: true,
-        //                         isEditable: true,
-        //                     },
-        //                 ],
-        //             },
-        //         ],
-        //     },
-        // ];
         const { getByRole, container } = render(
             <FolderTreeViewPanel folderTree={{ data: mockTreeEditData }} />
         );
@@ -172,28 +150,6 @@ describe('The FolderTree Component', () => {
     });
 
     test('Should support to update file name via blur or keypress', () => {
-        // const data: ITreeNodeItemProps[] = [
-        //     {
-        //         id: 'root',
-        //         name: 'root',
-        //         isLeaf: false,
-        //         children: [
-        //             {
-        //                 id: 'folder',
-        //                 name: 'folder',
-        //                 isLeaf: false,
-        //                 children: [
-        //                     {
-        //                         id: 'folder-file',
-        //                         name: 'folder-file',
-        //                         isLeaf: true,
-        //                         isEditable: true,
-        //                     },
-        //                 ],
-        //             },
-        //         ],
-        //     },
-        // ];
         const mockFn = jest.fn();
         const { getByRole } = render(
             <FolderTreeViewPanel

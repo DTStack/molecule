@@ -40,7 +40,7 @@ export interface IEditorActionsProps extends IMenuItemProps {
     /**
      * Mark the action placed in More menus or outer
      */
-    place?: 'outer';
+    place?: 'outer' | 'inner';
 }
 
 export interface IEditorTab<T = BuiltInEditorTabDataType> extends ITabProps<T> {

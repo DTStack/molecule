@@ -44,7 +44,7 @@ function splitActions(actions: IEditorActionsProps[]) {
 }
 
 function EditorAction(props: IEditorActionProps & IEditorController) {
-    const { actions = [], isActiveGroup = false, onClickActions } = props;
+    const { actions = [], isActiveGroup, onClickActions } = props;
     const [outer, inner] = splitActions(actions);
 
     const childRef = useRef<DropDownRef>(null);
@@ -67,6 +67,7 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
             />
         ) : (
             <span
+                role="no-action"
                 style={{
                     padding: 15,
                     fontSize: 14,
@@ -82,6 +83,7 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
                 outer.map((action) => (
                     <Tooltip key={action.id} overlay={action.title}>
                         <div
+                            role="test-tooltip"
                             onClick={() => handleActionsClick(action)}
                             className={classNames(
                                 groupActionsItemClassName,

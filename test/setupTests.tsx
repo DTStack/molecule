@@ -1,3 +1,5 @@
+import React from 'react';
+
 jest.mock('mo/monaco/monacoService', () => {
     function MonacoService() {}
     const getter = { get: () => {} };
@@ -12,5 +14,16 @@ jest.mock('mo/monaco/monacoService', () => {
 
     return {
         MonacoService: MonacoService,
+    };
+});
+
+// mock Scrollable component
+jest.mock('mo/components/scrollable', () => {
+    const originalModule = jest.requireActual('mo/components/scrollable');
+    return {
+        ...originalModule,
+        Scrollable: ({ children }) => {
+            return <>{children}</>;
+        },
     };
 });

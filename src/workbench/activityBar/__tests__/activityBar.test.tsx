@@ -27,15 +27,6 @@ const mockData: IActivityBarItem[] = [
     },
 ];
 
-// mock Scrollable component
-jest.mock('mo/components/scrollable', () => {
-    const originalModule = jest.requireActual('mo/components/scrollable');
-    return {
-        ...originalModule,
-        Scrollable: ({ children }) => <>{children}</>,
-    };
-});
-
 describe('The ActivityBar Component', () => {
     test('match the snapshot', () => {
         const component = renderer.create(<ActivityBar data={mockData} />);

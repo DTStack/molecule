@@ -307,7 +307,6 @@ export class FolderTreeService
     public get(id: number) {
         const { tree } = this.getCurrentRootFolderInfo(id);
 
-        // if (!tree) return null;
         const node = tree.get(id);
 
         return node;

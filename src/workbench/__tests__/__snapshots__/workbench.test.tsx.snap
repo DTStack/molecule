@@ -34,71 +34,29 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
             <div
               class="mo-activityBar__container"
             >
-              <div
-                class="ScrollbarsCustom mo-scrollbar mo-activityBar__normal"
-                style="position: relative; width: 100%; height: 100%;"
-              >
-                <div
-                  class="ScrollbarsCustom-Wrapper"
-                  style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden;"
+              <ul>
+                <li
+                  class="mo-activityBar__item mo-activityBar__item--checked"
+                  id="sidebar.explore.title"
                 >
-                  <div
-                    class="ScrollbarsCustom-Scroller"
-                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow-y: hidden; overflow-x: hidden;"
-                  >
-                    <div
-                      class="ScrollbarsCustom-Content"
-                      style="box-sizing: border-box; padding: 0.05px; min-height: 100%; min-width: 100%;"
-                    >
-                      <ul>
-                        <li
-                          class="mo-activityBar__item mo-activityBar__item--checked"
-                          id="sidebar.explore.title"
-                        >
-                          <span
-                            class="mo-activityBar__label codicon codicon-files"
-                            title=""
-                          />
-                          <div
-                            class="mo-activityBar__indicator"
-                          />
-                        </li>
-                        <li
-                          class="mo-activityBar__item"
-                          id="sidebar.search.title"
-                        >
-                          <span
-                            class="mo-activityBar__label codicon codicon-search"
-                            title=""
-                          />
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <span
-                  axis="y"
-                  class="ScrollbarsCustom-Track ScrollbarsCustom-TrackY"
-                  style="position: absolute; overflow: hidden; border-radius: 0; background: transparent; user-select: none; width: 10px; height: calc(100% - 20px); top: 10px; right: 0px; display: none; opacity: 0; transition: opacity 0.4s ease-in-out;"
-                >
-                  <div
-                    axis="y"
-                    class="ScrollbarsCustom-Thumb ScrollbarsCustom-ThumbY"
-                    style="cursor: pointer; border-radius: 0; width: 100%; height: 0px;"
+                  <span
+                    class="mo-activityBar__label codicon codicon-files"
+                    title=""
                   />
-                </span>
-                <span
-                  axis="x"
-                  class="ScrollbarsCustom-Track ScrollbarsCustom-TrackX"
-                  style="position: absolute; overflow: hidden; border-radius: 0; background: transparent; user-select: none; height: 10px; width: calc(100% - 20px); bottom: 0px; left: 10px; display: none; opacity: 0; transition: opacity 0.4s ease-in-out;"
-                >
                   <div
-                    axis="x"
-                    class="ScrollbarsCustom-Thumb ScrollbarsCustom-ThumbX"
-                    style="cursor: pointer; border-radius: 0; height: 100%; width: 0px;"
+                    class="mo-activityBar__indicator"
                   />
-                </span>
-              </div>
+                </li>
+                <li
+                  class="mo-activityBar__item"
+                  id="sidebar.search.title"
+                >
+                  <span
+                    class="mo-activityBar__label codicon codicon-search"
+                    title=""
+                  />
+                </li>
+              </ul>
               <ul
                 class="mo-activityBar__global"
               />
@@ -451,76 +409,31 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                     class="mo-panel__header"
                   >
                     <div
-                      class="ScrollbarsCustom mo-scrollbar"
-                      style="position: relative; width: 100%; height: 100%;"
+                      class="mo-tabs mo-tabs--line"
                     >
                       <div
-                        class="ScrollbarsCustom-Wrapper"
-                        style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden;"
+                        class="mo-tabs__header"
                       >
                         <div
-                          class="ScrollbarsCustom-Scroller"
-                          style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow-y: hidden; overflow-x: hidden;"
+                          class="mo-tab__item"
+                          draggable="true"
                         >
-                          <div
-                            class="ScrollbarsCustom-Content"
-                            style="box-sizing: border-box; padding: 0.05px; min-height: 100%; min-width: 100%;"
-                          >
-                            <div
-                              class="mo-tabs mo-tabs--line"
-                            >
-                              <div
-                                class="mo-tabs__header"
-                              >
-                                <div
-                                  class="mo-tab__item"
-                                  draggable="true"
-                                >
-                                  问题
-                                </div>
-                              </div>
-                              <div
-                                class="mo-tabs__content"
-                              >
-                                <div
-                                  class="mo-tabs__content__item"
-                                >
-                                  <div
-                                    style="margin: 0px 18px; user-select: none;"
-                                  >
-                                    未在工作区检测到问题
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          问题
                         </div>
                       </div>
                       <div
-                        class="shadow top"
-                      />
-                      <span
-                        axis="y"
-                        class="ScrollbarsCustom-Track ScrollbarsCustom-TrackY"
-                        style="position: absolute; overflow: hidden; border-radius: 0; background: transparent; user-select: none; width: 10px; height: calc(100% - 20px); top: 10px; right: 0px; display: none; opacity: 0; transition: opacity 0.4s ease-in-out;"
+                        class="mo-tabs__content"
                       >
                         <div
-                          axis="y"
-                          class="ScrollbarsCustom-Thumb ScrollbarsCustom-ThumbY"
-                          style="cursor: pointer; border-radius: 0; width: 100%; height: 0px;"
-                        />
-                      </span>
-                      <span
-                        axis="x"
-                        class="ScrollbarsCustom-Track ScrollbarsCustom-TrackX"
-                        style="position: absolute; overflow: hidden; border-radius: 0; background: transparent; user-select: none; height: 10px; width: calc(100% - 20px); bottom: 0px; left: 10px; display: none; opacity: 0; transition: opacity 0.4s ease-in-out;"
-                      >
-                        <div
-                          axis="x"
-                          class="ScrollbarsCustom-Thumb ScrollbarsCustom-ThumbX"
-                          style="cursor: pointer; border-radius: 0; height: 100%; width: 0px;"
-                        />
-                      </span>
+                          class="mo-tabs__content__item"
+                        >
+                          <div
+                            style="margin: 0px 18px; user-select: none;"
+                          >
+                            未在工作区检测到问题
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div
                       class="mo-action-bar mo-panel__toolbar"

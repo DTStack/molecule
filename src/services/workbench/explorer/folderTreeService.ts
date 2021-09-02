@@ -120,8 +120,8 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     onContextMenu(
         callback: (
-            treeNode: ITreeNodeItemProps,
-            contextMenu: IMenuItemProps
+            contextMenu: IMenuItemProps,
+            treeNode?: ITreeNodeItemProps
         ) => void
     ): void;
     /**
@@ -369,8 +369,8 @@ export class FolderTreeService
 
     public onContextMenu = (
         callback: (
-            treeNode: ITreeNodeItemProps,
-            contextMenu: IMenuItemProps
+            contextMenu: IMenuItemProps,
+            treeNode?: ITreeNodeItemProps
         ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);

@@ -4,6 +4,14 @@ import '@testing-library/jest-dom';
 
 import { IScrollbarProps, Scrollable } from '../index';
 
+// to make sure the Scrollable component not be mocked by global
+jest.mock('mo/components/scrollable', () => {
+    const originalModule = jest.requireActual('mo/components/scrollable');
+    return {
+        ...originalModule,
+    };
+});
+
 function TestScrollable(props: IScrollbarProps) {
     return (
         <div>

@@ -119,11 +119,11 @@ export class ExplorerController
         const toolbarId = item.id;
         switch (toolbarId) {
             case NEW_FILE_COMMAND_ID: {
-                this.folderTreeController.createTreeNode(FileTypes.File);
+                this.folderTreeController.createTreeNode?.(FileTypes.File);
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                this.folderTreeController.createTreeNode(FileTypes.Folder);
+                this.folderTreeController.createTreeNode?.(FileTypes.Folder);
                 break;
             }
             case REMOVE_COMMAND_ID: {

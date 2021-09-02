@@ -221,9 +221,8 @@ const EditorTree = (props: IOpenEditProps) => {
                                 return (
                                     <div
                                         title={
-                                            file.data?.path
-                                                ? `${file.data?.path}/${file.name}`
-                                                : undefined
+                                            file.data?.path &&
+                                            `${file.data?.path}/${file.name}`
                                         }
                                         className={classNames(
                                             editorTreeItemClassName,

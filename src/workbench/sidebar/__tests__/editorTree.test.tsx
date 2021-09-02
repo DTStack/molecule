@@ -18,6 +18,24 @@ const PaneEditorTree = (props: Omit<IOpenEditProps, 'panel'>) => {
     return <EditorTree panel={{ id: 'test', name: 'test' }} {...props} />;
 };
 
+const mockTab1 = {
+    id: 'tab1',
+    name: 'tab1',
+    data: {
+        path: 'tab',
+    },
+};
+
+const mockTab2 = {
+    id: 'tab2',
+    name: 'tab2',
+    data: {
+        path: 'tab',
+    },
+};
+const TAB1_PATH = `${mockTab1.data.path}/${mockTab1.name}`;
+const TAB2_PATH = `${mockTab2.data.path}/${mockTab2.name}`;
+
 const mockGroups = [
     {
         id: 1,
@@ -25,22 +43,7 @@ const mockGroups = [
             id: 'tab1',
             name: 'tab1',
         },
-        data: [
-            {
-                id: 'tab1',
-                name: 'tab1',
-                data: {
-                    path: 'tab',
-                },
-            },
-            {
-                id: 'tab2',
-                name: 'tab2',
-                data: {
-                    path: 'tab',
-                },
-            },
-        ],
+        data: [mockTab1, mockTab2],
     },
 ];
 
@@ -144,10 +147,10 @@ describe('The EditorTree Component', () => {
                 />
             );
 
-            const tab1 = getByTitle('tab/tab1');
+            const tab1 = getByTitle(TAB1_PATH);
             fireEvent.click(tab1.querySelector('span.codicon-close')!);
 
-            expect(testFn.mock.calls[0][0]).toBe('tab1');
+            expect(testFn.mock.calls[0][0]).toBe(mockTab1.name);
             expect(testFn.mock.calls[0][1]).toBe(1);
         });
     });
@@ -167,7 +170,7 @@ describe('The EditorTree Component', () => {
                 />
             );
 
-            const tab1 = getByTitle('tab/tab1');
+            const tab1 = getByTitle(TAB1_PATH);
             fireEvent.contextMenu(tab1);
 
             const menu = getByRole('menu');
@@ -179,13 +182,7 @@ describe('The EditorTree Component', () => {
                 expect.objectContaining(contextMenu)
             );
             expect(contextMenuFn.mock.calls[0][1]).toEqual(1);
-            expect(contextMenuFn.mock.calls[0][2]).toEqual({
-                id: 'tab1',
-                name: 'tab1',
-                data: {
-                    path: 'tab',
-                },
-            });
+            expect(contextMenuFn.mock.calls[0][2]).toEqual(mockTab1);
         });
     });
 
@@ -199,12 +196,12 @@ describe('The EditorTree Component', () => {
                 />
             );
 
-            const tab1 = getByTitle('tab/tab1');
+            const tab1 = getByTitle(TAB1_PATH);
             fireEvent.click(tab1);
             // same current tab won't triiger onSelect event
             expect(selectFn).not.toBeCalled();
 
-            const tab2 = getByTitle('tab/tab2');
+            const tab2 = getByTitle(TAB2_PATH);
             fireEvent.click(tab2);
         });
     });
@@ -241,22 +238,7 @@ const multipleGroups = [
             id: 'tab1',
             name: 'tab1',
         },
-        data: [
-            {
-                id: 'tab1',
-                name: 'tab1',
-                data: {
-                    path: 'tab',
-                },
-            },
-            {
-                id: 'tab2',
-                name: 'tab2',
-                data: {
-                    path: 'tab',
-                },
-            },
-        ],
+        data: [mockTab1, mockTab2],
     },
     {
         id: 2,
@@ -264,22 +246,7 @@ const multipleGroups = [
             id: 'tab1',
             name: 'tab1',
         },
-        data: [
-            {
-                id: 'tab1',
-                name: 'tab1',
-                data: {
-                    path: 'tab',
-                },
-            },
-            {
-                id: 'tab2',
-                name: 'tab2',
-                data: {
-                    path: 'tab',
-                },
-            },
-        ],
+        data: [mockTab1, mockTab2],
     },
 ];
 
@@ -316,8 +283,8 @@ describe('The EditorTree Component With multiple groups', () => {
                 (group1.nextElementSibling! as HTMLDivElement).focus
             ).toBeTruthy();
 
-            expect(selectFn.mock.calls[0][0]).toBe('tab1');
-            expect(selectFn.mock.calls[0][1]).toBe(1);
+            expect(selectFn.mock.calls[0][0]).toBe(mockTab1.name);
+            expect(selectFn.mock.calls[0][1]).toBe(multipleGroups[0].id);
         });
     });
 
@@ -350,7 +317,9 @@ describe('The EditorTree Component With multiple groups', () => {
             expect(contextMenuFn.mock.calls[0][0]).toEqual(
                 expect.objectContaining(contextMenu)
             );
-            expect(contextMenuFn.mock.calls[0][1]).toEqual(1);
+            expect(contextMenuFn.mock.calls[0][1]).toEqual(
+                multipleGroups[0].id
+            );
             expect(contextMenuFn.mock.calls[0][2]).toBeUndefined();
         });
     });

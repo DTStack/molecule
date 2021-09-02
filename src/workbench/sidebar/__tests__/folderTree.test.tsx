@@ -8,45 +8,48 @@ import type { ITreeNodeItemProps } from 'mo/components';
 import { dragToTargetNode } from 'mo/components/tabs/__tests__/tab.test';
 import { folderTreeClassName, folderTreeEditClassName } from '../explore/base';
 
-// mock Scrollable component
-jest.mock('mo/components/scrollable', () => {
-    const originalModule = jest.requireActual('mo/components/scrollable');
-    return {
-        ...originalModule,
-        Scrollable: ({ children }) => {
-            return <>{children}</>;
-        },
-    };
-});
-
 function FolderTreeViewPanel(props: Omit<IFolderTreeProps, 'panel'>) {
     return <FolderTree panel={{ id: 'test', name: 'test' }} {...props} />;
 }
+
+const mockFile = {
+    id: 'file',
+    name: 'file',
+    isLeaf: true,
+};
+
+const mockFileInFolder = {
+    id: 'folder-file',
+    name: 'folder-file',
+    isLeaf: true,
+};
+
+const mockEditFile = {
+    ...mockFileInFolder,
+    name: 'folder-file.tsx',
+    isEditable: true,
+};
+
+const mockFolder = {
+    id: 'folder',
+    name: 'folder',
+    isLeaf: false,
+    children: [mockFileInFolder],
+};
 
 const mockTreeData: ITreeNodeItemProps[] = [
     {
         id: 'root',
         name: 'root',
         isLeaf: false,
-        children: [
-            {
-                id: 'file',
-                name: 'file',
-                isLeaf: true,
-            },
-            {
-                id: 'folder',
-                name: 'folder',
-                isLeaf: false,
-                children: [
-                    {
-                        id: 'folder-file',
-                        name: 'folder-file',
-                        isLeaf: true,
-                    },
-                ],
-            },
-        ],
+        children: [mockFile, mockFolder],
+    },
+];
+
+const mockTreeEditData = [
+    {
+        ...mockTreeData[0],
+        children: [{ ...mockFolder, children: [mockEditFile] }],
     },
 ];
 
@@ -101,9 +104,8 @@ describe('The FolderTree Component', () => {
     });
 
     test('Should support to trigger onClickContextMenu event', () => {
-        const mockFn = jest
-            .fn()
-            .mockImplementation(() => [{ id: 'test', name: 'test' }]);
+        const contextMenu = { id: 'test', name: 'test' };
+        const mockFn = jest.fn().mockImplementation(() => [contextMenu]);
         const mockContextMenuFn = jest.fn();
 
         const { getByTitle, getByRole } = render(
@@ -121,51 +123,46 @@ describe('The FolderTree Component', () => {
 
         expect(mockContextMenuFn).toBeCalled();
         expect(mockContextMenuFn.mock.calls[0][0]).toEqual(
-            expect.objectContaining({
-                id: 'test',
-                name: 'test',
-            })
+            expect.objectContaining(contextMenu)
         );
         expect(mockContextMenuFn.mock.calls[0][1]).toEqual(
-            expect.objectContaining({
-                id: 'file',
-                name: 'file',
-                isLeaf: true,
-            })
+            expect.objectContaining(mockFile)
         );
     });
 
     test('Should support to render a input for the editing node', async () => {
-        const data: ITreeNodeItemProps[] = [
-            {
-                id: 'root',
-                name: 'root',
-                isLeaf: false,
-                children: [
-                    {
-                        id: 'folder',
-                        name: 'folder',
-                        isLeaf: false,
-                        children: [
-                            {
-                                id: 'folder-file',
-                                name: 'folder-file.tsx',
-                                isLeaf: true,
-                                isEditable: true,
-                            },
-                        ],
-                    },
-                ],
-            },
-        ];
+        // const data: ITreeNodeItemProps[] = [
+        //     {
+        //         id: 'root',
+        //         name: 'root',
+        //         isLeaf: false,
+        //         children: [
+        //             {
+        //                 id: 'folder',
+        //                 name: 'folder',
+        //                 isLeaf: false,
+        //                 children: [
+        //                     {
+        //                         id: 'folder-file',
+        //                         name: 'folder-file.tsx',
+        //                         isLeaf: true,
+        //                         isEditable: true,
+        //                     },
+        //                 ],
+        //             },
+        //         ],
+        //     },
+        // ];
         const { getByRole, container } = render(
-            <FolderTreeViewPanel folderTree={{ data }} />
+            <FolderTreeViewPanel folderTree={{ data: mockTreeEditData }} />
         );
 
         const input = getByRole('input') as HTMLInputElement;
+
         expect(input).toBeInTheDocument();
         // expect to pass through name into input's value
-        expect(input.value).toBe('folder-file.tsx');
+        expect(input.value).toBe(mockEditFile.name);
+
         // expect to select the file name automatically
         expect(input.selectionStart).toBe(0);
         expect(input.selectionEnd).toBe(11);
@@ -174,62 +171,65 @@ describe('The FolderTree Component', () => {
         ).toContain(folderTreeEditClassName);
     });
 
-    test('Should suppor to update file name via blur or keypress', () => {
-        const data: ITreeNodeItemProps[] = [
-            {
-                id: 'root',
-                name: 'root',
-                isLeaf: false,
-                children: [
-                    {
-                        id: 'folder',
-                        name: 'folder',
-                        isLeaf: false,
-                        children: [
-                            {
-                                id: 'folder-file',
-                                name: 'folder-file',
-                                isLeaf: true,
-                                isEditable: true,
-                            },
-                        ],
-                    },
-                ],
-            },
-        ];
+    test('Should support to update file name via blur or keypress', () => {
+        // const data: ITreeNodeItemProps[] = [
+        //     {
+        //         id: 'root',
+        //         name: 'root',
+        //         isLeaf: false,
+        //         children: [
+        //             {
+        //                 id: 'folder',
+        //                 name: 'folder',
+        //                 isLeaf: false,
+        //                 children: [
+        //                     {
+        //                         id: 'folder-file',
+        //                         name: 'folder-file',
+        //                         isLeaf: true,
+        //                         isEditable: true,
+        //                     },
+        //                 ],
+        //             },
+        //         ],
+        //     },
+        // ];
         const mockFn = jest.fn();
         const { getByRole } = render(
             <FolderTreeViewPanel
-                folderTree={{ data }}
+                folderTree={{ data: mockTreeEditData }}
                 onUpdateFileName={mockFn}
             />
         );
 
         const input = getByRole('input');
+        const mockEnterValue = 'test-enter';
         fireEvent.keyDown(input, {
             keyCode: 13,
-            target: { value: 'test-enter' },
+            target: { value: mockEnterValue },
         });
         expect(mockFn).toBeCalled();
         expect(mockFn.mock.calls[0][0]).toEqual(
-            expect.objectContaining({ name: 'test-enter' })
+            expect.objectContaining({ name: mockEnterValue })
         );
 
+        const mockEscValue = 'test-esc';
         fireEvent.keyDown(input, {
             keyCode: 27,
-            target: { value: 'test-esc' },
+            target: { value: mockEscValue },
         });
         expect(mockFn).toBeCalledTimes(2);
         expect(mockFn.mock.calls[1][0]).toEqual(
-            expect.objectContaining({ name: 'test-esc' })
+            expect.objectContaining({ name: mockEscValue })
         );
 
+        const mockBlurValue = 'test-blur';
         fireEvent.blur(input, {
-            target: { value: 'test-blur' },
+            target: { value: mockBlurValue },
         });
         expect(mockFn).toBeCalledTimes(3);
         expect(mockFn.mock.calls[2][0]).toEqual(
-            expect.objectContaining({ name: 'test-blur' })
+            expect.objectContaining({ name: mockBlurValue })
         );
     });
 
@@ -247,39 +247,20 @@ describe('The FolderTree Component', () => {
         expect(mockFn).toBeCalled();
         expect(mockFn.mock.calls[0][0]).toEqual([
             {
-                id: 'root',
-                name: 'root',
-                isLeaf: false,
-                children: [
-                    {
-                        id: 'folder',
-                        name: 'folder',
-                        isLeaf: false,
-                        children: [
-                            {
-                                id: 'folder-file',
-                                name: 'folder-file',
-                                isLeaf: true,
-                            },
-                        ],
-                    },
-                    {
-                        id: 'file',
-                        name: 'file',
-                        isLeaf: true,
-                    },
-                ],
+                ...mockTreeData[0],
+                children: [mockFolder, mockFile],
             },
         ]);
     });
 
     test('Should suppor to init contextMenu', () => {
+        const contextMenu = { id: 'test', name: 'test' };
         const mockFn = jest.fn();
         const { container, getByRole } = render(
             <FolderTreeViewPanel
                 folderTree={{
                     data: mockTreeData,
-                    folderPanelContextMenu: [{ id: 'test', name: 'test' }],
+                    folderPanelContextMenu: [contextMenu],
                 }}
                 onClickContextMenu={mockFn}
             />
@@ -295,7 +276,7 @@ describe('The FolderTree Component', () => {
         fireEvent.click(menu.firstElementChild!);
         expect(mockFn).toBeCalled();
         expect(mockFn.mock.calls[0][0]).toEqual(
-            expect.objectContaining({ id: 'test', name: 'test' })
+            expect.objectContaining(contextMenu)
         );
         expect(mockFn.mock.calls[0][1]).toBeUndefined();
     });

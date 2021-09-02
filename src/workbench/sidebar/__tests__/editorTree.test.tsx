@@ -47,17 +47,6 @@ const mockGroups = [
     },
 ];
 
-// mock Scrollable component
-jest.mock('mo/components/scrollable', () => {
-    const originalModule = jest.requireActual('mo/components/scrollable');
-    return {
-        ...originalModule,
-        Scrollable: ({ children }) => {
-            return <>{children}</>;
-        },
-    };
-});
-
 // mock Toolbar component
 jest.mock('mo/components/toolbar', () => {
     const originalModule = jest.requireActual('mo/components/toolbar');

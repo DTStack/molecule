@@ -165,10 +165,13 @@ describe('The PanelService test', () => {
 
     test("Should support to open a panel that doesn't exist", () => {
         const state = panelService.getState();
+        const newPanel = Object.assign({}, paneOutput, { id: 'test' });
         expect(state.current).toBeNull();
+        expect(panelService.getPanel(newPanel.id)).toBeUndefined();
 
-        panelService.open(paneOutput);
-        expect(state.current).toEqual(paneOutput);
+        panelService.open(newPanel);
+        expect(state.current).toEqual(newPanel);
+        expect(panelService.getPanel(newPanel.id)).not.toBeUndefined();
     });
 
     test('Should support to toggle maximize status', () => {

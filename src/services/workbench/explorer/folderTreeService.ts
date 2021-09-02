@@ -15,11 +15,15 @@ import {
 import { TreeViewUtil } from '../../helper';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
-import { SAMPLE_FOLDER_PANEL_ID } from 'mo/model';
+import { SAMPLE_FOLDER_PANEL_ID, builtInFolderTree } from 'mo/model';
 import { IMenuItemProps } from 'mo/components';
 import type { LoadEventData } from 'mo/controller';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
+    /**
+     * Reset the FolderTreeService state
+     */
+    reset(): void;
     /**
      * Add data into folder tree
      * @param data
@@ -67,6 +71,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     setFileContextMenu: (menus: IMenuItemProps[]) => void;
     /**
      * Set the context menus for folder
+     * @param menus
      */
     setFolderContextMenu: (menus: IMenuItemProps[]) => void;
     /**
@@ -119,7 +124,11 @@ export interface IFolderTreeService extends Component<IFolderTree> {
             contextMenu: IMenuItemProps
         ) => void
     ): void;
-    onLoadData(callback: (treeNode: LoadEventData) => Promise<void>): void;
+    /**
+     * Callback for load folder tree data
+     * @param callback
+     */
+    onLoadData(callback: (treeNode: LoadEventData) => void): void;
 }
 
 @singleton()
@@ -135,6 +144,10 @@ export class FolderTreeService
         super();
         this.state = container.resolve(IFolderTreeModel);
         this.explorerService = container.resolve(ExplorerService);
+    }
+
+    public reset() {
+        this.setState(builtInFolderTree as any);
     }
 
     public getFileContextMenu() {
@@ -153,6 +166,19 @@ export class FolderTreeService
         this.folderContextMenu = menus;
     }
 
+    private setCurrentFolderLocation(data: ITreeNodeItemProps, id: number) {
+        const children = data.children;
+        const { tree } = this.getCurrentRootFolderInfo(id);
+        const parentIndex = tree.getIndex(id);
+
+        data.location = `${parentIndex!.node!.location}/${data.name}`;
+        if (children?.length) {
+            children.forEach((child) => {
+                child.location = `${data.location}/${child.name}`;
+            });
+        }
+    }
+
     /**
      * Returns the node of root folder in folderTree
      */
@@ -167,6 +193,7 @@ export class FolderTreeService
 
     private addRootFolder(folder: ITreeNodeItemProps) {
         const { folderTree } = this.state;
+
         if (folderTree?.data?.length) {
             // if root folder exists, then do nothing
             return;
@@ -197,6 +224,7 @@ export class FolderTreeService
         const currentRootFolder = this.getRootFolderById(id);
         const index = this.getRootFolderIndex(currentRootFolder.id!);
         const tree = new TreeViewUtil<ITreeNodeItemProps>(currentRootFolder);
+
         return {
             currentRootFolder,
             index,
@@ -206,35 +234,44 @@ export class FolderTreeService
 
     public add(data: ITreeNodeItemProps, id?: number): void {
         const isRootFolder = data.fileType === 'RootFolder';
+
         if (isRootFolder) {
             this.addRootFolder(data);
             return;
         }
-        if (!id) throw new Error('File node or folder node both need id');
+        if (!id && id !== 0)
+            throw new Error('File node or folder node both need id');
+
         const cloneData = this.state.folderTree?.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
+
         // this index is root folder index
-        if (index > -1) {
-            const currentIndex = tree.getIndex(id);
-            if (currentIndex?.node?.fileType === FileTypes.File) {
-                const locations = currentIndex.node.location.split('/');
-                locations[locations.length - 1] = data.name;
-                data.location = locations.join('/');
-                tree.prepend(data, currentIndex.parent!);
-            } else {
-                data.location = `${currentIndex!.node!.location}/${data.name}`;
-                tree.append(data, id);
-            }
-            cloneData[index] = tree.obj;
-            this.setState({
-                folderTree: {
-                    ...this.state.folderTree,
-                    data: cloneDeep(cloneData),
-                },
-            });
-        } else {
-            console.warn('Please check id again, there is not folder tree');
+        if (index <= -1) {
+            return console.warn(
+                'Please check id again, there is not folder tree'
+            );
         }
+
+        const currentIndex = tree.getIndex(id);
+
+        if (currentIndex?.node?.fileType === FileTypes.File) {
+            data.location = currentIndex.node.location.replace(
+                /(?<=\/)[^\/]+$/,
+                `${data.name}`
+            );
+            tree.prepend(data, currentIndex.parent!);
+        } else {
+            this.setCurrentFolderLocation(data, id);
+            tree.append(data, id);
+        }
+
+        cloneData[index] = tree.obj;
+        this.setState({
+            folderTree: {
+                ...this.state.folderTree,
+                data: cloneDeep(cloneData),
+            },
+        });
     }
 
     public remove(id: number) {
@@ -243,6 +280,7 @@ export class FolderTreeService
         );
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
+
         tree.remove(id);
         if (index > -1) nextData[index] = tree.obj;
         this.setState({
@@ -258,6 +296,7 @@ export class FolderTreeService
         );
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
+
         tree.update(id, restData);
         if (index > -1) nextData[index] = tree.obj;
         this.setState({
@@ -267,14 +306,20 @@ export class FolderTreeService
 
     public get(id: number) {
         const { tree } = this.getCurrentRootFolderInfo(id);
+
         const node = tree.get(id);
+
         return node;
     }
 
     public setActive(id?: number) {
         const { folderTree } = this.state;
+
         this.setState({
-            folderTree: { ...folderTree, current: id ? this.get(id) : null },
+            folderTree: {
+                ...folderTree,
+                current: id || id === 0 ? this.get(id) : null,
+            },
         });
     }
 
@@ -331,9 +376,7 @@ export class FolderTreeService
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
     };
 
-    public onLoadData = (
-        callback: (treeNode: LoadEventData) => Promise<void>
-    ) => {
+    public onLoadData = (callback: (treeNode: LoadEventData) => void) => {
         this.subscribe(FolderTreeEvent.onLoadData, callback);
     };
 }

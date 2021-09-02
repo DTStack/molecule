@@ -19,6 +19,7 @@ export function expectLoggerErrorToBeCalled(action: () => void) {
  */
 export function expectFnCalled(action: (testFn: jest.Mock<any, any>) => void) {
     const testFn = jest.fn();
+
     action(testFn);
     expect(testFn).toBeCalled();
 }

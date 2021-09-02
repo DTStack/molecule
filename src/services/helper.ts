@@ -10,6 +10,13 @@ interface BaseProps {
     [key: string]: any;
 }
 
+interface ITreeNodeItem<T> {
+    id: number;
+    parent?: number;
+    node?: T;
+    [key: string]: any;
+}
+
 export interface IIndex<T> {
     id?: number;
     node?: T;
@@ -18,9 +25,19 @@ export interface IIndex<T> {
     next?: number | null;
     [x: string]: any; // default: children: []
 }
+
+export interface Index<T> {
+    id?: number;
+    node?: T;
+    prev?: number | null;
+    next?: number | null;
+    [x: string]: any; // default: children: []
+}
+
 export interface IIndexs<T> {
     [index: string]: IIndex<T>;
 }
+
 export interface ITreeInterface<T extends BaseProps> {
     count: number;
     obj: T;
@@ -28,6 +45,11 @@ export interface ITreeInterface<T extends BaseProps> {
     childNodeName: string;
 }
 
+/**
+ * TODO:
+ * The delete operation has a great impact on the performance of the object,
+ * and you can consider using other data structures for processing. such as linked lists , tree
+ */
 export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
     count: number;
     obj: T;
@@ -50,6 +72,7 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
      * }
      * ```
      */
+
     constructor(obj?: T, childNodeName = 'children') {
         this.count = 1; // nodes count
         this.obj = cloneDeep(obj) || ({ [childNodeName]: [] } as any);
@@ -61,37 +84,49 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
     generate(obj: T) {
         const indexes = this.indexes;
         const startId = obj.id;
-        const self = this;
 
+        /**
+         * This can be removed when the ts definition of the tree is fully available
+         */
+        if (!startId) return null;
+
+        const self = this;
         const index: IIndex<T> = { id: startId, node: obj };
-        indexes[startId + ''] = index;
+
+        indexes[startId] = index;
         this.count++;
 
         if (obj[this.childNodeName]?.length) {
-            walk(obj[this.childNodeName], index);
+            childWalker(obj[this.childNodeName], index);
         }
 
-        function walk(objs, parent) {
+        function childWalker(
+            objs: (T & ITreeNodeItem<T>)[],
+            parent: IIndex<T>
+        ) {
             const children: number[] = []; // current children ids
-            objs.forEach(function (obj: any, i) {
-                const index: IIndex<T> = {};
-                index.id = obj.id;
-                index.node = obj;
 
-                if (parent) index.parent = parent.id;
+            objs.forEach((obj) => {
+                const index: IIndex<T> = {
+                    id: obj.id,
+                    node: obj,
+                };
 
-                indexes[obj.id + ''] = index;
-                children.push(obj.id as number);
+                if (parent.id) index.parent = parent.id;
+                indexes[obj!.id] = index;
+                children.push(obj.id);
                 self.count++;
-
                 if (obj[self.childNodeName]?.length) {
-                    walk(obj[self.childNodeName], index);
+                    childWalker(obj[self.childNodeName], index);
                 }
             });
             parent[self.childNodeName] = children;
 
-            children.forEach(function (id, i) {
-                const index = indexes[id + ''];
+            /**
+             * TODO: really need doubly linked here?
+             */
+            children.forEach((id, i) => {
+                const index = indexes[id];
                 if (i > 0) index.prev = children[i - 1];
                 if (i < children.length - 1) index.next = children[i + 1];
             });
@@ -101,13 +136,18 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
     }
 
     getIndex(id: number) {
-        const index = this.indexes[id + ''];
+        const index = this.indexes[id];
         if (index) return index;
         return null;
     }
 
     removeIndex(index: IIndex<T>) {
-        delete this.indexes[index.id + ''];
+        /**
+         * TODO: Do not use the delete operator to delete object properties
+         * This is very convenient, but the impact on performance such as reading is huge
+         * In this application, the reading speed is very important to the experience, so we need to use the hidden class of javascript
+         */
+        if (index.id) delete this.indexes[index.id];
         if (index[this.childNodeName]?.length) {
             index[this.childNodeName].forEach((child) => {
                 const childIndex = this.getIndex(child);
@@ -174,15 +214,15 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
         const parentNode = this.get(parentId);
         if (parentNode && parentIndex) {
             const index = this.generate(obj);
-            index.parent = parentId;
 
+            index!.parent = parentId;
             (parentNode as BaseProps)[this.childNodeName] =
                 parentNode[this.childNodeName] || [];
             parentIndex[this.childNodeName] =
                 parentIndex[this.childNodeName] || [];
 
             parentNode[this.childNodeName].splice(i, 0, obj);
-            parentIndex[this.childNodeName].splice(i, 0, index.id);
+            parentIndex[this.childNodeName].splice(i, 0, index?.id);
 
             this.updateChildren(parentIndex[this.childNodeName]);
             if (parentIndex.parent) {

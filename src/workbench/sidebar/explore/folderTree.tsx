@@ -6,7 +6,7 @@ import { select, getEventPosition } from 'mo/common/dom';
 import Tree, { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { Button } from 'mo/components/button';
-import { FolderTreeController } from 'mo/controller/explorer/folderTree';
+import type { IFolderTreeController } from 'mo/controller/explorer/folderTree';
 import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
 import {
@@ -18,7 +18,7 @@ import { classNames } from 'mo/common/className';
 import { Scrollable } from 'mo/components';
 import { DataBaseProps } from 'mo/components/collapse';
 
-interface IFolderTreeProps extends FolderTreeController, IFolderTree {
+export interface IFolderTreeProps extends IFolderTreeController, IFolderTree {
     panel: DataBaseProps;
 }
 
@@ -85,7 +85,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     const { data = [], folderPanelContextMenu = [] } = folderTree;
 
     const handleAddRootFolder = () => {
-        createTreeNode('RootFolder');
+        createTreeNode?.('RootFolder');
     };
 
     const welcomePage = (
@@ -114,7 +114,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     const hasEditable = detectHasEditableStatus(data);
 
     const onClickMenuItem = (e, item) => {
-        onClickContextMenu?.(e, item);
+        onClickContextMenu?.(item);
         contextMenu.current?.hide();
     };
 
@@ -123,7 +123,11 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         return useContextMenu({
             anchor: select(`.${folderTreeClassName}`),
             render: () => (
-                <Menu onClick={onClickMenuItem} data={folderPanelContextMenu} />
+                <Menu
+                    role="menu"
+                    onClick={onClickMenuItem}
+                    data={folderPanelContextMenu}
+                />
             ),
         });
     };
@@ -132,20 +136,22 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         item: IMenuItemProps,
         data: IFolderTreeSubItem
     ) => {
-        onClickContextMenu(item, data);
+        onClickContextMenu?.(item, data);
         contextView.hide();
     };
 
     const handleRightClick = ({ event, node }) => {
         const { data } = node;
-        const menuItems = onRightClick(data);
+        const menuItems = onRightClick?.(data) || [];
 
-        contextView?.show(getEventPosition(event), () => (
-            <Menu
-                onClick={(_, item) => handleMenuClick(item!, data)}
-                data={menuItems}
-            />
-        ));
+        menuItems.length &&
+            contextView?.show(getEventPosition(event), () => (
+                <Menu
+                    role="menu"
+                    onClick={(_, item) => handleMenuClick(item!, data)}
+                    data={menuItems}
+                />
+            ));
     };
 
     const handleUpdateFile = (
@@ -186,6 +192,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
 
         return isEditable ? (
             <Input
+                role="input"
                 className={folderTreeInputClassName}
                 type="text"
                 defaultValue={name}

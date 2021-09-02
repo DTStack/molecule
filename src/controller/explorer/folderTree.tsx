@@ -23,17 +23,16 @@ export interface LoadEventData extends EventDataNode {
 }
 
 export interface IFolderTreeController {
-    readonly createTreeNode: (type: FileType) => void;
-    readonly onClickContextMenu: (
+    readonly createTreeNode?: (type: FileType) => void;
+    readonly onClickContextMenu?: (
         contextMenu: IMenuItemProps,
-        treeNode: ITreeNodeItemProps
+        treeNode?: ITreeNodeItemProps
     ) => void;
     readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
-    readonly onSelectFile: (file: ITreeNodeItemProps) => void;
+    readonly onSelectFile?: (file: ITreeNodeItemProps) => void;
     readonly onDropTree?: (treeNode: ITreeNodeItemProps[]) => void;
     readonly onLoadData?: (treeNode: LoadEventData) => Promise<void>;
-
-    onRightClick(treeNode: ITreeNodeItemProps): IMenuItemProps[];
+    readonly onRightClick?: (treeNode: ITreeNodeItemProps) => IMenuItemProps[];
 }
 
 @singleton()
@@ -86,16 +85,17 @@ export class FolderTreeController
 
     public readonly onClickContextMenu = (
         contextMenu: IMenuItemProps,
-        treeNode: ITreeNodeItemProps
+        treeNode?: ITreeNodeItemProps
     ) => {
         const menuId = contextMenu.id;
-        const { id: nodeId } = treeNode;
         switch (menuId) {
             case RENAME_COMMAND_ID: {
+                const { id: nodeId } = treeNode!;
                 this.onRename(nodeId);
                 break;
             }
             case DELETE_COMMAND_ID: {
+                const { id: nodeId } = treeNode!;
                 this.onDelete(nodeId);
                 break;
             }
@@ -108,11 +108,11 @@ export class FolderTreeController
                 break;
             }
             case OPEN_TO_SIDE_COMMAND_ID: {
-                this.onSelectFile(treeNode);
+                this.onSelectFile(treeNode!);
                 break;
             }
             default: {
-                this.onContextMenuClick(treeNode, contextMenu);
+                this.onContextMenuClick(contextMenu, treeNode);
             }
         }
     };
@@ -141,10 +141,10 @@ export class FolderTreeController
     };
 
     private onContextMenuClick = (
-        treeNode: ITreeNodeItemProps,
-        contextMenu: IMenuItemProps
+        contextMenu: IMenuItemProps,
+        treeNode?: ITreeNodeItemProps
     ) => {
-        this.emit(FolderTreeEvent.onContextMenuClick, treeNode, contextMenu);
+        this.emit(FolderTreeEvent.onContextMenuClick, contextMenu, treeNode);
     };
 
     private onRename = (id: number) => {

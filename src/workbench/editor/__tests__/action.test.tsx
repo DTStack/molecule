@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import EditorAction from '../action';
-// import { defaultEditorClassName, groupClassName } from '../base';
 import { IEditorActionsProps } from 'mo/model/workbench/editor';
 import { expectFnCalled } from '@test/utils';
 import '@testing-library/jest-dom';
+
+import EditorAction from '../action';
 
 const current: IEditorActionsProps = {
     id: '1',

@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The Explorer Component Match Snapshot 1`] = `
+<div
+  className="mo-sidebar-explorer"
+>
+  <header
+    className="mo-sidebar__header"
+  >
+    <div
+      className="mo-sidebar__title"
+    >
+      <h2>
+        浏览
+      </h2>
+    </div>
+    <div
+      className="mo-sidebar__toolbar"
+    >
+      <div
+        className="mo-tool-bar"
+      >
+        <div
+          className="mo-action-bar"
+        >
+          <ul
+            className="mo-action-bar__container"
+          >
+            <li
+              className="mo-action-bar__item"
+              id="test"
+              onClick={[Function]}
+            >
+              <span
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+              >
+                test
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div
+    className="mo-sidebar__content"
+  >
+    <div
+      className="mo-collapse"
+    >
+      <div
+        className="mo-collapse__item"
+        data-content="open"
+      >
+        <div
+          className="mo-collapse__header"
+          onClick={[Function]}
+          tabIndex={0}
+        >
+          <span
+            className="codicon codicon-chevron-right"
+          />
+          Open
+          <div
+            className="mo-collapse__extra"
+          />
+        </div>
+        <div
+          className="mo-collapse__content"
+          data-content="open"
+          tabIndex={0}
+        />
+      </div>
+      <div
+        className="mo-collapse__item"
+        data-content="test"
+      >
+        <div
+          className="mo-collapse__header"
+          onClick={[Function]}
+          tabIndex={0}
+        >
+          <span
+            className="codicon codicon-chevron-right"
+          />
+          test
+          <div
+            className="mo-collapse__extra"
+          />
+        </div>
+        <div
+          className="mo-collapse__content"
+          data-content="test"
+          tabIndex={0}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

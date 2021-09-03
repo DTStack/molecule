@@ -28,23 +28,23 @@ import {
 import { ISearchProps, ITreeNodeItemProps } from 'mo/components';
 
 export interface ISearchController {
-    getSearchIndex: (text: string, queryVal?: string) => number;
-    setSearchValue: (value?: string) => void;
-    setReplaceValue: (value?: string) => void;
-    setValidateInfo: (info: string | ISearchProps['validationInfo']) => void;
-    toggleMode: (status: boolean) => void;
+    getSearchIndex?: (text: string, queryVal?: string) => number;
+    setSearchValue?: (value?: string) => void;
+    setReplaceValue?: (value?: string) => void;
+    setValidateInfo?: (info: string | ISearchProps['validationInfo']) => void;
+    toggleMode?: (status: boolean) => void;
     toggleAddon?: (addon?: IActionBarItemProps) => void;
-    validateValue: (
+    validateValue?: (
         value: string,
         callback: (err: void | Error) => void
     ) => void;
 
-    onResultClick: (
+    onResultClick?: (
         item: ITreeNodeItemProps,
         resultData: ITreeNodeItemProps[]
     ) => void;
-    onChange: (value: string, replaceValue: string) => void;
-    onSearch: (value: string, replaceValue: string) => void;
+    onChange?: (value: string, replaceValue: string) => void;
+    onSearch?: (value: string, replaceValue: string) => void;
 }
 
 @singleton()

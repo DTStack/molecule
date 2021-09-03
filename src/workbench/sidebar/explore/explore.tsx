@@ -7,8 +7,10 @@ import { Toolbar } from 'mo/components/toolbar';
 import { defaultExplorerClassName } from './base';
 import { localize } from 'mo/i18n/localize';
 
-export const Explorer: React.FunctionComponent<IExplorer> = (
-    props: IExplorer & IExplorerController
+type IExplorerProps = IExplorer & IExplorerController;
+
+export const Explorer: React.FunctionComponent<IExplorerProps> = (
+    props: IExplorerProps
 ) => {
     const {
         data = [],

@@ -25,7 +25,7 @@ export interface ILocaleService {
     /**
      * Get the current locale language
      */
-    getCurrentLocale(): ILocale;
+    getCurrentLocale(): ILocale | undefined;
     /**
      * Get All locale languages
      */
@@ -93,14 +93,13 @@ export class LocaleService extends Component implements ILocaleService {
 
     constructor() {
         super();
-        this.reset();
+        this.initialize(BuiltInLocales);
     }
 
     public reset(): void {
         localStorage.removeItem(LocaleService.STORE_KEY);
         this._current = undefined;
         this._locales.clear();
-        this.initialize(BuiltInLocales);
     }
 
     public getDefaultLocale(): ILocale {
@@ -128,8 +127,8 @@ export class LocaleService extends Component implements ILocaleService {
         this.setCurrentLocale(finalLocale);
     }
 
-    public getCurrentLocale(): ILocale {
-        return Object.assign({}, this._current || this.getDefaultLocale());
+    public getCurrentLocale(): ILocale | undefined {
+        return this._current ? Object.assign({}, this._current) : undefined;
     }
 
     public getLocale(id: string): ILocale | undefined {

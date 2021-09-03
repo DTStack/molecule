@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { classNames, prefixClaName } from 'mo/common/className';
 import 'vscode-codicons/dist/codicon.css';
 import { ComponentProps } from 'react';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { Scrollbar, ScrollbarProps } from 'react-scrollbars-custom';
 import { prefixClaName, classNames } from 'mo/common/className';
@@ -15,7 +15,7 @@ const defaultScrollableClassName = prefixClaName('scrollbar');
  * the below implementation from this issue:
  * https://github.com/xobotyi/react-scrollbars-custom/issues/46
  */
-const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
+const Scrollable = forwardRef<Scrollbar, IScrollbarProps>(function (
     props,
     ref
 ) {
@@ -27,9 +27,9 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
         thumbStyle,
         ...restProps
     } = props;
-    const scroller = React.useRef<Scrollbar>(null);
+    const scroller = useRef<Scrollbar>(null);
 
-    React.useImperativeHandle(ref, () => scroller.current!);
+    useImperativeHandle(ref, () => scroller.current!);
 
     const [isScrolling, setIsScrolling] = useState(false);
     const [isMouseOver, setIsMouseOver] = useState(false);
@@ -107,7 +107,7 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
             wrapperProps={{
                 renderer: ({ elementRef, style, key, ...restProps }) => {
                     return (
-                        <React.Fragment key={key}>
+                        <div key={key}>
                             <div
                                 {...restProps}
                                 ref={elementRef}
@@ -122,7 +122,7 @@ const Scrollable = React.forwardRef<Scrollbar, IScrollbarProps>(function (
                                     )}
                                 />
                             ) : null}
-                        </React.Fragment>
+                        </div>
                     );
                 },
             }}

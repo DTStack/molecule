@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
-import * as React from 'react';
+import React from 'react';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { Controller } from 'mo/react/controller';
 import {

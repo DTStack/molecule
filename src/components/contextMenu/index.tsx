@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { HTMLElementType } from 'mo/common/dom';
 import { IContextView, useContextView } from 'mo/components/contextView';
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import { INotification } from 'mo/model/notification';
 import { INotificationController } from 'mo/controller/notification';
 import {
@@ -72,4 +72,4 @@ export function NotificationPane(
         </div>
     );
 }
-export default React.memo(NotificationPane);
+export default memo(NotificationPane);

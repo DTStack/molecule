@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Component, connect } from 'mo/react';
 import { render } from '@testing-library/react';
 

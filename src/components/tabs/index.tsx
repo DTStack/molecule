@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useCallback } from 'react';
 import update from 'immutability-helper';
 

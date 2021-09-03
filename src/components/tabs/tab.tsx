@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useCallback, useRef, useState } from 'react';
 import { findDOMNode } from 'react-dom';
 import {
@@ -92,6 +92,9 @@ export function Tab<T>(props: ITabProps) {
             if (dragIndex === hoverIndex) {
                 return;
             }
+            /**
+             * TODO: bad code needs to be removed
+             */
             const hoverBoundingRect = (findDOMNode(
                 component
             ) as Element)?.getBoundingClientRect();

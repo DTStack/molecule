@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef, useLayoutEffect, useEffect, useCallback } from 'react';
 import { useState } from 'react';
 import Logger from 'mo/common/logger';
 import { Toolbar } from 'mo/components/toolbar';
@@ -57,8 +57,8 @@ export const MAX_GROW_HEIGHT = 220;
 
 export function Collapse(props: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] = useState<React.Key[]>([]);
-    const wrapper = React.useRef<HTMLDivElement>(null);
-    const requestAF = React.useRef<number>();
+    const wrapper = useRef<HTMLDivElement>(null);
+    const requestAF = useRef<number>();
 
     const {
         className,
@@ -80,19 +80,19 @@ export function Collapse(props: ICollapseProps) {
 
     // to save position temporarily, empty array when rerender
     const _cachePosition: number[][] = [];
-    let _cacheWrapperHeight = React.useRef(0);
+    const _cacheWrapperHeight = useRef(0);
 
-    const handleResize = React.useCallback(() => {
+    const handleResize = useCallback(() => {
         // just want to trigger rerender
         setActivePanelKeys((keys) => keys.concat());
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         // It's necessary to check panel's empty before calculate every panel
         filterData.forEach((panel) => {
             const isActive = activePanelKeys.includes(panel.id);

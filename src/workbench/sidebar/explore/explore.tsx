@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Collapse } from 'mo/components/collapse';
 import { Header, Content } from 'mo/workbench/sidebar';
 import { IExplorer } from 'mo/model/workbench/explorer/explorer';

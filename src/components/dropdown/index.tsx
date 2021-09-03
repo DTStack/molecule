@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 import { useContextView } from '../contextView';
 import {
@@ -20,7 +20,7 @@ export type DropDownRef = {
 
 export const defaultDropDownClassName = prefixClaName('drop-down');
 
-export const DropDown = React.forwardRef<DropDownRef, IDropDownProps>(
+export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
     (props: IDropDownProps, ref) => {
         const {
             className,
@@ -34,7 +34,7 @@ export const DropDown = React.forwardRef<DropDownRef, IDropDownProps>(
             render: () => overlay,
         });
 
-        React.useImperativeHandle(ref, () => ({
+        useImperativeHandle(ref, () => ({
             contextView,
             dispose: () => {
                 contextView!.hide();

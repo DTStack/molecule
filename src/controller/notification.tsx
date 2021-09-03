@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'mo/react';
 import { Float, IStatusBarItem } from 'mo/model';
 import { Controller } from 'mo/react/controller';

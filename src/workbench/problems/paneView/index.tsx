@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import TreeView from 'mo/components/tree';
 import { localize } from 'mo/i18n/localize';
@@ -76,4 +76,4 @@ function ProblemsPaneView(props: IProblems) {
     );
 }
 
-export default React.memo(ProblemsPaneView);
+export default memo(ProblemsPaneView);

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { prefixClaName, classNames, getBEMModifier } from 'mo/common/className';
 import { ComponentProps, useEffect, useState } from 'react';
 import { cloneReactChildren } from 'mo/react';

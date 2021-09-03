@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as React from 'react';
+import React from 'react';
 import { PureComponent } from 'react';
 import { editor } from 'monaco-editor';
 import { isEqual } from 'lodash';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef } from 'react';
 import { Button, IButtonProps } from 'mo/components/button';
 export interface ActionButtonProps extends IButtonProps {
     actionFn?: (...args: any[]) => any | PromiseLike<any>;
@@ -6,7 +6,7 @@ export interface ActionButtonProps extends IButtonProps {
 }
 
 const ActionButton: React.FC<ActionButtonProps> = (props) => {
-    const clickedRef = React.useRef<boolean>(false);
+    const clickedRef = useRef<boolean>(false);
 
     const handlePromiseOnOk = (returnValueOfOnOk?: PromiseLike<any>) => {
         const { closeModal } = props;

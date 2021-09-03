@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { prefixClaName } from 'mo/common/className';
 import { IOutput } from 'mo/model/workbench/panel';
 import { MonacoEditor } from 'mo/components/monaco';

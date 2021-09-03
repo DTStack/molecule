@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 
 type BtnSizeType = 'normal' | 'large';

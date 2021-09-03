@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as React from 'react';
+import React from 'react';
 import { Float, IStatusBarItem } from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import {

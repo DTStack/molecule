@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
-import * as React from 'react';
+import React from 'react';
 
 import {
     EditorEvent,

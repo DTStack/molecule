@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { prefixClaName, classNames, getBEMElement } from 'mo/common/className';
 import { ComponentProps } from 'react';
 import { Icon } from 'mo/components';

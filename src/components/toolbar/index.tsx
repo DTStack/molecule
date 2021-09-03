@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { prefixClaName, classNames } from 'mo/common/className';
 import { ActionBar, IActionBarProps } from 'mo/components/actionBar';
 

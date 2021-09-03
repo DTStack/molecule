@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import molecule from 'mo';
 
 import { Button } from 'mo/components/button';

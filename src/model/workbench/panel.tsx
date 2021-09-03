@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { editor as MonacoEditor } from 'mo/monaco';
 
 import { localize } from 'mo/i18n/localize';

@@ -1,6 +1,6 @@
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { Icon } from 'mo/components/icon';
-import * as React from 'react';
+import React from 'react';
 import { IStatusBarItem } from './workbench/statusBar';
 
 export enum NotificationStatus {

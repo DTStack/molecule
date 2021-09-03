@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import EditorStatusBarView from 'mo/workbench/editor/statusBarView';
 import { IMenuItemProps } from 'mo/components/menu';
 

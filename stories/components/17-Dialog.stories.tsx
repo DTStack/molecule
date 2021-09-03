@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { Modal } from 'mo/components/dialog';
 import { Button } from 'mo/components/button';

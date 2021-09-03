@@ -2,7 +2,7 @@ import { MonacoEditor } from 'mo/components/monaco';
 import { Scrollable } from 'mo/components/scrollable';
 import { Tabs } from 'mo/components/tabs';
 import { IEditorGroup, IEditorOptions } from 'mo/model';
-import * as React from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import { memo, useEffect } from 'react';
 import {
     groupClassName,
@@ -42,8 +42,8 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
         onUpdateEditorIns,
     } = props;
 
-    const scrollable = React.useRef<Scrollbar>(null);
-    const groupTabs = React.useRef<HTMLDivElement>(null);
+    const scrollable = useRef<Scrollbar>(null);
+    const groupTabs = useRef<HTMLDivElement>(null);
 
     const isActiveGroup = id === currentGroup?.id;
 
@@ -67,7 +67,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
     });
 
     // scoller into view
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         const activeItem = groupTabs.current?.querySelector<HTMLDivElement>(
             `.${tabItemActiveClassName}`
         );

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useCallback } from 'react';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';

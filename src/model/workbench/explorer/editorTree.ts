@@ -14,6 +14,7 @@ export enum EditorTreeEvent {
     onCloseAll = 'editorTree.closeAll',
     onSaveAll = 'editorTree.saveAll',
     onSplitEditorLayout = 'editorTree.splitEditorLayout',
+    onToolbarClick = 'editorTree.toolbarClick',
     onContextMenu = 'editorTree.contextMenuClick',
 }
 

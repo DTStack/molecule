@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The EditorTree Component Match Snapshot 1`] = `
+<div
+  className="mo-editorTree"
+  data-content="test"
+>
+  <div
+    className="mo-editorTree__item"
+    onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
+    title="tab/tab1"
+  >
+    <span
+      className="mo-editorTree__close codicon codicon-close"
+      onClick={[Function]}
+    />
+    <span
+      className="mo-editorTree__item__fileName"
+    >
+      tab1
+    </span>
+    <span
+      className="mo-editorTree__item__filePath"
+    >
+      tab
+    </span>
+  </div>
+  <div
+    className="mo-editorTree__item"
+    onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
+    title="tab/tab2"
+  >
+    <span
+      className="mo-editorTree__close codicon codicon-close"
+      onClick={[Function]}
+    />
+    <span
+      className="mo-editorTree__item__fileName"
+    >
+      tab2
+    </span>
+    <span
+      className="mo-editorTree__item__filePath"
+    >
+      tab
+    </span>
+  </div>
+</div>
+`;
+
+exports[`The EditorTree Component With multiple groups Match Snapshot 1`] = `
+<div
+  className="mo-editorTree"
+  data-content="test"
+>
+  <div
+    className="mo-editorTree__group"
+    onClick={[Function]}
+    onContextMenu={[Function]}
+  >
+    第 1 组
+  </div>
+  <div
+    className="mo-editorTree__item"
+    onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
+    title="tab/tab1"
+  >
+    <span
+      className="mo-editorTree__close codicon codicon-close"
+      onClick={[Function]}
+    />
+    <span
+      className="mo-editorTree__item__fileName"
+    >
+      tab1
+    </span>
+    <span
+      className="mo-editorTree__item__filePath"
+    >
+      tab
+    </span>
+  </div>
+  <div
+    className="mo-editorTree__item"
+    onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
+    title="tab/tab2"
+  >
+    <span
+      className="mo-editorTree__close codicon codicon-close"
+      onClick={[Function]}
+    />
+    <span
+      className="mo-editorTree__item__fileName"
+    >
+      tab2
+    </span>
+    <span
+      className="mo-editorTree__item__filePath"
+    >
+      tab
+    </span>
+  </div>
+  <div
+    className="mo-editorTree__group"
+    onClick={[Function]}
+    onContextMenu={[Function]}
+  >
+    第 2 组
+  </div>
+  <div
+    className="mo-editorTree__item"
+    onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
+    title="tab/tab1"
+  >
+    <span
+      className="mo-editorTree__close codicon codicon-close"
+      onClick={[Function]}
+    />
+    <span
+      className="mo-editorTree__item__fileName"
+    >
+      tab1
+    </span>
+    <span
+      className="mo-editorTree__item__filePath"
+    >
+      tab
+    </span>
+  </div>
+  <div
+    className="mo-editorTree__item"
+    onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
+    title="tab/tab2"
+  >
+    <span
+      className="mo-editorTree__close codicon codicon-close"
+      onClick={[Function]}
+    />
+    <span
+      className="mo-editorTree__item__fileName"
+    >
+      tab2
+    </span>
+    <span
+      className="mo-editorTree__item__filePath"
+    >
+      tab
+    </span>
+  </div>
+</div>
+`;

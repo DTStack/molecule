@@ -1,11 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-    prefixClaName,
-    classNames,
-    getBEMElement,
-    getBEMModifier,
-} from 'mo/common/className';
+import { classNames } from 'mo/common/className';
 import {
     getRelativePosition,
     select,
@@ -14,10 +9,19 @@ import {
 } from 'mo/common/dom';
 import { EventEmitter } from 'mo/common/event';
 import { Utils } from '@dtinsight/dt-utils';
+
+import {
+    contextViewClass,
+    contentClassName,
+    blockClassName,
+    shadowClassName,
+} from './base';
+
 export interface IContextViewProps {
     /**
      * Default true
      */
+
     shadowOutline?: boolean;
     render?: () => React.ReactNode;
 }
@@ -34,17 +38,12 @@ enum ContextViewEvent {
     onHide = 'onHide',
 }
 
-const contextViewClass = prefixClaName('context-view');
-const contentClassName = getBEMElement(contextViewClass, 'content');
-const blockClassName = getBEMElement(contextViewClass, 'block');
-export const shadowClassName = getBEMModifier(contextViewClass, 'shadow');
-
 const Emitter = new EventEmitter();
 
 export function useContextView(props: IContextViewProps = {}): IContextView {
     const { shadowOutline = true } = props;
     const claName = classNames(contextViewClass, 'fade-in');
-    let contextView: HTMLElementType = select('.' + contextViewClass); // Singleton contextView dom
+    let contextView: HTMLElementType = select(`.${contextViewClass}`); // Singleton contextView dom
 
     const show = (anchorPos: IPosition, render?: () => React.ReactNode) => {
         const content = select('.' + contentClassName);
@@ -70,7 +69,7 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
     const hide = () => {
         if (contextView) {
             contextView.style.visibility = 'hidden';
-            const contentContainer = select('.' + contentClassName);
+            const contentContainer = select(`.${contentClassName}`);
             if (contentContainer) {
                 ReactDOM.unmountComponentAtNode(contentContainer);
             }

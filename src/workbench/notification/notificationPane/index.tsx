@@ -8,7 +8,7 @@ import {
     prefixClaName,
 } from 'mo/common/className';
 import { ActionBar } from 'mo/components/actionBar';
-import { shadowClassName } from 'mo/components/contextView';
+import { shadowClassName } from 'mo/components/contextView/base';
 import { Icon } from 'mo/components/icon';
 import { localize } from 'mo/i18n/localize';
 

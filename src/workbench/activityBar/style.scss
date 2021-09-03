@@ -30,7 +30,6 @@
         display: flex;
         height: 48px;
         justify-content: center;
-        margin-bottom: 4px;
         position: relative;
         transition: transform 50ms ease;
         width: 48px;
@@ -67,6 +66,6 @@
         left: 0;
         position: absolute;
         top: 0;
-        width: 1px;
+        width: 2px;
     }
 }

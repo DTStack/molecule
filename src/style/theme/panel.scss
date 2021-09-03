@@ -6,10 +6,8 @@
     border-color: var(--panel-border);
 
     &__header {
-        #{$tab}__item {
-            color: var(--panelTitle-inactiveForeground);
-
-            &--active {
+        #{$tabs} {
+            #{$tab}__item--active {
                 border-color: var(--panelTitle-activeBorder);
                 color: var(--panelTitle-activeForeground);
 

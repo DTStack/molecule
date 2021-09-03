@@ -32,6 +32,7 @@ $icon-size: 35px;
         #{$tab}__item {
             background: inherit;
             border: 0;
+            color: var(--panelTitle-inactiveForeground);
             font-size: 11px;
             padding: 0 10px;
             text-transform: uppercase;

@@ -31,16 +31,6 @@ jest.mock('react', () => {
     };
 });
 
-jest.mock('mo/components/scrollable', () => {
-    const originalModule = jest.requireActual('mo/components/scrollable');
-    return {
-        ...originalModule,
-        Scrollable: ({ children }) => {
-            return <>{children}</>;
-        },
-    };
-});
-
 jest.mock('mo/components/tabs', () => {
     const originalModule = jest.requireActual('mo/components/tabs');
     return {

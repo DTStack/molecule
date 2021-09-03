@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The LocaleNotification Component Match Snapshot 1`] = `
+<div
+  style={
+    Object {
+      "lineHeight": "1.5",
+      "textAlign": "left",
+      "width": 350,
+    }
+  }
+>
+  <p>
+    The current locale has changed to 
+    chinese
+    , click the button to reload the Page and applying the changes.
+  </p>
+  <p
+    style={
+      Object {
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Notice: Reload the Page could lose the data, Please confirm you have saved before.
+  </p>
+  <a
+    className="mo-btn mo-btn--normal"
+    onClick={[Function]}
+    style={
+      Object {
+        "width": 150,
+      }
+    }
+  >
+    Confirm Reload
+  </a>
+</div>
+`;

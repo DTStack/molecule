@@ -15,7 +15,7 @@ export interface ILayoutService extends Component<ILayout> {
     /**
      * Toggle the visibility of side bar, returns the status of side bar's `hidden`
      */
-    toggleSideBarVisibility(): boolean;
+    toggleSidebarVisibility(): boolean;
     /**
      * Toggle the visibility of the panel, returns the status of panel's `hidden`
      */
@@ -86,10 +86,10 @@ export class LayoutService
         return !wasHidden;
     }
 
-    public toggleSideBarVisibility(): boolean {
-        const { sideBar } = this.state;
-        const wasHidden = sideBar.hidden;
-        this.setState({ sideBar: { ...sideBar, hidden: !wasHidden } });
+    public toggleSidebarVisibility(): boolean {
+        const { sidebar } = this.state;
+        const wasHidden = sidebar.hidden;
+        this.setState({ sidebar: { ...sidebar, hidden: !wasHidden } });
         return !wasHidden;
     }
 
@@ -108,11 +108,11 @@ export class LayoutService
     }
 
     public setSideBarPosition(position: keyof typeof Position): void {
-        const { sideBar } = this.state;
-        const { position: prePos } = sideBar;
+        const { sidebar } = this.state;
+        const { position: prePos } = sidebar;
         if (prePos !== position) {
             this.setState({
-                sideBar: { position: position, hidden: false },
+                sidebar: { position: position, hidden: false },
             });
         }
     }
@@ -142,7 +142,7 @@ export class LayoutService
             activityBar: { hidden: false },
             panel: { hidden: false, panelMaximized: false },
             statusBar: { hidden: false },
-            sideBar: { hidden: false, position: Position.left },
+            sidebar: { hidden: false, position: Position.left },
             menuBar: { hidden: false },
         });
     }

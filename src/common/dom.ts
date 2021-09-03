@@ -143,3 +143,16 @@ export function getPositionByPlacement(
 export function getAttr(domElement: HTMLElement, attr) {
     return domElement.getAttribute(attr) || '';
 }
+
+/**
+ * Get an element the center coords
+ * @param element HTMLElement
+ * @returns
+ */
+export function getElementClientCenter(element: HTMLElement) {
+    const { left, top, width, height } = element.getBoundingClientRect();
+    return {
+        x: left + width / 2,
+        y: top + height / 2,
+    };
+}

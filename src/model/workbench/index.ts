@@ -15,5 +15,5 @@ export interface IWorkbench {
     activityBar: IActivityBar;
     menuBar: IMenuBar;
     statusBar: IStatusBar;
-    sideBar: ISidebar;
+    sidebar: ISidebar;
 }

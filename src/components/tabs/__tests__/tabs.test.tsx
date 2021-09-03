@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom';
 import { Tabs, tabsClassName, tabsContentActiveClassName } from '..';
 import { ITabProps, tabItemActiveClassName } from '../tab';
-import { dragToTargetNode } from './tab.test';
+import { dragToTargetNode } from '@test/utils';
 
 const mockData: ITabProps[] = [
     {

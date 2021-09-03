@@ -1,11 +1,10 @@
 import React from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { expectFnCalled } from '@test/utils';
+import { dragToTargetNode, expectFnCalled } from '@test/utils';
 import { FolderTree } from '../explore';
 import type { IFolderTreeProps } from '../explore/folderTree';
 import type { ITreeNodeItemProps } from 'mo/components';
-import { dragToTargetNode } from 'mo/components/tabs/__tests__/tab.test';
 import { folderTreeClassName, folderTreeEditClassName } from '../explore/base';
 
 function FolderTreeViewPanel(props: Omit<IFolderTreeProps, 'panel'>) {

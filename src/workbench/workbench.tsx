@@ -36,7 +36,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         activityBar,
         menuBar,
         panel,
-        sideBar,
+        sidebar,
         statusBar,
         onPaneSizeChange,
         onHorizontalPaneSizeChange,
@@ -47,6 +47,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
     const getContent = (panelMaximized: boolean, panelHidden: boolean) => {
         const editor = (
             <Pane
+                key="editorView"
                 initialSize={panelHidden ? '100%' : horizontalSplitPanePos[0]}
                 maxSize="100%"
                 minSize="10%"
@@ -56,7 +57,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         );
 
         const panel = (
-            <Pane>
+            <Pane key="panelView">
                 <PanelView />
             </Pane>
         );
@@ -84,7 +85,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         allowResize={true}
                         onChange={onPaneSizeChange as any}
                     >
-                        {!sideBar.hidden && (
+                        {!sidebar.hidden && (
                             <Pane
                                 minSize="170px"
                                 initialSize={splitPanePos[0]}

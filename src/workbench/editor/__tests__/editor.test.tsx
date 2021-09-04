@@ -107,15 +107,6 @@ describe('The Editor Component', () => {
         expect(getByTestId(TEST_ID)).toBeInTheDocument();
     });
 
-    test('Should support to set entry', () => {
-        const testJSX = <div data-testid={TEST_ID}></div>;
-        const { getByTestId } = render(
-            <Editor onClickActions={jest.fn()} entry={testJSX} />
-        );
-
-        expect(getByTestId(TEST_ID)).toBeInTheDocument();
-    });
-
     test('Should have default class name', () => {
         const { container } = render(<Editor onClickActions={jest.fn()} />);
 
@@ -149,7 +140,7 @@ describe('The Editor Component', () => {
             />
         );
 
-        expect(container.querySelectorAll(`.${groupClassName}`).length).toBe(
+        expect(container.querySelectorAll(`.${groupClassName}`)).toHaveLength(
             groups.length
         );
     });

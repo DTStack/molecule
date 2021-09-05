@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import * as React from 'react';
+import React, { createContext, Component } from 'react';
 
 import { IColorTheme } from 'mo/model/colorTheme';
 import { defaultExtensions } from 'mo/extensions';
@@ -28,8 +28,8 @@ export interface IMoleculeProps {
 }
 export interface IMoleculeState {}
 
-export const MoleculeCtx = React.createContext({});
-export class MoleculeProvider extends React.Component<IMoleculeProps> {
+export const MoleculeCtx = createContext({});
+export class MoleculeProvider extends Component<IMoleculeProps> {
     private readonly extensionService!: IExtensionService;
     private readonly monacoService!: IMonacoService;
     private readonly localeService!: ILocaleService;

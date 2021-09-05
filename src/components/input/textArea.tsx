@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import RcTextArea, { TextAreaProps } from 'rc-textarea';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import { useEffect, useRef } from 'react';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { localize } from 'mo/i18n/localize';
 import { ID_SIDE_BAR } from 'mo/common/id';
 import {

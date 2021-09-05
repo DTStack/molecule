@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useRef } from 'react';
 import { ActionBar, IActionBarItemProps } from 'mo/components/actionBar';
 import {
     inputGroupClassName,
@@ -41,8 +41,8 @@ function Input(props: IBaseInputProps) {
         info,
     } = props;
 
-    const [focusStatus, setFocus] = React.useState(false);
-    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const [focusStatus, setFocus] = useState(false);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const onToolbarClick = (e, item) => {
         // toolbar click can trigger input focus

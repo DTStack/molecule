@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useContextMenu } from 'mo/components/contextMenu';
 import { useEffect } from 'react';
 import '../demo.scss';

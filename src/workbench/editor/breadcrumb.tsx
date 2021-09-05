@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { memo } from 'react';
 import { groupBreadcrumbClassName } from './base';
 import { Breadcrumb, IBreadcrumbItemProps } from 'mo/components/breadcrumb';

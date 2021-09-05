@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { classNames, prefixClaName, getBEMModifier } from 'mo/common/className';
 import { KeyCodes } from 'mo/common/keyCodes';
 

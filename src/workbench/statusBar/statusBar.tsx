@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useEffect, useCallback } from 'react';
 import { IStatusBar, IStatusBarItem } from 'mo/model/workbench/statusBar';
 import { StatusItem } from './item';

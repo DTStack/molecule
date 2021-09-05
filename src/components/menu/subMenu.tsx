@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { classNames } from 'mo/common/className';
 import { TriggerEvent } from 'mo/common/dom';
 import { Icon } from 'mo/components/icon';

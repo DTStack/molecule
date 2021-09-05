@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import 'reflect-metadata';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps } from 'mo/components/menu';

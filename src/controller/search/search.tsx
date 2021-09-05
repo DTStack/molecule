@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
-import * as React from 'react';
+import React from 'react';
 import { SearchPanel } from 'mo/workbench/sidebar/search';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import {

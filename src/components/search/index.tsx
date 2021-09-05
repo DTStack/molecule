@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { IActionBarItemProps } from '../actionBar';
 import Input, { InfoTypeEnum, InfoTypeEnums } from './input';

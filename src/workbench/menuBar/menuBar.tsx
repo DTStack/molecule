@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef } from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IMenuBar, IMenuBarItem } from 'mo/model/workbench/menuBar';
 import { IMenuBarController } from 'mo/controller/menuBar';
@@ -12,7 +12,7 @@ export const actionClassName = getBEMElement(defaultClassName, 'action');
 
 export function MenuBar(props: IMenuBar & IMenuBarController) {
     const { data, onClick } = props;
-    const childRef = React.useRef<DropDownRef>(null);
+    const childRef = useRef<DropDownRef>(null);
 
     const addKeybindingForData = (
         rawData: IMenuBarItem[] = []

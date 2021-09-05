@@ -1,14 +1,14 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { StrictMode } from 'react';
+import ReactDOM from 'react-dom';
 import { Workbench, MoleculeProvider } from '../../esm';
 import '../../esm/style/mo.css';
 
 const App = () => (
-    <React.StrictMode>
+    <StrictMode>
         <MoleculeProvider>
             <Workbench />
         </MoleculeProvider>
-    </React.StrictMode>
+    </StrictMode>
 );
 
 ReactDOM.render(<App />, document.getElementById('root'));

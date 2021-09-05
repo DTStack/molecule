@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef } from 'react';
 import { memo } from 'react';
 import { Icon } from 'mo/components/icon';
 import { Menu } from 'mo/components/menu';
@@ -47,7 +47,7 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
     const { actions = [], isActiveGroup = false, onClickActions } = props;
     const [outer, inner] = splitActions(actions);
 
-    const childRef = React.useRef<DropDownRef>(null);
+    const childRef = useRef<DropDownRef>(null);
 
     const handleOnMenuClick = (_, item) => {
         onClickActions(item);
@@ -80,9 +80,8 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
         <div className={groupActionsClassName}>
             {isActiveGroup &&
                 outer.map((action) => (
-                    <Tooltip overlay={action.title}>
+                    <Tooltip key={action.id} overlay={action.title}>
                         <div
-                            key={action.id}
                             onClick={() => handleActionsClick(action)}
                             className={classNames(
                                 groupActionsItemClassName,

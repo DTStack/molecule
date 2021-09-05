@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useRef } from 'react';
 import { classNames } from 'mo/common/className';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';

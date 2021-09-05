@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { NEW_FILE_COMMAND_ID, NEW_FOLDER_COMMAND_ID } from './folderTree';
 import { localize } from 'mo/i18n/localize';

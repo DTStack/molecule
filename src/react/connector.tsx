@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as React from 'react';
+import React, { Component } from 'react';
 import Logger from 'mo/common/logger';
 import { IComponent } from './component';
 import { Controller } from './controller';
@@ -19,7 +19,7 @@ export function connect<T = any>(
     Controller?: Controller | ControllerObject,
     watchFiled?: object
 ): React.ComponentType<T> {
-    return class Connector extends React.Component<T, any> {
+    return class Connector extends Component<T, any> {
         state: { lastUpdated: number };
         constructor(props) {
             super(props);

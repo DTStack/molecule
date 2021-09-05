@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { IMenuItemProps } from 'mo/components/menu';
 import { localize } from 'mo/i18n/localize';
 import {

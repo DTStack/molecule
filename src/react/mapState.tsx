@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import Logger from 'mo/common/logger';
 
 /**
@@ -13,7 +13,7 @@ export function mapState<S, T>(
     state: S,
     actions?: T
 ) {
-    return class StateProvider extends React.Component {
+    return class StateProvider extends Component {
         state: { lastUpdated: number };
         constructor(props) {
             super(props);

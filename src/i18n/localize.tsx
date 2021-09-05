@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import * as React from 'react';
+import React from 'react';
 import { LocaleService } from './localeService';
 import { LocaleSourceIdType } from './localization';
 

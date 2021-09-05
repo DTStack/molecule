@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import RcTree, { TreeNode as RcTreeNode, TreeProps } from 'rc-tree';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
@@ -41,8 +41,8 @@ const TreeView = ({
     onLoadData,
     ...restProps
 }: ITreeProps) => {
-    const [selectedKeys, setKeys] = React.useState<React.Key[]>([]);
-    const treeRef = React.useRef<RcTree>(null);
+    const [selectedKeys, setKeys] = useState<React.Key[]>([]);
+    const treeRef = useRef<RcTree>(null);
 
     const onDrop = (info) => {
         if (!draggable) return;
@@ -186,7 +186,7 @@ const TreeView = ({
         onRightClick?.(info);
     };
 
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         const cache: { path: string; data: ITreeNodeItemProps }[] = [];
         data.forEach((item) => {
             cache.push({ path: `${item.id}`, data: item });

@@ -1,5 +1,5 @@
 import { prefixClaName } from 'mo/common/className';
-import * as React from 'react';
+import React from 'react';
 
 export default function Welcome() {
     return (

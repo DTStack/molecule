@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Toolbar } from 'mo/components/toolbar';
 import { classNames, prefixClaName } from 'mo/common/className';
 import { Header, Content } from 'mo/workbench/sidebar';

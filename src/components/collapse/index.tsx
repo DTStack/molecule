@@ -12,6 +12,7 @@ import {
     collapseHeaderClassName,
     collapseExtraClassName,
     collapseContentClassName,
+    collapseTitleClassName,
 } from './base';
 import { select } from 'mo/common/dom';
 
@@ -371,7 +372,9 @@ export function Collapse(props: ICollapseProps) {
                                             : 'chevron-right'
                                     }
                                 />
-                                {panel.name}
+                                <span className={collapseTitleClassName}>
+                                    {panel.name}
+                                </span>
                                 <div className={collapseExtraClassName}>
                                     {isActive && (
                                         <Toolbar

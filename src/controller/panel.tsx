@@ -13,9 +13,9 @@ import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 
 export interface IPanelController {
-    onTabChange(key: string | undefined): void;
-    onToolbarClick(e: React.MouseEvent, item: IActionBarItemProps): void;
-    onClose(key?: string): void;
+    onTabChange?(key: string | undefined): void;
+    onToolbarClick?(e: React.MouseEvent, item: IActionBarItemProps): void;
+    onClose?(key?: string): void;
 }
 
 @singleton()

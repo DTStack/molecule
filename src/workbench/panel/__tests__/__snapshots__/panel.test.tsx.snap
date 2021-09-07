@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Panel Component Match the Panel snapshot 1`] = `
+<div
+  className="mo-panel"
+>
+  <div
+    className="mo-panel__header"
+  >
+    <div
+      className="mo-tabs mo-tabs--line"
+    >
+      <div
+        className="mo-tabs__header"
+      >
+        <div
+          className="mo-tab__item"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onMouseOut={[Function]}
+          onMouseOver={[Function]}
+        >
+          问题
+        </div>
+        <div
+          className="mo-tab__item mo-tab__item--active"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onMouseOut={[Function]}
+          onMouseOver={[Function]}
+        >
+          输出
+        </div>
+      </div>
+      <div
+        className="mo-tabs__content"
+      >
+        <div
+          className="mo-tabs__content__item"
+        />
+        <div
+          className="mo-tabs__content__item mo-tabs__content__item--active"
+        >
+          <div
+            className="mo-output"
+          >
+            <div
+              className="mo-monaco-editor"
+              style={
+                Object {
+                  "height": "100%",
+                  "minHeight": "400px",
+                  "position": "relative",
+                  "width": "100%",
+                }
+              }
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="mo-action-bar mo-panel__toolbar"
+    >
+      <ul
+        className="mo-action-bar__container"
+      >
+        <li
+          className="mo-action-bar__item"
+          id="panel.toolbox.maximize"
+          onClick={[Function]}
+        >
+          <span
+            className="codicon codicon-chevron-up"
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+        </li>
+        <li
+          className="mo-action-bar__item"
+          id="panel.toolbox.closePanel"
+          onClick={[Function]}
+        >
+          <span
+            className="codicon codicon-close"
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    className="mo-panel__container"
+    tabIndex={0}
+  >
+    <div
+      className="mo-output"
+    >
+      <div
+        className="mo-monaco-editor"
+        style={
+          Object {
+            "height": "100%",
+            "minHeight": "400px",
+            "position": "relative",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test Panel Component Match the PanelView snapshot 1`] = `
+<div
+  className="mo-panel"
+>
+  <div
+    className="mo-panel__header"
+  >
+    <div
+      className="mo-tabs mo-tabs--line"
+    >
+      <div
+        className="mo-tabs__header"
+      >
+        <div
+          className="mo-tab__item"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onMouseOut={[Function]}
+          onMouseOver={[Function]}
+        >
+          问题
+        </div>
+        <div
+          className="mo-tab__item mo-tab__item--active"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onMouseOut={[Function]}
+          onMouseOver={[Function]}
+        >
+          输出
+        </div>
+      </div>
+      <div
+        className="mo-tabs__content"
+      >
+        <div
+          className="mo-tabs__content__item"
+        >
+          <div
+            style={
+              Object {
+                "margin": "0 18px",
+                "userSelect": "none",
+              }
+            }
+          >
+            未在工作区检测到问题
+          </div>
+        </div>
+        <div
+          className="mo-tabs__content__item mo-tabs__content__item--active"
+        >
+          <div
+            className="mo-output"
+          >
+            <div
+              className="mo-monaco-editor"
+              style={
+                Object {
+                  "height": "100%",
+                  "minHeight": "400px",
+                  "position": "relative",
+                  "width": "100%",
+                }
+              }
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="mo-action-bar mo-panel__toolbar"
+    >
+      <ul
+        className="mo-action-bar__container"
+      >
+        <li
+          className="mo-action-bar__item"
+          id="panel.toolbox.maximize"
+          onClick={[Function]}
+        >
+          <span
+            className="codicon codicon-chevron-up"
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+        </li>
+        <li
+          className="mo-action-bar__item"
+          id="panel.toolbox.closePanel"
+          onClick={[Function]}
+        >
+          <span
+            className="codicon codicon-close"
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    className="mo-panel__container"
+    tabIndex={0}
+  >
+    <div
+      className="mo-output"
+    >
+      <div
+        className="mo-monaco-editor"
+        style={
+          Object {
+            "height": "100%",
+            "minHeight": "400px",
+            "position": "relative",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;

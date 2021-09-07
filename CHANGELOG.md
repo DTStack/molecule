@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-alpha.5](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.4...v0.9.0-alpha.5) (2021-09-07)
+
+### Features
+
+-   adjust the import method ([#400](https://github.com/DTStack/molecule/issues/400)) ([1ea6238](https://github.com/DTStack/molecule/commit/1ea6238c2f77a5d40fa5a3237a2f4c9e50de08d4))
+-   folderTree support to loadData ([#367](https://github.com/DTStack/molecule/issues/367)) ([a9c6ded](https://github.com/DTStack/molecule/commit/a9c6ded812350b0cb294fad5f16b70875a41deac))
+-   support set the sorting of the panel ([#351](https://github.com/DTStack/molecule/issues/351)) ([95470fe](https://github.com/DTStack/molecule/commit/95470fe6696c4be0407c9205c54b3fc0ab8820da))
+-   support to set the default context menu in folderTree ([#363](https://github.com/DTStack/molecule/issues/363)) ([bbb3021](https://github.com/DTStack/molecule/commit/bbb30211b59ddc8e7d85a588f76bb44776e12251))
+
+### Bug Fixes
+
+-   update the LocaleService initial logic ([#397](https://github.com/DTStack/molecule/issues/397)) ([c98df53](https://github.com/DTStack/molecule/commit/c98df53e633307f10e838ecf1967199c0e899966))
+-   add an if statement before calling the unmountComponentAtNode ([#319](https://github.com/DTStack/molecule/issues/319)) ([99a7d81](https://github.com/DTStack/molecule/commit/99a7d819df2130a45036a70c77de81be21bb320b))
+-   can't add the new panel when open it ([#390](https://github.com/DTStack/molecule/issues/390)) ([f8eddab](https://github.com/DTStack/molecule/commit/f8eddabfa9d5d66d7cc1f85efd96a065c80c2571))
+-   ellipsis the title when width is too narrow ([#412](https://github.com/DTStack/molecule/issues/412)) ([55efbb7](https://github.com/DTStack/molecule/commit/55efbb7ad040b781ec7b373e0ed0cc07a4a9bbb2))
+-   height is lost after adjusting the input text ([#347](https://github.com/DTStack/molecule/issues/347)) ([d4f5512](https://github.com/DTStack/molecule/commit/d4f5512b1c24b0fc37030702c77b010b4ac3f665)), closes [#317](https://github.com/DTStack/molecule/issues/317)
+-   improve the style of tab title ([#409](https://github.com/DTStack/molecule/issues/409)) ([832a034](https://github.com/DTStack/molecule/commit/832a0347c3b28d58251bca60cedc9434c44798e2))
+-   improve type definition of editor tab ([#341](https://github.com/DTStack/molecule/issues/341)) ([22597b4](https://github.com/DTStack/molecule/commit/22597b478620ef68478e266272cc4353890cfd65))
+-   optimize the Color Theme ([#395](https://github.com/DTStack/molecule/issues/395)) ([9a6ed01](https://github.com/DTStack/molecule/commit/9a6ed01a53ab9e8ef66e16b680096b778c879cdc))
+-   prevent page broken via folderTree ([#358](https://github.com/DTStack/molecule/issues/358)) ([160a798](https://github.com/DTStack/molecule/commit/160a79826188f3cd29cc294169b27f4eb53c45cb))
+-   prevent page broken when data is undefined ([#361](https://github.com/DTStack/molecule/issues/361)) ([26d611a](https://github.com/DTStack/molecule/commit/26d611a1cd9e687ef23d0cef7f5b9ffb07cac7c4))
+-   tree can't update root node ([#368](https://github.com/DTStack/molecule/issues/368)) ([45fe3f6](https://github.com/DTStack/molecule/commit/45fe3f6a34bf80b20bde8f112135d3da5e78dc77))
+
 ## [0.9.0-alpha.4](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.2...v0.9.0-alpha.4) (2021-08-09)
 
 ### ⚠ BREAKING CHANGES

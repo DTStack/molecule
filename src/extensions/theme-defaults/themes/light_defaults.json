@@ -28,6 +28,8 @@
         "inputValidation.errorBackground": "#F2DEDE",
         "inputValidation.errorBorder": "#BE1100",
         "icon.foreground": "#424242",
+        "panelTitle.activeForeground": "#424242",
+        "panelTitle.inactiveForeground": "#424242bf",
         "problemsWarningIcon.foreground": "#BF8803",
         "problemsErrorIcon.foreground": "#E51400",
         "problemsInfoIcon.foreground": "#75BEFF",

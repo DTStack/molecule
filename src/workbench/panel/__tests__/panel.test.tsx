@@ -12,6 +12,8 @@ import {
     PanelModel,
 } from 'mo/model/workbench/panel';
 import { builtInPanelProblems } from 'mo/model/problems';
+import { MoleculeProvider } from 'mo';
+import { select } from 'mo/common/dom';
 
 function panelMockModel(): PanelModel {
     const output = builtInOutputPanel();
@@ -21,23 +23,32 @@ function panelMockModel(): PanelModel {
 }
 
 describe('Test Panel Component', () => {
-    test('Match the PanelView snapshot', async () => {
-        const component = renderer.create(<PanelView />);
+    test('Match the PanelView snapshot', () => {
+        const component = renderer.create(
+            <MoleculeProvider>
+                <PanelView />
+            </MoleculeProvider>
+        );
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    test('Test PanelView render', async () => {
-        const { queryAllByText } = render(<PanelView />);
-        expect(queryAllByText(builtInOutputPanel().name!)).not.toBeNull();
-        expect(queryAllByText(builtInPanelProblems().name!)).not.toBeNull();
+    test('Test PanelView render', () => {
+        render(
+            <MoleculeProvider>
+                <PanelView />
+            </MoleculeProvider>
+        );
+        expect(select<HTMLDivElement>('.mo-tab__item')!.textContent).toBe(
+            builtInPanelProblems().name
+        );
     });
 
-    test('Match the Panel snapshot', async () => {
+    test('Match the Panel snapshot', () => {
         const component = renderer.create(<Panel {...panelMockModel()} />);
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    test('Customize the Panel toolbox', async () => {
+    test('Customize the Panel toolbox', () => {
         const panel: IPanel = new PanelModel();
         const output = builtInOutputPanel();
         panel.toolbox = builtInPanelToolbox();
@@ -57,7 +68,7 @@ describe('Test Panel Component', () => {
         expect(container.querySelector('#box1')).not.toBeInTheDocument();
     });
 
-    test('Customize the Panel render content', async () => {
+    test('Customize the Panel render content', () => {
         const panel = panelMockModel();
         const { container, rerender, getAllByText } = render(
             <Panel {...panel} />
@@ -71,10 +82,12 @@ describe('Test Panel Component', () => {
         expect(
             container.querySelector('.mo-monaco-editor')
         ).not.toBeInTheDocument();
-        expect(getAllByText('customizedPane')).not.toBeNull();
+        // The customizedPane element are rendered in two places(mo-panel__container/mo-tabs__content),
+        // so the expect value is 2
+        expect(getAllByText('customizedPane').length).toBe(2);
     });
 
-    test('Sort the Panel ', async () => {
+    test('Sort the Panel ', () => {
         const current = { id: '1', name: 'test1' };
         const panel2 = { id: '2', name: 'test2' };
 
@@ -91,9 +104,7 @@ describe('Test Panel Component', () => {
         panel.data[1].sortIndex = 1;
 
         rerender(<Panel {...panel} />);
-        const tabs1 = container.querySelectorAll<HTMLDivElement>(
-            '.mo-tab__item'
-        );
-        expect(tabs1![0].textContent).toEqual('test2');
+        const tabs1 = container.querySelector<HTMLDivElement>('.mo-tab__item');
+        expect(tabs1!.textContent).toEqual('test2');
     });
 });

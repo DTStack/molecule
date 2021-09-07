@@ -3,8 +3,7 @@
 // =============== MenuBar =============== //
 #{$menuBar} {
     background-color: var(--activityBar-background);
-    border-color: var(--activityBar-border);
-    color: var(--activityBar-foreground);
+    color: var(--activityBar-inactiveForeground);
 
     #{$menu} {
         &__item {

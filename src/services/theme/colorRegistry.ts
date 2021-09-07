@@ -69,6 +69,8 @@ const defaultVS = {
 
     'panel.background': Color.white,
     'panel.border': 'rgba(128, 128, 128, 0.35)',
+    'panelTitle.activeForeground': 'rgb(66, 66, 66)',
+    'panelTitle.activeBorder': 'rgb(66, 66, 66)',
 
     'activityBar.background': 'rgb(51, 51, 51)',
     'activityBar.activeBorder': '#fff',
@@ -143,6 +145,8 @@ const defaultDark = {
 
     'panel.background': 'rgb(30, 30, 30)',
     'panel.border': '#3C3C3C',
+    'panelTitle.activeBorder': 'rgb(231, 231, 231)',
+    'panelTitle.activeForeground': 'rgb(231, 231, 231)',
 
     'activityBar.background': 'rgb(51, 51, 51)',
     'activityBar.activeBorder': '#fff',
@@ -204,6 +208,8 @@ const defaultHc = {
     'menu.separatorBackground': '#6FC3DF',
 
     'panel.border': '#6FC3DF',
+    'panelTitle.activeBorder': 'rgb(231, 231, 231)',
+    'panelTitle.activeForeground': 'rgb(231, 231, 231)',
 
     'activityBar.background': 'rgb(51, 51, 51)',
     'activityBar.activeBorder': '#fff',

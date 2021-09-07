@@ -1,4 +1,5 @@
-import { IColorTheme } from 'mo/model/colorTheme';
+import { cloneDeep } from 'lodash';
+import { IColors, IColorTheme } from 'mo/model/colorTheme';
 import { getBuiltInColors } from 'mo/services/theme/colorRegistry';
 import { editor as MonacoEditor } from 'monaco-editor';
 
@@ -27,11 +28,35 @@ export function convertToCSSVars(colors: object) {
     `;
 }
 
+/**
+ * Perfect the Color Theme,
+ * because some theme extensions not assign the fully,
+ * this function automatic helps to polyfill the color theme
+ * @param colors
+ * @returns colors
+ */
+function perfectColors(colors: IColors): IColors {
+    const nextColors = cloneDeep(colors);
+    const inheritMap = [
+        ['minimap.background', 'editor.background'],
+        ['minimapSlider.background', 'scrollbarSlider.background'],
+        ['minimapSlider.hoverBackground', 'scrollbarSlider.hoverBackground'],
+        ['minimapSlider.activeBackground', 'scrollbarSlider.activeBackground'],
+    ];
+
+    inheritMap.forEach(([inheritSourceColor, inheritTargetColor]) => {
+        if (nextColors[inheritTargetColor]) {
+            nextColors[inheritSourceColor] = nextColors[inheritTargetColor];
+        }
+    });
+    return nextColors;
+}
+
 export function getThemeData(
     theme: IColorTheme
 ): MonacoEditor.IStandaloneThemeData {
     const builtInColors = getBuiltInColors(theme);
-    const colors = Object.assign({}, builtInColors, theme.colors);
+    const colors = perfectColors(Object.assign(builtInColors, theme.colors));
 
     const convertColors = {};
     for (const colorId in colors) {

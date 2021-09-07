@@ -31,7 +31,7 @@ export class LayoutModel implements ILayout {
     public sidebar: ISidebarViewState;
     public menuBar: ViewVisibility;
     constructor(
-        splitPanePos: string[] = ['300px', 'auto'],
+        splitPanePos: string[] = ['230px', 'auto'],
         horizontalSplitPanePos = ['70%', 'auto'],
         activityBar = { hidden: false },
         panel = { hidden: false, panelMaximized: false },

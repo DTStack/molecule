@@ -12,7 +12,7 @@ import { shadowClassName } from 'mo/components/contextView/base';
 import { Icon } from 'mo/components/icon';
 import { localize } from 'mo/i18n/localize';
 
-const defaultNotificationClassName = prefixClaName('notification');
+export const defaultNotificationClassName = prefixClaName('notification');
 const notificationHeaderClassName = getBEMElement(
     defaultNotificationClassName,
     'header'
@@ -27,7 +27,7 @@ const notificationCloseClassName = getBEMModifier(
 );
 
 export function NotificationPane(
-    props: INotification & INotificationController
+    props: INotification & Partial<INotificationController>
 ) {
     const {
         data = [],
@@ -62,7 +62,7 @@ export function NotificationPane(
                             : item.value}
                         <Icon
                             title="Clear Notification"
-                            onClick={() => onCloseNotification(item)}
+                            onClick={() => onCloseNotification?.(item)}
                             className={notificationCloseClassName}
                             type="close"
                         />

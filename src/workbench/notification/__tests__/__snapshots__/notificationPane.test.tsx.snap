@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test NotificationPane Component Match The NotificationPane snapshot 1`] = `
+<div
+  className="mo-notification mo-context-view--shadow"
+  style={
+    Object {
+      "display": "none",
+    }
+  }
+>
+  <header
+    className="mo-notification__header"
+  >
+    <span>
+      通知
+    </span>
+    <div
+      className="mo-action-bar"
+    >
+      <ul
+        className="mo-action-bar__container"
+      />
+    </div>
+  </header>
+  <div
+    className="mo-notification__body"
+  >
+    <div>
+      
+      <span
+        className="mo-notification--close codicon codicon-close"
+        onClick={[Function]}
+        title="Clear Notification"
+      />
+    </div>
+  </div>
+</div>
+`;

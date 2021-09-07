@@ -134,7 +134,11 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                           <span
                             class="codicon codicon-chevron-right"
                           />
-                          打开的编辑器
+                          <span
+                            class="mo-collapse__header__title"
+                          >
+                            打开的编辑器
+                          </span>
                           <div
                             class="mo-collapse__extra"
                           />
@@ -156,7 +160,11 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                           <span
                             class="codicon codicon-chevron-right"
                           />
-                          无打开文件夹
+                          <span
+                            class="mo-collapse__header__title"
+                          >
+                            无打开文件夹
+                          </span>
                           <div
                             class="mo-collapse__extra"
                           />
@@ -193,7 +201,11 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                           <span
                             class="codicon codicon-chevron-right"
                           />
-                          轮廓
+                          <span
+                            class="mo-collapse__header__title"
+                          >
+                            轮廓
+                          </span>
                           <div
                             class="mo-collapse__extra"
                           />

@@ -61,7 +61,11 @@ exports[`The Explorer Component Match Snapshot 1`] = `
           <span
             className="codicon codicon-chevron-right"
           />
-          Open
+          <span
+            className="mo-collapse__header__title"
+          >
+            Open
+          </span>
           <div
             className="mo-collapse__extra"
           />
@@ -84,7 +88,11 @@ exports[`The Explorer Component Match Snapshot 1`] = `
           <span
             className="codicon codicon-chevron-right"
           />
-          test
+          <span
+            className="mo-collapse__header__title"
+          >
+            test
+          </span>
           <div
             className="mo-collapse__extra"
           />

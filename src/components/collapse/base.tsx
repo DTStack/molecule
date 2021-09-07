@@ -17,6 +17,10 @@ export const collapseHeaderClassName = getBEMElement(
     defaultCollapseClassName,
     'header'
 );
+export const collapseTitleClassName = getBEMElement(
+    collapseHeaderClassName,
+    'title'
+);
 export const collapseContentClassName = getBEMElement(
     defaultCollapseClassName,
     'content'

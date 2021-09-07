@@ -49,6 +49,12 @@ $collapse__extra: #{$collapse}__extra;
         &:focus {
             border-color: var(--list-focusOutline);
         }
+
+        &__title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
     &__extra {

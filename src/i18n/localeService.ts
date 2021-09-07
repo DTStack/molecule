@@ -128,7 +128,7 @@ export class LocaleService extends Component implements ILocaleService {
     }
 
     public getCurrentLocale(): ILocale | undefined {
-        return this._current ? Object.assign({}, this._current) : undefined;
+        return this._current && Object.assign({}, this._current);
     }
 
     public getLocale(id: string): ILocale | undefined {

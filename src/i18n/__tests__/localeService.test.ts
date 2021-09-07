@@ -64,7 +64,7 @@ describe('The Locale Service', () => {
 
     test('Get/Set current locale', () => {
         const localeService = new LocaleService();
-        (localeService as any)._current = null;
+        (localeService as any)._current = undefined;
         expect(localeService.getCurrentLocale()).toBeUndefined();
         localeService.addLocales([TestLocale]);
         localeService.setCurrentLocale(TestLocale.id);

@@ -35,19 +35,12 @@
         box-sizing: border-box;
         cursor: pointer;
         display: flex;
-        flex: 0 0 auto;
-        font-size: 13px;
+        flex-wrap: nowrap;
         height: 100%;
-        max-width: 300px;
-        min-width: 40px;
-        padding: 0 20px;
+        min-width: fit-content;
+        padding-left: 10px;
         position: relative;
         user-select: none;
-
-        &__name {
-            font-size: 16px;
-            margin-left: 10px;
-        }
 
         &__op {
             color: var(--icon-foreground);

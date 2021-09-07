@@ -2,6 +2,6 @@
 
 exports[`Test Notification StatusBar View Component Match The NotificationStatusBarView snapshot 1`] = `
 <span
-  className="codicon codicon-bell"
+  className="codicon codicon-bell-dot"
 />
 `;

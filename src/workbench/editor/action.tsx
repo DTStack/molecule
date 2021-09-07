@@ -44,7 +44,7 @@ function splitActions(actions: IEditorActionsProps[]) {
 }
 
 function EditorAction(props: IEditorActionProps & IEditorController) {
-    const { actions = [], isActiveGroup = false, onClickActions } = props;
+    const { actions = [], isActiveGroup, onClickActions } = props;
     const [outer, inner] = splitActions(actions);
 
     const childRef = useRef<DropDownRef>(null);

@@ -11,7 +11,7 @@ function EditorBreadcrumb(props: IEditorBreadcrumbProps) {
     const { breadcrumbs = [] } = props;
     return (
         <div className={groupBreadcrumbClassName}>
-            <Breadcrumb routes={breadcrumbs} />
+            <Breadcrumb role="breadcrumb" routes={breadcrumbs} />
         </div>
     );
 }

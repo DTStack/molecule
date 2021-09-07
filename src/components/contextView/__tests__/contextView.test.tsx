@@ -1,7 +1,8 @@
 import { cleanup, waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { IContextView, useContextView, shadowClassName } from '../index';
+import { IContextView, useContextView } from '../index';
+import { shadowClassName } from '../base';
 
 afterEach(() => cleanup());
 

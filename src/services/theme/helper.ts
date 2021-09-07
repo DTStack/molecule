@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { IColors, IColorTheme } from 'mo/model/colorTheme';
 import { getBuiltInColors } from 'mo/services/theme/colorRegistry';
 import { editor as MonacoEditor } from 'monaco-editor';
@@ -35,41 +36,27 @@ export function convertToCSSVars(colors: object) {
  * @returns colors
  */
 function perfectColors(colors: IColors): IColors {
-    if (!colors['minimap.background'] && colors['editor.background']) {
-        colors['minimap.background'] = colors['editor.background'];
-    }
-    // minimapSlider inherits the default scrollbar styles
-    if (
-        !colors['minimapSlider.background'] &&
-        colors['scrollbarSlider.background']
-    ) {
-        colors['minimapSlider.background'] =
-            colors['scrollbarSlider.background'];
-    }
-    if (
-        !colors['minimapSlider.hoverBackground'] &&
-        colors['scrollbarSlider.hoverBackground']
-    ) {
-        colors['minimapSlider.hoverBackground'] =
-            colors['scrollbarSlider.hoverBackground'];
-    }
-    if (
-        !colors['minimapSlider.activeBackground'] &&
-        colors['scrollbarSlider.activeBackground']
-    ) {
-        colors['minimapSlider.activeBackground'] =
-            colors['scrollbarSlider.activeBackground'];
-    }
-    return colors;
+    const nextColors = cloneDeep(colors);
+    const inheritMap = [
+        ['minimap.background', 'editor.background'],
+        ['minimapSlider.background', 'scrollbarSlider.background'],
+        ['minimapSlider.hoverBackground', 'scrollbarSlider.hoverBackground'],
+        ['minimapSlider.activeBackground', 'scrollbarSlider.activeBackground'],
+    ];
+
+    inheritMap.forEach(([inheritSourceColor, inheritTargetColor]) => {
+        if (nextColors[inheritTargetColor]) {
+            nextColors[inheritSourceColor] = nextColors[inheritTargetColor];
+        }
+    });
+    return nextColors;
 }
 
 export function getThemeData(
     theme: IColorTheme
 ): MonacoEditor.IStandaloneThemeData {
     const builtInColors = getBuiltInColors(theme);
-    const colors = perfectColors(
-        Object.assign({}, builtInColors, theme.colors)
-    );
+    const colors = perfectColors(Object.assign(builtInColors, theme.colors));
 
     const convertColors = {};
     for (const colorId in colors) {

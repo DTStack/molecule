@@ -55,6 +55,17 @@ describe('Test EditorService', () => {
         ).not.toBeUndefined();
     });
 
+    test('Listen to the tab opening event', () => {
+        const editor = new EditorService();
+        expectFnCalled((fun) => {
+            editor.onOpenTab(fun);
+            // Open in default Group
+            editor.open(mockTab);
+
+            expect(fun.mock.calls[0][0]).toEqual(mockTab);
+        });
+    });
+
     test('Get the default editor options', () => {
         const editor = new EditorService();
         expect(editor.getDefaultEditorOptions()).toEqual(BuiltInEditorOptions);

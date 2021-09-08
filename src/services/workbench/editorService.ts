@@ -95,6 +95,11 @@ export interface IEditorService extends Component<IEditor> {
      */
     onUpdateTab(callback: (tab: IEditorTab) => void): void;
     /**
+     * Listen to the tab opening event
+     * @param callback
+     */
+    onOpenTab(callback: (tab: IEditorTab) => void): void;
+    /**
      * Listen to the tab move event
      * @param callback
      */
@@ -562,10 +567,16 @@ export class EditorService
             groups.push(group);
         }
 
+        this.emit(EditorEvent.OpenTab, tab);
+
         this.setState({
             current: group,
             groups: [...groups],
         });
+    }
+
+    public onOpenTab(callback: (tab: IEditorTab) => void): void {
+        this.subscribe(EditorEvent.OpenTab, callback);
     }
 
     public closeAll(groupId: number) {

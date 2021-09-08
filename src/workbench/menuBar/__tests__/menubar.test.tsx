@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { fireEvent, render } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import MenuBar, { actionClassName } from '../menuBar';
@@ -25,6 +25,8 @@ const menuData = [
 const TEST_FN: jest.Mock<any, any> = jest.fn();
 
 describe('Test MenuBar Component', () => {
+    afterEach(cleanup);
+
     test('Match the MenuBar snapshot', () => {
         const component = renderer.create(
             <MenuBar data={menuData} onClick={TEST_FN} />
@@ -47,5 +49,24 @@ describe('Test MenuBar Component', () => {
 
         const menuBar = getByRole('menu').firstElementChild as HTMLLIElement;
         expect(menuBar).toBeInTheDocument();
+    });
+
+    test('Should support to get the focus element', () => {
+        const mockFn = jest.fn();
+        const {} = render(
+            <MenuBar
+                data={menuData}
+                onClick={TEST_FN}
+                updateFocusinEle={mockFn}
+            />
+        );
+
+        const input = document.createElement('input');
+        document.body.append(input);
+
+        input.focus();
+
+        expect(mockFn).toBeCalled();
+        expect(mockFn.mock.calls[0][0]).toEqual(input);
     });
 });

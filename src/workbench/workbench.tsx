@@ -72,7 +72,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
     };
 
     return (
-        <div id={ID_APP} className={appClassName} tabIndex={0}>
+        <div id={ID_APP} className={appClassName}>
             <div className={workbenchClassName}>
                 <div className={mainBenchClassName}>
                     <div className={compositeBarClassName}>

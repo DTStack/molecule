@@ -32,10 +32,33 @@ export class QuickSelectAllAction extends Action2 {
         this.editorService = container.resolve(EditorService);
     }
 
-    run(): void {
-        this.editorService.editorInstance!.focus();
-        this.editorService.editorInstance!.setSelection(
-            this.editorService.editorInstance!.getModel()!.getFullModelRange()
-        );
+    selectEditorAll() {
+        const editor = this.editorService.editorInstance;
+        if (editor) {
+            editor.focus();
+            editor.setSelection(editor.getModel()!.getFullModelRange());
+        }
+    }
+
+    isTextdom(ele: Element): ele is HTMLInputElement {
+        return typeof (ele as HTMLInputElement).selectionStart === 'number';
+    }
+
+    run(accessor, ...args): void {
+        const focusinEle = args[0];
+        // execute the action via shortcut if focusinEle is undefined
+        const currentFocusinEle: Element | null =
+            focusinEle || document.activeElement;
+        if (
+            currentFocusinEle &&
+            this.isTextdom(currentFocusinEle) &&
+            !currentFocusinEle.className.includes('monaco')
+        ) {
+            // native element can select by the native method
+            currentFocusinEle.select();
+        } else {
+            // monaco component should use the method from instance
+            this.selectEditorAll();
+        }
     }
 }

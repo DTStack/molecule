@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import { IMenuBar, IMenuBarItem } from 'mo/model/workbench/menuBar';
 import { IMenuBarController } from 'mo/controller/menuBar';
@@ -11,7 +11,7 @@ export const defaultClassName = prefixClaName('menuBar');
 export const actionClassName = getBEMElement(defaultClassName, 'action');
 
 export function MenuBar(props: IMenuBar & IMenuBarController) {
-    const { data, onClick } = props;
+    const { data, onClick, updateFocusinEle } = props;
     const childRef = useRef<DropDownRef>(null);
 
     const addKeybindingForData = (
@@ -50,6 +50,18 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
             data={addKeybindingForData(data)}
         />
     );
+
+    const handleSaveFocusinEle = useCallback((e: FocusEvent) => {
+        updateFocusinEle?.(e.target as HTMLElement | null);
+    }, []);
+
+    useEffect(() => {
+        document.body.addEventListener('focusin', handleSaveFocusinEle);
+        return () => {
+            document.body.removeEventListener('focusin', handleSaveFocusinEle);
+        };
+    }, []);
+
     return (
         <div className={defaultClassName}>
             <DropDown

@@ -1,5 +1,14 @@
 @import 'mo/style/common';
 
+#{$sidebar} {
+    #{$collapse}__header {
+        &__title {
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    }
+}
+
 #{$folderTree} {
     height: 100%;
 

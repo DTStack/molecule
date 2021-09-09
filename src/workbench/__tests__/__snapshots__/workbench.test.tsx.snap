@@ -5,6 +5,7 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
   <div
     class="mo"
     id="molecule"
+    tabindex="0"
   >
     <div
       class="mo-workbench"

@@ -69,7 +69,7 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
           data-type="SplitPane"
         >
           <div
-            style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-width: 170px; max-width: calc(80% - 1px*0.8); flex-grow: 0; width: 230px;"
+            style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-width: 170px; max-width: calc(80% - 1px*0.8); flex-grow: 0; width: 300px;"
           >
             <div
               class="mo-sidebar"

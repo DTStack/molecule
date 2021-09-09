@@ -24,7 +24,7 @@ import {
     MenuBarService,
     LayoutService,
 } from 'mo/services';
-import { ID_SIDE_BAR } from 'mo/common/id';
+import { ID_APP, ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
@@ -32,6 +32,7 @@ import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 export interface IMenuBarController {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick: (event: React.MouseEvent<any, any>, item: IMenuBarItem) => void;
+    updateFocusinEle?: (ele: HTMLElement | null) => void;
     updateStatusBar?: () => void;
     updateMenuBar?: () => void;
     updateActivityBar?: () => void;
@@ -45,6 +46,8 @@ export class MenuBarController
     private readonly menuBarService: IMenuBarService;
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
+    private focusinEle: HTMLElement | null = null;
+
     private automation = {
         [ACTION_QUICK_CREATE_FILE]: () => this.createFile(),
         [ACTION_QUICK_UNDO]: () => this.undo(),
@@ -65,6 +68,11 @@ export class MenuBarController
         this.layoutService = container.resolve(LayoutService);
         this.monacoService = container.resolve(MonacoService);
     }
+
+    public updateFocusinEle = (ele: HTMLElement | null) => {
+        if (ele?.id == ID_APP) return;
+        this.focusinEle = ele;
+    };
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
         const menuId = item.id || '';
@@ -105,7 +113,8 @@ export class MenuBarController
 
     public selectAll = () => {
         this.monacoService.commandService.executeCommand(
-            ACTION_QUICK_SELECT_ALL
+            ACTION_QUICK_SELECT_ALL,
+            this.focusinEle
         );
     };
 

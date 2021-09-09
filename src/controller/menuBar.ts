@@ -24,7 +24,7 @@ import {
     MenuBarService,
     LayoutService,
 } from 'mo/services';
-import { ID_SIDE_BAR } from 'mo/common/id';
+import { ID_APP, ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
@@ -70,6 +70,7 @@ export class MenuBarController
     }
 
     public updateFocusinEle = (ele: HTMLElement | null) => {
+        if (ele?.id == ID_APP) return;
         this.focusinEle = ele;
     };
 

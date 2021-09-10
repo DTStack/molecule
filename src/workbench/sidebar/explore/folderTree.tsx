@@ -139,8 +139,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         contextView.hide();
     };
 
-    const handleRightClick = ({ event, node }) => {
-        const { data } = node;
+    const handleRightClick = (event, data) => {
         const menuItems = onRightClick?.(data) || [];
 
         menuItems.length &&

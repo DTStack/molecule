@@ -280,28 +280,43 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         };
 
         const addRootFolder = () => {
-            const children = new Array(50).fill(1).map(
-                (_, index) =>
-                    new TreeNodeModel({
-                        id: index,
-                        name: `test_sql_${index}.txt`,
-                        fileType: FileTypes.File,
-                        isLeaf: true,
-                        content: `show tables;
-SELECT 1;
-DESC 6d_target_test;
-create table if not exists ods_order_header1213 (
-order_header_id     string comment '订单头id'
-,order_date          bigint comment '订单日期'
-,shop_id             string comment '店铺id'
-,customer_id         string comment '客户id'
-,order_status        bigint comment '订单状态'
-,pay_date            bigint comment '支付日期'
-)comment '销售订单明细表'
-PARTITIONED BY (ds string) lifecycle 1000;
-`,
-                    })
-            );
+            //             const children = new Array(50).fill(1).map(
+            //                 (_, index) =>
+            //                     new TreeNodeModel({
+            //                         id: index,
+            //                         name: `test_sql_${index}.txt`,
+            //                         fileType: FileTypes.File,
+            //                         isLeaf: true,
+            //                         content: `show tables;
+            // SELECT 1;
+            // DESC 6d_target_test;
+            // create table if not exists ods_order_header1213 (
+            // order_header_id     string comment '订单头id'
+            // ,order_date          bigint comment '订单日期'
+            // ,shop_id             string comment '店铺id'
+            // ,customer_id         string comment '客户id'
+            // ,order_status        bigint comment '订单状态'
+            // ,pay_date            bigint comment '支付日期'
+            // )comment '销售订单明细表'
+            // PARTITIONED BY (ds string) lifecycle 1000;
+            // `,
+            //                     })
+            //             );
+            const children = [
+                new TreeNodeModel({
+                    id: 1,
+                    name: 'folder',
+                    fileType: FileTypes.Folder,
+                    isLeaf: false,
+                }),
+                new TreeNodeModel({
+                    id: 2,
+                    name: 'file',
+                    fileType: FileTypes.File,
+                    isLeaf: true,
+                    content: 'show tables;',
+                }),
+            ];
             molecule.folderTree.add(
                 new TreeNodeModel({
                     name: 'molecule_temp',

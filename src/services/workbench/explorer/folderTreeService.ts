@@ -133,7 +133,12 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * Callback for load folder tree data
      * @param callback
      */
-    onLoadData(callback: (treeNode: LoadEventData) => void): void;
+    onLoadData(
+        callback: (
+            treeNode: ITreeNodeItemProps,
+            callback: (treeNode: ITreeNodeItemProps) => void
+        ) => void
+    ): void;
 }
 
 @singleton()
@@ -381,7 +386,12 @@ export class FolderTreeService
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
     };
 
-    public onLoadData = (callback: (treeNode: LoadEventData) => void) => {
+    public onLoadData = (
+        callback: (
+            treeNode: ITreeNodeItemProps,
+            callback: (treeNode: ITreeNodeItemProps) => void
+        ) => void
+    ) => {
         this.subscribe(FolderTreeEvent.onLoadData, callback);
     };
 }

@@ -10,7 +10,6 @@ import {
 } from 'mo/common/className';
 
 import { Tab, ITabProps } from './tab';
-import DragAndDrop from './dragAndDrop';
 
 export type TabsType = 'line' | 'card';
 export interface ITabsProps<T> extends React.ComponentProps<any> {
@@ -55,34 +54,32 @@ export function Tabs<T>(props: ITabsProps<T>) {
     );
 
     return (
-        <DragAndDrop>
-            <div
-                style={style}
-                className={classNames(
-                    tabsClassName,
-                    getBEMModifier(tabsClassName, type as string),
-                    className
-                )}
-            >
-                <div className={tabsHeader}>
-                    {data?.map((tab: ITabProps<T>, index: number) => {
-                        return (
-                            <Tab
-                                id={tab.id}
-                                key={tab.id}
-                                active={activeTab === tab.id}
-                                index={index}
-                                name={tab.name}
-                                icon={tab.icon}
-                                data={tab.data}
-                                closable={tab.closable}
-                                onMoveTab={onChangeTab}
-                                {...resetProps}
-                            />
-                        );
-                    })}
-                </div>
+        <div
+            style={style}
+            className={classNames(
+                tabsClassName,
+                getBEMModifier(tabsClassName, type as string),
+                className
+            )}
+        >
+            <div className={tabsHeader}>
+                {data?.map((tab: ITabProps<T>, index: number) => {
+                    return (
+                        <Tab
+                            id={tab.id}
+                            key={tab.id}
+                            active={activeTab === tab.id}
+                            index={index}
+                            name={tab.name}
+                            data={tab.data}
+                            icon={tab.icon}
+                            closable={tab.closable}
+                            onMoveTab={onChangeTab}
+                            {...resetProps}
+                        />
+                    );
+                })}
             </div>
-        </DragAndDrop>
+        </div>
     );
 }

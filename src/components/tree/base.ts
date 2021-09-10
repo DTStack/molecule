@@ -1,0 +1,23 @@
+import {
+    getBEMElement,
+    getBEMModifier,
+    prefixClaName,
+} from 'mo/common/className';
+
+export const defaultTreeClassName = prefixClaName('tree');
+export const defaultTreeNodeClassName = getBEMElement(
+    defaultTreeClassName,
+    'treenode'
+);
+export const activeTreeNodeClassName = getBEMModifier(
+    defaultTreeNodeClassName,
+    'active'
+);
+
+export const indentClassName = getBEMElement(defaultTreeClassName, 'indent');
+export const indentGuideClassName = getBEMElement(indentClassName, 'guide');
+
+export const treeNodeTitleClassName = getBEMElement(
+    defaultTreeNodeClassName,
+    'title'
+);

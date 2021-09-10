@@ -34,7 +34,7 @@ export interface IFolderTreeController {
         source: ITreeNodeItemProps,
         target: ITreeNodeItemProps
     ) => void;
-    readonly onLoadData?: (treeNode: LoadEventData) => Promise<void>;
+    readonly onLoadData?: (treeNode: ITreeNodeItemProps) => Promise<void>;
     readonly onRightClick?: (treeNode: ITreeNodeItemProps) => IMenuItemProps[];
 }
 
@@ -162,7 +162,13 @@ export class FolderTreeController
         this.emit(FolderTreeEvent.onDelete, id);
     };
 
-    public onLoadData = async (treeNode: LoadEventData) => {
-        await this.emit(FolderTreeEvent.onLoadData, treeNode);
+    public onLoadData = (treeNode: ITreeNodeItemProps) => {
+        return new Promise<void>((resolve, reject) => {
+            const callback = (node: ITreeNodeItemProps) => {
+                this.folderTreeService.update(node);
+                resolve();
+            };
+            this.emit(FolderTreeEvent.onLoadData, treeNode, callback);
+        });
     };
 }

@@ -222,13 +222,13 @@ const defaultHc = {
 export function getBuiltInColors(theme: IColorTheme) {
     switch (theme.uiTheme) {
         case 'vs-dark': {
-            return defaultDark;
+            return { ...defaultDark };
         }
         case 'vs': {
-            return defaultVS;
+            return { ...defaultVS };
         }
         default: {
-            return defaultHc;
+            return { ...defaultHc };
         }
     }
 }

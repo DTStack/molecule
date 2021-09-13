@@ -169,7 +169,11 @@ describe('Test Workbench Component', () => {
         expect(select('.mo-sidebar')).toBeInTheDocument();
         workbench.sidebar.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(select('.mo-sidebar')).not.toBeInTheDocument();
+
+        expect(select('.mo-sidebar')).toBeInTheDocument();
+        expect(
+            select<HTMLDivElement>('.mo-sidebar')?.parentElement?.classList
+        ).toContain('hidden');
     });
 
     test('Hide the StatusBar', async () => {

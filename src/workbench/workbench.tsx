@@ -85,15 +85,14 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         allowResize={true}
                         onChange={onPaneSizeChange as any}
                     >
-                        {!sidebar.hidden && (
-                            <Pane
-                                minSize="170px"
-                                initialSize={splitPanePos[0]}
-                                maxSize="80%"
-                            >
-                                <SidebarView />
-                            </Pane>
-                        )}
+                        <Pane
+                            minSize="170px"
+                            initialSize={splitPanePos[0]}
+                            maxSize="80%"
+                            className={sidebar.hidden && 'hidden'}
+                        >
+                            <SidebarView />
+                        </Pane>
                         <SplitPane
                             primary="first"
                             split="horizontal"

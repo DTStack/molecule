@@ -6,6 +6,7 @@
         "menubar": "菜单栏",
         "menu.file": "文件",
         "menu.settings": "设置",
+        "menu.account": "账号",
         "menu.colorTheme": "颜色主题",
         "menu.newFile": "新建文件",
         "menu.newFolder": "新建文件夹",

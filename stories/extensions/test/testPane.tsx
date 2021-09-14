@@ -316,6 +316,13 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                     isLeaf: true,
                     content: 'show tables;',
                 }),
+                new TreeNodeModel({
+                    id: 3,
+                    name: 'file2',
+                    fileType: FileTypes.File,
+                    isLeaf: true,
+                    content: 'show tables;show tables;show tables;',
+                }),
             ];
             molecule.folderTree.add(
                 new TreeNodeModel({

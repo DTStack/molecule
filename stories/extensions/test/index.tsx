@@ -205,6 +205,13 @@ export const ExtendTestPane: IExtension = {
                             isLeaf: true,
                             content: 'show tables;',
                         }),
+                        new TreeNodeModel({
+                            id: randomId(),
+                            name: 'file22',
+                            fileType: FileTypes.File,
+                            isLeaf: true,
+                            content: 'show tables;',
+                        }),
                     ]);
                 }, 1000);
             });

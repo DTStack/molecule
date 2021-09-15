@@ -1,6 +1,10 @@
 import React from 'react';
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import { NEW_FILE_COMMAND_ID, NEW_FOLDER_COMMAND_ID } from './folderTree';
+import {
+    COLLAPSE_FOLDER_COMMAND_ID,
+    NEW_FILE_COMMAND_ID,
+    NEW_FOLDER_COMMAND_ID,
+} from './folderTree';
 import { localize } from 'mo/i18n/localize';
 
 export enum ExplorerEvent {
@@ -46,6 +50,7 @@ export const EDITOR_PANEL_ID = 'sidebar.explore.openEditor';
 export const OUTLINE_PANEL_ID = 'sidebar.explore.outline';
 export const OUTLINE_PANEL_MORE_DESC = 'sidebar.explore.outlineMore';
 export const EXPLORER_ACTIVITY_ITEM = 'sidebar.explore.title';
+
 export const EXPLORER_ACTION_TITLE = 'sidebar.explore.actionDesc';
 export const EXPLORER_TOGGLE_VERTICAL = 'sidebar.explore.toggleVertical';
 export const EXPLORER_TOGGLE_SAVE_ALL = 'sidebar.explore.saveALL';
@@ -160,9 +165,9 @@ export function builtInExplorerFolderPanel() {
                 icon: 'refresh',
             },
             {
-                id: 'collapse',
+                id: COLLAPSE_FOLDER_COMMAND_ID,
                 title: localize(
-                    'sidebar.explore.collapseFolders',
+                    COLLAPSE_FOLDER_COMMAND_ID,
                     'Collapse Folders in Explorer'
                 ),
                 icon: 'collapse-all',

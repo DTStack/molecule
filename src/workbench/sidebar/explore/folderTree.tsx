@@ -71,9 +71,11 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     const {
         folderTree = {},
         entry,
+        expandedKeys,
         panel,
         onUpdateFileName,
         onSelectFile,
+        onExpand,
         onDropTree,
         onClickContextMenu,
         onRightClick,
@@ -213,6 +215,22 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         onDropTree?.(newFolderTreeData);
     };
 
+    const handleExpand = (expandedKeys, { node }) => {
+        onExpand?.(expandedKeys, node);
+    };
+
+    const handleSelect = (_, { node }) => {
+        if (!node.isLeaf) {
+            // If the selected node is expanded, so unexpanded the node
+            if (expandedKeys?.includes(node.key)) {
+                onExpand?.([], node);
+            } else {
+                onExpand?.([node.key], node);
+            }
+        }
+        onSelectFile?.(node.data);
+    };
+
     useEffect(() => {
         if (folderPanelContextMenu.length > 0) {
             contextMenu.current = initContextMenu();
@@ -232,9 +250,11 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                         folderTreeClassName,
                         hasEditable && folderTreeEditClassName
                     )}
+                    expandedKeys={expandedKeys}
                     draggable={!hasEditable}
                     onDropTree={handleDropTree}
-                    onSelectNode={onSelectFile}
+                    onSelect={handleSelect}
+                    onExpand={handleExpand}
                     onRightClick={handleRightClick}
                     renderTitle={renderTitle}
                     onLoadData={onLoadData}

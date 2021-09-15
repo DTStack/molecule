@@ -129,9 +129,12 @@ describe('The FolderTree Component', () => {
         );
     });
 
-    test('Should support to render a input for the editing node', async () => {
+    test('Should support to render a input for the editing node', () => {
         const { getByRole, container } = render(
-            <FolderTreeViewPanel folderTree={{ data: mockTreeEditData }} />
+            <FolderTreeViewPanel
+                folderTree={{ data: mockTreeEditData }}
+                expandedKeys={['root', 'folder']}
+            />
         );
 
         const input = getByRole('input') as HTMLInputElement;
@@ -154,6 +157,7 @@ describe('The FolderTree Component', () => {
             <FolderTreeViewPanel
                 folderTree={{ data: mockTreeEditData }}
                 onUpdateFileName={mockFn}
+                expandedKeys={['root', 'folder']}
             />
         );
 

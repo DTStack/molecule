@@ -15,6 +15,7 @@ export type FileType = keyof typeof FileTypes;
 
 export enum FolderTreeEvent {
     onSelectFile = 'folderTree.onSelectFile',
+    onExpand = 'folderTree.onExpand',
     onDelete = 'folderTree.onDelete',
     onRename = 'folderTree.onRename',
     onUpdateFileName = 'folderTree.onUpdateFileName',
@@ -38,11 +39,13 @@ export interface IFolderTreeSubItem {
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
     entry?: React.ReactNode;
+    expandedKeys?: string[];
 }
 
 export const NEW_FILE_COMMAND_ID = 'explorer.newFile';
 export const NEW_FOLDER_COMMAND_ID = 'explorer.newFolder';
 export const RENAME_COMMAND_ID = 'explorer.rename';
+export const COLLAPSE_FOLDER_COMMAND_ID = 'sidebar.explore.collapseFolders';
 export const REMOVE_COMMAND_ID = 'explorer.remove';
 export const DELETE_COMMAND_ID = 'explorer.delete';
 export const OPEN_TO_SIDE_COMMAND_ID = 'explorer.openToSide';

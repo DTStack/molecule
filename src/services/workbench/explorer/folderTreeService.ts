@@ -46,6 +46,11 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     get(id: number): ITreeNodeItemProps | null;
     /**
+     * Get the parent node by the child node ID
+     * @param id The child node ID
+     */
+    getParent(id: number): ITreeNodeItemProps | null;
+    /**
      * Get the context menus for file
      */
     getFileContextMenu: () => IMenuItemProps[];
@@ -58,7 +63,16 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * or unactive any node in folder tree
      * @param id
      */
-    setActive(id?: number): void;
+    setActive(id?: number | string): void;
+    /**
+     * Set the expanded keys of FolderTree
+     * @param ids Tree node id list
+     */
+    setExpandedKeys(ids: string[]): void;
+    /**
+     * Get the FolderTree expanded keys
+     */
+    getExpandedKeys(): string[];
     /**
      * Set a entry page for folder tree
      * @param entry
@@ -146,6 +160,11 @@ export class FolderTreeService
         this.explorerService = container.resolve(ExplorerService);
     }
 
+    public getExpandedKeys(): string[] {
+        const keys = this.state.expandedKeys;
+        return keys ? keys.concat() : [];
+    }
+
     public reset() {
         this.setState(builtInFolderTree as any);
     }
@@ -183,7 +202,7 @@ export class FolderTreeService
      * Returns the node of root folder in folderTree
      */
     private getRootFolderById(id: number) {
-        let rootNode: ITreeNodeItemProps = {};
+        let rootNode: ITreeNodeItemProps = { id: -1 };
         this.state.folderTree?.data?.forEach((folder) => {
             const treeInstance = new TreeViewUtil<ITreeNodeItemProps>(folder);
             if (treeInstance.get(id)) rootNode = folder;
@@ -312,6 +331,11 @@ export class FolderTreeService
         return node;
     }
 
+    public getParent(id: number) {
+        const { tree } = this.getCurrentRootFolderInfo(id);
+        return tree.getParent(id);
+    }
+
     public setActive(id?: number) {
         const { folderTree } = this.state;
 
@@ -321,6 +345,14 @@ export class FolderTreeService
                 current: id || id === 0 ? this.get(id) : null,
             },
         });
+    }
+
+    public setExpandedKeys(ids: string[]): void {
+        if (ids) {
+            this.setState({
+                expandedKeys: ids,
+            });
+        }
     }
 
     public setEntry(entry: React.ReactNode) {

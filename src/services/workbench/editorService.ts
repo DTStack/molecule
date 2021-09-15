@@ -184,6 +184,11 @@ export interface IEditorService extends Component<IEditor> {
      * The instance of MonacoEditor
      */
     readonly editorInstance: MonacoEditor.IStandaloneCodeEditor;
+    /**
+     * Get the group's id which contains the tab
+     * @param tabId
+     */
+    getGroupIdByTab(tabId: string): number | null;
 }
 @singleton()
 export class EditorService
@@ -478,6 +483,19 @@ export class EditorService
     public getGroupIndexById(id: number): number {
         const { groups } = this.state;
         return groups!.findIndex(searchById(id));
+    }
+
+    public getGroupIdByTab(tabId: string) {
+        const { groups = [] } = this.state;
+        const isOpened = this.isOpened(tabId, groups);
+        if (isOpened) {
+            const targetGroup = groups.find((group) =>
+                this.getTabById(tabId, group)
+            )!;
+            return targetGroup.id!;
+        } else {
+            return null;
+        }
     }
 
     public setActive(groupId: number, tabId: string) {

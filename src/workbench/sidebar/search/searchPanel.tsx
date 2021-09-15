@@ -14,6 +14,7 @@ import {
     matchSearchValueClassName,
     replaceSearchValueClassName,
 } from './base';
+import { ITreeNodeItemProps } from 'mo/components';
 
 export interface ISearchPaneToolBar extends ISearchController, ISearchProps {}
 
@@ -99,7 +100,8 @@ const SearchPanel = ({
         });
     };
 
-    const handleTreeSelect = (item) => {
+    const handleTreeSelect = (selectedKey, info) => {
+        const item: ITreeNodeItemProps = info.node.data;
         if (item.isLeaf) {
             onResultClick?.(item, result);
         }
@@ -131,7 +133,7 @@ const SearchPanel = ({
                     <SearchTree
                         data={result}
                         renderTitle={renderTitle}
-                        onSelectNode={handleTreeSelect}
+                        onSelect={handleTreeSelect}
                     />
                 )}
             </Content>

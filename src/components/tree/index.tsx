@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import RcTree, { TreeNode as RcTreeNode, TreeProps } from 'rc-tree';
 import { Icon } from 'mo/components/icon';
 import { prefixClaName, classNames } from 'mo/common/className';
@@ -14,13 +14,11 @@ export interface ITreeNodeItemProps {
     name?: string;
     isEditable?: boolean; // Edit status
     children?: ITreeNodeItemProps[];
-
     [key: string]: any;
 }
 
 export interface ITreeProps extends Partial<TreeProps> {
     data?: ITreeNodeItemProps[];
-    onSelectNode?: (file: ITreeNodeItemProps, isUpdate?) => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
         index: number,
@@ -37,11 +35,9 @@ const TreeView = ({
     onDropTree,
     onRightClick,
     renderTitle, // custom title
-    onSelectNode,
     onLoadData,
     ...restProps
 }: ITreeProps) => {
-    const [selectedKeys, setKeys] = useState<React.Key[]>([]);
     const treeRef = useRef<RcTree>(null);
 
     const onDrop = (info) => {
@@ -62,7 +58,7 @@ const TreeView = ({
             ) => void
         ) => {
             data.forEach((item, index, arr) => {
-                if (item.id === key) {
+                if (`${item.id}` === key) {
                     return callback(item, index, arr);
                 }
                 if (item.children) {
@@ -158,31 +154,7 @@ const TreeView = ({
             );
         });
 
-    const handleSelect = (_, { node }) => {
-        // always select current click node
-        const currentNodeKey = [node.key];
-        setKeys(currentNodeKey);
-        if (!node.isLeaf) {
-            const expanded = treeRef.current?.state.expandedKeys || [];
-            if (expanded.includes(node.key)) {
-                // difference set, remove current node key from expanded collection
-                treeRef.current?.setExpandedKeys(
-                    expanded?.filter(
-                        (exp) => !currentNodeKey.includes(exp.toString())
-                    )
-                );
-            } else {
-                // union set, add current node key into expanded collection
-                treeRef.current?.setExpandedKeys(
-                    expanded.concat(currentNodeKey)
-                );
-            }
-        }
-        onSelectNode?.(node.data);
-    };
-
     const handleRightClick = (info) => {
-        setKeys([info.node.key]);
         onRightClick?.(info);
     };
 
@@ -215,13 +187,11 @@ const TreeView = ({
         <div className={classNames(prefixClaName('tree'), className)}>
             <div className={prefixClaName('tree', 'sidebar')}>
                 <RcTree
-                    selectedKeys={selectedKeys}
                     ref={treeRef}
                     prefixCls="rc-tree"
                     draggable={draggable}
                     onDrop={onDrop}
                     switcherIcon={<Icon type="chevron-right" />}
-                    onSelect={handleSelect}
                     onRightClick={handleRightClick}
                     loadData={onLoadData}
                     {...restProps}

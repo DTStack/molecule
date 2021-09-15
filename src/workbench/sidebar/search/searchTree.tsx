@@ -5,7 +5,7 @@ import { treeContentClassName } from './base';
 export interface SearchTreeProps extends ITreeProps {}
 
 const SearchTree = (props: SearchTreeProps) => {
-    const { data = [], onSelectNode, renderTitle } = props;
+    const { data = [], onSelect, renderTitle } = props;
 
     return (
         <Tree
@@ -15,7 +15,7 @@ const SearchTree = (props: SearchTreeProps) => {
             className={treeContentClassName}
             data={data}
             renderTitle={renderTitle}
-            onSelectNode={onSelectNode}
+            onSelect={onSelect}
         />
     );
 };

@@ -40,7 +40,7 @@ describe('Test the Tree component', () => {
         expect(getByTitle('test1')).toBeInTheDocument();
         expect(getByTitle('test2')).toBeInTheDocument();
 
-        fireEvent.click(getByTitle('test1'));
+        fireEvent.click(getByTitle('test1').previousElementSibling!);
         expect(await findByTitle('test1-1')).toBeInTheDocument();
     });
 
@@ -75,7 +75,7 @@ describe('Test the Tree component', () => {
             'div[data-id="mo_treeNode_1"]'
         );
 
-        fireEvent.click(getByTitle('test1'));
+        fireEvent.click(getByTitle('test1').previousElementSibling!);
         const childNode = await waitFor(() =>
             container.querySelector<HTMLDivElement>(
                 'div[data-id="mo_treeNode_1-1"]'
@@ -88,7 +88,7 @@ describe('Test the Tree component', () => {
 
     test('Should render customer icon only in leaf node & render specific icon in non-leaf node', async () => {
         const { container, getByTitle } = render(<TreeView data={mockData} />);
-        fireEvent.click(getByTitle('test1'));
+        fireEvent.click(getByTitle('test1').previousElementSibling!);
 
         const parentIcon = container
             .querySelector<HTMLDivElement>('div[data-id="mo_treeNode_1"]')
@@ -108,7 +108,7 @@ describe('Test the Tree component', () => {
     test('Should support to render React.ReactNode icon in leaf node', async () => {
         mockData[0].children![0].icon = <span role="icon"></span>;
         const { container, getByTitle } = render(<TreeView data={mockData} />);
-        fireEvent.click(getByTitle('test1'));
+        fireEvent.click(getByTitle('test1').previousElementSibling!);
         const childNode = await waitFor(() =>
             container.querySelector<HTMLDivElement>(
                 'div[data-id="mo_treeNode_1-1"]'
@@ -132,16 +132,16 @@ describe('Test the Tree component', () => {
             },
         ];
         const { container, getByTitle } = render(<TreeView data={data} />);
-        fireEvent.click(getByTitle('test1'));
+        fireEvent.click(getByTitle('test1').previousElementSibling!);
 
         const parentNode = container.querySelector<HTMLDivElement>(
             'div[data-id="mo_treeNode_1"]'
         );
-        const childNode = await waitFor(() =>
-            container.querySelector<HTMLDivElement>(
+        const childNode = await waitFor(() => {
+            return container.querySelector<HTMLDivElement>(
                 'div[data-id="mo_treeNode_1_2"]'
-            )
-        );
+            );
+        });
 
         expect(parentNode).toBeInTheDocument();
         expect(childNode).toBeInTheDocument();
@@ -165,18 +165,6 @@ describe('Test the Tree component', () => {
 
         expect(mockFn).toBeCalled();
         expect(mockRightClickFn).toBeCalled();
-    });
-
-    test('Should fold when click expand node', async () => {
-        const { getByTitle, findByTitle } = render(
-            <TreeView data={mockData} />
-        );
-
-        fireEvent.click(getByTitle('test1'));
-        expect((await findByTitle('test1')).className).toContain('open');
-
-        fireEvent.click(getByTitle('test1'));
-        expect((await findByTitle('test1')).className).toContain('close');
     });
 
     test('Should expand the parent of editable node', async () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { expectFnCalled } from '@test/utils';
 import { SearchPanel } from '../search';
@@ -174,22 +174,25 @@ describe('The SearchPanel Component', () => {
         ).toBe(replaceValue);
     });
 
-    test('Should support to click the result tree node', () => {
-        expectFnCalled((mockFn) => {
-            const { container } = render(
-                <SearchPanel
-                    value="test"
-                    result={mockResult}
-                    getSearchIndex={() => 0}
-                    onResultClick={mockFn}
-                />
-            );
+    test('Should support to click the result tree node', async () => {
+        const mockFn = jest.fn();
+        const { container } = render(
+            <SearchPanel
+                value="test"
+                result={mockResult}
+                getSearchIndex={() => 0}
+                onResultClick={mockFn}
+            />
+        );
 
-            const target = mockResult[0];
-            const treeNode = container.querySelector(
-                `div[data-id=mo_treeNode_${target.id}]`
-            );
+        const target = mockResult[0];
+        const treeNode = container.querySelector(
+            `div[data-id=mo_treeNode_${target.id}]`
+        );
 
+        await fireEvent.click(treeNode?.querySelector('.rc-tree-switcher')!);
+
+        await waitFor(() => {
             const triggerDom = treeNode?.querySelector(
                 '.rc-tree-node-content-wrapper'
             );

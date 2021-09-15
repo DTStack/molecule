@@ -54,12 +54,14 @@ export function builtInActivityBar(): IActivityBar {
         {
             id: ACTIVITY_BAR_GLOBAL_ACCOUNT,
             name: localize('menu.account', 'Account'),
+            title: localize('menu.account', 'Account'),
             icon: 'account',
             type: 'global',
         },
         {
             id: ACTIVITY_BAR_GLOBAL_SETTINGS,
-            name: localize('menu.colorTheme', 'Color Theme'),
+            name: localize('menu.settings', 'Settings'),
+            title: localize('menu.settings', 'Settings'),
             icon: 'settings-gear',
             type: 'global',
             contextMenu: [

@@ -41,6 +41,7 @@ export function builtInSearchActivityItem() {
     return {
         id: SEARCH_ACTIVITY_ITEM,
         name: localize(SEARCH_ACTIVITY_ITEM, 'Search'),
+        title: localize(SEARCH_ACTIVITY_ITEM, 'Search'),
         icon: 'search',
     };
 }

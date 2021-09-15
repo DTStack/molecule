@@ -60,6 +60,7 @@ export function builtInExplorerActivityItem() {
         id: EXPLORER_ACTIVITY_ITEM,
         name: localize(EXPLORER_ACTIVITY_ITEM, 'Explore'),
         icon: 'files',
+        title: localize(EXPLORER_ACTIVITY_ITEM, 'Explore'),
     };
 }
 

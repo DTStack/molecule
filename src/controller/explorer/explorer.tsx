@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import React from 'react';
+import React, { Key } from 'react';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { connect } from 'mo/react';
@@ -37,7 +37,7 @@ export interface IExplorerController {
         e: React.MouseEvent,
         item?: IMenuItemProps
     ) => void;
-    onCollapseChange?: (keys) => void;
+    onCollapseChange?: (keys: Key[]) => void;
     onToolbarClick?: (
         item: IActionBarItemProps,
         panel: IExplorerPanelItem
@@ -53,14 +53,12 @@ export class ExplorerController
     private readonly sidebarService: ISidebarService;
     private readonly explorerService: IExplorerService;
     private readonly folderTreeController: IFolderTreeController;
-
     constructor() {
         super();
         this.activityBarService = container.resolve(ActivityBarService);
         this.sidebarService = container.resolve(SidebarService);
         this.explorerService = container.resolve(ExplorerService);
         this.folderTreeController = container.resolve(FolderTreeController);
-
         this.initView();
     }
 

@@ -162,6 +162,20 @@ export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
         return null;
     }
 
+    /**
+     * Get the parent node by the child ID
+     * @param id The child node ID
+     * @returns
+     */
+    getParent(id: number) {
+        const destIndex = this.getIndex(id);
+        if (destIndex) {
+            const parentId = destIndex.parent;
+            return this.getIndex(parentId!);
+        }
+        return null;
+    }
+
     remove(id: number) {
         const index = this.getIndex(id);
         if (index) {

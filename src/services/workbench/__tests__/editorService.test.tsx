@@ -365,6 +365,29 @@ describe('Test EditorService', () => {
         expect(updated.name).toBe('updateGroup');
     });
 
+    test('Should support to get the groupId via tab', () => {
+        const editor = new EditorService();
+        editor.open(mockTab);
+
+        let groupId = editor.getGroupIdByTab(mockTab.id!);
+        expect(groupId).toBe(1);
+
+        groupId = editor.getGroupIdByTab('non-exist');
+        expect(groupId).toBeNull();
+
+        editor.open(mockTab, 2);
+        const groups = editor.getState().groups;
+        expect(groups).toHaveLength(2);
+        // To be sure mockTab is opened both in two groups
+        expect(
+            groups!.every((group) => editor.getTabById(mockTab.id!, group))
+        ).toBeTruthy();
+
+        // Only get the first one
+        groupId = editor.getGroupIdByTab(mockTab.id!);
+        expect(groupId).toBe(1);
+    });
+
     test('Listen to the Tab update event', () => {
         const editor = new EditorService();
         expectFnCalled((testFn) => {

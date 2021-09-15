@@ -75,6 +75,10 @@ export interface IExplorerService extends Component<IExplorer> {
     onPanelToolbarClick(
         callback: (panel: IExplorerPanelItem, toolbarId: string) => void
     ): void;
+    /**
+     * Listen to toggle the Collapse
+     */
+    onCollapseChange(callback: (keys: string[]) => void): void;
 }
 
 @singleton()
@@ -292,5 +296,9 @@ export class ExplorerService
         callback: (panel: IExplorerPanelItem, toolbarId: string) => void
     ) {
         this.subscribe(ExplorerEvent.onPanelToolbarClick, callback);
+    }
+
+    public onCollapseChange(callback: (keys: string[]) => void) {
+        this.subscribe(ExplorerEvent.onCollapseChange, callback);
     }
 }

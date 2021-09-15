@@ -7,9 +7,12 @@ import {
     activeTreeNodeClassName,
     defaultTreeClassName,
     defaultTreeNodeClassName,
+    expandTreeNodeClassName,
+    unexpandTreeNodeClassName,
 } from './base';
 import { TreeViewUtil } from 'mo/services/helper';
 
+// TODO: Should reconsider the reasonable of the interface
 export interface ITreeNodeItemProps {
     disabled?: boolean;
     icon?: string | JSX.Element;
@@ -24,7 +27,7 @@ export interface ITreeNodeItemProps {
 
 export interface ITreeProps {
     data?: ITreeNodeItemProps[];
-    onSelectNode?: (file: ITreeNodeItemProps, isUpdate?) => void;
+    onSelect?: (file: ITreeNodeItemProps, isUpdate?) => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
         index: number,
@@ -39,19 +42,20 @@ export interface ITreeProps {
 
     className?: string;
     draggable?: boolean;
+    defaultExpandAll?: boolean;
 }
 
 const TreeView = ({
     className,
     data = [],
-    draggable = true,
+    draggable = false,
+    defaultExpandAll = false,
     onDropTree,
     onRightClick,
     renderTitle, // custom title
-    onSelectNode,
+    onSelect,
     onLoadData,
-}: // ...restProps
-ITreeProps) => {
+}: ITreeProps) => {
     const [expandKeys, setExpandKeys] = useState<string[]>([]);
     const [activeKey, setActiveKey] = useState<string | null>(null);
     const loadDataCache = useRef<Record<string, boolean>>({});
@@ -85,9 +89,7 @@ ITreeProps) => {
     const handleNodeClick = (node: ITreeNodeItemProps) => {
         const uuid = node.key || node.id;
         setActiveKey(uuid);
-        if (node.isLeaf) {
-            onSelectNode?.(node);
-        } else {
+        if (!node.isLeaf) {
             // expand node
             handleExpandKey(uuid!);
             // load data
@@ -108,15 +110,17 @@ ITreeProps) => {
                 });
             }
         }
+        onSelect?.(node);
     };
 
     const renderIcon = (
+        icon: JSX.Element | undefined,
         isLeaf: boolean,
         isExpand: boolean,
         isLoading: boolean
     ) => {
         if (isLeaf) {
-            return null;
+            return icon || null;
         }
         if (isLoading) {
             return <Icon type="loading~spin" />;
@@ -286,22 +290,39 @@ ITreeProps) => {
             const isLoading = loadingKeys.includes(uuid!);
             const isActive = activeKey === uuid;
 
+            const title =
+                renderTitle?.(item, index, !!item.isLeaf) || item.name;
+
+            const IconComponent =
+                typeof item.icon === 'string' ? (
+                    <Icon type={item.icon} />
+                ) : (
+                    item.icon
+                );
+
             const currentNode = (
                 <TreeNode
                     key={`${uuid}-${indent}`}
                     draggable={draggable}
                     data={item}
+                    name={typeof title === 'string' ? title : undefined}
                     indent={indent}
                     className={classNames(
                         defaultTreeNodeClassName,
-                        isActive && activeTreeNodeClassName
+                        isActive && activeTreeNodeClassName,
+                        isExpand
+                            ? expandTreeNodeClassName
+                            : unexpandTreeNodeClassName
                     )}
                     renderIcon={() =>
-                        renderIcon(!!item.isLeaf, isExpand, isLoading)
+                        renderIcon(
+                            IconComponent,
+                            !!item.isLeaf,
+                            isExpand,
+                            isLoading
+                        )
                     }
-                    renderTitle={() =>
-                        renderTitle?.(item, index, !!item.isLeaf) || item.name
-                    }
+                    renderTitle={() => title}
                     onContextMenu={(e) => handleRightClick(e, item)}
                     onClick={() => handleNodeClick(item)}
                     onNodeDragStart={draggable ? handleDragStart : undefined}

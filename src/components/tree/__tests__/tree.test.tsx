@@ -85,7 +85,7 @@ describe('Test the Tree component', () => {
 
         const parentIcon = container
             .querySelector<HTMLDivElement>('div[data-id="mo_treeNode_1"]')
-            ?.querySelector('span.codicon-chevron-right');
+            ?.querySelector('span.codicon-chevron-down');
 
         const childNode = await waitFor(() =>
             container.querySelector<HTMLDivElement>(

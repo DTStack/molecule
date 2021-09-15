@@ -9,6 +9,7 @@ import {
 interface TreeNodeProps {
     data: ITreeNodeItemProps;
     indent: number;
+    name?: string;
     className?: string;
     draggable?: boolean;
     renderIcon: () => JSX.Element | null;
@@ -42,6 +43,7 @@ export default ({
     data,
     indent,
     className,
+    name,
     renderIcon,
     renderTitle,
     draggable,
@@ -91,6 +93,9 @@ export default ({
         onNodeDragEnd?.(e, data);
     };
 
+    // calculate key automatically via parent path and self id
+    const nodeKey = data.key || `${indent ? indent + '_' : ''}${data.id}`;
+
     return (
         <div
             ref={ref}
@@ -98,7 +103,9 @@ export default ({
             tabIndex={0}
             data-indent={indent}
             data-key={uuid}
+            data-id={`mo_treeNode_${nodeKey}`}
             className={className}
+            title={name}
             draggable={draggable}
             onContextMenu={onContextMenu}
             onClick={onClick}

@@ -14,6 +14,16 @@ export const activeTreeNodeClassName = getBEMModifier(
     'active'
 );
 
+export const expandTreeNodeClassName = getBEMModifier(
+    defaultTreeNodeClassName,
+    'open'
+);
+
+export const unexpandTreeNodeClassName = getBEMModifier(
+    defaultTreeNodeClassName,
+    'close'
+);
+
 export const indentClassName = getBEMElement(defaultTreeClassName, 'indent');
 export const indentGuideClassName = getBEMElement(indentClassName, 'guide');
 

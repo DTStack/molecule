@@ -32,7 +32,7 @@ export interface IActivityBarService extends Component<IActivityBar> {
      * Remove the specific activity bar by id
      * @param id
      */
-    remove(id: string): void;
+    remove(id: string | string[]): void;
     /**
      * Toggle the specific activity bar between show or hide
      * @param id activity bar id
@@ -51,7 +51,7 @@ export interface IActivityBarService extends Component<IActivityBar> {
      * Remove the specific contextMenu item by id
      * @param id contextmenu id
      */
-    removeContextMenu(id: string): void;
+    removeContextMenu(id: string | string[]): void;
     /**
      * Add click event listener
      * @param callback
@@ -77,6 +77,7 @@ export class ActivityBarService
         this.state = container.resolve(ActivityBarModel);
         this.sidebarService = container.resolve(SidebarService);
     }
+
     public setActive(id?: string) {
         this.setState({
             selected: id,
@@ -106,19 +107,33 @@ export class ActivityBarService
         });
     }
 
-    public remove(id: string) {
+    private getRemoveList(id: string | string[], data) {
+        return data.reduce((total: number[], item, key) => {
+            const strItem = item.id.toString();
+            if ((Array.isArray(id) && id.includes(strItem)) || id === strItem) {
+                return total.concat(key);
+            }
+            return total;
+        }, []);
+    }
+
+    public remove(id: string | string[]) {
         const { data } = this.state;
-        const next = [...data!];
-        const index = next.findIndex(searchById(id));
-        if (index > -1) {
-            next.splice(index, 1);
-            this.setState({
-                data: next,
-            });
-        } else {
+        let next = [...data!];
+        const indexs = this.getRemoveList(id, next);
+
+        if (!indexs.length) {
             logger.error(
                 "Remove the bar data failed, because there is no data found in barData via this 'id'"
             );
+        } else {
+            next = next.filter((_, key) => {
+                return !indexs.includes(key);
+            });
+
+            this.setState({
+                data: next,
+            });
         }
     }
 
@@ -127,6 +142,7 @@ export class ActivityBarService
         const next = data.concat();
         const index = next.findIndex(searchById(id));
         const target = next[index];
+
         if (target) {
             target.hidden = !target.hidden;
             if (id === selected) {
@@ -146,6 +162,7 @@ export class ActivityBarService
         const { contextMenu = [] } = this.state;
         const newActions = contextMenu.concat();
         const target = newActions.find(searchById(id));
+
         if (target) {
             target.icon = target.icon === 'check' ? '' : 'check';
             this.setState({
@@ -160,6 +177,7 @@ export class ActivityBarService
 
     public addContextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]) {
         let next = [...this.state.contextMenu!];
+
         if (Array.isArray(contextMenu)) {
             next = next?.concat(contextMenu);
         } else {
@@ -170,19 +188,22 @@ export class ActivityBarService
         });
     }
 
-    public removeContextMenu(id: string) {
+    public removeContextMenu(id: string | string[]) {
         const { contextMenu } = this.state;
-        const next = [...contextMenu!];
-        const index = next.findIndex(searchById(id));
-        if (index > -1) {
-            next.splice(index, 1);
+        let next = [...contextMenu!];
+        const indexs = this.getRemoveList(id, next);
+
+        if (!indexs.length) {
+            logger.error(
+                "Remove the bar data failed, because there is no data found in barData via this 'id'"
+            );
+        } else {
+            next = next.filter((_, key) => {
+                return !indexs.includes(key);
+            });
             this.setState({
                 contextMenu: next,
             });
-        } else {
-            logger.error(
-                "Remove the context menus data failed, because there is no data found in context menus via this 'id'"
-            );
         }
     }
 

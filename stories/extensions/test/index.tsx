@@ -1,7 +1,13 @@
 import React from 'react';
 import molecule from 'mo';
 
-import { FileTypes, IExtension, TreeNodeModel } from 'mo/model';
+import {
+    FileTypes,
+    IExtension,
+    TreeNodeModel,
+    CONTEXT_MENU_SEARCH,
+    ACTIVITY_BAR_GLOBAL_ACCOUNT,
+} from 'mo/model';
 import { MENU_FILE_OPEN } from 'mo/model/workbench/menuBar';
 
 import TestPane from './testPane';
@@ -27,6 +33,11 @@ export const ExtendTestPane: IExtension = {
 
         molecule.activityBar.add(newItem);
         molecule.sidebar.add(testSidePane);
+
+        molecule.activityBar.remove([
+            CONTEXT_MENU_SEARCH,
+            ACTIVITY_BAR_GLOBAL_ACCOUNT,
+        ]);
 
         molecule.editor.setEntry(<Entry />);
 

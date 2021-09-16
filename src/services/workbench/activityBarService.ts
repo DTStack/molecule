@@ -8,7 +8,7 @@ import {
     IActivityBarItem,
 } from 'mo/model/workbench/activityBar';
 import { searchById } from '../helper';
-import { IMenuItemProps } from 'mo/components/menu';
+import { IActivityMenuItemProps } from 'mo/model';
 import logger from 'mo/common/logger';
 import { ISidebarService, SidebarService } from './sidebarService';
 
@@ -46,7 +46,9 @@ export interface IActivityBarService extends Component<IActivityBar> {
     /**
      * Add new contextMenus for the activityBar
      */
-    addContextMenu(data: IMenuItemProps | IMenuItemProps[]): void;
+    addContextMenu(
+        data: IActivityMenuItemProps | IActivityMenuItemProps[]
+    ): void;
     /**
      * Remove the specific contextMenu item by id
      * @param id contextmenu id
@@ -107,8 +109,11 @@ export class ActivityBarService
         });
     }
 
-    private getRemoveList(id: string | string[], data) {
-        return data.reduce((total: number[], item, key) => {
+    private getRemoveList<T extends IActivityBarItem | IActivityMenuItemProps>(
+        id: string | string[],
+        data: T[]
+    ) {
+        return data.reduce((total: number[], item: T, key: number) => {
             const strItem = item.id.toString();
             if ((Array.isArray(id) && id.includes(strItem)) || id === strItem) {
                 return total.concat(key);
@@ -120,7 +125,7 @@ export class ActivityBarService
     public remove(id: string | string[]) {
         const { data } = this.state;
         let next = [...data!];
-        const indexs = this.getRemoveList(id, next);
+        const indexs = this.getRemoveList<IActivityBarItem>(id, next);
 
         if (!indexs.length) {
             logger.error(
@@ -175,7 +180,9 @@ export class ActivityBarService
         }
     }
 
-    public addContextMenu(contextMenu: IMenuItemProps | IMenuItemProps[]) {
+    public addContextMenu(
+        contextMenu: IActivityMenuItemProps | IActivityMenuItemProps[]
+    ) {
         let next = [...this.state.contextMenu!];
 
         if (Array.isArray(contextMenu)) {
@@ -191,7 +198,7 @@ export class ActivityBarService
     public removeContextMenu(id: string | string[]) {
         const { contextMenu } = this.state;
         let next = [...contextMenu!];
-        const indexs = this.getRemoveList(id, next);
+        const indexs = this.getRemoveList<IActivityMenuItemProps>(id, next);
 
         if (!indexs.length) {
             logger.error(

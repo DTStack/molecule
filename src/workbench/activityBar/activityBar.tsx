@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCallback } from 'react';
+import { IActivityMenuItemProps } from 'mo/model';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
@@ -97,7 +98,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
                         {
                             type: 'divider',
                         },
-                    ] as IMenuItemProps[])
+                    ] as IActivityMenuItemProps[])
                 );
             contextView.show(
                 {

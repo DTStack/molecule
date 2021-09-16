@@ -1,5 +1,5 @@
 import React from 'react';
-import { IMenuItemProps } from 'mo/components/menu';
+import { IMenuItemProps } from 'mo/components';
 import { localize } from 'mo/i18n/localize';
 import {
     ACTION_QUICK_ACCESS_SETTINGS,
@@ -30,14 +30,18 @@ export interface IActivityBarItem {
     checked?: boolean;
     disabled?: boolean;
     type?: 'normal' | 'global';
-    contextMenu?: IMenuItemProps[];
+    contextMenu?: IActivityMenuItemProps[];
     className?: string;
     render?: () => React.ReactNode | JSX.Element;
 }
 
+export interface IActivityMenuItemProps extends IMenuItemProps {
+    id: string;
+}
+
 export interface IActivityBar {
     data?: IActivityBarItem[];
-    contextMenu?: IMenuItemProps[];
+    contextMenu?: IActivityMenuItemProps[];
     selected?: string;
 }
 
@@ -81,7 +85,7 @@ export function builtInActivityBar(): IActivityBar {
         },
     ];
 
-    const contextMenuData: IMenuItemProps[] = [
+    const contextMenuData: IActivityMenuItemProps[] = [
         {
             id: CONTEXT_MENU_MENU,
             name: localize('menubar', 'Menu'),
@@ -111,11 +115,11 @@ export function builtInActivityBar(): IActivityBar {
 
 export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
-    public contextMenu: IMenuItemProps[];
+    public contextMenu: IActivityMenuItemProps[];
     public selected: string;
     constructor(
         data: IActivityBarItem[] = [],
-        contextMenu: IMenuItemProps[] = [],
+        contextMenu: IActivityMenuItemProps[] = [],
         selected: string = ''
     ) {
         this.data = data;

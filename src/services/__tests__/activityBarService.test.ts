@@ -1,8 +1,11 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { ActivityBarService } from '../workbench';
-import { ActivityBarEvent, IActivityBarItem } from 'mo/model';
-import type { IMenuItemProps } from 'mo/components';
+import {
+    ActivityBarEvent,
+    IActivityBarItem,
+    IActivityMenuItemProps,
+} from 'mo/model';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
 
 const activityBarService = container.resolve(ActivityBarService);
@@ -15,7 +18,7 @@ const mockBarData: IActivityBarItem[] = [
     { id: '2', name: 'test2' },
 ];
 
-const mockMenuData: IMenuItemProps[] = [
+const mockMenuData: IActivityMenuItemProps[] = [
     {
         id: '1',
     },

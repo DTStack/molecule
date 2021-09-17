@@ -32,32 +32,6 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
           输出
         </div>
       </div>
-      <div
-        className="mo-tabs__content"
-      >
-        <div
-          className="mo-tabs__content__item"
-        />
-        <div
-          className="mo-tabs__content__item mo-tabs__content__item--active"
-        >
-          <div
-            className="mo-output"
-          >
-            <div
-              className="mo-monaco-editor"
-              style={
-                Object {
-                  "height": "100%",
-                  "minHeight": "400px",
-                  "position": "relative",
-                  "width": "100%",
-                }
-              }
-            />
-          </div>
-        </div>
-      </div>
     </div>
     <div
       className="mo-action-bar mo-panel__toolbar"
@@ -143,43 +117,6 @@ exports[`Test Panel Component Match the PanelView snapshot 1`] = `
           onMouseOver={[Function]}
         >
           输出
-        </div>
-      </div>
-      <div
-        className="mo-tabs__content"
-      >
-        <div
-          className="mo-tabs__content__item"
-        >
-          <div
-            style={
-              Object {
-                "margin": "0 18px",
-                "userSelect": "none",
-              }
-            }
-          >
-            未在工作区检测到问题
-          </div>
-        </div>
-        <div
-          className="mo-tabs__content__item mo-tabs__content__item--active"
-        >
-          <div
-            className="mo-output"
-          >
-            <div
-              className="mo-monaco-editor"
-              style={
-                Object {
-                  "height": "100%",
-                  "minHeight": "400px",
-                  "position": "relative",
-                  "width": "100%",
-                }
-              }
-            />
-          </div>
         </div>
       </div>
     </div>

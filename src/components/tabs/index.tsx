@@ -9,7 +9,7 @@ import {
     classNames,
 } from 'mo/common/className';
 
-import { Tab, ITabProps, tabItemClassName } from './tab';
+import { Tab, ITabProps } from './tab';
 import DragAndDrop from './dragAndDrop';
 
 export type TabsType = 'line' | 'card';
@@ -28,13 +28,6 @@ export interface ITabsProps<T> extends React.ComponentProps<any> {
 
 export const tabsClassName = prefixClaName('tabs');
 export const tabsHeader = getBEMElement(tabsClassName, 'header');
-export const tabsContent = getBEMElement(tabsClassName, 'content');
-export const tabsContentItem = getBEMElement(tabsContent, 'item');
-export const tabsContentActiveClassName = getBEMModifier(
-    tabsContentItem,
-    'active'
-);
-export const tabItemCloseClassName = getBEMElement(tabItemClassName, 'close');
 
 export function Tabs<T>(props: ITabsProps<T>) {
     const {
@@ -85,23 +78,6 @@ export function Tabs<T>(props: ITabsProps<T>) {
                                 onMoveTab={onChangeTab}
                                 {...resetProps}
                             />
-                        );
-                    })}
-                </div>
-                <div className={tabsContent}>
-                    {data?.map((tab: ITabProps<T>) => {
-                        return (
-                            <div
-                                key={tab.id}
-                                className={classNames(tabsContentItem, {
-                                    [tabsContentActiveClassName]:
-                                        activeTab === tab.id,
-                                })}
-                            >
-                                {tab.renderPane instanceof Function
-                                    ? tab.renderPane(tab)
-                                    : tab.renderPane}
-                            </div>
                         );
                     })}
                 </div>

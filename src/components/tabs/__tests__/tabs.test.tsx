@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom';
-import { Tabs, tabsClassName, tabsContentActiveClassName } from '..';
+import { Tabs, tabsClassName } from '..';
 import { ITabProps, tabItemActiveClassName } from '../tab';
 import { dragToTargetNode } from '@test/utils';
 
@@ -32,10 +32,8 @@ describe('The Tabs Components', () => {
 
     test('Should render nothing', () => {
         const { container } = render(<Tabs />);
-        const content = container.querySelector('.mo-tabs__content');
         const header = container.querySelector('.mo-tabs__header');
 
-        expect(content?.childElementCount).toBe(0);
         expect(header?.childElementCount).toBe(0);
     });
 
@@ -49,18 +47,6 @@ describe('The Tabs Components', () => {
         expect(body.classList).toContain('test-tabs');
     });
 
-    test('Should support to renderPane via function', () => {
-        const data = mockData.concat();
-        data.push({
-            id: '3',
-            name: 'test-title-3',
-            renderPane: () => <div data-testid="test3">test3</div>,
-            closable: true,
-        });
-        const { getByTestId } = render(<Tabs data={data} />);
-        expect(getByTestId('test3')).toBeInTheDocument();
-    });
-
     test('Should render card type', () => {
         const { container } = render(<Tabs type="card" data={mockData} />);
 
@@ -69,13 +55,9 @@ describe('The Tabs Components', () => {
     });
 
     test('Should active specific tab', () => {
-        const { getByText, getByTestId } = render(
-            <Tabs activeTab="1" data={mockData} />
-        );
+        const { getByText } = render(<Tabs activeTab="1" data={mockData} />);
         const testHeader = getByText('test-title-1');
-        const testContent = getByTestId('test1').parentElement;
         expect(testHeader?.classList).toContain(tabItemActiveClassName);
-        expect(testContent?.classList).toContain(tabsContentActiveClassName);
     });
 
     test('Should trigger events', async () => {

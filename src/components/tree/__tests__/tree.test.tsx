@@ -146,7 +146,7 @@ describe('Test the Tree component', () => {
         const { getByTitle } = render(
             <TreeView
                 data={mockData}
-                onSelect={mockFn}
+                onSelectNode={mockFn}
                 onRightClick={mockRightClickFn}
             />
         );
@@ -221,12 +221,7 @@ describe('Test the Tree component', () => {
         ];
         const mockFn = jest.fn();
         const { findByTitle } = render(
-            <TreeView
-                draggable
-                onDropTree={mockFn}
-                defaultExpandAll
-                data={data}
-            />
+            <TreeView draggable onDropTree={mockFn} data={data} />
         );
 
         dragToTargetNode(
@@ -251,12 +246,7 @@ describe('Test the Tree component', () => {
         ];
         const mockFn = jest.fn();
         const { findByTitle } = render(
-            <TreeView
-                draggable
-                onDropTree={mockFn}
-                defaultExpandAll
-                data={data}
-            />
+            <TreeView draggable onDropTree={mockFn} data={data} />
         );
 
         dragToTargetNode(
@@ -288,12 +278,7 @@ describe('Test the Tree component', () => {
         ];
         const mockFn = jest.fn();
         const { findByTitle } = render(
-            <TreeView
-                draggable
-                onDropTree={mockFn}
-                defaultExpandAll
-                data={data}
-            />
+            <TreeView draggable onDropTree={mockFn} data={data} />
         );
 
         dragToTargetNode(

@@ -17,7 +17,6 @@ import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
 import { SAMPLE_FOLDER_PANEL_ID, builtInFolderTree } from 'mo/model';
 import { IMenuItemProps } from 'mo/components';
-import type { LoadEventData } from 'mo/controller';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     /**

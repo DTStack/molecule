@@ -27,7 +27,7 @@ export interface ITreeNodeItemProps {
 
 export interface ITreeProps {
     data?: ITreeNodeItemProps[];
-    onSelect?: (file: ITreeNodeItemProps, isUpdate?) => void;
+    onSelectNode?: (file: ITreeNodeItemProps, isUpdate?) => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
         index: number,
@@ -42,25 +42,22 @@ export interface ITreeProps {
 
     className?: string;
     draggable?: boolean;
-    defaultExpandAll?: boolean;
 }
 
 const TreeView = ({
     className,
     data = [],
     draggable = false,
-    defaultExpandAll = false,
     onDropTree,
     onRightClick,
     renderTitle, // custom title
-    onSelect,
+    onSelectNode,
     onLoadData,
 }: ITreeProps) => {
     const [expandKeys, setExpandKeys] = useState<string[]>([]);
     const [activeKey, setActiveKey] = useState<string | null>(null);
     const loadDataCache = useRef<Record<string, boolean>>({});
     const [loadingKeys, setLoadingKeys] = useState<string[]>([]);
-    const [dragging, setDragging] = useState(false);
     const dragOverNode = useRef<ITreeNodeItemProps>();
     const dragInfo = useRef<{
         x: number;
@@ -110,7 +107,7 @@ const TreeView = ({
                 });
             }
         }
-        onSelect?.(node);
+        onSelectNode?.(node);
     };
 
     const renderIcon = (
@@ -165,8 +162,6 @@ const TreeView = ({
                 return next;
             });
         }
-
-        setDragging(true);
 
         window.addEventListener('dragend', onWindowDragEnd);
     };
@@ -237,7 +232,6 @@ const TreeView = ({
         clearOverClass();
         dragOverNode.current = undefined;
         // reset dragging status
-        setDragging(false);
         dragInfo.current = { x: 0, y: 0, dragNode: null, flattenTree: null };
     };
 

@@ -9,8 +9,6 @@ const SearchTree = (props: SearchTreeProps) => {
 
     return (
         <Tree
-            showLine
-            defaultExpandAll
             draggable={false}
             className={treeContentClassName}
             data={data}

@@ -16,11 +16,6 @@ import {
     FileType,
 } from 'mo/model';
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
-import type { EventDataNode } from 'rc-tree/lib/interface';
-
-export interface LoadEventData extends EventDataNode {
-    data?: ITreeNodeItemProps;
-}
 
 export interface IFolderTreeController {
     readonly createTreeNode?: (type: FileType) => void;

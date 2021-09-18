@@ -12335,15 +12335,6 @@ rc-motion@^2.0.0:
     classnames "^2.2.1"
     rc-util "^5.2.1"
 
-rc-motion@^2.0.1:
-  version "2.4.1"
-  resolved "https://registry.npm.taobao.org/rc-motion/download/rc-motion-2.4.1.tgz#323f47c8635e6b2bc0cba2dfad25fc415b58e1dc"
-  integrity sha1-Mj9HyGNeayvAy6LfrSX8QVtY4dw=
-  dependencies:
-    "@babel/runtime" "^7.11.1"
-    classnames "^2.2.1"
-    rc-util "^5.2.1"
-
 rc-resize-observer@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/rc-resize-observer/download/rc-resize-observer-1.0.0.tgz#97fb89856f62fec32ab6e40933935cf58e2e102d"
@@ -12372,17 +12363,6 @@ rc-tooltip@^5.1.1:
     "@babel/runtime" "^7.11.2"
     rc-trigger "^5.0.0"
 
-rc-tree@~3.10.0:
-  version "3.10.0"
-  resolved "https://registry.npm.taobao.org/rc-tree/download/rc-tree-3.10.0.tgz?cache=0&sync_timestamp=1615350048280&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-tree%2Fdownload%2Frc-tree-3.10.0.tgz#897498b3756f6c84f41ad2b244ee9489abf43b7f"
-  integrity sha1-iXSYs3VvbIT0GtKyRO6Uiav0O38=
-  dependencies:
-    "@babel/runtime" "^7.10.1"
-    classnames "2.x"
-    rc-motion "^2.0.1"
-    rc-util "^5.0.0"
-    rc-virtual-list "^3.0.1"
-
 rc-trigger@^5.0.0:
   version "5.2.9"
   resolved "https://registry.nlark.com/rc-trigger/download/rc-trigger-5.2.9.tgz#795a787d2b038347dcde27b89a4a5cec8fc40f3e"
@@ -12405,7 +12385,7 @@ rc-util@^4.15.3:
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.1.0"
 
-rc-util@^5.0.0, rc-util@^5.0.1, rc-util@^5.0.7, rc-util@^5.2.1, rc-util@^5.7.0:
+rc-util@^5.0.0, rc-util@^5.0.1, rc-util@^5.2.1, rc-util@^5.7.0:
   version "5.9.8"
   resolved "https://registry.npm.taobao.org/rc-util/download/rc-util-5.9.8.tgz?cache=0&sync_timestamp=1616771108217&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-util%2Fdownload%2Frc-util-5.9.8.tgz#dfcacc1f7b7c45fa18ab786e2b530dd0509073f1"
   integrity sha1-38rMH3t8RfoYq3huK1MN0FCQc/E=
@@ -12430,15 +12410,6 @@ rc-util@~5.5.0:
   dependencies:
     react-is "^16.12.0"
     shallowequal "^1.1.0"
-
-rc-virtual-list@^3.0.1:
-  version "3.2.6"
-  resolved "https://registry.npm.taobao.org/rc-virtual-list/download/rc-virtual-list-3.2.6.tgz?cache=0&sync_timestamp=1610703730819&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-virtual-list%2Fdownload%2Frc-virtual-list-3.2.6.tgz#2c92a40f4425e19881b38134d6bd286a11137d2d"
-  integrity sha1-LJKkD0Ql4ZiBs4E01r0oahETfS0=
-  dependencies:
-    classnames "^2.2.6"
-    rc-resize-observer "^1.0.0"
-    rc-util "^5.0.7"
 
 react-clientside-effect@^1.2.2:
   version "1.2.5"

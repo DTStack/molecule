@@ -22,7 +22,6 @@ import { LayoutService } from 'mo/services';
 import { ILayout } from 'mo/model/workbench/layout';
 
 import { IWorkbench } from 'mo/model';
-import DragAndDrop from 'mo/components/tabs/dragAndDrop';
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
@@ -73,47 +72,42 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
     };
 
     return (
-        <DragAndDrop>
-            <div id={ID_APP} className={appClassName} tabIndex={0}>
-                <div className={workbenchClassName}>
-                    <div className={mainBenchClassName}>
-                        <div className={compositeBarClassName}>
-                            {!menuBar.hidden && <MenuBarView />}
-                            {!activityBar.hidden && <ActivityBarView />}
-                        </div>
-                        <SplitPane
-                            split="vertical"
-                            primary="first"
-                            allowResize={true}
-                            onChange={onPaneSizeChange as any}
-                        >
-                            {!sidebar.hidden && (
-                                <Pane
-                                    minSize="170px"
-                                    initialSize={splitPanePos[0]}
-                                    maxSize="80%"
-                                >
-                                    <SidebarView />
-                                </Pane>
-                            )}
-                            <SplitPane
-                                primary="first"
-                                split="horizontal"
-                                allowResize={true}
-                                // react-split-pane onChange: (newSizes: [size, ratio]) => void；
-                                onChange={onHorizontalPaneSizeChange as any}
-                            >
-                                {getContent(
-                                    !!panel.panelMaximized,
-                                    !!panel.hidden
-                                )}
-                            </SplitPane>
-                        </SplitPane>
+        <div id={ID_APP} className={appClassName} tabIndex={0}>
+            <div className={workbenchClassName}>
+                <div className={mainBenchClassName}>
+                    <div className={compositeBarClassName}>
+                        {!menuBar.hidden && <MenuBarView />}
+                        {!activityBar.hidden && <ActivityBarView />}
                     </div>
+                    <SplitPane
+                        split="vertical"
+                        primary="first"
+                        allowResize={true}
+                        onChange={onPaneSizeChange as any}
+                    >
+                        {!sidebar.hidden && (
+                            <Pane
+                                minSize="170px"
+                                initialSize={splitPanePos[0]}
+                                maxSize="80%"
+                            >
+                                <SidebarView />
+                            </Pane>
+                        )}
+                        <SplitPane
+                            primary="first"
+                            split="horizontal"
+                            allowResize={true}
+                            // react-split-pane onChange: (newSizes: [size, ratio]) => void；
+                            onChange={onHorizontalPaneSizeChange as any}
+                        >
+                            {getContent(!!panel.panelMaximized, !!panel.hidden)}
+                        </SplitPane>
+                    </SplitPane>
                 </div>
-                {!statusBar.hidden && <StatusBarView />}
             </div>
-        </DragAndDrop>
+            {!statusBar.hidden && <StatusBarView />}
+        </div>
     );
 }
 

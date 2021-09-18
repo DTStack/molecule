@@ -9,6 +9,7 @@ import {
     replaceSearchValueClassName,
 } from '../search/base';
 import { replaceBtnClassName } from 'mo/components/search/base';
+import { defaultTreeNodeClassName } from 'mo/components/tree/base';
 
 const mockResult = [
     {
@@ -185,15 +186,12 @@ describe('The SearchPanel Component', () => {
                 />
             );
 
-            const target = mockResult[0];
-            const treeNode = container.querySelector(
-                `div[data-id=mo_treeNode_${target.id}]`
+            const target = mockResult[1];
+            fireEvent.click(
+                container.querySelector(
+                    `.${defaultTreeNodeClassName}[data-key="${target.id}"]`
+                )!
             );
-
-            const triggerDom = treeNode?.querySelector(
-                '.rc-tree-node-content-wrapper'
-            );
-            fireEvent.click(triggerDom!);
 
             expect(mockFn.mock.calls[0][0]).toEqual(target);
             expect(mockFn.mock.calls[0][1]).toEqual(mockResult);

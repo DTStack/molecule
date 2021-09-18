@@ -191,6 +191,25 @@ describe('Test the Tree component', () => {
         expect(await findByTitle('test2')).toBeInTheDocument();
     });
 
+    test('Should support to drag into children', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [
+                    {
+                        id: '2',
+                        name: 'test2',
+                        isEditable: true,
+                    },
+                ],
+            },
+        ];
+        const { findByTitle } = render(<TreeView data={data} />);
+
+        expect(await findByTitle('test2')).toBeInTheDocument();
+    });
+
     test('Should NOT support to sort via drag', async () => {
         const data = [
             { id: '1', name: 'test1', isLeaf: true },

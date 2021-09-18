@@ -15,21 +15,6 @@
     &--editable {
         background: rgba(0, 0, 0, 0.3);
 
-        // #{$tree} {
-        &-treenode-selected {
-            background: transparent;
-            border-color: transparent;
-        }
-
-        &-node-content-wrapper {
-            overflow: visible;
-        }
-
-        &-treenode {
-            background-color: var(--list-hoverBackground);
-            color: var(--list-hoverForeground);
-        }
-
         #{$folderTree}--input {
             border: 1px solid var(--list-focusOutline);
             font-family: inherit;
@@ -53,7 +38,6 @@
                 background: rgb(90, 126, 167);
             }
         }
-        // }
     }
 }
 

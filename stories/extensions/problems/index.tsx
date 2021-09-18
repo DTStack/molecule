@@ -6,6 +6,7 @@ function init() {
     const MockItem = {
         id: 1,
         name: 'text.tsx',
+        isLeaf: false,
         value: {
             code: 'text.tsx',
             message: '文件夹',
@@ -19,6 +20,7 @@ function init() {
             {
                 id: 3,
                 name: '0-1',
+                isLeaf: true,
                 value: {
                     code: 'endLineNumber',
                     message: '语法错误',
@@ -33,6 +35,7 @@ function init() {
             {
                 id: 4,
                 name: '0-1',
+                isLeaf: true,
                 value: {
                     code: 'endLineNumber',
                     message: '解析可能会存在问题',
@@ -47,6 +50,7 @@ function init() {
             {
                 id: 5,
                 name: '0-1',
+                isLeaf: true,
                 value: {
                     code: 'endLineNumber',
                     message: '住在山里，真不戳',

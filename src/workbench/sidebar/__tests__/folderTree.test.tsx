@@ -204,7 +204,7 @@ describe('The FolderTree Component', () => {
         expect(mockFn.mock.calls[0][1]).toEqual(mockFolder);
     });
 
-    test('Should suppor to init contextMenu', () => {
+    test('Should support to init contextMenu', () => {
         const contextMenu = { id: 'test', name: 'test' };
         const mockFn = jest.fn();
         const { container, getByRole } = render(

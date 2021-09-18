@@ -1,6 +1,5 @@
 import React from 'react';
-import { cleanup, render } from '@testing-library/react';
-import { create } from 'react-test-renderer';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ProblemsPaneView from '../paneView';
 import { MarkerSeverity } from 'mo/model';
@@ -8,6 +7,7 @@ import { MarkerSeverity } from 'mo/model';
 const mockErrorPro = {
     id: 1,
     name: '0-1',
+    isLeaf: true,
     value: {
         code: 'endLineNumber',
         message: '语法错误',
@@ -22,6 +22,7 @@ const mockErrorPro = {
 const mockWarningPro = {
     id: 2,
     name: '0-2',
+    isLeaf: true,
     value: {
         code: 'endLineNumber',
         message: '解析错误',
@@ -37,6 +38,7 @@ const mockWarningPro = {
 const mockInfoPro = {
     id: 3,
     name: '0-3',
+    isLeaf: true,
     value: {
         code: 'endLineNumber',
         message: '有点问题',
@@ -52,6 +54,7 @@ const mockInfoPro = {
 const mockDefaultPro = {
     id: 4,
     name: '0-4',
+    isLeaf: true,
     value: {
         code: 'endLineNumber',
         message: 'problems',
@@ -66,6 +69,7 @@ const mockDefaultPro = {
 const mockProblemFile = {
     id: 1,
     name: 'text.tsx',
+    isLeaf: false,
     value: {
         code: 'text.tsx',
         message: '文件夹',
@@ -81,6 +85,7 @@ const mockProblemFile = {
 const mockRootData = {
     id: 'test',
     name: 'test-name',
+    isLeaf: false,
     data: [mockProblemFile],
 };
 
@@ -88,13 +93,14 @@ describe('The PaneView Component', () => {
     afterEach(cleanup);
 
     test('Match snapshot', () => {
-        const component = create(<ProblemsPaneView {...mockRootData} />, {
-            createNodeMock: () => {
-                const dom = document.createElement('div');
-                return dom;
-            },
-        });
-        expect(component.toJSON()).toMatchSnapshot();
+        const { container, asFragment } = render(
+            <ProblemsPaneView {...mockRootData} />
+        );
+        const wrapper = container.querySelector(
+            `div[data-key="${mockProblemFile.id}"]`
+        );
+        fireEvent.click(wrapper!);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('Should render no data tips in Pane', () => {

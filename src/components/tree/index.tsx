@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { Icon } from 'mo/components/icon';
 import { debounce } from 'lodash';
 import { classNames } from 'mo/common/className';
@@ -73,6 +73,26 @@ const TreeView = ({
         return true;
     };
 
+    const validatorLoadingData = (node: ITreeNodeItemProps) => {
+        const uuid: string = (node.key || node.id).toString();
+        if (canLoadData(uuid!)) {
+            setLoadingKeys((keys) => {
+                const nextKeys = keys.concat();
+                nextKeys.push(uuid!);
+                return nextKeys;
+            });
+            loadDataCache.current[uuid] = true;
+            onLoadData!(node).finally(() => {
+                setLoadingKeys((keys) => {
+                    const nextKeys = keys.concat();
+                    const index = nextKeys.indexOf(uuid!);
+                    nextKeys.splice(index, 1);
+                    return nextKeys;
+                });
+            });
+        }
+    };
+
     const handleExpandKey = (key: string) => {
         const index = expandKeys.findIndex((e) => e === key);
         if (index > -1) {
@@ -84,28 +104,13 @@ const TreeView = ({
     };
 
     const handleNodeClick = (node: ITreeNodeItemProps) => {
-        const uuid = node.key || node.id;
+        const uuid: string = (node.key || node.id).toString();
         setActiveKey(uuid);
         if (!node.isLeaf) {
+            // load data
+            validatorLoadingData(node);
             // expand node
             handleExpandKey(uuid!);
-            // load data
-            if (canLoadData(uuid!)) {
-                setLoadingKeys((keys) => {
-                    const nextKeys = keys.concat();
-                    nextKeys.push(uuid!);
-                    return nextKeys;
-                });
-                loadDataCache.current[uuid] = true;
-                onLoadData!(node).finally(() => {
-                    setLoadingKeys((keys) => {
-                        const nextKeys = keys.concat();
-                        const index = nextKeys.indexOf(uuid!);
-                        nextKeys.splice(index, 1);
-                        return nextKeys;
-                    });
-                });
-            }
         }
         onSelectNode?.(node);
     };
@@ -153,7 +158,7 @@ const TreeView = ({
         };
 
         // unfolder current node
-        const uuid = node.key || node.id;
+        const uuid = (node.key || node.id).toString();
         const idx = expandKeys.indexOf(uuid);
         if (idx > -1) {
             setExpandKeys((keys) => {
@@ -169,7 +174,7 @@ const TreeView = ({
     const handleDragEnter = debounce(
         (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => {
             // expand the non-leaf node
-            const uuid = node.key || node.id;
+            const uuid = (node.key || node.id).toString();
             const isExpand = expandKeys.includes(uuid!);
             if (!node.isLeaf && !isExpand && !canLoadData(uuid)) {
                 handleExpandKey(uuid);
@@ -179,7 +184,7 @@ const TreeView = ({
     );
 
     const addOverClassViaNode = (node: ITreeNodeItemProps) => {
-        const uuid = node.key || node.id;
+        const uuid = (node.key || node.id).toString();
         const parentDom = document.querySelector<HTMLDivElement>(
             `div[data-key="${uuid}"]`
         );
@@ -279,7 +284,7 @@ const TreeView = ({
 
     const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
         return data.map((item, index) => {
-            const uuid = item.key || item.id;
+            const uuid = (item.key || item.id).toString();
             const isExpand = expandKeys.includes(uuid!);
             const isLoading = loadingKeys.includes(uuid!);
             const isActive = activeKey === uuid;
@@ -335,6 +340,41 @@ const TreeView = ({
             return [currentNode, childrenNode];
         });
     };
+
+    useLayoutEffect(() => {
+        const cache: {
+            paths: ITreeNodeItemProps[];
+            data: ITreeNodeItemProps;
+        }[] = [];
+        data.forEach((item) => {
+            cache.push({ paths: [item], data: item });
+        });
+
+        while (cache.length) {
+            const { paths, data } = cache.pop()!;
+            const editableChild = data.children?.find(
+                (child) => child.isEditable
+            );
+            if (editableChild) {
+                const keys = paths.map((node) => {
+                    validatorLoadingData(node);
+                    return (node.key || node.id).toString();
+                });
+                const nextExpandKeys = Array.from(
+                    new Set([...keys, ...expandKeys])
+                );
+                setExpandKeys(nextExpandKeys);
+                break;
+            } else {
+                const children =
+                    data.children?.map((child) => ({
+                        paths: [...paths, child],
+                        data: child,
+                    })) || [];
+                cache.push(...children);
+            }
+        }
+    }, [data]);
 
     return (
         <div

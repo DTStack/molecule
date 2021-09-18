@@ -82,9 +82,7 @@ describe('Test Panel Component', () => {
         expect(
             container.querySelector('.mo-monaco-editor')
         ).not.toBeInTheDocument();
-        // The customizedPane element are rendered in two places(mo-panel__container/mo-tabs__content),
-        // so the expect value is 2
-        expect(getAllByText('customizedPane').length).toBe(2);
+        expect(getAllByText('customizedPane').length).toBe(1);
     });
 
     test('Sort the Panel ', () => {

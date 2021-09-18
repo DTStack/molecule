@@ -433,19 +433,6 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                           问题
                         </div>
                       </div>
-                      <div
-                        class="mo-tabs__content"
-                      >
-                        <div
-                          class="mo-tabs__content__item"
-                        >
-                          <div
-                            style="margin: 0px 18px; user-select: none;"
-                          >
-                            未在工作区检测到问题
-                          </div>
-                        </div>
-                      </div>
                     </div>
                     <div
                       class="mo-action-bar mo-panel__toolbar"

@@ -2,7 +2,9 @@ import React from 'react';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TreeView, { ITreeNodeItemProps } from '../index';
-import { dragToTargetNode } from '@test/utils';
+import { dragToTargetNode, sleep } from '@test/utils';
+import { act } from 'react-test-renderer';
+import { unexpandTreeNodeClassName, expandTreeNodeClassName } from '../base';
 
 const mockData: ITreeNodeItemProps[] = [
     {
@@ -313,5 +315,178 @@ describe('Test the Tree component', () => {
             isLeaf: false,
             children: [target],
         });
+    });
+
+    test('Should support to drag node into another folder', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [{ id: '1-1', name: 'test1-1', isLeaf: true }],
+            },
+            {
+                id: '2',
+                name: 'test2',
+                children: [{ id: '2-1', name: 'test2-1', isLeaf: true }],
+            },
+        ];
+        const mockFn = jest.fn();
+        const { findByTitle } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
+        );
+
+        // expand parent node
+        fireEvent.click(await findByTitle('test1'));
+        fireEvent.click(await findByTitle('test2'));
+
+        dragToTargetNode(
+            await findByTitle('test2-1'),
+            await findByTitle('test1-1')
+        );
+
+        await dragExpect(mockFn, [
+            {
+                id: '1',
+                name: 'test1',
+                children: [
+                    { id: '1-1', name: 'test1-1', isLeaf: true },
+                    { id: '2-1', name: 'test2-1', isLeaf: true },
+                ],
+            },
+            {
+                id: '2',
+                name: 'test2',
+                children: [],
+            },
+        ]);
+    });
+
+    test('Should not drag node to its parent node or drag node to its siblings', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [
+                    { id: '1-1', isLeaf: true, name: 'test1-1' },
+                    { id: '1-2', isLeaf: true, name: 'test1-2' },
+                ],
+            },
+            {
+                id: '2',
+                name: 'test2',
+                isLeaf: true,
+            },
+        ];
+        const mockFn = jest.fn();
+        const { findByTitle } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
+        );
+
+        fireEvent.click(await findByTitle('test1'));
+
+        dragToTargetNode(
+            await findByTitle('test1-1'),
+            await findByTitle('test1')
+        );
+
+        expect(mockFn).not.toBeCalled();
+
+        dragToTargetNode(
+            await findByTitle('test1-2'),
+            await findByTitle('test1-1')
+        );
+        expect(mockFn).not.toBeCalled();
+    });
+
+    test('Should end drop when drag node out of tree', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [
+                    { id: '1-1', isLeaf: true, name: 'test1-1' },
+                    { id: '1-2', isLeaf: true, name: 'test1-2' },
+                ],
+            },
+        ];
+        const mockFn = jest.fn();
+        const { findByTitle, container, getByTestId } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
+        );
+
+        // creat a dom insert into body as the drop node
+        const outOfTree = document.createElement('div');
+        outOfTree.dataset.testid = 'outOfTree';
+        outOfTree.style.width = '100px';
+        outOfTree.style.height = '100px';
+        container.appendChild(outOfTree);
+
+        // expand the parent node
+        fireEvent.click(await findByTitle('test1'));
+        fireEvent.dragStart(await findByTitle('test1'));
+        fireEvent.dragOver(await findByTitle('test1'));
+
+        expect(container.querySelectorAll('.drag-over').length).not.toBe(0);
+
+        // drag node out of tree and drop it
+        fireEvent.dragOver(getByTestId('outOfTree'));
+        fireEvent.dragEnd(getByTestId('outOfTree'));
+
+        expect(container.querySelectorAll('.drag-over').length).toBe(0);
+    });
+
+    test('Should expand the drop node if this node is a folder', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [{ id: '1-1', isLeaf: true, name: 'test1-1' }],
+            },
+            { id: '2', isLeaf: true, name: 'test2' },
+        ];
+        const { getByText } = render(<TreeView draggable data={data} />);
+
+        expect(getByText('test1').parentElement!.classList).toContain(
+            unexpandTreeNodeClassName
+        );
+        dragToTargetNode(getByText('test2'), getByText('test1'));
+        await sleep(300);
+
+        expect(getByText('test1').parentElement!.classList).toContain(
+            expandTreeNodeClassName
+        );
+    });
+
+    test('Should support to loadData in sync', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                isLeaf: false,
+                children: [],
+            },
+        ];
+        const mockFn = jest.fn().mockImplementation(() => sleep(1000));
+        const { getByText, container } = render(
+            <TreeView data={data} onLoadData={mockFn} />
+        );
+
+        act(() => {
+            fireEvent.click(getByText('test1'));
+        });
+
+        expect(mockFn).toBeCalledTimes(1);
+        expect(container.querySelector('.codicon-spin')).toBeInTheDocument();
+        await sleep(1000);
+        expect(container.querySelector('.codicon-spin')).toBeNull();
+
+        act(() => {
+            // unfold it and open it again
+            fireEvent.click(getByText('test1'));
+            fireEvent.click(getByText('test1'));
+        });
+
+        // didn't trigger onLoadData this time
+        expect(mockFn).toBeCalledTimes(1);
     });
 });

@@ -40,12 +40,13 @@ export function dragToTargetNode(
     target: HTMLElement
 ): void {
     fireEvent.dragStart(source);
+    fireEvent.dragEnter(target);
     fireEvent.dragOver(target);
     fireEvent.drop(target);
     fireEvent.dragEnd(source);
 }
 
-const sleep = (ms) =>
+export const sleep = (ms) =>
     new Promise((resolve) => {
         setTimeout(resolve, ms);
     });

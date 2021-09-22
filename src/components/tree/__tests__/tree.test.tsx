@@ -516,4 +516,34 @@ describe('Test the Tree component', () => {
         // didn't trigger onLoadData this time
         expect(mockFn).toBeCalledTimes(1);
     });
+
+    test('Should support to be controlled', () => {
+        const mockFn = jest.fn();
+        const { getByText, rerender } = render(
+            <TreeView data={mockData} expandKeys={[]} onExpand={mockFn} />
+        );
+
+        expect(getByText('test1').parentElement?.classList).toContain(
+            unexpandTreeNodeClassName
+        );
+
+        fireEvent.click(getByText('test1'));
+
+        expect(getByText('test1').parentElement?.classList).toContain(
+            unexpandTreeNodeClassName
+        );
+        expect(mockFn).toBeCalled();
+
+        rerender(
+            <TreeView
+                data={mockData}
+                expandKeys={[mockData[0].key!]}
+                onExpand={mockFn}
+            />
+        );
+
+        expect(getByText('test1').parentElement?.classList).toContain(
+            expandTreeNodeClassName
+        );
+    });
 });

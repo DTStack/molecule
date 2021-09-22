@@ -29,6 +29,8 @@ export interface ITreeProps {
     data?: ITreeNodeItemProps[];
     className?: string;
     draggable?: boolean;
+    expandKeys?: string[];
+    onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
     onSelectNode?: (file: ITreeNodeItemProps, isUpdate?) => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
@@ -47,6 +49,8 @@ const TreeView = ({
     className,
     data = [],
     draggable = false,
+    expandKeys: controlExpandKeys,
+    onExpand,
     onDropTree,
     onRightClick,
     renderTitle, // custom title
@@ -92,14 +96,16 @@ const TreeView = ({
         }
     };
 
-    const handleExpandKey = (key: string) => {
+    const handleExpandKey = (key: string, node: ITreeNodeItemProps) => {
         const index = expandKeys.findIndex((e) => e === key);
         if (index > -1) {
             expandKeys.splice(index, 1);
         } else {
             expandKeys.push(key);
         }
-        setExpandKeys(expandKeys.concat());
+        onExpand
+            ? onExpand(expandKeys.concat(), node)
+            : setExpandKeys(expandKeys.concat());
     };
 
     const handleNodeClick = (node: ITreeNodeItemProps) => {
@@ -109,7 +115,7 @@ const TreeView = ({
             // load data
             validatorLoadingData(node);
             // expand node
-            handleExpandKey(uuid!);
+            handleExpandKey(uuid!, node);
         }
         onSelectNode?.(node);
     };
@@ -158,13 +164,11 @@ const TreeView = ({
 
         // unfolder current node
         const uuid = (node.key || node.id).toString();
-        const idx = expandKeys.indexOf(uuid);
+        const idx = (controlExpandKeys || expandKeys).indexOf(uuid);
         if (idx > -1) {
-            setExpandKeys((keys) => {
-                const next = keys.concat();
-                next.splice(idx, 1);
-                return next;
-            });
+            const next = expandKeys.concat();
+            next.splice(idx, 1);
+            onExpand ? onExpand(next, node) : setExpandKeys(next);
         }
 
         window.addEventListener('dragend', onWindowDragEnd);
@@ -174,7 +178,7 @@ const TreeView = ({
         (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => {
             // expand the non-leaf node
             const uuid = (node.key || node.id).toString();
-            const isExpand = expandKeys.includes(uuid!);
+            const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
             const dragNode = dragInfo.current.dragNode!;
             const dragNodeUuid = (dragNode.key || dragNode.id).toString();
             const isSelfNode = uuid === dragNodeUuid;
@@ -184,7 +188,7 @@ const TreeView = ({
                 !isExpand &&
                 !canLoadData(uuid)
             ) {
-                handleExpandKey(uuid);
+                handleExpandKey(uuid, node);
             }
         },
         300
@@ -292,7 +296,7 @@ const TreeView = ({
     const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
         return data.map((item, index) => {
             const uuid = (item.key || item.id).toString();
-            const isExpand = expandKeys.includes(uuid!);
+            const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
             const isLoading = loadingKeys.includes(uuid!);
             const isActive = activeKey === uuid;
 
@@ -370,7 +374,10 @@ const TreeView = ({
                 const nextExpandKeys = Array.from(
                     new Set([...keys, ...expandKeys])
                 );
-                setExpandKeys(nextExpandKeys);
+
+                onExpand
+                    ? onExpand(nextExpandKeys, data)
+                    : setExpandKeys(nextExpandKeys);
                 break;
             } else {
                 const children =

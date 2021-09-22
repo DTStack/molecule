@@ -42,6 +42,12 @@ describe('Test StatusBarService', () => {
         expect(folderTreeService.getState()).not.toBeUndefined();
     });
 
+    test('Should support to get and set the expanded keys', () => {
+        expect(folderTreeService.getExpandedKeys().length).toBe(0);
+        folderTreeService.setExpandedKeys(['1', '2']);
+        expect(folderTreeService.getExpandedKeys().length).toBe(2);
+    });
+
     test('Should support to set empty file context menu', () => {
         folderTreeService.setFileContextMenu([]);
         expect(folderTreeService.getFileContextMenu()).toEqual([]);
@@ -112,6 +118,9 @@ describe('Test StatusBarService', () => {
         mockTreeData.name = TEST_ID;
         folderTreeService.update(mockTreeData);
         expect(folderTreeService.get(1)?.name).toBe(TEST_ID);
+
+        const parent = folderTreeService.getParent(2);
+        expect(parent!.node.name).toBe(TEST_ID);
     });
 
     test('Should support to set entry', () => {

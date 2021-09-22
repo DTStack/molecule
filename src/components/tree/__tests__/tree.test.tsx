@@ -137,11 +137,11 @@ describe('Test the Tree component', () => {
         const parentNode = container.querySelector<HTMLDivElement>(
             'div[data-id="mo_treeNode_1"]'
         );
-        const childNode = await waitFor(() => {
-            return container.querySelector<HTMLDivElement>(
+        const childNode = await waitFor(() =>
+            container.querySelector<HTMLDivElement>(
                 'div[data-id="mo_treeNode_1_2"]'
-            );
-        });
+            )
+        );
 
         expect(parentNode).toBeInTheDocument();
         expect(childNode).toBeInTheDocument();

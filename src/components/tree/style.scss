@@ -103,10 +103,12 @@ $switch: #{$rcTree}-switcher;
 
             &__customize {
                 background-image: none;
+                display: inline-flex;
+                padding-right: 6px;
 
                 .codicon {
-                    margin-top: 4px;
-                    transform: scale(0.8);
+                    height: inherit;
+                    line-height: inherit;
                 }
             }
         }

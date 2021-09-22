@@ -9,12 +9,10 @@ export const ExtendsEditorTree: IExtension = {
 
         molecule.editorTree.onClose((tabId, groupId) => {
             molecule.editor.closeTab(tabId, groupId);
-            molecule.explorer.forceUpdate();
         });
 
         molecule.editorTree.onCloseOthers((tabItem, groupId) => {
             molecule.editor.closeOther(tabItem, groupId);
-            molecule.explorer.forceUpdate();
         });
 
         molecule.editorTree.onCloseSaved((groupId) => {
@@ -30,7 +28,6 @@ export const ExtendsEditorTree: IExtension = {
                     molecule.editor.closeAll(group.id!);
                 });
             }
-            molecule.explorer.forceUpdate();
         });
 
         molecule.editorTree.onSaveAll((groupId) => {

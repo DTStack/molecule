@@ -17,6 +17,7 @@ import {
 import { searchById } from '../helper';
 import { editor as MonacoEditor, Uri } from 'mo/monaco';
 import { IMenuItemProps } from 'mo/components';
+import { ExplorerService, IExplorerService } from './explorer/explorerService';
 
 export interface IEditorService extends Component<IEditor> {
     /**
@@ -196,10 +197,12 @@ export class EditorService
     implements IEditorService {
     protected state: IEditor;
     protected defaultActions: IEditorActionsProps[];
+    protected explorerService: IExplorerService;
     constructor() {
         super();
         this.state = container.resolve(EditorModel);
         this.defaultActions = getEditorInitialActions();
+        this.explorerService = container.resolve(ExplorerService);
     }
 
     public updateEditorOptions(options: IEditorOptions): void {
@@ -378,6 +381,7 @@ export class EditorService
             () => {
                 const isOpened = this.isOpened(tabId);
                 !isOpened && this.disposeModel(tab);
+                this.explorerService.forceUpdate();
             }
         );
     }
@@ -411,6 +415,7 @@ export class EditorService
         this.setActive(groupId, tabId!);
 
         this.disposeModel(removedTabs);
+        this.explorerService.forceUpdate();
     }
 
     public closeToRight(tab: IEditorTab, groupId: number) {
@@ -442,6 +447,7 @@ export class EditorService
         });
         this.setActive(groupId, tabId!);
         this.disposeModel(removedTabs || []);
+        this.explorerService.forceUpdate();
     }
 
     public closeToLeft(tab: IEditorTab, groupId: number) {
@@ -473,6 +479,7 @@ export class EditorService
         });
         this.setActive(groupId, tabId!);
         this.disposeModel(removedTabs || []);
+        this.explorerService.forceUpdate();
     }
 
     public getGroupById(groupId: number): IEditorGroup | undefined {
@@ -591,6 +598,7 @@ export class EditorService
             current: group,
             groups: [...groups],
         });
+        this.explorerService.forceUpdate();
     }
 
     public onOpenTab(callback: (tab: IEditorTab) => void): void {
@@ -626,6 +634,7 @@ export class EditorService
                 () => {
                     // dispose all models in specific group
                     this.disposeModel(removed);
+                    this.explorerService.forceUpdate();
                 }
             );
         }

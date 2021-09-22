@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { EventEmitter, GlobalEvent } from 'mo/common/event';
 
 enum componentEvents {
@@ -55,7 +56,7 @@ export abstract class Component<S = any>
     }
 
     public forceUpdate() {
-        this.setState(Object.assign({}, this.state));
+        this.setState(cloneDeep(this.state));
     }
 
     public getState(): S {

@@ -22,9 +22,7 @@ import { editor as MonacoEditor, Uri } from 'mo/monaco';
 
 import {
     EditorService,
-    ExplorerService,
     IEditorService,
-    IExplorerService,
     IStatusBarService,
     StatusBarService,
 } from 'mo/services';
@@ -60,13 +58,11 @@ export class EditorController extends Controller implements IEditorController {
     private editorStates = new Map();
     private readonly editorService: IEditorService;
     private readonly statusBarService: IStatusBarService;
-    private readonly explorerService: IExplorerService;
 
     constructor() {
         super();
         this.editorService = container.resolve(EditorService);
         this.statusBarService = container.resolve(StatusBarService);
-        this.explorerService = container.resolve(ExplorerService);
     }
 
     public open<T>(tab: IEditorTab<any>, groupId?: number) {
@@ -117,7 +113,6 @@ export class EditorController extends Controller implements IEditorController {
     public onCloseTab = (tabId?: string, groupId?: number) => {
         if (tabId && groupId) {
             this.editorService.closeTab(tabId, groupId);
-            this.explorerService.forceUpdate();
             this.emit(EditorEvent.OnCloseTab, tabId, groupId);
         }
     };

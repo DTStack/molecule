@@ -343,7 +343,6 @@ export class FolderTreeService
 
     public onSelectFile(callback: (file: ITreeNodeItemProps) => void) {
         this.subscribe(FolderTreeEvent.onSelectFile, callback);
-        this.explorerService.render();
     }
 
     public onDropTree = (treeData: ITreeNodeItemProps[]) => {

@@ -158,12 +158,17 @@ export class FolderTreeController
     };
 
     public onLoadData = (treeNode: ITreeNodeItemProps) => {
-        return new Promise<void>((resolve, reject) => {
-            const callback = (node: ITreeNodeItemProps) => {
-                this.folderTreeService.update(node);
-                resolve();
-            };
-            this.emit(FolderTreeEvent.onLoadData, treeNode, callback);
-        });
+        const count = this.count(FolderTreeEvent.onLoadData);
+        if (count) {
+            return new Promise<void>((resolve, reject) => {
+                const callback = (node: ITreeNodeItemProps) => {
+                    this.folderTreeService.update(node);
+                    resolve();
+                };
+                this.emit(FolderTreeEvent.onLoadData, treeNode, callback);
+            });
+        } else {
+            return Promise.resolve();
+        }
     };
 }

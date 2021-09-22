@@ -183,42 +183,5 @@ export const ExtendTestPane: IExtension = {
             };
             molecule.editor.open(tabData);
         });
-
-        molecule.folderTree.onDropTree((source, target) => {
-            console.log(source, target);
-        });
-
-        molecule.folderTree.onLoadData(async (tree, callback) => {
-            const res = await new Promise<TreeNodeModel[]>((resolve) => {
-                setTimeout(() => {
-                    resolve([
-                        new TreeNodeModel({
-                            id: randomId(),
-                            name: 'folder',
-                            fileType: FileTypes.Folder,
-                            isLeaf: false,
-                        }),
-                        new TreeNodeModel({
-                            id: randomId(),
-                            name: 'file',
-                            fileType: FileTypes.File,
-                            isLeaf: true,
-                            content: 'show tables;',
-                        }),
-                        new TreeNodeModel({
-                            id: randomId(),
-                            name: 'file22',
-                            fileType: FileTypes.File,
-                            isLeaf: true,
-                            content: 'show tables;',
-                        }),
-                    ]);
-                }, 1000);
-            });
-            tree.children = res;
-            callback(tree);
-            // molecule.folderTree.update(tree);
-            // console.log('res:', tree);
-        });
     },
 };

@@ -1,6 +1,11 @@
 export class EventEmitter {
     private _events = new Map<string, Function[]>();
 
+    public count(name: string) {
+        const events = this._events.get(name) || [];
+        return events.length;
+    }
+
     public emit(name: string, ...args) {
         const events = this._events.get(name);
         if (events && events.length > 0) {

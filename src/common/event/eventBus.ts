@@ -20,4 +20,12 @@ export abstract class GlobalEvent {
     public emit(name: string, ...args: any) {
         EventBus.emit(name, ...args);
     }
+
+    /**
+     * Count the service event
+     * @param name Event name
+     */
+    public count(name: string) {
+        return EventBus.count(name);
+    }
 }

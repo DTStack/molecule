@@ -4,10 +4,7 @@ import { container } from 'tsyringe';
 import { FileTypes } from 'mo/model/workbench/explorer/folderTree';
 import { expectFnCalled } from '@test/utils';
 
-import {
-    IFolderTreeService,
-    FolderTreeService,
-} from '../explorer/folderTreeService';
+import { IFolderTreeService, FolderTreeService } from '../workbench';
 import { FolderTreeEvent } from 'mo/model/workbench/explorer/folderTree';
 
 const TEST_ID = 'test-id';

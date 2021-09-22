@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditorService } from '../editorService';
+import { EditorService } from '../workbench/editorService';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import {

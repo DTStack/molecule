@@ -1,9 +1,6 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import {
-    IEditorTreeService,
-    EditorTreeService,
-} from '../explorer/editorTreeService';
+import { IEditorTreeService, EditorTreeService } from '../workbench';
 import { EditorTreeEvent } from 'mo/model/workbench/explorer/editorTree';
 import { expectFnCalled } from '@test/utils';
 

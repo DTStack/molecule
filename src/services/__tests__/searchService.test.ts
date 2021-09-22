@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { ISearchService, SearchService } from '../searchService';
+import { ISearchService, SearchService } from '../workbench';
 import { InfoTypeEnums } from 'mo/components/search/input';
 import {
     SearchEvent,

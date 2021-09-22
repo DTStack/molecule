@@ -25,6 +25,22 @@ const mockData: ITreeNodeItemProps[] = [
     },
 ];
 
+async function dragExpect(fn: jest.Mock, result: any) {
+    await waitFor(() => {
+        expect(fn).toBeCalled();
+        expect(fn.mock.calls[0][0]).toEqual(result);
+    });
+}
+
+// mock Scrollable component
+jest.mock('lodash', () => {
+    const originalModule = jest.requireActual('lodash');
+    return {
+        ...originalModule,
+        debounce: (fn) => fn,
+    };
+});
+
 describe('Test the Tree component', () => {
     afterEach(cleanup);
 
@@ -361,7 +377,7 @@ describe('Test the Tree component', () => {
         ]);
     });
 
-    test('Should not drag node to its parent node or drag node to its siblings', async () => {
+    test('Should not drag node to its parent node or drag node to its siblings or drag node to itself', async () => {
         const data = [
             {
                 id: '1',
@@ -394,6 +410,12 @@ describe('Test the Tree component', () => {
         dragToTargetNode(
             await findByTitle('test1-2'),
             await findByTitle('test1-1')
+        );
+        expect(mockFn).not.toBeCalled();
+
+        dragToTargetNode(
+            await findByTitle('test1'),
+            await findByTitle('test1')
         );
         expect(mockFn).not.toBeCalled();
     });
@@ -450,10 +472,15 @@ describe('Test the Tree component', () => {
             unexpandTreeNodeClassName
         );
         dragToTargetNode(getByText('test2'), getByText('test1'));
-        await sleep(300);
 
         expect(getByText('test1').parentElement!.classList).toContain(
             expandTreeNodeClassName
+        );
+
+        // drag to itself won't expand
+        dragToTargetNode(getByText('test1'), getByText('test1'));
+        expect(getByText('test1').parentElement!.classList).toContain(
+            unexpandTreeNodeClassName
         );
     });
 

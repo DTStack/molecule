@@ -27,6 +27,8 @@ export interface ITreeNodeItemProps {
 
 export interface ITreeProps {
     data?: ITreeNodeItemProps[];
+    className?: string;
+    draggable?: boolean;
     onSelectNode?: (file: ITreeNodeItemProps, isUpdate?) => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
@@ -39,9 +41,6 @@ export interface ITreeProps {
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
         treeNode: ITreeNodeItemProps
     ) => void;
-
-    className?: string;
-    draggable?: boolean;
 }
 
 const TreeView = ({
@@ -176,7 +175,15 @@ const TreeView = ({
             // expand the non-leaf node
             const uuid = (node.key || node.id).toString();
             const isExpand = expandKeys.includes(uuid!);
-            if (!node.isLeaf && !isExpand && !canLoadData(uuid)) {
+            const dragNode = dragInfo.current.dragNode!;
+            const dragNodeUuid = (dragNode.key || dragNode.id).toString();
+            const isSelfNode = uuid === dragNodeUuid;
+            if (
+                !node.isLeaf &&
+                !isSelfNode &&
+                !isExpand &&
+                !canLoadData(uuid)
+            ) {
                 handleExpandKey(uuid);
             }
         },

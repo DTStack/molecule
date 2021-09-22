@@ -93,11 +93,17 @@ export class MenuBarController
     };
 
     public undo = () => {
-        this.monacoService.commandService.executeCommand(ACTION_QUICK_UNDO);
+        this.monacoService.commandService.executeCommand(
+            ACTION_QUICK_UNDO,
+            this.focusinEle
+        );
     };
 
     public redo = () => {
-        this.monacoService.commandService.executeCommand(ACTION_QUICK_REDO);
+        this.monacoService.commandService.executeCommand(
+            ACTION_QUICK_REDO,
+            this.focusinEle
+        );
     };
 
     public gotoQuickCommand = () => {

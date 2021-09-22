@@ -258,4 +258,14 @@ describe('Test the Explorer Service', () => {
         expect(mockFn.mock.calls[0][0]).toEqual(panelData);
         expect(mockFn.mock.calls[0][1]).toEqual('toolbar-id');
     });
+
+    test('Should support to subscribe onCollapseChange event', () => {
+        const mockFn = jest.fn();
+        explorerService.onCollapseChange(mockFn);
+        const expected = ['test'];
+
+        explorerService.emit(ExplorerEvent.onCollapseChange, expected);
+        expect(mockFn).toBeCalled();
+        expect(mockFn.mock.calls[0][0]).toEqual(expected);
+    });
 });

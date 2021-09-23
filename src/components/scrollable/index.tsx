@@ -33,16 +33,17 @@ const Scrollable = forwardRef<Scrollbar, IScrollbarProps>(function (
 
     const [isScrolling, setIsScrolling] = useState(false);
     const [isMouseOver, setIsMouseOver] = useState(false);
-    const [scrollTop, setScrollTop] = useState(0);
+    const [scrollTop, setScrollTop] = React.useState(0);
     const isShow = isScrolling || isMouseOver;
 
     const claNames = classNames(defaultScrollableClassName, className);
 
     const onScroll = useCallback(({ scrollTop }) => {
+        /* istanbul ignore next */
         setScrollTop(scrollTop);
     }, []);
 
-    const onScrollStart = useCallback((values) => {
+    const onScrollStart = useCallback(() => {
         setIsScrolling(true);
     }, []);
     const onScrollStop = useCallback(() => {

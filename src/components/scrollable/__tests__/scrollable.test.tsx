@@ -12,6 +12,14 @@ jest.mock('mo/components/scrollable', () => {
     };
 });
 
+// jest.mock('react', () => {
+//     const originalModule = jest.requireActual('react');
+//     return {
+//         ...originalModule,
+//         useState: (args) => typeof args !== 'number' ?args:jest.fn().mockImplementation(0)
+//     }
+// })
+
 function TestScrollable(props: IScrollbarProps) {
     return (
         <div>
@@ -98,5 +106,36 @@ describe('Test Scrollable Component', () => {
         const rootEle = getByTestId('mytest');
         fireEvent.scroll(rootEle);
         expect(trackElement(container).style.opacity).toBe('1');
+    });
+
+    test('Should NOT render active shadow when scorllTop is 0', () => {
+        const original = React.useState;
+        React.useState = jest
+            .fn()
+            .mockImplementation((args) => [args, () => {}]);
+
+        const { container } = render(<TestScrollable isShowShadow />);
+
+        const shadowDom = container.querySelector('.shadow');
+        expect(shadowDom?.classList).not.toContain('active');
+
+        React.useState = original;
+    });
+
+    test("Should render active shadow when scrollTop isn't 0", () => {
+        const original = React.useState;
+        React.useState = jest
+            .fn()
+            .mockImplementation((args) => [
+                typeof args === 'number' ? 100 : args,
+                () => {},
+            ]);
+
+        const { container } = render(<TestScrollable isShowShadow />);
+
+        const shadowDom = container.querySelector('.shadow');
+        expect(shadowDom?.classList).toContain('active');
+
+        React.useState = original;
     });
 });

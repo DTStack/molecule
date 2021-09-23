@@ -69,7 +69,7 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
             {...events}
             {...custom}
         >
-            <a className={menuContentClassName}>
+            <div className={menuContentClassName}>
                 <Icon type={icon} className={checkClassName} />
                 <span
                     className={labelClassName}
@@ -80,7 +80,7 @@ export function MenuItem(props: React.PropsWithChildren<IMenuItemProps>) {
                 {keybinding ? (
                     <span className={keybindingClassName}>{keybinding}</span>
                 ) : null}
-            </a>
+            </div>
         </li>
     );
 }

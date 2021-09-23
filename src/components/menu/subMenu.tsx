@@ -86,7 +86,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
             {...(typeof title === 'string' ? { title } : {})}
             {...custom}
         >
-            <a className={menuContentClassName}>
+            <div className={menuContentClassName}>
                 {typeof icon === 'string' ? (
                     <Icon className={checkClassName} type={icon || ''} />
                 ) : (
@@ -99,7 +99,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
                     className={indicatorClassName}
                     type={`chevron-${chevronType}`}
                 />
-            </a>
+            </div>
             {subMenuContent}
         </li>
     );

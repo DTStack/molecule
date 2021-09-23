@@ -38,9 +38,12 @@ const Scrollable = forwardRef<Scrollbar, IScrollbarProps>(function (
 
     const claNames = classNames(defaultScrollableClassName, className);
 
+    const onScroll = useCallback(({ scrollTop }) => {
+        setScrollTop(scrollTop);
+    }, []);
+
     const onScrollStart = useCallback((values) => {
         setIsScrolling(true);
-        setScrollTop(values.scrollTop);
     }, []);
     const onScrollStop = useCallback(() => {
         /* istanbul ignore next */
@@ -132,6 +135,7 @@ const Scrollable = forwardRef<Scrollbar, IScrollbarProps>(function (
             thumbYProps={thumbProps}
             onScrollStart={onScrollStart}
             onScrollStop={onScrollStop}
+            onScroll={onScroll}
             scrollDetectionThreshold={500} // ms
         >
             {children}

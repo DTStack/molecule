@@ -79,6 +79,7 @@
             background-color: var(--list-inactiveSelectionBackground);
 
             #{$editorTree}__close {
+                color: var(--icon-foreground);
                 opacity: 1;
             }
         }
@@ -150,11 +151,11 @@
     }
 
     &__close {
-        color: var(--activityBar-inactiveForeground);
+        color: var(--icon-foreground);
         opacity: 0;
 
         &:hover {
-            color: var(--activityBar-activeBorder);
+            opacity: 1;
         }
     }
 

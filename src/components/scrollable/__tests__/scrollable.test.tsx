@@ -12,14 +12,6 @@ jest.mock('mo/components/scrollable', () => {
     };
 });
 
-// jest.mock('react', () => {
-//     const originalModule = jest.requireActual('react');
-//     return {
-//         ...originalModule,
-//         useState: (args) => typeof args !== 'number' ?args:jest.fn().mockImplementation(0)
-//     }
-// })
-
 function TestScrollable(props: IScrollbarProps) {
     return (
         <div>

@@ -18,7 +18,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
     data-submenu={true}
     id="File"
   >
-    <a
+    <div
       className="mo-menu__content"
     >
       <span
@@ -29,7 +29,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
       <span
         className="mo-menu__indicator codicon codicon-chevron-right"
       />
-    </a>
+    </div>
     <ul
       className="mo-menu mo-menu--vertical mo-sub-menu"
       id="File"
@@ -45,7 +45,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
         id="New File"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -54,14 +54,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             New File
           </span>
-        </a>
+        </div>
       </li>
       <li
         className="mo-menu__item"
         id="OpenFile"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -70,7 +70,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             Open
           </span>
-        </a>
+        </div>
       </li>
     </ul>
   </li>
@@ -79,7 +79,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
     data-submenu={true}
     id="Edit"
   >
-    <a
+    <div
       className="mo-menu__content"
     >
       <span
@@ -90,7 +90,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
       <span
         className="mo-menu__indicator codicon codicon-chevron-right"
       />
-    </a>
+    </div>
     <ul
       className="mo-menu mo-menu--vertical mo-sub-menu"
       id="Edit"
@@ -106,7 +106,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
         id="Undo"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -115,14 +115,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             Undo
           </span>
-        </a>
+        </div>
       </li>
       <li
         className="mo-menu__item"
         id="Redo"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -131,7 +131,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             Redo
           </span>
-        </a>
+        </div>
       </li>
     </ul>
   </li>
@@ -140,7 +140,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
     data-submenu={true}
     id="Selection"
   >
-    <a
+    <div
       className="mo-menu__content"
     >
       <span
@@ -151,7 +151,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
       <span
         className="mo-menu__indicator codicon codicon-chevron-right"
       />
-    </a>
+    </div>
     <ul
       className="mo-menu mo-menu--vertical mo-sub-menu"
       id="Selection"
@@ -167,7 +167,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
         id="SelectAll"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -176,14 +176,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             Select All
           </span>
-        </a>
+        </div>
       </li>
       <li
         className="mo-menu__item"
         id="CopyLineUp"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -192,7 +192,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             Copy Line Up
           </span>
-        </a>
+        </div>
       </li>
     </ul>
   </li>
@@ -201,7 +201,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
     data-submenu={true}
     id="View"
   >
-    <a
+    <div
       className="mo-menu__content"
     >
       <span
@@ -212,7 +212,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
       <span
         className="mo-menu__indicator codicon codicon-chevron-right"
       />
-    </a>
+    </div>
     <ul
       className="mo-menu mo-menu--vertical mo-sub-menu"
       id="View"
@@ -228,7 +228,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
         id="Command Palette"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -237,14 +237,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             Command Palette
           </span>
-        </a>
+        </div>
       </li>
       <li
         className="mo-menu__item"
         id="OpenView"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -253,14 +253,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             Open View
           </span>
-        </a>
+        </div>
       </li>
       <li
         className="mo-menu__item"
         data-submenu={true}
         id="Appearance"
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -271,7 +271,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           <span
             className="mo-menu__indicator codicon codicon-chevron-right"
           />
-        </a>
+        </div>
         <ul
           className="mo-menu mo-menu--vertical mo-sub-menu"
           id="Appearance"
@@ -287,7 +287,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
             id="ShowMenuBar"
             onClick={[Function]}
           >
-            <a
+            <div
               className="mo-menu__content"
             >
               <span
@@ -299,14 +299,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
               >
                 Show Menu Bar
               </span>
-            </a>
+            </div>
           </li>
           <li
             className="mo-menu__item"
             id="ShowSideBar"
             onClick={[Function]}
           >
-            <a
+            <div
               className="mo-menu__content"
             >
               <span
@@ -318,14 +318,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
               >
                 Show Side Bar
               </span>
-            </a>
+            </div>
           </li>
           <li
             className="mo-menu__item"
             id="ShowStatusBar"
             onClick={[Function]}
           >
-            <a
+            <div
               className="mo-menu__content"
             >
               <span
@@ -337,14 +337,14 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
               >
                 Show Status Bar
               </span>
-            </a>
+            </div>
           </li>
           <li
             className="mo-menu__item"
             id="ShowActivityBar"
             onClick={[Function]}
           >
-            <a
+            <div
               className="mo-menu__content"
             >
               <span
@@ -356,7 +356,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
               >
                 Show Activity Bar
               </span>
-            </a>
+            </div>
           </li>
         </ul>
       </li>
@@ -367,7 +367,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
     data-submenu={true}
     id="Run"
   >
-    <a
+    <div
       className="mo-menu__content"
     >
       <span
@@ -378,7 +378,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
       <span
         className="mo-menu__indicator codicon codicon-chevron-right"
       />
-    </a>
+    </div>
     <ul
       className="mo-menu mo-menu--vertical mo-sub-menu"
       id="Run"
@@ -394,7 +394,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
         id="RunTask"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -403,7 +403,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             Run Task
           </span>
-        </a>
+        </div>
       </li>
     </ul>
   </li>
@@ -412,7 +412,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
     data-submenu={true}
     id="Help"
   >
-    <a
+    <div
       className="mo-menu__content"
     >
       <span
@@ -423,7 +423,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
       <span
         className="mo-menu__indicator codicon codicon-chevron-right"
       />
-    </a>
+    </div>
     <ul
       className="mo-menu mo-menu--vertical mo-sub-menu"
       id="Help"
@@ -439,7 +439,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
         id="About"
         onClick={[Function]}
       >
-        <a
+        <div
           className="mo-menu__content"
         >
           <span
@@ -448,7 +448,7 @@ exports[`Test the Menu Component Match the List snapshot 1`] = `
           >
             About
           </span>
-        </a>
+        </div>
       </li>
     </ul>
   </li>

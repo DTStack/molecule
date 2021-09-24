@@ -1,5 +1,6 @@
 import React from 'react';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import {
     ITabEvent,
     ITabProps,
@@ -44,7 +45,18 @@ describe('The Tab Component', () => {
     test('Should render name in tab', () => {
         const { container } = render(<DTab />);
         const wrapper = container.querySelector(`.${tabItemClassName}`)!;
-        expect(wrapper.innerHTML).toBe('test');
+        expect(wrapper.innerHTML).toContain('test');
+    });
+
+    test('Should render icon in tab', () => {
+        const { container, getByTestId, rerender } = render(
+            <DTab icon="placeholder" />
+        );
+
+        expect(container.querySelector('.codicon-placeholder')).not.toBeNull();
+
+        rerender(<DTab icon={<i data-testid="icon" />} />);
+        expect(getByTestId('icon')).toBeInTheDocument();
     });
 
     test('Should active classNames when active tab', () => {
@@ -60,11 +72,11 @@ describe('The Tab Component', () => {
         );
         const wrapper = container.querySelector(`.${tabItemClassName}`)!;
 
-        expect(wrapper.childElementCount).toBe(2);
+        expect(wrapper.childElementCount).toBe(3);
 
         fireEvent.mouseOver(wrapper);
-        fireEvent.click(wrapper.children[0].firstChild!);
         fireEvent.click(wrapper.children[1].firstChild!);
+        fireEvent.click(wrapper.children[2].firstChild!);
 
         await waitFor(() => {
             expect(mockFn).toBeCalledTimes(2);
@@ -72,7 +84,7 @@ describe('The Tab Component', () => {
         });
 
         fireEvent.mouseOut(wrapper);
-        fireEvent.click(wrapper.children[0].firstChild!);
+        fireEvent.click(wrapper.children[1].firstChild!);
         mockFn.mockClear();
         await waitFor(() => {
             expect(mockFn).not.toBeCalled();

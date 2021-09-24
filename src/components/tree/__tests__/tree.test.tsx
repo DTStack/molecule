@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TreeView, { ITreeNodeItemProps } from '../index';
-import { dragToTargetNode, sleep } from '@test/utils';
+import { dragToTargetNode, expectFnCalled, sleep } from '@test/utils';
 import { act } from 'react-test-renderer';
 import { unexpandTreeNodeClassName, expandTreeNodeClassName } from '../base';
 
@@ -545,5 +545,16 @@ describe('Test the Tree component', () => {
         expect(getByText('test1').parentElement?.classList).toContain(
             expandTreeNodeClassName
         );
+    });
+
+    test('Should support to trigger tree click event', () => {
+        expectFnCalled((fn) => {
+            const { getByRole } = render(
+                <TreeView data={mockData} onTreeClick={fn} />
+            );
+
+            const wrapper = getByRole('tree');
+            fireEvent.click(wrapper);
+        });
     });
 });

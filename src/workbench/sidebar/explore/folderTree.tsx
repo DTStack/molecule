@@ -205,6 +205,10 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         );
     };
 
+    const handleTreeClick = () => {
+        onSelectFile?.();
+    };
+
     const handleDropTree = (source, target) => {
         onDropTree?.(source, target);
     };
@@ -220,7 +224,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
 
     return (
         <Scrollable noScrollX isShowShadow>
-            <div data-content={panel.id}>
+            <div data-content={panel.id} style={{ height: '100%' }}>
                 <Tree
                     // root folder do not render
                     data={data[0]?.children || []}
@@ -231,6 +235,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                     draggable={!hasEditable}
                     onDropTree={handleDropTree}
                     onSelectNode={onSelectFile}
+                    onTreeClick={handleTreeClick}
                     onRightClick={handleRightClick}
                     renderTitle={renderTitle}
                     onLoadData={onLoadData}

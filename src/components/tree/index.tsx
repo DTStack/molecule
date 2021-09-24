@@ -31,17 +31,18 @@ export interface ITreeProps {
     draggable?: boolean;
     expandKeys?: string[];
     onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
-    onSelectNode?: (file: ITreeNodeItemProps, isUpdate?) => void;
+    onSelectNode?: (node: ITreeNodeItemProps, isUpdate?) => void;
+    onTreeClick?: () => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
         index: number,
         isLeaf: boolean
     ) => JSX.Element | string;
     onDropTree?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;
-    onLoadData?: (treeNode: ITreeNodeItemProps) => Promise<void>;
+    onLoadData?: (node: ITreeNodeItemProps) => Promise<void>;
     onRightClick?: (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        treeNode: ITreeNodeItemProps
+        node: ITreeNodeItemProps
     ) => void;
 }
 
@@ -56,6 +57,7 @@ const TreeView = ({
     renderTitle, // custom title
     onSelectNode,
     onLoadData,
+    onTreeClick,
 }: ITreeProps) => {
     const [expandKeys, setExpandKeys] = useState<string[]>([]);
     const [activeKey, setActiveKey] = useState<string | null>(null);
@@ -108,7 +110,11 @@ const TreeView = ({
             : setExpandKeys(expandKeys.concat());
     };
 
-    const handleNodeClick = (node: ITreeNodeItemProps) => {
+    const handleNodeClick = (
+        node: ITreeNodeItemProps,
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        e.stopPropagation();
         const uuid: string = (node.key || node.id).toString();
         setActiveKey(uuid);
         if (!node.isLeaf) {
@@ -140,6 +146,7 @@ const TreeView = ({
         info: ITreeNodeItemProps
     ) => {
         e.preventDefault();
+        e.stopPropagation();
         onRightClick?.(e, info);
     };
 
@@ -334,7 +341,7 @@ const TreeView = ({
                     }
                     renderTitle={() => title}
                     onContextMenu={(e) => handleRightClick(e, item)}
-                    onClick={() => handleNodeClick(item)}
+                    onClick={(e) => handleNodeClick(item, e)}
                     onNodeDragStart={draggable ? handleDragStart : undefined}
                     onNodeDragEnter={draggable ? handleDragEnter : undefined}
                     onNodeDragOver={draggable ? handleDragOver : undefined}
@@ -350,6 +357,11 @@ const TreeView = ({
 
             return [currentNode, childrenNode];
         });
+    };
+
+    const handleTreeClick = () => {
+        setActiveKey(null);
+        onTreeClick?.();
     };
 
     useLayoutEffect(() => {
@@ -395,6 +407,7 @@ const TreeView = ({
             role="tree"
             ref={wrapper}
             draggable={draggable}
+            onClick={handleTreeClick}
             className={classNames(defaultTreeClassName, className)}
         >
             {renderTreeNode(data, 0)}

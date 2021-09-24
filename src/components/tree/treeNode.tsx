@@ -6,7 +6,7 @@ import {
     treeNodeTitleClassName,
 } from './base';
 
-interface TreeNodeProps {
+interface ITreeNodeProps {
     data: ITreeNodeItemProps;
     indent: number;
     name?: string;
@@ -54,7 +54,7 @@ export default ({
     onNodeDragOver,
     onNodeDrop,
     onNodeDragEnd,
-}: TreeNodeProps) => {
+}: ITreeNodeProps) => {
     const uuid = data.key || data.id;
     const ref = useRef<HTMLDivElement>(null);
 

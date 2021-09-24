@@ -24,7 +24,7 @@ export interface IFolderTreeController {
         treeNode?: ITreeNodeItemProps
     ) => void;
     readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
-    readonly onSelectFile?: (file: ITreeNodeItemProps) => void;
+    readonly onSelectFile?: (file?: ITreeNodeItemProps) => void;
     readonly onDropTree?: (
         source: ITreeNodeItemProps,
         target: ITreeNodeItemProps
@@ -134,10 +134,10 @@ export class FolderTreeController
         this.emit(FolderTreeEvent.onUpdateFileName, file);
     };
 
-    public readonly onSelectFile = (file: ITreeNodeItemProps) => {
-        this.folderTreeService.setActive(file.id);
+    public readonly onSelectFile = (file?: ITreeNodeItemProps) => {
+        this.folderTreeService.setActive(file?.id);
         // editing file won't emit onSelectFile
-        if (!file.isEditable && file.fileType === FileTypes.File) {
+        if (file && !file.isEditable && file.fileType === FileTypes.File) {
             this.emit(FolderTreeEvent.onSelectFile, file);
         }
     };

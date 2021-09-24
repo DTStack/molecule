@@ -231,4 +231,20 @@ describe('The FolderTree Component', () => {
         );
         expect(mockFn.mock.calls[0][1]).toBeUndefined();
     });
+
+    test('Should reset the current active tree node when click the blank area in tree', () => {
+        expectFnCalled((mockFn) => {
+            const { getByRole } = render(
+                <FolderTreeViewPanel
+                    folderTree={{ data: mockTreeData }}
+                    onSelectFile={mockFn}
+                />
+            );
+
+            const wrapper = getByRole('tree');
+            fireEvent.click(wrapper);
+
+            expect(mockFn.mock.calls[0][0]).toBeUndefined();
+        });
+    });
 });

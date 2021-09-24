@@ -72,11 +72,11 @@ describe('The Tab Component', () => {
         );
         const wrapper = container.querySelector(`.${tabItemClassName}`)!;
 
-        expect(wrapper.childElementCount).toBe(3);
+        expect(wrapper.childElementCount).toBe(2);
 
         fireEvent.mouseOver(wrapper);
+        fireEvent.click(wrapper.children[0].firstChild!);
         fireEvent.click(wrapper.children[1].firstChild!);
-        fireEvent.click(wrapper.children[2].firstChild!);
 
         await waitFor(() => {
             expect(mockFn).toBeCalledTimes(2);
@@ -84,7 +84,7 @@ describe('The Tab Component', () => {
         });
 
         fireEvent.mouseOut(wrapper);
-        fireEvent.click(wrapper.children[1].firstChild!);
+        fireEvent.click(wrapper.children[0].firstChild!);
         mockFn.mockClear();
         await waitFor(() => {
             expect(mockFn).not.toBeCalled();

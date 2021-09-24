@@ -123,11 +123,8 @@ export function Tab<T>(props: ITabProps) {
 
     drag(drop(ref));
 
-    const renderIcon = (icon?: string | JSX.Element) => {
-        if (icon) {
-            return typeof icon === 'string' ? <Icon type={icon} /> : icon;
-        }
-        return null;
+    const renderIcon = (icon: string | JSX.Element) => {
+        return typeof icon === 'string' ? <Icon type={icon} /> : icon;
     };
 
     return (
@@ -141,7 +138,11 @@ export function Tab<T>(props: ITabProps) {
             onMouseOut={handleMouseOut}
             onContextMenu={handleOnContextMenu}
         >
-            <span className={tabItemLabelClassName}>{renderIcon(icon)}</span>
+            {icon && (
+                <span className={tabItemLabelClassName}>
+                    {renderIcon(icon)}
+                </span>
+            )}
             {name}
             {editable && (
                 <TabExtra

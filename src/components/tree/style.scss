@@ -40,9 +40,10 @@ $treenode-height: 22px;
     &__indent {
         display: flex;
         height: 100%;
+        margin-right: 2px;
 
         &__guide {
-            border-left: 1px solid #585858;
+            border-left: 1px solid var(--tree-indentGuidesStroke);
             display: inline-block;
             height: 100%;
             margin-left: 7px;

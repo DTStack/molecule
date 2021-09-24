@@ -7,7 +7,8 @@
         "editorIndentGuide.activeBackground": "#FFFFFF",
         "editorIndentGuide.background": "#FFFFFF",
         "sideBarTitle.foreground": "#FFFFFF",
-        "statusBarItem.remoteBackground": "#00000000"
+        "statusBarItem.remoteBackground": "#00000000",
+        "tree.indentGuidesStroke": "#a9a9a9"
     },
     "settings": [
         {

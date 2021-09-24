@@ -19,14 +19,13 @@
             border: 1px solid var(--list-focusOutline);
             font-family: inherit;
             font-size: 13px;
-            height: 22px;
-            left: -1px;
+            height: 20px;
+            left: -2px;
             margin: 0;
             outline: none;
             padding: 0;
             position: relative;
-            top: -1px;
-            width: calc(100% - 16px);
+            width: 100%;
 
             &:focus,
             &:active {

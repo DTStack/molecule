@@ -2,6 +2,7 @@
     "$schema": "vscode://schemas/color-theme",
     "name": "Dark Default Colors",
     "colors": {
+        "actionBar.checkedBackground": "rgba(0, 127, 212, 0.4)",
         "activityBar.foreground": "#fff",
         "activityBar.inactiveForeground": "#ffffff66",
         "activityBarBadge.background": "#007ACC",

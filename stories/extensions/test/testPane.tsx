@@ -168,6 +168,7 @@ export default class TestPane extends React.Component {
             const tabData: IEditorTab = {
                 id: `${key}`,
                 name: `editor${key}.ts`,
+                icon: Math.random() >= 0.5 ? 'selection' : undefined,
                 data: {
                     value: `${key}export interface Type<T> { new(...args: any[]): T;}
 export type GenericClassDecorator<T> = (target: T) => void;`,

@@ -73,6 +73,7 @@ export function Tabs<T>(props: ITabsProps<T>) {
                                 active={activeTab === tab.id}
                                 index={index}
                                 name={tab.name}
+                                icon={tab.icon}
                                 data={tab.data}
                                 closable={tab.closable}
                                 onMoveTab={onChangeTab}

@@ -42,6 +42,14 @@
         position: relative;
         user-select: none;
 
+        &__label {
+            font-size: 0;
+
+            &:not(&:empty) {
+                padding-right: 6px;
+            }
+        }
+
         &__op {
             color: var(--icon-foreground);
             margin-left: 10px;

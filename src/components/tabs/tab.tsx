@@ -15,6 +15,7 @@ import {
     prefixClaName,
 } from 'mo/common/className';
 import TabExtra from './tabExtra';
+import { Icon } from '../icon';
 
 export interface ITabEvent {
     onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
@@ -29,6 +30,7 @@ export interface ITabProps<T = any, P = any> extends ITabEvent {
     active?: boolean;
     closable?: boolean;
     editable?: boolean;
+    icon?: string | JSX.Element;
     index?: number;
     id?: string;
     name?: string;
@@ -42,6 +44,7 @@ export const tabItemActiveClassName = getBEMModifier(
     tabItemClassName,
     'active'
 );
+export const tabItemLabelClassName = getBEMElement(tabItemClassName, 'label');
 
 export function Tab<T>(props: ITabProps) {
     const {
@@ -52,6 +55,7 @@ export function Tab<T>(props: ITabProps) {
         data,
         id,
         index,
+        icon,
         onCloseTab,
         onMoveTab,
         onSelectTab,
@@ -118,6 +122,14 @@ export function Tab<T>(props: ITabProps) {
     });
 
     drag(drop(ref));
+
+    const renderIcon = (icon?: string | JSX.Element) => {
+        if (icon) {
+            return typeof icon === 'string' ? <Icon type={icon} /> : icon;
+        }
+        return null;
+    };
+
     return (
         <div
             ref={ref}
@@ -129,6 +141,7 @@ export function Tab<T>(props: ITabProps) {
             onMouseOut={handleMouseOut}
             onContextMenu={handleOnContextMenu}
         >
+            <span className={tabItemLabelClassName}>{renderIcon(icon)}</span>
             {name}
             {editable && (
                 <TabExtra

@@ -1,5 +1,11 @@
 import 'reflect-metadata';
-import React, { memo, useRef, useEffect, useLayoutEffect } from 'react';
+import React, {
+    memo,
+    useRef,
+    useEffect,
+    useLayoutEffect,
+    useState,
+} from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { IFolderTree, IFolderTreeSubItem } from 'mo/model';
 import { select, getEventPosition } from 'mo/common/dom';
@@ -115,6 +121,16 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     // to detect current tree whether is editable
     const hasEditable = detectHasEditableStatus(data);
 
+    // Built-in expanded control
+    const [innerExpandedKeys, setInnerExpandedKeys] = useState<string[]>(
+        expandedKeys || []
+    );
+    useEffect(() => {
+        if (expandedKeys) {
+            setInnerExpandedKeys(expandedKeys);
+        }
+    }, [expandedKeys]);
+
     const onClickMenuItem = (e, item) => {
         onClickContextMenu?.(item);
         contextMenu.current?.hide();
@@ -215,17 +231,37 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         onDropTree?.(newFolderTreeData);
     };
 
-    const handleExpand = (expandedKeys, { node }) => {
-        onExpand?.(expandedKeys, node);
+    const handleExpand = (newExpandedKeys, { node }) => {
+        onExpand?.(newExpandedKeys, node);
+        if (!expandedKeys) {
+            setInnerExpandedKeys(newExpandedKeys);
+        }
     };
 
     const handleSelect = (_, { node }) => {
         if (!node.isLeaf) {
-            // If the selected node is expanded, so unexpanded the node
-            if (expandedKeys?.includes(node.key)) {
-                onExpand?.([], node);
+            const selectedKey = node.key;
+            if (!expandedKeys) {
+                if (innerExpandedKeys?.includes(selectedKey)) {
+                    setInnerExpandedKeys(
+                        innerExpandedKeys.filter(
+                            (value) => value === selectedKey
+                        )
+                    );
+                    onExpand?.([], node);
+                } else {
+                    setInnerExpandedKeys(
+                        innerExpandedKeys?.concat([selectedKey])
+                    );
+                    onExpand?.([node.key], node);
+                }
             } else {
-                onExpand?.([node.key], node);
+                // If the selected node is expanded, so unexpanded the node
+                if (expandedKeys.includes(node.key)) {
+                    onExpand?.([], node);
+                } else {
+                    onExpand?.([node.key], node);
+                }
             }
         }
         onSelectFile?.(node.data);
@@ -250,7 +286,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                         folderTreeClassName,
                         hasEditable && folderTreeEditClassName
                     )}
-                    expandedKeys={expandedKeys}
+                    expandedKeys={innerExpandedKeys}
                     draggable={!hasEditable}
                     onDropTree={handleDropTree}
                     onSelect={handleSelect}

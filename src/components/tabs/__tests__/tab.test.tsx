@@ -1,5 +1,6 @@
 import React from 'react';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import {
     ITabEvent,
     ITabProps,
@@ -44,7 +45,18 @@ describe('The Tab Component', () => {
     test('Should render name in tab', () => {
         const { container } = render(<DTab />);
         const wrapper = container.querySelector(`.${tabItemClassName}`)!;
-        expect(wrapper.innerHTML).toBe('test');
+        expect(wrapper.innerHTML).toContain('test');
+    });
+
+    test('Should render icon in tab', () => {
+        const { container, getByTestId, rerender } = render(
+            <DTab icon="placeholder" />
+        );
+
+        expect(container.querySelector('.codicon-placeholder')).not.toBeNull();
+
+        rerender(<DTab icon={<i data-testid="icon" />} />);
+        expect(getByTestId('icon')).toBeInTheDocument();
     });
 
     test('Should active classNames when active tab', () => {

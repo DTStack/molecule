@@ -38,10 +38,18 @@ export function convertToCSSVars(colors: object) {
 function perfectColors(colors: IColors): IColors {
     const nextColors = cloneDeep(colors);
     const inheritMap = [
-        ['minimap.background', 'editor.background'],
-        ['minimapSlider.background', 'scrollbarSlider.background'],
-        ['minimapSlider.hoverBackground', 'scrollbarSlider.hoverBackground'],
-        ['minimapSlider.activeBackground', 'scrollbarSlider.activeBackground'],
+        ['minimap.background', 'editor.background', 'useBackup'],
+        ['minimapSlider.background', 'scrollbarSlider.background', 'useBackup'],
+        [
+            'minimapSlider.hoverBackground',
+            'scrollbarSlider.hoverBackground',
+            'useBackup',
+        ],
+        [
+            'minimapSlider.activeBackground',
+            'scrollbarSlider.activeBackground',
+            'useBackup',
+        ],
         ['panel.background', 'workbenchBackground', 'useBackup'],
     ];
 

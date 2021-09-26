@@ -38,41 +38,18 @@ export function convertToCSSVars(colors: object) {
 function perfectColors(colors: IColors): IColors {
     const nextColors = cloneDeep(colors);
     const inheritMap = [
-        ['minimap.background', 'editor.background', 'useBackup'],
-        ['minimapSlider.background', 'scrollbarSlider.background', 'useBackup'],
-        [
-            'minimapSlider.hoverBackground',
-            'scrollbarSlider.hoverBackground',
-            'useBackup',
-        ],
-        [
-            'minimapSlider.activeBackground',
-            'scrollbarSlider.activeBackground',
-            'useBackup',
-        ],
-        ['panel.background', 'workbenchBackground', 'useBackup'],
+        ['minimap.background', 'editor.background'],
+        ['minimapSlider.background', 'scrollbarSlider.background'],
+        ['minimapSlider.hoverBackground', 'scrollbarSlider.hoverBackground'],
+        ['minimapSlider.activeBackground', 'scrollbarSlider.activeBackground'],
+        ['panel.background', 'workbenchBackground'],
     ];
 
-    inheritMap.forEach(
-        ([inheritSourceColor, inheritTargetColor, useBackup]) => {
-            // The isBackup flag is used to specify when the sourceColor is not defined, so the sourceColor inherits the targetColor directly
-            if (useBackup) {
-                if (
-                    nextColors[inheritTargetColor] &&
-                    !nextColors[inheritSourceColor]
-                ) {
-                    nextColors[inheritSourceColor] =
-                        nextColors[inheritTargetColor];
-                }
-                // Most of the sourceColors inherit the targetColor directly
-            } else {
-                if (nextColors[inheritTargetColor]) {
-                    nextColors[inheritSourceColor] =
-                        nextColors[inheritTargetColor];
-                }
-            }
+    inheritMap.forEach(([inheritSourceColor, inheritTargetColor]) => {
+        if (!nextColors[inheritSourceColor] && nextColors[inheritTargetColor]) {
+            nextColors[inheritSourceColor] = nextColors[inheritTargetColor];
         }
-    );
+    });
     return nextColors;
 }
 

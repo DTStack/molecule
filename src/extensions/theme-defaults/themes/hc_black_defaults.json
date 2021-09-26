@@ -4,10 +4,10 @@
     "colors": {
         "editor.background": "#000000",
         "editor.foreground": "#FFFFFF",
-        "editorIndentGuide.background": "#FFFFFF",
         "editorIndentGuide.activeBackground": "#FFFFFF",
-        "statusBarItem.remoteBackground": "#00000000",
-        "sidebarTitle.foreground": "#FFFFFF"
+        "editorIndentGuide.background": "#FFFFFF",
+        "sideBarTitle.foreground": "#FFFFFF",
+        "statusBarItem.remoteBackground": "#00000000"
     },
     "settings": [
         {

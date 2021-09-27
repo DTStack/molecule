@@ -183,5 +183,9 @@ export const ExtendTestPane: IExtension = {
             };
             molecule.editor.open(tabData);
         });
+
+        molecule.folderTree.onDropTree((source, target) => {
+            console.log(source, target);
+        });
     },
 };

@@ -98,7 +98,12 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * Listen to drop event
      * @param treeData
      */
-    onDropTree(treeData: ITreeNodeItemProps[]): void;
+    onDropTree(
+        callback: (
+            source: ITreeNodeItemProps,
+            target: ITreeNodeItemProps
+        ) => void
+    ): void;
     /**
      * Listen to right click event
      * @param callback
@@ -345,12 +350,18 @@ export class FolderTreeService
         this.subscribe(FolderTreeEvent.onSelectFile, callback);
     }
 
-    public onDropTree = (treeData: ITreeNodeItemProps[]) => {
-        this.setState({
-            folderTree: Object.assign(this.state.folderTree?.data, {
-                data: treeData,
-            }),
-        });
+    public onDropTree = (
+        callback: (
+            source: ITreeNodeItemProps,
+            target: ITreeNodeItemProps
+        ) => void
+    ) => {
+        this.subscribe(FolderTreeEvent.onDrop, callback);
+        // this.setState({
+        //     folderTree: Object.assign(this.state.folderTree?.data, {
+        //         data: treeData,
+        //     }),
+        // });
     };
 
     public onRightClick = (

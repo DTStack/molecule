@@ -5,6 +5,7 @@ import { prefixClaName, classNames } from 'mo/common/className';
 import type { DataNode } from 'rc-tree/lib/interface';
 import { FileTypes } from 'mo/model';
 import type { LoadEventData } from 'mo/controller';
+import { TreeViewUtil } from 'mo/services/helper';
 
 export interface ITreeNodeItemProps {
     disabled?: boolean;
@@ -26,7 +27,7 @@ export interface ITreeProps extends Partial<TreeProps> {
         index: number,
         isLeaf: boolean
     ) => JSX.Element | string;
-    onDropTree?(treeNode: ITreeNodeItemProps[]): void;
+    onDropTree?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;
     onLoadData?: (treeNode: LoadEventData) => Promise<void>;
 }
 
@@ -46,66 +47,35 @@ const TreeView = ({
 
     const onDrop = (info) => {
         if (!draggable) return;
-        const dropId = info.node.data.id;
-        const dragId = info.dragNode.data.id;
-        const dropPos = info.node.pos.split('-');
-        const dropPosition =
-            info.dropPosition - Number(dropPos[dropPos.length - 1]);
-
-        const loopTree = (
-            data: ITreeNodeItemProps[],
-            key: string,
-            callback: (
-                item: ITreeNodeItemProps,
-                index: number,
-                arr: ITreeNodeItemProps[]
-            ) => void
-        ) => {
-            data.forEach((item, index, arr) => {
-                if (item.id === key) {
-                    return callback(item, index, arr);
-                }
-                if (item.children) {
-                    return loopTree(item.children, key, callback);
-                }
-            });
-        };
-        const treeData = [...data];
-
-        let dragObj;
-        loopTree(treeData, dragId, (item, index, arr) => {
-            arr.splice(index, 1);
-            dragObj = item;
+        const source = info.dragNode;
+        const target = info.node;
+        const treeViewUtil = new TreeViewUtil({
+            id: Number.MAX_SAFE_INTEGER,
+            children: data,
         });
+        if (target.data.isLeaf) {
+            // Can't drag into a file, so the target would to be the parent of this target
+            const obj = treeViewUtil.indexes[target.data.id];
+            const targetParentId = obj.parent!;
 
-        if (!info.dropToGap) {
-            loopTree(treeData, dropId, (item) => {
-                item.children = item.children || [];
-                item.children.push(dragObj);
-            });
-        } else if (
-            (info.node.data.children || []).length > 0 &&
-            info.node.expanded &&
-            dropPosition === 1
-        ) {
-            loopTree(treeData, dropId, (item) => {
-                item.children = item.children || [];
-                item.children.unshift(dragObj);
-            });
-        } else {
-            let ar;
-            let i;
-            loopTree(treeData, dropId, (item, index, arr) => {
-                ar = arr;
-                i = index;
-            });
-            if (dropPosition === -1) {
-                ar.splice(i, 0, dragObj);
-            } else {
-                ar.splice(i + 1, 0, dragObj);
+            const sourceParentId = treeViewUtil.indexes[source.data.id].parent;
+            // Can't drag under same folder
+            if (targetParentId === sourceParentId) {
+                return;
             }
+            onDropTree?.(
+                info.dragNode,
+                treeViewUtil.indexes[targetParentId].node!
+            );
+        } else {
+            const sourceParentId = treeViewUtil.indexes[source.data.id].parent;
+            // Can't drag to the parent node
+            if (sourceParentId === target.id) {
+                return;
+            }
+
+            onDropTree?.(info.dragNode, info.node);
         }
-        onDropTree?.(treeData);
     };
 
     const renderTreeNodes = (

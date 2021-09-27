@@ -15,9 +15,9 @@ A lightweight Web IDE UI Framework, built with React.js, and inspired by the Vis
 ## Installation
 
 ```bash
-npm install @dtstack/molecule
+npm install @dtinsight/molecule
 # Or
-yarn add @dtstack/molecule
+yarn add @dtinsight/molecule
 ```
 
 ## Basic Usage

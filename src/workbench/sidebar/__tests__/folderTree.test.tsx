@@ -200,12 +200,8 @@ describe('The FolderTree Component', () => {
         dragToTargetNode(getByTitle('file'), getByTitle('folder'));
 
         expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toEqual([
-            {
-                ...mockTreeData[0],
-                children: [mockFolder, mockFile],
-            },
-        ]);
+        expect(mockFn.mock.calls[0][0]).toEqual(mockFile);
+        expect(mockFn.mock.calls[0][1]).toEqual(mockFolder);
     });
 
     test('Should suppor to init contextMenu', () => {

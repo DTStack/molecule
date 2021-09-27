@@ -64,17 +64,17 @@ const TreeView = ({
                 return;
             }
             onDropTree?.(
-                info.dragNode,
+                source.data,
                 treeViewUtil.indexes[targetParentId].node!
             );
         } else {
             const sourceParentId = treeViewUtil.indexes[source.data.id].parent;
             // Can't drag to the parent node
-            if (sourceParentId === target.id) {
+            if (sourceParentId === target.data.id) {
                 return;
             }
 
-            onDropTree?.(info.dragNode, info.node);
+            onDropTree?.(source.data, target.data);
         }
     };
 

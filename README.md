@@ -2,20 +2,22 @@
 
 [![codecov](https://codecov.io/gh/DTStack/molecule/branch/main/graph/badge.svg?token=PDjbCBo6qz)](https://codecov.io/gh/DTStack/molecule)
 
-A Web IDE UI library built by React.js, inspired by the Visual Studio Code.
+A lightweight Web IDE UI Framework, built with React.js, and inspired by the Visual Studio Code.
 
 ## Features
 
 -   Provides the default IDE Workbench same as the Visual Studio Code
--   Allow to extends the default IDE Workbench
--   Supports customize the IDE Workbench by React Component easily
+-   Easy to extends the default IDE Workbench via the Extension
+-   Atomic React Components, Easy to customize the IDE UI
+
+---
 
 ## Installation
 
 ```bash
-npm install molecule
+npm install @dtstack/molecule
 # Or
-yarn add molecule
+yarn add @dtstack/molecule
 ```
 
 ## Basic Usage
@@ -35,20 +37,9 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-For more complex examples please read the below document.
-
 ## Document
 
--   Basic React UI Components
--   Workbench Parts
--   Extension Services
--   Advanced Usage
-
-## TODO
-
--   Allow Users to customize settings
--   Support internationalization, default includes zhCN, English
--   Support alter keybinding
+Refer to the [Docs](./docs).
 
 ## Contributing
 

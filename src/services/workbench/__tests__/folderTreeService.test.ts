@@ -155,14 +155,14 @@ describe('Test StatusBarService', () => {
         });
     });
 
-    test('Should support to right click', () => {
+    test('Should support to create event', () => {
         expectFnCalled((fn) => {
             folderTreeService.onCreate(fn);
             folderTreeService.emit(FolderTreeEvent.onCreate);
         });
     });
 
-    test('Should support to right click', () => {
+    test('Should support to contextMenu event', () => {
         expectFnCalled((fn) => {
             folderTreeService.onContextMenu(fn);
             folderTreeService.emit(FolderTreeEvent.onContextMenuClick);
@@ -173,6 +173,13 @@ describe('Test StatusBarService', () => {
         expectFnCalled((fn) => {
             folderTreeService.onLoadData(fn);
             folderTreeService.emit(FolderTreeEvent.onLoadData);
+        });
+    });
+
+    test('Should support to subscribe drop tree event', () => {
+        expectFnCalled((fn) => {
+            folderTreeService.onDropTree(fn);
+            folderTreeService.emit(FolderTreeEvent.onDrop);
         });
     });
 });

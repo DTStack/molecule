@@ -357,11 +357,6 @@ export class FolderTreeService
         ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onDrop, callback);
-        // this.setState({
-        //     folderTree: Object.assign(this.state.folderTree?.data, {
-        //         data: treeData,
-        //     }),
-        // });
     };
 
     public onRightClick = (

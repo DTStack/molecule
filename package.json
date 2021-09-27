@@ -126,5 +126,8 @@
         "react": "^16.14.0",
         "react-dom": "^16.14.0"
     },
-    "repository": "https://github.com/DTStack/molecule"
+    "repository": "https://github.com/DTStack/molecule",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    }
 }

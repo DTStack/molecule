@@ -30,7 +30,10 @@ export interface IFolderTreeController {
     ) => void;
     readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
     readonly onSelectFile?: (file: ITreeNodeItemProps) => void;
-    readonly onDropTree?: (treeNode: ITreeNodeItemProps[]) => void;
+    readonly onDropTree?: (
+        source: ITreeNodeItemProps,
+        target: ITreeNodeItemProps
+    ) => void;
     readonly onLoadData?: (treeNode: LoadEventData) => Promise<void>;
     readonly onRightClick?: (treeNode: ITreeNodeItemProps) => IMenuItemProps[];
 }
@@ -124,8 +127,12 @@ export class FolderTreeController
         return menus;
     };
 
-    public readonly onDropTree = (treeNode: ITreeNodeItemProps[]) => {
-        this.folderTreeService.onDropTree(treeNode);
+    public readonly onDropTree = (
+        source: ITreeNodeItemProps,
+        target: ITreeNodeItemProps
+    ) => {
+        // this.folderTreeService.onDropTree(treeNode);
+        this.emit(FolderTreeEvent.onDrop, source, target);
     };
 
     public onUpdateFileName = (file: ITreeNodeItemProps) => {

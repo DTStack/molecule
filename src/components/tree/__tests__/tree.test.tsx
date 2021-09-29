@@ -157,7 +157,7 @@ describe('Test the Tree component', () => {
         const { getByTitle } = render(
             <TreeView
                 data={mockData}
-                onSelectNode={mockFn}
+                onSelect={mockFn}
                 onRightClick={mockRightClickFn}
             />
         );

@@ -31,7 +31,7 @@ export interface ITreeProps {
     draggable?: boolean;
     expandKeys?: string[];
     onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
-    onSelectNode?: (node: ITreeNodeItemProps, isUpdate?) => void;
+    onSelect?: (node: ITreeNodeItemProps, isUpdate?) => void;
     onTreeClick?: () => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
@@ -55,7 +55,7 @@ const TreeView = ({
     onDropTree,
     onRightClick,
     renderTitle, // custom title
-    onSelectNode,
+    onSelect,
     onLoadData,
     onTreeClick,
 }: ITreeProps) => {
@@ -123,7 +123,7 @@ const TreeView = ({
             // expand node
             handleExpandKey(uuid!, node);
         }
-        onSelectNode?.(node);
+        onSelect?.(node);
     };
 
     const renderIcon = (

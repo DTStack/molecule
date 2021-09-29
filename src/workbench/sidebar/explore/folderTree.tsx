@@ -234,7 +234,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                     )}
                     draggable={!hasEditable}
                     onDropTree={handleDropTree}
-                    onSelectNode={onSelectFile}
+                    onSelect={onSelectFile}
                     onTreeClick={handleTreeClick}
                     onRightClick={handleRightClick}
                     renderTitle={renderTitle}

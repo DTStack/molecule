@@ -25,13 +25,6 @@ const mockData: ITreeNodeItemProps[] = [
     },
 ];
 
-async function dragExpect(fn: jest.Mock, result: any) {
-    await waitFor(() => {
-        expect(fn).toBeCalled();
-        expect(fn.mock.calls[0][0]).toEqual(result);
-    });
-}
-
 // mock Scrollable component
 jest.mock('lodash', () => {
     const originalModule = jest.requireActual('lodash');
@@ -257,9 +250,11 @@ describe('Test the Tree component', () => {
             },
         ];
         const mockFn = jest.fn();
-        const { findByTitle } = render(
+        const { findByTitle, getByTitle } = render(
             <TreeView draggable onDropTree={mockFn} data={data} />
         );
+
+        fireEvent.click(getByTitle('test1'));
 
         dragToTargetNode(
             await findByTitle('test1-1'),
@@ -282,9 +277,11 @@ describe('Test the Tree component', () => {
             source,
         ];
         const mockFn = jest.fn();
-        const { findByTitle } = render(
+        const { findByTitle, getByTitle } = render(
             <TreeView draggable onDropTree={mockFn} data={data} />
         );
+
+        fireEvent.click(getByTitle('test1'));
 
         dragToTargetNode(
             await findByTitle(source.name),
@@ -314,9 +311,12 @@ describe('Test the Tree component', () => {
             },
         ];
         const mockFn = jest.fn();
-        const { findByTitle } = render(
+        const { findByTitle, getByTitle } = render(
             <TreeView draggable onDropTree={mockFn} data={data} />
         );
+
+        fireEvent.click(getByTitle('test1'));
+        fireEvent.click(getByTitle('test2'));
 
         dragToTargetNode(
             await findByTitle(source.name),
@@ -333,51 +333,7 @@ describe('Test the Tree component', () => {
         });
     });
 
-    test('Should support to drag node into another folder', async () => {
-        const data = [
-            {
-                id: '1',
-                name: 'test1',
-                children: [{ id: '1-1', name: 'test1-1', isLeaf: true }],
-            },
-            {
-                id: '2',
-                name: 'test2',
-                children: [{ id: '2-1', name: 'test2-1', isLeaf: true }],
-            },
-        ];
-        const mockFn = jest.fn();
-        const { findByTitle } = render(
-            <TreeView draggable onDropTree={mockFn} data={data} />
-        );
-
-        // expand parent node
-        fireEvent.click(await findByTitle('test1'));
-        fireEvent.click(await findByTitle('test2'));
-
-        dragToTargetNode(
-            await findByTitle('test2-1'),
-            await findByTitle('test1-1')
-        );
-
-        await dragExpect(mockFn, [
-            {
-                id: '1',
-                name: 'test1',
-                children: [
-                    { id: '1-1', name: 'test1-1', isLeaf: true },
-                    { id: '2-1', name: 'test2-1', isLeaf: true },
-                ],
-            },
-            {
-                id: '2',
-                name: 'test2',
-                children: [],
-            },
-        ]);
-    });
-
-    test('Should not drag node to its parent node or drag node to its siblings or drag node to itself', async () => {
+    test('Should NOT drag node to its parent node or drag node to its siblings or drag node to itself', async () => {
         const data = [
             {
                 id: '1',

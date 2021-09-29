@@ -263,21 +263,23 @@ const TreeView = ({
         node: ITreeNodeItemProps
     ) => {
         if (node.isLeaf) {
+            // Can't drag into a file, so the target would to be the parent of this target
             const parentNode = getParentNodeViaNode(node);
             const dragParent = getParentNodeViaNode(dragInfo.current.dragNode!);
             const parentUuid = (parentNode.key || parentNode.id).toString();
             const dragParentUuid = (dragParent.key || dragParent.id).toString();
             // prevent to drop node into same level
             if (parentUuid === dragParentUuid) {
+                dragInfo.current = {
+                    x: 0,
+                    y: 0,
+                    dragNode: null,
+                    flattenTree: null,
+                };
                 return;
             }
-            const treeUtils = dragInfo.current.flattenTree;
 
-            // remove original and append the Node into target node
-            treeUtils.remove(dragInfo.current.dragNode!.id);
-            treeUtils.append(dragInfo.current.dragNode, parentNode.id);
-
-            // onDropTree?.(treeUtils.obj.children);
+            onDropTree?.(dragInfo.current.dragNode!, parentNode);
         } else {
             const dragParent = getParentNodeViaNode(dragInfo.current.dragNode!);
             const parentUuid = (dragParent.key || dragParent.id).toString();
@@ -288,14 +290,16 @@ const TreeView = ({
             // 1. drag a node into parentNode
             // 2. drag a folder node into self
             if (parentUuid === nodeUuid || dragUuid === nodeUuid) {
+                dragInfo.current = {
+                    x: 0,
+                    y: 0,
+                    dragNode: null,
+                    flattenTree: null,
+                };
                 return;
             }
-            const treeUtils = dragInfo.current.flattenTree;
 
-            treeUtils.remove(dragInfo.current.dragNode!.id);
-            treeUtils.append(dragInfo.current.dragNode, node.id);
-
-            // onDropTree?.(treeUtils.obj.children);
+            onDropTree?.(dragInfo.current.dragNode!, node);
         }
         dragInfo.current = { x: 0, y: 0, dragNode: null, flattenTree: null };
     };

@@ -68,7 +68,12 @@ function init() {
 }
 
 export const ExtendsProblems: IExtension = {
+    id: 'ExtendsProblems',
+    name: 'Extends Problems',
     activate(extensionCtx: IExtensionService) {
         init();
+    },
+    dispose() {
+        molecule.problems.remove(1);
     },
 };

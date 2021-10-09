@@ -1,5 +1,3 @@
-import { ExtendsStatusBar } from './statusBar';
-import { ExtendsEditor } from './editor';
 import { ExtendsFolderTree } from './folderTree';
 import { ExtendsMenuBar } from './menuBar';
 import { ExtendsActivityBar } from './activityBar';
@@ -18,9 +16,7 @@ import { paleNightColorThemeExtension } from './vscode-palenight-theme';
 export const defaultExtensions = [
     ExtendsPanel,
     ExtendsActivityBar,
-    ExtendsEditor,
     ExtendsMenuBar,
-    ExtendsStatusBar,
     ExtendsExplorer,
     ExtendsEditorTree,
     defaultColorThemeExtension,

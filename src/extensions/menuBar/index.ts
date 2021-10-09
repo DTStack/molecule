@@ -4,7 +4,10 @@ import molecule from 'mo';
 import { builtInMenuBarData } from 'mo/model';
 
 export const ExtendsMenuBar: IExtension = {
+    id: 'ExtendsMenuBar',
+    name: 'Extends MenuBar',
     activate(extensionCtx: IExtensionService) {
         molecule.menuBar.setMenus(builtInMenuBarData());
     },
+    dispose() {},
 };

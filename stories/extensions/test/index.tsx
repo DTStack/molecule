@@ -14,7 +14,10 @@ import TestPane from './testPane';
 import { Entry } from './entry';
 import { randomId } from 'mo/common/utils';
 
-export const ExtendTestPane: IExtension = {
+export const ExtendsTestPane: IExtension = {
+    id: 'ExtendsTestPane',
+    name: 'Test Pane ',
+    dispose() {},
     activate() {
         const TEST_PANE_ID = 'ActivityBarTestPane';
         const testSidePane = {

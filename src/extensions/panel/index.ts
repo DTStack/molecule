@@ -4,6 +4,8 @@ import molecule from 'mo';
 import { builtInOutputPanel, builtInPanelToolbox } from 'mo/model';
 
 export const ExtendsPanel: IExtension = {
+    id: 'ExtendsPanel',
+    name: 'Extends Panel',
     activate(extensionCtx: IExtensionService) {
         const output = builtInOutputPanel();
         molecule.panel.setState({
@@ -27,4 +29,5 @@ export const ExtendsPanel: IExtension = {
             molecule.panel.remove(key);
         });
     },
+    dispose() {},
 };

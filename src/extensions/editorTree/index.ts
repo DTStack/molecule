@@ -2,6 +2,9 @@ import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
 
 export const ExtendsEditorTree: IExtension = {
+    id: 'ExtendsEditorTree',
+    name: 'Extends Editor Tree',
+    dispose() {},
     activate() {
         molecule.editorTree.onSelect((tabId, groupId) => {
             molecule.editor.setActive(groupId, tabId);
@@ -15,10 +18,6 @@ export const ExtendsEditorTree: IExtension = {
             molecule.editor.closeOther(tabItem, groupId);
         });
 
-        molecule.editorTree.onCloseSaved((groupId) => {
-            // TODO: editor close saved
-        });
-
         molecule.editorTree.onCloseAll((groupId) => {
             if (groupId) {
                 molecule.editor.closeAll(groupId);
@@ -28,14 +27,6 @@ export const ExtendsEditorTree: IExtension = {
                     molecule.editor.closeAll(group.id!);
                 });
             }
-        });
-
-        molecule.editorTree.onSaveAll((groupId) => {
-            // TODO: editor save
-        });
-
-        molecule.editorTree.onLayout(() => {
-            // TODO: layoutService
         });
     },
 };

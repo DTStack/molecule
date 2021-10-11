@@ -22,6 +22,8 @@
 
     &__item {
         align-items: center;
+        background-color: var(--list-dropBackground);
+        color: var(--foreground);
         cursor: pointer;
         display: flex;
         justify-content: left;
@@ -29,7 +31,14 @@
         position: relative;
 
         &:hover {
+            background-color: var(--list-hoverBackground);
+            color: var(--list-hoverForeground);
             opacity: 0.8;
+        }
+
+        &--active {
+            background-color: var(--list-focusBackground);
+            color: var(--list-focusForeground);
         }
 
         &--disabled {

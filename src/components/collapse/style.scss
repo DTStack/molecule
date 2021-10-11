@@ -3,6 +3,8 @@
 $collapse__extra: #{$collapse}__extra;
 
 #{$collapse} {
+    background-color: var(--sideBar-background);
+    color: var(--sideBar-foreground);
     height: 100%;
     position: relative;
 

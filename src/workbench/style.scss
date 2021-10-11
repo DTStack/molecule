@@ -1,5 +1,41 @@
 @import 'mo/style/common';
 
+.#{$prefix} {
+    background-color: var(--workbenchBackground);
+    color: var(--foreground);
+
+    *::selection {
+        background-color: var(--editor-selectionBackground);
+    }
+
+    input,
+    select {
+        background: var(--input-background);
+        border-color: var(--input-border);
+        color: var(--input-foreground);
+
+        &::placeholder {
+            color: var(--input-placeholderForeground);
+        }
+    }
+
+    input:focus,
+    input:active {
+        border-color: var(--focusBorder);
+        outline-color: var(--focusBorder);
+        outline-offset: -1;
+        outline-style: solid;
+    }
+
+    code {
+        background: var(--textCodeBlock-background);
+    }
+
+    &.codicon {
+        color: var(--icon-foreground);
+    }
+}
+
 #{$workbench} {
     bottom: 0;
     height: calc(100% - 22px);

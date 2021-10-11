@@ -1,7 +1,10 @@
 @import 'mo/style/common';
 
 #{$modal} {
+    background-color: var(--notification-background);
+    border-color: var(--notification-border);
     box-sizing: border-box;
+    color: var(--button-foreground);
     font-size: 14px;
     margin: 0 auto;
     max-width: calc(100vw - 32px);
@@ -14,7 +17,7 @@
 
     // TODO rc-dialog提pr解决
     &-mask {
-        background-color: transparent;
+        background-color: var(--widgetShadow);
         bottom: 0;
         height: 100%;
         left: 0;
@@ -48,7 +51,9 @@
 
     &-content {
         background-color: var(--workbenchBackground);
+        border-color: var(--notificationCenter-border);
         box-shadow: var(--widget-shadow) 0 0 10px 2px;
+        color: var(--button-foreground);
         font-size: 18px;
         padding: 0 15px;
         pointer-events: auto;
@@ -56,6 +61,8 @@
     }
 
     &-header {
+        background: var(--notificationCenterHeader-background);
+        color: var(--notificationCenterHeader-foreground);
         font-size: 24px;
         padding: 16px 0;
     }
@@ -72,7 +79,9 @@
     }
 
     &-close {
-        color: #fff;
+        background: 0 0;
+        border: 0;
+        color: var(--button-foreground);
         cursor: pointer;
         font-weight: 700;
         line-height: 1;
@@ -115,6 +124,10 @@
         .codicon {
             font-size: 48px !important;
         }
+
+        .codicon-warning {
+            color: var(--notificationsWarningIcon-foreground);
+        }
     }
 
     &__content {
@@ -136,6 +149,7 @@
         }
 
         &--detail {
+            color: var(--notificationsInfoIcon-foreground);
             font-size: 13px;
         }
     }

@@ -13,6 +13,7 @@
 
     &--active {
         border: 1px solid;
+        border-color: var(--focusBorder);
     }
 
     &__input {
@@ -50,8 +51,10 @@
     &__container {
         align-items: center;
         appearance: none;
+        background-color: var(--dropdown-background);
         border-top: 0;
         box-sizing: border-box;
+        color: var(--dropdown-foreground);
         display: flex;
         flex-direction: column;
         font-size: 13px;
@@ -65,6 +68,7 @@
 
     &__descriptor {
         border-top: 1px solid;
+        border-top-color: var(--dropdown-border);
         height: 26px;
         line-height: 26px;
         overflow: hidden;
@@ -77,6 +81,10 @@
         height: 20px;
         line-height: 20px;
         width: 100%;
+
+        &:hover {
+            background-color: var(--button-hoverBackground);
+        }
 
         &--disabled {
             cursor: not-allowed;

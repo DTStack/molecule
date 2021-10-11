@@ -1,10 +1,17 @@
 @import 'mo/style/common';
 
 #{$editor} {
+    background: var(--editorGroup-background);
     display: flex;
     height: 100%;
     position: relative;
     width: 100%;
+
+    &__group-breadcrumb,
+    &__group-container {
+        background-color: var(--editor-background);
+        color: var(--editor-foreground);
+    }
 
     &__group {
         height: 100%;
@@ -53,5 +60,14 @@
         height: 22px;
         line-height: 22px;
         padding-left: 20px;
+    }
+
+    #{prefix($tabSwitcher)} {
+        .tab-button {
+            &--active {
+                background-color: var(--tab-activeBackground);
+                color: var(--tab-activeForeground);
+            }
+        }
     }
 }

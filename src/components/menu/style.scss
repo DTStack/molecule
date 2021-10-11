@@ -2,6 +2,10 @@
 
 #{$menu},
 #{$subMenu} {
+    background-color: var(--menu-background);
+    border-color: var(--menu-border);
+    box-shadow: var(--widget-shadow) 0 2px 4px;
+    color: var(--menu-foreground);
     font-size: 13px;
     line-height: 13px;
 }
@@ -44,6 +48,16 @@
         border: thin solid transparent;
         display: flex;
         min-width: 120px;
+
+        &:hover {
+            background-color: var(--menu-selectionBackground);
+            color: var(--button-foreground);
+        }
+
+        &--active {
+            background-color: var(--menu-selectionBackground);
+            color: var(--button-foreground);
+        }
 
         &--disabled {
             cursor: default;
@@ -108,6 +122,7 @@
     }
 
     &__separator {
+        background-color: var(--menu-separatorBackground);
         height: 1px;
         width: 100%;
     }

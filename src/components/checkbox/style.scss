@@ -14,13 +14,16 @@
     }
 
     &__label {
+        color: var(--checkbox-foreground);
         cursor: pointer;
         outline: none;
         padding-left: 26px;
         position: relative;
 
         &::before {
+            background-color: var(--checkbox-background);
             border: 1px solid transparent;
+            border-color: var(--checkbox-border);
             border-radius: 3px;
             box-sizing: border-box;
             content: ' ';
@@ -39,5 +42,9 @@
             user-select: none;
             width: 18px;
         }
+    }
+
+    &--focus + label::before {
+        outline-color: var(--focusBorder);
     }
 }

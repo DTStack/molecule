@@ -89,6 +89,8 @@ export interface ISettingsService {
     getDefaultSettingsTab(): BuiltInSettingsTabType;
 }
 
+export const CUSTOM_TREE_THEME = 'custom-tree-theme';
+
 @singleton()
 export class SettingsService extends GlobalEvent implements ISettingsService {
     protected settings: ISettings;
@@ -151,7 +153,7 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
         }
         if (tree) {
             const cssvars = convertToCSSVars(flatObject({ tree }));
-            applyStyleSheetRules(cssvars, 'custom-tree-theme');
+            applyStyleSheetRules(cssvars, CUSTOM_TREE_THEME);
         }
     }
 

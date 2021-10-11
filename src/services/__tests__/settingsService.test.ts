@@ -2,8 +2,9 @@ import { BuiltInZhCN } from 'mo/i18n/localization';
 import { BuiltInEditorOptions } from 'mo/model';
 import { ISettings, SettingsEvent } from 'mo/model/settings';
 import 'reflect-metadata';
-import { SettingsService } from '../settingsService';
+import { CUSTOM_TREE_THEME, SettingsService } from '../settingsService';
 import { BuiltInColorTheme } from '../theme/colorThemeService';
+import '@testing-library/jest-dom';
 
 const mockData = {
     project: {
@@ -73,6 +74,9 @@ describe('Test the SettingsService', () => {
             editor: {
                 tabSize: 6,
             },
+            tree: {
+                fontSize: 14,
+            },
         };
         const mySettingService = new SettingsService() as any;
         mySettingService.colorThemeService.setTheme = jest.fn((value) => {
@@ -87,6 +91,12 @@ describe('Test the SettingsService', () => {
             }
         );
         mySettingService.applySettings(expectedSettings);
+
+        const styleSheet = document.head.querySelector(
+            `style.${CUSTOM_TREE_THEME}`
+        );
+        expect(styleSheet).toBeInTheDocument();
+        expect(styleSheet?.innerHTML).toContain('--tree-fontSize: 14;');
     });
 
     test('Flat an Object ', () => {

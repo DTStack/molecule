@@ -20,6 +20,8 @@ import {
 } from './theme/colorThemeService';
 import { ILocaleService, LocaleService } from 'mo/i18n';
 import { cloneDeep, isEqual } from 'lodash';
+import { convertToCSSVars } from './theme/helper';
+import { applyStyleSheetRules } from 'mo/common/css';
 
 export type BuiltInSettingsTabType = typeof BuiltInSettingsTab;
 
@@ -137,7 +139,7 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
 
     public applySettings(nextSettings: ISettings) {
         const oldSettings = this.settings;
-        const { colorTheme, locale, editor }: ISettings = nextSettings;
+        const { colorTheme, locale, editor, tree }: ISettings = nextSettings;
         if (colorTheme && colorTheme !== oldSettings.colorTheme) {
             this.colorThemeService.setTheme(colorTheme);
         }
@@ -146,6 +148,10 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
         }
         if (editor && !isEqual(editor, oldSettings.editor)) {
             this.editorService.updateEditorOptions(editor);
+        }
+        if (tree) {
+            const cssvars = convertToCSSVars(flatObject({ tree }));
+            applyStyleSheetRules(cssvars, 'custom-tree-theme');
         }
     }
 

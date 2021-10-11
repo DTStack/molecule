@@ -1,9 +1,9 @@
 @import 'mo/style/common';
 
-$treenode-height: 22px;
+$treenode-height: calc(var(--tree-height, 22) * 1px);
 
 #{$tree} {
-    font-size: 13px;
+    font-size: calc(var(--tree-fontSize, 13) * 1px);
 
     &__treenode {
         align-items: center;

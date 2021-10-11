@@ -17,7 +17,7 @@ $treenode-height: 22px;
         user-select: none;
 
         &:not(#{$tree}__treenode--active):hover {
-            background-color: var(--list-hoverForeground);
+            color: var(--list-hoverForeground);
         }
 
         &:focus {

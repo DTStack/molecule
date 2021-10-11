@@ -39,24 +39,6 @@
     "contributes": {
         "themes": [
             {
-                "id": "Palenight Theme",
-                "label": "Palenight Theme",
-                "uiTheme": "vs-dark",
-                "path": "./themes/palenight.json"
-            },
-            {
-                "id": "Palenight Italic",
-                "label": "Palenight Italic",
-                "uiTheme": "vs-dark",
-                "path": "./themes/palenight-italic.json"
-            },
-            {
-                "id": "Palenight Operator",
-                "label": "Palenight Operator",
-                "uiTheme": "vs-dark",
-                "path": "./themes/palenight-operator.json"
-            },
-            {
                 "id": "Palenight Mild Contrast",
                 "label": "Palenight (Mild Contrast)",
                 "uiTheme": "vs-dark",

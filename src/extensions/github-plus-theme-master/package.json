@@ -1,0 +1,39 @@
+{
+    "name": "github-plus-theme",
+    "displayName": "GitHub Plus Theme",
+    "description": "A GitHub inspired color theme for VSCode code and interface!",
+    "version": "1.4.2",
+    "publisher": "thenikso",
+    "icon": "icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/thenikso/github-plus-theme"
+    },
+    "bugs": {
+        "url": "https://github.com/thenikso/github-plus-theme/issues"
+    },
+    "engines": {
+        "vscode": "^1.16.0"
+    },
+    "categories": [
+        "Themes"
+    ],
+    "contributes": {
+        "themes": [
+            {
+                "id": "GitHub Plus",
+                "label": "GitHub Plus",
+                "uiTheme": "vs",
+                "path": "./themes/github-plus-theme.json"
+            }
+        ]
+    },
+    "scripts": {
+        "publish": "vsce publish"
+    },
+    "__metadata": {
+        "id": "d0db9e58-8cdf-49c5-87bf-02f037e10bb0",
+        "publisherDisplayName": "thenikso",
+        "publisherId": "e748af4a-d17d-4c3b-a7e1-2592de9a7e09"
+    }
+}

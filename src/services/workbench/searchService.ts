@@ -12,7 +12,7 @@ import {
     SEARCH_WHOLE_WORD_COMMAND_ID,
 } from 'mo/model/workbench/search';
 import { ITreeNodeItemProps } from 'mo/components';
-import { searchById } from '../../common/treeUtil';
+import { searchById } from 'mo/common/utils';
 
 export interface ISearchService extends Component<ISearchProps> {
     /**

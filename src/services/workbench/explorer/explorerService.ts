@@ -10,7 +10,7 @@ import {
 } from 'mo/model/workbench/explorer/explorer';
 import cloneDeep from 'lodash/cloneDeep';
 import { IMenuItemProps } from 'mo/components/menu';
-import { searchById } from '../../../common/treeUtil';
+import { searchById } from 'mo/common/utils';
 import { IActionBarItemProps } from 'mo/components';
 import logger from 'mo/common/logger';
 

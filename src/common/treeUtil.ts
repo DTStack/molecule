@@ -1,9 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
 
-export function searchById(id) {
-    return (item) => item.id === id;
-}
-
 interface BaseProps {
     id?: number;
 

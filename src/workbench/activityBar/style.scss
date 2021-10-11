@@ -1,6 +1,9 @@
 @import 'mo/style/common';
 
 #{$activityBar} {
+    background-color: var(--activityBar-background);
+    border-color: var(--activityBar-border);
+    color: var(--activityBar-foreground);
     flex: 1;
     width: 48px;
 
@@ -26,6 +29,7 @@
 
     &__item {
         align-items: center;
+        color: var(--activityBar-inactiveForeground);
         cursor: pointer;
         display: flex;
         height: 48px;
@@ -35,10 +39,21 @@
         width: 48px;
         z-index: 1;
 
+        &:hover,
+        &__label {
+            background-color: var(--activityBar-activeBackground);
+            border-color: var(--activityBar-activeBorder);
+            color: var(--activityBar-activeBorder);
+        }
+
         &--disabled {
             cursor: default;
             opacity: 0.4;
             pointer-events: none;
+        }
+
+        &--checked {
+            color: var(--activityBar-activeBorder);
         }
     }
 
@@ -62,6 +77,7 @@
     }
 
     &__indicator {
+        background: var(--activityBar-activeBorder);
         height: 100%;
         left: 0;
         position: absolute;

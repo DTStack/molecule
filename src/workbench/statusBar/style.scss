@@ -2,7 +2,10 @@
 
 #{$statusBar} {
     align-items: center;
+    background-color: var(--statusBar-background);
+    border-color: var(--statusBar-border);
     bottom: 0;
+    color: var(--statusBar-foreground);
     display: flex;
     height: 22px;
     justify-content: center;
@@ -51,7 +54,11 @@
         }
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: var(--statusBarItem-hoverBackground);
+        }
+
+        &:active {
+            background-color: var(--statusBarItem-activeBackground);
         }
 
         .codicon {

@@ -2,7 +2,10 @@
 $icon-size: 20px;
 
 #{$actionBar} {
+    background-color: var(--listFilterWidget-background);
+    color: var(--foreground);
     height: 100%;
+    outline-color: var(--listFilterWidget-outline);
     overflow: hidden;
     text-align: right;
     white-space: nowrap;
@@ -22,6 +25,16 @@ $icon-size: 20px;
         cursor: pointer;
         list-style: none;
         margin-left: 2px;
+
+        &:hover {
+            background: var(--toolbar-hoverBackground);
+            outline-color: var(--toolbar-hoverOutline);
+        }
+
+        &:hover,
+        &--checked {
+            background-color: var(--toolbar-activeBackground);
+        }
 
         &--disabled {
             cursor: not-allowed;

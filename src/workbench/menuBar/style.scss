@@ -2,12 +2,24 @@
 
 #{$menuBar} {
     align-items: center;
+    background-color: var(--activityBar-background);
+    color: var(--activityBar-inactiveForeground);
     cursor: pointer;
     display: flex;
     font-size: 13px;
     height: 35px;
     justify-content: center;
     width: 48px;
+
+    #{$menu} {
+        &__item {
+            &:hover {
+                background-color: var(--menubar-selectionBackground);
+                border-color: var(--menubar-selectionBorder);
+                color: var(--menubar-selectionForeground);
+            }
+        }
+    }
 
     &--left {
         left: 0;

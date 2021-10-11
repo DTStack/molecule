@@ -1,9 +1,12 @@
 @import 'mo/style/common';
 
 #{$btn} {
+    --button-hoverBackground: var(--button-background);
     align-items: center;
+    background-color: var(--button-background);
     border: 0;
     box-sizing: border-box;
+    color: var(--button-foreground);
     color: inherit;
     cursor: pointer;
     display: flex;
@@ -12,6 +15,11 @@
     outline-offset: 2px;
     padding: 4px 10px;
     text-align: center;
+
+    &:hover {
+        background-color: var(--button-hoverBackground);
+        opacity: 0.9;
+    }
 
     &--normal {
         padding: 4px 15px;

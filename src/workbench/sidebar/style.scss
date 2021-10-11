@@ -1,24 +1,17 @@
 @import 'mo/style/common';
 
 #{$sidebar} {
+    background-color: var(--sideBar-background);
+    border-color: var(--sideBar-border);
+    color: var(--sideBar-foreground);
     height: 100%;
     left: 0;
+    outline-color: var(--sideBar-border);
     position: relative;
     width: 100%;
 
     &-explorer {
         height: 100%;
-    }
-
-    h2 {
-        cursor: default;
-        font-size: 11px;
-        font-weight: normal;
-        margin: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-transform: uppercase;
-        white-space: nowrap;
     }
 
     &__pane {
@@ -29,7 +22,10 @@
 
     &__header {
         align-items: center;
+        background-color: var(--sideBarSectionHeader-background);
+        border-color: var(--sideBarSectionHeader-border);
         box-sizing: border-box;
+        color: var(--sideBarSectionHeader-foreground);
         display: flex;
         height: 35px;
         overflow: hidden;
@@ -44,6 +40,18 @@
         padding-left: 12px;
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        h2 {
+            color: var(--sideBarTitle-foreground);
+            cursor: default;
+            font-size: 11px;
+            font-weight: normal;
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
     }
 
     &__content {

@@ -1,9 +1,14 @@
 @import 'mo/style/common';
 
 #{$tabs} {
+    background-color: var(--editorGroupHeader-tabsBackground);
     height: 100%;
     position: relative;
     user-select: none;
+
+    &--line {
+        border-bottom: 1px solid var(--tab-border);
+    }
 
     &__header {
         align-items: center;
@@ -32,7 +37,10 @@
 #{$tab} {
     &__item {
         align-items: center;
+        background: var(--tab-inactiveBackground);
+        border-right: 1px solid var(--tab-border);
         box-sizing: border-box;
+        color: var(--tab-inactiveForeground);
         cursor: pointer;
         display: flex;
         flex-wrap: nowrap;
@@ -63,6 +71,7 @@
                 width: 18px;
 
                 &::after {
+                    background: var(--tab-activeForeground);
                     border-radius: 50%;
                     content: '';
                     display: block;
@@ -91,6 +100,16 @@
             &__button {
                 font-size: 0;
             }
+        }
+
+        &--active {
+            background: var(--tab-activeBackground);
+            border-bottom-color: var(--tab-activeBorder);
+            color: var(--tab-activeForeground);
+        }
+
+        &--close {
+            color: var(--tab-activeForeground);
         }
     }
 }

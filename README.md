@@ -4,10 +4,8 @@
 
 [ci-image]: https://github.com/DTStack/molecule/actions/workflows/main.yml/badge.svg
 [ci-url]: https://github.com/DTStack/molecule/actions/workflows/main.yml
-
 [codecov-image]: https://codecov.io/gh/DTStack/molecule/branch/main/graph/badge.svg?token=PDjbCBo6qz
 [codecov-url]: https://codecov.io/gh/DTStack/molecule
-
 [download-img]: https://img.shields.io/npm/dm/@dtinsight/molecule.svg?style=flat
 [download-url]: https://www.npmjs.com/package/@dtinsight/molecule
 

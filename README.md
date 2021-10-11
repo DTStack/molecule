@@ -1,6 +1,13 @@
 # Molecule
 
-[![codecov](https://codecov.io/gh/DTStack/molecule/branch/main/graph/badge.svg?token=PDjbCBo6qz)](https://codecov.io/gh/DTStack/molecule)
+[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url]
+
+[ci-image]: https://github.com/DTStack/molecule/actions/workflows/main.yml/badge.svg
+[ci-url]: https://github.com/DTStack/molecule/actions/workflows/main.yml
+[codecov-image]: https://codecov.io/gh/DTStack/molecule/branch/main/graph/badge.svg?token=PDjbCBo6qz
+[codecov-url]: https://codecov.io/gh/DTStack/molecule
+[download-img]: https://img.shields.io/npm/dm/@dtinsight/molecule.svg?style=flat
+[download-url]: https://www.npmjs.com/package/@dtinsight/molecule
 
 A lightweight Web IDE UI Framework, built with React.js, and inspired by the Visual Studio Code.
 

@@ -9,7 +9,6 @@ export class EventEmitter {
     public emit(name: string, ...args) {
         const events = this._events.get(name);
         if (events && events.length > 0) {
-            // The log for development
             events.forEach((callEvent) => {
                 callEvent(...args);
             });

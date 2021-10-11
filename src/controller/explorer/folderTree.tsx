@@ -16,11 +16,6 @@ import {
     FileType,
 } from 'mo/model';
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
-import type { EventDataNode } from 'rc-tree/lib/interface';
-
-export interface LoadEventData extends EventDataNode {
-    data?: ITreeNodeItemProps;
-}
 
 export interface IFolderTreeController {
     readonly createTreeNode?: (type: FileType) => void;
@@ -29,12 +24,12 @@ export interface IFolderTreeController {
         treeNode?: ITreeNodeItemProps
     ) => void;
     readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
-    readonly onSelectFile?: (file: ITreeNodeItemProps) => void;
+    readonly onSelectFile?: (file?: ITreeNodeItemProps) => void;
     readonly onDropTree?: (
         source: ITreeNodeItemProps,
         target: ITreeNodeItemProps
     ) => void;
-    readonly onLoadData?: (treeNode: LoadEventData) => Promise<void>;
+    readonly onLoadData?: (treeNode: ITreeNodeItemProps) => Promise<void>;
     readonly onRightClick?: (treeNode: ITreeNodeItemProps) => IMenuItemProps[];
 }
 
@@ -139,10 +134,10 @@ export class FolderTreeController
         this.emit(FolderTreeEvent.onUpdateFileName, file);
     };
 
-    public readonly onSelectFile = (file: ITreeNodeItemProps) => {
-        this.folderTreeService.setActive(file.id);
+    public readonly onSelectFile = (file?: ITreeNodeItemProps) => {
+        this.folderTreeService.setActive(file?.id);
         // editing file won't emit onSelectFile
-        if (!file.isEditable && file.fileType === FileTypes.File) {
+        if (file && !file.isEditable && file.fileType === FileTypes.File) {
             this.emit(FolderTreeEvent.onSelectFile, file);
         }
     };
@@ -162,7 +157,18 @@ export class FolderTreeController
         this.emit(FolderTreeEvent.onDelete, id);
     };
 
-    public onLoadData = async (treeNode: LoadEventData) => {
-        await this.emit(FolderTreeEvent.onLoadData, treeNode);
+    public onLoadData = (treeNode: ITreeNodeItemProps) => {
+        const count = this.count(FolderTreeEvent.onLoadData);
+        if (count) {
+            return new Promise<void>((resolve, reject) => {
+                const callback = (node: ITreeNodeItemProps) => {
+                    this.folderTreeService.update(node);
+                    resolve();
+                };
+                this.emit(FolderTreeEvent.onLoadData, treeNode, callback);
+            });
+        } else {
+            return Promise.resolve();
+        }
     };
 }

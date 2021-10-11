@@ -1,12 +1,18 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
-import RcTree, { TreeNode as RcTreeNode, TreeProps } from 'rc-tree';
+import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { Icon } from 'mo/components/icon';
-import { prefixClaName, classNames } from 'mo/common/className';
-import type { DataNode } from 'rc-tree/lib/interface';
-import { FileTypes } from 'mo/model';
-import type { LoadEventData } from 'mo/controller';
+import { debounce } from 'lodash';
+import { classNames } from 'mo/common/className';
+import TreeNode from './treeNode';
+import {
+    activeTreeNodeClassName,
+    defaultTreeClassName,
+    defaultTreeNodeClassName,
+    expandTreeNodeClassName,
+    unexpandTreeNodeClassName,
+} from './base';
 import { TreeViewUtil } from 'mo/services/helper';
 
+// TODO: Should reconsider the reasonable of the interface
 export interface ITreeNodeItemProps {
     disabled?: boolean;
     icon?: string | JSX.Element;
@@ -19,161 +25,380 @@ export interface ITreeNodeItemProps {
     [key: string]: any;
 }
 
-export interface ITreeProps extends Partial<TreeProps> {
+export interface ITreeProps {
     data?: ITreeNodeItemProps[];
-    onSelectNode?: (file: ITreeNodeItemProps, isUpdate?) => void;
+    className?: string;
+    draggable?: boolean;
+    expandKeys?: string[];
+    onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
+    onSelect?: (node: ITreeNodeItemProps, isUpdate?) => void;
+    onTreeClick?: () => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
         index: number,
         isLeaf: boolean
     ) => JSX.Element | string;
     onDropTree?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;
-    onLoadData?: (treeNode: LoadEventData) => Promise<void>;
+    onLoadData?: (node: ITreeNodeItemProps) => Promise<void>;
+    onRightClick?: (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        node: ITreeNodeItemProps
+    ) => void;
 }
 
 const TreeView = ({
     className,
     data = [],
-    draggable,
+    draggable = false,
+    expandKeys: controlExpandKeys,
+    onExpand,
     onDropTree,
     onRightClick,
     renderTitle, // custom title
-    onSelectNode,
+    onSelect,
     onLoadData,
-    ...restProps
+    onTreeClick,
 }: ITreeProps) => {
-    const [selectedKeys, setKeys] = useState<React.Key[]>([]);
-    const treeRef = useRef<RcTree>(null);
+    const [expandKeys, setExpandKeys] = useState<string[]>([]);
+    const [activeKey, setActiveKey] = useState<string | null>(null);
+    const loadDataCache = useRef<Record<string, boolean>>({});
+    const [loadingKeys, setLoadingKeys] = useState<string[]>([]);
+    const dragOverNode = useRef<ITreeNodeItemProps>();
+    const dragInfo = useRef<{
+        x: number;
+        y: number;
+        dragNode: ITreeNodeItemProps | null;
+        flattenTree: any;
+    }>({ x: 0, y: 0, dragNode: null, flattenTree: null });
+    const wrapper = useRef<HTMLDivElement>(null);
 
-    const onDrop = (info) => {
-        if (!draggable) return;
-        const source = info.dragNode;
-        const target = info.node;
-        const treeViewUtil = new TreeViewUtil({
-            id: Number.MAX_SAFE_INTEGER,
-            children: data,
-        });
-        if (target.data.isLeaf) {
-            // Can't drag into a file, so the target would to be the parent of this target
-            const obj = treeViewUtil.indexes[target.data.id];
-            const targetParentId = obj.parent!;
+    const canLoadData = (key: string) => {
+        if (!onLoadData) return false;
+        if (loadDataCache.current.hasOwnProperty(key)) return false;
+        return true;
+    };
 
-            const sourceParentId = treeViewUtil.indexes[source.data.id].parent;
-            // Can't drag under same folder
-            if (targetParentId === sourceParentId) {
-                return;
-            }
-            onDropTree?.(
-                source.data,
-                treeViewUtil.indexes[targetParentId].node!
-            );
-        } else {
-            const sourceParentId = treeViewUtil.indexes[source.data.id].parent;
-            // Can't drag to the parent node
-            if (sourceParentId === target.data.id) {
-                return;
-            }
-
-            onDropTree?.(source.data, target.data);
+    const validatorLoadingData = (node: ITreeNodeItemProps) => {
+        const uuid: string = (node.key || node.id).toString();
+        if (canLoadData(uuid!)) {
+            setLoadingKeys((keys) => {
+                const nextKeys = keys.concat();
+                nextKeys.push(uuid!);
+                return nextKeys;
+            });
+            loadDataCache.current[uuid] = true;
+            onLoadData!(node).finally(() => {
+                setLoadingKeys((keys) => {
+                    const nextKeys = keys.concat();
+                    const index = nextKeys.indexOf(uuid!);
+                    nextKeys.splice(index, 1);
+                    return nextKeys;
+                });
+            });
         }
     };
 
-    const renderTreeNodes = (
-        data: ITreeNodeItemProps[],
-        indent: number,
-        parentPath?: string
-    ) =>
-        data?.map((item, index) => {
-            const {
-                id,
-                disabled = false,
-                key: rawKey,
-                icon,
-                name,
-                children = [],
-                isLeaf: itemIsLeaf,
-            } = item;
+    const handleExpandKey = (key: string, node: ITreeNodeItemProps) => {
+        const index = expandKeys.findIndex((e) => e === key);
+        if (index > -1) {
+            expandKeys.splice(index, 1);
+        } else {
+            expandKeys.push(key);
+        }
+        onExpand
+            ? onExpand(expandKeys.concat(), node)
+            : setExpandKeys(expandKeys.concat());
+    };
 
-            const isLeaf =
-                typeof itemIsLeaf === 'boolean'
-                    ? itemIsLeaf
-                    : item.fileType === FileTypes.File || children.length === 0;
+    const handleNodeClick = (
+        node: ITreeNodeItemProps,
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        e.stopPropagation();
+        const uuid: string = (node.key || node.id).toString();
+        setActiveKey(uuid);
+        if (!node.isLeaf) {
+            // load data
+            validatorLoadingData(node);
+            // expand node
+            handleExpandKey(uuid!, node);
+        }
+        onSelect?.(node);
+    };
+
+    const renderIcon = (
+        icon: JSX.Element | undefined,
+        isLeaf: boolean,
+        isExpand: boolean,
+        isLoading: boolean
+    ) => {
+        if (isLeaf) {
+            return icon || null;
+        }
+        if (isLoading) {
+            return <Icon type="loading~spin" />;
+        }
+        return <Icon type={isExpand ? 'chevron-down' : 'chevron-right'} />;
+    };
+
+    const handleRightClick = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        info: ITreeNodeItemProps
+    ) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onRightClick?.(e, info);
+    };
+
+    const onWindowDragEnd = useCallback((event) => {
+        handleDragEnd(event, null, true);
+        window.removeEventListener('dragend', onWindowDragEnd);
+    }, []);
+
+    const handleDragStart = (
+        e: React.DragEvent<HTMLDivElement>,
+        node: ITreeNodeItemProps
+    ) => {
+        dragInfo.current = {
+            x: e.clientX,
+            y: e.clientY,
+            dragNode: node,
+            flattenTree: new TreeViewUtil({
+                id: Number.MAX_SAFE_INTEGER,
+                children: data,
+            }),
+        };
+
+        // unfolder current node
+        const uuid = (node.key || node.id).toString();
+        const idx = (controlExpandKeys || expandKeys).indexOf(uuid);
+        if (idx > -1) {
+            const next = expandKeys.concat();
+            next.splice(idx, 1);
+            onExpand ? onExpand(next, node) : setExpandKeys(next);
+        }
+
+        window.addEventListener('dragend', onWindowDragEnd);
+    };
+
+    const handleDragEnter = debounce(
+        (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => {
+            // expand the non-leaf node
+            const uuid = (node.key || node.id).toString();
+            const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
+            const dragNode = dragInfo.current.dragNode!;
+            const dragNodeUuid = (dragNode.key || dragNode.id).toString();
+            const isSelfNode = uuid === dragNodeUuid;
+            if (
+                !node.isLeaf &&
+                !isSelfNode &&
+                !isExpand &&
+                !canLoadData(uuid)
+            ) {
+                handleExpandKey(uuid, node);
+            }
+        },
+        300
+    );
+
+    const addOverClassViaNode = (node: ITreeNodeItemProps) => {
+        const uuid = (node.key || node.id).toString();
+        const parentDom = document.querySelector<HTMLDivElement>(
+            `div[data-key="${uuid}"]`
+        );
+        let dom = parentDom;
+        while (dom) {
+            if (!dom.classList.contains('drag-over')) {
+                dom.classList.add('drag-over');
+            }
+            const nextSibling = dom.nextElementSibling as HTMLDivElement;
+            if (nextSibling?.dataset.indent === parentDom!.dataset.indent) {
+                dom = null;
+            } else {
+                dom = nextSibling;
+            }
+        }
+    };
+
+    const clearOverClass = () => {
+        wrapper.current?.querySelectorAll('.drag-over').forEach((dom) => {
+            dom.classList.remove('drag-over');
+        });
+    };
+
+    const getParentNodeViaNode = (node: ITreeNodeItemProps) => {
+        const parentId = dragInfo.current.flattenTree.indexes[node.id].parent;
+        const parent = dragInfo.current.flattenTree.indexes[parentId].node;
+        return parent;
+    };
+
+    const handleDragOver = (
+        e: React.DragEvent<HTMLDivElement>,
+        node: ITreeNodeItemProps
+    ) => {
+        const parent = node.isLeaf ? getParentNodeViaNode(node) : node;
+        if (parent !== dragOverNode.current) {
+            clearOverClass();
+            dragOverNode.current = parent;
+            addOverClassViaNode(parent);
+        }
+    };
+
+    const handleDragEnd = (
+        event: React.DragEvent<HTMLDivElement>,
+        node: ITreeNodeItemProps | null,
+        outsideTree = false
+    ) => {
+        if (!outsideTree) {
+            // drop inside the tree
+        }
+        clearOverClass();
+        dragOverNode.current = undefined;
+        // reset dragging status
+        dragInfo.current = { x: 0, y: 0, dragNode: null, flattenTree: null };
+    };
+
+    const handleDrop = (
+        e: React.DragEvent<HTMLDivElement>,
+        node: ITreeNodeItemProps
+    ) => {
+        if (node.isLeaf) {
+            // Can't drag into a file, so the target would to be the parent of this target
+            const parentNode = getParentNodeViaNode(node);
+            const dragParent = getParentNodeViaNode(dragInfo.current.dragNode!);
+            const parentUuid = (parentNode.key || parentNode.id).toString();
+            const dragParentUuid = (dragParent.key || dragParent.id).toString();
+            // prevent to drop node into same level
+            if (parentUuid === dragParentUuid) {
+                dragInfo.current = {
+                    x: 0,
+                    y: 0,
+                    dragNode: null,
+                    flattenTree: null,
+                };
+                return;
+            }
+
+            onDropTree?.(dragInfo.current.dragNode!, parentNode);
+        } else {
+            const dragParent = getParentNodeViaNode(dragInfo.current.dragNode!);
+            const parentUuid = (dragParent.key || dragParent.id).toString();
+            const nodeUuid = (node.key || node.id).toString();
+            const dragNode = dragInfo.current.dragNode!;
+            const dragUuid = (dragNode.key || dragNode.id).toString();
+            // prevent the situations like
+            // 1. drag a node into parentNode
+            // 2. drag a folder node into self
+            if (parentUuid === nodeUuid || dragUuid === nodeUuid) {
+                dragInfo.current = {
+                    x: 0,
+                    y: 0,
+                    dragNode: null,
+                    flattenTree: null,
+                };
+                return;
+            }
+
+            onDropTree?.(dragInfo.current.dragNode!, node);
+        }
+        dragInfo.current = { x: 0, y: 0, dragNode: null, flattenTree: null };
+    };
+
+    const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
+        return data.map((item, index) => {
+            const uuid = (item.key || item.id).toString();
+            const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
+            const isLoading = loadingKeys.includes(uuid!);
+            const isActive = activeKey === uuid;
+
+            const title =
+                renderTitle?.(item, index, !!item.isLeaf) || item.name;
 
             const IconComponent =
-                typeof icon === 'string' ? <Icon type={icon} /> : icon;
+                typeof item.icon === 'string' ? (
+                    <Icon type={item.icon} />
+                ) : (
+                    item.icon
+                );
 
-            // calculate key automatically via parent path and self id
-            const key = rawKey || `${parentPath ? parentPath + '_' : ''}${id}`;
-
-            return (
-                /**
-                 * TODO: antd TreeNode 目前强依赖于 Tree，不好抽离，后续还不支持的话，考虑重写..
-                 * TODO: 由于依赖 rc-tree，无法针对具体的 div 元素添加 tabindex，从而无法做 :focus 的样式
-                 * https://github.com/ant-design/ant-design/issues/4688
-                 * https://github.com/ant-design/ant-design/issues/4853
-                 */
-                <RcTreeNode
-                    data-id={`mo_treeNode_${key}`}
-                    isLeaf={isLeaf}
-                    data-index={index}
-                    data-indent={indent}
-                    data={item as DataNode}
-                    disabled={disabled}
-                    title={renderTitle?.(item, index, isLeaf) || name} // dynamic title
-                    key={key}
-                    icon={itemIsLeaf && IconComponent}
-                >
-                    {children && renderTreeNodes(children, indent + 1, key)}
-                </RcTreeNode>
+            const currentNode = (
+                <TreeNode
+                    key={`${uuid}-${indent}`}
+                    draggable={draggable}
+                    data={item}
+                    name={typeof title === 'string' ? title : undefined}
+                    indent={indent}
+                    className={classNames(
+                        defaultTreeNodeClassName,
+                        isActive && activeTreeNodeClassName,
+                        isExpand
+                            ? expandTreeNodeClassName
+                            : unexpandTreeNodeClassName
+                    )}
+                    renderIcon={() =>
+                        renderIcon(
+                            IconComponent,
+                            !!item.isLeaf,
+                            isExpand,
+                            isLoading
+                        )
+                    }
+                    renderTitle={() => title}
+                    onContextMenu={(e) => handleRightClick(e, item)}
+                    onClick={(e) => handleNodeClick(item, e)}
+                    onNodeDragStart={draggable ? handleDragStart : undefined}
+                    onNodeDragEnter={draggable ? handleDragEnter : undefined}
+                    onNodeDragOver={draggable ? handleDragOver : undefined}
+                    onNodeDragEnd={draggable ? handleDragEnd : undefined}
+                    onNodeDrop={draggable ? handleDrop : undefined}
+                />
             );
-        });
 
-    const handleSelect = (_, { node }) => {
-        // always select current click node
-        const currentNodeKey = [node.key];
-        setKeys(currentNodeKey);
-        if (!node.isLeaf) {
-            const expanded = treeRef.current?.state.expandedKeys || [];
-            if (expanded.includes(node.key)) {
-                // difference set, remove current node key from expanded collection
-                treeRef.current?.setExpandedKeys(
-                    expanded?.filter(
-                        (exp) => !currentNodeKey.includes(exp.toString())
-                    )
-                );
-            } else {
-                // union set, add current node key into expanded collection
-                treeRef.current?.setExpandedKeys(
-                    expanded.concat(currentNodeKey)
-                );
-            }
-        }
-        onSelectNode?.(node.data);
+            const childrenNode =
+                isExpand &&
+                !isLoading &&
+                renderTreeNode(item.children || [], indent + 1);
+
+            return [currentNode, childrenNode];
+        });
     };
 
-    const handleRightClick = (info) => {
-        setKeys([info.node.key]);
-        onRightClick?.(info);
+    const handleTreeClick = () => {
+        setActiveKey(null);
+        onTreeClick?.();
     };
 
     useLayoutEffect(() => {
-        const cache: { path: string; data: ITreeNodeItemProps }[] = [];
+        const cache: {
+            paths: ITreeNodeItemProps[];
+            data: ITreeNodeItemProps;
+        }[] = [];
         data.forEach((item) => {
-            cache.push({ path: `${item.id}`, data: item });
+            cache.push({ paths: [item], data: item });
         });
 
         while (cache.length) {
-            const { path, data } = cache.pop()!;
+            const { paths, data } = cache.pop()!;
             const editableChild = data.children?.find(
                 (child) => child.isEditable
             );
             if (editableChild) {
-                treeRef.current?.setExpandedKeys(path.split('-'));
+                const keys = paths.map((node) => {
+                    validatorLoadingData(node);
+                    return (node.key || node.id).toString();
+                });
+                const nextExpandKeys = Array.from(
+                    new Set([...keys, ...expandKeys])
+                );
+
+                onExpand
+                    ? onExpand(nextExpandKeys, data)
+                    : setExpandKeys(nextExpandKeys);
                 break;
             } else {
                 const children =
                     data.children?.map((child) => ({
-                        path: `${path}-${child.id}`,
+                        paths: [...paths, child],
                         data: child,
                     })) || [];
                 cache.push(...children);
@@ -182,23 +407,14 @@ const TreeView = ({
     }, [data]);
 
     return (
-        <div className={classNames(prefixClaName('tree'), className)}>
-            <div className={prefixClaName('tree', 'sidebar')}>
-                <RcTree
-                    selectedKeys={selectedKeys}
-                    ref={treeRef}
-                    prefixCls="rc-tree"
-                    draggable={draggable}
-                    onDrop={onDrop}
-                    switcherIcon={<Icon type="chevron-right" />}
-                    onSelect={handleSelect}
-                    onRightClick={handleRightClick}
-                    loadData={onLoadData}
-                    {...restProps}
-                >
-                    {renderTreeNodes(data, 0)}
-                </RcTree>
-            </div>
+        <div
+            role="tree"
+            ref={wrapper}
+            draggable={draggable}
+            onClick={handleTreeClick}
+            className={classNames(defaultTreeClassName, className)}
+        >
+            {renderTreeNode(data, 0)}
         </div>
     );
 };

@@ -50,7 +50,8 @@
         "tab.activeForeground": "#333333",
         "tab.border": "#f3f3f3",
         "tab.inactiveBackground": "#ececec",
-        "tab.inactiveForeground": "#333333b3"
+        "tab.inactiveForeground": "#333333b3",
+        "tree.indentGuidesStroke": "#a9a9a9"
     },
     "semanticHighlighting": true
 }

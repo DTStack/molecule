@@ -204,7 +204,7 @@ describe('The FolderTree Component', () => {
         expect(mockFn.mock.calls[0][1]).toEqual(mockFolder);
     });
 
-    test('Should suppor to init contextMenu', () => {
+    test('Should support to init contextMenu', () => {
         const contextMenu = { id: 'test', name: 'test' };
         const mockFn = jest.fn();
         const { container, getByRole } = render(
@@ -230,5 +230,21 @@ describe('The FolderTree Component', () => {
             expect.objectContaining(contextMenu)
         );
         expect(mockFn.mock.calls[0][1]).toBeUndefined();
+    });
+
+    test('Should reset the current active tree node when click the blank area in tree', () => {
+        expectFnCalled((mockFn) => {
+            const { getByRole } = render(
+                <FolderTreeViewPanel
+                    folderTree={{ data: mockTreeData }}
+                    onSelectFile={mockFn}
+                />
+            );
+
+            const wrapper = getByRole('tree');
+            fireEvent.click(wrapper);
+
+            expect(mockFn.mock.calls[0][0]).toBeUndefined();
+        });
     });
 });

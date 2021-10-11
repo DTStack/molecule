@@ -131,7 +131,7 @@ const SearchPanel = ({
                     <SearchTree
                         data={result}
                         renderTitle={renderTitle}
-                        onSelectNode={handleTreeSelect}
+                        onSelect={handleTreeSelect}
                     />
                 )}
             </Content>

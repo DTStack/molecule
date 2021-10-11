@@ -2,7 +2,9 @@ import React from 'react';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TreeView, { ITreeNodeItemProps } from '../index';
-import { dragToTargetNode } from '@test/utils';
+import { dragToTargetNode, expectFnCalled, sleep } from '@test/utils';
+import { act } from 'react-test-renderer';
+import { unexpandTreeNodeClassName, expandTreeNodeClassName } from '../base';
 
 const mockData: ITreeNodeItemProps[] = [
     {
@@ -22,6 +24,15 @@ const mockData: ITreeNodeItemProps[] = [
         name: 'test2',
     },
 ];
+
+// mock Scrollable component
+jest.mock('lodash', () => {
+    const originalModule = jest.requireActual('lodash');
+    return {
+        ...originalModule,
+        debounce: (fn) => fn,
+    };
+});
 
 describe('Test the Tree component', () => {
     afterEach(cleanup);
@@ -85,7 +96,7 @@ describe('Test the Tree component', () => {
 
         const parentIcon = container
             .querySelector<HTMLDivElement>('div[data-id="mo_treeNode_1"]')
-            ?.querySelector('span.codicon-chevron-right');
+            ?.querySelector('span.codicon-chevron-down');
 
         const childNode = await waitFor(() =>
             container.querySelector<HTMLDivElement>(
@@ -191,6 +202,25 @@ describe('Test the Tree component', () => {
         expect(await findByTitle('test2')).toBeInTheDocument();
     });
 
+    test('Should support to drag into children', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [
+                    {
+                        id: '2',
+                        name: 'test2',
+                        isEditable: true,
+                    },
+                ],
+            },
+        ];
+        const { findByTitle } = render(<TreeView data={data} />);
+
+        expect(await findByTitle('test2')).toBeInTheDocument();
+    });
+
     test('Should NOT support to sort via drag', async () => {
         const data = [
             { id: '1', name: 'test1', isLeaf: true },
@@ -220,14 +250,11 @@ describe('Test the Tree component', () => {
             },
         ];
         const mockFn = jest.fn();
-        const { findByTitle } = render(
-            <TreeView
-                draggable
-                onDropTree={mockFn}
-                defaultExpandAll
-                data={data}
-            />
+        const { findByTitle, getByTitle } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
         );
+
+        fireEvent.click(getByTitle('test1'));
 
         dragToTargetNode(
             await findByTitle('test1-1'),
@@ -250,14 +277,11 @@ describe('Test the Tree component', () => {
             source,
         ];
         const mockFn = jest.fn();
-        const { findByTitle } = render(
-            <TreeView
-                draggable
-                onDropTree={mockFn}
-                defaultExpandAll
-                data={data}
-            />
+        const { findByTitle, getByTitle } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
         );
+
+        fireEvent.click(getByTitle('test1'));
 
         dragToTargetNode(
             await findByTitle(source.name),
@@ -287,14 +311,12 @@ describe('Test the Tree component', () => {
             },
         ];
         const mockFn = jest.fn();
-        const { findByTitle } = render(
-            <TreeView
-                draggable
-                onDropTree={mockFn}
-                defaultExpandAll
-                data={data}
-            />
+        const { findByTitle, getByTitle } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
         );
+
+        fireEvent.click(getByTitle('test1'));
+        fireEvent.click(getByTitle('test2'));
 
         dragToTargetNode(
             await findByTitle(source.name),
@@ -308,6 +330,187 @@ describe('Test the Tree component', () => {
             name: 'test1',
             isLeaf: false,
             children: [target],
+        });
+    });
+
+    test('Should NOT drag node to its parent node or drag node to its siblings or drag node to itself', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [
+                    { id: '1-1', isLeaf: true, name: 'test1-1' },
+                    { id: '1-2', isLeaf: true, name: 'test1-2' },
+                ],
+            },
+            {
+                id: '2',
+                name: 'test2',
+                isLeaf: true,
+            },
+        ];
+        const mockFn = jest.fn();
+        const { findByTitle } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
+        );
+
+        fireEvent.click(await findByTitle('test1'));
+
+        dragToTargetNode(
+            await findByTitle('test1-1'),
+            await findByTitle('test1')
+        );
+
+        expect(mockFn).not.toBeCalled();
+
+        dragToTargetNode(
+            await findByTitle('test1-2'),
+            await findByTitle('test1-1')
+        );
+        expect(mockFn).not.toBeCalled();
+
+        dragToTargetNode(
+            await findByTitle('test1'),
+            await findByTitle('test1')
+        );
+        expect(mockFn).not.toBeCalled();
+    });
+
+    test('Should end drop when drag node out of tree', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [
+                    { id: '1-1', isLeaf: true, name: 'test1-1' },
+                    { id: '1-2', isLeaf: true, name: 'test1-2' },
+                ],
+            },
+        ];
+        const mockFn = jest.fn();
+        const { findByTitle, container, getByTestId } = render(
+            <TreeView draggable onDropTree={mockFn} data={data} />
+        );
+
+        // creat a dom insert into body as the drop node
+        const outOfTree = document.createElement('div');
+        outOfTree.dataset.testid = 'outOfTree';
+        outOfTree.style.width = '100px';
+        outOfTree.style.height = '100px';
+        container.appendChild(outOfTree);
+
+        // expand the parent node
+        fireEvent.click(await findByTitle('test1'));
+        fireEvent.dragStart(await findByTitle('test1'));
+        fireEvent.dragOver(await findByTitle('test1'));
+
+        expect(container.querySelectorAll('.drag-over').length).not.toBe(0);
+
+        // drag node out of tree and drop it
+        fireEvent.dragOver(getByTestId('outOfTree'));
+        fireEvent.dragEnd(getByTestId('outOfTree'));
+
+        expect(container.querySelectorAll('.drag-over').length).toBe(0);
+    });
+
+    test('Should expand the drop node if this node is a folder', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                children: [{ id: '1-1', isLeaf: true, name: 'test1-1' }],
+            },
+            { id: '2', isLeaf: true, name: 'test2' },
+        ];
+        const { getByText } = render(<TreeView draggable data={data} />);
+
+        expect(getByText('test1').parentElement!.classList).toContain(
+            unexpandTreeNodeClassName
+        );
+        dragToTargetNode(getByText('test2'), getByText('test1'));
+
+        expect(getByText('test1').parentElement!.classList).toContain(
+            expandTreeNodeClassName
+        );
+
+        // drag to itself won't expand
+        dragToTargetNode(getByText('test1'), getByText('test1'));
+        expect(getByText('test1').parentElement!.classList).toContain(
+            unexpandTreeNodeClassName
+        );
+    });
+
+    test('Should support to loadData in sync', async () => {
+        const data = [
+            {
+                id: '1',
+                name: 'test1',
+                isLeaf: false,
+                children: [],
+            },
+        ];
+        const mockFn = jest.fn().mockImplementation(() => sleep(1000));
+        const { getByText, container } = render(
+            <TreeView data={data} onLoadData={mockFn} />
+        );
+
+        act(() => {
+            fireEvent.click(getByText('test1'));
+        });
+
+        expect(mockFn).toBeCalledTimes(1);
+        expect(container.querySelector('.codicon-spin')).toBeInTheDocument();
+        await sleep(1000);
+        expect(container.querySelector('.codicon-spin')).toBeNull();
+
+        act(() => {
+            // unfold it and open it again
+            fireEvent.click(getByText('test1'));
+            fireEvent.click(getByText('test1'));
+        });
+
+        // didn't trigger onLoadData this time
+        expect(mockFn).toBeCalledTimes(1);
+    });
+
+    test('Should support to be controlled', () => {
+        const mockFn = jest.fn();
+        const { getByText, rerender } = render(
+            <TreeView data={mockData} expandKeys={[]} onExpand={mockFn} />
+        );
+
+        expect(getByText('test1').parentElement?.classList).toContain(
+            unexpandTreeNodeClassName
+        );
+
+        fireEvent.click(getByText('test1'));
+
+        expect(getByText('test1').parentElement?.classList).toContain(
+            unexpandTreeNodeClassName
+        );
+        expect(mockFn).toBeCalled();
+
+        rerender(
+            <TreeView
+                data={mockData}
+                expandKeys={[mockData[0].key!]}
+                onExpand={mockFn}
+            />
+        );
+
+        expect(getByText('test1').parentElement?.classList).toContain(
+            expandTreeNodeClassName
+        );
+    });
+
+    test('Should support to trigger tree click event', () => {
+        expectFnCalled((fn) => {
+            const { getByRole } = render(
+                <TreeView data={mockData} onTreeClick={fn} />
+            );
+
+            const wrapper = getByRole('tree');
+            fireEvent.click(wrapper);
         });
     });
 });

@@ -339,40 +339,9 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                     </div>
                     <div
                       class="mo-tree mo-search__tree"
-                    >
-                      <div
-                        class="sidebar-tree"
-                      >
-                        <div
-                          class="rc-tree rc-tree-show-line"
-                        >
-                          <div
-                            role="tree"
-                          >
-                            <input
-                              style="width: 0px; height: 0px; display: flex; overflow: hidden; opacity: 0; border: 0px; padding: 0px; margin: 0px;"
-                              tabindex="0"
-                              value=""
-                            />
-                          </div>
-                          <div
-                            class="rc-tree-list"
-                            style="position: relative;"
-                          >
-                            <div
-                              class="rc-tree-list-holder"
-                            >
-                              <div>
-                                <div
-                                  class="rc-tree-list-holder-inner"
-                                  style="display: flex; flex-direction: column;"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                      draggable="false"
+                      role="tree"
+                    />
                   </div>
                 </div>
               </div>

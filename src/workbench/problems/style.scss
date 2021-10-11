@@ -27,7 +27,7 @@ $badge-size: 11px;
             }
         }
 
-        #{$rcTree}-treenode:not(#{$rcTree}-treenode-selected) {
+        #{$tree}__treenode:not(#{$tree}__treenode--active) {
             .codicon-info {
                 color: var(--problemsInfoIcon-foreground);
             }

@@ -1,4 +1,4 @@
-import { searchById, TreeViewUtil } from '../helper';
+import { searchById, TreeViewUtil } from '../treeUtil';
 
 const mockTreeData = {
     id: 1,

@@ -7,7 +7,7 @@ import {
     ISidebarPane,
     SidebarModel,
 } from 'mo/model/workbench/sidebar';
-import { searchById } from '../helper';
+import { searchById } from '../../common/treeUtil';
 import logger from 'mo/common/logger';
 
 export interface ISidebarService extends Component<ISidebar> {

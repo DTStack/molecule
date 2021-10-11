@@ -10,7 +10,7 @@ import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import { StatusBarService, IStatusBarService } from 'mo/services';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
-import { searchById } from './helper';
+import { searchById } from '../common/treeUtil';
 import logger from 'mo/common/logger';
 
 export interface IProblemsService extends Component<IProblems> {

@@ -16,7 +16,7 @@ import {
     PANEL_TOOLBOX_RESIZE,
 } from 'mo/model/workbench/panel';
 
-import { searchById } from '../helper';
+import { searchById } from '../../common/treeUtil';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { LayoutService } from 'mo/services';
 import logger from 'mo/common/logger';

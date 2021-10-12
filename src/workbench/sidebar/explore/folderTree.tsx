@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import React, { memo, useRef, useEffect, useLayoutEffect } from 'react';
-import { IFolderTree, IFolderTreeSubItem } from 'mo/model';
+import { IFolderTree, IFolderTreeNodeProps } from 'mo/model';
 import { select, getEventPosition } from 'mo/common/dom';
-import Tree, { ITreeNodeItemProps } from 'mo/components/tree';
+import Tree from 'mo/components/tree';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { Button } from 'mo/components/button';
 import type { IFolderTreeController } from 'mo/controller/explorer/folderTree';
@@ -133,7 +133,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
 
     const handleMenuClick = (
         item: IMenuItemProps,
-        data: IFolderTreeSubItem
+        data: IFolderTreeNodeProps
     ) => {
         onClickContextMenu?.(item, data);
         contextView.hide();
@@ -154,7 +154,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
 
     const handleUpdateFile = (
         e: HTMLInputElement,
-        node: ITreeNodeItemProps
+        node: IFolderTreeNodeProps
     ) => {
         const newName = e.value;
         onUpdateFileName?.({
@@ -168,7 +168,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
      */
     const handleInputBlur = (
         e: React.FocusEvent<HTMLInputElement>,
-        node: ITreeNodeItemProps
+        node: IFolderTreeNodeProps
     ) => {
         handleUpdateFile(e.target, node);
     };
@@ -178,14 +178,14 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
      */
     const handleInputKeyDown = (
         e: React.KeyboardEvent<HTMLInputElement>,
-        node: ITreeNodeItemProps
+        node: IFolderTreeNodeProps
     ) => {
         if (e.keyCode === 13 || e.keyCode === 27) {
             handleUpdateFile(e.target as EventTarget & HTMLInputElement, node);
         }
     };
 
-    const renderTitle = (node: ITreeNodeItemProps) => {
+    const renderTitle = (node: IFolderTreeNodeProps) => {
         const { isEditable, name } = node;
 
         return isEditable ? (

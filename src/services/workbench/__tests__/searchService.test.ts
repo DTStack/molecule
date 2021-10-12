@@ -7,6 +7,7 @@ import {
     builtInSearchAddons,
     builtInReplaceAddons,
 } from 'mo/model/workbench/search';
+import { randomId } from 'mo/common/utils';
 
 describe('Test StatusBarService', () => {
     const searchBarService = container.resolve<ISearchService>(SearchService);
@@ -52,7 +53,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to set setResult', () => {
-        const mockData = [{ name: TEST_ID }];
+        const mockData = [{ id: randomId(), name: TEST_ID }];
 
         searchBarService.setResult(mockData);
         expect(searchBarService.getState().result).toEqual(mockData);

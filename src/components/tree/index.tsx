@@ -12,15 +12,40 @@ import {
 } from './base';
 import { TreeViewUtil } from 'mo/common/treeUtil';
 
-// TODO: Should reconsider the reasonable of the interface
-export interface ITreeNodeItemProps {
-    disabled?: boolean;
-    icon?: string | JSX.Element;
-    isLeaf?: boolean;
-    key?: string;
+export interface ITreeNodeItemProps<T = any> {
+    /**
+     * The unique id in tree node
+     * @aware Please be aware of that id should be global unique
+     */
+    id: UniqueId;
+    /**
+     * The name of this tree node
+     */
     name?: string;
-    isEditable?: boolean; // Edit status
+    /**
+     * The icon of this tree node, which is rendered in front of the name
+     */
+    icon?: string | JSX.Element;
+    /**
+     * The status of disabled
+     */
+    disabled?: boolean;
+    /**
+     * The type of this tree node.
+     */
+    isLeaf?: boolean;
+    /**
+     * The status of editable, mark whether the node is being edited
+     */
+    isEditable?: boolean;
+    /**
+     * The children of this tree node
+     */
     children?: ITreeNodeItemProps[];
+    /**
+     * Store the custom data
+     */
+    data?: T;
 
     [key: string]: any;
 }
@@ -79,7 +104,7 @@ const TreeView = ({
     };
 
     const validatorLoadingData = (node: ITreeNodeItemProps) => {
-        const uuid: string = (node.key || node.id).toString();
+        const uuid: string = node.id.toString();
         if (canLoadData(uuid!)) {
             setLoadingKeys((keys) => {
                 const nextKeys = keys.concat();
@@ -115,7 +140,7 @@ const TreeView = ({
         e: React.MouseEvent<HTMLDivElement, MouseEvent>
     ) => {
         e.stopPropagation();
-        const uuid: string = (node.key || node.id).toString();
+        const uuid = node.id.toString();
         setActiveKey(uuid);
         if (!node.isLeaf) {
             // load data
@@ -170,7 +195,7 @@ const TreeView = ({
         };
 
         // unfolder current node
-        const uuid = (node.key || node.id).toString();
+        const uuid = node.id.toString();
         const idx = (controlExpandKeys || expandKeys).indexOf(uuid);
         if (idx > -1) {
             const next = expandKeys.concat();
@@ -184,10 +209,10 @@ const TreeView = ({
     const handleDragEnter = debounce(
         (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => {
             // expand the non-leaf node
-            const uuid = (node.key || node.id).toString();
+            const uuid = node.id.toString();
             const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
             const dragNode = dragInfo.current.dragNode!;
-            const dragNodeUuid = (dragNode.key || dragNode.id).toString();
+            const dragNodeUuid = dragNode.id.toString();
             const isSelfNode = uuid === dragNodeUuid;
             if (
                 !node.isLeaf &&
@@ -202,7 +227,7 @@ const TreeView = ({
     );
 
     const addOverClassViaNode = (node: ITreeNodeItemProps) => {
-        const uuid = (node.key || node.id).toString();
+        const uuid = node.id.toString();
         const parentDom = document.querySelector<HTMLDivElement>(
             `div[data-key="${uuid}"]`
         );
@@ -284,9 +309,9 @@ const TreeView = ({
         } else {
             const dragParent = getParentNodeViaNode(dragInfo.current.dragNode!);
             const parentUuid = (dragParent.key || dragParent.id).toString();
-            const nodeUuid = (node.key || node.id).toString();
+            const nodeUuid = node.id.toString();
             const dragNode = dragInfo.current.dragNode!;
-            const dragUuid = (dragNode.key || dragNode.id).toString();
+            const dragUuid = dragNode.id.toString();
             // prevent the situations like
             // 1. drag a node into parentNode
             // 2. drag a folder node into self
@@ -307,7 +332,7 @@ const TreeView = ({
 
     const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
         return data.map((item, index) => {
-            const uuid = (item.key || item.id).toString();
+            const uuid = item.id.toString();
             const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
             const isLoading = loadingKeys.includes(uuid!);
             const isActive = activeKey === uuid;
@@ -386,7 +411,7 @@ const TreeView = ({
             if (editableChild) {
                 const keys = paths.map((node) => {
                     validatorLoadingData(node);
-                    return (node.key || node.id).toString();
+                    return node.id.toString();
                 });
                 const nextExpandKeys = Array.from(
                     new Set([...keys, ...expandKeys])

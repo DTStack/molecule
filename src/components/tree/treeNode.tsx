@@ -55,7 +55,7 @@ export default ({
     onNodeDrop,
     onNodeDragEnd,
 }: ITreeNodeProps) => {
-    const uuid = data.key || data.id;
+    const uuid = data.id;
     const ref = useRef<HTMLDivElement>(null);
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
@@ -94,7 +94,7 @@ export default ({
     };
 
     // calculate key automatically via parent path and self id
-    const nodeKey = data.key || `${indent ? indent + '_' : ''}${data.id}`;
+    const nodeKey = `${indent ? indent + '_' : ''}${data.id}`;
 
     return (
         <div

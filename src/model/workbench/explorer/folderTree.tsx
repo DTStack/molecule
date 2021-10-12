@@ -1,8 +1,7 @@
 import React from 'react';
 import 'reflect-metadata';
-import { ITreeNodeItemProps } from 'mo/components/tree';
-import { IMenuItemProps } from 'mo/components/menu';
-import { randomId } from 'mo/common/utils';
+import type { ITreeNodeItemProps } from 'mo/components/tree';
+import type { IMenuItemProps } from 'mo/components/menu';
 import { localize } from 'mo/i18n/localize';
 
 export enum FileTypes {
@@ -31,10 +30,10 @@ export interface IFolderInputEvent {
 }
 
 export interface IFolderTreeSubItem {
-    data?: ITreeNodeItemProps[];
+    data?: IFolderTreeNodeProps[];
     contextMenu?: IMenuItemProps[];
     folderPanelContextMenu?: IMenuItemProps[];
-    current?: ITreeNodeItemProps | null;
+    current?: IFolderTreeNodeProps | null;
 }
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
@@ -102,20 +101,27 @@ export const FOLDER_PANEL_CONTEXT_MENU = [
     },
 ];
 
-export class TreeNodeModel implements ITreeNodeItemProps {
-    id?: number;
+export interface IFolderTreeNodeProps extends ITreeNodeItemProps<any> {
+    location?: string;
+    content?: string;
+    fileType?: FileType;
+    children?: IFolderTreeNodeProps[];
+}
+
+export class TreeNodeModel implements IFolderTreeNodeProps {
+    id: UniqueId;
     name?: string;
     location?: string;
     isLeaf?: boolean;
-    fileType?: FileType;
-    children?: ITreeNodeItemProps[];
+    fileType: FileType = FileTypes.File;
+    children?: IFolderTreeNodeProps[];
     icon?: string | JSX.Element;
     isEditable?: boolean;
     content?: string;
 
     data?: any;
 
-    constructor(props: ITreeNodeItemProps = {}) {
+    constructor(props: IFolderTreeNodeProps) {
         const {
             id,
             name = '',
@@ -131,7 +137,7 @@ export class TreeNodeModel implements ITreeNodeItemProps {
         this.fileType = fileType;
         this.isEditable = isEditable;
         this.name = name;
-        this.id = id || randomId();
+        this.id = id;
         this.location = location;
         this.children = children;
         this.icon = icon;

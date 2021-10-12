@@ -133,7 +133,7 @@ export const ExtendTestPane: IExtension = {
         });
         molecule.search.onSearch((value) => {
             const children = new Array(5).fill(1).map((_, index) => ({
-                key: index.toFixed(),
+                id: index.toFixed(),
                 isLeaf: true,
                 name: `${value}-${index}`,
             }));
@@ -142,7 +142,7 @@ export const ExtendTestPane: IExtension = {
                 value
                     ? [
                           {
-                              key: 'molecule',
+                              id: 'molecule',
                               name: 'molecule.test.js',
                               isLeaf: false,
                               children,

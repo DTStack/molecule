@@ -1,7 +1,10 @@
 import { Button } from 'mo/components/button';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { FileTypes } from 'mo/model/workbench/explorer/folderTree';
+import {
+    FileTypes,
+    IFolderTreeNodeProps,
+} from 'mo/model/workbench/explorer/folderTree';
 import { expectFnCalled } from '@test/utils';
 
 import {
@@ -63,7 +66,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to set root folder tree', () => {
-        const mockRootTree = {
+        const mockRootTree: IFolderTreeNodeProps = {
             id: '0',
             name: 'test0',
             fileType: 'RootFolder',
@@ -71,12 +74,10 @@ describe('Test StatusBarService', () => {
         };
         const mockTreeData = {
             id: '1',
-            key: '1',
             name: 'test1',
             children: [
                 {
                     id: '2',
-                    key: '1-1',
                     name: 'test1-1',
                     icon: 'test',
                     isLeaf: true,
@@ -86,7 +87,6 @@ describe('Test StatusBarService', () => {
         };
         const mockFileData = {
             id: '3',
-            key: '1-2',
             name: 'test1-2',
             icon: 'test',
             isLeaf: true,
@@ -94,24 +94,24 @@ describe('Test StatusBarService', () => {
         };
 
         folderTreeService.add(mockRootTree);
-        expect(folderTreeService.get(0)).toEqual(mockRootTree);
+        expect(folderTreeService.get(mockRootTree.id)).toEqual(mockRootTree);
 
-        folderTreeService.add(mockTreeData, 0);
-        expect(folderTreeService.get(1)).toEqual(mockTreeData);
+        folderTreeService.add(mockTreeData, mockRootTree.id);
+        expect(folderTreeService.get(mockTreeData.id)).toEqual(mockTreeData);
 
-        folderTreeService.add(mockFileData, 2);
-        expect(folderTreeService.get(3)).toEqual(mockFileData);
+        folderTreeService.add(mockFileData, mockTreeData.id);
+        expect(folderTreeService.get(mockFileData.id)).toEqual(mockFileData);
 
-        folderTreeService.setActive(0);
+        folderTreeService.setActive(mockRootTree.id);
         const currentNode = folderTreeService.getState()?.folderTree!.current;
-        expect(currentNode!.id).toBe('0');
+        expect(currentNode!.id).toBe(mockRootTree.id);
 
-        folderTreeService.remove(2);
-        expect(folderTreeService.get(2)).toBeNull();
+        folderTreeService.remove(mockFileData.id);
+        expect(folderTreeService.get(mockFileData.id)).toBeNull();
 
         mockTreeData.name = TEST_ID;
         folderTreeService.update(mockTreeData);
-        expect(folderTreeService.get(1)?.name).toBe(TEST_ID);
+        expect(folderTreeService.get(mockTreeData.id)?.name).toBe(TEST_ID);
     });
 
     test('Should support to set entry', () => {

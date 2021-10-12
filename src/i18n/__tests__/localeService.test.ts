@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { LocaleService } from '..';
-import { BuiltInLocales, BuiltInZhCN, ILocale } from '../localization';
+import { BuiltInLocales, BuiltInDefault, ILocale } from '../localization';
 
 describe('The Locale Service', () => {
     const TestLocale = {
@@ -21,7 +21,7 @@ describe('The Locale Service', () => {
 
     test('Reset the LocaleService', () => {
         const localeService = new LocaleService();
-        expect(localeService.getCurrentLocale()!.id).toBe(BuiltInZhCN.id);
+        expect(localeService.getCurrentLocale()!.id).toBe(BuiltInDefault!.id);
         localeService.reset();
         expect(localeService.getCurrentLocale()).toBeUndefined();
     });
@@ -29,7 +29,7 @@ describe('The Locale Service', () => {
     test('Get default Locale', () => {
         const localeService = new LocaleService();
         const defaultLocale = localeService.getDefaultLocale();
-        expect(defaultLocale).toEqual(BuiltInZhCN);
+        expect(defaultLocale).toEqual(BuiltInDefault);
     });
 
     test('Get default Locales', () => {
@@ -52,7 +52,9 @@ describe('The Locale Service', () => {
         );
         expect(localeService.getLocales().length).toBe(3);
         localeService.initialize([], 'test');
-        expect(localeService.getCurrentLocale()!.id).toEqual(BuiltInZhCN.id);
+        expect(localeService.getCurrentLocale()!.id).toEqual(
+            BuiltInDefault!.id
+        );
         // Clear the cached locale value
         localStorage.clear();
         localeService.initialize([], 'test');

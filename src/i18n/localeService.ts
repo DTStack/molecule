@@ -1,10 +1,11 @@
 import { APP_PREFIX } from 'mo/common/const';
 import {
-    BuiltInLocales,
-    BuiltInZhCN,
     ILocale,
     LocalizationEvent,
+    BuiltInLocales,
+    BuiltInDefault,
 } from 'mo/i18n/localization';
+
 import { Component } from 'mo/react';
 import { singleton } from 'tsyringe';
 
@@ -103,7 +104,7 @@ export class LocaleService extends Component implements ILocaleService {
     }
 
     public getDefaultLocale(): ILocale {
-        return Object.assign({}, BuiltInZhCN);
+        return Object.assign({}, BuiltInDefault);
     }
 
     public getDefaultLocales(): ILocale[] {
@@ -116,7 +117,7 @@ export class LocaleService extends Component implements ILocaleService {
 
     public initialize(locales: ILocale[], localeId?: string) {
         this.addLocales(locales);
-        let finalLocale = BuiltInZhCN.id;
+        let finalLocale = BuiltInDefault!.id;
         if (localeId) {
             finalLocale = localeId;
         }

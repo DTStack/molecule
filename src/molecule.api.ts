@@ -73,6 +73,7 @@ export const activityBar: IActivityBarService = container.resolve<IActivityBarSe
 export const explorer: IExplorerService = container.resolve<IExplorerService>(
     ExplorerService
 );
+
 export const folderTree: IFolderTreeService = container.resolve<IFolderTreeService>(
     FolderTreeService
 );

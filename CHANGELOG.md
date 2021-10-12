@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-alpha.5.1](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.5...v0.9.0-alpha.5.1) (2021-10-12)
+
+### Features
+
+-   set sidebar default width to 300px ([d15a621](https://github.com/DTStack/molecule/commit/d15a621c694cca53ffd3f6964c8c8aac34a453f5))
+-   support render icon in tab title ([#447](https://github.com/DTStack/molecule/issues/447)) ([d67c2e0](https://github.com/DTStack/molecule/commit/d67c2e08413048f055fd01926e04a68fe487c9e6))
+-   support to get groupId via tabId ([#431](https://github.com/DTStack/molecule/issues/431)) ([44c2a7b](https://github.com/DTStack/molecule/commit/44c2a7b1cd6a0d7a9b7755c988bb56fe28c2945b))
+-   **editor:** add the onOpenTab event ([#416](https://github.com/DTStack/molecule/issues/416)) ([cdbff6f](https://github.com/DTStack/molecule/commit/cdbff6f2fccd8e24e700f308930b4770c23828b7))
+
+### Bug Fixes
+
+-   add built-in titles for the activityBar items ([#424](https://github.com/DTStack/molecule/issues/424)) ([0a5c31d](https://github.com/DTStack/molecule/commit/0a5c31d39d9af5bc9535b248c8dcc66ebda993ce))
+-   fix editor size render incorrect when toggle the sidebar ([9655a45](https://github.com/DTStack/molecule/commit/9655a454658a1512411892b8e17b5d0265b1b62f))
+-   fix select all action always select the editor content ([#415](https://github.com/DTStack/molecule/issues/415)) ([a1feb18](https://github.com/DTStack/molecule/commit/a1feb1802bda9a4520175af5d315336ca476bd50))
+-   fix undo and redo actions ([#440](https://github.com/DTStack/molecule/issues/440)) ([b76f372](https://github.com/DTStack/molecule/commit/b76f3720726616d50a79a4f5f36b7a175eb11ada))
+-   improve the forceUpdate after editor open and close ([#441](https://github.com/DTStack/molecule/issues/441)) ([50e0de2](https://github.com/DTStack/molecule/commit/50e0de2c8bcbb1e4ab434b0ec3603520b1b3f4f5))
+-   optimize the shadow effect of Scrollable ([#443](https://github.com/DTStack/molecule/issues/443)) ([76ad9b3](https://github.com/DTStack/molecule/commit/76ad9b37500478e15e9547579ed11783176fd65f))
+-   perfect the Tree component style ([#428](https://github.com/DTStack/molecule/issues/428)) ([8ad91e0](https://github.com/DTStack/molecule/commit/8ad91e0d7c0e21894895bbdd06d10701e7563ad4))
+-   prevent miniMapSlider covered by other colors ([#448](https://github.com/DTStack/molecule/issues/448)) ([1b0aa04](https://github.com/DTStack/molecule/commit/1b0aa043735c4eba331978567ea76ddc92723254))
+-   remove the pointer-events CSS property ([#423](https://github.com/DTStack/molecule/issues/423)) ([b3f6be6](https://github.com/DTStack/molecule/commit/b3f6be6094468ff924f647782a835f82deca6ba9))
+-   renderPane exec twice ([#439](https://github.com/DTStack/molecule/issues/439)) ([5eb14a5](https://github.com/DTStack/molecule/commit/5eb14a51d4233b36e20f3db3962de579966d60fe))
+-   the tsyringe inject the EditorModel error beacuse of the current is undefined ([9550d17](https://github.com/DTStack/molecule/commit/9550d17173e705d5af573140d17cc3b5eed4ebb1))
+-   **color theme:** optimize the Panel, actionBar ([#445](https://github.com/DTStack/molecule/issues/445)) ([9ac1962](https://github.com/DTStack/molecule/commit/9ac1962f711969bc2f8f1524ef6ddc600add9b51))
+-   set the collapse content width to initial value ([366a635](https://github.com/DTStack/molecule/commit/366a6355b51b89d997893dcd61036a53fe400377))
+-   the sidebar collapse title style ([c27df72](https://github.com/DTStack/molecule/commit/c27df72f73d6e34e874975f14d770f9ff7f3e600))
+-   update the getBuiltInColors method to immutable ([b744265](https://github.com/DTStack/molecule/commit/b744265376a912b6ac18e244646c1dac751b2ba1))
+
 ## [0.9.0-alpha.5](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.4...v0.9.0-alpha.5) (2021-09-07)
 
 ### Features

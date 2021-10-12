@@ -64,7 +64,7 @@ export interface IEditor {
     /**
      * Current editor group
      */
-    current?: IEditorGroup;
+    current?: IEditorGroup | null;
     /**
      * Editor Groups
      */
@@ -165,13 +165,13 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
 }
 
 export class EditorModel implements IEditor {
-    public current: IEditorGroup | undefined;
+    public current: IEditorGroup | null;
     public groups: IEditorGroup[];
     public entry: React.ReactNode;
     public editorOptions: IEditorOptions;
 
     constructor(
-        current: IEditorGroup | undefined = undefined,
+        current: IEditorGroup | null = null,
         groups: IEditorGroup[] = [],
         entry: React.ReactNode,
         editorOptions: IEditorOptions = BuiltInEditorOptions

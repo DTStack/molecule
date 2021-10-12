@@ -7,7 +7,7 @@ import {
     IActivityBar,
     IActivityBarItem,
 } from 'mo/model/workbench/activityBar';
-import { searchById } from '../helper';
+import { searchById } from 'mo/common/utils';
 import { IActivityMenuItemProps } from 'mo/model';
 import logger from 'mo/common/logger';
 import { ISidebarService, SidebarService } from './sidebarService';

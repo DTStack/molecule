@@ -1,3 +1,7 @@
+export function searchById(id) {
+    return (item) => item.id === id;
+}
+
 /**
  * Clone a new object by an object instance
  * @param origin Original object instance

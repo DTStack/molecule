@@ -12,7 +12,7 @@ import {
     BASE_CONTEXT_MENU,
     FILE_CONTEXT_MENU,
 } from 'mo/model/workbench/explorer/folderTree';
-import { TreeViewUtil } from '../../helper';
+import { TreeViewUtil } from '../../../common/treeUtil';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
 import { SAMPLE_FOLDER_PANEL_ID, builtInFolderTree } from 'mo/model';

@@ -11,7 +11,7 @@ import {
 import cloneDeep from 'lodash/cloneDeep';
 import { Component } from 'mo/react';
 import { container, singleton } from 'tsyringe';
-import { searchById } from '../helper';
+import { searchById } from 'mo/common/utils';
 import logger from 'mo/common/logger';
 export interface IStatusBarService extends Component<IStatusBar> {
     /**

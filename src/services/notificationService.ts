@@ -7,8 +7,7 @@ import {
 } from 'mo/model/notification';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
-import { searchById } from './helper';
-import { randomId } from 'mo/common/utils';
+import { randomId, searchById } from 'mo/common/utils';
 import logger from 'mo/common/logger';
 import { cloneDeep } from 'lodash';
 

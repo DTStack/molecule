@@ -6,7 +6,7 @@ import {
 import 'reflect-metadata';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
-import { searchById } from '../helper';
+import { searchById } from 'mo/common/utils';
 import { ExplorerService } from '../workbench';
 
 const explorerService = container.resolve(ExplorerService);

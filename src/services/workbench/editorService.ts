@@ -14,7 +14,7 @@ import {
     IEditorOptions,
     BuiltInEditorOptions,
 } from 'mo/model';
-import { searchById } from '../helper';
+import { searchById } from 'mo/common/utils';
 import { editor as MonacoEditor, Uri } from 'mo/monaco';
 import { IMenuItemProps } from 'mo/components';
 import { ExplorerService, IExplorerService } from './explorer/explorerService';

@@ -11,7 +11,7 @@ import { applyStyleSheetRules } from 'mo/common/css';
 import { getThemeData, convertToCSSVars } from './helper';
 import logger from 'mo/common/logger';
 import { prefixClaName } from 'mo/common/className';
-import { searchById } from '../helper';
+import { searchById } from 'mo/common/utils';
 
 export interface IColorThemeService {
     /**

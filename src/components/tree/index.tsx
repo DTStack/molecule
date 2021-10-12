@@ -10,7 +10,7 @@ import {
     expandTreeNodeClassName,
     unexpandTreeNodeClassName,
 } from './base';
-import { TreeViewUtil } from 'mo/services/helper';
+import { TreeViewUtil } from 'mo/common/treeUtil';
 
 // TODO: Should reconsider the reasonable of the interface
 export interface ITreeNodeItemProps {

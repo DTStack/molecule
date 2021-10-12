@@ -10,7 +10,7 @@ export const ExtendsLocals: IExtension = {
             locales: [en, zhCN],
         },
     },
-    activate() {}, // todo
+    activate() {},
 };
 
 const builtInConfig = ExtendsLocals!.contributes?.[IContributeType.Languages];

@@ -17,6 +17,7 @@ import { TreeViewUtil } from '../../../common/treeUtil';
 import { ExplorerService, IExplorerService } from './explorerService';
 import { SAMPLE_FOLDER_PANEL_ID, builtInFolderTree } from 'mo/model';
 import { IMenuItemProps } from 'mo/components';
+import logger from 'mo/common/logger';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     /**
@@ -156,7 +157,10 @@ export class FolderTreeService
     }
 
     public reset() {
-        this.setState(builtInFolderTree as any);
+        this.setState({
+            folderTree: builtInFolderTree,
+            entry: undefined,
+        });
     }
 
     public getFileContextMenu() {
@@ -178,8 +182,8 @@ export class FolderTreeService
     private setCurrentFolderLocation(data: IFolderTreeNodeProps, id: UniqueId) {
         const children = data.children;
         const { tree } = this.getCurrentRootFolderInfo(id);
-        if (!tree) return;
-        const parentIndex = tree.getHashMap(id);
+        // The tree exist in certainly, because it was prejudged in the previous processing
+        const parentIndex = tree!.getHashMap(id);
 
         data.location = `${parentIndex!.node!.location}/${data.name}`;
         if (children?.length) {
@@ -261,13 +265,11 @@ export class FolderTreeService
 
         // this index is root folder index
         if (index <= -1) {
-            return console.warn(
-                'Please check id again, there is not folder tree'
-            );
+            logger.error('Please check id again, there is not folder tree');
+            return;
         }
 
-        const currentIndex = tree!.getHashMap(id);
-        if (!currentIndex) return;
+        const currentIndex = tree!.getHashMap(id)!;
 
         if (currentIndex.node.fileType === FileTypes.File) {
             data.location =
@@ -296,7 +298,10 @@ export class FolderTreeService
         );
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
-        if (!tree) {
+        if (!tree || index === -1) {
+            logger.error(
+                `There is unable to find a tree node whose id is ${id}`
+            );
             return;
         }
 
@@ -317,6 +322,9 @@ export class FolderTreeService
         const { tree, index } = this.getCurrentRootFolderInfo(id);
 
         if (!tree) {
+            logger.error(
+                `There is unable to find a tree node whose id is ${id}`
+            );
             return;
         }
         tree.updateNode(id, restData);
@@ -340,10 +348,13 @@ export class FolderTreeService
     public setActive(id?: UniqueId) {
         const { folderTree } = this.state;
 
+        const pendingActiveNode =
+            typeof id === 'undefined' ? null : this.get(id);
+
         this.setState({
             folderTree: {
                 ...folderTree,
-                current: id || id === 0 ? this.get(id) : null,
+                current: pendingActiveNode,
             },
         });
     }

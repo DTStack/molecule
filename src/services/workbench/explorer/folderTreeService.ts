@@ -178,7 +178,7 @@ export class FolderTreeService
     private setCurrentFolderLocation(data: ITreeNodeItemProps, id: number) {
         const children = data.children;
         const { tree } = this.getCurrentRootFolderInfo(id);
-        const parentIndex = tree.getIndex(id);
+        const parentIndex = tree.getHashMap(id);
 
         data.location = `${parentIndex!.node!.location}/${data.name}`;
         if (children?.length) {
@@ -195,7 +195,7 @@ export class FolderTreeService
         let rootNode: ITreeNodeItemProps = {};
         this.state.folderTree?.data?.forEach((folder) => {
             const treeInstance = new TreeViewUtil<ITreeNodeItemProps>(folder);
-            if (treeInstance.get(id)) rootNode = folder;
+            if (treeInstance.getNode(id)) rootNode = folder;
         });
         return rootNode;
     }
@@ -261,7 +261,7 @@ export class FolderTreeService
             );
         }
 
-        const currentIndex = tree.getIndex(id);
+        const currentIndex = tree.getHashMap(id);
 
         if (currentIndex?.node?.fileType === FileTypes.File) {
             data.location = currentIndex.node.location.replace(
@@ -290,7 +290,7 @@ export class FolderTreeService
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
 
-        tree.remove(id);
+        tree.removeNode(id);
         if (index > -1) nextData[index] = tree.obj;
         this.setState({
             folderTree,
@@ -306,7 +306,7 @@ export class FolderTreeService
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
 
-        tree.update(id, restData);
+        tree.updateNode(id, restData);
         if (index > -1) nextData[index] = tree.obj;
         this.setState({
             folderTree,
@@ -316,7 +316,7 @@ export class FolderTreeService
     public get(id: number) {
         const { tree } = this.getCurrentRootFolderInfo(id);
 
-        const node = tree.get(id);
+        const node = tree.getNode(id);
 
         return node;
     }

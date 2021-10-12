@@ -227,8 +227,9 @@ const TreeView = ({
     };
 
     const getParentNodeViaNode = (node: ITreeNodeItemProps) => {
-        const parentId = dragInfo.current.flattenTree.indexes[node.id].parent;
-        const parent = dragInfo.current.flattenTree.indexes[parentId].node;
+        const treeUtils: TreeViewUtil<any> = dragInfo.current.flattenTree;
+        const parentId = treeUtils.getHashMap(node.id)?.parent!;
+        const parent = treeUtils.getHashMap(parentId)?.node;
         return parent;
     };
 

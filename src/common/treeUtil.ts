@@ -1,277 +1,326 @@
 import cloneDeep from 'lodash/cloneDeep';
+import logger from './logger';
 
-interface BaseProps {
-    id?: number;
+interface IWithIdProps {
+    id: UniqueId;
 
-    [key: string]: any;
+    children?: any[];
 }
 
-interface ITreeNodeItem<T> {
-    id: number;
-    parent?: number;
-    node?: T;
-    [key: string]: any;
-}
-
-export interface IIndex<T> {
-    id?: number;
-    node?: T;
-    parent?: number;
-    prev?: number | null;
-    next?: number | null;
-    [x: string]: any; // default: children: []
-}
-
-export interface Index<T> {
-    id?: number;
-    node?: T;
-    prev?: number | null;
-    next?: number | null;
-    [x: string]: any; // default: children: []
-}
-
-export interface IIndexs<T> {
-    [index: string]: IIndex<T>;
-}
-
-export interface ITreeInterface<T extends BaseProps> {
+interface ITreeInterface<T> {
+    /**
+     * The count of tree node
+     */
     count: number;
+    /**
+     * The Raw tree data
+     */
     obj: T;
-    indexes: IIndexs<T>;
-    childNodeName: string;
+    /**
+     * Returns the tree informations about the node found by id,
+     * Contains
+     * - the parent's id
+     * - the previous node's id
+     * - the next node's id
+     * - and the collection of children's id
+     * @param id
+     */
+    getHashMap(id: UniqueId): IMapNode<T> | null;
+    /**
+     * Returns the node found in tree by id
+     * @param id
+     */
+    getNode(id: UniqueId): T | null;
+    /**
+     * Remove the node found in tree by id
+     * @param id
+     */
+    removeNode(id: UniqueId): T | null;
+    /**
+     * Update the node found in tree by id
+     * @param id
+     * @param extra
+     */
+    updateNode(id: UniqueId, extra: T): T | null;
+    /**
+     * Insert an object whose parent node is found by parentId and position is i into the tree
+     * @param obj
+     * @param parentId
+     * @param i
+     */
+    insertNode(obj: T, parentId: UniqueId, i: number): IMapNode<T> | null;
+    /**
+     * Insert an object before the destiny node whose id is `destId`
+     * @param obj
+     * @param destId
+     */
+    insertBefore(obj: T, destId: UniqueId): IMapNode<T> | null;
+    /**
+     * Insert an object after the destiny node whose id is `destId`
+     * @param obj
+     * @param destId
+     */
+    insertAfter(obj: T, destId: UniqueId): IMapNode<T> | null;
+    /**
+     * Prepend an object into tree
+     * @param obj
+     * @param destId
+     */
+    prepend(obj: T, destId: UniqueId): IMapNode<T> | null;
+    /**
+     * Append an object into tree
+     * @param obj
+     * @param destId
+     */
+    append(obj: T, destId: UniqueId): IMapNode<T> | null;
+}
+
+interface IMapNode<T> {
+    id: string;
+    node: T;
+    parent?: string;
+    children?: string[];
+    prev?: string;
+    next?: string;
 }
 
 /**
- * TODO:
- * The delete operation has a great impact on the performance of the object,
- * and you can consider using other data structures for processing. such as linked lists , tree
+ * A tool for flating tree node.
+ *
+ * It's convenient to get the relationship between tree nodes.
+ *
+ * How to get the parent node by current node id
+ * @example
+ * ```ts
+ * const tree = new TreeViewUtil(treeData); // Initialize the tree utils
+ * const currentHash = tree.getHashMap(currentNodeId); // Get the current hashmap by current node's id
+ * const parentNodeId = currentHash.parent; // This is the parent node's id
+ * const parentNode = tree.getNode(parentNodeId); // This is the parent node
+ * ```
+ *
+ * @aware There should be aware of that the id of tree node must be global unique
  */
-export class TreeViewUtil<T extends BaseProps> implements ITreeInterface<T> {
-    count: number;
+export class TreeViewUtil<T extends IWithIdProps = any>
+    implements ITreeInterface<T> {
+    protected hashMap: Map<string, IMapNode<T>> = new Map();
+    count: number = 0;
     obj: T;
-    indexes: IIndexs<T>;
-    childNodeName: string;
 
-    /**
-     *
-     * indexes data structure example:
-     * ```ts
-     * {
-     *   [2]: {
-     *      id: 2,
-     *      node: {},
-     *      parent: 1,
-     *      prev: null,
-     *      next: 3
-     *   },
-     *   ...
-     * }
-     * ```
-     */
-
-    constructor(obj?: T, childNodeName = 'children') {
-        this.count = 1; // nodes count
-        this.obj = cloneDeep(obj) || ({ [childNodeName]: [] } as any);
-        this.indexes = {};
-        this.childNodeName = childNodeName;
+    constructor(obj: T) {
+        this.obj = cloneDeep(obj);
+        this.count = 1;
         this.generate(this.obj);
     }
 
-    generate(obj: T) {
-        const indexes = this.indexes;
-        const startId = obj.id;
-
-        /**
-         * This can be removed when the ts definition of the tree is fully available
-         */
-        if (!startId) return null;
-
-        const self = this;
-        const index: IIndex<T> = { id: startId, node: obj };
-
-        indexes[startId] = index;
-        this.count++;
-
-        if (obj[this.childNodeName]?.length) {
-            childWalker(obj[this.childNodeName], index);
-        }
-
-        function childWalker(
-            objs: (T & ITreeNodeItem<T>)[],
-            parent: IIndex<T>
-        ) {
-            const children: number[] = []; // current children ids
-
-            objs.forEach((obj) => {
-                const index: IIndex<T> = {
-                    id: obj.id,
-                    node: obj,
-                };
-
-                if (parent.id) index.parent = parent.id;
-                indexes[obj!.id] = index;
-                children.push(obj.id);
-                self.count++;
-                if (obj[self.childNodeName]?.length) {
-                    childWalker(obj[self.childNodeName], index);
-                }
-            });
-            parent[self.childNodeName] = children;
-
-            /**
-             * TODO: really need doubly linked here?
-             */
-            children.forEach((id, i) => {
-                const index = indexes[id];
-                if (i > 0) index.prev = children[i - 1];
-                if (i < children.length - 1) index.next = children[i + 1];
-            });
-        }
-
-        return index;
-    }
-
-    getIndex(id: number) {
-        const index = this.indexes[id];
-        if (index) return index;
-        return null;
-    }
-
-    removeIndex(index: IIndex<T>) {
-        /**
-         * TODO: Do not use the delete operator to delete object properties
-         * This is very convenient, but the impact on performance such as reading is huge
-         * In this application, the reading speed is very important to the experience, so we need to use the hidden class of javascript
-         */
-        if (index.id) delete this.indexes[index.id];
-        if (index[this.childNodeName]?.length) {
-            index[this.childNodeName].forEach((child) => {
-                const childIndex = this.getIndex(child);
-                childIndex && this.removeIndex(childIndex);
-            });
+    private addMap(key: string, value: IMapNode<T>) {
+        if (this.hashMap.has(key)) {
+            logger.error('test.....');
+            return;
+        } else {
+            this.hashMap.set(key, value);
+            this.count += 1;
         }
     }
 
-    get(id: number) {
-        const index = this.getIndex(id);
-        if (index?.node) return index.node;
-        return null;
+    private generateChildren(children: T[], parent: IMapNode<T>) {
+        const childrenIds: string[] = [];
+        children.forEach((child) => {
+            const mapNode: IMapNode<T> = {
+                id: child.id.toString(),
+                node: child,
+            };
+            if (parent.id) {
+                mapNode.parent = parent.id;
+            }
+            this.addMap(child.id.toString(), mapNode);
+
+            childrenIds.push(child.id.toString());
+
+            if (child.children?.length) {
+                this.generateChildren(child.children, mapNode);
+            }
+        });
+
+        parent.children = childrenIds;
+
+        childrenIds.forEach((id, i) => {
+            const hash = this.hashMap.get(id)!;
+            if (i > 0) {
+                hash.prev = childrenIds[i - 1];
+            }
+            if (i < childrenIds.length - 1) {
+                hash.next = childrenIds[i + 1];
+            }
+        });
     }
 
-    remove(id: number) {
-        const index = this.getIndex(id);
-        if (index) {
-            const node = this.get(id);
-            const parentIndex = this.getIndex(index.parent!);
-            const parentNode = this.get(index.parent!);
+    // Generate hashMap by object
+    private generate(obj: T) {
+        const rootId = obj.id.toString();
 
-            if (parentNode && parentIndex && parentIndex[this.childNodeName]) {
-                parentNode[this.childNodeName].splice(
-                    parentNode[this.childNodeName].indexOf(node),
+        const mapNode: IMapNode<T> = { id: rootId, node: obj };
+        this.addMap(rootId, mapNode);
+
+        if (obj.children?.length) {
+            this.generateChildren(obj.children, mapNode);
+        }
+
+        return mapNode;
+    }
+
+    getHashMap = (id: UniqueId) => {
+        return this.hashMap.get(id.toString()) || null;
+    };
+
+    private removeHashMap = (id: UniqueId) => {
+        const source = this.hashMap.get(id.toString());
+        if (source) {
+            this.hashMap.delete(id.toString());
+            if (source.children?.length) {
+                source.children.forEach((child) => {
+                    this.removeHashMap(child);
+                });
+            }
+        }
+    };
+
+    getNode = (id: UniqueId) => {
+        const hash = this.getHashMap(id);
+        return hash?.node || null;
+    };
+
+    removeNode = (id: UniqueId) => {
+        const hash = this.getHashMap(id);
+        if (hash) {
+            const { node, parent } = hash;
+            if (!parent) {
+                logger.error("You're going to remove a root node");
+                return null;
+            }
+            const parentHash = this.getHashMap(parent);
+            const parentNode = parentHash?.node;
+
+            if (parentNode) {
+                parentNode.children?.splice(
+                    parentNode.children.indexOf(node),
                     1
                 );
-                parentIndex[this.childNodeName].splice(
-                    parentIndex[this.childNodeName].indexOf(id),
+
+                parentHash!.children?.splice(
+                    parentHash!.children.indexOf(id.toString()),
                     1
                 );
-                this.removeIndex(index);
-                this.updateChildren(parentIndex[this.childNodeName]);
+                this.removeHashMap(id);
+                this.updateChildren(parentHash!.children);
 
                 return node;
             }
         }
         return null;
-    }
+    };
 
-    update(id: number, extra = {}) {
-        const index = this.getIndex(id);
-        const node = this.get(id);
-        if (index) {
+    updateNode = (id: UniqueId, extra: Omit<T, 'id' | 'children'>) => {
+        const node = this.getNode(id);
+        if (node) {
             Object.assign(node, extra);
             return node;
         }
         return null;
-    }
+    };
 
-    updateChildren(children: IIndex<T> = []) {
-        const self = this;
-        children.forEach(function (id, i) {
-            const index = self.getIndex(id);
-            if (index) {
-                index.prev = index.next = null;
-                if (i > 0) index.prev = children[i - 1];
-                if (i < children.length - 1) index.next = children[i + 1];
+    private updateChildren(children: string[] = []) {
+        children.forEach((id, index) => {
+            const hash = this.getHashMap(id);
+            if (hash) {
+                hash.prev = hash.next = undefined;
+                if (index > 0) {
+                    hash.prev = children[index - 1];
+                }
+                if (index < children.length - 1) {
+                    hash.next = children[index + 1];
+                }
             }
         });
     }
 
-    insert(obj: T, parentId: number, i: number) {
-        const parentIndex = this.getIndex(parentId);
-        const parentNode = this.get(parentId);
-        if (parentNode && parentIndex) {
-            const index = this.generate(obj);
+    insertNode = (obj: T, parentId: UniqueId, i: number) => {
+        const parentHash = this.getHashMap(parentId);
+        if (parentHash) {
+            const parentNode = parentHash.node;
+            const hashMap = this.generate(obj);
 
-            index!.parent = parentId;
-            (parentNode as BaseProps)[this.childNodeName] =
-                parentNode[this.childNodeName] || [];
-            parentIndex[this.childNodeName] =
-                parentIndex[this.childNodeName] || [];
+            hashMap.parent = parentId.toString();
 
-            parentNode[this.childNodeName].splice(i, 0, obj);
-            parentIndex[this.childNodeName].splice(i, 0, index?.id);
+            parentNode.children = parentNode.children || [];
+            parentHash.children = parentHash.children || [];
 
-            this.updateChildren(parentIndex[this.childNodeName]);
-            if (parentIndex.parent) {
-                const fartherParent = this.getIndex(parentIndex.parent);
-                fartherParent &&
-                    this.updateChildren(fartherParent[this.childNodeName]);
+            parentNode.children.splice(i, 0, obj);
+            parentHash.children.splice(i, 0, hashMap.id);
+
+            this.updateChildren(parentHash.children);
+
+            if (parentHash.parent) {
+                const grandParent = this.getHashMap(parentHash.parent);
+                grandParent && this.updateChildren(grandParent.children);
             }
 
-            return index;
+            return hashMap;
         }
         return null;
-    }
+    };
 
-    insertBefore(obj: T, destId: number) {
-        const destIndex = this.getIndex(destId);
-        if (destIndex) {
-            const parentId = destIndex.parent;
-            const parent = this.getIndex(parentId!);
-            if (parent) {
-                const i = parent[this.childNodeName].indexOf(destId);
-                return this.insert(obj, parentId!, i);
+    insertBefore = (obj: T, destId: UniqueId) => {
+        const destinyHash = this.getHashMap(destId);
+        if (destinyHash) {
+            const parentId = destinyHash.parent;
+            if (!parentId) {
+                logger.error(
+                    "You're going to insert a obj before the root node"
+                );
+                return null;
             }
-        }
-        return null;
-    }
-
-    insertAfter(obj: T, destId: number) {
-        const destIndex = this.getIndex(destId);
-        if (destIndex) {
-            const parentId = destIndex.parent;
-            const parent = this.getIndex(parentId!);
-            if (parent) {
-                const i = parent[this.childNodeName].indexOf(destId);
-                return this.insert(obj, parentId!, i + 1);
+            const parentHash = this.getHashMap(parentId);
+            if (parentHash) {
+                const index = (parentHash.children || []).indexOf(
+                    destId.toString()
+                );
+                return this.insertNode(obj, parentId, index);
             }
         }
         return null;
-    }
+    };
 
-    prepend(obj: T, destId: number) {
-        return this.insert(obj, destId, 0);
-    }
-
-    append(obj: T, destId: number) {
-        const destIndex = this.getIndex(destId);
-        if (destIndex) {
-            destIndex[this.childNodeName] = destIndex[this.childNodeName] || [];
-            return this.insert(
-                obj,
-                destId,
-                destIndex[this.childNodeName].length
-            );
+    insertAfter = (obj: T, destId: UniqueId) => {
+        const destinyHash = this.getHashMap(destId);
+        if (destinyHash) {
+            const parentId = destinyHash.parent;
+            if (!parentId) {
+                logger.error(
+                    "You're going to insert a obj after the root node"
+                );
+                return null;
+            }
+            const parentHash = this.getHashMap(parentId);
+            if (parentHash) {
+                const index = (parentHash.children || []).indexOf(
+                    destId.toString()
+                );
+                return this.insertNode(obj, parentId, index + 1);
+            }
         }
         return null;
-    }
+    };
+
+    prepend = (obj: T, destId: UniqueId) => {
+        return this.insertNode(obj, destId, 0);
+    };
+
+    append = (obj: T, destId: UniqueId) => {
+        const destinyHash = this.getHashMap(destId);
+        if (destinyHash) {
+            destinyHash.children = destinyHash.children || [];
+            return this.insertNode(obj, destId, destinyHash.children.length);
+        }
+        return null;
+    };
 }

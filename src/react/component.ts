@@ -1,22 +1,39 @@
 import { cloneDeep } from 'lodash';
 import { EventEmitter, GlobalEvent } from 'mo/common/event';
 
-enum componentEvents {
+export enum ComponentEvents {
     Update = 'Component.Update',
 }
 
 export interface IComponent<S = any> {
-    setState(values: S, callback?: (prevState: S, nextState: S) => void): void;
-    render(nextState?: S): void;
-    onUpdateState(callback: (prevState: S, nextState: S) => void): void;
-    forceUpdate(): void;
-    getState(): S;
     /**
-     * Subscribe the component event
-     * @param name
+     * Set the Component state
+     * @param values The next values of state
+     * @param callback calling after setState
+     */
+    setState(values: S, callback?: (prevState: S, nextState: S) => void): void;
+    /**
+     * Trigger the Component update event
+     * @param nextState
+     */
+    render(nextState?: S): void;
+    /**
+     * Listen to the Component state update event
      * @param callback
      */
-    onEvent(name, callback): void;
+    onUpdateState(callback: (prevState: S, nextState: S) => void): void;
+    /**
+     * Remove the Component update event listening
+     */
+    removeOnUpdateState(): void;
+    /**
+     * Force to update the Component
+     */
+    forceUpdate(): void;
+    /**
+     * Get the Component state
+     */
+    getState(): S;
 }
 
 export abstract class Component<S = any>
@@ -48,11 +65,15 @@ export abstract class Component<S = any>
      * @param nextState
      */
     public render(nextState?: S) {
-        this._event.emit(componentEvents.Update, this.state, nextState);
+        this._event.emit(ComponentEvents.Update, this.state, nextState);
     }
 
     public onUpdateState(callback: (prevState: S, nextState: S) => void) {
-        this._event.subscribe(componentEvents.Update, callback);
+        this._event.subscribe(ComponentEvents.Update, callback);
+    }
+
+    public removeOnUpdateState(): void {
+        this._event.unsubscribe(ComponentEvents.Update);
     }
 
     public forceUpdate() {
@@ -61,9 +82,5 @@ export abstract class Component<S = any>
 
     public getState(): S {
         return this.state;
-    }
-
-    public onEvent(name, callback) {
-        this.subscribe(name, callback);
     }
 }

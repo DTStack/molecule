@@ -1,14 +1,20 @@
 import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
 
-export const ExtendDataSync: IExtension = {
+const testItem = {
+    id: '3333',
+    icon: 'sync',
+    name: 'Data Synchronization',
+};
+
+export const ExtendsDataSync: IExtension = {
+    id: 'ExtendDataSync',
+    name: 'Data Sync',
     activate() {
-        const newItem = {
-            id: '3333',
-            icon: 'sync',
-            name: '数据同步',
-        };
-        console.log('extend a new activity bar item:', newItem);
-        molecule.activityBar.add(newItem);
+        molecule.activityBar.add(testItem);
+    },
+
+    dispose() {
+        molecule.activityBar.remove(testItem.id);
     },
 };

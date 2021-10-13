@@ -13,6 +13,8 @@ import { QuickUndo } from 'mo/monaco/quickUndo';
 import { QuickCreateFile } from 'mo/monaco/quickCreateFile';
 
 export const ExtendsKeybinding: IExtension = {
+    id: 'ExtendsKeybinding',
+    name: 'Extends Keybinding',
     activate(extensionCtx: IExtensionService) {
         extensionCtx.registerAction(CommandQuickAccessViewAction);
         extensionCtx.registerAction(SelectColorThemeAction);
@@ -26,4 +28,5 @@ export const ExtendsKeybinding: IExtension = {
         extensionCtx.registerAction(QuickRedo);
         extensionCtx.registerAction(QuickCreateFile);
     },
+    dispose() {},
 };

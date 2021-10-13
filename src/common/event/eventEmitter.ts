@@ -9,7 +9,6 @@ export class EventEmitter {
     public emit(name: string, ...args) {
         const events = this._events.get(name);
         if (events && events.length > 0) {
-            // The log for development
             events.forEach((callEvent) => {
                 callEvent(...args);
             });
@@ -26,6 +25,14 @@ export class EventEmitter {
         }
     }
 
+    /**
+     * Unsubscribe the specific event by the name
+     *
+     * TODO: The `unsubscribe` method delete the all events via the name directly, the developer
+     * use the `subscribe` method could register many callbacks, so if the developer only want to delete the specific callback by the name,
+     * this method is no work.
+     * @param name The removed event name
+     */
     public unsubscribe(name: string | string[]) {
         if (Array.isArray(name)) {
             name.forEach((key: string) => {

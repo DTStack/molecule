@@ -4,9 +4,14 @@ import molecule from 'mo';
 import { builtInActivityBar } from 'mo/model';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
 
+const { data = [], contextMenu = [] } = builtInActivityBar();
+
 export const ExtendsActivityBar: IExtension = {
+    id: 'ExtendsActivityBar',
+    name: 'Extend The Default ActivityBar',
+
     activate(extensionCtx: IExtensionService) {
-        const { data = [], contextMenu = [] } = builtInActivityBar();
+        // Initial the activityBar UI state
         molecule.activityBar.add(data);
         molecule.activityBar.addContextMenu(contextMenu);
 
@@ -29,5 +34,9 @@ export const ExtendsActivityBar: IExtension = {
                 );
             }
         });
+    },
+
+    dispose() {
+        molecule.activityBar.remove(data.map((item) => item.id));
     },
 };

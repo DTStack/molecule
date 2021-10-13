@@ -9,6 +9,13 @@ import logger from 'mo/common/logger';
 
 describe('Test ExtensionService', () => {
     const instance = container.resolve(ExtensionService);
+    const mockExtension: IExtension = {
+        id: 'test',
+        name: 'test',
+        activate: jest.fn(),
+        contributes: {},
+        dispose() {},
+    };
 
     afterEach(() => {
         instance.reset();
@@ -34,52 +41,38 @@ describe('Test ExtensionService', () => {
     });
 
     test('Load an extension and activate it', () => {
-        const ext: IExtension = {
-            name: 'test',
-            activate: jest.fn((ctx) => {
-                expect(ext).not.toBeNull();
-            }),
-        };
-        instance.load([ext]);
+        instance.load([mockExtension]);
 
         expect(instance.getExtension('test')).not.toBeUndefined();
-        expect(ext.activate).toBeCalled();
+        expect(mockExtension.activate).toBeCalled();
     });
 
-    test('Remove the extension', () => {
-        const ext: IExtension = {
-            name: 'test',
-            activate: jest.fn(),
-        };
-        instance.load([ext]);
+    test('Not allowed to add the duplicate extension', () => {
+        instance.load([mockExtension]);
+        instance.load([mockExtension]);
+        expect(mockExtension.activate).toBeCalledTimes(1);
+    });
+
+    test('Dispose an extension', () => {
+        instance.load([mockExtension]);
         expect(instance.getExtension('test')).not.toBeUndefined();
-        instance.remove(ext);
+        instance.dispose('test');
         expect(instance.getExtension('test')).toBeUndefined();
-        expect(instance.remove(ext)).toBeUndefined();
+    });
+
+    test('Load the extension contributes', () => {
+        instance.loadContributes = jest.fn();
+        instance.load([mockExtension]);
+        expect(instance.loadContributes).toBeCalled();
     });
 
     test('Load an extension and it throws an Error', () => {
         logger.error = jest.fn();
-        const ext: IExtension = {
-            name: 'test',
-            activate: () => {
-                throw new Error('Test Error');
-            },
+        mockExtension.activate = () => {
+            throw new Error('Test Error');
         };
-        instance.load([ext]);
+        instance.load([mockExtension]);
         expect(logger.error).toBeCalled();
-    });
-
-    test('Load an extension contributes', () => {
-        const ext: IExtension = {
-            name: 'testContrib',
-            activate: jest.fn(),
-            contributes: {},
-        };
-
-        instance.loadContributes = jest.fn();
-        instance.load([ext]);
-        expect(instance.loadContributes).toBeCalled();
     });
 
     test('Extensions add the themes contribute', () => {
@@ -90,7 +83,7 @@ describe('Test ExtensionService', () => {
             },
         ];
         const instance: any = new ExtensionService();
-        const contrib: IContribute = { commands: 'contrib' };
+        const contrib: IContribute = { themes: undefined };
 
         instance.colorThemeService.addThemes = jest.fn((them) => {
             expect(them).toEqual(theme);
@@ -131,5 +124,41 @@ describe('Test ExtensionService', () => {
         instance.monacoService.commandService.executeCommand = testFn;
         instance.executeCommand('test', 'args');
         expect(testFn).toBeCalled();
+    });
+
+    test('Dispose the extension', () => {
+        mockExtension.dispose = jest.fn();
+        instance.load([mockExtension]);
+
+        instance.dispose(mockExtension.id);
+        expect(mockExtension.dispose).toBeCalled();
+        expect(instance.getExtension(mockExtension.id)).toBeUndefined();
+
+        instance.load([mockExtension]);
+        instance.dispose('unknown');
+        expect(instance.getAllExtensions().length).toBe(1);
+    });
+
+    test('Dispose all extensions', () => {
+        mockExtension.dispose = jest.fn();
+        instance.load([mockExtension]);
+
+        instance.disposeAll();
+        expect(mockExtension.dispose).toBeCalled();
+        expect(instance.getAllExtensions().length).toBe(0);
+    });
+
+    test('Inactive the specific extensions', () => {
+        mockExtension.activate = jest.fn();
+
+        instance.inactive((extension) => {
+            if (extension.id === mockExtension.id) {
+                return true;
+            }
+            return false;
+        });
+        instance.load([mockExtension]);
+
+        expect(mockExtension.activate).not.toBeCalled();
     });
 });

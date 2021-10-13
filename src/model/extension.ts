@@ -38,9 +38,13 @@ export interface IContribute {
  */
 export interface IExtension {
     /**
+     * The ID of extension required
+     */
+    id: string;
+    /**
      * The name of extension
      */
-    name?: string;
+    name: string;
     /**
      * The display name of extension
      */
@@ -87,7 +91,16 @@ export interface IExtension {
      */
     disable?: boolean;
     /**
-     * Activate current extension
+     * Do something you want when the Extension is activating.
+     * The ExtensionService will call the `activate` method after
+     * added the Extension instance.
+     * @param extensionCtx The Context of Extension instance
      */
     activate(extensionCtx: IExtensionService): void;
+    /**
+     * Do something when the Extension disposing.
+     * For example, you can recover the UI state, or remove the Objects in memory.
+     * @param extensionCtx The Context of Extension instance
+     */
+    dispose(extensionCtx: IExtensionService): void;
 }

@@ -1,5 +1,3 @@
-import { ExtendsStatusBar } from './statusBar';
-import { ExtendsEditor } from './editor';
 import { ExtendsFolderTree } from './folderTree';
 import { ExtendsMenuBar } from './menuBar';
 import { ExtendsActivityBar } from './activityBar';
@@ -20,9 +18,7 @@ import { githubPlusExtension } from './github-plus-theme-master';
 export const defaultExtensions = [
     ExtendsPanel,
     ExtendsActivityBar,
-    ExtendsEditor,
     ExtendsMenuBar,
-    ExtendsStatusBar,
     ExtendsExplorer,
     ExtendsEditorTree,
     defaultColorThemeExtension,

@@ -28,4 +28,13 @@ export abstract class GlobalEvent {
     public count(name: string) {
         return EventBus.count(name);
     }
+
+    /**
+     * Unsubscribe the specific event
+     * @param name The event name
+     * @param callback The subscribed function
+     */
+    public unsubscribe(name) {
+        EventBus.unsubscribe(name);
+    }
 }

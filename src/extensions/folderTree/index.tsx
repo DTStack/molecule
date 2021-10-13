@@ -3,6 +3,8 @@ import { IExtension } from 'mo/model/extension';
 import { ITreeNodeItemProps } from 'mo/components/tree';
 
 export const ExtendsFolderTree: IExtension = {
+    id: 'ExtendsFolderTree',
+    name: 'Extends FolderTree',
     activate() {
         molecule.folderTree.onRemove((id: number) => {
             molecule.folderTree.remove(id);
@@ -47,4 +49,5 @@ export const ExtendsFolderTree: IExtension = {
             }
         });
     },
+    dispose() {},
 };

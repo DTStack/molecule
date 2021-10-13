@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { singleton, inject, container } from 'tsyringe';
+import { singleton, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension } from 'mo/model/extension';
 import { IColorTheme } from 'mo/model/colorTheme';
@@ -10,32 +10,65 @@ import {
 } from './theme/colorThemeService';
 import { Action2, registerAction2 } from 'mo/monaco/common';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
+import { searchById } from './helper';
 
 export interface IExtensionService {
     /**
-     * Load the extension objects and then execute them
+     * Load the extension instances and then activate them.
+     * Notice: The ExtensionService doesn't load an existed Extension, if you want inactivate
+     * someone extension, there can use the `ExtensionService.inactive` method, also if you want
+     * remove a extension, you can use the `ExtensionService.dispose` method.
      * @param extensions The extension array
      */
     load(extensions: IExtension[]);
     /**
-     * Get an extension by name
-     * @param name The extension name
+     * Add the extensions to ExtensionService, but no activated.
+     * @param extensions The Extensions wait to added
+     * @returns Unload Extensions
      */
-    getExtension(name: string): IExtension | undefined;
+    add(extensions: IExtension[]): IExtension[] | null;
+    /**
+     * Activate the extensions (includes `contributes` type).
+     * Notice: this method only do  the `activate` work, not store the data into ExtensionService,
+     * which means you can't get the Extension by the `ExtensionService. getExtension` method.
+     * @param extensions
+     */
+    activate(extensions: IExtension[]): void;
+    /**
+     * Get an extension by the ID
+     * @param name The extension ID
+     */
+    getExtension(id: string): IExtension | undefined;
     /**
      * Get All loaded extensions
      * @return Extension Array
      */
     getAllExtensions(): IExtension[];
     /**
-     * Remove the specific extension
+     * Dispose the specific extension, and remove it from the ExtensionService
      * @param extension The extension name is required
      */
-    remove(extension: IExtension);
+    dispose(extensionId: string): void;
     /**
-     * Reset the extensions data
+     * Dispose all extensions, and reset the ExtensionService
      */
-    reset(): void;
+    disposeAll(): void;
+    /**
+     * Disable to activate some extensions, make use of it to filter some
+     * extensions no need to activate. You need register the inactive event before the MoleculeProvider declaration.
+     * @example
+     * ```ts
+     *  molecule.extension.inactive((extension: IExtension) => {
+     *      if (/^(idA|idB)$/.test(extension.id)) {
+     *          return true;
+     *      }
+     *  });
+     *  <MoleculeProvider extensions={[]}></MoleculeProvider>
+     * ```
+     * @param predicate The predicate function
+     */
+    inactive(predicate: (extension: IExtension) => boolean): void;
+
     /**
      * Register a new action which is extends the Action2,
      * @example
@@ -51,6 +84,10 @@ export interface IExtensionService {
      * @param args
      */
     executeCommand(id: string, ...args: any): void;
+    /**
+     * Reset the extensions to `[]`
+     */
+    reset(): void;
 }
 
 @singleton()
@@ -58,15 +95,15 @@ export class ExtensionService implements IExtensionService {
     private extensions: IExtension[] = [];
     private readonly colorThemeService: IColorThemeService;
     private readonly monacoService: IMonacoService;
+    private _inactive: Function | undefined;
 
-    constructor(@inject('Extensions') extensions: IExtension[] = []) {
-        this.load(extensions);
+    constructor(extensions: IExtension[] = []) {
         this.colorThemeService = container.resolve(ColorThemeService);
         this.monacoService = container.resolve(MonacoService);
     }
 
-    public getExtension(name: string): IExtension | undefined {
-        return this.extensions.find((ext) => ext.name === name);
+    public getExtension(id: string): IExtension | undefined {
+        return this.extensions.find(searchById(id));
     }
 
     public reset(): void {
@@ -77,21 +114,34 @@ export class ExtensionService implements IExtensionService {
         return this.extensions.concat();
     }
 
+    public add(extensions: IExtension[]): IExtension[] | null {
+        if (!extensions || extensions?.length === 0) return null;
+        /**
+         * Filtered the exist Extensions
+         */
+        const unloadExtensions = extensions.filter((ext) => {
+            const isExist = this.extensions.find(searchById(ext.id));
+            if (isExist) {
+                logger.warn(
+                    'Warning: Unable to load the existed Extension:' + ext.id
+                );
+            }
+            return !isExist;
+        });
+        if (unloadExtensions.length > 0) {
+            this.extensions = this.extensions.concat(unloadExtensions);
+        }
+        return unloadExtensions;
+    }
+
     public load(extensions: IExtension[]) {
         try {
-            if (extensions?.length === 0) return;
-            this.extensions = this.extensions.concat(extensions);
-            logger.info('ExtensionService.extensions:', this.extensions);
-            const ctx = this;
-            extensions?.forEach((extension: IExtension, index: number) => {
-                if (extension && extension.activate) {
-                    extension.activate(ctx);
-                }
+            // First add the extensions
+            const unloadExtensions = this.add(extensions);
+            if (!unloadExtensions) return;
 
-                if (extension && extension.contributes) {
-                    this.loadContributes(extension.contributes);
-                }
-            });
+            // Then activate
+            this.activate(unloadExtensions);
         } catch (e) {
             logger.error(ErrorMsg.LoadExtensionFail);
         }
@@ -107,10 +157,6 @@ export class ExtensionService implements IExtensionService {
                         this.colorThemeService.addThemes(themes);
                     }
                 }
-                // TODO: support the Commands type of extension
-                // case IContributeType.Commands: {
-                //     this.registerAction();
-                // }
             }
         });
     }
@@ -123,15 +169,49 @@ export class ExtensionService implements IExtensionService {
         this.monacoService.commandService.executeCommand(id, ...args);
     }
 
-    public remove(extension: IExtension): IExtension[] | undefined {
-        const extIndex = this.extensions.findIndex(
-            (ext) => ext.name === extension.name
-        );
+    public activate(extensions: IExtension[]): void {
+        if (extensions.length === 0) return;
+
+        const ctx = this;
+        extensions?.forEach((extension: IExtension, index: number) => {
+            // Ignore the inactive or invalid extension
+            if (!extension || this.isInactive(extension)) return;
+
+            if (extension.activate) {
+                extension.activate(ctx);
+            }
+
+            if (extension.contributes) {
+                this.loadContributes(extension.contributes);
+            }
+        });
+    }
+
+    public dispose(extensionId: string): void {
+        const ctx = this;
+        const extIndex = this.extensions.findIndex(searchById(extensionId));
         if (extIndex > -1) {
-            return this.extensions.splice(extIndex, 1);
+            const extension: IExtension = this.extensions[extIndex];
+            extension.dispose?.(ctx);
+            this.extensions.splice(extIndex, 1);
         }
-        return undefined;
+    }
+
+    public disposeAll() {
+        this.extensions.forEach((ext) => {
+            ext.dispose?.(this);
+        });
+        this.reset();
+    }
+
+    public inactive(predicate: (extension: IExtension) => boolean): void {
+        this._inactive = predicate;
+    }
+
+    private isInactive(extension: IExtension): boolean {
+        if (this._inactive && typeof this._inactive === 'function') {
+            return this._inactive(extension);
+        }
+        return false;
     }
 }
-
-container.register('Extensions', { useValue: [] });

@@ -3,7 +3,7 @@ import { singleton, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension } from 'mo/model/extension';
 import { IColorTheme } from 'mo/model/colorTheme';
-import { ILocaleService, LocaleService, ILocales } from 'mo/i18n';
+import { ILocaleService, LocaleService, ILocale } from 'mo/i18n';
 import logger from 'mo/common/logger';
 import {
     ColorThemeService,
@@ -160,14 +160,11 @@ export class ExtensionService implements IExtensionService {
                     this.colorThemeService.addThemes(themes);
                 }
                 case IContributeType.Languages: {
-                    const locales: ILocales | undefined = contributes[
+                    const locales: ILocale[] | undefined = contributes[
                         type
-                    ] as ILocales;
-                    if (!locales || !locales.locales) return;
-                    this.localeService.initialize(
-                        locales.locales,
-                        locales.localeId
-                    );
+                    ] as any;
+                    if (!locales) return;
+                    this.localeService.initialize(locales);
                 }
             }
         });

@@ -1,3 +1,4 @@
+import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { TreeViewUtil } from '../treeUtil';
 import { searchById } from '../utils';
 
@@ -257,5 +258,39 @@ describe('Test the treeView helper', () => {
         const res = tree.append({ id: 5, module: 'd', children: [] }, 100);
 
         expect(res).toBeNull();
+    });
+
+    test('Should log ERROR message when duplicated key', () => {
+        expectLoggerErrorToBeCalled(() => {
+            const tree = new TreeViewUtil(mockTreeData);
+            tree.append({ id: 3, module: 'duplicated key', children: [] }, 1);
+        });
+    });
+
+    test('Should NOT support to remove a root node', () => {
+        expectLoggerErrorToBeCalled(() => {
+            const tree = new TreeViewUtil(mockTreeData);
+            tree.removeNode(mockTreeData.id);
+        });
+    });
+
+    test('Should NOT support to insert a node before root', () => {
+        expectLoggerErrorToBeCalled(() => {
+            const tree = new TreeViewUtil(mockTreeData);
+            tree.insertBefore(
+                { id: 5, module: 'insert', children: [] },
+                mockTreeData.id
+            );
+        });
+    });
+
+    test('Should NOT support to insert a node after root', () => {
+        expectLoggerErrorToBeCalled(() => {
+            const tree = new TreeViewUtil(mockTreeData);
+            tree.insertAfter(
+                { id: 5, module: 'insert', children: [] },
+                mockTreeData.id
+            );
+        });
     });
 });

@@ -114,7 +114,9 @@ export class TreeViewUtil<T extends IWithIdProps = any>
 
     private addMap(key: string, value: IMapNode<T>) {
         if (this.hashMap.has(key)) {
-            logger.error('test.....');
+            logger.error(
+                `There is already a data whose key is ${key} in hashMap`
+            );
             return;
         } else {
             this.hashMap.set(key, value);

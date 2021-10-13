@@ -10,7 +10,7 @@ import {
 } from './theme/colorThemeService';
 import { Action2, registerAction2 } from 'mo/monaco/common';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
-import { searchById } from './helper';
+import { searchById } from 'mo/common/utils';
 
 export interface IExtensionService {
     /**

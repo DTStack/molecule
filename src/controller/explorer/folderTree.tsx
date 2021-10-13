@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import cloneDeep from 'lodash/cloneDeep';
 import { Controller } from 'mo/react/controller';
-import { ITreeNodeItemProps } from 'mo/components/tree';
 import { IMenuItemProps } from 'mo/components/menu';
 import {
     ROOT_FOLDER_CONTEXT_MENU,
@@ -14,6 +13,7 @@ import {
     FolderTreeEvent,
     FileTypes,
     FileType,
+    IFolderTreeNodeProps,
 } from 'mo/model';
 import { FolderTreeService, IFolderTreeService } from 'mo/services';
 
@@ -21,16 +21,18 @@ export interface IFolderTreeController {
     readonly createTreeNode?: (type: FileType) => void;
     readonly onClickContextMenu?: (
         contextMenu: IMenuItemProps,
-        treeNode?: ITreeNodeItemProps
+        treeNode?: IFolderTreeNodeProps
     ) => void;
-    readonly onUpdateFileName?: (file: ITreeNodeItemProps) => void;
-    readonly onSelectFile?: (file?: ITreeNodeItemProps) => void;
+    readonly onUpdateFileName?: (file: IFolderTreeNodeProps) => void;
+    readonly onSelectFile?: (file?: IFolderTreeNodeProps) => void;
     readonly onDropTree?: (
-        source: ITreeNodeItemProps,
-        target: ITreeNodeItemProps
+        source: IFolderTreeNodeProps,
+        target: IFolderTreeNodeProps
     ) => void;
-    readonly onLoadData?: (treeNode: ITreeNodeItemProps) => Promise<void>;
-    readonly onRightClick?: (treeNode: ITreeNodeItemProps) => IMenuItemProps[];
+    readonly onLoadData?: (treeNode: IFolderTreeNodeProps) => Promise<void>;
+    readonly onRightClick?: (
+        treeNode: IFolderTreeNodeProps
+    ) => IMenuItemProps[];
 }
 
 @singleton()
@@ -44,7 +46,7 @@ export class FolderTreeController
         this.folderTreeService = container.resolve(FolderTreeService);
     }
 
-    private getContextMenu = (treeNode: ITreeNodeItemProps) => {
+    private getContextMenu = (treeNode: IFolderTreeNodeProps) => {
         const menus: IMenuItemProps[] = cloneDeep(
             this.folderTreeService.getState().folderTree?.contextMenu || []
         );
@@ -83,7 +85,7 @@ export class FolderTreeController
 
     public readonly onClickContextMenu = (
         contextMenu: IMenuItemProps,
-        treeNode?: ITreeNodeItemProps
+        treeNode?: IFolderTreeNodeProps
     ) => {
         const menuId = contextMenu.id;
         switch (menuId) {
@@ -115,7 +117,7 @@ export class FolderTreeController
         }
     };
 
-    public onRightClick = (treeNode: ITreeNodeItemProps) => {
+    public onRightClick = (treeNode: IFolderTreeNodeProps) => {
         const menus = this.getContextMenu(treeNode);
         this.emit(FolderTreeEvent.onRightClick, treeNode, menus);
 
@@ -123,18 +125,18 @@ export class FolderTreeController
     };
 
     public readonly onDropTree = (
-        source: ITreeNodeItemProps,
-        target: ITreeNodeItemProps
+        source: IFolderTreeNodeProps,
+        target: IFolderTreeNodeProps
     ) => {
         // this.folderTreeService.onDropTree(treeNode);
         this.emit(FolderTreeEvent.onDrop, source, target);
     };
 
-    public onUpdateFileName = (file: ITreeNodeItemProps) => {
+    public onUpdateFileName = (file: IFolderTreeNodeProps) => {
         this.emit(FolderTreeEvent.onUpdateFileName, file);
     };
 
-    public readonly onSelectFile = (file?: ITreeNodeItemProps) => {
+    public readonly onSelectFile = (file?: IFolderTreeNodeProps) => {
         this.folderTreeService.setActive(file?.id);
         // editing file won't emit onSelectFile
         if (file && !file.isEditable && file.fileType === FileTypes.File) {
@@ -144,24 +146,24 @@ export class FolderTreeController
 
     private onContextMenuClick = (
         contextMenu: IMenuItemProps,
-        treeNode?: ITreeNodeItemProps
+        treeNode?: IFolderTreeNodeProps
     ) => {
         this.emit(FolderTreeEvent.onContextMenuClick, contextMenu, treeNode);
     };
 
-    private onRename = (id: number) => {
+    private onRename = (id: UniqueId) => {
         this.emit(FolderTreeEvent.onRename, id);
     };
 
-    private onDelete = (id: number) => {
+    private onDelete = (id: UniqueId) => {
         this.emit(FolderTreeEvent.onDelete, id);
     };
 
-    public onLoadData = (treeNode: ITreeNodeItemProps) => {
+    public onLoadData = (treeNode: IFolderTreeNodeProps) => {
         const count = this.count(FolderTreeEvent.onLoadData);
         if (count) {
             return new Promise<void>((resolve, reject) => {
-                const callback = (node: ITreeNodeItemProps) => {
+                const callback = (node: IFolderTreeNodeProps) => {
                     this.folderTreeService.update(node);
                     resolve();
                 };

@@ -127,9 +127,8 @@ export default class TestPane extends React.Component {
         };
 
         const updateProblem = () => {
-            const problems = molecule.problems.getState().data;
             molecule.problems.add({
-                id: (problems[problems.length - 1]?.id || 0) + 10,
+                id: randomId(),
                 name: 'text.tsx',
                 value: {
                     code: 'text.tsx',
@@ -142,7 +141,7 @@ export default class TestPane extends React.Component {
                 },
                 children: [
                     {
-                        id: (problems[problems.length - 1]?.id || 0) + 1,
+                        id: randomId(),
                         name: '0-1',
                         value: {
                             code: 'endLineNumber',
@@ -304,6 +303,7 @@ PARTITIONED BY (ds string) lifecycle 1000;
             );
             molecule.folderTree.add(
                 new TreeNodeModel({
+                    id: randomId(),
                     name: 'molecule_temp',
                     fileType: FileTypes.RootFolder,
                     children,

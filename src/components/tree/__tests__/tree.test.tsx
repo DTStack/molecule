@@ -8,11 +8,11 @@ import { unexpandTreeNodeClassName, expandTreeNodeClassName } from '../base';
 
 const mockData: ITreeNodeItemProps[] = [
     {
-        key: '1',
+        id: '1',
         name: 'test1',
         children: [
             {
-                key: '1-1',
+                id: '1-1',
                 name: 'test1-1',
                 icon: 'test',
                 isLeaf: true,
@@ -20,7 +20,7 @@ const mockData: ITreeNodeItemProps[] = [
         ],
     },
     {
-        key: '2',
+        id: '2',
         name: 'test2',
     },
 ];
@@ -52,7 +52,7 @@ describe('Test the Tree component', () => {
         const { container, getByTitle } = render(
             <TreeView
                 renderTitle={(node) => {
-                    if (node.key === '1') {
+                    if (node.id === '1') {
                         return "I'm renderTitle";
                     }
                     return node.name!;
@@ -82,7 +82,7 @@ describe('Test the Tree component', () => {
         fireEvent.click(getByTitle('test1'));
         const childNode = await waitFor(() =>
             container.querySelector<HTMLDivElement>(
-                'div[data-id="mo_treeNode_1-1"]'
+                'div[data-id="mo_treeNode_1_1-1"]'
             )
         );
 
@@ -100,7 +100,7 @@ describe('Test the Tree component', () => {
 
         const childNode = await waitFor(() =>
             container.querySelector<HTMLDivElement>(
-                'div[data-id="mo_treeNode_1-1"]'
+                'div[data-id="mo_treeNode_1_1-1"]'
             )
         );
         const childIcon = childNode?.querySelector('span.codicon-test') || null;
@@ -115,7 +115,7 @@ describe('Test the Tree component', () => {
         fireEvent.click(getByTitle('test1'));
         const childNode = await waitFor(() =>
             container.querySelector<HTMLDivElement>(
-                'div[data-id="mo_treeNode_1-1"]'
+                'div[data-id="mo_treeNode_1_1-1"]'
             )
         );
         const childIcon = childNode?.querySelector('span[role="icon"]');
@@ -493,7 +493,7 @@ describe('Test the Tree component', () => {
         rerender(
             <TreeView
                 data={mockData}
-                expandKeys={[mockData[0].key!]}
+                expandKeys={[mockData[0].id.toString()!]}
                 onExpand={mockFn}
             />
         );

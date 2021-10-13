@@ -1,6 +1,7 @@
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import { IPanelItem } from 'mo/model/workbench/panel';
 import { localize } from 'mo/i18n/localize';
+import { ITreeNodeItemProps } from 'mo/components';
 
 export enum MarkerSeverity {
     Hint = 1,
@@ -17,9 +18,7 @@ export interface IRelatedInformation {
     endColumn: number;
     status: MarkerSeverity;
 }
-export interface IProblemsItem<T = any> {
-    id?: number;
-    name: string;
+export interface IProblemsItem<T = any> extends ITreeNodeItemProps {
     value: IRelatedInformation;
     children: IProblemsItem[];
 }

@@ -11,12 +11,13 @@ import {
     IFolderTreeSubItem,
     BASE_CONTEXT_MENU,
     FILE_CONTEXT_MENU,
+    IFolderTreeNodeProps,
 } from 'mo/model/workbench/explorer/folderTree';
 import { TreeViewUtil } from '../../../common/treeUtil';
-import { ITreeNodeItemProps } from 'mo/components/tree';
 import { ExplorerService, IExplorerService } from './explorerService';
 import { SAMPLE_FOLDER_PANEL_ID, builtInFolderTree } from 'mo/model';
 import { IMenuItemProps } from 'mo/components';
+import logger from 'mo/common/logger';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     /**
@@ -28,22 +29,22 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * @param data
      * @param id - Except adding a root folder, the id is required
      */
-    add(data: ITreeNodeItemProps, id?: number): void;
+    add(data: IFolderTreeNodeProps, id?: UniqueId): void;
     /**
      * Remove specific data in folder tree
      * @param id
      */
-    remove(id: number): void;
+    remove(id: UniqueId): void;
     /**
      * Update specific data in folder tree
      * @param data - The `id` property is required in data
      */
-    update(data: ITreeNodeItemProps): void;
+    update(data: IFolderTreeNodeProps): void;
     /**
      * Get specific data in folder tree
      * @param id
      */
-    get(id: number): ITreeNodeItemProps | null;
+    get(id: UniqueId): IFolderTreeNodeProps | null;
     /**
      * Get the context menus for file
      */
@@ -57,7 +58,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * or unactive any node in folder tree
      * @param id
      */
-    setActive(id?: number): void;
+    setActive(id?: UniqueId): void;
     /**
      * Set a entry page for folder tree
      * @param entry
@@ -77,30 +78,30 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * Listen to event about clicking rename button
      * @param callback
      */
-    onRename(callback: (id: number) => void): void;
+    onRename(callback: (id: UniqueId) => void): void;
     /**
      * Listen to remove a node
      * @param callback
      */
-    onRemove(callback: (id: number) => void): void;
+    onRemove(callback: (id: UniqueId) => void): void;
     /**
      * Listen to update file or folder name
      * @param callback
      */
-    onUpdateFileName(callback: (file: ITreeNodeItemProps) => void): void;
+    onUpdateFileName(callback: (file: IFolderTreeNodeProps) => void): void;
     /**
      * Listen to select a file
      * @param callback
      */
-    onSelectFile(callback: (file: ITreeNodeItemProps) => void): void;
+    onSelectFile(callback: (file: IFolderTreeNodeProps) => void): void;
     /**
      * Listen to drop event
      * @param treeData
      */
     onDropTree(
         callback: (
-            source: ITreeNodeItemProps,
-            target: ITreeNodeItemProps
+            source: IFolderTreeNodeProps,
+            target: IFolderTreeNodeProps
         ) => void
     ): void;
     /**
@@ -109,7 +110,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     onRightClick(
         callback: (
-            treeData: ITreeNodeItemProps,
+            treeData: IFolderTreeNodeProps,
             menus: IMenuItemProps[]
         ) => void
     ): void;
@@ -117,7 +118,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      * Listen to create a node for folder tree
      * @param callback
      */
-    onCreate(callback: (type: FileType, nodeId?: number) => void): void;
+    onCreate(callback: (type: FileType, nodeId?: UniqueId) => void): void;
     /**
      * Listen to the click event about the context menu except for built-in menus
      * @param callback
@@ -125,7 +126,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
     onContextMenu(
         callback: (
             contextMenu: IMenuItemProps,
-            treeNode?: ITreeNodeItemProps
+            treeNode?: IFolderTreeNodeProps
         ) => void
     ): void;
     /**
@@ -134,8 +135,8 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     onLoadData(
         callback: (
-            treeNode: ITreeNodeItemProps,
-            callback: (treeNode: ITreeNodeItemProps) => void
+            treeNode: IFolderTreeNodeProps,
+            callback: (treeNode: IFolderTreeNodeProps) => void
         ) => void
     ): void;
 }
@@ -156,7 +157,10 @@ export class FolderTreeService
     }
 
     public reset() {
-        this.setState(builtInFolderTree as any);
+        this.setState({
+            folderTree: builtInFolderTree,
+            entry: undefined,
+        });
     }
 
     public getFileContextMenu() {
@@ -175,10 +179,11 @@ export class FolderTreeService
         this.folderContextMenu = menus;
     }
 
-    private setCurrentFolderLocation(data: ITreeNodeItemProps, id: number) {
+    private setCurrentFolderLocation(data: IFolderTreeNodeProps, id: UniqueId) {
         const children = data.children;
         const { tree } = this.getCurrentRootFolderInfo(id);
-        const parentIndex = tree.getIndex(id);
+        // The tree exist in certainly, because it was prejudged in the previous processing
+        const parentIndex = tree!.getHashMap(id);
 
         data.location = `${parentIndex!.node!.location}/${data.name}`;
         if (children?.length) {
@@ -191,16 +196,19 @@ export class FolderTreeService
     /**
      * Returns the node of root folder in folderTree
      */
-    private getRootFolderById(id: number) {
-        let rootNode: ITreeNodeItemProps = {};
-        this.state.folderTree?.data?.forEach((folder) => {
-            const treeInstance = new TreeViewUtil<ITreeNodeItemProps>(folder);
-            if (treeInstance.get(id)) rootNode = folder;
-        });
-        return rootNode;
+    private getRootFolderById(id: UniqueId) {
+        const stateData = this.state.folderTree?.data || [];
+        for (let index = 0; index < stateData.length; index++) {
+            const folder = stateData[index];
+            const treeInstance = new TreeViewUtil<IFolderTreeNodeProps>(folder);
+            if (treeInstance.getNode(id)) {
+                return folder;
+            }
+        }
+        return null;
     }
 
-    private addRootFolder(folder: ITreeNodeItemProps) {
+    private addRootFolder(folder: IFolderTreeNodeProps) {
         const { folderTree } = this.state;
 
         if (folderTree?.data?.length) {
@@ -217,22 +225,23 @@ export class FolderTreeService
         });
     }
 
-    private getRootFolderIndex(id: number) {
+    private getRootFolderIndex(id: UniqueId) {
         const data = this.state.folderTree?.data || [];
         const index = data.findIndex((folder) => folder.id === id);
         return index;
     }
 
-    private getCurrentRootFolderInfo(
-        id: number
-    ): {
-        currentRootFolder: ITreeNodeItemProps;
-        index: number;
-        tree: TreeViewUtil<ITreeNodeItemProps>;
-    } {
+    private getCurrentRootFolderInfo(id: UniqueId) {
         const currentRootFolder = this.getRootFolderById(id);
+        if (!currentRootFolder) {
+            return {
+                currentRootFolder: null,
+                index: -1,
+                tree: null,
+            };
+        }
         const index = this.getRootFolderIndex(currentRootFolder.id!);
-        const tree = new TreeViewUtil<ITreeNodeItemProps>(currentRootFolder);
+        const tree = new TreeViewUtil<IFolderTreeNodeProps>(currentRootFolder);
 
         return {
             currentRootFolder,
@@ -241,7 +250,7 @@ export class FolderTreeService
         };
     }
 
-    public add(data: ITreeNodeItemProps, id?: number): void {
+    public add(data: IFolderTreeNodeProps, id?: UniqueId): void {
         const isRootFolder = data.fileType === 'RootFolder';
 
         if (isRootFolder) {
@@ -256,25 +265,25 @@ export class FolderTreeService
 
         // this index is root folder index
         if (index <= -1) {
-            return console.warn(
-                'Please check id again, there is not folder tree'
-            );
+            logger.error('Please check id again, there is not folder tree');
+            return;
         }
 
-        const currentIndex = tree.getIndex(id);
+        const currentIndex = tree!.getHashMap(id)!;
 
-        if (currentIndex?.node?.fileType === FileTypes.File) {
-            data.location = currentIndex.node.location.replace(
-                /(?<=\/)[^\/]+$/,
-                `${data.name}`
-            );
-            tree.prepend(data, currentIndex.parent!);
+        if (currentIndex.node.fileType === FileTypes.File) {
+            data.location =
+                currentIndex.node.location?.replace(
+                    /(?<=\/)[^\/]+$/,
+                    `${data.name}`
+                ) || '';
+            tree!.prepend(data, currentIndex.parent!);
         } else {
             this.setCurrentFolderLocation(data, id);
-            tree.append(data, id);
+            tree!.append(data, id);
         }
 
-        cloneData[index] = tree.obj;
+        cloneData[index] = tree!.obj;
         this.setState({
             folderTree: {
                 ...this.state.folderTree,
@@ -283,21 +292,27 @@ export class FolderTreeService
         });
     }
 
-    public remove(id: number) {
+    public remove(id: UniqueId) {
         const folderTree: IFolderTreeSubItem = cloneDeep(
             this.getState().folderTree || {}
         );
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
+        if (!tree || index === -1) {
+            logger.error(
+                `There is unable to find a tree node whose id is ${id}`
+            );
+            return;
+        }
 
-        tree.remove(id);
+        tree.removeNode(id);
         if (index > -1) nextData[index] = tree.obj;
         this.setState({
             folderTree,
         });
     }
 
-    public update(data: ITreeNodeItemProps) {
+    public update(data: IFolderTreeNodeProps) {
         const { id, ...restData } = data;
         if (!id) throw new Error('Id is required in updating data');
         const folderTree: IFolderTreeSubItem = cloneDeep(
@@ -306,28 +321,40 @@ export class FolderTreeService
         const nextData = folderTree.data || [];
         const { tree, index } = this.getCurrentRootFolderInfo(id);
 
-        tree.update(id, restData);
+        if (!tree) {
+            logger.error(
+                `There is unable to find a tree node whose id is ${id}`
+            );
+            return;
+        }
+        tree.updateNode(id, restData);
         if (index > -1) nextData[index] = tree.obj;
         this.setState({
             folderTree,
         });
     }
 
-    public get(id: number) {
+    public get(id: UniqueId) {
         const { tree } = this.getCurrentRootFolderInfo(id);
 
-        const node = tree.get(id);
+        if (!tree) {
+            return null;
+        }
+        const node = tree.getNode(id);
 
         return node;
     }
 
-    public setActive(id?: number) {
+    public setActive(id?: UniqueId) {
         const { folderTree } = this.state;
+
+        const pendingActiveNode =
+            typeof id === 'undefined' ? null : this.get(id);
 
         this.setState({
             folderTree: {
                 ...folderTree,
-                current: id || id === 0 ? this.get(id) : null,
+                current: pendingActiveNode,
             },
         });
     }
@@ -338,26 +365,26 @@ export class FolderTreeService
         });
     }
 
-    public onRename(callback: (id: number) => void) {
+    public onRename(callback: (id: UniqueId) => void) {
         this.subscribe(FolderTreeEvent.onRename, callback);
     }
 
-    public onRemove(callback: (id: number) => void) {
+    public onRemove(callback: (id: UniqueId) => void) {
         this.subscribe(FolderTreeEvent.onDelete, callback);
     }
 
-    public onUpdateFileName(callback: (file: ITreeNodeItemProps) => void) {
+    public onUpdateFileName(callback: (file: IFolderTreeNodeProps) => void) {
         this.subscribe(FolderTreeEvent.onUpdateFileName, callback);
     }
 
-    public onSelectFile(callback: (file: ITreeNodeItemProps) => void) {
+    public onSelectFile(callback: (file: IFolderTreeNodeProps) => void) {
         this.subscribe(FolderTreeEvent.onSelectFile, callback);
     }
 
     public onDropTree = (
         callback: (
-            source: ITreeNodeItemProps,
-            target: ITreeNodeItemProps
+            source: IFolderTreeNodeProps,
+            target: IFolderTreeNodeProps
         ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onDrop, callback);
@@ -365,21 +392,23 @@ export class FolderTreeService
 
     public onRightClick = (
         callback: (
-            treeData: ITreeNodeItemProps,
+            treeData: IFolderTreeNodeProps,
             menus: IMenuItemProps[]
         ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onRightClick, callback);
     };
 
-    public onCreate = (callback: (type: FileType, nodeId?: number) => void) => {
+    public onCreate = (
+        callback: (type: FileType, nodeId?: UniqueId) => void
+    ) => {
         this.subscribe(FolderTreeEvent.onCreate, callback);
     };
 
     public onContextMenu = (
         callback: (
             contextMenu: IMenuItemProps,
-            treeNode?: ITreeNodeItemProps
+            treeNode?: IFolderTreeNodeProps
         ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
@@ -387,8 +416,8 @@ export class FolderTreeService
 
     public onLoadData = (
         callback: (
-            treeNode: ITreeNodeItemProps,
-            callback: (treeNode: ITreeNodeItemProps) => void
+            treeNode: IFolderTreeNodeProps,
+            callback: (treeNode: IFolderTreeNodeProps) => void
         ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onLoadData, callback);

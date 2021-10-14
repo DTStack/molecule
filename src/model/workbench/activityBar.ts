@@ -32,6 +32,7 @@ export interface IActivityBarItem {
     type?: 'normal' | 'global';
     contextMenu?: IActivityMenuItemProps[];
     className?: string;
+    sortIndex?: number;
     render?: () => React.ReactNode | JSX.Element;
 }
 

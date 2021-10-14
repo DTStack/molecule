@@ -45,6 +45,7 @@ export const modules = {
         name: localize(constants.EXPLORER_ACTIVITY_ITEM, 'Explore'),
         icon: 'files',
         title: localize(constants.EXPLORER_ACTIVITY_ITEM, 'Explore'),
+        sortIndex: 1,
     } as IActivityBarItem,
 
     builtInExplorerFolderPanel: {

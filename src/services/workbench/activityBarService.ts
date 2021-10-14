@@ -104,6 +104,14 @@ export class ActivityBarService
                 this.setActive(data.id);
             }
         }
+
+        // The smaller the sort number is, the more front the order is
+        next.sort((pre, next) => {
+            const preIndex = pre.sortIndex || Number.MAX_SAFE_INTEGER;
+            const nextIndex = next.sortIndex || Number.MAX_SAFE_INTEGER;
+            return preIndex - nextIndex;
+        });
+
         this.setState({
             data: next,
         });

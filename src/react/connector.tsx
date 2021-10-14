@@ -1,9 +1,9 @@
 import 'reflect-metadata';
+import { container } from 'tsyringe';
 import React, { Component } from 'react';
 import Logger from 'mo/common/logger';
 import { IComponent } from './component';
 import { Controller } from './controller';
-import { container } from 'tsyringe';
 
 export type ServiceObject = {
     [index: string]: IComponent;
@@ -16,11 +16,11 @@ export type ControllerObject = {
 export function connect<T = any>(
     Service: IComponent | ServiceObject,
     View: React.ComponentType<any>,
-    Controller?: Controller | ControllerObject,
-    watchFiled?: object
+    Controller?: Controller | ControllerObject
 ): React.ComponentType<T> {
     return class Connector extends Component<T, any> {
         state: { lastUpdated: number };
+        private _isMounted = false;
         constructor(props) {
             super(props);
             this.onChange = this.onChange.bind(this);
@@ -30,59 +30,65 @@ export function connect<T = any>(
         }
 
         componentDidMount() {
-            if (Service.onUpdateState) {
-                const service = Service as IComponent;
+            this._isMounted = true;
+            this.handleService((service) => {
                 service.onUpdateState(this.onChange);
-            } else {
-                for (const name in Service) {
-                    if (name) {
-                        const service: IComponent = Service[name];
-                        if (service.onUpdateState) {
-                            service.onUpdateState(this.onChange);
-                        }
-                    }
-                }
-            }
+            });
         }
 
+        componentWillUnmount() {
+            this._isMounted = false;
+            this.handleService((service) => {
+                service.removeOnUpdateState();
+            });
+        }
+
+        // TODO: 目前会全量触发更新，后期根据字段（watchField）来控制更新粒度
+        // const prev = get(prevState, watchFiled);
+        // const next = get(nextState, watchFiled);
+        // if (!equals(prev, next)) {
+        //     this.update();
+        // }
         onChange(prevState, nextState) {
             Logger.info(prevState, nextState, (container as any)._registry);
-            if (!watchFiled) {
-                this.update();
-            } else {
-                // TODO, 目前会全量触发更新，后期根据 watchField 字段来控制更新粒度
-                // const prev = get(prevState, watchFiled);
-                // const next = get(nextState, watchFiled);
-                // if (!equals(prev, next)) {
-                //     this.update();
-                // }
-            }
+            this.update();
         }
 
         update = () => {
-            this.setState({
-                lastUpdated: Date.now(),
-            });
+            if (this._isMounted) {
+                this.setState({
+                    lastUpdated: Date.now(),
+                });
+            }
         };
 
         getServiceState() {
             const target = {};
-            if (Service.onUpdateState) {
-                const service = Service as IComponent;
-                Object.assign(target, { ...service.getState() });
+            this.handleService((service, prop) => {
+                if (prop) {
+                    Object.assign(target, {
+                        [prop]: { ...service.getState() },
+                    });
+                } else {
+                    Object.assign(target, { ...service.getState() });
+                }
+            });
+            return target;
+        }
+
+        handleService(callback: (service: IComponent, prop?: string) => void) {
+            if (this.isValidService(Service as IComponent)) {
+                callback(Service as IComponent);
             } else {
                 for (const name in Service) {
                     if (name) {
                         const service: IComponent = Service[name];
-                        if (service.getState) {
-                            Object.assign(target, {
-                                [name]: { ...service.getState() },
-                            });
+                        if (this.isValidService(service)) {
+                            callback(service, name);
                         }
                     }
                 }
             }
-            return target;
         }
 
         render() {
@@ -94,6 +100,10 @@ export function connect<T = any>(
                     {...Controller}
                 />
             );
+        }
+
+        private isValidService(service: IComponent) {
+            return typeof service.onUpdateState === 'function';
         }
     };
 }

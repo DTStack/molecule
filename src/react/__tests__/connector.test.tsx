@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component, connect } from 'mo/react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 class TestServiceA extends Component {
     state = {
@@ -39,6 +39,27 @@ describe('Test Connector Component', () => {
 
     const actionA = new TestControllerA();
     const actionB = new TestControllerB();
+
+    test('Connect one Service and Controller to the Component', () => {
+        function Comp({ data, onClick }) {
+            return <span onClick={onClick}>{data}</span>;
+        }
+        const fn = jest.fn();
+        (actionA as any).onClick = fn;
+        const TestView = connect(serviceA, Comp, actionA);
+        const { getByText } = render(<TestView />);
+        const ele = getByText('A');
+        expect(ele).not.toBeNull();
+        fireEvent.click(ele);
+        expect(fn).toBeCalled();
+    });
+
+    test('Connect invalid Service to the Component', () => {
+        const TestView = connect({}, TestComponent);
+        const { queryByText } = render(<TestView />);
+        expect(queryByText('A')).toBeNull();
+    });
+
     test('Test connect method bind multiple Services and Controllers to the Component', () => {
         const TestView = connect(
             {
@@ -87,5 +108,16 @@ describe('Test Connector Component', () => {
         });
         expect(getByText('updateA')).not.toBeNull();
         expect(getByText('updateB')).not.toBeNull();
+    });
+
+    test('Update an unmounted Component.', () => {
+        serviceA.removeOnUpdateState = jest.fn();
+
+        const TestView = connect({ A: serviceA }, TestComponent);
+        const { unmount } = render(<TestView />);
+
+        unmount();
+
+        expect(serviceA.removeOnUpdateState).toBeCalled();
     });
 });

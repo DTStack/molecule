@@ -236,14 +236,7 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                     >
                       <div
                         class="mo-tabs__header"
-                      >
-                        <div
-                          class="mo-tab__item"
-                          draggable="true"
-                        >
-                          问题
-                        </div>
-                      </div>
+                      />
                     </div>
                     <div
                       class="mo-action-bar mo-panel__toolbar"
@@ -270,64 +263,10 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
     >
       <div
         class="mo-statusBar__left-items"
-      >
-        <div
-          class="mo-statusBar__item"
-          id="statusbar.problems.title"
-          sortindex="1"
-        >
-          <a
-            tabindex="-1"
-            title="Problems"
-          >
-            <span
-              class="codicon codicon-error"
-            />
-             0 
-            <span
-              class="codicon codicon-warning"
-            />
-             0 
-            <span
-              class="codicon codicon-info"
-            />
-             0
-          </a>
-        </div>
-      </div>
+      />
       <div
         class="mo-statusBar__right-items"
-      >
-        <div
-          actionbar="[object Object],[object Object]"
-          class="mo-statusBar__item"
-          id="MO_NOTIFICATION"
-          sortindex="1"
-        >
-          <a
-            tabindex="-1"
-            title="Notification"
-          >
-            <span
-              class="codicon codicon-bell"
-            />
-          </a>
-        </div>
-        <div
-          class="mo-statusBar__item"
-          id="MoEditorInfo"
-          sortindex="2"
-        >
-          <a
-            tabindex="-1"
-            title="Go to Line/Column"
-          >
-            <span>
-              Ln 0, Col 0
-            </span>
-          </a>
-        </div>
-      </div>
+      />
     </div>
   </div>
 </DocumentFragment>

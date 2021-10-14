@@ -31,15 +31,13 @@ describe('Test StatusBarService', () => {
         statusBarService.reset();
     });
 
-    test('Should have default value when initialize', () => {
+    test('Should NOT have default value when initialize', () => {
         expect(statusBarService).not.toBeUndefined();
 
         const state = statusBarService.getState();
         expect(state.leftItems).toEqual([]);
-        expect(state.rightItems).toEqual([modules.STATUS_EDITOR_INFO]);
-        expect(state.contextMenu).toEqual([
-            modules.CONTEXT_MENU_HIDE_STATUS_BAR,
-        ]);
+        expect(state.rightItems).toEqual([]);
+        expect(state.contextMenu).toEqual([]);
     });
 
     test('Should support to add a status data into the specific position', () => {
@@ -55,13 +53,16 @@ describe('Test StatusBarService', () => {
 
     test('Should log error when add failed', () => {
         expectLoggerErrorToBeCalled(() => {
+            statusBarService.add(mockStatusData, Float.right);
             // there is a status item whose id is ${mockStatusData.id}, so it'll add failed
             statusBarService.add(mockStatusData, Float.right);
         });
     });
 
     test('Should support to update item in specific position', () => {
+        // Add same status items both into left and right sides
         statusBarService.add(mockStatusData, Float.left);
+        statusBarService.add(mockStatusData, Float.right);
         statusBarService.update(
             {
                 id: mockStatusData.id,
@@ -75,7 +76,7 @@ describe('Test StatusBarService', () => {
             Float.left
         );
         expect(expected).toEqual({ ...mockStatusData, sortIndex: 1 });
-        // there is already a built-in status item whose id is ${mockStatusData.id},
+        // there is already a status item whose id is ${mockStatusData.id} in right,
         // so we should ensure only update the left one, and keep the right one as it is
         expect(
             statusBarService.getStatusBarItem(mockStatusData.id, Float.right)
@@ -84,6 +85,7 @@ describe('Test StatusBarService', () => {
 
     test('Should support to update left first and then right postion', () => {
         statusBarService.add(anotherStatusData, Float.left);
+        statusBarService.add(mockStatusData, Float.right);
 
         statusBarService.update({ id: anotherStatusData.id, sortIndex: 1 });
 
@@ -114,18 +116,18 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to remove a item in specific position', () => {
+        statusBarService.add(mockStatusData, Float.right);
         expect(
-            statusBarService.getStatusBarItem(modules.STATUS_EDITOR_INFO.id)
+            statusBarService.getStatusBarItem(mockStatusData.id)
         ).not.toBeNull();
 
-        statusBarService.remove(modules.STATUS_EDITOR_INFO.id, Float.right);
-        expect(
-            statusBarService.getStatusBarItem(modules.STATUS_EDITOR_INFO.id)
-        ).toBeNull();
+        statusBarService.remove(mockStatusData.id, Float.right);
+        expect(statusBarService.getStatusBarItem(mockStatusData.id)).toBeNull();
     });
 
     test('Should support to remove a item in left first and the right', () => {
         statusBarService.add(mockStatusData, Float.left);
+        statusBarService.add(mockStatusData, Float.right);
 
         expect(
             statusBarService.getStatusBarItem(mockStatusData.id, Float.left)

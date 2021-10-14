@@ -1,13 +1,10 @@
-import {
-    builtInExplorerHeaderToolbar,
-    ExplorerEvent,
-    IExplorerPanelItem,
-} from 'mo/model';
+import { ExplorerEvent, IExplorerPanelItem } from 'mo/model';
 import 'reflect-metadata';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
 import { searchById } from 'mo/common/utils';
 import { ExplorerService } from '../workbench';
+import { modules } from '../builtinService/const';
 
 const explorerService = container.resolve(ExplorerService);
 
@@ -38,7 +35,9 @@ describe('Test the Explorer Service', () => {
     test('Should have defualt header bar tool', () => {
         const state = explorerService.getState();
         expect(state.data).toEqual([]);
-        expect(state.headerToolBar).toEqual(builtInExplorerHeaderToolbar());
+        expect(state.headerToolBar).toEqual(
+            modules.builtInExplorerHeaderToolbar
+        );
     });
 
     describe('Test the panel data', () => {

@@ -13,7 +13,7 @@ exports[`Test NotificationPane Component Match The NotificationPane snapshot 1`]
     className="mo-notification__header"
   >
     <span>
-      通知
+      Notifications
     </span>
     <div
       className="mo-action-bar"

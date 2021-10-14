@@ -1,7 +1,7 @@
 import { BuiltInZhCN } from 'mo/i18n/localization';
-import { BuiltInEditorOptions } from 'mo/model';
 import { ISettings, SettingsEvent } from 'mo/model/settings';
 import 'reflect-metadata';
+import { modules } from '../builtinService/const';
 import { SettingsService } from '../settingsService';
 import { BuiltInColorTheme } from '../theme/colorThemeService';
 
@@ -25,7 +25,7 @@ describe('Test the SettingsService', () => {
     test('Initialized the built-in Settings', () => {
         const config = settingsService.getSettings();
         expect(config.colorTheme).toEqual(BuiltInColorTheme.id);
-        expect(config.editor).toEqual(BuiltInEditorOptions);
+        expect(config.editor).toEqual(modules.BuiltInEditorOptions);
         expect(config.locale).toEqual(BuiltInZhCN.id);
     });
 

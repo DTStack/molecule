@@ -14,12 +14,6 @@ import {
     IBuiltinService,
 } from 'mo/services';
 import {
-    EDITOR_MENU_CLOSE,
-    EDITOR_MENU_CLOSE_ALL,
-    EDITOR_MENU_CLOSE_OTHERS,
-    EDITOR_MENU_CLOSE_SAVED,
-} from 'mo/model';
-import {
     EditorTree,
     IOpenEditProps,
 } from 'mo/workbench/sidebar/explore/editorTree';
@@ -99,6 +93,13 @@ export class EditorTreeController
         groupId: number,
         file?: ITabProps
     ) => {
+        const {
+            EDITOR_MENU_CLOSE,
+            EDITOR_MENU_CLOSE_OTHERS,
+            EDITOR_MENU_CLOSE_SAVED,
+            EDITOR_MENU_CLOSE_ALL,
+        } = this.builtinService.getConstants();
+
         switch (menu.id) {
             case EDITOR_MENU_CLOSE:
                 this.onClose(file?.id!, groupId);

@@ -1,7 +1,8 @@
 import { localize } from 'mo/i18n/localize';
-import type { IActionBarItemProps } from 'mo/components';
+import type { IActionBarItemProps, IMenuItemProps } from 'mo/components';
 import type {
     IActivityBarItem,
+    IEditorActionsProps,
     IEditorOptions,
     IExplorerPanelItem,
 } from 'mo/model';
@@ -28,6 +29,14 @@ export const constants = {
     OPEN_TO_SIDE_COMMAND_ID: 'explorer.openToSide',
     FIND_IN_WORKSPACE_ID: 'filesExplorer.findInWorkspace',
     DOWNLOAD_COMMAND_ID: 'explorer.download',
+    EDITOR_MENU_CLOSE_TO_RIGHT: 'editor.closeToRight',
+    EDITOR_MENU_CLOSE_TO_LEFT: 'editor.closeToLeft',
+    EDITOR_MENU_CLOSE_ALL: 'editor.closeAll',
+    EDITOR_MENU_CLOSE_OTHERS: 'editor.closeOthers',
+    EDITOR_MENU_CLOSE_SAVED: 'editor.closeSaved',
+    EDITOR_MENU_CLOSE: 'editor.close',
+    EDITOR_MENU_SHOW_OPENEDITORS: 'editor.showOpenEditors',
+    EDITOR_MENU_SPILIT: 'editor.split',
 };
 
 export const modules = {
@@ -157,4 +166,51 @@ export const modules = {
         tabSize: 4,
         fontSize: 12,
     } as IEditorOptions,
+
+    builtInEditorInitialActions: [
+        {
+            id: constants.EDITOR_MENU_SPILIT,
+            name: 'Split Editor Right',
+            title: localize('editor.actions.splitRight', 'Split Editor Right'),
+            icon: 'split-horizontal',
+            place: 'outer',
+        },
+        {
+            id: constants.EDITOR_MENU_SHOW_OPENEDITORS,
+            name: 'Show Opened Editors',
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_ALL,
+            name: localize(constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+        },
+    ] as IEditorActionsProps[],
+
+    builtInEditorInitialMenu: [
+        {
+            id: constants.EDITOR_MENU_CLOSE,
+            name: localize(constants.EDITOR_MENU_CLOSE, 'Close'),
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_OTHERS,
+            name: localize(constants.EDITOR_MENU_CLOSE_OTHERS, 'Close Others'),
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_TO_RIGHT,
+            name: localize(
+                constants.EDITOR_MENU_CLOSE_TO_RIGHT,
+                'Close To Right'
+            ),
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_TO_LEFT,
+            name: localize(
+                constants.EDITOR_MENU_CLOSE_TO_LEFT,
+                'Close To Left'
+            ),
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_ALL,
+            name: localize(constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+        },
+    ] as IMenuItemProps[],
 };

@@ -5,14 +5,7 @@ import React from 'react';
 import {
     EditorEvent,
     IEditorTab,
-    EDITOR_MENU_CLOSE,
-    EDITOR_MENU_CLOSE_OTHERS,
-    EDITOR_MENU_CLOSE_TO_RIGHT,
-    EDITOR_MENU_CLOSE_TO_LEFT,
-    EDITOR_MENU_CLOSE_ALL,
     IEditorActionsProps,
-    EDITOR_MENU_SHOW_OPENEDITORS,
-    EDITOR_MENU_SPILIT,
 } from 'mo/model/workbench/editor';
 import { Controller } from 'mo/react/controller';
 import { IMenuItemProps } from 'mo/components/menu';
@@ -21,13 +14,16 @@ import { IMonacoEditorProps } from 'mo/components/monaco';
 import { editor as MonacoEditor, Uri } from 'mo/monaco';
 
 import {
+    BuiltinService,
     EditorService,
+    IBuiltinService,
     IEditorService,
     IStatusBarService,
     StatusBarService,
 } from 'mo/services';
 
 export interface IEditorController {
+    initView(): void;
     groupSplitPos?: string[];
     open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
     onClickContextMenu?: (
@@ -58,11 +54,31 @@ export class EditorController extends Controller implements IEditorController {
     private editorStates = new Map();
     private readonly editorService: IEditorService;
     private readonly statusBarService: IStatusBarService;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
         this.editorService = container.resolve(EditorService);
         this.statusBarService = container.resolve(StatusBarService);
+        this.builtinService = container.resolve(BuiltinService);
+    }
+
+    public initView() {
+        const {
+            builtInEditorInitialActions,
+            builtInEditorInitialMenu,
+            BuiltInEditorOptions,
+        } = this.builtinService.getModules();
+
+        const builtinActions = builtInEditorInitialActions || [];
+        this.editorService.setDefaultActions(builtinActions);
+
+        const builtinMenus = builtInEditorInitialMenu || [];
+        this.editorService.setDefaultMenus(builtinMenus);
+
+        this.editorService.setState({
+            editorOptions: BuiltInEditorOptions || {},
+        });
     }
 
     public open<T>(tab: IEditorTab<any>, groupId?: number) {
@@ -78,6 +94,15 @@ export class EditorController extends Controller implements IEditorController {
         const tabId = tabItem?.id!;
         const { current } = this.editorService.getState();
         const groupId = current?.id!;
+
+        const {
+            EDITOR_MENU_CLOSE,
+            EDITOR_MENU_CLOSE_OTHERS,
+            EDITOR_MENU_CLOSE_ALL,
+            EDITOR_MENU_CLOSE_TO_RIGHT,
+            EDITOR_MENU_CLOSE_TO_LEFT,
+        } = this.builtinService.getConstants();
+
         switch (menuId) {
             case EDITOR_MENU_CLOSE: {
                 this.onCloseTab(tabId, groupId);
@@ -173,6 +198,12 @@ export class EditorController extends Controller implements IEditorController {
     public onClickActions = (action: IEditorActionsProps) => {
         const { current } = this.editorService.getState();
         if (!current) return;
+
+        const {
+            EDITOR_MENU_CLOSE_ALL,
+            EDITOR_MENU_SHOW_OPENEDITORS,
+            EDITOR_MENU_SPILIT,
+        } = this.builtinService.getConstants();
 
         switch (action.id) {
             case EDITOR_MENU_CLOSE_ALL: {

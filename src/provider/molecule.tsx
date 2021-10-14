@@ -14,8 +14,10 @@ import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { ILocaleService, LocaleService } from 'mo/i18n/localeService';
 import { ILayoutService, LayoutService } from 'mo/services';
 import {
+    EditorController,
     EditorTreeController,
     ExplorerController,
+    IEditorController,
     IEditorTreeController,
     IExplorerController,
     IOutlineController,
@@ -46,6 +48,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     private readonly explorerController: IExplorerController;
     private readonly editorTreeController: IEditorTreeController;
     private readonly outlineController: IOutlineController;
+    private readonly editorController: IEditorController;
 
     constructor(props: IMoleculeProps) {
         super(props);
@@ -57,6 +60,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.explorerController = container.resolve(ExplorerController);
         this.editorTreeController = container.resolve(EditorTreeController);
         this.outlineController = container.resolve(OutlineController);
+        this.editorController = container.resolve(EditorController);
         this.preloadLocales();
     }
 
@@ -65,6 +69,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.explorerController.initView();
         this.editorTreeController.initView();
         this.outlineController.initView();
+        this.editorController.initView();
     }
 
     preloadLocales() {

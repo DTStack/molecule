@@ -1,11 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { IEditorTreeController } from 'mo/controller';
-import {
-    EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
-    EXPLORER_TOGGLE_SAVE_GROUP,
-    IEditor,
-    IEditorGroup,
-} from 'mo/model';
+import { IEditor, IEditorGroup } from 'mo/model';
 import {
     IActionBarItemProps,
     Icon,
@@ -35,9 +30,13 @@ import {
     MAX_GROW_HEIGHT,
 } from 'mo/components/collapse';
 import Scrollbar from 'react-scrollbars-custom';
+import { constants } from 'mo/services/builtinService/const';
 
 // override onContextMenu
-type UnionEditor = Omit<IEditor & IEditorTreeController, 'onContextMenu'>;
+type UnionEditor = Omit<
+    IEditor & IEditorTreeController,
+    'onContextMenu' | 'initView'
+>;
 export interface IOpenEditProps extends UnionEditor {
     /**
      * Group Header toolbar
@@ -163,10 +162,10 @@ const EditorTree = (props: IOpenEditProps) => {
     ) => {
         e.stopPropagation();
         switch (item.id) {
-            case EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS:
+            case constants.EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS:
                 onCloseGroup?.(group.id!);
                 break;
-            case EXPLORER_TOGGLE_SAVE_GROUP:
+            case constants.EXPLORER_TOGGLE_SAVE_GROUP:
                 onSaveGroup?.(group.id!);
                 break;
             default:

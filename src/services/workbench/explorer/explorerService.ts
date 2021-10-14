@@ -6,7 +6,6 @@ import {
     IExplorer,
     IExplorerModel,
     ExplorerEvent,
-    builtInExplorerHeaderToolbar,
 } from 'mo/model/workbench/explorer/explorer';
 import cloneDeep from 'lodash/cloneDeep';
 import { IMenuItemProps } from 'mo/components/menu';
@@ -274,7 +273,7 @@ export class ExplorerService
     public reset() {
         this.setState({
             data: [],
-            headerToolBar: builtInExplorerHeaderToolbar(),
+            headerToolBar: {},
         });
     }
 

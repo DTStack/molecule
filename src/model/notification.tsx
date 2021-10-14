@@ -1,5 +1,4 @@
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import { Icon } from 'mo/components/icon';
 import React from 'react';
 import { IStatusBarItem } from './workbench/statusBar';
 
@@ -21,22 +20,7 @@ export interface INotification<T = any> extends IStatusBarItem {
     actionBar?: IActionBarItemProps[];
 }
 
-export const NOTIFICATION_CLEAR_ALL: IActionBarItemProps = {
-    id: 'ClearAll',
-    title: 'Clear All Notifications',
-    icon: 'clear-all',
-};
-
-export const NOTIFICATION_HIDE: IActionBarItemProps = {
-    id: 'HideNotifications',
-    title: 'Hide Notifications',
-    icon: 'chevron-down',
-};
-
 export class NotificationModel<T> implements INotification<T> {
-    static readonly ID = 'MO_NOTIFICATION';
-    static readonly NAME = 'Notification';
-
     public id: string;
     public name: string;
     public data: INotificationItem<T>[];
@@ -46,16 +30,13 @@ export class NotificationModel<T> implements INotification<T> {
     public actionBar: IActionBarItemProps[];
 
     constructor(
-        id: string = NotificationModel.ID,
-        name: string = NotificationModel.NAME,
+        id: string = '',
+        name: string = '',
         data: INotificationItem<T>[] = [],
         sortIndex: number = 1,
         showNotifications: boolean = false,
-        actionBar: IActionBarItemProps[] = [
-            NOTIFICATION_CLEAR_ALL,
-            NOTIFICATION_HIDE,
-        ],
-        render: () => React.ReactNode = () => <Icon type="bell" />
+        actionBar: IActionBarItemProps[] = [],
+        render: () => React.ReactNode
     ) {
         this.id = id;
         this.name = name;

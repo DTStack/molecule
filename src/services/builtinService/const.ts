@@ -43,6 +43,10 @@ export const constants = {
     SETTING_ID: 'Setting',
     PROBLEM_MODEL_ID: 'MO_PROBLEMS',
     PROBLEM_MODEL_NAME: 'Problems',
+    NOTIFICATION_CLEAR_ALL_ID: 'ClearAll',
+    NOTIFICATION_HIDE_ID: 'HideNotifications',
+    NOTIFICATION_MODEL_ID: 'MO_NOTIFICATION',
+    NOTIFICATION_MODEL_NAME: 'Notification',
 };
 
 export const modules = {
@@ -277,4 +281,22 @@ export const modules = {
         data: null,
         sortIndex: 1,
     } as IPanelItem,
+
+    NOTIFICATION_CLEAR_ALL: {
+        id: constants.NOTIFICATION_CLEAR_ALL_ID,
+        title: 'Clear All Notifications',
+        icon: 'clear-all',
+    } as IActionBarItemProps,
+
+    NOTIFICATION_HIDE: {
+        id: constants.NOTIFICATION_HIDE_ID,
+        title: 'Hide Notifications',
+        icon: 'chevron-down',
+    } as IActionBarItemProps,
+
+    builtInNotification: {
+        id: constants.NOTIFICATION_MODEL_ID,
+        name: constants.NOTIFICATION_MODEL_NAME,
+        sortIndex: 1,
+    } as IStatusBarItem,
 };

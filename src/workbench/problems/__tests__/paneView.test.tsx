@@ -108,7 +108,9 @@ describe('The PaneView Component', () => {
             <ProblemsPaneView id="test" name="problem" data={[]} />
         );
 
-        const tips = getByText('未在工作区检测到问题');
+        const tips = getByText(
+            'No problems have been detected in the workspace.'
+        );
         expect(tips).toBeInTheDocument();
     });
 });

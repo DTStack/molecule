@@ -20,7 +20,7 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
           onMouseOut={[Function]}
           onMouseOver={[Function]}
         >
-          问题
+          Problems
         </div>
         <div
           className="mo-tab__item mo-tab__item--active"
@@ -29,7 +29,7 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
           onMouseOut={[Function]}
           onMouseOver={[Function]}
         >
-          输出
+          output
         </div>
       </div>
     </div>

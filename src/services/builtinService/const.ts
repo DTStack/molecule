@@ -4,6 +4,7 @@ import type {
     IActivityBarItem,
     IEditorActionsProps,
     IEditorOptions,
+    IEditorTab,
     IExplorerPanelItem,
 } from 'mo/model';
 
@@ -37,6 +38,7 @@ export const constants = {
     EDITOR_MENU_CLOSE: 'editor.close',
     EDITOR_MENU_SHOW_OPENEDITORS: 'editor.showOpenEditors',
     EDITOR_MENU_SPILIT: 'editor.split',
+    SETTING_ID: 'Setting',
 };
 
 export const modules = {
@@ -244,4 +246,13 @@ export const modules = {
             name: localize(constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
         },
     ] as IMenuItemProps[],
+
+    BuiltInSettingsTab: {
+        id: constants.SETTING_ID,
+        name: 'settings.json',
+        data: {
+            language: 'json',
+            value: '',
+        },
+    } as IEditorTab<{ language: string; value: string }>,
 };

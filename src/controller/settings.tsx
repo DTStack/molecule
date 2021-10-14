@@ -5,12 +5,14 @@ import { Controller } from 'mo/react/controller';
 import { debounce } from 'lodash';
 
 import {
+    BuiltinService,
     EditorService,
+    IBuiltinService,
     IEditorService,
     ISettingsService,
     SettingsService,
 } from 'mo/services';
-import { SettingsEvent, BuiltInSettingsTab } from 'mo/model/settings';
+import { SettingsEvent } from 'mo/model/settings';
 import { ILocale, ILocaleService, LocaleService } from 'mo/i18n';
 import { INotificationService, NotificationService } from 'mo/services';
 import { NotificationController } from '.';
@@ -28,6 +30,7 @@ export class SettingsController
     private readonly localeService: ILocaleService;
     private readonly notificationService: INotificationService;
     private readonly notificationController: INotificationController;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
@@ -36,6 +39,7 @@ export class SettingsController
         this.localeService = container.resolve(LocaleService);
         this.notificationService = container.resolve(NotificationService);
         this.notificationController = container.resolve(NotificationController);
+        this.builtinService = container.resolve(BuiltinService);
         this.initialize();
     }
 
@@ -49,8 +53,9 @@ export class SettingsController
     }, 600);
 
     private initialize() {
+        const { SETTING_ID } = this.builtinService.getConstants();
         this.editorService.onUpdateTab((tab) => {
-            if (tab.id === BuiltInSettingsTab.id) {
+            if (tab.id === SETTING_ID) {
                 const settingsValue = this.settingsService.normalizeFlatObject(
                     tab.data?.value || ''
                 );

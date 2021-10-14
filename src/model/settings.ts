@@ -10,15 +10,6 @@ export enum SettingsEvent {
     OnChange = 'settings.onchange',
 }
 
-export const BuiltInSettingsTab = {
-    id: 'Settings',
-    name: 'settings.json',
-    data: {
-        language: 'json',
-        value: '',
-    },
-};
-
 export interface ISettings {
     colorTheme?: string;
     editor?: IEditorOptions;

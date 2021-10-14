@@ -1,10 +1,5 @@
 import 'reflect-metadata';
-import {
-    BuiltInSettingsTab,
-    ISettings,
-    SettingsEvent,
-    SettingsModel,
-} from 'mo/model/settings';
+import { ISettings, SettingsEvent, SettingsModel } from 'mo/model/settings';
 import { singleton, container } from 'tsyringe';
 import {
     flatObject,
@@ -20,8 +15,10 @@ import {
 } from './theme/colorThemeService';
 import { ILocaleService, LocaleService } from 'mo/i18n';
 import { cloneDeep, isEqual } from 'lodash';
+import { modules } from './builtinService/const';
+import { BuiltinService, IBuiltinService } from './builtinService';
 
-export type BuiltInSettingsTabType = typeof BuiltInSettingsTab;
+export type BuiltInSettingsTabType = typeof modules.BuiltInSettingsTab;
 
 export interface ISettingsService {
     /**
@@ -93,12 +90,14 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
     private readonly editorService: IEditorService;
     private readonly colorThemeService: IColorThemeService;
     private readonly localeService: ILocaleService;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
         this.editorService = container.resolve(EditorService);
         this.localeService = container.resolve(LocaleService);
         this.colorThemeService = container.resolve(ColorThemeService);
+        this.builtinService = container.resolve(BuiltinService);
         this.settings = this.getBuiltInSettings();
     }
 
@@ -111,6 +110,7 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
     }
 
     public getDefaultSettingsTab(): BuiltInSettingsTabType {
+        const { BuiltInSettingsTab } = this.builtinService.getModules();
         return Object.assign({}, BuiltInSettingsTab);
     }
 
@@ -150,10 +150,13 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
     }
 
     public openSettingsInEditor(): void {
-        BuiltInSettingsTab.data.value = this.flatObject2JSONString(
-            this.getSettings()
-        );
-        this.editorService.open(BuiltInSettingsTab);
+        const { BuiltInSettingsTab } = this.builtinService.getModules();
+        if (BuiltInSettingsTab) {
+            BuiltInSettingsTab.data!.value = this.flatObject2JSONString(
+                this.getSettings()
+            );
+            this.editorService.open(BuiltInSettingsTab);
+        }
     }
 
     public normalizeFlatObject<T = ISettings>(jsonStr: string): T {

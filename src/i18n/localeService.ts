@@ -94,7 +94,7 @@ export class LocaleService extends Component implements ILocaleService {
 
     constructor() {
         super();
-        this.initialize(BuiltInLocales);
+        this.initialize(BuiltInLocales, BuiltInDefault);
     }
 
     public reset(): void {

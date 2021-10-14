@@ -130,15 +130,18 @@ export function ActionBar<T = any>(props: IActionBarProps<T>) {
 
     const claNames = classNames(defaultActionBarClassName, className);
 
-    const items = data.map((item: IActionBarItemProps<T>, index) => (
-        <ActionBarItem
-            key={item.id}
-            {...item}
-            onContextMenuClick={onContextMenuClick}
-            data-index={index}
-            onClick={mergeFunctions(onClick, item.onClick)}
-        />
-    ));
+    const items = data.map(
+        (item: IActionBarItemProps<T>, index) =>
+            item.id && (
+                <ActionBarItem
+                    key={item.id}
+                    {...item}
+                    onContextMenuClick={onContextMenuClick}
+                    data-index={index}
+                    onClick={mergeFunctions(onClick, item.onClick)}
+                />
+            )
+    );
 
     return (
         <div className={claNames} {...custom}>

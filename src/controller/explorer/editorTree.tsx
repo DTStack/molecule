@@ -7,9 +7,13 @@ import {
     builtInEditorTreeHeaderContextMenu,
     EditorTreeEvent,
 } from 'mo/model/workbench/explorer/editorTree';
-import { EditorService, ExplorerService } from 'mo/services';
 import {
-    builtInExplorerEditorPanel,
+    BuiltinService,
+    EditorService,
+    ExplorerService,
+    IBuiltinService,
+} from 'mo/services';
+import {
     EDITOR_MENU_CLOSE,
     EDITOR_MENU_CLOSE_ALL,
     EDITOR_MENU_CLOSE_OTHERS,
@@ -40,6 +44,8 @@ export interface IEditorTreeController {
         groupId: number,
         file?: ITabProps
     ) => void;
+
+    readonly initView: () => void;
 }
 
 @singleton()
@@ -48,12 +54,13 @@ export class EditorTreeController
     implements IEditorTreeController {
     private readonly explorerService: ExplorerService;
     private readonly editService: EditorService;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
         this.editService = container.resolve(EditorService);
         this.explorerService = container.resolve(ExplorerService);
-        this.initView();
+        this.builtinService = container.resolve(BuiltinService);
     }
 
     public initView() {
@@ -61,27 +68,30 @@ export class EditorTreeController
             this.editService,
             EditorTree
         );
-        const { groupToolbar, ...restEditor } = builtInExplorerEditorPanel();
-        const contextMenu = builtInEditorTreeContextMenu();
-        const headerContextMenu = builtInEditorTreeHeaderContextMenu();
+        const { builtInExplorerEditorPanel } = this.builtinService.getModules();
+        if (builtInExplorerEditorPanel) {
+            const { groupToolbar, ...restEditor } = builtInExplorerEditorPanel;
+            const contextMenu = builtInEditorTreeContextMenu();
+            const headerContextMenu = builtInEditorTreeHeaderContextMenu();
 
-        this.explorerService.addPanel({
-            ...restEditor,
-            renderPanel: (panel) => (
-                <EditorTreeView
-                    panel={panel}
-                    contextMenu={contextMenu}
-                    headerContextMenu={headerContextMenu}
-                    groupToolbar={groupToolbar}
-                    onClose={this.onClose}
-                    onSelect={this.onSelect}
-                    onCloseGroup={this.onCloseGroup}
-                    onSaveGroup={this.onSaveGroup}
-                    onContextMenu={this.onContextMenu}
-                    onToolbarClick={this.onToolbarClick}
-                />
-            ),
-        });
+            this.explorerService.addPanel({
+                ...restEditor,
+                renderPanel: (panel) => (
+                    <EditorTreeView
+                        panel={panel}
+                        contextMenu={contextMenu}
+                        headerContextMenu={headerContextMenu}
+                        groupToolbar={groupToolbar}
+                        onClose={this.onClose}
+                        onSelect={this.onSelect}
+                        onCloseGroup={this.onCloseGroup}
+                        onSaveGroup={this.onSaveGroup}
+                        onContextMenu={this.onContextMenu}
+                        onToolbarClick={this.onToolbarClick}
+                    />
+                ),
+            });
+        }
     }
 
     public onContextMenu = (

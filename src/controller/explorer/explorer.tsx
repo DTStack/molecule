@@ -6,21 +6,10 @@ import { connect } from 'mo/react';
 import { Explorer, FolderTreeView } from 'mo/workbench/sidebar/explore';
 import { IMenuItemProps } from 'mo/components/menu';
 import {
-    builtInExplorerActivityItem,
-    builtInExplorerFolderPanel,
     ExplorerEvent,
-    EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
-    EXPLORER_TOGGLE_SAVE_ALL,
-    EXPLORER_TOGGLE_VERTICAL,
     IExplorerPanelItem,
 } from 'mo/model/workbench/explorer/explorer';
-import {
-    NEW_FILE_COMMAND_ID,
-    NEW_FOLDER_COMMAND_ID,
-    REMOVE_COMMAND_ID,
-    FileTypes,
-    EditorTreeEvent,
-} from 'mo/model';
+import { FileTypes, EditorTreeEvent } from 'mo/model';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import {
     IExplorerService,
@@ -29,6 +18,8 @@ import {
     ActivityBarService,
     SidebarService,
     ExplorerService,
+    IBuiltinService,
+    BuiltinService,
 } from 'mo/services';
 import { FolderTreeController, IFolderTreeController } from './folderTree';
 
@@ -43,6 +34,8 @@ export interface IExplorerController {
         panel: IExplorerPanelItem
     ) => void;
     onClick?: (event, item) => void;
+
+    initView(): void;
 }
 
 @singleton()
@@ -53,6 +46,7 @@ export class ExplorerController
     private readonly sidebarService: ISidebarService;
     private readonly explorerService: IExplorerService;
     private readonly folderTreeController: IFolderTreeController;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
@@ -60,11 +54,10 @@ export class ExplorerController
         this.sidebarService = container.resolve(SidebarService);
         this.explorerService = container.resolve(ExplorerService);
         this.folderTreeController = container.resolve(FolderTreeController);
-
-        this.initView();
+        this.builtinService = container.resolve(BuiltinService);
     }
 
-    private initView() {
+    public initView() {
         const explorerEvent = {
             onClick: this.onClick,
             onCollapseChange: this.onCollapseChange,
@@ -74,21 +67,39 @@ export class ExplorerController
 
         const ExplorerView = connect(this.explorerService, Explorer);
 
+        const id = this.builtinService.getConstants().EXPLORER_ACTIVITY_ITEM;
+
+        if (!id) return;
+
         const explorePane = {
-            id: builtInExplorerActivityItem().id,
+            id,
             title: 'EXPLORER',
             render() {
                 return <ExplorerView {...explorerEvent} />;
             },
         };
+        const {
+            builtInExplorerActivityItem,
+            builtInExplorerFolderPanel,
+            builtInExplorerHeaderToolbar,
+        } = this.builtinService.getModules();
 
-        this.activityBarService.add(builtInExplorerActivityItem(), true);
-        this.sidebarService.add(explorePane, true);
-        // add folder panel
-        this.explorerService.addPanel({
-            ...builtInExplorerFolderPanel(),
-            renderPanel: this.renderFolderTree,
-        });
+        if (builtInExplorerActivityItem && builtInExplorerFolderPanel) {
+            this.activityBarService.add(builtInExplorerActivityItem, true);
+            this.sidebarService.add(explorePane, true);
+
+            // add folder panel
+            this.explorerService.addPanel({
+                ...builtInExplorerFolderPanel,
+                renderPanel: this.renderFolderTree,
+            });
+        }
+
+        if (builtInExplorerHeaderToolbar) {
+            this.explorerService.setState({
+                headerToolBar: builtInExplorerHeaderToolbar,
+            });
+        }
     }
 
     public readonly onClick = (
@@ -117,6 +128,15 @@ export class ExplorerController
         parentPanel: IExplorerPanelItem
     ) => {
         const toolbarId = item.id;
+        const {
+            NEW_FILE_COMMAND_ID,
+            NEW_FOLDER_COMMAND_ID,
+            REMOVE_COMMAND_ID,
+            EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
+            EXPLORER_TOGGLE_SAVE_ALL,
+            EXPLORER_TOGGLE_VERTICAL,
+        } = this.builtinService.getConstants();
+
         switch (toolbarId) {
             case NEW_FILE_COMMAND_ID: {
                 this.folderTreeController.createTreeNode?.(FileTypes.File);
@@ -155,6 +175,3 @@ export class ExplorerController
         return <FolderTreeView panel={panel} />;
     };
 }
-
-// Register singleton
-container.resolve(ExplorerController);

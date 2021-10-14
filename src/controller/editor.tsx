@@ -23,7 +23,7 @@ import {
 } from 'mo/services';
 
 export interface IEditorController {
-    initView(): void;
+    initView?: () => void;
     groupSplitPos?: string[];
     open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
     onClickContextMenu?: (

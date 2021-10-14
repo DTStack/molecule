@@ -24,6 +24,7 @@ import {
 import { FolderTreeController, IFolderTreeController } from './folderTree';
 
 export interface IExplorerController {
+    initView?: () => void;
     onActionsContextMenuClick?: (
         e: React.MouseEvent,
         item?: IMenuItemProps
@@ -34,8 +35,6 @@ export interface IExplorerController {
         panel: IExplorerPanelItem
     ) => void;
     onClick?: (event, item) => void;
-
-    initView(): void;
 }
 
 @singleton()

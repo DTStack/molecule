@@ -66,10 +66,10 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
 
     componentDidMount() {
         this.initialize();
-        this.explorerController.initView();
+        this.explorerController.initView?.();
         this.editorTreeController.initView();
         this.outlineController.initView();
-        this.editorController.initView();
+        this.editorController.initView?.();
     }
 
     preloadLocales() {

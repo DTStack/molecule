@@ -83,7 +83,7 @@ describe('Test EditorService', () => {
 
     test('Set default actions', () => {
         const editor: any = new EditorService();
-        expect(editor.defaultActions.length).toBe(3);
+        expect(editor.defaultActions.length).toBe(0);
         editor.setDefaultActions([{ id: 'test' }]);
         expect(editor.defaultActions.length).toBe(1);
     });
@@ -99,6 +99,7 @@ describe('Test EditorService', () => {
         const editor = new EditorService();
 
         expect(editor.updateActions([])).toBeUndefined();
+        editor.setDefaultActions(modules.builtInEditorInitialActions);
         editor.open(mockTab);
 
         const defaultAction = cloneDeep(modules.builtInEditorInitialActions);

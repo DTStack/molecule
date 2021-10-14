@@ -1,12 +1,10 @@
 import 'reflect-metadata';
 import {
-    CONTEXT_MENU_HIDE_STATUS_BAR,
     Float,
     IStatusBar,
     IStatusBarItem,
     StatusBarEvent,
     StatusBarModel,
-    STATUS_EDITOR_INFO,
 } from 'mo/model/workbench/statusBar';
 import cloneDeep from 'lodash/cloneDeep';
 import { Component } from 'mo/react';
@@ -173,9 +171,9 @@ export class StatusBarService
 
     public reset() {
         this.setState({
-            rightItems: [STATUS_EDITOR_INFO],
+            rightItems: [],
             leftItems: [],
-            contextMenu: [CONTEXT_MENU_HIDE_STATUS_BAR],
+            contextMenu: [],
         });
     }
 

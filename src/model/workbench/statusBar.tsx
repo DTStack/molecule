@@ -1,5 +1,4 @@
 import React from 'react';
-import EditorStatusBarView from 'mo/workbench/editor/statusBarView';
 import { IMenuItemProps } from 'mo/components/menu';
 
 export enum Float {
@@ -22,17 +21,6 @@ export interface IStatusBar {
     contextMenu?: IMenuItemProps[];
 }
 
-export const STATUS_EDITOR_INFO: IStatusBarItem = {
-    id: 'MoEditorInfo',
-    sortIndex: 2,
-    data: {
-        ln: 0,
-        col: 0,
-    },
-    name: 'Go to Line/Column',
-    render: (item: IStatusBarItem) => <EditorStatusBarView {...item} />,
-};
-
 /**
  * The activity bar event definition
  */
@@ -47,10 +35,6 @@ export enum StatusBarEvent {
     DataChanged = 'statusBar.data',
 }
 
-export const CONTEXT_MENU_HIDE_STATUS_BAR = {
-    id: 'hide',
-    name: 'Hide Status Bar',
-};
 export class StatusBarModel implements IStatusBar {
     public leftItems: IStatusBarItem[] = [];
     public rightItems: IStatusBarItem[] = [];
@@ -58,8 +42,8 @@ export class StatusBarModel implements IStatusBar {
 
     constructor(
         leftItems: IStatusBarItem[] = [],
-        rightItems: IStatusBarItem[] = [STATUS_EDITOR_INFO],
-        contextMenu: IMenuItemProps[] = [CONTEXT_MENU_HIDE_STATUS_BAR]
+        rightItems: IStatusBarItem[] = [],
+        contextMenu: IMenuItemProps[] = []
     ) {
         this.leftItems = leftItems;
         this.rightItems = rightItems;

@@ -47,6 +47,7 @@ export const constants = {
     NOTIFICATION_HIDE_ID: 'HideNotifications',
     NOTIFICATION_MODEL_ID: 'MO_NOTIFICATION',
     NOTIFICATION_MODEL_NAME: 'Notification',
+    STATUS_BAR_HIDE_ID: 'hide',
 };
 
 export const modules = {
@@ -299,4 +300,19 @@ export const modules = {
         name: constants.NOTIFICATION_MODEL_NAME,
         sortIndex: 1,
     } as IStatusBarItem,
+
+    STATUS_EDITOR_INFO: {
+        id: 'MoEditorInfo',
+        sortIndex: 2,
+        data: {
+            ln: 0,
+            col: 0,
+        },
+        name: 'Go to Line/Column',
+    },
+
+    CONTEXT_MENU_HIDE_STATUS_BAR: {
+        id: constants.STATUS_BAR_HIDE_ID,
+        name: 'Hide Status Bar',
+    } as IMenuItemProps,
 };

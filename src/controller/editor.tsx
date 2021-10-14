@@ -9,7 +9,6 @@ import {
 } from 'mo/model/workbench/editor';
 import { Controller } from 'mo/react/controller';
 import { IMenuItemProps } from 'mo/components/menu';
-import { STATUS_EDITOR_INFO } from 'mo/model/workbench/statusBar';
 import { IMonacoEditorProps } from 'mo/components/monaco';
 import { editor as MonacoEditor, Uri } from 'mo/monaco';
 
@@ -333,14 +332,18 @@ export class EditorController extends Controller implements IEditorController {
     ) {
         if (editorInstance) {
             const position = editorInstance.getPosition();
-            this.statusBarService.update(
-                Object.assign(STATUS_EDITOR_INFO, {
-                    data: {
-                        ln: position?.lineNumber,
-                        col: position?.column,
-                    },
-                })
-            );
+
+            const { STATUS_EDITOR_INFO } = this.builtinService.getModules();
+            if (STATUS_EDITOR_INFO) {
+                this.statusBarService.update(
+                    Object.assign(STATUS_EDITOR_INFO, {
+                        data: {
+                            ln: position?.lineNumber,
+                            col: position?.column,
+                        },
+                    })
+                );
+            }
         }
     }
 }

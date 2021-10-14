@@ -23,9 +23,11 @@ import {
     INotificationController,
     IOutlineController,
     IProblemsController,
+    IStatusBarController,
     NotificationController,
     OutlineController,
     ProblemsController,
+    StatusBarController,
 } from 'mo/controller';
 
 export interface IMoleculeProps {
@@ -55,6 +57,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     private readonly editorController: IEditorController;
     private readonly problemsController: IProblemsController;
     private readonly noticationController: INotificationController;
+    private readonly statusBarController: IStatusBarController;
 
     constructor(props: IMoleculeProps) {
         super(props);
@@ -69,6 +72,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.editorController = container.resolve(EditorController);
         this.problemsController = container.resolve(ProblemsController);
         this.noticationController = container.resolve(NotificationController);
+        this.statusBarController = container.resolve(StatusBarController);
         this.preloadLocales();
     }
 
@@ -80,6 +84,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.editorController.initView?.();
         this.problemsController.initView?.();
         this.noticationController.initView?.();
+        this.statusBarController.initView?.();
     }
 
     preloadLocales() {

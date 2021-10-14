@@ -4,16 +4,12 @@ import {
     IStatusBarService,
     StatusBarService,
 } from '../workbench/statusBarService';
-import {
-    CONTEXT_MENU_HIDE_STATUS_BAR,
-    Float,
-    StatusBarEvent,
-    STATUS_EDITOR_INFO,
-} from 'mo/model/workbench/statusBar';
+import { Float, StatusBarEvent } from 'mo/model/workbench/statusBar';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
+import { modules } from '../builtinService/const';
 
 const mockStatusData = {
-    ...STATUS_EDITOR_INFO,
+    ...modules.STATUS_EDITOR_INFO,
 };
 
 const anotherStatusData = {
@@ -40,8 +36,10 @@ describe('Test StatusBarService', () => {
 
         const state = statusBarService.getState();
         expect(state.leftItems).toEqual([]);
-        expect(state.rightItems).toEqual([STATUS_EDITOR_INFO]);
-        expect(state.contextMenu).toEqual([CONTEXT_MENU_HIDE_STATUS_BAR]);
+        expect(state.rightItems).toEqual([modules.STATUS_EDITOR_INFO]);
+        expect(state.contextMenu).toEqual([
+            modules.CONTEXT_MENU_HIDE_STATUS_BAR,
+        ]);
     });
 
     test('Should support to add a status data into the specific position', () => {
@@ -95,10 +93,14 @@ describe('Test StatusBarService', () => {
 
         expect(expected).toEqual({ ...anotherStatusData, sortIndex: 1 });
 
-        statusBarService.update({ id: STATUS_EDITOR_INFO.id, sortIndex: 0 });
+        statusBarService.update({
+            id: modules.STATUS_EDITOR_INFO.id,
+            sortIndex: 0,
+        });
 
         expect(
-            statusBarService.getStatusBarItem(STATUS_EDITOR_INFO.id)?.sortIndex
+            statusBarService.getStatusBarItem(modules.STATUS_EDITOR_INFO.id)
+                ?.sortIndex
         ).toBe(0);
     });
 
@@ -113,12 +115,12 @@ describe('Test StatusBarService', () => {
 
     test('Should support to remove a item in specific position', () => {
         expect(
-            statusBarService.getStatusBarItem(STATUS_EDITOR_INFO.id)
+            statusBarService.getStatusBarItem(modules.STATUS_EDITOR_INFO.id)
         ).not.toBeNull();
 
-        statusBarService.remove(STATUS_EDITOR_INFO.id, Float.right);
+        statusBarService.remove(modules.STATUS_EDITOR_INFO.id, Float.right);
         expect(
-            statusBarService.getStatusBarItem(STATUS_EDITOR_INFO.id)
+            statusBarService.getStatusBarItem(modules.STATUS_EDITOR_INFO.id)
         ).toBeNull();
     });
 

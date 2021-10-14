@@ -9,10 +9,7 @@ import {
     editorTreeActiveItemClassName,
     editorTreeGroupClassName,
 } from '../explore/base';
-import {
-    EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
-    EXPLORER_TOGGLE_SAVE_GROUP,
-} from 'mo/model';
+import { constants } from 'mo/services/builtinService/const';
 
 const PaneEditorTree = (props: Omit<IOpenEditProps, 'panel'>) => {
     return <EditorTree panel={{ id: 'test', name: 'test' }} {...props} />;
@@ -324,12 +321,12 @@ describe('The EditorTree Component With multiple groups', () => {
                 current={multipleGroups[0]}
                 groupToolbar={[
                     {
-                        id: EXPLORER_TOGGLE_SAVE_GROUP,
+                        id: constants.EXPLORER_TOGGLE_SAVE_GROUP,
                         title: 'Save Group',
                         icon: 'save-all',
                     },
                     {
-                        id: EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
+                        id: constants.EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
                         title: 'Close Group Editors',
                         icon: 'close-all',
                     },

@@ -2,13 +2,10 @@ import React from 'react';
 import { EditorService } from '../editorService';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import {
-    BuiltInEditorOptions,
-    EditorEvent,
-    getEditorInitialActions,
-    IEditorTab,
-} from 'mo/model';
+import { EditorEvent, IEditorTab } from 'mo/model';
 import { expectFnCalled } from '@test/utils';
+import { modules } from 'mo/services/builtinService/const';
+import { cloneDeep } from 'lodash';
 
 describe('Test EditorService', () => {
     let mockTab: IEditorTab;
@@ -66,11 +63,6 @@ describe('Test EditorService', () => {
         });
     });
 
-    test('Get the default editor options', () => {
-        const editor = new EditorService();
-        expect(editor.getDefaultEditorOptions()).toEqual(BuiltInEditorOptions);
-    });
-
     test('Update the editor options', () => {
         const editor = new EditorService();
         editor.updateEditorOptions({
@@ -109,7 +101,7 @@ describe('Test EditorService', () => {
         expect(editor.updateActions([])).toBeUndefined();
         editor.open(mockTab);
 
-        const defaultAction = getEditorInitialActions();
+        const defaultAction = cloneDeep(modules.builtInEditorInitialActions);
         defaultAction[0].name = 'test';
         editor.updateActions(defaultAction);
         const updatedActions = editor.getState().current?.actions;

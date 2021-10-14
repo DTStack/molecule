@@ -9,10 +9,8 @@ import {
     IEditorGroup,
     IEditorTab,
     EditorEvent,
-    getEditorInitialActions,
     IEditorActionsProps,
     IEditorOptions,
-    BuiltInEditorOptions,
 } from 'mo/model';
 import { searchById } from 'mo/common/utils';
 import { editor as MonacoEditor, Uri } from 'mo/monaco';
@@ -162,6 +160,11 @@ export interface IEditorService extends Component<IEditor> {
      */
     setDefaultActions(actions: IEditorActionsProps[]): void;
     /**
+     * Set default menus when create a new group
+     * @param menus
+     */
+    setDefaultMenus(menus: IMenuItemProps[]): void;
+    /**
      * Update actions in specific group
      * @param actions
      * @param groupId
@@ -173,9 +176,13 @@ export interface IEditorService extends Component<IEditor> {
      */
     updateCurrentGroup(currentValues): void;
     /**
-     * Get the default editor options
+     * Get the default group actions
      */
-    getDefaultEditorOptions(): IEditorOptions;
+    getDefaultActions(): IEditorActionsProps[];
+    /**
+     * Get the default group menus
+     */
+    getDefaultMenus(): IMenuItemProps[];
     /**
      * Update the editor options
      * @param options
@@ -196,12 +203,13 @@ export class EditorService
     extends Component<IEditor>
     implements IEditorService {
     protected state: IEditor;
-    protected defaultActions: IEditorActionsProps[];
+    protected defaultActions: IEditorActionsProps[] = [];
+    protected defaultMenus: IMenuItemProps[] = [];
     protected explorerService: IExplorerService;
+
     constructor() {
         super();
         this.state = container.resolve(EditorModel);
-        this.defaultActions = getEditorInitialActions();
         this.explorerService = container.resolve(ExplorerService);
     }
 
@@ -217,8 +225,12 @@ export class EditorService
         this.editorInstance?.updateOptions(editorOptions);
     }
 
-    public getDefaultEditorOptions(): IEditorOptions {
-        return Object.assign({}, BuiltInEditorOptions);
+    public getDefaultActions() {
+        return Object.assign({}, this.defaultActions);
+    }
+
+    public getDefaultMenus() {
+        return Object.assign({}, this.defaultMenus);
     }
 
     private disposeModel(tabs: IEditorTab | IEditorTab[]) {
@@ -238,6 +250,10 @@ export class EditorService
 
     public setDefaultActions(actions: IEditorActionsProps[]): void {
         this.defaultActions = actions;
+    }
+
+    public setDefaultMenus(menus: IMenuItemProps[]): void {
+        this.defaultMenus = menus;
     }
 
     public setEntry(component: React.ReactNode) {
@@ -587,7 +603,8 @@ export class EditorService
                 tab,
                 tab.id,
                 [tab],
-                this.defaultActions
+                this.defaultActions,
+                this.defaultMenus
             );
             groups.push(group);
         }

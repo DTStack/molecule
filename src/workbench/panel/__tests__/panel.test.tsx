@@ -11,13 +11,13 @@ import {
     IPanel,
     PanelModel,
 } from 'mo/model/workbench/panel';
-import { builtInPanelProblems } from 'mo/model/problems';
 import { MoleculeProvider } from 'mo';
 import { select } from 'mo/common/dom';
+import { modules } from 'mo/services/builtinService/const';
 
 function panelMockModel(): PanelModel {
     const output = builtInOutputPanel();
-    const problems = builtInPanelProblems();
+    const problems = modules.builtInPanelProblems;
     const toolboxResize = builtInPanelToolbox();
     return new PanelModel(output, [output, problems], toolboxResize);
 }
@@ -39,7 +39,7 @@ describe('Test Panel Component', () => {
             </MoleculeProvider>
         );
         expect(select<HTMLDivElement>('.mo-tab__item')!.textContent).toBe(
-            builtInPanelProblems().name
+            modules.builtInPanelProblems.name
         );
     });
 

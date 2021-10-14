@@ -6,6 +6,8 @@ import type {
     IEditorOptions,
     IEditorTab,
     IExplorerPanelItem,
+    IPanelItem,
+    IStatusBarItem,
 } from 'mo/model';
 
 export const constants = {
@@ -39,6 +41,8 @@ export const constants = {
     EDITOR_MENU_SHOW_OPENEDITORS: 'editor.showOpenEditors',
     EDITOR_MENU_SPILIT: 'editor.split',
     SETTING_ID: 'Setting',
+    PROBLEM_MODEL_ID: 'MO_PROBLEMS',
+    PROBLEM_MODEL_NAME: 'Problems',
 };
 
 export const modules = {
@@ -255,4 +259,22 @@ export const modules = {
             value: '',
         },
     } as IEditorTab<{ language: string; value: string }>,
+
+    builtInStatusProblems: {
+        id: constants.STATUS_PROBLEMS,
+        sortIndex: 1,
+        data: {
+            warnings: 0,
+            errors: 0,
+            infos: 0,
+        },
+        name: 'Problems',
+    } as IStatusBarItem,
+
+    builtInPanelProblems: {
+        id: constants.PANEL_PROBLEMS,
+        name: localize(constants.PANEL_PROBLEMS, 'problems'),
+        data: null,
+        sortIndex: 1,
+    } as IPanelItem,
 };

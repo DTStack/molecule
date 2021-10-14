@@ -7,11 +7,11 @@ import {
     builtInPanelToolboxReStore,
     PanelEvent,
 } from 'mo/model/workbench/panel';
-import { builtInPanelProblems } from 'mo/model/problems';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
+import { modules } from '../builtinService/const';
 
 const paneOutput = builtInOutputPanel();
-const panelProblems = builtInPanelProblems();
+const panelProblems = modules.builtInPanelProblems;
 
 const resize = builtInPanelToolboxResize();
 const restore = builtInPanelToolboxReStore();

@@ -1,4 +1,4 @@
-export { BuiltInLocales, BuiltInDefault } from 'mo/extensions/locals-defaults';
+export { BuiltInLocales, BuiltInDefault } from 'mo/extensions/locales-defaults';
 /**
  * The Localization configuration event definition
  */
@@ -92,9 +92,4 @@ export interface ILocale {
      */
     inherit?: string;
     source: Map<LocaleSourceIdType | string, string>;
-}
-
-export interface ILocales {
-    locales: ILocale[];
-    localeId: string;
 }

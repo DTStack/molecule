@@ -214,4 +214,34 @@ export const modules = {
             name: localize(constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
         },
     ] as IMenuItemProps[],
+
+    builtInEditorTreeHeaderContextMenu: [
+        {
+            id: constants.EDITOR_MENU_CLOSE_SAVED,
+            name: localize(constants.EDITOR_MENU_CLOSE_SAVED, 'Close Saved'),
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_ALL,
+            name: localize(constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+        },
+    ] as IMenuItemProps[],
+
+    builtInEditorTreeContextMenu: [
+        {
+            id: constants.EDITOR_MENU_CLOSE,
+            name: localize(constants.EDITOR_MENU_CLOSE, 'Close'),
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_OTHERS,
+            name: localize(constants.EDITOR_MENU_CLOSE_OTHERS, 'Close Others'),
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_SAVED,
+            name: localize(constants.EDITOR_MENU_CLOSE_SAVED, 'Close Saved'),
+        },
+        {
+            id: constants.EDITOR_MENU_CLOSE_ALL,
+            name: localize(constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+        },
+    ] as IMenuItemProps[],
 };

@@ -2,11 +2,7 @@ import 'reflect-metadata';
 import React from 'react';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
-import {
-    builtInEditorTreeContextMenu,
-    builtInEditorTreeHeaderContextMenu,
-    EditorTreeEvent,
-} from 'mo/model/workbench/explorer/editorTree';
+import { EditorTreeEvent } from 'mo/model/workbench/explorer/editorTree';
 import {
     BuiltinService,
     EditorService,
@@ -62,11 +58,15 @@ export class EditorTreeController
             this.editService,
             EditorTree
         );
-        const { builtInExplorerEditorPanel } = this.builtinService.getModules();
+        const {
+            builtInExplorerEditorPanel,
+            builtInEditorTreeContextMenu,
+            builtInEditorTreeHeaderContextMenu,
+        } = this.builtinService.getModules();
         if (builtInExplorerEditorPanel) {
             const { groupToolbar, ...restEditor } = builtInExplorerEditorPanel;
-            const contextMenu = builtInEditorTreeContextMenu();
-            const headerContextMenu = builtInEditorTreeHeaderContextMenu();
+            const contextMenu = builtInEditorTreeContextMenu || [];
+            const headerContextMenu = builtInEditorTreeHeaderContextMenu || [];
 
             this.explorerService.addPanel({
                 ...restEditor,

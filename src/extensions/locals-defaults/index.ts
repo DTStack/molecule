@@ -1,26 +1,19 @@
 import { IExtension, IContributeType } from 'mo/model/extension';
-const defaultLocalsExtension = require('./package.json');
 
-interface ILocaleList {
-    contributes: {
-        languages: { id: string; path: string }[];
-    };
-}
-
-const getLocalesList = (objs: ILocaleList) => {
-    return objs.contributes.languages.map((obj) => {
-        const value = require(obj.path);
-        return value;
-    });
+const getLocalesList = () => {
+    return [require('./locals/en.json'), require('./locals/zh-CN.json')];
 };
 
-const locales = getLocalesList(defaultLocalsExtension) || [];
+const locales = getLocalesList() || [];
 
 export const ExtendsLocals: IExtension = {
+    id: 'ExtendsLocals',
+    name: 'Extends Locals',
     contributes: {
         [IContributeType.Languages]: locales,
     },
     activate() {},
+    dispose() {},
 };
 
 export const BuiltInLocales = locales;

@@ -50,12 +50,14 @@ describe('Test ExtensionService', () => {
     test('Not allowed to add the duplicate extension', () => {
         instance.load([mockExtension]);
         instance.load([mockExtension]);
+
         expect(mockExtension.activate).toBeCalledTimes(1);
     });
 
     test('Dispose an extension', () => {
         instance.load([mockExtension]);
         expect(instance.getExtension('test')).not.toBeUndefined();
+
         instance.dispose('test');
         expect(instance.getExtension('test')).toBeUndefined();
     });
@@ -63,6 +65,7 @@ describe('Test ExtensionService', () => {
     test('Load the extension contributes', () => {
         instance.loadContributes = jest.fn();
         instance.load([mockExtension]);
+
         expect(instance.loadContributes).toBeCalled();
     });
 
@@ -72,6 +75,7 @@ describe('Test ExtensionService', () => {
             throw new Error('Test Error');
         };
         instance.load([mockExtension]);
+
         expect(logger.error).toBeCalled();
     });
 
@@ -111,6 +115,7 @@ describe('Test ExtensionService', () => {
         }
         instance.registerAction(MyAction);
         const command = CommandsRegistry.getCommand(MyAction.ID);
+
         expect(command).not.toBeNull();
         expect(command.id).toEqual(MyAction.ID);
     });
@@ -121,6 +126,7 @@ describe('Test ExtensionService', () => {
             expect(args).toEqual('args');
         });
         const instance: any = new ExtensionService();
+
         instance.monacoService.commandService.executeCommand = testFn;
         instance.executeCommand('test', 'args');
         expect(testFn).toBeCalled();

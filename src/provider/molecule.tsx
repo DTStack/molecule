@@ -4,7 +4,7 @@ import React, { createContext, Component } from 'react';
 
 import { IColorTheme } from 'mo/model/colorTheme';
 import { defaultExtensions } from 'mo/extensions';
-import { BuiltInDefault } from 'mo/extensions/locals-defaults';
+import { BuiltInDefault } from 'mo/extensions/locales-defaults';
 import { IExtension } from 'mo/model/extension';
 import {
     ExtensionService,
@@ -27,6 +27,7 @@ export interface IMoleculeProps {
 export interface IMoleculeState {}
 
 export const MoleculeCtx = createContext({});
+
 export class MoleculeProvider extends Component<IMoleculeProps> {
     private readonly extensionService!: IExtensionService;
     private readonly monacoService!: IMonacoService;

@@ -11,6 +11,7 @@ import {
     IExtensionService,
 } from 'mo/services/extensionService';
 import { LocaleService, ILocaleService } from 'mo/i18n';
+import { STORE_KEY } from 'mo/i18n/localeService';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { ILayoutService, LayoutService } from 'mo/services';
 import * as controllers from 'mo/controller';
@@ -53,13 +54,17 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
 
     initialize() {
         const { extensions = [], defaultLocale = BuiltInDefault } = this.props;
+
+        const currentLocale = localStorage.getItem(STORE_KEY);
         /**
          * TODO: 添加针对主题的默认值
          */
         this.monacoService.initWorkspace(this.container!);
         this.extensionService.load(defaultExtensions);
         this.extensionService.load(extensions);
-        this.localeService.setCurrentLocale(defaultLocale);
+        if (!currentLocale) {
+            this.localeService.setCurrentLocale(defaultLocale);
+        }
     }
 
     /**

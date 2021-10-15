@@ -84,10 +84,11 @@ export interface ILocaleService {
     reset(): void;
 }
 
+export const STORE_KEY = `${APP_PREFIX}.locale`;
+
 @singleton()
 export class LocaleService extends Component implements ILocaleService {
     state = {};
-    private static STORE_KEY = `${APP_PREFIX}.locale`;
     private static LOCALIZE_REPLACED_WORD = '${i}';
 
     private _locales: Map<string, ILocale> = new Map();
@@ -99,7 +100,7 @@ export class LocaleService extends Component implements ILocaleService {
     }
 
     public reset(): void {
-        localStorage.removeItem(LocaleService.STORE_KEY);
+        localStorage.removeItem(STORE_KEY);
         this._current = undefined;
         this._locales.clear();
     }
@@ -122,7 +123,7 @@ export class LocaleService extends Component implements ILocaleService {
         if (localeId) {
             finalLocale = localeId;
         }
-        const cachedLocale = localStorage.getItem(LocaleService.STORE_KEY);
+        const cachedLocale = localStorage.getItem(STORE_KEY);
         if (cachedLocale) {
             finalLocale = cachedLocale;
         }
@@ -155,7 +156,7 @@ export class LocaleService extends Component implements ILocaleService {
         if (locale) {
             this.emit(LocalizationEvent.OnChange, this._current, locale);
             this._current = locale;
-            localStorage.setItem(LocaleService.STORE_KEY, locale.id);
+            localStorage.setItem(STORE_KEY, locale.id);
             return true;
         }
         return false;

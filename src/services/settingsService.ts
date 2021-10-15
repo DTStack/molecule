@@ -105,7 +105,7 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
         const editorOptions = this.editorService.getState().editorOptions;
         const theme = this.colorThemeService.getColorTheme();
         const locale = this.localeService.getCurrentLocale();
-
+        console.log('俺看看：', locale);
         return new SettingsModel(theme.id, editorOptions!, locale!.id);
     }
 

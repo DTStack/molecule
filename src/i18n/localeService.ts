@@ -164,13 +164,8 @@ export class LocaleService extends Component implements ILocaleService {
     private transformLocaleData(locale: ILocale): ILocale {
         const newLocale = { ...locale };
         // Convert a normal Object to a Map
-        if (locale.source instanceof Map === false) {
-            newLocale.source = new Map(
-                Object.entries(locale.source).map(([key, value]) => [
-                    key,
-                    value,
-                ])
-            );
+        if (!(locale.source instanceof Map)) {
+            newLocale.source = new Map(Object.entries(locale.source));
         }
         // If current locale inherit an exist, merge the parent.
         if (newLocale.inherit) {

@@ -16,3 +16,4 @@ export const ExtendsLocales: IExtension = {
 };
 export const BuiltInLocales = locales;
 export const BuiltInDefault = locales.find((item) => item.id === en.id);
+export const BuiltInId = en.id;

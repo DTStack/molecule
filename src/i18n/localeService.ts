@@ -4,6 +4,7 @@ import {
     LocalizationEvent,
     BuiltInLocales,
     BuiltInDefault,
+    BuiltInId,
 } from 'mo/i18n/localization';
 
 import { Component } from 'mo/react';
@@ -94,7 +95,7 @@ export class LocaleService extends Component implements ILocaleService {
 
     constructor() {
         super();
-        this.initialize(BuiltInLocales, BuiltInDefault);
+        this.initialize(BuiltInLocales, BuiltInId);
     }
 
     public reset(): void {

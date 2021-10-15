@@ -5,20 +5,30 @@ import '@testing-library/jest-dom';
 
 import { PanelView } from '../index';
 import { Panel } from '../panel';
-import {
-    builtInOutputPanel,
-    builtInPanelToolbox,
-    IPanel,
-    PanelModel,
-} from 'mo/model/workbench/panel';
+import { IPanel, PanelModel } from 'mo/model/workbench/panel';
 import { MoleculeProvider } from 'mo';
 import { select } from 'mo/common/dom';
 import { modules } from 'mo/services/builtinService/const';
+import { cloneDeep } from 'lodash';
+import Output from '../output';
 
 function panelMockModel(): PanelModel {
-    const output = builtInOutputPanel();
+    const output = modules.builtInOutputPanel;
+    output.renderPane = (item) => (
+        <Output
+            onUpdateEditorIns={(instance) => {
+                // Please notice the problem about memory out
+                // 'Cause we didn't dispose the older instance
+                item.outputEditorInstance = instance;
+            }}
+            {...item}
+        />
+    );
     const problems = modules.builtInPanelProblems;
-    const toolboxResize = builtInPanelToolbox();
+    const toolboxResize = [
+        modules.builtInPanelToolboxResize,
+        modules.builtInPanelToolbox,
+    ];
     return new PanelModel(output, [output, problems], toolboxResize);
 }
 
@@ -50,8 +60,21 @@ describe('Test Panel Component', () => {
 
     test('Customize the Panel toolbox', () => {
         const panel: IPanel = new PanelModel();
-        const output = builtInOutputPanel();
-        panel.toolbox = builtInPanelToolbox();
+        const output = cloneDeep(modules.builtInOutputPanel);
+        output.renderPane = (item) => (
+            <Output
+                onUpdateEditorIns={(instance) => {
+                    // Please notice the problem about memory out
+                    // 'Cause we didn't dispose the older instance
+                    item.outputEditorInstance = instance;
+                }}
+                {...item}
+            />
+        );
+        panel.toolbox = [
+            modules.builtInPanelToolboxResize,
+            modules.builtInPanelToolbox,
+        ];
         panel.current = output;
         const { queryByText, container, rerender } = render(
             <Panel {...panel} />

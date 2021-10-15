@@ -6,6 +6,7 @@ import type {
     IEditorOptions,
     IEditorTab,
     IExplorerPanelItem,
+    IOutput,
     IPanelItem,
     IStatusBarItem,
 } from 'mo/model';
@@ -57,6 +58,10 @@ export const constants = {
     SEARCH_TOOLBAR_REFRESH: 'search.toolbar.refresh',
     SEARCH_TOOLBAR_CLEAR: 'search.toolbar.clearAll',
     SEARCH_TOOLBAR_COLLAPSE: 'search.toolbar.collapseAll',
+    PANEL_TOOLBOX_CLOSE: 'panel.toolbox.closePanel',
+    PANEL_TOOLBOX_RESIZE: 'panel.toolbox.maximize',
+    PANEL_TOOLBOX_RESTORE_SIZE: 'panel.toolbox.restoreSize',
+    PANEL_OUTPUT: 'panel.output.title',
 };
 
 export const modules = {
@@ -409,4 +414,32 @@ export const modules = {
             icon: 'replace-all',
         },
     ] as IActionBarItemProps[],
+
+    builtInOutputPanel: {
+        id: constants.PANEL_OUTPUT,
+        name: localize(constants.PANEL_OUTPUT, 'output'),
+        data: '',
+        sortIndex: 2,
+    } as IOutput,
+
+    builtInPanelToolboxResize: {
+        id: constants.PANEL_TOOLBOX_RESIZE,
+        title: localize(constants.PANEL_TOOLBOX_RESIZE, 'Maximize Panel Size'),
+        icon: 'chevron-up',
+    } as IActionBarItemProps,
+
+    builtInPanelToolboxReStore: {
+        id: constants.PANEL_TOOLBOX_RESIZE,
+        title: localize(
+            constants.PANEL_TOOLBOX_RESTORE_SIZE,
+            'Restore Panel Siz'
+        ),
+        icon: 'chevron-down',
+    } as IActionBarItemProps,
+
+    builtInPanelToolbox: {
+        id: constants.PANEL_TOOLBOX_CLOSE,
+        title: localize(constants.PANEL_TOOLBOX_CLOSE, 'Close Panel'),
+        icon: 'close',
+    },
 };

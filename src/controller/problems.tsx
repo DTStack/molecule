@@ -87,6 +87,7 @@ export class ProblemsController
             problemsPanel.renderPane = () => <ProblemsView />;
 
             this.panelService.add(problemsPanel);
+            this.panelService.setActive(problemsPanel.id);
         }
 
         const {

@@ -1,20 +1,15 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { PanelService } from '../workbench/panelService';
-import {
-    builtInOutputPanel,
-    builtInPanelToolboxResize,
-    builtInPanelToolboxReStore,
-    PanelEvent,
-} from 'mo/model/workbench/panel';
+import { PanelEvent } from 'mo/model/workbench/panel';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { modules } from '../builtinService/const';
 
-const paneOutput = builtInOutputPanel();
+const paneOutput = modules.builtInOutputPanel;
 const panelProblems = modules.builtInPanelProblems;
 
-const resize = builtInPanelToolboxResize();
-const restore = builtInPanelToolboxReStore();
+const resize = modules.builtInPanelToolboxResize;
+const restore = modules.builtInPanelToolboxReStore;
 
 const panelService = container.resolve(PanelService);
 

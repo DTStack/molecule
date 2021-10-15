@@ -3,16 +3,19 @@ import { container, singleton } from 'tsyringe';
 import React from 'react';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { Controller } from 'mo/react/controller';
+import { PanelEvent } from 'mo/model/workbench/panel';
 import {
-    PanelEvent,
-    PANEL_TOOLBOX_CLOSE,
-    PANEL_TOOLBOX_RESIZE,
-} from 'mo/model/workbench/panel';
-import { IPanelService, PanelService } from 'mo/services';
+    BuiltinService,
+    IBuiltinService,
+    IPanelService,
+    PanelService,
+} from 'mo/services';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
+import Output from 'mo/workbench/panel/output';
 
 export interface IPanelController {
+    initView?: () => void;
     onTabChange?(key: string | undefined): void;
     onToolbarClick?(e: React.MouseEvent, item: IActionBarItemProps): void;
     onClose?(key?: string): void;
@@ -22,11 +25,44 @@ export interface IPanelController {
 export class PanelController extends Controller implements IPanelController {
     private readonly panelService: IPanelService;
     private readonly monacoService: IMonacoService;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
         this.panelService = container.resolve(PanelService);
         this.monacoService = container.resolve(MonacoService);
+        this.builtinService = container.resolve(BuiltinService);
+    }
+
+    public initView() {
+        const {
+            builtInOutputPanel,
+            builtInPanelToolbox,
+            builtInPanelToolboxResize,
+        } = this.builtinService.getModules();
+        if (builtInOutputPanel) {
+            const output = builtInOutputPanel;
+            output.renderPane = (item) => (
+                <Output
+                    onUpdateEditorIns={(instance) => {
+                        // Please notice the problem about memory out
+                        // 'Cause we didn't dispose the older instance
+                        item.outputEditorInstance = instance;
+                    }}
+                    {...item}
+                />
+            );
+            this.panelService.add(output);
+            this.panelService.setActive(output.id);
+        }
+
+        const toolbox = [builtInPanelToolboxResize, builtInPanelToolbox].filter(
+            Boolean
+        ) as IActionBarItemProps[];
+
+        this.panelService.setState({
+            toolbox,
+        });
     }
 
     public readonly onTabChange = (key: string | undefined): void => {
@@ -49,6 +85,10 @@ export class PanelController extends Controller implements IPanelController {
         e: React.MouseEvent,
         item: IActionBarItemProps
     ): void => {
+        const {
+            PANEL_TOOLBOX_CLOSE,
+            PANEL_TOOLBOX_RESIZE,
+        } = this.builtinService.getConstants();
         if (item.id === PANEL_TOOLBOX_CLOSE) {
             this.monacoService.commandService.executeCommand(
                 QuickTogglePanelAction.ID

@@ -157,14 +157,12 @@ export class ExtensionService implements IExtensionService {
                 case IContributeType.Themes: {
                     const themes: IColorTheme[] | undefined = contributes[type];
                     if (!themes) return;
-                    this.colorThemeService.addThemes(themes);
+                    return this.colorThemeService.addThemes(themes);
                 }
                 case IContributeType.Languages: {
-                    const locales: ILocale[] | undefined = contributes[
-                        type
-                    ] as any;
+                    const locales: ILocale[] | undefined = contributes[type];
                     if (!locales) return;
-                    this.localeService.initialize(locales);
+                    return this.localeService.initialize(locales);
                 }
             }
         });

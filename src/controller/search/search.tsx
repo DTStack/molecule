@@ -5,21 +5,12 @@ import { connect } from 'mo/react';
 import React from 'react';
 import { SearchPanel } from 'mo/workbench/sidebar/search';
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import {
-    SEARCH_CASE_SENSITIVE_COMMAND_ID,
-    SEARCH_WHOLE_WORD_COMMAND_ID,
-    SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
-    SEARCH_PRESERVE_CASE_COMMAND_ID,
-    SEARCH_REPLACE_ALL_COMMAND_ID,
-    builtInSearchActivityItem,
-    builtInHeaderToolbar,
-    builtInSearchAddons,
-    builtInReplaceAddons,
-    SearchEvent,
-} from 'mo/model/workbench/search';
+import { SearchEvent } from 'mo/model/workbench/search';
 import {
     ActivityBarService,
+    BuiltinService,
     IActivityBarService,
+    IBuiltinService,
     ISearchService,
     ISidebarService,
     SearchService,
@@ -28,6 +19,7 @@ import {
 import { ISearchProps, ITreeNodeItemProps } from 'mo/components';
 
 export interface ISearchController {
+    initView?: () => void;
     getSearchIndex?: (text: string, queryVal?: string) => number;
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;
@@ -52,34 +44,47 @@ export class SearchController extends Controller implements ISearchController {
     private readonly activityBarService: IActivityBarService;
     private readonly sidebarService: ISidebarService;
     private readonly searchService: ISearchService;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
         this.activityBarService = container.resolve(ActivityBarService);
         this.sidebarService = container.resolve(SidebarService);
         this.searchService = container.resolve(SearchService);
-        this.initView();
+        this.builtinService = container.resolve(BuiltinService);
     }
 
-    private initView() {
-        const SearchPanelView = connect(this.searchService, SearchPanel, this);
+    public initView() {
+        const {
+            builtInSearchActivityItem,
+            builtInHeaderToolbar,
+            builtInSearchAddons,
+            builtInReplaceAddons,
+        } = this.builtinService.getModules();
+        if (builtInSearchActivityItem) {
+            const SearchPanelView = connect(
+                this.searchService,
+                SearchPanel,
+                this
+            );
 
-        const searchSidePane = {
-            id: builtInSearchActivityItem().id,
-            title: 'SEARCH',
-            render() {
-                return <SearchPanelView />;
-            },
-        };
+            const searchSidePane = {
+                id: builtInSearchActivityItem.id,
+                title: 'SEARCH',
+                render() {
+                    return <SearchPanelView />;
+                },
+            };
 
-        this.searchService.setState({
-            headerToolBar: builtInHeaderToolbar(),
-            searchAddons: builtInSearchAddons(),
-            replaceAddons: builtInReplaceAddons(),
-        });
+            this.searchService.setState({
+                headerToolBar: builtInHeaderToolbar || [],
+                searchAddons: builtInSearchAddons || [],
+                replaceAddons: builtInReplaceAddons || [],
+            });
 
-        this.sidebarService.add(searchSidePane);
-        this.activityBarService.add(builtInSearchActivityItem());
+            this.sidebarService.add(searchSidePane);
+            this.activityBarService.add(builtInSearchActivityItem);
+        }
     }
 
     public validateValue = (
@@ -92,7 +97,9 @@ export class SearchController extends Controller implements ISearchController {
                 new RegExp(value);
                 return callback();
             } catch (e) {
-                return callback(e);
+                if (e instanceof Error) {
+                    return callback(e);
+                }
             }
         }
         return callback();
@@ -174,6 +181,13 @@ export class SearchController extends Controller implements ISearchController {
 
     public toggleAddon = (addon?: IActionBarItemProps) => {
         const addonId = addon?.id;
+        const {
+            SEARCH_CASE_SENSITIVE_COMMAND_ID,
+            SEARCH_WHOLE_WORD_COMMAND_ID,
+            SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
+            SEARCH_PRESERVE_CASE_COMMAND_ID,
+            SEARCH_REPLACE_ALL_COMMAND_ID,
+        } = this.builtinService.getConstants();
         switch (addonId) {
             case SEARCH_CASE_SENSITIVE_COMMAND_ID: {
                 this.searchService.toggleCaseSensitive();

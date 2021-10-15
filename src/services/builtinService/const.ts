@@ -48,6 +48,15 @@ export const constants = {
     NOTIFICATION_MODEL_ID: 'MO_NOTIFICATION',
     NOTIFICATION_MODEL_NAME: 'Notification',
     STATUS_BAR_HIDE_ID: 'hide',
+    SEARCH_CASE_SENSITIVE_COMMAND_ID: 'search.matchCase',
+    SEARCH_WHOLE_WORD_COMMAND_ID: 'search.matchWholeWord',
+    SEARCH_REGULAR_EXPRESSION_COMMAND_ID: 'search.useRegularExpression',
+    SEARCH_PRESERVE_CASE_COMMAND_ID: 'search.preserveCase',
+    SEARCH_REPLACE_ALL_COMMAND_ID: 'search.replaceAll',
+    SEARCH_ACTIVITY_ITEM: 'sidebar.search.title',
+    SEARCH_TOOLBAR_REFRESH: 'search.toolbar.refresh',
+    SEARCH_TOOLBAR_CLEAR: 'search.toolbar.clearAll',
+    SEARCH_TOOLBAR_COLLAPSE: 'search.toolbar.collapseAll',
 };
 
 export const modules = {
@@ -315,4 +324,89 @@ export const modules = {
         id: constants.STATUS_BAR_HIDE_ID,
         name: 'Hide Status Bar',
     } as IMenuItemProps,
+
+    builtInSearchActivityItem: {
+        id: constants.SEARCH_ACTIVITY_ITEM,
+        name: localize(constants.SEARCH_ACTIVITY_ITEM, 'Search'),
+        title: localize(constants.SEARCH_ACTIVITY_ITEM, 'Search'),
+        sortIndex: 2,
+        icon: 'search',
+    } as IActivityBarItem,
+
+    builtInHeaderToolbar: [
+        {
+            id: constants.SEARCH_TOOLBAR_REFRESH,
+            title: localize(constants.SEARCH_TOOLBAR_REFRESH, 'Refresh'),
+            disabled: true,
+            icon: 'refresh',
+        },
+        {
+            id: constants.SEARCH_TOOLBAR_CLEAR,
+            disabled: true,
+            title: localize(constants.SEARCH_TOOLBAR_CLEAR, 'Clear all'),
+            icon: 'clear-all',
+        },
+        {
+            id: constants.SEARCH_TOOLBAR_COLLAPSE,
+            title: localize(constants.SEARCH_TOOLBAR_COLLAPSE, 'Collapse all'),
+            disabled: true,
+            icon: 'collapse-all',
+        },
+    ] as IActionBarItemProps[],
+
+    builtInSearchAddons: [
+        {
+            id: constants.SEARCH_CASE_SENSITIVE_COMMAND_ID,
+            title: localize(
+                constants.SEARCH_CASE_SENSITIVE_COMMAND_ID,
+                'Match Case'
+            ),
+            disabled: false,
+            checked: false,
+            icon: 'case-sensitive',
+        },
+        {
+            id: constants.SEARCH_WHOLE_WORD_COMMAND_ID,
+            title: localize(
+                constants.SEARCH_WHOLE_WORD_COMMAND_ID,
+                'Match Whole Word'
+            ),
+            disabled: false,
+            checked: false,
+            icon: 'whole-word',
+        },
+        {
+            id: constants.SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
+            disabled: false,
+            checked: false,
+            title: localize(
+                constants.SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
+                'Use Regular Expression'
+            ),
+            icon: 'regex',
+        },
+    ] as IActionBarItemProps[],
+
+    builtInReplaceAddons: [
+        {
+            id: constants.SEARCH_PRESERVE_CASE_COMMAND_ID,
+            title: localize(
+                constants.SEARCH_PRESERVE_CASE_COMMAND_ID,
+                'Preserve Case'
+            ),
+            disabled: false,
+            checked: false,
+            icon: 'preserve-case',
+        },
+        {
+            id: constants.SEARCH_REPLACE_ALL_COMMAND_ID,
+            title: localize(
+                constants.SEARCH_REPLACE_ALL_COMMAND_ID,
+                'Replace All'
+            ),
+            disabled: false,
+            checked: false,
+            icon: 'replace-all',
+        },
+    ] as IActionBarItemProps[],
 };

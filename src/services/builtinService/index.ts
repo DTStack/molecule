@@ -22,11 +22,11 @@ export interface IBuiltinService {
     /**
      * @deprecated
      */
-    inactiveConstant(id: string): boolean;
-    inactiveModule(id: string): boolean;
-    getConstant(id: string): IBuiltinConstantProps | undefined;
+    inactiveConstant(id: keyof typeof constants): boolean;
+    inactiveModule(id: keyof typeof modules): boolean;
+    getConstant(id: keyof typeof constants): IBuiltinConstantProps | undefined;
     getConstants(): Partial<typeof constants>;
-    getModule<T>(id: string): IBuiltinModuleProps<T> | undefined;
+    getModule<T>(id: keyof typeof modules): IBuiltinModuleProps<T> | undefined;
     getModules(): Partial<typeof modules>;
 }
 
@@ -52,11 +52,6 @@ export class BuiltinService implements IBuiltinService {
 
     private addConstant(constant: { id: string; value: string }) {
         const uuid = constant.id;
-        const isExist = this.builtinConstants.has(uuid);
-        if (isExist) {
-            logger.error(`There already a constant named ${uuid}`);
-            return;
-        }
         this.builtinConstants.set(uuid, {
             ...constant,
             active: true,
@@ -65,18 +60,13 @@ export class BuiltinService implements IBuiltinService {
 
     private addModules<T>(module: { id: string; module: T }) {
         const uuid = module.id;
-        const isExist = this.builtinConstants.has(uuid);
-        if (isExist) {
-            logger.error(`There already a module named ${uuid}`);
-            return;
-        }
         this.builtinModules.set(uuid, {
             ...module,
             active: true,
         });
     }
 
-    public getConstant(id: string) {
+    public getConstant(id: keyof typeof constants) {
         return this.builtinConstants.get(id);
     }
 
@@ -93,7 +83,7 @@ export class BuiltinService implements IBuiltinService {
         >;
     }
 
-    public inactiveConstant(id: string) {
+    public inactiveConstant(id: keyof typeof constants) {
         const isExist = this.builtinConstants.has(id);
         if (!isExist) {
             logger.error(`Can't find constant which is ${id}`);
@@ -104,7 +94,7 @@ export class BuiltinService implements IBuiltinService {
         return true;
     }
 
-    public inactiveModule(id: string) {
+    public inactiveModule(id: keyof typeof modules) {
         const isExist = this.builtinModules.has(id);
         if (!isExist) {
             logger.error(`Can't find module which is ${id}`);
@@ -116,7 +106,7 @@ export class BuiltinService implements IBuiltinService {
         return true;
     }
 
-    public getModule(id: string) {
+    public getModule(id: keyof typeof modules) {
         return cloneDeep(this.builtinModules.get(id));
     }
 

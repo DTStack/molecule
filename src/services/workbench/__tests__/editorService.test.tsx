@@ -381,6 +381,32 @@ describe('Test EditorService', () => {
         expect(groupId).toBe(1);
     });
 
+    test('Should support to get default actions and default menus', () => {
+        const editor = new EditorService();
+        const defualtActions = editor.getDefaultActions();
+        const defaultMenus = editor.getDefaultMenus();
+        expect(defualtActions).toHaveLength(0);
+        expect(defaultMenus).toHaveLength(0);
+
+        const actions = [
+            {
+                id: 'default',
+                name: 'default',
+            },
+        ];
+        const menus = [
+            {
+                id: 'default-menu',
+                name: 'default-menu',
+            },
+        ];
+        editor.setDefaultActions(actions);
+        editor.setDefaultMenus(menus);
+
+        expect(editor.getDefaultActions()).toEqual(actions);
+        expect(editor.getDefaultMenus()).toEqual(menus);
+    });
+
     test('Listen to the Tab update event', () => {
         const editor = new EditorService();
         expectFnCalled((testFn) => {

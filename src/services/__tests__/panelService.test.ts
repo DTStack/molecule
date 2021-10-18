@@ -127,6 +127,23 @@ describe('The PanelService test', () => {
         expect(target).toEqual(paneOutput);
     });
 
+    test('Should NOT clone StandaloneEditor when get the panel', () => {
+        class StandaloneEditor {}
+        const standaloneEditor = new StandaloneEditor();
+        panelService.setState({
+            data: [
+                {
+                    ...paneOutput,
+                    outputEditorInstance: standaloneEditor,
+                } as any,
+            ],
+        });
+
+        const target = panelService.getPanel(paneOutput.id);
+        expect(target).toEqual(expect.objectContaining(paneOutput));
+        expect((target as any).outputEditorInstance).toBe(standaloneEditor);
+    });
+
     test('Should support to active a exist panel', () => {
         panelService.add([paneOutput]);
 

@@ -226,11 +226,11 @@ export class EditorService
     }
 
     public getDefaultActions() {
-        return Object.assign({}, this.defaultActions);
+        return cloneDeep(this.defaultActions);
     }
 
     public getDefaultMenus() {
-        return Object.assign({}, this.defaultMenus);
+        return cloneDeep(this.defaultMenus);
     }
 
     private disposeModel(tabs: IEditorTab | IEditorTab[]) {

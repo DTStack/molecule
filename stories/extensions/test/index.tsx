@@ -8,7 +8,6 @@ import {
     CONTEXT_MENU_SEARCH,
     ACTIVITY_BAR_GLOBAL_ACCOUNT,
 } from 'mo/model';
-import { MENU_FILE_OPEN } from 'mo/model/workbench/menuBar';
 
 import TestPane from './testPane';
 import { Entry } from './entry';
@@ -102,6 +101,7 @@ export const ExtendsTestPane: IExtension = {
                 input.click();
             };
 
+            const { MENU_FILE_OPEN } = molecule.builtin.getConstants();
             switch (menuId) {
                 case MENU_FILE_OPEN:
                     openFile();

@@ -10,6 +10,7 @@ import type {
     IPanelItem,
     IStatusBarItem,
 } from 'mo/model';
+import { ID_SIDE_BAR } from 'mo/common/id';
 
 export const constants = {
     PANEL_PROBLEMS: 'panel.problems.title',
@@ -62,6 +63,22 @@ export const constants = {
     PANEL_TOOLBOX_RESIZE: 'panel.toolbox.maximize',
     PANEL_TOOLBOX_RESTORE_SIZE: 'panel.toolbox.restoreSize',
     PANEL_OUTPUT: 'panel.output.title',
+    MENU_FILE_OPEN: 'openFile',
+    MENU_QUICK_COMMAND: 'editor.action.quickCommand',
+    MENU_VIEW_MENUBAR: 'workbench.action.showMenuBar',
+    MENU_VIEW_ACTIVITYBAR: 'workbench.action.showActivityBar',
+    MENU_VIEW_STATUSBAR: 'workbench.action.showStatusBar',
+    MENU_VIEW_PANEL: 'workbench.action.showPanel',
+    ACTION_QUICK_COMMAND: 'editor.action.quickCommand',
+    ACTION_QUICK_SELECT_ALL: 'editor.action.quickSelectAll',
+    ACTION_QUICK_COPY_LINE_UP: 'editor.action.copyLinesUpAction',
+    ACTION_QUICK_UNDO: 'editor.action.undo',
+    ACTION_QUICK_REDO: 'editor.action.redo',
+    ACTION_QUICK_CREATE_FILE: 'workbench.action.quickCreateFile',
+    ACTION_QUICK_CREATE_FOLDER: 'workbench.action.quickCreateFolder',
+    ACTION_QUICK_ACCESS_SETTINGS: 'workbench.action.quickAccessSettings',
+    ACTION_SELECT_THEME: 'workbench.action.selectTheme',
+    ACTION_SELECT_LOCALE: 'workbench.action.selectLocale',
 };
 
 export const modules = {
@@ -441,5 +458,161 @@ export const modules = {
         id: constants.PANEL_TOOLBOX_CLOSE,
         title: localize(constants.PANEL_TOOLBOX_CLOSE, 'Close Panel'),
         icon: 'close',
+    } as IActionBarItemProps,
+
+    builtInMenuBarData: [
+        {
+            id: 'File',
+            name: localize('menu.file', 'File'),
+            data: [
+                {
+                    id: constants.ACTION_QUICK_CREATE_FILE,
+                    name: localize('menu.newFile', 'New File'),
+                },
+                {
+                    id: constants.MENU_FILE_OPEN,
+                    name: localize('menu.open', 'Open'),
+                },
+            ],
+        },
+        {
+            id: 'Edit',
+            name: localize('menu.edit', 'Edit'),
+            data: [
+                {
+                    id: constants.ACTION_QUICK_UNDO,
+                    name: localize('menu.undo', 'Undo'),
+                },
+                {
+                    id: constants.ACTION_QUICK_REDO,
+                    name: localize('menu.redo', 'Redo'),
+                },
+            ],
+        },
+        {
+            id: 'Selection',
+            name: localize('menu.selection', 'Selection'),
+            data: [
+                {
+                    id: constants.ACTION_QUICK_SELECT_ALL,
+                    name: localize('menu.selectAll', 'Select All'),
+                },
+                {
+                    id: constants.ACTION_QUICK_COPY_LINE_UP,
+                    name: localize('menu.copyLineUp', 'Copy Line Up'),
+                },
+            ],
+        },
+        {
+            id: 'View',
+            name: localize('menu.view', 'View'),
+            data: [
+                {
+                    id: constants.MENU_QUICK_COMMAND,
+                    name: localize('menu.commandPalette', 'Command Palette'),
+                },
+                {
+                    id: 'OpenView',
+                    name: localize('menu.openView', 'Open View'),
+                },
+                {
+                    id: 'Appearance',
+                    name: localize('menu.appearance', 'Appearance'),
+                    data: [
+                        {
+                            icon: 'check',
+                            id: constants.MENU_VIEW_MENUBAR,
+                            name: localize('menu.showMenuBar', 'Show Menu Bar'),
+                        },
+                        {
+                            icon: 'check',
+                            id: ID_SIDE_BAR,
+                            name: localize('menu.showSideBar', 'Show Side Bar'),
+                        },
+                        {
+                            icon: 'check',
+                            id: constants.MENU_VIEW_STATUSBAR,
+                            name: localize(
+                                'menu.showStatusBar',
+                                'Show Status Bar'
+                            ),
+                        },
+                        {
+                            icon: 'check',
+                            id: constants.MENU_VIEW_ACTIVITYBAR,
+                            name: localize(
+                                'menu.showActivityBar',
+                                'Show Activity Bar'
+                            ),
+                        },
+                        {
+                            icon: 'check',
+                            id: constants.MENU_VIEW_PANEL,
+                            name: localize('menu.showPanel', 'Show Panel'),
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            id: 'Run',
+            name: localize('menu.run', 'Run'),
+            data: [
+                {
+                    id: 'RunTask',
+                    name: localize('menu.runTask', 'Run Task'),
+                },
+            ],
+        },
+        {
+            id: 'Help',
+            name: localize('menu.help', 'Help'),
+            data: [
+                {
+                    id: 'About',
+                    name: localize('menu.about', 'About'),
+                },
+            ],
+        },
+    ] as IMenuItemProps[],
+
+    quickAcessViewAction: {
+        id: constants.ACTION_QUICK_COMMAND,
+    },
+
+    quickSelectColorThemeAction: {
+        id: constants.ACTION_SELECT_THEME,
+    },
+
+    quickAccessSettingsAction: {
+        id: constants.ACTION_QUICK_ACCESS_SETTINGS,
+    },
+
+    quickSelectLocaleAction: {
+        id: constants.ACTION_SELECT_LOCALE,
+    },
+
+    quickTogglePanelAction: {
+        id: constants.MENU_VIEW_PANEL,
+    },
+
+    quickSelectAllAction: {
+        id: constants.ACTION_QUICK_SELECT_ALL,
+    },
+
+    quickCopyLineUpAction: {
+        id: constants.ACTION_QUICK_COPY_LINE_UP,
+    },
+
+    quickUndoAction: {
+        id: constants.ACTION_QUICK_UNDO,
+    },
+
+    quickRedoAction: {
+        id: constants.ACTION_QUICK_REDO,
+    },
+
+    quickCreateFileAction: {
+        id: constants.ACTION_QUICK_CREATE_FILE,
     },
 };

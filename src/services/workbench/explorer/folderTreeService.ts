@@ -9,13 +9,10 @@ import {
     IFolderTree,
     IFolderTreeModel,
     IFolderTreeSubItem,
-    BASE_CONTEXT_MENU,
-    FILE_CONTEXT_MENU,
     IFolderTreeNodeProps,
 } from 'mo/model/workbench/explorer/folderTree';
 import { TreeViewUtil } from '../../../common/treeUtil';
 import { ExplorerService, IExplorerService } from './explorerService';
-import { builtInFolderTree } from 'mo/model';
 import { IMenuItemProps } from 'mo/components';
 import logger from 'mo/common/logger';
 import { BuiltinService, IBuiltinService } from 'mo/services';
@@ -149,8 +146,8 @@ export class FolderTreeService
     protected state: IFolderTree;
     private readonly explorerService: IExplorerService;
     private readonly builtinService: IBuiltinService;
-    private fileContextMenu: IMenuItemProps[] = FILE_CONTEXT_MENU;
-    private folderContextMenu: IMenuItemProps[] = BASE_CONTEXT_MENU;
+    private fileContextMenu: IMenuItemProps[] = [];
+    private folderContextMenu: IMenuItemProps[] = [];
 
     constructor() {
         super();
@@ -161,7 +158,12 @@ export class FolderTreeService
 
     public reset() {
         this.setState({
-            folderTree: builtInFolderTree,
+            folderTree: {
+                contextMenu: [],
+                current: null,
+                folderPanelContextMenu: [],
+                data: [],
+            },
             entry: undefined,
         });
     }

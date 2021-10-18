@@ -4,20 +4,20 @@ import cloneDeep from 'lodash/cloneDeep';
 import { Controller } from 'mo/react/controller';
 import { IMenuItemProps } from 'mo/components/menu';
 import {
-    ROOT_FOLDER_CONTEXT_MENU,
-    NEW_FILE_COMMAND_ID,
-    NEW_FOLDER_COMMAND_ID,
-    RENAME_COMMAND_ID,
-    DELETE_COMMAND_ID,
-    OPEN_TO_SIDE_COMMAND_ID,
     FolderTreeEvent,
     FileTypes,
     FileType,
     IFolderTreeNodeProps,
 } from 'mo/model';
-import { FolderTreeService, IFolderTreeService } from 'mo/services';
+import {
+    BuiltinService,
+    FolderTreeService,
+    IBuiltinService,
+    IFolderTreeService,
+} from 'mo/services';
 
 export interface IFolderTreeController {
+    initView?: () => void;
     readonly createTreeNode?: (type: FileType) => void;
     readonly onClickContextMenu?: (
         contextMenu: IMenuItemProps,
@@ -40,10 +40,12 @@ export class FolderTreeController
     extends Controller
     implements IFolderTreeController {
     private readonly folderTreeService: IFolderTreeService;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
         this.folderTreeService = container.resolve(FolderTreeService);
+        this.builtinService = container.resolve(BuiltinService);
     }
 
     private getContextMenu = (treeNode: IFolderTreeNodeProps) => {
@@ -53,6 +55,7 @@ export class FolderTreeController
 
         const fileContextMenu = this.folderTreeService.getFileContextMenu();
         const folderContextMenu = this.folderTreeService.getFolderContextMenu();
+        const { ROOT_FOLDER_CONTEXT_MENU } = this.builtinService.getModules();
         switch (treeNode.fileType) {
             case FileTypes.File: {
                 menus.unshift(...fileContextMenu);
@@ -65,7 +68,7 @@ export class FolderTreeController
             case FileTypes.RootFolder: {
                 // In general, root folder have no contextMenu, because it can't be clicked
                 return folderContextMenu.concat(
-                    ROOT_FOLDER_CONTEXT_MENU
+                    ROOT_FOLDER_CONTEXT_MENU || []
                 ) as IMenuItemProps[];
             }
             default:
@@ -74,6 +77,30 @@ export class FolderTreeController
 
         return menus;
     };
+
+    public initView() {
+        const {
+            FILE_CONTEXT_MENU,
+            BASE_CONTEXT_MENU,
+            COMMON_CONTEXT_MENU,
+            FOLDER_PANEL_CONTEXT_MENU,
+        } = this.builtinService.getModules();
+        if (FILE_CONTEXT_MENU) {
+            this.folderTreeService.setFileContextMenu(FILE_CONTEXT_MENU);
+        }
+        if (BASE_CONTEXT_MENU) {
+            this.folderTreeService.setFolderContextMenu(BASE_CONTEXT_MENU);
+        }
+
+        this.folderTreeService.setState({
+            folderTree: {
+                contextMenu: COMMON_CONTEXT_MENU,
+                current: null,
+                folderPanelContextMenu: FOLDER_PANEL_CONTEXT_MENU,
+                data: [],
+            },
+        });
+    }
 
     public createTreeNode = (type: FileType) => {
         const folderTreeState = this.folderTreeService.getState();
@@ -88,6 +115,13 @@ export class FolderTreeController
         treeNode?: IFolderTreeNodeProps
     ) => {
         const menuId = contextMenu.id;
+        const {
+            RENAME_COMMAND_ID,
+            DELETE_COMMAND_ID,
+            NEW_FILE_COMMAND_ID,
+            NEW_FOLDER_COMMAND_ID,
+            OPEN_TO_SIDE_COMMAND_ID,
+        } = this.builtinService.getConstants();
         switch (menuId) {
             case RENAME_COMMAND_ID: {
                 const { id: nodeId } = treeNode!;

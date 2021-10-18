@@ -18,10 +18,12 @@ import {
     EditorTreeController,
     ExplorerController,
     ExtensionController,
+    FolderTreeController,
     IEditorController,
     IEditorTreeController,
     IExplorerController,
     IExtensionController,
+    IFolderTreeController,
     IMenuBarController,
     INotificationController,
     IOutlineController,
@@ -70,6 +72,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     private readonly panelController: IPanelController;
     private readonly menuBarController: IMenuBarController;
     private readonly extensionController: IExtensionController;
+    private readonly folderTreeController: IFolderTreeController;
 
     constructor(props: IMoleculeProps) {
         super(props);
@@ -89,6 +92,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.panelController = container.resolve(PanelController);
         this.menuBarController = container.resolve(MenuBarController);
         this.extensionController = container.resolve(ExtensionController);
+        this.folderTreeController = container.resolve(FolderTreeController);
         this.preloadLocales();
     }
 
@@ -105,6 +109,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.panelController.initView?.();
         this.menuBarController.initView?.();
         this.extensionController.initView?.();
+        this.folderTreeController.initView?.();
     }
 
     preloadLocales() {

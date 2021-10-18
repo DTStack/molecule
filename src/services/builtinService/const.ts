@@ -615,4 +615,58 @@ export const modules = {
     quickCreateFileAction: {
         id: constants.ACTION_QUICK_CREATE_FILE,
     },
+
+    COMMON_CONTEXT_MENU: [
+        {
+            id: constants.RENAME_COMMAND_ID,
+            name: localize('contextmenu.rename', 'Rename'),
+        },
+        {
+            id: constants.DELETE_COMMAND_ID,
+            name: localize('contextmenu.delete', 'Delete'),
+        },
+    ] as IMenuItemProps[],
+
+    BASE_CONTEXT_MENU: [
+        {
+            id: constants.NEW_FILE_COMMAND_ID,
+            name: localize('contextmenu.newFile', 'New File'),
+        },
+        {
+            id: constants.NEW_FOLDER_COMMAND_ID,
+            name: localize('contextmenu.newFolder', 'New Folder'),
+        },
+    ] as IMenuItemProps[],
+
+    ROOT_FOLDER_CONTEXT_MENU: [
+        {
+            id: constants.REMOVE_COMMAND_ID,
+            name: localize('contextmenu.removeFolder', 'Remove Folder'),
+        },
+    ] as IMenuItemProps[],
+
+    FILE_CONTEXT_MENU: [
+        {
+            id: constants.OPEN_TO_SIDE_COMMAND_ID,
+            name: localize('contextmenu.openToTheSide', 'Open to the Side'),
+        },
+    ] as IMenuItemProps[],
+
+    FOLDER_PANEL_CONTEXT_MENU: [
+        {
+            id: constants.NEW_FOLDER_COMMAND_ID,
+            name: localize(
+                'contextmenu.addFolderToSpace',
+                'Add Folder to Workspace...'
+            ),
+        },
+        {
+            id: constants.FIND_IN_WORKSPACE_ID,
+            name: localize('contextmenu.findInSpace', 'Find in Workspace...'),
+        },
+        {
+            id: constants.DOWNLOAD_COMMAND_ID,
+            name: localize('contextmenu.download', 'Download...'),
+        },
+    ] as IMenuItemProps[],
 };

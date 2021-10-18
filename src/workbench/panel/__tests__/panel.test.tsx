@@ -6,7 +6,6 @@ import '@testing-library/jest-dom';
 import { PanelView } from '../index';
 import { Panel } from '../panel';
 import { IPanel, PanelModel } from 'mo/model/workbench/panel';
-import { MoleculeProvider } from 'mo';
 import { select } from 'mo/common/dom';
 import { modules } from 'mo/services/builtinService/const';
 import { cloneDeep } from 'lodash';
@@ -34,23 +33,13 @@ function panelMockModel(): PanelModel {
 
 describe('Test Panel Component', () => {
     test('Match the PanelView snapshot', () => {
-        const component = renderer.create(
-            <MoleculeProvider>
-                <PanelView />
-            </MoleculeProvider>
-        );
+        const component = renderer.create(<PanelView />);
         expect(component.toJSON()).toMatchSnapshot();
     });
 
     test('Test PanelView render', () => {
-        render(
-            <MoleculeProvider>
-                <PanelView />
-            </MoleculeProvider>
-        );
-        expect(select<HTMLDivElement>('.mo-tab__item')!.textContent).toBe(
-            modules.builtInPanelProblems.name
-        );
+        render(<PanelView />);
+        expect(select<HTMLDivElement>('.mo-tab__item')).toBeNull();
     });
 
     test('Match the Panel snapshot', () => {

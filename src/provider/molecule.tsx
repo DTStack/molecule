@@ -13,34 +13,8 @@ import {
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { ILocaleService, LocaleService } from 'mo/i18n/localeService';
 import { ILayoutService, LayoutService } from 'mo/services';
-import {
-    EditorController,
-    EditorTreeController,
-    ExplorerController,
-    ExtensionController,
-    FolderTreeController,
-    IEditorController,
-    IEditorTreeController,
-    IExplorerController,
-    IExtensionController,
-    IFolderTreeController,
-    IMenuBarController,
-    INotificationController,
-    IOutlineController,
-    IPanelController,
-    IProblemsController,
-    ISearchController,
-    ISettingsController,
-    IStatusBarController,
-    MenuBarController,
-    NotificationController,
-    OutlineController,
-    PanelController,
-    ProblemsController,
-    SearchController,
-    SettingsController,
-    StatusBarController,
-} from 'mo/controller';
+import * as controllers from 'mo/controller';
+import type { Controller } from 'mo/react';
 
 export interface IMoleculeProps {
     extensions?: IExtension[];
@@ -63,58 +37,18 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     private readonly localeService!: ILocaleService;
     private readonly layoutService!: ILayoutService;
 
-    private readonly explorerController: IExplorerController;
-    private readonly editorTreeController: IEditorTreeController;
-    private readonly outlineController: IOutlineController;
-    private readonly editorController: IEditorController;
-    private readonly problemsController: IProblemsController;
-    private readonly noticationController: INotificationController;
-    private readonly statusBarController: IStatusBarController;
-    private readonly searchController: ISearchController;
-    private readonly panelController: IPanelController;
-    private readonly menuBarController: IMenuBarController;
-    private readonly extensionController: IExtensionController;
-    private readonly folderTreeController: IFolderTreeController;
-    private readonly settingController: ISettingsController;
-
     constructor(props: IMoleculeProps) {
         super(props);
         this.localeService = container.resolve(LocaleService);
         this.monacoService = container.resolve(MonacoService);
         this.extensionService = container.resolve(ExtensionService);
         this.layoutService = container.resolve(LayoutService);
-
-        this.explorerController = container.resolve(ExplorerController);
-        this.editorTreeController = container.resolve(EditorTreeController);
-        this.outlineController = container.resolve(OutlineController);
-        this.editorController = container.resolve(EditorController);
-        this.problemsController = container.resolve(ProblemsController);
-        this.noticationController = container.resolve(NotificationController);
-        this.statusBarController = container.resolve(StatusBarController);
-        this.searchController = container.resolve(SearchController);
-        this.panelController = container.resolve(PanelController);
-        this.menuBarController = container.resolve(MenuBarController);
-        this.extensionController = container.resolve(ExtensionController);
-        this.folderTreeController = container.resolve(FolderTreeController);
-        this.settingController = container.resolve(SettingsController);
         this.preloadLocales();
     }
 
     componentDidMount() {
         this.initialize();
-        this.explorerController.initView?.();
-        this.editorTreeController.initView?.();
-        this.outlineController.initView?.();
-        this.editorController.initView?.();
-        this.problemsController.initView?.();
-        this.noticationController.initView?.();
-        this.statusBarController.initView?.();
-        this.searchController.initView?.();
-        this.panelController.initView?.();
-        this.menuBarController.initView?.();
-        this.extensionController.initView?.();
-        this.folderTreeController.initView?.();
-        this.settingController.initView?.();
+        this.initControllers();
     }
 
     preloadLocales() {
@@ -132,6 +66,17 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.monacoService.initWorkspace(this.container!);
         this.extensionService.load(defaultExtensions);
         this.extensionService.load(extensions);
+    }
+
+    /**
+     * Register all controllers and execute the initView method automatically to inject the default value into the corresponding service
+     */
+    initControllers() {
+        Object.keys(controllers).forEach((key) => {
+            const module = controllers[key];
+            const controller = container.resolve<Controller>(module);
+            controller.initView?.();
+        });
     }
 
     public render() {

@@ -5,10 +5,10 @@ import { KeyMod, KeyCode } from 'mo/monaco';
 import { container } from 'tsyringe';
 import { EditorService, IEditorService } from 'mo/services';
 import { Action2, KeybindingWeight } from './common';
-import { ACTION_QUICK_SELECT_ALL } from 'mo/model/keybinding';
+import { constants } from 'mo/services/builtinService/const';
 
 export class QuickSelectAllAction extends Action2 {
-    static ID = ACTION_QUICK_SELECT_ALL;
+    static ID = constants.ACTION_QUICK_SELECT_ALL;
     static readonly DESC = 'Select All';
     static readonly LABEL = localize('menu.selectAll', 'Select All');
     private readonly editorService: IEditorService;

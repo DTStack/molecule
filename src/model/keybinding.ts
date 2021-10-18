@@ -63,16 +63,3 @@ export interface ISimpleKeybinding {
     metaKey: boolean;
     keyCode: KeyCode;
 }
-
-export const ACTION_QUICK_COMMAND = 'editor.action.quickCommand';
-export const ACTION_QUICK_SELECT_ALL = 'editor.action.quickSelectAll';
-export const ACTION_QUICK_COPY_LINE_UP = 'editor.action.copyLinesUpAction';
-export const ACTION_QUICK_UNDO = 'editor.action.undo';
-export const ACTION_QUICK_REDO = 'editor.action.redo';
-
-export const ACTION_QUICK_CREATE_FILE = 'workbench.action.quickCreateFile';
-export const ACTION_QUICK_CREATE_FOLDER = 'workbench.action.quickCreateFolder';
-export const ACTION_QUICK_ACCESS_SETTINGS =
-    'workbench.action.quickAccessSettings';
-export const ACTION_SELECT_THEME = 'workbench.action.selectTheme';
-export const ACTION_SELECT_LOCALE = 'workbench.action.selectLocale';

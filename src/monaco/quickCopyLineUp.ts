@@ -4,10 +4,10 @@ import { KeyMod, KeyCode } from 'mo/monaco';
 import { EditorService, IEditorService } from 'mo/services';
 import { container } from 'tsyringe';
 import { Action2, KeybindingWeight } from './common';
-import { ACTION_QUICK_COPY_LINE_UP } from 'mo/model/keybinding';
+import { constants } from 'mo/services/builtinService/const';
 
 export class QuickCopyLineUp extends Action2 {
-    static readonly ID = ACTION_QUICK_COPY_LINE_UP;
+    static readonly ID = constants.ACTION_QUICK_COPY_LINE_UP;
     static readonly LABEL = localize('menu.copyLineUp', 'Copy Line Up');
     static readonly DESC = 'Copy Line Up';
     private readonly editorService: IEditorService;
@@ -34,7 +34,7 @@ export class QuickCopyLineUp extends Action2 {
 
     run() {
         this.editorService.editorInstance
-            ?.getAction(ACTION_QUICK_COPY_LINE_UP)
+            ?.getAction(constants.ACTION_QUICK_COPY_LINE_UP)
             .run();
     }
 }

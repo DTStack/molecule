@@ -4,10 +4,10 @@ import { KeyMod, KeyCode, Uri, editor as MonacoEditor } from 'mo/monaco';
 import { EditorService, IEditorService } from 'mo/services';
 import { container } from 'tsyringe';
 import { Action2, KeybindingWeight } from './common';
-import { ACTION_QUICK_REDO } from 'mo/model/keybinding';
+import { constants } from 'mo/services/builtinService/const';
 
 export class QuickRedo extends Action2 {
-    static readonly ID = ACTION_QUICK_REDO;
+    static readonly ID = constants.ACTION_QUICK_REDO;
     static readonly LABEL = localize('menu.redo', 'Redo');
     static readonly DESC = 'Redo';
     private readonly editorService: IEditorService;

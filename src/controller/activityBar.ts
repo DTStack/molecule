@@ -15,17 +15,14 @@ import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 
 import {
     ActivityBarService,
+    BuiltinService,
     IActivityBarService,
+    IBuiltinService,
     ISettingsService,
     SettingsService,
 } from 'mo/services';
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
-import {
-    ACTION_QUICK_COMMAND,
-    ACTION_QUICK_ACCESS_SETTINGS,
-    ACTION_SELECT_THEME,
-} from 'mo/model/keybinding';
 
 export interface IActivityBarController {
     /**
@@ -50,6 +47,7 @@ export class ActivityBarController
     private readonly settingsService: ISettingsService;
     private readonly monacoService: IMonacoService;
     private readonly menuBarController: IMenuBarController;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
@@ -57,6 +55,7 @@ export class ActivityBarController
         this.settingsService = container.resolve(SettingsService);
         this.monacoService = container.resolve(MonacoService);
         this.menuBarController = container.resolve(MenuBarController);
+        this.builtinService = container.resolve(BuiltinService);
     }
 
     public readonly onClick = (
@@ -90,6 +89,11 @@ export class ActivityBarController
         item: IMenuItemProps | undefined
     ) => {
         const contextMenuId = item?.id;
+        const {
+            ACTION_QUICK_COMMAND,
+            ACTION_QUICK_ACCESS_SETTINGS,
+            ACTION_SELECT_THEME,
+        } = this.builtinService.getConstants();
         switch (contextMenuId) {
             // activityBar contextMenu
             case CONTEXT_MENU_MENU: {

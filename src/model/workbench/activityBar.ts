@@ -1,12 +1,7 @@
 import React from 'react';
 import { IMenuItemProps } from 'mo/components';
 import { localize } from 'mo/i18n/localize';
-import {
-    ACTION_QUICK_ACCESS_SETTINGS,
-    ACTION_QUICK_COMMAND,
-    ACTION_SELECT_THEME,
-} from '../keybinding';
-
+import { constants } from 'mo/services/builtinService/const';
 /**
  * The activity bar event definition
  */
@@ -71,15 +66,15 @@ export function builtInActivityBar(): IActivityBar {
             type: 'global',
             contextMenu: [
                 {
-                    id: ACTION_QUICK_COMMAND,
+                    id: constants.ACTION_QUICK_COMMAND,
                     name: localize('menu.commandPalette', 'Command Palette'),
                 },
                 {
-                    id: ACTION_QUICK_ACCESS_SETTINGS,
+                    id: constants.ACTION_QUICK_ACCESS_SETTINGS,
                     name: localize('menu.settings', 'Settings'),
                 },
                 {
-                    id: ACTION_SELECT_THEME,
+                    id: constants.ACTION_SELECT_THEME,
                     name: localize('menu.colorTheme', 'Color Theme'),
                 },
             ],

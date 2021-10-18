@@ -10,10 +10,10 @@ import { localize } from './localize';
 import { ILocaleService, LocaleService } from './localeService';
 import { ILocale } from './localization';
 import { KeyCode, KeyMod } from 'mo/monaco';
-import { ACTION_SELECT_LOCALE } from 'mo/model/keybinding';
+import { constants } from 'mo/services/builtinService/const';
 
 export class SelectLocaleAction extends Action2 {
-    static readonly ID = ACTION_SELECT_LOCALE;
+    static readonly ID = constants.ACTION_SELECT_LOCALE;
     static readonly LABEL = localize(
         'select.locale',
         'Select Display Language'

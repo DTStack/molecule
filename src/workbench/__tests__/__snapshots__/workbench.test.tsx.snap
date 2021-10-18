@@ -34,17 +34,7 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
             <div
               class="mo-activityBar__container"
             >
-              <ul>
-                <li
-                  class="mo-activityBar__item"
-                  id="sidebar.search.title"
-                >
-                  <span
-                    class="mo-activityBar__label codicon codicon-search"
-                    title="搜索"
-                  />
-                </li>
-              </ul>
+              <ul />
               <ul
                 class="mo-activityBar__global"
               />
@@ -61,133 +51,7 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
           >
             <div
               class="mo-sidebar"
-            >
-              <div
-                class="mo-sidebar__pane"
-                data-id="sidebar.search.title"
-                style="display: none;"
-              >
-                <div
-                  class="sidebar-search-pane"
-                >
-                  <header
-                    class="mo-sidebar__header"
-                  >
-                    <div
-                      class="mo-sidebar__title"
-                    >
-                      <h2>
-                        搜索
-                      </h2>
-                    </div>
-                    <div
-                      class="mo-sidebar__toolbar"
-                    >
-                      <div
-                        class="mo-tool-bar"
-                      >
-                        <div
-                          class="mo-action-bar"
-                        >
-                          <ul
-                            class="mo-action-bar__container"
-                          >
-                            <li
-                              class="mo-action-bar__item mo-action-bar__item--disabled"
-                              id="search.toolbar.refresh"
-                            >
-                              <span
-                                class="codicon codicon-refresh"
-                              />
-                            </li>
-                            <li
-                              class="mo-action-bar__item mo-action-bar__item--disabled"
-                              id="search.toolbar.clearAll"
-                            >
-                              <span
-                                class="codicon codicon-clear-all"
-                              />
-                            </li>
-                            <li
-                              class="mo-action-bar__item mo-action-bar__item--disabled"
-                              id="search.toolbar.collapseAll"
-                            >
-                              <span
-                                class="codicon codicon-collapse-all"
-                              />
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </header>
-                  <div
-                    class="mo-sidebar__content"
-                  >
-                    <div
-                      class="mo-search"
-                    >
-                      <span
-                        class="mo-search__replace__button codicon codicon-chevron-right"
-                      />
-                      <div
-                        class="mo-search__group"
-                      >
-                        <div
-                          class="mo-search__input mo-search__target"
-                        >
-                          <textarea
-                            autocapitalize="off"
-                            autocorrect="off"
-                            class=""
-                            placeholder="Search"
-                            spellcheck="false"
-                            title="Search"
-                          />
-                          <div
-                            class="mo-action-bar mo-search__toolbar"
-                          >
-                            <ul
-                              class="mo-action-bar__container"
-                            >
-                              <li
-                                class="mo-action-bar__item"
-                                id="search.matchCase"
-                              >
-                                <span
-                                  class="codicon codicon-case-sensitive"
-                                />
-                              </li>
-                              <li
-                                class="mo-action-bar__item"
-                                id="search.matchWholeWord"
-                              >
-                                <span
-                                  class="codicon codicon-whole-word"
-                                />
-                              </li>
-                              <li
-                                class="mo-action-bar__item"
-                                id="search.useRegularExpression"
-                              >
-                                <span
-                                  class="codicon codicon-regex"
-                                />
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="mo-tree mo-search__tree"
-                      draggable="false"
-                      role="tree"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
           </div>
           <div
             class="sc-htpNat fXAXjb sc-bdVaJa cjjWdp"

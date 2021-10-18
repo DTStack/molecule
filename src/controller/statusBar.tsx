@@ -14,8 +14,7 @@ import {
 import { EditorStatusBarView } from 'mo/workbench/editor';
 import { cloneDeep } from 'lodash';
 
-export interface IStatusBarController {
-    initView?: () => void;
+export interface IStatusBarController extends Partial<Controller> {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
     onContextMenuClick?: (
         e: React.MouseEvent,

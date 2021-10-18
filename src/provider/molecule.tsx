@@ -30,6 +30,7 @@ import {
     IPanelController,
     IProblemsController,
     ISearchController,
+    ISettingsController,
     IStatusBarController,
     MenuBarController,
     NotificationController,
@@ -37,6 +38,7 @@ import {
     PanelController,
     ProblemsController,
     SearchController,
+    SettingsController,
     StatusBarController,
 } from 'mo/controller';
 
@@ -73,6 +75,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     private readonly menuBarController: IMenuBarController;
     private readonly extensionController: IExtensionController;
     private readonly folderTreeController: IFolderTreeController;
+    private readonly settingController: ISettingsController;
 
     constructor(props: IMoleculeProps) {
         super(props);
@@ -93,14 +96,15 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.menuBarController = container.resolve(MenuBarController);
         this.extensionController = container.resolve(ExtensionController);
         this.folderTreeController = container.resolve(FolderTreeController);
+        this.settingController = container.resolve(SettingsController);
         this.preloadLocales();
     }
 
     componentDidMount() {
         this.initialize();
         this.explorerController.initView?.();
-        this.editorTreeController.initView();
-        this.outlineController.initView();
+        this.editorTreeController.initView?.();
+        this.outlineController.initView?.();
         this.editorController.initView?.();
         this.problemsController.initView?.();
         this.noticationController.initView?.();
@@ -110,6 +114,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.menuBarController.initView?.();
         this.extensionController.initView?.();
         this.folderTreeController.initView?.();
+        this.settingController.initView?.();
     }
 
     preloadLocales() {

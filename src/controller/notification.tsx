@@ -22,8 +22,7 @@ import {
     BuiltinService,
 } from 'mo/services';
 
-export interface INotificationController {
-    initView?: () => void;
+export interface INotificationController extends Partial<Controller> {
     onCloseNotification(item: INotificationItem): void;
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
     onActionBarClick?(

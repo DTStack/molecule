@@ -16,8 +16,7 @@ import {
     IFolderTreeService,
 } from 'mo/services';
 
-export interface IFolderTreeController {
-    initView?: () => void;
+export interface IFolderTreeController extends Partial<Controller> {
     readonly createTreeNode?: (type: FileType) => void;
     readonly onClickContextMenu?: (
         contextMenu: IMenuItemProps,

@@ -18,8 +18,7 @@ import {
 } from 'mo/services';
 import { ISearchProps, ITreeNodeItemProps } from 'mo/components';
 
-export interface ISearchController {
-    initView?: () => void;
+export interface ISearchController extends Partial<Controller> {
     getSearchIndex?: (text: string, queryVal?: string) => number;
     setSearchValue?: (value?: string) => void;
     setReplaceValue?: (value?: string) => void;

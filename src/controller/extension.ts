@@ -21,9 +21,7 @@ import { QuickRedo } from 'mo/monaco/quickRedo';
 import { QuickCreateFile } from 'mo/monaco/quickCreateFile';
 import type { Action2 } from 'mo/monaco/common';
 
-export interface IExtensionController {
-    initView?: () => void;
-}
+export interface IExtensionController extends Partial<Controller> {}
 
 @singleton()
 export class ExtensionController

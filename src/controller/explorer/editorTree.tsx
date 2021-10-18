@@ -16,7 +16,7 @@ import {
 import { connect } from 'mo/react';
 import { IActionBarItemProps, IMenuItemProps, ITabProps } from 'mo/components';
 
-export interface IEditorTreeController {
+export interface IEditorTreeController extends Partial<Controller> {
     readonly onClose?: (tabId: string, groupId: number) => void;
     readonly onSelect?: (tabId: string, groupId: number) => void;
     readonly onCloseGroup?: (groupId: number) => void;
@@ -34,8 +34,6 @@ export interface IEditorTreeController {
         groupId: number,
         file?: ITabProps
     ) => void;
-
-    readonly initView: () => void;
 }
 
 @singleton()

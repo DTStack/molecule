@@ -24,7 +24,7 @@ import {
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 
-export interface IActivityBarController {
+export interface IActivityBarController extends Partial<Controller> {
     /**
      * Called when activity bar item is clicked
      */
@@ -57,6 +57,8 @@ export class ActivityBarController
         this.menuBarController = container.resolve(MenuBarController);
         this.builtinService = container.resolve(BuiltinService);
     }
+
+    public initView() {}
 
     public readonly onClick = (
         selectedKey: string,

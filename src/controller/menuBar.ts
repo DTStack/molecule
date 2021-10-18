@@ -16,8 +16,7 @@ import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 
-export interface IMenuBarController {
-    initView?: () => void;
+export interface IMenuBarController extends Partial<Controller> {
     onSelect?: (key: string, item?: IActivityBarItem) => void;
     onClick: (event: React.MouseEvent<any, any>, item: IMenuBarItem) => void;
     updateFocusinEle?: (ele: HTMLElement | null) => void;

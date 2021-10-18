@@ -19,7 +19,7 @@ import { NotificationController } from '.';
 import { INotificationController } from 'mo/workbench';
 import { LocaleNotification } from 'mo/workbench/notification/notificationPane/localeNotification';
 
-export interface ISettingsController {}
+export interface ISettingsController extends Partial<Controller> {}
 
 @singleton()
 export class SettingsController
@@ -40,7 +40,6 @@ export class SettingsController
         this.notificationService = container.resolve(NotificationService);
         this.notificationController = container.resolve(NotificationController);
         this.builtinService = container.resolve(BuiltinService);
-        this.initialize();
     }
 
     /**
@@ -52,7 +51,7 @@ export class SettingsController
         this.emit(SettingsEvent.OnChange, args);
     }, 600);
 
-    private initialize() {
+    public initView() {
         const { SETTING_ID } = this.builtinService.getConstants();
         this.editorService.onUpdateTab((tab) => {
             if (tab.id === SETTING_ID) {
@@ -78,6 +77,3 @@ export class SettingsController
         this.notificationController.toggleNotifications();
     }
 }
-
-// Register singleton
-container.resolve(SettingsController);

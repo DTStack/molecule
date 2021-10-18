@@ -18,8 +18,7 @@ import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 import { ProblemsPaneView, ProblemsStatusBarView } from 'mo/workbench/problems';
 import { connect } from 'mo/react';
-export interface IProblemsController {
-    initView?: () => void;
+export interface IProblemsController extends Partial<Controller> {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
 }
 @singleton()

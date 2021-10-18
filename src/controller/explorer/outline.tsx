@@ -9,9 +9,7 @@ import {
     IExplorerService,
 } from 'mo/services';
 
-export interface IOutlineController {
-    initView(): void;
-}
+export interface IOutlineController extends Partial<Controller> {}
 
 @singleton()
 export class OutlineController
@@ -30,6 +28,7 @@ export class OutlineController
         const {
             builtInExplorerOutlinePanel,
         } = this.builtinService.getModules();
+
         if (builtInExplorerOutlinePanel) {
             this.explorerService.addPanel(builtInExplorerOutlinePanel);
         }

@@ -15,10 +15,12 @@ class TestServiceB extends Component {
 }
 
 class TestControllerA extends Controller {
+    initView = () => {};
     methodA = () => {};
 }
 
 class TestControllerB extends Controller {
+    initView = () => {};
     methodB = () => {};
 }
 

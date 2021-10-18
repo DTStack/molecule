@@ -23,8 +23,7 @@ import {
 } from 'mo/services';
 import { FolderTreeController, IFolderTreeController } from './folderTree';
 
-export interface IExplorerController {
-    initView?: () => void;
+export interface IExplorerController extends Partial<Controller> {
     onActionsContextMenuClick?: (
         e: React.MouseEvent,
         item?: IMenuItemProps

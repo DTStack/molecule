@@ -21,8 +21,7 @@ import {
     StatusBarService,
 } from 'mo/services';
 
-export interface IEditorController {
-    initView?: () => void;
+export interface IEditorController extends Partial<Controller> {
     groupSplitPos?: string[];
     open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
     onClickContextMenu?: (

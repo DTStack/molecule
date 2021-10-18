@@ -14,8 +14,7 @@ import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 import Output from 'mo/workbench/panel/output';
 
-export interface IPanelController {
-    initView?: () => void;
+export interface IPanelController extends Partial<Controller> {
     onTabChange?(key: string | undefined): void;
     onToolbarClick?(e: React.MouseEvent, item: IActionBarItemProps): void;
     onClose?(key?: string): void;

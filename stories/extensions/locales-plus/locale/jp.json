@@ -4,6 +4,8 @@
     "inherit": "zh-CN",
     "source": {
         "sidebar.explore.title": "ブラウジングテスト",
-        "test.id": "测试 Locale"
+        "test.id": "测试 Locale",
+        "menu.open": "開く",
+        "menu.file": "ファイル"
     }
 }

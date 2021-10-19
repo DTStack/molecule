@@ -5,7 +5,7 @@ import { customExtensions } from '../extensions';
 import '../demo.scss';
 
 export const IDEDemo = () => (
-    <MoleculeProvider extensions={customExtensions} defaultLocale="zh-CN">
+    <MoleculeProvider extensions={customExtensions} defaultLocale="en">
         <Workbench />
     </MoleculeProvider>
 );

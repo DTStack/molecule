@@ -96,6 +96,10 @@ export class NotificationController
         } = this.builtinService.getModules();
 
         if (builtInNotification) {
+            const NotificationView = connect(
+                this.notificationService,
+                NotificationStatusBarView
+            );
             const defaultNotification = {
                 ...builtInNotification,
                 actionBar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(
@@ -103,10 +107,6 @@ export class NotificationController
                 ) as IActionBarItemProps[],
                 render: () => <NotificationView onClick={this.onClick} />,
             };
-            const NotificationView = connect(
-                this.notificationService,
-                NotificationStatusBarView
-            );
             this.notificationService.setState({
                 ...defaultNotification,
             });

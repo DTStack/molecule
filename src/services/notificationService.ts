@@ -118,7 +118,13 @@ export class NotificationService
 
     public reset() {
         this.setState({
+            id: '',
+            name: '',
             data: [],
+            sortIndex: 1,
+            showNotifications: false,
+            actionBar: [],
+            render: undefined,
         });
     }
 }

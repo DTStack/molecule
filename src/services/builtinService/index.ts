@@ -28,6 +28,7 @@ export interface IBuiltinService {
     getConstants(): Partial<typeof constants>;
     getModule<T>(id: keyof typeof modules): IBuiltinModuleProps<T> | undefined;
     getModules(): Partial<typeof modules>;
+    reset(): void;
 }
 
 @singleton()
@@ -118,6 +119,12 @@ export class BuiltinService implements IBuiltinService {
             }
         });
         return res;
+    }
+
+    public reset() {
+        this.builtinModules.clear();
+        this.builtinConstants.clear();
+        this.initialize();
     }
 }
 

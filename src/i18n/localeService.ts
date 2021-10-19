@@ -84,7 +84,7 @@ export interface ILocaleService {
     reset(): void;
 }
 
-export const STORE_KEY = `${APP_PREFIX}.locale`;
+export const STORE_KEY = `${APP_PREFIX}.localeId`;
 
 @singleton()
 export class LocaleService extends Component implements ILocaleService {
@@ -96,6 +96,9 @@ export class LocaleService extends Component implements ILocaleService {
 
     constructor() {
         super();
+        /**
+         * TODO: It will then be removed accordingly
+         */
         this.initialize(BuiltInLocales, BuiltInId);
     }
 
@@ -123,9 +126,9 @@ export class LocaleService extends Component implements ILocaleService {
         if (localeId) {
             finalLocale = localeId;
         }
-        const cachedLocale = localStorage.getItem(STORE_KEY);
-        if (cachedLocale) {
-            finalLocale = cachedLocale;
+        const cachedLocaleId = localStorage.getItem(STORE_KEY);
+        if (cachedLocaleId) {
+            finalLocale = cachedLocaleId;
         }
         this.setCurrentLocale(finalLocale);
     }

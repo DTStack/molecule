@@ -55,16 +55,15 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     initialize() {
         const { extensions = [], defaultLocale = BuiltInDefault } = this.props;
 
-        const currentLocale = localStorage.getItem(STORE_KEY);
+        const currentLocale = localStorage.getItem(STORE_KEY) || defaultLocale;
         /**
          * TODO: 添加针对主题的默认值
          */
         this.monacoService.initWorkspace(this.container!);
         this.extensionService.load(defaultExtensions);
         this.extensionService.load(extensions);
-        if (!currentLocale) {
-            this.localeService.setCurrentLocale(defaultLocale);
-        }
+        const locales = this.localeService.getLocales();
+        this.localeService.initialize(locales, currentLocale);
     }
 
     /**

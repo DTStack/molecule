@@ -82,6 +82,12 @@ export class ExplorerController
             builtInExplorerHeaderToolbar,
         } = this.builtinService.getModules();
 
+        if (builtInExplorerHeaderToolbar) {
+            this.explorerService.setState({
+                headerToolBar: builtInExplorerHeaderToolbar,
+            });
+        }
+
         if (builtInExplorerActivityItem && builtInExplorerFolderPanel) {
             this.activityBarService.add(builtInExplorerActivityItem, true);
             this.sidebarService.add(explorePane, true);
@@ -90,12 +96,6 @@ export class ExplorerController
             this.explorerService.addPanel({
                 ...builtInExplorerFolderPanel,
                 renderPanel: this.renderFolderTree,
-            });
-        }
-
-        if (builtInExplorerHeaderToolbar) {
-            this.explorerService.setState({
-                headerToolBar: builtInExplorerHeaderToolbar,
             });
         }
     }

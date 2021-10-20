@@ -93,9 +93,9 @@ export class FolderTreeController
 
         this.folderTreeService.setState({
             folderTree: {
-                contextMenu: COMMON_CONTEXT_MENU,
+                contextMenu: COMMON_CONTEXT_MENU || [],
                 current: null,
-                folderPanelContextMenu: FOLDER_PANEL_CONTEXT_MENU,
+                folderPanelContextMenu: FOLDER_PANEL_CONTEXT_MENU || [],
                 data: [],
             },
         });

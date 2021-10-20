@@ -141,6 +141,3 @@ export class EditorTreeController
         this.emit(EditorTreeEvent.onToolbarClick, toolbar, groupId);
     };
 }
-
-// Register singleton
-container.resolve(EditorTreeController);

@@ -244,6 +244,3 @@ export class SearchController extends Controller implements ISearchController {
         this.emit(SearchEvent.onResultClick, item, resultData);
     };
 }
-
-// Register a singleton
-container.resolve(SearchController);

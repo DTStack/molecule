@@ -23,14 +23,15 @@ describe('The explorer controller', () => {
         explorerController.initView();
 
         const { headerToolBar, data } = explorerService.getState();
-        expect(headerToolBar.id).toBe(modules.builtInExplorerHeaderToolbar.id);
-        expect(headerToolBar.icon).toBe(
+        expect(headerToolBar).not.toBeUndefined();
+        expect(headerToolBar!.id).toBe(modules.builtInExplorerHeaderToolbar.id);
+        expect(headerToolBar!.icon).toBe(
             modules.builtInExplorerHeaderToolbar.icon
         );
-        expect(headerToolBar.title).toBe(
+        expect(headerToolBar!.title).toBe(
             modules.builtInExplorerHeaderToolbar.title
         );
-        expect(headerToolBar.contextMenu).toHaveLength(1);
+        expect(headerToolBar!.contextMenu).toHaveLength(1);
 
         expect(data).toHaveLength(1);
         expect(data[0]).toEqual(

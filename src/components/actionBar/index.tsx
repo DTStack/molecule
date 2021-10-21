@@ -6,37 +6,41 @@ import {
     getBEMElement,
     getBEMModifier,
 } from 'mo/common/className';
-import { useContextMenu } from 'mo/components/contextMenu';
+import { IContextMenu, useContextMenu } from 'mo/components/contextMenu';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { mergeFunctions } from 'mo/common/utils';
 import Tooltip from '../tooltip';
 import { Icon } from '../icon';
+import type { HTMLElementProps, UniqueId } from 'mo/common/types';
+import { getDataAttributionsFromProps } from 'mo/common/dom';
 
 export interface IActionBarItemProps<T = any> {
-    id?: string;
+    id: UniqueId;
+    title?: string | JSX.Element;
     name?: React.ReactNode;
-    title?: string;
     icon?: string | JSX.Element;
     disabled?: boolean;
     checked?: boolean;
     data?: T;
     contextMenu?: IMenuItemProps[];
-    className?: string;
     onContextMenuClick?: (
         e: React.MouseEvent,
         item: IMenuItemProps | undefined
     ) => void;
     onClick?(event: React.MouseEvent, item: IActionBarItemProps): void;
+
+    [key: string]: any;
 }
 
-export interface IActionBarProps<T = any> {
+export interface IActionBarProps<T = any> extends HTMLElementProps {
     data: IActionBarItemProps<T>[];
-    className?: string;
     onContextMenuClick?: (
         e: React.MouseEvent,
         item: IMenuItemProps | undefined
     ) => void;
     onClick?(event: React.MouseEvent, item: IActionBarItemProps): void;
+
+    [key: string]: any;
 }
 
 const defaultActionBarClassName = prefixClaName('action-bar');
@@ -50,25 +54,24 @@ const itemCheckedClassName = getBEMModifier(itemClassName, 'checked');
 
 export function ActionBarItem(props: IActionBarItemProps) {
     const {
-        id,
         title,
         name,
-        data = {},
         contextMenu = [],
         onClick,
         icon,
         onContextMenuClick,
+        ...restProps
     } = props;
     const disabled = props.disabled ? itemDisabledClassName : null;
     const checked = props.checked ? itemCheckedClassName : null;
-    const refItem = useRef(null);
+    const refItem = useRef<HTMLLIElement>(null);
 
-    let contextViewMenu;
+    const contextViewMenu = useRef<IContextMenu>();
 
     const onClickMenuItem = useCallback(
         (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
             onContextMenuClick?.(e, item);
-            contextViewMenu?.dispose();
+            contextViewMenu.current?.hide();
         },
         [contextMenu]
     );
@@ -78,13 +81,13 @@ export function ActionBarItem(props: IActionBarItemProps) {
 
     useEffect(() => {
         if (contextMenu.length > 0) {
-            contextViewMenu = useContextMenu({
+            contextViewMenu.current = useContextMenu({
                 anchor: refItem.current,
                 render: renderContextMenu,
             });
         }
         return function cleanup() {
-            contextViewMenu?.dispose();
+            contextViewMenu.current?.dispose();
         };
     });
 
@@ -96,21 +99,22 @@ export function ActionBarItem(props: IActionBarItemProps) {
         if (onClick) {
             onClick(event, props);
         }
-        if (contextMenu.length > -1 && contextViewMenu) {
-            contextViewMenu.show({
+        if (contextMenu.length > -1 && contextViewMenu.current) {
+            contextViewMenu.current.show({
                 x: event.clientX,
                 y: event.clientY,
             });
         }
     };
 
+    const dataProps = getDataAttributionsFromProps(restProps);
+
     return (
         <li
-            id={id}
             ref={refItem}
             className={classNames(itemClassName, disabled, checked)}
             onClick={onClickItem}
-            data-id={data.id}
+            {...dataProps}
         >
             <Tooltip overlay={<span>{title}</span>}>
                 <Icon type={icon}>{name}</Icon>
@@ -125,26 +129,27 @@ export function ActionBar<T = any>(props: IActionBarProps<T>) {
         onClick,
         onContextMenuClick,
         className,
-        ...custom
+        style,
+        title,
+        ...restProps
     } = props;
 
     const claNames = classNames(defaultActionBarClassName, className);
 
-    const items = data.map(
-        (item: IActionBarItemProps<T>, index) =>
-            item.id && (
-                <ActionBarItem
-                    key={item.id}
-                    {...item}
-                    onContextMenuClick={onContextMenuClick}
-                    data-index={index}
-                    onClick={mergeFunctions(onClick, item.onClick)}
-                />
-            )
-    );
+    const items = data.map((item, index) => (
+        <ActionBarItem
+            key={item.id}
+            {...item}
+            onContextMenuClick={onContextMenuClick}
+            data-index={index}
+            onClick={mergeFunctions(onClick, item.onClick)}
+        />
+    ));
+
+    const dataProps = getDataAttributionsFromProps(restProps);
 
     return (
-        <div className={claNames} {...custom}>
+        <div className={claNames} style={style} title={title} {...dataProps}>
             <ul className={containerClassName}>{items}</ul>
         </div>
     );

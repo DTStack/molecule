@@ -156,3 +156,19 @@ export function getElementClientCenter(element: HTMLElement) {
         y: top + height / 2,
     };
 }
+
+/**
+ * Get the data-* attributions from props
+ * @param props
+ * @returns
+ */
+export function getDataAttributionsFromProps(
+    props: Record<string, any>
+): Record<string, any> {
+    return Object.keys(props).reduce((pre, cur) => {
+        if (cur.startsWith('data-')) {
+            pre[cur] = props[cur];
+        }
+        return pre;
+    }, {});
+}

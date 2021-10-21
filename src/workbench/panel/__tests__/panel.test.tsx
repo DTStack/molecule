@@ -12,7 +12,7 @@ import { cloneDeep } from 'lodash';
 import Output from '../output';
 
 function panelMockModel(): PanelModel {
-    const output = modules.builtInOutputPanel;
+    const output = modules.builtInOutputPanel();
     output.renderPane = (item) => (
         <Output
             onUpdateEditorIns={(instance) => {
@@ -23,10 +23,10 @@ function panelMockModel(): PanelModel {
             {...item}
         />
     );
-    const problems = modules.builtInPanelProblems;
+    const problems = modules.builtInPanelProblems();
     const toolboxResize = [
-        modules.builtInPanelToolboxResize,
-        modules.builtInPanelToolbox,
+        modules.builtInPanelToolboxResize(),
+        modules.builtInPanelToolbox(),
     ];
     return new PanelModel(output, [output, problems], toolboxResize);
 }
@@ -49,7 +49,7 @@ describe('Test Panel Component', () => {
 
     test('Customize the Panel toolbox', () => {
         const panel: IPanel = new PanelModel();
-        const output = cloneDeep(modules.builtInOutputPanel);
+        const output = cloneDeep(modules.builtInOutputPanel());
         output.renderPane = (item) => (
             <Output
                 onUpdateEditorIns={(instance) => {
@@ -61,8 +61,8 @@ describe('Test Panel Component', () => {
             />
         );
         panel.toolbox = [
-            modules.builtInPanelToolboxResize,
-            modules.builtInPanelToolbox,
+            modules.builtInPanelToolboxResize(),
+            modules.builtInPanelToolbox(),
         ];
         panel.current = output;
         const { queryByText, container, rerender } = render(

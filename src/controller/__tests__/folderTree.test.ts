@@ -160,24 +160,24 @@ describe('The folder tree controller', () => {
         let menus = folderTreeController.onRightClick(mockTreeNode);
 
         expect(menus).toEqual([
-            ...modules.FILE_CONTEXT_MENU,
-            ...modules.COMMON_CONTEXT_MENU,
+            ...modules.FILE_CONTEXT_MENU(),
+            ...modules.COMMON_CONTEXT_MENU(),
         ]);
 
         // get the folder contextMenus
         mockTreeNode.fileType = FileTypes.Folder;
         menus = folderTreeController.onRightClick(mockTreeNode);
         expect(menus).toEqual([
-            ...modules.BASE_CONTEXT_MENU,
-            ...modules.COMMON_CONTEXT_MENU,
+            ...modules.BASE_CONTEXT_MENU(),
+            ...modules.COMMON_CONTEXT_MENU(),
         ]);
 
         // get the root folder contextMenus
         mockTreeNode.fileType = FileTypes.RootFolder;
         menus = folderTreeController.onRightClick(mockTreeNode);
         expect(menus).toEqual([
-            ...modules.BASE_CONTEXT_MENU,
-            ...modules.ROOT_FOLDER_CONTEXT_MENU,
+            ...modules.BASE_CONTEXT_MENU(),
+            ...modules.ROOT_FOLDER_CONTEXT_MENU(),
         ]);
 
         // error fileTypes

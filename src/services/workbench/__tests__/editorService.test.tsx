@@ -99,10 +99,10 @@ describe('Test EditorService', () => {
         const editor = new EditorService();
 
         expect(editor.updateActions([])).toBeUndefined();
-        editor.setDefaultActions(modules.builtInEditorInitialActions);
+        editor.setDefaultActions(modules.builtInEditorInitialActions());
         editor.open(mockTab);
 
-        const defaultAction = cloneDeep(modules.builtInEditorInitialActions);
+        const defaultAction = cloneDeep(modules.builtInEditorInitialActions());
         defaultAction[0].name = 'test';
         editor.updateActions(defaultAction);
         const updatedActions = editor.getState().current?.actions;

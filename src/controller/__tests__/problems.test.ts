@@ -32,7 +32,7 @@ describe('The problems controller', () => {
         expect(name).toBe(constants.PROBLEM_MODEL_NAME);
 
         const defaultStatus = statusBarService.getStatusBarItem(
-            modules.builtInStatusProblems.id,
+            modules.builtInStatusProblems().id,
             Float.left
         );
         expect(defaultStatus).not.toBeNull();
@@ -41,7 +41,7 @@ describe('The problems controller', () => {
         );
 
         const defaultPanel = panelService.getPanel(
-            modules.builtInPanelProblems.id
+            modules.builtInPanelProblems().id
         );
         const { current } = panelService.getState();
         expect(defaultPanel).not.toBeNull();
@@ -56,13 +56,13 @@ describe('The problems controller', () => {
 
         problemsController.initView();
         const defaultStatus = statusBarService.getStatusBarItem(
-            modules.builtInStatusProblems.id,
+            modules.builtInStatusProblems().id,
             Float.left
         );
         expect(defaultStatus).toBeNull();
 
         const defaultPanel = panelService.getPanel(
-            modules.builtInPanelProblems.id
+            modules.builtInPanelProblems().id
         );
         const { current } = panelService.getState();
         expect(defaultPanel).toBeUndefined();

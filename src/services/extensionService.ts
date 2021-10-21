@@ -162,7 +162,7 @@ export class ExtensionService implements IExtensionService {
                 case IContributeType.Languages: {
                     const locales: ILocale[] | undefined = contributes[type];
                     if (!locales) return;
-                    return this.localeService.initialize(locales);
+                    return this.localeService.addLocales(locales);
                 }
             }
         });

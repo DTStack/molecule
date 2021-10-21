@@ -2,8 +2,7 @@ import { IExtension, IContributeType } from 'mo/model/extension';
 
 const zhCN = require('./locales/zh-CN.json');
 const en = require('./locales/en.json');
-const getLocalesList = () => [zhCN, en];
-const locales = getLocalesList() || [];
+const locales = [zhCN, en];
 
 export const ExtendsLocales: IExtension = {
     id: 'ExtendsLocales',
@@ -15,5 +14,5 @@ export const ExtendsLocales: IExtension = {
     dispose() {},
 };
 export const BuiltInLocales = locales;
-export const BuiltInDefault = locales.find((item) => item.id === en.id);
 export const BuiltInId = en.id;
+export const BuiltInDefault = locales.find((item) => item.id === BuiltInId);

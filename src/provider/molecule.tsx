@@ -62,8 +62,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.monacoService.initWorkspace(this.container!);
         this.extensionService.load(defaultExtensions);
         this.extensionService.load(extensions);
-        const locales = this.localeService.getLocales();
-        this.localeService.initialize(locales, currentLocale);
+        this.localeService.setCurrentLocale(currentLocale);
     }
 
     /**

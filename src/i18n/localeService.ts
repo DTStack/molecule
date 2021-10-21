@@ -129,14 +129,19 @@ export class LocaleService extends Component implements ILocaleService {
         if (cachedLocaleId) {
             finalLocale = cachedLocaleId;
         }
+
         this.setCurrentLocale(finalLocale);
     }
 
     public getCurrentLocale(): ILocale | undefined {
-        return this._current && Object.assign({}, this._current);
+        return (
+            (this._current && Object.assign({}, this._current)) ||
+            BuiltInDefault
+        );
     }
 
-    public getLocale(id: string): ILocale | undefined {
+    public getLocale(id: string | null): ILocale | undefined {
+        if (!id) return;
         return this._locales.get(id);
     }
 

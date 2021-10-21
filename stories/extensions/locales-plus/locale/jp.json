@@ -6,6 +6,7 @@
         "sidebar.explore.title": "ブラウジングテスト",
         "test.id": "测试 Locale",
         "menu.open": "開く",
-        "menu.file": "ファイル"
+        "menu.file": "ファイル",
+        "panel.problems.title": "+++---"
     }
 }

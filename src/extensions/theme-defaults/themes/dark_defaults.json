@@ -27,7 +27,7 @@
         "list.activeSelectionBackground": "#094771",
         "list.dropBackground": "#383B3D",
         "list.focusOutline": "#007FD4",
-        "list.hoverForeground": "#2A2D2E",
+        "list.hoverBackground": "#2A2D2E",
         "list.inactiveSelectionBackground": "#37373D",
         "menu.background": "#252526",
         "menu.foreground": "#CCCCCC",

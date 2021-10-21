@@ -85,13 +85,6 @@ export class TreeNodeModel implements IFolderTreeNodeProps {
     }
 }
 
-// export const builtInFolderTree = {
-//     contextMenu: COMMON_CONTEXT_MENU,
-//     current: null,
-//     folderPanelContextMenu: FOLDER_PANEL_CONTEXT_MENU,
-//     data: [],
-// };
-
 export class IFolderTreeModel implements IFolderTree {
     public folderTree: IFolderTreeSubItem;
     public entry: React.ReactNode;

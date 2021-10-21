@@ -3,14 +3,7 @@ import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { MenuBarController, IMenuBarController } from 'mo/controller';
 import { IMenuItemProps } from 'mo/components/menu';
-import {
-    ActivityBarEvent,
-    CONTEXT_MENU_MENU,
-    CONTEXT_MENU_EXPLORER,
-    CONTEXT_MENU_SEARCH,
-    CONTEXT_MENU_HIDE,
-    IActivityBarItem,
-} from 'mo/model';
+import { ActivityBarEvent, IActivityBarItem } from 'mo/model';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 
 import {
@@ -58,7 +51,18 @@ export class ActivityBarController
         this.builtinService = container.resolve(BuiltinService);
     }
 
-    public initView() {}
+    public initView() {
+        const {
+            activityBarData,
+            contextMenuData,
+        } = this.builtinService.getModules();
+        if (activityBarData) {
+            this.activityBarService.add(activityBarData);
+        }
+        if (contextMenuData) {
+            this.activityBarService.addContextMenu(contextMenuData);
+        }
+    }
 
     public readonly onClick = (
         selectedKey: string,
@@ -92,9 +96,13 @@ export class ActivityBarController
     ) => {
         const contextMenuId = item?.id;
         const {
-            ACTION_QUICK_COMMAND,
-            ACTION_QUICK_ACCESS_SETTINGS,
-            ACTION_SELECT_THEME,
+            ACTION_QUICK_COMMAND = '',
+            ACTION_QUICK_ACCESS_SETTINGS = '',
+            ACTION_SELECT_THEME = '',
+            CONTEXT_MENU_MENU = '',
+            CONTEXT_MENU_EXPLORER = '',
+            CONTEXT_MENU_SEARCH = '',
+            CONTEXT_MENU_HIDE,
         } = this.builtinService.getConstants();
         switch (contextMenuId) {
             // activityBar contextMenu

@@ -1,7 +1,5 @@
 import React from 'react';
 import { IMenuItemProps } from 'mo/components';
-import { localize } from 'mo/i18n/localize';
-import { constants } from 'mo/services/builtinService/const';
 /**
  * The activity bar event definition
  */
@@ -39,74 +37,6 @@ export interface IActivityBar {
     data?: IActivityBarItem[];
     contextMenu?: IActivityMenuItemProps[];
     selected?: string;
-}
-
-export const ACTIVITY_BAR_GLOBAL_SETTINGS = 'global.menu.settings';
-export const ACTIVITY_BAR_GLOBAL_ACCOUNT = 'global.menu.account';
-
-export const CONTEXT_MENU_MENU = 'menubar';
-export const CONTEXT_MENU_EXPLORER = 'sidebar.explore.title';
-export const CONTEXT_MENU_SEARCH = 'sidebar.search.title';
-export const CONTEXT_MENU_HIDE = 'menu.hideActivityBar';
-
-export function builtInActivityBar(): IActivityBar {
-    const activityBarData: IActivityBarItem[] = [
-        {
-            id: ACTIVITY_BAR_GLOBAL_ACCOUNT,
-            name: localize('menu.account', 'Account'),
-            title: localize('menu.account', 'Account'),
-            icon: 'account',
-            type: 'global',
-        },
-        {
-            id: ACTIVITY_BAR_GLOBAL_SETTINGS,
-            name: localize('menu.settings', 'Settings'),
-            title: localize('menu.settings', 'Settings'),
-            icon: 'settings-gear',
-            type: 'global',
-            contextMenu: [
-                {
-                    id: constants.ACTION_QUICK_COMMAND,
-                    name: localize('menu.commandPalette', 'Command Palette'),
-                },
-                {
-                    id: constants.ACTION_QUICK_ACCESS_SETTINGS,
-                    name: localize('menu.settings', 'Settings'),
-                },
-                {
-                    id: constants.ACTION_SELECT_THEME,
-                    name: localize('menu.colorTheme', 'Color Theme'),
-                },
-            ],
-        },
-    ];
-
-    const contextMenuData: IActivityMenuItemProps[] = [
-        {
-            id: CONTEXT_MENU_MENU,
-            name: localize('menubar', 'Menu'),
-            icon: 'check',
-        },
-        {
-            id: CONTEXT_MENU_EXPLORER,
-            name: localize('sidebar.explore.title', 'Explorer'),
-            icon: 'check',
-        },
-        {
-            id: CONTEXT_MENU_SEARCH,
-            name: localize('sidebar.search.title', 'Search'),
-            icon: 'check',
-        },
-        {
-            id: CONTEXT_MENU_HIDE,
-            name: localize('menu.hideActivityBar', 'Hide Activity Bar'),
-        },
-    ];
-
-    return {
-        data: activityBarData,
-        contextMenu: contextMenuData,
-    };
 }
 
 export class ActivityBarModel implements IActivityBar {

@@ -2,6 +2,7 @@ import { localize } from 'mo/i18n/localize';
 import type { IActionBarItemProps, IMenuItemProps } from 'mo/components';
 import type {
     IActivityBarItem,
+    IActivityMenuItemProps,
     IEditorActionsProps,
     IEditorOptions,
     IEditorTab,
@@ -79,6 +80,12 @@ export const constants = {
     ACTION_QUICK_ACCESS_SETTINGS: 'workbench.action.quickAccessSettings',
     ACTION_SELECT_THEME: 'workbench.action.selectTheme',
     ACTION_SELECT_LOCALE: 'workbench.action.selectLocale',
+    ACTIVITY_BAR_GLOBAL_SETTINGS: 'global.menu.settings',
+    ACTIVITY_BAR_GLOBAL_ACCOUNT: 'global.menu.account',
+    CONTEXT_MENU_MENU: 'menubar',
+    CONTEXT_MENU_EXPLORER: 'sidebar.explore.title',
+    CONTEXT_MENU_SEARCH: 'sidebar.search.title',
+    CONTEXT_MENU_HIDE: 'menu.hideActivityBar',
 };
 
 export const modules = {
@@ -669,4 +676,57 @@ export const modules = {
             name: localize('contextmenu.download', 'Download...'),
         },
     ] as IMenuItemProps[],
+
+    activityBarData: [
+        {
+            id: constants.ACTIVITY_BAR_GLOBAL_ACCOUNT,
+            name: localize('menu.account', 'Account'),
+            title: localize('menu.account', 'Account'),
+            icon: 'account',
+            type: 'global',
+        },
+        {
+            id: constants.ACTIVITY_BAR_GLOBAL_SETTINGS,
+            name: localize('menu.settings', 'Settings'),
+            title: localize('menu.settings', 'Settings'),
+            icon: 'settings-gear',
+            type: 'global',
+            contextMenu: [
+                {
+                    id: constants.ACTION_QUICK_COMMAND,
+                    name: localize('menu.commandPalette', 'Command Palette'),
+                },
+                {
+                    id: constants.ACTION_QUICK_ACCESS_SETTINGS,
+                    name: localize('menu.settings', 'Settings'),
+                },
+                {
+                    id: constants.ACTION_SELECT_THEME,
+                    name: localize('menu.colorTheme', 'Color Theme'),
+                },
+            ],
+        },
+    ] as IActivityBarItem[],
+
+    contextMenuData: [
+        {
+            id: constants.CONTEXT_MENU_MENU,
+            name: localize('menubar', 'Menu'),
+            icon: 'check',
+        },
+        {
+            id: constants.CONTEXT_MENU_EXPLORER,
+            name: localize('sidebar.explore.title', 'Explorer'),
+            icon: 'check',
+        },
+        {
+            id: constants.CONTEXT_MENU_SEARCH,
+            name: localize('sidebar.search.title', 'Search'),
+            icon: 'check',
+        },
+        {
+            id: constants.CONTEXT_MENU_HIDE,
+            name: localize('menu.hideActivityBar', 'Hide Activity Bar'),
+        },
+    ] as IActivityMenuItemProps[],
 };

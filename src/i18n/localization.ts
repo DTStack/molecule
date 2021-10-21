@@ -1,8 +1,4 @@
-export {
-    BuiltInLocales,
-    BuiltInDefault,
-    BuiltInId,
-} from 'mo/extensions/locales-defaults';
+export { BuiltInLocales, BuiltInDefault } from 'mo/extensions/locales-defaults';
 /**
  * The Localization configuration event definition
  */

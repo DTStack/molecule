@@ -12,12 +12,12 @@ exports[`The Toolbar Component Match Snapshot 1`] = `
     >
       <li
         className="mo-action-bar__item"
-        id="action1"
+        data-index={0}
         onClick={[Function]}
       />
       <li
         className="mo-action-bar__item"
-        id="action2"
+        data-index={1}
         onClick={[Function]}
       />
     </ul>

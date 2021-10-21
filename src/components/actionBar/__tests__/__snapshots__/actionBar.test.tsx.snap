@@ -9,7 +9,8 @@ exports[`Test ActionBar Component The ActionBar snapshot 1`] = `
   >
     <li
       className="mo-action-bar__item mo-action-bar__item--checked"
-      id="test-action-item-id"
+      data-index={0}
+      data-testid="test-action-item-id"
       onClick={[Function]}
     >
       <span

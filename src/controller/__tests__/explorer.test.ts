@@ -70,7 +70,7 @@ describe('The explorer controller', () => {
 
         explorerController.initView();
         const { data, headerToolBar } = explorerService.getState();
-        expect(headerToolBar).toEqual({});
+        expect(headerToolBar).toBeUndefined();
         expect(data).toHaveLength(0);
 
         const {

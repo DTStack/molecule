@@ -25,6 +25,7 @@ const mockData: IActionBarItemProps[] = [
         title: 'mockDataTitle',
         icon: 'add',
         checked: true,
+        'data-testid': TEST_ID,
     },
 ];
 
@@ -171,12 +172,9 @@ describe('Test Search Component', () => {
     });
 
     test('Search addons', () => {
-        const wrapper = render(<Search addons={[mockData]} />);
-        const li = wrapper.container.querySelector<HTMLLIElement>(
-            `li[id=${TEST_ID}]`
-        );
+        const { getByTestId } = render(<Search addons={[mockData]} />);
 
-        expect(li).toBeInTheDocument();
+        expect(getByTestId(TEST_ID)).toBeInTheDocument();
     });
 
     test('Search validationInfo', () => {
@@ -237,9 +235,9 @@ describe('Test Search Component', () => {
         )[1];
         expect(textarea!.value).toBe(INPUT_VALUE);
 
-        const li = wrapper.container.querySelector<HTMLLIElement>(
-            `li[id=${TEST_ID}]`
-        );
-        expect(li).toBeInTheDocument();
+        // const li = wrapper.container.querySelector<HTMLLIElement>(
+        //     `li[id=${TEST_ID}]`
+        // );
+        expect(wrapper.getByTestId(TEST_ID)).toBeInTheDocument();
     });
 });

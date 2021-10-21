@@ -65,19 +65,19 @@ describe('Test Panel Component', () => {
             modules.builtInPanelToolbox,
         ];
         panel.current = output;
-        const { queryByText, container, rerender } = render(
+        const { queryByText, rerender, queryByTestId } = render(
             <Panel {...panel} />
         );
         expect(queryByText('box1')).not.toBeInTheDocument();
 
-        output.toolbox = [{ id: 'box1', name: 'box1' }];
+        output.toolbox = [{ id: 'box1', name: 'box1', 'data-testid': 'box1' }];
         rerender(<Panel {...panel} />);
-        expect(container.querySelector('#box1')).toBeInTheDocument();
+        expect(queryByTestId('box1')).toBeInTheDocument();
 
         document.body.innerHTML = '';
         panel.toolbox = undefined;
         rerender(<Panel {...panel} />);
-        expect(container.querySelector('#box1')).not.toBeInTheDocument();
+        expect(queryByTestId('box1')).not.toBeInTheDocument();
     });
 
     test('Customize the Panel render content', () => {

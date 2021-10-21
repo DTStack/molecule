@@ -131,6 +131,9 @@ export class ExplorerService
         }
         const { headerToolBar } = this.state;
         if (!headerToolBar) {
+            logger.error(
+                "Molecule can' update the action, because there is no headerToolBar in Explorer"
+            );
             return;
         }
         const nextActions = headerToolBar.contextMenu?.concat() || [];
@@ -190,6 +193,9 @@ export class ExplorerService
         const workInProgressActions = Array.isArray(action) ? action : [action];
         const { headerToolBar } = this.state;
         if (!headerToolBar) {
+            logger.error(
+                "Molecule can't add the action, because there is no headerToolBar in Explorer"
+            );
             return;
         }
         const newActions = headerToolBar.contextMenu?.concat() || [];
@@ -233,6 +239,9 @@ export class ExplorerService
     public removeAction(id: string) {
         const { headerToolBar } = this.state;
         if (!headerToolBar) {
+            logger.error(
+                "Molecule can' remove the action, because there is no headerToolBar in Explorer"
+            );
             return;
         }
         const newActions = headerToolBar.contextMenu || [];
@@ -266,6 +275,9 @@ export class ExplorerService
     public toggleHeaderBar(id: string) {
         const { headerToolBar } = this.state;
         if (!headerToolBar) {
+            logger.error(
+                "Molecule can' toggle the header bar, because there is no headerToolBar in Explorer"
+            );
             return;
         }
         const nextMenu = headerToolBar.contextMenu?.concat() || [];

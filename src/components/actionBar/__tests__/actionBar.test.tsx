@@ -13,6 +13,7 @@ const mockData: IActionBarItemProps[] = [
         title: 'mockDataTitle',
         icon: 'add',
         checked: true,
+        'data-testid': TEST_ID,
     },
 ];
 
@@ -24,8 +25,8 @@ describe('Test ActionBar Component', () => {
     });
 
     test('The ActionBar common props', () => {
-        const wrapper = render(<ActionBar data={mockData} />);
-        const liDom = wrapper.container.querySelector('#' + TEST_ID);
+        const { getByTestId } = render(<ActionBar data={mockData} />);
+        const liDom = getByTestId(TEST_ID);
         const iconDom = liDom?.querySelector('span.codicon-add');
 
         expect(liDom).not.toBeNull();
@@ -34,12 +35,10 @@ describe('Test ActionBar Component', () => {
 
     test('The ActionBar item onClick', () => {
         const mockCallback = jest.fn();
-        const wrapper = render(
+        const { getByTestId } = render(
             <ActionBar data={mockData} onClick={mockCallback} />
         );
-        const liDom = wrapper.container.querySelector<HTMLLIElement>(
-            '#' + TEST_ID
-        );
+        const liDom = getByTestId(TEST_ID);
 
         if (liDom) {
             fireEvent.click(liDom);
@@ -51,12 +50,10 @@ describe('Test ActionBar Component', () => {
         mockData[0].disabled = true;
         const mockCallback = jest.fn();
 
-        const wrapper = render(
+        const { getByTestId } = render(
             <ActionBar data={mockData} onClick={mockCallback} />
         );
-        const liDom = wrapper.container.querySelector<HTMLLIElement>(
-            '#' + TEST_ID
-        );
+        const liDom = getByTestId(TEST_ID);
 
         expect(liDom).not.toBeNull();
         if (liDom) {
@@ -81,7 +78,7 @@ describe('Test ActionBar Component', () => {
                 onContextMenuClick={mockContextMenuCallback}
             />
         );
-        const liDom = wrapper.container.querySelector('#' + TEST_ID);
+        const liDom = wrapper.getByTestId(TEST_ID);
         if (liDom) {
             fireEvent.contextMenu(liDom);
         }

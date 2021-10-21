@@ -4,7 +4,6 @@ import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { expectFnCalled } from '@test/utils';
 import { Explorer } from '../explore';
-import { toolbarClassName } from 'mo/components/toolbar';
 
 const mockContextMenu = {
     id: 'contextMenu',
@@ -14,6 +13,7 @@ const mockContextMenu = {
 const mockToolbar = {
     id: 'test',
     name: 'test',
+    'data-testid': 'mockToolbar',
     contextMenu: [mockContextMenu],
 };
 const mockData = [
@@ -120,7 +120,7 @@ describe('The Explorer Component', () => {
 
     test('Should trigger onActionsContextMenuClick event', () => {
         expectFnCalled((mockFn) => {
-            const { container, getByTestId } = render(
+            const { getByTestId } = render(
                 <Explorer
                     data={mockData}
                     headerToolBar={mockToolbar}
@@ -128,9 +128,7 @@ describe('The Explorer Component', () => {
                 />
             );
 
-            const toolbar = container.querySelector(`.${toolbarClassName}`);
-            const target = toolbar?.querySelector(`#${mockToolbar.id}`);
-
+            const target = getByTestId(mockToolbar['data-testid']);
             expect(target).toBeInTheDocument();
             fireEvent.contextMenu(target!);
 
@@ -145,7 +143,7 @@ describe('The Explorer Component', () => {
 
     test('Should trigger onClick event in header toolbar', () => {
         expectFnCalled((mockFn) => {
-            const { container, getByTestId } = render(
+            const { getByTestId } = render(
                 <Explorer
                     data={mockData}
                     headerToolBar={mockToolbar}
@@ -153,8 +151,7 @@ describe('The Explorer Component', () => {
                 />
             );
 
-            const toolbar = container.querySelector(`.${toolbarClassName}`);
-            const target = toolbar?.querySelector(`#${mockToolbar.id}`);
+            const target = getByTestId(mockToolbar['data-testid']);
 
             expect(target).toBeInTheDocument();
             fireEvent.click(target!);

@@ -6,13 +6,10 @@ import {
     ISearchProps,
     SearchEvent,
     SearchModel,
-    SEARCH_CASE_SENSITIVE_COMMAND_ID,
-    SEARCH_PRESERVE_CASE_COMMAND_ID,
-    SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
-    SEARCH_WHOLE_WORD_COMMAND_ID,
 } from 'mo/model/workbench/search';
 import { ITreeNodeItemProps } from 'mo/components';
 import { searchById } from 'mo/common/utils';
+import { BuiltinService, IBuiltinService } from '../builtinService';
 
 export interface ISearchService extends Component<ISearchProps> {
     /**
@@ -99,9 +96,11 @@ export class SearchService
     extends Component<ISearchProps>
     implements ISearchService {
     protected state: ISearchProps;
+    private builtinService: IBuiltinService;
     constructor() {
         super();
         this.state = container.resolve(SearchModel);
+        this.builtinService = container.resolve(BuiltinService);
     }
 
     public setValidateInfo(info: string | ISearchProps['validationInfo']) {
@@ -142,34 +141,57 @@ export class SearchService
 
     public toggleCaseSensitive() {
         const { isCaseSensitive } = this.state;
-        this.setState({
-            isCaseSensitive: !isCaseSensitive,
-        });
-        this.updateStatus(SEARCH_CASE_SENSITIVE_COMMAND_ID, !isCaseSensitive);
+        const {
+            SEARCH_CASE_SENSITIVE_COMMAND_ID,
+        } = this.builtinService.getConstants();
+        if (SEARCH_CASE_SENSITIVE_COMMAND_ID) {
+            this.setState({
+                isCaseSensitive: !isCaseSensitive,
+            });
+            this.updateStatus(
+                SEARCH_CASE_SENSITIVE_COMMAND_ID,
+                !isCaseSensitive
+            );
+        }
     }
 
     public toggleWholeWord() {
         const { isWholeWords } = this.state;
-        this.setState({
-            isWholeWords: !isWholeWords,
-        });
-        this.updateStatus(SEARCH_WHOLE_WORD_COMMAND_ID, !isWholeWords);
+        const {
+            SEARCH_WHOLE_WORD_COMMAND_ID,
+        } = this.builtinService.getConstants();
+        if (SEARCH_WHOLE_WORD_COMMAND_ID) {
+            this.setState({
+                isWholeWords: !isWholeWords,
+            });
+            this.updateStatus(SEARCH_WHOLE_WORD_COMMAND_ID, !isWholeWords);
+        }
     }
 
     public toggleRegex() {
         const { isRegex } = this.state;
-        this.setState({
-            isRegex: !isRegex,
-        });
-        this.updateStatus(SEARCH_REGULAR_EXPRESSION_COMMAND_ID, !isRegex);
+        const {
+            SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
+        } = this.builtinService.getConstants();
+        if (SEARCH_REGULAR_EXPRESSION_COMMAND_ID) {
+            this.setState({
+                isRegex: !isRegex,
+            });
+            this.updateStatus(SEARCH_REGULAR_EXPRESSION_COMMAND_ID, !isRegex);
+        }
     }
 
     public togglePreserveCase() {
         const { preserveCase } = this.state;
-        this.setState({
-            preserveCase: !preserveCase,
-        });
-        this.updateStatus(SEARCH_PRESERVE_CASE_COMMAND_ID, !preserveCase);
+        const {
+            SEARCH_PRESERVE_CASE_COMMAND_ID,
+        } = this.builtinService.getConstants();
+        if (SEARCH_PRESERVE_CASE_COMMAND_ID) {
+            this.setState({
+                preserveCase: !preserveCase,
+            });
+            this.updateStatus(SEARCH_PRESERVE_CASE_COMMAND_ID, !preserveCase);
+        }
     }
 
     public updateStatus(addonId: string, checked: boolean) {

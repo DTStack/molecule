@@ -1,24 +1,20 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { editor as MonacoEditor } from 'monaco-editor';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeepWith, cloneDeep } from 'lodash';
 import pickBy from 'lodash/pickBy';
 import { Component } from 'mo/react';
 import {
-    builtInPanelToolboxResize,
-    builtInPanelToolboxReStore,
     IOutput,
     IPanel,
     IPanelItem,
     PanelEvent,
     PanelModel,
-    PANEL_OUTPUT,
-    PANEL_TOOLBOX_RESIZE,
 } from 'mo/model/workbench/panel';
 
 import { searchById } from 'mo/common/utils';
 import { IActionBarItemProps } from 'mo/components/actionBar';
-import { LayoutService } from 'mo/services';
+import { BuiltinService, IBuiltinService, LayoutService } from 'mo/services';
 import logger from 'mo/common/logger';
 
 export interface IPanelService extends Component<IPanel> {
@@ -112,23 +108,27 @@ export interface IPanelService extends Component<IPanel> {
 export class PanelService extends Component<IPanel> implements IPanelService {
     protected state: IPanel;
     private readonly layoutService: LayoutService;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
         this.state = container.resolve(PanelModel);
         this.layoutService = container.resolve(LayoutService);
+        this.builtinService = container.resolve(BuiltinService);
     }
 
     private updateOutputProperty(
         data: Partial<IPanelItem<string>>
     ): IPanelItem | undefined {
+        const { PANEL_OUTPUT } = this.builtinService.getConstants();
         const truthData = pickBy(data, (item) => item !== undefined);
         return this.update(
-            Object.assign(this.getPanel(PANEL_OUTPUT), truthData)
+            Object.assign(this.getPanel(PANEL_OUTPUT!), truthData)
         );
     }
 
     public get outputEditorInstance() {
+        const { PANEL_OUTPUT } = this.builtinService.getConstants();
         const outputPane: IOutput | undefined = this.state.data?.find(
             searchById(PANEL_OUTPUT)
         );
@@ -147,17 +147,24 @@ export class PanelService extends Component<IPanel> implements IPanelService {
     }
 
     public toggleMaximize(): void {
+        const { PANEL_TOOLBOX_RESIZE } = this.builtinService.getConstants();
+        const {
+            builtInPanelToolboxResize,
+            builtInPanelToolboxReStore,
+        } = this.builtinService.getModules();
         const { toolbox = [] } = this.state;
-        const resizeBtnIndex = toolbox?.findIndex(
-            searchById(PANEL_TOOLBOX_RESIZE)
-        );
-        const resizeBtn = toolbox[resizeBtnIndex];
-        if (resizeBtn) {
-            const panelMaximized = this.layoutService.togglePanelMaximized();
+        if (builtInPanelToolboxResize && builtInPanelToolboxReStore) {
+            const resizeBtnIndex = toolbox?.findIndex(
+                searchById(PANEL_TOOLBOX_RESIZE)
+            );
+            const resizeBtn = toolbox[resizeBtnIndex];
+            if (resizeBtn) {
+                const panelMaximized = this.layoutService.togglePanelMaximized();
 
-            toolbox[resizeBtnIndex] = panelMaximized
-                ? builtInPanelToolboxReStore()
-                : builtInPanelToolboxResize();
+                toolbox[resizeBtnIndex] = panelMaximized
+                    ? builtInPanelToolboxReStore
+                    : builtInPanelToolboxResize;
+            }
         }
     }
 
@@ -179,10 +186,23 @@ export class PanelService extends Component<IPanel> implements IPanelService {
 
     public getPanel(id: string): IPanelItem<any> | undefined {
         const { data = [] } = this.state;
-        return cloneDeep(data.find(searchById(id)));
+        return cloneDeepWith(data.find(searchById(id)), (value) => {
+            // prevent the browser from OOM
+            // because when cloneDeep the StandaloneEditor class, it'll get infinity loop in
+            // https://unpkg.com/monaco-editor@0.23.0/esm/vs/editor/common/model/pieceTreeTextBuffer/pieceTreeBase.js#L398
+            // class PieceTreeBase.getOffsetAt.while
+            if (
+                value &&
+                typeof value === 'object' &&
+                value.constructor.name === 'StandaloneEditor'
+            ) {
+                return value;
+            }
+        });
     }
 
     public getOutputValue() {
+        const { PANEL_OUTPUT = '' } = this.builtinService.getConstants();
         const outputPanel = this.getPanel(PANEL_OUTPUT);
         return outputPanel?.data || '';
     }

@@ -2,7 +2,6 @@ import { ITabProps } from 'mo/components/tabs/tab';
 import { ITabsProps } from 'mo/components/tabs';
 import { IMenuItemProps } from 'mo/components/menu';
 import { IBreadcrumbItemProps } from 'mo/components/breadcrumb';
-import { localize } from 'mo/i18n/localize';
 import { editor as MonacoEditor } from 'monaco-editor';
 
 export enum EditorEvent {
@@ -28,12 +27,6 @@ interface BuiltInEditorTabDataType {
 
 export type IEditorOptions = MonacoEditor.IEditorOptions &
     MonacoEditor.IGlobalEditorOptions;
-
-export const BuiltInEditorOptions: IEditorOptions = {
-    renderWhitespace: 'none',
-    tabSize: 4,
-    fontSize: 12,
-};
 
 export interface IEditorActionsProps extends IMenuItemProps {
     id: string;
@@ -79,63 +72,6 @@ export interface IEditor {
     editorOptions?: IEditorOptions;
 }
 
-export const EDITOR_MENU_CLOSE_TO_RIGHT = 'editor.closeToRight';
-export const EDITOR_MENU_CLOSE_TO_LEFT = 'editor.closeToLeft';
-export const EDITOR_MENU_CLOSE_ALL = 'editor.closeAll';
-export const EDITOR_MENU_CLOSE_OTHERS = 'editor.closeOthers';
-export const EDITOR_MENU_CLOSE_SAVED = 'editor.closeSaved';
-export const EDITOR_MENU_CLOSE = 'editor.close';
-export const EDITOR_MENU_SHOW_OPENEDITORS = 'editor.showOpenEditors';
-export const EDITOR_MENU_SPILIT = 'editor.split';
-
-export function getBaseMenu() {
-    return [
-        {
-            id: EDITOR_MENU_CLOSE_ALL,
-            name: localize(EDITOR_MENU_CLOSE_ALL, 'Close All'),
-        },
-    ];
-}
-
-export function getEditorInitialActions(): IEditorActionsProps[] {
-    return [
-        {
-            id: EDITOR_MENU_SPILIT,
-            name: 'Split Editor Right',
-            title: localize('editor.actions.splitRight', 'Split Editor Right'),
-            icon: 'split-horizontal',
-            place: 'outer',
-        },
-        {
-            id: EDITOR_MENU_SHOW_OPENEDITORS,
-            name: 'Show Opened Editors',
-        },
-        ...getBaseMenu(),
-    ];
-}
-
-export function getEditorInitialMenu(): IMenuItemProps[] {
-    return [
-        {
-            id: EDITOR_MENU_CLOSE,
-            name: localize(EDITOR_MENU_CLOSE, 'Close'),
-        },
-        {
-            id: EDITOR_MENU_CLOSE_OTHERS,
-            name: localize(EDITOR_MENU_CLOSE_OTHERS, 'Close Others'),
-        },
-        {
-            id: EDITOR_MENU_CLOSE_TO_RIGHT,
-            name: localize(EDITOR_MENU_CLOSE_TO_RIGHT, 'Close To Right'),
-        },
-        {
-            id: EDITOR_MENU_CLOSE_TO_LEFT,
-            name: localize(EDITOR_MENU_CLOSE_TO_LEFT, 'Close To Left'),
-        },
-        ...getBaseMenu(),
-    ];
-}
-
 export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
     id: number;
     tab: IEditorTab<T>;
@@ -150,8 +86,8 @@ export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
         tab: IEditorTab<T>,
         activeTab: string | undefined,
         data: IEditorTab<T>[],
-        actions: IEditorActionsProps[] = getEditorInitialActions(),
-        menu: IMenuItemProps[] = getEditorInitialMenu(),
+        actions: IEditorActionsProps[] = [],
+        menu: IMenuItemProps[] = [],
         editorInstance?: E
     ) {
         this.id = id;
@@ -174,7 +110,7 @@ export class EditorModel implements IEditor {
         current: IEditorGroup | null = null,
         groups: IEditorGroup[] = [],
         entry: React.ReactNode,
-        editorOptions: IEditorOptions = BuiltInEditorOptions
+        editorOptions: IEditorOptions = {}
     ) {
         this.current = current;
         this.groups = groups;

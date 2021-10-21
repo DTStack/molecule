@@ -2,12 +2,9 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { ISearchService, SearchService } from '../searchService';
 import { InfoTypeEnums } from 'mo/components/search/input';
-import {
-    SearchEvent,
-    builtInSearchAddons,
-    builtInReplaceAddons,
-} from 'mo/model/workbench/search';
+import { SearchEvent } from 'mo/model/workbench/search';
 import { randomId } from 'mo/common/utils';
+import { modules } from 'mo/services/builtinService/const';
 
 describe('Test StatusBarService', () => {
     const searchBarService = container.resolve<ISearchService>(SearchService);
@@ -68,7 +65,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to toggle case sensitive', () => {
-        const testValue = builtInSearchAddons();
+        const testValue = modules.builtInSearchAddons;
         const TEST_RESULT = Object.assign({}, testValue[0], { checked: true });
 
         searchBarService.setState({
@@ -91,7 +88,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to toggle whole word', () => {
-        const testValue = builtInSearchAddons();
+        const testValue = modules.builtInSearchAddons;
         const TEST_RESULT = Object.assign({}, testValue[1], { checked: true });
 
         searchBarService.setState({
@@ -114,7 +111,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to toggle regex', () => {
-        const testValue = builtInSearchAddons();
+        const testValue = modules.builtInSearchAddons;
         const TEST_RESULT = Object.assign({}, testValue[2], { checked: true });
 
         searchBarService.setState({
@@ -137,7 +134,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to toggle preserve case', () => {
-        const testValue = builtInReplaceAddons();
+        const testValue = modules.builtInReplaceAddons;
         const TEST_RESULT = Object.assign({}, testValue[0], { checked: true });
 
         searchBarService.setState({

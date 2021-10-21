@@ -2,13 +2,10 @@ import React from 'react';
 import { EditorService } from '../editorService';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import {
-    BuiltInEditorOptions,
-    EditorEvent,
-    getEditorInitialActions,
-    IEditorTab,
-} from 'mo/model';
+import { EditorEvent, IEditorTab } from 'mo/model';
 import { expectFnCalled } from '@test/utils';
+import { modules } from 'mo/services/builtinService/const';
+import { cloneDeep } from 'lodash';
 
 describe('Test EditorService', () => {
     let mockTab: IEditorTab;
@@ -66,11 +63,6 @@ describe('Test EditorService', () => {
         });
     });
 
-    test('Get the default editor options', () => {
-        const editor = new EditorService();
-        expect(editor.getDefaultEditorOptions()).toEqual(BuiltInEditorOptions);
-    });
-
     test('Update the editor options', () => {
         const editor = new EditorService();
         editor.updateEditorOptions({
@@ -91,7 +83,7 @@ describe('Test EditorService', () => {
 
     test('Set default actions', () => {
         const editor: any = new EditorService();
-        expect(editor.defaultActions.length).toBe(3);
+        expect(editor.defaultActions.length).toBe(0);
         editor.setDefaultActions([{ id: 'test' }]);
         expect(editor.defaultActions.length).toBe(1);
     });
@@ -107,9 +99,10 @@ describe('Test EditorService', () => {
         const editor = new EditorService();
 
         expect(editor.updateActions([])).toBeUndefined();
+        editor.setDefaultActions(modules.builtInEditorInitialActions);
         editor.open(mockTab);
 
-        const defaultAction = getEditorInitialActions();
+        const defaultAction = cloneDeep(modules.builtInEditorInitialActions);
         defaultAction[0].name = 'test';
         editor.updateActions(defaultAction);
         const updatedActions = editor.getState().current?.actions;
@@ -386,6 +379,32 @@ describe('Test EditorService', () => {
         // Only get the first one
         groupId = editor.getGroupIdByTab(mockTab.id!);
         expect(groupId).toBe(1);
+    });
+
+    test('Should support to get default actions and default menus', () => {
+        const editor = new EditorService();
+        const defualtActions = editor.getDefaultActions();
+        const defaultMenus = editor.getDefaultMenus();
+        expect(defualtActions).toHaveLength(0);
+        expect(defaultMenus).toHaveLength(0);
+
+        const actions = [
+            {
+                id: 'default',
+                name: 'default',
+            },
+        ];
+        const menus = [
+            {
+                id: 'default-menu',
+                name: 'default-menu',
+            },
+        ];
+        editor.setDefaultActions(actions);
+        editor.setDefaultMenus(menus);
+
+        expect(editor.getDefaultActions()).toEqual(actions);
+        expect(editor.getDefaultMenus()).toEqual(menus);
     });
 
     test('Listen to the Tab update event', () => {

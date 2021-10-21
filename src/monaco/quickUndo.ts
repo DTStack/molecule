@@ -4,10 +4,10 @@ import { KeyMod, KeyCode, Uri, editor as MonacoEditor } from 'mo/monaco';
 import { EditorService, IEditorService } from 'mo/services';
 import { container } from 'tsyringe';
 import { Action2, KeybindingWeight } from './common';
-import { ACTION_QUICK_UNDO } from 'mo/model/keybinding';
+import { constants } from 'mo/services/builtinService/const';
 
 export class QuickUndo extends Action2 {
-    static readonly ID = ACTION_QUICK_UNDO;
+    static readonly ID = constants.ACTION_QUICK_UNDO;
     static readonly LABEL = localize('menu.undo', 'Undo');
     static readonly DESC = 'Undo';
     private readonly editorService: IEditorService;

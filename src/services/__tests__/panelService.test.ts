@@ -1,20 +1,15 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { PanelService } from '../workbench/panelService';
-import {
-    builtInOutputPanel,
-    builtInPanelToolboxResize,
-    builtInPanelToolboxReStore,
-    PanelEvent,
-} from 'mo/model/workbench/panel';
-import { builtInPanelProblems } from 'mo/model/problems';
+import { PanelEvent } from 'mo/model/workbench/panel';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
+import { modules } from '../builtinService/const';
 
-const paneOutput = builtInOutputPanel();
-const panelProblems = builtInPanelProblems();
+const paneOutput = modules.builtInOutputPanel;
+const panelProblems = modules.builtInPanelProblems;
 
-const resize = builtInPanelToolboxResize();
-const restore = builtInPanelToolboxReStore();
+const resize = modules.builtInPanelToolboxResize;
+const restore = modules.builtInPanelToolboxReStore;
 
 const panelService = container.resolve(PanelService);
 
@@ -130,6 +125,23 @@ describe('The PanelService test', () => {
 
         const target = panelService.getPanel(paneOutput.id);
         expect(target).toEqual(paneOutput);
+    });
+
+    test('Should NOT clone StandaloneEditor when get the panel', () => {
+        class StandaloneEditor {}
+        const standaloneEditor = new StandaloneEditor();
+        panelService.setState({
+            data: [
+                {
+                    ...paneOutput,
+                    outputEditorInstance: standaloneEditor,
+                } as any,
+            ],
+        });
+
+        const target = panelService.getPanel(paneOutput.id);
+        expect(target).toEqual(expect.objectContaining(paneOutput));
+        expect((target as any).outputEditorInstance).toBe(standaloneEditor);
     });
 
     test('Should support to active a exist panel', () => {

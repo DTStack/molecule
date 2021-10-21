@@ -10,14 +10,15 @@ import {
     ILayoutService,
     LayoutService,
     ProblemsService,
+    IBuiltinService,
+    BuiltinService,
 } from 'mo/services';
 import { singleton, container } from 'tsyringe';
-import { builtInPanelProblems, builtInStatusProblems } from 'mo/model/problems';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 import { ProblemsPaneView, ProblemsStatusBarView } from 'mo/workbench/problems';
 import { connect } from 'mo/react';
-export interface IProblemsController {
+export interface IProblemsController extends Partial<Controller> {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
 }
 @singleton()
@@ -29,6 +30,7 @@ export class ProblemsController
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
     private readonly problemsService: ProblemsService;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
@@ -37,42 +39,64 @@ export class ProblemsController
         this.monacoService = container.resolve(MonacoService);
         this.layoutService = container.resolve(LayoutService);
         this.problemsService = container.resolve(ProblemsService);
-
-        this.init();
+        this.builtinService = container.resolve(BuiltinService);
     }
 
     private showHideProblems() {
         const { panel } = this.layoutService.getState();
         const { current } = this.panelService.getState();
+        const { builtInPanelProblems } = this.builtinService.getModules();
+        if (builtInPanelProblems) {
+            if (panel.hidden || current?.id === builtInPanelProblems.id) {
+                this.monacoService.commandService.executeCommand(
+                    QuickTogglePanelAction.ID
+                );
+            }
 
-        if (panel.hidden || current?.id === builtInPanelProblems().id) {
-            this.monacoService.commandService.executeCommand(
-                QuickTogglePanelAction.ID
-            );
+            this.panelService.open(builtInPanelProblems);
         }
-
-        this.panelService.open(builtInPanelProblems());
     }
 
     public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
         this.showHideProblems();
     };
 
-    private init() {
-        const statusProblems = builtInStatusProblems();
-        statusProblems.render = (item) => <ProblemsStatusBarView {...item} />;
-        statusProblems.onClick = this.onClick;
+    public initView() {
+        const {
+            builtInStatusProblems: statusProblems,
+            builtInPanelProblems,
+        } = this.builtinService.getModules();
 
-        this.statusBarService.add(statusProblems, Float.left);
+        if (statusProblems) {
+            statusProblems.render = (item) => (
+                <ProblemsStatusBarView {...item} />
+            );
+            statusProblems.onClick = this.onClick;
 
-        // keep ProblemsPaneView updated to problems' state
-        const ProblemsView = connect(this.problemsService, ProblemsPaneView);
+            this.statusBarService.add(statusProblems, Float.left);
+        }
 
-        const problemsPanel = builtInPanelProblems();
-        problemsPanel.renderPane = () => <ProblemsView />;
+        if (builtInPanelProblems) {
+            // keep ProblemsPaneView updated to problems' state
+            const ProblemsView = connect(
+                this.problemsService,
+                ProblemsPaneView
+            );
+            const problemsPanel = builtInPanelProblems;
+            problemsPanel.renderPane = () => <ProblemsView />;
 
-        this.panelService.add(problemsPanel);
+            this.panelService.add(problemsPanel);
+            this.panelService.setActive(problemsPanel.id);
+        }
+
+        const {
+            PROBLEM_MODEL_ID,
+            PROBLEM_MODEL_NAME,
+        } = this.builtinService.getConstants();
+
+        this.problemsService.setState({
+            id: PROBLEM_MODEL_ID,
+            name: PROBLEM_MODEL_NAME,
+        });
     }
 }
-
-container.resolve(ProblemsController);

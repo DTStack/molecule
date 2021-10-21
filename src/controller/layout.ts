@@ -3,7 +3,7 @@ import { container, singleton } from 'tsyringe';
 import { Controller } from 'mo/react/controller';
 import { ILayoutService, LayoutService } from 'mo/services';
 
-export interface ILayoutController {
+export interface ILayoutController extends Partial<Controller> {
     onPaneSizeChange?: (splitPanePos: string[]) => void;
     onHorizontalPaneSizeChange?: (horizontalSplitPanePos: string[]) => void;
 }
@@ -16,6 +16,8 @@ export class LayoutController extends Controller implements ILayoutController {
         super();
         this.layoutService = container.resolve(LayoutService);
     }
+
+    public initView() {}
 
     public onPaneSizeChange = (splitPanePos: string[]) => {
         this.layoutService.setPaneSize(splitPanePos);

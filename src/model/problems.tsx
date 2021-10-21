@@ -1,6 +1,3 @@
-import { IStatusBarItem } from 'mo/model/workbench/statusBar';
-import { IPanelItem } from 'mo/model/workbench/panel';
-import { localize } from 'mo/i18n/localize';
 import { ITreeNodeItemProps } from 'mo/components';
 
 export enum MarkerSeverity {
@@ -29,42 +26,16 @@ export interface IProblems<T = any> {
     data: IProblemsItem<T>[];
     show?: boolean;
 }
-export const PANEL_PROBLEMS = 'panel.problems.title';
-export const STATUS_PROBLEMS = 'statusbar.problems.title';
-
-export function builtInStatusProblems(): IStatusBarItem {
-    return {
-        id: STATUS_PROBLEMS,
-        sortIndex: 1,
-        data: {
-            warnings: 0,
-            errors: 0,
-            infos: 0,
-        },
-        name: 'Problems',
-    };
-}
-
-export function builtInPanelProblems(): IPanelItem {
-    return {
-        id: PANEL_PROBLEMS,
-        name: localize(PANEL_PROBLEMS, 'problems'),
-        data: null,
-        sortIndex: 1,
-    };
-}
 
 export class ProblemsModel<T> implements IProblems<T> {
-    static readonly ID = 'MO_PROBLEMS';
-    static readonly NAME = 'Problems';
     public id: string;
     public name: string;
     public data: IProblemsItem<T>[];
     public show: boolean;
 
     constructor(
-        id: string = ProblemsModel.ID,
-        name: string = ProblemsModel.NAME,
+        id: string = '',
+        name: string = '',
         data: IProblemsItem<T>[] = [],
         show: boolean = false
     ) {

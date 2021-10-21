@@ -1,10 +1,6 @@
-import React from 'react';
 import { editor as MonacoEditor } from 'mo/monaco';
-
-import { localize } from 'mo/i18n/localize';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { ITabProps } from 'mo/components/tabs/tab';
-import Output from 'mo/workbench/panel/output';
 export interface IPanelItem<T = any> extends ITabProps<T> {
     id: string;
     /**
@@ -25,11 +21,6 @@ export enum PanelEvent {
     onTabClose = 'panel.onTabClose',
 }
 
-export const PANEL_TOOLBOX_CLOSE = 'panel.toolbox.closePanel';
-export const PANEL_TOOLBOX_RESIZE = 'panel.toolbox.maximize';
-export const PANEL_TOOLBOX_RESTORE_SIZE = 'panel.toolbox.restoreSize';
-export const PANEL_OUTPUT = 'panel.output.title';
-
 export interface IPanel {
     current?: IPanelItem | null;
     data?: IPanelItem[];
@@ -41,59 +32,6 @@ export interface IOutput extends IPanelItem {
     onUpdateEditorIns?(
         editorInstance: MonacoEditor.IStandaloneCodeEditor
     ): void;
-}
-
-export function builtInOutputPanel() {
-    const outputPane: IOutput = {
-        id: PANEL_OUTPUT,
-        name: localize(PANEL_OUTPUT, 'output'),
-        data: '',
-        sortIndex: 2,
-    };
-
-    function onUpdateEditorIns(
-        editorInstance: MonacoEditor.IStandaloneCodeEditor,
-        item: IOutput
-    ) {
-        // Please notice the problem about memory out
-        // 'Cause we didn't dispose the older instance
-        item.outputEditorInstance = editorInstance;
-    }
-
-    outputPane.renderPane = (item) => (
-        <Output
-            onUpdateEditorIns={(instance) => onUpdateEditorIns(instance, item)}
-            {...item}
-        />
-    );
-
-    return outputPane;
-}
-
-export function builtInPanelToolboxResize(): IActionBarItemProps {
-    return {
-        id: PANEL_TOOLBOX_RESIZE,
-        title: localize(PANEL_TOOLBOX_RESIZE, 'Maximize Panel Size'),
-        icon: 'chevron-up',
-    };
-}
-
-export function builtInPanelToolboxReStore(): IActionBarItemProps {
-    return {
-        id: PANEL_TOOLBOX_RESIZE,
-        title: localize(PANEL_TOOLBOX_RESTORE_SIZE, 'Restore Panel Siz'),
-        icon: 'chevron-down',
-    };
-}
-export function builtInPanelToolbox(): IActionBarItemProps[] {
-    return [
-        builtInPanelToolboxResize(),
-        {
-            id: PANEL_TOOLBOX_CLOSE,
-            title: localize(PANEL_TOOLBOX_CLOSE, 'Close Panel'),
-            icon: 'close',
-        },
-    ];
 }
 
 export class PanelModel implements IPanel {

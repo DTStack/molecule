@@ -13,6 +13,8 @@ import {
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { ILocaleService, LocaleService } from 'mo/i18n/localeService';
 import { ILayoutService, LayoutService } from 'mo/services';
+import * as controllers from 'mo/controller';
+import type { Controller } from 'mo/react';
 
 export interface IMoleculeProps {
     extensions?: IExtension[];
@@ -46,6 +48,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
 
     componentDidMount() {
         this.initialize();
+        this.initControllers();
     }
 
     preloadLocales() {
@@ -63,6 +66,17 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.monacoService.initWorkspace(this.container!);
         this.extensionService.load(defaultExtensions);
         this.extensionService.load(extensions);
+    }
+
+    /**
+     * Register all controllers and execute the initView method automatically to inject the default value into the corresponding service
+     */
+    initControllers() {
+        Object.keys(controllers).forEach((key) => {
+            const module = controllers[key];
+            const controller = container.resolve<Controller>(module);
+            controller.initView?.();
+        });
     }
 
     public render() {

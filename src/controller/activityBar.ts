@@ -3,31 +3,21 @@ import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
 import { MenuBarController, IMenuBarController } from 'mo/controller';
 import { IMenuItemProps } from 'mo/components/menu';
-import {
-    ActivityBarEvent,
-    CONTEXT_MENU_MENU,
-    CONTEXT_MENU_EXPLORER,
-    CONTEXT_MENU_SEARCH,
-    CONTEXT_MENU_HIDE,
-    IActivityBarItem,
-} from 'mo/model';
+import { ActivityBarEvent, IActivityBarItem } from 'mo/model';
 import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 
 import {
     ActivityBarService,
+    BuiltinService,
     IActivityBarService,
+    IBuiltinService,
     ISettingsService,
     SettingsService,
 } from 'mo/services';
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
-import {
-    ACTION_QUICK_COMMAND,
-    ACTION_QUICK_ACCESS_SETTINGS,
-    ACTION_SELECT_THEME,
-} from 'mo/model/keybinding';
 
-export interface IActivityBarController {
+export interface IActivityBarController extends Partial<Controller> {
     /**
      * Called when activity bar item is clicked
      */
@@ -50,6 +40,7 @@ export class ActivityBarController
     private readonly settingsService: ISettingsService;
     private readonly monacoService: IMonacoService;
     private readonly menuBarController: IMenuBarController;
+    private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
@@ -57,6 +48,20 @@ export class ActivityBarController
         this.settingsService = container.resolve(SettingsService);
         this.monacoService = container.resolve(MonacoService);
         this.menuBarController = container.resolve(MenuBarController);
+        this.builtinService = container.resolve(BuiltinService);
+    }
+
+    public initView() {
+        const {
+            activityBarData,
+            contextMenuData,
+        } = this.builtinService.getModules();
+        if (activityBarData) {
+            this.activityBarService.add(activityBarData);
+        }
+        if (contextMenuData) {
+            this.activityBarService.addContextMenu(contextMenuData);
+        }
     }
 
     public readonly onClick = (
@@ -90,6 +95,15 @@ export class ActivityBarController
         item: IMenuItemProps | undefined
     ) => {
         const contextMenuId = item?.id;
+        const {
+            ACTION_QUICK_COMMAND = '',
+            ACTION_QUICK_ACCESS_SETTINGS = '',
+            ACTION_SELECT_THEME = '',
+            CONTEXT_MENU_MENU = '',
+            CONTEXT_MENU_EXPLORER = '',
+            CONTEXT_MENU_SEARCH = '',
+            CONTEXT_MENU_HIDE,
+        } = this.builtinService.getConstants();
         switch (contextMenuId) {
             // activityBar contextMenu
             case CONTEXT_MENU_MENU: {

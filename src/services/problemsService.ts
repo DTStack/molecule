@@ -4,10 +4,14 @@ import {
     IProblemsItem,
     ProblemsModel,
     MarkerSeverity,
-    builtInStatusProblems,
 } from 'mo/model/problems';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
-import { StatusBarService, IStatusBarService } from 'mo/services';
+import {
+    StatusBarService,
+    IStatusBarService,
+    IBuiltinService,
+    BuiltinService,
+} from 'mo/services';
 import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from 'mo/common/utils';
@@ -45,10 +49,12 @@ export class ProblemsService
     implements IProblemsService {
     protected state: IProblems;
     private readonly statusBarService: IStatusBarService;
+    private readonly builtinService: IBuiltinService;
     constructor() {
         super();
         this.state = container.resolve(ProblemsModel);
         this.statusBarService = container.resolve(StatusBarService);
+        this.builtinService = container.resolve(BuiltinService);
     }
 
     public toggleProblems(): void {
@@ -129,21 +135,28 @@ export class ProblemsService
     }
 
     public reset(): void {
+        const { builtInStatusProblems } = this.builtinService.getModules();
         this.setState({
             ...this.state,
             data: [],
         });
-        this.updateStatus(builtInStatusProblems());
+        if (builtInStatusProblems) {
+            this.updateStatus(builtInStatusProblems);
+        }
     }
 
     private updateStatusBar<T>(): void {
         const { data = [] } = this.state;
         const markersData = this.getProblemsMarkers(data);
-        this.updateStatus(
-            Object.assign(builtInStatusProblems(), {
-                data: markersData,
-            })
-        );
+        const { builtInStatusProblems } = this.builtinService.getModules();
+
+        if (builtInStatusProblems) {
+            this.updateStatus(
+                Object.assign(builtInStatusProblems, {
+                    data: markersData,
+                })
+            );
+        }
     }
 
     private updateStatus<T>(item: IStatusBarItem<T>): void {

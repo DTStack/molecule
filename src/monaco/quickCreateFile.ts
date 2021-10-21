@@ -9,10 +9,10 @@ import {
 } from 'mo/controller/explorer/folderTree';
 import { container } from 'tsyringe';
 import { Action2, KeybindingWeight } from './common';
-import { ACTION_QUICK_CREATE_FILE } from 'mo/model/keybinding';
+import { constants } from 'mo/services/builtinService/const';
 
 export class QuickCreateFile extends Action2 {
-    static readonly ID = ACTION_QUICK_CREATE_FILE;
+    static readonly ID = constants.ACTION_QUICK_CREATE_FILE;
     static readonly LABEL = localize('menu.newFile', 'New File');
     static readonly DESC = 'New File';
     private readonly folderTreeController: IFolderTreeController;

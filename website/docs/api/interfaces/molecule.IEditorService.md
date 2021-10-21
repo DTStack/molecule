@@ -27,7 +27,7 @@ The instance of MonacoEditor
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:187](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L187)
+[src/services/workbench/editorService.ts:194](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L194)
 
 ---
 
@@ -41,7 +41,7 @@ The instance of MonacoEditor
 
 #### Defined in
 
-[src/react/component.ts:25](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L25)
+[src/react/component.ts:42](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L42)
 
 ## Methods
 
@@ -64,7 +64,7 @@ there default clone the current group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:92](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L92)
+[src/services/workbench/editorService.ts:90](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L90)
 
 ---
 
@@ -86,7 +86,7 @@ Close the specific group all opened tabs
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:81](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L81)
+[src/services/workbench/editorService.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L79)
 
 ---
 
@@ -109,7 +109,7 @@ Close other opened tabs in Editor Group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:64](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L64)
+[src/services/workbench/editorService.ts:62](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L62)
 
 ---
 
@@ -132,7 +132,7 @@ Close the specific Tab opened in Editor Group view
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L58)
+[src/services/workbench/editorService.ts:56](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L56)
 
 ---
 
@@ -155,7 +155,7 @@ Close the left opened Tabs in Editor Group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:76](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L76)
+[src/services/workbench/editorService.ts:74](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L74)
 
 ---
 
@@ -178,7 +178,33 @@ Close the right opened tabs in Editor Group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:70](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L70)
+[src/services/workbench/editorService.ts:68](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L68)
+
+---
+
+### count
+
+▸ **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[count](../classes/molecule.react.Component#count)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -205,13 +231,15 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
 
 ---
 
 ### forceUpdate
 
 ▸ **forceUpdate**(): `void`
+
+Force to update the Component
 
 #### Returns
 
@@ -223,23 +251,39 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L58)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
 
 ---
 
-### getDefaultEditorOptions
+### getDefaultActions
 
-▸ **getDefaultEditorOptions**(): `IEditorOptions`
+▸ **getDefaultActions**(): `IEditorActionsProps`[]
 
-Get the default editor options
+Get the default group actions
 
 #### Returns
 
-`IEditorOptions`
+`IEditorActionsProps`[]
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:178](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L178)
+[src/services/workbench/editorService.ts:181](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L181)
+
+---
+
+### getDefaultMenus
+
+▸ **getDefaultMenus**(): [`IMenuItemProps`](molecule.component.IMenuItemProps)[]
+
+Get the default group menus
+
+#### Returns
+
+[`IMenuItemProps`](molecule.component.IMenuItemProps)[]
+
+#### Defined in
+
+[src/services/workbench/editorService.ts:185](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L185)
 
 ---
 
@@ -261,7 +305,7 @@ Get the specific group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:86](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L86)
+[src/services/workbench/editorService.ts:84](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L84)
 
 ---
 
@@ -283,13 +327,15 @@ Get the group's id which contains the tab
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:192](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L192)
+[src/services/workbench/editorService.ts:199](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L199)
 
 ---
 
 ### getState
 
 ▸ **getState**(): [`IEditor`](molecule.IEditor)
+
+Get the Component state
 
 #### Returns
 
@@ -301,7 +347,7 @@ Get the group's id which contains the tab
 
 #### Defined in
 
-[src/react/component.ts:62](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L62)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
 
 ---
 
@@ -330,7 +376,7 @@ Get a tab from a specific group via the tab ID
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L34)
+[src/services/workbench/editorService.ts:32](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L32)
 
 ---
 
@@ -352,7 +398,7 @@ Judge the specific tabs whether opened in Editor view
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:52](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L52)
+[src/services/workbench/editorService.ts:50](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L50)
 
 ---
 
@@ -374,7 +420,7 @@ Listen to the Group Actions click event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:144](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L144)
+[src/services/workbench/editorService.ts:142](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L142)
 
 ---
 
@@ -396,7 +442,7 @@ Listen to the all tabs close event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:119](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L119)
+[src/services/workbench/editorService.ts:117](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L117)
 
 ---
 
@@ -418,7 +464,7 @@ Listen to the other tabs close event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:129](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L129)
+[src/services/workbench/editorService.ts:127](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L127)
 
 ---
 
@@ -440,7 +486,7 @@ Listen to the tab close event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:124](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L124)
+[src/services/workbench/editorService.ts:122](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L122)
 
 ---
 
@@ -462,7 +508,7 @@ Listen to the left tabs close event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:134](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L134)
+[src/services/workbench/editorService.ts:132](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L132)
 
 ---
 
@@ -484,34 +530,7 @@ Listen to the right tabs close event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:139](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L139)
-
----
-
-### onEvent
-
-▸ **onEvent**(`name`, `callback`): `void`
-
-Subscribe the component event
-
-#### Parameters
-
-| Name       | Type  |
-| :--------- | :---- |
-| `name`     | `any` |
-| `callback` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Component](../classes/molecule.react.Component).[onEvent](../classes/molecule.react.Component#onevent)
-
-#### Defined in
-
-[src/react/component.ts:66](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L66)
+[src/services/workbench/editorService.ts:137](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L137)
 
 ---
 
@@ -533,7 +552,7 @@ Listen to the tab move event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:107](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L107)
+[src/services/workbench/editorService.ts:105](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L105)
 
 ---
 
@@ -555,7 +574,7 @@ Listen to the tab opening event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:102](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L102)
+[src/services/workbench/editorService.ts:100](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L100)
 
 ---
 
@@ -577,13 +596,15 @@ Listen to the tab select event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:114](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L114)
+[src/services/workbench/editorService.ts:112](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L112)
 
 ---
 
 ### onUpdateState
 
 ▸ **onUpdateState**(`callback`): `void`
+
+Listen to the Component state update event
 
 #### Parameters
 
@@ -601,7 +622,7 @@ Listen to the tab select event
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L54)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
 
 ---
 
@@ -623,7 +644,7 @@ Listen to the Editor tab changed event
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:97](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L97)
+[src/services/workbench/editorService.ts:95](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L95)
 
 ---
 
@@ -652,7 +673,27 @@ Open a new tab in a specific group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:28](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L28)
+[src/services/workbench/editorService.ts:26](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L26)
+
+---
+
+### removeOnUpdateState
+
+▸ **removeOnUpdateState**(): `void`
+
+Remove the Component update event listening
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[removeOnUpdateState](../classes/molecule.react.Component#removeonupdatestate)
+
+#### Defined in
+
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
 
 ---
 
@@ -678,7 +719,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L50)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
 
 ---
 
@@ -701,7 +742,7 @@ Set active group and tab
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:152](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L152)
+[src/services/workbench/editorService.ts:150](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L150)
 
 ---
 
@@ -723,7 +764,29 @@ Set default actions when create a new group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:163](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L163)
+[src/services/workbench/editorService.ts:161](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L161)
+
+---
+
+### setDefaultMenus
+
+▸ **setDefaultMenus**(`menus`): `void`
+
+Set default menus when create a new group
+
+#### Parameters
+
+| Name    | Type                                                    |
+| :------ | :------------------------------------------------------ |
+| `menus` | [`IMenuItemProps`](molecule.component.IMenuItemProps)[] |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/services/workbench/editorService.ts:166](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L166)
 
 ---
 
@@ -745,7 +808,7 @@ Specify the Entry page of Workbench
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:47](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L47)
+[src/services/workbench/editorService.ts:45](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L45)
 
 ---
 
@@ -772,7 +835,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L37)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
 
 ---
 
@@ -799,7 +862,33 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+
+---
+
+### unsubscribe
+
+▸ **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[unsubscribe](../classes/molecule.react.Component#unsubscribe)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -822,7 +911,7 @@ Update actions in specific group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:169](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L169)
+[src/services/workbench/editorService.ts:172](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L172)
 
 ---
 
@@ -844,7 +933,7 @@ Update the current group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:174](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L174)
+[src/services/workbench/editorService.ts:177](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L177)
 
 ---
 
@@ -866,7 +955,7 @@ Update the editor options
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:183](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L183)
+[src/services/workbench/editorService.ts:190](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L190)
 
 ---
 
@@ -889,7 +978,7 @@ Update the specific group
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:158](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L158)
+[src/services/workbench/editorService.ts:156](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L156)
 
 ---
 
@@ -912,4 +1001,4 @@ Update the specific tab, if the groupId provide, then update the tab of specific
 
 #### Defined in
 
-[src/services/workbench/editorService.ts:43](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/editorService.ts#L43)
+[src/services/workbench/editorService.ts:41](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/editorService.ts#L41)

@@ -7,7 +7,84 @@ custom_edit_url: null
 
 [molecule](../namespaces/molecule).IStatusBarController
 
+## Hierarchy
+
+-   `Partial`<[`Controller`](../classes/molecule.react.Controller)\>
+
+    ↳ **`IStatusBarController`**
+
 ## Methods
+
+### count
+
+▸ `Optional` **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+Partial.count
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+
+---
+
+### emit
+
+▸ `Optional` **emit**(`name`, ...`args`): `void`
+
+Emit the service event
+
+#### Parameters
+
+| Name      | Type     | Description |
+| :-------- | :------- | :---------- |
+| `name`    | `string` | Event name  |
+| `...args` | `any`    | Arguments   |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.emit
+
+#### Defined in
+
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+
+---
+
+### initView
+
+▸ `Optional` `Abstract` **initView**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.initView
+
+#### Defined in
+
+[src/react/controller.ts:4](https://github.com/DTStack/molecule/blob/3c64296/src/react/controller.ts#L4)
+
+---
 
 ### onClick
 
@@ -26,7 +103,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/statusBar.tsx:10](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/statusBar.tsx#L10)
+[src/controller/statusBar.tsx:18](https://github.com/DTStack/molecule/blob/3c64296/src/controller/statusBar.tsx#L18)
 
 ---
 
@@ -47,4 +124,57 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/statusBar.tsx:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/statusBar.tsx#L11)
+[src/controller/statusBar.tsx:19](https://github.com/DTStack/molecule/blob/3c64296/src/controller/statusBar.tsx#L19)
+
+---
+
+### subscribe
+
+▸ `Optional` **subscribe**(`name`, `callback`): `void`
+
+Subscribe the service event
+
+#### Parameters
+
+| Name       | Type                   | Description       |
+| :--------- | :--------------------- | :---------------- |
+| `name`     | `string` \| `string`[] | Event name        |
+| `callback` | `Function`             | Callback function |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.subscribe
+
+#### Defined in
+
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+
+---
+
+### unsubscribe
+
+▸ `Optional` **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.unsubscribe
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)

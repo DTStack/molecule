@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/breadcrumb/index.tsx#L11)
+[src/components/breadcrumb/index.tsx:11](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L11)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:8](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/breadcrumb/index.tsx#L8)
+[src/components/breadcrumb/index.tsx:8](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L8)
 
 ---
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:10](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/breadcrumb/index.tsx#L10)
+[src/components/breadcrumb/index.tsx:10](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L10)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:7](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/breadcrumb/index.tsx#L7)
+[src/components/breadcrumb/index.tsx:7](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L7)
 
 ---
 
@@ -55,7 +55,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:9](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/breadcrumb/index.tsx#L9)
+[src/components/breadcrumb/index.tsx:9](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L9)
 
 ## Methods
 
@@ -75,4 +75,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:12](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/breadcrumb/index.tsx#L12)
+[src/components/breadcrumb/index.tsx:12](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L12)

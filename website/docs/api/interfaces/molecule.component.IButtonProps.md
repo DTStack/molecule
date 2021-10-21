@@ -1075,7 +1075,7 @@ node_modules/@types/react/index.d.ts:1752
 
 #### Defined in
 
-[src/components/button/index.tsx:6](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/button/index.tsx#L6)
+[src/components/button/index.tsx:6](https://github.com/DTStack/molecule/blob/3c64296/src/components/button/index.tsx#L6)
 
 ---
 
@@ -3725,7 +3725,7 @@ node_modules/@types/react/index.d.ts:1792
 
 #### Defined in
 
-[src/components/button/index.tsx:7](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/button/index.tsx#L7)
+[src/components/button/index.tsx:7](https://github.com/DTStack/molecule/blob/3c64296/src/components/button/index.tsx#L7)
 
 ---
 
@@ -3931,4 +3931,4 @@ React.ComponentProps.onClick
 
 #### Defined in
 
-[src/components/button/index.tsx:8](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/button/index.tsx#L8)
+[src/components/button/index.tsx:8](https://github.com/DTStack/molecule/blob/3c64296/src/components/button/index.tsx#L8)

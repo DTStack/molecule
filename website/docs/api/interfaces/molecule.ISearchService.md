@@ -29,9 +29,35 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/react/component.ts:25](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L25)
+[src/react/component.ts:42](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L42)
 
 ## Methods
+
+### count
+
+▸ **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[count](../classes/molecule.react.Component#count)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+
+---
 
 ### emit
 
@@ -56,13 +82,15 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
 
 ---
 
 ### forceUpdate
 
 ▸ **forceUpdate**(): `void`
+
+Force to update the Component
 
 #### Returns
 
@@ -74,13 +102,15 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L58)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
 
 ---
 
 ### getState
 
 ▸ **getState**(): `ISearchProps`
+
+Get the Component state
 
 #### Returns
 
@@ -92,7 +122,7 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:62](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L62)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
 
 ---
 
@@ -114,34 +144,7 @@ Listen to the event about the value of search input changed
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:66](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L66)
-
----
-
-### onEvent
-
-▸ **onEvent**(`name`, `callback`): `void`
-
-Subscribe the component event
-
-#### Parameters
-
-| Name       | Type  |
-| :--------- | :---- |
-| `name`     | `any` |
-| `callback` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Component](../classes/molecule.react.Component).[onEvent](../classes/molecule.react.Component#onevent)
-
-#### Defined in
-
-[src/react/component.ts:66](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L66)
+[src/services/workbench/searchService.ts:63](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L63)
 
 ---
 
@@ -163,7 +166,7 @@ Listen to the event about replace all text in result
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:85](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L85)
+[src/services/workbench/searchService.ts:82](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L82)
 
 ---
 
@@ -175,9 +178,9 @@ Listen to the click event in result data
 
 #### Parameters
 
-| Name       | Type                                                                                                                                                             |
-| :--------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `callback` | (`item`: [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps), `resultData`: [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)[]) => `void` |
+| Name       | Type                                                                                                                                                                             |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `callback` | (`item`: [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)<`any`\>, `resultData`: [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)<`any`\>[]) => `void` |
 
 #### Returns
 
@@ -185,7 +188,7 @@ Listen to the click event in result data
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:89](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L89)
+[src/services/workbench/searchService.ts:86](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L86)
 
 ---
 
@@ -207,13 +210,15 @@ Listen to the event about going to search result via values or config changed
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:70](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L70)
+[src/services/workbench/searchService.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L67)
 
 ---
 
 ### onUpdateState
 
 ▸ **onUpdateState**(`callback`): `void`
+
+Listen to the Component state update event
 
 #### Parameters
 
@@ -231,7 +236,27 @@ Listen to the event about going to search result via values or config changed
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L54)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
+
+---
+
+### removeOnUpdateState
+
+▸ **removeOnUpdateState**(): `void`
+
+Remove the Component update event listening
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[removeOnUpdateState](../classes/molecule.react.Component#removeonupdatestate)
+
+#### Defined in
+
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
 
 ---
 
@@ -257,7 +282,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L50)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
 
 ---
 
@@ -273,7 +298,7 @@ Reset the search input data
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:62](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L62)
+[src/services/workbench/searchService.ts:59](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L59)
 
 ---
 
@@ -295,7 +320,7 @@ Set replace value for replace input
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:30](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L30)
+[src/services/workbench/searchService.ts:27](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L27)
 
 ---
 
@@ -307,9 +332,9 @@ Set result data for searching result
 
 #### Parameters
 
-| Name     | Type                                                            |
-| :------- | :-------------------------------------------------------------- |
-| `value?` | [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)[] |
+| Name     | Type                                                                    |
+| :------- | :---------------------------------------------------------------------- |
+| `value?` | [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)<`any`\>[] |
 
 #### Returns
 
@@ -317,7 +342,7 @@ Set result data for searching result
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L34)
+[src/services/workbench/searchService.ts:31](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L31)
 
 ---
 
@@ -339,7 +364,7 @@ Set search value for search input
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:26](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L26)
+[src/services/workbench/searchService.ts:23](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L23)
 
 ---
 
@@ -366,7 +391,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L37)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
 
 ---
 
@@ -388,7 +413,7 @@ Set informations about validating,
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:22](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L22)
+[src/services/workbench/searchService.ts:19](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L19)
 
 ---
 
@@ -415,7 +440,7 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -431,7 +456,7 @@ Toggle the rule for case senstitive when searching
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:42](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L42)
+[src/services/workbench/searchService.ts:39](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L39)
 
 ---
 
@@ -453,7 +478,7 @@ Toggle search mode, `true` for replace mode
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:38](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L38)
+[src/services/workbench/searchService.ts:35](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L35)
 
 ---
 
@@ -469,7 +494,7 @@ Toggle the rule for preserving case when replacing
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:54](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L54)
+[src/services/workbench/searchService.ts:51](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L51)
 
 ---
 
@@ -485,7 +510,7 @@ Toggle the rule for enabling regex when searching
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L50)
+[src/services/workbench/searchService.ts:47](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L47)
 
 ---
 
@@ -501,7 +526,33 @@ Toggle the rule for finding whole word when searching
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:46](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L46)
+[src/services/workbench/searchService.ts:43](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L43)
+
+---
+
+### unsubscribe
+
+▸ **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[unsubscribe](../classes/molecule.react.Component#unsubscribe)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -524,4 +575,4 @@ Update the status of specific addon icon to `checked`
 
 #### Defined in
 
-[src/services/workbench/searchService.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/searchService.ts#L58)
+[src/services/workbench/searchService.ts:55](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/searchService.ts#L55)

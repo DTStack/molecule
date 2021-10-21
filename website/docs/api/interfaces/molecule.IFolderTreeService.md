@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/react/component.ts:25](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L25)
+[src/react/component.ts:42](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L42)
 
 ## Methods
 
@@ -41,10 +41,10 @@ Add data into folder tree
 
 #### Parameters
 
-| Name   | Type                                                          | Description                                     |
-| :----- | :------------------------------------------------------------ | :---------------------------------------------- |
-| `data` | [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps) |                                                 |
-| `id?`  | `number`                                                      | Except adding a root folder, the id is required |
+| Name   | Type                   | Description                                     |
+| :----- | :--------------------- | :---------------------------------------------- |
+| `data` | `IFolderTreeNodeProps` |                                                 |
+| `id?`  | `Key`                  | Except adding a root folder, the id is required |
 
 #### Returns
 
@@ -52,7 +52,33 @@ Add data into folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:32](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L32)
+[src/services/workbench/explorer/folderTreeService.ts:30](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L30)
+
+---
+
+### count
+
+▸ **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[count](../classes/molecule.react.Component#count)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -79,13 +105,15 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
 
 ---
 
 ### forceUpdate
 
 ▸ **forceUpdate**(): `void`
+
+Force to update the Component
 
 #### Returns
 
@@ -97,29 +125,29 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L58)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
 
 ---
 
 ### get
 
-▸ **get**(`id`): `null` \| [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)
+▸ **get**(`id`): `null` \| `IFolderTreeNodeProps`
 
 Get specific data in folder tree
 
 #### Parameters
 
-| Name | Type     |
-| :--- | :------- |
-| `id` | `number` |
+| Name | Type  |
+| :--- | :---- |
+| `id` | `Key` |
 
 #### Returns
 
-`null` \| [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)
+`null` \| `IFolderTreeNodeProps`
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:47](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L47)
+[src/services/workbench/explorer/folderTreeService.ts:45](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L45)
 
 ---
 
@@ -135,7 +163,7 @@ Get the context menus for file
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:51](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L51)
+[src/services/workbench/explorer/folderTreeService.ts:49](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L49)
 
 ---
 
@@ -151,13 +179,15 @@ Get the context menus for folder
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:55](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L55)
+[src/services/workbench/explorer/folderTreeService.ts:53](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L53)
 
 ---
 
 ### getState
 
 ▸ **getState**(): `IFolderTree`
+
+Get the Component state
 
 #### Returns
 
@@ -169,7 +199,7 @@ Get the context menus for folder
 
 #### Defined in
 
-[src/react/component.ts:62](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L62)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
 
 ---
 
@@ -181,9 +211,9 @@ Listen to the click event about the context menu except for built-in menus
 
 #### Parameters
 
-| Name       | Type                                                                                                                                                         |
-| :--------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `callback` | (`contextMenu`: [`IMenuItemProps`](molecule.component.IMenuItemProps), `treeNode?`: [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)) => `void` |
+| Name       | Type                                                                                                                  |
+| :--------- | :-------------------------------------------------------------------------------------------------------------------- |
+| `callback` | (`contextMenu`: [`IMenuItemProps`](molecule.component.IMenuItemProps), `treeNode?`: `IFolderTreeNodeProps`) => `void` |
 
 #### Returns
 
@@ -191,7 +221,7 @@ Listen to the click event about the context menu except for built-in menus
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:121](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L121)
+[src/services/workbench/explorer/folderTreeService.ts:124](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L124)
 
 ---
 
@@ -203,9 +233,9 @@ Listen to create a node for folder tree
 
 #### Parameters
 
-| Name       | Type                                                                              |
-| :--------- | :-------------------------------------------------------------------------------- |
-| `callback` | (`type`: `"File"` \| `"Folder"` \| `"RootFolder"`, `nodeId?`: `number`) => `void` |
+| Name       | Type                                                                           |
+| :--------- | :----------------------------------------------------------------------------- |
+| `callback` | (`type`: `"File"` \| `"Folder"` \| `"RootFolder"`, `nodeId?`: `Key`) => `void` |
 
 #### Returns
 
@@ -213,21 +243,21 @@ Listen to create a node for folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:116](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L116)
+[src/services/workbench/explorer/folderTreeService.ts:119](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L119)
 
 ---
 
 ### onDropTree
 
-▸ **onDropTree**(`treeData`): `void`
+▸ **onDropTree**(`callback`): `void`
 
 Listen to drop event
 
 #### Parameters
 
-| Name       | Type                                                            |
-| :--------- | :-------------------------------------------------------------- |
-| `treeData` | [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)[] |
+| Name       | Type                                                                           |
+| :--------- | :----------------------------------------------------------------------------- |
+| `callback` | (`source`: `IFolderTreeNodeProps`, `target`: `IFolderTreeNodeProps`) => `void` |
 
 #### Returns
 
@@ -235,34 +265,7 @@ Listen to drop event
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:101](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L101)
-
----
-
-### onEvent
-
-▸ **onEvent**(`name`, `callback`): `void`
-
-Subscribe the component event
-
-#### Parameters
-
-| Name       | Type  |
-| :--------- | :---- |
-| `name`     | `any` |
-| `callback` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Component](../classes/molecule.react.Component).[onEvent](../classes/molecule.react.Component#onevent)
-
-#### Defined in
-
-[src/react/component.ts:66](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L66)
+[src/services/workbench/explorer/folderTreeService.ts:99](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L99)
 
 ---
 
@@ -274,9 +277,9 @@ Callback for load folder tree data
 
 #### Parameters
 
-| Name       | Type                                    |
-| :--------- | :-------------------------------------- |
-| `callback` | (`treeNode`: `LoadEventData`) => `void` |
+| Name       | Type                                                                                                       |
+| :--------- | :--------------------------------------------------------------------------------------------------------- |
+| `callback` | (`treeNode`: `IFolderTreeNodeProps`, `callback`: (`treeNode`: `IFolderTreeNodeProps`) => `void`) => `void` |
 
 #### Returns
 
@@ -284,7 +287,7 @@ Callback for load folder tree data
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:131](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L131)
+[src/services/workbench/explorer/folderTreeService.ts:134](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L134)
 
 ---
 
@@ -296,9 +299,9 @@ Listen to remove a node
 
 #### Parameters
 
-| Name       | Type                       |
-| :--------- | :------------------------- |
-| `callback` | (`id`: `number`) => `void` |
+| Name       | Type                    |
+| :--------- | :---------------------- |
+| `callback` | (`id`: `Key`) => `void` |
 
 #### Returns
 
@@ -306,7 +309,7 @@ Listen to remove a node
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:86](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L86)
+[src/services/workbench/explorer/folderTreeService.ts:84](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L84)
 
 ---
 
@@ -318,9 +321,9 @@ Listen to event about clicking rename button
 
 #### Parameters
 
-| Name       | Type                       |
-| :--------- | :------------------------- |
-| `callback` | (`id`: `number`) => `void` |
+| Name       | Type                    |
+| :--------- | :---------------------- |
+| `callback` | (`id`: `Key`) => `void` |
 
 #### Returns
 
@@ -328,7 +331,7 @@ Listen to event about clicking rename button
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:81](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L81)
+[src/services/workbench/explorer/folderTreeService.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L79)
 
 ---
 
@@ -340,9 +343,9 @@ Listen to right click event
 
 #### Parameters
 
-| Name       | Type                                                                                                                                                    |
-| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `callback` | (`treeData`: [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps), `menus`: [`IMenuItemProps`](molecule.component.IMenuItemProps)[]) => `void` |
+| Name       | Type                                                                                                             |
+| :--------- | :--------------------------------------------------------------------------------------------------------------- |
+| `callback` | (`treeData`: `IFolderTreeNodeProps`, `menus`: [`IMenuItemProps`](molecule.component.IMenuItemProps)[]) => `void` |
 
 #### Returns
 
@@ -350,7 +353,7 @@ Listen to right click event
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:106](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L106)
+[src/services/workbench/explorer/folderTreeService.ts:109](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L109)
 
 ---
 
@@ -362,9 +365,9 @@ Listen to select a file
 
 #### Parameters
 
-| Name       | Type                                                                              |
-| :--------- | :-------------------------------------------------------------------------------- |
-| `callback` | (`file`: [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)) => `void` |
+| Name       | Type                                       |
+| :--------- | :----------------------------------------- |
+| `callback` | (`file`: `IFolderTreeNodeProps`) => `void` |
 
 #### Returns
 
@@ -372,7 +375,7 @@ Listen to select a file
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:96](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L96)
+[src/services/workbench/explorer/folderTreeService.ts:94](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L94)
 
 ---
 
@@ -384,9 +387,9 @@ Listen to update file or folder name
 
 #### Parameters
 
-| Name       | Type                                                                              |
-| :--------- | :-------------------------------------------------------------------------------- |
-| `callback` | (`file`: [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps)) => `void` |
+| Name       | Type                                       |
+| :--------- | :----------------------------------------- |
+| `callback` | (`file`: `IFolderTreeNodeProps`) => `void` |
 
 #### Returns
 
@@ -394,13 +397,15 @@ Listen to update file or folder name
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:91](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L91)
+[src/services/workbench/explorer/folderTreeService.ts:89](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L89)
 
 ---
 
 ### onUpdateState
 
 ▸ **onUpdateState**(`callback`): `void`
+
+Listen to the Component state update event
 
 #### Parameters
 
@@ -418,7 +423,7 @@ Listen to update file or folder name
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L54)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
 
 ---
 
@@ -430,9 +435,9 @@ Remove specific data in folder tree
 
 #### Parameters
 
-| Name | Type     |
-| :--- | :------- |
-| `id` | `number` |
+| Name | Type  |
+| :--- | :---- |
+| `id` | `Key` |
 
 #### Returns
 
@@ -440,7 +445,27 @@ Remove specific data in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L37)
+[src/services/workbench/explorer/folderTreeService.ts:35](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L35)
+
+---
+
+### removeOnUpdateState
+
+▸ **removeOnUpdateState**(): `void`
+
+Remove the Component update event listening
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[removeOnUpdateState](../classes/molecule.react.Component#removeonupdatestate)
+
+#### Defined in
+
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
 
 ---
 
@@ -466,7 +491,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L50)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
 
 ---
 
@@ -482,7 +507,7 @@ Reset the FolderTreeService state
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:26](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L26)
+[src/services/workbench/explorer/folderTreeService.ts:24](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L24)
 
 ---
 
@@ -495,9 +520,9 @@ or unactive any node in folder tree
 
 #### Parameters
 
-| Name  | Type     |
-| :---- | :------- |
-| `id?` | `number` |
+| Name  | Type  |
+| :---- | :---- |
+| `id?` | `Key` |
 
 #### Returns
 
@@ -505,7 +530,7 @@ or unactive any node in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:61](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L61)
+[src/services/workbench/explorer/folderTreeService.ts:59](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L59)
 
 ---
 
@@ -527,7 +552,7 @@ Set a entry page for folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:66](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L66)
+[src/services/workbench/explorer/folderTreeService.ts:64](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L64)
 
 ---
 
@@ -549,7 +574,7 @@ Set the context menus for file
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:71](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L71)
+[src/services/workbench/explorer/folderTreeService.ts:69](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L69)
 
 ---
 
@@ -571,7 +596,7 @@ Set the context menus for folder
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:76](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L76)
+[src/services/workbench/explorer/folderTreeService.ts:74](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L74)
 
 ---
 
@@ -598,7 +623,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L37)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
 
 ---
 
@@ -625,7 +650,33 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+
+---
+
+### unsubscribe
+
+▸ **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[unsubscribe](../classes/molecule.react.Component#unsubscribe)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -637,9 +688,9 @@ Update specific data in folder tree
 
 #### Parameters
 
-| Name   | Type                                                          | Description                           |
-| :----- | :------------------------------------------------------------ | :------------------------------------ |
-| `data` | [`ITreeNodeItemProps`](molecule.component.ITreeNodeItemProps) | The `id` property is required in data |
+| Name   | Type                   | Description                           |
+| :----- | :--------------------- | :------------------------------------ |
+| `data` | `IFolderTreeNodeProps` | The `id` property is required in data |
 
 #### Returns
 
@@ -647,4 +698,4 @@ Update specific data in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:42](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/explorer/folderTreeService.ts#L42)
+[src/services/workbench/explorer/folderTreeService.ts:40](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L40)

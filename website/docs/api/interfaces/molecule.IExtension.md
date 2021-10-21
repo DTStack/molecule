@@ -20,7 +20,7 @@ The categories of extension
 
 #### Defined in
 
-[src/model/extension.ts:55](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L55)
+[src/model/extension.ts:59](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L59)
 
 ---
 
@@ -33,7 +33,7 @@ Extension system will load the extension by this file
 
 #### Defined in
 
-[src/model/extension.ts:64](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L64)
+[src/model/extension.ts:68](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L68)
 
 ---
 
@@ -45,7 +45,7 @@ The description of extension
 
 #### Defined in
 
-[src/model/extension.ts:76](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L76)
+[src/model/extension.ts:80](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L80)
 
 ---
 
@@ -57,7 +57,7 @@ Whether disable current extension, the extension default status is enable
 
 #### Defined in
 
-[src/model/extension.ts:88](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L88)
+[src/model/extension.ts:92](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L92)
 
 ---
 
@@ -69,7 +69,7 @@ The display name of extension
 
 #### Defined in
 
-[src/model/extension.ts:47](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L47)
+[src/model/extension.ts:51](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L51)
 
 ---
 
@@ -81,7 +81,7 @@ The kind of extension
 
 #### Defined in
 
-[src/model/extension.ts:59](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L59)
+[src/model/extension.ts:63](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L63)
 
 ---
 
@@ -93,7 +93,19 @@ The Icon of extension
 
 #### Defined in
 
-[src/model/extension.ts:72](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L72)
+[src/model/extension.ts:76](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L76)
+
+---
+
+### id
+
+• **id**: `string`
+
+The ID of extension required
+
+#### Defined in
+
+[src/model/extension.ts:43](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L43)
 
 ---
 
@@ -105,19 +117,19 @@ The entry of extension
 
 #### Defined in
 
-[src/model/extension.ts:68](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L68)
+[src/model/extension.ts:72](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L72)
 
 ---
 
 ### name
 
-• `Optional` **name**: `string`
+• **name**: `string`
 
 The name of extension
 
 #### Defined in
 
-[src/model/extension.ts:43](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L43)
+[src/model/extension.ts:47](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L47)
 
 ---
 
@@ -129,7 +141,7 @@ The path of extension
 
 #### Defined in
 
-[src/model/extension.ts:84](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L84)
+[src/model/extension.ts:88](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L88)
 
 ---
 
@@ -141,7 +153,7 @@ The publisher of extension
 
 #### Defined in
 
-[src/model/extension.ts:80](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L80)
+[src/model/extension.ts:84](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L84)
 
 ---
 
@@ -153,7 +165,7 @@ The version of extension
 
 #### Defined in
 
-[src/model/extension.ts:51](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L51)
+[src/model/extension.ts:55](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L55)
 
 ## Methods
 
@@ -161,13 +173,15 @@ The version of extension
 
 ▸ **activate**(`extensionCtx`): `void`
 
-Activate current extension
+Do something you want when the Extension is activating.
+The ExtensionService will call the `activate` method after
+added the Extension instance.
 
 #### Parameters
 
-| Name           | Type                                              |
-| :------------- | :------------------------------------------------ |
-| `extensionCtx` | [`IExtensionService`](molecule.IExtensionService) |
+| Name           | Type                                              | Description                       |
+| :------------- | :------------------------------------------------ | :-------------------------------- |
+| `extensionCtx` | [`IExtensionService`](molecule.IExtensionService) | The Context of Extension instance |
 
 #### Returns
 
@@ -175,4 +189,27 @@ Activate current extension
 
 #### Defined in
 
-[src/model/extension.ts:92](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/extension.ts#L92)
+[src/model/extension.ts:99](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L99)
+
+---
+
+### dispose
+
+▸ **dispose**(`extensionCtx`): `void`
+
+Do something when the Extension disposing.
+For example, you can recover the UI state, or remove the Objects in memory.
+
+#### Parameters
+
+| Name           | Type                                              | Description                       |
+| :------------- | :------------------------------------------------ | :-------------------------------- |
+| `extensionCtx` | [`IExtensionService`](molecule.IExtensionService) | The Context of Extension instance |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/model/extension.ts:105](https://github.com/DTStack/molecule/blob/3c64296/src/model/extension.ts#L105)

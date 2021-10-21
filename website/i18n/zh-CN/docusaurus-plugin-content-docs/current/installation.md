@@ -1,8 +1,10 @@
 ---
-sidebar_position: 1
+title: 安装
+sidebar_label: 安装
+sidebar_position: 2
 ---
 
-# Tutorial Intro
+# 快速安装
 
 Let's discover **Docusaurus in less than 5 minutes**.
 
@@ -28,6 +30,7 @@ Run the development server:
 cd my-website
 
 npx docusaurus start
+
 ```
 
 Your site starts at `http://localhost:3000`.

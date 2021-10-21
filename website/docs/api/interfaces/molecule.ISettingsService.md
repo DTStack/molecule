@@ -32,7 +32,7 @@ eg: ` append({ project: { name: 'example' } })`
 
 #### Defined in
 
-[src/services/settingsService.ts:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L34)
+[src/services/settingsService.ts:31](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L31)
 
 ---
 
@@ -54,7 +54,7 @@ Apply the nextSettings configuration
 
 #### Defined in
 
-[src/services/settingsService.ts:76](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L76)
+[src/services/settingsService.ts:73](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L73)
 
 ---
 
@@ -77,7 +77,7 @@ eg: { a: { b: 'test' }}, result is : { 'a.b': 'test' }.
 
 #### Defined in
 
-[src/services/settingsService.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L50)
+[src/services/settingsService.ts:47](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L47)
 
 ---
 
@@ -100,31 +100,23 @@ eg: { a: { b: 'test' }}, result is : `{ 'a.b': 'test' }`.
 
 #### Defined in
 
-[src/services/settingsService.ts:56](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L56)
+[src/services/settingsService.ts:53](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L53)
 
 ---
 
 ### getDefaultSettingsTab
 
-▸ **getDefaultSettingsTab**(): `Object`
+▸ **getDefaultSettingsTab**(): `IEditorTab`<`Object`\>
 
 Get the default Settings Tab object
 
 #### Returns
 
-`Object`
-
-| Name            | Type     |
-| :-------------- | :------- |
-| `data`          | `Object` |
-| `data.language` | `string` |
-| `data.value`    | `string` |
-| `id`            | `string` |
-| `name`          | `string` |
+`IEditorTab`<`Object`\>
 
 #### Defined in
 
-[src/services/settingsService.ts:87](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L87)
+[src/services/settingsService.ts:84](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L84)
 
 ---
 
@@ -140,7 +132,7 @@ Get the settings object
 
 #### Defined in
 
-[src/services/settingsService.ts:44](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L44)
+[src/services/settingsService.ts:41](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L41)
 
 ---
 
@@ -171,7 +163,7 @@ T
 
 #### Defined in
 
-[src/services/settingsService.ts:63](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L63)
+[src/services/settingsService.ts:60](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L60)
 
 ---
 
@@ -183,9 +175,9 @@ Listen to the Settings change event.
 
 #### Parameters
 
-| Name       | Type                                       |
-| :--------- | :----------------------------------------- |
-| `callback` | (`tab`: `IEditorTab`<`Object`\>) => `void` |
+| Name       | Type                                                      |
+| :--------- | :-------------------------------------------------------- |
+| `callback` | (`tab`: `IEditorTab`<`IEditorTab`<`Object`\>\>) => `void` |
 
 #### Returns
 
@@ -193,7 +185,7 @@ Listen to the Settings change event.
 
 #### Defined in
 
-[src/services/settingsService.ts:81](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L81)
+[src/services/settingsService.ts:78](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L78)
 
 ---
 
@@ -209,7 +201,7 @@ Open the `settings.json` in the Editor Panel
 
 #### Defined in
 
-[src/services/settingsService.ts:71](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L71)
+[src/services/settingsService.ts:68](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L68)
 
 ---
 
@@ -232,7 +224,7 @@ It converts an object to JSON string
 
 #### Defined in
 
-[src/services/settingsService.ts:67](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L67)
+[src/services/settingsService.ts:64](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L64)
 
 ---
 
@@ -255,4 +247,4 @@ a settings item if it existed.
 
 #### Defined in
 
-[src/services/settingsService.ts:40](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/settingsService.ts#L40)
+[src/services/settingsService.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/services/settingsService.ts#L37)

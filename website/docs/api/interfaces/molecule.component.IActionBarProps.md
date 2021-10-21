@@ -27,7 +27,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/actionBar/index.tsx#L34)
+[src/components/actionBar/index.tsx:34](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L34)
 
 ---
 
@@ -37,7 +37,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:33](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/actionBar/index.tsx#L33)
+[src/components/actionBar/index.tsx:33](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L33)
 
 ## Methods
 
@@ -58,7 +58,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:39](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/actionBar/index.tsx#L39)
+[src/components/actionBar/index.tsx:39](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L39)
 
 ---
 
@@ -79,4 +79,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:35](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/actionBar/index.tsx#L35)
+[src/components/actionBar/index.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L35)

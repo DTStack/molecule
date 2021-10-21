@@ -7,6 +7,12 @@ custom_edit_url: null
 
 [molecule](../namespaces/molecule).IEditorController
 
+## Hierarchy
+
+-   `Partial`<[`Controller`](../classes/molecule.react.Controller)\>
+
+    ↳ **`IEditorController`**
+
 ## Properties
 
 ### groupSplitPos
@@ -15,9 +21,80 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:31](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L31)
+[src/controller/editor.tsx:25](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L25)
 
 ## Methods
+
+### count
+
+▸ `Optional` **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+Partial.count
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+
+---
+
+### emit
+
+▸ `Optional` **emit**(`name`, ...`args`): `void`
+
+Emit the service event
+
+#### Parameters
+
+| Name      | Type     | Description |
+| :-------- | :------- | :---------- |
+| `name`    | `string` | Event name  |
+| `...args` | `any`    | Arguments   |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.emit
+
+#### Defined in
+
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+
+---
+
+### initView
+
+▸ `Optional` `Abstract` **initView**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.initView
+
+#### Defined in
+
+[src/react/controller.ts:4](https://github.com/DTStack/molecule/blob/3c64296/src/react/controller.ts#L4)
+
+---
 
 ### onChangeEditorProps
 
@@ -36,7 +113,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:44](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L44)
+[src/controller/editor.tsx:38](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L38)
 
 ---
 
@@ -56,7 +133,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L50)
+[src/controller/editor.tsx:44](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L44)
 
 ---
 
@@ -78,7 +155,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:33](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L33)
+[src/controller/editor.tsx:27](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L27)
 
 ---
 
@@ -98,7 +175,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:38](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L38)
+[src/controller/editor.tsx:32](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L32)
 
 ---
 
@@ -119,7 +196,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:42](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L42)
+[src/controller/editor.tsx:36](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L36)
 
 ---
 
@@ -139,7 +216,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:43](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L43)
+[src/controller/editor.tsx:37](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L37)
 
 ---
 
@@ -160,7 +237,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:39](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L39)
+[src/controller/editor.tsx:33](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L33)
 
 ---
 
@@ -181,7 +258,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:40](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L40)
+[src/controller/editor.tsx:34](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L34)
 
 ---
 
@@ -202,7 +279,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:41](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L41)
+[src/controller/editor.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L35)
 
 ---
 
@@ -229,7 +306,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:48](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L48)
+[src/controller/editor.tsx:42](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L42)
 
 ---
 
@@ -249,7 +326,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:52](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L52)
+[src/controller/editor.tsx:46](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L46)
 
 ---
 
@@ -270,7 +347,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:49](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L49)
+[src/controller/editor.tsx:43](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L43)
 
 ---
 
@@ -291,7 +368,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:51](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L51)
+[src/controller/editor.tsx:45](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L45)
 
 ---
 
@@ -318,4 +395,57 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:32](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/editor.tsx#L32)
+[src/controller/editor.tsx:26](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L26)
+
+---
+
+### subscribe
+
+▸ `Optional` **subscribe**(`name`, `callback`): `void`
+
+Subscribe the service event
+
+#### Parameters
+
+| Name       | Type                   | Description       |
+| :--------- | :--------------------- | :---------------- |
+| `name`     | `string` \| `string`[] | Event name        |
+| `callback` | `Function`             | Callback function |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.subscribe
+
+#### Defined in
+
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+
+---
+
+### unsubscribe
+
+▸ `Optional` **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.unsubscribe
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)

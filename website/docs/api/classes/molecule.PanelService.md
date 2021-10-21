@@ -29,9 +29,19 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:116](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L116)
+[src/services/workbench/panelService.ts:113](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L113)
 
 ## Properties
+
+### builtinService
+
+• `Private` `Readonly` **builtinService**: [`IBuiltinService`](../interfaces/molecule.IBuiltinService)
+
+#### Defined in
+
+[src/services/workbench/panelService.ts:111](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L111)
+
+---
 
 ### layoutService
 
@@ -39,7 +49,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:114](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L114)
+[src/services/workbench/panelService.ts:110](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L110)
 
 ---
 
@@ -57,7 +67,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:113](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L113)
+[src/services/workbench/panelService.ts:109](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L109)
 
 ## Accessors
 
@@ -77,7 +87,7 @@ The editorInstance of Output
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:131](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L131)
+[src/services/workbench/panelService.ts:130](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L130)
 
 ## Methods
 
@@ -103,7 +113,7 @@ Add new Panel items
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:217](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L217)
+[src/services/workbench/panelService.ts:237](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L237)
 
 ---
 
@@ -129,7 +139,7 @@ Append the content into Output panel
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:205](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L205)
+[src/services/workbench/panelService.ts:225](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L225)
 
 ---
 
@@ -149,7 +159,37 @@ Clean the Output content
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:213](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L213)
+[src/services/workbench/panelService.ts:233](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L233)
+
+---
+
+### count
+
+▸ **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Implementation of
+
+[IPanelService](../interfaces/molecule.IPanelService).[count](../interfaces/molecule.IPanelService#count)
+
+#### Inherited from
+
+[Component](molecule.react.Component).[count](molecule.react.Component#count)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -180,13 +220,15 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
 
 ---
 
 ### forceUpdate
 
 ▸ **forceUpdate**(): `void`
+
+Force to update the Component
 
 #### Returns
 
@@ -202,7 +244,7 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L58)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
 
 ---
 
@@ -222,7 +264,7 @@ Get the value of Output Panel
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:185](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L185)
+[src/services/workbench/panelService.ts:204](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L204)
 
 ---
 
@@ -248,13 +290,15 @@ Get the specific panel
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:180](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L180)
+[src/services/workbench/panelService.ts:187](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L187)
 
 ---
 
 ### getState
 
 ▸ **getState**(): [`IPanel`](../interfaces/molecule.IPanel)
+
+Get the Component state
 
 #### Returns
 
@@ -270,38 +314,7 @@ Get the specific panel
 
 #### Defined in
 
-[src/react/component.ts:62](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L62)
-
----
-
-### onEvent
-
-▸ **onEvent**(`name`, `callback`): `void`
-
-Subscribe the component event
-
-#### Parameters
-
-| Name       | Type  |
-| :--------- | :---- |
-| `name`     | `any` |
-| `callback` | `any` |
-
-#### Returns
-
-`void`
-
-#### Implementation of
-
-[IPanelService](../interfaces/molecule.IPanelService).[onEvent](../interfaces/molecule.IPanelService#onevent)
-
-#### Inherited from
-
-[Component](molecule.react.Component).[onEvent](molecule.react.Component#onevent)
-
-#### Defined in
-
-[src/react/component.ts:66](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L66)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
 
 ---
 
@@ -327,7 +340,7 @@ Listen to the Panel tabs onChange event
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:270](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L270)
+[src/services/workbench/panelService.ts:290](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L290)
 
 ---
 
@@ -353,7 +366,7 @@ Listen to the Panel tabs close event
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:280](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L280)
+[src/services/workbench/panelService.ts:300](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L300)
 
 ---
 
@@ -379,13 +392,15 @@ Listen to the Panel toolbar click event
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:274](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L274)
+[src/services/workbench/panelService.ts:294](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L294)
 
 ---
 
 ### onUpdateState
 
 ▸ **onUpdateState**(`callback`): `void`
+
+Listen to the Component state update event
 
 #### Parameters
 
@@ -407,7 +422,7 @@ Listen to the Panel toolbar click event
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L54)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
 
 ---
 
@@ -433,7 +448,7 @@ Open a new or existing panel item as the active in Panel view
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:164](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L164)
+[src/services/workbench/panelService.ts:171](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L171)
 
 ---
 
@@ -459,7 +474,31 @@ Remove the specific panel
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:245](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L245)
+[src/services/workbench/panelService.ts:265](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L265)
+
+---
+
+### removeOnUpdateState
+
+▸ **removeOnUpdateState**(): `void`
+
+Remove the Component update event listening
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[IPanelService](../interfaces/molecule.IPanelService).[removeOnUpdateState](../interfaces/molecule.IPanelService#removeonupdatestate)
+
+#### Inherited from
+
+[Component](molecule.react.Component).[removeOnUpdateState](molecule.react.Component#removeonupdatestate)
+
+#### Defined in
+
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
 
 ---
 
@@ -489,7 +528,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L50)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
 
 ---
 
@@ -509,7 +548,7 @@ Reset data in state
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:261](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L261)
+[src/services/workbench/panelService.ts:281](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L281)
 
 ---
 
@@ -538,7 +577,7 @@ So if you want to add a panel and meanwhile active it, please use the `open` met
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:138](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L138)
+[src/services/workbench/panelService.ts:138](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L138)
 
 ---
 
@@ -569,7 +608,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L37)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
 
 ---
 
@@ -600,7 +639,7 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -620,7 +659,37 @@ Toggle the panel between maximized or normal
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:149](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L149)
+[src/services/workbench/panelService.ts:149](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L149)
+
+---
+
+### unsubscribe
+
+▸ **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[IPanelService](../interfaces/molecule.IPanelService).[unsubscribe](../interfaces/molecule.IPanelService#unsubscribe)
+
+#### Inherited from
+
+[Component](molecule.react.Component).[unsubscribe](molecule.react.Component#unsubscribe)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -646,7 +715,7 @@ Update the specific panel
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:230](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L230)
+[src/services/workbench/panelService.ts:250](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L250)
 
 ---
 
@@ -672,7 +741,7 @@ Onyl support to update several properties
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:193](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L193)
+[src/services/workbench/panelService.ts:213](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L213)
 
 ---
 
@@ -692,4 +761,4 @@ Onyl support to update several properties
 
 #### Defined in
 
-[src/services/workbench/panelService.ts:122](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/panelService.ts#L122)
+[src/services/workbench/panelService.ts:120](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/panelService.ts#L120)

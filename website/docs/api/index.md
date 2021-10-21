@@ -1,6 +1,6 @@
 ---
 id: 'index'
-title: 'molecule'
+title: 'Molecule'
 slug: '/api/'
 sidebar_label: 'Readme'
 sidebar_position: 0
@@ -9,22 +9,31 @@ custom_edit_url: null
 
 # Molecule
 
-[![codecov](https://codecov.io/gh/DTStack/molecule/branch/main/graph/badge.svg?token=PDjbCBo6qz)](https://codecov.io/gh/DTStack/molecule)
+[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url]
 
-A Web IDE UI library built by React.js, inspired by the Visual Studio Code.
+[ci-image]: https://github.com/DTStack/molecule/actions/workflows/main.yml/badge.svg
+[ci-url]: https://github.com/DTStack/molecule/actions/workflows/main.yml
+[codecov-image]: https://codecov.io/gh/DTStack/molecule/branch/main/graph/badge.svg?token=PDjbCBo6qz
+[codecov-url]: https://codecov.io/gh/DTStack/molecule
+[download-img]: https://img.shields.io/npm/dm/@dtinsight/molecule.svg?style=flat
+[download-url]: https://www.npmjs.com/package/@dtinsight/molecule
+
+A lightweight Web IDE UI Framework, built with React.js, and inspired by the Visual Studio Code.
 
 ## Features
 
 -   Provides the default IDE Workbench same as the Visual Studio Code
--   Allow to extends the default IDE Workbench
--   Supports customize the IDE Workbench by React Component easily
+-   Easy to extends the default IDE Workbench via the Extension
+-   Atomic React Components, Easy to customize the IDE UI
+
+---
 
 ## Installation
 
 ```bash
-npm install molecule
+npm install @dtinsight/molecule
 # Or
-yarn add molecule
+yarn add @dtinsight/molecule
 ```
 
 ## Basic Usage
@@ -44,20 +53,9 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-For more complex examples please read the below document.
-
 ## Document
 
--   Basic React UI Components
--   Workbench Parts
--   Extension Services
--   Advanced Usage
-
-## TODO
-
--   Allow Users to customize settings
--   Support internationalization, default includes zhCN, English
--   Support alter keybinding
+Refer to the [Docs](./docs).
 
 ## Contributing
 

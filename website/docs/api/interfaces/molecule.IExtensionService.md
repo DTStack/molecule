@@ -7,7 +7,97 @@ custom_edit_url: null
 
 [molecule](../namespaces/molecule).IExtensionService
 
+## Implemented by
+
+-   [`ExtensionService`](../classes/molecule.ExtensionService)
+
 ## Methods
+
+### activate
+
+▸ **activate**(`extensions`): `void`
+
+Activate the extensions (includes `contributes` type).
+Notice: this method only do the `activate` work, not store the data into ExtensionService,
+which means you can't get the Extension by the `ExtensionService. getExtension` method.
+
+#### Parameters
+
+| Name         | Type                                  |
+| :----------- | :------------------------------------ |
+| `extensions` | [`IExtension`](molecule.IExtension)[] |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/services/extensionService.ts:36](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L36)
+
+---
+
+### add
+
+▸ **add**(`extensions`): `null` \| [`IExtension`](molecule.IExtension)[]
+
+Add the extensions to ExtensionService, but no activated.
+
+#### Parameters
+
+| Name         | Type                                  | Description                  |
+| :----------- | :------------------------------------ | :--------------------------- |
+| `extensions` | [`IExtension`](molecule.IExtension)[] | The Extensions wait to added |
+
+#### Returns
+
+`null` \| [`IExtension`](molecule.IExtension)[]
+
+Unload Extensions
+
+#### Defined in
+
+[src/services/extensionService.ts:29](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L29)
+
+---
+
+### dispose
+
+▸ **dispose**(`extensionId`): `void`
+
+Dispose the specific extension, and remove it from the ExtensionService
+
+#### Parameters
+
+| Name          | Type     |
+| :------------ | :------- |
+| `extensionId` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/services/extensionService.ts:51](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L51)
+
+---
+
+### disposeAll
+
+▸ **disposeAll**(): `void`
+
+Dispose all extensions, and reset the ExtensionService
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/services/extensionService.ts:55](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L55)
+
+---
 
 ### executeCommand
 
@@ -28,7 +118,7 @@ Execute the registered command
 
 #### Defined in
 
-[src/services/extensionService.ts:53](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/extensionService.ts#L53)
+[src/services/extensionService.ts:86](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L86)
 
 ---
 
@@ -46,21 +136,21 @@ Extension Array
 
 #### Defined in
 
-[src/services/extensionService.ts:29](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/extensionService.ts#L29)
+[src/services/extensionService.ts:46](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L46)
 
 ---
 
 ### getExtension
 
-▸ **getExtension**(`name`): `undefined` \| [`IExtension`](molecule.IExtension)
+▸ **getExtension**(`id`): `undefined` \| [`IExtension`](molecule.IExtension)
 
-Get an extension by name
+Get an extension by the ID
 
 #### Parameters
 
-| Name   | Type     | Description        |
-| :----- | :------- | :----------------- |
-| `name` | `string` | The extension name |
+| Name | Type     |
+| :--- | :------- |
+| `id` | `string` |
 
 #### Returns
 
@@ -68,7 +158,41 @@ Get an extension by name
 
 #### Defined in
 
-[src/services/extensionService.ts:24](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/extensionService.ts#L24)
+[src/services/extensionService.ts:41](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L41)
+
+---
+
+### inactive
+
+▸ **inactive**(`predicate`): `void`
+
+Disable to activate some extensions, make use of it to filter some
+extensions no need to activate. You need register the inactive event before the MoleculeProvider declaration.
+
+**`example`**
+
+```ts
+molecule.extension.inactive((extension: IExtension) => {
+    if (/^(idA|idB)$/.test(extension.id)) {
+        return true;
+    }
+});
+<MoleculeProvider extensions={[]}></MoleculeProvider>;
+```
+
+#### Parameters
+
+| Name        | Type                                                            | Description            |
+| :---------- | :-------------------------------------------------------------- | :--------------------- |
+| `predicate` | (`extension`: [`IExtension`](molecule.IExtension)) => `boolean` | The predicate function |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/services/extensionService.ts:70](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L70)
 
 ---
 
@@ -76,7 +200,10 @@ Get an extension by name
 
 ▸ **load**(`extensions`): `any`
 
-Load the extension objects and then execute them
+Load the extension instances and then activate them.
+Notice: The ExtensionService doesn't load an existed Extension, if you want inactivate
+someone extension, there can use the `ExtensionService.inactive` method, also if you want
+remove a extension, you can use the `ExtensionService.dispose` method.
 
 #### Parameters
 
@@ -90,7 +217,7 @@ Load the extension objects and then execute them
 
 #### Defined in
 
-[src/services/extensionService.ts:19](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/extensionService.ts#L19)
+[src/services/extensionService.ts:23](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L23)
 
 ---
 
@@ -119,29 +246,7 @@ registerAction(action);
 
 #### Defined in
 
-[src/services/extensionService.ts:47](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/extensionService.ts#L47)
-
----
-
-### remove
-
-▸ **remove**(`extension`): `any`
-
-Remove the specific extension
-
-#### Parameters
-
-| Name        | Type                                | Description                    |
-| :---------- | :---------------------------------- | :----------------------------- |
-| `extension` | [`IExtension`](molecule.IExtension) | The extension name is required |
-
-#### Returns
-
-`any`
-
-#### Defined in
-
-[src/services/extensionService.ts:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/extensionService.ts#L34)
+[src/services/extensionService.ts:80](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L80)
 
 ---
 
@@ -149,7 +254,7 @@ Remove the specific extension
 
 ▸ **reset**(): `void`
 
-Reset the extensions data
+Reset the extensions to `[]`
 
 #### Returns
 
@@ -157,4 +262,4 @@ Reset the extensions data
 
 #### Defined in
 
-[src/services/extensionService.ts:38](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/extensionService.ts#L38)
+[src/services/extensionService.ts:90](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L90)

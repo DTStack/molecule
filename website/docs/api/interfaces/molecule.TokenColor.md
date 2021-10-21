@@ -37,7 +37,7 @@ node_modules/typescript/lib/lib.es5.d.ts:122
 
 #### Defined in
 
-[src/model/colorTheme.ts:5](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/colorTheme.ts#L5)
+[src/model/colorTheme.ts:5](https://github.com/DTStack/molecule/blob/3c64296/src/model/colorTheme.ts#L5)
 
 ---
 
@@ -47,7 +47,7 @@ node_modules/typescript/lib/lib.es5.d.ts:122
 
 #### Defined in
 
-[src/model/colorTheme.ts:6](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/colorTheme.ts#L6)
+[src/model/colorTheme.ts:6](https://github.com/DTStack/molecule/blob/3c64296/src/model/colorTheme.ts#L6)
 
 ---
 
@@ -57,7 +57,7 @@ node_modules/typescript/lib/lib.es5.d.ts:122
 
 #### Defined in
 
-[src/model/colorTheme.ts:7](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/colorTheme.ts#L7)
+[src/model/colorTheme.ts:7](https://github.com/DTStack/molecule/blob/3c64296/src/model/colorTheme.ts#L7)
 
 ## Methods
 

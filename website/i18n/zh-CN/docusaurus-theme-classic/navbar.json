@@ -1,0 +1,18 @@
+{
+    "item.label.Docs": {
+        "message": "文档",
+        "description": "开发文档"
+    },
+    "item.label.Showcase": {
+        "message": "案例",
+        "description": "在线案例"
+    },
+    "item.label.Help": {
+        "message": "帮助",
+        "description": "提问和帮助"
+    },
+    "item.label.Help us translate": {
+        "message": "帮助我们翻译",
+        "description": "帮助我们一起翻译"
+    }
+}

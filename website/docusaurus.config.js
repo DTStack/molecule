@@ -8,11 +8,25 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     tagline: 'A lightweight Web IDE UI framework!',
     url: 'https://your-docusaurus-test-site.com',
     baseUrl: '/',
-    onBrokenLinks: 'throw',
+    onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
-    organizationName: 'facebook', // Usually your GitHub org/user name.
-    projectName: 'docusaurus', // Usually your repo name.
+    organizationName: 'DTStack', // Usually your GitHub org/user name.
+    projectName: 'molecule', // Usually your repo name.
+    i18n: {
+        defaultLocale: 'en',
+        locales: ['zh-CN', 'en'],
+        localeConfigs: {
+            'zh-CN': {
+                label: '中文',
+                direction: 'ltr',
+            },
+            en: {
+                label: 'English',
+                direction: 'ltr',
+            },
+        },
+    },
     plugins: [
         [
             'docusaurus-plugin-typedoc',
@@ -20,6 +34,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             {
                 entryPoints: ['../src/index.ts'],
                 tsconfig: '../tsconfig.json',
+                name: 'Molecule',
             },
         ],
     ],
@@ -28,17 +43,21 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             '@docusaurus/preset-classic',
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
+                path: 'docs',
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     // Please change this to your repo.
-                    editUrl:
-                        'https://github.com/facebook/docusaurus/edit/main/website/',
-                },
-                blog: {
-                    showReadingTime: true,
-                    // Please change this to your repo.
-                    editUrl:
-                        'https://github.com/facebook/docusaurus/edit/main/website/blog/',
+                    editUrl: function ({
+                        locale,
+                        versionDocsDirPath,
+                        docPath,
+                    }) {
+                        console.log('---editUrl', locale, versionDocsDirPath);
+                        if (locale !== 'en') {
+                            return `https://github.com/DTStack/molecule/website/i18n/${locale}`;
+                        }
+                        return `https://github.com/DTStack/molecule/website/${docPath}`;
+                    },
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
@@ -51,35 +70,68 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             navbar: {
-                title: 'My Site',
+                title: 'Molecule',
                 logo: {
-                    alt: 'My Site Logo',
+                    alt: 'Molecule Logo',
                     src: 'img/logo.svg',
                 },
                 items: [
                     {
                         type: 'doc',
-                        docId: 'intro',
+                        docId: 'introduction',
                         position: 'left',
-                        label: 'Tutorial',
+                        label: 'Docs',
                     },
-                    { to: '/blog', label: 'Blog', position: 'left' },
                     {
-                        href: 'https://github.com/facebook/docusaurus',
-                        label: 'GitHub',
+                        type: 'doc',
+                        docId: 'api/modules',
+                        label: 'API',
+                        position: 'left',
+                    },
+                    {
+                        type: 'doc',
+                        docId: 'examples/index',
+                        label: 'Showcase',
+                        position: 'left',
+                    },
+                    {
+                        type: 'search',
                         position: 'right',
+                    },
+                    {
+                        href: 'https://github.com/DTStack/molecule',
+                        label: 'GitHub',
+                        position: 'left',
+                    },
+                    {
+                        type: 'localeDropdown',
+                        position: 'right',
+                        dropdownItemsAfter: [
+                            {
+                                to: 'https://my-site.com/help-us-translate',
+                                label: 'Help us translate',
+                            },
+                        ],
                     },
                 ],
             },
             footer: {
-                style: 'dark',
+                style: 'light',
                 links: [
                     {
                         title: 'Docs',
                         items: [
                             {
-                                label: 'Tutorial',
-                                to: '/docs/intro',
+                                label: 'Quick Start',
+                                to: '/docs/introduction',
+                            },
+                            {
+                                label: 'Guides',
+                                to: '/docs/guides/the-first-extension',
+                            },
+                            {
+                                label: 'API',
+                                to: '/docs/api/modules',
                             },
                         ],
                     },
@@ -106,17 +158,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         title: 'More',
                         items: [
                             {
-                                label: 'Blog',
-                                to: '/blog',
-                            },
-                            {
                                 label: 'GitHub',
-                                href: 'https://github.com/facebook/docusaurus',
+                                href: 'https://github.com/DTStack/molecule',
                             },
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+                copyright: `Copyright © ${new Date().getFullYear()} DTStack, Inc. 数栈 UED 团队.`,
             },
             prism: {
                 theme: lightCodeTheme,

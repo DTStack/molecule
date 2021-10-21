@@ -31,7 +31,7 @@ Omit.className
 
 #### Defined in
 
-[src/typings/index.d.ts:10](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L10)
+[src/typings/index.d.ts:12](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L12)
 
 ---
 
@@ -41,7 +41,7 @@ Omit.className
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:24](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L24)
+[src/components/menu/menuItem.tsx:24](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L24)
 
 ---
 
@@ -53,7 +53,7 @@ The name of icon
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:17](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L17)
+[src/components/menu/menuItem.tsx:17](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L17)
 
 ---
 
@@ -67,7 +67,7 @@ Omit.id
 
 #### Defined in
 
-[src/typings/index.d.ts:7](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L7)
+[src/typings/index.d.ts:9](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L9)
 
 ---
 
@@ -80,7 +80,7 @@ example: ⇧⌘P
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:29](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L29)
+[src/components/menu/menuItem.tsx:29](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L29)
 
 ---
 
@@ -92,7 +92,7 @@ Item Name
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:22](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L22)
+[src/components/menu/menuItem.tsx:22](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L22)
 
 ---
 
@@ -102,7 +102,7 @@ Item Name
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:35](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L35)
+[src/components/menu/menuItem.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L35)
 
 ---
 
@@ -116,7 +116,7 @@ Omit.style
 
 #### Defined in
 
-[src/typings/index.d.ts:9](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L9)
+[src/typings/index.d.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L11)
 
 ---
 
@@ -126,7 +126,7 @@ Omit.style
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:23](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L23)
+[src/components/menu/menuItem.tsx:23](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L23)
 
 ---
 
@@ -136,7 +136,7 @@ Omit.style
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:18](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L18)
+[src/components/menu/menuItem.tsx:18](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L18)
 
 ## Methods
 
@@ -157,7 +157,7 @@ Omit.style
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L34)
+[src/components/menu/menuItem.tsx:34](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L34)
 
 ---
 
@@ -179,4 +179,4 @@ Custom render
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:33](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L33)
+[src/components/menu/menuItem.tsx:33](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L33)

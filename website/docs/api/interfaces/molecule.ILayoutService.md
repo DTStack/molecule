@@ -27,7 +27,7 @@ Get the container of the molecule
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:10](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L10)
+[src/services/workbench/layoutService.ts:10](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L10)
 
 ---
 
@@ -41,9 +41,35 @@ Get the container of the molecule
 
 #### Defined in
 
-[src/react/component.ts:25](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L25)
+[src/react/component.ts:42](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L42)
 
 ## Methods
+
+### count
+
+▸ **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[count](../classes/molecule.react.Component#count)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+
+---
 
 ### emit
 
@@ -68,13 +94,15 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
 
 ---
 
 ### forceUpdate
 
 ▸ **forceUpdate**(): `void`
+
+Force to update the Component
 
 #### Returns
 
@@ -86,13 +114,15 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L58)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
 
 ---
 
 ### getState
 
 ▸ **getState**(): `ILayout`
+
+Get the Component state
 
 #### Returns
 
@@ -104,40 +134,15 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:62](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L62)
-
----
-
-### onEvent
-
-▸ **onEvent**(`name`, `callback`): `void`
-
-Subscribe the component event
-
-#### Parameters
-
-| Name       | Type  |
-| :--------- | :---- |
-| `name`     | `any` |
-| `callback` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Component](../classes/molecule.react.Component).[onEvent](../classes/molecule.react.Component#onevent)
-
-#### Defined in
-
-[src/react/component.ts:66](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L66)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
 
 ---
 
 ### onUpdateState
 
 ▸ **onUpdateState**(`callback`): `void`
+
+Listen to the Component state update event
 
 #### Parameters
 
@@ -155,7 +160,27 @@ Subscribe the component event
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L54)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
+
+---
+
+### removeOnUpdateState
+
+▸ **removeOnUpdateState**(): `void`
+
+Remove the Component update event listening
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[removeOnUpdateState](../classes/molecule.react.Component#removeonupdatestate)
+
+#### Defined in
+
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
 
 ---
 
@@ -181,7 +206,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L50)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
 
 ---
 
@@ -197,7 +222,7 @@ Reset all layout data as default value
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:54](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L54)
+[src/services/workbench/layoutService.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L54)
 
 ---
 
@@ -219,7 +244,7 @@ Set the sizes between the editor and the panel
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:44](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L44)
+[src/services/workbench/layoutService.ts:44](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L44)
 
 ---
 
@@ -241,7 +266,7 @@ Set the sizes between the side bar and main content area
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:39](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L39)
+[src/services/workbench/layoutService.ts:39](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L39)
 
 ---
 
@@ -265,7 +290,7 @@ Set the position of the side bar, default is in `left`
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L50)
+[src/services/workbench/layoutService.ts:50](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L50)
 
 ---
 
@@ -292,7 +317,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L37)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
 
 ---
 
@@ -319,7 +344,7 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -335,7 +360,7 @@ Toggle the visibility of the activity bar, returns the status of activity bar's 
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:26](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L26)
+[src/services/workbench/layoutService.ts:26](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L26)
 
 ---
 
@@ -351,7 +376,7 @@ Toggle the visibility of menu bar, returns the status of menu bar's `hidden`
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:14](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L14)
+[src/services/workbench/layoutService.ts:14](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L14)
 
 ---
 
@@ -367,7 +392,7 @@ Toggle the maximized status of the panel, returns the status of maximized panel
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L34)
+[src/services/workbench/layoutService.ts:34](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L34)
 
 ---
 
@@ -383,7 +408,7 @@ Toggle the visibility of the panel, returns the status of panel's `hidden`
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:22](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L22)
+[src/services/workbench/layoutService.ts:22](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L22)
 
 ---
 
@@ -399,7 +424,7 @@ Toggle the visibility of side bar, returns the status of side bar's `hidden`
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:18](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L18)
+[src/services/workbench/layoutService.ts:18](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L18)
 
 ---
 
@@ -415,4 +440,30 @@ Toggle the visibility of the status bar, returns the status of status bar's `hid
 
 #### Defined in
 
-[src/services/workbench/layoutService.ts:30](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/workbench/layoutService.ts#L30)
+[src/services/workbench/layoutService.ts:30](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/layoutService.ts#L30)
+
+---
+
+### unsubscribe
+
+▸ **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Component](../classes/molecule.react.Component).[unsubscribe](../classes/molecule.react.Component#unsubscribe)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)

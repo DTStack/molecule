@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/typings/index.d.ts:10](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L10)
+[src/typings/index.d.ts:12](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L12)
 
 ---
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/menu/subMenu.tsx:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/subMenu.tsx#L37)
+[src/components/menu/subMenu.tsx:37](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/subMenu.tsx#L37)
 
 ---
 
@@ -49,7 +49,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:24](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L24)
+[src/components/menu/menuItem.tsx:24](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L24)
 
 ---
 
@@ -65,7 +65,7 @@ The name of icon
 
 #### Defined in
 
-[src/components/menu/subMenu.tsx:36](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/subMenu.tsx#L36)
+[src/components/menu/subMenu.tsx:36](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/subMenu.tsx#L36)
 
 ---
 
@@ -79,7 +79,7 @@ The name of icon
 
 #### Defined in
 
-[src/typings/index.d.ts:7](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L7)
+[src/typings/index.d.ts:9](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L9)
 
 ---
 
@@ -96,7 +96,7 @@ example: ⇧⌘P
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:29](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L29)
+[src/components/menu/menuItem.tsx:29](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L29)
 
 ---
 
@@ -106,7 +106,7 @@ example: ⇧⌘P
 
 #### Defined in
 
-[src/components/menu/subMenu.tsx:38](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/subMenu.tsx#L38)
+[src/components/menu/subMenu.tsx:38](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/subMenu.tsx#L38)
 
 ---
 
@@ -122,7 +122,7 @@ Item Name
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:22](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L22)
+[src/components/menu/menuItem.tsx:22](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L22)
 
 ---
 
@@ -136,7 +136,7 @@ Item Name
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:35](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L35)
+[src/components/menu/menuItem.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L35)
 
 ---
 
@@ -150,7 +150,7 @@ Item Name
 
 #### Defined in
 
-[src/typings/index.d.ts:9](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L9)
+[src/typings/index.d.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L11)
 
 ---
 
@@ -164,7 +164,7 @@ Item Name
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:23](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L23)
+[src/components/menu/menuItem.tsx:23](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L23)
 
 ---
 
@@ -176,7 +176,7 @@ The event of show subMenu, default value is 'hover'
 
 #### Defined in
 
-[src/components/menu/subMenu.tsx:35](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/subMenu.tsx#L35)
+[src/components/menu/subMenu.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/subMenu.tsx#L35)
 
 ---
 
@@ -190,7 +190,7 @@ The event of show subMenu, default value is 'hover'
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:18](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L18)
+[src/components/menu/menuItem.tsx:18](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L18)
 
 ## Methods
 
@@ -215,7 +215,7 @@ The event of show subMenu, default value is 'hover'
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L34)
+[src/components/menu/menuItem.tsx:34](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L34)
 
 ---
 
@@ -241,4 +241,4 @@ Custom render
 
 #### Defined in
 
-[src/components/menu/menuItem.tsx:33](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/menuItem.tsx#L33)
+[src/components/menu/menuItem.tsx:33](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/menuItem.tsx#L33)

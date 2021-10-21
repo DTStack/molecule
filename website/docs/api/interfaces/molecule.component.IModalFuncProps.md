@@ -63,7 +63,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:26
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:33](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L33)
+[src/components/dialog/modal.tsx:33](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L33)
 
 ---
 
@@ -73,7 +73,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:26
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:26](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L26)
+[src/components/dialog/modal.tsx:26](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L26)
 
 ---
 
@@ -83,7 +83,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:26
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L34)
+[src/components/dialog/modal.tsx:34](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L34)
 
 ---
 
@@ -149,7 +149,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:37
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:29](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L29)
+[src/components/dialog/modal.tsx:29](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L29)
 
 ---
 
@@ -243,7 +243,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:31
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:28](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L28)
+[src/components/dialog/modal.tsx:28](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L28)
 
 ---
 
@@ -372,7 +372,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:15
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:32](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L32)
+[src/components/dialog/modal.tsx:32](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L32)
 
 ---
 
@@ -382,7 +382,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:15
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:35](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L35)
+[src/components/dialog/modal.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L35)
 
 ---
 
@@ -392,7 +392,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:15
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:27](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L27)
+[src/components/dialog/modal.tsx:27](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L27)
 
 ---
 
@@ -458,7 +458,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:21
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:36](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L36)
+[src/components/dialog/modal.tsx:36](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L36)
 
 ---
 
@@ -580,7 +580,7 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:9
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:31](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L31)
+[src/components/dialog/modal.tsx:31](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L31)
 
 ---
 
@@ -624,4 +624,4 @@ node_modules/rc-dialog/lib/IDialogPropTypes.d.ts:10
 
 #### Defined in
 
-[src/components/dialog/modal.tsx:30](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/dialog/modal.tsx#L30)
+[src/components/dialog/modal.tsx:30](https://github.com/DTStack/molecule/blob/3c64296/src/components/dialog/modal.tsx#L30)

@@ -33,7 +33,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[src/typings/index.d.ts:10](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L10)
+[src/typings/index.d.ts:12](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L12)
 
 ---
 
@@ -43,7 +43,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:13](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/statusBar.tsx#L13)
+[src/model/workbench/statusBar.tsx:12](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L12)
 
 ---
 
@@ -57,7 +57,7 @@ HTMLElementProps.id
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/statusBar.tsx#L11)
+[src/model/workbench/statusBar.tsx:10](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L10)
 
 ---
 
@@ -67,7 +67,7 @@ HTMLElementProps.id
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:16](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/statusBar.tsx#L16)
+[src/model/workbench/statusBar.tsx:15](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L15)
 
 ---
 
@@ -77,7 +77,7 @@ HTMLElementProps.id
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:12](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/statusBar.tsx#L12)
+[src/model/workbench/statusBar.tsx:11](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L11)
 
 ---
 
@@ -91,7 +91,7 @@ HTMLElementProps.style
 
 #### Defined in
 
-[src/typings/index.d.ts:9](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L9)
+[src/typings/index.d.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L11)
 
 ---
 
@@ -105,7 +105,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[src/typings/index.d.ts:8](https://github.com/DTStack/molecule/blob/1b0aa04/src/typings/index.d.ts#L8)
+[src/typings/index.d.ts:10](https://github.com/DTStack/molecule/blob/3c64296/src/typings/index.d.ts#L10)
 
 ## Methods
 
@@ -126,7 +126,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:14](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/statusBar.tsx#L14)
+[src/model/workbench/statusBar.tsx:13](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L13)
 
 ---
 
@@ -146,4 +146,4 @@ HTMLElementProps.title
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:15](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/statusBar.tsx#L15)
+[src/model/workbench/statusBar.tsx:14](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L14)

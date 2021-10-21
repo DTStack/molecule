@@ -7,7 +7,84 @@ custom_edit_url: null
 
 [molecule](../namespaces/molecule).IMenuBarController
 
+## Hierarchy
+
+-   `Partial`<[`Controller`](../classes/molecule.react.Controller)\>
+
+    ↳ **`IMenuBarController`**
+
 ## Methods
+
+### count
+
+▸ `Optional` **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+Partial.count
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+
+---
+
+### emit
+
+▸ `Optional` **emit**(`name`, ...`args`): `void`
+
+Emit the service event
+
+#### Parameters
+
+| Name      | Type     | Description |
+| :-------- | :------- | :---------- |
+| `name`    | `string` | Event name  |
+| `...args` | `any`    | Arguments   |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.emit
+
+#### Defined in
+
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+
+---
+
+### initView
+
+▸ `Optional` `Abstract` **initView**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.initView
+
+#### Defined in
+
+[src/react/controller.ts:4](https://github.com/DTStack/molecule/blob/3c64296/src/react/controller.ts#L4)
+
+---
 
 ### onClick
 
@@ -26,7 +103,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/menuBar.ts:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/menuBar.ts#L34)
+[src/controller/menuBar.ts:21](https://github.com/DTStack/molecule/blob/3c64296/src/controller/menuBar.ts#L21)
 
 ---
 
@@ -47,7 +124,60 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/menuBar.ts:33](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/menuBar.ts#L33)
+[src/controller/menuBar.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/controller/menuBar.ts#L20)
+
+---
+
+### subscribe
+
+▸ `Optional` **subscribe**(`name`, `callback`): `void`
+
+Subscribe the service event
+
+#### Parameters
+
+| Name       | Type                   | Description       |
+| :--------- | :--------------------- | :---------------- |
+| `name`     | `string` \| `string`[] | Event name        |
+| `callback` | `Function`             | Callback function |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.subscribe
+
+#### Defined in
+
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+
+---
+
+### unsubscribe
+
+▸ `Optional` **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.unsubscribe
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -61,7 +191,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/menuBar.ts:38](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/menuBar.ts#L38)
+[src/controller/menuBar.ts:25](https://github.com/DTStack/molecule/blob/3c64296/src/controller/menuBar.ts#L25)
 
 ---
 
@@ -81,7 +211,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/menuBar.ts:35](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/menuBar.ts#L35)
+[src/controller/menuBar.ts:22](https://github.com/DTStack/molecule/blob/3c64296/src/controller/menuBar.ts#L22)
 
 ---
 
@@ -95,7 +225,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/menuBar.ts:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/menuBar.ts#L37)
+[src/controller/menuBar.ts:24](https://github.com/DTStack/molecule/blob/3c64296/src/controller/menuBar.ts#L24)
 
 ---
 
@@ -109,7 +239,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/menuBar.ts:39](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/menuBar.ts#L39)
+[src/controller/menuBar.ts:26](https://github.com/DTStack/molecule/blob/3c64296/src/controller/menuBar.ts#L26)
 
 ---
 
@@ -123,4 +253,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/menuBar.ts:36](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/menuBar.ts#L36)
+[src/controller/menuBar.ts:23](https://github.com/DTStack/molecule/blob/3c64296/src/controller/menuBar.ts#L23)

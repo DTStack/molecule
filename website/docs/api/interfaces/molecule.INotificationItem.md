@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/notification.tsx:12](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/notification.tsx#L12)
+[src/model/notification.tsx:11](https://github.com/DTStack/molecule/blob/3c64296/src/model/notification.tsx#L11)
 
 ---
 
@@ -31,7 +31,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/notification.tsx:15](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/notification.tsx#L15)
+[src/model/notification.tsx:14](https://github.com/DTStack/molecule/blob/3c64296/src/model/notification.tsx#L14)
 
 ---
 
@@ -41,7 +41,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/notification.tsx:13](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/notification.tsx#L13)
+[src/model/notification.tsx:12](https://github.com/DTStack/molecule/blob/3c64296/src/model/notification.tsx#L12)
 
 ## Methods
 
@@ -61,4 +61,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/notification.tsx:14](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/notification.tsx#L14)
+[src/model/notification.tsx:13](https://github.com/DTStack/molecule/blob/3c64296/src/model/notification.tsx#L13)

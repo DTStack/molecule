@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:2](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventEmitter.ts#L2)
+[src/common/event/eventEmitter.ts:2](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L2)
 
 ## Methods
 
@@ -48,7 +48,27 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventEmitter.ts#L34)
+[src/common/event/eventEmitter.ts:46](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L46)
+
+---
+
+### count
+
+▸ **count**(`name`): `number`
+
+#### Parameters
+
+| Name   | Type     |
+| :----- | :------- |
+| `name` | `string` |
+
+#### Returns
+
+`number`
+
+#### Defined in
+
+[src/common/event/eventEmitter.ts:4](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L4)
 
 ---
 
@@ -69,7 +89,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:4](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventEmitter.ts#L4)
+[src/common/event/eventEmitter.ts:9](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L9)
 
 ---
 
@@ -90,7 +110,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:14](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventEmitter.ts#L14)
+[src/common/event/eventEmitter.ts:18](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L18)
 
 ---
 
@@ -98,11 +118,17 @@ custom_edit_url: null
 
 ▸ **unsubscribe**(`name`): `void`
 
+Unsubscribe the specific event by the name
+
+TODO: The `unsubscribe` method delete the all events via the name directly, the developer
+use the `subscribe` method could register many callbacks, so if the developer only want to delete the specific callback by the name,
+this method is no work.
+
 #### Parameters
 
-| Name   | Type                   |
-| :----- | :--------------------- |
-| `name` | `string` \| `string`[] |
+| Name   | Type                   | Description            |
+| :----- | :--------------------- | :--------------------- |
+| `name` | `string` \| `string`[] | The removed event name |
 
 #### Returns
 
@@ -110,4 +136,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:24](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventEmitter.ts#L24)
+[src/common/event/eventEmitter.ts:36](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L36)

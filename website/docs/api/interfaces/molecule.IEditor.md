@@ -11,13 +11,13 @@ custom_edit_url: null
 
 ### current
 
-• `Optional` **current**: [`IEditorGroup`](molecule.IEditorGroup)<`any`, `any`\>
+• `Optional` **current**: `null` \| [`IEditorGroup`](molecule.IEditorGroup)<`any`, `any`\>
 
 Current editor group
 
 #### Defined in
 
-[src/model/workbench/editor.ts:67](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/editor.ts#L67)
+[src/model/workbench/editor.ts:60](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L60)
 
 ---
 
@@ -29,7 +29,7 @@ Built-in editor options, there is main apply it to monaco-editor
 
 #### Defined in
 
-[src/model/workbench/editor.ts:79](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/editor.ts#L79)
+[src/model/workbench/editor.ts:72](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L72)
 
 ---
 
@@ -41,7 +41,7 @@ The welcome page of editor bench
 
 #### Defined in
 
-[src/model/workbench/editor.ts:75](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/editor.ts#L75)
+[src/model/workbench/editor.ts:68](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L68)
 
 ---
 
@@ -53,4 +53,4 @@ Editor Groups
 
 #### Defined in
 
-[src/model/workbench/editor.ts:71](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/editor.ts#L71)
+[src/model/workbench/editor.ts:64](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L64)

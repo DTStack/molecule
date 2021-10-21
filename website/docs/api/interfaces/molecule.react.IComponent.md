@@ -23,13 +23,15 @@ custom_edit_url: null
 
 ▸ **forceUpdate**(): `void`
 
+Force to update the Component
+
 #### Returns
 
 `void`
 
 #### Defined in
 
-[src/react/component.ts:12](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L12)
+[src/react/component.ts:32](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L32)
 
 ---
 
@@ -37,42 +39,23 @@ custom_edit_url: null
 
 ▸ **getState**(): `S`
 
+Get the Component state
+
 #### Returns
 
 `S`
 
 #### Defined in
 
-[src/react/component.ts:13](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L13)
-
----
-
-### onEvent
-
-▸ **onEvent**(`name`, `callback`): `void`
-
-Subscribe the component event
-
-#### Parameters
-
-| Name       | Type  |
-| :--------- | :---- |
-| `name`     | `any` |
-| `callback` | `any` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/react/component.ts:19](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L19)
+[src/react/component.ts:36](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L36)
 
 ---
 
 ### onUpdateState
 
 ▸ **onUpdateState**(`callback`): `void`
+
+Listen to the Component state update event
 
 #### Parameters
 
@@ -86,13 +69,31 @@ Subscribe the component event
 
 #### Defined in
 
-[src/react/component.ts:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L11)
+[src/react/component.ts:24](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L24)
+
+---
+
+### removeOnUpdateState
+
+▸ **removeOnUpdateState**(): `void`
+
+Remove the Component update event listening
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/react/component.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L28)
 
 ---
 
 ### render
 
 ▸ **render**(`nextState?`): `void`
+
+Trigger the Component update event
 
 #### Parameters
 
@@ -106,7 +107,7 @@ Subscribe the component event
 
 #### Defined in
 
-[src/react/component.ts:10](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L10)
+[src/react/component.ts:19](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L19)
 
 ---
 
@@ -114,12 +115,14 @@ Subscribe the component event
 
 ▸ **setState**(`values`, `callback?`): `void`
 
+Set the Component state
+
 #### Parameters
 
-| Name        | Type                                           |
-| :---------- | :--------------------------------------------- |
-| `values`    | `S`                                            |
-| `callback?` | (`prevState`: `S`, `nextState`: `S`) => `void` |
+| Name        | Type                                           | Description              |
+| :---------- | :--------------------------------------------- | :----------------------- |
+| `values`    | `S`                                            | The next values of state |
+| `callback?` | (`prevState`: `S`, `nextState`: `S`) => `void` | calling after setState   |
 
 #### Returns
 
@@ -127,4 +130,4 @@ Subscribe the component event
 
 #### Defined in
 
-[src/react/component.ts:9](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L9)
+[src/react/component.ts:14](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L14)

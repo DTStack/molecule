@@ -30,7 +30,7 @@ Component&lt;IMoleculeProps\&gt;.constructor
 
 #### Defined in
 
-[src/provider/molecule.tsx:38](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L38)
+[src/provider/molecule.tsx:40](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L40)
 
 ## Properties
 
@@ -68,7 +68,7 @@ node_modules/@types/react/index.d.ts:469
 
 #### Defined in
 
-[src/provider/molecule.tsx:33](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L33)
+[src/provider/molecule.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L35)
 
 ---
 
@@ -78,7 +78,7 @@ node_modules/@types/react/index.d.ts:469
 
 #### Defined in
 
-[src/provider/molecule.tsx:36](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L36)
+[src/provider/molecule.tsx:38](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L38)
 
 ---
 
@@ -88,7 +88,7 @@ node_modules/@types/react/index.d.ts:469
 
 #### Defined in
 
-[src/provider/molecule.tsx:35](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L35)
+[src/provider/molecule.tsx:37](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L37)
 
 ---
 
@@ -98,7 +98,7 @@ node_modules/@types/react/index.d.ts:469
 
 #### Defined in
 
-[src/provider/molecule.tsx:34](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L34)
+[src/provider/molecule.tsx:36](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L36)
 
 ---
 
@@ -194,7 +194,7 @@ node_modules/@types/react/index.d.ts:451
 
 #### Defined in
 
-[src/provider/molecule.tsx:56](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L56)
+[src/provider/molecule.tsx:59](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L59)
 
 ## Methods
 
@@ -355,7 +355,7 @@ Component.componentDidMount
 
 #### Defined in
 
-[src/provider/molecule.tsx:47](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L47)
+[src/provider/molecule.tsx:49](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L49)
 
 ---
 
@@ -575,6 +575,22 @@ node_modules/@types/react/index.d.ts:672
 
 ---
 
+### initControllers
+
+▸ **initControllers**(): `void`
+
+Register all controllers and execute the initView method automatically to inject the default value into the corresponding service
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/provider/molecule.tsx:74](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L74)
+
+---
+
 ### initialize
 
 ▸ **initialize**(): `void`
@@ -585,7 +601,7 @@ node_modules/@types/react/index.d.ts:672
 
 #### Defined in
 
-[src/provider/molecule.tsx:60](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L60)
+[src/provider/molecule.tsx:63](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L63)
 
 ---
 
@@ -599,7 +615,7 @@ node_modules/@types/react/index.d.ts:672
 
 #### Defined in
 
-[src/provider/molecule.tsx:51](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L51)
+[src/provider/molecule.tsx:54](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L54)
 
 ---
 
@@ -617,7 +633,7 @@ Component.render
 
 #### Defined in
 
-[src/provider/molecule.tsx:68](https://github.com/DTStack/molecule/blob/1b0aa04/src/provider/molecule.tsx#L68)
+[src/provider/molecule.tsx:82](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L82)
 
 ---
 

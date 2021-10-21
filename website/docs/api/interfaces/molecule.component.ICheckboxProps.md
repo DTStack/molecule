@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/checkbox/checkbox.tsx:8](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/checkbox/checkbox.tsx#L8)
+[src/components/checkbox/checkbox.tsx:8](https://github.com/DTStack/molecule/blob/3c64296/src/components/checkbox/checkbox.tsx#L8)
 
 ---
 
@@ -31,7 +31,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/checkbox/checkbox.tsx:6](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/checkbox/checkbox.tsx#L6)
+[src/components/checkbox/checkbox.tsx:6](https://github.com/DTStack/molecule/blob/3c64296/src/components/checkbox/checkbox.tsx#L6)
 
 ---
 
@@ -41,7 +41,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/checkbox/checkbox.tsx:7](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/checkbox/checkbox.tsx#L7)
+[src/components/checkbox/checkbox.tsx:7](https://github.com/DTStack/molecule/blob/3c64296/src/components/checkbox/checkbox.tsx#L7)
 
 ## Methods
 
@@ -62,4 +62,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/checkbox/checkbox.tsx:9](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/checkbox/checkbox.tsx#L9)
+[src/components/checkbox/checkbox.tsx:9](https://github.com/DTStack/molecule/blob/3c64296/src/components/checkbox/checkbox.tsx#L9)

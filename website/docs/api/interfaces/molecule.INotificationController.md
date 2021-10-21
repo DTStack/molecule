@@ -7,7 +7,84 @@ custom_edit_url: null
 
 [molecule](../namespaces/molecule).INotificationController
 
+## Hierarchy
+
+-   `Partial`<[`Controller`](../classes/molecule.react.Controller)\>
+
+    ↳ **`INotificationController`**
+
 ## Methods
+
+### count
+
+▸ `Optional` **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+Partial.count
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+
+---
+
+### emit
+
+▸ `Optional` **emit**(`name`, ...`args`): `void`
+
+Emit the service event
+
+#### Parameters
+
+| Name      | Type     | Description |
+| :-------- | :------- | :---------- |
+| `name`    | `string` | Event name  |
+| `...args` | `any`    | Arguments   |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.emit
+
+#### Defined in
+
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+
+---
+
+### initView
+
+▸ `Optional` `Abstract` **initView**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.initView
+
+#### Defined in
+
+[src/react/controller.ts:4](https://github.com/DTStack/molecule/blob/3c64296/src/react/controller.ts#L4)
+
+---
 
 ### onActionBarClick
 
@@ -26,7 +103,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/notification.tsx:30](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/notification.tsx#L30)
+[src/controller/notification.tsx:28](https://github.com/DTStack/molecule/blob/3c64296/src/controller/notification.tsx#L28)
 
 ---
 
@@ -47,7 +124,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/notification.tsx:29](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/notification.tsx#L29)
+[src/controller/notification.tsx:27](https://github.com/DTStack/molecule/blob/3c64296/src/controller/notification.tsx#L27)
 
 ---
 
@@ -67,7 +144,34 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/notification.tsx:28](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/notification.tsx#L28)
+[src/controller/notification.tsx:26](https://github.com/DTStack/molecule/blob/3c64296/src/controller/notification.tsx#L26)
+
+---
+
+### subscribe
+
+▸ `Optional` **subscribe**(`name`, `callback`): `void`
+
+Subscribe the service event
+
+#### Parameters
+
+| Name       | Type                   | Description       |
+| :--------- | :--------------------- | :---------------- |
+| `name`     | `string` \| `string`[] | Event name        |
+| `callback` | `Function`             | Callback function |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.subscribe
+
+#### Defined in
+
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -83,4 +187,30 @@ Toggle the Notifications visibility
 
 #### Defined in
 
-[src/controller/notification.tsx:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/controller/notification.tsx#L37)
+[src/controller/notification.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/controller/notification.tsx#L35)
+
+---
+
+### unsubscribe
+
+▸ `Optional` **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Partial.unsubscribe
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)

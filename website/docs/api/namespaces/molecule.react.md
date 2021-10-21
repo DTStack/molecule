@@ -7,6 +7,10 @@ custom_edit_url: null
 
 [molecule](molecule).react
 
+## Enumerations
+
+-   [ComponentEvents](../enums/molecule.react.ComponentEvents)
+
 ## Classes
 
 -   [Component](../classes/molecule.react.Component)
@@ -28,7 +32,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/react/connector.tsx:12](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/connector.tsx#L12)
+[src/react/connector.tsx:12](https://github.com/DTStack/molecule/blob/3c64296/src/react/connector.tsx#L12)
 
 ---
 
@@ -42,7 +46,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/react/connector.tsx:8](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/connector.tsx#L8)
+[src/react/connector.tsx:8](https://github.com/DTStack/molecule/blob/3c64296/src/react/connector.tsx#L8)
 
 ## Functions
 
@@ -71,13 +75,13 @@ Clone react children props
 
 #### Defined in
 
-[src/react/helper.ts:8](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/helper.ts#L8)
+[src/react/helper.ts:8](https://github.com/DTStack/molecule/blob/3c64296/src/react/helper.ts#L8)
 
 ---
 
 ### connect
 
-▸ **connect**<`T`\>(`Service`, `View`, `Controller?`, `watchFiled?`): `React.ComponentType`<`T`\>
+▸ **connect**<`T`\>(`Service`, `View`, `Controller?`): `React.ComponentType`<`T`\>
 
 #### Type parameters
 
@@ -92,7 +96,6 @@ Clone react children props
 | `Service`     | [`IComponent`](../interfaces/molecule.react.IComponent)<`any`\> \| [`ServiceObject`](molecule.react#serviceobject) |
 | `View`        | `ComponentType`<`any`\>                                                                                            |
 | `Controller?` | [`Controller`](../classes/molecule.react.Controller) \| [`ControllerObject`](molecule.react#controllerobject)      |
-| `watchFiled?` | `object`                                                                                                           |
 
 #### Returns
 
@@ -100,36 +103,4 @@ Clone react children props
 
 #### Defined in
 
-[src/react/connector.tsx:16](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/connector.tsx#L16)
-
----
-
-### mapState
-
-▸ **mapState**<`S`, `T`\>(`WrappedComponent`, `state`, `actions?`): typeof `StateProvider`
-
-Mapping the state to the component
-TODO support mapping service method to the component.
-
-#### Type parameters
-
-| Name |
-| :--- |
-| `S`  |
-| `T`  |
-
-#### Parameters
-
-| Name               | Type                  | Description                                                                   |
-| :----------------- | :-------------------- | :---------------------------------------------------------------------------- |
-| `WrappedComponent` | `ComponentType`<`S`\> | The component will be wrapped                                                 |
-| `state`            | `S`                   | The state you want to injected, notice the state must be an observable object |
-| `actions?`         | `T`                   | -                                                                             |
-
-#### Returns
-
-typeof `StateProvider`
-
-#### Defined in
-
-[src/react/mapState.tsx:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/mapState.tsx#L11)
+[src/react/connector.tsx:16](https://github.com/DTStack/molecule/blob/3c64296/src/react/connector.tsx#L16)

@@ -19,7 +19,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:71](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L71)
+[src/services/theme/colorThemeService.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L71)
 
 ## Properties
 
@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:69](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L69)
+[src/services/theme/colorThemeService.ts:69](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L69)
 
 ---
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:68](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L68)
+[src/services/theme/colorThemeService.ts:68](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L68)
 
 ## Methods
 
@@ -67,7 +67,7 @@ This will update the duplicated themes found in `colorThemes`
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:77](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L77)
+[src/services/theme/colorThemeService.ts:77](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L77)
 
 ---
 
@@ -87,7 +87,7 @@ Get the current Color Theme
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:118](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L118)
+[src/services/theme/colorThemeService.ts:118](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L118)
 
 ---
 
@@ -113,7 +113,7 @@ Get specific theme via id
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:113](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L113)
+[src/services/theme/colorThemeService.ts:113](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L113)
 
 ---
 
@@ -133,7 +133,7 @@ Get all themes in `colorThemes`
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:138](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L138)
+[src/services/theme/colorThemeService.ts:138](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L138)
 
 ---
 
@@ -153,7 +153,7 @@ Reload current theme
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:142](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L142)
+[src/services/theme/colorThemeService.ts:142](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L142)
 
 ---
 
@@ -173,7 +173,7 @@ Reset theme
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:146](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L146)
+[src/services/theme/colorThemeService.ts:146](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L146)
 
 ---
 
@@ -200,7 +200,7 @@ Please ensure the theme could be found in `colorThemes`
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:122](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L122)
+[src/services/theme/colorThemeService.ts:122](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L122)
 
 ---
 
@@ -226,4 +226,4 @@ Update specific theme,
 
 #### Defined in
 
-[src/services/theme/colorThemeService.ts:92](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/theme/colorThemeService.ts#L92)
+[src/services/theme/colorThemeService.ts:92](https://github.com/DTStack/molecule/blob/3c64296/src/services/theme/colorThemeService.ts#L92)

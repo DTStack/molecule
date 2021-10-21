@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/collapse/index.tsx:44](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/collapse/index.tsx#L44)
+[src/components/collapse/index.tsx:44](https://github.com/DTStack/molecule/blob/3c64296/src/components/collapse/index.tsx#L44)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/collapse/index.tsx:43](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/collapse/index.tsx#L43)
+[src/components/collapse/index.tsx:43](https://github.com/DTStack/molecule/blob/3c64296/src/components/collapse/index.tsx#L43)
 
 ## Methods
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/collapse/index.tsx:45](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/collapse/index.tsx#L45)
+[src/components/collapse/index.tsx:45](https://github.com/DTStack/molecule/blob/3c64296/src/components/collapse/index.tsx#L45)
 
 ---
 
@@ -66,4 +66,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/collapse/index.tsx:46](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/collapse/index.tsx#L46)
+[src/components/collapse/index.tsx:46](https://github.com/DTStack/molecule/blob/3c64296/src/components/collapse/index.tsx#L46)

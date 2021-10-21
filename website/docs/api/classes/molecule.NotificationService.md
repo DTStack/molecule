@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/notificationService.ts:47](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/notificationService.ts#L47)
+[src/services/notificationService.ts:46](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L46)
 
 ## Properties
 
@@ -47,7 +47,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/notificationService.ts:45](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/notificationService.ts#L45)
+[src/services/notificationService.ts:44](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L44)
 
 ## Methods
 
@@ -79,7 +79,37 @@ Add new notification items
 
 #### Defined in
 
-[src/services/notificationService.ts:101](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/notificationService.ts#L101)
+[src/services/notificationService.ts:100](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L100)
+
+---
+
+### count
+
+▸ **count**(`name`): `number`
+
+Count the service event
+
+#### Parameters
+
+| Name   | Type     | Description |
+| :----- | :------- | :---------- |
+| `name` | `string` | Event name  |
+
+#### Returns
+
+`number`
+
+#### Implementation of
+
+[INotificationService](../interfaces/molecule.INotificationService).[count](../interfaces/molecule.INotificationService#count)
+
+#### Inherited from
+
+[Component](molecule.react.Component).[count](molecule.react.Component#count)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -110,13 +140,15 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
 
 ---
 
 ### forceUpdate
 
 ▸ **forceUpdate**(): `void`
+
+Force to update the Component
 
 #### Returns
 
@@ -132,13 +164,15 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L58)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
 
 ---
 
 ### getState
 
 ▸ **getState**(): [`INotification`](../interfaces/molecule.INotification)<`any`\>
+
+Get the Component state
 
 #### Returns
 
@@ -154,44 +188,15 @@ Emit the service event
 
 #### Defined in
 
-[src/react/component.ts:62](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L62)
-
----
-
-### onEvent
-
-▸ **onEvent**(`name`, `callback`): `void`
-
-Subscribe the component event
-
-#### Parameters
-
-| Name       | Type  |
-| :--------- | :---- |
-| `name`     | `any` |
-| `callback` | `any` |
-
-#### Returns
-
-`void`
-
-#### Implementation of
-
-[INotificationService](../interfaces/molecule.INotificationService).[onEvent](../interfaces/molecule.INotificationService#onevent)
-
-#### Inherited from
-
-[Component](molecule.react.Component).[onEvent](molecule.react.Component#onevent)
-
-#### Defined in
-
-[src/react/component.ts:66](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L66)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
 
 ---
 
 ### onUpdateState
 
 ▸ **onUpdateState**(`callback`): `void`
+
+Listen to the Component state update event
 
 #### Parameters
 
@@ -213,7 +218,7 @@ Subscribe the component event
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L54)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
 
 ---
 
@@ -239,7 +244,31 @@ Remove the specific notification item by id
 
 #### Defined in
 
-[src/services/notificationService.ts:79](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/notificationService.ts#L79)
+[src/services/notificationService.ts:78](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L78)
+
+---
+
+### removeOnUpdateState
+
+▸ **removeOnUpdateState**(): `void`
+
+Remove the Component update event listening
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[INotificationService](../interfaces/molecule.INotificationService).[removeOnUpdateState](../interfaces/molecule.INotificationService#removeonupdatestate)
+
+#### Inherited from
+
+[Component](molecule.react.Component).[removeOnUpdateState](molecule.react.Component#removeonupdatestate)
+
+#### Defined in
+
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
 
 ---
 
@@ -269,7 +298,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:50](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L50)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
 
 ---
 
@@ -289,7 +318,7 @@ Reset notifications, this will clear the pending notifications
 
 #### Defined in
 
-[src/services/notificationService.ts:120](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/notificationService.ts#L120)
+[src/services/notificationService.ts:119](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L119)
 
 ---
 
@@ -320,7 +349,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:37](https://github.com/DTStack/molecule/blob/1b0aa04/src/react/component.ts#L37)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
 
 ---
 
@@ -351,7 +380,7 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/1b0aa04/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -371,7 +400,37 @@ Toggle the Notification view between display or hidden
 
 #### Defined in
 
-[src/services/notificationService.ts:52](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/notificationService.ts#L52)
+[src/services/notificationService.ts:51](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L51)
+
+---
+
+### unsubscribe
+
+▸ **unsubscribe**(`name`): `void`
+
+Unsubscribe the specific event
+
+#### Parameters
+
+| Name   | Type  | Description    |
+| :----- | :---- | :------------- |
+| `name` | `any` | The event name |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[INotificationService](../interfaces/molecule.INotificationService).[unsubscribe](../interfaces/molecule.INotificationService#unsubscribe)
+
+#### Inherited from
+
+[Component](molecule.react.Component).[unsubscribe](molecule.react.Component#unsubscribe)
+
+#### Defined in
+
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -403,4 +462,4 @@ Update the specific notification item
 
 #### Defined in
 
-[src/services/notificationService.ts:58](https://github.com/DTStack/molecule/blob/1b0aa04/src/services/notificationService.ts#L58)
+[src/services/notificationService.ts:57](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L57)

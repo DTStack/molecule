@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/menu/subMenu.tsx:20](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/subMenu.tsx#L20)
+[src/components/menu/subMenu.tsx:20](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/subMenu.tsx#L20)
 
 ---
 
@@ -25,4 +25,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/menu/subMenu.tsx:19](https://github.com/DTStack/molecule/blob/1b0aa04/src/components/menu/subMenu.tsx#L19)
+[src/components/menu/subMenu.tsx:19](https://github.com/DTStack/molecule/blob/3c64296/src/components/menu/subMenu.tsx#L19)

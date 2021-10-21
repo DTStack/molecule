@@ -15,4 +15,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/menuBar.ts:32](https://github.com/DTStack/molecule/blob/1b0aa04/src/model/workbench/menuBar.ts#L32)
+[src/model/workbench/menuBar.ts:23](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/menuBar.ts#L23)

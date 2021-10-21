@@ -1,6 +1,6 @@
 ---
 id: 'modules'
-title: 'molecule'
+title: 'Molecule'
 sidebar_label: 'Exports'
 sidebar_position: 0.5
 custom_edit_url: null
@@ -22,7 +22,7 @@ custom_edit_url: null
 
 ### default
 
-• **default**: `Object`
+Renames and re-exports [molecule](namespaces/molecule)
 
 ## Variables
 
@@ -32,4 +32,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/workbench/workbench.tsx:113](https://github.com/DTStack/molecule/blob/1b0aa04/src/workbench/workbench.tsx#L113)
+[src/workbench/workbench.tsx:113](https://github.com/DTStack/molecule/blob/3c64296/src/workbench/workbench.tsx#L113)

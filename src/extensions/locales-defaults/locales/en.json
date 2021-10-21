@@ -2,6 +2,7 @@
     "id": "en",
     "name": "English",
     "source": {
+        "molecule.welcome": "Welcome to Molecule",
         "menu.file": "File",
         "menu.settings": "Settings",
         "menu.colorTheme": "Color Theme",

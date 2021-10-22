@@ -1,12 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { fireEvent, render } from '@testing-library/react';
-import {
-    Breadcrumb,
-    breadcrumbLabelClassName,
-    defaultBreadcrumbClassName,
-} from 'mo/components/breadcrumb';
+import { Breadcrumb } from 'mo/components/breadcrumb';
 import type { IBreadcrumbItemProps } from 'mo/components/breadcrumb';
+import { breadcrumbLabelClassName, defaultBreadcrumbClassName } from '../base';
 
 const mockData: IBreadcrumbItemProps[] = new Array(3)
     .fill(1)

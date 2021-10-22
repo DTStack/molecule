@@ -1,69 +1,90 @@
 import React from 'react';
-import { prefixClaName, classNames, getBEMElement } from 'mo/common/className';
-import { ComponentProps } from 'react';
+import { classNames } from 'mo/common/className';
 import { Icon } from 'mo/components';
+import type { UniqueId, HTMLElementProps } from 'mo/common/types';
+import {
+    defaultBreadcrumbClassName,
+    breadcrumbItemClassName,
+    breadcrumbLabelClassName,
+} from './base';
+import { getDataAttributionsFromProps } from 'mo/common/dom';
 
-export interface IBreadcrumbItemProps {
-    id: string;
+export interface IBreadcrumbItemProps extends HTMLElementProps {
+    id: UniqueId;
     href?: string;
     name?: string;
     icon?: string | JSX.Element;
-    className?: string;
     render?(item: IBreadcrumbItemProps): React.ReactNode;
+
+    [key: string]: any;
 }
 
-export interface IBreadcrumbProps extends ComponentProps<'div'> {
+export interface IBreadcrumbProps extends HTMLElementProps {
     routes: IBreadcrumbItemProps[];
     separator?: React.ReactNode;
     onClick?(event: React.MouseEvent, item?: IBreadcrumbItemProps): void;
+
+    [key: string]: any;
 }
 
-export const defaultBreadcrumbClassName = prefixClaName('breadcrumb');
-
-export const breadcrumbItemClassName = getBEMElement(
-    defaultBreadcrumbClassName,
-    'item'
-);
-
-export const breadcrumbLabelClassName = getBEMElement(
-    defaultBreadcrumbClassName,
-    'label'
-);
-
 export function Breadcrumb(props: IBreadcrumbProps) {
-    const { onClick, className, separator, routes = [], ...extra } = props;
-
-    const getEvents = (item: IBreadcrumbItemProps) => {
-        return {
-            onClick: function (e: React.MouseEvent) {
-                onClick?.(e, item);
-            },
-        };
-    };
+    const {
+        onClick,
+        className,
+        separator,
+        routes = [],
+        style,
+        title,
+        role,
+        ...extra
+    } = props;
 
     const claNames = classNames(defaultBreadcrumbClassName, className);
     const len = routes.length;
     const sep = separator || <Icon type="chevron-right" />;
+    const dataAttrs = getDataAttributionsFromProps(extra);
 
     return (
-        <div className={claNames} {...extra}>
-            {routes.map((route: IBreadcrumbItemProps, index: number) => (
-                <a
-                    key={route.id}
-                    className={classNames(
-                        breadcrumbItemClassName,
-                        route.className
-                    )}
-                    href={route.href}
-                    {...getEvents(route)}
-                >
-                    <Icon type={route.icon} />
-                    <span className={breadcrumbLabelClassName}>
-                        {route.render ? route.render(route) : route.name}
-                    </span>
-                    {len - index > 1 ? sep : null}
-                </a>
-            ))}
+        <div
+            className={claNames}
+            role={role}
+            style={style}
+            title={title}
+            {...dataAttrs}
+        >
+            {routes.map((route, index) => {
+                const {
+                    id,
+                    className,
+                    title,
+                    style,
+                    href,
+                    icon,
+                    render,
+                    name,
+                    ...rest
+                } = route;
+                return (
+                    <a
+                        key={id}
+                        className={classNames(
+                            breadcrumbItemClassName,
+                            className
+                        )}
+                        title={title}
+                        style={style}
+                        href={href}
+                        onClick={(e) => onClick?.(e, route)}
+                        {...getDataAttributionsFromProps(rest)}
+                    >
+                        <Icon type={icon} />
+                        <span className={breadcrumbLabelClassName}>
+                            {render ? render(route) : name}
+                        </span>
+                        {len - index > 1 ? sep : null}
+                    </a>
+                );
+            })}
         </div>
     );
 }

@@ -18,7 +18,9 @@ import { cloneDeep, isEqual } from 'lodash';
 import { modules } from './builtinService/const';
 import { BuiltinService, IBuiltinService } from './builtinService';
 
-export type BuiltInSettingsTabType = typeof modules.BuiltInSettingsTab;
+export type BuiltInSettingsTabType = ReturnType<
+    typeof modules.BuiltInSettingsTab
+>;
 
 export interface ISettingsService {
     /**

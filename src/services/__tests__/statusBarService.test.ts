@@ -9,7 +9,7 @@ import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { modules } from '../builtinService/const';
 
 const mockStatusData = {
-    ...modules.STATUS_EDITOR_INFO,
+    ...modules.STATUS_EDITOR_INFO(),
 };
 
 const anotherStatusData = {
@@ -96,12 +96,12 @@ describe('Test StatusBarService', () => {
         expect(expected).toEqual({ ...anotherStatusData, sortIndex: 1 });
 
         statusBarService.update({
-            id: modules.STATUS_EDITOR_INFO.id,
+            id: modules.STATUS_EDITOR_INFO().id,
             sortIndex: 0,
         });
 
         expect(
-            statusBarService.getStatusBarItem(modules.STATUS_EDITOR_INFO.id)
+            statusBarService.getStatusBarItem(modules.STATUS_EDITOR_INFO().id)
                 ?.sortIndex
         ).toBe(0);
     });

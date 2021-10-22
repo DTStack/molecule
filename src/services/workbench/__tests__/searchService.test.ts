@@ -65,7 +65,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to toggle case sensitive', () => {
-        const testValue = modules.builtInSearchAddons;
+        const testValue = modules.builtInSearchAddons();
         const TEST_RESULT = Object.assign({}, testValue[0], { checked: true });
 
         searchBarService.setState({
@@ -88,7 +88,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to toggle whole word', () => {
-        const testValue = modules.builtInSearchAddons;
+        const testValue = modules.builtInSearchAddons();
         const TEST_RESULT = Object.assign({}, testValue[1], { checked: true });
 
         searchBarService.setState({
@@ -111,7 +111,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to toggle regex', () => {
-        const testValue = modules.builtInSearchAddons;
+        const testValue = modules.builtInSearchAddons();
         const TEST_RESULT = Object.assign({}, testValue[2], { checked: true });
 
         searchBarService.setState({
@@ -134,7 +134,7 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to toggle preserve case', () => {
-        const testValue = modules.builtInReplaceAddons;
+        const testValue = modules.builtInReplaceAddons();
         const TEST_RESULT = Object.assign({}, testValue[0], { checked: true });
 
         searchBarService.setState({

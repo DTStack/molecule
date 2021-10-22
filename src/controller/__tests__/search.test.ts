@@ -42,7 +42,7 @@ describe('The search controller', () => {
         expect(sidebarService.getState().panes).toHaveLength(1);
         expect(sidebarService.getState().panes[0]).toEqual(
             expect.objectContaining({
-                id: modules.builtInSearchActivityItem.id,
+                id: modules.builtInSearchActivityItem().id,
                 title: 'SEARCH',
             })
         );

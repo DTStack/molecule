@@ -92,7 +92,7 @@ export class ExplorerService
 
     public getAction(id: string): IMenuItemProps | undefined {
         const { headerToolBar } = this.state;
-        const action = headerToolBar.contextMenu?.find(searchById(id));
+        const action = headerToolBar?.contextMenu?.find(searchById(id));
         return action ? cloneDeep(action) : action;
     }
 
@@ -130,6 +130,12 @@ export class ExplorerService
             return;
         }
         const { headerToolBar } = this.state;
+        if (!headerToolBar) {
+            logger.error(
+                "Molecule can' update the action, because there is no headerToolBar in Explorer"
+            );
+            return;
+        }
         const nextActions = headerToolBar.contextMenu?.concat() || [];
 
         const target = nextActions.find(searchById(action.id));
@@ -186,6 +192,12 @@ export class ExplorerService
     public addAction(action: IMenuItemProps | IMenuItemProps[]) {
         const workInProgressActions = Array.isArray(action) ? action : [action];
         const { headerToolBar } = this.state;
+        if (!headerToolBar) {
+            logger.error(
+                "Molecule can't add the action, because there is no headerToolBar in Explorer"
+            );
+            return;
+        }
         const newActions = headerToolBar.contextMenu?.concat() || [];
         workInProgressActions.forEach((action) => {
             const index = newActions.findIndex(searchById(action.id));
@@ -226,6 +238,12 @@ export class ExplorerService
 
     public removeAction(id: string) {
         const { headerToolBar } = this.state;
+        if (!headerToolBar) {
+            logger.error(
+                "Molecule can' remove the action, because there is no headerToolBar in Explorer"
+            );
+            return;
+        }
         const newActions = headerToolBar.contextMenu || [];
         const index = newActions?.findIndex(searchById(id));
         if (index > -1) {
@@ -256,6 +274,12 @@ export class ExplorerService
     // update header toolbar status
     public toggleHeaderBar(id: string) {
         const { headerToolBar } = this.state;
+        if (!headerToolBar) {
+            logger.error(
+                "Molecule can' toggle the header bar, because there is no headerToolBar in Explorer"
+            );
+            return;
+        }
         const nextMenu = headerToolBar.contextMenu?.concat() || [];
         const currentMenu = nextMenu.find(searchById(id));
         if (currentMenu) {
@@ -273,7 +297,7 @@ export class ExplorerService
     public reset() {
         this.setState({
             data: [],
-            headerToolBar: {},
+            headerToolBar: undefined,
         });
     }
 

@@ -41,7 +41,7 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
       >
         <li
           className="mo-action-bar__item"
-          id="panel.toolbox.maximize"
+          data-index={0}
           onClick={[Function]}
         >
           <span
@@ -52,7 +52,7 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
         </li>
         <li
           className="mo-action-bar__item"
-          id="panel.toolbox.closePanel"
+          data-index={1}
           onClick={[Function]}
         >
           <span

@@ -4,6 +4,7 @@ import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
 import { searchById } from 'mo/common/utils';
 import { ExplorerService } from '../workbench';
+import { modules } from '../builtinService/const';
 
 const explorerService = container.resolve(ExplorerService);
 
@@ -34,7 +35,7 @@ describe('Test the Explorer Service', () => {
     test('Should NOT have defualt header bar tool', () => {
         const state = explorerService.getState();
         expect(state.data).toEqual([]);
-        expect(state.headerToolBar).toEqual({});
+        expect(state.headerToolBar).toBeUndefined();
     });
 
     describe('Test the panel data', () => {
@@ -55,6 +56,10 @@ describe('Test the Explorer Service', () => {
         });
 
         test('Should support to add panels meanwhile add actions', () => {
+            // initialize the header tool bar
+            explorerService.setState({
+                headerToolBar: modules.builtInExplorerHeaderToolbar,
+            });
             explorerService.addPanel([panelData]);
 
             const state = explorerService.getState();
@@ -102,6 +107,10 @@ describe('Test the Explorer Service', () => {
         });
 
         test('Should support to remove a panel', () => {
+            // initialize the header tool bar
+            explorerService.setState({
+                headerToolBar: modules.builtInExplorerHeaderToolbar,
+            });
             explorerService.addPanel([panelData]);
 
             explorerService.removePanel(panelData.id);
@@ -112,6 +121,10 @@ describe('Test the Explorer Service', () => {
         });
 
         test('Should support to toggle the visibility of the panel', () => {
+            // initialize the header tool bar
+            explorerService.setState({
+                headerToolBar: modules.builtInExplorerHeaderToolbar,
+            });
             explorerService.addPanel([panelData]);
 
             const state = explorerService.getState();
@@ -137,6 +150,12 @@ describe('Test the Explorer Service', () => {
     });
 
     describe('Test the actions data in toolbar actions', () => {
+        beforeEach(() => {
+            // initialize the header tool bar
+            explorerService.setState({
+                headerToolBar: modules.builtInExplorerHeaderToolbar,
+            });
+        });
         test('Should get undefined before add', () => {
             const res = explorerService.getAction(actionData.id);
             expect(res).toBeUndefined();
@@ -196,6 +215,23 @@ describe('Test the Explorer Service', () => {
 
             explorerService.removeAction(actionData.id);
             expect(explorerService.getAction(actionData.id)).toBeUndefined();
+        });
+
+        test('Should NOT remove a action without headerToolbar', () => {
+            // reset the headerToolbar
+            explorerService.reset();
+            expectLoggerErrorToBeCalled(() => {
+                explorerService.addAction(actionData);
+            });
+            expectLoggerErrorToBeCalled(() => {
+                explorerService.removeAction(actionData.id);
+            });
+            expectLoggerErrorToBeCalled(() => {
+                explorerService.toggleHeaderBar(actionData.id);
+            });
+            expectLoggerErrorToBeCalled(() => {
+                explorerService.updateAction(actionData);
+            });
         });
 
         test('Should support to toggle the status of the action', () => {

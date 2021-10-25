@@ -66,19 +66,19 @@ describe('Test NotificationPane Component', () => {
 
     test('Listen to the onActionBarClick event', () => {
         expectFnCalled((fn) => {
-            render(
+            const { getByTestId } = render(
                 <NotificationPane
                     id="test"
                     onActionBarClick={fn}
                     actionBar={[
                         {
                             id: 'test',
+                            'data-testid': 'test',
                         },
                     ]}
                 />
             );
-            const testDom = select<HTMLDivElement>('#test');
-            fireEvent.click(testDom!);
+            fireEvent.click(getByTestId('test'));
         });
     });
 

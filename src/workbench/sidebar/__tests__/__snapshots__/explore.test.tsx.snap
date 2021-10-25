@@ -28,7 +28,8 @@ exports[`The Explorer Component Match Snapshot 1`] = `
           >
             <li
               className="mo-action-bar__item"
-              id="test"
+              data-index={0}
+              data-testid="mockToolbar"
               onClick={[Function]}
             >
               <span

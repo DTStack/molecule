@@ -36,16 +36,16 @@ export interface IExplorerPanelItem {
 }
 export interface IExplorer {
     data: IExplorerPanelItem[];
-    headerToolBar: IActionBarItemProps;
+    headerToolBar?: IActionBarItemProps;
 }
 
 export class IExplorerModel implements IExplorer {
     public data: IExplorerPanelItem[];
-    public headerToolBar: IActionBarItemProps;
+    public headerToolBar?: IActionBarItemProps;
 
     constructor(
         data: IExplorerPanelItem[] = [],
-        headerToolBar: IActionBarItemProps = {}
+        headerToolBar?: IActionBarItemProps
     ) {
         this.data = data;
         this.headerToolBar = headerToolBar;

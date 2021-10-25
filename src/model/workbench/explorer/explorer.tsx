@@ -1,5 +1,6 @@
 import React from 'react';
 import { IActionBarItemProps } from 'mo/components/actionBar';
+import type { UniqueId } from 'mo/common/types';
 
 export enum ExplorerEvent {
     onClick = 'explorer.onClick',
@@ -13,7 +14,7 @@ export interface IExplorerPanelItem {
     /**
      * It must be unique in the Explorer Panel Data
      */
-    id: string;
+    id: UniqueId;
     /**
      * @requires true
      * explorer panel's title

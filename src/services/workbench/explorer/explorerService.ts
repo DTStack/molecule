@@ -12,6 +12,7 @@ import { IMenuItemProps } from 'mo/components/menu';
 import { searchById } from 'mo/common/utils';
 import { IActionBarItemProps } from 'mo/components';
 import logger from 'mo/common/logger';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IExplorerService extends Component<IExplorer> {
     /**
@@ -25,15 +26,15 @@ export interface IExplorerService extends Component<IExplorer> {
     /**
      * Remove a panel via id, as well as remove the corresponding action bar
      */
-    removePanel(id: string): void;
+    removePanel(id: UniqueId): void;
     /**
      * Toggle panel hidden, as well as toggle the toolbar status
      */
-    togglePanel(id: string): void;
+    togglePanel(id: UniqueId): void;
     /**
      * Only toggle the toolbar status
      */
-    toggleHeaderBar(id: string): void;
+    toggleHeaderBar(id: UniqueId): void;
     /**
      * Only add an action in toolbar actions
      */
@@ -42,7 +43,7 @@ export interface IExplorerService extends Component<IExplorer> {
      * Get the specific action in toolbar actions
      * @param id
      */
-    getAction(id: string): IMenuItemProps | undefined;
+    getAction(id: UniqueId): IMenuItemProps | undefined;
     /**
      * Update the action in toolbar actions
      * @param action
@@ -52,7 +53,7 @@ export interface IExplorerService extends Component<IExplorer> {
      * Remove the specific header toolbar action
      * @param id action id
      */
-    removeAction(id: string): void;
+    removeAction(id: UniqueId): void;
     /**
      * Reset the ExplorerService state, it's mainly for customizing the Explorer
      */
@@ -90,7 +91,7 @@ export class ExplorerService
         return icon === 'check' ? '' : 'check';
     }
 
-    public getAction(id: string): IMenuItemProps | undefined {
+    public getAction(id: UniqueId): IMenuItemProps | undefined {
         const { headerToolBar } = this.state;
         const action = headerToolBar?.contextMenu?.find(searchById(id));
         return action ? cloneDeep(action) : action;
@@ -221,7 +222,7 @@ export class ExplorerService
         });
     }
 
-    public removePanel(id: string) {
+    public removePanel(id: UniqueId) {
         const { data } = this.state;
         const next = [...data!];
         const index = next.findIndex(searchById(id));
@@ -236,7 +237,7 @@ export class ExplorerService
         this.removeAction(id);
     }
 
-    public removeAction(id: string) {
+    public removeAction(id: UniqueId) {
         const { headerToolBar } = this.state;
         if (!headerToolBar) {
             logger.error(
@@ -256,7 +257,7 @@ export class ExplorerService
     }
 
     // update panel hidden
-    public togglePanel(id: string) {
+    public togglePanel(id: UniqueId) {
         const { data } = this.state;
         const next = data.concat();
         // find current panel
@@ -272,7 +273,7 @@ export class ExplorerService
     }
 
     // update header toolbar status
-    public toggleHeaderBar(id: string) {
+    public toggleHeaderBar(id: UniqueId) {
         const { headerToolBar } = this.state;
         if (!headerToolBar) {
             logger.error(

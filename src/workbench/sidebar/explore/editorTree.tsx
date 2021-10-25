@@ -25,7 +25,7 @@ import { classNames } from 'mo/common/className';
 import { getEventPosition } from 'mo/common/dom';
 import { localize } from 'mo/i18n/localize';
 import {
-    DataBaseProps,
+    ICollapseItem,
     HEADER_HEIGTH,
     MAX_GROW_HEIGHT,
 } from 'mo/components/collapse';
@@ -56,7 +56,7 @@ export interface IOpenEditProps extends UnionEditor {
         groupId: number,
         file?: ITabProps
     ) => void;
-    panel: DataBaseProps;
+    panel: ICollapseItem;
 }
 
 const EditorTree = (props: IOpenEditProps) => {

@@ -15,10 +15,10 @@ import {
 } from './base';
 import { classNames } from 'mo/common/className';
 import { Scrollable } from 'mo/components';
-import { DataBaseProps } from 'mo/components/collapse';
+import { ICollapseItem } from 'mo/components/collapse';
 
 export interface IFolderTreeProps extends IFolderTreeController, IFolderTree {
-    panel: DataBaseProps;
+    panel: ICollapseItem;
 }
 
 const detectHasEditableStatus = (data) => {

@@ -14,13 +14,13 @@ import {
     collapseContentClassName,
     collapseTitleClassName,
 } from './base';
-import { select } from 'mo/common/dom';
+import { getDataAttributionsFromProps, select } from 'mo/common/dom';
+import type { HTMLElementProps, UniqueId } from 'mo/common/types';
 
-type RenderFunctionProps = (data: DataBaseProps) => React.ReactNode;
-export interface DataBaseProps {
-    id: string;
+type RenderFunctionProps = (data: ICollapseItem) => React.ReactNode;
+export interface ICollapseItem extends HTMLElementProps {
+    id: UniqueId;
     name: string;
-    className?: string;
     hidden?: boolean;
     toolbar?: IActionBarItemProps[];
     renderPanel?: RenderFunctionProps;
@@ -39,14 +39,15 @@ export interface DataBaseProps {
     [key: string]: any;
 }
 
-export interface ICollapseProps {
-    data?: Partial<DataBaseProps>[];
-    className?: string;
+export interface ICollapseProps extends HTMLElementProps {
+    data?: ICollapseItem[];
     onCollapseChange?: (keys: React.Key[]) => void;
     onToolbarClick?: (
         item: IActionBarItemProps,
-        parentPanel: DataBaseProps
+        parentPanel: ICollapseItem
     ) => void;
+
+    [key: string]: any;
 }
 
 // default collapse height, only contains header
@@ -66,6 +67,9 @@ export function Collapse(props: ICollapseProps) {
         data = [],
         onCollapseChange,
         onToolbarClick,
+        title,
+        style,
+        role,
         ...restProps
     } = props;
 
@@ -74,7 +78,7 @@ export function Collapse(props: ICollapseProps) {
     // assets data must have id
     const filterData = visibleData.filter(
         (panel) => panel.id
-    ) as DataBaseProps[];
+    ) as ICollapseItem[];
     if (filterData.length < visibleData.length) {
         Logger.warn(new SyntaxError('collapse data must have id'));
     }
@@ -153,14 +157,14 @@ export function Collapse(props: ICollapseProps) {
     const handleToolbarClick = (
         e: React.MouseEvent,
         item: IActionBarItemProps,
-        panel: DataBaseProps
+        panel: ICollapseItem
     ) => {
         e.stopPropagation();
         onToolbarClick?.(item, panel);
     };
 
     const renderPanels = (
-        data: DataBaseProps,
+        data: ICollapseItem,
         render?: RenderFunctionProps
     ) => {
         if (render) {
@@ -172,7 +176,7 @@ export function Collapse(props: ICollapseProps) {
     /**
      * Returns the grow of data, or 1
      */
-    const getGrow = (data: DataBaseProps) => {
+    const getGrow = (data: ICollapseItem) => {
         if (typeof data.config?.grow === 'number') {
             return data.config.grow;
         } else {
@@ -185,7 +189,7 @@ export function Collapse(props: ICollapseProps) {
      */
     const getZeroPanelsByKeys = (
         keys: React.Key[],
-        panels: DataBaseProps[]
+        panels: ICollapseItem[]
     ) => {
         return keys.filter((key) => {
             const targetPanel = panels.find((panel) => panel.id === key);
@@ -232,8 +236,8 @@ export function Collapse(props: ICollapseProps) {
      */
     const calcPosition = (
         keys: React.Key[],
-        panel: DataBaseProps,
-        panels: DataBaseProps[]
+        panel: ICollapseItem,
+        panels: ICollapseItem[]
     ) => {
         // init a Tuple save height and top
         const res = [0, 0];
@@ -283,7 +287,7 @@ export function Collapse(props: ICollapseProps) {
                 });
 
                 // count the non-empty & active & non-grow-zero panels in active panels
-                const nonEmptyAndActivePanels: DataBaseProps[] = [];
+                const nonEmptyAndActivePanels: ICollapseItem[] = [];
                 const nonEmptyAndActivePanelKeys = keys.filter((key) => {
                     const target = panels.find((p) => p.id === key);
                     if (target) {
@@ -341,24 +345,35 @@ export function Collapse(props: ICollapseProps) {
         return res;
     };
 
+    const dataAttrs = getDataAttributionsFromProps(restProps);
+
     return (
         <div
             className={classNames(defaultCollapseClassName, className)}
+            title={title}
+            role={role}
+            style={style}
             ref={wrapper}
-            {...restProps}
+            {...dataAttrs}
         >
             {filterData
                 .filter((p) => !p.hidden)
                 .map((panel) => {
                     const isActive = activePanelKeys.includes(panel.id);
+                    const attrs = getDataAttributionsFromProps(panel);
                     return (
                         <div
                             className={classNames(
+                                panel.className,
                                 collapseItemClassName,
                                 isActive && collapseActiveClassName
                             )}
                             data-content={panel.id}
                             key={panel.id}
+                            style={panel.style}
+                            role={panel.role}
+                            title={panel.title}
+                            {...attrs}
                         >
                             <div
                                 className={collapseHeaderClassName}

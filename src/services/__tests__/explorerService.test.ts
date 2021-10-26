@@ -58,7 +58,7 @@ describe('Test the Explorer Service', () => {
         test('Should support to add panels meanwhile add actions', () => {
             // initialize the header tool bar
             explorerService.setState({
-                headerToolBar: modules.builtInExplorerHeaderToolbar,
+                headerToolBar: modules.builtInExplorerHeaderToolbar(),
             });
             explorerService.addPanel([panelData]);
 
@@ -109,7 +109,7 @@ describe('Test the Explorer Service', () => {
         test('Should support to remove a panel', () => {
             // initialize the header tool bar
             explorerService.setState({
-                headerToolBar: modules.builtInExplorerHeaderToolbar,
+                headerToolBar: modules.builtInExplorerHeaderToolbar(),
             });
             explorerService.addPanel([panelData]);
 
@@ -123,7 +123,7 @@ describe('Test the Explorer Service', () => {
         test('Should support to toggle the visibility of the panel', () => {
             // initialize the header tool bar
             explorerService.setState({
-                headerToolBar: modules.builtInExplorerHeaderToolbar,
+                headerToolBar: modules.builtInExplorerHeaderToolbar(),
             });
             explorerService.addPanel([panelData]);
 
@@ -153,7 +153,7 @@ describe('Test the Explorer Service', () => {
         beforeEach(() => {
             // initialize the header tool bar
             explorerService.setState({
-                headerToolBar: modules.builtInExplorerHeaderToolbar,
+                headerToolBar: modules.builtInExplorerHeaderToolbar(),
             });
         });
         test('Should get undefined before add', () => {

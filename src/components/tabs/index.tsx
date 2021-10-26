@@ -11,6 +11,7 @@ import {
 
 import { Tab, ITabProps } from './tab';
 import DragAndDrop from './dragAndDrop';
+import type { UniqueId } from 'mo/common/types';
 
 export type TabsType = 'line' | 'card';
 export interface ITabsProps<T> extends React.ComponentProps<any> {
@@ -18,12 +19,12 @@ export interface ITabsProps<T> extends React.ComponentProps<any> {
     closable?: boolean;
     editable?: boolean;
     data?: ITabProps<T>[];
-    activeTab?: string;
+    activeTab?: UniqueId;
     type?: TabsType;
     style?: React.CSSProperties;
-    onCloseTab?: (key?: string) => void;
+    onCloseTab?: (key: UniqueId) => void;
     onMoveTab?: (tabs: ITabProps<T>[]) => void;
-    onSelectTab?: (key?: string) => void;
+    onSelectTab?: (key: UniqueId) => void;
 }
 
 export const tabsClassName = prefixClaName('tabs');

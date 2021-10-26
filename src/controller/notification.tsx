@@ -53,7 +53,7 @@ export class NotificationController
     }
 
     public onCloseNotification = (item: INotificationItem<any>): void => {
-        if (typeof item.id === 'number') {
+        if (typeof item.id === 'number' || typeof item.id === 'string') {
             this.notificationService.remove(item.id);
         }
     };

@@ -18,7 +18,7 @@ const tabData = {
     name: 'test',
 };
 
-function DTab(args: ITabProps & ITabEvent) {
+function DTab(args: Omit<ITabProps & ITabEvent, 'id'>) {
     return (
         <DragAndDrop>
             <Tab {...tabData} {...args} />

@@ -59,7 +59,9 @@ export class QuickRedo extends Action2 {
                         currentActiveGroup.id!
                     );
                     editorInstance?.focus();
-                    const model = MonacoEditor.getModel(Uri.parse(tab!.id!))!;
+                    const model = MonacoEditor.getModel(
+                        Uri.parse(tab!.id!.toString())
+                    )!;
                     (model as any).redo();
                 }
             }

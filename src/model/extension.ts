@@ -1,3 +1,4 @@
+import type { UniqueId } from 'mo/common/types';
 import { IExtensionService } from 'mo/services';
 import { IColorTheme } from './colorTheme';
 import { IIconTheme } from './iconTheme';
@@ -41,7 +42,7 @@ export interface IExtension {
     /**
      * The ID of extension required
      */
-    id: string;
+    id: UniqueId;
     /**
      * The name of extension
      */

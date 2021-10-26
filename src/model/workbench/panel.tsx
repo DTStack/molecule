@@ -2,7 +2,6 @@ import { editor as MonacoEditor } from 'mo/monaco';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { ITabProps } from 'mo/components/tabs/tab';
 export interface IPanelItem<T = any> extends ITabProps<T> {
-    id: string;
     /**
      * The same as HTMLElement title attribute
      */

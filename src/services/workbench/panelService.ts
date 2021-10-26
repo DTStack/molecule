@@ -16,6 +16,7 @@ import { searchById } from 'mo/common/utils';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { BuiltinService, IBuiltinService, LayoutService } from 'mo/services';
 import logger from 'mo/common/logger';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IPanelService extends Component<IPanel> {
     /**
@@ -31,7 +32,7 @@ export interface IPanelService extends Component<IPanel> {
      * So if you want to add a panel and meanwhile active it, please use the `open` method
      * @param id target panel id
      */
-    setActive(id: string): void;
+    setActive(id: UniqueId): void;
     /**
      * Open a new or existing panel item as the active in Panel view
      * @param panel
@@ -41,7 +42,7 @@ export interface IPanelService extends Component<IPanel> {
      * Get the specific panel
      * @param id
      */
-    getPanel(id: string): IPanelItem | undefined;
+    getPanel(id: UniqueId): IPanelItem | undefined;
     /**
      * Add new Panel items
      * @param data
@@ -63,7 +64,7 @@ export interface IPanelService extends Component<IPanel> {
      * Remove the specific panel
      * @param id
      */
-    remove(id: string): IPanelItem | undefined;
+    remove(id: UniqueId): IPanelItem | undefined;
     /**
      * Toggle the panel between maximized or normal
      */
@@ -72,7 +73,7 @@ export interface IPanelService extends Component<IPanel> {
      * Listen to the Panel tabs onChange event
      * @param callback
      */
-    onTabChange(callback: (panelId: string) => void): void;
+    onTabChange(callback: (panelId: UniqueId) => void): void;
     /**
      * Listen to the Panel toolbar click event
      * @param callback
@@ -84,7 +85,7 @@ export interface IPanelService extends Component<IPanel> {
      * Listen to the Panel tabs close event
      * @param callback
      */
-    onTabClose(callback: (panelId: string) => void): void;
+    onTabClose(callback: (panelId: UniqueId) => void): void;
     /**
      * Get the value of Output Panel
      */
@@ -135,7 +136,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         return outputPane?.outputEditorInstance;
     }
 
-    public setActive(id: string): void {
+    public setActive(id: UniqueId): void {
         const panel = this.getPanel(id);
         if (panel) {
             this.open(panel);
@@ -184,7 +185,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         });
     }
 
-    public getPanel(id: string): IPanelItem<any> | undefined {
+    public getPanel(id: UniqueId): IPanelItem<any> | undefined {
         const { data = [] } = this.state;
         return cloneDeepWith(data.find(searchById(id)), (value) => {
             // prevent the browser from OOM
@@ -262,7 +263,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         }
     }
 
-    public remove(id: string): IPanelItem | undefined {
+    public remove(id: UniqueId): IPanelItem | undefined {
         const { data } = this.state;
 
         const targetIndex = data?.findIndex(searchById(id));
@@ -287,7 +288,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         this.cleanOutput();
     }
 
-    public onTabChange(callback: (key: string) => void) {
+    public onTabChange(callback: (key: UniqueId) => void) {
         this.subscribe(PanelEvent.onTabChange, callback);
     }
 
@@ -297,7 +298,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
         this.subscribe(PanelEvent.onToolbarClick, callback);
     }
 
-    public onTabClose(callback: (key: string) => void) {
+    public onTabClose(callback: (key: UniqueId) => void) {
         this.subscribe(PanelEvent.onTabClose, callback);
     }
 }

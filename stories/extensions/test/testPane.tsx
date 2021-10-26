@@ -215,6 +215,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         const addANotification = function () {
             molecule.notification.add<string>([
                 {
+                    id: 'test',
                     value: 'Test Notification!',
                 },
             ]);

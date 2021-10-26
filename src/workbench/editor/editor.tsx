@@ -8,6 +8,7 @@ import EditorGroup from './group';
 import Welcome from './welcome';
 import { defaultEditorClassName } from './base';
 import { IEditorController } from 'mo/controller/editor';
+import type { UniqueId } from 'mo/common/types';
 
 export function Editor(props: IEditor & IEditorController) {
     const {
@@ -26,7 +27,7 @@ export function Editor(props: IEditor & IEditorController) {
         onPaneSizeChange,
     } = props;
 
-    const getEvents = (groupId: number) => {
+    const getEvents = (groupId: UniqueId) => {
         return {
             onMoveTab: (tabs) => onMoveTab?.(tabs, groupId),
             onCloseTab: (tabKey) => onCloseTab?.(tabKey, groupId),

@@ -1,5 +1,6 @@
 import React from 'react';
 import { IMenuItemProps } from 'mo/components/menu';
+import type { HTMLElementProps, UniqueId } from 'mo/common/types';
 
 export enum Float {
     left = 'left',
@@ -7,7 +8,7 @@ export enum Float {
 }
 
 export interface IStatusBarItem<T = any> extends HTMLElementProps {
-    id: string;
+    id: UniqueId;
     sortIndex?: number;
     data?: T;
     onClick?(e: React.MouseEvent, item?: IStatusBarItem);

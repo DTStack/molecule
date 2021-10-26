@@ -28,6 +28,7 @@ describe('The Notification Service', () => {
 
     test('Should support to generate random id for notices which without id', () => {
         const notices = {
+            id: 'test',
             value: 'test',
         };
         notificationService.add([notices]);

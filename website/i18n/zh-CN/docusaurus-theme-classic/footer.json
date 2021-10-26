@@ -1,0 +1,18 @@
+{
+    "title.Docs": {
+        "message": "文档",
+        "description": "开发文档"
+    },
+    "item.label.Quick Start": {
+        "message": "快速开始",
+        "description": "快速开始"
+    },
+    "item.label.Guides": {
+        "message": "开发指南",
+        "description": "开发指南"
+    },
+    "item.label.Help us translate": {
+        "message": "帮助我们翻译",
+        "description": "帮助我们一起翻译"
+    }
+}

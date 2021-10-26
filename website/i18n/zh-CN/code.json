@@ -1,0 +1,14 @@
+{
+    "page.quickStart": {
+        "message": "快速开始",
+        "description": "快速上手 Molecule"
+    },
+    "page.preview": {
+        "message": "预览",
+        "description": "在线预览 Molecule 示例"
+    },
+    "page.tagline": {
+        "message": "一个轻量级的 Web IDE UI 框架!",
+        "description": "一个轻量级的 Web IDE UI 框架!"
+    }
+}

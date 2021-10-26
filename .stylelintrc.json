@@ -6,5 +6,10 @@
         "max-nesting-depth": 4,
         "no-missing-end-of-source-newline": null
     },
-    "ignoreFiles": ["coverage/**/*.css", "esm/**/*.css", "umd/**/*.css"]
+    "ignoreFiles": [
+        "coverage/**/*.css",
+        "esm/**/*.css",
+        "umd/**/*.css",
+        "website/**/*.css"
+    ]
 }

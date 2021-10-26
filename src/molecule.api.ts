@@ -49,6 +49,8 @@ import {
     IEditorTreeService,
     EditorTreeService,
     BuiltinService,
+    ExtensionService,
+    IExtensionService,
 } from 'mo/services';
 
 import { ILocaleService, LocaleService } from 'mo/i18n';
@@ -106,3 +108,8 @@ export const colorTheme = container.resolve<IColorThemeService>(
 export const settings = container.resolve<ISettingsService>(SettingsService);
 
 export const builtin = container.resolve(BuiltinService);
+
+/**
+ * The Extension service
+ */
+export const extension = container.resolve<IExtensionService>(ExtensionService);

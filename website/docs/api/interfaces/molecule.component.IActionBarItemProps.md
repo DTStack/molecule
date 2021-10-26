@@ -1,0 +1,146 @@
+---
+id: 'molecule.component.IActionBarItemProps'
+title: 'Interface: IActionBarItemProps<T>'
+sidebar_label: 'IActionBarItemProps'
+custom_edit_url: null
+---
+
+[molecule](../namespaces/molecule).[component](../namespaces/molecule.component).IActionBarItemProps
+
+## Type parameters
+
+| Name | Type  |
+| :--- | :---- |
+| `T`  | `any` |
+
+## Properties
+
+### checked
+
+• `Optional` **checked**: `boolean`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:21](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L21)
+
+---
+
+### className
+
+• `Optional` **className**: `string`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:24](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L24)
+
+---
+
+### contextMenu
+
+• `Optional` **contextMenu**: [`IMenuItemProps`](molecule.component.IMenuItemProps)[]
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:23](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L23)
+
+---
+
+### data
+
+• `Optional` **data**: `T`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:22](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L22)
+
+---
+
+### disabled
+
+• `Optional` **disabled**: `boolean`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:20](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L20)
+
+---
+
+### icon
+
+• `Optional` **icon**: `string` \| `Element`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:19](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L19)
+
+---
+
+### id
+
+• `Optional` **id**: `string`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:16](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L16)
+
+---
+
+### name
+
+• `Optional` **name**: `ReactNode`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:17](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L17)
+
+---
+
+### title
+
+• `Optional` **title**: `string`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:18](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L18)
+
+## Methods
+
+### onClick
+
+▸ `Optional` **onClick**(`event`, `item`): `void`
+
+#### Parameters
+
+| Name    | Type                                                                    |
+| :------ | :---------------------------------------------------------------------- |
+| `event` | `MouseEvent`<`Element`, `MouseEvent`\>                                  |
+| `item`  | [`IActionBarItemProps`](molecule.component.IActionBarItemProps)<`any`\> |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:29](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L29)
+
+---
+
+### onContextMenuClick
+
+▸ `Optional` **onContextMenuClick**(`e`, `item`): `void`
+
+#### Parameters
+
+| Name   | Type                                                                 |
+| :----- | :------------------------------------------------------------------- |
+| `e`    | `MouseEvent`<`Element`, `MouseEvent`\>                               |
+| `item` | `undefined` \| [`IMenuItemProps`](molecule.component.IMenuItemProps) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/components/actionBar/index.tsx:25](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L25)

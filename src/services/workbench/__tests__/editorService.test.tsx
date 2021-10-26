@@ -115,6 +115,16 @@ describe('Test EditorService', () => {
         expect(updatedActions1![0].name).toBe('test');
     });
 
+    test('Get a Tab by ID and groupId', () => {
+        const editor = new EditorService();
+        editor.open(mockTab);
+        expect(
+            editor.getTabById(mockTab.id!, editor.getState().current!.id!)
+        ).not.toBeUndefined();
+
+        expect(editor.getTabById(mockTab.id!, -1)).toBeUndefined();
+    });
+
     test('Monaco editorInstance default should is undefined', () => {
         const editor = new EditorService();
         expect(editor.editorInstance).toBeUndefined();

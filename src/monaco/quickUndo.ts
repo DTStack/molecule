@@ -56,7 +56,7 @@ export class QuickUndo extends Action2 {
                 if (currentActiveGroup) {
                     const tab = this.editorService.getTabById(
                         currentActiveGroup.activeTab!,
-                        currentActiveGroup
+                        currentActiveGroup.id!
                     );
                     editorInstance?.focus();
                     const model = MonacoEditor.getModel(Uri.parse(tab!.id!))!;

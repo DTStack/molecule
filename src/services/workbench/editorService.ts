@@ -27,12 +27,9 @@ export interface IEditorService extends Component<IEditor> {
     /**
      * Get a tab from a specific group via the tab ID
      * @param tabId
-     * @param group
+     * @param groupId
      */
-    getTabById<T>(
-        tabId: string,
-        group: IEditorGroup
-    ): IEditorTab<T> | undefined;
+    getTabById<T>(tabId: string, groupId: number): IEditorTab<T> | undefined;
     /**
      * Update the specific tab, if the groupId provide, then update the tab of specific group
      * @param tab The id is required
@@ -245,7 +242,7 @@ export class EditorService
         filterGroups?: IEditorGroup<any, any>[]
     ): boolean {
         const groups = filterGroups || this.state.groups || [];
-        return groups.some((group) => this.getTabById(tabId, group));
+        return groups.some((group) => this.getTabById(tabId, group.id!));
     }
 
     public setDefaultActions(actions: IEditorActionsProps[]): void {
@@ -288,9 +285,13 @@ export class EditorService
 
     public getTabById<T>(
         tabId: string,
-        group: IEditorGroup
+        groupId: number
     ): IEditorTab<T> | undefined {
-        return group.data?.find(searchById(tabId));
+        const group = this.getGroupById(groupId);
+        if (group) {
+            return group.data?.find(searchById(tabId));
+        }
+        return undefined;
     }
 
     public get editorInstance() {
@@ -321,7 +322,7 @@ export class EditorService
         } else {
             const { groups = [], current } = this.state;
             groups.forEach((group) => {
-                const tabData = this.getTabById(tab.id!, group);
+                const tabData = this.getTabById(tab.id!, group.id!);
                 if (tabData) {
                     updatedTab = Object.assign(tabData, tab);
                 }
@@ -513,7 +514,7 @@ export class EditorService
         const isOpened = this.isOpened(tabId, groups);
         if (isOpened) {
             const targetGroup = groups.find((group) =>
-                this.getTabById(tabId, group)
+                this.getTabById(tabId, group.id!)
             )!;
             return targetGroup.id!;
         } else {
@@ -528,7 +529,7 @@ export class EditorService
         if (groupIndex > -1) {
             const nextGroups = [...groups];
             const group = nextGroups[groupIndex];
-            const tab = this.getTabById(tabId, group);
+            const tab = this.getTabById(tabId, group.id!);
 
             if (tab) {
                 const nextGroup = { ...group };

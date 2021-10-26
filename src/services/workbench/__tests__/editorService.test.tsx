@@ -41,7 +41,7 @@ describe('Test EditorService', () => {
         const tab2 = Object.assign({}, mockTab, { id: 'tab2' });
         const currentGroup = state.current!;
         editor.open(tab2, currentGroup.id);
-        const tab = editor.getTabById(tab2.id, currentGroup);
+        const tab = editor.getTabById(tab2.id, currentGroup.id!);
         expect(tab).not.toBeUndefined();
 
         // Open in isn't exist Group
@@ -131,7 +131,7 @@ describe('Test EditorService', () => {
 
         expect(updated.name).toBe('updated');
         expect(
-            editor.getTabById(mockTab.id!, editor.getState().current!)!.name
+            editor.getTabById(mockTab.id!, editor.getState().current!.id!)!.name
         ).toBe('updated');
 
         updated = editor.updateTab(
@@ -141,7 +141,7 @@ describe('Test EditorService', () => {
 
         expect(updated.name).toBe('updated1');
         expect(
-            editor.getTabById(mockTab.id!, editor.getState().current!)!.name
+            editor.getTabById(mockTab.id!, editor.getState().current!.id!)!.name
         ).toBe('updated1');
     });
 
@@ -150,7 +150,7 @@ describe('Test EditorService', () => {
         editor.disposeModel = jest.fn();
         editor.open(mockTab);
         expect(
-            editor.getTabById(mockTab.id!, editor.getState().current!)
+            editor.getTabById(mockTab.id!, editor.getState().current.id!)
         ).not.toBeUndefined();
 
         // Close a tab in an undefined group
@@ -167,7 +167,7 @@ describe('Test EditorService', () => {
         editor.open(tab2);
         editor.closeTab(tab2.id!, currentGroup.id!);
         expect(
-            editor.getTabById(tab2.id!, editor.getState().current!)
+            editor.getTabById(tab2.id!, editor.getState().current.id)
         ).toBeUndefined();
     });
 
@@ -183,14 +183,14 @@ describe('Test EditorService', () => {
 
         // Close the all tabs expect mockTab
         expect(
-            editor.getTabById(tab2.id!, editor.getState().current!)
+            editor.getTabById(tab2.id!, editor.getState().current!.id!)
         ).not.toBeUndefined();
         expect(editor.getState().current?.activeTab).toBe(tab2.id);
 
         editor.closeOther(mockTab, editor.getState().current!.id!);
 
         expect(
-            editor.getTabById(tab2.id!, editor.getState().current!)
+            editor.getTabById(tab2.id!, editor.getState().current!.id!)
         ).toBeUndefined();
         expect(editor.getState().current?.activeTab).toBe(mockTab.id);
     });
@@ -211,13 +211,13 @@ describe('Test EditorService', () => {
         ).toBeUndefined();
 
         expect(
-            editor.getTabById(tab2.id!, editor.getState().current!)
+            editor.getTabById(tab2.id!, editor.getState().current!.id!)
         ).not.toBeUndefined();
 
         editor.closeToRight(mockTab, editor.getState().current!.id!);
 
         expect(
-            editor.getTabById(tab2.id!, editor.getState().current!)
+            editor.getTabById(tab2.id!, editor.getState().current!.id!)
         ).toBeUndefined();
 
         expect(editor.getState().current?.activeTab).toBe(mockTab.id);
@@ -241,14 +241,14 @@ describe('Test EditorService', () => {
         ).toBeUndefined();
 
         expect(
-            editor.getTabById(mockTab.id!, editor.getState().current!)
+            editor.getTabById(mockTab.id!, editor.getState().current!.id!)
         ).not.toBeUndefined();
         expect(editor.getState().current?.activeTab).toBe(tab3.id);
 
         editor.closeToLeft(tab2, editor.getState().current!.id!);
 
         expect(
-            editor.getTabById(mockTab.id!, editor.getState().current!)
+            editor.getTabById(mockTab.id!, editor.getState().current!.id!)
         ).toBeUndefined();
 
         expect(editor.getState().current?.activeTab).toBe(tab2.id);
@@ -373,7 +373,7 @@ describe('Test EditorService', () => {
         expect(groups).toHaveLength(2);
         // To be sure mockTab is opened both in two groups
         expect(
-            groups!.every((group) => editor.getTabById(mockTab.id!, group))
+            groups!.every((group) => editor.getTabById(mockTab.id!, group.id!))
         ).toBeTruthy();
 
         // Only get the first one

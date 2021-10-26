@@ -31,7 +31,7 @@ describe('The explorer controller', () => {
 
         expect(data).toHaveLength(1);
         expect(data[0]).toEqual(
-            expect.objectContaining(modules.builtInExplorerFolderPanel)
+            expect.objectContaining(modules.builtInExplorerFolderPanel())
         );
 
         const {

@@ -18,7 +18,7 @@ describe('The menuBar controller', () => {
         menuBarController.initView();
 
         expect(menuBarService.getState().data).toEqual(
-            modules.builtInMenuBarData
+            modules.builtInMenuBarData()
         );
         menuBarService.reset();
     });

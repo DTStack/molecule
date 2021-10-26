@@ -17,16 +17,16 @@ describe('The panel controller', () => {
         const { current, data, toolbox } = panelService.getState();
         expect(data).toHaveLength(1);
         expect(data![0]).toEqual(
-            expect.objectContaining(modules.builtInOutputPanel)
+            expect.objectContaining(modules.builtInOutputPanel())
         );
         expect(current).toEqual(
-            expect.objectContaining(modules.builtInOutputPanel)
+            expect.objectContaining(modules.builtInOutputPanel())
         );
 
         expect(toolbox).toHaveLength(2);
         expect(toolbox).toEqual([
-            modules.builtInPanelToolboxResize,
-            modules.builtInPanelToolbox,
+            modules.builtInPanelToolboxResize(),
+            modules.builtInPanelToolbox(),
         ]);
 
         panelService.reset();
@@ -57,7 +57,7 @@ describe('The panel controller', () => {
         panelController.onTabChange(modules.builtInOutputPanel().id);
 
         expect(panelService.getState().current).toEqual(
-            expect.objectContaining(modules.builtInOutputPanel)
+            expect.objectContaining(modules.builtInOutputPanel())
         );
         expect(mockFn).toBeCalled();
         expect(mockFn.mock.calls[0][0]).toBe(modules.builtInOutputPanel().id);

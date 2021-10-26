@@ -10,9 +10,15 @@ describe('The Built-in Service', () => {
     test('Should initialize the built-in data', () => {
         const builtinConstants = builtinService.getConstants();
         const builtinModules = builtinService.getModules();
+        const builtinObj = {};
 
+        for (const item in modules) {
+            if (modules.hasOwnProperty(item)) {
+                builtinObj[item] = modules[item]?.();
+            }
+        }
         expect(builtinConstants).toEqual(constants);
-        expect(builtinModules).toEqual(modules);
+        expect(builtinModules).toEqual(builtinObj);
     });
 
     test('Should support to get specific the built-in data', () => {

@@ -21,15 +21,17 @@ describe('The folder tree controller', () => {
         folderTreeController.initView();
 
         const { folderTree } = folderTreeService.getState();
-        expect(folderTree?.contextMenu).toEqual(modules.COMMON_CONTEXT_MENU);
+        expect(folderTree?.contextMenu).toEqual(
+            modules.COMMON_CONTEXT_MENU?.()
+        );
         expect(folderTree?.folderPanelContextMenu).toEqual(
-            modules.FOLDER_PANEL_CONTEXT_MENU
+            modules.FOLDER_PANEL_CONTEXT_MENU?.()
         );
         expect(folderTreeService.getFileContextMenu()).toEqual(
-            modules.FILE_CONTEXT_MENU
+            modules.FILE_CONTEXT_MENU?.()
         );
         expect(folderTreeService.getFolderContextMenu()).toEqual(
-            modules.BASE_CONTEXT_MENU
+            modules.BASE_CONTEXT_MENU?.()
         );
 
         reset();

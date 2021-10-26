@@ -23,7 +23,7 @@ describe('The Locale Service', () => {
         const localeService = new LocaleService();
         expect(localeService.getCurrentLocale()!.id).toBe(BuiltInDefault.id);
         localeService.reset();
-        expect(localeService.getCurrentLocale()).toBeUndefined();
+        expect(localeService.getCurrentLocale()!.id).toBe(BuiltInDefault.id);
     });
 
     test('Get default Locale', () => {
@@ -65,7 +65,7 @@ describe('The Locale Service', () => {
     test('Get/Set current locale', () => {
         const localeService = new LocaleService();
         (localeService as any)._current = undefined;
-        expect(localeService.getCurrentLocale()).toBeUndefined();
+        expect(localeService.getCurrentLocale()).toBe(BuiltInDefault);
         localeService.addLocales([TestLocale]);
         localeService.setCurrentLocale(TestLocale.id);
         expect(localeService.getCurrentLocale()!.id).toEqual(TestLocale.id);

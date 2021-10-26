@@ -37,7 +37,7 @@ describe('The problems controller', () => {
         );
         expect(defaultStatus).not.toBeNull();
         expect(defaultStatus).toEqual(
-            expect.objectContaining(modules.builtInStatusProblems)
+            expect.objectContaining(modules.builtInStatusProblems())
         );
 
         const defaultPanel = panelService.getPanel(
@@ -84,7 +84,7 @@ describe('The problems controller', () => {
 
         const { current } = panelService.getState();
         expect(current).toEqual(
-            expect.objectContaining(modules.builtInPanelProblems)
+            expect.objectContaining(modules.builtInPanelProblems())
         );
         monacoService.commandService.executeCommand = original;
     });

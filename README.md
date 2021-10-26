@@ -14,10 +14,8 @@ A lightweight Web IDE UI Framework, built with React.js, and inspired by the Vis
 ## Features
 
 -   Provides the default IDE Workbench same as the Visual Studio Code
--   Easy to extends the default IDE Workbench via the Extension
+-   Easy to extend the default IDE Workbench via the Extension
 -   Atomic React Components, Easy to customize the IDE UI
-
----
 
 ## Installation
 
@@ -32,8 +30,8 @@ yarn add @dtinsight/molecule
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MoleculeProvider, Workbench } from 'molecule';
-import 'molecule/esm/style/mo.css';
+import { MoleculeProvider, Workbench } from '@dtinsight/molecule';
+import '@dtinsight/molecule/esm/style/mo.css';
 
 const App = () => (
     <MoleculeProvider extension={[]}>

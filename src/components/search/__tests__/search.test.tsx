@@ -235,9 +235,6 @@ describe('Test Search Component', () => {
         )[1];
         expect(textarea!.value).toBe(INPUT_VALUE);
 
-        // const li = wrapper.container.querySelector<HTMLLIElement>(
-        //     `li[id=${TEST_ID}]`
-        // );
         expect(wrapper.getByTestId(TEST_ID)).toBeInTheDocument();
     });
 });

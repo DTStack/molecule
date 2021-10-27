@@ -25,8 +25,8 @@ describe('The notification controller', () => {
 
         const states = notificationService.getState();
         const actionBar = [
-            modules.NOTIFICATION_CLEAR_ALL,
-            modules.NOTIFICATION_HIDE,
+            modules.NOTIFICATION_CLEAR_ALL?.(),
+            modules.NOTIFICATION_HIDE?.(),
         ];
         const defaults = {
             ...modules.builtInNotification,

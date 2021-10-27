@@ -23,30 +23,28 @@ describe('The explorer controller', () => {
         explorerController.initView();
 
         const { headerToolBar, data } = explorerService.getState();
-        expect(headerToolBar).not.toBeUndefined();
-        expect(headerToolBar!.id).toBe(modules.builtInExplorerHeaderToolbar.id);
-        expect(headerToolBar!.icon).toBe(
-            modules.builtInExplorerHeaderToolbar.icon
-        );
-        expect(headerToolBar!.title).toBe(
-            modules.builtInExplorerHeaderToolbar.title
-        );
+        const { id, icon, title } = modules.builtInExplorerHeaderToolbar();
+        expect(headerToolBar!.id).toBe(id);
+        expect(headerToolBar!.icon).toBe(icon);
+        expect(headerToolBar!.title).toBe(title);
         expect(headerToolBar!.contextMenu).toHaveLength(1);
 
         expect(data).toHaveLength(1);
         expect(data[0]).toEqual(
-            expect.objectContaining(modules.builtInExplorerFolderPanel)
+            expect.objectContaining(modules.builtInExplorerFolderPanel())
         );
 
         const {
             data: activityBarData,
             selected,
         } = activityBarService.getState();
+        const builtInExplorerActivityItem = modules.builtInExplorerActivityItem();
+
         expect(activityBarData).toHaveLength(1);
         expect(activityBarData![0]).toEqual(
-            expect.objectContaining(modules.builtInExplorerActivityItem)
+            expect.objectContaining(builtInExplorerActivityItem)
         );
-        expect(selected).toBe(modules.builtInExplorerActivityItem.id);
+        expect(selected).toBe(builtInExplorerActivityItem.id);
 
         const { current, panes } = sidebarService.getState();
         expect(panes).toHaveLength(1);

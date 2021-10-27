@@ -6,7 +6,11 @@ import { constants, modules } from './const';
 
 type IBuiltinModuleProps<T = any> = {
     id: string;
-    module: T;
+    module: () => T;
+    /**
+     * Before excuting the module, the value is empty
+     */
+    value?: T;
     active: boolean;
 };
 
@@ -43,7 +47,7 @@ export interface IBuiltinService {
     /**
      * Get all modules
      */
-    getModules(): Partial<typeof modules>;
+    getModules(): any;
     /**
      * Reset all constants and modules
      */
@@ -78,7 +82,7 @@ export class BuiltinService implements IBuiltinService {
         });
     }
 
-    private addModules<T>(module: { id: string; module: T }) {
+    private addModules<T>(module: { id: string; module: () => T }) {
         const uuid = module.id;
         this.builtinModules.set(uuid, {
             ...module,
@@ -127,14 +131,27 @@ export class BuiltinService implements IBuiltinService {
     }
 
     public getModule(id: keyof typeof modules) {
-        return cloneDeep(this.builtinModules.get(id));
+        const target = this.builtinModules.get(id);
+        if (!target) {
+            return target;
+        }
+        if (!target.value) {
+            target.value = target.module();
+        }
+        const next = Object.assign({}, target);
+        Reflect.deleteProperty(next, 'module');
+        return cloneDeep(next);
     }
 
     public getModules() {
-        const res: Partial<typeof modules> = {};
-        this.builtinModules.forEach((constant) => {
-            if (constant.active) {
-                res[constant.id] = cloneDeep(constant.module);
+        const res: any = {};
+        this.builtinModules.forEach((biultinModule) => {
+            if (biultinModule.active) {
+                const isExcute = !!biultinModule.value;
+                if (!isExcute) {
+                    biultinModule.value = biultinModule.module();
+                }
+                res[biultinModule.id] = cloneDeep(biultinModule.value);
             }
         });
         return res;

@@ -14,11 +14,13 @@ const defaultHC: IColorTheme = require('./themes/hc_black_defaults.json');
 // Theme
 const darkPlus: IColorTheme = require('./themes/dark_plus.json');
 Object.assign(darkPlus, defaultDark);
+
 const darkVS: IColorTheme = require('./themes/dark_vs.json');
 Object.assign(darkVS, defaultDark);
 
 const lightPlus: IColorTheme = require('./themes/light_plus.json');
 Object.assign(lightPlus, defaultLight);
+
 const lightVS: IColorTheme = require('./themes/light_vs.json');
 Object.assign(lightVS, defaultLight);
 

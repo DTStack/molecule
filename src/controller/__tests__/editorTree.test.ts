@@ -22,7 +22,7 @@ describe('The editor tree controller', () => {
         const {
             groupToolbar,
             ...restEditor
-        } = modules.builtInExplorerEditorPanel;
+        } = modules.builtInExplorerEditorPanel();
         expect(data[0]).toEqual(expect.objectContaining(restEditor));
 
         explorerService.reset();

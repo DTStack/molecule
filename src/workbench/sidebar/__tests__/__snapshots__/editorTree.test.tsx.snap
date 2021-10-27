@@ -62,7 +62,7 @@ exports[`The EditorTree Component With multiple groups Match Snapshot 1`] = `
     onClick={[Function]}
     onContextMenu={[Function]}
   >
-    第 1 组
+    Group 1
   </div>
   <div
     className="mo-editorTree__item"
@@ -113,7 +113,7 @@ exports[`The EditorTree Component With multiple groups Match Snapshot 1`] = `
     onClick={[Function]}
     onContextMenu={[Function]}
   >
-    第 2 组
+    Group 2
   </div>
   <div
     className="mo-editorTree__item"

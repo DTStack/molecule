@@ -5,11 +5,11 @@ import { PanelEvent } from 'mo/model/workbench/panel';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { modules } from '../builtinService/const';
 
-const paneOutput = modules.builtInOutputPanel;
-const panelProblems = modules.builtInPanelProblems;
+const paneOutput = modules.builtInOutputPanel();
+const panelProblems = modules.builtInPanelProblems();
 
-const resize = modules.builtInPanelToolboxResize;
-const restore = modules.builtInPanelToolboxReStore;
+const resize = modules.builtInPanelToolboxResize();
+const restore = modules.builtInPanelToolboxReStore();
 
 const panelService = container.resolve(PanelService);
 

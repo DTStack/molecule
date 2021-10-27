@@ -16,7 +16,7 @@ describe('The outline controller', () => {
         const { data } = explorerService.getState();
         expect(data).toHaveLength(1);
         expect(data[0]).toEqual(
-            expect.objectContaining(modules.builtInExplorerOutlinePanel)
+            expect.objectContaining(modules.builtInExplorerOutlinePanel())
         );
 
         explorerService.reset();

@@ -1,6 +1,7 @@
 import { IExtensionService } from 'mo/services';
 import { IColorTheme } from './colorTheme';
 import { IIconTheme } from './iconTheme';
+import { ILocale } from 'mo/i18n';
 
 /**
  * Defines extension types
@@ -24,7 +25,7 @@ export enum IContributeType {
 }
 
 export interface IContribute {
-    [IContributeType.Languages]?: any;
+    [IContributeType.Languages]?: ILocale[];
     [IContributeType.Commands]?: any;
     [IContributeType.Configuration]?: any;
     [IContributeType.Grammar]?: any;

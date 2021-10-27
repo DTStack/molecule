@@ -32,16 +32,16 @@ describe('The problems controller', () => {
         expect(name).toBe(constants.PROBLEM_MODEL_NAME);
 
         const defaultStatus = statusBarService.getStatusBarItem(
-            modules.builtInStatusProblems.id,
+            modules.builtInStatusProblems().id,
             Float.left
         );
         expect(defaultStatus).not.toBeNull();
         expect(defaultStatus).toEqual(
-            expect.objectContaining(modules.builtInStatusProblems)
+            expect.objectContaining(modules.builtInStatusProblems())
         );
 
         const defaultPanel = panelService.getPanel(
-            modules.builtInPanelProblems.id
+            modules.builtInPanelProblems().id
         );
         const { current } = panelService.getState();
         expect(defaultPanel).not.toBeNull();
@@ -56,13 +56,13 @@ describe('The problems controller', () => {
 
         problemsController.initView();
         const defaultStatus = statusBarService.getStatusBarItem(
-            modules.builtInStatusProblems.id,
+            modules.builtInStatusProblems().id,
             Float.left
         );
         expect(defaultStatus).toBeNull();
 
         const defaultPanel = panelService.getPanel(
-            modules.builtInPanelProblems.id
+            modules.builtInPanelProblems().id
         );
         const { current } = panelService.getState();
         expect(defaultPanel).toBeUndefined();
@@ -84,7 +84,7 @@ describe('The problems controller', () => {
 
         const { current } = panelService.getState();
         expect(current).toEqual(
-            expect.objectContaining(modules.builtInPanelProblems)
+            expect.objectContaining(modules.builtInPanelProblems())
         );
         monacoService.commandService.executeCommand = original;
     });

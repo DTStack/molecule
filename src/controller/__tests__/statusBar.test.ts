@@ -23,7 +23,7 @@ describe('The statusBar controller', () => {
         expect(leftItems).toHaveLength(0);
         expect(contextMenu).toHaveLength(1);
         expect(rightItems[0]).toEqual(
-            expect.objectContaining(modules.STATUS_EDITOR_INFO)
+            expect.objectContaining(modules.STATUS_EDITOR_INFO?.())
         );
 
         statusBarService.reset();

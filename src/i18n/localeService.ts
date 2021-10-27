@@ -1,10 +1,11 @@
 import { APP_PREFIX } from 'mo/common/const';
 import {
-    BuiltInLocales,
-    BuiltInZhCN,
     ILocale,
     LocalizationEvent,
+    BuiltInLocales,
+    BuiltInDefault,
 } from 'mo/i18n/localization';
+
 import { Component } from 'mo/react';
 import { singleton } from 'tsyringe';
 
@@ -82,10 +83,11 @@ export interface ILocaleService {
     reset(): void;
 }
 
+export const STORE_KEY = `${APP_PREFIX}.localeId`;
+
 @singleton()
 export class LocaleService extends Component implements ILocaleService {
     state = {};
-    private static STORE_KEY = `${APP_PREFIX}.locale`;
     private static LOCALIZE_REPLACED_WORD = '${i}';
 
     private _locales: Map<string, ILocale> = new Map();
@@ -93,17 +95,20 @@ export class LocaleService extends Component implements ILocaleService {
 
     constructor() {
         super();
+        /**
+         * TODO: It will then be removed accordingly
+         */
         this.initialize(BuiltInLocales);
     }
 
     public reset(): void {
-        localStorage.removeItem(LocaleService.STORE_KEY);
+        localStorage.removeItem(STORE_KEY);
         this._current = undefined;
         this._locales.clear();
     }
 
     public getDefaultLocale(): ILocale {
-        return Object.assign({}, BuiltInZhCN);
+        return Object.assign({}, BuiltInDefault);
     }
 
     public getDefaultLocales(): ILocale[] {
@@ -116,22 +121,27 @@ export class LocaleService extends Component implements ILocaleService {
 
     public initialize(locales: ILocale[], localeId?: string) {
         this.addLocales(locales);
-        let finalLocale = BuiltInZhCN.id;
+        let finalLocale = BuiltInDefault!.id;
         if (localeId) {
             finalLocale = localeId;
         }
-        const cachedLocale = localStorage.getItem(LocaleService.STORE_KEY);
-        if (cachedLocale) {
-            finalLocale = cachedLocale;
+        const cachedLocaleId = localStorage.getItem(STORE_KEY);
+        if (cachedLocaleId) {
+            finalLocale = cachedLocaleId;
         }
+
         this.setCurrentLocale(finalLocale);
     }
 
     public getCurrentLocale(): ILocale | undefined {
-        return this._current && Object.assign({}, this._current);
+        return (
+            (this._current && Object.assign({}, this._current)) ||
+            BuiltInDefault
+        );
     }
 
-    public getLocale(id: string): ILocale | undefined {
+    public getLocale(id: string | null): ILocale | undefined {
+        if (!id) return;
         return this._locales.get(id);
     }
 
@@ -153,7 +163,7 @@ export class LocaleService extends Component implements ILocaleService {
         if (locale) {
             this.emit(LocalizationEvent.OnChange, this._current, locale);
             this._current = locale;
-            localStorage.setItem(LocaleService.STORE_KEY, locale.id);
+            localStorage.setItem(STORE_KEY, locale.id);
             return true;
         }
         return false;
@@ -162,13 +172,8 @@ export class LocaleService extends Component implements ILocaleService {
     private transformLocaleData(locale: ILocale): ILocale {
         const newLocale = { ...locale };
         // Convert a normal Object to a Map
-        if (locale.source instanceof Map === false) {
-            newLocale.source = new Map(
-                Object.entries(locale.source).map(([key, value]) => [
-                    key,
-                    value,
-                ])
-            );
+        if (!(locale.source instanceof Map)) {
+            newLocale.source = new Map(Object.entries(locale.source));
         }
         // If current locale inherit an exist, merge the parent.
         if (newLocale.inherit) {

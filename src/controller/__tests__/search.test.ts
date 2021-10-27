@@ -36,13 +36,13 @@ describe('The search controller', () => {
         expect(searchService.getState().replaceAddons).toHaveLength(0);
         expect(activityBarService.getState().data).toHaveLength(1);
         expect(activityBarService.getState().data![0]).toEqual(
-            expect.objectContaining(modules.builtInSearchActivityItem)
+            expect.objectContaining(modules.builtInSearchActivityItem())
         );
 
         expect(sidebarService.getState().panes).toHaveLength(1);
         expect(sidebarService.getState().panes[0]).toEqual(
             expect.objectContaining({
-                id: modules.builtInSearchActivityItem.id,
+                id: modules.builtInSearchActivityItem().id,
                 title: 'SEARCH',
             })
         );
@@ -60,9 +60,9 @@ describe('The search controller', () => {
             replaceAddons,
         } = searchService.getState();
 
-        expect(headerToolBar).toEqual(modules.builtInHeaderToolbar);
-        expect(searchAddons).toEqual(modules.builtInSearchAddons);
-        expect(replaceAddons).toEqual(modules.builtInReplaceAddons);
+        expect(headerToolBar).toEqual(modules.builtInHeaderToolbar());
+        expect(searchAddons).toEqual(modules.builtInSearchAddons());
+        expect(replaceAddons).toEqual(modules.builtInReplaceAddons());
     });
 
     test('Should validate the value', () => {

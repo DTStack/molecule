@@ -3,6 +3,7 @@ import { singleton, container } from 'tsyringe';
 import { ErrorMsg } from 'mo/common/error';
 import { IContribute, IContributeType, IExtension } from 'mo/model/extension';
 import { IColorTheme } from 'mo/model/colorTheme';
+import { ILocaleService, LocaleService, ILocale } from 'mo/i18n';
 import logger from 'mo/common/logger';
 import {
     ColorThemeService,
@@ -20,7 +21,7 @@ export interface IExtensionService {
      * remove a extension, you can use the `ExtensionService.dispose` method.
      * @param extensions The extension array
      */
-    load(extensions: IExtension[]);
+    load(extensions: IExtension[]): void;
     /**
      * Add the extensions to ExtensionService, but no activated.
      * @param extensions The Extensions wait to added
@@ -96,10 +97,12 @@ export class ExtensionService implements IExtensionService {
     private readonly colorThemeService: IColorThemeService;
     private readonly monacoService: IMonacoService;
     private _inactive: Function | undefined;
+    private readonly localeService: ILocaleService;
 
     constructor(extensions: IExtension[] = []) {
         this.colorThemeService = container.resolve(ColorThemeService);
         this.monacoService = container.resolve(MonacoService);
+        this.localeService = container.resolve(LocaleService);
     }
 
     public getExtension(id: string): IExtension | undefined {
@@ -153,9 +156,13 @@ export class ExtensionService implements IExtensionService {
             switch (type) {
                 case IContributeType.Themes: {
                     const themes: IColorTheme[] | undefined = contributes[type];
-                    if (themes) {
-                        this.colorThemeService.addThemes(themes);
-                    }
+                    if (!themes) return;
+                    return this.colorThemeService.addThemes(themes);
+                }
+                case IContributeType.Languages: {
+                    const locales: ILocale[] | undefined = contributes[type];
+                    if (!locales) return;
+                    return this.localeService.addLocales(locales);
                 }
             }
         });

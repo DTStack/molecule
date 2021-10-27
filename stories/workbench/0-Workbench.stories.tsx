@@ -4,14 +4,8 @@ import 'mo/style/mo.scss';
 import { customExtensions } from '../extensions';
 import '../demo.scss';
 
-const locale = require('../extensions/locale/jp.json');
-
 export const IDEDemo = () => (
-    <MoleculeProvider
-        extensions={customExtensions}
-        locales={[locale]}
-        defaultLocale="zh-CN"
-    >
+    <MoleculeProvider extensions={customExtensions} defaultLocale="en">
         <Workbench />
     </MoleculeProvider>
 );

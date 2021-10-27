@@ -11,7 +11,7 @@ exports[`The Explorer Component Match Snapshot 1`] = `
       className="mo-sidebar__title"
     >
       <h2>
-        浏览
+        Explorer
       </h2>
     </div>
     <div

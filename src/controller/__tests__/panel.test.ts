@@ -17,16 +17,16 @@ describe('The panel controller', () => {
         const { current, data, toolbox } = panelService.getState();
         expect(data).toHaveLength(1);
         expect(data![0]).toEqual(
-            expect.objectContaining(modules.builtInOutputPanel)
+            expect.objectContaining(modules.builtInOutputPanel())
         );
         expect(current).toEqual(
-            expect.objectContaining(modules.builtInOutputPanel)
+            expect.objectContaining(modules.builtInOutputPanel())
         );
 
         expect(toolbox).toHaveLength(2);
         expect(toolbox).toEqual([
-            modules.builtInPanelToolboxResize,
-            modules.builtInPanelToolbox,
+            modules.builtInPanelToolboxResize(),
+            modules.builtInPanelToolbox(),
         ]);
 
         panelService.reset();
@@ -54,23 +54,23 @@ describe('The panel controller', () => {
         const mockFn = jest.fn();
         panelService.onTabChange(mockFn);
 
-        panelController.onTabChange(modules.builtInOutputPanel.id);
+        panelController.onTabChange(modules.builtInOutputPanel().id);
 
         expect(panelService.getState().current).toEqual(
-            expect.objectContaining(modules.builtInOutputPanel)
+            expect.objectContaining(modules.builtInOutputPanel())
         );
         expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toBe(modules.builtInOutputPanel.id);
+        expect(mockFn.mock.calls[0][0]).toBe(modules.builtInOutputPanel().id);
     });
 
     test('Should support to subscribe onClose', () => {
         const mockFn = jest.fn();
         panelService.onTabClose(mockFn);
 
-        panelController.onClose(modules.builtInOutputPanel.id);
+        panelController.onClose(modules.builtInOutputPanel().id);
 
         expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toBe(modules.builtInOutputPanel.id);
+        expect(mockFn.mock.calls[0][0]).toBe(modules.builtInOutputPanel().id);
     });
 
     test('Should support to execute onToolbarClick', () => {

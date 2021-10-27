@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { LocaleService } from '..';
-import { BuiltInLocales, BuiltInZhCN, ILocale } from '../localization';
+import { BuiltInLocales, BuiltInDefault, ILocale } from '../localization';
 
 describe('The Locale Service', () => {
     const TestLocale = {
@@ -21,15 +21,15 @@ describe('The Locale Service', () => {
 
     test('Reset the LocaleService', () => {
         const localeService = new LocaleService();
-        expect(localeService.getCurrentLocale()!.id).toBe(BuiltInZhCN.id);
+        expect(localeService.getCurrentLocale()!.id).toBe(BuiltInDefault.id);
         localeService.reset();
-        expect(localeService.getCurrentLocale()).toBeUndefined();
+        expect(localeService.getCurrentLocale()!.id).toBe(BuiltInDefault.id);
     });
 
     test('Get default Locale', () => {
         const localeService = new LocaleService();
         const defaultLocale = localeService.getDefaultLocale();
-        expect(defaultLocale).toEqual(BuiltInZhCN);
+        expect(defaultLocale).toEqual(BuiltInDefault);
     });
 
     test('Get default Locales', () => {
@@ -52,7 +52,7 @@ describe('The Locale Service', () => {
         );
         expect(localeService.getLocales().length).toBe(3);
         localeService.initialize([], 'test');
-        expect(localeService.getCurrentLocale()!.id).toEqual(BuiltInZhCN.id);
+        expect(localeService.getCurrentLocale()!.id).toEqual(BuiltInDefault.id);
         // Clear the cached locale value
         localStorage.clear();
         localeService.initialize([], 'test');
@@ -65,7 +65,7 @@ describe('The Locale Service', () => {
     test('Get/Set current locale', () => {
         const localeService = new LocaleService();
         (localeService as any)._current = undefined;
-        expect(localeService.getCurrentLocale()).toBeUndefined();
+        expect(localeService.getCurrentLocale()).toBe(BuiltInDefault);
         localeService.addLocales([TestLocale]);
         localeService.setCurrentLocale(TestLocale.id);
         expect(localeService.getCurrentLocale()!.id).toEqual(TestLocale.id);
@@ -131,12 +131,13 @@ describe('The Locale Service', () => {
     });
 
     test('Listen to the current locale change event', () => {
+        const target = 'zh-CN';
         const localeService = new LocaleService();
         const fn = jest.fn();
         localeService.onChange(fn);
-        localeService.setCurrentLocale('en');
+        localeService.setCurrentLocale(target);
         expect(fn).toBeCalledTimes(1);
-        expect(localeService.getCurrentLocale()!.id).toEqual('en');
+        expect(localeService.getCurrentLocale()!.id).toEqual(target);
     });
 
     test('Localize the source key', () => {
@@ -148,10 +149,10 @@ describe('The Locale Service', () => {
         expect(res).toEqual('default');
 
         res = localeService.localize('molecule.welcome');
-        expect(res).toEqual('欢迎!');
+        expect(res).toEqual('Welcome to Molecule');
 
         res = localeService.localize('molecule.welcome', 'default');
-        expect(res).toEqual('欢迎!');
+        expect(res).toEqual('Welcome to Molecule');
 
         const map = new Map();
         map.set('test.id', 'hello ${i}');

@@ -2,10 +2,9 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import React from 'react';
 import { LocaleService } from './localeService';
-import { LocaleSourceIdType } from './localization';
 
 export interface ILocalizeProps {
-    sourceKey: string | LocaleSourceIdType;
+    sourceKey: string;
     defaultValue?: string;
 }
 

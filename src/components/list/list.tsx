@@ -2,6 +2,7 @@ import React from 'react';
 import { prefixClaName, classNames, getBEMModifier } from 'mo/common/className';
 import { ComponentProps, useEffect, useState } from 'react';
 import { cloneReactChildren } from 'mo/react';
+import type { UniqueId } from 'mo/common/types';
 import { IItemProps } from './item';
 
 export interface IListProps extends Omit<ComponentProps<'ul'>, 'onSelect'> {
@@ -16,7 +17,7 @@ export interface IListProps extends Omit<ComponentProps<'ul'>, 'onSelect'> {
     /**
      * It's used to disable specific item, the value of disable is id string
      */
-    disable?: string;
+    disable?: UniqueId;
     /**
      * Listen to the select event of List
      * @param event React mouse event
@@ -53,8 +54,8 @@ export function List(props: React.PropsWithChildren<IListProps>) {
         ...restProps
     } = props;
 
-    const [active, setActive] = useState<string | undefined>(current);
-    const [isDisable, setIsDisable] = useState<string | undefined>(disable);
+    const [active, setActive] = useState<UniqueId | undefined>(current);
+    const [isDisable, setIsDisable] = useState<UniqueId | undefined>(disable);
 
     useEffect(() => {
         if (active !== current) {

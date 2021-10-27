@@ -36,7 +36,7 @@ export const ExtendsTestPane: IExtension = {
             console.log('onChangeSettings:', value);
         });
 
-        molecule.menuBar.onSelect((menuId: string) => {
+        molecule.menuBar.onSelect((menuId) => {
             const openFile = () => {
                 const input = document.createElement('input');
                 const getFile = (event: Event) => {

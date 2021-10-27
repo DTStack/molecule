@@ -1,12 +1,13 @@
 import React from 'react';
 import { classNames, getBEMElement, getBEMModifier } from 'mo/common/className';
+import type { UniqueId } from 'mo/common/types';
 import { defaultListClassName } from './list';
 
 export interface IItemProps extends Omit<React.ComponentProps<'li'>, 'id'> {
-    id: string;
+    id: UniqueId;
     disabled?: boolean;
-    disable?: string;
-    active?: string;
+    disable?: UniqueId;
+    active?: UniqueId;
     onClick?(event: React.MouseEvent, item?: IItemProps): void;
 }
 
@@ -47,7 +48,12 @@ export function Item(props: React.PropsWithChildren<IItemProps>) {
         active === id ? itemActiveClassName : ''
     );
     return (
-        <li id={id} className={claNames} {...restProps} onClick={click}>
+        <li
+            id={id.toString()}
+            className={claNames}
+            {...restProps}
+            onClick={click}
+        >
             <span className={labelClassName}>{children}</span>
         </li>
     );

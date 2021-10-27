@@ -16,6 +16,7 @@ import { ExplorerService, IExplorerService } from './explorerService';
 import { IMenuItemProps } from 'mo/components';
 import logger from 'mo/common/logger';
 import { BuiltinService, IBuiltinService } from 'mo/services';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IFolderTreeService extends Component<IFolderTree> {
     /**

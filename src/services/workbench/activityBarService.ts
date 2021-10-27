@@ -11,6 +11,7 @@ import { searchById } from 'mo/common/utils';
 import { IActivityMenuItemProps } from 'mo/model';
 import logger from 'mo/common/logger';
 import { ISidebarService, SidebarService } from './sidebarService';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IActivityBarService extends Component<IActivityBar> {
     /**
@@ -27,22 +28,22 @@ export interface IActivityBarService extends Component<IActivityBar> {
     /**
      * Set active bar
      */
-    setActive(id?: string): void;
+    setActive(id?: UniqueId): void;
     /**
      * Remove the specific activity bar by id
      * @param id
      */
-    remove(id: string | string[]): void;
+    remove(id: UniqueId | UniqueId[]): void;
     /**
      * Toggle the specific activity bar between show or hide
      * @param id activity bar id
      */
-    toggleBar(id: string): void;
+    toggleBar(id: UniqueId): void;
     /**
      * Toggle the contextMenu between checked or unchecked
      * @param id contextmenu id
      */
-    toggleContextMenuChecked(id: string): void;
+    toggleContextMenuChecked(id: UniqueId): void;
     /**
      * Add new contextMenus for the activityBar
      */
@@ -53,17 +54,20 @@ export interface IActivityBarService extends Component<IActivityBar> {
      * Remove the specific contextMenu item by id
      * @param id contextmenu id
      */
-    removeContextMenu(id: string | string[]): void;
+    removeContextMenu(id: UniqueId | UniqueId[]): void;
     /**
      * Add click event listener
      * @param callback
      */
-    onClick(callback: (selectedKey: string, item: IActivityBarItem) => void);
+    onClick(callback: (selectedKey: UniqueId, item: IActivityBarItem) => void);
     /**
      * Called when activity bar item which is not global is changed
      */
     onChange(
-        callback: (prevSelectedKey?: string, nextSelectedKey?: string) => void
+        callback: (
+            prevSelectedKey?: UniqueId,
+            nextSelectedKey?: UniqueId
+        ) => void
     );
 }
 
@@ -80,7 +84,7 @@ export class ActivityBarService
         this.sidebarService = container.resolve(SidebarService);
     }
 
-    public setActive(id?: string) {
+    public setActive(id?: UniqueId) {
         this.setState({
             selected: id,
         });
@@ -118,7 +122,7 @@ export class ActivityBarService
     }
 
     private getRemoveList<T extends IActivityBarItem | IActivityMenuItemProps>(
-        id: string | string[],
+        id: UniqueId | UniqueId[],
         data: T[]
     ) {
         return data.reduce((total: number[], item: T, key: number) => {
@@ -130,7 +134,7 @@ export class ActivityBarService
         }, []);
     }
 
-    public remove(id: string | string[]) {
+    public remove(id: UniqueId | UniqueId[]) {
         const { data } = this.state;
         let next = [...data!];
         const indexs = this.getRemoveList<IActivityBarItem>(id, next);
@@ -150,7 +154,7 @@ export class ActivityBarService
         }
     }
 
-    public toggleBar(id: string) {
+    public toggleBar(id: UniqueId) {
         const { data = [], selected } = this.state;
         const next = data.concat();
         const index = next.findIndex(searchById(id));
@@ -171,7 +175,7 @@ export class ActivityBarService
         }
     }
 
-    public toggleContextMenuChecked(id: string) {
+    public toggleContextMenuChecked(id: UniqueId) {
         const { contextMenu = [] } = this.state;
         const newActions = contextMenu.concat();
         const target = newActions.find(searchById(id));
@@ -203,7 +207,7 @@ export class ActivityBarService
         });
     }
 
-    public removeContextMenu(id: string | string[]) {
+    public removeContextMenu(id: UniqueId | UniqueId[]) {
         const { contextMenu } = this.state;
         let next = [...contextMenu!];
         const indexs = this.getRemoveList<IActivityMenuItemProps>(id, next);
@@ -224,13 +228,16 @@ export class ActivityBarService
 
     // ====== The belows for subscribe activity bar events ======
     public onClick(
-        callback: (selectedKey: string, item: IActivityBarItem) => void
+        callback: (selectedKey: UniqueId, item: IActivityBarItem) => void
     ) {
         this.subscribe(ActivityBarEvent.OnClick, callback);
     }
 
     public onChange(
-        callback: (prevSelectedKey?: string, nextSelectedKey?: string) => void
+        callback: (
+            prevSelectedKey?: UniqueId,
+            nextSelectedKey?: UniqueId
+        ) => void
     ) {
         this.subscribe(ActivityBarEvent.OnChange, callback);
     }

@@ -12,6 +12,7 @@ import {
 import { Action2, registerAction2 } from 'mo/monaco/common';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { searchById } from 'mo/common/utils';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IExtensionService {
     /**

@@ -15,6 +15,7 @@ import {
     SidebarService,
 } from 'mo/services';
 import { ID_SIDE_BAR } from 'mo/common/id';
+import type { UniqueId } from 'mo/common/types';
 
 export class CommandQuickSideBarViewAction extends Action2 {
     static readonly ID = ID_SIDE_BAR;
@@ -26,7 +27,7 @@ export class CommandQuickSideBarViewAction extends Action2 {
     private readonly activityBarService: IActivityBarService;
     private readonly menuBarService: IMenuBarService;
     private readonly sideBarService: ISidebarService;
-    private _preActivityBar: string | undefined;
+    private _preActivityBar: UniqueId | undefined;
 
     constructor() {
         super({

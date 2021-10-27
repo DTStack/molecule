@@ -9,6 +9,7 @@ import {
 } from 'mo/model/workbench/sidebar';
 import { searchById } from 'mo/common/utils';
 import logger from 'mo/common/logger';
+import type { UniqueId } from 'mo/common/types';
 
 export interface ISidebarService extends Component<ISidebar> {
     /**

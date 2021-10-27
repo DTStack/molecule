@@ -4,49 +4,50 @@ import { EditorTreeEvent } from 'mo/model/workbench/explorer/editorTree';
 import { Component } from 'mo/react';
 import { EditorService } from 'mo/services';
 import { container, singleton } from 'tsyringe';
+import { UniqueId } from 'mo/common/types';
 
 export interface IEditorTreeService extends Component<IEditor> {
     /**
      * Callabck for close a certain tab
      * @param callback
      */
-    onClose(callback: (tabId: string, groupId: number) => void): void;
+    onClose(callback: (tabId: UniqueId, groupId: UniqueId) => void): void;
     /**
      * Callback for close others tabs except this tabItem
      * @param callback
      */
     onCloseOthers(
-        callback: (tabItem: IEditorTab, groupId: number) => void
+        callback: (tabItem: IEditorTab, groupId: UniqueId) => void
     ): void;
     /**
      * Callback for close saved tabs in this group
      * @param callback
      */
-    onCloseSaved(callback: (groupId: number) => void): void;
+    onCloseSaved(callback: (groupId: UniqueId) => void): void;
     /**
      * Callback for select tab in this group
      * @param callback
      */
-    onSelect(callback: (tabId: string, groupId: number) => void): void;
+    onSelect(callback: (tabId: UniqueId, groupId: UniqueId) => void): void;
     /**
      * Callback for close all tabs
      * When specify groupId, it'll close that group
      * @param callback
      */
-    onCloseAll(callback: (groupId?: number) => void): void;
+    onCloseAll(callback: (groupId?: UniqueId) => void): void;
     /**
      * Callback for save all tabs
      * When specify groupId, it'll save that group
      * @param callback
      */
-    onSaveAll(callback: (groupId?: number) => void): void;
+    onSaveAll(callback: (groupId?: UniqueId) => void): void;
     /**
      * Callback for the click event from toolbar buttons, except for saving button and closing button,
      * if you want to subscribe to the click events for these two buttons, please use the methods of `onSaveAll` and `onCloseAll`
      * @param callback
      */
     onToolbarClick(
-        callback: (toolbar: IActionBarItemProps, groupId?: number) => void
+        callback: (toolbar: IActionBarItemProps, groupId?: UniqueId) => void
     ): void;
     /**
      * Callback for adjust editor layout
@@ -61,7 +62,7 @@ export interface IEditorTreeService extends Component<IEditor> {
         callback: (
             menu: IMenuItemProps,
             file: ITabProps,
-            groupId: number
+            groupId: UniqueId
         ) => void
     ): void;
 }
@@ -79,34 +80,34 @@ export class EditorTreeService
         this.state = this.editorService.getState();
     }
 
-    public onClose(callback: (tabId: string, groupId: number) => void) {
+    public onClose(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
         this.subscribe(EditorTreeEvent.onClose, callback);
     }
 
     public onCloseOthers(
-        callback: (tabItem: IEditorTab, groupId: number) => void
+        callback: (tabItem: IEditorTab, groupId: UniqueId) => void
     ) {
         this.subscribe(EditorTreeEvent.onCloseOthers, callback);
     }
 
-    public onCloseSaved(callback: (groupId: number) => void) {
+    public onCloseSaved(callback: (groupId: UniqueId) => void) {
         this.subscribe(EditorTreeEvent.onCloseSaved, callback);
     }
 
-    public onSelect(callback: (tabId: string, groupId: number) => void) {
+    public onSelect(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
         this.subscribe(EditorTreeEvent.onSelect, callback);
     }
 
-    public onCloseAll(callback: (groupId?: number) => void) {
+    public onCloseAll(callback: (groupId?: UniqueId) => void) {
         this.subscribe(EditorTreeEvent.onCloseAll, callback);
     }
 
-    public onSaveAll(callback: (groupId?: number) => void) {
+    public onSaveAll(callback: (groupId?: UniqueId) => void) {
         this.subscribe(EditorTreeEvent.onSaveAll, callback);
     }
 
     public onToolbarClick(
-        callback: (toolbar: IActionBarItemProps, groupId?: number) => void
+        callback: (toolbar: IActionBarItemProps, groupId?: UniqueId) => void
     ) {
         this.subscribe(EditorTreeEvent.onToolbarClick, callback);
     }
@@ -119,7 +120,7 @@ export class EditorTreeService
         callback: (
             menu: IMenuItemProps,
             file: ITabProps,
-            groupId: number
+            groupId: UniqueId
         ) => void
     ) {
         this.subscribe(EditorTreeEvent.onContextMenu, callback);

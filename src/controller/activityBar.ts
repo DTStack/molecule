@@ -16,16 +16,17 @@ import {
 } from 'mo/services';
 import { CommandQuickAccessViewAction } from 'mo/monaco/quickAccessViewAction';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IActivityBarController extends Partial<Controller> {
     /**
      * Called when activity bar item is clicked
      */
-    onClick?: (selectedKey: string, selectedNode: IActivityBarItem) => void;
+    onClick?: (selectedKey: UniqueId, selectedNode: IActivityBarItem) => void;
     /**
      * Called when activity bar item which is not global is changed
      */
-    onChange?: (prevSelected?: string, nextSelected?: string) => void;
+    onChange?: (prevSelected?: UniqueId, nextSelected?: UniqueId) => void;
     onContextMenuClick?: (
         e: React.MouseEvent,
         item: IMenuItemProps | undefined
@@ -65,15 +66,15 @@ export class ActivityBarController
     }
 
     public readonly onClick = (
-        selectedKey: string,
+        selectedKey: UniqueId,
         selctedNode: IActivityBarItem
     ) => {
         this.emit(ActivityBarEvent.OnClick, selectedKey, selctedNode);
     };
 
     public readonly onChange = (
-        prevSelected?: string,
-        nextSelected?: string
+        prevSelected?: UniqueId,
+        nextSelected?: UniqueId
     ) => {
         this.emit(ActivityBarEvent.OnChange, prevSelected, nextSelected);
     };

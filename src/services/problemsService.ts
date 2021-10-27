@@ -16,6 +16,7 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from 'mo/common/utils';
 import logger from 'mo/common/logger';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IProblemsService extends Component<IProblems> {
     /**

@@ -17,6 +17,7 @@ import {
     normalItemsClassName,
 } from './base';
 import { useContextView } from 'mo/components';
+import { UniqueId } from 'mo/common/types';
 
 export function ActivityBar(props: IActivityBar & IActivityBarController) {
     const {
@@ -28,7 +29,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
         onContextMenuClick,
     } = props;
 
-    const onClickBar = (key: string, item: IActivityBarItem) => {
+    const onClickBar = (key: UniqueId, item: IActivityBarItem) => {
         if (onClick) onClick(key, item);
         if (onChange) {
             // only normal item trigger onChange event

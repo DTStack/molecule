@@ -99,7 +99,7 @@ export class ExtensionService implements IExtensionService {
     private _inactive: Function | undefined;
     private readonly localeService: ILocaleService;
 
-    constructor(extensions: IExtension[] = []) {
+    constructor() {
         this.colorThemeService = container.resolve(ColorThemeService);
         this.monacoService = container.resolve(MonacoService);
         this.localeService = container.resolve(LocaleService);

@@ -44,7 +44,7 @@ export interface IEditorController extends Partial<Controller> {
     onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onClickActions: (action: IEditorActionsProps) => void;
     onUpdateEditorIns?: (editorInstance: any, groupId: UniqueId) => void;
-    onPaneSizeChange?: (newSize: UniqueId) => void;
+    onPaneSizeChange?: (newSize: string[]) => void;
 }
 @singleton()
 export class EditorController extends Controller implements IEditorController {
@@ -224,7 +224,7 @@ export class EditorController extends Controller implements IEditorController {
         }
     };
 
-    public onPaneSizeChange = (newSize) => {
+    public onPaneSizeChange = (newSize: string[]) => {
         this.groupSplitPos = newSize;
     };
 

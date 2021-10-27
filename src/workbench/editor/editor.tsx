@@ -51,7 +51,10 @@ export function Editor(props: IEditor & IEditorController) {
             );
         } else if (groups.length > 1) {
             return (
-                <SplitPane split={'vertical'} onChange={onPaneSizeChange}>
+                <SplitPane
+                    split={'vertical'}
+                    onChange={onPaneSizeChange as any}
+                >
                     {groups.map((g: IEditorGroup, index: number) => (
                         <Pane
                             key={`group-${index}${g.id}`}

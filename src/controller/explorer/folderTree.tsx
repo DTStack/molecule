@@ -105,7 +105,9 @@ export class FolderTreeController
         const folderTreeState = this.folderTreeService.getState();
         const { data, current } = folderTreeState?.folderTree || {};
         // The current selected node id or the first root node
-        const nodeId = current?.id || data?.[0]?.id;
+        const nodeId =
+            typeof current?.id === 'undefined' ? data?.[0]?.id : current?.id;
+
         this.emit(FolderTreeEvent.onCreate, type, nodeId);
     };
 

@@ -257,6 +257,23 @@ export class FolderTreeService
         };
     }
 
+    // Get the position of file by type
+    // We considered by default that the list is sorted in fileType
+    private getPosOfType(
+        type: keyof typeof FileTypes,
+        folderList: IFolderTreeNodeProps[]
+    ) {
+        if (!folderList.length) return 0;
+        if (type === FileTypes.Folder || type === FileTypes.RootFolder) {
+            return 0;
+        }
+        // find the first file type
+        const index = folderList.findIndex(
+            (list) => list.fileType === FileTypes.File
+        );
+        return index === -1 ? folderList.length : index;
+    }
+
     public add(data: IFolderTreeNodeProps, id?: UniqueId): void {
         const isRootFolder = data.fileType === 'RootFolder';
 
@@ -284,10 +301,20 @@ export class FolderTreeService
                     /(?<=\/)[^\/]+$/,
                     `${data.name}`
                 ) || '';
-            tree!.prepend(data, currentIndex.parent!);
+
+            const parentNode = tree!.getNode(currentIndex.parent!)!;
+            const pos = this.getPosOfType(
+                data.fileType!,
+                parentNode.children || []
+            );
+            tree!.insertNode(data, currentIndex.parent!, pos);
         } else {
             this.setCurrentFolderLocation(data, id);
-            tree!.append(data, id);
+            const pos = this.getPosOfType(
+                data.fileType!,
+                currentIndex.node.children || []
+            );
+            tree?.insertNode(data, currentIndex.id, pos);
         }
 
         cloneData[index] = tree!.obj;

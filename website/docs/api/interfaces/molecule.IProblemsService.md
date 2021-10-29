@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/react/component.ts:42](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L42)
+[src/react/component.ts:42](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L42)
 
 ## Methods
 
@@ -51,7 +51,7 @@ Add single or multiple items data
 
 #### Defined in
 
-[src/services/problemsService.ts:25](https://github.com/DTStack/molecule/blob/3c64296/src/services/problemsService.ts#L25)
+[src/services/problemsService.ts:25](https://github.com/DTStack/molecule/blob/22a59c7/src/services/problemsService.ts#L25)
 
 ---
 
@@ -77,7 +77,7 @@ Count the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -104,7 +104,7 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -124,7 +124,7 @@ Force to update the Component
 
 #### Defined in
 
-[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L79)
 
 ---
 
@@ -144,7 +144,7 @@ Get the Component state
 
 #### Defined in
 
-[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L83)
 
 ---
 
@@ -170,7 +170,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L71)
 
 ---
 
@@ -192,7 +192,7 @@ Remove the specific problem items
 
 #### Defined in
 
-[src/services/problemsService.ts:30](https://github.com/DTStack/molecule/blob/3c64296/src/services/problemsService.ts#L30)
+[src/services/problemsService.ts:30](https://github.com/DTStack/molecule/blob/22a59c7/src/services/problemsService.ts#L30)
 
 ---
 
@@ -212,7 +212,7 @@ Remove the Component update event listening
 
 #### Defined in
 
-[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L75)
 
 ---
 
@@ -238,7 +238,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L67)
 
 ---
 
@@ -254,7 +254,7 @@ Reset the ProblemsService state data
 
 #### Defined in
 
-[src/services/problemsService.ts:34](https://github.com/DTStack/molecule/blob/3c64296/src/services/problemsService.ts#L34)
+[src/services/problemsService.ts:34](https://github.com/DTStack/molecule/blob/22a59c7/src/services/problemsService.ts#L34)
 
 ---
 
@@ -281,7 +281,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L54)
 
 ---
 
@@ -308,7 +308,7 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -324,7 +324,7 @@ Toggle the Problems view between display or hidden
 
 #### Defined in
 
-[src/services/problemsService.ts:43](https://github.com/DTStack/molecule/blob/3c64296/src/services/problemsService.ts#L43)
+[src/services/problemsService.ts:43](https://github.com/DTStack/molecule/blob/22a59c7/src/services/problemsService.ts#L43)
 
 ---
 
@@ -350,7 +350,7 @@ Unsubscribe the specific event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -378,4 +378,4 @@ Update the specific data
 
 #### Defined in
 
-[src/services/problemsService.ts:39](https://github.com/DTStack/molecule/blob/3c64296/src/services/problemsService.ts#L39)
+[src/services/problemsService.ts:39](https://github.com/DTStack/molecule/blob/22a59c7/src/services/problemsService.ts#L39)

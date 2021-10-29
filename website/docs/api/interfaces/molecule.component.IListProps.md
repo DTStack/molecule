@@ -1001,7 +1001,7 @@ Current active
 
 #### Defined in
 
-[src/components/list/list.tsx:15](https://github.com/DTStack/molecule/blob/3c64296/src/components/list/list.tsx#L15)
+[src/components/list/list.tsx:15](https://github.com/DTStack/molecule/blob/22a59c7/src/components/list/list.tsx#L15)
 
 ---
 
@@ -1089,7 +1089,7 @@ It's used to disable specific item, the value of disable is id string
 
 #### Defined in
 
-[src/components/list/list.tsx:19](https://github.com/DTStack/molecule/blob/3c64296/src/components/list/list.tsx#L19)
+[src/components/list/list.tsx:19](https://github.com/DTStack/molecule/blob/22a59c7/src/components/list/list.tsx#L19)
 
 ---
 
@@ -1291,7 +1291,7 @@ Default is vertical mode
 
 #### Defined in
 
-[src/components/list/list.tsx:11](https://github.com/DTStack/molecule/blob/3c64296/src/components/list/list.tsx#L11)
+[src/components/list/list.tsx:11](https://github.com/DTStack/molecule/blob/22a59c7/src/components/list/list.tsx#L11)
 
 ---
 
@@ -3810,7 +3810,7 @@ Omit.onClick
 
 #### Defined in
 
-[src/components/list/list.tsx:31](https://github.com/DTStack/molecule/blob/3c64296/src/components/list/list.tsx#L31)
+[src/components/list/list.tsx:31](https://github.com/DTStack/molecule/blob/22a59c7/src/components/list/list.tsx#L31)
 
 ---
 
@@ -3833,4 +3833,4 @@ Listen to the select event of List
 
 #### Defined in
 
-[src/components/list/list.tsx:25](https://github.com/DTStack/molecule/blob/3c64296/src/components/list/list.tsx#L25)
+[src/components/list/list.tsx:25](https://github.com/DTStack/molecule/blob/22a59c7/src/components/list/list.tsx#L25)

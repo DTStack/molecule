@@ -14,7 +14,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/provider/molecule.tsx:29](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L29)
+[src/provider/molecule.tsx:26](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L26)
 
 ---
 
@@ -26,7 +26,7 @@ Specify a default locale
 
 #### Defined in
 
-[src/provider/molecule.tsx:28](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L28)
+[src/provider/molecule.tsx:25](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L25)
 
 ---
 
@@ -36,16 +36,4 @@ Specify a default locale
 
 #### Defined in
 
-[src/provider/molecule.tsx:20](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L20)
-
----
-
-### locales
-
-• `Optional` **locales**: [`ILocale`](molecule.i18n.ILocale)[]
-
-Locales data
-
-#### Defined in
-
-[src/provider/molecule.tsx:24](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L24)
+[src/provider/molecule.tsx:21](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L21)

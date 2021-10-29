@@ -15,17 +15,11 @@ custom_edit_url: null
 
 ### constructor
 
-• **new ExtensionService**(`extensions?`)
-
-#### Parameters
-
-| Name         | Type                                                | Default value |
-| :----------- | :-------------------------------------------------- | :------------ |
-| `extensions` | [`IExtension`](../interfaces/molecule.IExtension)[] | `[]`          |
+• **new ExtensionService**()
 
 #### Defined in
 
-[src/services/extensionService.ts:100](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L100)
+[src/services/extensionService.ts:102](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L102)
 
 ## Properties
 
@@ -35,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/extensionService.ts:98](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L98)
+[src/services/extensionService.ts:99](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L99)
 
 ---
 
@@ -45,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/extensionService.ts:96](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L96)
+[src/services/extensionService.ts:97](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L97)
 
 ---
 
@@ -55,7 +49,17 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/extensionService.ts:95](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L95)
+[src/services/extensionService.ts:96](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L96)
+
+---
+
+### localeService
+
+• `Private` `Readonly` **localeService**: [`ILocaleService`](../interfaces/molecule.i18n.ILocaleService)
+
+#### Defined in
+
+[src/services/extensionService.ts:100](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L100)
 
 ---
 
@@ -65,7 +69,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/extensionService.ts:97](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L97)
+[src/services/extensionService.ts:98](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L98)
 
 ## Methods
 
@@ -93,7 +97,7 @@ which means you can't get the Extension by the `ExtensionService. getExtension` 
 
 #### Defined in
 
-[src/services/extensionService.ts:172](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L172)
+[src/services/extensionService.ts:179](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L179)
 
 ---
 
@@ -121,7 +125,7 @@ Unload Extensions
 
 #### Defined in
 
-[src/services/extensionService.ts:117](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L117)
+[src/services/extensionService.ts:120](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L120)
 
 ---
 
@@ -147,7 +151,7 @@ Dispose the specific extension, and remove it from the ExtensionService
 
 #### Defined in
 
-[src/services/extensionService.ts:190](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L190)
+[src/services/extensionService.ts:197](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L197)
 
 ---
 
@@ -167,7 +171,7 @@ Dispose all extensions, and reset the ExtensionService
 
 #### Defined in
 
-[src/services/extensionService.ts:200](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L200)
+[src/services/extensionService.ts:207](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L207)
 
 ---
 
@@ -194,7 +198,7 @@ Execute the registered command
 
 #### Defined in
 
-[src/services/extensionService.ts:168](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L168)
+[src/services/extensionService.ts:175](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L175)
 
 ---
 
@@ -216,7 +220,7 @@ Extension Array
 
 #### Defined in
 
-[src/services/extensionService.ts:113](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L113)
+[src/services/extensionService.ts:116](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L116)
 
 ---
 
@@ -242,7 +246,7 @@ Get an extension by the ID
 
 #### Defined in
 
-[src/services/extensionService.ts:105](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L105)
+[src/services/extensionService.ts:108](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L108)
 
 ---
 
@@ -269,7 +273,7 @@ extensions no need to activate. You need register the inactive event before the 
 
 #### Defined in
 
-[src/services/extensionService.ts:207](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L207)
+[src/services/extensionService.ts:214](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L214)
 
 ---
 
@@ -289,7 +293,7 @@ extensions no need to activate. You need register the inactive event before the 
 
 #### Defined in
 
-[src/services/extensionService.ts:211](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L211)
+[src/services/extensionService.ts:218](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L218)
 
 ---
 
@@ -318,7 +322,7 @@ remove a extension, you can use the `ExtensionService.dispose` method.
 
 #### Defined in
 
-[src/services/extensionService.ts:137](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L137)
+[src/services/extensionService.ts:140](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L140)
 
 ---
 
@@ -338,7 +342,7 @@ remove a extension, you can use the `ExtensionService.dispose` method.
 
 #### Defined in
 
-[src/services/extensionService.ts:150](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L150)
+[src/services/extensionService.ts:153](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L153)
 
 ---
 
@@ -364,7 +368,7 @@ Register a new action which is extends the Action2,
 
 #### Defined in
 
-[src/services/extensionService.ts:164](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L164)
+[src/services/extensionService.ts:171](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L171)
 
 ---
 
@@ -384,4 +388,4 @@ Reset the extensions to `[]`
 
 #### Defined in
 
-[src/services/extensionService.ts:109](https://github.com/DTStack/molecule/blob/3c64296/src/services/extensionService.ts#L109)
+[src/services/extensionService.ts:112](https://github.com/DTStack/molecule/blob/22a59c7/src/services/extensionService.ts#L112)

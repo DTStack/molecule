@@ -1965,7 +1965,7 @@ node_modules/@types/react/index.d.ts:1805
 
 #### Defined in
 
-[src/components/scrollable/index.tsx:6](https://github.com/DTStack/molecule/blob/3c64296/src/components/scrollable/index.tsx#L6)
+[src/components/scrollable/index.tsx:6](https://github.com/DTStack/molecule/blob/22a59c7/src/components/scrollable/index.tsx#L6)
 
 ---
 
@@ -5615,7 +5615,7 @@ node_modules/@types/react/index.d.ts:1909
 
 #### Defined in
 
-[src/components/scrollable/index.tsx:8](https://github.com/DTStack/molecule/blob/3c64296/src/components/scrollable/index.tsx#L8)
+[src/components/scrollable/index.tsx:8](https://github.com/DTStack/molecule/blob/22a59c7/src/components/scrollable/index.tsx#L8)
 
 ---
 
@@ -5681,7 +5681,7 @@ node_modules/react-scrollbars-custom/dist/types/Scrollbar.d.ts:43
 
 #### Defined in
 
-[src/components/scrollable/index.tsx:7](https://github.com/DTStack/molecule/blob/3c64296/src/components/scrollable/index.tsx#L7)
+[src/components/scrollable/index.tsx:7](https://github.com/DTStack/molecule/blob/22a59c7/src/components/scrollable/index.tsx#L7)
 
 ---
 

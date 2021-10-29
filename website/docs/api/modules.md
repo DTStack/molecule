@@ -32,4 +32,4 @@ Renames and re-exports [molecule](namespaces/molecule)
 
 #### Defined in
 
-[src/workbench/workbench.tsx:113](https://github.com/DTStack/molecule/blob/3c64296/src/workbench/workbench.tsx#L113)
+[src/workbench/workbench.tsx:113](https://github.com/DTStack/molecule/blob/22a59c7/src/workbench/workbench.tsx#L113)

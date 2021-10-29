@@ -23,7 +23,7 @@ The option of monaco editor
 
 #### Defined in
 
-[src/components/monaco/index.tsx:16](https://github.com/DTStack/molecule/blob/3c64296/src/components/monaco/index.tsx#L16)
+[src/components/monaco/index.tsx:16](https://github.com/DTStack/molecule/blob/22a59c7/src/components/monaco/index.tsx#L16)
 
 ---
 
@@ -35,7 +35,7 @@ The override for monaco editor
 
 #### Defined in
 
-[src/components/monaco/index.tsx:20](https://github.com/DTStack/molecule/blob/3c64296/src/components/monaco/index.tsx#L20)
+[src/components/monaco/index.tsx:20](https://github.com/DTStack/molecule/blob/22a59c7/src/components/monaco/index.tsx#L20)
 
 ## Methods
 
@@ -55,7 +55,7 @@ The override for monaco editor
 
 #### Defined in
 
-[src/components/monaco/index.tsx:21](https://github.com/DTStack/molecule/blob/3c64296/src/components/monaco/index.tsx#L21)
+[src/components/monaco/index.tsx:21](https://github.com/DTStack/molecule/blob/22a59c7/src/components/monaco/index.tsx#L21)
 
 ---
 
@@ -76,4 +76,4 @@ The override for monaco editor
 
 #### Defined in
 
-[src/components/monaco/index.tsx:22](https://github.com/DTStack/molecule/blob/3c64296/src/components/monaco/index.tsx#L22)
+[src/components/monaco/index.tsx:22](https://github.com/DTStack/molecule/blob/22a59c7/src/components/monaco/index.tsx#L22)

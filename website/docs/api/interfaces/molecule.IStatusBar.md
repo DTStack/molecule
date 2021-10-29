@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:21](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L21)
+[src/model/workbench/statusBar.tsx:21](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/statusBar.tsx#L21)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:20](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L20)
+[src/model/workbench/statusBar.tsx:20](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/statusBar.tsx#L20)
 
 ---
 
@@ -35,4 +35,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/statusBar.tsx:19](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/statusBar.tsx#L19)
+[src/model/workbench/statusBar.tsx:19](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/statusBar.tsx#L19)

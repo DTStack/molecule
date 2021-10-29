@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:2](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L2)
+[src/common/event/eventEmitter.ts:2](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventEmitter.ts#L2)
 
 ## Methods
 
@@ -48,7 +48,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:46](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L46)
+[src/common/event/eventEmitter.ts:46](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventEmitter.ts#L46)
 
 ---
 
@@ -68,7 +68,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:4](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L4)
+[src/common/event/eventEmitter.ts:4](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventEmitter.ts#L4)
 
 ---
 
@@ -89,7 +89,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:9](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L9)
+[src/common/event/eventEmitter.ts:9](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventEmitter.ts#L9)
 
 ---
 
@@ -110,7 +110,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:18](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L18)
+[src/common/event/eventEmitter.ts:18](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventEmitter.ts#L18)
 
 ---
 
@@ -136,4 +136,4 @@ this method is no work.
 
 #### Defined in
 
-[src/common/event/eventEmitter.ts:36](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventEmitter.ts#L36)
+[src/common/event/eventEmitter.ts:36](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventEmitter.ts#L36)

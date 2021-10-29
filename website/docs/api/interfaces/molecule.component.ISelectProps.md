@@ -919,7 +919,7 @@ Omit.children
 
 #### Defined in
 
-[src/components/select/select.tsx:28](https://github.com/DTStack/molecule/blob/3c64296/src/components/select/select.tsx#L28)
+[src/components/select/select.tsx:28](https://github.com/DTStack/molecule/blob/22a59c7/src/components/select/select.tsx#L28)
 
 ---
 
@@ -933,7 +933,7 @@ Omit.className
 
 #### Defined in
 
-[src/components/select/select.tsx:25](https://github.com/DTStack/molecule/blob/3c64296/src/components/select/select.tsx#L25)
+[src/components/select/select.tsx:25](https://github.com/DTStack/molecule/blob/22a59c7/src/components/select/select.tsx#L25)
 
 ---
 
@@ -1051,7 +1051,7 @@ Omit.defaultValue
 
 #### Defined in
 
-[src/components/select/select.tsx:26](https://github.com/DTStack/molecule/blob/3c64296/src/components/select/select.tsx#L26)
+[src/components/select/select.tsx:26](https://github.com/DTStack/molecule/blob/22a59c7/src/components/select/select.tsx#L26)
 
 ---
 
@@ -3495,7 +3495,7 @@ Omit.placeholder
 
 #### Defined in
 
-[src/components/select/select.tsx:27](https://github.com/DTStack/molecule/blob/3c64296/src/components/select/select.tsx#L27)
+[src/components/select/select.tsx:27](https://github.com/DTStack/molecule/blob/22a59c7/src/components/select/select.tsx#L27)
 
 ---
 
@@ -3649,7 +3649,7 @@ Omit.style
 
 #### Defined in
 
-[src/components/select/select.tsx:24](https://github.com/DTStack/molecule/blob/3c64296/src/components/select/select.tsx#L24)
+[src/components/select/select.tsx:24](https://github.com/DTStack/molecule/blob/22a59c7/src/components/select/select.tsx#L24)
 
 ---
 
@@ -3757,7 +3757,7 @@ node_modules/@types/react/index.d.ts:1793
 
 #### Defined in
 
-[src/components/select/select.tsx:23](https://github.com/DTStack/molecule/blob/3c64296/src/components/select/select.tsx#L23)
+[src/components/select/select.tsx:23](https://github.com/DTStack/molecule/blob/22a59c7/src/components/select/select.tsx#L23)
 
 ---
 
@@ -3792,4 +3792,4 @@ node_modules/@types/react/index.d.ts:1779
 
 #### Defined in
 
-[src/components/select/select.tsx:29](https://github.com/DTStack/molecule/blob/3c64296/src/components/select/select.tsx#L29)
+[src/components/select/select.tsx:29](https://github.com/DTStack/molecule/blob/22a59c7/src/components/select/select.tsx#L29)

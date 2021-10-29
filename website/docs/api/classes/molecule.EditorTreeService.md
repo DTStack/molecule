@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:76](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L76)
+[src/services/workbench/explorer/editorTreeService.ts:76](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L76)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:74](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L74)
+[src/services/workbench/explorer/editorTreeService.ts:74](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L74)
 
 ---
 
@@ -57,7 +57,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:73](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L73)
+[src/services/workbench/explorer/editorTreeService.ts:73](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L73)
 
 ## Methods
 
@@ -87,7 +87,7 @@ Count the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -118,7 +118,7 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -142,7 +142,7 @@ Force to update the Component
 
 #### Defined in
 
-[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L79)
 
 ---
 
@@ -166,7 +166,7 @@ Get the Component state
 
 #### Defined in
 
-[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L83)
 
 ---
 
@@ -192,7 +192,7 @@ Callabck for close a certain tab
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:82](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L82)
+[src/services/workbench/explorer/editorTreeService.ts:82](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L82)
 
 ---
 
@@ -219,7 +219,7 @@ When specify groupId, it'll close that group
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:100](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L100)
+[src/services/workbench/explorer/editorTreeService.ts:100](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L100)
 
 ---
 
@@ -245,7 +245,7 @@ Callback for close others tabs except this tabItem
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:86](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L86)
+[src/services/workbench/explorer/editorTreeService.ts:86](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L86)
 
 ---
 
@@ -271,7 +271,7 @@ Callback for close saved tabs in this group
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:92](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L92)
+[src/services/workbench/explorer/editorTreeService.ts:92](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L92)
 
 ---
 
@@ -297,7 +297,7 @@ Callback for context menu click event which isn't in buit-in menus
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:118](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L118)
+[src/services/workbench/explorer/editorTreeService.ts:118](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L118)
 
 ---
 
@@ -323,7 +323,7 @@ Callback for adjust editor layout
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:114](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L114)
+[src/services/workbench/explorer/editorTreeService.ts:114](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L114)
 
 ---
 
@@ -350,7 +350,7 @@ When specify groupId, it'll save that group
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:104](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L104)
+[src/services/workbench/explorer/editorTreeService.ts:104](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L104)
 
 ---
 
@@ -376,7 +376,7 @@ Callback for select tab in this group
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:96](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L96)
+[src/services/workbench/explorer/editorTreeService.ts:96](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L96)
 
 ---
 
@@ -403,7 +403,7 @@ if you want to subscribe to the click events for these two buttons, please use t
 
 #### Defined in
 
-[src/services/workbench/explorer/editorTreeService.ts:108](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/editorTreeService.ts#L108)
+[src/services/workbench/explorer/editorTreeService.ts:108](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/editorTreeService.ts#L108)
 
 ---
 
@@ -433,7 +433,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L71)
 
 ---
 
@@ -457,7 +457,7 @@ Remove the Component update event listening
 
 #### Defined in
 
-[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L75)
 
 ---
 
@@ -487,7 +487,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L67)
 
 ---
 
@@ -518,7 +518,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L54)
 
 ---
 
@@ -549,7 +549,7 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -579,4 +579,4 @@ Unsubscribe the specific event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L37)

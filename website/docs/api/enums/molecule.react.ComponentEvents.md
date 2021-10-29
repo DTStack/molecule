@@ -15,4 +15,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/react/component.ts:5](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L5)
+[src/react/component.ts:5](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L5)

@@ -10,7 +10,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     baseUrl: '/',
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
-    favicon: 'img/favicon.ico',
+    favicon: 'img/favicon.png',
     organizationName: 'DTStack', // Usually your GitHub org/user name.
     projectName: 'molecule', // Usually your repo name.
     i18n: {
@@ -73,7 +73,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 title: 'Molecule',
                 logo: {
                     alt: 'Molecule Logo',
-                    src: 'img/logo.svg',
+                    src: 'img/logo@1x.png',
                 },
                 items: [
                     {

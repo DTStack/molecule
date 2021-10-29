@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:21](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L21)
+[src/components/tabs/index.tsx:21](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L21)
 
 ---
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:17](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L17)
+[src/components/tabs/index.tsx:17](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L17)
 
 ---
 
@@ -49,7 +49,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:18](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L18)
+[src/components/tabs/index.tsx:18](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L18)
 
 ---
 
@@ -59,7 +59,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:20](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L20)
+[src/components/tabs/index.tsx:20](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L20)
 
 ---
 
@@ -69,7 +69,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:19](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L19)
+[src/components/tabs/index.tsx:19](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L19)
 
 ---
 
@@ -79,7 +79,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:23](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L23)
+[src/components/tabs/index.tsx:23](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L23)
 
 ---
 
@@ -89,7 +89,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:22](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L22)
+[src/components/tabs/index.tsx:22](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L22)
 
 ## Methods
 
@@ -109,7 +109,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:24](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L24)
+[src/components/tabs/index.tsx:24](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L24)
 
 ---
 
@@ -129,7 +129,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:25](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L25)
+[src/components/tabs/index.tsx:25](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L25)
 
 ---
 
@@ -149,4 +149,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:26](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L26)
+[src/components/tabs/index.tsx:26](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L26)

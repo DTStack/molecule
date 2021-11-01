@@ -18,7 +18,7 @@ module.exports = {
             type: 'category',
             label: 'Quick Start',
             collapsed: false,
-            items: ['installation', 'configuration'],
+            items: ['installation', 'deploy'],
         },
         {
             type: 'category',

@@ -17,7 +17,7 @@ v12.13.0
 
 ## Installation
 
-Let's start from [creat-creat-app](https://github.com/facebook/create-react-app)
+Let's start with [creat-creat-app](https://github.com/facebook/create-react-app)
 
 First, we create a new project by `creat-creat-app`
 
@@ -62,6 +62,8 @@ function App() {
 export default App;
 ```
 
+## StartUp
+
 And then, run the `start` script in terminal:
 
 ```bash
@@ -70,4 +72,4 @@ yarn start
 npm run start
 ```
 
-It will open [http://localhost:3000](http://localhost:3000) automatically in brower or you can open it by yourself, you can see a simple IDE interface in page.
+It will open [http://localhost:3000](http://localhost:3000) automatically in browser or you can open it in yourself, you can see a simple IDE interface in page.

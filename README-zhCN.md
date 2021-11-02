@@ -19,17 +19,17 @@
 
 [中文](./README-zhCN.md) | [English](./README.md)
 
-Molecule 是一款基于 React.js, 可以帮助我们快速搭建 Web IDE UI 的框架。受 Visual Studio Code 启发，我们设计了简单的扩展（Extension)机制，以便帮助开发者轻松扩展 Workbench。Molecule 已经在 DTStack 多个产品、项目中得到应用，通过 Molecule 提供的 API 和扩展机制，我们可以轻松的在 React 项目中集成。[在线预览～](https://github.com/DTStack/molecule-examples)
+Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。[在线预览～](https://github.com/DTStack/molecule-examples)
 
 ## 核心功能
 
 -   内置 React 版本的 Visual Studio Code **Workbench** UI
 -   基本兼容 Visual Studio Code 的 **ColorTheme**
--   支持使用 React 组件自定义 ** Workbench** UI 样式
+-   支持使用 React 组件自定义 **Workbench** UI 样式
 -   内置 Monaco Editor **Command Palette**、**Keybinding**等模块，并支持扩展
 -   支持 **i18n**，内置简体中文、English 2 种语言
--   内置一个简单的 **Settings** 模块，支持在线编辑修改，支持扩展机制
--   内置默认的 **Explorer**, **Search** 等模块，并支持自定义
+-   内置一个简单的 **Settings** 模块，支持在线编辑修改以及扩展
+-   内置默认的 **Explorer**, **Search** 等组件，并支持扩展
 -   Typescript 支持
 
 ## 安装
@@ -57,9 +57,7 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-`extension` 为 Workbench 应用的扩展入口，具体应用扩展，请参考[快速开始](./website/docs/guides/the-first-extension.md)。
-
-更多使用 [Examples](https://github.com/DTStack/molecule-examples)
+`extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./website/docs/guides/the-first-extension.md)。
 
 ## 文档
 
@@ -67,36 +65,35 @@ ReactDOM.render(<App />, document.getElementById('root'));
 -   [快速开始](./website/docs/introduction.md)
 -   [API 文档](./website/docs/api/index.md)
 -   [扩展 Workbench](./website/docs/guides/extends-workbench.md)
-
-更多请参考 [Docs](./website/docs).
+-   [More Docs](./website/docs).
+-   [Examples](https://github.com/DTStack/molecule-examples)
 
 ## 开发
 
-首先 Clone 源码到本地
-
-```bash
+````bash
 git clone git@github.com:DTStack/molecule.git
-```
-
+``
+`
+首先 Clone 源码到本地
 **开发模式**
 
 ```bash
 yarn # install dependencies
 
 yarn dev # 启动开发模式
-```
+````
 
-Molecule 中的组件是基于 Storybook 开发并管理的，启动成功后
-在浏览器通过`http://localhost:6006/`默认地址浏览。
+Molecule 中的组件是基于 Storybook 开发并管理的，预览地址：`http://localhost:6006/`默认地址浏览。
 
 **构建 & 预览**
 
-这里除了 Storybook 提供的内置组件预览意外，我们提供了一个内置 Web 版本 的预览。
-
 ```bash
 yarn build
-yarn web # 预览打包后的 Web 版本
+yarn web # 预览打包后的 Web
 ```
+
+当前我们默认将 Molecule 以 `ES6` 模块的方式构建到 **`esm`** 目录。另外，
+这里除了 Storybook 提供的组件预览模式以外，我们同时内置了一个使用 ESM 模块的 `Web` 预览模式。
 
 ## 贡献
 

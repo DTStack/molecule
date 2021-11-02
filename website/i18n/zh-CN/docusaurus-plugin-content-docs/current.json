@@ -2,5 +2,9 @@
     "sidebar.docs.category.Quick Start": {
         "message": "快速开始",
         "description": "快速上手 Molecule"
+    },
+    "sidebar.docs.category.Guides": {
+        "message": "指南",
+        "description": "指南 Molecule"
     }
 }

@@ -25,6 +25,7 @@ module.exports = {
             label: 'Guides',
             collapsed: false,
             items: [
+                'guides/basic',
                 'guides/the-first-extension',
                 'guides/extends-workbench',
                 'guides/extends-colorTheme',

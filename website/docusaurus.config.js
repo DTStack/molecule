@@ -52,7 +52,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         versionDocsDirPath,
                         docPath,
                     }) {
-                        console.log('---editUrl', locale, versionDocsDirPath);
                         if (locale !== 'en') {
                             return `https://github.com/DTStack/molecule/website/i18n/${locale}`;
                         }

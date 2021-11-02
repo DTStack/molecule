@@ -17,13 +17,20 @@
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 
-A lightweight Web IDE UI Framework, built with React.js, and inspired by the Visual Studio Code.
+[中文](./README-zhCN.md) | [English](./README.md)
+
+The **Molecule** is a lightweight **Web IDE UI** Framework built with React.js，and inspired by the VSCode. We also provide the Extension APIs the seem like VSCode, to help developers extend the Workbench easily. The Molecule integrates with React.js applications is very simple. It has applied to many DTStack inner projects. [Online Preview]()
 
 ## Features
 
--   Provides the default IDE Workbench same as the Visual Studio Code
--   Easy to extend the default IDE Workbench via the Extension
--   Atomic React Components, Easy to customize the IDE UI
+-   Builtin the VSCode **Workbench** UI
+-   Compatible with the VSCode **ColorTheme**
+-   Customize the Workbench via **React Component** easily
+-   Builtin Monaco-Editor **Command Palette, Keybinding** features
+-   Support the **i18n**, builtin zhCN, and English
+-   Builtin Settings, support to edit and extend via the Extension
+-   Builtin basic Explorer, Search components, and support extending via the Extension
+-   Typescript Ready
 
 ## Installation
 
@@ -58,6 +65,6 @@ Refer to the [Docs](./docs).
 
 Refer to the [CONTRIBUTING](./CONTRIBUTING.md).
 
-## Licence
+## License
 
 MIT

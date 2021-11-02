@@ -17,17 +17,20 @@
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 
-Molecule 是一款基于 React.js, 可以帮助我们快速搭建 Web IDE UI 的框架。受 Visual Studio Code 启发，我们设计了简单的扩展（Extension)机制，使其拥有了一种简单的 Workbench 扩展能力。通过 Molecule 提供的 API 和扩展机制，我们可以轻松的在 React 项目中集成，使用自定义的 React 组件，快速实现产品所需要的基本功能。[在线预览](https://github.com/DTStack/molecule-examples)
+[中文](./README-zhCN.md) | [English](./README.md)
+
+Molecule 是一款基于 React.js, 可以帮助我们快速搭建 Web IDE UI 的框架。受 Visual Studio Code 启发，我们设计了简单的扩展（Extension)机制，以便帮助开发者轻松扩展 Workbench。Molecule 已经在 DTStack 多个产品、项目中得到应用，通过 Molecule 提供的 API 和扩展机制，我们可以轻松的在 React 项目中集成。[在线预览～](https://github.com/DTStack/molecule-examples)
 
 ## 核心功能
 
--   内置 **Visual Studio Code** Workbench UI 的 React **克隆**版本，并支持扩展
--   支持以扩展的方式，兼容基本的 Visual Studio Code 的 **ColorTheme**
--   支持使用 React 组件**自定义 Workbench** UI 样式
+-   内置 React 版本的 Visual Studio Code **Workbench** UI
+-   基本兼容 Visual Studio Code 的 **ColorTheme**
+-   支持使用 React 组件自定义 ** Workbench** UI 样式
 -   内置 Monaco Editor **Command Palette**、**Keybinding**等模块，并支持扩展
--   支持 **i18n**，默认内置简体中文、English 2 种语言, 支持以扩展的方式增加新的语言
+-   支持 **i18n**，内置简体中文、English 2 种语言
 -   内置一个简单的 **Settings** 模块，支持在线编辑修改，支持扩展机制
 -   内置默认的 **Explorer**, **Search** 等模块，并支持自定义
+-   Typescript 支持
 
 ## 安装
 

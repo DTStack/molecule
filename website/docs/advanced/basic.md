@@ -6,8 +6,6 @@ Before start to introduce the basic config about molecule, It's necessary to emp
 
 Workbench is the main interface in molecule.
 
-### Concepts
-
 For reducing the cost of learning, we divide workbench into multiple parts.
 
 As you see, this is a workbench interface for molecule IDE.
@@ -30,16 +28,6 @@ And the main content is divided into three parts, which are `sideBar`, `editor` 
 ![molecule](/img/guides/layout-marks.jpg)
 
 > If you can't see clearly, just open the image in a new tab.
-
-Besides these concepts we mentioned, there are other concepts that can be known while using them.
-
-Now, you know the concepts of `statusBar`, `sideBar`, `editor`, `panel`, and `activityBar` in molecule. It's important to understand these concepts when you execute the api of molecule.
-
-### Extension
-
-Molecule support enriches its features through extensions. Not only can we add a new feature in extensions, but also disabled specific built-in modules in extensions.
-
-All in all, we could control the behavior of `molecule` by using these concepts in extensions.
 
 ## ColorTheme
 
@@ -97,3 +85,9 @@ As your see, there are many built-in commands and features in molecule. But if t
 The answer is through the `builtin` service. Molecule gathers all built-in commands and features into the `builtin` service and distributes built-in commands to other services.
 
 So if you want to disable a `builtin` command or feature, just have try `builtin` service. The more details about how to use `builtin` service, please refer to [extends-builtin](extends-builtin).
+
+## Extension
+
+Molecule support enriches its features through extensions. Not only can we add a new feature in extensions, but also disabled specific built-in modules in extensions.
+
+But how can we add features through extensions? After the followings you will know something about it.

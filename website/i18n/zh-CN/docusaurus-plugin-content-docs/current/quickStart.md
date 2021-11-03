@@ -1,10 +1,10 @@
 ---
-title: 安装依赖
-sidebar_label: 安装依赖
-sidebar_position: 1
+title: 快速开始
+sidebar_label: 快速开始
+sidebar_position: 2
 ---
 
-# 安装依赖
+# 快速开始
 
 ## 前置需求
 

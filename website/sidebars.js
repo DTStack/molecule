@@ -14,18 +14,12 @@ module.exports = {
 
     docs: [
         'introduction',
-        {
-            type: 'category',
-            label: 'Quick Start',
-            collapsed: false,
-            items: ['installation', 'deploy'],
-        },
+        'quickStart',
         {
             type: 'category',
             label: 'Guides',
             collapsed: false,
             items: [
-                'guides/basic',
                 'guides/the-first-extension',
                 'guides/extends-workbench',
                 'guides/extends-colorTheme',

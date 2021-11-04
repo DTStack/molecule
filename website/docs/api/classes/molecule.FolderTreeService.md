@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:152](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L152)
+[src/services/workbench/explorer/folderTreeService.ts:152](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L152)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:148](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L148)
+[src/services/workbench/explorer/folderTreeService.ts:148](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L148)
 
 ---
 
@@ -49,7 +49,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:147](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L147)
+[src/services/workbench/explorer/folderTreeService.ts:147](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L147)
 
 ---
 
@@ -59,7 +59,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:149](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L149)
+[src/services/workbench/explorer/folderTreeService.ts:149](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L149)
 
 ---
 
@@ -69,7 +69,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:150](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L150)
+[src/services/workbench/explorer/folderTreeService.ts:150](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L150)
 
 ---
 
@@ -87,7 +87,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:146](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L146)
+[src/services/workbench/explorer/folderTreeService.ts:146](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L146)
 
 ## Methods
 
@@ -114,7 +114,7 @@ Add data into folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:260](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L260)
+[src/services/workbench/explorer/folderTreeService.ts:260](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L260)
 
 ---
 
@@ -134,7 +134,7 @@ Add data into folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:216](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L216)
+[src/services/workbench/explorer/folderTreeService.ts:216](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L216)
 
 ---
 
@@ -164,7 +164,7 @@ Count the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -195,7 +195,7 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -219,7 +219,7 @@ Force to update the Component
 
 #### Defined in
 
-[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L79)
 
 ---
 
@@ -245,7 +245,7 @@ Get specific data in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:344](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L344)
+[src/services/workbench/explorer/folderTreeService.ts:344](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L344)
 
 ---
 
@@ -265,7 +265,7 @@ Get specific data in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:241](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L241)
+[src/services/workbench/explorer/folderTreeService.ts:241](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L241)
 
 ---
 
@@ -285,7 +285,7 @@ Get the context menus for file
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:171](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L171)
+[src/services/workbench/explorer/folderTreeService.ts:171](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L171)
 
 ---
 
@@ -305,7 +305,7 @@ Get the context menus for folder
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:179](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L179)
+[src/services/workbench/explorer/folderTreeService.ts:179](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L179)
 
 ---
 
@@ -327,7 +327,7 @@ Returns the node of root folder in folderTree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:204](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L204)
+[src/services/workbench/explorer/folderTreeService.ts:204](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L204)
 
 ---
 
@@ -347,7 +347,7 @@ Returns the node of root folder in folderTree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:235](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L235)
+[src/services/workbench/explorer/folderTreeService.ts:235](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L235)
 
 ---
 
@@ -371,7 +371,7 @@ Get the Component state
 
 #### Defined in
 
-[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L83)
 
 ---
 
@@ -397,7 +397,7 @@ Listen to the click event about the context menu except for built-in menus
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:415](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L415)
+[src/services/workbench/explorer/folderTreeService.ts:415](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L415)
 
 ---
 
@@ -423,7 +423,7 @@ Listen to create a node for folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:409](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L409)
+[src/services/workbench/explorer/folderTreeService.ts:409](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L409)
 
 ---
 
@@ -449,7 +449,7 @@ Listen to drop event
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:391](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L391)
+[src/services/workbench/explorer/folderTreeService.ts:391](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L391)
 
 ---
 
@@ -475,7 +475,7 @@ Callback for load folder tree data
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:424](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L424)
+[src/services/workbench/explorer/folderTreeService.ts:424](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L424)
 
 ---
 
@@ -501,7 +501,7 @@ Listen to remove a node
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:379](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L379)
+[src/services/workbench/explorer/folderTreeService.ts:379](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L379)
 
 ---
 
@@ -527,7 +527,7 @@ Listen to event about clicking rename button
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:375](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L375)
+[src/services/workbench/explorer/folderTreeService.ts:375](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L375)
 
 ---
 
@@ -553,7 +553,7 @@ Listen to right click event
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:400](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L400)
+[src/services/workbench/explorer/folderTreeService.ts:400](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L400)
 
 ---
 
@@ -579,7 +579,7 @@ Listen to select a file
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:387](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L387)
+[src/services/workbench/explorer/folderTreeService.ts:387](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L387)
 
 ---
 
@@ -605,7 +605,7 @@ Listen to update file or folder name
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:383](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L383)
+[src/services/workbench/explorer/folderTreeService.ts:383](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L383)
 
 ---
 
@@ -635,7 +635,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L71)
 
 ---
 
@@ -661,7 +661,7 @@ Remove specific data in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:302](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L302)
+[src/services/workbench/explorer/folderTreeService.ts:302](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L302)
 
 ---
 
@@ -685,7 +685,7 @@ Remove the Component update event listening
 
 #### Defined in
 
-[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L75)
 
 ---
 
@@ -715,7 +715,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L67)
 
 ---
 
@@ -735,7 +735,7 @@ Reset the FolderTreeService state
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:159](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L159)
+[src/services/workbench/explorer/folderTreeService.ts:159](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L159)
 
 ---
 
@@ -762,7 +762,7 @@ or unactive any node in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:355](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L355)
+[src/services/workbench/explorer/folderTreeService.ts:355](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L355)
 
 ---
 
@@ -783,7 +783,7 @@ or unactive any node in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:187](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L187)
+[src/services/workbench/explorer/folderTreeService.ts:187](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L187)
 
 ---
 
@@ -809,7 +809,7 @@ Set a entry page for folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:369](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L369)
+[src/services/workbench/explorer/folderTreeService.ts:369](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L369)
 
 ---
 
@@ -835,7 +835,7 @@ Set the context menus for file
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:175](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L175)
+[src/services/workbench/explorer/folderTreeService.ts:175](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L175)
 
 ---
 
@@ -861,7 +861,7 @@ Set the context menus for folder
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:183](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L183)
+[src/services/workbench/explorer/folderTreeService.ts:183](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L183)
 
 ---
 
@@ -892,7 +892,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L54)
 
 ---
 
@@ -923,7 +923,7 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -953,7 +953,7 @@ Unsubscribe the specific event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -979,4 +979,4 @@ Update specific data in folder tree
 
 #### Defined in
 
-[src/services/workbench/explorer/folderTreeService.ts:322](https://github.com/DTStack/molecule/blob/3c64296/src/services/workbench/explorer/folderTreeService.ts#L322)
+[src/services/workbench/explorer/folderTreeService.ts:322](https://github.com/DTStack/molecule/blob/22a59c7/src/services/workbench/explorer/folderTreeService.ts#L322)

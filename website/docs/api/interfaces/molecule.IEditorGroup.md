@@ -28,7 +28,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/editor.ts:52](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L52)
+[src/model/workbench/editor.ts:52](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/editor.ts#L52)
 
 ---
 
@@ -42,7 +42,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:21](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L21)
+[src/components/tabs/index.tsx:21](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L21)
 
 ---
 
@@ -56,7 +56,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:17](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L17)
+[src/components/tabs/index.tsx:17](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L17)
 
 ---
 
@@ -70,7 +70,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:18](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L18)
+[src/components/tabs/index.tsx:18](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L18)
 
 ---
 
@@ -84,7 +84,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:20](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L20)
+[src/components/tabs/index.tsx:20](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L20)
 
 ---
 
@@ -98,7 +98,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:19](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L19)
+[src/components/tabs/index.tsx:19](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L19)
 
 ---
 
@@ -108,7 +108,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/editor.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L54)
+[src/model/workbench/editor.ts:54](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/editor.ts#L54)
 
 ---
 
@@ -118,7 +118,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/editor.ts:47](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L47)
+[src/model/workbench/editor.ts:47](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/editor.ts#L47)
 
 ---
 
@@ -128,7 +128,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/editor.ts:53](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L53)
+[src/model/workbench/editor.ts:53](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/editor.ts#L53)
 
 ---
 
@@ -142,7 +142,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/tabs/index.tsx:23](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L23)
+[src/components/tabs/index.tsx:23](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L23)
 
 ---
 
@@ -154,7 +154,7 @@ Current editor group tab
 
 #### Defined in
 
-[src/model/workbench/editor.ts:51](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/editor.ts#L51)
+[src/model/workbench/editor.ts:51](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/editor.ts#L51)
 
 ---
 
@@ -168,7 +168,7 @@ Current editor group tab
 
 #### Defined in
 
-[src/components/tabs/index.tsx:22](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L22)
+[src/components/tabs/index.tsx:22](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L22)
 
 ## Methods
 
@@ -192,7 +192,7 @@ Current editor group tab
 
 #### Defined in
 
-[src/components/tabs/index.tsx:24](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L24)
+[src/components/tabs/index.tsx:24](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L24)
 
 ---
 
@@ -216,7 +216,7 @@ Current editor group tab
 
 #### Defined in
 
-[src/components/tabs/index.tsx:25](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L25)
+[src/components/tabs/index.tsx:25](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L25)
 
 ---
 
@@ -240,4 +240,4 @@ Current editor group tab
 
 #### Defined in
 
-[src/components/tabs/index.tsx:26](https://github.com/DTStack/molecule/blob/3c64296/src/components/tabs/index.tsx#L26)
+[src/components/tabs/index.tsx:26](https://github.com/DTStack/molecule/blob/22a59c7/src/components/tabs/index.tsx#L26)

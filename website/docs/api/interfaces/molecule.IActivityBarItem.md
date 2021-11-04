@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:23](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L23)
+[src/model/workbench/activityBar.ts:23](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L23)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:27](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L27)
+[src/model/workbench/activityBar.ts:27](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L27)
 
 ---
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:26](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L26)
+[src/model/workbench/activityBar.ts:26](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L26)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:21](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L21)
+[src/model/workbench/activityBar.ts:21](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L21)
 
 ---
 
@@ -55,7 +55,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:24](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L24)
+[src/model/workbench/activityBar.ts:24](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L24)
 
 ---
 
@@ -65,7 +65,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L20)
+[src/model/workbench/activityBar.ts:20](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L20)
 
 ---
 
@@ -75,7 +75,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:22](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L22)
+[src/model/workbench/activityBar.ts:22](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L22)
 
 ---
 
@@ -85,7 +85,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:17](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L17)
+[src/model/workbench/activityBar.ts:17](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L17)
 
 ---
 
@@ -95,7 +95,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:18](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L18)
+[src/model/workbench/activityBar.ts:18](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L18)
 
 ---
 
@@ -105,7 +105,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L28)
+[src/model/workbench/activityBar.ts:28](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L28)
 
 ---
 
@@ -115,7 +115,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:19](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L19)
+[src/model/workbench/activityBar.ts:19](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L19)
 
 ---
 
@@ -125,7 +125,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:25](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L25)
+[src/model/workbench/activityBar.ts:25](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L25)
 
 ## Methods
 
@@ -139,4 +139,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/model/workbench/activityBar.ts:29](https://github.com/DTStack/molecule/blob/3c64296/src/model/workbench/activityBar.ts#L29)
+[src/model/workbench/activityBar.ts:29](https://github.com/DTStack/molecule/blob/22a59c7/src/model/workbench/activityBar.ts#L29)

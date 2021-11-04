@@ -9,9 +9,13 @@ custom_edit_url: null
 
 ## Hierarchy
 
--   `ComponentProps`<`any`\>
+-   `HTMLElementProps`
 
     ↳ **`ICheckboxProps`**
+
+## Indexable
+
+▪ [key: `string`]: `any`
 
 ## Properties
 
@@ -21,17 +25,73 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/checkbox/checkbox.tsx:8](https://github.com/DTStack/molecule/blob/3c64296/src/components/checkbox/checkbox.tsx#L8)
+[src/components/checkbox/checkbox.tsx:9](https://github.com/DTStack/molecule/blob/22a59c7/src/components/checkbox/checkbox.tsx#L9)
+
+---
+
+### className
+
+• `Optional` **className**: `string`
+
+#### Inherited from
+
+HTMLElementProps.className
+
+#### Defined in
+
+[src/common/types.ts:4](https://github.com/DTStack/molecule/blob/22a59c7/src/common/types.ts#L4)
 
 ---
 
 ### id
 
-• **id**: `string`
+• **id**: `UniqueId`
 
 #### Defined in
 
-[src/components/checkbox/checkbox.tsx:6](https://github.com/DTStack/molecule/blob/3c64296/src/components/checkbox/checkbox.tsx#L6)
+[src/components/checkbox/checkbox.tsx:7](https://github.com/DTStack/molecule/blob/22a59c7/src/components/checkbox/checkbox.tsx#L7)
+
+---
+
+### role
+
+• `Optional` **role**: `string`
+
+#### Inherited from
+
+HTMLElementProps.role
+
+#### Defined in
+
+[src/common/types.ts:5](https://github.com/DTStack/molecule/blob/22a59c7/src/common/types.ts#L5)
+
+---
+
+### style
+
+• `Optional` **style**: `CSSProperties`
+
+#### Inherited from
+
+HTMLElementProps.style
+
+#### Defined in
+
+[src/common/types.ts:3](https://github.com/DTStack/molecule/blob/22a59c7/src/common/types.ts#L3)
+
+---
+
+### title
+
+• `Optional` **title**: `string`
+
+#### Inherited from
+
+HTMLElementProps.title
+
+#### Defined in
+
+[src/common/types.ts:2](https://github.com/DTStack/molecule/blob/22a59c7/src/common/types.ts#L2)
 
 ---
 
@@ -41,7 +101,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/checkbox/checkbox.tsx:7](https://github.com/DTStack/molecule/blob/3c64296/src/components/checkbox/checkbox.tsx#L7)
+[src/components/checkbox/checkbox.tsx:8](https://github.com/DTStack/molecule/blob/22a59c7/src/components/checkbox/checkbox.tsx#L8)
 
 ## Methods
 
@@ -62,4 +122,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/checkbox/checkbox.tsx:9](https://github.com/DTStack/molecule/blob/3c64296/src/components/checkbox/checkbox.tsx#L9)
+[src/components/checkbox/checkbox.tsx:10](https://github.com/DTStack/molecule/blob/22a59c7/src/components/checkbox/checkbox.tsx#L10)

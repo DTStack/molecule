@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/controller/editor.tsx:25](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L25)
+[src/controller/editor.tsx:25](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L25)
 
 ## Methods
 
@@ -47,7 +47,7 @@ Partial.count
 
 #### Defined in
 
-[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -74,7 +74,7 @@ Partial.emit
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -92,7 +92,7 @@ Partial.initView
 
 #### Defined in
 
-[src/react/controller.ts:4](https://github.com/DTStack/molecule/blob/3c64296/src/react/controller.ts#L4)
+[src/react/controller.ts:4](https://github.com/DTStack/molecule/blob/22a59c7/src/react/controller.ts#L4)
 
 ---
 
@@ -113,7 +113,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:38](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L38)
+[src/controller/editor.tsx:38](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L38)
 
 ---
 
@@ -133,7 +133,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:44](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L44)
+[src/controller/editor.tsx:44](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L44)
 
 ---
 
@@ -155,7 +155,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:27](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L27)
+[src/controller/editor.tsx:27](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L27)
 
 ---
 
@@ -175,7 +175,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:32](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L32)
+[src/controller/editor.tsx:32](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L32)
 
 ---
 
@@ -196,7 +196,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:36](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L36)
+[src/controller/editor.tsx:36](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L36)
 
 ---
 
@@ -216,7 +216,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:37](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L37)
+[src/controller/editor.tsx:37](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L37)
 
 ---
 
@@ -237,7 +237,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:33](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L33)
+[src/controller/editor.tsx:33](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L33)
 
 ---
 
@@ -258,7 +258,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:34](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L34)
+[src/controller/editor.tsx:34](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L34)
 
 ---
 
@@ -279,7 +279,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L35)
+[src/controller/editor.tsx:35](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L35)
 
 ---
 
@@ -306,7 +306,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:42](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L42)
+[src/controller/editor.tsx:42](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L42)
 
 ---
 
@@ -326,7 +326,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:46](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L46)
+[src/controller/editor.tsx:46](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L46)
 
 ---
 
@@ -347,7 +347,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:43](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L43)
+[src/controller/editor.tsx:43](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L43)
 
 ---
 
@@ -368,7 +368,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:45](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L45)
+[src/controller/editor.tsx:45](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L45)
 
 ---
 
@@ -395,7 +395,7 @@ Partial.initView
 
 #### Defined in
 
-[src/controller/editor.tsx:26](https://github.com/DTStack/molecule/blob/3c64296/src/controller/editor.tsx#L26)
+[src/controller/editor.tsx:26](https://github.com/DTStack/molecule/blob/22a59c7/src/controller/editor.tsx#L26)
 
 ---
 
@@ -422,7 +422,7 @@ Partial.subscribe
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -448,4 +448,4 @@ Partial.unsubscribe
 
 #### Defined in
 
-[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L37)

@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/i18n/localization.ts:21](https://github.com/DTStack/molecule/blob/3c64296/src/i18n/localization.ts#L21)
+[src/i18n/localization.ts:89](https://github.com/DTStack/molecule/blob/22a59c7/src/i18n/localization.ts#L89)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/i18n/localization.ts:19](https://github.com/DTStack/molecule/blob/3c64296/src/i18n/localization.ts#L19)
+[src/i18n/localization.ts:87](https://github.com/DTStack/molecule/blob/22a59c7/src/i18n/localization.ts#L87)
 
 ---
 
@@ -37,7 +37,7 @@ Whether inherit an exist locale, if it's exist, merge the parent locale
 
 #### Defined in
 
-[src/i18n/localization.ts:25](https://github.com/DTStack/molecule/blob/3c64296/src/i18n/localization.ts#L25)
+[src/i18n/localization.ts:93](https://github.com/DTStack/molecule/blob/22a59c7/src/i18n/localization.ts#L93)
 
 ---
 
@@ -47,14 +47,14 @@ Whether inherit an exist locale, if it's exist, merge the parent locale
 
 #### Defined in
 
-[src/i18n/localization.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/i18n/localization.ts#L20)
+[src/i18n/localization.ts:88](https://github.com/DTStack/molecule/blob/22a59c7/src/i18n/localization.ts#L88)
 
 ---
 
 ### source
 
-• **source**: `Map`<`string`, `string`\>
+• **source**: `Map`<`string` \| `LocaleSourceIdType`, `string`\>
 
 #### Defined in
 
-[src/i18n/localization.ts:26](https://github.com/DTStack/molecule/blob/3c64296/src/i18n/localization.ts#L26)
+[src/i18n/localization.ts:94](https://github.com/DTStack/molecule/blob/22a59c7/src/i18n/localization.ts#L94)

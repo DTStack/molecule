@@ -30,7 +30,7 @@ Component&lt;IMoleculeProps\&gt;.constructor
 
 #### Defined in
 
-[src/provider/molecule.tsx:40](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L40)
+[src/provider/molecule.tsx:38](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L38)
 
 ## Properties
 
@@ -68,7 +68,7 @@ node_modules/@types/react/index.d.ts:469
 
 #### Defined in
 
-[src/provider/molecule.tsx:35](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L35)
+[src/provider/molecule.tsx:33](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L33)
 
 ---
 
@@ -78,7 +78,7 @@ node_modules/@types/react/index.d.ts:469
 
 #### Defined in
 
-[src/provider/molecule.tsx:38](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L38)
+[src/provider/molecule.tsx:35](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L35)
 
 ---
 
@@ -88,7 +88,7 @@ node_modules/@types/react/index.d.ts:469
 
 #### Defined in
 
-[src/provider/molecule.tsx:37](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L37)
+[src/provider/molecule.tsx:36](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L36)
 
 ---
 
@@ -98,7 +98,7 @@ node_modules/@types/react/index.d.ts:469
 
 #### Defined in
 
-[src/provider/molecule.tsx:36](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L36)
+[src/provider/molecule.tsx:34](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L34)
 
 ---
 
@@ -194,7 +194,7 @@ node_modules/@types/react/index.d.ts:451
 
 #### Defined in
 
-[src/provider/molecule.tsx:59](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L59)
+[src/provider/molecule.tsx:51](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L51)
 
 ## Methods
 
@@ -355,7 +355,7 @@ Component.componentDidMount
 
 #### Defined in
 
-[src/provider/molecule.tsx:49](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L49)
+[src/provider/molecule.tsx:46](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L46)
 
 ---
 
@@ -587,7 +587,7 @@ Register all controllers and execute the initView method automatically to inject
 
 #### Defined in
 
-[src/provider/molecule.tsx:74](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L74)
+[src/provider/molecule.tsx:100](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L100)
 
 ---
 
@@ -601,21 +601,7 @@ Register all controllers and execute the initView method automatically to inject
 
 #### Defined in
 
-[src/provider/molecule.tsx:63](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L63)
-
----
-
-### preloadLocales
-
-▸ **preloadLocales**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/provider/molecule.tsx:54](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L54)
+[src/provider/molecule.tsx:74](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L74)
 
 ---
 
@@ -633,7 +619,7 @@ Component.render
 
 #### Defined in
 
-[src/provider/molecule.tsx:82](https://github.com/DTStack/molecule/blob/3c64296/src/provider/molecule.tsx#L82)
+[src/provider/molecule.tsx:108](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L108)
 
 ---
 
@@ -700,3 +686,25 @@ Component.shouldComponentUpdate
 #### Defined in
 
 node_modules/@types/react/index.d.ts:626
+
+---
+
+### splitLanguagesExts
+
+▸ `Private` **splitLanguagesExts**(`extensions`): [`IExtension`](../interfaces/molecule.IExtension)[][]
+
+Distinguish the language extensions from extensions
+
+#### Parameters
+
+| Name         | Type                                                |
+| :----------- | :-------------------------------------------------- |
+| `extensions` | [`IExtension`](../interfaces/molecule.IExtension)[] |
+
+#### Returns
+
+[`IExtension`](../interfaces/molecule.IExtension)[][]
+
+#### Defined in
+
+[src/provider/molecule.tsx:60](https://github.com/DTStack/molecule/blob/22a59c7/src/provider/molecule.tsx#L60)

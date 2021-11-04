@@ -19,7 +19,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/builtinService/index.ts:57](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L57)
+[src/services/builtinService/index.ts:61](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L61)
 
 ## Properties
 
@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/builtinService/index.ts:55](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L55)
+[src/services/builtinService/index.ts:59](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L59)
 
 ---
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/builtinService/index.ts:56](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L56)
+[src/services/builtinService/index.ts:60](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L60)
 
 ## Methods
 
@@ -61,7 +61,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/builtinService/index.ts:73](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L73)
+[src/services/builtinService/index.ts:77](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L77)
 
 ---
 
@@ -77,11 +77,11 @@ custom_edit_url: null
 
 #### Parameters
 
-| Name            | Type     |
-| :-------------- | :------- |
-| `module`        | `Object` |
-| `module.id`     | `string` |
-| `module.module` | `T`      |
+| Name            | Type      |
+| :-------------- | :-------- |
+| `module`        | `Object`  |
+| `module.id`     | `string`  |
+| `module.module` | () => `T` |
 
 #### Returns
 
@@ -89,7 +89,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/builtinService/index.ts:81](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L81)
+[src/services/builtinService/index.ts:85](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L85)
 
 ---
 
@@ -115,7 +115,7 @@ Get the specific constant by id
 
 #### Defined in
 
-[src/services/builtinService/index.ts:89](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L89)
+[src/services/builtinService/index.ts:93](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L93)
 
 ---
 
@@ -135,7 +135,7 @@ Get all constants
 
 #### Defined in
 
-[src/services/builtinService/index.ts:93](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L93)
+[src/services/builtinService/index.ts:97](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L97)
 
 ---
 
@@ -161,19 +161,19 @@ Get the specific module by id
 
 #### Defined in
 
-[src/services/builtinService/index.ts:129](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L129)
+[src/services/builtinService/index.ts:133](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L133)
 
 ---
 
 ### getModules
 
-▸ **getModules**(): `Partial`<`Object`\>
+▸ **getModules**(): `any`
 
 Get all modules
 
 #### Returns
 
-`Partial`<`Object`\>
+`any`
 
 #### Implementation of
 
@@ -181,7 +181,7 @@ Get all modules
 
 #### Defined in
 
-[src/services/builtinService/index.ts:133](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L133)
+[src/services/builtinService/index.ts:146](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L146)
 
 ---
 
@@ -207,7 +207,7 @@ Mark the specific constant as inactive
 
 #### Defined in
 
-[src/services/builtinService/index.ts:106](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L106)
+[src/services/builtinService/index.ts:110](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L110)
 
 ---
 
@@ -233,7 +233,7 @@ Mark the specific module as inactive
 
 #### Defined in
 
-[src/services/builtinService/index.ts:117](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L117)
+[src/services/builtinService/index.ts:121](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L121)
 
 ---
 
@@ -247,7 +247,7 @@ Mark the specific module as inactive
 
 #### Defined in
 
-[src/services/builtinService/index.ts:61](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L61)
+[src/services/builtinService/index.ts:65](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L65)
 
 ---
 
@@ -267,4 +267,4 @@ Reset all constants and modules
 
 #### Defined in
 
-[src/services/builtinService/index.ts:143](https://github.com/DTStack/molecule/blob/3c64296/src/services/builtinService/index.ts#L143)
+[src/services/builtinService/index.ts:160](https://github.com/DTStack/molecule/blob/22a59c7/src/services/builtinService/index.ts#L160)

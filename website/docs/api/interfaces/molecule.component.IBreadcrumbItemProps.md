@@ -7,15 +7,29 @@ custom_edit_url: null
 
 [molecule](../namespaces/molecule).[component](../namespaces/molecule.component).IBreadcrumbItemProps
 
+## Hierarchy
+
+-   `HTMLElementProps`
+
+    ↳ **`IBreadcrumbItemProps`**
+
+## Indexable
+
+▪ [key: `string`]: `any`
+
 ## Properties
 
 ### className
 
 • `Optional` **className**: `string`
 
+#### Inherited from
+
+HTMLElementProps.className
+
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:11](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L11)
+[src/common/types.ts:4](https://github.com/DTStack/molecule/blob/22a59c7/src/common/types.ts#L4)
 
 ---
 
@@ -25,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:8](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L8)
+[src/components/breadcrumb/index.tsx:14](https://github.com/DTStack/molecule/blob/22a59c7/src/components/breadcrumb/index.tsx#L14)
 
 ---
 
@@ -35,17 +49,17 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:10](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L10)
+[src/components/breadcrumb/index.tsx:16](https://github.com/DTStack/molecule/blob/22a59c7/src/components/breadcrumb/index.tsx#L16)
 
 ---
 
 ### id
 
-• **id**: `string`
+• **id**: `UniqueId`
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:7](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L7)
+[src/components/breadcrumb/index.tsx:13](https://github.com/DTStack/molecule/blob/22a59c7/src/components/breadcrumb/index.tsx#L13)
 
 ---
 
@@ -55,7 +69,49 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:9](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L9)
+[src/components/breadcrumb/index.tsx:15](https://github.com/DTStack/molecule/blob/22a59c7/src/components/breadcrumb/index.tsx#L15)
+
+---
+
+### role
+
+• `Optional` **role**: `string`
+
+#### Inherited from
+
+HTMLElementProps.role
+
+#### Defined in
+
+[src/common/types.ts:5](https://github.com/DTStack/molecule/blob/22a59c7/src/common/types.ts#L5)
+
+---
+
+### style
+
+• `Optional` **style**: `CSSProperties`
+
+#### Inherited from
+
+HTMLElementProps.style
+
+#### Defined in
+
+[src/common/types.ts:3](https://github.com/DTStack/molecule/blob/22a59c7/src/common/types.ts#L3)
+
+---
+
+### title
+
+• `Optional` **title**: `string`
+
+#### Inherited from
+
+HTMLElementProps.title
+
+#### Defined in
+
+[src/common/types.ts:2](https://github.com/DTStack/molecule/blob/22a59c7/src/common/types.ts#L2)
 
 ## Methods
 
@@ -75,4 +131,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/breadcrumb/index.tsx:12](https://github.com/DTStack/molecule/blob/3c64296/src/components/breadcrumb/index.tsx#L12)
+[src/components/breadcrumb/index.tsx:17](https://github.com/DTStack/molecule/blob/22a59c7/src/components/breadcrumb/index.tsx#L17)

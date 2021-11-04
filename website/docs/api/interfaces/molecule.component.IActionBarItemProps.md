@@ -13,6 +13,10 @@ custom_edit_url: null
 | :--- | :---- |
 | `T`  | `any` |
 
+## Indexable
+
+▪ [key: `string`]: `any`
+
 ## Properties
 
 ### checked
@@ -21,17 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:21](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L21)
-
----
-
-### className
-
-• `Optional` **className**: `string`
-
-#### Defined in
-
-[src/components/actionBar/index.tsx:24](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L24)
+[src/components/actionBar/index.tsx:23](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L23)
 
 ---
 
@@ -41,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:23](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L23)
+[src/components/actionBar/index.tsx:25](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L25)
 
 ---
 
@@ -51,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:22](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L22)
+[src/components/actionBar/index.tsx:24](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L24)
 
 ---
 
@@ -61,7 +55,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:20](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L20)
+[src/components/actionBar/index.tsx:22](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L22)
 
 ---
 
@@ -71,17 +65,17 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:19](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L19)
+[src/components/actionBar/index.tsx:21](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L21)
 
 ---
 
 ### id
 
-• `Optional` **id**: `string`
+• **id**: `UniqueId`
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:16](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L16)
+[src/components/actionBar/index.tsx:18](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L18)
 
 ---
 
@@ -91,17 +85,17 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:17](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L17)
+[src/components/actionBar/index.tsx:20](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L20)
 
 ---
 
 ### title
 
-• `Optional` **title**: `string`
+• `Optional` **title**: `string` \| `Element`
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:18](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L18)
+[src/components/actionBar/index.tsx:19](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L19)
 
 ## Methods
 
@@ -122,7 +116,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:29](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L29)
+[src/components/actionBar/index.tsx:30](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L30)
 
 ---
 
@@ -143,4 +137,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/components/actionBar/index.tsx:25](https://github.com/DTStack/molecule/blob/3c64296/src/components/actionBar/index.tsx#L25)
+[src/components/actionBar/index.tsx:26](https://github.com/DTStack/molecule/blob/22a59c7/src/components/actionBar/index.tsx#L26)

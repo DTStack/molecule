@@ -3729,7 +3729,7 @@ node_modules/@types/react/index.d.ts:1763
 
 #### Defined in
 
-[src/components/icon/index.tsx:7](https://github.com/DTStack/molecule/blob/3c64296/src/components/icon/index.tsx#L7)
+[src/components/icon/index.tsx:7](https://github.com/DTStack/molecule/blob/22a59c7/src/components/icon/index.tsx#L7)
 
 ---
 
@@ -3795,4 +3795,4 @@ ComponentProps.onClick
 
 #### Defined in
 
-[src/components/icon/index.tsx:8](https://github.com/DTStack/molecule/blob/3c64296/src/components/icon/index.tsx#L8)
+[src/components/icon/index.tsx:8](https://github.com/DTStack/molecule/blob/22a59c7/src/components/icon/index.tsx#L8)

@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/notificationService.ts:46](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L46)
+[src/services/notificationService.ts:46](https://github.com/DTStack/molecule/blob/22a59c7/src/services/notificationService.ts#L46)
 
 ## Properties
 
@@ -47,7 +47,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[src/services/notificationService.ts:44](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L44)
+[src/services/notificationService.ts:44](https://github.com/DTStack/molecule/blob/22a59c7/src/services/notificationService.ts#L44)
 
 ## Methods
 
@@ -79,7 +79,7 @@ Add new notification items
 
 #### Defined in
 
-[src/services/notificationService.ts:100](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L100)
+[src/services/notificationService.ts:100](https://github.com/DTStack/molecule/blob/22a59c7/src/services/notificationService.ts#L100)
 
 ---
 
@@ -109,7 +109,7 @@ Count the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L28)
+[src/common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -140,7 +140,7 @@ Emit the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L20)
+[src/common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -164,7 +164,7 @@ Force to update the Component
 
 #### Defined in
 
-[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L79)
+[src/react/component.ts:79](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L79)
 
 ---
 
@@ -188,7 +188,7 @@ Get the Component state
 
 #### Defined in
 
-[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L83)
+[src/react/component.ts:83](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L83)
 
 ---
 
@@ -218,7 +218,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L71)
+[src/react/component.ts:71](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L71)
 
 ---
 
@@ -244,7 +244,7 @@ Remove the specific notification item by id
 
 #### Defined in
 
-[src/services/notificationService.ts:78](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L78)
+[src/services/notificationService.ts:78](https://github.com/DTStack/molecule/blob/22a59c7/src/services/notificationService.ts#L78)
 
 ---
 
@@ -268,7 +268,7 @@ Remove the Component update event listening
 
 #### Defined in
 
-[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L75)
+[src/react/component.ts:75](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L75)
 
 ---
 
@@ -298,7 +298,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L67)
+[src/react/component.ts:67](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L67)
 
 ---
 
@@ -318,7 +318,7 @@ Reset notifications, this will clear the pending notifications
 
 #### Defined in
 
-[src/services/notificationService.ts:119](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L119)
+[src/services/notificationService.ts:119](https://github.com/DTStack/molecule/blob/22a59c7/src/services/notificationService.ts#L119)
 
 ---
 
@@ -349,7 +349,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/3c64296/src/react/component.ts#L54)
+[src/react/component.ts:54](https://github.com/DTStack/molecule/blob/22a59c7/src/react/component.ts#L54)
 
 ---
 
@@ -380,7 +380,7 @@ Subscribe the service event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L11)
+[src/common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -400,7 +400,7 @@ Toggle the Notification view between display or hidden
 
 #### Defined in
 
-[src/services/notificationService.ts:51](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L51)
+[src/services/notificationService.ts:51](https://github.com/DTStack/molecule/blob/22a59c7/src/services/notificationService.ts#L51)
 
 ---
 
@@ -430,7 +430,7 @@ Unsubscribe the specific event
 
 #### Defined in
 
-[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3c64296/src/common/event/eventBus.ts#L37)
+[src/common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/22a59c7/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -462,4 +462,4 @@ Update the specific notification item
 
 #### Defined in
 
-[src/services/notificationService.ts:57](https://github.com/DTStack/molecule/blob/3c64296/src/services/notificationService.ts#L57)
+[src/services/notificationService.ts:57](https://github.com/DTStack/molecule/blob/22a59c7/src/services/notificationService.ts#L57)

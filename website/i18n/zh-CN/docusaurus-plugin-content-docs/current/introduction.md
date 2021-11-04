@@ -4,9 +4,14 @@ sidebar_label: 简介
 sidebar_position: 1
 ---
 
-# Molecule
+<div align="center">
+ <img src="/static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo" />
+ <h1>Molecule</h1>
+ <h3>一个轻量的 Web IDE UI 框架</h3>
 
-[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url]
+[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url]
+
+</div>
 
 [ci-image]: https://github.com/DTStack/molecule/actions/workflows/main.yml/badge.svg
 [ci-url]: https://github.com/DTStack/molecule/actions/workflows/main.yml
@@ -14,16 +19,25 @@ sidebar_position: 1
 [codecov-url]: https://codecov.io/gh/DTStack/molecule
 [download-img]: https://img.shields.io/npm/dm/@dtinsight/molecule.svg?style=flat
 [download-url]: https://www.npmjs.com/package/@dtinsight/molecule
+[npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
+[npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 
-Molecule 是一个受 Visual Studio Code 启发，用 React.js 技术 构建的，轻量级的 Web IDE UI 框架。使用 Molecule 我们可以快速搭建一个 UI 可扩展的 Web IDE 网站，得益于使用了 React.js 技术，我们可以方便的在 React 项目中集成，使用自定义的 React 组件，快速实现产品所需要的功能。
+Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
 
-## 主要功能
+[在线预览](https://github.com/DTStack/molecule-examples)
 
--   Provides the default IDE Workbench same as the Visual Studio Code
--   Easy to extends the default IDE Workbench via the Extension
--   Atomic React Components, Easy to customize the IDE UI
+## 核心功能
 
-## Installation
+-   内置 React 版本的 Visual Studio Code **Workbench** UI
+-   基本兼容 Visual Studio Code 的 **ColorTheme**
+-   支持使用 React 组件自定义 **Workbench** UI 样式
+-   内置 Monaco Editor **Command Palette**、**Keybinding**等模块，并支持扩展
+-   支持 **i18n**，内置简体中文、English 2 种语言
+-   内置一个简单的 **Settings** 模块，支持在线编辑修改以及扩展
+-   内置默认的 **Explorer**, **Search** 等组件，并支持扩展
+-   Typescript 支持
+
+## 安装
 
 ```bash
 npm install @dtinsight/molecule
@@ -31,16 +45,16 @@ npm install @dtinsight/molecule
 yarn add @dtinsight/molecule
 ```
 
-## Basic Usage
+## 基本使用
 
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MoleculeProvider, Workbench } from 'molecule';
-import 'molecule/esm/style/mo.css';
+import { MoleculeProvider, Workbench } from '@dtinsight/molecule';
+import '@dtinsight/molecule/esm/style/mo.css';
 
 const App = () => (
-    <MoleculeProvider extension={[]}>
+    <MoleculeProvider extensions={[]}>
         <Workbench />
     </MoleculeProvider>
 );
@@ -48,16 +62,41 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-## Document
+`extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./website/docs/guides/the-first-extension.md)。
 
-Refer to the [Docs](./docs).
+## 开发
 
-## Contributing
+```bash
+git clone git@github.com:DTStack/molecule.git
+```
 
-Refer to the [CONTRIBUTING](./CONTRIBUTING.md).
+首先 Clone 源码到本地
+**开发模式**
 
-## Licence
+```bash
+yarn # install dependencies
 
-MIT
+yarn dev # 启动开发模式
+```
 
----
+Molecule 中的组件是基于 Storybook 开发并管理的，预览地址：`http://localhost:6006/`默认地址浏览。
+
+**构建 & 预览**
+
+```bash
+yarn build
+yarn web # 预览打包后的 Web
+```
+
+当前我们默认将 Molecule 以 `ES6` 模块的方式构建到 **`esm`** 目录。另外，
+这里除了 Storybook 提供的组件预览模式以外，我们同时内置了一个使用 ESM 模块的 `Web` 预览模式。
+
+## 贡献
+
+更多请参考 [CONTRIBUTING](./CONTRIBUTING.md).
+
+## License
+
+Copyright © DTStack. All rights reserved.
+
+Licensed under the MIT license.

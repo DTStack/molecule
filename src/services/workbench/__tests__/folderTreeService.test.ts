@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import {
     FileTypes,
     IFolderTreeNodeProps,
+    TreeNodeModel,
 } from 'mo/model/workbench/explorer/folderTree';
 import { expectFnCalled, expectLoggerErrorToBeCalled } from '@test/utils';
 
@@ -12,6 +13,7 @@ import {
     FolderTreeService,
 } from '../explorer/folderTreeService';
 import { FolderTreeEvent } from 'mo/model/workbench/explorer/folderTree';
+import { randomId } from 'mo/common/utils';
 
 const TEST_ID = 'test-id';
 
@@ -133,6 +135,53 @@ describe('Test StatusBarService', () => {
         mockTreeData.name = TEST_ID;
         folderTreeService.update(mockTreeData);
         expect(folderTreeService.get(mockTreeData.id)?.name).toBe(TEST_ID);
+    });
+
+    test('Should insert a  file or a folder in a sorted way', () => {
+        const mockRootTree = new TreeNodeModel({
+            id: randomId(),
+            name: 'molecule_temp',
+            fileType: FileTypes.RootFolder,
+        });
+        folderTreeService.add(mockRootTree);
+        const mockFolder = new TreeNodeModel({
+            id: randomId(),
+            name: 'mock_folder',
+            fileType: FileTypes.Folder,
+            isLeaf: false,
+        });
+        folderTreeService.add(mockFolder, mockRootTree.id);
+        let rootFolder = folderTreeService.get(mockRootTree.id)!;
+
+        expect(rootFolder.children).toHaveLength(1);
+
+        const anotherMockFolder = new TreeNodeModel({
+            id: randomId(),
+            name: 'another_mock_folder',
+            fileType: FileTypes.Folder,
+            isLeaf: false,
+        });
+        folderTreeService.add(anotherMockFolder, mockRootTree.id);
+        rootFolder = folderTreeService.get(mockRootTree.id)!;
+
+        expect(rootFolder.children).toHaveLength(2);
+        expect(rootFolder.children).toEqual([anotherMockFolder, mockFolder]);
+
+        const mockFile = new TreeNodeModel({
+            id: randomId(),
+            name: 'mock_file',
+            fileType: FileTypes.File,
+            isLeaf: true,
+        });
+        folderTreeService.add(mockFile, mockRootTree.id);
+        rootFolder = folderTreeService.get(mockRootTree.id)!;
+
+        expect(rootFolder.children).toHaveLength(3);
+        expect(rootFolder.children).toEqual([
+            anotherMockFolder,
+            mockFolder,
+            mockFile,
+        ]);
     });
 
     test('Should NOT add root folder when there is a root folder', () => {

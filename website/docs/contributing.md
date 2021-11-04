@@ -33,7 +33,7 @@ Unify the Service methods basic prefix naming:
 -   append, prefix for Append sth.
 -   toggle, prefix for Toggle sth.
 
-## Git Work flow
+## Git Work Flow
 
 [Branch-based Workflow](https://guides.github.com/introduction/flow/)
 

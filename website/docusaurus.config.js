@@ -5,16 +5,16 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
     title: 'Molecule',
-    tagline: 'A lightweight Web IDE UI framework!',
+    tagline: 'A lightweight Web IDE UI framework',
     url: 'https://your-docusaurus-test-site.com',
     baseUrl: '/',
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
-    favicon: 'img/favicon.ico',
+    favicon: 'img/favicon.png',
     organizationName: 'DTStack', // Usually your GitHub org/user name.
     projectName: 'molecule', // Usually your repo name.
     i18n: {
-        defaultLocale: 'zh-CN',
+        defaultLocale: 'en',
         locales: ['zh-CN', 'en'],
         localeConfigs: {
             'zh-CN': {
@@ -52,7 +52,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         versionDocsDirPath,
                         docPath,
                     }) {
-                        console.log('---editUrl', locale, versionDocsDirPath);
                         if (locale !== 'en') {
                             return `https://github.com/DTStack/molecule/website/i18n/${locale}`;
                         }
@@ -73,7 +72,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 title: 'Molecule',
                 logo: {
                     alt: 'Molecule Logo',
-                    src: 'img/logo.svg',
+                    src: 'img/logo@1x.png',
                 },
                 items: [
                     {

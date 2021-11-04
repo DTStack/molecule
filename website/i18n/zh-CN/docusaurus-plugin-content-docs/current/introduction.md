@@ -62,7 +62,7 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-`extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./website/docs/guides/the-first-extension.md)。
+`extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./quickStart.md)。
 
 ## 开发
 
@@ -93,7 +93,7 @@ yarn web # 预览打包后的 Web
 
 ## 贡献
 
-更多请参考 [CONTRIBUTING](./CONTRIBUTING.md).
+更多请参考 [CONTRIBUTING](./contributing.md).
 
 ## License
 

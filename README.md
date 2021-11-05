@@ -1,6 +1,6 @@
 <div align="center">
 
- <img src="./website/static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo">
+ <img src="./website/static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo" />
  <h1>Molecule</h1>
  <h3>A lightweight Web IDE UI Framework</h3>
 
@@ -19,7 +19,9 @@
 
 [中文](./README-zhCN.md) | [English](./README.md)
 
-The **Molecule** is a lightweight **Web IDE UI** Framework built with React.js，and inspired by the VSCode. We also provide the Extension APIs the seem like VSCode, to help developers extend the Workbench easily. The Molecule integrates with React.js applications is simple. we have applied it to many [DTStack](https://www.dtstack.com/) inner projects. [Online Preview]()
+The **Molecule** is a lightweight **Web IDE UI** Framework built with React.js，and inspired by the VSCode. We also provide the Extension APIs the seem like VSCode, to help developers extend the Workbench easily. The Molecule integrates with React.js applications is simple. It has applied to many [DTStack](https://www.dtstack.com/) inner projects.
+
+[Online Preview]((https://github.com/DTStack/molecule-examples)
 
 ## Features
 
@@ -49,7 +51,7 @@ import { MoleculeProvider, Workbench } from '@dtinsight/molecule';
 import '@dtinsight/molecule/esm/style/mo.css';
 
 const App = () => (
-    <MoleculeProvider extension={[]}>
+    <MoleculeProvider extensions={[]}>
         <Workbench />
     </MoleculeProvider>
 );
@@ -101,4 +103,6 @@ Refer to the [CONTRIBUTING](./CONTRIBUTING.md).
 
 ## License
 
-MIT
+Copyright © DTStack. All rights reserved.
+
+Licensed under the MIT license.

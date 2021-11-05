@@ -1,6 +1,6 @@
 <div align="center">
 
- <img src="./website/static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo">
+ <img src="./website/static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo" />
  <h1>Molecule</h1>
  <h3>一个轻量的 Web IDE UI 框架</h3>
 
@@ -19,7 +19,9 @@
 
 [中文](./README-zhCN.md) | [English](./README.md)
 
-Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。[在线预览～](https://github.com/DTStack/molecule-examples)
+Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
+
+[在线预览](https://github.com/DTStack/molecule-examples)
 
 ## 核心功能
 

@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
     title: 'Molecule',
-    tagline: 'A lightweight Web IDE UI framework!',
+    tagline: 'A lightweight Web IDE UI framework',
     url: 'https://your-docusaurus-test-site.com',
     baseUrl: '/',
     onBrokenLinks: 'warn',
@@ -14,7 +14,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     organizationName: 'DTStack', // Usually your GitHub org/user name.
     projectName: 'molecule', // Usually your repo name.
     i18n: {
-        defaultLocale: 'en',
+        defaultLocale: 'zh-CN',
         locales: ['zh-CN', 'en'],
         localeConfigs: {
             'zh-CN': {

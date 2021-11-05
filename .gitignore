@@ -20,6 +20,7 @@ website/build
 # Generated files
 website/.docusaurus
 website/.cache-loader
+website/docs/api
 
 # Misc
 website/.DS_Store

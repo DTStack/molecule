@@ -5,6 +5,7 @@ const through = require('through2');
 const rimraf = require('rimraf');
 const sass = require('gulp-sass')(require('sass'));
 const aliasImporter = require('node-sass-alias-importer');
+const varables = require('./variable');
 const tsProject = ts.createProject('../tsconfig.build.json');
 const output = '../esm';
 
@@ -33,6 +34,21 @@ function relativeImport(compilerOptions) {
     });
 }
 
+function removeDevelopmentVariables() {
+    return through.obj(function (file, encoding, cb) {
+        if (!file.contents) return;
+        let content = file.contents.toString('utf-8');
+        // 后续不行的话 用 babel 来基于 AST 来清除指定代码块
+        const reg = new RegExp(Object.keys(varables).join('|'));
+        if (reg.test(content)) {
+            content = content.replace(reg, 'false');
+        }
+        file.contents = Buffer.from(content);
+        this.push(file);
+        cb();
+    });
+}
+
 gulp.task('clean', function (cb) {
     rimraf(output, cb);
 });
@@ -42,6 +58,7 @@ gulp.task('build:esm', function () {
         .src()
         .pipe(tsProject())
         .pipe(relativeImport(tsProject.config.compilerOptions))
+        .pipe(removeDevelopmentVariables())
         .on('error', function (error, callback) {
             console.error(error.stack);
         })

@@ -5,7 +5,7 @@ const through = require('through2');
 const rimraf = require('rimraf');
 const sass = require('gulp-sass')(require('sass'));
 const aliasImporter = require('node-sass-alias-importer');
-const varables = require('./variable');
+const varables = require('./variables');
 const tsProject = ts.createProject('../tsconfig.build.json');
 const output = '../esm';
 

@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const varables = require('./variable');
+const varables = require('./variables');
 
 module.exports = {
     mode: 'development',

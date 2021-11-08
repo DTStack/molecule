@@ -72,9 +72,9 @@
         &__op {
             color: var(--icon-foreground);
             margin-left: 10px;
+            opacity: 0;
             transform: translateY(1px);
             width: 20px;
-            opacity: 0;
 
             &__close {
                 cursor: pointer;

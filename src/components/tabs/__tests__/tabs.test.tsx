@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom';
 import { Tabs, tabsClassName } from '..';
-import { ITabProps, tabItemActiveClassName } from '../tab';
+import { ITabProps, tabItemActiveClassName, tabItemClassName } from '../tab';
 import { dragToTargetNode } from '@test/utils';
 
 const mockData: ITabProps[] = [
@@ -22,6 +22,19 @@ const mockData: ITabProps[] = [
 ];
 
 afterEach(cleanup);
+
+function mockClientOffset(boundingRectSize: number, size: number) {
+    // @ts-ignore
+    HTMLDivElement.prototype.getBoundingClientRect = jest.fn(() => ({
+        right: boundingRectSize,
+        left: boundingRectSize,
+    }));
+
+    // @ts-ignore
+    Event.prototype.clientX = size;
+    // @ts-ignore
+    Event.prototype.clientY = size;
+}
 
 describe('The Tabs Components', () => {
     test('The snapshot', () => {
@@ -109,5 +122,45 @@ describe('The Tabs Components', () => {
                 closable: true,
             },
         ]);
+    });
+
+    test('Should NOT onMove', () => {
+        const originalBoundingClientRect =
+            HTMLDivElement.prototype.getBoundingClientRect;
+        //@ts-ignore
+        const originalClientX = Event.prototype.clientX;
+        //@ts-ignore
+        const originalClientY = Event.prototype.clientY;
+
+        const mockFn = jest.fn();
+        const { container } = render(
+            <Tabs activeTab="1" data={mockData} onMoveTab={mockFn} />
+        );
+
+        const tabs = container.querySelectorAll<HTMLDivElement>(
+            `.${tabItemClassName}`
+        )!;
+
+        // drag up
+        mockClientOffset(5, 10);
+        dragToTargetNode(tabs[1], tabs[0]);
+        expect(mockFn).not.toBeCalled();
+
+        // drag down
+        mockClientOffset(20, 10);
+        dragToTargetNode(tabs[0], tabs[1]);
+        expect(mockFn).not.toBeCalled();
+
+        // drag to itself
+        mockClientOffset(20, 10);
+        dragToTargetNode(tabs[0], tabs[0]);
+        expect(mockFn).not.toBeCalled();
+
+        // reset mock function
+        HTMLDivElement.prototype.getBoundingClientRect = originalBoundingClientRect;
+        // @ts-ignore
+        Event.prototype.clientX = originalClientX;
+        // @ts-ignore
+        Event.prototype.clientY = originalClientY;
     });
 });

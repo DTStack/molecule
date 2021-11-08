@@ -1,12 +1,7 @@
 import React from 'react';
-import { useCallback, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { findDOMNode } from 'react-dom';
-import {
-    DragSourceMonitor,
-    DropTargetMonitor,
-    useDrag,
-    useDrop,
-} from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 
 import {
     classNames,
@@ -19,20 +14,39 @@ import { Icon } from '../icon';
 import type { UniqueId } from 'mo/common/types';
 
 export interface ITabEvent {
-    onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
-    onCloseTab?: (key: UniqueId) => void;
-    onSelectTab?: (key: UniqueId) => void;
+    onDrag?: (
+        source: ITabProps,
+        target: ITabProps,
+        dragInfos: Record<string, any>
+    ) => void;
+    onCloseTab?: (key?: UniqueId) => void;
+    onSelectTab?: (key?: UniqueId) => void;
     onContextMenu?: <T = any>(
         event: React.MouseEvent,
         tab: ITabProps<T>
     ) => void;
 }
-export interface ITabProps<T = any, P = any> extends ITabEvent {
+
+type ITabStatus = 'edited';
+/**
+ * The type definition for the Tab data construct
+ */
+export interface ITabProps<T = any, P = any> {
+    /**
+     * @deprecated Tab doesn't need this property, but the type extends from tab need
+     */
     active?: boolean;
+    /**
+     * Mark the tab status to be closable,
+     * Default is true
+     */
     closable?: boolean;
+    /**
+     * Mark the tab status to be editing
+     */
     editable?: boolean;
+    status?: ITabStatus | ((tab: ITabProps) => JSX.Element);
     icon?: string | JSX.Element;
-    index?: number;
     id: UniqueId;
     name?: string;
     renderPane?: ((item: P) => React.ReactNode) | React.ReactNode;
@@ -47,56 +61,34 @@ export const tabItemActiveClassName = getBEMModifier(
 );
 export const tabItemLabelClassName = getBEMElement(tabItemClassName, 'label');
 
-export function Tab<T>(props: ITabProps) {
-    const {
-        active,
-        name,
-        closable,
-        editable,
-        data,
-        id,
-        index,
-        icon,
-        onCloseTab,
-        onMoveTab,
-        onSelectTab,
-        onContextMenu,
-        ...resetProps
-    } = props;
+/**
+ * The type definition for The Tab Component
+ */
+export type ITabComponent = { tab: ITabProps; active?: boolean } & ITabEvent;
+
+export function Tab({ tab, active, ...restEvents }: ITabComponent) {
+    const { name, closable, id, icon, status } = tab;
+    const { onCloseTab, onSelectTab, onContextMenu, onDrag } = restEvents;
+
     const ref = useRef<HTMLDivElement>(null);
 
-    const [hover, setHover] = useState(false);
-    const handleMouseOver = () => setHover(true);
-    const handleMouseOut = () => setHover(false);
-    const handleOnContextMenu = useCallback(
-        (event: React.MouseEvent) => {
-            event.preventDefault();
-            onContextMenu?.(event, props);
-        },
-        [props]
-    );
+    const handleOnContextMenu = (event: React.MouseEvent) => {
+        event.preventDefault();
+        onContextMenu?.(event, tab);
+    };
 
     const [, drag] = useDrag({
-        collect: (monitor: DragSourceMonitor) => ({
+        collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
-        item: { type: 'DND_NODE', id, index },
+        item: { type: 'DND_NODE', tab },
     });
 
     const [, drop] = useDrop({
         accept: 'DND_NODE',
-        hover(
-            item: { type: string; index: number },
-            monitor: DropTargetMonitor
-        ) {
+        hover(item: { type: string; tab: ITabProps }, monitor) {
             if (!ref.current) return;
             const component = ref.current;
-            const dragIndex = monitor.getItem().index;
-            const hoverIndex = index!;
-            // Don't replace items with themselves
-            if (dragIndex === hoverIndex) {
-                return;
-            }
             /**
              * TODO: bad code needs to be removed
              */
@@ -109,16 +101,12 @@ export function Tab<T>(props: ITabProps) {
             const hoverClientX =
                 (clientOffset as { x: number; y: number }).x -
                 hoverBoundingRect.left;
-            // drag down
-            if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
-                return;
-            }
-            // drag up
-            if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
-                return;
-            }
-            onMoveTab?.(dragIndex, hoverIndex);
-            monitor.getItem().index = hoverIndex;
+
+            const dragInfo = {
+                hoverMiddleX,
+                hoverClientX,
+            };
+            onDrag?.(item.tab, tab, dragInfo);
         },
     });
 
@@ -128,6 +116,25 @@ export function Tab<T>(props: ITabProps) {
         return typeof icon === 'string' ? <Icon type={icon} /> : icon;
     };
 
+    const renderStatus = (
+        status?: ITabStatus | ((tab: ITabProps) => JSX.Element),
+        isHover?: boolean
+    ) => {
+        if (status && !isHover) {
+            if (typeof status === 'function') {
+                return status(tab);
+            }
+            switch (status) {
+                case 'edited':
+                    return <Icon type="primitive-dot" />;
+
+                default:
+                    return <Icon type="close" />;
+            }
+        }
+        return <Icon type="close" />;
+    };
+
     return (
         <div
             ref={ref}
@@ -135,8 +142,6 @@ export function Tab<T>(props: ITabProps) {
                 [tabItemActiveClassName]: active,
             })}
             onClick={(event: React.MouseEvent) => onSelectTab?.(id)}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
             onContextMenu={handleOnContextMenu}
         >
             {icon && (
@@ -145,23 +150,14 @@ export function Tab<T>(props: ITabProps) {
                 </span>
             )}
             {name}
-            {editable && (
+            {(typeof closable === 'undefined' || closable) && (
                 <TabExtra
-                    classNames={getBEMElement(tabItemClassName, 'op')}
-                    active={active}
-                    buttonHover={hover}
-                    onClick={(e) => onCloseTab?.(id)}
-                    modified={data?.modified || false}
-                    {...resetProps}
-                />
-            )}
-            {closable && (
-                <TabExtra
-                    classNames={getBEMElement(tabItemClassName, 'op')}
-                    active={active}
-                    buttonHover={hover}
-                    onClick={(e) => onCloseTab?.(id)}
-                    {...resetProps}
+                    classNames={getBEMElement(
+                        tabItemClassName,
+                        status ? 'status' : 'op'
+                    )}
+                    onClick={() => onCloseTab?.(id)}
+                    renderStatus={(isHover) => renderStatus(status, isHover)}
                 />
             )}
         </div>

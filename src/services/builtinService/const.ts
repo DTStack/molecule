@@ -353,6 +353,7 @@ export const modules = {
             name: localize(constants.PANEL_PROBLEMS, 'problems'),
             data: null,
             sortIndex: 1,
+            closable: false,
         } as IPanelItem),
 
     NOTIFICATION_CLEAR_ALL: () =>
@@ -490,6 +491,7 @@ export const modules = {
             name: localize(constants.PANEL_OUTPUT, 'output'),
             data: '',
             sortIndex: 2,
+            closable: false,
         } as IOutput),
 
     builtInPanelToolboxResize: () =>

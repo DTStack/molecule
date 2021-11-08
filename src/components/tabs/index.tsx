@@ -14,31 +14,48 @@ import DragAndDrop from './dragAndDrop';
 import type { UniqueId } from 'mo/common/types';
 
 export type TabsType = 'line' | 'card';
-export interface ITabsProps<T> extends React.ComponentProps<any> {
+/**
+ * TODO: Get rid of the generic and remove the ComponentProps
+ */
+export interface ITabsProps<T = any> extends React.ComponentProps<any> {
     className?: string;
-    closable?: boolean;
-    editable?: boolean;
-    data?: ITabProps<T>[];
-    activeTab?: UniqueId;
-    type?: TabsType;
     style?: React.CSSProperties;
-    onCloseTab?: (key: UniqueId) => void;
-    onMoveTab?: (tabs: ITabProps<T>[]) => void;
-    onSelectTab?: (key: UniqueId) => void;
+    role?: string;
+    /**
+     * @deprecated For now, we don't need to control the global closable
+     */
+    closable?: boolean;
+    /**
+     * @deprecated For now, we don't need to control the global editable
+     */
+    editable?: boolean;
+    data?: ITabProps[];
+    activeTab?: UniqueId;
+    /**
+     * Default is line
+     */
+    type?: TabsType;
+    onCloseTab?: (key?: UniqueId) => void;
+    onContextMenu?: (e: React.MouseEvent, tab: ITabProps) => void;
+    onMoveTab?: (tabs: ITabProps[]) => void;
+    onSelectTab?: (key?: UniqueId) => void;
 }
 
 export const tabsClassName = prefixClaName('tabs');
 export const tabsHeader = getBEMElement(tabsClassName, 'header');
 
-export function Tabs<T>(props: ITabsProps<T>) {
+export function Tabs(props: ITabsProps) {
     const {
+        role,
         activeTab,
         className,
         data = [],
         type = 'line',
         style,
         onMoveTab,
-        ...resetProps
+        onCloseTab,
+        onSelectTab,
+        onContextMenu,
     } = props;
     const onChangeTab = useCallback(
         (dragIndex, hoverIndex) => {
@@ -55,6 +72,29 @@ export function Tabs<T>(props: ITabsProps<T>) {
         [data]
     );
 
+    const handleDrag = (
+        source: ITabProps,
+        target: ITabProps,
+        infos: Record<string, any>
+    ) => {
+        const dragIndex = data.indexOf(source);
+        const hoverIndex = data.indexOf(target);
+        const { hoverClientX, hoverMiddleX } = infos;
+        // Don't replace items with themselves
+        if (dragIndex === hoverIndex) {
+            return;
+        }
+        // drag down
+        if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
+            return;
+        }
+        // drag up
+        if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
+            return;
+        }
+        onChangeTab?.(dragIndex, hoverIndex);
+    };
+
     return (
         <DragAndDrop>
             <div
@@ -64,21 +104,19 @@ export function Tabs<T>(props: ITabsProps<T>) {
                     getBEMModifier(tabsClassName, type as string),
                     className
                 )}
+                role={role}
             >
                 <div className={tabsHeader}>
-                    {data?.map((tab: ITabProps<T>, index: number) => {
+                    {data.map((tab, index) => {
                         return (
                             <Tab
-                                id={tab.id}
                                 key={tab.id}
                                 active={activeTab === tab.id}
-                                index={index}
-                                name={tab.name}
-                                icon={tab.icon}
-                                data={tab.data}
-                                closable={tab.closable}
-                                onMoveTab={onChangeTab}
-                                {...resetProps}
+                                tab={tab}
+                                onDrag={handleDrag}
+                                onCloseTab={onCloseTab}
+                                onContextMenu={onContextMenu}
+                                onSelectTab={onSelectTab}
                             />
                         );
                     })}

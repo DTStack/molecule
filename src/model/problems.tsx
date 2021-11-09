@@ -1,3 +1,4 @@
+import type { UniqueId } from 'mo/common/types';
 import { ITreeNodeItemProps } from 'mo/components';
 
 export enum MarkerSeverity {
@@ -21,20 +22,20 @@ export interface IProblemsItem<T = any> extends ITreeNodeItemProps {
 }
 
 export interface IProblems<T = any> {
-    id: string;
+    id: UniqueId;
     name: string;
     data: IProblemsItem<T>[];
     show?: boolean;
 }
 
 export class ProblemsModel<T> implements IProblems<T> {
-    public id: string;
+    public id: UniqueId;
     public name: string;
     public data: IProblemsItem<T>[];
     public show: boolean;
 
     constructor(
-        id: string = '',
+        id: UniqueId = '',
         name: string = '',
         data: IProblemsItem<T>[] = [],
         show: boolean = false

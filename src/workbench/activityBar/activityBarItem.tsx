@@ -62,7 +62,7 @@ export function ActivityBarItem(
             data={contextMenu.map((menu) => {
                 if (menu.id) {
                     const keybindingObj = KeybindingHelper.queryGlobalKeybinding(
-                        menu.id
+                        menu.id.toString()
                     );
                     if (keybindingObj) {
                         menu.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
@@ -79,7 +79,7 @@ export function ActivityBarItem(
 
     return (
         <li
-            id={id}
+            id={id.toString()}
             onClick={onClickItem}
             className={classNames(
                 className,

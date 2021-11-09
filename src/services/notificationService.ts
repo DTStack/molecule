@@ -10,6 +10,7 @@ import { singleton, container } from 'tsyringe';
 import { randomId, searchById } from 'mo/common/utils';
 import logger from 'mo/common/logger';
 import { cloneDeep } from 'lodash';
+import type { UniqueId } from 'mo/common/types';
 
 export interface INotificationService extends Component<INotification> {
     /**
@@ -21,7 +22,7 @@ export interface INotificationService extends Component<INotification> {
      * Remove the specific notification item by id
      * @param id
      */
-    remove(id: number): void;
+    remove(id: UniqueId): void;
     /**
      * Update the specific notification item
      * @param item notification item, the id field is required
@@ -75,7 +76,7 @@ export class NotificationService
         return null;
     }
 
-    public remove(id: number): void {
+    public remove(id: UniqueId): void {
         const { data = [] } = this.state;
         if (data.length) {
             const index = data.findIndex(searchById(id));

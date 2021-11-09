@@ -20,30 +20,31 @@ import {
     IStatusBarService,
     StatusBarService,
 } from 'mo/services';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IEditorController extends Partial<Controller> {
     groupSplitPos?: string[];
-    open?<T = any>(tab: IEditorTab<T>, groupId?: number): void;
+    open?<T = any>(tab: IEditorTab<T>, groupId?: UniqueId): void;
     onClickContextMenu?: (
         e: React.MouseEvent,
         item: IMenuItemProps,
         tabItem?: IEditorTab
     ) => void;
-    onCloseAll?: (group: number) => void;
-    onCloseTab?: (tabId: string, group: number) => void;
-    onCloseToLeft?: (tab: IEditorTab, group: number) => void;
-    onCloseToRight?: (tab: IEditorTab, group: number) => void;
-    onCloseOther?: (tab: IEditorTab, group: number) => void;
-    onCloseSaved?: (group: number) => void;
+    onCloseAll?: (group: UniqueId) => void;
+    onCloseTab?: (tabId: UniqueId, group: UniqueId) => void;
+    onCloseToLeft?: (tab: IEditorTab, group: UniqueId) => void;
+    onCloseToRight?: (tab: IEditorTab, group: UniqueId) => void;
+    onCloseOther?: (tab: IEditorTab, group: UniqueId) => void;
+    onCloseSaved?: (group: UniqueId) => void;
     onChangeEditorProps?: (
         preProps: IMonacoEditorProps,
         nextProps: IMonacoEditorProps
     ) => void;
-    onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: number) => void;
-    onSelectTab?: (tabId: string, group: number) => void;
+    onMoveTab?: <T = any>(updateTabs: IEditorTab<T>[], group: UniqueId) => void;
+    onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onClickActions: (action: IEditorActionsProps) => void;
-    onUpdateEditorIns?: (editorInstance: any, groupId: number) => void;
-    onPaneSizeChange?: (newSize: number) => void;
+    onUpdateEditorIns?: (editorInstance: any, groupId: UniqueId) => void;
+    onPaneSizeChange?: (newSize: string[]) => void;
 }
 @singleton()
 export class EditorController extends Controller implements IEditorController {
@@ -79,7 +80,7 @@ export class EditorController extends Controller implements IEditorController {
         });
     }
 
-    public open<T>(tab: IEditorTab<any>, groupId?: number) {
+    public open<T>(tab: IEditorTab<any>, groupId?: UniqueId) {
         this.editorService.open<T>(tab, groupId);
     }
 
@@ -128,41 +129,41 @@ export class EditorController extends Controller implements IEditorController {
         }
     };
 
-    public onCloseAll = (groupId: number) => {
+    public onCloseAll = (groupId: UniqueId) => {
         this.editorService.closeAll(groupId);
         this.emit(EditorEvent.OnCloseAll, groupId);
     };
 
-    public onCloseTab = (tabId?: string, groupId?: number) => {
+    public onCloseTab = (tabId?: UniqueId, groupId?: UniqueId) => {
         if (tabId && groupId) {
             this.editorService.closeTab(tabId, groupId);
             this.emit(EditorEvent.OnCloseTab, tabId, groupId);
         }
     };
 
-    public onCloseToRight = (tabItem: IEditorTab, groupId: number) => {
+    public onCloseToRight = (tabItem: IEditorTab, groupId: UniqueId) => {
         this.editorService.closeToRight(tabItem, groupId);
         this.emit(EditorEvent.OnCloseToRight, tabItem, groupId);
     };
 
-    public onCloseToLeft = (tabItem: IEditorTab, groupId: number) => {
+    public onCloseToLeft = (tabItem: IEditorTab, groupId: UniqueId) => {
         this.editorService.closeToLeft(tabItem, groupId);
         this.emit(EditorEvent.OnCloseToLeft, tabItem, groupId);
     };
 
-    public onCloseOther = (tabItem: IEditorTab, groupId: number) => {
+    public onCloseOther = (tabItem: IEditorTab, groupId: UniqueId) => {
         this.editorService.closeOther(tabItem, groupId);
         this.emit(EditorEvent.OnCloseOther, tabItem, groupId);
     };
 
-    public onMoveTab = (updateTabs: IEditorTab<any>[], groupId: number) => {
+    public onMoveTab = (updateTabs: IEditorTab<any>[], groupId: UniqueId) => {
         this.editorService.updateGroup(groupId, {
             data: updateTabs,
         });
         this.emit(EditorEvent.OnMoveTab, updateTabs, groupId);
     };
 
-    public onSelectTab = (tabId: string, groupId: number) => {
+    public onSelectTab = (tabId: UniqueId, groupId: UniqueId) => {
         this.editorService.setActive(groupId, tabId);
         this.emit(EditorEvent.OnSelectTab, tabId, groupId);
     };
@@ -172,7 +173,7 @@ export class EditorController extends Controller implements IEditorController {
      */
     public onUpdateEditorIns = (
         editorInstance: MonacoEditor.IStandaloneCodeEditor,
-        groupId: number
+        groupId: UniqueId
     ) => {
         if (!editorInstance) return;
 
@@ -187,7 +188,7 @@ export class EditorController extends Controller implements IEditorController {
 
         this.openTab(
             editorInstance,
-            tab?.id!,
+            tab!.id!.toString(),
             tab?.data?.value!,
             tab?.data?.language!
         );
@@ -223,13 +224,13 @@ export class EditorController extends Controller implements IEditorController {
         }
     };
 
-    public onPaneSizeChange = (newSize) => {
+    public onPaneSizeChange = (newSize: string[]) => {
         this.groupSplitPos = newSize;
     };
 
     private initEditorEvents(
         editorInstance: MonacoEditor.IStandaloneCodeEditor,
-        groupId: number
+        groupId: UniqueId
     ) {
         if (!editorInstance) return;
 

@@ -67,7 +67,9 @@ export class SettingsController
     }
 
     private notifyLocaleChanged(prev: ILocale, next: ILocale) {
+        const { SETTING_ID } = this.builtinService.getConstants();
         const notify = {
+            id: SETTING_ID!,
             value: next,
             render(value) {
                 return <LocaleNotification key={next.id} locale={next.id} />;

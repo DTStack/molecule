@@ -28,7 +28,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
     const {
         id,
         data,
-        tab = {},
+        tab,
         currentGroup,
         actions = [],
         menu = [],
@@ -96,7 +96,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
                             onMoveTab={onMoveTab}
                             onSelectTab={onSelectTab}
                             onContextMenu={handleTabContextMenu}
-                            activeTab={isActiveGroup ? tab.id : ''}
+                            activeTab={isActiveGroup ? tab?.id : ''}
                             onCloseTab={onCloseTab}
                         />
                     </Scrollable>
@@ -108,11 +108,11 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
                     onClickActions={onClickActions}
                 />
             </div>
-            <EditorBreadcrumb breadcrumbs={tab.breadcrumb} />
+            <EditorBreadcrumb breadcrumbs={tab?.breadcrumb || []} />
             <div className={groupContainerClassName}>
                 {
                     // Default we use monaco editor, but also you can customize by renderPanel() function or a react element
-                    tab.renderPane ? (
+                    tab?.renderPane ? (
                         typeof tab.renderPane === 'function' ? (
                             tab.renderPane(tab.data)
                         ) : (
@@ -120,14 +120,14 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
                         )
                     ) : (
                         <MonacoEditor
-                            key={tab.id}
+                            key={tab?.id}
                             options={{
                                 ...editorOptions,
-                                value: tab.data?.value,
-                                language: tab.data?.language,
+                                value: tab?.data?.value,
+                                language: tab?.data?.language,
                                 automaticLayout: true,
                             }}
-                            path={tab.id}
+                            path={tab?.id.toString()}
                             editorInstanceRef={(editorInstance) => {
                                 // This assignment will trigger moleculeCtx update, and subNodes update
                                 onUpdateEditorIns?.(editorInstance, id!);

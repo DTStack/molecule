@@ -14,7 +14,7 @@ export function StatusItem(props: IStatusBarItem & IStatusBarController) {
     };
 
     return (
-        <div className={clsName} id={id} {...extra}>
+        <div className={clsName} id={id.toString()} {...extra}>
             <a tabIndex={-1} title={name} {...events}>
                 {render ? render(props) : name}
             </a>

@@ -31,6 +31,7 @@ import {
 } from 'mo/components/collapse';
 import Scrollbar from 'react-scrollbars-custom';
 import { constants } from 'mo/services/builtinService/const';
+import type { UniqueId } from 'mo/common/types';
 
 // override onContextMenu
 type UnionEditor = Omit<
@@ -53,7 +54,7 @@ export interface IOpenEditProps extends UnionEditor {
     headerContextMenu?: IMenuItemProps[];
     onContextMenu?: (
         menu: IMenuItemProps,
-        groupId: number,
+        groupId: UniqueId,
         file?: ITabProps
     ) => void;
     panel: ICollapseItem;

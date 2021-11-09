@@ -15,6 +15,7 @@ import {
     IBuiltinService,
     IFolderTreeService,
 } from 'mo/services';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IFolderTreeController extends Partial<Controller> {
     readonly createTreeNode?: (type: FileType) => void;

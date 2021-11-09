@@ -11,6 +11,7 @@ import {
     unexpandTreeNodeClassName,
 } from './base';
 import { TreeViewUtil } from 'mo/common/treeUtil';
+import type { UniqueId } from 'mo/common/types';
 
 export interface ITreeNodeItemProps<T = any> {
     /**

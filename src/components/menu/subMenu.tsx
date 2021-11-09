@@ -28,7 +28,7 @@ export function isVertical(mode: MenuMode) {
     return mode === MenuMode.Horizontal;
 }
 
-export interface ISubMenuProps extends IMenuItemProps {
+export interface ISubMenuProps extends Omit<IMenuItemProps, 'id'> {
     /**
      * The event of show subMenu, default value is 'hover'
      */

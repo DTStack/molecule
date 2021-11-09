@@ -15,15 +15,16 @@ import {
 } from 'mo/workbench/sidebar/explore/editorTree';
 import { connect } from 'mo/react';
 import { IActionBarItemProps, IMenuItemProps, ITabProps } from 'mo/components';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IEditorTreeController extends Partial<Controller> {
-    readonly onClose?: (tabId: string, groupId: number) => void;
-    readonly onSelect?: (tabId: string, groupId: number) => void;
-    readonly onCloseGroup?: (groupId: number) => void;
-    readonly onSaveGroup?: (groupId: number) => void;
+    readonly onClose?: (tabId: UniqueId, groupId: UniqueId) => void;
+    readonly onSelect?: (tabId: UniqueId, groupId: UniqueId) => void;
+    readonly onCloseGroup?: (groupId: UniqueId) => void;
+    readonly onSaveGroup?: (groupId: UniqueId) => void;
     readonly onToolbarClick?: (
         toolbar: IActionBarItemProps,
-        groupId: number
+        groupId: UniqueId
     ) => void;
     /**
      * Trigger by context menu click event
@@ -31,7 +32,7 @@ export interface IEditorTreeController extends Partial<Controller> {
      */
     readonly onContextMenu?: (
         menu: IMenuItemProps,
-        groupId: number,
+        groupId: UniqueId,
         file?: ITabProps
     ) => void;
 }
@@ -88,7 +89,7 @@ export class EditorTreeController
 
     public onContextMenu = (
         menu: IMenuItemProps,
-        groupId: number,
+        groupId: UniqueId,
         file?: ITabProps
     ) => {
         const {
@@ -121,23 +122,26 @@ export class EditorTreeController
         }
     };
 
-    public onClose = (tabId: string, groupId: number) => {
+    public onClose = (tabId: UniqueId, groupId: UniqueId) => {
         this.emit(EditorTreeEvent.onClose, tabId, groupId);
     };
 
-    public onSelect = (tabId: string, groupId: number) => {
+    public onSelect = (tabId: UniqueId, groupId: UniqueId) => {
         this.emit(EditorTreeEvent.onSelect, tabId, groupId);
     };
 
-    public onCloseGroup = (groupId: number) => {
+    public onCloseGroup = (groupId: UniqueId) => {
         this.emit(EditorTreeEvent.onCloseAll, groupId);
     };
 
-    public onSaveGroup = (groupId: number) => {
+    public onSaveGroup = (groupId: UniqueId) => {
         this.emit(EditorTreeEvent.onSaveAll, groupId);
     };
 
-    public onToolbarClick = (toolbar: IActionBarItemProps, groupId: number) => {
+    public onToolbarClick = (
+        toolbar: IActionBarItemProps,
+        groupId: UniqueId
+    ) => {
         this.emit(EditorTreeEvent.onToolbarClick, toolbar, groupId);
     };
 }

@@ -108,6 +108,7 @@ describe('The Editor Component', () => {
         const fn = jest.fn();
         const { getByTestId } = render(
             <EditorGroup
+                id="test"
                 isActiveGroup={true}
                 onClickActions={jest.fn()}
                 onClickContextMenu={fn}

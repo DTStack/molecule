@@ -9,13 +9,14 @@ import {
 } from 'mo/model/workbench/sidebar';
 import { searchById } from 'mo/common/utils';
 import logger from 'mo/common/logger';
+import type { UniqueId } from 'mo/common/types';
 
 export interface ISidebarService extends Component<ISidebar> {
     /**
      * Get a specific pane via id
      * @param id
      */
-    get(id: string): ISidebarPane | undefined;
+    get(id: UniqueId): ISidebarPane | undefined;
     /**
      * Add a new Sidebar pane
      * @param pane
@@ -31,12 +32,12 @@ export interface ISidebarService extends Component<ISidebar> {
      * Remove a pane
      * @param id
      */
-    remove(id: string): void;
+    remove(id: UniqueId): void;
     /**
      * Set the specific pane as active
      * @param id
      */
-    setActive(id?: string): void;
+    setActive(id?: UniqueId): void;
     /**
      * Reset the sidebar data
      */
@@ -54,13 +55,13 @@ export class SidebarService
         this.state = container.resolve(SidebarModel);
     }
 
-    private getPane(id: string) {
+    private getPane(id: UniqueId) {
         const { panes } = this.state;
         const target = panes.find(searchById(id));
         return target;
     }
 
-    public get(id: string) {
+    public get(id: UniqueId) {
         const pane = this.getPane(id);
         return pane ? cloneDeep(pane) : undefined;
     }
@@ -100,7 +101,7 @@ export class SidebarService
         });
     }
 
-    public remove(id: string) {
+    public remove(id: UniqueId) {
         const { panes, current } = this.state;
         const index = panes.findIndex(searchById(id));
         if (index === -1) {
@@ -121,7 +122,7 @@ export class SidebarService
         });
     }
 
-    public setActive(id?: string) {
+    public setActive(id?: UniqueId) {
         if (!id) {
             this.setState({
                 current: '',

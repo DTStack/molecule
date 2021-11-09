@@ -1,5 +1,6 @@
 import React from 'react';
 import { IMenuItemProps } from 'mo/components';
+import type { HTMLElementProps, UniqueId } from 'mo/common/types';
 /**
  * The activity bar event definition
  */
@@ -13,10 +14,9 @@ export enum ActivityBarEvent {
     ReRender = 'activityBar.reRender',
 }
 
-export interface IActivityBarItem {
-    id: string;
+export interface IActivityBarItem extends HTMLElementProps {
+    id: UniqueId;
     name?: React.ReactNode;
-    title?: string;
     hidden?: boolean;
     data?: any;
     icon?: string | JSX.Element;
@@ -24,29 +24,28 @@ export interface IActivityBarItem {
     disabled?: boolean;
     type?: 'normal' | 'global';
     contextMenu?: IActivityMenuItemProps[];
-    className?: string;
     sortIndex?: number;
     render?: () => React.ReactNode | JSX.Element;
 }
 
 export interface IActivityMenuItemProps extends IMenuItemProps {
-    id: string;
+    id: UniqueId;
 }
 
 export interface IActivityBar {
     data?: IActivityBarItem[];
     contextMenu?: IActivityMenuItemProps[];
-    selected?: string;
+    selected?: UniqueId;
 }
 
 export class ActivityBarModel implements IActivityBar {
     public data: IActivityBarItem[];
     public contextMenu: IActivityMenuItemProps[];
-    public selected: string;
+    public selected: UniqueId;
     constructor(
         data: IActivityBarItem[] = [],
         contextMenu: IActivityMenuItemProps[] = [],
-        selected: string = ''
+        selected: UniqueId = ''
     ) {
         this.data = data;
         this.contextMenu = contextMenu;

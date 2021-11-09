@@ -1,6 +1,7 @@
 import React from 'react';
 import { ISubMenuProps } from 'mo/components/menu/subMenu';
 import { IMenuItemProps } from 'mo/components/menu';
+import type { UniqueId } from 'mo/common/types';
 /**
  * The activity bar event definition
  */
@@ -12,7 +13,7 @@ export enum MenuBarEvent {
 }
 
 export interface IMenuBarItem {
-    id?: string;
+    id?: UniqueId;
     name?: string;
     icon?: string | JSX.Element;
     data?: ISubMenuProps[];

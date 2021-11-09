@@ -16,11 +16,12 @@ import {
 } from 'mo/common/className';
 import TabExtra from './tabExtra';
 import { Icon } from '../icon';
+import type { UniqueId } from 'mo/common/types';
 
 export interface ITabEvent {
     onMoveTab?: (dragIndex: number, hoverIndex: number) => void;
-    onCloseTab?: (key?: string) => void;
-    onSelectTab?: (key?: string) => void;
+    onCloseTab?: (key: UniqueId) => void;
+    onSelectTab?: (key: UniqueId) => void;
     onContextMenu?: <T = any>(
         event: React.MouseEvent,
         tab: ITabProps<T>
@@ -32,7 +33,7 @@ export interface ITabProps<T = any, P = any> extends ITabEvent {
     editable?: boolean;
     icon?: string | JSX.Element;
     index?: number;
-    id?: string;
+    id: UniqueId;
     name?: string;
     renderPane?: ((item: P) => React.ReactNode) | React.ReactNode;
     data?: T;

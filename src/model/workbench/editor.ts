@@ -3,6 +3,7 @@ import { ITabsProps } from 'mo/components/tabs';
 import { IMenuItemProps } from 'mo/components/menu';
 import { IBreadcrumbItemProps } from 'mo/components/breadcrumb';
 import { editor as MonacoEditor } from 'monaco-editor';
+import type { UniqueId } from 'mo/common/types';
 
 export enum EditorEvent {
     OnCloseTab = 'editor.closeTab',
@@ -29,7 +30,7 @@ export type IEditorOptions = MonacoEditor.IEditorOptions &
     MonacoEditor.IGlobalEditorOptions;
 
 export interface IEditorActionsProps extends IMenuItemProps {
-    id: string;
+    id: UniqueId;
     /**
      * Mark the action placed in More menus or outer
      */
@@ -44,7 +45,7 @@ export interface IEditorAction {
     menu?: IMenuItemProps[];
 }
 export interface IEditorGroup<E = any, T = any> extends ITabsProps<T> {
-    id?: number;
+    id: UniqueId;
     /**
      * Current editor group tab
      */
@@ -73,18 +74,18 @@ export interface IEditor {
 }
 
 export class EditorGroupModel<E = any, T = any> implements IEditorGroup<E, T> {
-    id: number;
+    id: UniqueId;
     tab: IEditorTab<T>;
     data: IEditorTab<T>[];
     actions: IEditorActionsProps[];
     menu: IMenuItemProps[];
     editorInstance: E | undefined;
-    activeTab: string | undefined;
+    activeTab: UniqueId | undefined;
 
     constructor(
-        id: number,
+        id: UniqueId,
         tab: IEditorTab<T>,
-        activeTab: string | undefined,
+        activeTab: UniqueId | undefined,
         data: IEditorTab<T>[],
         actions: IEditorActionsProps[] = [],
         menu: IMenuItemProps[] = [],

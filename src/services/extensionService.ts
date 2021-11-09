@@ -12,6 +12,7 @@ import {
 import { Action2, registerAction2 } from 'mo/monaco/common';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { searchById } from 'mo/common/utils';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IExtensionService {
     /**
@@ -39,7 +40,7 @@ export interface IExtensionService {
      * Get an extension by the ID
      * @param name The extension ID
      */
-    getExtension(id: string): IExtension | undefined;
+    getExtension(id: UniqueId): IExtension | undefined;
     /**
      * Get All loaded extensions
      * @return Extension Array
@@ -47,9 +48,9 @@ export interface IExtensionService {
     getAllExtensions(): IExtension[];
     /**
      * Dispose the specific extension, and remove it from the ExtensionService
-     * @param extension The extension name is required
+     * @param extension The extension id is required
      */
-    dispose(extensionId: string): void;
+    dispose(extensionId: UniqueId): void;
     /**
      * Dispose all extensions, and reset the ExtensionService
      */
@@ -105,7 +106,7 @@ export class ExtensionService implements IExtensionService {
         this.localeService = container.resolve(LocaleService);
     }
 
-    public getExtension(id: string): IExtension | undefined {
+    public getExtension(id: UniqueId): IExtension | undefined {
         return this.extensions.find(searchById(id));
     }
 
@@ -194,7 +195,7 @@ export class ExtensionService implements IExtensionService {
         });
     }
 
-    public dispose(extensionId: string): void {
+    public dispose(extensionId: UniqueId): void {
         const ctx = this;
         const extIndex = this.extensions.findIndex(searchById(extensionId));
         if (extIndex > -1) {

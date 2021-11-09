@@ -2,6 +2,7 @@ import React from 'react';
 import 'reflect-metadata';
 import type { ITreeNodeItemProps } from 'mo/components/tree';
 import type { IMenuItemProps } from 'mo/components/menu';
+import type { UniqueId } from 'mo/common/types';
 
 export enum FileTypes {
     File = 'File',

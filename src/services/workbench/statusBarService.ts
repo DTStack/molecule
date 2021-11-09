@@ -11,6 +11,7 @@ import { Component } from 'mo/react';
 import { container, singleton } from 'tsyringe';
 import { searchById } from 'mo/common/utils';
 import logger from 'mo/common/logger';
+import type { UniqueId } from 'mo/common/types';
 export interface IStatusBarService extends Component<IStatusBar> {
     /**
      * Add a new StatusBar item into right or left status
@@ -23,7 +24,7 @@ export interface IStatusBarService extends Component<IStatusBar> {
      * @param id
      * @param float if provided, it'll remove the item in spcific position
      */
-    remove(id: string, float?: Float): void;
+    remove(id: UniqueId, float?: Float): void;
     /**
      * Update the specific StatusBar item, it'll update the item found in left
      * @param item the id field is required
@@ -34,7 +35,7 @@ export interface IStatusBarService extends Component<IStatusBar> {
      * Get the specific StatusBar item
      * @param id
      */
-    getStatusBarItem(id: string, float?: Float): IStatusBarItem | null;
+    getStatusBarItem(id: UniqueId, float?: Float): IStatusBarItem | null;
     /**
      * Reset the contextMenu data and the StatusBar data , including right and left
      */
@@ -148,12 +149,12 @@ export class StatusBarService
         });
     }
 
-    public getStatusBarItem(id: string, float?: Float) {
+    public getStatusBarItem(id: UniqueId, float?: Float) {
         const itemInfo = this.getItem({ id }, float);
         return itemInfo.source ? cloneDeep(itemInfo.item) : itemInfo.item;
     }
 
-    public remove(id: string, float?: Float) {
+    public remove(id: UniqueId, float?: Float) {
         const itemInfo = this.getItem({ id }, float);
         if (!itemInfo.source) {
             logger.error(`There is no status item found whose id is ${id}`);

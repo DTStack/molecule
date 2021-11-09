@@ -13,11 +13,12 @@ import {
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 import Output from 'mo/workbench/panel/output';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IPanelController extends Partial<Controller> {
-    onTabChange?(key: string | undefined): void;
+    onTabChange?(key: UniqueId): void;
     onToolbarClick?(e: React.MouseEvent, item: IActionBarItemProps): void;
-    onClose?(key?: string): void;
+    onClose?(key: UniqueId): void;
 }
 
 @singleton()
@@ -64,7 +65,7 @@ export class PanelController extends Controller implements IPanelController {
         });
     }
 
-    public readonly onTabChange = (key: string | undefined): void => {
+    public readonly onTabChange = (key: UniqueId): void => {
         const state = this.panelService.getState();
         if (key) {
             this.panelService.setState({
@@ -74,7 +75,7 @@ export class PanelController extends Controller implements IPanelController {
         this.emit(PanelEvent.onTabChange, key);
     };
 
-    public readonly onClose = (key?: string) => {
+    public readonly onClose = (key: UniqueId) => {
         if (key) {
             this.emit(PanelEvent.onTabClose, key);
         }

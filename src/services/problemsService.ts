@@ -16,6 +16,7 @@ import { Component } from 'mo/react';
 import { singleton, container } from 'tsyringe';
 import { searchById } from 'mo/common/utils';
 import logger from 'mo/common/logger';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IProblemsService extends Component<IProblems> {
     /**
@@ -27,7 +28,7 @@ export interface IProblemsService extends Component<IProblems> {
      * Remove the specific problem items
      * @param id single or multiple ids
      */
-    remove(id: number | number[]): void;
+    remove(id: UniqueId | UniqueId[]): void;
     /**
      * Reset the ProblemsService state data
      */
@@ -109,7 +110,7 @@ export class ProblemsService
             }
         );
     }
-    public remove(id: number | number[]): void {
+    public remove(id: UniqueId | UniqueId[]): void {
         const ids = Array.isArray(id) ? id : [id];
 
         const { data = [] } = this.state;

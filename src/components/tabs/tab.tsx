@@ -19,8 +19,8 @@ export interface ITabEvent {
         target: ITabProps,
         dragInfos: Record<string, any>
     ) => void;
-    onCloseTab?: (key?: UniqueId) => void;
-    onSelectTab?: (key?: UniqueId) => void;
+    onCloseTab?: (key: UniqueId) => void;
+    onSelectTab?: (key: UniqueId) => void;
     onContextMenu?: <T = any>(
         event: React.MouseEvent,
         tab: ITabProps<T>

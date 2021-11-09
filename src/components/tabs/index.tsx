@@ -35,10 +35,10 @@ export interface ITabsProps<T = any> extends React.ComponentProps<any> {
      * Default is line
      */
     type?: TabsType;
-    onCloseTab?: (key?: UniqueId) => void;
+    onCloseTab?: (key: UniqueId) => void;
     onContextMenu?: (e: React.MouseEvent, tab: ITabProps) => void;
     onMoveTab?: (tabs: ITabProps[]) => void;
-    onSelectTab?: (key?: UniqueId) => void;
+    onSelectTab?: (key: UniqueId) => void;
 }
 
 export const tabsClassName = prefixClaName('tabs');

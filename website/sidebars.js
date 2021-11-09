@@ -15,12 +15,12 @@ module.exports = {
     docs: [
         'introduction',
         'quickStart',
+        'the-first-extension',
         {
             type: 'category',
             label: 'Guides',
             collapsed: false,
             items: [
-                'guides/the-first-extension',
                 'guides/extends-workbench',
                 'guides/extends-colorTheme',
                 'guides/extends-locales',

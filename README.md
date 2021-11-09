@@ -21,7 +21,7 @@
 
 The **Molecule** is a lightweight **Web IDE UI** Framework built with React.js，and inspired by the VSCode. We also provide the Extension APIs the seem like VSCode, to help developers extend the Workbench easily. The Molecule integrates with React.js applications is simple. It has applied to many [DTStack](https://www.dtstack.com/) inner projects.
 
-[Online Preview]((https://github.com/DTStack/molecule-examples)
+[Online Preview](https://github.com/DTStack/molecule-examples)
 
 ## Features
 

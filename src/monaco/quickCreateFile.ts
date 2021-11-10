@@ -31,7 +31,7 @@ export class QuickCreateFile extends Action2 {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
-                primary: KeyMod.CtrlCmd | KeyCode.KEY_N,
+                primary: KeyMod.CtrlCmd | KeyCode.KeyN,
             },
         });
         this.folderTreeController = container.resolve(FolderTreeController);

@@ -26,7 +26,7 @@ export class QuickRedo extends Action2 {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
-                primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KEY_Z,
+                primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyZ,
             },
         });
         this.editorService = container.resolve(EditorService);

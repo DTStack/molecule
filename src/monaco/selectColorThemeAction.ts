@@ -30,7 +30,7 @@ export class SelectColorThemeAction extends Action2 {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
-                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KEY_K),
+                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KeyK),
             },
         });
         this.colorThemeService = container.resolve(ColorThemeService);

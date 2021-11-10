@@ -30,7 +30,7 @@ export class QuickTogglePanelAction extends Action2 {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
-                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KEY_J),
+                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KeyJ),
             },
         });
         this.layoutService = container.resolve(LayoutService);

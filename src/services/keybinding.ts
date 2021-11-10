@@ -34,6 +34,7 @@ export const KeybindingHelper: IKeybinding = {
     queryGlobalKeybinding: (id: string) => {
         const defaultKeybindings: ResolvedKeybindingItem[] = KeybindingsRegistry.getDefaultKeybindings();
         const globalKeybindings = defaultKeybindings.filter((key) => !key.when);
+        console.log('globalKeybindings:', globalKeybindings);
 
         // 'Cause one action can occupy multiply keybinding, so there should be filter rather than find
         const targetKeybinding = globalKeybindings.filter(
@@ -45,8 +46,7 @@ export const KeybindingHelper: IKeybinding = {
             // Get lower priority keybinding
             const lowerPriorty = targetKeybinding[targetKeybinding.length - 1];
             // keybinding which is chord key[组合键] can get more than 1 parts
-            const keybindings: ISimpleKeybinding[] =
-                lowerPriorty.keybinding.parts;
+            const keybindings: ISimpleKeybinding[] = lowerPriorty.keybinding;
             return keybindings;
         }
         return null;

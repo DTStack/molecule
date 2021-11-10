@@ -28,7 +28,7 @@ export class QuickAccessSettings extends Action2 {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
-                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.US_COMMA),
+                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.Comma),
             },
         });
         this.settingsService = container.resolve(SettingsService);

@@ -2816,6 +2816,11 @@
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
+"@vscode/codicons@^0.0.26":
+  version "0.0.26"
+  resolved "https://registry.npmmirror.com/@vscode/codicons/download/@vscode/codicons-0.0.26.tgz#affdbc4499d3bd0db1156e4c9d323f885d299e03"
+  integrity sha1-r/28RJnTvQ2xFW5MnTI/iF0pngM=
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.npm.taobao.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.9.0.tgz?cache=0&sync_timestamp=1610045499973&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40webassemblyjs%2Fast%2Fdownload%2F%40webassemblyjs%2Fast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -15399,11 +15404,6 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
-
-vscode-codicons@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.npm.taobao.org/vscode-codicons/download/vscode-codicons-0.0.12.tgz#94b867156f3e3a6a4cf7661e9bf2bd0060042390"
-  integrity sha1-lLhnFW8+OmpM92Yem/K9AGAEI5A=
 
 vscode-textmate@^5.2.0:
   version "5.4.0"

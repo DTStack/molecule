@@ -26,7 +26,7 @@ export class QuickSelectAllAction extends Action2 {
             keybinding: {
                 weight: KeybindingWeight.BuiltinExtension,
                 when: undefined,
-                primary: KeyMod.CtrlCmd | KeyCode.KEY_A,
+                primary: KeyMod.CtrlCmd | KeyCode.KeyA,
             },
         });
         this.editorService = container.resolve(EditorService);

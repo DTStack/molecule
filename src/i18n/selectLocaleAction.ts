@@ -33,7 +33,7 @@ export class SelectLocaleAction extends Action2 {
             f1: true,
             keybinding: {
                 when: undefined,
-                primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KEY_L,
+                primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyL,
             },
         });
     }

@@ -26,7 +26,7 @@ export class QuickUndo extends Action2 {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
-                primary: KeyMod.CtrlCmd | KeyCode.KEY_Z,
+                primary: KeyMod.CtrlCmd | KeyCode.KeyZ,
             },
         });
         this.editorService = container.resolve(EditorService);

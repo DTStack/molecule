@@ -42,7 +42,7 @@ export class CommandQuickSideBarViewAction extends Action2 {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
                 // eslint-disable-next-line new-cap
-                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KEY_B),
+                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KeyB),
             },
         });
         this.layoutService = container.resolve(LayoutService);

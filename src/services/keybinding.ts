@@ -45,8 +45,7 @@ export const KeybindingHelper: IKeybinding = {
             // Get lower priority keybinding
             const lowerPriorty = targetKeybinding[targetKeybinding.length - 1];
             // keybinding which is chord key[组合键] can get more than 1 parts
-            const keybindings: ISimpleKeybinding[] =
-                lowerPriorty.keybinding.parts;
+            const keybindings: ISimpleKeybinding[] = lowerPriorty.keybinding;
             return keybindings;
         }
         return null;

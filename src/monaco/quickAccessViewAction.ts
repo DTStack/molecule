@@ -184,7 +184,7 @@ export class CommandQuickAccessViewAction extends Action2 {
             keybinding: {
                 weight: KeybindingWeight.WorkbenchContrib,
                 when: undefined,
-                primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KEY_P,
+                primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyP,
                 secondary: [KeyCode.F1],
             },
         });

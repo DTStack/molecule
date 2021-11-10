@@ -10751,17 +10751,17 @@ modify-values@^1.0.0:
   resolved "https://registry.npm.taobao.org/modify-values/download/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha1-s5OfpgVUZHTj4+PGPWS9Q7TuYCI=
 
-monaco-editor-webpack-plugin@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npm.taobao.org/monaco-editor-webpack-plugin/download/monaco-editor-webpack-plugin-3.0.1.tgz#b9bf93314eb2708907c232cfbf359622e7a6d98a"
-  integrity sha1-ub+TMU6ycIkHwjLPvzWWIuem2Yo=
+monaco-editor-webpack-plugin@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npmmirror.com/monaco-editor-webpack-plugin/download/monaco-editor-webpack-plugin-6.0.0.tgz#628956ce1851afa2a5f6c88d0ecbb24e9a444898"
+  integrity sha1-YolWzhhRr6Kl9siNDsuyTppESJg=
   dependencies:
     loader-utils "^2.0.0"
 
-monaco-editor@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.nlark.com/monaco-editor/download/monaco-editor-0.23.0.tgz#24844ba5640c7adb3a2a3ff3b520cf2d7170a6f0"
-  integrity sha1-JIRLpWQMets6Kj/ztSDPLXFwpvA=
+monaco-editor@^0.30.1:
+  version "0.30.1"
+  resolved "https://registry.npmmirror.com/monaco-editor/download/monaco-editor-0.30.1.tgz#47f8d18a0aa2264fc5654581741ab8d7bec01689"
+  integrity sha1-R/jRigqiJk/FZUWBdBq4177AFok=
 
 moo-color@^1.0.2:
   version "1.0.2"

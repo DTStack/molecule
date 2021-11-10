@@ -135,7 +135,7 @@ describe('The ActivityBar Item Component', () => {
                         shiftKey: false,
                         altKey: false,
                         metaKey: true,
-                        keyCode: KeyCode.KEY_F,
+                        keyCode: KeyCode.KeyF,
                     },
                 ];
             }

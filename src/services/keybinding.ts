@@ -34,7 +34,6 @@ export const KeybindingHelper: IKeybinding = {
     queryGlobalKeybinding: (id: string) => {
         const defaultKeybindings: ResolvedKeybindingItem[] = KeybindingsRegistry.getDefaultKeybindings();
         const globalKeybindings = defaultKeybindings.filter((key) => !key.when);
-        console.log('globalKeybindings:', globalKeybindings);
 
         // 'Cause one action can occupy multiply keybinding, so there should be filter rather than find
         const targetKeybinding = globalKeybindings.filter(

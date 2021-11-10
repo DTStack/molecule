@@ -19,7 +19,7 @@ v12.13.0
 
 ## 安装依赖
 
-我们以 [creat-creat-app](https://github.com/facebook/create-react-app) 作为开始
+我们以 [create-react-app](https://github.com/facebook/create-react-app) 作为开始
 
 首先，我们通过 `creat-creat-app` 创建一个新的项目，
 

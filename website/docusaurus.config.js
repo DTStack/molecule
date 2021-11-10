@@ -125,8 +125,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                                 to: '/docs/introduction',
                             },
                             {
+                                label: 'The first Extension',
+                                to: '/docs/the-first-extension',
+                            },
+                            {
                                 label: 'Guides',
-                                to: '/docs/guides/the-first-extension',
+                                to: '/docs/extends-workbench',
                             },
                             {
                                 label: 'API',

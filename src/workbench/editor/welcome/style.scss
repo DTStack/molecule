@@ -1,15 +1,62 @@
 @import 'mo/style/common';
 
-#{prefix('welcome')} {
-    align-items: center;
-    background-color: var(--panel-background);
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
+$border-color: rgba(115, 115, 115, 0.4);
 
-    > h1 {
-        font-family: monospace;
-        opacity: 0.6;
+#{prefix('welcome')} {
+    background-color: var(--molecule-welcomeBackground);
+    width: 100%;
+    text-align: center;
+
+    .logo {
+        font-size: 120px;
+        margin-top: 150px;
+    }
+
+    .title {
+        width: 132px;
+        margin: 32px auto 0;
+        height: 24px;
+        line-height: 24px;
+        font-weight: 800;
+        letter-spacing: 2.667px;
+        color: #a2a2a2;
+        font-family: GEETYPE-TakaLineGB-Flash-Heavy, GEETYPE-TakaLineGB-Flash,
+            sans-serif;
+        user-select: none;
+        opacity: 0.48;
+    }
+
+    .keybindings {
+        border-top: 1px solid $border-color;
+        margin: 100px auto 0;
+        min-width: 183px;
+        height: 148px;
+        background-color: rgba(162, 162, 162, 0.11);
+        padding: 24px;
+        box-sizing: border-box;
+        user-select: none;
+        display: inline-block;
+
+        > ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            color: #b6b6b6;
+            font-size: 14px;
+            opacity: 0.6;
+
+            line-height: 20px;
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            height: 100%;
+            align-items: center;
+
+            > li {
+                grid-template-columns: 1fr minmax(47px, min-content);
+                text-align: left;
+                grid-gap: 32px;
+                display: grid;
+            }
+        }
     }
 }

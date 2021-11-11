@@ -1,23 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
-
+import React, { useState } from 'react';
 import { getBEMElement } from 'mo/common/className';
-import { Icon } from 'mo/components/icon';
-export interface ITabExtraProps {
-    modified?: boolean;
-    active?: boolean;
-    buttonHover?: boolean;
-    onClick?: (event: React.MouseEvent) => void;
+
+interface ITabExtraProps {
     classNames?: string;
+    onClick?: () => void;
+    renderStatus?: (hover: boolean) => JSX.Element;
 }
 
-export default function TabExtra({
-    classNames = '',
-    modified = false,
-    onClick,
-    active = false,
-    buttonHover = false,
-}: ITabExtraProps) {
+export default ({ onClick, classNames = '', renderStatus }: ITabExtraProps) => {
     const [hover, setHover] = useState(false);
 
     const handleMouseOver = () => {
@@ -28,40 +18,18 @@ export default function TabExtra({
         setHover(false);
     };
 
-    const handleClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        onClick?.(e);
-        handleMouseOut();
-    };
-
-    const renderTabExtra = () => {
-        if (
-            hover ||
-            (!active && buttonHover && !modified) ||
-            (active && !modified)
-        ) {
-            return (
-                <div
-                    className={getBEMElement(classNames, 'button')}
-                    onClick={handleClick}
-                >
-                    <Icon type="close" />
-                </div>
-            );
-        }
-        if (modified) {
-            return <i className={getBEMElement(classNames, 'dot')} />;
-        }
-        return <i className={getBEMElement(classNames, 'placeholder')} />;
-    };
-
     return (
         <a
             className={classNames}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
-            {renderTabExtra()}
+            <div
+                className={getBEMElement(classNames, 'button')}
+                onClick={onClick}
+            >
+                {renderStatus?.(hover)}
+            </div>
         </a>
     );
-}
+};

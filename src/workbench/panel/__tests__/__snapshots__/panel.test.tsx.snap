@@ -17,8 +17,6 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
           className="mo-tab__item"
           onClick={[Function]}
           onContextMenu={[Function]}
-          onMouseOut={[Function]}
-          onMouseOver={[Function]}
         >
           Problems
         </div>
@@ -26,8 +24,6 @@ exports[`Test Panel Component Match the Panel snapshot 1`] = `
           className="mo-tab__item mo-tab__item--active"
           onClick={[Function]}
           onContextMenu={[Function]}
-          onMouseOut={[Function]}
-          onMouseOver={[Function]}
         >
           output
         </div>

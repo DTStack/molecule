@@ -11,8 +11,6 @@ exports[`The Tabs Components The snapshot 1`] = `
       className="mo-tab__item"
       onClick={[Function]}
       onContextMenu={[Function]}
-      onMouseOut={[Function]}
-      onMouseOver={[Function]}
     >
       test-title-1
       <a
@@ -20,17 +18,20 @@ exports[`The Tabs Components The snapshot 1`] = `
         onMouseOut={[Function]}
         onMouseOver={[Function]}
       >
-        <i
-          className="mo-tab__item__op__placeholder"
-        />
+        <div
+          className="mo-tab__item__op__button"
+          onClick={[Function]}
+        >
+          <span
+            className="codicon codicon-close"
+          />
+        </div>
       </a>
     </div>
     <div
       className="mo-tab__item"
       onClick={[Function]}
       onContextMenu={[Function]}
-      onMouseOut={[Function]}
-      onMouseOver={[Function]}
     >
       test-title-2
       <a
@@ -38,9 +39,14 @@ exports[`The Tabs Components The snapshot 1`] = `
         onMouseOut={[Function]}
         onMouseOver={[Function]}
       >
-        <i
-          className="mo-tab__item__op__placeholder"
-        />
+        <div
+          className="mo-tab__item__op__button"
+          onClick={[Function]}
+        >
+          <span
+            className="codicon codicon-close"
+          />
+        </div>
       </a>
     </div>
   </div>

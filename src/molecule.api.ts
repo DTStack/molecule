@@ -8,14 +8,7 @@ export * as i18n from 'mo/i18n';
 export * from 'mo/workbench';
 export * from 'mo/services';
 
-export {
-    IExtension,
-    IColorTheme,
-    ISettings,
-    IColors,
-    TokenColor,
-    ColorScheme,
-} from 'mo/model';
+export * as models from 'mo/model';
 
 import {
     ILayoutService,

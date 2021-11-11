@@ -55,12 +55,18 @@ export interface IColorThemeService {
     reset(): void;
 }
 
+/**
+ * @ignore
+ */
 export const BuiltInColorTheme: IColorTheme = {
     id: 'Default Dark+',
     name: 'Default Dark+',
     label: 'Default Dark+',
     uiTheme: 'vs-dark',
 };
+/**
+ * @ignore
+ */
 export const DEFAULT_THEME_CLASS_NAME = prefixClaName('customize-theme');
 
 @singleton()

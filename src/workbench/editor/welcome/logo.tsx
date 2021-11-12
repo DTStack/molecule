@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ({ className }) {
     return (
-        <span>
+        <span style={{ fontSize: 0 }}>
             <svg
                 width="1em"
                 height="1em"

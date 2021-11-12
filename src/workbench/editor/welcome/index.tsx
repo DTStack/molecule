@@ -14,7 +14,7 @@ export default function Welcome() {
                 <ul>
                     {keys.map((item) => {
                         return (
-                            <li key={item.id}>
+                            <li className="keys" key={item.id}>
                                 <span>{item.name}</span>
                                 <span>
                                     {item.keybindings.split('').join(' ')}

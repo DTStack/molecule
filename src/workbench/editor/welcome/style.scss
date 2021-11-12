@@ -4,8 +4,8 @@ $border-color: rgba(115, 115, 115, 0.4);
 
 #{prefix('welcome')} {
     background-color: var(--molecule-welcomeBackground);
-    width: 100%;
     text-align: center;
+    width: 100%;
 
     .logo {
         font-size: 120px;
@@ -13,50 +13,50 @@ $border-color: rgba(115, 115, 115, 0.4);
     }
 
     .title {
-        width: 132px;
-        margin: 32px auto 0;
-        height: 24px;
-        line-height: 24px;
-        font-weight: 800;
-        letter-spacing: 2.667px;
         color: #a2a2a2;
         font-family: GEETYPE-TakaLineGB-Flash-Heavy, GEETYPE-TakaLineGB-Flash,
             sans-serif;
-        user-select: none;
+        font-weight: 800;
+        height: 24px;
+        letter-spacing: 2.667px;
+        line-height: 24px;
+        margin: 32px auto 0;
         opacity: 0.48;
+        user-select: none;
+        width: 132px;
     }
 
     .keybindings {
+        background-color: rgba(162, 162, 162, 0.11);
         border-top: 1px solid $border-color;
+        box-sizing: border-box;
+        display: inline-block;
+        height: 148px;
         margin: 100px auto 0;
         min-width: 183px;
-        height: 148px;
-        background-color: rgba(162, 162, 162, 0.11);
         padding: 24px;
-        box-sizing: border-box;
         user-select: none;
-        display: inline-block;
 
         > ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
+            align-items: center;
             color: #b6b6b6;
-            font-size: 14px;
-            opacity: 0.6;
-
-            line-height: 20px;
             display: grid;
+            font-size: 14px;
             grid-template-rows: repeat(3, 1fr);
             height: 100%;
-            align-items: center;
 
-            > li {
-                grid-template-columns: 1fr minmax(47px, min-content);
-                text-align: left;
-                grid-gap: 32px;
-                display: grid;
-            }
+            line-height: 20px;
+            list-style: none;
+            margin: 0;
+            opacity: 0.6;
+            padding: 0;
+        }
+
+        .keys {
+            display: grid;
+            grid-gap: 32px;
+            grid-template-columns: 1fr minmax(47px, min-content);
+            text-align: left;
         }
     }
 }

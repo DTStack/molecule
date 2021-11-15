@@ -163,7 +163,13 @@ exports[`The Editor Component Match the welcome snapshot 1`] = `
   <div
     className="mo-welcome"
   >
-    <span>
+    <span
+      style={
+        Object {
+          "fontSize": 0,
+        }
+      }
+    >
       <svg
         className="logo"
         height="1em"

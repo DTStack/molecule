@@ -75,7 +75,9 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                   <div
                     class="mo-welcome"
                   >
-                    <span>
+                    <span
+                      style="font-size: 0px;"
+                    >
                       <svg
                         class="logo"
                         height="1em"

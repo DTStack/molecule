@@ -38,7 +38,10 @@ export function Sidebar(props: ISidebar) {
             <div
                 key={pane.id}
                 data-id={pane.id}
-                style={{ display: pane.id === current ? 'block' : 'none' }}
+                style={{
+                    visibility: pane.id === current ? 'visible' : 'hidden',
+                    zIndex: pane.id === current ? 1 : -1,
+                }}
                 className={paneClassName}
             >
                 {pane.render ? pane.render() : null}

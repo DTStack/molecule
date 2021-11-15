@@ -1,21 +1,20 @@
-import React, { useRef, useLayoutEffect, useEffect, useCallback } from 'react';
-import { useState } from 'react';
-import Logger from 'mo/common/logger';
-import { Toolbar } from 'mo/components/toolbar';
-import { Icon } from 'mo/components/icon';
-import { IActionBarItemProps } from 'mo/components/actionBar';
 import { classNames } from 'mo/common/className';
+import { isEqual } from 'lodash';
+import { HTMLElementProps, UniqueId } from 'mo/common/types';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { IActionBarItemProps, Icon, Toolbar } from '..';
+import SplitPane from '../split/SplitPane';
 import {
-    defaultCollapseClassName,
-    collapseItemClassName,
     collapseActiveClassName,
-    collapseHeaderClassName,
-    collapseExtraClassName,
     collapseContentClassName,
+    collapseExtraClassName,
+    collapseHeaderClassName,
+    collapseItemClassName,
+    collapsePaneClassName,
     collapseTitleClassName,
+    collapsingClassName,
+    defaultCollapseClassName,
 } from './base';
-import { getDataAttributionsFromProps, select } from 'mo/common/dom';
-import type { HTMLElementProps, UniqueId } from 'mo/common/types';
 
 type RenderFunctionProps = (data: ICollapseItem) => React.ReactNode;
 export interface ICollapseItem extends HTMLElementProps {
@@ -42,6 +41,7 @@ export interface ICollapseItem extends HTMLElementProps {
 export interface ICollapseProps extends HTMLElementProps {
     data?: ICollapseItem[];
     onCollapseChange?: (keys: React.Key[]) => void;
+    onResize?: (resizes: number[]) => void;
     onToolbarClick?: (
         item: IActionBarItemProps,
         parentPanel: ICollapseItem
@@ -50,108 +50,53 @@ export interface ICollapseProps extends HTMLElementProps {
     [key: string]: any;
 }
 
-// default collapse height, only contains header
-export const HEADER_HEIGTH = 26;
 /**
  * It's the max height for the item which set the grow to 0
  */
 export const MAX_GROW_HEIGHT = 220;
+// default collapse height, only contains header
+export const HEADER_HEIGTH = 26;
 
-export function Collapse(props: ICollapseProps) {
+export function Collapse({
+    className,
+    data = [],
+    onCollapseChange,
+    onToolbarClick,
+    title,
+    style,
+    role,
+    onResize,
+    ...restProps
+}: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] = useState<React.Key[]>([]);
+    const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
-    const requestAF = useRef<number>();
+    const [sizes, setSizes] = useState(
+        new Array(data.length).fill(HEADER_HEIGTH)
+    );
+    // cache the adjusted size
+    const adjustedSize = useRef<number[]>([]);
+    const [resize, setResize] = useState(new Array(data.length).fill(false));
+    const first = useRef(true);
 
-    const {
-        className,
-        data = [],
-        onCollapseChange,
-        onToolbarClick,
-        title,
-        style,
-        role,
-        ...restProps
-    } = props;
-
-    const visibleData = data.filter((d) => !d.hidden);
-
-    // assets data must have id
-    const filterData = visibleData.filter(
-        (panel) => panel.id
-    ) as ICollapseItem[];
-    if (filterData.length < visibleData.length) {
-        Logger.warn(new SyntaxError('collapse data must have id'));
-    }
-
-    // to save position temporarily, empty array when rerender
-    const _cachePosition: number[][] = [];
-    const _cacheWrapperHeight = useRef(0);
-
-    const handleResize = useCallback(() => {
-        // just want to trigger rerender
-        setActivePanelKeys((keys) => keys.concat());
-    }, []);
-
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    useLayoutEffect(() => {
-        // It's necessary to check panel's empty before calculate every panel
-        filterData.forEach((panel) => {
-            const isActive = activePanelKeys.includes(panel.id);
-            let isEmpty = true;
-            if (isActive) {
-                const contentDom =
-                    select(
-                        `.${collapseContentClassName}[data-content='${panel.id}']`
-                    )?.querySelector(`[data-content='${panel.id}']`) ||
-                    select(
-                        `.${collapseContentClassName}[data-content='${panel.id}']`
-                    );
-
-                isEmpty = !contentDom?.hasChildNodes();
+    // compare two sizes to find the change one
+    const compareTheSizes = (sizes: number[], otherSizes: number[]) => {
+        for (let index = 0; index < sizes.length; index++) {
+            if (sizes[index] !== otherSizes[index]) {
+                return index + 1;
             }
-            panel._isEmpty = isEmpty;
-        });
-
-        filterData.forEach((panel) => {
-            const [height, top] = calcPosition(
-                activePanelKeys,
-                panel,
-                filterData
-            );
-            _cachePosition.push([height, top]);
-            const dom = select<HTMLElement>(
-                `.${collapseItemClassName}[data-content='${panel.id}']`
-            );
-
-            if (dom) {
-                requestAF.current = requestAnimationFrame(() => {
-                    dom.style.height = `${height}px`;
-                    dom.style.top = `${top}px`;
-                });
-            }
-        });
-
-        return () => {
-            if (requestAF.current) {
-                cancelAnimationFrame(requestAF.current);
-                requestAF.current = undefined;
-            }
-        };
-    }, [filterData]);
-
-    const handleChangeCallback = (key: React.Key) => {
-        const currentKeys = activePanelKeys.concat();
-        if (currentKeys.includes(key)) {
-            currentKeys.splice(currentKeys.indexOf(key), 1);
-        } else {
-            currentKeys.push(key);
         }
-        onCollapseChange?.(currentKeys);
-        setActivePanelKeys(currentKeys);
+        return -1;
+    };
+
+    const handleSplitChange = (nextSizes: number[]) => {
+        const index = compareTheSizes(sizes, nextSizes);
+        if (index === -1) {
+            return;
+        }
+        adjustedSize.current[index] = nextSizes[index];
+        onResize?.(nextSizes);
+        setSizes(nextSizes);
     };
 
     const handleToolbarClick = (
@@ -173,194 +118,164 @@ export function Collapse(props: ICollapseProps) {
         return null;
     };
 
-    /**
-     * Returns the grow of data, or 1
-     */
-    const getGrow = (data: ICollapseItem) => {
-        if (typeof data.config?.grow === 'number') {
-            return data.config.grow;
+    const handleChangeCallback = (key: React.Key) => {
+        const currentKeys = activePanelKeys.concat();
+        if (currentKeys.includes(key)) {
+            currentKeys.splice(currentKeys.indexOf(key), 1);
         } else {
-            return 1;
+            currentKeys.push(key);
         }
+        onCollapseChange?.(currentKeys);
+        setActivePanelKeys(currentKeys.concat());
     };
 
-    /**
-     * Returns the key whose panel is active and whose grow is 0
-     */
-    const getZeroPanelsByKeys = (
-        keys: React.Key[],
-        panels: ICollapseItem[]
-    ) => {
-        return keys.filter((key) => {
-            const targetPanel = panels.find((panel) => panel.id === key);
-            if (targetPanel) {
-                return targetPanel.config?.grow === 0;
-            }
-            return false;
-        });
+    // 渲染平缓过度的 sizes
+    const performSmoothSizes = () => {
+        setCollapsing(true);
+        performSizes();
+        setTimeout(() => {
+            setCollapsing(false);
+        }, 300);
     };
 
-    /**
-     * Returns the collections of height
-     */
-    const getContentHeightsByKeys = (data: React.Key[]) => {
-        return data.map((key) => {
-            const contentDom = select(
-                `.${collapseContentClassName}[data-content='${key}']`
-            );
-
-            const childrenDom = contentDom?.querySelector(
-                `[data-content='${key}']`
-            );
-
-            let contentHeight = contentDom?.getBoundingClientRect().height || 0;
-
-            if (childrenDom) {
-                contentHeight = childrenDom.getBoundingClientRect().height;
-            }
-
-            // border-top-width + border-bottom-width = 2
-            const height =
-                parseInt(contentHeight.toFixed(0)) - 2 + HEADER_HEIGTH;
-
-            return height > MAX_GROW_HEIGHT ? MAX_GROW_HEIGHT : height;
-        });
-    };
-
-    /**
-     * Calculate the position of the panel in view
-     * @param keys Current active keys
-     * @param panel Current panel
-     * @param panels All panels array
-     * @returns Tuple - [height, top]
-     */
-    const calcPosition = (
-        keys: React.Key[],
-        panel: ICollapseItem,
-        panels: ICollapseItem[]
-    ) => {
-        // init a Tuple save height and top
-        const res = [0, 0];
-        const isActive = keys.includes(panel.id);
-        // calculate height for current panel
-        if (!isActive || panel._isEmpty) {
-            // the height of inactive panel or empty panel is a fixed value
-            res[0] = HEADER_HEIGTH;
-        } else {
-            if (panel.config?.grow === 0) {
-                // to get current panel content
-                const contentDom = select(
-                    `.${collapseContentClassName}[data-content='${panel.id}']`
-                )?.querySelector(`[data-content='${panel.id}']`);
-
-                if (contentDom) {
-                    const height =
-                        contentDom.getBoundingClientRect().height +
-                        2 +
-                        HEADER_HEIGTH;
-                    res[0] =
-                        height > MAX_GROW_HEIGHT ? MAX_GROW_HEIGHT : height;
+    // 渲染新的 sizes
+    const performSizes = () => {
+        const activeLength = activePanelKeys.length;
+        if (activeLength) {
+            const { height } = wrapper.current!.getBoundingClientRect();
+            let restHeight = height;
+            let count = 0;
+            // 对所有 sizes 进行重新计算赋值
+            // 不管之前的 sizes 是多少，新的 sizes 只存在两种状态
+            // 1. 新的 sizes 是收起状态，则直接赋值
+            // 2. 新的 sizes 是展开状态，则高度必有变化，需要重新计算
+            const wipSizes = sizes.map((size, index) => {
+                const isHidden = data[index].hidden;
+                if (isHidden) {
+                    return 0;
                 }
-            } else {
-                // get the height of the wrapper
-                let wrapperHeight =
-                    wrapper.current?.getBoundingClientRect().height ||
-                    _cacheWrapperHeight.current;
-                _cacheWrapperHeight.current = wrapperHeight;
-                // count active panels
-                const activeCount = keys.length;
-                const inactiveCount = panels.length - activeCount;
-                // the height active panels can occupied
-                wrapperHeight = wrapperHeight - HEADER_HEIGTH * inactiveCount;
+                const willCollapsing = activePanelKeys.includes(data[index].id);
+                if (!willCollapsing) {
+                    restHeight = restHeight - HEADER_HEIGTH;
+                    return HEADER_HEIGTH;
+                }
 
-                // get grow-zero panels' heights
-                const growZeroPanelsKeys = getZeroPanelsByKeys(keys, panels);
-                const growZeroPanelsHeights = getContentHeightsByKeys(
-                    growZeroPanelsKeys
-                );
-
-                // the height grow-normal panels can occupied =
-                // the height active panels can occupied -
-                // each grow-zero panels' heights
-                growZeroPanelsHeights.forEach((height) => {
-                    wrapperHeight -= height;
-                });
-
-                // count the non-empty & active & non-grow-zero panels in active panels
-                const nonEmptyAndActivePanels: ICollapseItem[] = [];
-                const nonEmptyAndActivePanelKeys = keys.filter((key) => {
-                    const target = panels.find((p) => p.id === key);
-                    if (target) {
-                        if (getGrow(target) === 0) return false;
-                        if (typeof target._isEmpty === 'boolean') {
-                            !target._isEmpty &&
-                                nonEmptyAndActivePanels.push(target);
-                            return !target._isEmpty;
-                        }
-                        // In general, the following code will not be excuted
-                        const contentDom = select(
-                            `.${collapseContentClassName}[data-content='${panel.id}']`
-                        )?.querySelector(`[data-content='${panel.id}']`);
-                        return contentDom?.hasChildNodes();
+                const panel = data[index];
+                // 如果设置了 grow 是 0 的话，直接通过子结点去拿高度，然后自适应高度
+                if (panel.config?.grow === 0) {
+                    const correspondDOM = wrapper.current
+                        ?.querySelector(
+                            `.${collapseContentClassName}[data-collapse-index='${index}']`
+                        )
+                        ?.querySelector(`[data-content='${panel.id}']`);
+                    if (!correspondDOM) {
+                        restHeight = restHeight - HEADER_HEIGTH;
+                        return HEADER_HEIGTH;
                     }
-                    return false;
-                });
+                    const {
+                        height: contentHeight,
+                    } = correspondDOM.getBoundingClientRect();
+                    const height = contentHeight + HEADER_HEIGTH;
 
-                const growSum = nonEmptyAndActivePanels.reduce((pre, cur) => {
-                    return pre + getGrow(cur);
-                }, 0);
+                    if (height > MAX_GROW_HEIGHT) {
+                        restHeight = restHeight - MAX_GROW_HEIGHT;
+                        return MAX_GROW_HEIGHT;
+                    }
+                    restHeight = restHeight - height;
+                    return height;
+                }
 
-                const emptyAndActivePanelsHeights =
-                    HEADER_HEIGTH *
-                    (keys.length -
-                        growZeroPanelsKeys.length -
-                        nonEmptyAndActivePanelKeys.length);
+                // there is a cached size
+                if (typeof adjustedSize.current[index] !== 'undefined') {
+                    restHeight = restHeight - adjustedSize.current[index];
+                    return adjustedSize.current[index];
+                }
 
-                // the height for grow-normal panels is divided by non-empty & active & grow-normal panels depends on grow number
-                res[0] =
-                    ((wrapperHeight - emptyAndActivePanelsHeights) *
-                        getGrow(panel)) /
-                    growSum;
-            }
+                // 如果 grow 非 0，则统计 grow 的总数，即剩余空间要被分成几份
+                // 占位符，用于计算出剩余空间后对其进行替换
+                count = count + (panel.config?.grow || 1);
+                return 'auto';
+            });
+
+            const averageHeight = restHeight / count;
+            const nextSizes = wipSizes.map((size, index) =>
+                size === 'auto'
+                    ? averageHeight * (data[index].config?.grow || 1)
+                    : size
+            );
+            onResize?.(nextSizes);
+            setSizes(nextSizes);
+        } else {
+            const nextSizes = data.map((pane) =>
+                pane.hidden ? 0 : HEADER_HEIGTH
+            );
+            onResize?.(nextSizes);
+            setSizes(nextSizes);
         }
-
-        // calculate top for current panel
-        let topCount = 0;
-        for (let index = 0; index < panels.length; index++) {
-            const element = panels[index];
-            // only count the position of front panel
-            if (element === panel) {
-                break;
-            }
-            // if this element is a active panel, then get height via cache
-            // else count default height in
-            if (keys.includes(element.id)) {
-                const [cacheHeight] = _cachePosition[index];
-                topCount += cacheHeight;
-            } else {
-                topCount += HEADER_HEIGTH;
-            }
-        }
-        res[1] = topCount;
-        return res;
     };
 
-    const dataAttrs = getDataAttributionsFromProps(restProps);
+    // 根据新的 sizes 值，渲染 resizes 的值
+    const performResize = () => {
+        const res: boolean[] = [];
+        sizes.forEach((size, index) => {
+            if (!index) {
+                res.push(false);
+            } else if (data[index].config?.grow === 2) {
+                // When specify grow to be 2, then it wouldn't be resized
+                res.push(false);
+            } else {
+                const isCollapsing = !!size && size !== HEADER_HEIGTH;
+                const lastCollasping =
+                    !!sizes[index - 1] && sizes[index - 1] !== HEADER_HEIGTH;
+                // 当前为展开且上一个 pane 也为展开状态
+                res.push(isCollapsing && lastCollasping);
+            }
+        });
+
+        const didChanged = !isEqual(res, resize);
+        if (didChanged) {
+            setResize(res);
+        }
+    };
+
+    useLayoutEffect(() => {
+        if (!first.current) {
+            performSmoothSizes();
+        }
+    }, [activePanelKeys]);
+
+    useLayoutEffect(() => {
+        if (!first.current) {
+            console.log('data 改变了', data);
+            performSmoothSizes();
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if (!first.current) {
+            performResize();
+        }
+
+        first.current = false;
+    }, [sizes]);
 
     return (
         <div
-            className={classNames(defaultCollapseClassName, className)}
-            title={title}
-            role={role}
-            style={style}
             ref={wrapper}
-            {...dataAttrs}
+            className={classNames(defaultCollapseClassName, className)}
         >
-            {filterData
-                .filter((p) => !p.hidden)
-                .map((panel) => {
+            <SplitPane
+                sizes={sizes}
+                onChange={handleSplitChange}
+                split="horizontal"
+                allowResize={resize}
+                paneClassName={classNames(
+                    collapsePaneClassName,
+                    collapsing && collapsingClassName
+                )}
+            >
+                {data.map((panel, index) => {
                     const isActive = activePanelKeys.includes(panel.id);
-                    const attrs = getDataAttributionsFromProps(panel);
                     return (
                         <div
                             className={classNames(
@@ -368,12 +283,7 @@ export function Collapse(props: ICollapseProps) {
                                 collapseItemClassName,
                                 isActive && collapseActiveClassName
                             )}
-                            data-content={panel.id}
                             key={panel.id}
-                            style={panel.style}
-                            role={panel.role}
-                            title={panel.title}
-                            {...attrs}
                         >
                             <div
                                 className={collapseHeaderClassName}
@@ -408,14 +318,15 @@ export function Collapse(props: ICollapseProps) {
                             </div>
                             <div
                                 className={collapseContentClassName}
-                                data-content={panel.id}
                                 tabIndex={0}
+                                data-collapse-index={index}
                             >
                                 {renderPanels(panel, panel.renderPanel)}
                             </div>
                         </div>
                     );
                 })}
+            </SplitPane>
         </div>
     );
 }

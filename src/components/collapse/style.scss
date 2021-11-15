@@ -6,7 +6,6 @@ $collapse__extra: #{$collapse}__extra;
     background-color: var(--sideBar-background);
     color: var(--sideBar-foreground);
     height: 100%;
-    position: relative;
 
     &:focus-within {
         #{$collapse__extra} {
@@ -14,14 +13,24 @@ $collapse__extra: #{$collapse}__extra;
         }
     }
 
+    &__pane {
+        &--collapsing {
+            transition: top ease-in-out 0.2s, height ease-in-out 0.2s;
+        }
+
+        &:not(&.visible ~ &.visible) {
+            #{$collapse}__header {
+                border-top: 0;
+            }
+        }
+    }
+
     &__item {
-        border-bottom: 1px solid var(--sideBarSectionHeader-border);
         display: flex;
         flex-direction: column;
+        height: 100%;
         line-height: 22px;
         overflow: hidden;
-        position: absolute;
-        transition: top ease-in-out 0.2s, height ease-in-out 0.2s;
         width: 100%;
 
         &:hover {
@@ -29,15 +38,11 @@ $collapse__extra: #{$collapse}__extra;
                 opacity: 1;
             }
         }
-
-        &:last-child {
-            border-bottom-color: transparent;
-        }
     }
 
     &__header {
         align-items: center;
-        border: 1px solid transparent;
+        border-top: 1px solid var(--sideBarSectionHeader-border);
         box-sizing: border-box;
         cursor: pointer;
         display: flex;
@@ -45,11 +50,13 @@ $collapse__extra: #{$collapse}__extra;
         font-weight: bold;
         height: 25px;
         outline: none;
+        outline: 1px solid transparent;
+        outline-offset: -1px;
         padding: 1px 2px;
         user-select: none;
 
         &:focus {
-            border-color: var(--list-focusOutline);
+            outline-color: var(--list-focusOutline);
         }
 
         &__title {
@@ -70,14 +77,12 @@ $collapse__extra: #{$collapse}__extra;
     }
 
     &__content {
-        border: 1px solid transparent;
-
-        &:not(:empty) {
-            flex: 1;
-        }
+        flex: 1;
+        outline: 1px solid transparent;
+        outline-offset: -1px;
 
         &:focus {
-            border-color: var(--list-focusOutline);
+            outline-color: var(--list-focusOutline);
         }
     }
 }

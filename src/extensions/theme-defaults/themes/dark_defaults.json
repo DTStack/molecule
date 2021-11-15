@@ -42,6 +42,7 @@
         "problemsErrorIcon.foreground": "#F48771",
         "problemsInfoIcon.foreground": "#75BEFF",
         "problemsWarningIcon.foreground": "#CCA700",
+        "sash.hoverBorder": "#007FD4",
         "settings.numberInputBackground": "#292929",
         "settings.textInputBackground": "#292929",
         "sideBarSectionHeader.background": "#0000",

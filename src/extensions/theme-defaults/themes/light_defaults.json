@@ -39,6 +39,7 @@
         "problemsErrorIcon.foreground": "#E51400",
         "problemsInfoIcon.foreground": "#75BEFF",
         "problemsWarningIcon.foreground": "#BF8803",
+        "sash.hoverBorder": "#0090F1",
         "searchEditor.textInputBorder": "#CECECE",
         "settings.numberInputBorder": "#CECECE",
         "settings.textInputBorder": "#CECECE",

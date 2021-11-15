@@ -6,6 +6,7 @@
         "editor.foreground": "#FFFFFF",
         "editorIndentGuide.activeBackground": "#FFFFFF",
         "editorIndentGuide.background": "#FFFFFF",
+        "sash.hoverBorder": "#F38518",
         "sideBarTitle.foreground": "#FFFFFF",
         "statusBarItem.remoteBackground": "#00000000",
         "tree.indentGuidesStroke": "#a9a9a9"

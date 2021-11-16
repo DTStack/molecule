@@ -1,57 +1,36 @@
 import React, {
-    memo,
-    PropsWithChildren,
     useCallback,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from 'react';
 import { classNames } from 'mo/common/className';
-import './index.scss';
-import { debounce } from 'lodash';
+import { debounce, isEqual } from 'lodash';
 import { HTMLElementProps } from 'mo/common/types';
+import Pane from './pane';
+import Sash from './sash';
+import {
+    paneContainerClassName,
+    paneItemClassName,
+    paneItemVisibleClassName,
+    sashContainerClassName,
+    sashDisabledClassName,
+    sashHorizontalClassName,
+    sashHoverClassName,
+    sashItemClassName,
+    sashVerticalClassName,
+    splitClassName,
+} from './base';
 
-interface ISplitProps extends HTMLElementProps {
-    children: React.ReactChild[];
+export interface ISplitProps extends HTMLElementProps {
+    children: JSX.Element[];
     allowResize?: boolean | boolean[];
     split?: 'vertical' | 'horizontal';
     sizes: (string | number)[];
     onChange: (sizes: number[]) => void;
     paneClassName?: string;
 }
-
-interface IPaneProps {
-    size: number;
-    width: number;
-    split: 'vertical' | 'horizontal';
-    className?: string;
-}
-
-const Pane = memo(
-    ({
-        children,
-        size,
-        width,
-        split,
-        className,
-    }: PropsWithChildren<IPaneProps>) => {
-        return (
-            <div
-                className={classNames(
-                    'split-view-view',
-                    width !== 0 && 'visible',
-                    className
-                )}
-                style={{
-                    [split === 'vertical' ? 'left' : 'top']: size || 0,
-                    [split === 'vertical' ? 'width' : 'height']: width,
-                }}
-            >
-                {children}
-            </div>
-        );
-    }
-);
 
 interface IAxis {
     x: number;
@@ -60,22 +39,7 @@ interface IAxis {
     dragIndex: number;
 }
 
-const getDefaultResize = (num: number, defaultValue: boolean | boolean[]) => {
-    if (typeof defaultValue === 'boolean') {
-        return new Array(num).fill(defaultValue);
-    }
-    const res: boolean[] = [];
-    for (let index = 0; index < num; index++) {
-        if (typeof defaultValue[index] === 'boolean') {
-            res.push(defaultValue[index]);
-        } else {
-            res.push(true);
-        }
-    }
-    return res;
-};
-
-export default ({
+const SplitPane = ({
     children,
     sizes: propSizes,
     allowResize: propAllowResize = true,
@@ -88,10 +52,8 @@ export default ({
     paneClassName,
 }: ISplitProps) => {
     const [sizes, setSize] = useState<number[]>([]);
-    const [allowResize, setResize] = useState<boolean[]>(
-        getDefaultResize(children.length, propAllowResize)
-    );
     const [draging, setDrag] = useState(false);
+    const [sashHovering, setHover] = useState<{ [x: number]: boolean }>({});
     const wrapper = useRef<HTMLDivElement>(null);
     const axis = useRef<IAxis>({
         x: 0,
@@ -100,27 +62,26 @@ export default ({
         dragIndex: -1,
     });
 
-    const panes = children.map(
-        function (pane, paneIndex) {
-            // @ts-ignore
-            const size = this.sum + (sizes[paneIndex - 1] || 0);
-            // @ts-ignore
-            this.sum = size;
-            return (
-                <React.Fragment key={paneIndex}>
-                    <Pane
-                        className={paneClassName}
-                        size={size}
-                        width={sizes[paneIndex]}
-                        split={split}
-                    >
-                        {pane}
-                    </Pane>
-                </React.Fragment>
-            );
-        },
-        { sum: 0 }
-    );
+    const getSplitSizeName = (): {
+        sizeName: 'width' | 'height';
+        pos: 'top' | 'left';
+        axis: 'x' | 'y';
+    } => {
+        return {
+            sizeName: split === 'vertical' ? 'width' : 'height',
+            pos: split === 'vertical' ? 'left' : 'top',
+            axis: split === 'vertical' ? 'x' : 'y',
+        };
+    };
+
+    // recommended to set key for the Pane, it's used for improving performance
+    const childrenKey: React.Key[] = useMemo(() => {
+        const nextKey = children.map((child, index) => child.key || index);
+        if (isEqual(nextKey, childrenKey)) {
+            return childrenKey;
+        }
+        return nextKey;
+    }, [children]);
 
     const handleMouseDown = (e, index) => {
         setDrag(true);
@@ -132,6 +93,20 @@ export default ({
         };
     };
 
+    const timeout = useRef<NodeJS.Timeout>();
+    const handleMouseEnterSash = (paneIndex) => {
+        timeout.current = setTimeout(() => {
+            setHover({ [paneIndex]: true });
+        }, 300);
+    };
+
+    const handleMouseLeaveSash = (paneIndex) => {
+        if (timeout.current) {
+            setHover({ [paneIndex]: false });
+            clearTimeout(timeout.current);
+        }
+    };
+
     const handleMouseMove = (e) => {
         if (draging) {
             const currentAxis = {
@@ -139,8 +114,8 @@ export default ({
                 y: e.clientY - axis.current.dragSource!.offsetTop,
             };
             const distanceX =
-                axis.current[split === 'vertical' ? 'x' : 'y'] -
-                currentAxis[split === 'vertical' ? 'x' : 'y'];
+                axis.current[getSplitSizeName().axis] -
+                currentAxis[getSplitSizeName().axis];
 
             onChange(
                 sizes.map((size, index) => {
@@ -168,36 +143,19 @@ export default ({
         }
     };
 
-    const sash = children.map(
-        function (pane, paneIndex) {
-            // @ts-ignore
-            const size = this.sum + (sizes[paneIndex - 1] || 0);
-            // @ts-ignore
-            this.sum = size;
-            return (
-                <React.Fragment key={paneIndex}>
-                    <div
-                        className={classNames(
-                            'sash',
-                            !allowResize[paneIndex] && 'disabled',
-                            split
-                        )}
-                        style={{
-                            [split === 'vertical' ? 'left' : 'top']: size - 2,
-                            width: split === 'vertical' ? 4 : '100%',
-                            height: split === 'vertical' ? '100%' : 4,
-                        }}
-                        onMouseDown={(e) => handleMouseDown(e, paneIndex)}
-                    ></div>
-                </React.Fragment>
-            );
-        },
-        { sum: 0 }
-    );
-
-    const replaceAuto = (sizes: (string | number)[]) => {
+    /**
+     * SplitPane allows sizes in string and number, but the state sizes only support number,
+     * so convert string and number to number in here
+     * ```ts
+     * 'auto' -> divide the remaining space equally
+     * 'xxxpx' -> xxx
+     * 'xxx%' -> wrapper.size * xxx/100
+     * xxx -> xxx
+     * ```
+     */
+    const convertSizes = (sizes: (string | number)[]) => {
         let res: (string | number)[] = [];
-        // 先补全
+        // insert 'auto' to make the length completion
         if (sizes.length === children.length) {
             res.push(...sizes);
         } else {
@@ -210,21 +168,21 @@ export default ({
             );
         }
 
-        // 获取外层容器的高度或宽度
-        const { width, height } = wrapper.current!.getBoundingClientRect();
+        // Get the height or width of container
+        const rect = wrapper.current!.getBoundingClientRect();
 
-        // 平均分配 auto
         let count = 0;
-        let restSize = split === 'vertical' ? width : height;
+        let restSize = rect[getSplitSizeName().sizeName];
         const nextRes = res.map((size) => {
-            // 先把百分比和 px 换算了，并且计算出 auto 的个数和剩余高宽
+            // convert percent and px to absolute number
+            // count the auto number
+            // and calculate the rest size by minus of absolute number
             if (typeof size === 'number') {
                 restSize = restSize - size;
                 return size;
             } else if (size.endsWith('%')) {
                 const percent = Number(size.replace('%', '')) / 100;
-                const countSize =
-                    (split === 'vertical' ? width : height) * percent;
+                const countSize = rect[getSplitSizeName().sizeName] * percent;
                 restSize = restSize - countSize;
                 return countSize;
             } else if (size.endsWith('px')) {
@@ -237,7 +195,7 @@ export default ({
             }
         });
 
-        // 存在 auto，则进行 auto 的换算
+        // convert auto to absolute number
         if (count) {
             let average = restSize / count;
 
@@ -253,7 +211,7 @@ export default ({
     };
 
     useEffect(() => {
-        setSize(replaceAuto(propSizes));
+        setSize(convertSizes(propSizes));
     }, [propSizes]);
 
     const handleResize = useCallback(
@@ -265,32 +223,109 @@ export default ({
                 }, 0);
                 const percents = sizes.map((size) => size / sum);
 
-                // 获取外层容器的高度或宽度
-                const {
-                    width,
-                    height,
-                } = wrapper.current!.getBoundingClientRect();
+                const rect = wrapper.current!.getBoundingClientRect();
                 const nextSizes = percents.map((percent) => {
-                    return (split === 'vertical' ? width : height) * percent;
+                    return rect[getSplitSizeName().sizeName] * percent;
                 });
                 return nextSizes;
             });
-        }, 300),
+        }, 150),
         []
     );
+
     useEffect(() => {
-        // 按照百分比 resize
         window.addEventListener('resize', handleResize);
         return () => window.addEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        setResize(getDefaultResize(children.length, propAllowResize));
-    }, [children.length, propAllowResize]);
+    // perform the task for recalculating resizable
+    const allowResize = useMemo(() => {
+        if (typeof propAllowResize === 'boolean') {
+            const next = new Array(childrenKey.length).fill(propAllowResize);
+            if (isEqual(next, allowResize)) {
+                return allowResize;
+            }
+            return next;
+        }
+        const res: boolean[] = [];
+        for (let index = 0; index < childrenKey.length; index++) {
+            if (typeof propAllowResize[index] === 'boolean') {
+                res.push(propAllowResize[index]);
+            } else {
+                res.push(true);
+            }
+        }
+        if (isEqual(res, allowResize)) {
+            return allowResize;
+        }
+        return res;
+    }, [childrenKey.length, propAllowResize]);
+
+    // perform the Panes
+    const panes = useMemo(() => {
+        return childrenKey.map(
+            function (_, paneIndex) {
+                // @ts-ignore
+                const size = this.sum + (sizes[paneIndex - 1] || 0);
+                // @ts-ignore
+                this.sum = size;
+                return (
+                    <Pane
+                        key={paneIndex}
+                        className={classNames(
+                            paneItemClassName,
+                            sizes[paneIndex] !== 0 && paneItemVisibleClassName,
+                            paneClassName
+                        )}
+                        style={{
+                            [getSplitSizeName().sizeName]: sizes[paneIndex],
+                            [getSplitSizeName().pos]: size || 0,
+                        }}
+                    >
+                        {children[paneIndex]}
+                    </Pane>
+                );
+            },
+            { sum: 0 }
+        );
+    }, [childrenKey, sizes]);
+
+    // perform the Sashs
+    const sashs = useMemo(() => {
+        return childrenKey.map(
+            function (_, paneIndex) {
+                // @ts-ignore
+                const size = this.sum + (sizes[paneIndex - 1] || 0);
+                // @ts-ignore
+                this.sum = size;
+                return (
+                    <Sash
+                        key={paneIndex}
+                        className={classNames(
+                            sashItemClassName,
+                            !allowResize[paneIndex] && sashDisabledClassName,
+                            sashHovering[paneIndex] && sashHoverClassName,
+                            split === 'vertical'
+                                ? sashVerticalClassName
+                                : sashHorizontalClassName
+                        )}
+                        style={{
+                            [getSplitSizeName().sizeName]: 4,
+                            [getSplitSizeName().pos]: size - 2,
+                        }}
+                        onMouseDown={(e) => handleMouseDown(e, paneIndex)}
+                        onMouseEnter={() => handleMouseEnterSash(paneIndex)}
+                        onMouseLeave={() => handleMouseLeaveSash(paneIndex)}
+                    />
+                );
+            },
+            { sum: 0 }
+        );
+    }, [childrenKey, sizes, allowResize, sashHovering]);
 
     return (
         <div
-            className={classNames('split-view', className)}
+            className={classNames(splitClassName, className)}
             ref={wrapper}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
@@ -298,8 +333,10 @@ export default ({
             role={role}
             style={style}
         >
-            <div className="sash-container">{sash}</div>
-            <div className="split-view-container">{panes}</div>
+            <div className={sashContainerClassName}>{sashs}</div>
+            <div className={paneContainerClassName}>{panes}</div>
         </div>
     );
 };
+
+export default SplitPane;

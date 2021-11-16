@@ -1,6 +1,7 @@
 @import 'mo/style/common';
 
 $collapse__extra: #{$collapse}__extra;
+$split_pane_visible: #{$split}__pane__item--visible;
 
 #{$collapse} {
     background-color: var(--sideBar-background);
@@ -18,7 +19,7 @@ $collapse__extra: #{$collapse}__extra;
             transition: top ease-in-out 0.2s, height ease-in-out 0.2s;
         }
 
-        &:not(&.visible ~ &.visible) {
+        &:not(#{$split_pane_visible} ~ #{$split_pane_visible}) {
             #{$collapse}__header {
                 border-top: 0;
             }

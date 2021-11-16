@@ -1,7 +1,7 @@
 import { classNames } from 'mo/common/className';
 import { isEqual } from 'lodash';
 import { HTMLElementProps, UniqueId } from 'mo/common/types';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { IActionBarItemProps, Icon, Toolbar } from '..';
 import SplitPane from '../split/SplitPane';
 import {
@@ -15,6 +15,7 @@ import {
     collapsingClassName,
     defaultCollapseClassName,
 } from './base';
+import { getDataAttributionsFromProps } from 'mo/common/dom';
 
 type RenderFunctionProps = (data: ICollapseItem) => React.ReactNode;
 export interface ICollapseItem extends HTMLElementProps {
@@ -23,9 +24,6 @@ export interface ICollapseItem extends HTMLElementProps {
     hidden?: boolean;
     toolbar?: IActionBarItemProps[];
     renderPanel?: RenderFunctionProps;
-
-    // detect the collapse panel whether empty
-    _isEmpty?: boolean;
     config?: {
         /**
          * Specify how much of the remaining space should be assigned to the item, default is 1
@@ -58,25 +56,24 @@ export const MAX_GROW_HEIGHT = 220;
 export const HEADER_HEIGTH = 26;
 
 export function Collapse({
-    className,
     data = [],
-    onCollapseChange,
-    onToolbarClick,
+    className,
     title,
     style,
     role,
+    onCollapseChange,
+    onToolbarClick,
     onResize,
     ...restProps
 }: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] = useState<React.Key[]>([]);
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
-    const [sizes, setSizes] = useState(
+    const [sizes, setSizes] = useState<number[]>(
         new Array(data.length).fill(HEADER_HEIGTH)
     );
-    // cache the adjusted size
+    // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
-    const [resize, setResize] = useState(new Array(data.length).fill(false));
     const first = useRef(true);
 
     // compare two sizes to find the change one
@@ -129,7 +126,7 @@ export function Collapse({
         setActivePanelKeys(currentKeys.concat());
     };
 
-    // 渲染平缓过度的 sizes
+    // perform smoothly the task to recalculate sizes
     const performSmoothSizes = () => {
         setCollapsing(true);
         performSizes();
@@ -138,36 +135,34 @@ export function Collapse({
         }, 300);
     };
 
-    // 渲染新的 sizes
+    // perform the tasks to recalculate sizes
     const performSizes = () => {
         const activeLength = activePanelKeys.length;
         if (activeLength) {
             const { height } = wrapper.current!.getBoundingClientRect();
             let restHeight = height;
             let count = 0;
-            // 对所有 sizes 进行重新计算赋值
-            // 不管之前的 sizes 是多少，新的 sizes 只存在两种状态
-            // 1. 新的 sizes 是收起状态，则直接赋值
-            // 2. 新的 sizes 是展开状态，则高度必有变化，需要重新计算
-            const wipSizes = sizes.map((size, index) => {
-                const isHidden = data[index].hidden;
+            // don't care of what the previous sizes are, the next sizes only contains:
+            // 1. directly assignment for the next size is collapsing
+            // 2. recalculate for the next size is uncollapsing
+            const wipSizes = data.map((pane, index) => {
+                const isHidden = pane.hidden;
                 if (isHidden) {
                     return 0;
                 }
-                const willCollapsing = activePanelKeys.includes(data[index].id);
+                const willCollapsing = activePanelKeys.includes(pane.id);
                 if (!willCollapsing) {
                     restHeight = restHeight - HEADER_HEIGTH;
                     return HEADER_HEIGTH;
                 }
 
-                const panel = data[index];
-                // 如果设置了 grow 是 0 的话，直接通过子结点去拿高度，然后自适应高度
-                if (panel.config?.grow === 0) {
+                // to get the height of content while grow is 0
+                if (pane.config?.grow === 0) {
                     const correspondDOM = wrapper.current
                         ?.querySelector(
                             `.${collapseContentClassName}[data-collapse-index='${index}']`
                         )
-                        ?.querySelector(`[data-content='${panel.id}']`);
+                        ?.querySelector(`[data-content='${pane.id}']`);
                     if (!correspondDOM) {
                         restHeight = restHeight - HEADER_HEIGTH;
                         return HEADER_HEIGTH;
@@ -175,6 +170,7 @@ export function Collapse({
                     const {
                         height: contentHeight,
                     } = correspondDOM.getBoundingClientRect();
+                    // for preventing the loss of DOM height, don't set the display to be none for DOM
                     const height = contentHeight + HEADER_HEIGTH;
 
                     if (height > MAX_GROW_HEIGHT) {
@@ -191,12 +187,13 @@ export function Collapse({
                     return adjustedSize.current[index];
                 }
 
-                // 如果 grow 非 0，则统计 grow 的总数，即剩余空间要被分成几份
-                // 占位符，用于计算出剩余空间后对其进行替换
-                count = count + (panel.config?.grow || 1);
+                // count the sum of grow that isn't 0, for how many parts the remaing part should be divided into
+                count = count + (pane.config?.grow || 1);
+                // auto is a placeholder for calculation in next process
                 return 'auto';
             });
 
+            // count the average size for each auto
             const averageHeight = restHeight / count;
             const nextSizes = wipSizes.map((size, index) =>
                 size === 'auto'
@@ -214,55 +211,52 @@ export function Collapse({
         }
     };
 
-    // 根据新的 sizes 值，渲染 resizes 的值
-    const performResize = () => {
+    useLayoutEffect(() => {
+        if (!first.current) {
+            performSmoothSizes();
+        }
+
+        first.current = false;
+    }, [activePanelKeys, data]);
+
+    // perform the next resizes value via sizes
+    // the effects of data changes will lead to perform recalculate sizes, which cause recalculate the resizers
+    // so don't need to add data into deps
+    const resize = useMemo(() => {
         const res: boolean[] = [];
         sizes.forEach((size, index) => {
             if (!index) {
+                // the first pane couldn't be resized
                 res.push(false);
             } else if (data[index].config?.grow === 2) {
-                // When specify grow to be 2, then it wouldn't be resized
+                // when specify grow to be 2, this pane couldn't be resized
                 res.push(false);
             } else {
                 const isCollapsing = !!size && size !== HEADER_HEIGTH;
                 const lastCollasping =
                     !!sizes[index - 1] && sizes[index - 1] !== HEADER_HEIGTH;
-                // 当前为展开且上一个 pane 也为展开状态
+                // the pane could be resized only when the last pane is collapsing and the current pane is collapsing
                 res.push(isCollapsing && lastCollasping);
             }
         });
 
         const didChanged = !isEqual(res, resize);
         if (didChanged) {
-            setResize(res);
+            return res;
         }
-    };
-
-    useLayoutEffect(() => {
-        if (!first.current) {
-            performSmoothSizes();
-        }
-    }, [activePanelKeys]);
-
-    useLayoutEffect(() => {
-        if (!first.current) {
-            console.log('data 改变了', data);
-            performSmoothSizes();
-        }
-    }, [data]);
-
-    useEffect(() => {
-        if (!first.current) {
-            performResize();
-        }
-
-        first.current = false;
+        return resize;
     }, [sizes]);
+
+    const dataAttrProps = getDataAttributionsFromProps(restProps);
 
     return (
         <div
             ref={wrapper}
             className={classNames(defaultCollapseClassName, className)}
+            title={title}
+            style={style}
+            role={role}
+            {...dataAttrProps}
         >
             <SplitPane
                 sizes={sizes}

@@ -69,11 +69,17 @@ export class EditorController extends Controller implements IEditorController {
             BuiltInEditorOptions,
         } = this.builtinService.getModules();
 
-        const builtinActions = builtInEditorInitialActions || [];
-        this.editorService.setDefaultActions(builtinActions);
+        const defaultActions = this.editorService.getDefaultActions();
+        if (!defaultActions.length) {
+            const builtinActions = builtInEditorInitialActions || [];
+            this.editorService.setDefaultActions(builtinActions);
+        }
 
-        const builtinMenus = builtInEditorInitialMenu || [];
-        this.editorService.setDefaultMenus(builtinMenus);
+        const defaultMenus = this.editorService.getDefaultMenus();
+        if (!defaultMenus.length) {
+            const builtinMenus = builtInEditorInitialMenu || [];
+            this.editorService.setDefaultMenus(builtinMenus);
+        }
 
         this.editorService.setState({
             editorOptions: BuiltInEditorOptions || {},

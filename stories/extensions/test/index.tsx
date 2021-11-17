@@ -4,7 +4,6 @@ import molecule from 'mo';
 import { FileTypes, IExtension, TreeNodeModel } from 'mo/model';
 
 import TestPane from './testPane';
-import { Entry } from './entry';
 import { randomId } from 'mo/common/utils';
 
 export const ExtendsTestPane: IExtension = {
@@ -29,8 +28,6 @@ export const ExtendsTestPane: IExtension = {
 
         molecule.activityBar.add(newItem);
         molecule.sidebar.add(testSidePane);
-
-        molecule.editor.setEntry(<Entry />);
 
         molecule.settings.onChangeSettings((value) => {
             console.log('onChangeSettings:', value);

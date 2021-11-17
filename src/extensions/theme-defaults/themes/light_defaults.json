@@ -33,6 +33,7 @@
         "minimapSlider.activeBackground": "#00000099",
         "minimapSlider.background": "#64646480",
         "minimapSlider.hoverBackground": "#64646480",
+        "molecule.welcomeBackground": "#fff",
         "panelTitle.activeForeground": "#424242",
         "panelTitle.inactiveForeground": "#424242bf",
         "problemsErrorIcon.foreground": "#E51400",

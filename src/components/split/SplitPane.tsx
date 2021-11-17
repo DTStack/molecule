@@ -23,6 +23,7 @@ import {
     splitClassName,
 } from './base';
 
+export type ResizeStratygy = 'keep' | 'pave';
 export interface ISplitProps extends HTMLElementProps {
     children: JSX.Element[];
     allowResize?: boolean | boolean[];
@@ -30,6 +31,8 @@ export interface ISplitProps extends HTMLElementProps {
     sizes: (string | number)[];
     onChange: (sizes: number[]) => void;
     paneClassName?: string;
+    onResizeStrategy?: (sizes: number[]) => ResizeStratygy | ResizeStratygy[];
+    resizerSize?: number;
 }
 
 interface IAxis {
@@ -44,16 +47,18 @@ const SplitPane = ({
     sizes: propSizes,
     allowResize: propAllowResize = true,
     split = 'vertical',
-    onChange,
     title,
     style,
     role,
     className,
     paneClassName,
+    resizerSize = 4,
+    onChange,
+    onResizeStrategy,
 }: ISplitProps) => {
     const [sizes, setSize] = useState<number[]>([]);
     const [draging, setDrag] = useState(false);
-    const [sashHovering, setHover] = useState<{ [x: number]: boolean }>({});
+    const [sashActive, setActive] = useState<{ [x: number]: boolean }>({});
     const wrapper = useRef<HTMLDivElement>(null);
     const axis = useRef<IAxis>({
         x: 0,
@@ -96,13 +101,13 @@ const SplitPane = ({
     const timeout = useRef<NodeJS.Timeout>();
     const handleMouseEnterSash = (paneIndex) => {
         timeout.current = setTimeout(() => {
-            setHover({ [paneIndex]: true });
-        }, 300);
+            setActive({ [paneIndex]: true });
+        }, 150);
     };
 
     const handleMouseLeaveSash = (paneIndex) => {
         if (timeout.current) {
-            setHover({ [paneIndex]: false });
+            setActive({ [paneIndex]: false });
             clearTimeout(timeout.current);
         }
     };
@@ -216,18 +221,34 @@ const SplitPane = ({
 
     const handleResize = useCallback(
         debounce(() => {
+            let stratygies: ResizeStratygy[] = [];
             setSize((sizes) => {
-                const sum = sizes.reduce((sum, cur) => {
-                    sum = sum + cur;
-                    return sum;
-                }, 0);
-                const percents = sizes.map((size) => size / sum);
+                if (!stratygies.length) {
+                    const res = onResizeStrategy?.(sizes);
+                    if (typeof res === 'string') {
+                        // global stratygies
+                        stratygies = sizes.map(() => res);
+                    } else if (Array.isArray(res)) {
+                        stratygies = res;
+                    } else {
+                        // default strategies
+                        stratygies = sizes.map(() => 'pave');
+                    }
+                }
 
                 const rect = wrapper.current!.getBoundingClientRect();
-                const nextSizes = percents.map((percent) => {
-                    return rect[getSplitSizeName().sizeName] * percent;
+                let restSize = rect[getSplitSizeName().sizeName];
+                const wipSizes = sizes.map((size, index) => {
+                    if (stratygies[index] === 'keep') {
+                        restSize = restSize - size;
+                        return size;
+                    }
+                    return 'pave';
                 });
-                return nextSizes;
+
+                return wipSizes.map((size) =>
+                    size === 'pave' ? restSize : size
+                );
             });
         }, 150),
         []
@@ -304,14 +325,14 @@ const SplitPane = ({
                         className={classNames(
                             sashItemClassName,
                             !allowResize[paneIndex] && sashDisabledClassName,
-                            sashHovering[paneIndex] && sashHoverClassName,
+                            sashActive[paneIndex] && sashHoverClassName,
                             split === 'vertical'
                                 ? sashVerticalClassName
                                 : sashHorizontalClassName
                         )}
                         style={{
-                            [getSplitSizeName().sizeName]: 4,
-                            [getSplitSizeName().pos]: size - 2,
+                            [getSplitSizeName().sizeName]: resizerSize,
+                            [getSplitSizeName().pos]: size - resizerSize / 2,
                         }}
                         onMouseDown={(e) => handleMouseDown(e, paneIndex)}
                         onMouseEnter={() => handleMouseEnterSash(paneIndex)}
@@ -321,7 +342,7 @@ const SplitPane = ({
             },
             { sum: 0 }
         );
-    }, [childrenKey, sizes, allowResize, sashHovering]);
+    }, [childrenKey, sizes, allowResize, sashActive]);
 
     return (
         <div
@@ -333,8 +354,8 @@ const SplitPane = ({
             role={role}
             style={style}
         >
-            <div className={sashContainerClassName}>{sashs}</div>
-            <div className={paneContainerClassName}>{panes}</div>
+            <div className={classNames(sashContainerClassName)}>{sashs}</div>
+            <div className={classNames(paneContainerClassName)}>{panes}</div>
         </div>
     );
 };

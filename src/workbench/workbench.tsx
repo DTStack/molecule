@@ -56,6 +56,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         split="vertical"
                         allowResize={[false]}
                         onChange={(sizes) => onPaneSizeChange?.(sizes)}
+                        onResizeStrategy={() => ['keep', 'pave']}
                     >
                         <SidebarView />
                         <SplitPane
@@ -69,6 +70,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                             onChange={(sizes) =>
                                 onHorizontalPaneSizeChange?.(sizes)
                             }
+                            onResizeStrategy={() => ['pave', 'keep']}
                         >
                             <EditorView />
                             <PanelView />

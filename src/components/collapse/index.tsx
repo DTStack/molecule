@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 import { HTMLElementProps, UniqueId } from 'mo/common/types';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { IActionBarItemProps, Icon, Toolbar } from '..';
-import SplitPane from '../split/SplitPane';
+import SplitPane, { ResizeStratygy } from '../split/SplitPane';
 import {
     collapseActiveClassName,
     collapseContentClassName,
@@ -124,6 +124,25 @@ export function Collapse({
         }
         onCollapseChange?.(currentKeys);
         setActivePanelKeys(currentKeys.concat());
+    };
+
+    const handleStrategies = (sizes: number[]): ResizeStratygy[] => {
+        let maxGrowIndex = -1;
+        let maxGrow = Number.MIN_SAFE_INTEGER;
+        const wip: ResizeStratygy[] = sizes.map((size, index) => {
+            const grow =
+                typeof data[index].config?.grow === 'undefined'
+                    ? 1
+                    : data[index].config!.grow!;
+            if (grow > maxGrow && size !== HEADER_HEIGTH) {
+                maxGrow = grow;
+                maxGrowIndex = index;
+            }
+            return 'keep';
+        });
+        // set pave for max grow data
+        wip[maxGrowIndex] = 'pave';
+        return wip;
     };
 
     // perform smoothly the task to recalculate sizes
@@ -267,6 +286,7 @@ export function Collapse({
                     collapsePaneClassName,
                     collapsing && collapsingClassName
                 )}
+                onResizeStrategy={handleStrategies}
             >
                 {data.map((panel, index) => {
                     const isActive = activePanelKeys.includes(panel.id);

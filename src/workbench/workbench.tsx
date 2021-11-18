@@ -43,6 +43,16 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         horizontalSplitPanePos,
     } = props;
 
+    const getSizes = () => {
+        if (panel.hidden) {
+            return ['100%', 0];
+        }
+        if (panel.panelMaximized) {
+            return [0, '100%'];
+        }
+        return horizontalSplitPanePos;
+    };
+
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
             <div className={workbenchClassName}>
@@ -60,11 +70,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                     >
                         <SidebarView />
                         <SplitPane
-                            sizes={
-                                panel.hidden
-                                    ? ['100%', 0]
-                                    : horizontalSplitPanePos
-                            }
+                            sizes={getSizes()}
                             allowResize={[false]}
                             split="horizontal"
                             onChange={(sizes) =>

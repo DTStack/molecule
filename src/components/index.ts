@@ -70,3 +70,6 @@ export type { IToolTipProps } from './tooltip';
 
 export { default as TreeView } from './tree';
 export type { ITreeProps, ITreeNodeItemProps } from './tree';
+
+export { default as SplitPane } from './split';
+export * from './split';

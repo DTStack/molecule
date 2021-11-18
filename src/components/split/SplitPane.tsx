@@ -178,6 +178,7 @@ const SplitPane = ({
 
         let count = 0;
         let restSize = rect[getSplitSizeName().sizeName];
+
         const nextRes = res.map((size) => {
             // convert percent and px to absolute number
             // count the auto number
@@ -238,16 +239,18 @@ const SplitPane = ({
 
                 const rect = wrapper.current!.getBoundingClientRect();
                 let restSize = rect[getSplitSizeName().sizeName];
+                let count = 0;
                 const wipSizes = sizes.map((size, index) => {
                     if (stratygies[index] === 'keep') {
                         restSize = restSize - size;
                         return size;
                     }
+                    count += 1;
                     return 'pave';
                 });
 
                 return wipSizes.map((size) =>
-                    size === 'pave' ? restSize : size
+                    size === 'pave' ? restSize / count : size
                 );
             });
         }, 150),
@@ -270,11 +273,7 @@ const SplitPane = ({
         }
         const res: boolean[] = [];
         for (let index = 0; index < childrenKey.length; index++) {
-            if (typeof propAllowResize[index] === 'boolean') {
-                res.push(propAllowResize[index]);
-            } else {
-                res.push(true);
-            }
+            res.push(propAllowResize[index]);
         }
         if (isEqual(res, allowResize)) {
             return allowResize;
@@ -290,6 +289,7 @@ const SplitPane = ({
                 const size = this.sum + (sizes[paneIndex - 1] || 0);
                 // @ts-ignore
                 this.sum = size;
+
                 return (
                     <Pane
                         key={paneIndex}

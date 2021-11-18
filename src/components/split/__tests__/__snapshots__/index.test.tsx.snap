@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test The SplitPane Component Match Snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-split"
+  >
+    <div
+      class="mo-split__sash"
+    >
+      <div
+        class="mo-split__sash__item mo-split__sash__item--vertical"
+        style="width: 4px; left: -2px;"
+      />
+      <div
+        class="mo-split__sash__item mo-split__sash__item--vertical"
+        style="width: 4px; left: 18px;"
+      />
+    </div>
+    <div
+      class="mo-split__pane"
+    >
+      <div
+        class="mo-split__pane__item mo-split__pane__item--visible"
+        style="left: 0px; width: 20px;"
+      >
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mo-split__pane__item mo-split__pane__item--visible"
+        style="left: 20px; width: 20px;"
+      >
+        <div>
+          2
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Test The SplitPane Component Match Snapshot in horizontal 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-split"
+  >
+    <div
+      class="mo-split__sash"
+    >
+      <div
+        class="mo-split__sash__item mo-split__sash__item--horizontal"
+        style="height: 4px; top: -2px;"
+      />
+      <div
+        class="mo-split__sash__item mo-split__sash__item--horizontal"
+        style="height: 4px; top: 18px;"
+      />
+    </div>
+    <div
+      class="mo-split__pane"
+    >
+      <div
+        class="mo-split__pane__item mo-split__pane__item--visible"
+        style="top: 0px; height: 20px;"
+      >
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mo-split__pane__item mo-split__pane__item--visible"
+        style="top: 20px; height: 20px;"
+      >
+        <div>
+          2
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

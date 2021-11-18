@@ -10,10 +10,12 @@ exports[`Test The SplitPane Component Match Snapshot 1`] = `
     >
       <div
         class="mo-split__sash__item mo-split__sash__item--vertical"
+        role="Resizer"
         style="width: 4px; left: -2px;"
       />
       <div
         class="mo-split__sash__item mo-split__sash__item--vertical"
+        role="Resizer"
         style="width: 4px; left: 18px;"
       />
     </div>
@@ -51,10 +53,12 @@ exports[`Test The SplitPane Component Match Snapshot in horizontal 1`] = `
     >
       <div
         class="mo-split__sash__item mo-split__sash__item--horizontal"
+        role="Resizer"
         style="height: 4px; top: -2px;"
       />
       <div
         class="mo-split__sash__item mo-split__sash__item--horizontal"
+        role="Resizer"
         style="height: 4px; top: 18px;"
       />
     </div>

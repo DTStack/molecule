@@ -17,6 +17,7 @@ export default function Sash({
 }: ISashProps) {
     return (
         <div
+            role="Resizer"
             className={className}
             style={style}
             onMouseDown={onMouseDown}

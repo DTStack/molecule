@@ -13,8 +13,8 @@ export interface ISidebarViewState extends ViewVisibility {
     position: keyof typeof Position;
 }
 export interface ILayout {
-    splitPanePos: string[];
-    horizontalSplitPanePos: string[];
+    splitPanePos: (number | string)[];
+    horizontalSplitPanePos: (number | string)[];
     activityBar: ViewVisibility;
     panel: IPanelViewState;
     statusBar: ViewVisibility;
@@ -23,8 +23,8 @@ export interface ILayout {
 }
 
 export class LayoutModel implements ILayout {
-    public splitPanePos: string[];
-    public horizontalSplitPanePos: string[];
+    public splitPanePos: (number | string)[];
+    public horizontalSplitPanePos: (number | string)[];
     public activityBar: ViewVisibility;
     public panel: IPanelViewState;
     public statusBar: ViewVisibility;

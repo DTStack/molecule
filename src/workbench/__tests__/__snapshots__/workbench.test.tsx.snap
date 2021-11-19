@@ -42,117 +42,142 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
           </div>
         </div>
         <div
-          class="css-1ndrsdj"
-          data-split="vertical"
-          data-type="SplitPane"
+          class="mo-split"
         >
           <div
-            class=""
-            style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-width: 170px; max-width: calc(80% - 1px*0.8); flex-grow: 0; width: 300px;"
+            class="mo-split__sash"
           >
             <div
-              class="mo-sidebar"
+              class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--vertical"
+              role="Resizer"
+              style="width: 4px; left: -2px;"
+            />
+            <div
+              class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--vertical"
+              role="Resizer"
+              style="width: 4px; left: 298px;"
             />
           </div>
           <div
-            class="sc-htpNat fXAXjb sc-bdVaJa cjjWdp"
-            data-attribute="vertical"
-            data-type="Resizer"
-          />
-          <div
-            style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-width: 0; max-width: calc(100% - 1px*1); flex: 1;"
+            class="mo-split__pane"
           >
             <div
-              class="css-f7b5xf"
-              data-split="horizontal"
-              data-type="SplitPane"
+              class="mo-split__pane__item mo-split__pane__item--visible"
+              style="left: 0px; width: 300px;"
             >
               <div
-                style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-height: calc(10% - 1px*0.1); max-height: calc(100% - 1px*1); flex-grow: 0; height: calc(70% - 1px*0.7);"
-              >
-                <div
-                  class="mo-editor"
-                >
-                  <div
-                    class="mo-welcome"
-                  >
-                    <span
-                      style="font-size: 0px;"
-                    >
-                      <svg
-                        class="logo"
-                        height="1em"
-                        viewBox="0 0 120 120"
-                        width="1em"
-                      >
-                        <g
-                          fill="none"
-                          fill-rule="evenodd"
-                          opacity="0.48"
-                          stroke="none"
-                          stroke-width="1"
-                        >
-                          <g
-                            fill="#A2A2A2"
-                            transform="translate(-660 -152)"
-                          >
-                            <g
-                              transform="translate(660 152)"
-                            >
-                              <path
-                                d="M59.3 96.335c4.87 0 8.817 3.954 8.817 8.832S64.169 114 59.3 114c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.832 8.818-8.832zm-22.444-6.826a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm44.887 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 72.245c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.833 8.818-8.833zm-42.483 0c4.87 0 8.817 3.955 8.817 8.833s-3.947 8.833-8.817 8.833S8 85.956 8 81.078s3.948-8.833 8.817-8.833zm85.366 0c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.833 8.817-8.833zm-65.327-6.022a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm44.887 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 48.156c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.833 8.818-8.833zm-42.483 0c4.87 0 8.817 3.955 8.817 8.833s-3.947 8.833-8.817 8.833S8 61.867 8 56.989s3.948-8.833 8.817-8.833zm85.366 0c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.833 8.817-8.833zM80.942 35.31c4.87 0 8.817 3.954 8.817 8.832s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.832 8.817-8.832zm-43.284 0c4.87 0 8.817 3.954 8.817 8.832s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.832 8.818-8.832zm64.525-11.242c4.87 0 8.817 3.954 8.817 8.833 0 4.878-3.948 8.832-8.817 8.832-4.87 0-8.817-3.954-8.817-8.832 0-4.879 3.947-8.833 8.817-8.833zm-85.366 0c4.87 0 8.817 3.954 8.817 8.833 0 4.878-3.947 8.832-8.817 8.832S8 37.778 8 32.9c0-4.879 3.948-8.833 8.817-8.833zm42.483 5.62a3.21 3.21 0 013.206 3.213 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.207-3.212 3.21 3.21 0 013.207-3.212zm-19.238-13.65a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm38.475 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 6a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.207-3.212A3.21 3.21 0 0159.3 6z"
-                              />
-                            </g>
-                          </g>
-                        </g>
-                      </svg>
-                    </span>
-                    <h1
-                      class="title"
-                    >
-                      Molecule
-                    </h1>
-                    <div
-                      class="keybindings"
-                    >
-                      <ul />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="sc-bwzfXH hEACtv sc-bdVaJa cjjWdp"
-                data-attribute="horizontal"
-                data-type="Resizer"
+                class="mo-sidebar"
               />
+            </div>
+            <div
+              class="mo-split__pane__item mo-split__pane__item--visible"
+              style="left: 300px; width: 200px;"
+            >
               <div
-                style="display: -webkit-box,-moz-box,-ms-flexbox,-webkit-flex,flex; outline: none; min-height: 0; max-height: calc(100% - 1px*1); flex: 1;"
+                class="mo-split"
               >
                 <div
-                  class="mo-panel"
+                  class="mo-split__sash"
                 >
                   <div
-                    class="mo-panel__header"
+                    class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+                    role="Resizer"
+                    style="height: 4px; top: -2px;"
+                  />
+                  <div
+                    class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+                    role="Resizer"
+                    style="height: 4px; top: 348px;"
+                  />
+                </div>
+                <div
+                  class="mo-split__pane"
+                >
+                  <div
+                    class="mo-split__pane__item mo-split__pane__item--visible"
+                    style="top: 0px; height: 350px;"
                   >
                     <div
-                      class="mo-tabs mo-tabs--line"
+                      class="mo-editor"
                     >
                       <div
-                        class="mo-tabs__header"
-                      />
-                    </div>
-                    <div
-                      class="mo-action-bar mo-panel__toolbar"
-                    >
-                      <ul
-                        class="mo-action-bar__container"
-                      />
+                        class="mo-welcome"
+                      >
+                        <span
+                          style="font-size: 0px;"
+                        >
+                          <svg
+                            class="logo"
+                            height="1em"
+                            viewBox="0 0 120 120"
+                            width="1em"
+                          >
+                            <g
+                              fill="none"
+                              fill-rule="evenodd"
+                              opacity="0.48"
+                              stroke="none"
+                              stroke-width="1"
+                            >
+                              <g
+                                fill="#A2A2A2"
+                                transform="translate(-660 -152)"
+                              >
+                                <g
+                                  transform="translate(660 152)"
+                                >
+                                  <path
+                                    d="M59.3 96.335c4.87 0 8.817 3.954 8.817 8.832S64.169 114 59.3 114c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.832 8.818-8.832zm-22.444-6.826a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm44.887 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 72.245c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.833 8.818-8.833zm-42.483 0c4.87 0 8.817 3.955 8.817 8.833s-3.947 8.833-8.817 8.833S8 85.956 8 81.078s3.948-8.833 8.817-8.833zm85.366 0c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.833 8.817-8.833zm-65.327-6.022a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm44.887 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 48.156c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.833 8.818-8.833zm-42.483 0c4.87 0 8.817 3.955 8.817 8.833s-3.947 8.833-8.817 8.833S8 61.867 8 56.989s3.948-8.833 8.817-8.833zm85.366 0c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.833 8.817-8.833zM80.942 35.31c4.87 0 8.817 3.954 8.817 8.832s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.832 8.817-8.832zm-43.284 0c4.87 0 8.817 3.954 8.817 8.832s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.832 8.818-8.832zm64.525-11.242c4.87 0 8.817 3.954 8.817 8.833 0 4.878-3.948 8.832-8.817 8.832-4.87 0-8.817-3.954-8.817-8.832 0-4.879 3.947-8.833 8.817-8.833zm-85.366 0c4.87 0 8.817 3.954 8.817 8.833 0 4.878-3.947 8.832-8.817 8.832S8 37.778 8 32.9c0-4.879 3.948-8.833 8.817-8.833zm42.483 5.62a3.21 3.21 0 013.206 3.213 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.207-3.212 3.21 3.21 0 013.207-3.212zm-19.238-13.65a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm38.475 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 6a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.207-3.212A3.21 3.21 0 0159.3 6z"
+                                  />
+                                </g>
+                              </g>
+                            </g>
+                          </svg>
+                        </span>
+                        <h1
+                          class="title"
+                        >
+                          Molecule
+                        </h1>
+                        <div
+                          class="keybindings"
+                        >
+                          <ul />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div
-                    class="mo-panel__container"
-                    tabindex="0"
-                  />
+                    class="mo-split__pane__item mo-split__pane__item--visible"
+                    style="top: 350px; height: 150px;"
+                  >
+                    <div
+                      class="mo-panel"
+                    >
+                      <div
+                        class="mo-panel__header"
+                      >
+                        <div
+                          class="mo-tabs mo-tabs--line"
+                        >
+                          <div
+                            class="mo-tabs__header"
+                          />
+                        </div>
+                        <div
+                          class="mo-action-bar mo-panel__toolbar"
+                        >
+                          <ul
+                            class="mo-action-bar__container"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="mo-panel__container"
+                        tabindex="0"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

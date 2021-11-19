@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { WorkbenchView, Workbench } from '../workbench';
@@ -23,10 +23,56 @@ import {
     LayoutModel,
     ViewVisibility,
 } from 'mo/model/workbench/layout';
-import { drag } from '@test/utils';
-import { select } from 'mo/common/dom';
+import { select, selectAll } from 'mo/common/dom';
+import {
+    sashHorizontalClassName,
+    splitClassName,
+} from 'mo/components/split/base';
+
+function expectElementInOrNot(
+    ele: Element | null,
+    InDocument: boolean,
+    horizontal: boolean = true
+) {
+    if (InDocument) {
+        expect(
+            ele?.parentElement?.style[horizontal ? 'height' : 'width']
+        ).not.toBe('0px');
+    } else {
+        expect(ele?.parentElement?.style[horizontal ? 'height' : 'width']).toBe(
+            '0px'
+        );
+    }
+}
+
+/**
+ * Should display the Editor, Panel, Sidebar, ActivityBar, StatusBar, and MenuBar so on Views
+ * @param container
+ */
+function expectBasicPartsInTheDocument() {
+    expectElementInOrNot(select('.mo-editor'), true);
+    expectElementInOrNot(select('.mo-panel'), true);
+    expectElementInOrNot(select('.mo-sidebar'), true);
+    expect(select('.mo-activityBar')).toBeInTheDocument();
+    expect(select('.mo-statusBar')).toBeInTheDocument();
+    expect(select('.mo-menuBar')).toBeInTheDocument();
+}
 
 describe('Test Workbench Component', () => {
+    let original;
+    beforeEach(() => {
+        original = HTMLElement.prototype.getBoundingClientRect;
+        // @ts-ignore
+        HTMLElement.prototype.getBoundingClientRect = () => ({
+            width: 500,
+            height: 500,
+        });
+    });
+
+    afterEach(() => {
+        HTMLElement.prototype.getBoundingClientRect = original;
+    });
+
     function workbenchModel(): IWorkbench & ILayout {
         const panel = new PanelModel();
         const activityBar = new ActivityBarModel();
@@ -67,19 +113,6 @@ describe('Test Workbench Component', () => {
         };
     }
 
-    /**
-     * Should display the Editor, Panel, Sidebar, ActivityBar, StatusBar, and MenuBar so on Views
-     * @param container
-     */
-    function expectBasicPartsInTheDocument() {
-        expect(select('.mo-editor')).toBeInTheDocument();
-        expect(select('.mo-panel')).toBeInTheDocument();
-        expect(select('.mo-sidebar')).toBeInTheDocument();
-        expect(select('.mo-activityBar')).toBeInTheDocument();
-        expect(select('.mo-statusBar')).toBeInTheDocument();
-        expect(select('.mo-menuBar')).toBeInTheDocument();
-    }
-
     test('Match The WorkbenchView snapshot', () => {
         const component = render(<WorkbenchView {...workbenchModel()} />);
         const tree = component.asFragment();
@@ -100,10 +133,14 @@ describe('Test Workbench Component', () => {
     test('Listen to The WorkbenchView onPaneSizeChange event', async () => {
         const fn = jest.fn();
         render(<WorkbenchView {...workbenchModel()} onPaneSizeChange={fn} />);
-        const source = select<HTMLDivElement>('div[data-type="Resizer"]');
-        if (source) {
-            await drag(source, { delta: { x: 100, y: 0 } });
-        }
+
+        const sashs = selectAll<HTMLDivElement>('div[role="Resizer"]');
+        const wrapper = select<HTMLDivElement>(`.${splitClassName}`);
+
+        fireEvent.mouseDown(sashs[1]);
+        fireEvent.mouseMove(wrapper!, { clientX: 10, clientY: 10 });
+        fireEvent.mouseUp(wrapper!);
+
         expect(fn).toBeCalled();
         // Compare the splitPanePos arguments
         expect(fn.mock.calls[0][0].length).toBe(2);
@@ -117,35 +154,36 @@ describe('Test Workbench Component', () => {
                 onHorizontalPaneSizeChange={fn}
             />
         );
-        const source = select<HTMLDivElement>(
-            'div[data-attribute="horizontal"]'
-        );
-        if (source) {
-            await drag(source, { delta: { x: 0, y: 50 } });
-        }
+        const sashs = selectAll<HTMLDivElement>(`.${sashHorizontalClassName}`);
+        const wrapper = selectAll<HTMLDivElement>(`.${splitClassName}`)[1];
+
+        fireEvent.mouseDown(sashs[1]);
+        fireEvent.mouseMove(wrapper!, { clientX: 10, clientY: 10 });
+        fireEvent.mouseUp(wrapper!);
+
         expect(fn).toBeCalled();
     });
 
     test('Hide the Panel view', async () => {
         const workbench = workbenchModel();
         const { rerender } = render(<WorkbenchView {...workbench} />);
-        expect(select('.mo-panel')).toBeInTheDocument();
+        expectElementInOrNot(select('.mo-panel'), true);
         workbench.panel.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(select('.mo-panel')).not.toBeInTheDocument();
+        expectElementInOrNot(select('.mo-panel'), false);
     });
 
     test('Maximize the Panel', async () => {
         const workbench = workbenchModel();
         const { rerender } = render(<WorkbenchView {...workbench} />);
-        expect(select('.mo-editor')).toBeInTheDocument();
+        expectElementInOrNot(select('.mo-editor'), true);
         workbench.panel.panelMaximized = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(select('.mo-editor')).not.toBeInTheDocument();
+        expectElementInOrNot(select('.mo-editor'), false);
 
         workbench.panel.panelMaximized = false;
         rerender(<WorkbenchView {...workbench} />);
-        expect(select('.mo-editor')).toBeInTheDocument();
+        expectElementInOrNot(select('.mo-editor'), true);
     });
 
     test('Set the panel hidden and panelMaximized', async () => {
@@ -153,27 +191,24 @@ describe('Test Workbench Component', () => {
 
         workbench.panel.panelMaximized = true;
         const { rerender } = render(<WorkbenchView {...workbench} />);
-        expect(select('.mo-editor')).not.toBeInTheDocument();
-        expect(select('.mo-panel')).toBeInTheDocument();
+        expectElementInOrNot(select('.mo-editor'), false);
+        expectElementInOrNot(select('.mo-panel'), true);
 
         workbench.panel.hidden = true;
         workbench.panel.panelMaximized = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(select('.mo-editor')).toBeInTheDocument();
-        expect(select('.mo-panel')).not.toBeInTheDocument();
+        expectElementInOrNot(select('.mo-editor'), true);
+        expectElementInOrNot(select('.mo-panel'), false);
     });
 
     test('Hide the Sidebar', async () => {
         const workbench = workbenchModel();
         const { rerender } = render(<WorkbenchView {...workbench} />);
-        expect(select('.mo-sidebar')).toBeInTheDocument();
+        expectElementInOrNot(select('.mo-sidebar'), true, false);
         workbench.sidebar.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
 
-        expect(select('.mo-sidebar')).toBeInTheDocument();
-        expect(
-            select<HTMLDivElement>('.mo-sidebar')?.parentElement?.classList
-        ).toContain('hidden');
+        expectElementInOrNot(select('.mo-sidebar'), false, false);
     });
 
     test('Hide the StatusBar', async () => {

@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test The Collapse Component Match Snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-collapse"
+  >
+    <div
+      class="mo-split"
+    >
+      <div
+        class="mo-split__sash"
+      >
+        <div
+          class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+          role="Resizer"
+          style="height: 4px; top: -2px;"
+        />
+        <div
+          class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+          role="Resizer"
+          style="height: 4px; top: 24px;"
+        />
+        <div
+          class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+          role="Resizer"
+          style="height: 4px; top: 50px;"
+        />
+      </div>
+      <div
+        class="mo-split__pane"
+      >
+        <div
+          class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
+          style="top: 0px; height: 26px;"
+        >
+          <div
+            class="mo-collapse__item"
+            data-collapse-id="mock1"
+          >
+            <div
+              class="mo-collapse__header"
+              tabindex="0"
+            >
+              <span
+                class="codicon codicon-chevron-right"
+              />
+              <span
+                class="mo-collapse__header__title"
+              >
+                test1
+              </span>
+              <div
+                class="mo-collapse__extra"
+              />
+            </div>
+            <div
+              class="mo-collapse__content"
+              data-collapse-index="0"
+              tabindex="0"
+            />
+          </div>
+        </div>
+        <div
+          class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
+          style="top: 26px; height: 26px;"
+        >
+          <div
+            class="mo-collapse__item"
+            data-collapse-id="mock2"
+          >
+            <div
+              class="mo-collapse__header"
+              tabindex="0"
+            >
+              <span
+                class="codicon codicon-chevron-right"
+              />
+              <span
+                class="mo-collapse__header__title"
+              >
+                test2
+              </span>
+              <div
+                class="mo-collapse__extra"
+              />
+            </div>
+            <div
+              class="mo-collapse__content"
+              data-collapse-index="1"
+              tabindex="0"
+            />
+          </div>
+        </div>
+        <div
+          class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
+          style="top: 52px; height: 26px;"
+        >
+          <div
+            class="mo-collapse__item"
+            data-collapse-id="mock2"
+          >
+            <div
+              class="mo-collapse__header"
+              tabindex="0"
+            >
+              <span
+                class="codicon codicon-chevron-right"
+              />
+              <span
+                class="mo-collapse__header__title"
+              >
+                test2
+              </span>
+              <div
+                class="mo-collapse__extra"
+              />
+            </div>
+            <div
+              class="mo-collapse__content"
+              data-collapse-index="2"
+              tabindex="0"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

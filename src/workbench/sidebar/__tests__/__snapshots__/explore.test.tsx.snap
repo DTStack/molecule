@@ -99,6 +99,7 @@ exports[`The Explorer Component Match Snapshot 1`] = `
           >
             <div
               className="mo-collapse__item"
+              data-collapse-id="open"
             >
               <div
                 className="mo-collapse__header"
@@ -135,6 +136,7 @@ exports[`The Explorer Component Match Snapshot 1`] = `
           >
             <div
               className="mo-collapse__item"
+              data-collapse-id="test"
             >
               <div
                 className="mo-collapse__header"

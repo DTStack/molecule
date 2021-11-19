@@ -70,7 +70,7 @@ export function Collapse({
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
     const [sizes, setSizes] = useState<number[]>(
-        new Array(data.length).fill(HEADER_HEIGTH)
+        data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGTH))
     );
     // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
@@ -219,6 +219,7 @@ export function Collapse({
                     ? averageHeight * (data[index].config?.grow || 1)
                     : size
             );
+
             onResize?.(nextSizes);
             setSizes(nextSizes);
         } else {
@@ -297,6 +298,7 @@ export function Collapse({
                                 collapseItemClassName,
                                 isActive && collapseActiveClassName
                             )}
+                            data-collapse-id={panel.id}
                             key={panel.id}
                         >
                             <div

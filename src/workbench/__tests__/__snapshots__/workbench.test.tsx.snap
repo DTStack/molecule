@@ -53,7 +53,7 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
               style="width: 4px; left: -2px;"
             />
             <div
-              class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--vertical"
+              class="mo-split__sash__item mo-split__sash__item--vertical"
               role="Resizer"
               style="width: 4px; left: 298px;"
             />
@@ -85,7 +85,7 @@ exports[`Test Workbench Component Match The WorkbenchView snapshot 1`] = `
                     style="height: 4px; top: -2px;"
                   />
                   <div
-                    class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+                    class="mo-split__sash__item mo-split__sash__item--horizontal"
                     role="Resizer"
                     style="height: 4px; top: 348px;"
                   />

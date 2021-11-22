@@ -23,15 +23,40 @@ import {
     splitClassName,
 } from './base';
 
+/**
+ * Keep for keep size when resize
+ * Pave for NOT keep size when resize
+ */
 export type ResizeStratygy = 'keep' | 'pave';
 export interface ISplitProps extends HTMLElementProps {
     children: JSX.Element[];
+    /**
+     * Should allowed to resized
+     *
+     * default is true
+     */
     allowResize?: boolean | boolean[];
+    /**
+     * How to split the space
+     *
+     * default is vertical
+     */
     split?: 'vertical' | 'horizontal';
+    /**
+     * Only support controlled mode, so it's required
+     */
     sizes: (string | number)[];
     onChange: (sizes: number[]) => void;
     paneClassName?: string;
+    /**
+     * Spicify how to assign the remaining space when window.onresize called
+     */
     onResizeStrategy?: (sizes: number[]) => ResizeStratygy | ResizeStratygy[];
+    /**
+     * Specify the size fo resizer
+     *
+     * defualt size is 4px
+     */
     resizerSize?: number;
 }
 
@@ -273,7 +298,11 @@ const SplitPane = ({
         }
         const res: boolean[] = [];
         for (let index = 0; index < childrenKey.length; index++) {
-            res.push(propAllowResize[index]);
+            res.push(
+                typeof propAllowResize[index] === 'undefined'
+                    ? true
+                    : propAllowResize[index]
+            );
         }
         if (isEqual(res, allowResize)) {
             return allowResize;

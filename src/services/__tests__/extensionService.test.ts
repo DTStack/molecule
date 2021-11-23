@@ -6,6 +6,7 @@ import { IContribute, IExtension } from 'mo/model';
 import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
 import { Action2 } from 'mo/monaco/common';
 import logger from 'mo/common/logger';
+import { cloneDeep } from 'lodash';
 
 describe('Test ExtensionService', () => {
     const instance = container.resolve(ExtensionService);
@@ -166,5 +167,18 @@ describe('Test ExtensionService', () => {
         instance.load([mockExtension]);
 
         expect(mockExtension.activate).not.toBeCalled();
+    });
+
+    test('Split the locale languages extensions', () => {
+        const languageExt = cloneDeep(mockExtension);
+        languageExt.contributes!.languages = [];
+        const extensions: IExtension[] = [mockExtension, languageExt];
+
+        const [languagesExts, otherExts] = instance.splitLanguagesExts(
+            extensions
+        );
+
+        expect(languagesExts.length).toBe(1);
+        expect(otherExts.length).toBe(1);
     });
 });

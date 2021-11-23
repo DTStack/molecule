@@ -94,4 +94,12 @@ describe('The Notification Service', () => {
         notificationService.toggleNotification();
         expect(notificationService.getState().showNotifications).toBeTruthy();
     });
+
+    test('Should support to clear all notifications', () => {
+        notificationService.add([{ id: 1, value: 'test' }]);
+        expect(notificationService.getState().data).toHaveLength(1);
+
+        notificationService.clear();
+        expect(notificationService.getState().data).toHaveLength(0);
+    });
 });

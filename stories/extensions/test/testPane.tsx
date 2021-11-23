@@ -229,6 +229,10 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             }
         };
 
+        const toggleNotification = function () {
+            molecule.notification.toggleNotification();
+        };
+
         const openCommand = function () {};
 
         const appendMenu = function () {
@@ -344,6 +348,9 @@ PARTITIONED BY (ds string) lifecycle 1000;
                         </Button>
                         <Button onClick={removeNotification}>
                             Remove A Notification
+                        </Button>
+                        <Button onClick={toggleNotification}>
+                            Toggle Notifications
                         </Button>
                     </div>
                     <div style={{ margin: '50px 20px' }}>

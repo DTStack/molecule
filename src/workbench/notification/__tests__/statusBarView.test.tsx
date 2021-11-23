@@ -10,7 +10,10 @@ import { expectFnCalled } from '@test/utils';
 describe('Test Notification StatusBar View Component', () => {
     test('Match The NotificationStatusBarView snapshot', () => {
         const component = renderer.create(
-            <NotificationStatusBarView data={[{ id: '' }]} id="test" />
+            <NotificationStatusBarView
+                data={[{ id: '', value: '' }]}
+                id="test"
+            />
         );
         expect(component.toJSON()).toMatchSnapshot();
     });
@@ -18,7 +21,12 @@ describe('Test Notification StatusBar View Component', () => {
     test('Should display the bell dot icon', () => {
         const { rerender } = render(<NotificationStatusBarView id="test" />);
         expect(select('.codicon-bell-dot')).not.toBeInTheDocument();
-        rerender(<NotificationStatusBarView id="test" data={[{ id: '' }]} />);
+        rerender(
+            <NotificationStatusBarView
+                id="test"
+                data={[{ id: '', value: '' }]}
+            />
+        );
         expect(select('.codicon-bell-dot')).toBeInTheDocument();
     });
 

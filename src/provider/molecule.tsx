@@ -23,7 +23,8 @@ export interface IMoleculeProps {
      */
     extensions?: IExtension[];
     /**
-     * Specify a default locale Id, the Molecule built-in zh-CN, en two languages.
+     * Specify a default locale Id, the Molecule built-in `zh-CN`, `en` two languages, and
+     * default locale Id is `en`.
      */
     defaultLocale?: string;
 }

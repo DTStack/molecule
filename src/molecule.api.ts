@@ -4,7 +4,7 @@ import { container } from 'tsyringe';
 export * as event from 'mo/common/event';
 export * as react from 'mo/react';
 export * as component from 'mo/components';
-export * as i18n from 'mo/i18n';
+export * from 'mo/i18n';
 export * from 'mo/workbench';
 export * from 'mo/services';
 
@@ -51,7 +51,7 @@ import { ILocaleService, LocaleService } from 'mo/i18n';
 /**
  * The locale service
  */
-export const il8n = container.resolve<ILocaleService>(LocaleService);
+export const i18n = container.resolve<ILocaleService>(LocaleService);
 
 /**
  * The layout service

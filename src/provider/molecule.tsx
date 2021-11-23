@@ -47,13 +47,34 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     }
 
     componentDidMount() {
-        // Note: the initControllers method must executing before the initExtensions,
-        // because many of extensions depend on the Controllers init the Services state
-        this.initControllers();
-        this.initExtensions();
+        this.initialize();
     }
 
-    loadLocaleExts(languages: IExtension[]) {
+    initialize() {
+        const { extensions = [] } = this.props;
+
+        const [languages, resetExts] = this.extensionService.splitLanguagesExts(
+            extensions
+        );
+
+        // First to init the monacoService
+        this.monacoService.initWorkspace(this.layoutService.container!);
+
+        // Molecule should load the language extensions first to
+        // ensure that the custom language extensions is registered in localeService
+        this.initLocaleExts(languages);
+
+        // The Workbench depends on the monaco and locale extension
+        this.initWorkbenchUI();
+
+        // Init the built-in extensions
+        this.extensionService.load(defaultExtensions);
+
+        // Finally, handle the reset extensions
+        this.extensionService.load(resetExts);
+    }
+
+    initLocaleExts(languages: IExtension[]) {
         const { defaultLocale = BuiltInDefault } = this.props;
 
         this.extensionService.load(languages);
@@ -64,28 +85,11 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         this.localeService.setCurrentLocale(currentLocale);
     }
 
-    initExtensions() {
-        const { extensions = [] } = this.props;
-
-        const [languages, resetExts] = this.extensionService.splitLanguagesExts(
-            extensions
-        );
-
-        this.monacoService.initWorkspace(this.layoutService.container!);
-
-        // Molecule should load the language extensions first to
-        // ensure that the custom language extensions is registered in localeService
-        this.loadLocaleExts(languages);
-
-        this.extensionService.load(defaultExtensions);
-        this.extensionService.load(resetExts);
-    }
-
     /**
      * Register all controllers and execute the initView method automatically to inject the default value
      * into the corresponding service
      */
-    initControllers() {
+    initWorkbenchUI() {
         Object.keys(controllers).forEach((key) => {
             const module = controllers[key];
             const controller = container.resolve<Controller>(module);

@@ -28,7 +28,7 @@ export interface IMoleculeProps {
      */
     defaultLocale?: string;
 }
-export interface IMoleculeState {}
+export interface IMoleculeState { }
 
 export const MoleculeCtx = createContext({});
 
@@ -54,7 +54,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     initialize() {
         const { extensions = [] } = this.props;
 
-        const [languages, resetExts] = this.extensionService.splitLanguagesExts(
+        const [languages, restExts] = this.extensionService.splitLanguagesExts(
             extensions
         );
 
@@ -71,8 +71,8 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
         // Init the built-in extensions
         this.extensionService.load(defaultExtensions);
 
-        // Finally, handle the reset extensions
-        this.extensionService.load(resetExts);
+        // Finally, handle the rest of extensions
+        this.extensionService.load(restExts);
     }
 
     initLocaleExts(languages: IExtension[]) {

@@ -90,6 +90,12 @@ export interface IExtensionService {
      * Reset the extensions to `[]`
      */
     reset(): void;
+    /**
+     * Distinguish the language extensions from extensions
+     * @param extensions
+     * @returns [ languagesExts, otherExtensions ]
+     */
+    splitLanguagesExts(extensions: IExtension[]): [IExtension[], IExtension[]];
 }
 
 @singleton()
@@ -221,5 +227,21 @@ export class ExtensionService implements IExtensionService {
             return this._inactive(extension);
         }
         return false;
+    }
+
+    public splitLanguagesExts(
+        extensions: IExtension[]
+    ): [IExtension[], IExtension[]] {
+        const languagesExts: IExtension[] = [];
+        const others: IExtension[] = [];
+        extensions.forEach((ext) => {
+            if (ext.contributes?.languages) {
+                languagesExts.push(ext);
+            } else {
+                others.push(ext);
+            }
+        });
+
+        return [languagesExts, others];
     }
 }

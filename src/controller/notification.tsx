@@ -1,23 +1,17 @@
 import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'mo/react';
 import { Float, IStatusBarItem } from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import { IActionBarItemProps } from 'mo/components/actionBar';
 import { INotificationItem } from 'mo/model/notification';
-import {
-    NotificationPane,
-    NotificationStatusBarView,
-} from 'mo/workbench/notification';
+import { NotificationStatusBarView } from 'mo/workbench/notification';
 import {
     IStatusBarService,
     StatusBarService,
     INotificationService,
     NotificationService,
-    ILayoutService,
-    LayoutService,
     IBuiltinService,
     BuiltinService,
 } from 'mo/services';
@@ -41,29 +35,20 @@ export class NotificationController
     implements INotificationController {
     private readonly notificationService: INotificationService;
     private readonly statusBarService: IStatusBarService;
-    private readonly layoutService: ILayoutService;
     private readonly builtinService: IBuiltinService;
 
     constructor() {
         super();
         this.notificationService = container.resolve(NotificationService);
         this.statusBarService = container.resolve(StatusBarService);
-        this.layoutService = container.resolve(LayoutService);
         this.builtinService = container.resolve(BuiltinService);
     }
 
     public onCloseNotification = (item: INotificationItem<any>): void => {
-        if (typeof item.id === 'number' || typeof item.id === 'string') {
-            this.notificationService.remove(item.id);
-        }
+        this.notificationService.remove(item.id);
     };
 
-    private _notificationPane: HTMLDivElement | undefined = undefined;
-
     public toggleNotifications() {
-        if (!this._notificationPane) {
-            this.renderNotificationPane();
-        }
         this.notificationService.toggleNotification();
     }
 
@@ -82,7 +67,7 @@ export class NotificationController
         } = this.builtinService.getConstants();
 
         if (action === NOTIFICATION_CLEAR_ALL_ID) {
-            this.notificationService.toggleNotification();
+            this.notificationService.clear();
         } else if (action === NOTIFICATION_HIDE_ID) {
             this.toggleNotifications();
         }
@@ -105,30 +90,18 @@ export class NotificationController
                 actionBar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(
                     Boolean
                 ) as IActionBarItemProps[],
-                render: () => <NotificationView onClick={this.onClick} />,
+                render: () => (
+                    <NotificationView
+                        onClick={this.onClick}
+                        onActionBarClick={this.onActionBarClick}
+                        onCloseNotification={this.onCloseNotification}
+                    />
+                ),
             };
             this.notificationService.setState({
                 ...defaultNotification,
             });
             this.statusBarService.add(defaultNotification, Float.right);
         }
-    }
-
-    public renderNotificationPane() {
-        const NotificationPaneView = connect(
-            this.notificationService,
-            NotificationPane
-        );
-        const root = this.layoutService.container;
-        const container = document.createElement('div');
-        root?.appendChild(container);
-        ReactDOM.render(
-            <NotificationPaneView
-                onActionBarClick={this.onActionBarClick}
-                onCloseNotification={this.onCloseNotification}
-            />,
-            container
-        );
-        this._notificationPane = container;
     }
 }

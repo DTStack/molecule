@@ -13,12 +13,6 @@ const notificationService = container.resolve(NotificationService);
 const statusBarService = container.resolve(StatusBarService);
 const builtinService = container.resolve(BuiltinService);
 
-jest.mock('react-dom', () => {
-    return {
-        render: jest.fn(),
-    };
-});
-
 describe('The notification controller', () => {
     test('Should support initialize the service', () => {
         notificationController.initView();
@@ -94,34 +88,23 @@ describe('The notification controller', () => {
         expect(notificationService.getState().data).toHaveLength(0);
     });
 
-    test('Should support to toggleNotifications', () => {
-        expect(
-            (notificationController as any)._notificationPane
-        ).toBeUndefined();
-        expect(notificationService.getState().showNotifications).toBeFalsy();
-        notificationController.toggleNotifications();
-
-        expect(
-            (notificationController as any)._notificationPane
-        ).not.toBeUndefined();
-        expect(notificationService.getState().showNotifications).toBeTruthy();
-    });
-
     test('Should support to execute onClick', () => {
-        expect(notificationService.getState().showNotifications).toBeTruthy();
+        expect(notificationService.getState().showNotifications).toBeFalsy();
 
         notificationController.onClick({} as any, { id: 'test' });
 
-        expect(notificationService.getState().showNotifications).toBeFalsy();
+        expect(notificationService.getState().showNotifications).toBeTruthy();
     });
 
     test('Should support to execute onActionBarClick', () => {
-        expect(notificationService.getState().showNotifications).toBeFalsy();
+        notificationService.add([{ id: 1, value: 'test' }]);
+        expect(notificationService.getState().data).toHaveLength(1);
         notificationController.onActionBarClick({} as any, {
             id: constants.NOTIFICATION_CLEAR_ALL_ID,
         });
-        expect(notificationService.getState().showNotifications).toBeTruthy();
+        expect(notificationService.getState().data).toHaveLength(0);
 
+        expect(notificationService.getState().showNotifications).toBeTruthy();
         notificationController.onActionBarClick({} as any, {
             id: constants.NOTIFICATION_HIDE_ID,
         });

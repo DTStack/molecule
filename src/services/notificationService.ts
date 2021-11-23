@@ -33,6 +33,10 @@ export interface INotificationService extends Component<INotification> {
      */
     toggleNotification(): void;
     /**
+     * Clear the notifications
+     */
+    clear(): void;
+    /**
      * Reset notifications, this will clear the pending notifications
      */
     reset(): void;
@@ -115,6 +119,12 @@ export class NotificationService
             return items;
         }
         return null;
+    }
+
+    public clear() {
+        this.setState({
+            data: [],
+        });
     }
 
     public reset() {

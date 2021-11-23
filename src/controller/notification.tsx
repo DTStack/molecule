@@ -85,6 +85,7 @@ export class NotificationController
                 this.notificationService,
                 NotificationStatusBarView
             );
+            /* istanbul ignore next */
             const defaultNotification = {
                 ...builtInNotification,
                 actionBar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(

@@ -1,22 +1,21 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import renderer from 'react-test-renderer';
 
 import { select } from 'mo/common/dom';
-
 import { MoleculeProvider, Workbench } from 'mo';
 
 import { customExtensions } from '../../../stories/extensions';
 
 describe('Test MoleculeProvider', () => {
     test('Match The MoleculeProvider snapshot', () => {
-        const component = render(
+        const component = renderer.create(
             <MoleculeProvider>
                 <Workbench />
             </MoleculeProvider>
         );
-        const tree = component.asFragment();
-        expect(tree).toMatchSnapshot();
+        expect(component.toJSON()).toMatchSnapshot();
     });
 
     test('MoleculeProvider should render built-in Workbench extensions', () => {

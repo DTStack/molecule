@@ -16,6 +16,7 @@ import {
     defaultCollapseClassName,
 } from './base';
 import { getDataAttributionsFromProps } from 'mo/common/dom';
+import Pane from '../split/pane';
 
 type RenderFunctionProps = (data: ICollapseItem) => React.ReactNode;
 export interface ICollapseItem extends HTMLElementProps {
@@ -292,54 +293,57 @@ export function Collapse({
                 {data.map((panel, index) => {
                     const isActive = activePanelKeys.includes(panel.id);
                     return (
-                        <div
-                            className={classNames(
-                                panel.className,
-                                collapseItemClassName,
-                                isActive && collapseActiveClassName
-                            )}
-                            data-collapse-id={panel.id}
-                            key={panel.id}
-                        >
+                        <Pane key={panel.id} minSize={HEADER_HEIGTH}>
                             <div
-                                className={collapseHeaderClassName}
-                                tabIndex={0}
-                                onClick={() => handleChangeCallback(panel.id)}
+                                className={classNames(
+                                    panel.className,
+                                    collapseItemClassName,
+                                    isActive && collapseActiveClassName
+                                )}
+                                data-collapse-id={panel.id}
                             >
-                                <Icon
-                                    type={
-                                        isActive
-                                            ? 'chevron-down'
-                                            : 'chevron-right'
+                                <div
+                                    className={collapseHeaderClassName}
+                                    tabIndex={0}
+                                    onClick={() =>
+                                        handleChangeCallback(panel.id)
                                     }
-                                />
-                                <span className={collapseTitleClassName}>
-                                    {panel.name}
-                                </span>
-                                <div className={collapseExtraClassName}>
-                                    {isActive && (
-                                        <Toolbar
-                                            key={panel.id}
-                                            data={panel.toolbar || []}
-                                            onClick={(e, item) =>
-                                                handleToolbarClick(
-                                                    e,
-                                                    item,
-                                                    panel
-                                                )
-                                            }
-                                        />
-                                    )}
+                                >
+                                    <Icon
+                                        type={
+                                            isActive
+                                                ? 'chevron-down'
+                                                : 'chevron-right'
+                                        }
+                                    />
+                                    <span className={collapseTitleClassName}>
+                                        {panel.name}
+                                    </span>
+                                    <div className={collapseExtraClassName}>
+                                        {isActive && (
+                                            <Toolbar
+                                                key={panel.id}
+                                                data={panel.toolbar || []}
+                                                onClick={(e, item) =>
+                                                    handleToolbarClick(
+                                                        e,
+                                                        item,
+                                                        panel
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+                                <div
+                                    className={collapseContentClassName}
+                                    tabIndex={0}
+                                    data-collapse-index={index}
+                                >
+                                    {renderPanels(panel, panel.renderPanel)}
                                 </div>
                             </div>
-                            <div
-                                className={collapseContentClassName}
-                                tabIndex={0}
-                                data-collapse-index={index}
-                            >
-                                {renderPanels(panel, panel.renderPanel)}
-                            </div>
-                        </div>
+                        </Pane>
                     );
                 })}
             </SplitPane>

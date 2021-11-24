@@ -21,6 +21,7 @@ import { ILayout } from 'mo/model/workbench/layout';
 
 import { IWorkbench } from 'mo/model';
 import SplitPane from 'mo/components/split/SplitPane';
+import Pane from 'mo/components/split/pane';
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
@@ -68,7 +69,9 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         onChange={(sizes) => onPaneSizeChange?.(sizes)}
                         onResizeStrategy={() => ['keep', 'pave']}
                     >
-                        <SidebarView />
+                        <Pane minSize="300px" maxSize="60%">
+                            <SidebarView />
+                        </Pane>
                         <SplitPane
                             sizes={getSizes()}
                             allowResize={[false]}
@@ -78,7 +81,9 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                             }
                             onResizeStrategy={() => ['pave', 'keep']}
                         >
-                            <EditorView />
+                            <Pane minSize="200px" maxSize="70%">
+                                <EditorView />
+                            </Pane>
                             <PanelView />
                         </SplitPane>
                     </SplitPane>

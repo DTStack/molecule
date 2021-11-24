@@ -8,7 +8,7 @@ import React, {
 import { classNames } from 'mo/common/className';
 import { debounce, isEqual } from 'lodash';
 import { HTMLElementProps } from 'mo/common/types';
-import Pane from './pane';
+import Pane, { IPaneConfigs } from './pane';
 import Sash from './sash';
 import {
     paneContainerClassName,
@@ -22,6 +22,7 @@ import {
     sashVerticalClassName,
     splitClassName,
 } from './base';
+import { react } from 'mo/molecule.api';
 
 /**
  * Keep for keep size when resize
@@ -67,6 +68,63 @@ interface IAxis {
     dragIndex: number;
 }
 
+type PercentString = `${number}%`;
+
+type LimitedSizes = {
+    minSize: number | PercentString;
+    maxSize: number | PercentString;
+};
+
+/**
+ * Convert sizes to absolute number or percent number
+ * @param size
+ * @param defaultValue
+ * @returns
+ */
+const assertsSizes = (
+    size: string | number | undefined,
+    defaultValue: LimitedSizes['maxSize']
+) => {
+    if (typeof size === 'undefined') return defaultValue;
+    if (typeof size === 'number') return size;
+    if (size.endsWith('%')) return size as PercentString;
+    if (size.endsWith('px')) return Number(size.replace('px', ''));
+    return defaultValue;
+};
+
+function useDelayHover(): [
+    { [x: number]: boolean },
+    (index: number) => void,
+    (index: number) => void,
+    (index: number) => void
+] {
+    const timeout = useRef<NodeJS.Timeout>();
+    const [active, setActive] = useState<{ [x: number]: boolean }>({});
+
+    const onMouseEnter = (index: number) => {
+        timeout.current = setTimeout(() => {
+            setActive({ [index]: true });
+        }, 150);
+    };
+
+    const onMouseLeave = (index: number) => {
+        if (timeout.current) {
+            setActive({ [index]: false });
+            clearTimeout(timeout.current);
+        }
+    };
+
+    const resetHover = (index: number) => {
+        if (timeout.current) {
+            clearTimeout(timeout.current);
+            timeout.current = undefined;
+        }
+        setActive({ [index]: false });
+    };
+
+    return [active, onMouseEnter, onMouseLeave, resetHover];
+}
+
 const SplitPane = ({
     children,
     sizes: propSizes,
@@ -82,8 +140,14 @@ const SplitPane = ({
     onResizeStrategy,
 }: ISplitProps) => {
     const [sizes, setSize] = useState<number[]>([]);
-    const [draging, setDrag] = useState(false);
-    const [sashActive, setActive] = useState<{ [x: number]: boolean }>({});
+    const limitedSizes = useRef<LimitedSizes[]>([]);
+    const [draging, setDrag] = useState<boolean[]>([]);
+    const [
+        sashActive,
+        handleMouseEnterSash,
+        handleMouseLeaveSash,
+        resetHover,
+    ] = useDelayHover();
     const wrapper = useRef<HTMLDivElement>(null);
     const axis = useRef<IAxis>({
         x: 0,
@@ -92,6 +156,11 @@ const SplitPane = ({
         dragIndex: -1,
     });
 
+    /**
+     * Get some size infos via split
+     * @param split
+     * @returns
+     */
     const getSplitSizeName = (): {
         sizeName: 'width' | 'height';
         pos: 'top' | 'left';
@@ -104,9 +173,45 @@ const SplitPane = ({
         };
     };
 
-    // recommended to set key for the Pane, it's used for improving performance
+    /**
+     * Calculate the percent size based on rect
+     * @param size
+     * @returns
+     */
+    const calcPercent = (size: `${number}%`) => {
+        const rect = wrapper.current!.getBoundingClientRect();
+        const rectSize = rect[getSplitSizeName().sizeName];
+
+        return rectSize * (Number(size.replace('%', '')) / 100);
+    };
+
+    /**
+     * Register the limited sizes
+     * @param child
+     * @returns
+     */
+    const registerLimitedSizes = (child: JSX.Element): LimitedSizes => {
+        if (child.type === Pane) {
+            const { maxSize, minSize } = child.props as IPaneConfigs;
+            return {
+                minSize: assertsSizes(minSize, 0),
+                maxSize: assertsSizes(maxSize, '100%'),
+            };
+        } else {
+            return {
+                minSize: 0,
+                maxSize: '100%',
+            };
+        }
+    };
+
+    // recommended to set key for the Pane
     const childrenKey: React.Key[] = useMemo(() => {
-        const nextKey = children.map((child, index) => child.key || index);
+        const nextKey = children.map((child, index) => {
+            limitedSizes.current[index] = registerLimitedSizes(child);
+            return child.key || index;
+        });
+        // improving performance
         if (isEqual(nextKey, childrenKey)) {
             return childrenKey;
         }
@@ -114,7 +219,28 @@ const SplitPane = ({
     }, [children]);
 
     const handleMouseDown = (e, index) => {
-        setDrag(true);
+        setDrag((dragList) => {
+            const next = dragList.concat();
+            next[index] = true;
+            return next;
+        });
+        // reset the hover status
+        resetHover(index);
+
+        // calculate the limited sizes
+        limitedSizes.current = limitedSizes.current.map((size) => {
+            return {
+                minSize:
+                    typeof size.minSize === 'number'
+                        ? size.minSize
+                        : calcPercent(size.minSize),
+                maxSize:
+                    typeof size.maxSize === 'number'
+                        ? size.maxSize
+                        : calcPercent(size.maxSize),
+            };
+        });
+
         axis.current = {
             x: e.clientX - e.target.offsetLeft,
             y: e.clientY - e.target.offsetTop,
@@ -123,22 +249,8 @@ const SplitPane = ({
         };
     };
 
-    const timeout = useRef<NodeJS.Timeout>();
-    const handleMouseEnterSash = (paneIndex) => {
-        timeout.current = setTimeout(() => {
-            setActive({ [paneIndex]: true });
-        }, 150);
-    };
-
-    const handleMouseLeaveSash = (paneIndex) => {
-        if (timeout.current) {
-            setActive({ [paneIndex]: false });
-            clearTimeout(timeout.current);
-        }
-    };
-
     const handleMouseMove = (e) => {
-        if (draging) {
+        if (draging.some((i) => i)) {
             const currentAxis = {
                 x: e.clientX - axis.current.dragSource!.offsetLeft,
                 y: e.clientY - axis.current.dragSource!.offsetTop,
@@ -147,23 +259,53 @@ const SplitPane = ({
                 axis.current[getSplitSizeName().axis] -
                 currentAxis[getSplitSizeName().axis];
 
-            onChange(
-                sizes.map((size, index) => {
-                    if (index === axis.current.dragIndex - 1) {
-                        return size - distanceX;
-                    }
-                    if (index === axis.current.dragIndex) {
-                        return size + distanceX;
-                    }
-                    return size;
-                })
-            );
+            setSize((s) => {
+                const nextSizes = s.map(
+                    function (size, index) {
+                        if (index === axis.current.dragIndex - 1) {
+                            const nSize = size - distanceX;
+
+                            // TODO check the reason why always have blank
+                            const minSize = limitedSizes.current[index]
+                                .minSize as number;
+                            const maxSize = limitedSizes.current[index]
+                                .maxSize as number;
+
+                            if (nSize < minSize) {
+                                // @ts-ignore
+                                this.isChanged = false;
+                                return minSize;
+                            }
+
+                            if (nSize > maxSize) {
+                                // @ts-ignore
+                                this.isChanged = false;
+                                return maxSize;
+                            }
+
+                            return nSize;
+                        }
+                        if (index === axis.current.dragIndex) {
+                            // @ts-ignore
+                            if (this.isChanged) {
+                                return size + distanceX;
+                            }
+                            return size;
+                        }
+                        return size;
+                    },
+                    { isChanged: true }
+                );
+
+                onChange(nextSizes);
+                return s;
+            });
         }
     };
 
-    const handleMouseUp = () => {
-        if (draging) {
-            setDrag(false);
+    const handleMouseUp = (e) => {
+        if (draging.some((i) => i)) {
+            setDrag([]);
             axis.current = {
                 x: 0,
                 y: 0,
@@ -319,6 +461,27 @@ const SplitPane = ({
                 // @ts-ignore
                 this.sum = size;
 
+                const isPane = children[paneIndex].type === Pane;
+                if (isPane) {
+                    const { className = '', style = {} } = children[
+                        paneIndex
+                    ].props;
+                    return react.cloneReactChildren(children[paneIndex], {
+                        key: paneIndex,
+                        className: classNames(
+                            paneItemClassName,
+                            sizes[paneIndex] !== 0 && paneItemVisibleClassName,
+                            paneClassName,
+                            className
+                        ),
+                        style: {
+                            [getSplitSizeName().sizeName]: sizes[paneIndex],
+                            [getSplitSizeName().pos]: size || 0,
+                            ...style,
+                        },
+                    });
+                }
+
                 return (
                     <Pane
                         key={paneIndex}
@@ -348,13 +511,15 @@ const SplitPane = ({
                 const size = this.sum + (sizes[paneIndex - 1] || 0);
                 // @ts-ignore
                 this.sum = size;
+
+                const isActive = draging[paneIndex] || sashActive[paneIndex];
                 return (
                     <Sash
                         key={paneIndex}
                         className={classNames(
                             sashItemClassName,
                             !allowResize[paneIndex] && sashDisabledClassName,
-                            sashActive[paneIndex] && sashHoverClassName,
+                            isActive && sashHoverClassName,
                             split === 'vertical'
                                 ? sashVerticalClassName
                                 : sashHorizontalClassName
@@ -371,7 +536,7 @@ const SplitPane = ({
             },
             { sum: 0 }
         );
-    }, [childrenKey, sizes, allowResize, sashActive]);
+    }, [childrenKey, sizes, allowResize, sashActive, draging]);
 
     return (
         <div

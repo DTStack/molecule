@@ -1,17 +1,22 @@
-import React, { CSSProperties, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
+import type { HTMLElementProps } from 'mo/common/types';
 
-interface IPaneProps {
-    style?: CSSProperties;
-    className?: string;
+interface IPaneProps extends HTMLElementProps {}
+
+export interface IPaneConfigs {
+    maxSize?: number | string;
+    minSize?: number | string;
 }
 
 export default function Pane({
     children,
     style,
     className,
-}: PropsWithChildren<IPaneProps>) {
+    role,
+    title,
+}: PropsWithChildren<IPaneProps & IPaneConfigs>) {
     return (
-        <div className={className} style={style}>
+        <div role={role} title={title} className={className} style={style}>
             {children}
         </div>
     );

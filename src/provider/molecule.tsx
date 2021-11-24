@@ -28,7 +28,7 @@ export interface IMoleculeProps {
      */
     defaultLocale?: string;
 }
-export interface IMoleculeState { }
+export interface IMoleculeState {}
 
 export const MoleculeCtx = createContext({});
 

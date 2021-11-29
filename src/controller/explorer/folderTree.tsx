@@ -18,7 +18,7 @@ import {
 import type { UniqueId } from 'mo/common/types';
 
 export interface IFolderTreeController extends Partial<Controller> {
-    readonly createTreeNode?: (type: FileType) => void;
+    readonly createTreeNode?: (type: FileType, id?: UniqueId) => void;
     readonly onClickContextMenu?: (
         contextMenu: IMenuItemProps,
         treeNode?: IFolderTreeNodeProps
@@ -102,14 +102,19 @@ export class FolderTreeController
         });
     }
 
-    public createTreeNode = (type: FileType) => {
-        const folderTreeState = this.folderTreeService.getState();
-        const { data, current } = folderTreeState?.folderTree || {};
-        // The current selected node id or the first root node
-        const nodeId =
-            typeof current?.id === 'undefined' ? data?.[0]?.id : current?.id;
-
-        this.emit(FolderTreeEvent.onCreate, type, nodeId);
+    public createTreeNode = (type: FileType, id?: UniqueId) => {
+        if (typeof id === 'undefined') {
+            const folderTreeState = this.folderTreeService.getState();
+            const { data, current } = folderTreeState?.folderTree || {};
+            // The current selected node id or the first root node
+            const nodeId =
+                typeof current?.id === 'undefined'
+                    ? data?.[0]?.id
+                    : current?.id;
+            this.emit(FolderTreeEvent.onCreate, type, nodeId);
+        } else {
+            this.emit(FolderTreeEvent.onCreate, type, id);
+        }
     };
 
     public readonly onClickContextMenu = (
@@ -136,11 +141,13 @@ export class FolderTreeController
                 break;
             }
             case NEW_FILE_COMMAND_ID: {
-                this.createTreeNode(FileTypes.File);
+                const { id } = treeNode!;
+                this.createTreeNode(FileTypes.File, id);
                 break;
             }
             case NEW_FOLDER_COMMAND_ID: {
-                this.createTreeNode(FileTypes.Folder);
+                const { id } = treeNode!;
+                this.createTreeNode(FileTypes.Folder, id);
                 break;
             }
             case OPEN_TO_SIDE_COMMAND_ID: {

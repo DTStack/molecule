@@ -725,6 +725,55 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
             className="codicon codicon-bell"
             onClick={[Function]}
           />
+          <div
+            className="mo-notification mo-context-view--shadow"
+            style={
+              Object {
+                "display": "none",
+              }
+            }
+          >
+            <header
+              className="mo-notification__header"
+            >
+              <span>
+                No new notifications
+              </span>
+              <div
+                className="mo-action-bar"
+              >
+                <ul
+                  className="mo-action-bar__container"
+                >
+                  <li
+                    className="mo-action-bar__item"
+                    data-index={0}
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="codicon codicon-clear-all"
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                    />
+                  </li>
+                  <li
+                    className="mo-action-bar__item"
+                    data-index={1}
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="codicon codicon-chevron-down"
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                    />
+                  </li>
+                </ul>
+              </div>
+            </header>
+            <div
+              className="mo-notification__body"
+            />
+          </div>
         </a>
       </div>
       <div

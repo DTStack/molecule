@@ -11,19 +11,19 @@ sidebar_position: 1
 我们已经在 [Quick Start](./quickStart.md) 中利用 [create-react-app](https://github.com/facebook/create-react-app) 成功安装并集成了 Molecule，现在我们可以尝试利用其提供的 [Extension API](./api/interfaces/molecule.IExtension)，实现一个简单的场景：
 
 <div align="center">
- <img src="/static/img/the-first-extension.png" alt="The First Extension" />
+ <img src="/static/img/theFirstExtension.png" alt="The First Extension" />
 </div>
 
 上图实现一个简单的目录树，并支持通过点击文件，在右侧的编辑器中打开该文件。Molecule 默认内置了 [explorer](./api/namespaces/molecule#explorer)，[folderTree](./api/namespaces/molecule#foldertree)，[editor](./api/namespaces/molecule#editor) 等等模块，通过其提供的 API，我们可以快速实现这个需求，而无需过多关心 UI 上的构建工作。
 
 ## 实现方法
 
-首先，我们在 `src` 下新建一个 `extensions` 文件夹，然后创建一个 `the-first-extension` 目录, 并新建扩展程序默认模块 `index.ts`，如下：
+首先，我们在 `src` 下新建一个 `extensions` 文件夹，然后创建一个 `theFirstExtension` 目录, 并新建扩展程序默认模块 `index.ts`，如下：
 
 ```bash
 src/extensions
 ├── index.ts
-└── the-first-extension
+└── theFirstExtension
     ├── folderTreeController.ts
     ├── index.ts
 ```
@@ -63,7 +63,7 @@ export class FirstExtension implements IExtension {
 -   `initFolderTree`： 获取文件树的数据，并渲染数据到 `folderTree`
 -   `handleSelectFolderTree`： 监听 `folderTree` 的 `onSelectFile` 事件，选中文件后，在 [editor](./api/namespaces/molecule#editor) 中打开文件
 
-```ts title="/src/extensions/the-first-extension/folderTreeController.ts"
+```ts title="/src/extensions/theFirstExtension/folderTreeController.ts"
 import molecule from '@dtinsight/molecule';
 import { IFolderTreeNodeProps } from '@dtinsight/molecule/esm/model';
 import { transformToEditorTab } from '../../common';
@@ -101,7 +101,7 @@ export function handleSelectFolderTree() {
 
 ```ts title="/src/extensions/index.ts"
 import { IExtension } from '@dtinsight/molecule/esm/model';
-import { FirstExtension } from './the-first-extension';
+import { FirstExtension } from './theFirstExtension';
 
 const extensions: IExtension[] = [new FirstExtension()];
 
@@ -130,4 +130,4 @@ import extensions from './extensions';
 
 ## 完整示例
 
-**第一个扩展**的完整源码，请[浏览](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/the-first-extension)。
+**第一个扩展**的完整源码，请[浏览](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/theFirstExtension)。

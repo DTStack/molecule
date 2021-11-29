@@ -8,7 +8,7 @@
         "description": "在线预览 Molecule 示例"
     },
     "page.tagline": {
-        "message": "一个轻量级的 Web IDE UI 框架!",
-        "description": "一个轻量级的 Web IDE UI 框架!"
+        "message": "一个轻量级的 Web IDE UI 框架",
+        "description": "一个轻量级的 Web IDE UI 框架"
     }
 }

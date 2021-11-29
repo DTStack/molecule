@@ -1,3 +1,7 @@
+---
+sidebar_label: 贡献指南
+---
+
 # Contributing
 
 ## Development
@@ -17,6 +21,10 @@ yarn build
 yarn web
 ```
 
+## Git Work Flow
+
+[Branch-based Workflow](https://guides.github.com/introduction/flow/)
+
 ## Naming
 
 Unify the Service methods basic prefix naming:
@@ -32,10 +40,6 @@ Unify the Service methods basic prefix naming:
 -   move, prefix for Move sth.
 -   append, prefix for Append sth.
 -   toggle, prefix for Toggle sth.
-
-## Git Work flow
-
-[Branch-based Workflow](https://guides.github.com/introduction/flow/)
 
 ### Reference
 

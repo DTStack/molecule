@@ -1,5 +1,5 @@
 ---
-title: 简介
+title: ''
 sidebar_label: 简介
 sidebar_position: 1
 ---
@@ -22,9 +22,13 @@ sidebar_position: 1
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 
+## 简介
+
 Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
 
 [在线预览](https://github.com/DTStack/molecule-examples)
+
+## 动机（Motivation)
 
 ## 核心功能
 

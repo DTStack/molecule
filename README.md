@@ -25,7 +25,8 @@ The **Molecule** is a lightweight **Web IDE UI** Framework built with React.jsï¼
 [Online Preview](https://github.com/DTStack/molecule-examples)
 =======
 [Online Preview]((https://github.com/DTStack/molecule-examples)
->>>>>>> docs: update the introduction
+
+> > > > > > > docs: update the introduction
 
 ## Features
 

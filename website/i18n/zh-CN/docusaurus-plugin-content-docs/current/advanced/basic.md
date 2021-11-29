@@ -1,93 +1,104 @@
-# Basic
+---
+title: 核心概念
+sidebar_label: 核心概念
+---
 
-Before start to introduce the basic config about molecule, It's necessary to emphasize that the followings are based on you are a programmer of JavaScript.
+# 基础指南
 
-## Workbench
+在介绍 Molecule 的基础配置之前，在阅读以下内容之前请确保您会 JavaScript。
 
-Workbench is the main interface in molecule.
+## 工作台
 
-For reducing the cost of learning, we divide workbench into multiple parts.
+工作台是 Molecule 中最重要的界面。
 
-As you see, this is a workbench interface for molecule IDE.
+### 概念
+
+为了减少学习成本，我们把 Molecule 的工作台划分成了多个部分。
+
+如你所见，下图就是 Molecule 的工作台布局。
 
 ![molecule](/img/guides/molecule.jpg)
 
-> If you can't see clearly, just open the image in a new tab.
+> 如果无法看清，请右键选择在新标签页中打开图片。
 
-First, we divide the workbench into two parts, which are `statusBar` and main content.
+首先，我们把工作台划分成两个部分，分别是 `statusBar` 和主要区域。
 
--   `statusBar` is located in the bottom of the whole page. In general, we put some informations here, like the language current tab used, the line of rows and columns, and so on.
+-   `statusBar` 位于整个页面的最底下。通常来说，我们可以放一些信息在这里，比如说当前标签页的语言，当前光标所在行和列等等信息。
 
-And the main content is divided into three parts, which are `sideBar`, `editor` and `panel`.
+主要区域又被划分成三个区域，分别为 `sideBar`, `editor` 和 `panel`。
 
--   `sideBar` is located in the left of the whole page. `sideBar` Only contains a column in the left of page, so it only controls what item will render in this column. And if you want to achieve a complete feature, you should use it with `activityBar`.
--   `editor` is the most important part in molecule. When there is no editor tab, we will render a entry page which you can customize it.
--   `panel` is located in the area under the `editor`. In general, we put some informations about editor tab in these panels. For example, we have built-in problems panel for showing the detail of problems in each opened tab.
--   `activityBar` is beside the `sidebar`. We mentioned it in `sideBar`, so it could be understood as the supplement of the `sideBar`. For example, we have built-in explorer in `sideBar` and `activityBar`, and It supports to select explorer in `sideBar` and render explorer panel in `activitybar`.
+-   `sideBar` 在整个页面的最左边。它只包含了页面上最左边的一列，所以它只控制最左边这一列渲染什么东西。如果你想要实现一个完整的功能，你应该和 `activityBar` 一起使用。
+-   `editor` 是 Molecule 中最重要的部分。当没有打开编辑器标签页的时候，Molecule 会渲染一个入口页面在这块区域。当然，这个入口页面是支持自定义的。
+-   `panel` 的位置是在 `editor` 的下面。通常来说，我们会把一些编辑器标签页相关的信息放在这些面板之中。例如：我们有内置的「问题」面板用来展示每个打开的标签页中的问题详情。
+-   `activityBar` 在 `sidebar` 的边上。我们在解释 `sideBar` 的时候提到了 `activityBar`，所以 `activityBar` 可以理解为是 `sideBar` 的具体补充。例如：我们在 `sideBar` 和 `activityBar` 中都有内置的「浏览」模块，其中 `sideBar` 支持选中「浏览」模块， 而 `activityBar` 负责渲染「浏览」模块的面板。
 
 ![molecule](/img/guides/layout-marks.jpg)
 
-> If you can't see clearly, just open the image in a new tab.
+> 如果无法看清，请右键选择在新标签页中打开图片。
 
-## ColorTheme
+除了这些我们提到的概念以外，还有其他的一些概念可以在使用的时候去了解和熟悉。
 
-When you open the settings menus, you can see the `Color Theme` in the bottom of menus. And It will open a quick access palette in the top of pages.
+目前，我们了解了 `statusBar`, `sideBar`, `editor`, `panel`, 和 `activityBar` 的概念。去了解和熟悉这些概念很重要，因为只有了解了这些概念后，才能更好地使用 Molecule 的接口。
 
-There are several built-in themes in molecule, including `Dark`, `Light`, `Monakai`, `Github Plus`, `High Contrast` and so on.
+### 扩展插件
 
-You can choose one theme in these built-in themes. Or you can customize your own theme throught extensions.
+Molecule 支持通过扩展插件来丰富自身的功能。我们不仅可以在扩展插件中新增功能，还可以在扩展插件中禁用某些指定的内置模块从而实现自定义自己的 IDE。
 
-If you want to customize your own, then you can refer to the [VSCode Theme](https://code.visualstudio.com/api/references/theme-color).
+总而言之，我们可以通过在扩展插件中使用这些概念来控制 Molecule 的行为。
 
-## Locales
+## 颜色主题
 
-There are two built-in locales which are Chinese and English in molecule, you can choose one between them. First, you can open the `Command Palette` in settings menus. And then, type `select display language` and choose a language and confirm it.
+当你打开设置菜单，你可以在菜单的最下面看到「颜色主题」。点击它将会在页面顶部打开一个快速访问面板。
 
-There will be a notification in the bottom right corner of the page. And just reload current page, then the localed will changes.
+在 Molecule 中我们有许多内置的主题，包括 `Dark`, `Light`, `Monakai`, `Github Plus`, `High Contrast` 等等。
 
-If the built-in locales can't satisfy you, you can define the other languages as you like.
+你可以在这些内置的主题中任选一个，或者你也可以通过扩展插件自定义自己的主题。
 
-The more details about how to define your own locale, please refer to [extends-locales](extends-locales).
+如果你想要自定义自己的主题，那么你可以参考 [VSCode Theme](https://code.visualstudio.com/api/references/theme-color).
 
-## Settings
+## 语言环境
 
-Molecule support to change some configurations through settings. For example, If you want to change the font size of editor, you just open the `Settings` in settings menus, and then change the value of `editor.fontSize` from 12 to 14. Just waiting for a second, the settings will work.
+在 Molecule 中有两种内置的语言环境，分别是中文和英文，你可以选择其中的一种进行切换。首先，你可以在设置菜单中打开「命令面板」，然后输入 `select display language` 并选择一种语言，然后确认选择。
 
-Sometimes, you want to extends settings to change some other things. You can refer to [extends-settings](extends-settings) to know how to extends settings.
+然后在页面的右下角将会有一个提醒窗口，点击确认会重新加载当前页面，之后语言环境就会发生更改。
 
-## Keybindings
+如果内置的语言环境无法满足你，那么你可以按照你的需求定义其他语言环境。
 
-Expect for some special shortcut keys, such as `Command/Ctrl + W`, `Command/Ctrl + S`, molecule supports to set a marjority of keybindings.
+更多关于如果定义自己的语言环境的细节，请参考[扩展语言环境](extends-locales)。
 
-There are several built-in keybindings for quick accessing. For example,
+## 设置
 
--   `Command/Ctrl + ,` can access the settings tab quickly;
--   `Command/Ctrl + Shift + L` can access the locales Palette quickly;
--   `Command/Ctrl + Shift + P` can access the Command Palette quickly;
--   and so on.
+Molecule 支持通过在设置中修改部分配置项。例如：当你想要修改编辑器的字体大小时，只需要打开设置菜单中的「设置」选项，然后把 `editor.fontSize` 的值从 12 修改至 14 即可。在稍微等待几秒钟后，设置将会生效。
 
-Sometimes, you want to register new keybindings, you can refer to [extends-keybindings](extends-keybindings) to know how to register new keybindings.
+有时，你会想要去扩展设置项来修改其他的一些东西。你可以参考 [扩展设置](extends-settings) 来了解如何去扩展设置。
 
-## QuickAccess
+## 快捷键
 
-The quick access palette provider a convenient way to access commands or features quickly. You can access it by shortcut key `Command/Ctrl + Shift + P` in molecule.
+除了一些特殊的快捷键以外，例如 `Command/Ctrl + W`, `Command/Ctrl + S`, Molecule 支持设置绝大多数的快捷键。
+
+Molecule 中有许多内置的快捷键来处理快速访问，比如：
+
+-   `Command/Ctrl + ,` 可以快速访问设置；
+-   `Command/Ctrl + Shift + L` 可以快速切换语言环境；
+-   `Command/Ctrl + Shift + P` 可以快速访问命令中心；
+-   等等；
+
+有时，你想要注册新的快捷键，你可以参考[扩展快捷键](extends-keybindings)了解如何注册新的快捷键。
+
+## 快速访问
+
+快速访问面板提供了一种方便的方式去快速访问命令或方法。你可以在 Molecule 中通过快捷键 `Command/Ctrl + Shift + P` 快速访问它。
 
 ![QuickAccess](/img/guides/quick-access.jpg)
 
-> If you can't see clearly, just open the image in a new tab.
+> 如果无法看清，请右键选择在新标签页中打开图片。
 
-Sometimes, you want to register your command or feature into quick access palette, you can refer to [extends-quickAccess](extends-quickAccess) to know how to extends quick access palette.
+有时，你想要把你自己的命令或方法注册到快速访问面板上，你可以参考[扩展快速访问](extends-quickAccess)来了解如何扩展快速访问面板。
 
-## Built-in
+## 内置
 
-As your see, there are many built-in commands and features in molecule. But if the user doesn't want this feature, what should he or she do to disable the feature?
+如上所示，在 Molecule 中有需要内置的命令和方法。但是如果用户不想要某个功能，那么他/她应该如何去禁用这个功能呢？
 
-The answer is through the `builtin` service. Molecule gathers all built-in commands and features into the `builtin` service and distributes built-in commands to other services.
+答案是通过 `builtin` 服务。Molecule 将所有的内置命令和方法都搜集入 `builtin` 服务，然后将其分发到其他的服务中去注册。
 
-So if you want to disable a `builtin` command or feature, just have try `builtin` service. The more details about how to use `builtin` service, please refer to [extends-builtin](extends-builtin).
-
-## Extension
-
-Molecule support enriches its features through extensions. Not only can we add a new feature in extensions, but also disabled specific built-in modules in extensions.
-
-But how can we add features through extensions? After the followings you will know something about it.
+所以，如果你想要禁用某一个内置的命令或功能，只需要使用 `builtin` 服务。更多关于如何使用 `builtin` 服务的信息，请参考[扩展内置](extends-builtin)。

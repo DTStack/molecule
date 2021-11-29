@@ -89,7 +89,7 @@ jobs:
                   key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
 
             - name: Run Unit Test
-              run: yarn test -u
+              run: yarn test
 
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v2

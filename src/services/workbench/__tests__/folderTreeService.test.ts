@@ -272,8 +272,123 @@ describe('Test StatusBarService', () => {
         const children = data[0].children!;
         expect(children).toHaveLength(2);
         expect(children[0]).toEqual({
-            ...pendingNode,
+            ...fileNode,
         });
+    });
+
+    test('Should in sort', () => {
+        const ignoreFolder = new TreeNodeModel({
+            id: 'ignore-folder',
+            fileType: FileTypes.Folder,
+            name: '.git',
+            isLeaf: false,
+            children: [],
+        });
+        const normalFolder = new TreeNodeModel({
+            id: 'nomral-folder',
+            fileType: FileTypes.Folder,
+            name: 'folder',
+            isLeaf: false,
+            children: [],
+        });
+        const normalFile = new TreeNodeModel({
+            id: 'nomral-file',
+            fileType: FileTypes.File,
+            name: 'file',
+            isLeaf: true,
+            children: [],
+        });
+        const ignoreFile = new TreeNodeModel({
+            id: 'ignore-file',
+            fileType: FileTypes.File,
+            name: '.gitignore',
+            isLeaf: true,
+            children: [],
+        });
+        const root = new TreeNodeModel({
+            id: 'root',
+            fileType: FileTypes.RootFolder,
+            name: 'root-test',
+            isLeaf: false,
+            children: [ignoreFile, normalFile, normalFolder, ignoreFolder],
+        });
+        folderTreeService.add(root);
+
+        // let data = folderTreeService.getState().folderTree?.data || [];
+        let rootNode = folderTreeService.get('root')!;
+        expect(rootNode.children?.map((i) => i.name)).toEqual([
+            '.git',
+            'folder',
+            '.gitignore',
+            'file',
+        ]);
+
+        // add a file
+        folderTreeService.add(
+            new TreeNodeModel({
+                id: 'another-ignore-file',
+                fileType: FileTypes.File,
+                name: '.prettierignore',
+                isLeaf: true,
+                children: [],
+            }),
+            'root'
+        );
+
+        rootNode = folderTreeService.get('root')!;
+        expect(rootNode.children?.map((i) => i.name)).toEqual([
+            '.git',
+            'folder',
+            '.gitignore',
+            '.prettierignore',
+            'file',
+        ]);
+
+        // add a folder
+        folderTreeService.add(
+            new TreeNodeModel({
+                id: 'another-normal-folder',
+                fileType: FileTypes.Folder,
+                name: 'another-folder',
+                isLeaf: false,
+                children: [],
+            }),
+            'root'
+        );
+
+        rootNode = folderTreeService.get('root')!;
+        expect(rootNode.children?.map((i) => i.name)).toEqual([
+            '.git',
+            'another-folder',
+            'folder',
+            '.gitignore',
+            '.prettierignore',
+            'file',
+        ]);
+
+        // add a input
+        folderTreeService.add(
+            new TreeNodeModel({
+                id: 'create-folder',
+                fileType: FileTypes.Folder,
+                name: '',
+                isEditable: true,
+                isLeaf: false,
+                children: [],
+            }),
+            'root'
+        );
+
+        rootNode = folderTreeService.get('root')!;
+        expect(rootNode.children?.map((i) => i.name)).toEqual([
+            '',
+            '.git',
+            'another-folder',
+            'folder',
+            '.gitignore',
+            '.prettierignore',
+            'file',
+        ]);
     });
 
     test('Should support to set entry', () => {

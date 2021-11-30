@@ -1,6 +1,7 @@
 import React from 'react';
 import { classNames } from 'mo/common/className';
-import { Icon } from '../icon';
+import type { HTMLElementProps, UniqueId } from 'mo/common/types';
+
 import {
     checkClassName,
     disabledClassName,
@@ -9,7 +10,7 @@ import {
     labelClassName,
     menuContentClassName,
 } from './base';
-import type { HTMLElementProps, UniqueId } from 'mo/common/types';
+import { Icon } from '../icon';
 
 export interface IMenuItemProps extends HTMLElementProps {
     id: UniqueId;
@@ -52,7 +53,8 @@ export function MenuItem(
         name,
         title,
         id,
-        ...custom
+        sortIndex,
+        ...restProps
     } = props;
 
     const events = {
@@ -69,10 +71,11 @@ export function MenuItem(
                 disabled ? disabledClassName : null
             )}
             id={id?.toString()}
+            data-sort={sortIndex}
             // prevent render JSX title in HTMLElement
             {...(typeof title === 'string' ? { title } : {})}
             {...events}
-            {...custom}
+            {...restProps}
         >
             <div className={menuContentClassName}>
                 <Icon type={icon} className={checkClassName} />

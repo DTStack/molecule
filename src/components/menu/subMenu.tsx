@@ -50,7 +50,8 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
         children,
         onClick,
         title,
-        ...custom
+        sortIndex,
+        ...restProps
     } = props;
     const cNames = classNames(defaultSubMenuClassName, className);
     const isAlignHorizontal = isHorizontal(mode);
@@ -63,7 +64,7 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
                 style={{ opacity: '0', pointerEvents: 'none' }}
                 data={data}
                 onClick={onClick}
-                {...custom}
+                {...restProps}
             />
         ) : (
             <Menu
@@ -82,9 +83,11 @@ export function SubMenu(props: React.PropsWithChildren<ISubMenuProps>) {
                 disabled ? disabledClassName : null
             )}
             data-submenu
+            data-mode={mode}
+            data-sort={sortIndex}
             // prevent render JSX title in HTMLElement
             {...(typeof title === 'string' ? { title } : {})}
-            {...custom}
+            {...restProps}
         >
             <div className={menuContentClassName}>
                 {typeof icon === 'string' ? (

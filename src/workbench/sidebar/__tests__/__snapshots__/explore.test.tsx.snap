@@ -52,8 +52,6 @@ exports[`The Explorer Component Match Snapshot 1`] = `
     >
       <div
         className="mo-split"
-        onMouseMove={[Function]}
-        onMouseUp={[Function]}
       >
         <div
           className="mo-split__sash"

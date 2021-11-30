@@ -126,6 +126,23 @@ function useDelayHover(): [
     return [active, onMouseEnter, onMouseLeave, resetHover];
 }
 
+// make function persistence
+// refer from ahooks
+function useMemoizedFn<T extends (...args: any[]) => any>(fn: T) {
+    const fnRef = useRef<T>(fn);
+    fnRef.current = useMemo(() => fn, [fn]);
+
+    const memoizedFn = useRef<T>();
+    if (!memoizedFn.current) {
+        memoizedFn.current = function (...args) {
+            // @ts-ignore
+            return fnRef.current.apply(this, args);
+        } as T;
+    }
+
+    return memoizedFn.current;
+}
+
 const SplitPane = ({
     children,
     sizes: propSizes,
@@ -157,6 +174,8 @@ const SplitPane = ({
         dragSource: null,
         dragIndex: -1,
     });
+
+    const propOnChange = useMemoizedFn<ISplitProps['onChange']>(onChange);
 
     /**
      * Get some size infos via split
@@ -296,7 +315,7 @@ const SplitPane = ({
             { offset: 0 }
         );
 
-        onChange(nextSizes);
+        propOnChange(nextSizes);
     },
     []);
 

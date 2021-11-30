@@ -138,16 +138,50 @@ describe('Test The Collapse Component', () => {
         const wrapper = container.querySelector(`.${collapsePaneClassName}`)!;
         const sashs = container.querySelectorAll(`.${sashItemClassName}`);
         fireEvent.mouseDown(sashs[2]);
-        fireEvent.mouseMove(wrapper, { clientX: 10, clientY: 10 });
+        fireEvent.mouseMove(wrapper, { screenX: 10, screenY: 10 });
         fireEvent.mouseUp(wrapper);
 
         expect(mockResize).toBeCalled();
         expect(mockResize.mock.calls[0][0]).toEqual([26, 326, 148]);
+    });
 
-        // ensure when there is no changes in sizes it won't trigger onResize event
+    test('Should NOT trigger onChange', async () => {
+        const mockResize = jest.fn();
+        const { container, getByTestId } = render(
+            <Collapse
+                data={[
+                    { id: 'mock1', name: 'test1', config: { grow: 0 } },
+                    { id: 'mock2', name: 'test2', config: { grow: 2 } },
+                    {
+                        id: 'mock3',
+                        name: 'test3',
+                        renderPanel: () => <div data-testid="test"></div>,
+                    },
+                ]}
+                onResize={mockResize}
+            />
+        );
+        expect(getByTestId('test')).toBeInTheDocument();
+
+        await act(async () => {
+            const mock2 = container.querySelector(
+                'div[data-collapse-id="mock2"]'
+            );
+            const mock3 = container.querySelector(
+                'div[data-collapse-id="mock3"]'
+            );
+            fireEvent.click(mock2?.childNodes[0]!);
+            await sleep(300);
+            fireEvent.click(mock3?.childNodes[0]!);
+            await sleep(300);
+        });
+
         mockResize.mockClear();
+        const wrapper = container.querySelector(`.${collapsePaneClassName}`)!;
+        const sashs = container.querySelectorAll(`.${sashItemClassName}`);
+        // ensure when there is no changes in sizes it won't trigger onResize event
         fireEvent.mouseDown(sashs[2]);
-        fireEvent.mouseMove(wrapper, { clientX: 0, clientY: 0 });
+        fireEvent.mouseMove(wrapper, { screenX: 0, screenY: 0 });
         fireEvent.mouseUp(wrapper);
         expect(mockResize).not.toBeCalled();
     });
@@ -326,7 +360,7 @@ describe('Test The Collapse Component', () => {
         const wrapper = container.querySelector(`.${collapsePaneClassName}`)!;
         const sashs = container.querySelectorAll(`.${sashItemClassName}`);
         fireEvent.mouseDown(sashs[2]);
-        fireEvent.mouseMove(wrapper, { clientX: 10, clientY: 10 });
+        fireEvent.mouseMove(wrapper, { screenX: 10, screenY: 10 });
         fireEvent.mouseUp(wrapper);
 
         expect(mock2?.parentElement?.style.height).toBe('326px');

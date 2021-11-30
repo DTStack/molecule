@@ -29,13 +29,13 @@ export default class TestPane extends React.Component {
     onChangeLocale = (e, option) => {
         if (option && option.value) {
             console.log('onChangeLocale:', option.value);
-            molecule.il8n.setCurrentLocale(option.value);
+            molecule.i18n.setCurrentLocale(option.value);
         }
     };
 
     renderLocales() {
-        const data = molecule.il8n.getLocales();
-        const current = molecule.il8n.getCurrentLocale();
+        const data = molecule.i18n.getLocales();
+        const current = molecule.i18n.getCurrentLocale();
         const options = data.map((item: ILocale) => {
             return (
                 <Option key={item.id} value={item.id}>

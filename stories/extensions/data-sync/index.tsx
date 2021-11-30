@@ -12,6 +12,13 @@ export const ExtendsDataSync: IExtension = {
     name: 'Data Sync',
     activate() {
         molecule.activityBar.add(testItem);
+        molecule.menuBar.append(
+            {
+                id: 'menu.dataSync',
+                name: '新建数据同步',
+            },
+            'File'
+        );
     },
 
     dispose() {

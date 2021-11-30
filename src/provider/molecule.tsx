@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import React, { createContext, Component } from 'react';
 
-import { IColorTheme } from 'mo/model/colorTheme';
 import { defaultExtensions } from 'mo/extensions';
 import { BuiltInDefault } from 'mo/extensions/locales-defaults';
 import { IExtension } from 'mo/model/extension';
@@ -18,12 +17,16 @@ import * as controllers from 'mo/controller';
 import type { Controller } from 'mo/react';
 
 export interface IMoleculeProps {
+    /**
+     * Molecule Extension instances, after the MoleculeProvider
+     * did mount, then handle it.
+     */
     extensions?: IExtension[];
     /**
-     * Specify a default locale
+     * Specify a default locale Id, the Molecule built-in `zh-CN`, `en` two languages, and
+     * default locale Id is `en`.
      */
     defaultLocale?: string;
-    colorTheme?: IColorTheme[];
 }
 export interface IMoleculeState {}
 
@@ -37,6 +40,7 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
 
     constructor(props: IMoleculeProps) {
         super(props);
+
         this.monacoService = container.resolve(MonacoService);
         this.extensionService = container.resolve(ExtensionService);
         this.layoutService = container.resolve(LayoutService);
@@ -45,59 +49,48 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
 
     componentDidMount() {
         this.initialize();
-        this.initControllers();
-    }
-
-    public get container() {
-        return this.layoutService.container;
-    }
-
-    /**
-     * Distinguish the language extensions from extensions
-     * @param extensions
-     * @returns
-     */
-    private splitLanguagesExts(extensions: IExtension[]) {
-        const languagesExts: IExtension[] = [];
-        const others: IExtension[] = [];
-        extensions.forEach((ext) => {
-            if (ext.contributes?.languages) {
-                languagesExts.push(ext);
-            } else {
-                others.push(ext);
-            }
-        });
-
-        return [languagesExts, others];
     }
 
     initialize() {
-        const { extensions = [], defaultLocale = BuiltInDefault } = this.props;
+        const { extensions = [] } = this.props;
 
-        const [languages, others] = this.splitLanguagesExts(extensions);
+        const [languages, restExts] = this.extensionService.splitLanguagesExts(
+            extensions
+        );
 
-        /**
-         * TODO: 添加针对主题的默认值
-         */
-        this.monacoService.initWorkspace(this.container!);
-        this.extensionService.load(defaultExtensions);
+        // First to init the monacoService
+        this.monacoService.initWorkspace(this.layoutService.container!);
 
         // Molecule should load the language extensions first to
         // ensure that the custom language extensions is registered in localeService
+        this.initLocaleExts(languages);
+
+        // The Workbench depends on the monaco and locale extension
+        this.initWorkbenchUI();
+
+        // Init the built-in extensions
+        this.extensionService.load(defaultExtensions);
+
+        // Finally, handle the rest of extensions
+        this.extensionService.load(restExts);
+    }
+
+    initLocaleExts(languages: IExtension[]) {
+        const { defaultLocale = BuiltInDefault } = this.props;
+
         this.extensionService.load(languages);
 
         // And Molecule should set the correct locale before loading normal extensions in case of
         // the localize method returns incorrect international text caused by incorrect current locale in the normal extensions
         const currentLocale = localStorage.getItem(STORE_KEY) || defaultLocale;
         this.localeService.setCurrentLocale(currentLocale);
-
-        this.extensionService.load(others);
     }
 
     /**
-     * Register all controllers and execute the initView method automatically to inject the default value into the corresponding service
+     * Register all controllers and execute the initView method automatically to inject the default value
+     * into the corresponding service
      */
-    initControllers() {
+    initWorkbenchUI() {
         Object.keys(controllers).forEach((key) => {
             const module = controllers[key];
             const controller = container.resolve<Controller>(module);

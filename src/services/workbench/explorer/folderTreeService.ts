@@ -157,6 +157,10 @@ export class FolderTreeService
         this.builtinService = container.resolve(BuiltinService);
     }
 
+    private isHiddenFile(file: IFolderTreeNodeProps) {
+        return !!file.name?.startsWith('.');
+    }
+
     private sortTree(tree: IFolderTreeNodeProps[]) {
         tree.sort((pre, cur) => {
             // folder before file
@@ -166,8 +170,8 @@ export class FolderTreeService
 
             // in general, both have name
             if (pre.name && cur.name) {
-                const isHiddenFilePre = pre.name.startsWith('.') ? 1 : 0;
-                const isHiddenFileCur = cur.name.startsWith('.') ? 1 : 0;
+                const isHiddenFilePre = Number(this.isHiddenFile(pre));
+                const isHiddenFileCur = Number(this.isHiddenFile(cur));
                 // one is hidden file and another is not
                 if (isHiddenFilePre ^ isHiddenFileCur) {
                     return isHiddenFilePre ? -1 : 1;

@@ -7,3 +7,7 @@ yarn.lock
 coverage
 storybook-static
 docs/api
+website/build
+website/docs/api
+website/.docusaurus
+website/node_modules

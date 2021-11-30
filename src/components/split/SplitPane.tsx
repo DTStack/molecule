@@ -62,6 +62,7 @@ export interface ISplitProps extends HTMLElementProps {
 }
 
 interface IAxis {
+    startSize: number[];
     x: number;
     y: number;
     dragSource: null | HTMLDivElement;
@@ -150,6 +151,7 @@ const SplitPane = ({
     ] = useDelayHover();
     const wrapper = useRef<HTMLDivElement>(null);
     const axis = useRef<IAxis>({
+        startSize: [],
         x: 0,
         y: 0,
         dragSource: null,
@@ -227,93 +229,92 @@ const SplitPane = ({
         // reset the hover status
         resetHover(index);
 
-        // calculate the limited sizes
-        limitedSizes.current = limitedSizes.current.map((size) => {
-            return {
-                minSize:
-                    typeof size.minSize === 'number'
-                        ? size.minSize
-                        : calcPercent(size.minSize),
-                maxSize:
-                    typeof size.maxSize === 'number'
-                        ? size.maxSize
-                        : calcPercent(size.maxSize),
-            };
-        });
-
         axis.current = {
-            x: e.clientX - e.target.offsetLeft,
-            y: e.clientY - e.target.offsetTop,
+            startSize: sizes.concat(),
+            x: e.screenX,
+            y: e.screenY,
             dragSource: e.target,
             dragIndex: index,
         };
+
+        // calculate the limited sizes
+        // put it in window temporarily, delete it when mouseup
+        // @ts-ignore
+        window._limitedSizes = limitedSizes.current.map((size) => {
+            return [
+                typeof size.minSize === 'number'
+                    ? size.minSize
+                    : calcPercent(size.minSize),
+                typeof size.maxSize === 'number'
+                    ? size.maxSize
+                    : calcPercent(size.maxSize),
+            ];
+        });
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
     };
 
-    const handleMouseMove = (e) => {
-        if (draging.some((i) => i)) {
-            const currentAxis = {
-                x: e.clientX - axis.current.dragSource!.offsetLeft,
-                y: e.clientY - axis.current.dragSource!.offsetTop,
-            };
-            const distanceX =
-                axis.current[getSplitSizeName().axis] -
-                currentAxis[getSplitSizeName().axis];
+    const handleMouseMove = useCallback(function (
+        this: { _limitedSizes: number[][] } & Window,
+        e
+    ) {
+        const currentAxis = {
+            x: e.screenX,
+            y: e.screenY,
+        };
+        const distanceX =
+            axis.current[getSplitSizeName().axis] -
+            currentAxis[getSplitSizeName().axis];
 
-            setSize((s) => {
-                const nextSizes = s.map(
-                    function (size, index) {
-                        if (index === axis.current.dragIndex - 1) {
-                            const nSize = size - distanceX;
+        const limitedSizes = this._limitedSizes;
 
-                            // TODO check the reason why always have blank
-                            const minSize = limitedSizes.current[index]
-                                .minSize as number;
-                            const maxSize = limitedSizes.current[index]
-                                .maxSize as number;
+        const nextSizes = axis.current.startSize.map(
+            function (this: { offset: number }, size, index) {
+                if (index === axis.current.dragIndex - 1) {
+                    const nSize = size - distanceX;
 
-                            if (nSize < minSize) {
-                                // @ts-ignore
-                                this.isChanged = false;
-                                return minSize;
-                            }
+                    const [minSize, maxSize] = limitedSizes[index];
 
-                            if (nSize > maxSize) {
-                                // @ts-ignore
-                                this.isChanged = false;
-                                return maxSize;
-                            }
+                    if (nSize < minSize) {
+                        this.offset = size - (minSize as number);
+                        return minSize as number;
+                    }
 
-                            return nSize;
-                        }
-                        if (index === axis.current.dragIndex) {
-                            // @ts-ignore
-                            if (this.isChanged) {
-                                return size + distanceX;
-                            }
-                            return size;
-                        }
-                        return size;
-                    },
-                    { isChanged: true }
-                );
+                    if (nSize > maxSize) {
+                        this.offset = size - (maxSize as number);
+                        return maxSize as number;
+                    }
 
-                onChange(nextSizes);
-                return s;
-            });
-        }
-    };
+                    this.offset = distanceX;
+                    return nSize;
+                }
+                if (index === axis.current.dragIndex) {
+                    return size + this.offset;
+                }
+                return size;
+            },
+            { offset: 0 }
+        );
 
-    const handleMouseUp = (e) => {
-        if (draging.some((i) => i)) {
-            setDrag([]);
-            axis.current = {
-                x: 0,
-                y: 0,
-                dragSource: null,
-                dragIndex: -1,
-            };
-        }
-    };
+        onChange(nextSizes);
+    },
+    []);
+
+    const handleMouseUp = useCallback(() => {
+        setDrag([]);
+        axis.current = {
+            startSize: [],
+            x: 0,
+            y: 0,
+            dragSource: null,
+            dragIndex: -1,
+        };
+
+        // @ts-ignore
+        window._limitedSizes = null;
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+    }, []);
 
     /**
      * SplitPane allows sizes in string and number, but the state sizes only support number,
@@ -542,8 +543,6 @@ const SplitPane = ({
         <div
             className={classNames(splitClassName, className)}
             ref={wrapper}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
             title={title}
             role={role}
             style={style}

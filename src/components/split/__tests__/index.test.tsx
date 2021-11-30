@@ -8,6 +8,7 @@ import {
     sashHoverClassName,
     sashItemClassName,
 } from '../base';
+import Pane from '../pane';
 import SplitPane from '../SplitPane';
 
 afterEach(cleanup);
@@ -129,7 +130,7 @@ describe('Test The SplitPane Component', () => {
         const wrapper = getByRole('split');
         const sashs = container.querySelectorAll(`.${sashItemClassName}`);
         fireEvent.mouseDown(sashs[2]);
-        fireEvent.mouseMove(wrapper, { clientX: 10, clientY: 10 });
+        fireEvent.mouseMove(wrapper, { screenX: 10, screenY: 10 });
         fireEvent.mouseUp(wrapper);
 
         expect(mockFn).toBeCalled();
@@ -246,5 +247,41 @@ describe('Test The SplitPane Component', () => {
         expect(panes[0].style.width).toBe(`${2000 / 3}px`);
         expect(panes[1].style.width).toBe(`${2000 / 3}px`);
         expect(panes[2].style.width).toBe(`${2000 / 3}px`);
+    });
+
+    test('Should have limited sizes', () => {
+        const mockFn = jest.fn();
+        const { container, getByRole } = render(
+            <SplitPane
+                role="split"
+                sizes={['10%', '10px']}
+                style={{ width: 500 }}
+                onChange={mockFn}
+            >
+                <Pane maxSize={100} minSize="20px">
+                    <div>1</div>
+                </Pane>
+                <Pane maxSize={50}>
+                    <div>2</div>
+                </Pane>
+                <div>3</div>
+            </SplitPane>
+        );
+
+        const wrapper = getByRole('split');
+        const sashs = container.querySelectorAll(`.${sashItemClassName}`);
+        fireEvent.mouseDown(sashs[1]);
+        fireEvent.mouseMove(wrapper, { screenX: -40, screenY: -40 });
+        fireEvent.mouseUp(wrapper);
+
+        expect(mockFn).toBeCalled();
+        expect(mockFn.mock.calls[0][0]).toEqual([20, 40, 440]);
+
+        mockFn.mockClear();
+        fireEvent.mouseDown(sashs[2]);
+        fireEvent.mouseMove(wrapper, { screenX: 100, screenY: 100 });
+        fireEvent.mouseUp(wrapper);
+        expect(mockFn).toBeCalled();
+        expect(mockFn.mock.calls[0][0]).toEqual([50, 50, 400]);
     });
 });

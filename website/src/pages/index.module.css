@@ -8,6 +8,12 @@
     padding: 4rem 0;
     position: relative;
     text-align: center;
+
+    background: linear-gradient(to bottom right, #00c5f8, #0065f6);
+}
+
+html[data-theme='dark'] .heroBanner {
+    background: linear-gradient(to bottom right, #0058a5, #00437b);
 }
 
 @media screen and (max-width: 966px) {

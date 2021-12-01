@@ -2,36 +2,48 @@ import React from 'react';
 import clsx from 'clsx';
 import styles from './HomepageFeatures.module.css';
 
+import Translate, { translate } from '@docusaurus/Translate';
+
 const FeatureList = [
     {
-        title: 'Easy to Use',
-        Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+        title: translate({ id: 'page.hero.first', message: 'Easy to Use' }),
+        Svg: require('../../static/img/easyToUse.svg').default,
         description: (
             <>
-                Docusaurus was designed from the ground up to be easily
-                installed and used to get your website up and running quickly.
+                <Translate id="page.hero.first.desc">
+                    The Molecule has a majority of built-in components and
+                    services which could combine these as your like, and achieve
+                    the complex interactive through event-emit.
+                </Translate>
             </>
         ),
     },
     {
-        title: 'Focus on What Matters',
-        Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
+        title: translate({ id: 'page.hero.second', message: 'Extensible' }),
+        Svg: require('../../static/img/extensible.svg').default,
         description: (
             <>
-                Docusaurus lets you focus on your docs, and we&apos;ll do the
-                chores. Go ahead and move your docs into the <code>docs</code>{' '}
-                directory.
+                <Translate id="page.hero.second.desc">
+                    The Molecule could enrich the functionality through
+                    extensions. Besides, the Molecule also support some
+                    extensions from VSCode extensions market.
+                </Translate>
             </>
         ),
     },
     {
-        title: 'Powered by React',
-        Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
+        title: translate({
+            id: 'page.hero.third',
+            message: 'Powered by React',
+        }),
+        Svg: require('../../static/img/react.svg').default,
         description: (
             <>
-                Extend or customize your website layout by reusing React.
-                Docusaurus can be extended while reusing the same header and
-                footer.
+                <Translate id="page.hero.third.desc">
+                    The Molecule a UI framework which is developed in React and
+                    associated with MVC pattern. It only export ES modules for
+                    using in React Project.
+                </Translate>
             </>
         ),
     },

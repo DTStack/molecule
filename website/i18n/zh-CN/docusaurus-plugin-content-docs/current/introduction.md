@@ -5,7 +5,7 @@ sidebar_position: 1
 ---
 
 <div align="center">
- <img src="/static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo" />
+ <img src="/static/img/logo@3x.png" width="20%" height="20%" alt="watchman-logo" />
  <h1>Molecule</h1>
  <h3>一个轻量的 Web IDE UI 框架</h3>
 

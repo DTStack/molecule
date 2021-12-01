@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { connect } from 'mo/react';
-import { ActivityBarController } from 'mo/controller/activityBar';
+import { ActivityBarController } from 'mo/controller';
 
 import ActivityBar from './activityBar';
 import { container } from 'tsyringe';

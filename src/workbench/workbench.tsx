@@ -89,7 +89,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                             minSize="170px"
                             initialSize={splitPanePos[0]}
                             maxSize="80%"
-                            className={sidebar.hidden && 'hidden'}
+                            className={sidebar.hidden ? 'hidden' : ''}
                         >
                             <SidebarView />
                         </Pane>

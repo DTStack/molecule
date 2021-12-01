@@ -14,28 +14,28 @@ module.exports = {
 
     docs: [
         'introduction',
-        'quickStart',
+        'overview',
+        'quick-start',
         'the-first-extension',
         {
             type: 'category',
             label: 'Guides',
             collapsed: false,
             items: [
-                'guides/basic',
                 'guides/extension',
                 {
                     type: 'category',
                     collapsed: false,
-                    label: '扩展工作台',
+                    label: '工作台',
                     items: [
                         'guides/extend-workbench',
-                        'guides/extend-builtinUI',
+                        'guides/extend-builtin-ui',
                     ],
                 },
-                'guides/extend-colorTheme',
+                'guides/extend-color-theme',
                 'guides/extend-locales',
                 'guides/extend-settings',
-                'guides/extend-quickAccess',
+                'guides/extend-quick-access',
                 'guides/extend-keybinding',
                 'guides/icons',
             ],

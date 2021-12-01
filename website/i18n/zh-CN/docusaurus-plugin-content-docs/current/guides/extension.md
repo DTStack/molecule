@@ -49,15 +49,6 @@ export class ExampleExt implements IExtension {
 
 [ExtensionService][extensionservice] 是用来管理扩展程序的一个服务对象，例如常见的**添加、查询**等操作。服务对象我们可以通过 [`molecule.extension`][extensionservice] 直接访问。除去针对扩展的一些基本操作，ExtensionService 还负责了一些其他的常用操作。
 
-### 执行内置命令（executeCommand）
-
-我们在 [自定义 Action](/docs/guides/extend-quickAccess) 章节中有讲过如何定义一个 **Action**, 那么除了使用 [Keybinding](/docs/guides/extend-keybinding) 的方式， **Command Palette** 的方式触发这个 **Action** 以外，
-我们也可以通过 [executeCommand][extensionservicecmd] 方法去主动执行这个 **Action**。
-
-```ts
-molecule.extension.executeCommand('ActionID', args);
-```
-
 ## 禁用扩展
 
 我们已经在上文中的诸多示例中讲述了 **Extension** 的使用方法。Molecule 默认内置了很多扩展程序，

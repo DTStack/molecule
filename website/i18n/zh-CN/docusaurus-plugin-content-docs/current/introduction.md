@@ -26,9 +26,9 @@ sidebar_position: 1
 
 Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
 
-[在线预览](https://github.com/DTStack/molecule-examples)
+## 动机
 
-## 动机（Motivation)
+> 我们过去在产品中使用 React.js 构建了大量的 Web IDE 场景，然而这些 UI 组件失去了。
 
 ## 核心功能
 
@@ -67,33 +67,6 @@ ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 `extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./quickStart.md)。
-
-## 开发
-
-```bash
-git clone git@github.com:DTStack/molecule.git
-```
-
-首先 Clone 源码到本地
-**开发模式**
-
-```bash
-yarn # install dependencies
-
-yarn dev # 启动开发模式
-```
-
-Molecule 中的组件是基于 Storybook 开发并管理的，预览地址：`http://localhost:6006/`默认地址浏览。
-
-**构建 & 预览**
-
-```bash
-yarn build
-yarn web # 预览打包后的 Web
-```
-
-当前我们默认将 Molecule 以 `ES6` 模块的方式构建到 **`esm`** 目录。另外，
-这里除了 Storybook 提供的组件预览模式以外，我们同时内置了一个使用 ESM 模块的 `Web` 预览模式。
 
 ## 贡献
 

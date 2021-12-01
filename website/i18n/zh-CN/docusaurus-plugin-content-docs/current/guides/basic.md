@@ -3,7 +3,7 @@ title: 概览
 sidebar_label: 概览
 ---
 
-在介绍 Molecule 的基础配置之前，在阅读以下内容之前请确保您会 JavaScript。
+在正式开始使用 Molecule 前，我们一起来简单的了解下几个基本的概念，以确保您能快速上手 Molecule 的使用。
 
 ## 扩展（Extension）
 
@@ -13,17 +13,13 @@ Molecule 支持通过扩展插件来丰富自身的功能。我们不仅可以�
 
 ## 工作台（Workbench）
 
-工作台是 Molecule 中最重要的界面。
-
-### 概念
-
-为了减少学习成本，我们把 Molecule 的工作台划分成了多个部分。
-
-如你所见，下图就是 Molecule 的工作台布局。
+工作台是 Molecule 中最重要的界面。我们把 Molecule 的工作台划分成了多个部分，如你所见，下图就是 Molecule 的工作台布局：
 
 ![molecule](/img/guides/molecule.jpg)
 
-> 如果无法看清，请右键选择在新标签页中打开图片。
+:::tip
+如果无法看清，请右键选择在新标签页中打开图片。
+:::
 
 首先，我们把工作台划分成两个部分，分别是 `statusBar` 和主要区域。
 

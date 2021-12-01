@@ -22,10 +22,11 @@ module.exports = {
             collapsed: false,
             items: [
                 'guides/basic',
+                'guides/extension',
                 {
                     type: 'category',
                     collapsed: false,
-                    label: 'UI',
+                    label: '扩展工作台',
                     items: [
                         'guides/extend-workbench',
                         'guides/extend-builtinUI',
@@ -43,7 +44,7 @@ module.exports = {
             type: 'category',
             collapsed: false,
             label: 'Advanced Guides',
-            items: ['advanced/customize-workbench', 'advanced/extension'],
+            items: ['advanced/customize-workbench'],
         },
         'contributing',
     ],
@@ -56,7 +57,6 @@ module.exports = {
             collapsed: false,
             items: [
                 'api/namespaces/molecule.component',
-                'api/namespaces/molecule.i18n',
                 'api/namespaces/molecule.react',
                 'api/namespaces/molecule.event',
             ],

@@ -1,6 +1,6 @@
 ---
-title: 工作台（Workbench）
-sidebar_label: 工作台
+title: 工作台核心部件（Workbench）
+sidebar_label: 核心部件
 ---
 
 工作台是 Molecule 中最核心的部件, 我们使用 React 组件复刻了 VSCode Workbench 的设计，提供了一个简单的工作台界面, 并且可以被用来扩展其他功能。

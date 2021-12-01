@@ -1,6 +1,6 @@
 ---
-title: 内置部件
-sidebar_label: 内置部件
+title: 扩展部件
+sidebar_label: 扩展部件
 ---
 
 在 Molecule 中，我们基于 核心 UI 模块，默认内置了很多在 IDE Workbench 中常用的模块，以便我们可以快速的满足我们的开发需求。

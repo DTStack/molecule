@@ -22,8 +22,7 @@ import {
     sashVerticalClassName,
     splitClassName,
 } from './base';
-import { react } from 'mo/molecule.api';
-
+import { cloneReactChildren } from 'mo/react';
 /**
  * Keep for keep size when resize
  * Pave for NOT keep size when resize
@@ -486,7 +485,7 @@ const SplitPane = ({
                     const { className = '', style = {} } = children[
                         paneIndex
                     ].props;
-                    return react.cloneReactChildren(children[paneIndex], {
+                    return cloneReactChildren(children[paneIndex], {
                         key: paneIndex,
                         className: classNames(
                             paneItemClassName,

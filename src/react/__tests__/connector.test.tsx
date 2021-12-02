@@ -85,19 +85,18 @@ describe('Test Connector Component', () => {
 
     test('Should bind refs into controller', () => {
         const withRef = new TestControllerA();
+        const refObj = {
+            test: jest.fn(),
+        };
         const RefComponent = forwardRef((props, ref) => {
-            useImperativeHandle(ref, () => ({
-                test: jest.fn(),
-            }));
+            useImperativeHandle(ref, () => refObj);
             return <div>test</div>;
         });
         const TestView = connect(serviceA, RefComponent, withRef);
         render(<TestView />);
 
         // @ts-ignore
-        expect(withRef.ref.current).toEqual({
-            test: jest.fn(),
-        });
+        expect(withRef.ref.current).toBe(refObj);
     });
 
     test('Test connect update to the Component view after state changed.', () => {

@@ -39,11 +39,14 @@ describe('The folder tree controller', () => {
 
     test('Should support to collapseAll', () => {
         const mockFn = jest.fn();
-        // @ts-ignore
-        folderTreeController.ref = {
-            clearExpands: mockFn,
-        };
-
+        Object.defineProperty(folderTreeController, 'ref', {
+            value: {
+                current: {
+                    clearExpands: mockFn,
+                },
+            },
+            writable: false,
+        });
         folderTreeController.collapseAll();
         expect(mockFn).toBeCalled();
     });

@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test the Tree component Match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-tree"
+    draggable="false"
+    role="tree"
+  >
+    <div
+      class="mo-tree__treenode mo-tree__treenode--close"
+      data-id="mo_treeNode_1"
+      data-indent="0"
+      data-key="1"
+      draggable="false"
+      tabindex="0"
+      title="test1"
+    >
+      <div
+        class="mo-tree__indent"
+        style="width: 0px;"
+      />
+      <span
+        class="codicon codicon-chevron-right"
+      />
+      <span
+        class="mo-tree__treenode__title"
+      >
+        test1
+      </span>
+    </div>
+    <div
+      class="mo-tree__treenode mo-tree__treenode--close"
+      data-id="mo_treeNode_2"
+      data-indent="0"
+      data-key="2"
+      draggable="false"
+      tabindex="0"
+      title="test2"
+    >
+      <div
+        class="mo-tree__indent"
+        style="width: 0px;"
+      />
+      <span
+        class="codicon codicon-chevron-right"
+      />
+      <span
+        class="mo-tree__treenode__title"
+      >
+        test2
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;

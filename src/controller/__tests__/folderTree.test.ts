@@ -37,7 +37,18 @@ describe('The folder tree controller', () => {
         reset();
     });
 
-    test('Should support to controll the default value', () => {
+    test('Should support to collapseAll', () => {
+        const mockFn = jest.fn();
+        // @ts-ignore
+        folderTreeController.ref = {
+            clearExpands: mockFn,
+        };
+
+        folderTreeController.collapseAll();
+        expect(mockFn).toBeCalled();
+    });
+
+    test('Should support to control the default value', () => {
         builtinService.inactiveModule('FILE_CONTEXT_MENU');
         builtinService.inactiveModule('BASE_CONTEXT_MENU');
         builtinService.inactiveModule('COMMON_CONTEXT_MENU');

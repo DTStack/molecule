@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The FolderTree Component Match Snapshot 1`] = `
+<DocumentFragment>
+  <div
+    data-content="test"
+    style="height: 100%;"
+  >
+    <div
+      class="mo-tree mo-folderTree"
+      draggable="true"
+      role="tree"
+    >
+      <div
+        class="mo-tree__treenode mo-tree__treenode--close"
+        data-id="mo_treeNode_test"
+        data-indent="0"
+        data-key="test"
+        draggable="true"
+        tabindex="0"
+        title="test"
+      >
+        <div
+          class="mo-tree__indent"
+          style="width: 0px;"
+        />
+        <span
+          class="codicon codicon-chevron-right"
+        />
+        <span
+          class="mo-tree__treenode__title"
+        >
+          test
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

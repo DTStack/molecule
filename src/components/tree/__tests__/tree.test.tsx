@@ -37,6 +37,11 @@ jest.mock('lodash', () => {
 describe('Test the Tree component', () => {
     afterEach(cleanup);
 
+    test('Match snapshot', function () {
+        const { asFragment } = render(<TreeView data={mockData} />);
+        expect(asFragment()).toMatchSnapshot();
+    });
+
     test('Should render name', async () => {
         const { getByTitle, findByTitle } = render(
             <TreeView data={mockData} />

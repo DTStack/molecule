@@ -124,7 +124,7 @@ describe('The explorer controller', () => {
         expect(mockFn.mock.calls[0][0]).toBe(mockKeys);
     });
 
-    test('Should support to execute the onToolbarClick method', () => {
+    test('Should support to execute the create tree node in the onToolbarClick method', () => {
         const original = folderTreeController.createTreeNode;
         const mockFn = jest.fn();
         folderTreeController.createTreeNode = mockFn;
@@ -147,7 +147,20 @@ describe('The explorer controller', () => {
         folderTreeController.createTreeNode = original;
     });
 
-    test('Should support to execute the onToolbarClick method', () => {
+    test('Should suppor t o execute the collapse in the onToolbarClick method', () => {
+        const original = folderTreeController.collapseAll;
+        const mockFn = jest.fn();
+        folderTreeController.collapseAll = mockFn;
+
+        const mockItem = { id: constants.COLLAPSE_COMMAND_ID };
+        const mockParentPanel = { id: 'test', name: 'test' };
+        explorerController.onToolbarClick(mockItem, mockParentPanel);
+
+        expect(mockFn).toBeCalled();
+        folderTreeController.createTreeNode = original;
+    });
+
+    test('Should support to execute the others in the onToolbarClick method', () => {
         // REMOVE_COMMAND_ID
         const mockItem = { id: constants.REMOVE_COMMAND_ID };
         const mockParentPanel = { id: 'test', name: 'test' };

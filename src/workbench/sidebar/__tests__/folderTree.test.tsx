@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, PropsWithRef } from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { dragToTargetNode, expectFnCalled } from '@test/utils';
@@ -6,8 +6,12 @@ import { FolderTree } from '../explore';
 import type { IFolderTreeProps } from '../explore/folderTree';
 import type { ITreeNodeItemProps } from 'mo/components';
 import { folderTreeClassName, folderTreeEditClassName } from '../explore/base';
+import { TreeNodeModel } from 'mo/model';
+import { expandTreeNodeClassName } from 'mo/components/tree/base';
 
-function FolderTreeViewPanel(props: Omit<IFolderTreeProps, 'panel'>) {
+function FolderTreeViewPanel(
+    props: Omit<IFolderTreeProps, 'panel'> & PropsWithRef<any>
+) {
     return <FolderTree panel={{ id: 'test', name: 'test' }} {...props} />;
 }
 
@@ -54,6 +58,31 @@ const mockTreeEditData = [
 
 describe('The FolderTree Component', () => {
     afterEach(cleanup);
+
+    test('Match Snapshot', () => {
+        const { asFragment } = render(
+            <FolderTree
+                panel={{ id: 'test', name: 'test' }}
+                folderTree={{
+                    data: [
+                        new TreeNodeModel({
+                            id: 'root',
+                            name: 'root',
+                            isLeaf: false,
+                            children: [
+                                new TreeNodeModel({
+                                    id: 'test',
+                                    name: 'test',
+                                    isLeaf: false,
+                                }),
+                            ],
+                        }),
+                    ],
+                }}
+            />
+        );
+        expect(asFragment()).toMatchSnapshot();
+    });
 
     test('Should render welcome page without data', () => {
         expectFnCalled((mockFn) => {
@@ -246,5 +275,45 @@ describe('The FolderTree Component', () => {
 
             expect(mockFn.mock.calls[0][0]).toBeUndefined();
         });
+    });
+
+    test('Should with refs', () => {
+        const ref = createRef<any>();
+        const { getByTitle } = render(
+            <FolderTree
+                panel={{ id: 'test', name: 'test' }}
+                ref={ref}
+                folderTree={{
+                    data: [
+                        new TreeNodeModel({
+                            id: 'root',
+                            name: 'root',
+                            isLeaf: false,
+                            children: [
+                                new TreeNodeModel({
+                                    id: 'test',
+                                    name: 'test',
+                                    isLeaf: false,
+                                }),
+                            ],
+                        }),
+                    ],
+                }}
+            />
+        );
+
+        const node = getByTitle('test');
+        fireEvent.click(node);
+
+        const openNodes = document.querySelectorAll(
+            `.${expandTreeNodeClassName}`
+        );
+        expect(openNodes.length).toBe(1);
+
+        expect(Object.keys(ref.current)).toEqual(['clearExpands']);
+        ref.current.clearExpands();
+        expect(
+            document.querySelectorAll(`.${expandTreeNodeClassName}`).length
+        ).toBe(0);
     });
 });

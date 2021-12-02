@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { Component, connect } from 'mo/react';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -81,6 +81,23 @@ describe('Test Connector Component', () => {
         );
         expect(getByText('A')).not.toBeNull();
         expect(getByText('B')).not.toBeNull();
+    });
+
+    test('Should bind refs into controller', () => {
+        const withRef = new TestControllerA();
+        const RefComponent = forwardRef((props, ref) => {
+            useImperativeHandle(ref, () => ({
+                test: jest.fn(),
+            }));
+            return <div>test</div>;
+        });
+        const TestView = connect(serviceA, RefComponent, withRef);
+        render(<TestView />);
+
+        // @ts-ignore
+        expect(withRef.ref.current).toEqual({
+            test: jest.fn(),
+        });
     });
 
     test('Test connect update to the Component view after state changed.', () => {

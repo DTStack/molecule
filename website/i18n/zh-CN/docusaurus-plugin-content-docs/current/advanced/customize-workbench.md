@@ -3,9 +3,13 @@ title: 自定义工作台（Workbench）
 sidebar_label: 自定义工作台
 ---
 
-Molecule 默认的 **Workbench** UI 是一个 **VSCode** 的克隆版本。但是我们在实际的业务开发场景中，往往不能满足我们产品经理的需求。
+Molecule 默认的 **Workbench** UI 是一个 **VSCode** 的克隆版本。但是我们在实际的开发场景中，往往不能满足我们的需求。
 
-Molecule 除了内置的一些原子 [Components](/docs/api/namespaces/molecule.component) 以外，也提供了基本的 **Workbench、SideBar、Editor、ActivityBar、MenuBar、Panel、StatusBar** 等核心[**部件**](./../guides/extend-workbench.md)，以便开发者根据自己的需求**重新组装**自己的 **Workbench**。
+除了内置的一些原子 [Components](/docs/api/namespaces/molecule.component) 以外，Molecule 同时提供了基本的 **Workbench、SideBar、Editor、ActivityBar、MenuBar、Panel、StatusBar** 等核心[**UI 部件**](./../guides/extend-workbench.md)，以便开发者根据自己的需求**重新组装**自己的 **Workbench**。
+
+:::tip
+本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+:::
 
 ## 自定义 Workbench 示例
 
@@ -14,6 +18,10 @@ Molecule 除了内置的一些原子 [Components](/docs/api/namespaces/molecule.
 </div>
 
 Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我们将 **MenuBar** 水平置于了**顶部**的位置，在编辑器的右侧，我们又自定义了一个**右边栏（RightSideBar)**。
+
+:::info
+我们会在未来的版本中，将 **MenuBar 置顶布局** 、**右边栏（RightSideBar）**作为 Molecule 的**内置**功能。
+:::
 
 ### 重组 Workbench
 
@@ -54,8 +62,10 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 </div>
 ```
 
-**MenuBar** 和 **ActivityBar** 默认都放在了 `className` 为 `compositeBarClassName` DIV 元素中，而 **SplitPane** 组件中
-默认包含了 **SidebarView** 和右侧的 **Editor** 和 **Panel** 面板，并没有包含 **RightSideBar** 面板，具体改造下：
+代码中，`MenuBarView` 和 `ActivityBarView` 默认都放在了 `className` 为 `compositeBarClassName` **DIV** 元素中，而 `SplitPane` 组件中
+默认包含了 `SidebarView` 和右侧的 **Editor** 和 **Panel** 面板，并没有包含 **RightSideBar** 面板。
+
+具体改造如下：
 
 ```tsx title="/src/views/myWorkbench.tsx"
 <div className={workbenchClassName}>
@@ -100,16 +110,16 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 </div>
 ```
 
-:::tip
+:::caution
 以上代码仅仅是 `myWorkbench.tsx` 文件的部分代码，完整代码请查看 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/views/myWorkbench.tsx)
 :::
 
-我们移动了 `MenuBar` 组件的位置，并使用的是自己定义的 `MyMenuBarView` 组件。并在 `SplitPane` 组件中新增了一个
-`className` 为 `rightSidebar` 的面板，并使用了内置的 `Sidebar` 组件，并使用了自定义的 `MySidePane` 组件。
+我们移动了 `MenuBar` 组件的位置，使用的是自己定义的 `MyMenuBarView` 组件。在 `SplitPane` 组件中新增了一个
+`className` 为 `rightSidebar` 的面板，使用了内置的 `Sidebar` 组件，并在 `Sidebar` 中使用了自定义的 `MySidePane` 组件。
 
 ### 自定义 MenuBar
 
-上图中 **MenuBar** 包含了一个自定义的 **Logo** 元素，MenuBar 并使用了**横向（Horizontal）**的布局。 与 Workbench 一样，我们从 `src/workbench/menuBar` 下拷贝默认的 `menuBar.tsx` 组件，重命名为 `myMenuBar.tsx`：
+上图中 MenuBar 包含了一个自定义的 **Logo** 元素，MenuBar 并使用了**横向（Horizontal）**的布局。 与 Workbench 一样，我们从 `src/workbench/menuBar` 下拷贝默认的 `menuBar.tsx` 组件，重命名为 `myMenuBar.tsx`：
 
 ```tsx title="/src/views/myMenuBar/index.tsx"
 <div className="myMenuBar">
@@ -125,11 +135,11 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 </div>
 ```
 
-新增了 `Logo` 组件，并替换了原来的 [DropDown](/docs/api/namespaces/molecule.component#dropdown) 为 [Menu](/docs/api/namespaces/molecule.component#menu) 组件。
+代码中新增了 `Logo` 组件，并替换了原来的 [DropDown](/docs/api/namespaces/molecule.component#dropdown) 为 [Menu](/docs/api/namespaces/molecule.component#menu) 组件。
 
 ### 自定义 RightSideBar
 
-与 `MenuBar` 稍有不同的是，因为复用了内置的 [Sidebar](/docs/api/namespaces/molecule#sidebar-1) 组件，所以这里我们只需要传入 [ISidebarPane](/docs/api/interfaces/molecule.models.ISidebarPane) 类型的组件即可：
+与 `MenuBar` 稍有不同的是，因为复用了内置的 [Sidebar](/docs/api/namespaces/molecule#sidebar-1) 组件，所以这里我们只需要传入 [ISidebarPane](/docs/api/interfaces/molecule.models.ISidebarPane) 类型的组件：
 
 ```tsx title="/src/views/mySidePane.tsx"
 import React from 'react';
@@ -174,12 +184,8 @@ export const MySidePane: ISidebarPane = {
 };
 ```
 
-完整示例代码请参考 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo)
-
-:::info
-我们会在未来的版本中，将 **MenuBar 置顶布局** 、**右边栏（RightSideBar）**作为 Molecule 的**内置**功能。
-:::
+完成这些操作后，即可在界面中看到如上图所示的布局了。完整示例请参考 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo)
 
 ## 总结
 
-如上例中使用了很多 Molecule **内置**的 UI 组件来实现自定义，然而使用内置组件是有一定上手成本的，需要对内置的 UI 组件有比较好了解。我们会在后序的版本中，持续优化**文档**和**API**，并提供更多的使用**示例**，以减轻上手成本。
+上例中使用了很多 Molecule **内置**的 UI 组件来实现自定义，然而使用[内置组件](./customize-builtin.md)是有一定上手成本的，需要开发者对内置的 UI 组件有比较好了解。我们会在后序的版本中，持续优化**文档**和**API**，以减轻上手成本，并尽可能的提供更多的使用**示例**。

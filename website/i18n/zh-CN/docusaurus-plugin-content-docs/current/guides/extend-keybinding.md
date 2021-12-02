@@ -4,9 +4,13 @@ sidebar_label: 快捷键
 ---
 
 [Monaco Editor](https://microsoft.github.io/monaco-editor/) 内置来非常强大的 **快捷键（Keybinding）** 服务，Molecule 在此基础上，移植了 VSCode 中的 `Action2` 抽象类。开发者可以通过继承这个 `Action2` 对象，来实现一些**自定义 Action**，并可以通过
-**快捷键、执行命令、Command Palette** 的方式来触发。
+**快捷键、执行命令、Command Palette** 等方式来触发。
 
 本文将详细阐述，如何实现自定义 **Keybinding Action**。
+
+:::tip
+本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+:::
 
 ## 定义 Action 对象
 

@@ -3,25 +3,27 @@ title: 快捷访问（QuickAccess)
 sidebar_label: 快捷访问
 ---
 
-得益于 `monaco-editor` **快捷访问 （QuickAccess）** 强大的扩展能力，我们把允许开发者在 Molecule 中通过 **Extension** 的方式，去自定义**快捷访问**功能。
+得益于 [Monaco Editor](https://microsoft.github.io/monaco-editor/) **快捷访问 （QuickAccess）** 强大的扩展能力，我们把允许开发者在 Molecule 中通过 **Extension** 的方式，去自定义**快捷访问**功能。
+
+:::info
+Molecule 中的快捷访问功能，与[快捷键](./extend-keybinding.md)功能一样, 都得依赖 `Action2` 抽象类。目前实现此功能需要引入相关的 monaco-editor 模块。
+:::
 
 <div align="center">
  <img src="/img/guides/extend-quickAccess-1.png" alt="Search files by name" />
 </div>
 
-:::info
-Molecule 中的快捷访问功能，都是依赖 monaco-editor 中的 Action 对象。目前实现此功能需要引入相关的 monaco-editor 模块。
-:::
-
 ## 定义快捷访问 Action 对象
+
+我们一起来看个具体示例：
 
 <div align="center">
  <img src="/img/guides/extend-quickAccess.png" alt="Search files by name" />
 </div>
 
-我们一起来看这个例子：我们通过快捷键 `Command/Ctrl + P` 打开**快速访问搜索**面板 ，通过输入文件名称，即可检索出文件列表，选中则在编辑器中打开。
+图中的 **「快速访问搜索」** 面板，通过快捷键 `Command/Ctrl + P` 打开，通过输入文件名称，即可以 **AutoComplete** 的效果展示出文件列表，**选中文件**则在**编辑器**中打开。
 
-首先我们新建一个 `quickOpenAction.ts` 文件, 文件中定义了 `QuickOpenAction` Action 对象：
+首先，我们新建一个 `quickOpenAction.ts` 文件, 文件中定义了 `QuickOpenAction` Action 对象：
 
 ```ts title="/src/extensions/theFirstExtension/quickOpenAction.ts"
 import {
@@ -102,7 +104,7 @@ export class QuickOpenAction extends Action2 {
 
 ## 注册 Action
 
-跟其他的扩展程序相同，声明好的 QuickOpenAction 对象我们需要在扩展方法 activate 中激活：
+跟其他的扩展程序相同， `QuickOpenAction` 对象需要在扩展 `activate` 方法中激活：
 
 ```ts
 activate(extensionCtx: IExtensionService): void {
@@ -116,4 +118,6 @@ activate(extensionCtx: IExtensionService): void {
 这里我们需要使用 [ExtensionService](/docs/api/interfaces/molecule.IExtensionService) 对象的 `registerAction` 方法来注册。重新加载
 应用界面，然后我们可以在 **Command Palette** 中找到 **Search files by name** 项，同时也可以使用快捷键 `Command/Ctrl + P` 来激活。
 
-完整示例请看 [molecule-examples](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/action)
+:::tip
+本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+:::

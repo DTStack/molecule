@@ -8,7 +8,7 @@ sidebar_label: 颜色主题
 ## 使用 VSCode 社区的主题
 
 :::tip
-本文仍就以 [Quick Start](../quick-start) 中的项目为例子，阐述如何使用 VSCode 社区的主题。
+本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
 :::
 
 首先，我们可以打开这个 [VSCode Theme 市场](https://vscodethemes.com/), 尝试找到一款你喜欢的颜色主题。

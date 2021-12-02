@@ -3,17 +3,17 @@ title: 颜色主题（ColorTheme）
 sidebar_label: 颜色主题
 ---
 
-本章内容包括如何扩展 VSCode 扩展市场中的相关颜色主题扩展包，以及如何自定义自己的颜色主题扩展包。
-
-## 基本功能
+[颜色主题（ColorTheme）](/docs/api/interfaces/molecule.IColorThemeService)是 Molecule 非常重要的功能，我们做到了**基本兼容** VSCode 的社区的[颜色主题](https://vscodethemes.com/)。本文主要是介绍如何扩展 **VSCode 扩展市场中**的相关颜色主题扩展包，以及如何实现**自定义**颜色主题。
 
 ## 使用 VSCode 社区的主题
 
-Molecule 支持扩展部分 VSCode 扩展市场中的颜色主题扩展包，接下来就以[快速开始](../quickStart)中生成的项目为例子，阐述如何加载已存在的颜色主题包。
+:::tip
+本文仍就以 [Quick Start](../quick-start) 中的项目为例子，阐述如何使用 VSCode 社区的主题。
+:::
 
-首先，你需要在 VSCode 市场中找到一款你喜欢的颜色主题，这里我们以 `One Dark Pro` 为例。在确认该主题之后，我们需要在 `github` 上找到该主题的项目地址以确保我们可以获取到颜色主题的代码。
+首先，我们可以打开这个 [VSCode Theme 市场](https://vscodethemes.com/), 尝试找到一款你喜欢的颜色主题。
 
-然后，我们在 `src` 目录下新建 `extensions` 目录，用以存放该项目中所有的扩展，然后我们在终端中打开该 `extensions` 目录，在该目录下执行 `git clone https://github.com/Binaryify/OneDark-Pro.git` 命令下载 `One Dark Pro` 主题代码.
+这里我们以 **One Dark Pro** 主题为例，我们需要在 **GitHub** 上找到该主题, 并确保我们可以获得该颜色主题的代码。找到主题代码后，我们在终端切换到 `src/extensions` 目录下，执行 `git clone https://github.com/Binaryify/OneDark-Pro.git` 命令，下载 `One Dark Pro` 主题代码， 如下：
 
 ```shell
 $ pwd
@@ -29,7 +29,7 @@ Receiving objects: 100% (4493/4493), 19.68 MiB | 358.00 KiB/s, done.
 Resolving deltas: 100% (2830/2830), done.
 ```
 
-在这之后，我们的文件目录为
+下载完成后，我们可以看到：
 
 ```shell
 $ tree -L 2  ./src
@@ -46,11 +46,15 @@ $ tree -L 2  ./src
 └── setupTests.js
 ```
 
-我们可以看到在 `OneDark-Pro/themes` 下有 3 个文件夹，这表示 `One Dark Pro` 主题中包含了 3 种颜色主题。然后由于一些特殊性，我们需要对 `One Dark Pro` 主题的代码做一些简单的修改。
+我们可以看到在 `OneDark-Pro/themes` 下有 3 个文件夹，这表示 `One Dark Pro` 主题中包含了 3 种颜色主题。
+
+:::tip
+由于实现技术的原因，Molecule 并不是无缝衔接 VSCode Color Theme 扩展的, 我们需要对 `One Dark Pro` 主题的代码做一些简单**改造**。
+:::
 
 ### 改造主题包
 
-首先，我们在 `OneDark-Pro` 目录下新建 `index.js` 文件，写入以下内容:
+首先，我们在 `OneDark-Pro` 目录下新建 `index.ts` 文件，具体内容如下:
 
 ```js
 // 读取 package.json 中的内容
@@ -78,36 +82,15 @@ OneDarkPro.id = 'OneDarkPro';
 export { OneDarkPro };
 ```
 
-:::info
-建议将 `OneDark-Pro` 目录下除了 `package.json`、`index.js`、`themes` 三个文件或文件夹保留以外，其余均可以删除
-
-```shell
-$ tree -L 3 ./src
-./src
-├── App.css
-├── App.js
-├── App.test.js
-├── extensions
-│   └── OneDark-Pro
-│       ├── index.js
-│       ├── package.json
-│       └── themes
-├── index.css
-├── index.js
-├── logo.svg
-├── reportWebVitals.js
-└── setupTests.js
-```
-
+:::tip
+`OneDark-Pro` 目录下除了 `package.json`、`index.js`、`themes` 3 个文件为必要以外，其余文件均可以删除。
 :::
 
 ### 应用颜色主题
 
-然后，我们在 `App.js` 中添加该扩展包
+最后，我们在 `App.js` 中添加该扩展包
 
-```js
-// src/App.js
-
+```js title="src/App.js"
 import { OneDarkPro } from './extensions/OneDark-Pro';
 
 function App() {
@@ -119,19 +102,21 @@ function App() {
 }
 ```
 
-通过 `yarn start` 启动项目后，我们可以通过快捷键 `Command/Ctrl + K` 快速访问颜色主题面板。
+我们可以通过快捷键 `Command/Ctrl + K` 快速访问**「颜色主题面板」**。
 
 ![colorTheme](/img/guides/colorThemePalette.jpg)
 
-除了内置的几个颜色主题外，我们已经可以在颜色主题面板中看到刚才我们新添加的颜色主题扩展中的三个颜色主题，分别是 `One Dark Pro`,`One Dark Pro Darker` 以及 `One Dark Pro Flat`.
+:::info
+除了内置的几个颜色主题外，我们已经可以在颜色主题面板中看到刚才我们新添加的颜色主题扩展中的三个颜色主题，分别是 `One Dark Pro`，`One Dark Pro Darker` 以及 `One Dark Pro Flat`。
+:::
 
 ## 自定义颜色主题
 
-### 创建自定义颜色主题扩展
+如果当前 VSCode 扩展市场没有颜色主题能满足你，那么你可以选择**自定义颜色主题**扩展，相比使用已存在的颜色主题扩展，自定义颜色主题扩展会需要更多的时间。
 
-如果当前 VSCode 扩展市场没有颜色主题能满足你，那么你可以选择自定义颜色主题扩展，相比使用已存在的颜色主题扩展，自定义颜色主题扩展会需要更多的时间。
+### 创建颜色主题扩展
 
-首先，你需要为你的颜色主题考虑一个名字，这里我们以 `My Theme` 作为示例。我么你需要在 `extensions` 目录下创建一个文件夹，名字就叫 `MyTheme`
+首先，我们在 `extensions` 目录下创建一个文件夹 `MyTheme` 的文件夹：
 
 ```shell
 $ mkdir MyTheme
@@ -151,7 +136,7 @@ $ tree -L 2
     └── themes
 ```
 
-绝大多数 `package.json` 文件里的内容都是一个 `JavaScript` 程序员应该知道的，所以这里就不详细说明了。接下来我们在 `package.json` 中添加必要的属性，如下:
+接下来我们在 `package.json` 中添加**必要的属性**，如下:
 
 ```diff
 {
@@ -177,11 +162,11 @@ $ tree -L 2
 }
 ```
 
--   `label` 属性的意思是当该主题被 Molecule 加载后，在颜色主题面板中显示的名称。
+-   `label` 属性的意思是当该主题被 Molecule 加载后，在颜色主题面板中显示的名称 `My Theme`。
 -   `uiTheme` 属性的意思是该主题是暗黑主题还是亮色主题，抑或是高对比度主题.
 -   `path` 属性的意思是该主题的详细主题配置所在的路径.
 
-然后，我们需要创建 `themes/MyTheme.json` 文件，其中的内容如下：
+然后，我们再创建一个 `themes/MyTheme.json` 文件，具体内容如下：
 
 ```json
 {
@@ -197,9 +182,14 @@ $ tree -L 2
 -   `type` 表示当前颜色主题的类型
 -   `colors` 表示当前颜色主题的具体颜色
 
-这里我们可以看到，`My Theme` 主题修改了 `statusBar` 的背景颜色为红色，具体还有许多的颜色可以修改，具体参考 [VSCode Theme](https://code.visualstudio.com/api/references/theme-color)。
+这里我们可以看到，`My Theme` 主题修改了 [StatusBar](/docs/guides/extend-workbench#状态栏statusbar) 的背景颜色为红色。
 
-然后我们在 `MyTheme` 目录下创建 `index.js`，并写入以下内容,
+:::info
+Molecule 的 ColorTheme **兼容** [VSCode ColorTheme](https://code.visualstudio.com/api/references/theme-color)，
+更多的**颜色修改项**，请查阅 [VSCode ColorTheme](https://code.visualstudio.com/api/references/theme-color)。
+:::
+
+然后我们在 `MyTheme` 目录下创建 `index.ts`，具体内容如下：
 
 ```js
 // 读取 package.json 中的内容
@@ -224,13 +214,11 @@ MyTheme.id = 'MyTheme';
 export { MyTheme };
 ```
 
-### 应用颜色主题
+### 应用颜色主题扩展
 
-这部分和 [应用颜色主题](/extends-colorTheme#应用颜色主题) 一致，同样也是在 `App.js` 中添加该扩展包并且启动项目
+同样, 自定义的主题扩展程序也是在 `App.js` 中的 [MoleculeProvider](/docs/api/classes/MoleculeProvider) 组件中引入：
 
-```js
-// src/App.js
-
+```js title="src/App.js"
 import { OneDarkPro } from './extensions/OneDark-Pro';
 import { MyTheme } from './extensions/MyTheme';
 
@@ -243,10 +231,17 @@ function App() {
 }
 ```
 
-启动项目后，我们就可以在颜色主题快速访问面板中看到 `My Theme` 的主题，并且选择该主题后，底部状态栏的背景颜色变成了红色。
+打开在**颜色主题快速访问面板**，我们应该就能看到 `My Theme` 的主题了。选择该主题后，底部 [StatusBar](/docs/guides/extend-workbench#状态栏statusbar) 的**背景颜色**即变成了红色。
 
-## 其他 API
+## 颜色主题（ColorTheme） 服务对象
 
-## 总结
+Molecule 提供了 [ColorTheme](/docs/api/classes/molecule.ColorThemeService) 服务对象，支持开发者在必要的情况下主动做一些主动操作，例如[设置主题](/docs/api/classes/molecule.ColorThemeService#settheme)、[获取主题](/docs/api/classes/molecule.ColorThemeService#getthemebyid) 等等。
 
-本节内容介绍了如何在 Molecule 中加载社区颜色主题扩展和如何创建并加载自定义的颜色主题扩展。
+```ts
+// Set the current Color Theme
+molecule.colorTheme.setTheme(themeId);
+// Get Themes
+molecule.colorTheme.getThemes();
+```
+
+更多有关 [ColorTheme](/docs/api/classes/molecule.ColorThemeService) 的操作，请参考[API](/docs/api/classes/molecule.ColorThemeService)。

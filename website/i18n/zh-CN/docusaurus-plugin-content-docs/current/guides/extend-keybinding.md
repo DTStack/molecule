@@ -3,10 +3,10 @@ title: 快捷键（Keybinding）
 sidebar_label: 快捷键
 ---
 
-Molecule 基于 **monaco-editor** 提供了一个 `Action2` 的抽象类，通过继承这个 `Action`2 对象来实现一些**自定义 Action**，并可以通过
+Molecule 基于 **monaco-editor** 提供了一个 `Action2` 的抽象类，通过继承这个 `Action2` 对象来实现一些**自定义 Action**，并可以通过
 **快捷键、执行命令、Command Palette** 的方式来触发。
 
-**快捷键（Keybinding）**是一种通过监听键盘按键触发的 **Action**，我们通过 monaco-editor 内置的 **Keybinding 服务**，可以轻松实现快捷键自定义的功能。
+**快捷键（Keybinding）**是一种通过监听键盘按键触发的 **Action**，我们通过 monaco-editor 内置的 **Keybinding 服务**，可以轻松实现**快捷键自定义**的功能。
 
 ## 定义 Action 对象
 

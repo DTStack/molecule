@@ -17,7 +17,7 @@ Molecule 内置了一个简单的**国际化（i18n）**方案，支持我们基
 
 修改完成后，Molecule 会在**通知栏（Notification）**弹出更新消息，我们选择 **Reload** 即可重新加载。
 
-## [本地服务（LocaleService） 对象](/docs/api/classes/molecule.i18n.LocaleService)
+## [本地化服务（LocaleService） 对象](/docs/api/classes/molecule.i18n.LocaleService)
 
 **LocaleService** 提供了一些基础的 [API](/docs/api/classes/molecule.i18n.LocaleService) 方法，这些方法可以帮助我们完成对国际化功能的扩展，例如：
 

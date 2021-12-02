@@ -4,37 +4,35 @@ sidebar_label: 编写第一个扩展
 sidebar_position: 1
 ---
 
-我们已经成功在 [molecule-demo](./quickStart.md) 中整合了 Molecule，接下里我们开始编写第一个扩展程序，让 Molecule 帮助我们实现产品功能。 看到这里不清楚如何安装使用的同学，可以阅读[快速开始](./quickStart.md)。
+在 Molecule 中，所有的自定义的功能，都是利用[扩展（Extension）](./guides/extension)来完成的。我们已经在 [Quick Start](./quick-start.md) 中利用 [create-react-app](https://github.com/facebook/create-react-app) 成功安装了 Molecule，接下来让我们基于[molecule-demo][demo-url] 项目，快速学习一下如何编写一个扩展应用。
 
-## 一个简单的需求
-
-我们已经在 [Quick Start](./quickStart.md) 中利用 [create-react-app](https://github.com/facebook/create-react-app) 成功安装并集成了 Molecule，现在我们可以尝试利用其提供的 [Extension API](./api/interfaces/molecule.IExtension)，实现一个简单的场景：
+## 一个简单的场景
 
 <div align="center">
- <img src="/static/img/theFirstExtension.png" alt="The First Extension" />
+ <img src="/img/the-first-extension.png" alt="The First Extension" />
 </div>
 
-上图实现一个简单的目录树，并支持通过点击文件，在右侧的编辑器中打开该文件。Molecule 默认内置了 [explorer](./api/namespaces/molecule#explorer)，[folderTree](./api/namespaces/molecule#foldertree)，[editor](./api/namespaces/molecule#editor) 等等模块，通过其提供的 API，我们可以快速实现这个需求，而无需过多关心 UI 上的构建工作。
+如图，我们在 **Explorer** 中的文件树（FolderTree）中展示了一系列的代码文件，当鼠标**点击**文件后，则在右侧的编辑器（Editor）中**打开**该文件。
 
-## 实现方法
+Molecule 默认内置了 [Explorer](./guides/extend-builtin-ui.md#浏览面板explorer)，[FolderTree][foldertree-url]，[Editor](./guides/extend-workbench#编辑器editor) 等基础 UI 模块，实现上图的功能，只需要通过其提供的 API，就可以快速实现这些需求，而开发者无需过多关心 UI 上的构建工作。
 
-首先，我们在 `src` 下新建一个 `extensions` 文件夹，然后创建一个 `theFirstExtension` 目录, 并新建扩展程序默认模块 `index.ts`，如下：
+## 具体实现
+
+首先，我们在 `src` 下新建一个 `extensions` 文件夹，然后创建一个 `theFirstExtension` 目录, 并添加默认模块 `index.ts`，如下：
 
 ```bash
 src/extensions
 ├── index.ts
 └── theFirstExtension
-    ├── folderTreeController.ts
+    ├── folderTreeController.ts // folderTree
     ├── index.ts
 ```
 
 ### 创建扩展（Extension）对象
 
-在 Molecule 中，[扩展（Extension）](./api/interfaces/molecule.IExtension)对象是一个包含 `id`, `name`, `activate`, `dispose` 等基本**属性**和**方法**的对象。通过 [MoleculeProvider](./api/classes/MoleculeProvider) 的 `extensions` API 属性，我们可以将实例化的扩展对象传入，而 Molecule 将自动加载传入的扩展程序。
+我们在 `index.ts` 中新建一个叫 `FirstExtension` 的类，该类实现类 [IExtension](./api/interfaces/molecule.IExtension) 接口：
 
-如果你当前工作的是 **Typescript** 项目的话那就更好了，只需要简单的**实现（implements）**一下 [IExtension](./api/interfaces/molecule.IExtension) 接口，这里以上图的扩展程序为例：
-
-```ts
+```ts title="src/extensions/theFirstExtension/index.ts"
 import { IExtension } from '@dtinsight/molecule/esm/model/extension';
 import { IExtensionService } from '@dtinsight/molecule/esm/services';
 import * as folderTreeController from './folderTreeController';
@@ -54,14 +52,18 @@ export class FirstExtension implements IExtension {
 }
 ```
 
-这里我们定义了一个实现 `IExtension` 接口的 `FirstExtension` 的对象。`activate` 为扩展程序激活时所触发的方法，我们将在这个方法中执行扩展程序的**初始化**操作； `dispose` 则是用于**消除**扩展程序时所触发的方法，一般可以做一些回收的操作。
+上述代码中 `FirstExtension` 对象包含一个 `activate` 程序激活时所触发的方法，我们在这个方法中编写扩展程序的**初始化**逻辑； `dispose` 函数一般用于**取消**扩展程序时触发的方法，做一些**回收**的操作。我们使用 `folderTreeController` 分别执行了 `initFolderTree` 和 `handleSelectFolderTree` 方法，用来处理 [FolderTree][foldertree-url] 的**数据初始化**和**事件监听**。
+
+:::info
+更多关于 **Extension** 的介绍内容，请参考 [Guides](./guides/extension.md)
+:::
 
 ### 编写控制逻辑
 
-按上图中所展示的需求，我们可以简单拆分为 2 个部分：
+我们来看看 `folderTreeController` 模块的具体实现逻辑：
 
--   `initFolderTree`： 获取文件树的数据，并渲染数据到 `folderTree`
--   `handleSelectFolderTree`： 监听 `folderTree` 的 `onSelectFile` 事件，选中文件后，在 [editor](./api/namespaces/molecule#editor) 中打开文件
+-   `initFolderTree`： 负责获取 [FolderTree][foldertree-url] 的数据，成功后并渲染数据到 [FolderTree][foldertree-url] 组件
+-   `handleSelectFolderTree`： 负责处理 [FolderTree][foldertree-url] 的 `onSelectFile` 事件，选中后文件，在 [Editor](./api/namespaces/molecule#editor) 中打开
 
 ```ts title="/src/extensions/theFirstExtension/folderTreeController.ts"
 import molecule from '@dtinsight/molecule';
@@ -86,18 +88,15 @@ export function handleSelectFolderTree() {
 }
 ```
 
-在`API.getFolderTree` 方法获取文件树数据成功后，我们通过 [folderTree](./api/classes/molecule.FolderTreeService) 服务的 [add](./api/classes/molecule.FolderTreeService#add) 方法，将数据添加并展示到 [FolderTree](./api/classes/molecule.FolderTreeService) 组件中。通过 [onSelectFile](./api/classes/molecule.FolderTreeService#onSelectFile) 方法监听选中文件，通过 [editor](./api/interfaces/molecule.IEditorService) 服务的 [open](./api/interfaces/molecule.IEditorService#open) 方法打开文件。[folderTree](./api/interfaces/molecule.IFolderTreeService), [editor](./api/interfaces/molecule.IEditorService) 服务对象能做的事情远非如此，关于服务对象的更多内容，请参考 [API 文档](./api) 。
+在`API.getFolderTree` 方法获取文件树数据成功后，我们通过 [`molecule.folderTree.add`](./api/classes/molecule.FolderTreeService#add) 方法，将数据添加并展示到 [FolderTree](./api/classes/molecule.FolderTreeService) 组件中；通过 [`molecule.folderTree.onSelectFile`](./api/classes/molecule.FolderTreeService#onSelectFile) 方法监听**选中文件**；最后通过 [`molecule.editor.open`](./api/interfaces/molecule.IEditorService#open) 方法打开文件。
 
 :::caution
-
-需要注意到是，在现实情况中，`API.getFolderTree` 返回的数据结构并不是直接符合 folderTree 接口的，
-我们往往需要经过一个**转换**方法。这里可以通过 API 文档查看 [IFolderTreeNodeProps](./api/interfaces/molecule.IFolderTreeNodeProps) 类型的详细声明。示例中 `folderTree` 的 Mock 数据可以在这里[查看](https://github.com/DTStack/molecule-examples/blob/main/packages/molecule-demo/public/mock/folderTree.json)。`handleSelectFolderTree` 方法中的 `transformToEditorTab` 同为一个**转换**方法，主要是将`file`转换为满足 [IEditorTab](./api/interfaces/molecule.IEditorTab) 的类型。
-
+需要注意的是，在现实情况中，`API.getFolderTree` 返回的**数据类型**并不是 [IFolderTreeNodeProps](./api/interfaces/molecule.IFolderTreeNodeProps) 类型，我们往往需要经过一个**转换**方法。示例中 `API.getFolderTree` 函数的 Mock 数据可以[查看](https://github.com/DTStack/molecule-examples/blob/main/packages/molecule-demo/public/mock/folderTree.json)。`handleSelectFolderTree` 方法中的 `transformToEditorTab` 为一个**转换**方法，主要是将`file`转换为[IEditorTab](./api/interfaces/molecule.IEditorTab) 类型。
 :::
 
 ### 使用扩展
 
-这里我们默认在 `extensions/index.ts` 中导出所有需要加载的**扩展对象**：
+定义好的 `FirstExtension` 对象，最后需要配合 [MoleculeProvider][provider-url] 来使用。这里我们默认在 `extensions/index.ts` 中导出所有需要加载的**扩展对象**：
 
 ```ts title="/src/extensions/index.ts"
 import { IExtension } from '@dtinsight/molecule/esm/model';
@@ -108,7 +107,7 @@ const extensions: IExtension[] = [new FirstExtension()];
 export default extensions;
 ```
 
-如代码所示，我们导入 `FirstExtension` 对象并将其实例化，最后使用 `extensions` 导出所有扩展程序。
+导入 `FirstExtension` 对象并将其实例化，最后使用 `extensions` 导出所有**扩展对象实例**。
 
 ```tsx title="/src/app.tsx"
 import extensions from './extensions';
@@ -118,16 +117,20 @@ import extensions from './extensions';
 </MoleculeProvider>;
 ```
 
-最后，引入 `extensions` 并传入 `MoleculeProvider` 的 `extensions` 属性。
+最后，引入 `extensions` 并传入 [MoleculeProvider][provider-url] 的 `extensions` 属性。
 
 :::info
-上例只是一个很简单的应用，想要完成更复杂的业务场景，需要我们了解更多的 Molecule [API](./api) 信息。
+上例只是一个很简单的应用场景，想要实现对 [Workbench](/guides/extend-workbench.md) 更丰富的扩展，可以参考 [工作台扩展指南](./guides/extend-workbench.md)。
 
-另外，**Extension** 为 Molecule 中非常重要的概念，通过它我们才可以完成对整个 Molecule 应用中的 **ColorTheme**, **Workbench**, **i18n**,
-**Settings**, **Keybindings**, **QuickAccess** 等等核心模块的扩展，更多关于 Extension 接口的信息，请[查看](./api/interfaces/molecule.IExtension)。
+另外，[**Extension**](./guides/extension.md) 为 Molecule 中非常重要的概念，通过它我们才可以完成对 [**ColorTheme**](./guides/extend-color-theme.md), [**Workbench**](guides/extend-workbench.md), [**i18n**](./guides/extend-locales.md),
+[**Settings**](./guides/extend-settings.md), [**Keybindings**](./guides/extend-keybinding.md), [**QuickAccess**](./guides/extend-quick-access.md) 等等核心模块的扩展。
 
 :::
 
 ## 完整示例
 
-**第一个扩展**的完整源码，请[浏览](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/theFirstExtension)。
+**第一个扩展**的完整源码，请[浏览][demo-url]。
+
+[demo-url]: https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/theFirstExtension
+[foldertree-url]: ./guides/extend-builtin-ui#文件树foldertree
+[provider-url]: /docs/api/classes/MoleculeProvider

@@ -3,13 +3,15 @@ title: 扩展（Extension）
 sidebar_label: 扩展
 ---
 
-扩展（Extension）作为 Molecule 最重要的核心模块之一，主要是提供了一套扩展 IDE Workbench 的机制。通过这种机制，我们可以轻松的实现自定义，并且可以管理这些扩展应用。
+[扩展（Extension）][ext-url] 作为 Molecule 最重要的**核心**模块之一，主要是提供了一套扩展 IDE Workbench 的机制。通过这种机制，我们可以轻松的实现自定义，并且可以管理这些扩展应用。
 
 ## 扩展接口（IExtension)
 
-[扩展接口（IExtension）](/docs/api/interfaces/molecule.models.IExtension)**定义了扩展（Extension）**程序的类型，通过该接口类型，我们可以更快速的创建扩展程序。
+[扩展（Extension）][ext-url] 是一个包含 `id`、`name`、`activate`、`dispose` 等**属性**和**方法**的接口，通过该**接口类型**，可以帮助开发者更快的创建扩展程序。
 
-**自面量对象**：
+Molecule 支持你使用**字面量**或者 **class** 关键字的方式来定义扩展对象，具体看开发者自己的偏好。
+
+### 自面量对象
 
 ```ts
 import { IContributeType, IExtension } from '@dtinsight/molecule/esm/model';
@@ -24,7 +26,7 @@ export const ExampleExt: IExtension = {
 };
 ```
 
-**类对象**实现扩展接口的方式：
+### class 对象
 
 ```ts
 import molecule from '@dtinsight/molecule';
@@ -47,14 +49,20 @@ export class ExampleExt implements IExtension {
 
 ## 扩展服务（ExtensionService)
 
-[ExtensionService][extensionservice] 是用来管理扩展程序的一个服务对象，例如常见的**添加、查询**等操作。服务对象我们可以通过 [`molecule.extension`][extensionservice] 直接访问。除去针对扩展的一些基本操作，ExtensionService 还负责了一些其他的常用操作。
+在 Molecule 中，我们可以通过 [ExtensionService][service-url] 服务对象来管理**扩展程序**。例如**添加、查询、删除**等操作, 例如：
+
+```ts
+// Add Extension, but no activated
+molecule.extension.add(extensions);
+// Dispose the Extension
+molecule.extension.dispose(extensionId);
+// Get an Extension
+molecule.extension.getExtension(extensionId);
+```
 
 ## 禁用扩展
 
-我们已经在上文中的诸多示例中讲述了 **Extension** 的使用方法。Molecule 默认内置了很多扩展程序，
-但是有些情况下，开发者想要**禁用**这些默认扩展。
-
-我们在 [ExtensionService][extensionservice] 中提供了一个 [inactive][inactive-link] 方法，以供我们去禁用某些扩展, 如下示例：
+在有些情况下，开发者可能会想要**禁用**一些 Molecule 中内置的扩展程序，这里可以使用 [ExtensionService][service-url] 中的 [`inactive`][inactive-url] 方法，示例：
 
 ```ts
 import React from 'react';
@@ -83,10 +91,11 @@ function App() {
 export default App;
 ```
 
-:::info
-需要注意到是，[inactive][inactive-link] 方法，需要在 [MoleculeProvider](/docs/api/classes/MoleculeProvider) 之前声明。
+:::caution
+需要注意到是，[inactive][inactive-url] 方法，需要在 [MoleculeProvider](/docs/api/classes/MoleculeProvider) 之前声明
 :::
 
-[inactive-link]: /docs/api/interfaces/molecule.IExtensionService#inactive
-[extensionservice]: /docs/api/classes/molecule.ExtensionService
-[extensionservicecmd]: /docs/api/classes/molecule.ExtensionService#executecommand
+[inactive-url]: /docs/api/interfaces/molecule.IExtensionService#inactive
+[service-url]: /docs/api/classes/molecule.ExtensionService
+[cmd-url]: /docs/api/classes/molecule.ExtensionService#executecommand
+[ext-url]: /docs/api/interfaces/molecule.models.IExtension

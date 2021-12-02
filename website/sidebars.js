@@ -26,7 +26,7 @@ module.exports = {
                 {
                     type: 'category',
                     collapsed: false,
-                    label: '工作台',
+                    label: 'UI',
                     items: [
                         'guides/extend-workbench',
                         'guides/extend-builtin-ui',

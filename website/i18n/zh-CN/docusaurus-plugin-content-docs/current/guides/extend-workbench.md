@@ -1,38 +1,44 @@
 ---
-title: 工作台核心部件（Workbench）
-sidebar_label: 核心部件
+title: 工作台（Workbench）
+sidebar_label: 工作台
 ---
 
-工作台是 Molecule 中最核心的部件, 我们使用 React 组件复刻了 VSCode Workbench 的设计，提供了一个简单的工作台界面, 并且可以被用来扩展其他功能。
+[工作台（Workbench）][workbench-url] 是 Molecule 中最核心的部件, 我们使用 **React 组件**复刻了 **VSCode Workbench** 优秀的设计，提供了一个简单的**Workbench UI**, 并支持**扩展机制**，可以高度**自定义**。
 
-## Workbench
+## 核心概念
 
 ![molecule](/img/guides/workbench.png)
 
-如上图所示，我们把 Molecule 的工作台 UI 划分成了`menuBar`, `activityBar`, `sideBar`, `editor`, `panel`, `statusBar` 主要**6**大模块：
+我们把 Molecule 的工作台 UI 划分成了 [MenuBar](#菜单栏menubar)、[ActivityBar](#活动栏activitybar)、[Sidebar](#边栏sidebar),、[Editor](#编辑器editor)、[Panel](#面板panel)、[StatusBar](#状态栏statusbar) 主要**6**大模块：
 
--   **菜单栏（menuBar）**：主要负责 Workbench 主菜单的显示和管理，例如常见的 **文件（File）**、**编辑（Edit）**、**选择（Selection）** 、**视图（View）**等菜单项。
--   **活动栏（activityBar）**：其主要负责展示工作台当前的活动项，例如**浏览（Explorer）**，**搜索（Search）**等模块，需要注意的是，`activityBar` 通常需要配合其他模块一起来使用，例如我们在 `sideBar` 和 `activityBar` 中都有内置的浏览（Explorer）模块，其中 `sideBar` 负责展示， 而 `activityBar` 负责切换浏览（Explorer）模块的面板。
--   **边栏（sideBar）**：在工作台的左侧，其内置的**浏览（Explorer）**模块为 Workbench 重要的导航模块。需要注意点是，`sideBar` 常常需要和 `activityBar` 或者 `editor` 等模块联动，来展示相关信息。
--   **编辑区（editor）**：通过编辑器标签页来展示具体的工作任务，例如编辑代码，或者自定义渲染其他操作界面。当没有打开编辑器标签页的时候，Molecule 会渲染一个**入口（Entry）**页面在这块区域。当然，这个入口页面是支持**自定义**的。
--   **面板（panel）**：在 `editor` 的下方，通常会展示例如**问题（Problems）**, **输出（Output）**, **终端（Terminal）** 等模块。
--   **状态栏（statusBar）**：位于整个 Workbench 的最底部。通常来说，我们可以放**状态信息**在这里，比如说当前标签页的**语言(Language)**，当前光标所在**行和列**，**通知栏（Notification）**等等信息。
+-   **菜单栏（MenuBar）**：主要负责 Workbench **主菜单**的显示和管理，例如常见的 **文件（File）**、**编辑（Edit）**、**选择（Selection）** 、**视图（View）**等菜单项；
+-   **活动栏（ActivityBar）**：主要负责展示工作台当前的**活动项**，例如[浏览（Explorer）](./extend-builtin-ui.md#浏览面板explorer)，[搜索（Search）](./extend-builtin-ui.md#搜索面板search)等模块。需要注意的是，ActivityBar 通常需要配合其他模块一起**联动**，例如切换 ActivityBar 后，Sidebar 则需要展示相对应的面板；
+-   **边栏（Sidebar）**：工作台的**左边栏**，其内置的[浏览（Explorer）](./extend-builtin-ui.md#浏览面板explorer)模块为 Workbench 重要的**导航**模块；
+-   **编辑区（Editor）**：通过编辑器标签页来展示具体的工作内容，例如**编辑代码**，或者渲染自定义的操作界面。当没有打开编辑器标签页的时候，Molecule 会渲染一个**入口（Entry）**页面在这块区域。当然，这个入口页面是支持**自定义**的；
+-   **面板（Panel）**：在 Editor 的下方，通常会展示例如 [问题（Problems）](./extend-builtin-ui.md#问题面板problems-), [输出（Output）](extend-builtin-ui.md#输出面板output), **终端（Terminal）**等模块；
+-   **状态栏（StatusBar）**：位于整个 Workbench 的最底部, 用来展示**状态信息**。例如当前编辑器中文件的**语言(Language)**，当前光标所在**行（Ln）和列（Col）**，[通知（Notification）](./extend-builtin-ui.md#通知栏notification)等信息。
 
-这**6**大模块目前仅仅是做简单的渲染，并没有什么实际的功能，想要完成具体的业务场景，需要我们联合各个模块来实现。另外，我们基于这几个基础模块，[内置](#内置-ui-模块)了几个常用的 UI 模块，以便快速满足我们的开发需求。
+:::tip
+这**6**大模块仅仅是做简单的渲染，并没有什么实际的功能，想要完成具体的业务场景，需要我们联合其他模块来实现，例如 **ActivityBar** 与 **Sidebar** **联动，FolderTree** 与 **Editor** 联动等等。
 
-:::info
-我们需要注意点是，想要发挥这些模块的**扩展**能力，需要我们去了解每个模块的[API](./api/namespaces/molecule#variables)。
+另外，为了减轻 UI 开发的工作量，我们在 6 大组件的基础上，扩展来不少[**内置部件**](extend-builtin-ui.md)，详细使用情[参考](./extend-builtin-ui.md)
 :::
 
 ## 扩展工作台（Workbench)
 
-这里我们将详细展示，通过 **Extension** 和内置的 **API** ，如何扩展 **Workbench**。同样的，我们从一个场景开始，如下图所示：
+这部分内容将详细的展示，我们是如何通过 **Extension** 和内置的 **API** 扩展 **Workbench**的。
+
+同样的，我们从一个场景开始：
 
 ![Extend Workbench](/img/guides/extend-workbench.png)
 
-如上图所示，我们创建了和一个数据源管理的界面。在这个场景中，我们分别对 **MenuBar**, **ActivityBar**、**SideBar**、**Editor**、**Panel**、**StatusBar** 等核心模块进行了扩展。接下来我们逐一看看如何实现。
+如上图所示，我们模拟了一个简单的**数据库管理**的界面。在这个场景中，我们会分别对 [MenuBar](#菜单栏menubar)、[ActivityBar](#活动栏activitybar)、[Sidebar](#边栏sidebar),、[Editor](#编辑器editor)、[Panel](#面板panel)、[StatusBar](#状态栏statusbar) 6 大模块逐一进行扩展。
 
-首先，我们在 **extensions** 下新建了一个 **dataSource** 的目录, 用来存放与其相关扩展的代码。这里我们创建一个 `index.ts` 和 `base.tsx` 文件，分别用来声明**扩展入口**和定义基本的**公共**模块，目录如下：
+:::tip
+示例仍然基于 [molecule-demo][demo-url] 项目，所有代码都可以在此仓库中找到。
+:::
+
+首先，我们在 `extensions` 下新建了一个 `dataSource` 的目录, 用来存放与其相关扩展的代码。然后新建 `index.ts` 和 `base.tsx` 文件，分别用来声明**扩展入口**和定义**公共代码**，目录如下：
 
 ```ts
 src/extensions/dataSource
@@ -63,14 +69,14 @@ export class DataSourceExtension implements IExtension {
 }
 ```
 
-如上所示，我们声明了一个实现 `IExtension` 接口的 `DataSourceExtension` 扩展，在 `initUI` 方法中，我们分别针对
-`sidebar`、`activityBar `进行了扩展，在 `dispose` 扩展时，移除了激活时所添加的 UI。
+如上所示，我们声明了一个实现 `IExtension` 接口的 `DataSourceExtension` 对象，在 `initUI` 方法中，我们分别使用
+`molecule.sidebar.add`、`molecule.activityBar.add` 方法添加了新的 UI 组件扩展项。在 `dispose` 方法，**移除**了激活时所添加的 UI 项。
 
-我们先看看活动栏是如何扩展的。
+接下来我们先看看活动栏是如何扩展的。
 
 ### [活动栏（ActivityBar）](/docs/api/interfaces/molecule.IActivityBarService)
 
-添加活动栏，我们需要使用 [`activityBar.add`](/docs/api/interfaces/molecule.IActivityBarService#add) 方法。首先，我们在 `base.tsx` 中定义了一个 `IActivityBarItem` 类型的对象：
+添加活动栏，我们需要使用 [`molecule.activityBar.add`](/docs/api/interfaces/molecule.IActivityBarService#add) 方法。首先，我们在 `base.tsx` 中定义了一个 [`IActivityBarItem`](/docs/api/namespaces/molecule#iactivitybaritem) 类型的对象：
 
 ```ts title="src/extensions/dataSource/base.tsx"
 export const DATA_SOURCE_ID = 'DataSource';
@@ -84,11 +90,11 @@ export const dataSourceActivityBar: IActivityBarItem = {
 };
 ```
 
-如上所示，`dataSourceActivityBar` 字面量对象的 `id`属性为 **DataSource**，其 `icon` 名称为 **database**, 另外添加了一个 `sortIndex` 属性，默认设置排在 **activityBar** 的最顶部。
+`dataSourceActivityBar` 字面量对象的 `id`属性为 **DataSource**，其 `icon` 名称为 **database**, 另外添加了一个 `sortIndex` 属性，设置该 UI 显示在 **activityBar** 的最顶部。
 
 ### [边栏（SideBar）](/docs/api/interfaces/molecule.ISidebarService)
 
-同 activityBar 一样，我们先在 base.tsx 中声明一个`ISidebarPane`类型的对象 **dataSourceSidebar**，然后使用[`sidebar.add`](/docs/api/interfaces/molecule.ISidebarService#add) 方法。
+同 ActivityBar 一样，我们先在 base.tsx 中声明一个 [`ISidebarPane`](/docs/api/interfaces/molecule.models.ISidebarPane) 类型的对象 `dataSourceSidebar`，然后使用[`molecule.sidebar.add`](/docs/api/interfaces/molecule.ISidebarService#add) 方法。
 
 ```ts title="src/extensions/dataSource/base.tsx"
 import DataSourceView from '../../views/dataSource/dataSourceSidebar';
@@ -104,17 +110,17 @@ export const dataSourceSidebar: ISidebarPane = {
 };
 ```
 
-这里与 `IActivityBarItem` 类型的对象的区别则是，我们的 `sidebar` 的面板上一个 `render` 函数，最后返回的是一个 `ReactNode` 的组件。这里 `DataSourceView` 组件则是我们根据我们的业务需求定义的一个**业务组件**。
+这里与 `IActivityBarItem` 类型的对象的区别则是，我们的 Sidebar 面板上定义了一个 `render` 函数，最后返回的是一个 `ReactNode` 类型的组件。这里 `DataSourceView` 组件则是我们根据我们的业务需求定义的一个**业务组件**。
 
 完整示例请参考这里 [molecule-examples](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/dataSource)。
 
-:::tip
-示例中的 `dataSourceSidebar` 和 `dataSourceActivityBar` 两个对象的 `id` 都是使用的统一个 `DATA_SOURCE_ID`, 主要是保证切换**activityBar** 时能正确的显示 `dataSourceSidebar` 的面板内容。
+:::caution
+示例中的 `dataSourceSidebar` 和 `dataSourceActivityBar` 两个对象的 `id` 都是使用的统一个 `DATA_SOURCE_ID`, 主要是保证切换**ActivityBar** 项时能正确的在 **Sidebar** 中显示 `dataSourceSidebar` 的面板内容。
 :::
 
 ### [编辑器（Editor）](/docs/api/interfaces/molecule.IEditorService)
 
-如上图示例所示，我们在编辑器中打开了一个名叫`Create Data Source`的标签，而标签内容则是一个创建数据源的**表单（Form)**。同样的，我们首先声明一个 IEditorTab 的对象，然后利用 [editor.open](/docs/api/interfaces/molecule.IEditorService#open) API 来打开。
+在上图中，我们在 Editor 中打开了一个名叫 **Create Data Source** 的标签，而标签内容则是一个**添加数据库**的**表单（Form)**。同样的，我们首先声明一个 [IEditorTab](/docs/api/interfaces/molecule.models.IEditorTab) 的对象，然后利用 [molecule.editor.open](/docs/api/interfaces/molecule.IEditorService#open) 方法打开：
 
 ```ts title="src/extensions/dataSource/base.tsx"
 import CreateDataSourceView from '../../views/dataSource/createDataSource';
@@ -132,7 +138,7 @@ export function openCreateDataSourceView() {
 }
 ```
 
-`createDataSourceTab` 对象的 `renderPane` 为 **Editor Tab** 内容的**渲染函数**，这里返回的是 **CreateDataSourceView** 组件。需要注意到是，editor 标签默认打开渲染的是 **monaco-editor** 实例，例如我们想要编辑一个 **SQL** 类型的文本，则可这样来调用：
+`createDataSourceTab` 对象的 `renderPane` 为**标签内容**的自定义**渲染函数**，这里返回的是 `CreateDataSourceView` 组件。需要注意到是，Editor 标签默认渲染的是 **monaco-editor** 视图，例如我们想要编辑一个 **SQL** 类型的文本，则可这样来调用：
 
 ```ts
 molecule.editor.open({
@@ -145,11 +151,13 @@ molecule.editor.open({
 });
 ```
 
-这里并没有设置 `renderPane` 函数，我们可以参考一下[第一个扩展](../the-first-extension.md)这个示例。
+这里并没有设置 `renderPane` 函数。关于打开编程语言的例子，可以参考一下[第一个扩展](../the-first-extension.md)这个示例。
 
 ### [面板（Panel）](/docs/api/interfaces/molecule.IPanelService)
 
-这里我们以常见的 **Terminal** 面板为例, 为了区分上面的数据源示例，这里我们在 `extensions` 下新建了一个叫 `terminal` 的文件夹。这里我们先声明一个 IPanelItem 类型的对象 `terminalPanel`，然后利用 `panel.add` API 将其添加到视图中。
+关于[面板（Panel）](/docs/api/interfaces/molecule.IPanelService)，我们以常见的 **Terminal** 面板为示例。为了区分上面的**数据库**示例，这里我们在 `extensions` 下新建了一个叫 `terminal` 的文件夹。
+
+首先，我们先声明一个 [IPanelItem](/docs/api/interfaces/molecule.models.IEditorTab) 类型的对象 `terminalPanel`：
 
 ```ts title="src/extensions/terminal/base.tsx"
 import { localize } from '@dtinsight/molecule/esm/i18n/localize';
@@ -169,7 +177,7 @@ export const terminalPanel: IPanelItem = {
 };
 ```
 
-同样的， 我们在 index.ts 中声明了一个叫 TerminalExtension 的扩展对象：
+然后在 `index.ts` 中声明了一个叫 `TerminalExtension` 的扩展对象：
 
 ```ts title="src/extensions/terminal/base.tsx"
 import molecule from '@dtinsight/molecule';
@@ -191,13 +199,13 @@ export class TerminalExtension implements IExtension {
 }
 ```
 
-在 activate 方法中，我们使用 `panel.add` 添加了 `terminalPanel` 对象。完成示例代码请参考[Terminal](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/terminal)。
+在 `activate` 方法中，利用 [`molecule.panel.add`](/docs/api/interfaces/molecule.IPanelService#add) 将 `terminalPanel` 添加到 Panel 视图中。
+
+完整代码请参考[Terminal](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/terminal)。
 
 ### [状态栏（StatusBar）](/docs/api/interfaces/molecule.IStatusBarService)
 
-想要对 StatusBar 进行增加、更新、删除操作，我们整个是围绕 [IStatusBarItem](/docs/api/interfaces/molecule.models.IStatusBarItem) 类型的对象来进行的，例如：
-
-#### 基本操作
+[状态栏（StatusBar）](/docs/api/interfaces/molecule.IStatusBarService) 整个是围绕 [IStatusBarItem](/docs/api/interfaces/molecule.models.IStatusBarItem) 类型的对象来进行**增加、更新、删除**等基本操作的，例如：
 
 ```ts
 import { IStatusBarItem, Float } from '@dtinsight/molecule/esm/model';
@@ -222,9 +230,9 @@ molecule.statusBar.update({ ...existLanguageBar, name: 'HTML' }, Float.right);
 molecule.statusBar.remove(languageBar.id, Float.right);
 ```
 
-#### 自定义渲染图标
+代码中的 `Float.left/Float.right` 用来表示显示在状态栏的**左侧**或者**右侧**。
 
-如果我们想要自定义 **StatusBar** 的渲染内容，例如是一个图标的话，我们可以使用 `render` 自定义函数：
+如果我们想要 **自定义 StatusBar** 的渲染内容，我们可以使用 `render` 自定义函数，例如自定义[**图标**](./icons.md)：
 
 ```ts
 import { IStatusBarItem, Float } from '@dtinsight/molecule/esm/model';
@@ -236,9 +244,9 @@ const languageBar: IStatusBarItem = {
 };
 ```
 
-### 菜单栏（MenuBar)
+### [菜单栏（MenuBar)](/docs/api/interfaces/molecule.IMenuBarService)
 
-默认 Molecule 内置了基本的**文件（File）**、**编辑（Edit）**、**选择（Selection）**、**视图（View）**、**运行（Run）**和**帮助（Help）**的菜单项，通常我们可以直接在这些基础上进行扩展, 例如：
+[菜单栏（MenuBar)](/docs/api/interfaces/molecule.IMenuBarService) 默认内置了基本的**文件（File）**、**编辑（Edit）**、**选择（Selection）**、**视图（View）**、**运行（Run）**和**帮助（Help）**的菜单项，通常我们可以直接在这些基础上进行扩展：
 
 ```ts
 activate(extensionCtx: IExtensionService): void {
@@ -254,7 +262,10 @@ dispose(extensionCtx: IExtensionService): void {
 }
 ```
 
-上例则是在**文件（File）**下新增了一个菜单项 **Create Data Source**，移除则使用 `molecule.menuBar.remove` 方法。如果想重置所有 MenuBar 的数据，
+上例中，我们在**文件（File）**下新增了一个菜单项 **Create Data Source**，移除则使用 `molecule.menuBar.remove` 方法。如果想重置所有 MenuBar 的数据，
 可以使用 [`molecule.menuBar.setMenus()` ](/docs/api/interfaces/molecule.IMenuBarService#setmenus)。
 
 更多关于 MenuBar 的操作，请查看 [MenuBar API](/docs/api/interfaces/molecule.IMenuBarService) 文档。
+
+[workbench-url]: /docs/api/namespaces/molecule#workbench
+[demo-url]: https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo

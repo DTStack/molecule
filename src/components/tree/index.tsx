@@ -56,7 +56,7 @@ export interface ITreeProps {
     className?: string;
     draggable?: boolean;
     expandKeys?: string[];
-    onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
+    onExpand?: (expandedKeys: string[], node: ITreeNodeItemProps) => void;
     onSelect?: (node: ITreeNodeItemProps, isUpdate?) => void;
     onTreeClick?: () => void;
     renderTitle?: (
@@ -125,15 +125,14 @@ const TreeView = ({
     };
 
     const handleExpandKey = (key: string, node: ITreeNodeItemProps) => {
-        const index = expandKeys.findIndex((e) => e === key);
+        const expKeys = (controlExpandKeys || expandKeys).concat();
+        const index = expKeys.findIndex((e) => e === key);
         if (index > -1) {
-            expandKeys.splice(index, 1);
+            expKeys.splice(index, 1);
         } else {
-            expandKeys.push(key);
+            expKeys.push(key);
         }
-        onExpand
-            ? onExpand(expandKeys.concat(), node)
-            : setExpandKeys(expandKeys.concat());
+        onExpand ? onExpand(expKeys, node) : setExpandKeys(expKeys);
     };
 
     const handleNodeClick = (

@@ -21,16 +21,22 @@ export function connect<T = any>(
     return class Connector extends Component<T, any> {
         state: { lastUpdated: number };
         private _isMounted = false;
+        private viewRef: React.RefObject<any>;
         constructor(props) {
             super(props);
             this.onChange = this.onChange.bind(this);
             this.state = {
                 lastUpdated: Date.now(),
             };
+            this.viewRef = React.createRef<any>();
         }
 
         componentDidMount() {
             this._isMounted = true;
+            if (this.viewRef && Controller) {
+                // @ts-ignore
+                Controller.ref = this.viewRef;
+            }
             this.handleService((service) => {
                 service.onUpdateState(this.onChange);
             });
@@ -94,6 +100,7 @@ export function connect<T = any>(
         render() {
             return (
                 <View
+                    ref={this.viewRef}
                     {...this.state}
                     {...this.getServiceState()}
                     {...this.props}

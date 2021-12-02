@@ -19,6 +19,7 @@ import type { UniqueId } from 'mo/common/types';
 
 export interface IFolderTreeController extends Partial<Controller> {
     readonly createTreeNode?: (type: FileType, id?: UniqueId) => void;
+    readonly collapseAll?: () => void;
     readonly onClickContextMenu?: (
         contextMenu: IMenuItemProps,
         treeNode?: IFolderTreeNodeProps
@@ -39,6 +40,7 @@ export interface IFolderTreeController extends Partial<Controller> {
 export class FolderTreeController
     extends Controller
     implements IFolderTreeController {
+    public readonly ref: any;
     private readonly folderTreeService: IFolderTreeService;
     private readonly builtinService: IBuiltinService;
 
@@ -114,6 +116,12 @@ export class FolderTreeController
             this.emit(FolderTreeEvent.onCreate, type, nodeId);
         } else {
             this.emit(FolderTreeEvent.onCreate, type, id);
+        }
+    };
+
+    public collapseAll = () => {
+        if (this.ref.current) {
+            this.ref.current.clearExpands();
         }
     };
 

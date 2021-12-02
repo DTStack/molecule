@@ -98,7 +98,7 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
         data-type="SplitPane"
       >
         <div
-          className={false}
+          className=""
           style={
             Object {
               "WebkitBoxFlex": 0,
@@ -672,7 +672,6 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
       <div
         className="mo-statusBar__item"
         id="statusbar.problems.title"
-        sortIndex={1}
       >
         <a
           onClick={[Function]}
@@ -698,23 +697,8 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
       className="mo-statusBar__right-items"
     >
       <div
-        actionBar={
-          Array [
-            Object {
-              "icon": "clear-all",
-              "id": "ClearAll",
-              "title": "Clear All Notifications",
-            },
-            Object {
-              "icon": "chevron-down",
-              "id": "HideNotifications",
-              "title": "Hide Notifications",
-            },
-          ]
-        }
         className="mo-statusBar__item"
         id="MO_NOTIFICATION"
-        sortIndex={1}
       >
         <a
           onClick={[Function]}
@@ -779,7 +763,6 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
       <div
         className="mo-statusBar__item"
         id="MoEditorInfo"
-        sortIndex={2}
       >
         <a
           onClick={[Function]}

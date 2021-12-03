@@ -21,7 +21,7 @@ import { ILayout } from 'mo/model/workbench/layout';
 
 import { IWorkbench } from 'mo/model';
 import SplitPane from 'mo/components/split/SplitPane';
-import Pane from 'mo/components/split/pane';
+import { Pane } from 'mo/components/split';
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');

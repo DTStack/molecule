@@ -16,7 +16,7 @@ import {
     defaultCollapseClassName,
 } from './base';
 import { getDataAttributionsFromProps } from 'mo/common/dom';
-import Pane from '../split/pane';
+import { Pane } from '../split';
 
 type RenderFunctionProps = (data: ICollapseItem) => React.ReactNode;
 export interface ICollapseItem extends HTMLElementProps {

@@ -1,10 +1,9 @@
 ---
+title: 贡献指南
 sidebar_label: 贡献指南
 ---
 
-# Contributing
-
-## 开发
+## Development
 
 ```bash
 git clone git@github.com:DTStack/molecule.git
@@ -31,28 +30,11 @@ yarn web # 预览打包后的 Web
 当前我们默认将 Molecule 以 `ES6` 模块的方式构建到 **`esm`** 目录。另外，
 这里除了 Storybook 提供的组件预览模式以外，我们同时内置了一个使用 ESM 模块的 `Web` 预览模式。
 
-## Development
-
-Start to development
-
-```bash
-yarn # install dependencies
-
-yarn dev
-```
-
-Running a web preview version:
-
-```bash
-yarn build
-yarn web
-```
-
 ## Git Work Flow
 
-[Branch-based Workflow](https://guides.github.com/introduction/flow/)
+Refer to [Branch-based Workflow](https://guides.github.com/introduction/flow/)
 
-## Naming
+## Naming rules
 
 Unify the Service methods basic prefix naming:
 
@@ -70,7 +52,6 @@ Unify the Service methods basic prefix naming:
 
 ### Reference
 
--   ARIA: [Accessible Rich Internet Applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
+-   [Accessible Rich Internet Applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
 -   [VS Code Extension](https://code.visualstudio.com/api/get-started/your-first-extension)
-    <https://code.visualstudio.com/api>
-    <https://medium.com/dev-genius/reactjs-manage-your-state-nicely-with-context-1ed3090a6a46>
+-   <https://code.visualstudio.com/api>

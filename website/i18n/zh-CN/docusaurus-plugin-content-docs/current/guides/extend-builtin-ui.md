@@ -6,7 +6,7 @@ sidebar_label: 内置部件
 在 Molecule 中，我们基于 [6 大核心 UI ](./extend-workbench.md)模块，默认内置了很多在 IDE Workbench 中常用的 UI 模块，以便可以快速的满足开发者的需求。
 这些模块内置了一系列**服务（Service）**，允许我们通过 **Extension** 的方式进行操作或者扩展。
 
-![molecule](/img/guides/workbench.png)
+![molecule](/img/guides/builtin-ui.png)
 
 如图: 目前**内置部件**主要包含 [浏览面板（Explorer)](#浏览面板explorer)、[文件树（FolderTree)](#文件树foldertree)、[编辑器树（EditorTree)](#编辑器树editortree)、[搜索面板（Search)](#搜索面板search)、[输出面板（Output）](#输出面板output)、[问题面板（Problems）](#问题面板problems)、[通知栏（Notification）)](#通知栏notification) 等 **7** 个模块。
 

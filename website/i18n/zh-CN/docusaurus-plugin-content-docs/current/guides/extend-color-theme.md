@@ -13,7 +13,7 @@ sidebar_label: 颜色主题
 
 首先，我们可以打开这个 [VSCode Theme 市场](https://vscodethemes.com/), 尝试找到一款你喜欢的颜色主题。
 
-这里我们以 **One Dark Pro** 主题为例，我们需要在 **GitHub** 上找到该主题, 并确保我们可以获得该颜色主题的代码。找到主题代码后，我们在终端切换到 `src/extensions` 目录下，执行 `git clone https://github.com/Binaryify/OneDark-Pro.git` 命令，下载 `One Dark Pro` 主题代码， 如下：
+这里我们以 [One Dark Pro](https://github.com/Binaryify/OneDark-Pro.git) 主题为例，我们需要在 **GitHub** 上找到该主题, 并确保我们可以获得该颜色主题的代码。找到主题代码后，我们在终端切换到 `src/extensions` 目录下，执行 `git clone https://github.com/Binaryify/OneDark-Pro.git` 命令，下载 `One Dark Pro` 主题代码， 如下：
 
 ```shell
 $ pwd

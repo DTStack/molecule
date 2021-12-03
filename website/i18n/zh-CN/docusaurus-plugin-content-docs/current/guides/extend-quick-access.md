@@ -15,6 +15,10 @@ Molecule 中的快捷访问功能，与[快捷键](./extend-keybinding.md)功能
 
 ## 定义快捷访问 Action 对象
 
+:::tip
+本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+:::
+
 我们一起来看个具体示例：
 
 <div align="center">
@@ -117,7 +121,3 @@ activate(extensionCtx: IExtensionService): void {
 
 这里我们需要使用 [ExtensionService](/docs/api/interfaces/molecule.IExtensionService) 对象的 `registerAction` 方法来注册。重新加载
 应用界面，然后我们可以在 **Command Palette** 中找到 **Search files by name** 项，同时也可以使用快捷键 `Command/Ctrl + P` 来激活。
-
-:::tip
-本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
-:::

@@ -3,21 +3,17 @@ title: 概览
 sidebar_label: 概览
 ---
 
-在正式开始使用 Molecule 前，我们一起来简单的了解下几个基本的**概念**，以确保您能快速上手 Molecule 的使用。
+在正式开始使用 Molecule 前，我们一起来简单的了解下几个基本的**概念**，以确保您能[快速开始](./quick-start.md) Molecule 的使用。
+
+![molecule](/img/molecule.png)
 
 ## 扩展（Extension）
 
-[扩展（Extension）](./guides/extension)是 Molecule 用来实现**功能自定义**的**插件技术**。通过扩展机制，我们可以轻松实现自定义扩展 Workbench、 ColorTheme、i18n、Settings、Keybinding、QuickAccess 等核心功能。
+[扩展（Extension）](./guides/extension)是 Molecule 用来实现**功能自定义**的**插件技术**。通过扩展机制，我们可以轻松实现自定义扩展 **Workbench、 ColorTheme、i18n、Settings、Keybinding、QuickAccess** 等核心功能。
 
 ## 工作台（Workbench）
 
-![molecule](/img/guides/layout-marks.jpg)
-
-:::tip
-如果无法看清，请右键选择在新标签页中打开图片
-:::
-
-[工作台（Workbench）](./guides/extend-workbench)是 IDE UI 中最重要的部分了。在 Molecule 中我们把工作台抽象成了多个子组件：**MenuBar**、 **ActivityBar**、**Sidebar**、 **Editor**、**Panel**、**StatusBar** 主要 6 大模块。每个核心模块又分别提供了 **React 组件**和基础的**服务（Service）对象**，以便开发者进行自定义。
+[工作台（Workbench）](./guides/extend-workbench)是 IDE UI 中最重要的部分了。在 Molecule 中我们把工作台抽象成了多个子组件：**MenuBar**、 **ActivityBar**、**Sidebar**、 **Editor**、**Panel**、**StatusBar** 主要 6 大模块。每个核心模块又分别提供了 **React 组件**和基础的**服务（Service）对象**，以便开发者进行操作或者自定义。
 
 ## 颜色主题（ColorTheme）
 

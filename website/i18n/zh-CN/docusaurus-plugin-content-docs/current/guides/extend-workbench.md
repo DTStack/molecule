@@ -7,7 +7,7 @@ sidebar_label: 工作台
 
 ## 核心概念
 
-![molecule](/img/guides/workbench.png)
+![molecule](/img/guides/workbench-ui.png)
 
 我们把 Molecule 的工作台 UI 划分成了 [MenuBar](#菜单栏menubar)、[ActivityBar](#活动栏activitybar)、[Sidebar](#边栏sidebar),、[Editor](#编辑器editor)、[Panel](#面板panel)、[StatusBar](#状态栏statusbar) 主要**6**大模块：
 
@@ -35,7 +35,7 @@ sidebar_label: 工作台
 如上图所示，我们模拟了一个简单的**数据库管理**的界面。在这个场景中，我们会分别对 [MenuBar](#菜单栏menubar)、[ActivityBar](#活动栏activitybar)、[Sidebar](#边栏sidebar),、[Editor](#编辑器editor)、[Panel](#面板panel)、[StatusBar](#状态栏statusbar) 6 大模块逐一进行扩展。
 
 :::tip
-示例仍然基于 [molecule-demo][demo-url] 项目，所有代码都可以在此仓库中找到。
+本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
 :::
 
 首先，我们在 `extensions` 下新建了一个 `dataSource` 的目录, 用来存放与其相关扩展的代码。然后新建 `index.ts` 和 `base.tsx` 文件，分别用来声明**扩展入口**和定义**公共代码**，目录如下：

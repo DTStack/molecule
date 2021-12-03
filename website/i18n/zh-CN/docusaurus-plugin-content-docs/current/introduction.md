@@ -26,10 +26,6 @@ sidebar_position: 1
 
 Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
 
-## 动机
-
-> 我们过去在产品中使用 React.js 构建了大量的 Web IDE 场景，然而这些 UI 组件失去了。
-
 ## 核心功能
 
 -   内置 React 版本的 Visual Studio Code **Workbench** UI

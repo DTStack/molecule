@@ -4,7 +4,11 @@ sidebar_label: 编写第一个扩展
 sidebar_position: 1
 ---
 
-在 Molecule 中，所有的自定义的功能，都是利用[扩展（Extension）](./guides/extension)来完成的。我们已经在 [Quick Start](./quick-start.md) 中利用 [create-react-app](https://github.com/facebook/create-react-app) 成功安装了 Molecule，接下来让我们基于[molecule-demo][demo-url] 项目，快速学习一下如何编写一个扩展应用。
+在 Molecule 中，所有的自定义的功能，都是利用[扩展（Extension）](./guides/extension)来完成的。接下来让我们基于[molecule-demo][demo-url] 项目，快速学习一下如何编写一个扩展应用。
+
+:::tip
+本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+:::
 
 ## 一个简单的场景
 

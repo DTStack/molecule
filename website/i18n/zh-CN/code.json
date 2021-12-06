@@ -8,7 +8,25 @@
         "description": "在线预览 Molecule 示例"
     },
     "page.tagline": {
-        "message": "一个轻量级的 Web IDE UI 框架!",
-        "description": "一个轻量级的 Web IDE UI 框架!"
+        "message": "一个轻量级的 Web IDE UI 框架",
+        "description": "一个轻量级的 Web IDE UI 框架"
+    },
+    "page.hero.first": {
+        "message": "开箱即用"
+    },
+    "page.hero.first.desc": {
+        "message": "Molecule 内置了多种组件以及 Service 以供用户自由组合使用，通过事件订阅机制轻松实现各种复杂交互，满足大量 IDE 场景的使用。"
+    },
+    "page.hero.second": {
+        "message": "可扩展的"
+    },
+    "page.hero.second.desc": {
+        "message": "Molecule 支持通过插件（extension）的形式，丰富自身功能，同时支持部分 VSCode 的扩展应用。"
+    },
+    "page.hero.third": {
+        "message": "基于 React"
+    },
+    "page.hero.third.desc": {
+        "message": "Molecule 是基于 React 框架开发的，符合 MVC 模型的 UI 框架。它只会导出 ES 模块以供 React 项目使用。"
     }
 }

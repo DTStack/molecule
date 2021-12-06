@@ -1,11 +1,11 @@
 ---
-title: 简介
+title: ''
 sidebar_label: 简介
 sidebar_position: 1
 ---
 
 <div align="center">
- <img src="/static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo" />
+ <img src="/static/img/logo@3x.png" width="20%" height="20%" alt="watchman-logo" />
  <h1>Molecule</h1>
  <h3>一个轻量的 Web IDE UI 框架</h3>
 
@@ -22,9 +22,9 @@ sidebar_position: 1
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 
-Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
+## 简介
 
-[在线预览](https://github.com/DTStack/molecule-examples)
+Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
 
 ## 核心功能
 
@@ -63,33 +63,6 @@ ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 `extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./quickStart.md)。
-
-## 开发
-
-```bash
-git clone git@github.com:DTStack/molecule.git
-```
-
-首先 Clone 源码到本地
-**开发模式**
-
-```bash
-yarn # install dependencies
-
-yarn dev # 启动开发模式
-```
-
-Molecule 中的组件是基于 Storybook 开发并管理的，预览地址：`http://localhost:6006/`默认地址浏览。
-
-**构建 & 预览**
-
-```bash
-yarn build
-yarn web # 预览打包后的 Web
-```
-
-当前我们默认将 Molecule 以 `ES6` 模块的方式构建到 **`esm`** 目录。另外，
-这里除了 Storybook 提供的组件预览模式以外，我们同时内置了一个使用 ESM 模块的 `Web` 预览模式。
 
 ## 贡献
 

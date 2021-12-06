@@ -6,5 +6,9 @@
     "sidebar.docs.category.Guides": {
         "message": "指南",
         "description": "指南 Molecule"
+    },
+    "sidebar.docs.category.Advanced Guides": {
+        "message": "高级指南",
+        "description": "高级指南"
     }
 }

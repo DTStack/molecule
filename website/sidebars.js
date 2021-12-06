@@ -14,18 +14,30 @@ module.exports = {
 
     docs: [
         'introduction',
-        'quickStart',
+        'overview',
+        'quick-start',
         'the-first-extension',
         {
             type: 'category',
             label: 'Guides',
             collapsed: false,
             items: [
-                'guides/extends-workbench',
-                'guides/extends-colorTheme',
-                'guides/extends-locales',
-                'guides/extends-settings',
-                'guides/extends-quickAccess',
+                'guides/extension',
+                {
+                    type: 'category',
+                    collapsed: false,
+                    label: 'UI',
+                    items: [
+                        'guides/extend-workbench',
+                        'guides/extend-builtin-ui',
+                    ],
+                },
+                'guides/extend-color-theme',
+                'guides/extend-keybinding',
+                'guides/extend-quick-access',
+                'guides/extend-locales',
+                'guides/extend-settings',
+                'guides/icons',
             ],
         },
         {
@@ -45,7 +57,6 @@ module.exports = {
             collapsed: false,
             items: [
                 'api/namespaces/molecule.component',
-                'api/namespaces/molecule.i18n',
                 'api/namespaces/molecule.react',
                 'api/namespaces/molecule.event',
             ],

@@ -122,10 +122,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         items: [
                             {
                                 label: 'Quick Start',
-                                to: '/docs/introduction',
+                                to: '/docs/quick-start',
                             },
                             {
-                                label: 'The first Extension',
+                                label: 'The First Extension',
                                 to: '/docs/the-first-extension',
                             },
                             {

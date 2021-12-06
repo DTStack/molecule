@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-beta.1](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.6...v0.9.0-beta.1) (2021-12-06)
+
+### Features
+
+-   support a new Welcome page ([#508](https://github.com/DTStack/molecule/issues/508)) ([e5e0a0c](https://github.com/DTStack/molecule/commit/e5e0a0c42ffc4b717b87f8e1d7ffa6259c557788))
+-   support sort in folderTree ([#524](https://github.com/DTStack/molecule/issues/524)) ([8802b1f](https://github.com/DTStack/molecule/commit/8802b1f70ec85a597038f003ebf60feafb2ef127))
+
+### Bug Fixes
+
+-   adjust the menu icon size ([ed9cb8d](https://github.com/DTStack/molecule/commit/ed9cb8d7f50c0d75893593edaf83e7d7360812d5))
+-   fix can't clear the notifications ([#518](https://github.com/DTStack/molecule/issues/518)) ([2503f4a](https://github.com/DTStack/molecule/commit/2503f4a5699700b56247a94a51f38d64dfbf4ba0))
+-   fix create file node incorrect on contextMenu ([#522](https://github.com/DTStack/molecule/issues/522)) ([14c6057](https://github.com/DTStack/molecule/commit/14c6057b34e27cb69997f932867f4bebbf27a6eb))
+-   improve the circular dep error when execute yarn link ([#528](https://github.com/DTStack/molecule/issues/528)) ([486182b](https://github.com/DTStack/molecule/commit/486182b1ef62f72f954edfc08f3edb84ababa62c))
+-   improve the exports of models ([#507](https://github.com/DTStack/molecule/issues/507)) ([4b7ab03](https://github.com/DTStack/molecule/commit/4b7ab0331a0374567c4ad404413e49c40a0387aa))
+-   improve the insert strategy in folderTree ([#486](https://github.com/DTStack/molecule/issues/486)) ([3061b68](https://github.com/DTStack/molecule/commit/3061b68ecea6887aacdf1db19ae56261a144a76d))
+-   initView will override the setDefaultValue ([#513](https://github.com/DTStack/molecule/issues/513)) ([586335e](https://github.com/DTStack/molecule/commit/586335e2e5085f1fdc36c79861bf01c0346427c2))
+-   remove the warning in console ([#529](https://github.com/DTStack/molecule/issues/529)) ([059016c](https://github.com/DTStack/molecule/commit/059016cb4ca19854c200ac0791a198eb521a2d3f))
+-   show the SubMenu in right place when the Menu is horizontal mode ([#526](https://github.com/DTStack/molecule/issues/526)) ([0d76520](https://github.com/DTStack/molecule/commit/0d76520eb03076314ff2f5fda7f51ddfcf0cbdb9))
+
 ## [0.9.0-alpha.6](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.5...v0.9.0-alpha.6) (2021-10-27)
 
 ### Features

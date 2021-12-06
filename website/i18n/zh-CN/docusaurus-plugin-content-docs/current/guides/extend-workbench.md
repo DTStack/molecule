@@ -157,7 +157,7 @@ molecule.editor.open({
 
 关于[面板（Panel）](/docs/api/interfaces/molecule.IPanelService)，我们以常见的 **Terminal** 面板为示例。为了区分上面的**数据库**示例，这里我们在 `extensions` 下新建了一个叫 `terminal` 的文件夹。
 
-首先，我们先声明一个 [IPanelItem](/docs/api/interfaces/molecule.models.IEditorTab) 类型的对象 `terminalPanel`：
+首先，我们先声明一个 [IPanelItem](/docs/api/interfaces/molecule.models.IPanelItem) 类型的对象 `terminalPanel`：
 
 ```ts title="src/extensions/terminal/base.tsx"
 import { localize } from '@dtinsight/molecule/esm/i18n/localize';
@@ -201,7 +201,7 @@ export class TerminalExtension implements IExtension {
 
 在 `activate` 方法中，利用 [`molecule.panel.add`](/docs/api/interfaces/molecule.IPanelService#add) 将 `terminalPanel` 添加到 Panel 视图中。
 
-完整代码请参考[Terminal](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/terminal)。
+完整代码请参考 [Terminal](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/terminal)。
 
 ### [状态栏（StatusBar）](/docs/api/interfaces/molecule.IStatusBarService)
 
@@ -263,7 +263,7 @@ dispose(extensionCtx: IExtensionService): void {
 ```
 
 上例中，我们在**文件（File）**下新增了一个菜单项 **Create Data Source**，移除则使用 `molecule.menuBar.remove` 方法。如果想重置所有 MenuBar 的数据，
-可以使用 [`molecule.menuBar.setMenus()` ](/docs/api/interfaces/molecule.IMenuBarService#setmenus)。
+可以使用 [`molecule.menuBar.setMenus` ](/docs/api/interfaces/molecule.IMenuBarService#setmenus)。
 
 更多关于 MenuBar 的操作，请查看 [MenuBar API](/docs/api/interfaces/molecule.IMenuBarService) 文档。
 

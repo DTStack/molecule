@@ -123,7 +123,7 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 
 ```tsx title="/src/views/myMenuBar/index.tsx"
 <div className="myMenuBar">
-    <Logo alt="logo" src="logo@1x.png" />
+    <Logo alt="logo" src="logo@3x.png" />
     <Menu
         role="menu"
         mode={MenuMode.Horizontal}

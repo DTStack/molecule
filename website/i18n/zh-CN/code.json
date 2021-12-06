@@ -21,7 +21,7 @@
         "message": "可扩展的"
     },
     "page.hero.second.desc": {
-        "message": "Molecule 支持通过插件（extension）的形式，丰富自身功能，同时支持部分 VSCode 的扩展应用。"
+        "message": "Molecule 支持通过插件（Extension）的形式，丰富自身功能，同时支持部分 VSCode 的扩展应用。"
     },
     "page.hero.third": {
         "message": "基于 React"

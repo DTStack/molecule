@@ -201,12 +201,7 @@ export class TerminalExtension implements IExtension {
 
 在 `activate` 方法中，利用 [`molecule.panel.add`](/docs/api/interfaces/molecule.IPanelService#add) 将 `terminalPanel` 添加到 Panel 视图中。
 
-<<<<<<< HEAD
-完整代码请参考[Terminal](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/terminal)。
-=======
 完整代码请参考 [Terminal](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/terminal)。
-
-> > > > > > > 720fedf8348b337d766fd7ea38d3c1c80356c556
 
 ### [状态栏（StatusBar）](/docs/api/interfaces/molecule.IStatusBarService)
 
@@ -268,12 +263,7 @@ dispose(extensionCtx: IExtensionService): void {
 ```
 
 上例中，我们在**文件（File）**下新增了一个菜单项 **Create Data Source**，移除则使用 `molecule.menuBar.remove` 方法。如果想重置所有 MenuBar 的数据，
-<<<<<<< HEAD
-可以使用 [`molecule.menuBar.setMenus()` ](/docs/api/interfaces/molecule.IMenuBarService#setmenus)。
-=======
 可以使用 [`molecule.menuBar.setMenus` ](/docs/api/interfaces/molecule.IMenuBarService#setmenus)。
-
-> > > > > > > 720fedf8348b337d766fd7ea38d3c1c80356c556
 
 更多关于 MenuBar 的操作，请查看 [MenuBar API](/docs/api/interfaces/molecule.IMenuBarService) 文档。
 

@@ -72,7 +72,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 title: 'Molecule',
                 logo: {
                     alt: 'Molecule Logo',
-                    src: 'img/logo@1x.png',
+                    src: 'img/logo@3x.png',
                 },
                 items: [
                     {

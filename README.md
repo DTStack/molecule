@@ -1,6 +1,6 @@
 <div align="center">
 
- <img src="./website/static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo" />
+ <img src="./website/static/img/logo@3x.png" width="20%" height="20%" alt="watchman-logo" />
  <h1>Molecule</h1>
  <h3>A lightweight Web IDE UI Framework</h3>
 

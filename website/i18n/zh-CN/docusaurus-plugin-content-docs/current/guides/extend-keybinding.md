@@ -48,7 +48,7 @@ export class KeybindingAction extends Action2 {
 }
 ```
 
-代码中，`keybinding` 字段则是快捷键的主要部分。我们在 `primary` 这里定义了一个 `Command/Ctrl + S ` 的**组合键**，**触发函数** `run` 执行了一个 `alert`。 其中 `id` 参数为 当前 Action 的 **ID**，我们可以使用 `executeCommand(actionId)` 方法[主动触发](#主动执行-action) 这个 Action。
+代码中，`keybinding` 字段则是快捷键的主要部分。我们在 `primary` 这里定义了一个 `Command/Ctrl + S ` 的**组合键**，**触发函数** `run` 执行了一个 `alert`。 其中 `id` 参数为 当前 Action 的 **ID**，我们可以使用 `executeCommand(actionId)` 方法[主动触发](#主动执行-action)这个 Action。
 
 ## 注册 Action
 

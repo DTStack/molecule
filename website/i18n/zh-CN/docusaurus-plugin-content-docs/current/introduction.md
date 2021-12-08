@@ -62,7 +62,7 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-`extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./quickStart.md)。
+`extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./quick-start.md)。
 
 ## 贡献
 

@@ -19,9 +19,9 @@
 
 [中文](./README-zhCN.md) | [English](./README.md)
 
-The **Molecule** is a lightweight **Web IDE UI** Framework built with React.js，and inspired by the VSCode. We also provide the Extension APIs the seem like VSCode, to help developers extend the Workbench easily. The Molecule integrates with React.js applications is simple. It has applied to many [DTStack](https://www.dtstack.com/) inner projects.
+The **Molecule** is a lightweight **Web IDE UI** Framework built with React.js，and inspired by the VSCode. We also provide the Extension APIs the seem like VSCode, to help developers extend the Workbench easily. The Molecule integrates with React.js applications is simple. It has applied to many [DTStack](https://www.dtstack.com/) inner products.
 
-[Online Preview](https://github.com/DTStack/molecule-examples)
+[Online Preview](https://dtstack.github.io/molecule-examples/#/)
 
 ## Features
 
@@ -59,15 +59,14 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-The `extension` is the Extension applications entry, more details about Extension, please read the [Quick Start](./website/docs/guides/the-first-extension.md).
+The `extension` is the Extension applications entry, more details about Extension, please read the [Quick Start](https://dtstack.github.io/molecule/docs/quick-start).
 
 ## Document
 
--   [Introduction](./website/docs/introduction.md)
--   [Quick Start](./website/docs/.md)
--   [API](./website/docs/api/index.md)
--   [Extend Workbench](./website/docs/guides/extends-workbench.md)
--   [More Docs](./website/docs).
+-   [Introduction](https://dtstack.github.io/molecule/docs/introduction)
+-   [Quick Start](https://dtstack.github.io/molecule/docs/quick-start)
+-   [API](https://dtstack.github.io/molecule/docs/api)
+-   [Extend Workbench](https://dtstack.github.io/molecule/docs/guides/extend-workbench)
 -   [Examples](https://github.com/DTStack/molecule-examples)
 
 ## Development

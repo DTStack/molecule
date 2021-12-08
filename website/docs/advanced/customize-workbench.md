@@ -5,7 +5,7 @@ sidebar_label: Custom Workbench
 
 Molecule 默认的 **Workbench** UI 是一个 **VSCode** 的克隆版本。但是我们在实际的开发场景中，往往不能满足我们的需求。
 
-除了内置的一些原子 [Components](/docs/api/namespaces/molecule.component) 以外，Molecule 同时提供了基本的 **Workbench、SideBar、Editor、ActivityBar、MenuBar、Panel、StatusBar** 等核心[**UI 部件**](./../guides/extend-workbench.md)，以便开发者根据自己的需求**重新组装**自己的 **Workbench**。
+除了内置的一些原子 [Components](/docs/api/namespaces/molecule.component) 以外，Molecule 同时提供了基本的 **Workbench、SideBar、Editor、ActivityBar、MenuBar、Panel、StatusBar** 等核心[**UI 部件**](../guides/extend-workbench)，以便开发者根据自己的需求**重新组装**自己的 **Workbench**。
 
 :::tip
 本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
@@ -188,4 +188,4 @@ export const MySidePane: ISidebarPane = {
 
 ## 总结
 
-上例中使用了很多 Molecule **内置**的 UI 组件来实现自定义，然而使用[内置组件](./customize-builtin.md)是有一定上手成本的，需要开发者对内置的 UI 组件有比较好了解。我们会在后序的版本中，持续优化**文档**和**API**，以减轻上手成本，并尽可能的提供更多的使用**示例**。
+上例中使用了很多 Molecule **内置**的 UI 组件来实现自定义，然而使用[内置组件](/docs/api/namespaces/molecule.component)是有一定上手成本的，需要开发者对内置的 UI 组件有比较好了解。我们会在后序的版本中，持续优化**文档**和**API**，以减轻上手成本，并尽可能的提供更多的使用**示例**。

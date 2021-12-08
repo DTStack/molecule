@@ -12,16 +12,16 @@ sidebar_label: Workbench
 我们把 Molecule 的工作台 UI 划分成了 [MenuBar](#菜单栏menubar)、[ActivityBar](#活动栏activitybar)、[Sidebar](#边栏sidebar),、[Editor](#编辑器editor)、[Panel](#面板panel)、[StatusBar](#状态栏statusbar) 主要**6**大模块：
 
 -   **菜单栏（MenuBar）**：主要负责 Workbench **主菜单**的显示和管理，例如常见的 **文件（File）**、**编辑（Edit）**、**选择（Selection）** 、**视图（View）**等菜单项；
--   **活动栏（ActivityBar）**：主要负责展示工作台当前的**活动项**，例如[浏览（Explorer）](./extend-builtin-ui.md#浏览面板explorer)，[搜索（Search）](./extend-builtin-ui.md#搜索面板search)等模块。需要注意的是，ActivityBar 通常需要配合其他模块一起**联动**，例如切换 ActivityBar 后，Sidebar 则需要展示相对应的面板；
--   **边栏（Sidebar）**：工作台的**左边栏**，其内置的[浏览（Explorer）](./extend-builtin-ui.md#浏览面板explorer)模块为 Workbench 重要的**导航**模块；
+-   **活动栏（ActivityBar）**：主要负责展示工作台当前的**活动项**，例如[浏览（Explorer）](./extend-builtin-ui#浏览面板explorer)，[搜索（Search）](./extend-builtin-ui#搜索面板search)等模块。需要注意的是，ActivityBar 通常需要配合其他模块一起**联动**，例如切换 ActivityBar 后，Sidebar 则需要展示相对应的面板；
+-   **边栏（Sidebar）**：工作台的**左边栏**，其内置的[浏览（Explorer）](./extend-builtin-ui#浏览面板explorer)模块为 Workbench 重要的**导航**模块；
 -   **编辑区（Editor）**：通过编辑器标签页来展示具体的工作内容，例如**编辑代码**，或者渲染自定义的操作界面。当没有打开编辑器标签页的时候，Molecule 会渲染一个**入口（Entry）**页面在这块区域。当然，这个入口页面是支持**自定义**的；
--   **面板（Panel）**：在 Editor 的下方，通常会展示例如 [问题（Problems）](./extend-builtin-ui.md#问题面板problems-), [输出（Output）](extend-builtin-ui.md#输出面板output), **终端（Terminal）**等模块；
--   **状态栏（StatusBar）**：位于整个 Workbench 的最底部, 用来展示**状态信息**。例如当前编辑器中文件的**语言(Language)**，当前光标所在**行（Ln）和列（Col）**，[通知（Notification）](./extend-builtin-ui.md#通知栏notification)等信息。
+-   **面板（Panel）**：在 Editor 的下方，通常会展示例如 [问题（Problems）](./extend-builtin-ui#问题面板problems-), [输出（Output）](extend-builtin-ui#输出面板output), **终端（Terminal）**等模块；
+-   **状态栏（StatusBar）**：位于整个 Workbench 的最底部, 用来展示**状态信息**。例如当前编辑器中文件的**语言(Language)**，当前光标所在**行（Ln）和列（Col）**，[通知（Notification）](./extend-builtin-ui#通知栏notification)等信息。
 
 :::tip
 这**6**大模块仅仅是做简单的渲染，并没有什么实际的功能，想要完成具体的业务场景，需要我们联合其他模块来实现，例如 **ActivityBar** 与 **Sidebar** **联动，FolderTree** 与 **Editor** 联动等等。
 
-另外，为了减轻 UI 开发的工作量，我们在 6 大组件的基础上，扩展来不少[**内置部件**](extend-builtin-ui.md)，详细使用情[参考](./extend-builtin-ui.md)
+另外，为了减轻 UI 开发的工作量，我们在 6 大组件的基础上，扩展来不少[**内置部件**](./extend-builtin-ui)，详细使用情[参考](./extend-builtin-ui)
 :::
 
 ## 扩展工作台（Workbench)
@@ -151,7 +151,7 @@ molecule.editor.open({
 });
 ```
 
-这里并没有设置 `renderPane` 函数。关于打开编程语言的例子，可以参考一下[第一个扩展](../the-first-extension.md)这个示例。
+这里并没有设置 `renderPane` 函数。关于打开编程语言的例子，可以参考一下[第一个扩展](../the-first-extension)这个示例。
 
 ### [面板（Panel）](/docs/api/interfaces/molecule.IPanelService)
 
@@ -232,7 +232,7 @@ molecule.statusBar.remove(languageBar.id, Float.right);
 
 代码中的 `Float.left/Float.right` 用来表示显示在状态栏的**左侧**或者**右侧**。
 
-如果我们想要 **自定义 StatusBar** 的渲染内容，我们可以使用 `render` 自定义函数，例如自定义[**图标**](./icons.md)：
+如果我们想要 **自定义 StatusBar** 的渲染内容，我们可以使用 `render` 自定义函数，例如自定义[**图标**](./icons)：
 
 ```ts
 import { IStatusBarItem, Float } from '@dtinsight/molecule/esm/model';

@@ -15,11 +15,11 @@ Molecule 内置了一个简单的**国际化（i18n）**方案，支持我们基
 
 ![Select Display Language](/img/guides/extend-language.png)
 
-第二种，打开使用快捷键 `Command/Ctrl + ,` 在 [Editor](./extend-workbench.md) 中打开[设置（Settings)](./extend-settings) 面板，修改 **JSON** 配置中的 `locale` 字段：
+第二种，打开使用快捷键 `Command/Ctrl + ,` 在 [Editor](./extend-workbench) 中打开[设置（Settings)](./extend-settings) 面板，修改 **JSON** 配置中的 `locale` 字段：
 
 ![Select Display Language](/img/guides/extend-language2.png)
 
-修改完成后，Molecule 会在 通知栏[（Notification）](./extend-builtin-ui.md#通知栏notification)弹出更新消息，我们选择 **Reload** 即可重新加载。
+修改完成后，Molecule 会在 通知栏[（Notification）](./extend-builtin-ui#通知栏notification)弹出更新消息，我们选择 **Reload** 即可重新加载。
 
 ## [本地化服务（LocaleService） 对象](/docs/api/classes/molecule.i18n.LocaleService)
 

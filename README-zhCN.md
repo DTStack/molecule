@@ -21,7 +21,7 @@
 
 Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
 
-[在线预览](https://github.com/DTStack/molecule-examples)
+[在线预览](https://dtstack.github.io/molecule-examples/#/)
 
 ## 核心功能
 
@@ -59,15 +59,14 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-`extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](./website/docs/guides/the-first-extension.md)。
+`extension` 为 Workbench 应用的扩展入口，如何编写扩展，请参考[快速开始](https://dtstack.github.io/molecule/docs/quick-start)。
 
 ## 文档
 
--   [简介](./website/docs/introduction.md)
--   [快速开始](./website/docs/introduction.md)
--   [API 文档](./website/docs/api/index.md)
--   [扩展 Workbench](./website/docs/guides/extends-workbench.md)
--   [More Docs](./website/docs).
+-   [简介](https://dtstack.github.io/molecule/docs/introduction)
+-   [快速开始](https://dtstack.github.io/molecule/docs/quick-start)
+-   [API 文档](https://dtstack.github.io/molecule/docs/api)
+-   [扩展 Workbench](https://dtstack.github.io/molecule/docs/guides/extend-workbench)
 -   [Examples](https://github.com/DTStack/molecule-examples)
 
 ## 开发

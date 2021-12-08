@@ -7,7 +7,7 @@ sidebar_position: 1
 在 Molecule 中，所有的自定义的功能，都是利用[扩展（Extension）](./guides/extension)来完成的。接下来让我们基于 [molecule-demo][demo-url] 项目，快速学习一下如何编写一个扩展应用。
 
 :::tip
-本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+本文内容中的所有代码，都以 [Quick Start](./quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
 :::
 
 ## 一个简单的场景
@@ -67,7 +67,7 @@ export class FirstExtension implements IExtension {
 我们来看看 `folderTreeController` 模块的具体实现逻辑：
 
 -   `initFolderTree`： 负责获取 [FolderTree][foldertree-url] 的数据，成功后并渲染数据到 [FolderTree][foldertree-url] 组件
--   `handleSelectFolderTree`： 负责处理 [FolderTree][foldertree-url] 的 `onSelectFile` 事件，选中后文件，在 [Editor](./api/namespaces/molecule#editor) 中打开
+-   `handleSelectFolderTree`： 负责处理 [FolderTree][foldertree-url] 的 `onSelectFile` 事件，选中后文件，在 [Editor](/docs/guides/extend-workbench#编辑器editor) 中打开
 
 ```ts title="/src/extensions/theFirstExtension/folderTreeController.ts"
 import molecule from '@dtinsight/molecule';

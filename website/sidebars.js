@@ -49,7 +49,7 @@ module.exports = {
         'contributing',
     ],
     api: [
-        'api/modules',
+        'api/index',
         'api/namespaces/molecule',
         {
             type: 'category',

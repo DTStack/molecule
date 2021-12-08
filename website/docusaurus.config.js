@@ -8,13 +8,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     tagline: 'A lightweight Web IDE UI framework',
     url: 'https://your-docusaurus-test-site.com',
     baseUrl: '/',
-    onBrokenLinks: 'warn',
-    onBrokenMarkdownLinks: 'warn',
+    onBrokenLinks: 'error',
+    onBrokenMarkdownLinks: 'error',
     favicon: 'img/favicon.png',
     organizationName: 'DTStack', // Usually your GitHub org/user name.
     projectName: 'molecule', // Usually your repo name.
     i18n: {
-        defaultLocale: 'zh-CN',
+        defaultLocale: 'en',
         locales: ['zh-CN', 'en'],
         localeConfigs: {
             'zh-CN': {
@@ -35,6 +35,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 entryPoints: ['../src/index.ts'],
                 tsconfig: '../tsconfig.json',
                 name: 'Molecule',
+                readme: 'none',
             },
         ],
     ],
@@ -83,7 +84,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                     },
                     {
                         type: 'doc',
-                        docId: 'api/modules',
+                        docId: 'api/index',
                         label: 'API',
                         position: 'left',
                     },
@@ -130,11 +131,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                             },
                             {
                                 label: 'Guides',
-                                to: '/docs/extends-workbench',
+                                to: '/docs/guides/extension',
                             },
                             {
                                 label: 'API',
-                                to: '/docs/api/modules',
+                                to: '/docs/api',
                             },
                         ],
                     },

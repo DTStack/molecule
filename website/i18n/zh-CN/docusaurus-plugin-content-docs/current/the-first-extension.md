@@ -34,7 +34,7 @@ src/extensions
 
 ### 创建扩展（Extension）对象
 
-我们在 `index.ts` 中新建一个叫 `FirstExtension` 的类，该类实现类 [IExtension](./api/interfaces/molecule.models.IExtension) 接口：
+我们在 `index.ts` 中新建一个叫 `FirstExtension` 的类，该类实现类 [IExtension](./api/interfaces/molecule.model.IExtension) 接口：
 
 ```ts title="src/extensions/theFirstExtension/index.ts"
 import { IExtension } from '@dtinsight/molecule/esm/model/extension';
@@ -95,7 +95,7 @@ export function handleSelectFolderTree() {
 在`API.getFolderTree` 方法获取文件树数据成功后，我们通过 [`molecule.folderTree.add`](./api/classes/molecule.FolderTreeService#add) 方法，将数据添加并展示到 [FolderTree](./api/classes/molecule.FolderTreeService) 组件中；通过 [`molecule.folderTree.onSelectFile`](./api/classes/molecule.FolderTreeService#onselectfile) 方法监听**选中文件**；最后通过 [`molecule.editor.open`](./api/interfaces/molecule.IEditorService#open) 方法打开文件。
 
 :::caution
-需要注意的是，在现实情况中，`API.getFolderTree` 返回的**数据类型**并不是 [IFolderTreeNodeProps](./api/interfaces/molecule.IFolderTreeNodeProps) 类型，我们往往需要经过一个**转换**方法。示例中 `API.getFolderTree` 函数的 Mock 数据可以[查看](https://github.com/DTStack/molecule-examples/blob/main/packages/molecule-demo/public/mock/folderTree.json)。`handleSelectFolderTree` 方法中的 `transformToEditorTab` 为一个**转换**方法，主要是将`file`转换为[IEditorTab](./api/interfaces/molecule.models.IEditorTab) 类型。
+需要注意的是，在现实情况中，`API.getFolderTree` 返回的**数据类型**并不是 [IFolderTreeNodeProps](./api/interfaces/molecule.model.IFolderTreeNodeProps) 类型，我们往往需要经过一个**转换**方法。示例中 `API.getFolderTree` 函数的 Mock 数据可以[查看](https://github.com/DTStack/molecule-examples/blob/main/packages/molecule-demo/public/mock/folderTree.json)。`handleSelectFolderTree` 方法中的 `transformToEditorTab` 为一个**转换**方法，主要是将`file`转换为[IEditorTab](./api/interfaces/molecule.model.IEditorTab) 类型。
 :::
 
 ### 使用扩展

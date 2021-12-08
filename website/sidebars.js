@@ -57,6 +57,7 @@ module.exports = {
             collapsed: false,
             items: [
                 'api/namespaces/molecule.component',
+                'api/namespaces/molecule.model',
                 'api/namespaces/molecule.react',
                 'api/namespaces/molecule.event',
             ],

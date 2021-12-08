@@ -37,7 +37,7 @@ molecule.explore.addPanel({
 });
 ```
 
-[`renderPanel`](/docs/api/interfaces/molecule.models.IExplorerPanelItem#renderpanel) 为自定义渲染的面板内容，[`toolbar`](/docs/api/interfaces/molecule.models.IExplorerPanelItem#toolbar) 为自定义的工具栏。
+[`renderPanel`](/docs/api/interfaces/molecule.model.IExplorerPanelItem#renderpanel) 为自定义渲染的面板内容，[`toolbar`](/docs/api/interfaces/molecule.model.IExplorerPanelItem#toolbar) 为自定义的工具栏。
 
 监听 Explorer 的**事件**：
 
@@ -106,7 +106,7 @@ molecule.folderTree.onSelectFile((file: IFolderTreeNodeProps) => {
 });
 ```
 
-更多关于 FolderTree 的使用，请参考 [API](./api/classes/molecule.FolderTreeService) 文档。
+更多关于 FolderTree 的使用，请参考 [API](/docs/api/classes/molecule.FolderTreeService) 文档。
 
 ## [编辑器树（EditorTree)](/docs/api/interfaces/molecule.IEditorTreeService)
 

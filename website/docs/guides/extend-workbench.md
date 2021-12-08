@@ -94,7 +94,7 @@ export const dataSourceActivityBar: IActivityBarItem = {
 
 ### [边栏（SideBar）](/docs/api/interfaces/molecule.ISidebarService)
 
-同 ActivityBar 一样，我们先在 base.tsx 中声明一个 [`ISidebarPane`](/docs/api/interfaces/molecule.models.ISidebarPane) 类型的对象 `dataSourceSidebar`，然后使用[`molecule.sidebar.add`](/docs/api/interfaces/molecule.ISidebarService#add) 方法。
+同 ActivityBar 一样，我们先在 base.tsx 中声明一个 [`ISidebarPane`](/docs/api/interfaces/molecule.model.ISidebarPane) 类型的对象 `dataSourceSidebar`，然后使用[`molecule.sidebar.add`](/docs/api/interfaces/molecule.ISidebarService#add) 方法。
 
 ```ts title="src/extensions/dataSource/base.tsx"
 import DataSourceView from '../../views/dataSource/dataSourceSidebar';
@@ -120,7 +120,7 @@ export const dataSourceSidebar: ISidebarPane = {
 
 ### [编辑器（Editor）](/docs/api/interfaces/molecule.IEditorService)
 
-在上图中，我们在 Editor 中打开了一个名叫 **Create Data Source** 的标签，而标签内容则是一个**添加数据库**的**表单（Form)**。同样的，我们首先声明一个 [IEditorTab](/docs/api/interfaces/molecule.models.IEditorTab) 的对象，然后利用 [molecule.editor.open](/docs/api/interfaces/molecule.IEditorService#open) 方法打开：
+在上图中，我们在 Editor 中打开了一个名叫 **Create Data Source** 的标签，而标签内容则是一个**添加数据库**的**表单（Form)**。同样的，我们首先声明一个 [IEditorTab](/docs/api/interfaces/molecule.model.IEditorTab) 的对象，然后利用 [molecule.editor.open](/docs/api/interfaces/molecule.IEditorService#open) 方法打开：
 
 ```ts title="src/extensions/dataSource/base.tsx"
 import CreateDataSourceView from '../../views/dataSource/createDataSource';
@@ -157,7 +157,7 @@ molecule.editor.open({
 
 关于[面板（Panel）](/docs/api/interfaces/molecule.IPanelService)，我们以常见的 **Terminal** 面板为示例。为了区分上面的**数据库**示例，这里我们在 `extensions` 下新建了一个叫 `terminal` 的文件夹。
 
-首先，我们先声明一个 [IPanelItem](/docs/api/interfaces/molecule.models.IEditorTab) 类型的对象 `terminalPanel`：
+首先，我们先声明一个 [IPanelItem](/docs/api/interfaces/molecule.model.IEditorTab) 类型的对象 `terminalPanel`：
 
 ```ts title="src/extensions/terminal/base.tsx"
 import { localize } from '@dtinsight/molecule/esm/i18n/localize';
@@ -205,7 +205,7 @@ export class TerminalExtension implements IExtension {
 
 ### [状态栏（StatusBar）](/docs/api/interfaces/molecule.IStatusBarService)
 
-[状态栏（StatusBar）](/docs/api/interfaces/molecule.IStatusBarService) 整个是围绕 [IStatusBarItem](/docs/api/interfaces/molecule.models.IStatusBarItem) 类型的对象来进行**增加、更新、删除**等基本操作的，例如：
+[状态栏（StatusBar）](/docs/api/interfaces/molecule.IStatusBarService) 整个是围绕 [IStatusBarItem](/docs/api/interfaces/molecule.model.IStatusBarItem) 类型的对象来进行**增加、更新、删除**等基本操作的，例如：
 
 ```ts
 import { IStatusBarItem, Float } from '@dtinsight/molecule/esm/model';

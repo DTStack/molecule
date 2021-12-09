@@ -47,6 +47,7 @@
 }
 
 #{$compositeBar} {
+    border-right: 1px solid var(--activityBar-border);
     display: flex;
     flex-direction: column;
     min-height: 100%;

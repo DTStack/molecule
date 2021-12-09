@@ -7,6 +7,17 @@
             text-transform: uppercase;
         }
     }
+
+    #{$folderTree} {
+        #{$tree}__indent__guide {
+            opacity: 0;
+            transition: opacity 0.3s linear;
+        }
+
+        &:hover #{$tree}__indent__guide {
+            opacity: 1;
+        }
+    }
 }
 
 #{$folderTree} {

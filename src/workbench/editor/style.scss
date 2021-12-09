@@ -28,10 +28,10 @@
     }
 
     &__group-header {
-        display: flex;
-        position: relative;
         background: var(--editorGroupHeader-tabsBackground);
         border-bottom: 1px solid var(--editorGroupHeader-tabsBorder);
+        display: flex;
+        position: relative;
     }
 
     &__group-tabs {

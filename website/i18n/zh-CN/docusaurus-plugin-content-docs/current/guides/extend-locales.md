@@ -69,7 +69,7 @@ export const ExtendLocales: IExtension = {
 };
 ```
 
-`zh-CN.json` 为 [ILocale](/docs/api/interfaces/molecule.i18n.ILocale) 类型的语言包资源文件:
+`zh-CN.json` 为 [ILocale](/docs/api/interfaces/molecule.ILocale) 类型的语言包资源文件:
 
 ```json
 {

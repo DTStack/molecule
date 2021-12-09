@@ -98,4 +98,4 @@ export default App;
 [inactive-url]: /docs/api/interfaces/molecule.IExtensionService#inactive
 [service-url]: /docs/api/classes/molecule.ExtensionService
 [cmd-url]: /docs/api/classes/molecule.ExtensionService#executecommand
-[ext-url]: /docs/api/interfaces/molecule.models.IExtension
+[ext-url]: /docs/api/interfaces/molecule.model.IExtension

@@ -8,7 +8,7 @@ export * from 'mo/i18n';
 export * from 'mo/workbench';
 export * from 'mo/services';
 
-export * as models from 'mo/model';
+export * as model from 'mo/model';
 
 import {
     ILayoutService,

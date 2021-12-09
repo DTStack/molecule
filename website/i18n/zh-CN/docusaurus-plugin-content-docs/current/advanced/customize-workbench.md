@@ -139,7 +139,7 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 
 ### 自定义 RightSideBar
 
-与 `MenuBar` 稍有不同的是，因为复用了内置的 [Sidebar](/docs/api/namespaces/molecule#sidebar-1) 组件，所以这里我们只需要传入 [ISidebarPane](/docs/api/interfaces/molecule.models.ISidebarPane) 类型的组件：
+与 `MenuBar` 稍有不同的是，因为复用了内置的 [Sidebar](/docs/api/namespaces/molecule#sidebar-1) 组件，所以这里我们只需要传入 [ISidebarPane](/docs/api/interfaces/molecule.model.ISidebarPane) 类型的组件：
 
 ```tsx title="/src/views/mySidePane.tsx"
 import React from 'react';
@@ -188,4 +188,4 @@ export const MySidePane: ISidebarPane = {
 
 ## 总结
 
-上例中使用了很多 Molecule **内置**的 UI 组件来实现自定义，然而使用[内置组件](./customize-builtin.md)是有一定上手成本的，需要开发者对内置的 UI 组件有比较好了解。我们会在后序的版本中，持续优化**文档**和**API**，以减轻上手成本，并尽可能的提供更多的使用**示例**。
+上例中使用了很多 Molecule **内置**的 UI 组件来实现自定义，然而使用[内置组件](/docs/api/namespaces/molecule.component)是有一定上手成本的，需要开发者对内置的 UI 组件有比较好了解。我们会在后序的版本中，持续优化**文档**和**API**，以减轻上手成本，并尽可能的提供更多的使用**示例**。

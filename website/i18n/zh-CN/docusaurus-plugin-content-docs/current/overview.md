@@ -30,7 +30,7 @@ Molecule 有一个基本的[国际化（i18n）](./guides/extend-locales)方案�
 
 ## 设置（Settings）
 
-Molecule 支持通过在[设置（Settings）](./guides/extend-setting)中修改部分配置项。例如：当你想要修改**编辑器**的**字体**大小时，只需要打开设置菜单中的「**设置**」选项，然后把 `editor.fontSize` 的值从 **12** 修改至 **14** 即可。
+Molecule 支持通过在[设置（Settings）](./guides/extend-settings)中修改部分配置项。例如：当你想要修改**编辑器**的**字体**大小时，只需要打开设置菜单中的「**设置**」选项，然后把 `editor.fontSize` 的值从 **12** 修改至 **14** 即可。
 
 更多关于去**扩展设置项**的内容，请参考 [扩展设置](./guides/extend-settings) 。
 

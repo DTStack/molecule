@@ -62,7 +62,7 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-The `extension` is the Extension applications entry, more details about Extension, please read the [Quick Start](./quickStart.md).
+The `extension` is the Extension applications entry, more details about Extension, please read the [Quick Start](./quick-start.md).
 
 ## Development
 

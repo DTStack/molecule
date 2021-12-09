@@ -11,7 +11,7 @@ Molecule 内置了一些**基本设置项**，例如**编辑器（Monaco Editor�
 
 上图中，显示了 `colorTheme`、`editor.renderWhitespace`、`editor.tabSize`, `editor.fontSize`、`locale` 这些配置项。用户可以根据自己的需要，在线修改。其中 `colorTheme` 和 `locale` 则需要看当前扩展的支持情况。
 
-Molecule 除了可以在线修改配置，更重要的是， 支持开发者通过[扩展](./extension.md)**自定义**配置项。
+Molecule 除了可以在线修改配置，更重要的是， 支持开发者通过[扩展](./extension)**自定义**配置项。
 
 ## 打开设置
 

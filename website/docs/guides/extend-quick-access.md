@@ -6,7 +6,7 @@ sidebar_label: QuickAccess
 得益于 [Monaco Editor](https://microsoft.github.io/monaco-editor/) **快捷访问 （QuickAccess）** 强大的扩展能力，我们把允许开发者在 Molecule 中通过 **Extension** 的方式，去自定义**快捷访问**功能。
 
 :::info
-Molecule 中的快捷访问功能，与[快捷键](./extend-keybinding.md)功能一样, 都得依赖 `Action2` 抽象类。目前实现此功能需要引入相关的 monaco-editor 模块。
+Molecule 中的快捷访问功能，与[快捷键](./extend-keybinding)功能一样, 都得依赖 `Action2` 抽象类。目前实现此功能需要引入相关的 monaco-editor 模块。
 :::
 
 <div align="center">

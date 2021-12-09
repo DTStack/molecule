@@ -15,15 +15,15 @@ Molecule 内置了一个简单的**国际化（i18n）**方案，支持我们基
 
 ![Select Display Language](/img/guides/extend-language.png)
 
-第二种，打开使用快捷键 `Command/Ctrl + ,` 在 [Editor](./extend-workbench.md) 中打开[设置（Settings)](./extend-settings) 面板，修改 **JSON** 配置中的 `locale` 字段：
+第二种，打开使用快捷键 `Command/Ctrl + ,` 在 [Editor](./extend-workbench) 中打开[设置（Settings)](./extend-settings) 面板，修改 **JSON** 配置中的 `locale` 字段：
 
 ![Select Display Language](/img/guides/extend-language2.png)
 
-修改完成后，Molecule 会在 通知栏[（Notification）](./extend-builtin-ui.md#通知栏notification)弹出更新消息，我们选择 **Reload** 即可重新加载。
+修改完成后，Molecule 会在 通知栏[（Notification）](./extend-builtin-ui#通知栏notification)弹出更新消息，我们选择 **Reload** 即可重新加载。
 
-## [本地化服务（LocaleService） 对象](/docs/api/classes/molecule.i18n.LocaleService)
+## [本地化服务（LocaleService） 对象](/docs/api/classes/molecule.LocaleService)
 
-**LocaleService** 提供了一些基础的 [API](/docs/api/classes/molecule.i18n.LocaleService) 方法，这些方法可以帮助我们完成对国际化功能的扩展，例如：
+**LocaleService** 提供了一些基础的 [API](/docs/api/classes/molecule.LocaleService) 方法，这些方法可以帮助我们完成对国际化功能的扩展，例如：
 
 **本地化(localize)**一个对象:
 
@@ -69,13 +69,13 @@ export const ExtendLocales: IExtension = {
 };
 ```
 
-`zh-CN.json` 为 [ILocale](/docs/api/interfaces/molecule.i18n.ILocale) 类型的语言包资源文件:
+`zh-CN.json` 为 [ILocale](/docs/api/interfaces/molecule.ILocale) 类型的语言包资源文件:
 
 ```json
 {
     "id": "custom-zh-CN",
     "name": "简体中文 - 自定义",
-    "inherit": "zh-CN",
+    "inherit": "zh-CN",/docs/guides/extend-locales:
     "source": {
         "menu.file": "文件",
         "menu.newFile": "新建任务",

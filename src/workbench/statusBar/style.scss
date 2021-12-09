@@ -4,6 +4,7 @@
     align-items: center;
     background-color: var(--statusBar-background);
     border-color: var(--statusBar-border);
+    border-top: 1px solid var(--statusBar-border);
     bottom: 0;
     color: var(--statusBar-foreground);
     display: flex;

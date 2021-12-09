@@ -40,7 +40,7 @@ export function Panel(props: IPanel & IPanelController) {
     return (
         <div className={defaultClassName}>
             <div className={panelHeaderClassName}>
-                <Scrollable noScrollY isShowShadow>
+                <Scrollable noScrollY>
                     <Tabs
                         activeTab={current?.id}
                         data={sortedPanels}

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-beta.1.1](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1...v0.9.0-beta.1.1) (2021-12-13)
+
+### Features
+
+-   improve the colorTheme detail ([#541](https://github.com/DTStack/molecule/issues/541)) ([049f003](https://github.com/DTStack/molecule/commit/049f00311f4596356695cb2c6b9c62656a52775c))
+
 ## [0.9.0-beta.1](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.6...v0.9.0-beta.1) (2021-12-06)
 
 ### Features

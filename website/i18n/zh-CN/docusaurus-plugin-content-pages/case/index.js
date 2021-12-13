@@ -8,27 +8,25 @@ const data = [
         sourceUrl:
             'https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo',
         previewUrl: 'https://dtstack.github.io/molecule-examples/',
-        desc: 'The examples showing how to integrate or use the Molecule.',
-        enDesc: 'The examples showing how to integrate or use the Molecule.',
-        cnDesc: '展示如何使用Molecule的demo项目',
+        desc: '展示如何使用 Molecule 的 demo 项目',
     },
     {
         name: 'online-code-formatting',
         sourceUrl: 'https://github.com/wewoor/online-code-formatting',
         previewUrl: 'https://wewoor.github.io/online-code-formatting/',
-        desc: 'A simple online code formatting tool built with Molecule.',
+        desc: '使用 Molecule 开发的一个简单的在线代码格式化工具',
     },
     {
         name: 'monaco-sql-languages',
         sourceUrl: 'https://github.com/DTStack/monaco-sql-languages',
         previewUrl: 'https://dtstack.github.io/monaco-sql-languages/',
-        desc: 'This is a SQL Languages project for Monaco Editor.',
+        desc: '这是 Monaco Editor 的一个 SQL Languages 项目',
     },
     {
         name: 'online-markdown-preview',
         sourceUrl: 'https://github.com/kiwiwong/online-markdown-preview',
         previewUrl: 'https://kiwiwong.github.io/online-markdown-preview/',
-        desc: 'A simple online markdown preview tool built with Molecule.',
+        desc: '使用 Molecule 开发的一个简单的 Markdown 在线编辑预览工具',
     },
 ];
 
@@ -52,7 +50,7 @@ const CasePanel = ({ name, sourceUrl, previewUrl, desc }) => (
                 style={{ color: 'var(--ifm-color-primary)' }}
             >
                 <span className={styles.icon}></span>
-                <span>source</span>
+                <span>源码</span>
             </a>
         </div>
         <div>{desc}</div>

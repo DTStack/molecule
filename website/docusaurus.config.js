@@ -88,12 +88,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         label: 'API',
                         position: 'left',
                     },
-                    // {
-                    //     type: 'doc',
-                    //     docId: 'examples/index',
-                    //     label: 'Showcase',
-                    //     position: 'left',
-                    // },
                     {
                         to: 'case',
                         label: 'Showcase',

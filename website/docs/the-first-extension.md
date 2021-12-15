@@ -12,7 +12,7 @@ sidebar_position: 1
 
 ## 一个简单的场景
 
-![The First Extension](/img/the-first-extensifefen.png)
+![The First Extension](/img/the-first-extension.png)
 
 如图，我们在 **Explorer** 中的文件树（FolderTree）中展示了一系列的代码文件，当鼠标**点击**文件后，则在右侧的编辑器（Editor）中**打开**该文件。
 

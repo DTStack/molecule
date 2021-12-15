@@ -13,9 +13,7 @@ Molecule 默认的 **Workbench** UI 是一个 **VSCode** 的克隆版本。但�
 
 ## 自定义 Workbench 示例
 
-<div align="center">
- <img src="/img/advanced/custom-workbench.png" alt="Search files by name" />
-</div>
+![Custom Workbench](/img/advanced/custom-workbench.png)
 
 Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我们将 **MenuBar** 水平置于了**顶部**的位置，在编辑器的右侧，我们又自定义了一个**右边栏（RightSideBar)**。
 

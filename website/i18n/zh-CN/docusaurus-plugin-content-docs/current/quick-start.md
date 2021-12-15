@@ -75,9 +75,7 @@ npm run start
 
 这个命令会自动在默认浏览器中打开 [http://localhost:3000](http://localhost:3000) 这个地址，即可看到 Molecule 默认的 IDE 界面。
 
-<div align="center">
- <img src="/img/molecule.png" alt="Quick Start" />
-</div>
+![Quick Start](/img/molecule.png)
 
 ## 使用 Monaco Editor 语言包
 

@@ -25,13 +25,13 @@ The **Molecule** is a lightweight **Web IDE UI** Framework built with React.jsï¼
 
 ## Features
 
--   Builtin the VSCode **Workbench** UI
+-   Built-in the VSCode **Workbench** UI
 -   Compatible with the VSCode **ColorTheme**
 -   Customize the Workbench via **React Component** easily
--   Builtin Monaco-Editor **Command Palette, Keybinding** features
--   Support the **i18n**, builtin zhCN, and English
--   Builtin **Settings**, support to edit and extend via the Extension
--   Builtin basic **Explorer, Search** components, and support extending via the Extension
+-   Built-in Monaco-Editor **Command Palette, Keybinding** features
+-   Support the **i18n**, built-in zhCN, and English
+-   Built-in **Settings**, support to edit and extend via the Extension
+-   Built-in basic **Explorer, Search** components, and support extending via the Extension
 -   **Typescript** Ready
 
 ## Installation

@@ -29,4 +29,49 @@
     &__action {
         font-size: 16px;
     }
+
+    &--horizontal {
+        height: 25px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--activityBar-background);
+
+        & > #{$menu} {
+            box-shadow: none;
+            background: var(--activityBar-background);
+            color: var(--foreground);
+
+            &--horizontal {
+                #{$menu}__item {
+                    min-width: auto;
+                }
+
+                & > #{$menu}__item > #{$menu}__content {
+                    & > #{$menu}__label {
+                        padding: 0 1em;
+                        flex: none;
+                        font-size: 12px;
+                    }
+
+                    & > #{$menu}__indicator {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        #{$menu}:hover {
+            background-color: auto !important;
+            border-color: auto !important;
+            color: auto !important;
+        }
+
+        &__logo {
+            width: 20px;
+            height: 20px;
+            margin: 0 14px;
+        }
+    }
 }

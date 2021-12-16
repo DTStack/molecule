@@ -44,6 +44,12 @@
     right: 0;
     top: 0;
     z-index: 1;
+
+    &--with-horizontal-menuBar {
+        #{$mainBench} {
+            height: calc(100% - 25px);
+        }
+    }
 }
 
 #{$compositeBar} {

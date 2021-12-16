@@ -1,7 +1,12 @@
 import { container, singleton } from 'tsyringe';
 import { Component } from 'mo/react';
 import { ID_APP } from 'mo/common/id';
-import { ILayout, Position, LayoutModel } from 'mo/model/workbench/layout';
+import {
+    ILayout,
+    Position,
+    LayoutModel,
+    MenuBarMode,
+} from 'mo/model/workbench/layout';
 
 export interface ILayoutService extends Component<ILayout> {
     /**
@@ -48,6 +53,16 @@ export interface ILayoutService extends Component<ILayout> {
      * @unachieved
      */
     setSideBarPosition(position: keyof typeof Position): void;
+    /**
+     * Set the mode of the menu bar, default is `vertical`
+     * @param mode
+     * @unachieved
+     */
+    setMenuBarMode(mode: keyof typeof MenuBarMode): void;
+    /**
+     * Get the mode of the menu bar
+     */
+    getMenuBarMode(): keyof typeof MenuBarMode;
     /**
      * Reset all layout data as default value
      */
@@ -135,6 +150,19 @@ export class LayoutService
         this.setState({ horizontalSplitPanePos });
     }
 
+    public setMenuBarMode(mode: keyof typeof MenuBarMode): void {
+        const { menuBar } = this.state;
+        const { mode: preMode } = menuBar;
+        if (preMode !== mode) {
+            this.setState({ menuBar: { ...menuBar, mode, hidden: false } });
+        }
+    }
+
+    public getMenuBarMode(): keyof typeof MenuBarMode {
+        const { menuBar } = this.state;
+        return menuBar.mode;
+    }
+
     public reset() {
         this.setState({
             splitPanePos: ['300px', 'auto'],
@@ -143,7 +171,7 @@ export class LayoutService
             panel: { hidden: false, panelMaximized: false },
             statusBar: { hidden: false },
             sidebar: { hidden: false, position: Position.left },
-            menuBar: { hidden: false },
+            menuBar: { hidden: false, mode: MenuBarMode.vertical },
         });
     }
 }

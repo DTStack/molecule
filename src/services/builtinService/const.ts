@@ -86,6 +86,9 @@ export const constants = {
     CONTEXT_MENU_EXPLORER: 'sidebar.explore.title',
     CONTEXT_MENU_SEARCH: 'sidebar.search.title',
     CONTEXT_MENU_HIDE: 'menu.hideActivityBar',
+    MENUBAR_MODE_HORIZONTAL: 'menuBar.mode.horizontal',
+    MENUBAR_MODE_VERTICAL: 'menuBar.mode.vertical',
+    MENUBAR_MENU_MODE_DIVIDER: 'menuBar.modeDivider',
 };
 
 export const modules = {
@@ -620,6 +623,24 @@ export const modules = {
                                 icon: 'check',
                                 id: constants.MENU_VIEW_PANEL,
                                 name: localize('menu.showPanel', 'Show Panel'),
+                            },
+                            {
+                                id: constants.MENUBAR_MENU_MODE_DIVIDER,
+                                type: 'divider',
+                            },
+                            {
+                                id: constants.MENUBAR_MODE_HORIZONTAL,
+                                name: localize(
+                                    'menu.menuBarHorizontal',
+                                    'Menu Bar Horizontal Mode'
+                                ),
+                            },
+                            {
+                                id: constants.MENUBAR_MODE_VERTICAL,
+                                name: localize(
+                                    'menu.menuBarVertical',
+                                    'Menu Bar Vertical Mode'
+                                ),
                             },
                         ],
                     },

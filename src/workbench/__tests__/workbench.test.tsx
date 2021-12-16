@@ -22,6 +22,7 @@ import {
     ISidebarViewState,
     LayoutModel,
     ViewVisibility,
+    IMenuBarViewState,
 } from 'mo/model/workbench/layout';
 import { drag } from '@test/utils';
 import { select } from 'mo/common/dom';
@@ -43,7 +44,7 @@ describe('Test Workbench Component', () => {
             activityBar,
             layout.activityBar
         );
-        const menuBarState = Object.assign<IMenuBar, ViewVisibility>(
+        const menuBarState = Object.assign<IMenuBar, IMenuBarViewState>(
             menuBar,
             layout.menuBar
         );

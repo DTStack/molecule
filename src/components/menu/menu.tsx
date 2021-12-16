@@ -1,4 +1,10 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, {
+    useEffect,
+    useCallback,
+    useRef,
+    useImperativeHandle,
+    forwardRef,
+} from 'react';
 import { classNames } from 'mo/common/className';
 import { debounce } from 'lodash';
 import { mergeFunctions } from 'mo/common/utils';
@@ -56,7 +62,7 @@ const setPositionForSubMenu = (
     subMenu.style.left = `${pos.x}px`;
 };
 
-export function Menu(props: React.PropsWithChildren<IMenuProps>) {
+function MenuComp(props: React.PropsWithChildren<IMenuProps>, ref) {
     const {
         className,
         mode = MenuMode.Vertical,
@@ -82,7 +88,7 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
     if (data.length > 0) {
         const renderMenusByData = (menus: IMenuProps[]) => {
             return menus.map((item: IMenuProps) => {
-                if (item.type === 'divider') return <Divider />;
+                if (item.type === 'divider') return <Divider key={item.id} />;
 
                 const handleClick = mergeFunctions(onClick, item.onClick);
                 if (item.data && item.data.length > 0) {
@@ -200,6 +206,12 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         };
     }, []);
 
+    useImperativeHandle(ref, () => ({
+        dispose: () => {
+            initialMenuStyle();
+        },
+    }));
+
     return (
         <ul
             className={claNames}
@@ -213,3 +225,11 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         </ul>
     );
 }
+
+export type MenuRef = {
+    dispose: () => void;
+};
+
+export const Menu = forwardRef<MenuRef, React.PropsWithChildren<IMenuProps>>(
+    MenuComp
+);

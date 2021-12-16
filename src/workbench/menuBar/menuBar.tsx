@@ -1,18 +1,35 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { getBEMElement, prefixClaName } from 'mo/common/className';
+import {
+    getBEMElement,
+    prefixClaName,
+    getBEMModifier,
+} from 'mo/common/className';
 import { IMenuBar, IMenuBarItem } from 'mo/model/workbench/menuBar';
 import { IMenuBarController } from 'mo/controller/menuBar';
 import { DropDown, DropDownRef } from 'mo/components/dropdown';
-import { IMenuProps, Menu } from 'mo/components/menu';
+import { IMenuProps, Menu, MenuMode, MenuRef } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { KeybindingHelper } from 'mo/services/keybinding';
+import { MenuBarMode } from 'mo/model/workbench/layout';
+import Logo from './logo';
 
 export const defaultClassName = prefixClaName('menuBar');
 export const actionClassName = getBEMElement(defaultClassName, 'action');
+export const horizontalClassName = getBEMModifier(
+    defaultClassName,
+    'horizontal'
+);
+export const logoClassName = getBEMElement(horizontalClassName, 'logo');
 
 export function MenuBar(props: IMenuBar & IMenuBarController) {
-    const { data, onClick, updateFocusinEle } = props;
+    const {
+        data,
+        mode = MenuBarMode.vertical,
+        onClick,
+        updateFocusinEle,
+    } = props;
     const childRef = useRef<DropDownRef>(null);
+    const menuRef = useRef<MenuRef>(null);
 
     const addKeybindingForData = (
         rawData: IMenuBarItem[] = []
@@ -42,6 +59,15 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
         onClick?.(e, item);
         childRef.current!.dispose();
     };
+
+    const handleClickHorizontalMenu = (
+        e: React.MouseEvent,
+        item: IMenuBarItem
+    ) => {
+        onClick?.(e, item);
+        menuRef.current!.dispose();
+    };
+
     const overlay = (
         <Menu
             role="menu"
@@ -61,6 +87,23 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
             document.body.removeEventListener('focusin', handleSaveFocusinEle);
         };
     }, []);
+
+    if (mode === MenuBarMode.horizontal) {
+        return (
+            <div className={horizontalClassName}>
+                <Logo className={logoClassName} />
+                <Menu
+                    ref={menuRef}
+                    role="menu"
+                    mode={MenuMode.Horizontal}
+                    trigger="click"
+                    onClick={handleClickHorizontalMenu}
+                    style={{ width: '100%' }}
+                    data={addKeybindingForData(data)}
+                />
+            </div>
+        );
+    }
 
     return (
         <div className={defaultClassName}>

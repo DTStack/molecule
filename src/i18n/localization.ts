@@ -35,6 +35,8 @@ export type LocaleSourceIdType = {
     'menu.showPanel.title': string;
     'menu.run': string;
     'menu.help': string;
+    'menu.menuBarHorizontal': string;
+    'menu.menuBarVertical': string;
     'sidebar.explore.title': string;
     'sidebar.explore.folders': string;
     'sidebar.explore.openEditor': string;

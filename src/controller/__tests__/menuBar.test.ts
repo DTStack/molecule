@@ -1,15 +1,17 @@
 import { ID_SIDE_BAR } from 'mo/common/id';
 import { MonacoService } from 'mo/monaco/monacoService';
-import { MenuBarService, BuiltinService } from 'mo/services';
+import { MenuBarService, BuiltinService, LayoutService } from 'mo/services';
 import { constants, modules } from 'mo/services/builtinService/const';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { MenuBarController } from '../menuBar';
+import { MenuBarMode } from 'mo/model/workbench/layout';
 
 const menuBarController = container.resolve(MenuBarController);
 const menuBarService = container.resolve(MenuBarService);
 const monacoService = container.resolve(MonacoService);
 const builtinService = container.resolve(BuiltinService);
+const layoutService = container.resolve(LayoutService);
 
 const mockEle = document.createElement('div');
 
@@ -17,9 +19,24 @@ describe('The menuBar controller', () => {
     test('Should support to inject the default value', () => {
         menuBarController.initView();
 
-        expect(menuBarService.getState().data).toEqual(
-            modules.builtInMenuBarData()
+        const {
+            MENUBAR_MODE_HORIZONTAL,
+            MENUBAR_MODE_VERTICAL,
+        } = builtinService.getConstants();
+        const mode = layoutService.getMenuBarMode();
+        const ids: (string | undefined)[] = [];
+
+        if (mode === MenuBarMode.horizontal) {
+            ids.push(MENUBAR_MODE_HORIZONTAL);
+        } else if (mode === MenuBarMode.vertical) {
+            ids.push(MENUBAR_MODE_VERTICAL);
+        }
+        const menuBarData = menuBarController.getFilteredMenuBarData(
+            modules.builtInMenuBarData(),
+            ids
         );
+
+        expect(menuBarService.getState().data).toEqual(menuBarData);
         menuBarService.reset();
     });
 

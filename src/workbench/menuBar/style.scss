@@ -31,16 +31,16 @@
     }
 
     &--horizontal {
+        align-items: center;
+        display: flex;
         height: 25px;
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         background: var(--activityBar-background);
+        justify-content: center;
 
         & > #{$menu} {
-            box-shadow: none;
             background: var(--activityBar-background);
+            box-shadow: none;
             color: var(--foreground);
 
             &--horizontal {
@@ -50,8 +50,8 @@
 
                 & > #{$menu}__item > #{$menu}__content {
                     & > #{$menu}__label {
-                        padding: 0 1em;
                         flex: none;
+                        padding: 0 1em;
                         font-size: 12px;
                     }
 
@@ -69,8 +69,8 @@
         }
 
         &__logo {
-            width: 20px;
             height: 20px;
+            width: 20px;
             margin: 0 14px;
         }
     }

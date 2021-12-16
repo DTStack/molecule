@@ -27,6 +27,10 @@ export interface IMenuBarController extends Partial<Controller> {
     updateActivityBar?: () => void;
     updateSideBar?: () => void;
     updateMenuBarMode?: (mode: keyof typeof MenuBarMode) => void;
+    getFilteredMenuBarData?: (
+        menuData: IMenuBarItem[],
+        ids: (UniqueId | undefined)[]
+    ) => IMenuBarItem[];
 }
 
 @singleton()
@@ -73,7 +77,7 @@ export class MenuBarController
         }
     }
 
-    private getFilteredMenuBarData(
+    public getFilteredMenuBarData(
         menuData: IMenuBarItem[],
         ids: (UniqueId | undefined)[]
     ): IMenuBarItem[] {

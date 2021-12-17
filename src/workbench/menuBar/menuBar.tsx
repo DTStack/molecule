@@ -20,6 +20,7 @@ export const horizontalClassName = getBEMModifier(
     'horizontal'
 );
 export const logoClassName = getBEMElement(horizontalClassName, 'logo');
+export const logoContentClassName = getBEMElement(logoClassName, 'content');
 
 export function MenuBar(props: IMenuBar & IMenuBarController) {
     const {
@@ -27,6 +28,7 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
         mode = MenuBarMode.vertical,
         onClick,
         updateFocusinEle,
+        icon,
     } = props;
     const childRef = useRef<DropDownRef>(null);
     const menuRef = useRef<MenuRef>(null);
@@ -91,7 +93,9 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
     if (mode === MenuBarMode.horizontal) {
         return (
             <div className={horizontalClassName}>
-                <Logo className={logoClassName} />
+                <div className={logoClassName}>
+                    {icon ? icon : <Logo className={logoContentClassName} />}
+                </div>
                 <Menu
                     ref={menuRef}
                     role="menu"
@@ -114,7 +118,7 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
                 placement="right"
                 overlay={overlay}
             >
-                <Icon type="menu" />
+                {icon ? icon : <Icon type="menu" />}
             </DropDown>
         </div>
     );

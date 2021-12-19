@@ -28,7 +28,7 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
         mode = MenuBarMode.vertical,
         onClick,
         updateFocusinEle,
-        icon,
+        logo,
     } = props;
     const childRef = useRef<DropDownRef>(null);
     const menuRef = useRef<MenuRef>(null);
@@ -94,7 +94,7 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
         return (
             <div className={horizontalClassName}>
                 <div className={logoClassName}>
-                    {icon ? icon : <Logo className={logoContentClassName} />}
+                    {logo || <Logo className={logoContentClassName} />}
                 </div>
                 <Menu
                     ref={menuRef}
@@ -118,7 +118,7 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
                 placement="right"
                 overlay={overlay}
             >
-                {icon ? icon : <Icon type="menu" />}
+                <Icon type="menu" />
             </DropDown>
         </div>
     );

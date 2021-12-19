@@ -27,9 +27,9 @@ export interface IMenuBarController extends Partial<Controller> {
     updateActivityBar?: () => void;
     updateSideBar?: () => void;
     updateMenuBarMode?: (mode: keyof typeof MenuBarMode) => void;
-    getFilteredMenuBarData?: (
-        menuData: IMenuBarItem[],
-        ids: (UniqueId | undefined)[]
+    getMenuBarDataByMode?: (
+        mode: keyof typeof MenuBarMode,
+        menuData: IMenuBarItem[]
     ) => IMenuBarItem[];
 }
 
@@ -53,39 +53,6 @@ export class MenuBarController
         this.builtinService = container.resolve(BuiltinService);
     }
 
-    /**
-     * Filter out the menu data whose id is contained in ids
-     * @param data
-     * @param ids
-     */
-    private filterMenuBarDataByIds(
-        data: IMenuBarItem,
-        ids: (UniqueId | undefined)[]
-    ) {
-        const preData = data?.data;
-        const newData: IMenuBarItem[] = [];
-        if (Array.isArray(preData)) {
-            preData.forEach((item: IMenuBarItem) => {
-                if (Array.isArray(item.data) && item.data.length > 0) {
-                    this.filterMenuBarDataByIds(item, ids);
-                }
-                if (!ids.includes(item.id)) {
-                    newData.push(item);
-                }
-            });
-            data.data = newData;
-        }
-    }
-
-    public getFilteredMenuBarData(
-        menuData: IMenuBarItem[],
-        ids: (UniqueId | undefined)[]
-    ): IMenuBarItem[] {
-        const rootObj = { data: menuData };
-        this.filterMenuBarDataByIds(rootObj, ids);
-        return rootObj.data;
-    }
-
     public initView() {
         const { builtInMenuBarData } = this.builtinService.getModules();
         const {
@@ -104,16 +71,9 @@ export class MenuBarController
         } = this.builtinService.getConstants();
         if (builtInMenuBarData) {
             const mode = this.layoutService.getMenuBarMode();
-            const ids: (string | undefined)[] = [];
-
-            if (mode === MenuBarMode.horizontal) {
-                ids.push(MENUBAR_MODE_HORIZONTAL);
-            } else if (mode === MenuBarMode.vertical) {
-                ids.push(MENUBAR_MODE_VERTICAL);
-            }
-            const menuBarData = this.getFilteredMenuBarData(
-                builtInMenuBarData,
-                ids
+            const menuBarData = this.getMenuBarDataByMode(
+                mode,
+                builtInMenuBarData
             );
             this.menuBarService.setMenus(menuBarData);
         }
@@ -243,21 +203,7 @@ export class MenuBarController
     public updateMenuBarMode = (mode: keyof typeof MenuBarMode) => {
         this.layoutService.setMenuBarMode(mode);
         const { builtInMenuBarData } = this.builtinService.getModules();
-        const {
-            MENUBAR_MODE_VERTICAL,
-            MENUBAR_MODE_HORIZONTAL,
-        } = this.builtinService.getConstants();
-        const ids: (string | undefined)[] = [];
-
-        if (mode === MenuBarMode.horizontal) {
-            ids.push(MENUBAR_MODE_HORIZONTAL);
-        } else if (mode === MenuBarMode.vertical) {
-            ids.push(MENUBAR_MODE_VERTICAL);
-        }
-        const menuBarData = this.getFilteredMenuBarData(
-            builtInMenuBarData,
-            ids
-        );
+        const menuBarData = this.getMenuBarDataByMode(mode, builtInMenuBarData);
         this.menuBarService.setMenus(menuBarData);
     };
 
@@ -282,4 +228,47 @@ export class MenuBarController
             QuickTogglePanelAction.ID
         );
     };
+
+    /**
+     * Get the menu bar data after filtering out the menu contained in ids
+     * @param menuData
+     * @param ids
+     * @returns Filtered menu bar data
+     */
+    private getFilteredMenuBarData(
+        menuData: IMenuBarItem[],
+        ids: (UniqueId | undefined)[]
+    ): IMenuBarItem[] {
+        const newData: IMenuBarItem[] = [];
+        if (Array.isArray(menuData)) {
+            menuData.forEach((item: IMenuBarItem) => {
+                if (ids.includes(item.id)) return;
+                const newItem = { ...item };
+                if (Array.isArray(item.data) && item.data.length > 0) {
+                    newItem.data = this.getFilteredMenuBarData(item.data, ids);
+                }
+                newData.push(newItem);
+            });
+        }
+        return newData;
+    }
+
+    public getMenuBarDataByMode(
+        mode: keyof typeof MenuBarMode,
+        menuData: IMenuBarItem[]
+    ): IMenuBarItem[] {
+        const {
+            MENUBAR_MODE_VERTICAL,
+            MENUBAR_MODE_HORIZONTAL,
+        } = this.builtinService.getConstants();
+        const ids: (string | undefined)[] = [];
+        if (mode === MenuBarMode.horizontal) {
+            ids.push(MENUBAR_MODE_HORIZONTAL);
+        } else if (mode === MenuBarMode.vertical) {
+            ids.push(MENUBAR_MODE_VERTICAL);
+        }
+
+        const menuBarData = this.getFilteredMenuBarData(menuData, ids);
+        return menuBarData;
+    }
 }

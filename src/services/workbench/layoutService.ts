@@ -54,13 +54,13 @@ export interface ILayoutService extends Component<ILayout> {
      */
     setSideBarPosition(position: keyof typeof Position): void;
     /**
-     * Set the mode of the menu bar, default is `vertical`
+     * Set the mode of the MenuBar, default is `vertical`
      * @param mode
      * @unachieved
      */
     setMenuBarMode(mode: keyof typeof MenuBarMode): void;
     /**
-     * Get the mode of the menu bar
+     * Get the mode of the MenuBar
      */
     getMenuBarMode(): keyof typeof MenuBarMode;
     /**

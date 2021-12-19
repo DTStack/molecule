@@ -18,22 +18,10 @@ const mockEle = document.createElement('div');
 describe('The menuBar controller', () => {
     test('Should support to inject the default value', () => {
         menuBarController.initView();
-
-        const {
-            MENUBAR_MODE_HORIZONTAL,
-            MENUBAR_MODE_VERTICAL,
-        } = builtinService.getConstants();
         const mode = layoutService.getMenuBarMode();
-        const ids: (string | undefined)[] = [];
-
-        if (mode === MenuBarMode.horizontal) {
-            ids.push(MENUBAR_MODE_HORIZONTAL);
-        } else if (mode === MenuBarMode.vertical) {
-            ids.push(MENUBAR_MODE_VERTICAL);
-        }
-        const menuBarData = menuBarController.getFilteredMenuBarData(
-            modules.builtInMenuBarData(),
-            ids
+        const menuBarData = menuBarController.getMenuBarDataByMode(
+            mode,
+            modules.builtInMenuBarData()
         );
 
         expect(menuBarService.getState().data).toEqual(menuBarData);
@@ -178,7 +166,7 @@ describe('The menuBar controller', () => {
         menuBarService.update = originalUpdate;
     });
 
-    test('Should support to change layout mode of menu bar', () => {
+    test('Should support to change the layout mode', () => {
         const mockEvent = {} as any;
         const mockItem = { id: constants.MENUBAR_MODE_HORIZONTAL };
         const mockExecute = jest.fn();

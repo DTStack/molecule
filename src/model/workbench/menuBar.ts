@@ -24,7 +24,7 @@ export interface IMenuBarItem {
 export interface IMenuBar {
     data: IMenuBarItem[];
     mode?: keyof typeof MenuBarMode;
-    icon?: React.ReactNode;
+    logo?: React.ReactNode;
 }
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];

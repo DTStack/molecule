@@ -23,6 +23,7 @@ import {
     LayoutModel,
     ViewVisibility,
     IMenuBarViewState,
+    MenuBarMode,
 } from 'mo/model/workbench/layout';
 import { drag } from '@test/utils';
 import { select } from 'mo/common/dom';
@@ -184,5 +185,16 @@ describe('Test Workbench Component', () => {
         workbench.statusBar.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
         expect(select('.mo-statusBar')).not.toBeInTheDocument();
+    });
+
+    test('Should support to change the layout mode of MenuBar', async () => {
+        const workbench = workbenchModel();
+        workbench.menuBar.mode = MenuBarMode.vertical;
+        const { rerender } = render(<WorkbenchView {...workbench} />);
+        expect(select('.mo-menuBar')).toBeInTheDocument();
+
+        workbench.menuBar.mode = MenuBarMode.horizontal;
+        rerender(<WorkbenchView {...workbench} />);
+        expect(select('.mo-menuBar--horizontal')).toBeInTheDocument();
     });
 });

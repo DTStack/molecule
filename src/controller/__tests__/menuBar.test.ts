@@ -177,4 +177,41 @@ describe('The menuBar controller', () => {
         mockExecute.mockClear();
         menuBarService.update = originalUpdate;
     });
+
+    test('Should support to change layout mode of menu bar', () => {
+        const mockEvent = {} as any;
+        const mockItem = { id: constants.MENUBAR_MODE_HORIZONTAL };
+        const mockExecute = jest.fn();
+        const originalSetMenus = menuBarService.setMenus;
+        const originalUpdateMenuBarMode = menuBarController.updateMenuBarMode;
+
+        // change default mode
+        const defaultMode = layoutService.getMenuBarMode();
+        const anotherMode =
+            defaultMode === MenuBarMode.horizontal
+                ? MenuBarMode.vertical
+                : MenuBarMode.horizontal;
+        layoutService.setMenuBarMode(anotherMode);
+        menuBarController.initView();
+        expect(layoutService.getMenuBarMode()).toBe(anotherMode);
+
+        // update to horizontal mode
+        menuBarService.setMenus = mockExecute;
+        layoutService.setMenuBarMode(MenuBarMode.vertical);
+        menuBarController.onClick(mockEvent, mockItem);
+        expect(mockExecute).toBeCalled();
+        mockExecute.mockClear();
+
+        // update to vertical mode
+        mockItem.id = constants.MENUBAR_MODE_VERTICAL;
+        layoutService.setMenuBarMode(MenuBarMode.horizontal);
+        menuBarController.onClick(mockEvent, mockItem);
+        expect(mockExecute).toBeCalled();
+        mockExecute.mockClear();
+
+        menuBarService.setMenus = originalSetMenus;
+        menuBarController.updateMenuBarMode = originalUpdateMenuBarMode;
+        layoutService.reset();
+        menuBarService.reset();
+    });
 });

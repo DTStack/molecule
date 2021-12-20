@@ -50,6 +50,10 @@
             height: calc(100% - 25px);
         }
     }
+
+    &--with-hidden-statusBar {
+        height: 100%;
+    }
 }
 
 #{$compositeBar} {

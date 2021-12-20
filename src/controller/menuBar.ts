@@ -11,6 +11,8 @@ import {
     LayoutService,
     IBuiltinService,
     BuiltinService,
+    ActivityBarService,
+    IActivityBarService,
 } from 'mo/services';
 import { ID_APP, ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
@@ -41,6 +43,7 @@ export class MenuBarController
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
     private readonly builtinService: IBuiltinService;
+    private readonly activityBarService: IActivityBarService;
     private focusinEle: HTMLElement | null = null;
 
     private automation = {};
@@ -51,6 +54,7 @@ export class MenuBarController
         this.layoutService = container.resolve(LayoutService);
         this.monacoService = container.resolve(MonacoService);
         this.builtinService = container.resolve(BuiltinService);
+        this.activityBarService = container.resolve(ActivityBarService);
     }
 
     public initView() {
@@ -119,6 +123,9 @@ export class MenuBarController
          */
         this.emit(MenuBarEvent.onSelect, menuId);
         this.automation[menuId]?.();
+
+        // Update the check status of MenuBar in the contextmenu of ActivityBar
+        this.updateActivityBarContextMenu(menuId);
     };
 
     public createFile = () => {
@@ -270,5 +277,15 @@ export class MenuBarController
 
         const menuBarData = this.getFilteredMenuBarData(menuData, ids);
         return menuBarData;
+    }
+
+    private updateActivityBarContextMenu(menuId: UniqueId) {
+        const {
+            MENU_VIEW_MENUBAR,
+            CONTEXT_MENU_MENU,
+        } = this.builtinService.getConstants();
+        if (CONTEXT_MENU_MENU && menuId === MENU_VIEW_MENUBAR) {
+            this.activityBarService.toggleContextMenuChecked(CONTEXT_MENU_MENU);
+        }
     }
 }

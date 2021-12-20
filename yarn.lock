@@ -11038,9 +11038,9 @@ node-releases@^1.1.52, node-releases@^1.1.71:
   integrity sha1-yxM0sXmJaxyJ7P3UtyX7e738fbs=
 
 node-sass-alias-importer@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.nlark.com/node-sass-alias-importer/download/node-sass-alias-importer-1.0.2.tgz#bcaff60b44463c9794f5d80a4ddc3d1c5085b4c7"
-  integrity sha1-vK/2C0RGPJeU9dgKTdw9HFCFtMc=
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/node-sass-alias-importer/-/node-sass-alias-importer-1.1.0.tgz#0a1ce0a5f9d72f53d1ca1279dd11a5913b55d138"
+  integrity sha512-oXTJUIYFUiLx/8gZ7m1SJ0hBxYtDGJ53KX/w1NaUz69MApY9HIhpR6zeyk8fNZI9Rh2+hvS7BQUMH2JTbBe9nA==
 
 normalize-package-data@^2.3.0, normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, normalize-package-data@^2.5.0:
   version "2.5.0"

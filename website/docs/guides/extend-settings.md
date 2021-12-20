@@ -5,9 +5,7 @@ sidebar_label: Settings
 
 Molecule 内置了一些**基本设置项**，例如**编辑器（Monaco Editor）**的基本设置、**颜色主题（colorTheme)**、本**地化的语言（locale)** 等。
 
-<div align="center">
- <img src="/img/guides/extend-settings.png" alt="Open Settings" />
-</div>
+![Open Settings](/img/guides/extend-settings.png)
 
 上图中，显示了 `colorTheme`、`editor.renderWhitespace`、`editor.tabSize`, `editor.fontSize`、`locale` 这些配置项。用户可以根据自己的需要，在线修改。其中 `colorTheme` 和 `locale` 则需要看当前扩展的支持情况。
 

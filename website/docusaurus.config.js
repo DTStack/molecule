@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 (module.exports = {
     title: 'Molecule',
     tagline: 'A lightweight Web IDE UI framework',
-    url: 'https://your-docusaurus-test-site.com',
-    baseUrl: '/',
+    url: 'https://dtstack.github.io',
+    baseUrl: '/molecule/',
     onBrokenLinks: 'error',
     onBrokenMarkdownLinks: 'error',
     favicon: 'img/favicon.png',

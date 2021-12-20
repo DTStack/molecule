@@ -9,9 +9,7 @@ sidebar_label: QuickAccess
 Molecule 中的快捷访问功能，与[快捷键](./extend-keybinding)功能一样, 都得依赖 `Action2` 抽象类。目前实现此功能需要引入相关的 monaco-editor 模块。
 :::
 
-<div align="center">
- <img src="/img/guides/extend-quickAccess-1.png" alt="Search files by name" />
-</div>
+![Search files by name](/img/guides/extend-quickAccess-1.png)
 
 ## 定义快捷访问 Action 对象
 
@@ -21,9 +19,7 @@ Molecule 中的快捷访问功能，与[快捷键](./extend-keybinding)功能一
 
 我们一起来看个具体示例：
 
-<div align="center">
- <img src="/img/guides/extend-quickAccess.png" alt="Search files by name" />
-</div>
+![Search files by name](/img/guides/extend-quickAccess.png)
 
 图中的 **「快速访问搜索」** 面板，通过快捷键 `Command/Ctrl + P` 打开，通过输入文件名称，即可以 **AutoComplete** 的效果展示出文件列表，**选中文件**则在**编辑器**中打开。
 

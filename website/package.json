@@ -11,8 +11,7 @@
         "clear": "docusaurus clear",
         "serve": "docusaurus serve",
         "write-translations": "docusaurus write-translations",
-        "write-heading-ids": "docusaurus write-heading-ids",
-        "gh-pages": "gh-pages -d build"
+        "write-heading-ids": "docusaurus write-heading-ids"
     },
     "dependencies": {
         "@docusaurus/core": "2.0.0-beta.6",
@@ -40,7 +39,6 @@
     },
     "devDependencies": {
         "docusaurus-plugin-typedoc": "^0.16.3",
-        "gh-pages": "^3.2.3",
         "typedoc": "^0.22.4",
         "typedoc-plugin-markdown": "^3.11.1"
     }

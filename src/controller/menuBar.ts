@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import { IActivityBarItem, IMenuBarItem } from 'mo/model';
 import { MenuBarEvent } from 'mo/model/workbench/menuBar';
+import { MenuBarMode } from 'mo/model/workbench/layout';
 import { Controller } from 'mo/react/controller';
 import {
     IMenuBarService,
@@ -25,6 +26,11 @@ export interface IMenuBarController extends Partial<Controller> {
     updateMenuBar?: () => void;
     updateActivityBar?: () => void;
     updateSideBar?: () => void;
+    updateMenuBarMode?: (mode: keyof typeof MenuBarMode) => void;
+    getMenuBarDataByMode?: (
+        mode: keyof typeof MenuBarMode,
+        menuData: IMenuBarItem[]
+    ) => IMenuBarItem[];
 }
 
 @singleton()
@@ -60,9 +66,16 @@ export class MenuBarController
             MENU_VIEW_STATUSBAR,
             MENU_QUICK_COMMAND,
             MENU_VIEW_PANEL,
+            MENUBAR_MODE_HORIZONTAL,
+            MENUBAR_MODE_VERTICAL,
         } = this.builtinService.getConstants();
         if (builtInMenuBarData) {
-            this.menuBarService.setMenus(builtInMenuBarData);
+            const mode = this.layoutService.getMenuBarMode();
+            const menuBarData = this.getMenuBarDataByMode(
+                mode,
+                builtInMenuBarData
+            );
+            this.menuBarService.setMenus(menuBarData);
         }
         ([
             [ACTION_QUICK_CREATE_FILE, () => this.createFile()],
@@ -76,6 +89,14 @@ export class MenuBarController
             [MENU_QUICK_COMMAND, () => this.gotoQuickCommand()],
             [ID_SIDE_BAR, () => this.updateSideBar()],
             [MENU_VIEW_PANEL, () => this.updatePanel()],
+            [
+                MENUBAR_MODE_HORIZONTAL,
+                () => this.updateMenuBarMode(MenuBarMode.horizontal),
+            ],
+            [
+                MENUBAR_MODE_VERTICAL,
+                () => this.updateMenuBarMode(MenuBarMode.vertical),
+            ],
         ] as [string, () => void][]).forEach(([key, value]) => {
             if (key) {
                 this.automation[key] = value;
@@ -179,6 +200,13 @@ export class MenuBarController
         }
     };
 
+    public updateMenuBarMode = (mode: keyof typeof MenuBarMode) => {
+        this.layoutService.setMenuBarMode(mode);
+        const { builtInMenuBarData } = this.builtinService.getModules();
+        const menuBarData = this.getMenuBarDataByMode(mode, builtInMenuBarData);
+        this.menuBarService.setMenus(menuBarData);
+    };
+
     public updateStatusBar = () => {
         const hidden = this.layoutService.toggleStatusBarVisibility();
         const { MENU_VIEW_STATUSBAR } = this.builtinService.getConstants();
@@ -200,4 +228,47 @@ export class MenuBarController
             QuickTogglePanelAction.ID
         );
     };
+
+    /**
+     * Get the menu bar data after filtering out the menu contained in ids
+     * @param menuData
+     * @param ids
+     * @returns Filtered menu bar data
+     */
+    private getFilteredMenuBarData(
+        menuData: IMenuBarItem[],
+        ids: (UniqueId | undefined)[]
+    ): IMenuBarItem[] {
+        const newData: IMenuBarItem[] = [];
+        if (Array.isArray(menuData)) {
+            menuData.forEach((item: IMenuBarItem) => {
+                if (ids.includes(item.id)) return;
+                const newItem = { ...item };
+                if (Array.isArray(item.data) && item.data.length > 0) {
+                    newItem.data = this.getFilteredMenuBarData(item.data, ids);
+                }
+                newData.push(newItem);
+            });
+        }
+        return newData;
+    }
+
+    public getMenuBarDataByMode(
+        mode: keyof typeof MenuBarMode,
+        menuData: IMenuBarItem[]
+    ): IMenuBarItem[] {
+        const {
+            MENUBAR_MODE_VERTICAL,
+            MENUBAR_MODE_HORIZONTAL,
+        } = this.builtinService.getConstants();
+        const ids: (string | undefined)[] = [];
+        if (mode === MenuBarMode.horizontal) {
+            ids.push(MENUBAR_MODE_HORIZONTAL);
+        } else if (mode === MenuBarMode.vertical) {
+            ids.push(MENUBAR_MODE_VERTICAL);
+        }
+
+        const menuBarData = this.getFilteredMenuBarData(menuData, ids);
+        return menuBarData;
+    }
 }

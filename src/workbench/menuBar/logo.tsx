@@ -1,30 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+import React from 'react';
 
-exports[`Test MenuBar Component Match the MenuBar snapshot 1`] = `
-<div
-  className="mo-menuBar"
->
-  <div
-    className="mo-drop-down mo-drop-down--right mo-menuBar__action"
-    onClick={[Function]}
-  >
-    <span
-      className="codicon codicon-menu"
-    />
-  </div>
-</div>
-`;
-
-exports[`Test MenuBar Component Match the snapshot of menuBar in horizontal mode 1`] = `
-<div
-  className="mo-menuBar--horizontal"
->
-  <div
-    className="mo-menuBar--horizontal__logo"
-  >
-    <img
-      className="mo-menuBar--horizontal__logo__content"
-      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+export default function Logo({ className }) {
+    return (
+        <img
+            className={className}
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAA
 B3RJTUUH5QwPAyYJr4pYHwAAF6hJREFUeNrtnXm0VMW1xn/79L19GhUTnBAxGNfTuKKJeSsOaBxw
 QF5QURzRTODwUIw4RI1RHJ5RUROcgkHFRDEaNUEBjaISUZzBDPqSOORFo0EJkmeMaIQe7qn9/uju
@@ -143,98 +123,6 @@ Yjo6SW1hZ2U6OldpZHRoADEyMN5Wme8AAAAZdEVYdFRodW1iOjpNaW1ldHlwZQBpbWFnZS9wbmc/
 slZOAAAAF3RFWHRUaHVtYjo6TVRpbWUAMTYzOTQ4MTg4ObVTMPUAAAASdEVYdFRodW1iOjpTaXpl
 ADc2MjBCQiI6F3sAAABGdEVYdFRodW1iOjpVUkkAZmlsZTovLy9hcHAvdG1wL2ltYWdlbGMvaW1n
 dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
-    />
-  </div>
-  <ul
-    className="mo-menu mo-menu--horizontal"
-    onClick={[Function]}
-    onContextMenu={[Function]}
-    onMouseOut={[Function]}
-    role="menu"
-    style={
-      Object {
-        "width": "100%",
-      }
-    }
-  >
-    <li
-      className="mo-menu__item"
-      data-mode="horizontal"
-      data-submenu={true}
-      id="test-id"
-    >
-      <div
-        className="mo-menu__content"
-      >
-        <span
-          className="mo-menu__label"
-        >
-          test-id
-        </span>
-        <span
-          className="mo-menu__indicator codicon codicon-chevron-down"
         />
-      </div>
-      <ul
-        className="mo-menu mo-menu--vertical mo-sub-menu"
-        id="test-id"
-        style={
-          Object {
-            "opacity": "0",
-            "pointerEvents": "none",
-          }
-        }
-      >
-        <li
-          className="mo-menu__item"
-          id="New File"
-          onClick={[Function]}
-        >
-          <div
-            className="mo-menu__content"
-          >
-            <span
-              className="mo-menu__label"
-              title="New File"
-            >
-              New File
-            </span>
-          </div>
-        </li>
-        <li
-          className="mo-menu__item"
-          id="OpenFile"
-          onClick={[Function]}
-        >
-          <div
-            className="mo-menu__content"
-          >
-            <span
-              className="mo-menu__label"
-              title="Open"
-            >
-              Open
-            </span>
-          </div>
-        </li>
-        <li
-          className="mo-menu__item"
-          id="test-data"
-          onClick={[Function]}
-        >
-          <div
-            className="mo-menu__content"
-          >
-            <span
-              className="mo-menu__label"
-              title="test-data"
-            >
-              test-data
-            </span>
-          </div>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-`;
+    );
+}

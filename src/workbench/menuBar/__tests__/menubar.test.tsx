@@ -4,8 +4,10 @@ import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import MenuBar, { actionClassName } from '../menuBar';
+import { MenuBarMode } from 'mo/model/workbench/layout';
 
 const TEST_ID = 'test-id';
+const TEST_DATA = 'test-data';
 const menuData = [
     {
         id: TEST_ID,
@@ -18,6 +20,10 @@ const menuData = [
             {
                 id: 'OpenFile',
                 name: 'Open',
+            },
+            {
+                id: TEST_DATA,
+                name: TEST_DATA,
             },
         ],
     },
@@ -68,5 +74,53 @@ describe('Test MenuBar Component', () => {
 
         expect(mockFn).toBeCalled();
         expect(mockFn.mock.calls[0][0]).toEqual(input);
+    });
+
+    test('Match the snapshot of menuBar in horizontal mode', () => {
+        const component = renderer.create(
+            <MenuBar
+                data={menuData}
+                onClick={TEST_FN}
+                mode={MenuBarMode.horizontal}
+            />
+        );
+
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    test('Should support to execute the onClick method in vertical mode', () => {
+        const mockFn = jest.fn();
+        const { container, getByText } = render(
+            <MenuBar
+                data={menuData}
+                onClick={mockFn}
+                mode={MenuBarMode.vertical}
+            />
+        );
+        const component = container.firstElementChild!
+            .firstElementChild as HTMLDivElement;
+
+        fireEvent.click(component);
+        const elem = getByText(TEST_DATA);
+        fireEvent.click(elem);
+        expect(mockFn).toBeCalled();
+    });
+
+    test('Should support to execute the onClick method in horizontal mode', () => {
+        const mockFn = jest.fn();
+        const { container, getByText } = render(
+            <MenuBar
+                data={menuData}
+                onClick={mockFn}
+                mode={MenuBarMode.horizontal}
+            />
+        );
+        const component = container.firstElementChild!
+            .firstElementChild as HTMLDivElement;
+
+        fireEvent.click(component);
+        const elem = getByText(TEST_DATA);
+        fireEvent.click(elem);
+        expect(mockFn).toBeCalled();
     });
 });

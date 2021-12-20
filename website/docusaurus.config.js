@@ -145,6 +145,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                                 label: 'GitHub',
                                 href: 'https://github.com/DTStack/molecule',
                             },
+                            {
+                                label: 'Discord',
+                                href: 'https://discord.gg/b62gpHwNA7',
+                            },
                         ],
                     },
                 ],

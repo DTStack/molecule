@@ -4,7 +4,12 @@ import SplitPane from 'react-split-pane';
 import Pane from 'react-split-pane/lib/Pane';
 import { container } from 'tsyringe';
 
-import { classNames, getFontInMac, prefixClaName } from 'mo/common/className';
+import {
+    classNames,
+    getFontInMac,
+    prefixClaName,
+    getBEMModifier,
+} from 'mo/common/className';
 
 import { EditorView } from 'mo/workbench/editor';
 import { SidebarView } from 'mo/workbench/sidebar';
@@ -19,7 +24,7 @@ import { connect } from 'mo/react';
 
 import { ILayoutController, LayoutController } from 'mo/controller/layout';
 import { LayoutService } from 'mo/services';
-import { ILayout } from 'mo/model/workbench/layout';
+import { ILayout, MenuBarMode } from 'mo/model/workbench/layout';
 
 import { IWorkbench } from 'mo/model';
 
@@ -27,6 +32,10 @@ const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
 const compositeBarClassName = prefixClaName('compositeBar');
 const appClassName = classNames(APP_PREFIX, getFontInMac());
+const workbenchWithHorizontalMenuBarClassName = getBEMModifier(
+    workbenchClassName,
+    'with-horizontal-menuBar'
+);
 
 const layoutController = container.resolve(LayoutController);
 const layoutService = container.resolve(LayoutService);
@@ -71,12 +80,24 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         return [editor, panel];
     };
 
+    const isMenuBarHorizontal =
+        !menuBar.hidden && menuBar.mode === MenuBarMode.horizontal;
+    const horizontal = isMenuBarHorizontal
+        ? workbenchWithHorizontalMenuBarClassName
+        : null;
+
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
-            <div className={workbenchClassName}>
+            <div className={classNames(workbenchClassName, horizontal)}>
+                {isMenuBarHorizontal && (
+                    <MenuBarView mode={MenuBarMode.horizontal} />
+                )}
                 <div className={mainBenchClassName}>
                     <div className={compositeBarClassName}>
-                        {!menuBar.hidden && <MenuBarView />}
+                        {!menuBar.hidden &&
+                            menuBar.mode === MenuBarMode.vertical && (
+                                <MenuBarView mode={MenuBarMode.vertical} />
+                            )}
                         {!activityBar.hidden && <ActivityBarView />}
                     </div>
                     <SplitPane

@@ -2,6 +2,7 @@ import React from 'react';
 import { ISubMenuProps } from 'mo/components/menu/subMenu';
 import { IMenuItemProps } from 'mo/components/menu';
 import type { UniqueId } from 'mo/common/types';
+import { MenuBarMode } from './layout';
 /**
  * The activity bar event definition
  */
@@ -22,6 +23,8 @@ export interface IMenuBarItem {
 
 export interface IMenuBar {
     data: IMenuBarItem[];
+    mode?: keyof typeof MenuBarMode;
+    logo?: React.ReactNode;
 }
 export class MenuBarModel implements IMenuBar {
     public data: IMenuBarItem[];

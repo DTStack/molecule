@@ -34,6 +34,8 @@
         "menu.runTask": "运行任务",
         "menu.help": "帮助",
         "menu.about": "关于",
+        "menu.menuBarHorizontal": "菜单栏水平模式",
+        "menu.menuBarVertical": "菜单栏垂直模式",
         "sidebar.explore.title": "浏览",
         "sidebar.explore.openEditor": "打开的编辑器",
         "sidebar.explore.openEditor.group": "第 ${i} 组",

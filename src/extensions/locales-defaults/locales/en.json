@@ -28,6 +28,8 @@
         "menu.showPanel.title": "Toggle Panel",
         "menu.run": "Run",
         "menu.help": "Help",
+        "menu.menuBarHorizontal": "Menu Bar Horizontal Mode",
+        "menu.menuBarVertical": "Menu Bar Vertical Mode",
         "sidebar.explore.title": "Explorer",
         "sidebar.explore.folders": "Folders",
         "sidebar.explore.openEditor": "Open Editors",

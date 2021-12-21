@@ -37,7 +37,7 @@
         "menu.menuBarHorizontal": "Menu Bar Horizontal Mode",
         "menu.menuBarVertical": "Menu Bar Vertical Mode",
         "sidebar.explore.folders": "Folders",
-        "sidebar.explore.title": "Explore",
+        "sidebar.explore.title": "Explorer",
         "sidebar.explore.openEditor": "Open Editors",
         "sidebar.explore.openEditor.group": "Group ${i}",
         "sidebar.explore.outline": "Outline",

@@ -36,6 +36,10 @@ const workbenchWithHorizontalMenuBarClassName = getBEMModifier(
     workbenchClassName,
     'with-horizontal-menuBar'
 );
+const withHiddenStatusBar = getBEMModifier(
+    workbenchClassName,
+    'with-hidden-statusBar'
+);
 
 const layoutController = container.resolve(LayoutController);
 const layoutService = container.resolve(LayoutService);
@@ -82,13 +86,19 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
 
     const isMenuBarHorizontal =
         !menuBar.hidden && menuBar.mode === MenuBarMode.horizontal;
-    const horizontal = isMenuBarHorizontal
+    const horizontalMenuBar = isMenuBarHorizontal
         ? workbenchWithHorizontalMenuBarClassName
         : null;
+    const hideStatusBar = statusBar.hidden ? withHiddenStatusBar : null;
+    const workbenchFinalClassName = classNames(
+        workbenchClassName,
+        horizontalMenuBar,
+        hideStatusBar
+    );
 
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
-            <div className={classNames(workbenchClassName, horizontal)}>
+            <div className={workbenchFinalClassName}>
                 {isMenuBarHorizontal && (
                     <MenuBarView mode={MenuBarMode.horizontal} />
                 )}

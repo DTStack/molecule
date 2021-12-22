@@ -218,7 +218,7 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
                         <span
                           className="mo-collapse__header__title"
                         >
-                          No Open Folder
+                          Default Project Name
                         </span>
                         <div
                           className="mo-collapse__extra"

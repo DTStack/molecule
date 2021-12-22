@@ -38,10 +38,10 @@ describe('The Locale Service', () => {
         expect(defaultLocale).toEqual(BuiltInLocales);
     });
 
-    test('The size of Built-in Locales should be 2', () => {
+    test('The size of Built-in Locales should be 3', () => {
         const localeService = new LocaleService();
         const locales = localeService.getLocales();
-        expect(locales.length).toBe(2);
+        expect(locales.length).toBe(3);
     });
 
     test('Initialize the locales', () => {
@@ -50,7 +50,7 @@ describe('The Locale Service', () => {
         expect(localeService.getCurrentLocale()!.id).toEqual(
             localeService.getDefaultLocale().id
         );
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(4);
         localeService.initialize([], 'test');
         expect(localeService.getCurrentLocale()!.id).toEqual(BuiltInDefault.id);
         // Clear the cached locale value
@@ -75,14 +75,14 @@ describe('The Locale Service', () => {
 
     test('Add locales', () => {
         const localeService = new LocaleService();
-        expect(localeService.getLocales().length).toBe(2);
+        expect(localeService.getLocales().length).toBe(3);
         localeService.addLocales([TestLocale]);
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(4);
         localeService.addLocales([]);
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(4);
         // Add an existed locale
         localeService.addLocales([TestLocale]);
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(4);
     });
 
     test('Add an locale inherit the en', () => {
@@ -130,8 +130,18 @@ describe('The Locale Service', () => {
         expect(localeService.removeLocale(TestLocale.id));
     });
 
-    test('Listen to the current locale change event', () => {
+    test('Listen to the current locale change to Chineses event', () => {
         const target = 'zh-CN';
+        const localeService = new LocaleService();
+        const fn = jest.fn();
+        localeService.onChange(fn);
+        localeService.setCurrentLocale(target);
+        expect(fn).toBeCalledTimes(1);
+        expect(localeService.getCurrentLocale()!.id).toEqual(target);
+    });
+
+    test('Listen to the current locale change to Korean event', () => {
+        const target = 'ko-KR';
         const localeService = new LocaleService();
         const fn = jest.fn();
         localeService.onChange(fn);

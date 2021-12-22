@@ -10,85 +10,742 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
     className="mo-workbench"
   >
     <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="mo-menuBar--horizontal"
+      >
+        <div
+          className="mo-menuBar--horizontal__logo"
+        >
+          <img
+            className="mo-menuBar--horizontal__logo__content"
+            src="data:image/png;base64,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
+bgKBLW2RkyXT2AyPGyxyARmCZ25MG1tdzOcUP4fyXcDyf+u2mPz308ZmS1sQjBZ2Ru3DE6qOB3Zr
+27RZo3ug6sRkX+yVNjRb2oPgjLM8egIdILzXtmmznnWOdCDwoqmdDR0n7UHwt7pfQpyFUR+3XJ02
+tLryb+6j4LwcE89tK8xtQbCCIu5hoNNBXgf9LY5zCue5baWsAObJFOh29wOZBfImqotRxun0AW21
+l6ptrOimNfD84vY4Wj4v2shAVFaAvsiA3Hy9ON1Hvbek/Z1KsFxQ2g31pmHYI/asR6SAyA9Zz720
+k4nuSIJlSuF0jF4NlaB4vfztssP8DRxnjF6VfTVt3E3RRacRLOcXJqFmRmwudN1jhWU5mtulnRwU
+/SVtYWT1l8hFxR2AH9QNtUXirn48dgiavzNt/M2QjiKYHm8qxnRFemogwGBnT9hpSLqPnFU4MO0m
+9Ld0DMFyPhtj5KDIDobwoZ7ho3mr1xTo0fFpt6O/pT3dgH0RLe6HaiY454bi1ZGEvIjxdUDazehv
+6ZgeDN6w4A6Z8AGeWHlZ1vXq53LPHiSXsEHaLelP6RyCjeSC/mxrKA4My4Rys6xrRuEjcmk3pT+l
+g4boyg54tQ0su7fGDdehIRpKTOPvaTelP6WDerCzOJAnFt4fHH7uYHiLSDmb8YW1zfBoN+kYgnVa
+9hWQVwPDsp+0Zi+TQmmpwSzRe9NuR39LxxBcFr0ksj85PN/aa+Gg/JVN3Zlpt6C/pbMIvnrAzxHm
+RreQQuz+5loqrUGdiX1NmGtn6SiCFZTMgK+jUj4N3e61sQn7CioeKt/UGe5DaeNvhnQUwQD6fT5m
+h9wB4EwDqexUsHsv9l6kP5OR0TrDvSlt3M2SjosmBRo3Ob81MB6jBwJbgwxEWYHqizgyh81y97R0
+u0oaOuhkgtdJBw7R6yQo6wjucFlHcIfLOoI7XNYR3OHyf7iqrvn/gHCwAAAAJXRFWHRkYXRlOmNy
+ZWF0ZQAyMDIxLTEyLTE0VDE5OjM4OjA5KzA4OjAwmXMYFgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAy
+MS0xMi0xNFQxOTozODowOSswODowMOguoKoAAAARdEVYdGV4aWY6Q29sb3JTcGFjZQAxD5sCSQAA
+ABJ0RVh0ZXhpZjpFeGlmT2Zmc2V0ADI2UxuiZQAAABh0RVh0ZXhpZjpQaXhlbFhEaW1lbnNpb24A
+MTIwdAQi7wAAABh0RVh0ZXhpZjpQaXhlbFlEaW1lbnNpb24AMTIw6QvDmQAAACB0RVh0c29mdHdh
+cmUAaHR0cHM6Ly9pbWFnZW1hZ2ljay5vcme8zx2dAAAAGHRFWHRUaHVtYjo6RG9jdW1lbnQ6OlBh
+Z2VzADGn/7svAAAAGHRFWHRUaHVtYjo6SW1hZ2U6OkhlaWdodAAxMjBNp8myAAAAF3RFWHRUaHVt
+Yjo6SW1hZ2U6OldpZHRoADEyMN5Wme8AAAAZdEVYdFRodW1iOjpNaW1ldHlwZQBpbWFnZS9wbmc/
+slZOAAAAF3RFWHRUaHVtYjo6TVRpbWUAMTYzOTQ4MTg4ObVTMPUAAAASdEVYdFRodW1iOjpTaXpl
+ADc2MjBCQiI6F3sAAABGdEVYdFRodW1iOjpVUkkAZmlsZTovLy9hcHAvdG1wL2ltYWdlbGMvaW1n
+dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
+          />
+        </div>
+        <ul
+          className="mo-menu mo-menu--horizontal"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onMouseOut={[Function]}
+          role="menu"
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
+        >
+          <li
+            className="mo-menu__item"
+            data-mode="horizontal"
+            data-submenu={true}
+            id="File"
+          >
+            <div
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__label"
+              >
+                File
+              </span>
+              <span
+                className="mo-menu__indicator codicon codicon-chevron-down"
+              />
+            </div>
+            <ul
+              className="mo-menu mo-menu--vertical mo-sub-menu"
+              id="File"
+              style={
+                Object {
+                  "opacity": "0",
+                  "pointerEvents": "none",
+                }
+              }
+            >
+              <li
+                className="mo-menu__item"
+                id="workbench.action.quickCreateFile"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="New File"
+                  >
+                    New File
+                  </span>
+                </div>
+              </li>
+              <li
+                className="mo-menu__item"
+                id="openFile"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="Open"
+                  >
+                    Open
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li
+            className="mo-menu__item"
+            data-mode="horizontal"
+            data-submenu={true}
+            id="Edit"
+          >
+            <div
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__label"
+              >
+                Edit
+              </span>
+              <span
+                className="mo-menu__indicator codicon codicon-chevron-down"
+              />
+            </div>
+            <ul
+              className="mo-menu mo-menu--vertical mo-sub-menu"
+              id="Edit"
+              style={
+                Object {
+                  "opacity": "0",
+                  "pointerEvents": "none",
+                }
+              }
+            >
+              <li
+                className="mo-menu__item"
+                id="editor.action.undo"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="Undo"
+                  >
+                    Undo
+                  </span>
+                </div>
+              </li>
+              <li
+                className="mo-menu__item"
+                id="editor.action.redo"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="Redo"
+                  >
+                    Redo
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li
+            className="mo-menu__item"
+            data-mode="horizontal"
+            data-submenu={true}
+            id="Selection"
+          >
+            <div
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__label"
+              >
+                Selection
+              </span>
+              <span
+                className="mo-menu__indicator codicon codicon-chevron-down"
+              />
+            </div>
+            <ul
+              className="mo-menu mo-menu--vertical mo-sub-menu"
+              id="Selection"
+              style={
+                Object {
+                  "opacity": "0",
+                  "pointerEvents": "none",
+                }
+              }
+            >
+              <li
+                className="mo-menu__item"
+                id="editor.action.quickSelectAll"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="Select All"
+                  >
+                    Select All
+                  </span>
+                </div>
+              </li>
+              <li
+                className="mo-menu__item"
+                id="editor.action.copyLinesUpAction"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="Copy Line Up"
+                  >
+                    Copy Line Up
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li
+            className="mo-menu__item"
+            data-mode="horizontal"
+            data-submenu={true}
+            id="View"
+          >
+            <div
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__label"
+              >
+                View
+              </span>
+              <span
+                className="mo-menu__indicator codicon codicon-chevron-down"
+              />
+            </div>
+            <ul
+              className="mo-menu mo-menu--vertical mo-sub-menu"
+              id="View"
+              style={
+                Object {
+                  "opacity": "0",
+                  "pointerEvents": "none",
+                }
+              }
+            >
+              <li
+                className="mo-menu__item"
+                id="editor.action.quickCommand"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="Command Palette"
+                  >
+                    Command Palette
+                  </span>
+                </div>
+              </li>
+              <li
+                className="mo-menu__item"
+                id="OpenView"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="Open View"
+                  >
+                    Open View
+                  </span>
+                </div>
+              </li>
+              <li
+                className="mo-menu__item"
+                data-mode="vertical"
+                data-submenu={true}
+                id="Appearance"
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                  >
+                    Appearance
+                  </span>
+                  <span
+                    className="mo-menu__indicator codicon codicon-chevron-right"
+                  />
+                </div>
+                <ul
+                  className="mo-menu mo-menu--vertical mo-sub-menu"
+                  id="Appearance"
+                  style={
+                    Object {
+                      "opacity": "0",
+                      "pointerEvents": "none",
+                    }
+                  }
+                >
+                  <li
+                    className="mo-menu__item"
+                    id="workbench.action.showMenuBar"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="mo-menu__content"
+                    >
+                      <span
+                        className="mo-menu__check codicon codicon-check"
+                      />
+                      <span
+                        className="mo-menu__label"
+                        title="Show Menu Bar"
+                      >
+                        Show Menu Bar
+                      </span>
+                    </div>
+                  </li>
+                  <li
+                    className="mo-menu__item"
+                    id="sidebar"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="mo-menu__content"
+                    >
+                      <span
+                        className="mo-menu__check codicon codicon-check"
+                      />
+                      <span
+                        className="mo-menu__label"
+                        title="Show Side bar"
+                      >
+                        Show Side bar
+                      </span>
+                    </div>
+                  </li>
+                  <li
+                    className="mo-menu__item"
+                    id="workbench.action.showStatusBar"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="mo-menu__content"
+                    >
+                      <span
+                        className="mo-menu__check codicon codicon-check"
+                      />
+                      <span
+                        className="mo-menu__label"
+                        title="Show Status Bar"
+                      >
+                        Show Status Bar
+                      </span>
+                    </div>
+                  </li>
+                  <li
+                    className="mo-menu__item"
+                    id="workbench.action.showActivityBar"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="mo-menu__content"
+                    >
+                      <span
+                        className="mo-menu__check codicon codicon-check"
+                      />
+                      <span
+                        className="mo-menu__label"
+                        title="Show Activity Bar"
+                      >
+                        Show Activity Bar
+                      </span>
+                    </div>
+                  </li>
+                  <li
+                    className="mo-menu__item"
+                    id="workbench.action.showPanel"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="mo-menu__content"
+                    >
+                      <span
+                        className="mo-menu__check codicon codicon-check"
+                      />
+                      <span
+                        className="mo-menu__label"
+                        title="Show Panel"
+                      >
+                        Show Panel
+                      </span>
+                    </div>
+                  </li>
+                  <li
+                    className="mo-menu__item mo-menu__item--disabled"
+                    role="separator"
+                  >
+                    <a
+                      className="mo-menu__divider"
+                    />
+                  </li>
+                  <li
+                    className="mo-menu__item"
+                    id="menuBar.mode.horizontal"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="mo-menu__content"
+                    >
+                      <span
+                        className="mo-menu__label"
+                        title="Menu Bar Horizontal Mode"
+                      >
+                        Menu Bar Horizontal Mode
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li
+            className="mo-menu__item"
+            data-mode="horizontal"
+            data-submenu={true}
+            id="Run"
+          >
+            <div
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__label"
+              >
+                Run
+              </span>
+              <span
+                className="mo-menu__indicator codicon codicon-chevron-down"
+              />
+            </div>
+            <ul
+              className="mo-menu mo-menu--vertical mo-sub-menu"
+              id="Run"
+              style={
+                Object {
+                  "opacity": "0",
+                  "pointerEvents": "none",
+                }
+              }
+            >
+              <li
+                className="mo-menu__item"
+                id="RunTask"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="Run Task"
+                  >
+                    Run Task
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li
+            className="mo-menu__item"
+            data-mode="horizontal"
+            data-submenu={true}
+            id="Help"
+          >
+            <div
+              className="mo-menu__content"
+            >
+              <span
+                className="mo-menu__label"
+              >
+                Help
+              </span>
+              <span
+                className="mo-menu__indicator codicon codicon-chevron-down"
+              />
+            </div>
+            <ul
+              className="mo-menu mo-menu--vertical mo-sub-menu"
+              id="Help"
+              style={
+                Object {
+                  "opacity": "0",
+                  "pointerEvents": "none",
+                }
+              }
+            >
+              <li
+                className="mo-menu__item"
+                id="About"
+                onClick={[Function]}
+              >
+                <div
+                  className="mo-menu__content"
+                >
+                  <span
+                    className="mo-menu__label"
+                    title="About"
+                  >
+                    About
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
       className="mo-mainBench"
     >
       <div
         className="mo-compositeBar"
       >
         <div
-          className="mo-menuBar"
+          style={
+            Object {
+              "display": undefined,
+            }
+          }
         >
           <div
-            className="mo-drop-down mo-drop-down--right mo-menuBar__action"
-            onClick={[Function]}
+            className="mo-menuBar"
           >
-            <span
-              className="codicon codicon-menu"
-            />
+            <div
+              className="mo-drop-down mo-drop-down--right mo-menuBar__action"
+              onClick={[Function]}
+            >
+              <span
+                className="codicon codicon-menu"
+              />
+            </div>
           </div>
         </div>
         <div
-          className="mo-activityBar"
-          id="activityBar"
-          onContextMenu={[Function]}
+          className="mo-workbench__display-activityBar"
+          style={
+            Object {
+              "display": undefined,
+            }
+          }
         >
           <div
-            className="mo-activityBar__container"
+            className="mo-activityBar"
+            id="activityBar"
+            onContextMenu={[Function]}
           >
-            <ul>
-              <li
-                className="mo-activityBar__item mo-activityBar__item--checked"
-                id="sidebar.explore.title"
-                onClick={[Function]}
-              >
-                <span
-                  className="mo-activityBar__label codicon codicon-files"
-                  title="Explorer"
-                />
-                <div
-                  className="mo-activityBar__indicator"
-                />
-              </li>
-              <li
-                className="mo-activityBar__item"
-                id="sidebar.search.title"
-                onClick={[Function]}
-              >
-                <span
-                  className="mo-activityBar__label codicon codicon-search"
-                  title="Search"
-                />
-              </li>
-            </ul>
-            <ul
-              className="mo-activityBar__global"
+            <div
+              className="mo-activityBar__container"
             >
-              <li
-                className="mo-activityBar__item"
-                id="global.menu.account"
-                onClick={[Function]}
-              >
-                <span
-                  className="mo-activityBar__label codicon codicon-account"
-                  title="Account"
-                />
-              </li>
-              <li
-                className="mo-activityBar__item"
-                id="global.menu.settings"
-                onClick={[Function]}
-              >
-                <div
-                  className="mo-drop-down mo-drop-down--rightBottom"
+              <ul>
+                <li
+                  className="mo-activityBar__item mo-activityBar__item--checked"
+                  id="sidebar.explore.title"
                   onClick={[Function]}
                 >
                   <span
-                    className="mo-activityBar__label codicon codicon-settings-gear"
-                    title="Settings"
+                    className="mo-activityBar__label codicon codicon-files"
+                    title="Explorer"
                   />
-                </div>
-              </li>
-            </ul>
+                  <div
+                    className="mo-activityBar__indicator"
+                  />
+                </li>
+                <li
+                  className="mo-activityBar__item"
+                  id="sidebar.search.title"
+                  onClick={[Function]}
+                >
+                  <span
+                    className="mo-activityBar__label codicon codicon-search"
+                    title="Search"
+                  />
+                </li>
+              </ul>
+              <ul
+                className="mo-activityBar__global"
+              >
+                <li
+                  className="mo-activityBar__item"
+                  id="global.menu.account"
+                  onClick={[Function]}
+                >
+                  <span
+                    className="mo-activityBar__label codicon codicon-account"
+                    title="Account"
+                  />
+                </li>
+                <li
+                  className="mo-activityBar__item"
+                  id="global.menu.settings"
+                  onClick={[Function]}
+                >
+                  <div
+                    className="mo-drop-down mo-drop-down--rightBottom"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="mo-activityBar__label codicon codicon-settings-gear"
+                      title="Settings"
+                    />
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -663,116 +1320,124 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
     </div>
   </div>
   <div
-    className="mo-statusBar"
-    id="statusBar"
+    style={
+      Object {
+        "display": undefined,
+      }
+    }
   >
     <div
-      className="mo-statusBar__left-items"
+      className="mo-statusBar"
+      id="statusBar"
     >
       <div
-        className="mo-statusBar__item"
-        id="statusbar.problems.title"
+        className="mo-statusBar__left-items"
       >
-        <a
-          onClick={[Function]}
-          tabIndex={-1}
-          title="Problems"
+        <div
+          className="mo-statusBar__item"
+          id="statusbar.problems.title"
         >
-          <span
-            className="codicon codicon-error"
-          />
-           0 
-          <span
-            className="codicon codicon-warning"
-          />
-           0 
-          <span
-            className="codicon codicon-info"
-          />
-           0
-        </a>
-      </div>
-    </div>
-    <div
-      className="mo-statusBar__right-items"
-    >
-      <div
-        className="mo-statusBar__item"
-        id="MO_NOTIFICATION"
-      >
-        <a
-          onClick={[Function]}
-          tabIndex={-1}
-          title="Notification"
-        >
-          <span
-            className="codicon codicon-bell"
+          <a
             onClick={[Function]}
-          />
-          <div
-            className="mo-notification mo-context-view--shadow"
-            style={
-              Object {
-                "display": "none",
-              }
-            }
+            tabIndex={-1}
+            title="Problems"
           >
-            <header
-              className="mo-notification__header"
-            >
-              <span>
-                No new notifications
-              </span>
-              <div
-                className="mo-action-bar"
-              >
-                <ul
-                  className="mo-action-bar__container"
-                >
-                  <li
-                    className="mo-action-bar__item"
-                    data-index={0}
-                    onClick={[Function]}
-                  >
-                    <span
-                      className="codicon codicon-clear-all"
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                    />
-                  </li>
-                  <li
-                    className="mo-action-bar__item"
-                    data-index={1}
-                    onClick={[Function]}
-                  >
-                    <span
-                      className="codicon codicon-chevron-down"
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                    />
-                  </li>
-                </ul>
-              </div>
-            </header>
-            <div
-              className="mo-notification__body"
+            <span
+              className="codicon codicon-error"
             />
-          </div>
-        </a>
+             0 
+            <span
+              className="codicon codicon-warning"
+            />
+             0 
+            <span
+              className="codicon codicon-info"
+            />
+             0
+          </a>
+        </div>
       </div>
       <div
-        className="mo-statusBar__item"
-        id="MoEditorInfo"
+        className="mo-statusBar__right-items"
       >
-        <a
-          onClick={[Function]}
-          tabIndex={-1}
-          title="Go to Line/Column"
+        <div
+          className="mo-statusBar__item"
+          id="MO_NOTIFICATION"
         >
-          <span>
-            Ln 0, Col 0
-          </span>
-        </a>
+          <a
+            onClick={[Function]}
+            tabIndex={-1}
+            title="Notification"
+          >
+            <span
+              className="codicon codicon-bell"
+              onClick={[Function]}
+            />
+            <div
+              className="mo-notification mo-context-view--shadow"
+              style={
+                Object {
+                  "display": "none",
+                }
+              }
+            >
+              <header
+                className="mo-notification__header"
+              >
+                <span>
+                  No new notifications
+                </span>
+                <div
+                  className="mo-action-bar"
+                >
+                  <ul
+                    className="mo-action-bar__container"
+                  >
+                    <li
+                      className="mo-action-bar__item"
+                      data-index={0}
+                      onClick={[Function]}
+                    >
+                      <span
+                        className="codicon codicon-clear-all"
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
+                      />
+                    </li>
+                    <li
+                      className="mo-action-bar__item"
+                      data-index={1}
+                      onClick={[Function]}
+                    >
+                      <span
+                        className="codicon codicon-chevron-down"
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </header>
+              <div
+                className="mo-notification__body"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          className="mo-statusBar__item"
+          id="MoEditorInfo"
+        >
+          <a
+            onClick={[Function]}
+            tabIndex={-1}
+            title="Go to Line/Column"
+          >
+            <span>
+              Ln 0, Col 0
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </div>

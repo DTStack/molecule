@@ -70,3 +70,6 @@ export type { IToolTipProps } from './tooltip';
 
 export { default as TreeView } from './tree';
 export type { ITreeProps, ITreeNodeItemProps } from './tree';
+
+export { default as Display } from './display';
+export type { IDisplayProps } from './display';

@@ -38,10 +38,10 @@ describe('The Locale Service', () => {
         expect(defaultLocale).toEqual(BuiltInLocales);
     });
 
-    test('The size of Built-in Locales should be 2', () => {
+    test('The size of Built-in Locales should be 3', () => {
         const localeService = new LocaleService();
         const locales = localeService.getLocales();
-        expect(locales.length).toBe(2);
+        expect(locales.length).toBe(3);
     });
 
     test('Initialize the locales', () => {
@@ -50,7 +50,7 @@ describe('The Locale Service', () => {
         expect(localeService.getCurrentLocale()!.id).toEqual(
             localeService.getDefaultLocale().id
         );
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(4);
         localeService.initialize([], 'test');
         expect(localeService.getCurrentLocale()!.id).toEqual(BuiltInDefault.id);
         // Clear the cached locale value
@@ -75,14 +75,14 @@ describe('The Locale Service', () => {
 
     test('Add locales', () => {
         const localeService = new LocaleService();
-        expect(localeService.getLocales().length).toBe(2);
+        expect(localeService.getLocales().length).toBe(3);
         localeService.addLocales([TestLocale]);
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(4);
         localeService.addLocales([]);
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(4);
         // Add an existed locale
         localeService.addLocales([TestLocale]);
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(4);
     });
 
     test('Add an locale inherit the en', () => {

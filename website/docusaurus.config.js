@@ -14,7 +14,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     organizationName: 'DTStack', // Usually your GitHub org/user name.
     projectName: 'molecule', // Usually your repo name.
     i18n: {
-        defaultLocale: 'zh-CN',
+        defaultLocale: 'en',
         locales: ['zh-CN', 'en'],
         localeConfigs: {
             'zh-CN': {
@@ -148,7 +148,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} DTStack, Inc. 数栈 UED 团队.`,
+                copyright: `Copyright © ${new Date().getFullYear()} DTStack, Inc. All rights reserved.`,
             },
             prism: {
                 theme: lightCodeTheme,

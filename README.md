@@ -17,7 +17,7 @@
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 
-[中文](./README-zhCN.md) | [English](./README.md)
+[中文](./README-zhCN.md) | [English](./README.md) | [한국어](./README-koKR.md)
 
 The **Molecule** is a lightweight **Web IDE UI** framework which is built with React.js and inspired by the VSCode. We have designed the Extension APIs similar to the VSCode, to help developers extend the Workbench in an easier way. It's convenient to integrate the Molecule with React.js applications. It has been applied to many products in [DTStack](https://www.dtstack.com/)
 
@@ -25,11 +25,11 @@ The **Molecule** is a lightweight **Web IDE UI** framework which is built with R
 
 ## Features
 
--   Built-in the VSCode **Workbench** UI
--   Compatible with the VSCode **ColorTheme**
+-   Built-in the Visual Studio Code **Workbench** UI
+-   Compatible with the Visual Studio Code **ColorTheme**
 -   Customize the Workbench via **React Component** easily
 -   Built-in Monaco-Editor **Command Palette, Keybinding** features
--   Support the **i18n**, built-in zhCN, and English
+-   Support the **i18n**, built-in Simplified Chinese, Korean and English
 -   Built-in **Settings**, support to edit and extend via the Extension
 -   Built-in basic **Explorer, Search** components, and support extending via the Extension
 -   **Typescript** Ready
@@ -86,6 +86,12 @@ yarn dev # Start dev mode
 ```
 
 The Molecule using the **Storybook** to manage and develop the React components, the default visiting address is `http://localhost:6006/`.
+
+**Test**
+
+```bash
+yarn test -u
+```
 
 **Build & Preview**
 

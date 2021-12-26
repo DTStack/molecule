@@ -265,6 +265,8 @@ dispose(extensionCtx: IExtensionService): void {
 上例中，我们在**文件（File）**下新增了一个菜单项 **Create Data Source**，移除则使用 `molecule.menuBar.remove` 方法。如果想重置所有 MenuBar 的数据，
 可以使用 [`molecule.menuBar.setMenus()` ](/docs/api/interfaces/molecule.IMenuBarService#setmenus)。
 
+MenuBar 的布局默认是 `vertical` 模式，可通过菜单 **视图（View）**-> **外观（Appearance）**-> **菜单栏水平模式（Menu Bar Horizontal Mode）** 切换至 `horizontal` 模式，在该模式下，可通过 MenuBar 组件的 logo 属性，设置 MenuBar 的 logo。
+
 更多关于 MenuBar 的操作，请查看 [MenuBar API](/docs/api/interfaces/molecule.IMenuBarService) 文档。
 
 [workbench-url]: /docs/api/namespaces/molecule#workbench

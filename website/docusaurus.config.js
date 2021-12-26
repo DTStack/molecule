@@ -44,7 +44,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             '@docusaurus/preset-classic',
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
-                path: 'docs',
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     // Please change this to your repo.
@@ -62,6 +61,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
                 },
+                gtag: {
+                    trackingID: 'G-QWXN7DD46Z',
+                    anonymizeIP: true,
+                },
             }),
         ],
     ],
@@ -69,6 +72,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            metadata: [
+                {
+                    name: 'keywords',
+                    content: 'web ide, ide, vscode, monaco-editor, web-ide',
+                },
+            ],
             navbar: {
                 title: 'Molecule',
                 logo: {
@@ -107,7 +116,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         position: 'right',
                         dropdownItemsAfter: [
                             {
-                                to: 'https://my-site.com/help-us-translate',
+                                to:
+                                    'https://github.com/DTStack/molecule/tree/main/website',
                                 label: 'Help us translate',
                             },
                         ],
@@ -144,6 +154,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                             {
                                 label: 'GitHub',
                                 href: 'https://github.com/DTStack/molecule',
+                            },
+                            {
+                                label: 'Discord',
+                                href: 'https://discord.gg/b62gpHwNA7',
                             },
                         ],
                     },

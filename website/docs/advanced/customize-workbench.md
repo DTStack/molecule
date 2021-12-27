@@ -144,7 +144,7 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 代码中新增了 `Logo` 组件，并替换了原来的 [DropDown](/docs/api/namespaces/molecule.component#dropdown) 为 [Menu](/docs/api/namespaces/molecule.component#menu) 组件。
 
 :::tip
-上面 MenuBar 的自定义 **Logo** 和**横向（Horizontal）**布局功能，目前已内置，具体可查看 [菜单栏 menubar](../guides/extend-workbench#菜单栏menubar)
+上面 MenuBar 的自定义 **Logo** 和**横向（Horizontal）**布局功能，目前已内置，具体可查看 [菜单栏（MenuBar）](../guides/extend-workbench#菜单栏menubar)
 :::
 
 ### 自定义 RightSideBar

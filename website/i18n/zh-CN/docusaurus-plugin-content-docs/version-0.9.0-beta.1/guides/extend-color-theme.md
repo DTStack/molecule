@@ -3,7 +3,7 @@ title: 颜色主题（ColorTheme）
 sidebar_label: 颜色主题
 ---
 
-[颜色主题（ColorTheme）](/docs/api/interfaces/molecule.IColorThemeService)是 Molecule 非常重要的功能，我们做到了**基本兼容** VSCode 的社区的[颜色主题](https://vscodethemes.com/)。本文主要是介绍如何扩展 **VSCode 扩展市场中**的相关颜色主题扩展包，以及如何实现**自定义**颜色主题。
+[颜色主题（ColorTheme）](../api/interfaces/molecule.IColorThemeService)是 Molecule 非常重要的功能，我们做到了**基本兼容** VSCode 的社区的[颜色主题](https://vscodethemes.com/)。本文主要是介绍如何扩展 **VSCode 扩展市场中**的相关颜色主题扩展包，以及如何实现**自定义**颜色主题。
 
 ## 使用 VSCode 社区的主题
 
@@ -182,7 +182,7 @@ $ tree -L 2
 -   `type` 表示当前颜色主题的类型
 -   `colors` 表示当前颜色主题的具体颜色
 
-这里我们可以看到，`My Theme` 主题修改了 [StatusBar](/docs/guides/extend-workbench#状态栏statusbar) 的背景颜色为红色。
+这里我们可以看到，`My Theme` 主题修改了 [StatusBar](extend-workbench#状态栏statusbar) 的背景颜色为红色。
 
 :::info
 Molecule 的 ColorTheme **兼容** [VSCode ColorTheme](https://code.visualstudio.com/api/references/theme-color)，
@@ -216,7 +216,7 @@ export { MyTheme };
 
 ### 应用颜色主题扩展
 
-同样, 自定义的主题扩展程序也是在 `App.js` 中的 [MoleculeProvider](/docs/api/classes/MoleculeProvider) 组件中引入：
+同样, 自定义的主题扩展程序也是在 `App.js` 中的 [MoleculeProvider](../api/classes/MoleculeProvider) 组件中引入：
 
 ```js title="src/App.js"
 import { OneDarkPro } from './extensions/OneDark-Pro';
@@ -231,11 +231,11 @@ function App() {
 }
 ```
 
-打开在**颜色主题快速访问面板**，我们应该就能看到 `My Theme` 的主题了。选择该主题后，底部 [StatusBar](/docs/guides/extend-workbench#状态栏statusbar) 的**背景颜色**即变成了红色。
+打开在**颜色主题快速访问面板**，我们应该就能看到 `My Theme` 的主题了。选择该主题后，底部 [StatusBar](extend-workbench#状态栏statusbar) 的**背景颜色**即变成了红色。
 
 ## 颜色主题（ColorTheme） 服务对象
 
-Molecule 提供了 [ColorTheme](/docs/api/classes/molecule.ColorThemeService) 服务对象，支持开发者在必要的情况下主动做一些主动操作，例如[设置主题](/docs/api/classes/molecule.ColorThemeService#settheme)、[获取主题](/docs/api/classes/molecule.ColorThemeService#getthemebyid) 等等。
+Molecule 提供了 [ColorTheme](../api/classes/molecule.ColorThemeService) 服务对象，支持开发者在必要的情况下主动做一些主动操作，例如[设置主题](../api/classes/molecule.ColorThemeService#settheme)、[获取主题](../api/classes/molecule.ColorThemeService#getthemebyid) 等等。
 
 ```ts
 // Set the current Color Theme
@@ -244,4 +244,4 @@ molecule.colorTheme.setTheme(themeId);
 molecule.colorTheme.getThemes();
 ```
 
-更多有关 [ColorTheme](/docs/api/classes/molecule.ColorThemeService) 的操作，请参考[API](/docs/api/classes/molecule.ColorThemeService)。
+更多有关 [ColorTheme](../api/classes/molecule.ColorThemeService) 的操作，请参考[API](../api/classes/molecule.ColorThemeService)。

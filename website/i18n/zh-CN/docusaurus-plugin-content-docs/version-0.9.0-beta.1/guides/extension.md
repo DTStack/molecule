@@ -92,10 +92,10 @@ export default App;
 ```
 
 :::caution
-需要注意到是，[inactive][inactive-url] 方法，需要在 [MoleculeProvider](/docs/api/classes/MoleculeProvider) 之前声明
+需要注意到是，[inactive][inactive-url] 方法，需要在 [MoleculeProvider](../api/classes/MoleculeProvider) 之前声明
 :::
 
-[inactive-url]: /docs/api/interfaces/molecule.IExtensionService#inactive
-[service-url]: /docs/api/classes/molecule.ExtensionService
-[cmd-url]: /docs/api/classes/molecule.ExtensionService#executecommand
-[ext-url]: /docs/api/interfaces/molecule.model.IExtension
+[inactive-url]: ../api/interfaces/molecule.IExtensionService#inactive
+[service-url]: ../api/classes/molecule.ExtensionService
+[cmd-url]: ../api/classes/molecule.ExtensionService#executecommand
+[ext-url]: ../api/interfaces/molecule.model.IExtension

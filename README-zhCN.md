@@ -17,7 +17,7 @@
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 
-[中文](./README-zhCN.md) | [English](./README.md)
+[中文](./README-zhCN.md) | [English](./README.md) | [한국어](./README-koKR.md)
 
 Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web IDE UI** 框架。我们设计了类似 VSCode 的**扩展**（Extension)机制，可以帮助我们使用 React 组件快速完成对 Workbench 的自定义。Molecule 与 **React** 项目集成非常方便，我们已经在 [DTStack](https://www.dtstack.com/) 多个产品、项目中使用。
 
@@ -29,7 +29,7 @@ Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web ID
 -   基本兼容 Visual Studio Code 的 **ColorTheme**
 -   支持使用 React 组件自定义 **Workbench** UI 样式
 -   内置 Monaco Editor **Command Palette**、**Keybinding**等模块，并支持扩展
--   支持 **i18n**，内置简体中文、English 2 种语言
+-   支持 **i18n**，简体中文、English 、한국어 3 种语言
 -   内置一个简单的 **Settings** 模块，支持在线编辑修改以及扩展
 -   内置默认的 **Explorer**, **Search** 等组件，并支持扩展
 -   Typescript 支持
@@ -85,6 +85,12 @@ yarn dev # 启动开发模式
 ````
 
 Molecule 中的组件是基于 Storybook 开发并管理的，预览地址：`http://localhost:6006/`默认地址浏览。
+
+**测试**
+
+```bash
+yarn test -u
+```
 
 **构建 & 预览**
 

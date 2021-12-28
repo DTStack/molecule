@@ -1,19 +1,15 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
+about: Suggest an idea for molecule
+title: 'feat: '
+labels: 'enhancement'
 assignees: ''
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### Description
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+<!-- Please provide a thoughtful and clear commentary to tell us about Why you need this feature or What benefits of this feature. It's more impressive for us if you can provide a **code samples** to tell us about how it works.  -->
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+### Solution
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+<!-- Maybe you have a solution about this feature, It's welcomed to have a PR for us. And we'll review it as soon as possible -->

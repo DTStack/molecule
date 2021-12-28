@@ -115,5 +115,5 @@ activate(extensionCtx: IExtensionService): void {
 }
 ```
 
-这里我们需要使用 [ExtensionService](/docs/api/interfaces/molecule.IExtensionService) 对象的 `registerAction` 方法来注册。重新加载
+这里我们需要使用 [ExtensionService](../api/interfaces/molecule.IExtensionService) 对象的 `registerAction` 方法来注册。重新加载
 应用界面，然后我们可以在 **Command Palette** 中找到 **Search files by name** 项，同时也可以使用快捷键 `Command/Ctrl + P` 来激活。

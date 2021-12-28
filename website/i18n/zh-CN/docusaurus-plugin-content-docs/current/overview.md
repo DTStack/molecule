@@ -54,10 +54,10 @@ Molecule 利用 monaco-editor 强大的 Keybinding 服务，支持以扩展的�
 
 ## 原子组件（Components)
 
-Molecule 提供了很多基本的 React UI [原子组件](/docs/api/namespaces/molecule.component)，例如 [Menu][menu-url]、[TreeView][treeview-url][、ContextMenu][ctxmenu-url] 等等。而我们的 Workbench UI 就是在这些组件的基础上构建而来。通过这些内置的组件，我们可以在更大程度上，满足我们开发者在 UI 上的扩展诉求。另外，Molecule 支持引用例如 [antd](http://ant.design/) 这类第三方的 UI 组件库，来满足自己的自定义诉求。
+Molecule 提供了很多基本的 React UI [原子组件](./api/namespaces/molecule.component)，例如 [Menu][menu-url]、[TreeView][treeview-url][、ContextMenu][ctxmenu-url] 等等。而我们的 Workbench UI 就是在这些组件的基础上构建而来。通过这些内置的组件，我们可以在更大程度上，满足我们开发者在 UI 上的扩展诉求。另外，Molecule 支持引用例如 [antd](http://ant.design/) 这类第三方的 UI 组件库，来满足自己的自定义诉求。
 
 目前我们使用了 Storybook 来开发维护这些组件，关于这些组件的使用，我们可以在源码仓库下的 [stories](https://github.com/DTStack/molecule/tree/main/stories) 中找到示例。
 
-[menu-url]: /docs/api/namespaces/molecule.component#menu
-[ctxmenu-url]: /docs/api/namespaces/molecule.component#usecontextmenu
-[treeview-url]: /docs/api/namespaces/molecule.component#treeview
+[menu-url]: ./api/namespaces/molecule.component#menu
+[ctxmenu-url]: ./api/namespaces/molecule.component#usecontextmenu
+[treeview-url]: ./api/namespaces/molecule.component#treeview

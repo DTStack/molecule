@@ -21,9 +21,9 @@ Molecule 内置了一个简单的**国际化（i18n）**方案，支持我们基
 
 修改完成后，Molecule 会在 通知栏[（Notification）](./extend-builtin-ui#通知栏notification)弹出更新消息，我们选择 **Reload** 即可重新加载。
 
-## [本地化服务（LocaleService） 对象](/docs/api/classes/molecule.LocaleService)
+## [本地化服务（LocaleService） 对象](../api/classes/molecule.LocaleService)
 
-**LocaleService** 提供了一些基础的 [API](/docs/api/classes/molecule.LocaleService) 方法，这些方法可以帮助我们完成对国际化功能的扩展，例如：
+**LocaleService** 提供了一些基础的 [API](../api/classes/molecule.LocaleService) 方法，这些方法可以帮助我们完成对国际化功能的扩展，例如：
 
 **本地化(localize)**一个对象:
 
@@ -69,13 +69,13 @@ export const ExtendLocales: IExtension = {
 };
 ```
 
-`zh-CN.json` 为 [ILocale](/docs/api/interfaces/molecule.ILocale) 类型的语言包资源文件:
+`zh-CN.json` 为 [ILocale](../api/interfaces/molecule.ILocale) 类型的语言包资源文件:
 
 ```json
 {
     "id": "custom-zh-CN",
     "name": "简体中文 - 自定义",
-    "inherit": "zh-CN",/docs/guides/extend-locales:
+    "inherit": "zh-CN",
     "source": {
         "menu.file": "文件",
         "menu.newFile": "新建任务",

@@ -135,4 +135,4 @@ import extensions from './extensions';
 
 [demo-url]: https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/theFirstExtension
 [foldertree-url]: ./guides/extend-builtin-ui#文件树foldertree
-[provider-url]: /docs/api/classes/MoleculeProvider
+[provider-url]: ./api/classes/MoleculeProvider

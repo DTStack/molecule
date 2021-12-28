@@ -61,7 +61,7 @@ activate(extensionCtx: IExtensionService): void {
 }
 ```
 
-定义好的 Action 对象，需要使用 [ExtensionService](/docs/api/classes/molecule.ExtensionService) 对象的 `registerAction` 方法进行注册。
+定义好的 Action 对象，需要使用 [ExtensionService](../api/classes/molecule.ExtensionService) 对象的 `registerAction` 方法进行注册。
 
 :::tip
 Action 对象同样要在扩展程序 `activate` 的阶段进行注册，才能生效。
@@ -69,8 +69,8 @@ Action 对象同样要在扩展程序 `activate` 的阶段进行注册，才能�
 
 ## 主动执行 Action
 
-除了使用 [Keybinding](/docs/guides/extend-keybinding)、 **Command Palette** 的方式触发 **Action** 以外，
-开发者也可以通过 [executeCommand](/docs/api/classes/molecule.ExtensionService#executecommand) 方法去**主动触发**执行 Action。以 `KeybindingAction` 为例：
+除了使用 [Keybinding](extend-keybinding)、 **Command Palette** 的方式触发 **Action** 以外，
+开发者也可以通过 [executeCommand](../api/classes/molecule.ExtensionService#executecommand) 方法去**主动触发**执行 Action。以 `KeybindingAction` 为例：
 
 ```ts
 molecule.extension.executeCommand('AutoSave', args);

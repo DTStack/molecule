@@ -4,7 +4,7 @@ sidebar_label: 图标
 ---
 
 Molecule 默认引用了 [@vscode/codicons](https://microsoft.github.io/vscode-codicons/dist/codicon.html) 字体图标，并且我们提供了
-React [Icon](/docs/api/namespaces/molecule.component#icon) 组件版本。
+React [Icon](../api/namespaces/molecule.component#icon) 组件版本。
 
 ## 基本使用
 

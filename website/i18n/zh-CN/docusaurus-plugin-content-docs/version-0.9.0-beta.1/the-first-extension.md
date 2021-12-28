@@ -65,7 +65,7 @@ export class FirstExtension implements IExtension {
 我们来看看 `folderTreeController` 模块的具体实现逻辑：
 
 -   `initFolderTree`： 负责获取 [FolderTree][foldertree-url] 的数据，成功后并渲染数据到 [FolderTree][foldertree-url] 组件
--   `handleSelectFolderTree`： 负责处理 [FolderTree][foldertree-url] 的 `onSelectFile` 事件，选中后文件，在 [Editor](/docs/guides/extend-workbench#编辑器editor) 中打开
+-   `handleSelectFolderTree`： 负责处理 [FolderTree][foldertree-url] 的 `onSelectFile` 事件，选中后文件，在 [Editor](./guides/extend-workbench#编辑器editor) 中打开
 
 ```ts title="/src/extensions/theFirstExtension/folderTreeController.ts"
 import molecule from '@dtinsight/molecule';
@@ -135,4 +135,4 @@ import extensions from './extensions';
 
 [demo-url]: https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/theFirstExtension
 [foldertree-url]: ./guides/extend-builtin-ui#文件树foldertree
-[provider-url]: /docs/api/classes/MoleculeProvider
+[provider-url]: ./api/classes/MoleculeProvider

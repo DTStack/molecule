@@ -20,7 +20,7 @@ Molecule 除了可以在线修改配置，更重要的是， 支持开发者通�
 
 ## 设置服务（SettingsService）对象
 
-Molecule 内置了[设置服务（SettingsService）](/docs/api/interfaces/molecule.ISettingsService)对象，除了扩展设置项以外，有些场景下，开发者可以利用它做一些基本操作：
+Molecule 内置了[设置服务（SettingsService）](../api/interfaces/molecule.ISettingsService)对象，除了扩展设置项以外，有些场景下，开发者可以利用它做一些基本操作：
 
 ```ts
 // Get the setting configuration object
@@ -90,5 +90,5 @@ export class SettingsExtension implements IExtension {
 然后，开发者可以利用 `onChangeSettings` 方法**监听配置项**的变化，然后去做相应的处理。完整示例请查看 [molecule-example](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/settings)。
 
 :::tip
-目前 Molecule 并未缓存用户修改的设置，所有重新加载页面后，这些配置信息就好丢失。如果要避免这种情况，可以自己利用 localeStorage 之类的方案，存储用户的配置信息，然后利用 [SettingsService](/docs/api/interfaces/molecule.ISettingsService) 去更新配置信息。
+目前 Molecule 并未缓存用户修改的设置，所有重新加载页面后，这些配置信息就好丢失。如果要避免这种情况，可以自己利用 localeStorage 之类的方案，存储用户的配置信息，然后利用 [SettingsService](../api/interfaces/molecule.ISettingsService) 去更新配置信息。
 :::

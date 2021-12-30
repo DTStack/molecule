@@ -181,4 +181,12 @@ describe('Test ExtensionService', () => {
         expect(languagesExts.length).toBe(1);
         expect(otherExts.length).toBe(1);
     });
+
+    test('The ExtensionService loaded status', () => {
+        expect(instance.isLoaded()).not.toBeTruthy();
+        instance.setLoaded();
+        expect(instance.isLoaded()).toBeTruthy();
+        instance.setLoaded(false);
+        expect(instance.isLoaded()).not.toBeTruthy();
+    });
 });

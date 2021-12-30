@@ -19,7 +19,7 @@ We divide the Workbench UI into six modules, including [MenuBar](#menubar), [Act
 -   **StatusBar**: It's placed on the bottom of Workbench for rendering the **status infomations**. For example, the **Language** informations of current file in Editor, or the informations about the **Columns** and **Line** of cursor, or the [Notification](./extend-builtin-ui#notification).
 
 :::tip
-There are not real function with the isolated module, which is only for pure rendering. If you want to achieve some specific commerial scenarios, we should integrate with other modules, like integrating **ActivityBar** with **Sidebar**, or intergrating **FolerTree** with **Editor** and so on.
+There is do not real function with the isolated module, which is only for pure rendering. If you want to achieve some specific commerial scenarios, you should integrate one with other modules, like integrating **ActivityBar** with **Sidebar**, or intergrating **FolderTree** with **Editor** and so on.
 
 Besides, for reducing the work of developing in UI, we have a majority of [**built-in components**](./extend-builtin-ui), refer to [参考](./extend-builtin-ui) about the detail usage.
 :::

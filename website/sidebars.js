@@ -60,6 +60,7 @@ module.exports = {
                 'api/namespaces/molecule.model',
                 'api/namespaces/molecule.react',
                 'api/namespaces/molecule.event',
+                'api/namespaces/molecule.monaco',
             ],
         },
         {

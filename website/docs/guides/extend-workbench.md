@@ -137,7 +137,7 @@ export function openCreateDataSourceView() {
 }
 ```
 
-The `renderPane` belonged to `createDataSourceTab` is a customize render function for tab content, which returns a `CreateDataSourceView` component here. It's noticed that the default render of Editor is a **monaco-editor** view. If we want to modify a **SQL** text, we can execute like the following:
+The `renderPane` belonged to `createDataSourceTab` is a customize **render function** for **tab content**, which returns a `CreateDataSourceView` component here. It's noticed that the default render of Editor is a **monaco-editor** view. If we want to modify a **SQL** text, we can execute like the following:
 
 ```ts
 molecule.editor.open({

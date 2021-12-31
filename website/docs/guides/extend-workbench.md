@@ -3,7 +3,7 @@ title: Workbench
 sidebar_label: Workbench
 ---
 
-[Workbench][workbench-url] is the most core partial in Molecule, we imitate the wonderful design of **VSCode Workbench** based on **React**, and provide a simple **Workbench UI** to support extend, by which it could be fully customized.
+[Workbench][workbench-url] is the most core partial in Molecule, we imitate the wonderful design of **VSCode Workbench** based on **React**, and provide a simple **Workbench UI** to support extend, by which it could be fully **customized**.
 
 ## Core Conception
 

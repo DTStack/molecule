@@ -12,7 +12,7 @@ sidebar_label: Workbench
 We divide the Workbench UI into six modules, including [MenuBar](#menubar), [ActivityBar](#activitybar), [Sidebar](#sidebar), [Editor](#editor), [Panel](#panel), [StatusBar](#statusbar):
 
 -   **MenuBar**: For managing the menu bar in workbench, like **File**, **Edit**, **Selection**, **View** and so on.
--   **ActivityBar**: For showing the **active bar** in workbench, like [Explorer](./extend-builtin-ui#Explorer), [Search](./extend-builtin-ui#Search) and other bars. It's noticed that the ActivityBar should cooperate with other modules in general. For example, the Sidebar is going to show the correspond panel when switching the ActivityBar.
+-   **ActivityBar**: For showing the **active bar** in workbench, like [Explorer](./extend-builtin-ui#explorer), [Search](./extend-builtin-ui#search) and other bars. It's noticed that the ActivityBar should **cooperate** with other modules in general. For example, the Sidebar is going to show the correspond panel when switching the ActivityBar.
 -   **Sidebar**: In general, it's as a significant navigator part placed in the left of workbench like the built-in [Explorer](./extend-builtin-ui#explorer).
 -   **Editor**: For editing some data in tabs. In general, we can **edit the codes** in Editor. Or you can render your own editor UI. Molecule will have an **Entry** in **Editor** when without the tabs. Obviously, the Entry Page is support customize.
 -   **Panel**: In general, it's placed on the below of the Editor for rendering some panels like [Problems](./extend-builtin-ui#problems-), [Output](extend-builtin-ui#output), **Terminal**, and so on.

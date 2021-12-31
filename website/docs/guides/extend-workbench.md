@@ -9,7 +9,7 @@ sidebar_label: Workbench
 
 ![molecule](/img/guides/workbench-ui.png)
 
-We divide the Workbench UI into six modules, including [MenuBar](#menubar), [ActivityBar](#activitybar), [Sidebar](#sidebar), [Editor](#editor), [Panel](#panel), [StatusBar](#statusbar):
+We divide the Workbench UI into **six** modules, including [MenuBar](#menubar), [ActivityBar](#activitybar), [Sidebar](#sidebar), [Editor](#editor), [Panel](#panel), [StatusBar](#statusbar):
 
 -   **MenuBar**: For managing the menu bar in workbench, like **File**, **Edit**, **Selection**, **View** and so on.
 -   **ActivityBar**: For showing the **active bar** in workbench, like [Explorer](./extend-builtin-ui#explorer), [Search](./extend-builtin-ui#search) and other bars. It's noticed that the ActivityBar should **cooperate** with other modules in general. For example, the Sidebar is going to show the correspond panel when switching the ActivityBar.

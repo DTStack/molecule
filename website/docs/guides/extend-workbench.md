@@ -231,7 +231,7 @@ molecule.statusBar.remove(languageBar.id, Float.right);
 
 The `Float.left/Float.right` in code is used for setting the rendering position in the **left** or **right** of status bar.
 
-If we want to **customize Statusbar**'s content, we can by `render` function, such as [**icons**](./icons)：
+We can **customize Statusbar**'s content by `render` function, such as [**icons**](./icons)：
 
 ```ts
 import { IStatusBarItem, Float } from '@dtinsight/molecule/esm/model';

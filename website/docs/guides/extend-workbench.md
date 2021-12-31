@@ -26,7 +26,7 @@ Besides, for reducing the work of developing in UI, we have a majority of [**bui
 
 ## Extend Workbench
 
-We will thoroughly indicate How to extend **workbench** via **Extension** and the built-in **API**s in the part.
+We will thoroughly indicate how to extend **Workbench** via **Extension** and the built-in **API**s in this part.
 
 To begin with a scenario:
 

@@ -46,8 +46,8 @@ export const constants = {
     SETTING_ID: 'Setting',
     PROBLEM_MODEL_ID: 'MO_PROBLEMS',
     PROBLEM_MODEL_NAME: 'Problems',
-    NOTIFICATION_CLEAR_ALL_ID: 'ClearAll',
-    NOTIFICATION_HIDE_ID: 'HideNotifications',
+    NOTIFICATION_CLEAR_ALL_ID: 'notification.clearAll',
+    NOTIFICATION_HIDE_ID: 'notification.hideAll',
     NOTIFICATION_MODEL_ID: 'MO_NOTIFICATION',
     NOTIFICATION_MODEL_NAME: 'Notification',
     STATUS_BAR_HIDE_ID: 'hide',
@@ -362,14 +362,20 @@ export const modules = {
     NOTIFICATION_CLEAR_ALL: () =>
         ({
             id: constants.NOTIFICATION_CLEAR_ALL_ID,
-            title: 'Clear All Notifications',
+            title: localize(
+                constants.NOTIFICATION_CLEAR_ALL_ID,
+                'Clear All Notifications'
+            ),
             icon: 'clear-all',
         } as IActionBarItemProps),
 
     NOTIFICATION_HIDE: () =>
         ({
             id: constants.NOTIFICATION_HIDE_ID,
-            title: 'Hide Notifications',
+            title: localize(
+                constants.NOTIFICATION_HIDE_ID,
+                'Hide Notifications'
+            ),
             icon: 'chevron-down',
         } as IActionBarItemProps),
 

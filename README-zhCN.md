@@ -29,7 +29,7 @@ Molecule 是一款受 **VSCode** 启发，使用 **React.js** 构建的 **Web ID
 -   基本兼容 Visual Studio Code 的 **ColorTheme**
 -   支持使用 React 组件自定义 **Workbench** UI 样式
 -   内置 Monaco Editor **Command Palette**、**Keybinding**等模块，并支持扩展
--   支持 **i18n**，簡体字中国語、英制、朝鲜语 3 种语言
+-   支持 **i18n**，简体中文、English 、한국어 3 种语言
 -   内置一个简单的 **Settings** 模块，支持在线编辑修改以及扩展
 -   内置默认的 **Explorer**, **Search** 等组件，并支持扩展
 -   Typescript 支持

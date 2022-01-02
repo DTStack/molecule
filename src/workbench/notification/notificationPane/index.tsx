@@ -61,7 +61,10 @@ export function NotificationPane(
                             ? item.render(item)
                             : item.value}
                         <Icon
-                            title="Clear Notification"
+                            title={localize(
+                                'notification.clear',
+                                'Clear Notification'
+                            )}
                             onClick={() => onCloseNotification?.(item)}
                             className={notificationCloseClassName}
                             type="close"

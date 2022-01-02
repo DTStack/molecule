@@ -19,6 +19,8 @@
         "editor.closeSaved": "저장된 항목 닫기",
         "editor.closeToLeft": "왼쪽에 있는 항목 닫기",
         "editor.closeToRight": "오른쪽에 있는 항목 닫기",
+        "editor.gotoLine": "줄/열로 이동...",
+        "editor.singleSelection": "줄 ${i}, 열 ${i}",
         "editor.showOpenEditors": "열려 있는 편집기 표시",
         "menu.about": "정보",
         "menu.account": "계정",
@@ -93,6 +95,8 @@
         "sidebar.search.placeHolder": "검색",
         "sidebar.search.replace.placeHolder": "바꾸기",
         "sidebar.search.title": "검색",
+        "statusbar.hide": "상태 표시줄 숨기기",
+        "statusbar.problems.title": "문제",
         "toolbar.clearAll": "모두 지우기",
         "toolbar.collapseAll": "모두 축소",
         "toolbar.refresh": "새로 고침"

@@ -19,6 +19,8 @@
         "editor.closeSaved": "关闭已保存",
         "editor.closeToLeft": "关闭左边",
         "editor.closeToRight": "关闭右边",
+        "editor.gotoLine": "转到行/列...",
+        "editor.singleSelection": "行 ${i}, 列 ${i}",
         "editor.showOpenEditors": "展示已打开的编辑器",
         "menu.about": "关于",
         "menu.account": "账号",
@@ -93,6 +95,8 @@
         "sidebar.search.placeHolder": "搜索",
         "sidebar.search.replace.placeHolder": "替换",
         "sidebar.search.title": "搜索",
+        "statusbar.hide": "隐藏状态栏",
+        "statusbar.problems.title": "问题",
         "toolbar.clearAll": "清除所有",
         "toolbar.collapseAll": "折叠所有",
         "toolbar.refresh": "刷新"

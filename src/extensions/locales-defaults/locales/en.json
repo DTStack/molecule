@@ -19,6 +19,8 @@
         "editor.closeSaved": "Close Saved",
         "editor.closeToLeft": "Close To Left",
         "editor.closeToRight": "Close To Right",
+        "editor.gotoLine": "Go to Line/Column...",
+        "editor.singleSelection": "Line ${i}, Column ${i}",
         "editor.showOpenEditors": "Show Opened Editors",
         "menu.about": "About",
         "menu.account": "Account",
@@ -93,6 +95,8 @@
         "sidebar.search.placeHolder": "Search",
         "sidebar.search.replace.placeHolder": "Replace",
         "sidebar.search.title": "Search",
+        "statusbar.hide": "Hide Status Bar",
+        "statusbar.problems.title": "Problems",
         "toolbar.clearAll": "Clear all",
         "toolbar.collapseAll": "Collapse all",
         "toolbar.refresh": "Refresh"

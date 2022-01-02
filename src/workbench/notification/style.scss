@@ -10,6 +10,7 @@ $icon-size: 22px;
     position: fixed;
     right: 8px;
     z-index: 1000;
+    padding: 0 0 5px;
 
     &__header {
         align-items: center;
@@ -41,11 +42,13 @@ $icon-size: 22px;
         overflow-y: auto;
         padding: 0 8px;
         position: relative;
+        direction: ltr;
 
         > div {
             padding-right: 30px;
             position: relative;
             text-align: left;
+            line-height: 1.5;
         }
     }
 

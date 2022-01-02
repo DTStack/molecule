@@ -15,9 +15,9 @@ exports[`The StatusBar Component Match Snapshot 1`] = `
       <a
         onClick={[Function]}
         tabIndex={-1}
-        title="Go to Line/Column"
+        title="Go to Line/Column..."
       >
-        Go to Line/Column
+        Go to Line/Column...
       </a>
     </div>
   </div>
@@ -31,9 +31,9 @@ exports[`The StatusBar Component Match Snapshot 1`] = `
       <a
         onClick={[Function]}
         tabIndex={-1}
-        title="Go to Line/Column"
+        title="Go to Line/Column..."
       >
-        Go to Line/Column
+        Go to Line/Column...
       </a>
     </div>
   </div>

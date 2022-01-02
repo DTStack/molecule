@@ -896,12 +896,12 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
                               }
                             }
                           >
-                            you have not yet opened a folder
+                            You have not yet opened a folder.
                             <a
                               className="mo-btn mo-btn--normal"
                               onClick={[Function]}
                             >
-                              Add Folder
+                              Open Folder
                             </a>
                           </div>
                         </div>

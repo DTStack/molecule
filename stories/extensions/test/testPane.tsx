@@ -6,7 +6,6 @@ import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
 import { FileTypes, Float, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
-import { localize } from 'mo/i18n/localize';
 import { Scrollable } from 'mo/components';
 import { randomId } from 'mo/common/utils';
 
@@ -331,7 +330,6 @@ PARTITIONED BY (ds string) lifecycle 1000;
                     <div style={{ margin: '50px 20px' }}>
                         <h1>Select a localization language:</h1>
                         {this.renderLocales()}
-                        {localize('test.id', 'aaaa')}
                     </div>
                     <div style={{ margin: '50px 20px' }}>
                         <h2>Add a new Panel:</h2>

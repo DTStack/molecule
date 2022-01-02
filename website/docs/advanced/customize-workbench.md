@@ -5,7 +5,7 @@ sidebar_label: Custom Workbench
 
 Molecule 默认的 **Workbench** UI 是一个 **VSCode** 的克隆版本。但是我们在实际的开发场景中，往往不能满足我们的需求。
 
-除了内置的一些原子 [Components](/docs/api/namespaces/molecule.component) 以外，Molecule 同时提供了基本的 **Workbench、SideBar、Editor、ActivityBar、MenuBar、Panel、StatusBar** 等核心[**UI 部件**](../guides/extend-workbench)，以便开发者根据自己的需求**重新组装**自己的 **Workbench**。
+除了内置的一些原子 [Components](../api/namespaces/molecule.component) 以外，Molecule 同时提供了基本的 **Workbench、SideBar、Editor、ActivityBar、MenuBar、Panel、StatusBar** 等核心[**UI 部件**](../guides/extend-workbench)，以便开发者根据自己的需求**重新组装**自己的 **Workbench**。
 
 :::tip
 本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
@@ -18,7 +18,7 @@ Molecule 默认的 **Workbench** UI 是一个 **VSCode** 的克隆版本。但�
 Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我们将 **MenuBar** 水平置于了**顶部**的位置，在编辑器的右侧，我们又自定义了一个**右边栏（RightSideBar)**。
 
 :::info
-我们会在未来的版本中，将 **MenuBar 置顶布局** 、**右边栏（RightSideBar）**作为 Molecule 的**内置**功能。
+目前 **MenuBar 置顶布局**功能已内置，我们会在未来的版本中，将**右边栏（RightSideBar）**也作为 Molecule 的**内置**功能。
 :::
 
 ### 重组 Workbench
@@ -26,11 +26,21 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 首先我们打开 Molecule [源码](https://github.com/DTStack/molecule)仓库，找到 `src/workbench` 目录，拷贝 `workbench.tsx` 文件到项目的 `views` 或其他目录下，将其重命名为 `myWorkbench.tsx` 文件：
 
 ```tsx
-<div className={workbenchClassName}>
+<div className={workbenchFinalClassName}>
+    <Display visible={isMenuBarHorizontal}>
+        <MenuBarView mode={MenuBarMode.horizontal} />
+    </Display>
     <div className={mainBenchClassName}>
         <div className={compositeBarClassName}>
-            {!menuBar.hidden && <MenuBarView />}
-            {!activityBar.hidden && <ActivityBarView />}
+            <Display visible={isMenuBarVertical}>
+                <MenuBarView mode={MenuBarMode.vertical} />
+            </Display>
+            <Display
+                visible={!activityBar.hidden}
+                className={displayActivityBarClassName}
+            >
+                <ActivityBarView />
+            </Display>
         </div>
         <SplitPane
             split="vertical"
@@ -42,7 +52,7 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
                 minSize="170px"
                 initialSize={splitPanePos[0]}
                 maxSize="80%"
-                className={sidebar.hidden && 'hidden'}
+                className={sidebar.hidden ? 'hidden' : ''}
             >
                 <SidebarView />
             </Pane>
@@ -60,8 +70,7 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 </div>
 ```
 
-代码中，`MenuBarView` 和 `ActivityBarView` 默认都放在了 `className` 为 `compositeBarClassName` **DIV** 元素中，而 `SplitPane` 组件中
-默认包含了 `SidebarView` 和右侧的 **Editor** 和 **Panel** 面板，并没有包含 **RightSideBar** 面板。
+代码中，`horizontal` 模式下和 `vertical` 模式下的 `MenuBarView` 分别放在了不同的位置，`SplitPane` 组件中默认包含了 `SidebarView` 和右侧的 **Editor** 和 **Panel** 面板，并没有包含 **RightSideBar** 面板。
 
 具体改造如下：
 
@@ -112,8 +121,7 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 以上代码仅仅是 `myWorkbench.tsx` 文件的部分代码，完整代码请查看 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/views/myWorkbench.tsx)
 :::
 
-我们移动了 `MenuBar` 组件的位置，使用的是自己定义的 `MyMenuBarView` 组件。在 `SplitPane` 组件中新增了一个
-`className` 为 `rightSidebar` 的面板，使用了内置的 `Sidebar` 组件，并在 `Sidebar` 中使用了自定义的 `MySidePane` 组件。
+我们去掉了 `vertical` 模式下的 MenuBar，并直接根据 `menuBar.hidden` 来渲染自己定义的 `MyMenuBarView` 组件。在 `SplitPane` 组件中新增了一个 `className` 为 `rightSidebar` 的面板，使用了内置的 `Sidebar` 组件，并在 `Sidebar` 中使用了自定义的 `MySidePane` 组件。
 
 ### 自定义 MenuBar
 
@@ -133,11 +141,15 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 </div>
 ```
 
-代码中新增了 `Logo` 组件，并替换了原来的 [DropDown](/docs/api/namespaces/molecule.component#dropdown) 为 [Menu](/docs/api/namespaces/molecule.component#menu) 组件。
+代码中新增了 `Logo` 组件，并替换了原来的 [DropDown](../api/namespaces/molecule.component#dropdown) 为 [Menu](../api/namespaces/molecule.component#menu) 组件。
+
+:::tip
+上面 MenuBar 的自定义 **Logo** 和**横向（Horizontal）**布局功能，目前已内置，具体可查看 [菜单栏（MenuBar）](../guides/extend-workbench#菜单栏menubar)
+:::
 
 ### 自定义 RightSideBar
 
-与 `MenuBar` 稍有不同的是，因为复用了内置的 [Sidebar](/docs/api/namespaces/molecule#sidebar-1) 组件，所以这里我们只需要传入 [ISidebarPane](/docs/api/interfaces/molecule.model.ISidebarPane) 类型的组件：
+与 `MenuBar` 稍有不同的是，因为复用了内置的 [Sidebar](../api/namespaces/molecule#sidebar-1) 组件，所以这里我们只需要传入 [ISidebarPane](../api/interfaces/molecule.model.ISidebarPane) 类型的组件：
 
 ```tsx title="/src/views/mySidePane.tsx"
 import React from 'react';
@@ -186,4 +198,4 @@ export const MySidePane: ISidebarPane = {
 
 ## 总结
 
-上例中使用了很多 Molecule **内置**的 UI 组件来实现自定义，然而使用[内置组件](/docs/api/namespaces/molecule.component)是有一定上手成本的，需要开发者对内置的 UI 组件有比较好了解。我们会在后序的版本中，持续优化**文档**和**API**，以减轻上手成本，并尽可能的提供更多的使用**示例**。
+上例中使用了很多 Molecule **内置**的 UI 组件来实现自定义，然而使用[内置组件](../api/namespaces/molecule.component)是有一定上手成本的，需要开发者对内置的 UI 组件有比较好了解。我们会在后序的版本中，持续优化**文档**和**API**，以减轻上手成本，并尽可能的提供更多的使用**示例**。

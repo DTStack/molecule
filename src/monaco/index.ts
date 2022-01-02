@@ -22,3 +22,5 @@ import 'monaco-editor/esm/vs/editor/standalone/browser/referenceSearch/standalon
 import 'monaco-editor/esm/vs/editor/standalone/browser/toggleHighContrast/toggleHighContrast';
 
 export * from 'monaco-editor/esm/vs/editor/editor.api.js';
+
+export { KeybindingWeight, Action2 } from './common';

@@ -57,7 +57,7 @@ $border-color: rgba(115, 115, 115, 0.4);
         .keys {
             display: grid;
             grid-gap: 32px;
-            grid-template-columns: 1fr minmax(47px, min-content);
+            grid-template-columns: 1fr minmax(47px, max-content);
             text-align: left;
         }
     }

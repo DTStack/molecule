@@ -18,9 +18,9 @@
 
     &__input {
         appearance: none;
-        background: inherit;
+        background: var(--input-background);
         border: 0;
-        color: inherit;
+        color: var(--input-foreground);
         cursor: default;
         font: inherit;
         font-size: inherit;
@@ -32,6 +32,18 @@
 
         &:focus {
             outline: none;
+        }
+
+        &::placeholder {
+            color: var(--input-placeholderForeground);
+        }
+
+        &:focus,
+        &:active {
+            border-color: var(--focusBorder);
+            outline-color: var(--focusBorder);
+            outline-offset: -1;
+            outline-style: solid;
         }
     }
 

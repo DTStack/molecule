@@ -96,6 +96,14 @@ export interface IExtensionService {
      * @returns [ languagesExts, otherExtensions ]
      */
     splitLanguagesExts(extensions: IExtension[]): [IExtension[], IExtension[]];
+    /**
+     * whether the extensions are loaded
+     */
+    isLoaded(): boolean;
+    /**
+     * Set the extensions are loaded
+     */
+    setLoaded(flag?: boolean): void;
 }
 
 @singleton()
@@ -105,11 +113,24 @@ export class ExtensionService implements IExtensionService {
     private readonly monacoService: IMonacoService;
     private _inactive: Function | undefined;
     private readonly localeService: ILocaleService;
+    /**
+     * TODO: This property is used for marking the extensions were loaded
+     * we are going to refactor this logic after redesign the Molecule lifecycle.
+     */
+    private _isLoaded: boolean = false;
 
     constructor() {
         this.colorThemeService = container.resolve(ColorThemeService);
         this.monacoService = container.resolve(MonacoService);
         this.localeService = container.resolve(LocaleService);
+    }
+
+    public setLoaded(flag?: boolean): void {
+        this._isLoaded = flag !== undefined ? flag : true;
+    }
+
+    public isLoaded(): boolean {
+        return this._isLoaded;
     }
 
     public getExtension(id: UniqueId): IExtension | undefined {

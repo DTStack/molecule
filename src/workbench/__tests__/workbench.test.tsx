@@ -184,7 +184,9 @@ describe('Test Workbench Component', () => {
         expect(select('.mo-statusBar')).toBeInTheDocument();
         workbench.statusBar.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(select('.mo-statusBar')).not.toBeInTheDocument();
+        expect(select('.mo-statusBar')?.parentElement?.style.display).toBe(
+            'none'
+        );
     });
 
     test('Should support to change the layout mode of MenuBar', async () => {

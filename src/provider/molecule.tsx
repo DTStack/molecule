@@ -48,7 +48,9 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     }
 
     componentDidMount() {
-        this.initialize();
+        if (!this.extensionService.isLoaded()) {
+            this.initialize();
+        }
     }
 
     initialize() {
@@ -73,6 +75,9 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
 
         // Finally, handle the rest of extensions
         this.extensionService.load(restExts);
+
+        // Mark the extensionService as loaded
+        this.extensionService.setLoaded();
     }
 
     initLocaleExts(languages: IExtension[]) {

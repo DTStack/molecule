@@ -3,17 +3,17 @@ title: Color Theme
 sidebar_label: Color Theme
 ---
 
-[ColorTheme](../api/interfaces/molecule.IColorThemeService) is a very important function of Molecule. We have achieved **basic compatibility** with the [color theme](https://vscodethemes.com/) of the VSCode community. This article mainly introduces how to extend the relevant color theme extension packages in the **VSCode extension market**, and how to implement **custom** color themes.
+[ColorTheme](../api/interfaces/molecule.IColorThemeService) is a very important function of Molecule. We have achieved **basic compatibility** with the [color theme](https://vscodethemes.com/) of the VSCode community. This part mainly introduces how to extend the relevant color theme extension packages in the **VSCode extension market**, and how to implement **custom** color themes.
 
 ## Use the theme of the VSCode community
 
 :::tip
-All the codes in this article are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).
+All code demos in this part are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).
 :::
 
 First, we can open the [VSCode Theme market](https://vscodethemes.com/) and try to find a color theme you like.
 
-Here we take the [One Dark Pro](https://github.com/Binaryify/OneDark-Pro.git) theme as an example. We need to find the theme on **GitHub** and make sure that we can get the code for the color theme. After finding the theme code, we switch to the `src/extensions` directory in the terminal and execute the `git clone https://github.com/Binaryify/OneDark-Pro.git` command to download the `One Dark Pro` theme code, as follows:
+Take the [One Dark Pro](https://github.com/Binaryify/OneDark-Pro.git) theme as an example. We need to find the theme on **GitHub** and make sure that we can get the code for the color theme. After finding the theme code, switch to the `src/extensions` directory in the terminal and execute the `git clone https://github.com/Binaryify/OneDark-Pro.git` command to download the `One Dark Pro` theme code, as follows:
 
 ```shell
 $ pwd
@@ -166,7 +166,7 @@ Next we add the **necessary attributes** in `package.json` as follows:
 -   The `uiTheme` attribute means whether the theme is a dark theme, a light theme, or a high-contrast theme.
 -   The `path` attribute means the path where the detailed theme configuration of the theme is located.
 
-然后，我们再创建一个 `themes/MyTheme.json` 文件，具体内容如下：
+Then, we create a file with the path of `themes/MyTheme.json`, the specific content is as follows:
 
 ```json
 {
@@ -178,45 +178,44 @@ Next we add the **necessary attributes** in `package.json` as follows:
 }
 ```
 
--   `name` 表示当前颜色主题，建议与上面的 `label` 属性保持一致
--   `type` 表示当前颜色主题的类型
--   `colors` 表示当前颜色主题的具体颜色
+-   `name` represents the current color theme, it is recommended to be consistent with the above `label` attribute
+-   `type` represents the type of the current color theme
+-   `colors` represents the specific colors of the current color theme
 
-这里我们可以看到，`My Theme` 主题修改了 [StatusBar](extend-workbench#状态栏statusbar) 的背景颜色为红色。
+Here we can see that `My Theme` changed the background color of [StatusBar](extend-workbench#statusbar) to red.
 
 :::info
-Molecule 的 ColorTheme **兼容** [VSCode ColorTheme](https://code.visualstudio.com/api/references/theme-color)，
-更多的**颜色修改项**，请查阅 [VSCode ColorTheme](https://code.visualstudio.com/api/references/theme-color)。
+Molecule's ColorTheme is **compatible** with [VSCode ColorTheme](https://code.visualstudio.com/api/references/theme-color). For more **color modification items**, please refer to [VSCode ColorTheme](https://code.visualstudio.com/api/references/theme-color).
 :::
 
-然后我们在 `MyTheme` 目录下创建 `index.ts`，具体内容如下：
+Then we create the `index.ts` file under the `MyTheme` directory, the specific content of the file is as follows:
 
 ```js
-// 读取 package.json 中的内容
+// Get the content in package.json
 const MyTheme = require('./package.json');
 
-// 读取详细的主题颜色内容
+// Get detailed theme color content
 const themes = [require('./themes/MyTheme.json')];
 
 const packageThemes = MyTheme.contributes?.themes || [];
 
 MyTheme.contributes.themes = packageThemes.map((theme, index) => {
-    // 为每个 theme 添加 id
+    // Add id to each theme
     theme.id = theme.label;
     theme = Object.assign({}, theme, themes[index]);
     return theme;
 });
 
-// 声明当前主题的唯一 id
+// Declare the unique id of the current theme
 MyTheme.id = 'MyTheme';
 
-// 导出 package.json 的内容供 Molecule 使用
+// Export the contents of package.json for use by Molecule
 export { MyTheme };
 ```
 
-### 应用颜色主题扩展
+### Apply color theme extension
 
-同样, 自定义的主题扩展程序也是在 `App.js` 中的 [MoleculeProvider](../api/classes/MoleculeProvider) 组件中引入：
+Similarly, custom theme extensions are also need to be introduced in the [MoleculeProvider](../api/classes/MoleculeProvider) component in `App.js`:
 
 ```js title="src/App.js"
 import { OneDarkPro } from './extensions/OneDark-Pro';
@@ -231,11 +230,11 @@ function App() {
 }
 ```
 
-打开在**颜色主题快速访问面板**，我们应该就能看到 `My Theme` 的主题了。选择该主题后，底部 [StatusBar](extend-workbench#状态栏statusbar) 的**背景颜色**即变成了红色。
+Open **the color theme quick access panel**, we should be able to see the theme of `My Theme`. After selecting this theme, the **background color** of the [StatusBar](extend-workbench#statusbar) at the bottom changes to red.
 
-## 颜色主题（ColorTheme） 服务对象
+## ColorTheme service object
 
-Molecule 提供了 [ColorTheme](../api/classes/molecule.ColorThemeService) 服务对象，支持开发者在必要的情况下主动做一些主动操作，例如[设置主题](../api/classes/molecule.ColorThemeService#settheme)、[获取主题](../api/classes/molecule.ColorThemeService#getthemebyid) 等等。
+Molecule provides the [ColorTheme](../api/classes/molecule.ColorThemeService) service object, which supports developers to do some active operations when necessary, such as [setting theme](../api/classes/molecule.ColorThemeService#settheme), [getting theme](../api/classes/molecule.ColorThemeService#getthemebyid), and so on.
 
 ```ts
 // Set the current Color Theme
@@ -244,4 +243,4 @@ molecule.colorTheme.setTheme(themeId);
 molecule.colorTheme.getThemes();
 ```
 
-更多有关 [ColorTheme](../api/classes/molecule.ColorThemeService) 的操作，请参考[API](../api/classes/molecule.ColorThemeService)。
+For more information about [ColorTheme](../api/classes/molecule.ColorThemeService) operations, please refer to [API](../api/classes/molecule.ColorThemeService).

@@ -8,7 +8,7 @@ Molecule's default **Workbench** UI is a clone of **VSCode**. But in actual deve
 In addition to some built-in atomic [Components](../api/namespaces/molecule.component), Molecule also provides basic **Workbench,SideBar, Editor, ActivityBar, MenuBar, Panel, StatusBar** and other core [**UI components**](../guides/extend-workbench), so that developers can **reassemble** their own **Workbench** according to their needs.
 
 :::tip
-All the codes in this article are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).
+All code demos in this part are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).
 :::
 
 ## Custom Workbench Example
@@ -18,12 +18,12 @@ All the codes in this article are based on the [molecule-demo](https://github.co
 Molecule's Workbench defaults to **VSCode layout**. In the example above, we placed the **MenuBar** horizontally **at the top** position, and on the right side of the editor, we have customized a **RightSideBar**.
 
 :::info
-At present, **MenuBar** has a built-in **top layout** function. We will use the **right sidebar (RightSideBar)** as a **built-in** function of Molecule in future versions.
+At present, the top fixed layout for the **MenuBar** is integrated in Molecule. Besides, we will also integrate the **right sidebar (RightSideBar)** for Molecule in the future.
 :::
 
 ### Restructuring Workbench
 
-First, we open the [source](https://github.com/DTStack/molecule) code repository of Molecule, find the `src/workbench` directory, then copy the `workbench.tsx` file to the `views` or other directories of the project, and rename it to `myWorkbench.tsx`:
+First, open the [source code](https://github.com/DTStack/molecule) of Molecule, and find the `src/workbench` directory, then copy the `workbench.tsx` file to the `views` or other directories of your project, and rename it to `myWorkbench.tsx`:
 
 ```tsx
 <div className={workbenchFinalClassName}>

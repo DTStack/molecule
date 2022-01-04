@@ -3,48 +3,48 @@ title: i18n
 sidebar_label: i18n
 ---
 
-Molecule 内置了一个简单的**国际化（i18n）**方案，支持我们基本的国际化需求。我们内置了**简体中文（zh-CN）**、**英文（en 默认）**2 种基本的语言。
+Molecule has built-in a simple **internationalization (i18n)** solution to support our basic internationalization needs. We have built-in two basic languages: **simplified Chinese (zh-CN)** and **English (en default)**.
 
 :::tip
-本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+All code demos in this part are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).
 :::
 
-## 切换语言
+## Switch language
 
-默认我们提供了**2 种**方法切换。第一种使用 `Command/Ctrl + Shift + L` 快捷键：
+We provide **2 ways** to switch languages by default. The first way is to use the shortcut key `Command/Ctrl + Shift + L`:
 
 ![Select Display Language](/img/guides/extend-language.png)
 
-第二种，打开使用快捷键 `Command/Ctrl + ,` 在 [Editor](./extend-workbench) 中打开[设置（Settings)](./extend-settings) 面板，修改 **JSON** 配置中的 `locale` 字段：
+The second way is to use the shortcut key `Command/Ctrl + ,` to open the [Settings](./extend-settings) panel in the [Editor](./extend-workbench), and then modify the `locale` field in the **JSON** configuration:
 
 ![Select Display Language](/img/guides/extend-language2.png)
 
-修改完成后，Molecule 会在 通知栏[（Notification）](./extend-builtin-ui#通知栏notification)弹出更新消息，我们选择 **Reload** 即可重新加载。
+After the modification is completed, Molecule will pop up an update message in the [Notification](./extend-builtin-ui#notification) bar, and then we can select **Reload** to reload the page application.
 
-## [本地化服务（LocaleService） 对象](../api/classes/molecule.LocaleService)
+## [LocaleService](../api/classes/molecule.LocaleService)
 
-**LocaleService** 提供了一些基础的 [API](../api/classes/molecule.LocaleService) 方法，这些方法可以帮助我们完成对国际化功能的扩展，例如：
+**LocaleService** provides some basic [API](../api/classes/molecule.LocaleService) methods, these methods can help us to complete the expansion of internationalization functions, for example:
 
-**本地化(localize)**一个对象:
+**Localize** an object:
 
 ```ts
 molecule.locale.localize('sourceKey', 'default value');
 ```
 
-设置**当前**的本地化语言：
+Set the **current** localized language:
 
 ```ts
 // Set the zh-CN as the current locale language
 molecule.locale.setCurrentLocale('zh-CN');
 ```
 
-## 自定义语言
+## Custom language
 
-**国际化语言（i18n）** 同样是 Molecule 的一种扩展程序，我们提供了一种非常简便的**自定义语言**的方式, 支持使用 `JSON` 文件来定义国际化**语言包**数据。
+**Internationalized language** is also an extension of Molecule. We provide a very convenient way to **customize the language**, which is to use `JSON` files to define internationalized **language package** data.
 
-我们一起来看个例子！
+Let's take a look at an example!
 
-首先我们可以在自己项目中的 `extensions` 目录下，新建一个 `i18n` 的文件夹
+First, you can create a new folder named `i18n` under the `extensions` directory in your project.
 
 ```bash
 src/extensions/i18n
@@ -52,7 +52,7 @@ src/extensions/i18n
 └── zh-CN.json
 ```
 
-`index.ts` 用来定义本地化扩展对象
+`index.ts` is used to define localized extension objects.
 
 ```ts
 import { IContributeType, IExtension } from '@dtinsight/molecule/esm/model';
@@ -69,7 +69,7 @@ export const ExtendLocales: IExtension = {
 };
 ```
 
-`zh-CN.json` 为 [ILocale](../api/interfaces/molecule.ILocale) 类型的语言包资源文件:
+`zh-CN.json` is a language pack resource file of type [ILocale](../api/interfaces/molecule.ILocale):
 
 ```json
 {
@@ -86,11 +86,10 @@ export const ExtendLocales: IExtension = {
 }
 ```
 
-其中 `inherit` 是可选项，表示是否**继承**已存在的**（zh-CN/en) **的语言文件，`source` 为具体的本地化数据，以 **key-value** 的形式表示。
+Among these properties, `inherit` is optional, indicating whether to **inherit** the existing **(zh-CN/en)** language files, and `source` indicates the specific localized data, whose content is expressed in the form of **key-value**.
 
-添加完成后，**刷新**整个页面，我们可以通过 `Command/Ctrl + Shift + L `快捷键打开**语言切换面板**，找到 **简体中文 - 自定义** 选项。
+After adding the language pack resource file, **refresh** the entire page. You can open the language switch panel with the shortcut key `Command/Ctrl + Shift + L`, and then you can find the `简体中文 - 自定义` option.
 
 :::info
-遗憾的是，Molecule 虽然使用了 React 技术来构建整个应用，但是因为架构的原因，
-目前无法做到切换后**实时切换**语言，需要**重新加载**整个页面应用，才能**刷新**语言环境。
+Unfortunately, although Molecule uses React to build the entire application, it is currently unable to **switch languages in real time** due to architectural reasons. The entire page application needs to be reloaded to refresh the locale.
 :::

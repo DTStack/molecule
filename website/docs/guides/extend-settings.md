@@ -3,24 +3,25 @@ title: Settings
 sidebar_label: Settings
 ---
 
-Molecule 内置了一些**基本设置项**，例如**编辑器（Monaco Editor）**的基本设置、**颜色主题（colorTheme)**、本**地化的语言（locale)** 等。
+Molecule has some **basic settings** built-in, such as the basic settings of the **editor (Monaco Editor)**, **color theme (colorTheme)**, **localized language (locale)**, etc.
 
 ![Open Settings](/img/guides/extend-settings.png)
 
-上图中，显示了 `colorTheme`、`editor.renderWhitespace`、`editor.tabSize`, `editor.fontSize`、`locale` 这些配置项。用户可以根据自己的需要，在线修改。其中 `colorTheme` 和 `locale` 则需要看当前扩展的支持情况。
+The above picture shows the configuration items `colorTheme`, `editor.renderWhitespace`, `editor.tabSize`, `editor.fontSize`, and `locale`. Users can modify the configuration online according to their needs. Among these configuration items, `colorTheme` and `locale` need to be configured according to the current extended support.
 
-Molecule 除了可以在线修改配置，更重要的是， 支持开发者通过[扩展](./extension)**自定义**配置项。
+In addition to supporting online configuration modification, Molecule supports developers to **customize** configuration items through [extensions](./extension).
 
-## 打开设置
+## Open settings
 
--   第一种、最快捷的方式，就是使用快捷键 `Command/Ctrl + ,`；
+-   The first and fastest way is to use the shortcut key `Command/Ctrl + ,`;
 
--   第二种、通过**快速访问（QuickAccess) **面板，通过快捷键`Command/Ctrl + Shift + P` 打开访问面板，搜索 **settings** 即可；
--   最后一种、就是通过访问 **ActivityBar** 上的**设置菜单**。
+-   The second way is to use the **QuickAccess** panel, open the access panel with the shortcut key `Command/Ctrl + Shift + P`, and search for **settings**;
 
-## 设置服务（SettingsService）对象
+-   The last way is to access the **settings menu** on the **ActivityBar**.
 
-Molecule 内置了[设置服务（SettingsService）](../api/interfaces/molecule.ISettingsService)对象，除了扩展设置项以外，有些场景下，开发者可以利用它做一些基本操作：
+## SettingsService
+
+Molecule has a built-in [SettingsService](../api/interfaces/molecule.ISettingsService) object. In addition to extended settings, in some scenarios, developers can use it to do some basic operations:
 
 ```ts
 // Get the setting configuration object
@@ -31,15 +32,15 @@ molecule.settings.update(settings: ISettings);
 
 ```
 
-## 自定义配置项
+## Custom configuration items
 
 :::tip
-本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+All code demos in this part are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).
 :::
 
-Molecule 支持开发者扩展当前的**配置项**，以满足我们**自定义**的诉求。让我们一起看一个例子!
+Molecule supports you to extend the current **configuration items** to meet your **customized** requirements. Let's see an example together!
 
-如果想在配置文件中增加一个 `project.id` 字段，如下:
+If you want to add a `project.id` field to the configuration file as follows:
 
 ```json
 {
@@ -52,7 +53,7 @@ Molecule 支持开发者扩展当前的**配置项**，以满足我们**自定�
 }
 ```
 
-首先，先定义一个 `SettingsExtension` 对象，在 `customSettings` 对象下，定义我们要添加的 `project` 扩展字段：
+First, define a `SettingsExtension` object, and define the `project` extension field you want to add under the `customSettings` object:
 
 ```ts
 export const customSettings = {
@@ -87,8 +88,8 @@ export class SettingsExtension implements IExtension {
 }
 ```
 
-然后，开发者可以利用 `onChangeSettings` 方法**监听配置项**的变化，然后去做相应的处理。完整示例请查看 [molecule-example](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/settings)。
+Then, you can use the `onChangeSettings` method to **monitor** the changes of the **configuration items**, and then do the corresponding processing. The complete example refer to [molecule-example](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/settings).
 
 :::tip
-目前 Molecule 并未缓存用户修改的设置，所有重新加载页面后，这些配置信息就好丢失。如果要避免这种情况，可以自己利用 localeStorage 之类的方案，存储用户的配置信息，然后利用 [SettingsService](../api/interfaces/molecule.ISettingsService) 去更新配置信息。
+Currently, Molecule does not cache user-modified settings, so after reloading the page, these configuration information will be lost. If you want to avoid this situation, you can use a solution such as localeStorage to store the user's configuration information, and then use [SettingsService](../api/interfaces/molecule.ISettingsService) to update the configuration information.
 :::

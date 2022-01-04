@@ -16,7 +16,7 @@ All the codes are based on the [molecule-demo](https://github.com/DTStack/molecu
 
 As shown in the figure, we display series of code files in the **FolderTree** of **Explorer**. When the file is **clicked** by the mouse, it will be **opened** in the Editor on the right.
 
-Molecule has some UI modules such as [Explorer](./guides/extend-builtin-ui.md#浏览面板explorer)，[FolderTree][foldertree-url]，[Editor](./guides/extend-workbench#编辑器editor) built in by default.
+Molecule has some UI modules such as [Explorer](./guides/extend-builtin-ui.md#explorer)，[FolderTree][foldertree-url]，[Editor](./guides/extend-workbench#editor) built in by default.
 To achieve the functions in the above figure, these requirements can be quickly achieved through the API provided by it, and developers do not need to care too much about the construction of the UI.
 
 ## Implementation
@@ -31,7 +31,7 @@ src/extensions
     ├── index.ts
 ```
 
-### create Extension Object
+### Create Extension Object
 
 We create a new class called `FirstExtension` in `index.ts`, which implements the class [IExtension](./api/interfaces/molecule.model.IExtension) interface:
 
@@ -91,7 +91,7 @@ export function handleSelectFolderTree() {
 }
 ```
 
-After fetching the data of FolderTree successfully through `API.getFolderTree` ,we use the [`molecule.folderTree.add`](./api/classes/molecule.FolderTreeService#add) method to add and display data to the [FolderTree] component; next, monitor **the selected file** through the [`molecule.folderTree.onSelectFile`](./api/classes/molecule.FolderTreeService#onSelectFile) method; finally,open the file through the [`molecule.editor.open`](./api/interfaces/molecule.IEditorService#open) method.
+After fetching the data of FolderTree successfully through `API.getFolderTree` ,we use the [`molecule.folderTree.add`](./api/classes/molecule.FolderTreeService#add) method to add and display data to the [FolderTree] component; next, monitor **the selected file** through the [`molecule.folderTree.onSelectFile`](./api/classes/molecule.FolderTreeService#onselectfile) method; finally,open the file through the [`molecule.editor.open`](./api/interfaces/molecule.IEditorService#open) method.
 
 :::caution
 Pay more attention: In reality, the **data type** returned by `API.getFolderTree` is not [IFolderTreeNodeProps](./api/interfaces/molecule.model.IFolderTreeNodeProps) type, we often need to go through a **conversion** method. The mock data of the `API.getFolderTree` function in the example can be [View](https://github.com/DTStack/molecule-examples/blob/main/packages/molecule-demo/public/mock/folderTree.json). The `transformToEditorTab` in the `handleSelectFolderTree` method is a **transformation** method, which mainly converts `file` to [IEditorTab](./api/interfaces/molecule.model.IEditorTab) type.
@@ -127,7 +127,7 @@ The above example is just a very simple application scenario. If you want to ach
 
 Otherwise,[**Extension**](./guides/extension.md) is the quite important concept in Molecule.
 Through it, we can extend many core modules such as [**ColorTheme**](./guides/extend-color-theme.md), [**Workbench**](guides/extend-workbench.md), [**i18n**](./guides/extend-locales.md),
-[**Settings**](./guides/extend-settings.md), [**Keybindings**](./guides/extend-keybinding.md), [**QuickAccess**](./guides/extend-quick-access.md)
+[**Settings**](./guides/extend-settings.md), [**Keybinding**](./guides/extend-keybinding.md), [**QuickAccess**](./guides/extend-quick-access.md)
 
 :::
 
@@ -136,5 +136,5 @@ Through it, we can extend many core modules such as [**ColorTheme**](./guides/ex
 Please [view][demo-url] the complete source code of **First Extension**
 
 [demo-url]: https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/theFirstExtension
-[foldertree-url]: ./guides/extend-builtin-ui#文件树foldertree
+[foldertree-url]: ./guides/extend-builtin-ui#foldertree
 [provider-url]: ./api/classes/MoleculeProvider

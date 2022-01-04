@@ -25,7 +25,7 @@ import { Icon } from '@dtinsight/molecule/esm/components';
 <Icon type="check" />;
 ```
 
-`type` is the **icon name**, refer to this preview [address](https://microsoft.github.io/vscode-codicons/dist/codicon.html) for the complete name list.
+`type` is the **icon name**, refer to this [preview address](https://microsoft.github.io/vscode-codicons/dist/codicon.html) for the complete name list.
 
 ## Use Icon className
 

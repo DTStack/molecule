@@ -3,7 +3,7 @@ title: Built-in Parts
 sidebar_label: Built-in Parts
 ---
 
-In Molecule, we are based on the 6 [core UI](./extend-workbench.md) modules, and many commonly used UI modules in IDE Workbench are built in by default, so that we can quickly meet the needs of developers. These modules have built-in a series of **Service**, allowing us to operate or extend through **Extension**.
+In Molecule, we are based on the [6 core UI](./extend-workbench.md) modules, and many commonly used UI modules in IDE Workbench are built in by default, so that we can quickly meet the needs of developers. These modules have built-in a series of **Service**, allowing us to operate or extend through **Extension**.
 
 ![molecule](/img/guides/builtin-ui.png)
 
@@ -129,7 +129,6 @@ molecule.editorTree.onSelect((tabId: UniqueId, groupId: UniqueId) => {
 
 [Search](../api/interfaces/molecule.ISearchService#setresult) is a built-in **search panel**, which contains some common **search**, **replace** and other UI functions. The built-in search module of Molecule is just a basic UI module. The specific **search** or **replacement** function needs to be completed by the developer through some APIs:
 
-监听**搜索输入控件**的输入内容：
 Listen to the input of the **search input control**:
 
 ```ts

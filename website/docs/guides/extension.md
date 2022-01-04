@@ -26,7 +26,7 @@ export const ExampleExt: IExtension = {
 };
 ```
 
-### class object
+### Class object
 
 ```ts
 import molecule from '@dtinsight/molecule';

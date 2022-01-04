@@ -243,7 +243,7 @@ const languageBar: IStatusBarItem = {
 };
 ```
 
-### [MenuBar)](../api/interfaces/molecule.IMenuBarService)
+### [MenuBar](../api/interfaces/molecule.IMenuBarService)
 
 We are integrate basic **File**, **Edit**, **Selection**, **View**, **Run**, and **Help** menus in [MenuBar)](../api/interfaces/molecule.IMenuBarService) as default. In general, we can extend something based on these menus directly:
 

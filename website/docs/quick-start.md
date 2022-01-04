@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ## Prerequisites
 
-> -   node.js version: **Node.js 12.13.0 +**
+> -   Node.js version: **Node.js 12.13.0 +**
 > -   React.js version: **React.js 16.14.0 +**
 > -   [Yarn](https://yarnpkg.com/en/) - Recommend to use **Yarn** as package management
 

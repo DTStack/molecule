@@ -9,7 +9,7 @@ Before Molecule is for official use, let's learn some **fundamentals** about it,
 
 ## Extension
 
-[Extension](./guides/extension)is a **plug-in technology** used by Molecule to realize **function customization**. With the extension, it's easy to extend core functionalities such as **Workbench, ColorTheme, i18n, Settings,Keybinding, QuickAccess**.
+[Extension](./guides/extension) is a **plug-in technology** used by Molecule to realize **function customization**. With the extension, it's easy to extend core functionalities such as **Workbench, ColorTheme, i18n, Settings,Keybinding, QuickAccess**.
 
 ## Workbench
 

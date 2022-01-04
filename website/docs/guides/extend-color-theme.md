@@ -29,7 +29,7 @@ Receiving objects: 100% (4493/4493), 19.68 MiB | 358.00 KiB/s, done.
 Resolving deltas: 100% (2830/2830), done.
 ```
 
-After the download is complete, we can see:
+After the download is completed, we can see:
 
 ```shell
 $ tree -L 2  ./src

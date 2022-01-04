@@ -43,9 +43,9 @@ $icon-size: 22px;
         position: relative;
 
         > div {
+            direction: ltr;
             padding-right: 30px;
             position: relative;
-            direction: ltr;
             text-align: left;
         }
     }

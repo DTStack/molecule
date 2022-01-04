@@ -32,7 +32,7 @@ For more details about the **customized** locale, please refer to [Extended Lang
 
 ## Settings
 
-Molecule supports modifying some configuration items in [Settings] (./guides/extend-settings). When you want to modify the size of the **font** in the **editor**, you only need to open the '**Settings**' option in the settings menu, and then change the value of `editor.fontSize` from **12** amended to **14**.
+Molecule supports modifying some configuration items in [Settings](./guides/extend-settings). When you want to modify the size of the **font** in the **editor**, you only need to open the '**Settings**' option in the settings menu, and then change the value of `editor.fontSize` from **12** amended to **14**.
 
 For more details about the **Extended settings**, please refer to [Extended settings](./guides/extend-settings).
 

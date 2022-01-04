@@ -3,9 +3,9 @@ title: Custom Workbench
 sidebar_label: Custom Workbench
 ---
 
-Molecule's default **Workbench** UI is a clone of **VSCode**. But in actual development scenarios, this often fails to meet our needs.
+Molecule's default **Workbench** UI is a clone of **VSCode**. However, it often can't meet our needs in actual development scenarios.
 
-In addition to some built-in atomic [Components](../api/namespaces/molecule.component), Molecule also provides basic **Workbench,SideBar, Editor, ActivityBar, MenuBar, Panel, StatusBar** and other core [**UI components**](../guides/extend-workbench), so that developers can **reassemble** their own **Workbench** according to their needs.
+In addition to some built-in atomic [Components](../api/namespaces/molecule.component), Molecule also provides basic **Workbench, SideBar, Editor, ActivityBar, MenuBar, Panel, StatusBar** and other core [**UI components**](../guides/extend-workbench), so that developers can **reassemble** their own **Workbench** according to their needs.
 
 :::tip
 All code demos in this part are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).
@@ -15,7 +15,7 @@ All code demos in this part are based on the [molecule-demo](https://github.com/
 
 ![Custom Workbench](/img/advanced/custom-workbench.png)
 
-Molecule's Workbench defaults to **VSCode layout**. In the example above, we placed the **MenuBar** horizontally **at the top** position, and on the right side of the editor, we have customized a **RightSideBar**.
+Molecule's Workbench has a **VSCode layout** by default. In the example above, we placed the **MenuBar** horizontally **at the top** position, and on the right side of the editor, we have customized a **RightSideBar**.
 
 :::info
 At present, the top fixed layout for the **MenuBar** is integrated in Molecule. Besides, we will also integrate the **right sidebar (RightSideBar)** for Molecule in the future.
@@ -70,7 +70,7 @@ First, open the [source code](https://github.com/DTStack/molecule) of Molecule, 
 </div>
 ```
 
-In the code, the `MenuBarView` in `horizontal` mode and `vertical` mode are placed in different positions. The `SplitPane` component includes `SidebarView` and the `Editor` and `Panel` panels on the right by default, but does not include the `RightSideBar` panel.
+In the code, the `MenuBarView` in `horizontal` mode and `vertical` mode are placed in different positions. The `SplitPane` component includes `SidebarView` by default, as well as the **Editor** and **Panel** on the right, but does not include the **RightSideBar**.
 
 The specific transformation is as follows:
 
@@ -118,10 +118,10 @@ The specific transformation is as follows:
 ```
 
 :::caution
-The above code is only part of the `myWorkbench.tsx` file, please check [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/views/myWorkbench.tsx) for the complete code.
+The above code is only part of the `myWorkbench.tsx` file, the complete code can refer to [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/views/myWorkbench.tsx).
 :::
 
-We removed the MenuBar in the `vertical` mode, and directly rendered the self-defined `MyMenuBarView` component based on the `menuBar.hidden`. A new panel with a `className` of `rightSidebar` is added to the `SplitPane` component, the built-in `Sidebar` component is used, and a custom `MySidePane` component is used in the `Sidebar`.
+We removed the MenuBar in the `vertical` mode, and directly rendered the custom `MyMenuBarView` component based on the `menuBar.hidden`. A new panel with a `className` of `rightSidebar` is added to the `SplitPane` component, which uses a built-in `Sidebar` component, and a custom `MySidePane` component is used in this `Sidebar` component.
 
 ### Custom MenuBar
 

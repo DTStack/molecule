@@ -7,7 +7,7 @@ In Molecule, we are based on the 6 [core UI](./extend-workbench.md) modules, and
 
 ![molecule](/img/guides/builtin-ui.png)
 
-As shown in the figure above, the current **built-in parts** mainly include [Explorer](#explorer), [FolderTree](#foldertree), [EditorTree](#editortree), [Search](#search), [Output](#output), [Problems](#problems), [Notification](#notification) and other 7 modules.
+As shown in the picture above, the current **built-in parts** mainly include 7 modules: [Explorer](#explorer), [FolderTree](#foldertree), [EditorTree](#editortree), [Search](#search), [Output](#output), [Problems](#problems) and [Notification](#notification).
 
 Let's see how to use these parts.
 

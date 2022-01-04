@@ -896,12 +896,12 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
                               }
                             }
                           >
-                            you have not yet opened a folder
+                            You have not yet opened a folder.
                             <a
                               className="mo-btn mo-btn--normal"
                               onClick={[Function]}
                             >
-                              Add Folder
+                              Open Folder
                             </a>
                           </div>
                         </div>
@@ -1367,7 +1367,7 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
           <a
             onClick={[Function]}
             tabIndex={-1}
-            title="Notification"
+            title="Notifications"
           >
             <span
               className="codicon codicon-bell"
@@ -1426,15 +1426,15 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
         </div>
         <div
           className="mo-statusBar__item"
-          id="MoEditorInfo"
+          id="editor.gotoLine"
         >
           <a
             onClick={[Function]}
             tabIndex={-1}
-            title="Go to Line/Column"
+            title="Go to Line/Column..."
           >
             <span>
-              Ln 0, Col 0
+              Line 0, Column 0
             </span>
           </a>
         </div>

@@ -6,7 +6,6 @@ import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
 import { FileTypes, Float, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
-import { localize } from 'mo/i18n/localize';
 import { Scrollable } from 'mo/components';
 import { randomId } from 'mo/common/utils';
 
@@ -87,7 +86,7 @@ export default class TestPane extends React.Component {
             molecule.statusBar.add(
                 {
                     id: globalTempId,
-                    name: 'test' + globalTempId,
+                    name: 'StatusBar-' + globalTempId,
                     sortIndex: 2,
                 },
                 Float.right
@@ -110,7 +109,7 @@ export default class TestPane extends React.Component {
             const id = Math.random() * 10 + 1;
             molecule.panel.open({
                 id: 'Pane' + id,
-                name: 'Panel' + id,
+                name: 'Panel-' + id,
                 closable: true,
                 renderPane: () => <h1>Test Pane</h1>,
             });
@@ -169,7 +168,8 @@ export default class TestPane extends React.Component {
                 name: `editor${key}.ts`,
                 icon: Math.random() >= 0.5 ? 'selection' : undefined,
                 data: {
-                    value: `${key}export interface Type<T> { new(...args: any[]): T;}
+                    value: `// editor${key}
+export interface Type<T> { new(...args: any[]): T;}
 export type GenericClassDecorator<T> = (target: T) => void;`,
                     path: 'desktop/molecule/editor1',
                     language: 'typescript',
@@ -240,7 +240,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             molecule.menuBar.append(
                 {
                     id: id + '',
-                    name: 'menuBar' + id,
+                    name: 'MenuBar-' + id,
                     icon: '',
                 },
                 'Edit'
@@ -270,7 +270,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             const panels = [
                 {
                     id: `Panel-${id}`,
-                    name: 'Panel-' + id,
+                    name: 'Sample-Panel-' + id,
                     toolbar: [
                         {
                             icon: 'remove',
@@ -288,28 +288,31 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                 (_, index) =>
                     new TreeNodeModel({
                         id: index,
-                        name: `test_sql_${index}.txt`,
+                        name: `test_sql_${index}.sql`,
                         fileType: FileTypes.File,
                         isLeaf: true,
-                        content: `show tables;
+                        content: `SHOW TABLES;
+
 SELECT 1;
+
 DESC 6d_target_test;
-create table if not exists ods_order_header1213 (
-order_header_id     string comment '订单头id'
-,order_date          bigint comment '订单日期'
-,shop_id             string comment '店铺id'
-,customer_id         string comment '客户id'
-,order_status        bigint comment '订单状态'
-,pay_date            bigint comment '支付日期'
-)comment '销售订单明细表'
-PARTITIONED BY (ds string) lifecycle 1000;
+
+CREATE TABLE IF NOT EXISTS ods_order_header1213 (
+order_header_id     STRING COMMENT '订单头id',
+order_date          STRING COMMENT '订单日期',
+shop_id             STRING COMMENT '店铺id',
+customer_id         STRING COMMENT '客户id',
+order_status        BIGINT COMMENT '订单状态',
+pay_date            BIGINT COMMENT '支付日期'
+) COMMENT '销售订单明细表'
+PARTITIONED BY (DE STRING) LIFECYCLE 1000;
 `,
                     })
             );
             molecule.folderTree.add(
                 new TreeNodeModel({
                     id: randomId(),
-                    name: 'molecule_temp',
+                    name: 'Sample SQLs',
                     fileType: FileTypes.RootFolder,
                     children,
                 })
@@ -331,7 +334,6 @@ PARTITIONED BY (ds string) lifecycle 1000;
                     <div style={{ margin: '50px 20px' }}>
                         <h1>Select a localization language:</h1>
                         {this.renderLocales()}
-                        {localize('test.id', 'aaaa')}
                     </div>
                     <div style={{ margin: '50px 20px' }}>
                         <h2>Add a new Panel:</h2>
@@ -369,7 +371,7 @@ PARTITIONED BY (ds string) lifecycle 1000;
                         </Button>
                         <Button onClick={addRootFolder}>Add Root Folder</Button>
                     </div>
-                    <div>
+                    <div style={{ margin: '50px 20px' }}>
                         <h2>StatusBar:</h2>
                         <molecule.component.Button onClick={addStatusBar}>
                             Add a StatusBar

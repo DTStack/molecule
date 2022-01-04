@@ -56,7 +56,7 @@ For more information on how to **customize quick access**, please refer to [Exte
 
 ## Components
 
-Molecule provides many basic React UI Atomic Components such as [Menu][menu-url],[TreeView][treeview-url],[ContextMenu][ctxmenu-url],etc. At the same time, our Workbench UI is built on the basis of these components. Through these built-in components, we can meet the extension demands of out developers on UI to a greater extend. In addition, Molecule also supports the use of third-party UI component libraries like [antd](http://ant.design/), to meet its own custom requirements.
+Molecule provides many basic React UI [Atomic Components](./api/namespaces/molecule.component) such as [Menu][menu-url],[TreeView][treeview-url],[ContextMenu][ctxmenu-url],etc. At the same time, our Workbench UI is built on the basis of these components. Through these built-in components, we can meet the extension demands of out developers on UI to a greater extend. In addition, Molecule also supports the use of third-party UI component libraries like [antd](http://ant.design/), to meet its own custom requirements.
 
 Currently, we use Storybook to develop and maintain these components. Regarding the use of these components, we can find examples in [stories](https://github.com/DTStack/molecule/tree/main/stories) under the source code repository.
 

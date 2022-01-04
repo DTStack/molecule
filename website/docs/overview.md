@@ -15,7 +15,7 @@ Before Molecule is for official use, let's learn some **fundamentals** about it,
 
 [Workbench](./guides/extend-workbench)
 is the most important part in IDE UI. It contains many components，which includes 6 main modules named **MenuBar**, **ActivityBar**, **Sidebar**, **Editor**, **Panel**, and **StatusBar** in Molecule.
-Every core module improves both React Components and basic Service Object in order to make more easier to use or to hook for producers.
+Each core module provides a **React component** and a basic **Service object** for developers to operate or customize.
 
 ## ColorTheme
 
@@ -32,7 +32,7 @@ For more details about the **customized** locale, please refer to [Extended Lang
 
 ## Settings
 
-Molecule supports modifying some configuration items in [Settings](./guides/extend-settings). When you want to modify the size of the **font** in the **editor**, you only need to open the '**Settings**' option in the settings menu, and then change the value of `editor.fontSize` from **12** amended to **14**.
+Molecule supports modifying some configuration items in [Settings](./guides/extend-settings). When you want to modify the size of the **font** in the **editor**, you only need to open the '**Settings**' option in the settings menu, and then change the value of `editor.fontSize` from **12** to **14**.
 
 For more details about the **Extended settings**, please refer to [Extended settings](./guides/extend-settings).
 

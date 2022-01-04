@@ -14,7 +14,7 @@ const mockItems = {
         ln: 0,
         col: 0,
     },
-    name: 'Go to Line/Column',
+    name: 'Go to Line/Column...',
 };
 const current = {
     id: 1,

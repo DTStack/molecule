@@ -16,6 +16,7 @@ import {
 import { classNames } from 'mo/common/className';
 import { Scrollable } from 'mo/components';
 import { ICollapseItem } from 'mo/components/collapse';
+import { localize } from 'mo/i18n/localize';
 
 export interface IFolderTreeProps extends IFolderTreeController, IFolderTree {
     panel: ICollapseItem;
@@ -93,8 +94,13 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                 <>{entry}</>
             ) : (
                 <div style={{ padding: '10px 5px' }}>
-                    you have not yet opened a folder
-                    <Button onClick={handleAddRootFolder}>Add Folder</Button>
+                    {localize(
+                        'message.noFolderButEditorsHelp',
+                        'You have not yet opened a folder.'
+                    )}
+                    <Button onClick={handleAddRootFolder}>
+                        {localize('sidebar.explore.openFolder', 'Open Folder')}
+                    </Button>
                 </div>
             )}
         </div>

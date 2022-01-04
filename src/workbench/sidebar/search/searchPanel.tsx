@@ -125,7 +125,10 @@ const SearchPanel = ({
                 />
                 {value && result.length === 0 ? (
                     <div className={emptyTextValueClassName}>
-                        未找到结果，请重新修改您的搜索条件
+                        {localize(
+                            'searchView.noResultsFound',
+                            'No results found. Review your settings for configured exclusions and check your gitignore files - '
+                        )}
                     </div>
                 ) : (
                     <SearchTree

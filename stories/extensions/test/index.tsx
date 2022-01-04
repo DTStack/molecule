@@ -1,5 +1,6 @@
 import React from 'react';
 import molecule from 'mo';
+import { localize } from 'mo/i18n/localize';
 
 import { FileTypes, IExtension, TreeNodeModel } from 'mo/model';
 
@@ -144,8 +145,10 @@ export const ExtendsTestPane: IExtension = {
                 value
                     ? {
                           type: 'warning',
-                          text:
-                              '结果集仅包含所有匹配项的子集，请使你的搜索更加精准',
+                          text: localize(
+                              'message.searchMaxResultsWarning',
+                              'The result set only contains a subset of all matches. Be more specific in your search to narrow down the results.'
+                          ),
                       }
                     : ''
             );

@@ -23,7 +23,7 @@ function init() {
                 isLeaf: true,
                 value: {
                     code: 'endLineNumber',
-                    message: '语法错误',
+                    message: 'Grammatical errors',
                     startLineNumber: 0,
                     startColumn: 1,
                     endLineNumber: 0,
@@ -38,7 +38,7 @@ function init() {
                 isLeaf: true,
                 value: {
                     code: 'endLineNumber',
-                    message: '解析可能会存在问题',
+                    message: 'There may be problems with parsing',
                     startLineNumber: 0,
                     startColumn: 1,
                     endLineNumber: 0,
@@ -53,7 +53,7 @@ function init() {
                 isLeaf: true,
                 value: {
                     code: 'endLineNumber',
-                    message: '住在山里，真不戳',
+                    message: 'Live in the mountains, really don’t poke',
                     startLineNumber: 0,
                     startColumn: 1,
                     endLineNumber: 0,

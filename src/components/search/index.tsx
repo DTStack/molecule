@@ -11,6 +11,7 @@ import {
     searchTargetContainerClassName,
 } from './base';
 import { Icon } from '../icon';
+import { localize } from 'mo/i18n/localize';
 
 export type SearchValues = (string | undefined)[];
 
@@ -52,8 +53,11 @@ export function Search(props: ISearchProps) {
     } = props;
 
     const [
-        searchPlaceholder = 'Search',
-        replacePlaceholder = 'Replace',
+        searchPlaceholder = localize('sidebar.search.placeHolder', 'Search'),
+        replacePlaceholder = localize(
+            'sidebar.search.replace.placeHolder',
+            'Replace'
+        ),
     ] = placeholders;
 
     const [searchAddons, replaceAddons] = addons;

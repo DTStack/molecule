@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[9365],{93629:function(e){e.exports=JSON.parse('{"allTagsPath":"/molecule/zh-CN/blog/tags","slug":"/molecule/zh-CN/blog/tags/hola","name":"hola","count":1,"permalink":"/molecule/zh-CN/blog/tags/hola"}')}}]);

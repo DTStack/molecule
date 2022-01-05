@@ -8,7 +8,7 @@ import { Action2, KeybindingWeight } from './common';
 import { constants } from 'mo/services/builtinService/const';
 
 export class QuickSelectAllAction extends Action2 {
-    static ID = constants.ACTION_QUICK_SELECT_ALL;
+    static readonly ID = constants.ACTION_QUICK_SELECT_ALL;
     static readonly DESC = 'Select All';
     static readonly LABEL = localize('menu.selectAll', 'Select All');
     private readonly editorService: IEditorService;

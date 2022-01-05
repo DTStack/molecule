@@ -3,7 +3,7 @@ title: i18n
 sidebar_label: i18n
 ---
 
-Molecule has built-in a simple **internationalization (i18n)** solution to support our basic internationalization needs. We have built-in two basic languages: **simplified Chinese (zh-CN)** and **English (en default)**.
+Molecule has built-in a simple **internationalization (i18n)** solution to support our basic internationalization needs. We have built-in three basic languages: **simplified Chinese (zh-CN)**, **English (en default)** and **Korean (ko-KR)**.
 
 :::tip
 All code demos in this part are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).

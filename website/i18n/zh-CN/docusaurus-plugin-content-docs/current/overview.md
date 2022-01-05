@@ -23,7 +23,7 @@ Molecule 兼容了 [VSCode ColorTheme](https://code.visualstudio.com/api/referen
 
 ## 国际化（i18n）
 
-Molecule 有一个基本的[国际化（i18n）](./guides/extend-locales)方案，并支持扩展（Extension）机制。默认有两种内置的语言，分别是**中文**和**英文**。
+Molecule 有一个基本的[国际化（i18n）](./guides/extend-locales)方案，并支持扩展（Extension）机制。默认有三种内置的语言，分别是**中文**、**英文**和**韩文**。
 我们可以通过快捷键 `Command/Ctrl Shift + L` 打开语言「**切换面板**」，选择一种语言，然后确认选择，然后在页面的**右下角**将会有一个提醒窗口，点击确认会重新加载当前页面，之后语言环境就会发生更改。
 
 更多关于**自定义**语言环境的细节，请参考[扩展语言环境](./guides/extend-locales)。

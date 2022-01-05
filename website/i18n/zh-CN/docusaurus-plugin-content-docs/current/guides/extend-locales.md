@@ -3,7 +3,7 @@ title: 国际化（i18n）
 sidebar_label: 国际化
 ---
 
-Molecule 内置了一个简单的**国际化（i18n）**方案，支持我们基本的国际化需求。我们内置了**简体中文（zh-CN）**、**英文（en 默认）** 和**韩文（ko-KR）**3 种基本的语言。
+Molecule 内置了一个简单的**国际化（i18n）**方案，支持我们基本的国际化需求。我们内置了**简体中文（zh-CN）**、**英文（en 默认）**和**韩文（ko-KR）**3 种基本的语言。
 
 :::tip
 本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。

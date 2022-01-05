@@ -108,10 +108,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         position: 'left',
                     },
                     {
-                        type: 'search',
-                        position: 'right',
-                    },
-                    {
                         href: 'https://github.com/DTStack/molecule',
                         label: 'GitHub',
                         position: 'left',
@@ -176,6 +172,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+            },
+            algolia: {
+                appId: 'T0LPBPMKRS',
+                apiKey: '335846e20b354fe1cf4ecd24d61515d2',
+                indexName: 'molecule',
             },
         }),
 });

@@ -1,7 +1,4 @@
-import {
-    IDisposable,
-    DisposableStore,
-} from 'monaco-editor/esm/vs/base/common/lifecycle';
+import { DisposableStore } from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { ContextKeyExpr } from 'monaco-editor/esm/vs/platform/contextkey/common/contextkey';
 import { KeybindingsRegistry } from 'monaco-editor/esm/vs/platform/keybinding/common/keybindingsRegistry';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
@@ -11,6 +8,10 @@ import {
     MenuRegistry,
     MenuId,
 } from 'monaco-editor/esm/vs/platform/actions/common/actions';
+
+export interface IDisposable {
+    dispose(): void;
+}
 
 export enum KeybindingWeight {
     EditorCore = 0,
@@ -42,6 +43,7 @@ export const CATEGORIES = {
 };
 
 export abstract class Action2 {
+    static readonly ID: string;
     constructor(
         readonly desc: Readonly<{
             /**
@@ -54,10 +56,10 @@ export abstract class Action2 {
     abstract run(accessor: ServicesAccessor, ...args: any[]): any;
 }
 
-export function registerAction2(ctor: { new (): Action2 }): IDisposable {
+export function registerAction2(Ctor: { new (): Action2 }): IDisposable {
     const disposables = new DisposableStore();
-    // eslint-disable-next-line new-cap
-    const action = new ctor();
+
+    const action = new Ctor();
 
     const { f1, menu, keybinding, description, ...command } = action.desc;
 

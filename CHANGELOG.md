@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-beta.2](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1.1...v0.9.0-beta.2) (2022-01-05)
+
+### Features
+
+-   add a Display component that controlling the Workbench Parts ([#564](https://github.com/DTStack/molecule/issues/564)) ([948f09c](https://github.com/DTStack/molecule/commit/948f09c05ec508c8e29f2c79d81fac4a598cfcbb))
+-   add Korean language pack ([#558](https://github.com/DTStack/molecule/issues/558)) ([b9f817d](https://github.com/DTStack/molecule/commit/b9f817d1761ff6329634909226eb4fb8598ce735))
+-   provide types of Keybinding and QuickAccess ([#567](https://github.com/DTStack/molecule/issues/567)) ([0118b43](https://github.com/DTStack/molecule/commit/0118b4335b8557f2fbd4f256fcb23c08b617e16d))
+-   support the horizontal layout of MenuBar ([#553](https://github.com/DTStack/molecule/issues/553)) ([2cf2abb](https://github.com/DTStack/molecule/commit/2cf2abba809cfa63d778a20e4b3d6c65f8f070f3))
+
+### Bug Fixes
+
+-   correct the style of input and select ([#578](https://github.com/DTStack/molecule/issues/578)) ([e0ba0fc](https://github.com/DTStack/molecule/commit/e0ba0fc91cfe968c13357667b5eb0b375484eafa))
+-   not allowed to reload the initialize method ([#580](https://github.com/DTStack/molecule/issues/580)) ([7229fc5](https://github.com/DTStack/molecule/commit/7229fc5e4c01e2777934641d30676aacc31b6454))
+-   re-layout the Workbench when StatusBar is hidden ([#557](https://github.com/DTStack/molecule/issues/557)) ([2d89f56](https://github.com/DTStack/molecule/commit/2d89f568289c62b4c36ee506ac3b62e7f1fec20b))
+
 ## [0.9.0-beta.1.1](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1...v0.9.0-beta.1.1) (2021-12-13)
 
 ### Features

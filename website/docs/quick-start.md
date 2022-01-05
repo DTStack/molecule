@@ -4,46 +4,46 @@ sidebar_label: Quick Start
 sidebar_position: 2
 ---
 
-## 前置要求
+## Prerequisites
 
-> -   **Node.js 12.13.0 +** 版本
-> -   **React.js 16.14.0 +** 版本
-> -   [Yarn](https://yarnpkg.com/en/) - 推荐使用 **Yarn** 作为包管理
+> -   Node.js version: **Node.js 12.13.0 +**
+> -   React.js version: **React.js 16.14.0 +**
+> -   [Yarn](https://yarnpkg.com/en/) - Recommend to use **Yarn** as package management
 
 :::info
-可以通过 `node -v` 命令查看当前 Node 版本。 推荐在 Mac 系统中使用 [nvm](https://github.com/nvm-sh/nvm) 来管理 Node.js 多版本
+use the `node -v` command to view the current Node version. It is recommended to use [nvm](https://github.com/nvm-sh/nvm) on Mac systems to manage multiple versions of Node.js.
 :::
 
-## 创建项目
+## Create a Project
 
-我们使用 React 官方推荐的 [create-react-app](https://github.com/facebook/create-react-app) 脚手架工具作为示例，
-这里我们**强烈推荐**使用 **Typescript** 模板：
+We use the [create-react-app](https://github.com/facebook/create-react-app) scaffolding tool officially recommended by React as an example,
+Here we **strongly recommend** the use of the **Typescript** template:
 
 ```bash
 npx create-react-app molecule-demo --template typescript
 ```
 
-这个命令会在当前目录下，创建一个叫 `molecule-demo` 的目录，切换到项目文件夹：
+This command will create a directory called `molecule-demo` in the current directory and switch to the project folder:
 
 ```bash
 cd molecule-demo
 ```
 
-## 安装 Molecule
+## Install Molecule
 
-然后，你需要安装 molecule 的依赖：
+Then, you need to install the dependency of molecule:
 
 ```bash
 yarn add @dtinsight/molecule
-# 或者
+# or
 npm install @dtinsight/molecule
 ```
 
-这个命令会在 `molecule-demo` 项目中自动安装 Molecule 的依赖。
+This command will automatically install Molecule's dependencies in the `molecule-demo` project.
 
-## 基本使用
+## Basic Use
 
-打开 `src/App.js` 文件，将该文件的内容替换成如下：
+Open the `src/App.js` file and replace the contents of the file with the following:
 
 ```js title="src/App.js"
 import React from 'react';
@@ -61,26 +61,26 @@ function App() {
 export default App;
 ```
 
-`extensions` 是需要自定义的扩展程序。
+`extensions` are extensions that need to be customized.
 
-## 启动项目
+## Startup Project
 
-最后，在终端中运行`start` 命令：
+Finally, run the `start` command in the terminal:
 
 ```bash
 yarn start
-# 或者 npm
+# or npm
 npm run start
 ```
 
-这个命令会自动在默认浏览器中打开 [http://localhost:3000](http://localhost:3000) 这个地址，即可看到 Molecule 默认的 IDE 界面。
+This command will automatically open the address [http://localhost:3000](http://localhost:3000) in the default browser, and you can see the default IDE interface of Molecule.
 
 ![molecule](/img/molecule.png)
 
-## 使用 Monaco Editor 语言包
+## Use Monaco Editor language pack
 
-使用 Monaco Editor 的语言包，需要使用插件 `monaco-editor-webpack-plugin`，所以这里我们得扩展下 **Webpack** 的默认配置。
-首先我们先安装 [react-app-rewired](https://github.com/timarney/react-app-rewired) 工具，然后在项目根目录创建一个`config-overrides.js` 文件，用来覆盖默认 Webpack 配置。 `monaco-editor-webpack-plugin` 插件具体使用如下：
+To use the language pack of Monaco Editor, you need to use the plug-in `monaco-editor-webpack-plugin`, so here we have to extend the default configuration of **Webpack**.
+First, we first install the [react-app-rewired](https://github.com/timarney/react-app-rewired) tool, and then create a `config-overrides.js` file in the project root directory to override the default Webpack configuration. The specific usage of the `monaco-editor-webpack-plugin` plugin is as follows:
 
 ```js title="config-overrides.js"
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
@@ -103,4 +103,4 @@ module.exports = function override(config, env) {
 };
 ```
 
-完整的代码示例，请查看 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目。
+For the complete code example, please check the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project.

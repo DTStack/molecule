@@ -3,15 +3,15 @@ title: Extension
 sidebar_label: Extension
 ---
 
-[扩展（Extension）][ext-url] 作为 Molecule 最重要的**核心**模块之一，主要是提供了一套扩展 IDE Workbench 的机制。通过这种机制，我们可以轻松的实现自定义，并且可以管理这些扩展应用。
+[Extension][ext-url] as one of the most important **core** modules of Molecule, it provides a mechanism for extending the IDE Workbench. Through this mechanism, you can easily implement customization and manage these extended applications.
 
-## 扩展接口（IExtension)
+## IExtension
 
-[扩展（Extension）][ext-url] 是一个包含 `id`、`name`、`activate`、`dispose` 等**属性**和**方法**的接口，通过该**接口类型**，可以帮助开发者更快的创建扩展程序。
+[Extension][ext-url] is an interface that contains **attributes** and **methods** such as `id`, `name`, `activate`, `dispose`, etc. This **interface** can help developers create extensions faster.
 
-Molecule 支持你使用**字面量**或者 **class** 关键字的方式来定义扩展对象，具体看开发者自己的偏好。
+Molecule supports you to use **literal** or **class** to define extension objects, depending on your preference.
 
-### 自面量对象
+### Literal object
 
 ```ts
 import { IContributeType, IExtension } from '@dtinsight/molecule/esm/model';
@@ -26,7 +26,7 @@ export const ExampleExt: IExtension = {
 };
 ```
 
-### class 对象
+### Class object
 
 ```ts
 import molecule from '@dtinsight/molecule';
@@ -47,9 +47,9 @@ export class ExampleExt implements IExtension {
 }
 ```
 
-## 扩展服务（ExtensionService)
+## ExtensionService
 
-在 Molecule 中，我们可以通过 [ExtensionService][service-url] 服务对象来管理**扩展程序**。例如**添加、查询、删除**等操作, 例如：
+In Molecule, you can manage the **addition, query, deletion** and other operations of extensions through the [ExtensionService][service-url] service object. Examples are as follows:
 
 ```ts
 // Add Extension, but no activated
@@ -60,9 +60,9 @@ molecule.extension.dispose(extensionId);
 molecule.extension.getExtension(extensionId);
 ```
 
-## 禁用扩展
+## Disable extension
 
-在有些情况下，开发者可能会想要**禁用**一些 Molecule 中内置的扩展程序，这里可以使用 [ExtensionService][service-url] 中的 [`inactive`][inactive-url] 方法，示例：
+In some cases, you may want to **disable** some built-in extensions in Molecule. Here you can use the [`inactive`][inactive-url] method in [ExtensionService][service-url], for example:
 
 ```ts
 import React from 'react';
@@ -92,7 +92,7 @@ export default App;
 ```
 
 :::caution
-需要注意到是，[inactive][inactive-url] 方法，需要在 [MoleculeProvider](../api/classes/MoleculeProvider) 之前声明
+It should be noted that the [inactive][inactive-url] method needs to be declared before [MoleculeProvider](../api/classes/MoleculeProvider).
 :::
 
 [inactive-url]: ../api/interfaces/molecule.IExtensionService#inactive

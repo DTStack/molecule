@@ -3,27 +3,27 @@ title: QuickAccess
 sidebar_label: QuickAccess
 ---
 
-得益于 [Monaco Editor](https://microsoft.github.io/monaco-editor/) **快捷访问 （QuickAccess）** 强大的扩展能力，我们把允许开发者在 Molecule 中通过 **Extension** 的方式，去自定义**快捷访问**功能。
+Thanks to the powerful extension capabilities of [Monaco Editor](https://microsoft.github.io/monaco-editor/)'s **QuickAccess**, Molecule supports developers to customize the **quick access** functions through **Extension**.
 
 :::info
-Molecule 中的快捷访问功能，与[快捷键](./extend-keybinding)功能一样, 都得依赖 `Action2` 抽象类。目前实现此功能需要引入相关的 monaco-editor 模块。
+Same as the [Keybinding](./extend-keybinding) function, the QuickAccess function in Molecule relies on the `Action2` abstract class. To implement this function at present, the related monaco-editor module needs to be introduced.
 :::
 
 ![Search files by name](/img/guides/extend-quickAccess-1.png)
 
-## 定义快捷访问 Action 对象
+## Define the Action object for quick access
 
 :::tip
-本文内容中的所有代码，都以 [Quick Start](../quick-start) 中的 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) 项目为基础演示。
+All code demos in this part are based on the [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo) project in [Quick Start](../quick-start).
 :::
 
-我们一起来看个具体示例：
+Let's take a look at a specific example:
 
 ![Search files by name](/img/guides/extend-quickAccess.png)
 
-图中的 **「快速访问搜索」** 面板，通过快捷键 `Command/Ctrl + P` 打开，通过输入文件名称，即可以 **AutoComplete** 的效果展示出文件列表，**选中文件**则在**编辑器**中打开。
+The **"Quick Access Search"** panel in the picture is opened by the shortcut key `Command/Ctrl + P`. By entering the file name, you can see the file list displayed in the effect of **AutoComplete**. After the file is **selected**, it will be opened in the **editor**.
 
-首先，我们新建一个 `quickOpenAction.ts` 文件, 文件中定义了 `QuickOpenAction` Action 对象：
+First, let's create a new `quickOpenAction.ts` file, which defines the `QuickOpenAction` Action object:
 
 ```ts title="/src/extensions/theFirstExtension/quickOpenAction.ts"
 import {
@@ -100,11 +100,11 @@ export class QuickOpenAction extends Action2 {
 }
 ```
 
-代码中 `QuickOpenAction `继承了一个 `Action2` 对象，该对象默认封装在了 Molecule 中。我们在构造器中声明 **Action** 的一些基本信息。其中 `id` 为必要的参数，`label` 用于显示当前的 Action 名称，`run` 方法处理**触发**后的逻辑。
+The `QuickOpenAction` in the code inherits an `Action2` object, which is encapsulated in Molecule by default. We declare some basic information of `Action` in the constructor. Among them, `id` is a necessary parameter, `label` is used to display the current Action name, and the `run` method processes the logic after **triggering**.
 
-## 注册 Action
+## Register Action
 
-跟其他的扩展程序相同， `QuickOpenAction` 对象需要在扩展 `activate` 方法中激活：
+Like other extensions, the `QuickOpenAction` object needs to be activated in the extension's `activate` method:
 
 ```ts
 activate(extensionCtx: IExtensionService): void {
@@ -115,5 +115,4 @@ activate(extensionCtx: IExtensionService): void {
 }
 ```
 
-这里我们需要使用 [ExtensionService](../api/interfaces/molecule.IExtensionService) 对象的 `registerAction` 方法来注册。重新加载
-应用界面，然后我们可以在 **Command Palette** 中找到 **Search files by name** 项，同时也可以使用快捷键 `Command/Ctrl + P` 来激活。
+Here we need to use the `registerAction` method of the [ExtensionService](../api/interfaces/molecule.IExtensionService) object to register the `QuickOpenAction` object. Reload the application interface, and then we can find the **Search files by name** item in the **Command Palette**. In addition, you can also use the shortcut key `Command/Ctrl + P` to open the quick access search panel to find it.

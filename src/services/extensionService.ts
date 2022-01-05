@@ -9,8 +9,9 @@ import {
     ColorThemeService,
     IColorThemeService,
 } from './theme/colorThemeService';
-import { Action2, registerAction2 } from 'mo/monaco/common';
+import { Action2, IDisposable, registerAction2 } from 'mo/monaco/common';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
+
 import { searchById } from 'mo/common/utils';
 import type { UniqueId } from 'mo/common/types';
 
@@ -70,16 +71,18 @@ export interface IExtensionService {
      * @param predicate The predicate function
      */
     inactive(predicate: (extension: IExtension) => boolean): void;
-
     /**
-     * Register a new action which is extends the Action2,
+     * Register a new action which is extends the Action2, and return a disposable instance.
      * @example
      * ```ts
      * const action = class Action extends Action2 {};
-     * registerAction(action);
+     * const disposableAction = registerAction(action);
+     * disposableAction.dispose(); // Dispose the action
      * ```
+     * @param actionClass The action class
+     * @return IDisposable The Disposable instance
      */
-    registerAction(actionClass: { new (): Action2 }): void;
+    registerAction(actionClass: { new (): Action2 }): IDisposable;
     /**
      * Execute the registered command
      * @param id The command ID
@@ -196,8 +199,8 @@ export class ExtensionService implements IExtensionService {
         });
     }
 
-    public registerAction(actionClass: { new (): Action2 }) {
-        registerAction2(actionClass);
+    public registerAction(ActionClass: { new (): Action2 }): IDisposable {
+        return registerAction2(ActionClass);
     }
 
     public executeCommand(id, ...args) {

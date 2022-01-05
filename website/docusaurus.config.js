@@ -177,6 +177,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 appId: 'T0LPBPMKRS',
                 apiKey: '335846e20b354fe1cf4ecd24d61515d2',
                 indexName: 'molecule',
+                contextualSearch: true,
             },
         }),
 });

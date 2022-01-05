@@ -114,11 +114,12 @@ describe('Test ExtensionService', () => {
             }
             run() {}
         }
-        instance.registerAction(MyAction);
+        const myAction = instance.registerAction(MyAction);
         const command = CommandsRegistry.getCommand(MyAction.ID);
 
         expect(command).not.toBeNull();
         expect(command.id).toEqual(MyAction.ID);
+        expect(myAction.dispose).not.toBeUndefined();
     });
 
     test('The executeCommand should call the commandService.executeCommand function', () => {

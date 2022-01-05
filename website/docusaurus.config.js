@@ -51,11 +51,16 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         locale,
                         versionDocsDirPath,
                         docPath,
+                        version,
                     }) {
+                        const versionName =
+                            version === 'current'
+                                ? version
+                                : `version-${version}`;
                         if (locale !== 'en') {
-                            return `https://github.com/DTStack/molecule/website/i18n/${locale}`;
+                            return `https://github.com/DTStack/molecule/edit/main/website/i18n/${locale}/docusaurus-plugin-content-docs/${versionName}/${docPath}`;
                         }
-                        return `https://github.com/DTStack/molecule/website/${docPath}`;
+                        return `https://github.com/DTStack/molecule/edit/main/website/${versionDocsDirPath}/${docPath}`;
                     },
                 },
                 theme: {

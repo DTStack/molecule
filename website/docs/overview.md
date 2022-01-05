@@ -25,7 +25,7 @@ There are kinds of built-in themes in Molecule ,including `Dark`, `Light`, `Mona
 
 ## i18n
 
-Molecule has a basic [Internationalization (i18n)](./guides/extend-locales) program and supports the extension mechanism. There are two built-in languages ​​by default, **Chinese** and **English**.
+Molecule has a basic [Internationalization (i18n)](./guides/extend-locales) program and supports the extension mechanism. There are three built-in languages ​​by default, **Chinese**, **English** and **Korean**.
 We can use the shortcut combination `Command/Ctrl Shift + L` to open the language 「**switch panel**」, select a language, and then confirm the selection, and then there will be a reminder window in the **bottom right corner** of the page. Clicking to confirm will reload the current page, and then the locale will be changed.
 
 For more details about the **customized** locale, please refer to [Extended Language Environment](./guides/extend-locales).

@@ -36,6 +36,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 tsconfig: '../tsconfig.json',
                 name: 'Molecule',
                 readme: 'none',
+                excludeExternals: true,
             },
         ],
     ],

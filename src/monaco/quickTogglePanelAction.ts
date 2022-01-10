@@ -1,16 +1,20 @@
-import { Action2, CATEGORIES, KeybindingWeight } from './common';
+import 'reflect-metadata';
+import { container } from 'tsyringe';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
+
 import { localize } from 'mo/i18n/localize';
-import { KeyMod, KeyCode } from 'mo/monaco';
-import { container } from 'tsyringe';
 import {
     ILayoutService,
     IMenuBarService,
     LayoutService,
     MenuBarService,
 } from 'mo/services';
+
+import { KeyMod, KeyCode } from 'mo/monaco';
 import { constants } from 'mo/services/builtinService/const';
+import { Action2 } from 'mo/monaco/action';
+import { CATEGORIES, KeybindingWeight } from 'mo/monaco/common';
 
 export class QuickTogglePanelAction extends Action2 {
     static readonly ID = constants.MENU_VIEW_PANEL;

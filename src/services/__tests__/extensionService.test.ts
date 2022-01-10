@@ -1,12 +1,13 @@
 import 'reflect-metadata';
+import { cloneDeep } from 'lodash';
 import { container } from 'tsyringe';
-import { ExtensionService } from '../extensionService';
+import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
+
 import { defaultExtensions } from 'mo/extensions';
 import { IContribute, IExtension } from 'mo/model';
-import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
-import { Action2 } from 'mo/monaco/common';
+import { Action2 } from 'mo/monaco/action';
 import logger from 'mo/common/logger';
-import { cloneDeep } from 'lodash';
+import { ExtensionService } from '../extensionService';
 
 describe('Test ExtensionService', () => {
     const instance = container.resolve(ExtensionService);

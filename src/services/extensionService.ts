@@ -9,11 +9,12 @@ import {
     ColorThemeService,
     IColorThemeService,
 } from './theme/colorThemeService';
-import { Action2, IDisposable, registerAction2 } from 'mo/monaco/common';
+import { IDisposable } from 'mo/monaco/common';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 
 import { searchById } from 'mo/common/utils';
 import type { UniqueId } from 'mo/common/types';
+import { Action2, registerAction2 } from 'mo/monaco/action';
 
 export interface IExtensionService {
     /**

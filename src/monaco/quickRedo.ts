@@ -1,9 +1,11 @@
 import 'reflect-metadata';
+import { container } from 'tsyringe';
+
 import { localize } from 'mo/i18n/localize';
 import { KeyMod, KeyCode, Uri, editor as MonacoEditor } from 'mo/monaco';
 import { EditorService, IEditorService } from 'mo/services';
-import { container } from 'tsyringe';
-import { Action2, KeybindingWeight } from './common';
+import { KeybindingWeight } from 'mo/monaco/common';
+import { Action2 } from 'mo/monaco/action';
 import { constants } from 'mo/services/builtinService/const';
 
 export class QuickRedo extends Action2 {

@@ -1,14 +1,15 @@
 import 'reflect-metadata';
+import { container } from 'tsyringe';
 import {
     IQuickInputService,
     QuickPickInput,
 } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
-import { container } from 'tsyringe';
-import { Action2 } from 'mo/monaco/common';
+
 import { localize } from './localize';
 import { ILocaleService, LocaleService } from './localeService';
 import { ILocale } from './localization';
+import { Action2 } from 'mo/monaco/action';
 import { KeyCode, KeyMod } from 'mo/monaco';
 import { constants } from 'mo/services/builtinService/const';
 

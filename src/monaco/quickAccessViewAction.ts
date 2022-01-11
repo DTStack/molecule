@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import { container } from 'tsyringe';
+
 import { localize } from 'monaco-editor/esm/vs/nls';
 import { DisposableStore } from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { QuickCommandNLS } from 'monaco-editor/esm/vs/editor/common/standaloneStrings';
@@ -24,12 +26,12 @@ import {
 import { stripIcons } from 'monaco-editor/esm/vs/base/common/iconLabels';
 
 import { KeyMod, KeyCode, editor as MonacoEditor } from 'mo/monaco';
-import { container } from 'tsyringe';
 import { EditorService, IEditorService } from 'mo/services';
-import { Action2, KeybindingWeight } from './common';
-import { MonacoService } from './monacoService';
-import { registerQuickAccessProvider } from './quickAccessProvider';
 import { constants } from 'mo/services/builtinService/const';
+import { Action2 } from 'mo/monaco/action';
+import { KeybindingWeight } from 'mo/monaco/common';
+import { MonacoService } from 'mo/monaco/monacoService';
+import { registerQuickAccessProvider } from 'mo/monaco/quickAccessProvider';
 
 export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAccessProvider {
     static PREFIX = '>';

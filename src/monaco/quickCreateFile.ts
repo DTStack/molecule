@@ -1,15 +1,16 @@
 import 'reflect-metadata';
-import { localize } from 'mo/i18n/localize';
-import { KeyMod, KeyCode } from 'mo/monaco';
-import { FileTypes } from 'mo/model';
+import { container } from 'tsyringe';
 
 import {
     IFolderTreeController,
     FolderTreeController,
 } from 'mo/controller/explorer/folderTree';
-import { container } from 'tsyringe';
-import { Action2, KeybindingWeight } from './common';
+import { KeybindingWeight } from 'mo/monaco/common';
 import { constants } from 'mo/services/builtinService/const';
+import { Action2 } from 'mo/monaco/action';
+import { localize } from 'mo/i18n/localize';
+import { KeyMod, KeyCode } from 'mo/monaco';
+import { FileTypes } from 'mo/model';
 
 export class QuickCreateFile extends Action2 {
     static readonly ID = constants.ACTION_QUICK_CREATE_FILE;

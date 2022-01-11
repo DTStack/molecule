@@ -138,6 +138,10 @@ export interface IFolderTreeService extends Component<IFolderTree> {
             callback: (treeNode: IFolderTreeNodeProps) => void
         ) => void
     ): void;
+    /**
+     * Toggle autoSort
+     */
+    toggleAutoSort(): void;
 }
 
 @singleton()
@@ -251,14 +255,16 @@ export class FolderTreeService
     }
 
     private addRootFolder(folder: IFolderTreeNodeProps) {
-        const { folderTree } = this.state;
+        const { folderTree, autoSort } = this.state;
 
         if (folderTree?.data?.length) {
             // if root folder exists, then do nothing
             return;
         }
 
-        this.sortTree(folder.children || []);
+        if (autoSort) {
+            this.sortTree(folder.children || []);
+        }
         this.setState({
             folderTree: { ...folderTree, data: [folder] },
         });
@@ -315,6 +321,7 @@ export class FolderTreeService
 
     public add(data: IFolderTreeNodeProps, id?: UniqueId): void {
         const isRootFolder = data.fileType === 'RootFolder';
+        const { autoSort } = this.state;
 
         if (isRootFolder) {
             this.addRootFolder(data);
@@ -357,7 +364,9 @@ export class FolderTreeService
         }
 
         cloneData[index] = tree!.obj;
-        this.sortTree(cloneData[index].children || []);
+        if (autoSort) {
+            this.sortTree(cloneData[index].children || []);
+        }
         this.setState({
             folderTree: {
                 ...this.state.folderTree,
@@ -388,6 +397,7 @@ export class FolderTreeService
 
     public update(data: IFolderTreeNodeProps) {
         const { id, ...restData } = data;
+        const { autoSort } = this.state;
         if (!id) throw new Error('Id is required in updating data');
         const folderTree: IFolderTreeSubItem = cloneDeep(
             this.getState().folderTree || {}
@@ -404,7 +414,9 @@ export class FolderTreeService
         tree.updateNode(id, restData);
         if (index > -1) {
             nextData[index] = tree.obj;
-            this.sortTree(nextData[index].children || []);
+            if (autoSort) {
+                this.sortTree(nextData[index].children || []);
+            }
         }
         this.setState({
             folderTree,
@@ -499,4 +511,8 @@ export class FolderTreeService
     ) => {
         this.subscribe(FolderTreeEvent.onLoadData, callback);
     };
+
+    public toggleAutoSort() {
+        this.setState({ autoSort: !this.state.autoSort });
+    }
 }

@@ -105,6 +105,13 @@ molecule.folderTree.onSelectFile((file: IFolderTreeNodeProps) => {
 });
 ```
 
+Enable sorting
+
+```ts
+// Toggle whether to enable sorting, which is disabled by default.
+molecule.folderTree.toggleAutoSort();
+```
+
 For more information about the use of FolderTree, please refer to the [API](../api/classes/molecule.FolderTreeService) documentation.
 
 ## [EditorTree](../api/interfaces/molecule.IEditorTreeService)

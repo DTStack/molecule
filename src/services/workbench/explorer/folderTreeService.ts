@@ -139,7 +139,7 @@ export interface IFolderTreeService extends Component<IFolderTree> {
         ) => void
     ): void;
     /**
-     * Toggle autoSort
+     * Toggle whether to enable sorting, which is disabled by default.
      */
     toggleAutoSort(): void;
 }

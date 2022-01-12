@@ -398,7 +398,7 @@ export class FolderTreeService
     public update(data: IFolderTreeNodeProps) {
         const { id, ...restData } = data;
         const { autoSort } = this.state;
-        if (!id) throw new Error('Id is required in updating data');
+        if (!id && id !== 0) throw new Error('Id is required in updating data');
         const folderTree: IFolderTreeSubItem = cloneDeep(
             this.getState().folderTree || {}
         );

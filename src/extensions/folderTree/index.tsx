@@ -5,10 +5,6 @@ export const ExtendsFolderTree: IExtension = {
     id: 'ExtendsFolderTree',
     name: 'Extends FolderTree',
     activate() {
-        molecule.folderTree.onRemove((id) => {
-            molecule.folderTree.remove(id);
-        });
-
         molecule.folderTree.onRename((id) => {
             molecule.folderTree.update({
                 id,

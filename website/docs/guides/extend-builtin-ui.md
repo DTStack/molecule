@@ -107,6 +107,10 @@ molecule.folderTree.onSelectFile((file: IFolderTreeNodeProps) => {
 
 For more information about the use of FolderTree, please refer to the [API](../api/classes/molecule.FolderTreeService) documentation.
 
+:::caution
+We don't have default node removal logic built into FolderTree, but you can customize it using the `onRemove` method.
+:::
+
 ## [EditorTree](../api/interfaces/molecule.IEditorTreeService)
 
 [EditorTree](../api/interfaces/molecule.IEditorTreeService) is responsible for displaying some **editing tags** currently working in [Explorer](#explorer). Molecule currently does not provide too many APIs to support the extension of this UI, but more basic **event handling**.

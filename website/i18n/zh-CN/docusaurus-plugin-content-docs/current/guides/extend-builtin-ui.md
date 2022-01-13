@@ -133,9 +133,9 @@ molecule.editorTree.onSelect((tabId: UniqueId, groupId: UniqueId) => {
 });
 ```
 
-## [搜索面板（Search)](../api/interfaces/molecule.ISearchService#setresult)
+## [搜索面板（Search)](../api/interfaces/molecule.ISearchService)
 
-[Search](../api/interfaces/molecule.ISearchService#setresult) 是一个内置的**搜索面板**，它包含一些常见的**搜索**、**替换** 等 UI 功能。Molecule 内置的搜索模块只是基础的 UI 模块，具体的**搜索**，或者**替换**功能，需要开发者通过一些 API 来完成：
+[Search](../api/interfaces/molecule.ISearchService) 是一个内置的**搜索面板**，它包含一些常见的**搜索**、**替换** 等 UI 功能。Molecule 内置的搜索模块只是基础的 UI 模块，具体的**搜索**，或者**替换**功能，需要开发者通过一些 API 来完成：
 
 监听**搜索输入控件**的输入内容：
 

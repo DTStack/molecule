@@ -132,9 +132,9 @@ molecule.editorTree.onSelect((tabId: UniqueId, groupId: UniqueId) => {
 });
 ```
 
-## [Search](../api/interfaces/molecule.ISearchService#setresult)
+## [Search](../api/interfaces/molecule.ISearchService)
 
-[Search](../api/interfaces/molecule.ISearchService#setresult) is a built-in **search panel**, which contains some common **search**, **replace** and other UI functions. The built-in search module of Molecule is just a basic UI module. The specific **search** or **replacement** function needs to be completed by the developer through some APIs:
+[Search](../api/interfaces/molecule.ISearchService) is a built-in **search panel**, which contains some common **search**, **replace** and other UI functions. The built-in search module of Molecule is just a basic UI module. The specific **search** or **replacement** function needs to be completed by the developer through some APIs:
 
 Listen to the input of the **search input control**:
 

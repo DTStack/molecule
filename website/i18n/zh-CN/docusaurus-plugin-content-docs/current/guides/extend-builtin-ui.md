@@ -109,7 +109,7 @@ molecule.folderTree.onSelectFile((file: IFolderTreeNodeProps) => {
 更多关于 FolderTree 的使用，请参考 [API](../api/classes/molecule.FolderTreeService) 文档。
 
 :::caution
-我们没有在 FolderTree 中内置默认的节点移除逻辑，开发者可以使用 `onRemove` 方法来自定义。
+我们没有在 FolderTree 中内置默认的节点移除逻辑，开发者可以使用 `remove` 方法来自定义。
 :::
 
 ## [编辑器树（EditorTree)](../api/interfaces/molecule.IEditorTreeService)

@@ -108,7 +108,7 @@ molecule.folderTree.onSelectFile((file: IFolderTreeNodeProps) => {
 For more information about the use of FolderTree, please refer to the [API](../api/classes/molecule.FolderTreeService) documentation.
 
 :::caution
-We don't have default node removal logic built into FolderTree, but you can customize it using the `onRemove` method.
+We don't have default node removal logic built into FolderTree, but you can customize it using `remove` method.
 :::
 
 ## [EditorTree](../api/interfaces/molecule.IEditorTreeService)

@@ -106,6 +106,13 @@ molecule.folderTree.onSelectFile((file: IFolderTreeNodeProps) => {
 });
 ```
 
+启用排序功能
+
+```ts
+// Toggle whether to enable sorting, which is disabled by default.
+molecule.folderTree.toggleAutoSort();
+```
+
 更多关于 FolderTree 的使用，请参考 [API](../api/classes/molecule.FolderTreeService) 文档。
 
 ## [编辑器树（EditorTree)](../api/interfaces/molecule.IEditorTreeService)

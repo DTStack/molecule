@@ -115,6 +115,10 @@ molecule.folderTree.toggleAutoSort();
 
 更多关于 FolderTree 的使用，请参考 [API](../api/classes/molecule.FolderTreeService) 文档。
 
+:::caution
+我们没有在 FolderTree 中内置默认的节点移除逻辑，开发者可以使用 `remove` 方法来自定义。
+:::
+
 ## [编辑器树（EditorTree)](../api/interfaces/molecule.IEditorTreeService)
 
 [EditorTree](../api/interfaces/molecule.IEditorTreeService) 是 [Explorer](#浏览面板explorer) 中负责展示当前正在工作的一些**编辑标签**。Molecule 目前并未提供太多的 API 来支持扩展这个 UI, 更多还是一些基本的**事件处理**。

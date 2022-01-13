@@ -172,5 +172,9 @@ export const ExtendsTestPane: IExtension = {
             };
             molecule.editor.open(tabData);
         });
+
+        molecule.folderTree.onRemove((id) => {
+            molecule.folderTree.remove(id);
+        });
     },
 };

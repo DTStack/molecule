@@ -9,7 +9,7 @@ sidebar_position: 1
  <h1>Molecule</h1>
  <h3>A lightweight Web IDE UI Framework</h3>
 
-[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url]
+[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url] [![Chat][online-chat-img]][online-chat-url]
 
 </div>
 
@@ -21,6 +21,8 @@ sidebar_position: 1
 [download-url]: https://www.npmjs.com/package/@dtinsight/molecule
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
+[online-chat-img]: https://img.shields.io/discord/920616811261743104?logo=Molecule
+[online-chat-url]: https://discord.com/invite/b62gpHwNA7
 
 The **Molecule** is a lightweight **Web IDE UI** Framework built with React.js，and inspired by the VSCode. We also provide the Extension APIs the seem like VSCode, to help developers extend the Workbench easily. The Molecule integrates with React.js applications is simple. It has applied to many [DTStack](https://www.dtstack.com/) inner projects.
 

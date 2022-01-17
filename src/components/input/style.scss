@@ -3,6 +3,7 @@
 #{$input} {
     background-color: var(--input-background);
     border: 1px solid transparent;
+    border-color: var(--input-border);
     color: var(--input-foreground);
     display: inline-block;
     font-size: 13px;
@@ -32,5 +33,17 @@
             display: block;
             text-align: right;
         }
+    }
+
+    &::placeholder {
+        color: var(--input-placeholderForeground);
+    }
+
+    &:focus,
+    &:active {
+        border-color: var(--focusBorder);
+        outline-color: var(--focusBorder);
+        outline-offset: -1;
+        outline-style: solid;
     }
 }

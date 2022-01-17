@@ -1,10 +1,12 @@
 import 'reflect-metadata';
-import { localize } from 'mo/i18n/localize';
-import { KeyMod, KeyCode, Uri, editor as MonacoEditor } from 'mo/monaco';
-import { EditorService, IEditorService } from 'mo/services';
 import { container } from 'tsyringe';
-import { Action2, KeybindingWeight } from './common';
+
+import { localize } from 'mo/i18n/localize';
+import { EditorService, IEditorService } from 'mo/services';
 import { constants } from 'mo/services/builtinService/const';
+import { KeybindingWeight } from 'mo/monaco/common';
+import { Action2 } from 'mo/monaco/action';
+import { KeyMod, KeyCode, Uri, editor as MonacoEditor } from 'mo/monaco';
 
 export class QuickUndo extends Action2 {
     static readonly ID = constants.ACTION_QUICK_UNDO;

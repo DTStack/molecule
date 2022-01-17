@@ -734,15 +734,10 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
                   id="global.menu.settings"
                   onClick={[Function]}
                 >
-                  <div
-                    className="mo-drop-down mo-drop-down--rightBottom"
-                    onClick={[Function]}
-                  >
-                    <span
-                      className="mo-activityBar__label codicon codicon-settings-gear"
-                      title="Settings"
-                    />
-                  </div>
+                  <span
+                    className="mo-activityBar__label codicon codicon-settings-gear"
+                    title="Settings"
+                  />
                 </li>
               </ul>
             </div>

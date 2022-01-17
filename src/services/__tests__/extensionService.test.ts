@@ -1,12 +1,13 @@
 import 'reflect-metadata';
+import { cloneDeep } from 'lodash';
 import { container } from 'tsyringe';
-import { ExtensionService } from '../extensionService';
+import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
+
 import { defaultExtensions } from 'mo/extensions';
 import { IContribute, IExtension } from 'mo/model';
-import { CommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
-import { Action2 } from 'mo/monaco/common';
+import { Action2 } from 'mo/monaco/action';
 import logger from 'mo/common/logger';
-import { cloneDeep } from 'lodash';
+import { ExtensionService } from '../extensionService';
 
 describe('Test ExtensionService', () => {
     const instance = container.resolve(ExtensionService);
@@ -114,11 +115,12 @@ describe('Test ExtensionService', () => {
             }
             run() {}
         }
-        instance.registerAction(MyAction);
+        const myAction = instance.registerAction(MyAction);
         const command = CommandsRegistry.getCommand(MyAction.ID);
 
         expect(command).not.toBeNull();
         expect(command.id).toEqual(MyAction.ID);
+        expect(myAction.dispose).not.toBeUndefined();
     });
 
     test('The executeCommand should call the commandService.executeCommand function', () => {
@@ -180,5 +182,13 @@ describe('Test ExtensionService', () => {
 
         expect(languagesExts.length).toBe(1);
         expect(otherExts.length).toBe(1);
+    });
+
+    test('The ExtensionService loaded status', () => {
+        expect(instance.isLoaded()).not.toBeTruthy();
+        instance.setLoaded();
+        expect(instance.isLoaded()).toBeTruthy();
+        instance.setLoaded(false);
+        expect(instance.isLoaded()).not.toBeTruthy();
     });
 });

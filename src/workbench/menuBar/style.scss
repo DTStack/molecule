@@ -61,6 +61,10 @@
                     }
                 }
             }
+
+            > #{$menu}__item > #{$subMenu} {
+                z-index: 2500;
+            }
         }
 
         &__logo {

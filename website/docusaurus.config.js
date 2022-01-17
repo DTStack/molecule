@@ -14,7 +14,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     organizationName: 'DTStack', // Usually your GitHub org/user name.
     projectName: 'molecule', // Usually your repo name.
     i18n: {
-        defaultLocale: 'zh-CN',
+        defaultLocale: 'en',
         locales: ['zh-CN', 'en'],
         localeConfigs: {
             'zh-CN': {
@@ -36,6 +36,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 tsconfig: '../tsconfig.json',
                 name: 'Molecule',
                 readme: 'none',
+                excludeExternals: true,
             },
         ],
     ],
@@ -51,11 +52,16 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         locale,
                         versionDocsDirPath,
                         docPath,
+                        version,
                     }) {
+                        const versionName =
+                            version === 'current'
+                                ? version
+                                : `version-${version}`;
                         if (locale !== 'en') {
-                            return `https://github.com/DTStack/molecule/website/i18n/${locale}`;
+                            return `https://github.com/DTStack/molecule/edit/main/website/i18n/${locale}/docusaurus-plugin-content-docs/${versionName}/${docPath}`;
                         }
-                        return `https://github.com/DTStack/molecule/website/${docPath}`;
+                        return `https://github.com/DTStack/molecule/edit/main/website/${versionDocsDirPath}/${docPath}`;
                     },
                 },
                 theme: {
@@ -101,10 +107,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                         to: 'case',
                         label: 'Showcase',
                         position: 'left',
-                    },
-                    {
-                        type: 'search',
-                        position: 'right',
                     },
                     {
                         href: 'https://github.com/DTStack/molecule',
@@ -171,6 +173,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+            },
+            algolia: {
+                appId: 'T0LPBPMKRS',
+                apiKey: '335846e20b354fe1cf4ecd24d61515d2',
+                indexName: 'molecule',
+                contextualSearch: true,
             },
         }),
 });

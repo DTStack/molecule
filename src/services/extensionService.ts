@@ -9,10 +9,12 @@ import {
     ColorThemeService,
     IColorThemeService,
 } from './theme/colorThemeService';
-import { Action2, registerAction2 } from 'mo/monaco/common';
+import { IDisposable } from 'mo/monaco/common';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
+
 import { searchById } from 'mo/common/utils';
 import type { UniqueId } from 'mo/common/types';
+import { Action2, registerAction2 } from 'mo/monaco/action';
 
 export interface IExtensionService {
     /**
@@ -70,16 +72,18 @@ export interface IExtensionService {
      * @param predicate The predicate function
      */
     inactive(predicate: (extension: IExtension) => boolean): void;
-
     /**
-     * Register a new action which is extends the Action2,
+     * Register a new action which is extends the Action2, and return a disposable instance.
      * @example
      * ```ts
      * const action = class Action extends Action2 {};
-     * registerAction(action);
+     * const disposableAction = registerAction(action);
+     * disposableAction.dispose(); // Dispose the action
      * ```
+     * @param actionClass The action class
+     * @return IDisposable The Disposable instance
      */
-    registerAction(actionClass: { new (): Action2 }): void;
+    registerAction(actionClass: { new (): Action2 }): IDisposable;
     /**
      * Execute the registered command
      * @param id The command ID
@@ -96,6 +100,14 @@ export interface IExtensionService {
      * @returns [ languagesExts, otherExtensions ]
      */
     splitLanguagesExts(extensions: IExtension[]): [IExtension[], IExtension[]];
+    /**
+     * whether the extensions are loaded
+     */
+    isLoaded(): boolean;
+    /**
+     * Set the extensions are loaded
+     */
+    setLoaded(flag?: boolean): void;
 }
 
 @singleton()
@@ -105,11 +117,24 @@ export class ExtensionService implements IExtensionService {
     private readonly monacoService: IMonacoService;
     private _inactive: Function | undefined;
     private readonly localeService: ILocaleService;
+    /**
+     * TODO: This property is used for marking the extensions were loaded
+     * we are going to refactor this logic after redesign the Molecule lifecycle.
+     */
+    private _isLoaded: boolean = false;
 
     constructor() {
         this.colorThemeService = container.resolve(ColorThemeService);
         this.monacoService = container.resolve(MonacoService);
         this.localeService = container.resolve(LocaleService);
+    }
+
+    public setLoaded(flag?: boolean): void {
+        this._isLoaded = flag !== undefined ? flag : true;
+    }
+
+    public isLoaded(): boolean {
+        return this._isLoaded;
     }
 
     public getExtension(id: UniqueId): IExtension | undefined {
@@ -175,8 +200,8 @@ export class ExtensionService implements IExtensionService {
         });
     }
 
-    public registerAction(actionClass: { new (): Action2 }) {
-        registerAction2(actionClass);
+    public registerAction(ActionClass: { new (): Action2 }): IDisposable {
+        return registerAction2(ActionClass);
     }
 
     public executeCommand(id, ...args) {

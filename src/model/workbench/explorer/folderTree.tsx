@@ -38,6 +38,7 @@ export interface IFolderTreeSubItem {
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
     entry?: React.ReactNode;
+    autoSort?: Boolean;
 }
 
 export interface IFolderTreeNodeProps extends ITreeNodeItemProps<any> {
@@ -89,6 +90,7 @@ export class TreeNodeModel implements IFolderTreeNodeProps {
 export class IFolderTreeModel implements IFolderTree {
     public folderTree: IFolderTreeSubItem;
     public entry: React.ReactNode;
+    public autoSort: Boolean;
 
     constructor(
         folderTree: IFolderTreeSubItem = {
@@ -97,9 +99,11 @@ export class IFolderTreeModel implements IFolderTree {
             folderPanelContextMenu: [],
             data: [],
         },
+        autoSort: Boolean = false,
         entry?: React.ReactNode
     ) {
         this.folderTree = folderTree;
         this.entry = entry;
+        this.autoSort = autoSort;
     }
 }

@@ -1,17 +1,19 @@
 import 'reflect-metadata';
+import { container } from 'tsyringe';
 import { localize } from 'monaco-editor/esm/vs/nls';
 import {
     IQuickInputService,
     QuickPickInput,
 } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
-import { IColorTheme } from 'mo/model/colorTheme';
-import { KeyMod, KeyCode } from 'mo/monaco';
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
-import { ColorThemeService, IColorThemeService } from 'mo/services';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
-import { container } from 'tsyringe';
-import { Action2, KeybindingWeight } from './common';
+
+import { KeyMod, KeyCode } from 'mo/monaco';
+import { Action2 } from 'mo/monaco/action';
+import { KeybindingWeight } from 'mo/monaco/common';
+import { IColorTheme } from 'mo/model/colorTheme';
 import { constants } from 'mo/services/builtinService/const';
+import { ColorThemeService, IColorThemeService } from 'mo/services';
 
 export class SelectColorThemeAction extends Action2 {
     static readonly ID = constants.ACTION_SELECT_THEME;

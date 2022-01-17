@@ -8,7 +8,7 @@ import { randomId } from 'mo/common/utils';
 
 export const ExtendsTestPane: IExtension = {
     id: 'ExtendsTestPane',
-    name: 'Test Pane ',
+    name: 'Test Pane',
     dispose() {},
     activate() {
         const TEST_PANE_ID = 'ActivityBarTestPane';
@@ -171,6 +171,10 @@ export const ExtendsTestPane: IExtension = {
                 },
             };
             molecule.editor.open(tabData);
+        });
+
+        molecule.folderTree.onRemove((id) => {
+            molecule.folderTree.remove(id);
         });
     },
 };

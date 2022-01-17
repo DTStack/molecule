@@ -4,7 +4,7 @@
  <h1>Molecule</h1>
  <h3>一个轻量的 Web IDE UI 框架</h3>
 
-[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url]
+[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url] [![Chat][online-chat-img]][online-chat-url]
 
 </div>
 
@@ -16,6 +16,8 @@
 [download-url]: https://www.npmjs.com/package/@dtinsight/molecule
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
+[online-chat-img]: https://img.shields.io/discord/920616811261743104?logo=Molecule
+[online-chat-url]: https://discord.com/invite/b62gpHwNA7
 
 [中文](./README-zhCN.md) | [English](./README.md) | [한국어](./README-koKR.md)
 

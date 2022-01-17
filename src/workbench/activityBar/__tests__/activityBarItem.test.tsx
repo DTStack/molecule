@@ -8,8 +8,8 @@ import {
     itemCheckedClassName,
     itemDisabledClassName,
     labelClassName,
+    itemClassName,
 } from '../base';
-import { defaultDropDownClassName } from 'mo/components/dropdown';
 import { keybindingClassName } from 'mo/components/menu/base';
 import { KeybindingHelper } from 'mo/services/keybinding';
 import { KeyCode } from 'mo/monaco';
@@ -105,9 +105,7 @@ describe('The ActivityBar Item Component', () => {
             <ActivityBarItem id="test" contextMenu={contexts} icon="type" />
         );
 
-        fireEvent.click(
-            container.querySelector(`.${defaultDropDownClassName}`)!
-        );
+        fireEvent.click(container.querySelector(`.${itemClassName}`)!);
 
         const menus = getByRole('menu');
         expect(menus).toBeInTheDocument();
@@ -144,9 +142,7 @@ describe('The ActivityBar Item Component', () => {
         const { container, getByRole } = render(
             <ActivityBarItem id="test" contextMenu={contexts} icon="type" />
         );
-        fireEvent.click(
-            container.querySelector(`.${defaultDropDownClassName}`)!
-        );
+        fireEvent.click(container.querySelector(`.${itemClassName}`)!);
 
         const menus = getByRole('menu');
         // the first menu have keybinding
@@ -187,9 +183,7 @@ describe('The ActivityBar Item Component', () => {
                 onContextMenuClick={mockFn}
             />
         );
-        fireEvent.click(
-            container.querySelector(`.${defaultDropDownClassName}`)!
-        );
+        fireEvent.click(container.querySelector(`.${itemClassName}`)!);
 
         const menus = getByRole('menu');
         fireEvent.click(menus.firstElementChild!);

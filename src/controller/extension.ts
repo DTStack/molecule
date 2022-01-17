@@ -19,7 +19,7 @@ import { QuickCopyLineUp } from 'mo/monaco/quickCopyLineUp';
 import { QuickUndo } from 'mo/monaco/quickUndo';
 import { QuickRedo } from 'mo/monaco/quickRedo';
 import { QuickCreateFile } from 'mo/monaco/quickCreateFile';
-import type { Action2 } from 'mo/monaco/common';
+import type { Action2 } from 'mo/monaco/action';
 
 export interface IExtensionController extends Partial<Controller> {}
 

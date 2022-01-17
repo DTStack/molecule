@@ -33,16 +33,17 @@
 
     &--horizontal {
         align-items: center;
-        background: var(--activityBar-background);
+        background-color: var(--activityBar-background);
         display: flex;
         height: 30px;
         justify-content: center;
         width: 100%;
 
         > #{$menu} {
-            background: var(--activityBar-background);
+            background-color: inherit;
             box-shadow: none;
             color: var(--foreground);
+            height: 100%;
 
             &--horizontal {
                 #{$menu}__item {

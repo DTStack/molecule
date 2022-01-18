@@ -98,7 +98,7 @@ export function Tabs(props: ITabsProps) {
     };
 
     return (
-        <DndProvider backend={HTML5Backend}>
+        <DndProvider backend={HTML5Backend} context={window}>
             <div
                 style={style}
                 className={classNames(

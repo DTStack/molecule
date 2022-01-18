@@ -19,7 +19,7 @@ const tabData = {
 
 function DTab(args: Partial<ITabComponent>) {
     return (
-        <DndProvider backend={HTML5Backend}>
+        <DndProvider backend={HTML5Backend} context={window}>
             <Tab tab={tabData} {...args} />
         </DndProvider>
     );

@@ -82,7 +82,7 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
             isDragging: monitor.isDragging(),
         }),
         item: { type: 'DND_NODE', tab },
-    });
+    } as any);
 
     const [, drop] = useDrop({
         accept: 'DND_NODE',

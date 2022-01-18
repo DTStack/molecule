@@ -173,6 +173,18 @@ describe('Test Input Component', () => {
         expect(TEST_EVENT).toBeCalled();
     });
 
+    test('Input built-in onchange event', () => {
+        const TEST_VALUE = '1';
+        const wrapper = render(<Input data-testid={TEST_ID} />);
+        const element = wrapper.getByTestId(TEST_ID);
+
+        fireEvent.change(element, {
+            target: { value: TEST_VALUE },
+        });
+
+        expect(element.getAttribute('value')).toBe(TEST_VALUE);
+    });
+
     test('Overwrite the current state value with props', () => {
         const BUTTON_ID = 'button';
         const START_VALUE = '0';

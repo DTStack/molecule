@@ -1,13 +1,14 @@
 import React from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import {
     ITabComponent,
     Tab,
     tabItemActiveClassName,
     tabItemClassName,
 } from '../tab';
-import DragAndDrop from '../dragAndDrop';
 import { dragToTargetNode } from '@test/utils';
 
 const tabData = {
@@ -18,9 +19,9 @@ const tabData = {
 
 function DTab(args: Partial<ITabComponent>) {
     return (
-        <DragAndDrop>
+        <DndProvider backend={HTML5Backend} context={window}>
             <Tab tab={tabData} {...args} />
-        </DragAndDrop>
+        </DndProvider>
     );
 }
 
@@ -78,11 +79,11 @@ describe('The Tab Component', () => {
     test('Should render support to sort via drag and drop', () => {
         const mockFn = jest.fn();
         const { container } = render(
-            <DragAndDrop>
+            <DndProvider backend={HTML5Backend}>
                 <Tab onDrag={mockFn} tab={tabData} />
                 <Tab onDrag={mockFn} tab={{ id: '2', name: 'test2' }} />
                 <Tab onDrag={mockFn} tab={{ id: '3', name: 'test3' }} />
-            </DragAndDrop>
+            </DndProvider>
         );
 
         const tabs = container.querySelectorAll<HTMLDivElement>(

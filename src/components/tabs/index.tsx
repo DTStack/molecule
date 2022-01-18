@@ -13,7 +13,6 @@ import {
 } from 'mo/common/className';
 
 import { Tab, ITabProps } from './tab';
-// import DragAndDrop from './dragAndDrop';
 import type { UniqueId } from 'mo/common/types';
 
 export type TabsType = 'line' | 'card';

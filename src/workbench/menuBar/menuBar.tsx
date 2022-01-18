@@ -100,6 +100,7 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
                     ref={menuRef}
                     role="menu"
                     mode={MenuMode.Horizontal}
+                    trigger="click"
                     onClick={handleClickHorizontalMenu}
                     style={{ width: '100%' }}
                     data={addKeybindingForData(data)}

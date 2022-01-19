@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
 const confirm = Modal.confirm;
-const stories = storiesOf('dialog', module);
+const stories = storiesOf('Dialog', module);
 stories.addDecorator(withKnobs);
 
 stories.add('Basic Usage', () => {

@@ -23,9 +23,10 @@ export interface IComponent<S = any> {
      */
     onUpdateState(callback: (prevState: S, nextState: S) => void): void;
     /**
-     * Remove the Component update event listening
+     * Remove the Component update event listening, default is remove all,
+     * if you want to remove one, you can pass the callback
      */
-    removeOnUpdateState(): void;
+    removeOnUpdateState(callback?: Function): void;
     /**
      * Force to update the Component
      */
@@ -72,8 +73,8 @@ export abstract class Component<S = any>
         this._event.subscribe(ComponentEvents.Update, callback);
     }
 
-    public removeOnUpdateState(): void {
-        this._event.unsubscribe(ComponentEvents.Update);
+    public removeOnUpdateState(callback?: Function): void {
+        this._event.unsubscribe(ComponentEvents.Update, callback);
     }
 
     public forceUpdate() {

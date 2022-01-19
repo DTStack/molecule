@@ -30,11 +30,11 @@ export abstract class GlobalEvent {
     }
 
     /**
-     * Unsubscribe the specific event
+     * Unsubscribe the specific event and the callback function
      * @param name The event name
-     * @param callback The subscribed function
+     * @param callback optional, it unsubscribes events via name if not pass the callback function
      */
-    public unsubscribe(name) {
-        EventBus.unsubscribe(name);
+    public unsubscribe(name, callback?: Function) {
+        EventBus.unsubscribe(name, callback);
     }
 }

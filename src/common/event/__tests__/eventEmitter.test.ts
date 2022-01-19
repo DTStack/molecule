@@ -37,4 +37,27 @@ describe('Test the EventEmitter class', () => {
         event.unsubscribe(['a', 'b']);
         expect(event.count('a')).toBe(0);
     });
+
+    test('Unsubscribe the event by pass the callback', () => {
+        const evt = new EventEmitter();
+        const eventName = 'event1';
+        const mockFn1 = jest.fn();
+        const mockFn2 = jest.fn();
+        evt.subscribe(eventName, mockFn1);
+        evt.subscribe(eventName, mockFn2);
+
+        expect(evt.count(eventName)).toBe(2);
+
+        evt.unsubscribe(eventName, mockFn1);
+        expect(evt.count(eventName)).toBe(1);
+        evt.emit(eventName);
+        expect(mockFn1).toBeCalledTimes(0);
+        expect(mockFn2).toBeCalledTimes(1);
+
+        evt.subscribe(eventName, mockFn1);
+        expect(evt.count(eventName)).toBe(2);
+
+        evt.unsubscribe(eventName);
+        expect(evt.count(eventName)).toBe(0);
+    });
 });

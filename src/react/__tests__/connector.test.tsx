@@ -124,17 +124,25 @@ describe('Test Connector Component', () => {
     });
 
     test('The Service connect multiple Components', () => {
-        const TestView = connect({ A: serviceA }, TestComponent);
-        const TestView2 = connect({ A: serviceA }, TestComponent);
+        const testService = new TestServiceA();
+
+        const TestView = connect({ A: testService }, TestComponent);
+        const TestView2 = connect({ A: testService }, TestComponent);
 
         const { unmount } = render(<TestView />);
         const { unmount: unmount2 } = render(<TestView2 />);
-        expect((serviceA as any)._event.count(ComponentEvents.Update)).toBe(2);
+        expect((testService as any)._event.count(ComponentEvents.Update)).toBe(
+            2
+        );
 
         unmount();
-        expect((serviceA as any)._event.count(ComponentEvents.Update)).toBe(1);
+        expect((testService as any)._event.count(ComponentEvents.Update)).toBe(
+            1
+        );
 
         unmount2();
-        expect((serviceA as any)._event.count(ComponentEvents.Update)).toBe(0);
+        expect((testService as any)._event.count(ComponentEvents.Update)).toBe(
+            0
+        );
     });
 });

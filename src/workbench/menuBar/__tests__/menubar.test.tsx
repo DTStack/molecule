@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import MenuBar, { actionClassName } from '../menuBar';
@@ -122,5 +122,63 @@ describe('Test MenuBar Component', () => {
         const elem = getByText(TEST_DATA);
         fireEvent.click(elem);
         expect(mockFn).toBeCalled();
+    });
+
+    test('Should support to execute the handleClickMenuBar method in HorizontalView', async () => {
+        const { getByText } = render(
+            <MenuBar
+                data={menuData}
+                onClick={TEST_FN}
+                mode={MenuBarMode.horizontal}
+            />
+        );
+        const elem = getByText(TEST_ID);
+        const liElem = elem.closest('li');
+        const elemArr = liElem ? [liElem] : [];
+        const spanElem = getByText(TEST_DATA);
+        const ulElem = spanElem.closest('ul');
+        const originalFunc = document.elementsFromPoint;
+        document.elementsFromPoint = jest.fn(() => elemArr);
+
+        fireEvent.click(elem);
+        await waitFor(() => {
+            expect(ulElem?.style.opacity).toBe('1');
+        });
+
+        fireEvent.click(elem);
+        await waitFor(() => {
+            expect(ulElem?.style.opacity).toBe('0');
+        });
+
+        document.elementsFromPoint = originalFunc;
+    });
+
+    test('Should support to execute the clearAutoDisplay method in HorizontalView', async () => {
+        const { getByText } = render(
+            <MenuBar
+                data={menuData}
+                onClick={TEST_FN}
+                mode={MenuBarMode.horizontal}
+            />
+        );
+        const elem = getByText(TEST_ID);
+        const liElem = elem.closest('li');
+        const elemArr = liElem ? [liElem] : [];
+        const spanElem = getByText(TEST_DATA);
+        const ulElem = spanElem.closest('ul');
+        const originalFunc = document.elementsFromPoint;
+        document.elementsFromPoint = jest.fn(() => elemArr);
+
+        fireEvent.click(elem);
+        await waitFor(() => {
+            expect(ulElem?.style.opacity).toBe('1');
+        });
+
+        fireEvent.click(document.body);
+        await waitFor(() => {
+            expect(ulElem?.style.opacity).toBe('0');
+        });
+
+        document.elementsFromPoint = originalFunc;
     });
 });

@@ -15,48 +15,43 @@ export class EventEmitter {
         }
     }
 
-    public subscribe(name: string | string[], callback: Function) {
+    public subscribe(name: string | string[], listener: Function) {
         if (Array.isArray(name)) {
             name.forEach((key: string) => {
-                this.assignEvent(key, callback);
+                this.assignEvent(key, listener);
             });
         } else {
-            this.assignEvent(name, callback);
+            this.assignEvent(name, listener);
         }
     }
 
-    /**
-     * Unsubscribe the specific event by the name and the callback function
-     * @param name The removed event name
-     * @param callback optional, The removed callback function
-     */
-    public unsubscribe(name: string | string[], callback?: Function) {
+    public unsubscribe(name: string | string[], listener?: Function) {
         if (Array.isArray(name)) {
             name.forEach((key: string) => {
-                this.deleteEvent(key, callback);
+                this.deleteEvent(key, listener);
             });
         } else {
-            this.deleteEvent(name, callback);
+            this.deleteEvent(name, listener);
         }
     }
 
-    public deleteEvent(name: string, callback?: Function) {
-        if (callback) {
+    public deleteEvent(name: string, listener?: Function) {
+        if (listener) {
             const event = this._events.get(name);
             if (event) {
-                event.splice(event.indexOf(callback), 1);
+                event.splice(event.indexOf(listener), 1);
             }
         } else {
             this._events.delete(name);
         }
     }
 
-    public assignEvent<T>(name: string, callback: Function) {
+    public assignEvent<T>(name: string, listener: Function) {
         const event = this._events.get(name);
         if (event) {
-            event.push(callback);
+            event.push(listener);
         } else {
-            this._events.set(name, [callback]);
+            this._events.set(name, [listener]);
         }
     }
 }

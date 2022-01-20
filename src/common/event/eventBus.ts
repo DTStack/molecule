@@ -6,10 +6,10 @@ export abstract class GlobalEvent {
     /**
      * Subscribe the service event
      * @param name Event name
-     * @param callback Callback function
+     * @param listener Listener function
      */
-    public subscribe(name: string | string[], callback: Function) {
-        EventBus.subscribe(name, callback);
+    public subscribe(name: string | string[], listener: Function) {
+        EventBus.subscribe(name, listener);
     }
 
     /**
@@ -30,11 +30,11 @@ export abstract class GlobalEvent {
     }
 
     /**
-     * Unsubscribe the specific event
+     * Unsubscribe the specific event and the listener function
      * @param name The event name
-     * @param callback The subscribed function
+     * @param listener optional, it unsubscribes events via name if not pass the listener function
      */
-    public unsubscribe(name) {
-        EventBus.unsubscribe(name);
+    public unsubscribe(name, listener?: Function) {
+        EventBus.unsubscribe(name, listener);
     }
 }

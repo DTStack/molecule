@@ -39,16 +39,10 @@ export function connect<T = any>(
         componentWillUnmount() {
             this._isMounted = false;
             this.handleService((service) => {
-                service.removeOnUpdateState();
+                service.removeOnUpdateState(this.onChange);
             });
         }
 
-        // TODO: 目前会全量触发更新，后期根据字段（watchField）来控制更新粒度
-        // const prev = get(prevState, watchFiled);
-        // const next = get(nextState, watchFiled);
-        // if (!equals(prev, next)) {
-        //     this.update();
-        // }
         onChange(prevState, nextState) {
             Logger.info(prevState, nextState, (container as any)._registry);
             this.update();

@@ -5,9 +5,12 @@ import { ExtendsLocalesPlus } from './locales-plus';
 
 import { ExtendsTestPane } from './test';
 
+import { ExtendPanel } from './extend-panel';
+
 export const customExtensions: IExtension[] = [
     ExtendsDataSync,
     ExtendsTestPane,
     ExtendsProblems,
+    ExtendPanel,
     ExtendsLocalesPlus,
 ];

@@ -7,6 +7,7 @@ import {
     LayoutModel,
     MenuBarMode,
 } from 'mo/model/workbench/layout';
+import { MenuBarEvent } from 'mo/model/workbench/menuBar';
 
 export interface ILayoutService extends Component<ILayout> {
     /**
@@ -155,6 +156,7 @@ export class LayoutService
         const { mode: preMode } = menuBar;
         if (preMode !== mode) {
             this.setState({ menuBar: { ...menuBar, mode, hidden: false } });
+            this.emit(MenuBarEvent.onChangeMode, mode);
         }
     }
 

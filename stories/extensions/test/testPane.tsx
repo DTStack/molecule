@@ -316,6 +316,13 @@ PARTITIONED BY (ds string) lifecycle 1000;
             );
         };
 
+        const toggleMenuBarMode = () => {
+            const currentMode = molecule.layout.getMenuBarMode();
+            const newMode =
+                currentMode === 'horizontal' ? 'vertical' : 'horizontal';
+            molecule.layout.setMenuBarMode(newMode);
+        };
+
         return (
             <Scrollable isShowShadow>
                 <div>
@@ -360,6 +367,9 @@ PARTITIONED BY (ds string) lifecycle 1000;
                         <Button onClick={updateMenu}>Update MenuBar</Button>
                         <Button onClick={addSettingsItem}>
                             Append Settings Item
+                        </Button>
+                        <Button onClick={toggleMenuBarMode}>
+                            Toggle MenuBar mode
                         </Button>
                     </div>
                     <div style={{ margin: '50px 20px' }}>

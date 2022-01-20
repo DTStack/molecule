@@ -106,6 +106,8 @@ export class MenuBarController
                 this.automation[key] = value;
             }
         });
+
+        this.subscribe(MenuBarEvent.onChangeMode, this.updateMenuBarData);
     }
 
     public updateFocusinEle = (ele: HTMLElement | null) => {
@@ -209,6 +211,9 @@ export class MenuBarController
 
     public updateMenuBarMode = (mode: keyof typeof MenuBarMode) => {
         this.layoutService.setMenuBarMode(mode);
+    };
+
+    public updateMenuBarData = (mode: keyof typeof MenuBarMode) => {
         const { builtInMenuBarData } = this.builtinService.getModules();
         const menuBarData = this.getMenuBarDataByMode(mode, builtInMenuBarData);
         this.menuBarService.setMenus(menuBarData);

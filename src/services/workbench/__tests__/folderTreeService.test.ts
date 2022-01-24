@@ -18,9 +18,8 @@ import { randomId } from 'mo/common/utils';
 const TEST_ID = 'test-id';
 
 describe('Test StatusBarService', () => {
-    const folderTreeService = container.resolve<IFolderTreeService>(
-        FolderTreeService
-    );
+    const folderTreeService =
+        container.resolve<IFolderTreeService>(FolderTreeService);
     const mockMenuProps = [
         {
             id: 'File',

@@ -80,7 +80,8 @@ export interface IExplorerService extends Component<IExplorer> {
 @singleton()
 export class ExplorerService
     extends Component<IExplorer>
-    implements IExplorerService {
+    implements IExplorerService
+{
     protected state: IExplorer;
     constructor() {
         super();

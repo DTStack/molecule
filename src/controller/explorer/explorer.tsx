@@ -39,7 +39,8 @@ export interface IExplorerController extends Partial<Controller> {
 @singleton()
 export class ExplorerController
     extends Controller
-    implements IExplorerController {
+    implements IExplorerController
+{
     private readonly activityBarService: IActivityBarService;
     private readonly sidebarService: ISidebarService;
     private readonly explorerService: IExplorerService;

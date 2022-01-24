@@ -73,7 +73,8 @@ export interface ILayoutService extends Component<ILayout> {
 @singleton()
 export class LayoutService
     extends Component<ILayout>
-    implements ILayoutService {
+    implements ILayoutService
+{
     protected state: ILayout;
     private _container!: HTMLElement | null;
     constructor() {

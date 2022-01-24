@@ -8,9 +8,8 @@ import { EditorTreeEvent } from 'mo/model/workbench/explorer/editorTree';
 import { expectFnCalled } from '@test/utils';
 
 describe('Test StatusBarService', () => {
-    const editorTreeService = container.resolve<IEditorTreeService>(
-        EditorTreeService
-    );
+    const editorTreeService =
+        container.resolve<IEditorTreeService>(EditorTreeService);
 
     test('SearchBarService Class instance', () => {
         expect(editorTreeService).not.toBeUndefined();

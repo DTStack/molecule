@@ -37,13 +37,15 @@ export function ActivityBarItem(
             role="menu"
             data={contextMenu.map((menu) => {
                 if (menu.id) {
-                    const keybindingObj = KeybindingHelper.queryGlobalKeybinding(
-                        menu.id.toString()
-                    );
-                    if (keybindingObj) {
-                        menu.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
-                            keybindingObj
+                    const keybindingObj =
+                        KeybindingHelper.queryGlobalKeybinding(
+                            menu.id.toString()
                         );
+                    if (keybindingObj) {
+                        menu.keybinding =
+                            KeybindingHelper.convertSimpleKeybindingToString(
+                                keybindingObj
+                            );
                     }
                 }
                 return menu;

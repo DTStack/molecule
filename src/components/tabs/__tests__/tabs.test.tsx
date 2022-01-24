@@ -157,7 +157,8 @@ describe('The Tabs Components', () => {
         expect(mockFn).not.toBeCalled();
 
         // reset mock function
-        HTMLDivElement.prototype.getBoundingClientRect = originalBoundingClientRect;
+        HTMLDivElement.prototype.getBoundingClientRect =
+            originalBoundingClientRect;
         // @ts-ignore
         Event.prototype.clientX = originalClientX;
         // @ts-ignore

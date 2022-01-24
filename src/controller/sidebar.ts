@@ -8,7 +8,8 @@ export interface ISideBarController extends Partial<Controller> {}
 @singleton()
 export class SidebarController
     extends Controller
-    implements ISideBarController {
+    implements ISideBarController
+{
     private readonly sidebarService: ISidebarService;
 
     constructor() {

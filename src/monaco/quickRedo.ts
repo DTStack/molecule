@@ -53,8 +53,8 @@ export class QuickRedo extends Action2 {
             // monaco component should use the method from instance
             const editorInstance = this.editorService.editorInstance;
             if (editorInstance) {
-                const currentActiveGroup = this.editorService.getState()
-                    .current;
+                const currentActiveGroup =
+                    this.editorService.getState().current;
                 if (currentActiveGroup) {
                     const tab = this.editorService.getTabById(
                         currentActiveGroup.activeTab!,

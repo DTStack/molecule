@@ -63,21 +63,17 @@ export const layout = container.resolve<ILayoutService>(LayoutService);
 /**
  * The activityBar service
  */
-export const activityBar: IActivityBarService = container.resolve<IActivityBarService>(
-    ActivityBarService
-);
+export const activityBar: IActivityBarService =
+    container.resolve<IActivityBarService>(ActivityBarService);
 
-export const explorer: IExplorerService = container.resolve<IExplorerService>(
-    ExplorerService
-);
+export const explorer: IExplorerService =
+    container.resolve<IExplorerService>(ExplorerService);
 
-export const folderTree: IFolderTreeService = container.resolve<IFolderTreeService>(
-    FolderTreeService
-);
+export const folderTree: IFolderTreeService =
+    container.resolve<IFolderTreeService>(FolderTreeService);
 
-export const editorTree = container.resolve<IEditorTreeService>(
-    EditorTreeService
-);
+export const editorTree =
+    container.resolve<IEditorTreeService>(EditorTreeService);
 
 export const search = container.resolve<ISearchService>(SearchService);
 export const sidebar = container.resolve<ISidebarService>(SidebarService);
@@ -85,18 +81,16 @@ export const menuBar = container.resolve<IMenuBarService>(MenuBarService);
 export const editor = container.resolve<IEditorService>(EditorService);
 export const statusBar = container.resolve<IStatusBarService>(StatusBarService);
 export const panel = container.resolve<IPanelService>(PanelService);
-export const notification = container.resolve<INotificationService>(
-    NotificationService
-);
+export const notification =
+    container.resolve<INotificationService>(NotificationService);
 
 export const problems = container.resolve<IProblemsService>(ProblemsService);
 
 /**
  * The ColorTheme service
  */
-export const colorTheme = container.resolve<IColorThemeService>(
-    ColorThemeService
-);
+export const colorTheme =
+    container.resolve<IColorThemeService>(ColorThemeService);
 
 /**
  * The Settings service

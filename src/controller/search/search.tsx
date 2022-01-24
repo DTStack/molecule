@@ -106,11 +106,8 @@ export class SearchController extends Controller implements ISearchController {
 
     public getSearchIndex = (text: string, queryVal: string = '') => {
         let searchIndex: number = -1;
-        const {
-            isCaseSensitive,
-            isWholeWords,
-            isRegex,
-        } = this.searchService.getState();
+        const { isCaseSensitive, isWholeWords, isRegex } =
+            this.searchService.getState();
         const onlyCaseSensitiveMatch = isCaseSensitive;
         const onlyWholeWordsMatch = isWholeWords;
         const useAllCondtionsMatch = isCaseSensitive && isWholeWords;
@@ -222,12 +219,8 @@ export class SearchController extends Controller implements ISearchController {
     };
 
     public onSearch = (value: string = '', replaceValue: string = '') => {
-        const {
-            isRegex,
-            isCaseSensitive,
-            isWholeWords,
-            preserveCase,
-        } = this.searchService.getState();
+        const { isRegex, isCaseSensitive, isWholeWords, preserveCase } =
+            this.searchService.getState();
 
         this.emit(SearchEvent.onSearch, value, replaceValue, {
             isRegex,

@@ -38,7 +38,8 @@ export interface IFolderTreeController extends Partial<Controller> {
 @singleton()
 export class FolderTreeController
     extends Controller
-    implements IFolderTreeController {
+    implements IFolderTreeController
+{
     private readonly folderTreeService: IFolderTreeService;
     private readonly builtinService: IBuiltinService;
 

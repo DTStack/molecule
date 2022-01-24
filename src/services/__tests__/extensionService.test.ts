@@ -176,9 +176,8 @@ describe('Test ExtensionService', () => {
         languageExt.contributes!.languages = [];
         const extensions: IExtension[] = [mockExtension, languageExt];
 
-        const [languagesExts, otherExts] = instance.splitLanguagesExts(
-            extensions
-        );
+        const [languagesExts, otherExts] =
+            instance.splitLanguagesExts(extensions);
 
         expect(languagesExts.length).toBe(1);
         expect(otherExts.length).toBe(1);

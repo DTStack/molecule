@@ -40,12 +40,10 @@ const defaultVS = {
 
     'scrollbar.shadow': '#DDDDDD',
     'scrollbarSlider.background': Color.fromHex('#646464').transparent(0.4),
-    'scrollbarSlider.hoverBackground': Color.fromHex('#646464').transparent(
-        0.7
-    ),
-    'scrollbarSlider.activeBackground': Color.fromHex('#000000').transparent(
-        0.6
-    ),
+    'scrollbarSlider.hoverBackground':
+        Color.fromHex('#646464').transparent(0.7),
+    'scrollbarSlider.activeBackground':
+        Color.fromHex('#000000').transparent(0.6),
 
     'progressBar.background': Color.fromHex('#0E70C0'),
 
@@ -116,12 +114,10 @@ const defaultDark = {
 
     'scrollbar.shadow': '#000000',
     'scrollbarSlider.background': Color.fromHex('#797979').transparent(0.4),
-    'scrollbarSlider.hoverBackground': Color.fromHex('#646464').transparent(
-        0.7
-    ),
-    'scrollbarSlider.activeBackground': Color.fromHex('#BFBFBF').transparent(
-        0.4
-    ),
+    'scrollbarSlider.hoverBackground':
+        Color.fromHex('#646464').transparent(0.7),
+    'scrollbarSlider.activeBackground':
+        Color.fromHex('#BFBFBF').transparent(0.4),
 
     'progressBar.background': Color.fromHex('#0E70C0'),
 
@@ -189,9 +185,8 @@ const defaultHc = {
     'badge.background': Color.black,
     'badge.foreground': Color.white,
     'scrollbarSlider.background': Color.fromHex('#6FC3DF').transparent(0.6),
-    'scrollbarSlider.hoverBackground': Color.fromHex('#6FC3DF').transparent(
-        0.8
-    ),
+    'scrollbarSlider.hoverBackground':
+        Color.fromHex('#6FC3DF').transparent(0.8),
     'scrollbarSlider.activeBackground': '#6FC3DF',
 
     'progressBar.background': '#6FC3DF',

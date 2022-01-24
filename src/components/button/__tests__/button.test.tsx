@@ -39,9 +39,8 @@ describe('Test Button Component', () => {
         const classNormaleExist = element?.classList.contains(
             normalButtonClassName
         );
-        const classLargeExist = element?.classList.contains(
-            largeButtonClassName
-        );
+        const classLargeExist =
+            element?.classList.contains(largeButtonClassName);
 
         expect(classNormaleExist).toBeTruthy();
         expect(classLargeExist).not.toBeTruthy();
@@ -53,9 +52,8 @@ describe('Test Button Component', () => {
         const classNormaleExist = element?.classList.contains(
             normalButtonClassName
         );
-        const classLargeExist = element?.classList.contains(
-            largeButtonClassName
-        );
+        const classLargeExist =
+            element?.classList.contains(largeButtonClassName);
 
         expect(classNormaleExist).not.toBeTruthy();
         expect(classLargeExist).toBeTruthy();

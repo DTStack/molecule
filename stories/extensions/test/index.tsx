@@ -144,8 +144,7 @@ export const ExtendsTestPane: IExtension = {
                 value
                     ? {
                           type: 'warning',
-                          text:
-                              '结果集仅包含所有匹配项的子集，请使你的搜索更加精准',
+                          text: '结果集仅包含所有匹配项的子集，请使你的搜索更加精准',
                       }
                     : ''
             );

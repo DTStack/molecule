@@ -14,7 +14,8 @@ export interface IOutlineController extends Partial<Controller> {}
 @singleton()
 export class OutlineController
     extends Controller
-    implements IOutlineController {
+    implements IOutlineController
+{
     private readonly explorerService: IExplorerService;
     private readonly builtinService: IBuiltinService;
 
@@ -25,9 +26,8 @@ export class OutlineController
     }
 
     public initView() {
-        const {
-            builtInExplorerOutlinePanel,
-        } = this.builtinService.getModules();
+        const { builtInExplorerOutlinePanel } =
+            this.builtinService.getModules();
 
         if (builtInExplorerOutlinePanel) {
             this.explorerService.addPanel(builtInExplorerOutlinePanel);

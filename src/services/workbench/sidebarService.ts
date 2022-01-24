@@ -47,7 +47,8 @@ export interface ISidebarService extends Component<ISidebar> {
 @singleton()
 export class SidebarService
     extends Component<ISidebar>
-    implements ISidebarService {
+    implements ISidebarService
+{
     protected state: ISidebar;
 
     constructor() {

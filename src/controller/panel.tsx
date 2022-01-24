@@ -85,10 +85,8 @@ export class PanelController extends Controller implements IPanelController {
         e: React.MouseEvent,
         item: IActionBarItemProps
     ): void => {
-        const {
-            PANEL_TOOLBOX_CLOSE,
-            PANEL_TOOLBOX_RESIZE,
-        } = this.builtinService.getConstants();
+        const { PANEL_TOOLBOX_CLOSE, PANEL_TOOLBOX_RESIZE } =
+            this.builtinService.getConstants();
         if (item.id === PANEL_TOOLBOX_CLOSE) {
             this.monacoService.commandService.executeCommand(
                 QuickTogglePanelAction.ID

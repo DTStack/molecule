@@ -14,11 +14,8 @@ describe('The statusBar controller', () => {
     test('Should support to inject default value into service', () => {
         statusBarController.initView();
 
-        const {
-            leftItems,
-            rightItems,
-            contextMenu,
-        } = statusBarService.getState();
+        const { leftItems, rightItems, contextMenu } =
+            statusBarService.getState();
         expect(rightItems).toHaveLength(1);
         expect(leftItems).toHaveLength(0);
         expect(contextMenu).toHaveLength(1);
@@ -34,11 +31,8 @@ describe('The statusBar controller', () => {
         builtinService.inactiveModule('CONTEXT_MENU_HIDE_STATUS_BAR');
         statusBarController.initView();
 
-        const {
-            leftItems,
-            rightItems,
-            contextMenu,
-        } = statusBarService.getState();
+        const { leftItems, rightItems, contextMenu } =
+            statusBarService.getState();
         expect(rightItems).toHaveLength(0);
         expect(leftItems).toHaveLength(0);
         expect(contextMenu).toHaveLength(0);

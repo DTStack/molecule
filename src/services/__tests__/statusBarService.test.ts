@@ -23,9 +23,8 @@ const anotherStatusData = {
 };
 
 describe('Test StatusBarService', () => {
-    const statusBarService = container.resolve<IStatusBarService>(
-        StatusBarService
-    );
+    const statusBarService =
+        container.resolve<IStatusBarService>(StatusBarService);
 
     afterEach(() => {
         statusBarService.reset();

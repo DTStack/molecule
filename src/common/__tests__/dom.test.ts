@@ -1,4 +1,4 @@
-import { getPositionByPlacement } from '../dom';
+import { findParentByClassName, getPositionByPlacement } from '../dom';
 
 describe('Test functions in dom.ts', () => {
     test('The getPositionByPlacement function', () => {
@@ -33,5 +33,18 @@ describe('Test functions in dom.ts', () => {
         position = getPositionByPlacement('rightBottom', domRect);
         expect(typeof position.x).toBe('number');
         expect(typeof position.y).toBe('number');
+    });
+
+    test('The findParentByClassName function', () => {
+        const ele = document.createElement('div');
+        ele.setAttribute('class', 'test');
+        document.body.appendChild(ele);
+        const res = findParentByClassName(document.body, 'test');
+
+        expect(res).not.toBeUndefined();
+
+        expect(() => {
+            findParentByClassName(1, 'test');
+        }).toThrowError();
     });
 });

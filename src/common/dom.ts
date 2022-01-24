@@ -91,7 +91,7 @@ export function findParentByClassName<T>(element, className): T | null {
             element = element.parentElement;
         }
     } catch (e) {
-        throw new Error(e);
+        throw e;
     }
     return null;
 }

@@ -39,7 +39,8 @@ export interface IComponent<S = any> {
 
 export abstract class Component<S = any>
     extends GlobalEvent
-    implements IComponent<S> {
+    implements IComponent<S>
+{
     protected abstract state: S;
     private _event: EventEmitter;
 

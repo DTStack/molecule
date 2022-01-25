@@ -38,7 +38,8 @@ export interface IMenuBarController extends Partial<Controller> {
 @singleton()
 export class MenuBarController
     extends Controller
-    implements IMenuBarController {
+    implements IMenuBarController
+{
     private readonly menuBarService: IMenuBarService;
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
@@ -81,27 +82,29 @@ export class MenuBarController
             );
             this.menuBarService.setMenus(menuBarData);
         }
-        ([
-            [ACTION_QUICK_CREATE_FILE, () => this.createFile()],
-            [ACTION_QUICK_UNDO, () => this.undo()],
-            [ACTION_QUICK_REDO, () => this.redo()],
-            [ACTION_QUICK_SELECT_ALL, () => this.selectAll()],
-            [ACTION_QUICK_COPY_LINE_UP, () => this.copyLineUp()],
-            [MENU_VIEW_ACTIVITYBAR, () => this.updateActivityBar()],
-            [MENU_VIEW_MENUBAR, () => this.updateMenuBar()],
-            [MENU_VIEW_STATUSBAR, () => this.updateStatusBar()],
-            [MENU_QUICK_COMMAND, () => this.gotoQuickCommand()],
-            [ID_SIDE_BAR, () => this.updateSideBar()],
-            [MENU_VIEW_PANEL, () => this.updatePanel()],
+        (
             [
-                MENUBAR_MODE_HORIZONTAL,
-                () => this.updateMenuBarMode(MenuBarMode.horizontal),
-            ],
-            [
-                MENUBAR_MODE_VERTICAL,
-                () => this.updateMenuBarMode(MenuBarMode.vertical),
-            ],
-        ] as [string, () => void][]).forEach(([key, value]) => {
+                [ACTION_QUICK_CREATE_FILE, () => this.createFile()],
+                [ACTION_QUICK_UNDO, () => this.undo()],
+                [ACTION_QUICK_REDO, () => this.redo()],
+                [ACTION_QUICK_SELECT_ALL, () => this.selectAll()],
+                [ACTION_QUICK_COPY_LINE_UP, () => this.copyLineUp()],
+                [MENU_VIEW_ACTIVITYBAR, () => this.updateActivityBar()],
+                [MENU_VIEW_MENUBAR, () => this.updateMenuBar()],
+                [MENU_VIEW_STATUSBAR, () => this.updateStatusBar()],
+                [MENU_QUICK_COMMAND, () => this.gotoQuickCommand()],
+                [ID_SIDE_BAR, () => this.updateSideBar()],
+                [MENU_VIEW_PANEL, () => this.updatePanel()],
+                [
+                    MENUBAR_MODE_HORIZONTAL,
+                    () => this.updateMenuBarMode(MenuBarMode.horizontal),
+                ],
+                [
+                    MENUBAR_MODE_VERTICAL,
+                    () => this.updateMenuBarMode(MenuBarMode.vertical),
+                ],
+            ] as [string, () => void][]
+        ).forEach(([key, value]) => {
             if (key) {
                 this.automation[key] = value;
             }
@@ -189,9 +192,8 @@ export class MenuBarController
     };
 
     public copyLineUp = () => {
-        const {
-            ACTION_QUICK_COPY_LINE_UP,
-        } = this.builtinService.getConstants();
+        const { ACTION_QUICK_COPY_LINE_UP } =
+            this.builtinService.getConstants();
         if (ACTION_QUICK_COPY_LINE_UP) {
             this.monacoService.commandService.executeCommand(
                 ACTION_QUICK_COPY_LINE_UP
@@ -269,10 +271,8 @@ export class MenuBarController
         mode: keyof typeof MenuBarMode,
         menuData: IMenuBarItem[]
     ): IMenuBarItem[] {
-        const {
-            MENUBAR_MODE_VERTICAL,
-            MENUBAR_MODE_HORIZONTAL,
-        } = this.builtinService.getConstants();
+        const { MENUBAR_MODE_VERTICAL, MENUBAR_MODE_HORIZONTAL } =
+            this.builtinService.getConstants();
         const ids: (string | undefined)[] = [];
         if (mode === MenuBarMode.horizontal) {
             ids.push(MENUBAR_MODE_HORIZONTAL);
@@ -285,10 +285,8 @@ export class MenuBarController
     }
 
     private updateActivityBarContextMenu(menuId: UniqueId) {
-        const {
-            MENU_VIEW_MENUBAR,
-            CONTEXT_MENU_MENU,
-        } = this.builtinService.getConstants();
+        const { MENU_VIEW_MENUBAR, CONTEXT_MENU_MENU } =
+            this.builtinService.getConstants();
         if (CONTEXT_MENU_MENU && menuId === MENU_VIEW_MENUBAR) {
             this.activityBarService.toggleContextMenuChecked(CONTEXT_MENU_MENU);
         }

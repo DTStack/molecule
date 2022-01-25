@@ -36,7 +36,8 @@ export interface IActivityBarController extends Partial<Controller> {
 @singleton()
 export class ActivityBarController
     extends Controller
-    implements IActivityBarController {
+    implements IActivityBarController
+{
     private readonly activityBarService: IActivityBarService;
     private readonly settingsService: ISettingsService;
     private readonly monacoService: IMonacoService;
@@ -53,10 +54,8 @@ export class ActivityBarController
     }
 
     public initView() {
-        const {
-            activityBarData,
-            contextMenuData,
-        } = this.builtinService.getModules();
+        const { activityBarData, contextMenuData } =
+            this.builtinService.getModules();
         if (activityBarData) {
             this.activityBarService.add(activityBarData);
         }

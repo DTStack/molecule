@@ -19,10 +19,8 @@ describe('The editor tree controller', () => {
 
         const { data } = explorerService.getState();
         expect(data).toHaveLength(1);
-        const {
-            groupToolbar,
-            ...restEditor
-        } = modules.builtInExplorerEditorPanel();
+        const { groupToolbar, ...restEditor } =
+            modules.builtInExplorerEditorPanel();
         expect(data[0]).toEqual(expect.objectContaining(restEditor));
 
         explorerService.reset();

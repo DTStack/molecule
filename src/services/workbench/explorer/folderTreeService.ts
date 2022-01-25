@@ -147,7 +147,8 @@ export interface IFolderTreeService extends Component<IFolderTree> {
 @singleton()
 export class FolderTreeService
     extends Component<IFolderTree>
-    implements IFolderTreeService {
+    implements IFolderTreeService
+{
     protected state: IFolderTree;
     private readonly explorerService: IExplorerService;
     private readonly builtinService: IBuiltinService;

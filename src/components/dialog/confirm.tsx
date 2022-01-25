@@ -5,9 +5,7 @@ import { Icon } from 'mo/components/icon';
 import { IModalFuncProps, destroyFns } from './modal';
 import ConfirmDialog from './confirmDialog';
 
-export type ModalFunc = (
-    props: IModalFuncProps
-) => {
+export type ModalFunc = (props: IModalFuncProps) => {
     destroy: () => void;
 };
 

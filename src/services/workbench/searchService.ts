@@ -94,7 +94,8 @@ export interface ISearchService extends Component<ISearchProps> {
 @singleton()
 export class SearchService
     extends Component<ISearchProps>
-    implements ISearchService {
+    implements ISearchService
+{
     protected state: ISearchProps;
     private builtinService: IBuiltinService;
     constructor() {
@@ -141,9 +142,8 @@ export class SearchService
 
     public toggleCaseSensitive() {
         const { isCaseSensitive } = this.state;
-        const {
-            SEARCH_CASE_SENSITIVE_COMMAND_ID,
-        } = this.builtinService.getConstants();
+        const { SEARCH_CASE_SENSITIVE_COMMAND_ID } =
+            this.builtinService.getConstants();
         if (SEARCH_CASE_SENSITIVE_COMMAND_ID) {
             this.setState({
                 isCaseSensitive: !isCaseSensitive,
@@ -157,9 +157,8 @@ export class SearchService
 
     public toggleWholeWord() {
         const { isWholeWords } = this.state;
-        const {
-            SEARCH_WHOLE_WORD_COMMAND_ID,
-        } = this.builtinService.getConstants();
+        const { SEARCH_WHOLE_WORD_COMMAND_ID } =
+            this.builtinService.getConstants();
         if (SEARCH_WHOLE_WORD_COMMAND_ID) {
             this.setState({
                 isWholeWords: !isWholeWords,
@@ -170,9 +169,8 @@ export class SearchService
 
     public toggleRegex() {
         const { isRegex } = this.state;
-        const {
-            SEARCH_REGULAR_EXPRESSION_COMMAND_ID,
-        } = this.builtinService.getConstants();
+        const { SEARCH_REGULAR_EXPRESSION_COMMAND_ID } =
+            this.builtinService.getConstants();
         if (SEARCH_REGULAR_EXPRESSION_COMMAND_ID) {
             this.setState({
                 isRegex: !isRegex,
@@ -183,9 +181,8 @@ export class SearchService
 
     public togglePreserveCase() {
         const { preserveCase } = this.state;
-        const {
-            SEARCH_PRESERVE_CASE_COMMAND_ID,
-        } = this.builtinService.getConstants();
+        const { SEARCH_PRESERVE_CASE_COMMAND_ID } =
+            this.builtinService.getConstants();
         if (SEARCH_PRESERVE_CASE_COMMAND_ID) {
             this.setState({
                 preserveCase: !preserveCase,

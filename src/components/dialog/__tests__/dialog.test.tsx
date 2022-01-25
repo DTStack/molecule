@@ -63,8 +63,9 @@ describe('Test Modal Component', () => {
             <Modal footer={TEST_FOOTER} centered={true} visible={true} />
         );
         const component = wrapper.getByTestId(TEST_ID);
-        const div = component?.closest('div')!.parentElement!.parentElement
-            ?.parentElement;
+        const div =
+            component?.closest('div')!.parentElement!.parentElement
+                ?.parentElement;
 
         expect(div!.classList).toContain(wrapDialogClassName);
     });

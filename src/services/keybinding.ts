@@ -32,7 +32,8 @@ export const KeybindingHelper: IKeybinding = {
     _isMac: Utils.isMacOs(),
 
     queryGlobalKeybinding: (id: string) => {
-        const defaultKeybindings: ResolvedKeybindingItem[] = KeybindingsRegistry.getDefaultKeybindings();
+        const defaultKeybindings: ResolvedKeybindingItem[] =
+            KeybindingsRegistry.getDefaultKeybindings();
         const globalKeybindings = defaultKeybindings.filter((key) => !key.when);
 
         // 'Cause one action can occupy multiply keybinding, so there should be filter rather than find

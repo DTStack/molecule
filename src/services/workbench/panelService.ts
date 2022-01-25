@@ -149,10 +149,8 @@ export class PanelService extends Component<IPanel> implements IPanelService {
 
     public toggleMaximize(): void {
         const { PANEL_TOOLBOX_RESIZE } = this.builtinService.getConstants();
-        const {
-            builtInPanelToolboxResize,
-            builtInPanelToolboxReStore,
-        } = this.builtinService.getModules();
+        const { builtInPanelToolboxResize, builtInPanelToolboxReStore } =
+            this.builtinService.getModules();
         const { toolbox = [] } = this.state;
         if (builtInPanelToolboxResize && builtInPanelToolboxReStore) {
             const resizeBtnIndex = toolbox?.findIndex(
@@ -160,7 +158,8 @@ export class PanelService extends Component<IPanel> implements IPanelService {
             );
             const resizeBtn = toolbox[resizeBtnIndex];
             if (resizeBtn) {
-                const panelMaximized = this.layoutService.togglePanelMaximized();
+                const panelMaximized =
+                    this.layoutService.togglePanelMaximized();
 
                 toolbox[resizeBtnIndex] = panelMaximized
                     ? builtInPanelToolboxReStore

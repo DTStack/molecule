@@ -51,9 +51,8 @@ const setPositionForSubMenu = (
     else {
         pos.x = pos.x + domRect.width;
         // The vertical menu default has padding 0.5em so that need reduce the padding
-        const fontSize = getComputedStyle(subMenu).getPropertyValue(
-            'font-size'
-        );
+        const fontSize =
+            getComputedStyle(subMenu).getPropertyValue('font-size');
         const paddingTop = em2Px(0.5, parseInt(fontSize.replace(/px/g, '')));
         pos.y = pos.y - paddingTop;
     }

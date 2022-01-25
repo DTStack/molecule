@@ -275,9 +275,8 @@ export function Collapse(props: ICollapseProps) {
 
                 // get grow-zero panels' heights
                 const growZeroPanelsKeys = getZeroPanelsByKeys(keys, panels);
-                const growZeroPanelsHeights = getContentHeightsByKeys(
-                    growZeroPanelsKeys
-                );
+                const growZeroPanelsHeights =
+                    getContentHeightsByKeys(growZeroPanelsKeys);
 
                 // the height grow-normal panels can occupied =
                 // the height active panels can occupied -

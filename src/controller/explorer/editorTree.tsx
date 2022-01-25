@@ -40,7 +40,8 @@ export interface IEditorTreeController extends Partial<Controller> {
 @singleton()
 export class EditorTreeController
     extends Controller
-    implements IEditorTreeController {
+    implements IEditorTreeController
+{
     private readonly explorerService: ExplorerService;
     private readonly editService: EditorService;
     private readonly builtinService: IBuiltinService;

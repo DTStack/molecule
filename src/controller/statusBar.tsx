@@ -24,7 +24,8 @@ export interface IStatusBarController extends Partial<Controller> {
 @singleton()
 export class StatusBarController
     extends Controller
-    implements IStatusBarController {
+    implements IStatusBarController
+{
     private readonly menuBarController;
     private readonly statusBarService: IStatusBarService;
     private readonly builtinService: IBuiltinService;
@@ -37,10 +38,8 @@ export class StatusBarController
     }
 
     public initView() {
-        const {
-            STATUS_EDITOR_INFO,
-            CONTEXT_MENU_HIDE_STATUS_BAR,
-        } = this.builtinService.getModules();
+        const { STATUS_EDITOR_INFO, CONTEXT_MENU_HIDE_STATUS_BAR } =
+            this.builtinService.getModules();
 
         const nextRightItems = cloneDeep(
             this.statusBarService.getState().rightItems

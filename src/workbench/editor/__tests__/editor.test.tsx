@@ -36,13 +36,8 @@ jest.mock('mo/components/tabs', () => {
     return {
         ...originalModule,
         Tabs: (props) => {
-            const {
-                children,
-                onSelectTab,
-                onMoveTab,
-                onCloseTab,
-                ...others
-            } = props;
+            const { children, onSelectTab, onMoveTab, onCloseTab, ...others } =
+                props;
             return (
                 <div
                     data-testid={TEST_ID}

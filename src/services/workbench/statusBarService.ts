@@ -62,7 +62,8 @@ type StatusBarItemInfos =
 @singleton()
 export class StatusBarService
     extends Component<IStatusBar>
-    implements IStatusBarService {
+    implements IStatusBarService
+{
     protected state: IStatusBar;
 
     constructor() {

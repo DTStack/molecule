@@ -97,8 +97,8 @@ describe('Test Input Component', () => {
                 style={{ background: INPUT_BGCOLOR }}
             />
         );
-        const placeHolderContain = wrapper.getByTestId(TEST_ID).style
-            .background;
+        const placeHolderContain =
+            wrapper.getByTestId(TEST_ID).style.background;
 
         expect(placeHolderContain).toBe(INPUT_BGCOLOR);
     });

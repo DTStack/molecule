@@ -34,11 +34,10 @@ describe('The explorer controller', () => {
             expect.objectContaining(modules.builtInExplorerFolderPanel())
         );
 
-        const {
-            data: activityBarData,
-            selected,
-        } = activityBarService.getState();
-        const builtInExplorerActivityItem = modules.builtInExplorerActivityItem();
+        const { data: activityBarData, selected } =
+            activityBarService.getState();
+        const builtInExplorerActivityItem =
+            modules.builtInExplorerActivityItem();
 
         expect(activityBarData).toHaveLength(1);
         expect(activityBarData![0]).toEqual(
@@ -71,10 +70,8 @@ describe('The explorer controller', () => {
         expect(headerToolBar).toBeUndefined();
         expect(data).toHaveLength(0);
 
-        const {
-            data: activityBarData,
-            selected,
-        } = activityBarService.getState();
+        const { data: activityBarData, selected } =
+            activityBarService.getState();
         expect(activityBarData).toHaveLength(0);
         expect(selected).toBe('');
 

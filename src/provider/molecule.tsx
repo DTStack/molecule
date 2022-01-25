@@ -56,9 +56,8 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     initialize() {
         const { extensions = [] } = this.props;
 
-        const [languages, restExts] = this.extensionService.splitLanguagesExts(
-            extensions
-        );
+        const [languages, restExts] =
+            this.extensionService.splitLanguagesExts(extensions);
 
         // First to init the monacoService
         this.monacoService.initWorkspace(this.layoutService.container!);

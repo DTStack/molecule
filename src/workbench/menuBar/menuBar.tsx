@@ -36,9 +36,10 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
                     const simplyKeybinding =
                         KeybindingHelper.queryGlobalKeybinding(head.id!) || [];
                     if (simplyKeybinding.length) {
-                        head.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
-                            simplyKeybinding
-                        );
+                        head.keybinding =
+                            KeybindingHelper.convertSimpleKeybindingToString(
+                                simplyKeybinding
+                            );
                     }
                 }
             }

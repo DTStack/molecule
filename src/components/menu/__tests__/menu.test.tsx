@@ -331,9 +331,9 @@ describe('Test the Menu Component', () => {
             },
         ];
         const menu = renderer.create(<MenuTest />);
-        const menuNode: any = (menu as renderer.ReactTestRenderer).root.findByType(
-            Menu
-        );
+        const menuNode: any = (
+            menu as renderer.ReactTestRenderer
+        ).root.findByType(Menu);
         expect(menuNode._fiber).not.toBeUndefined();
 
         const menuRef = menuNode._fiber.ref;

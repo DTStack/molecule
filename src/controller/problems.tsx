@@ -24,7 +24,8 @@ export interface IProblemsController extends Partial<Controller> {
 @singleton()
 export class ProblemsController
     extends Controller
-    implements IProblemsController {
+    implements IProblemsController
+{
     private readonly panelService: IPanelService;
     private readonly statusBarService: IStatusBarService;
     private readonly layoutService: ILayoutService;
@@ -62,10 +63,8 @@ export class ProblemsController
     };
 
     public initView() {
-        const {
-            builtInStatusProblems: statusProblems,
-            builtInPanelProblems,
-        } = this.builtinService.getModules();
+        const { builtInStatusProblems: statusProblems, builtInPanelProblems } =
+            this.builtinService.getModules();
 
         if (statusProblems) {
             statusProblems.render = (item) => (
@@ -89,10 +88,8 @@ export class ProblemsController
             this.panelService.setActive(problemsPanel.id);
         }
 
-        const {
-            PROBLEM_MODEL_ID,
-            PROBLEM_MODEL_NAME,
-        } = this.builtinService.getConstants();
+        const { PROBLEM_MODEL_ID, PROBLEM_MODEL_NAME } =
+            this.builtinService.getConstants();
 
         this.problemsService.setState({
             id: PROBLEM_MODEL_ID,

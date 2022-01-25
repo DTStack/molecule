@@ -102,7 +102,8 @@ interface IMapNode<T> {
  * @aware There should be aware of that the id of tree node must be global unique
  */
 export class TreeViewUtil<T extends IWithIdProps = any>
-    implements ITreeInterface<T> {
+    implements ITreeInterface<T>
+{
     protected hashMap: Map<string, IMapNode<T>> = new Map();
     count: number = 0;
     obj: T;

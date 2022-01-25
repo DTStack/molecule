@@ -7,6 +7,7 @@ import {
     ColorThemeService,
     DEFAULT_THEME_CLASS_NAME,
 } from '../theme/colorThemeService';
+import { ColorThemeMode, ColorScheme } from 'mo/model/colorTheme';
 
 const DarkTestTheme = {
     id: 'Default Test',
@@ -132,5 +133,37 @@ describe('The Color Theme Service', () => {
         expectLoggerErrorToBeCalled(() => {
             colorThemeService.updateTheme(DarkTestTheme);
         });
+    });
+
+    test('Should support to get colorThemeMode', () => {
+        colorThemeService.updateTheme({
+            ...BuiltInColorTheme,
+            type: ColorScheme.DARK,
+        });
+        expect(colorThemeService.getColorThemeMode()).toBe(ColorThemeMode.dark);
+
+        colorThemeService.updateTheme({
+            ...BuiltInColorTheme,
+            type: ColorScheme.LIGHT,
+        });
+        expect(colorThemeService.getColorThemeMode()).toBe(
+            ColorThemeMode.light
+        );
+
+        colorThemeService.updateTheme({
+            ...BuiltInColorTheme,
+            type: undefined,
+            colors: {
+                'molecule.welcomeBackground': '#252526',
+            },
+        });
+        expect(colorThemeService.getColorThemeMode()).toBe(ColorThemeMode.dark);
+
+        colorThemeService.updateTheme({
+            ...BuiltInColorTheme,
+            type: undefined,
+            colors: {},
+        });
+        expect(colorThemeService.getColorThemeMode()).toBe(ColorThemeMode.dark);
     });
 });

@@ -44,9 +44,9 @@ export class MenuBarController
     private readonly monacoService: IMonacoService;
     private readonly builtinService: IBuiltinService;
     private readonly activityBarService: IActivityBarService;
-    private focusinEle: HTMLElement | null = null;
 
-    private automation = {};
+    private _focusinEle: HTMLElement | null = null;
+    private _automation = {};
 
     constructor() {
         super();
@@ -103,7 +103,7 @@ export class MenuBarController
             ],
         ] as [string, () => void][]).forEach(([key, value]) => {
             if (key) {
-                this.automation[key] = value;
+                this._automation[key] = value;
             }
         });
 
@@ -112,7 +112,7 @@ export class MenuBarController
 
     public updateFocusinEle = (ele: HTMLElement | null) => {
         if (ele?.id == ID_APP) return;
-        this.focusinEle = ele;
+        this._focusinEle = ele;
     };
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
@@ -124,7 +124,7 @@ export class MenuBarController
          * 2、we have no way of knowing whether user-defined events are executed internally
          */
         this.emit(MenuBarEvent.onSelect, menuId);
-        this.automation[menuId]?.();
+        this._automation[menuId]?.();
 
         // Update the check status of MenuBar in the contextmenu of ActivityBar
         this.updateActivityBarContextMenu(menuId);
@@ -144,7 +144,7 @@ export class MenuBarController
         if (ACTION_QUICK_UNDO) {
             this.monacoService.commandService.executeCommand(
                 ACTION_QUICK_UNDO,
-                this.focusinEle
+                this._focusinEle
             );
         }
     };
@@ -154,7 +154,7 @@ export class MenuBarController
         if (ACTION_QUICK_REDO) {
             this.monacoService.commandService.executeCommand(
                 ACTION_QUICK_REDO,
-                this.focusinEle
+                this._focusinEle
             );
         }
     };
@@ -183,7 +183,7 @@ export class MenuBarController
         if (ACTION_QUICK_SELECT_ALL) {
             this.monacoService.commandService.executeCommand(
                 ACTION_QUICK_SELECT_ALL,
-                this.focusinEle
+                this._focusinEle
             );
         }
     };

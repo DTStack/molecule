@@ -85,19 +85,79 @@ export function connect<T = any>(
             }
         }
 
+        getControllers() {
+            const target = {};
+            if (!Controller) {
+                return target;
+            }
+
+            this.handleController((controller: Controller, prop) => {
+                if (prop) {
+                    Object.assign(target, {
+                        [prop]: this.getObjectPublicProperties(controller),
+                    });
+                } else {
+                    Object.assign(
+                        target,
+                        this.getObjectPublicProperties(controller)
+                    );
+                }
+            });
+            return target;
+        }
+
+        handleController(
+            callback: (controller: Controller, prop?: string) => void
+        ) {
+            if (this.isValidController(Controller as Controller)) {
+                callback(Controller as Controller);
+            } else {
+                for (const name in Controller) {
+                    if (name) {
+                        const controller: Controller = Controller[name];
+                        if (this.isValidController(controller)) {
+                            callback(controller, name);
+                        }
+                    }
+                }
+            }
+        }
+
         render() {
             return (
                 <View
                     {...this.state}
-                    {...this.getServiceState()}
                     {...this.props}
-                    {...Controller}
+                    {...this.getServiceState()}
+                    {...this.getControllers()}
                 />
             );
         }
 
         private isValidService(service: IComponent) {
             return typeof service.onUpdateState === 'function';
+        }
+
+        private isValidController(controller: Controller) {
+            return typeof controller.initView === 'function';
+        }
+
+        private getObjectPublicProperties(obj: Controller) {
+            const keys = Object.keys(obj);
+            const result = {};
+            keys.forEach((key) => {
+                // Filter the Service, Controller instances and private properties which start with '_'
+                // TODO There need a better way to filter the private properties of Object,
+                // maybe we can make use of the # identifier in future.
+                if (
+                    !key.endsWith('Service') &&
+                    !key.endsWith('Controller') &&
+                    !key.startsWith('_')
+                ) {
+                    result[key] = obj[key];
+                }
+            });
+            return result;
         }
     };
 }

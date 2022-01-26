@@ -41,7 +41,7 @@ describe('The menuBar controller', () => {
     test('Should support to update the focusin element', () => {
         menuBarController.updateFocusinEle(mockEle);
 
-        expect((menuBarController as any).focusinEle).toBe(mockEle);
+        expect((menuBarController as any)._focusinEle).toBe(mockEle);
     });
 
     test('Should support to execute the onClick method', () => {

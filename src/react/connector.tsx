@@ -85,7 +85,7 @@ export function connect<T = any>(
             }
         }
 
-        getControllers() {
+        getControllerProperties() {
             const target = {};
             if (!Controller) {
                 return target;
@@ -129,7 +129,7 @@ export function connect<T = any>(
                     {...this.state}
                     {...this.props}
                     {...this.getServiceState()}
-                    {...this.getControllers()}
+                    {...this.getControllerProperties()}
                 />
             );
         }

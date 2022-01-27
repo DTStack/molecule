@@ -30,8 +30,12 @@ describe('The LocaleNotification Component', () => {
     test('Should support to reload by pressing the Enter key.', async () => {
         const originalFunction = window.location.reload;
         const mockFn = jest.fn();
+        Reflect.deleteProperty(window, 'location');
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: { reload: mockFn },
+        });
         render(<LocaleNotification locale="zh-CN" />);
-        window.location.reload = mockFn;
 
         await new Promise((resolve) => {
             setTimeout(() => {
@@ -41,7 +45,9 @@ describe('The LocaleNotification Component', () => {
             }, 1000);
         });
 
+        expect(jest.isMockFunction(window.location.reload)).toBeTruthy();
         expect(mockFn).toBeCalled();
+
         window.location.reload = originalFunction;
     });
 });

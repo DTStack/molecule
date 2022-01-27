@@ -26,4 +26,22 @@ describe('The LocaleNotification Component', () => {
 
         window.location.reload = originalFunction;
     });
+
+    test('Should support to reload by pressing the Enter key.', async () => {
+        const originalFunction = window.location.reload;
+        const mockFn = jest.fn();
+        render(<LocaleNotification locale="zh-CN" />);
+        window.location.reload = mockFn;
+
+        await new Promise((resolve) => {
+            setTimeout(() => {
+                fireEvent.keyDown(document, { key: 'Enter', code: 'Enter' });
+                fireEvent.keyUp(document, { key: 'Enter', code: 'Enter' });
+                resolve(true);
+            }, 1000);
+        });
+
+        expect(mockFn).toBeCalled();
+        window.location.reload = originalFunction;
+    });
 });

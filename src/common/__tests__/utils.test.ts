@@ -1,4 +1,4 @@
-import { normalizeFlattedObject } from '../utils';
+import { normalizeFlattedObject, colorLightOrDark } from '../utils';
 
 describe('Test Utils', () => {
     test('The normalizeFlattedObject function', () => {
@@ -34,5 +34,10 @@ describe('Test Utils', () => {
         };
         const normalized = normalizeFlattedObject(testData);
         expect(normalized).toEqual(expected);
+    });
+
+    test('The colorLightOrDark function', () => {
+        expect(colorLightOrDark('#000')).toBe('dark');
+        expect(colorLightOrDark('rgb(255,255,255)')).toBe('light');
     });
 });

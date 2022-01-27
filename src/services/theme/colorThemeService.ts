@@ -4,14 +4,14 @@
  */
 
 import 'reflect-metadata';
-import { IColorTheme } from 'mo/model/colorTheme';
+import { IColorTheme, ColorThemeMode, ColorScheme } from 'mo/model/colorTheme';
 import { singleton } from 'tsyringe';
 import { editor as monacoEditor } from 'mo/monaco';
 import { applyStyleSheetRules } from 'mo/common/css';
 import { getThemeData, convertToCSSVars } from './helper';
 import logger from 'mo/common/logger';
 import { prefixClaName } from 'mo/common/className';
-import { searchById } from 'mo/common/utils';
+import { searchById, colorLightOrDark } from 'mo/common/utils';
 
 export interface IColorThemeService {
     /**
@@ -53,6 +53,10 @@ export interface IColorThemeService {
      * Reset theme
      */
     reset(): void;
+    /**
+     * Get the mode('dark' or 'light') of the current Color Theme
+     */
+    getColorThemeMode(): ColorThemeMode;
 }
 
 /**
@@ -152,5 +156,28 @@ export class ColorThemeService implements IColorThemeService {
     public reset() {
         this.colorThemes = [BuiltInColorTheme];
         this.setTheme(BuiltInColorTheme.id);
+    }
+
+    public getColorThemeMode(): ColorThemeMode {
+        const { colors, type } = this.colorTheme;
+
+        // Try to get colorThemeMode from type
+        if (type === ColorScheme.DARK || type === ColorScheme.HIGH_CONTRAST) {
+            return ColorThemeMode.dark;
+        } else if (type === ColorScheme.LIGHT) {
+            return ColorThemeMode.light;
+        }
+
+        // Try to get colorThemeMode from background color
+        const background =
+            colors?.['editor.background'] ||
+            colors?.['tab.activeBackground'] ||
+            colors?.['molecule.welcomeBackground'];
+        if (background) {
+            return colorLightOrDark(background) as ColorThemeMode;
+        }
+
+        // Default dark
+        return ColorThemeMode.dark;
     }
 }

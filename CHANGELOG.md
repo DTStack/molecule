@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-beta.3](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1.1...v0.9.0-beta.3) (2022-01-27)
+
+### Features
+
+-   add a Display component that controlling the Workbench Parts ([#564](https://github.com/DTStack/molecule/issues/564)) ([948f09c](https://github.com/DTStack/molecule/commit/948f09c05ec508c8e29f2c79d81fac4a598cfcbb))
+-   add Korean language pack ([#558](https://github.com/DTStack/molecule/issues/558)) ([b9f817d](https://github.com/DTStack/molecule/commit/b9f817d1761ff6329634909226eb4fb8598ce735))
+-   change the interaction of MenuBar in horizontal mode ([#636](https://github.com/DTStack/molecule/issues/636)) ([b352afd](https://github.com/DTStack/molecule/commit/b352afda1043a1c16f34cfb58e8d6b879ea0f783))
+-   provide types of Keybinding and QuickAccess ([#567](https://github.com/DTStack/molecule/issues/567)) ([0118b43](https://github.com/DTStack/molecule/commit/0118b4335b8557f2fbd4f256fcb23c08b617e16d))
+-   remove the onRemove processing logic in the built-in FolderTree extension ([#617](https://github.com/DTStack/molecule/issues/617)) ([7a77374](https://github.com/DTStack/molecule/commit/7a7737480a98c87e2c97a148e7f1730e28d075dd))
+-   support the horizontal layout of MenuBar ([#553](https://github.com/DTStack/molecule/issues/553)) ([2cf2abb](https://github.com/DTStack/molecule/commit/2cf2abba809cfa63d778a20e4b3d6c65f8f070f3))
+-   support to dispose the Action ([#599](https://github.com/DTStack/molecule/issues/599)) ([bfdf0bb](https://github.com/DTStack/molecule/commit/bfdf0bb34511254de3bb4b15e3b3796ef68fa023))
+-   support to get the mode of the current Color Theme ([#641](https://github.com/DTStack/molecule/issues/641)) ([57f8fab](https://github.com/DTStack/molecule/commit/57f8fab95182e4074fc66de2b0fef5a195dc972e))
+-   support to set the folderTree nodes whether to sort by default ([#614](https://github.com/DTStack/molecule/issues/614)) ([99754f9](https://github.com/DTStack/molecule/commit/99754f96db39403ab6edafd11f7730e6f059f9c4))
+
+### Bug Fixes
+
+-   Connect component supports to unsubscribe event by pass the callback ([#635](https://github.com/DTStack/molecule/issues/635)) ([bde0274](https://github.com/DTStack/molecule/commit/bde0274857bc3b56b62931824af2537e228dd472))
+-   correct the style of input and select ([#578](https://github.com/DTStack/molecule/issues/578)) ([e0ba0fc](https://github.com/DTStack/molecule/commit/e0ba0fc91cfe968c13357667b5eb0b375484eafa))
+-   increase the z-index value of SubMenu in horizontal mode ([#611](https://github.com/DTStack/molecule/issues/611)) ([b11b4e9](https://github.com/DTStack/molecule/commit/b11b4e90970d79a2000c2eb7fba8860348145262))
+-   let defaultLocale works ([#639](https://github.com/DTStack/molecule/issues/639)) ([2faaa9f](https://github.com/DTStack/molecule/commit/2faaa9f9977ea2ce6e4a3573cc788ca945fbc99c))
+-   not allowed to reload the initialize method ([#580](https://github.com/DTStack/molecule/issues/580)) ([7229fc5](https://github.com/DTStack/molecule/commit/7229fc5e4c01e2777934641d30676aacc31b6454))
+-   optimize the style of MenuBar ([#629](https://github.com/DTStack/molecule/issues/629)) ([f355c88](https://github.com/DTStack/molecule/commit/f355c88d6151ccddab773317776adf8c834790de))
+-   re-layout the Workbench when StatusBar is hidden ([#557](https://github.com/DTStack/molecule/issues/557)) ([2d89f56](https://github.com/DTStack/molecule/commit/2d89f568289c62b4c36ee506ac3b62e7f1fec20b))
+-   sync menuBar mode status ([#637](https://github.com/DTStack/molecule/issues/637)) ([ecdb312](https://github.com/DTStack/molecule/commit/ecdb3128f3308751f52db134ebf8019ff1e0e366))
+-   the style of the context menu of ActivityBarItem ([#613](https://github.com/DTStack/molecule/issues/613)) ([08fd30f](https://github.com/DTStack/molecule/commit/08fd30f8478028f5e05c3e855cbacd1f4844f827))
+
 ## [0.9.0-beta.2](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1.1...v0.9.0-beta.2) (2022-01-05)
 
 ### Features

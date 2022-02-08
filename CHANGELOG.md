@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-beta.3.1](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3...v0.9.0-beta.3.1) (2022-02-08)
+
 ## [0.9.0-beta.3](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1.1...v0.9.0-beta.3) (2022-01-27)
 
 ### Features

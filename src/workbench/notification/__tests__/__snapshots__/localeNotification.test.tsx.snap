@@ -5,7 +5,7 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
   style={
     Object {
       "lineHeight": "1.5",
-      "textAlign": "left",
+      "textAlign": "right",
       "width": 420,
     }
   }
@@ -14,6 +14,7 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
     style={
       Object {
         "direction": "ltr",
+        "textAlign": "left",
         "whiteSpace": "normal",
       }
     }
@@ -33,16 +34,28 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
       Notice: Reload the Page could lose the data, Please confirm you have saved before.
     </p>
   </div>
-  <a
-    className="mo-btn mo-btn--normal"
-    onClick={[Function]}
+  <div
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
     style={
       Object {
-        "width": 150,
+        "display": "inline-block",
+        "marginBottom": 2,
       }
     }
+    tabIndex={0}
   >
-    Confirm Reload
-  </a>
+    <a
+      className="mo-btn mo-btn--normal"
+      onClick={[Function]}
+      style={
+        Object {
+          "width": 150,
+        }
+      }
+    >
+      Confirm Reload
+    </a>
+  </div>
 </div>
 `;

@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { create } from 'react-test-renderer';
 import LocaleNotification from '../notificationPane/localeNotification';
@@ -35,18 +35,16 @@ describe('The LocaleNotification Component', () => {
             writable: true,
             value: { reload: mockFn },
         });
-        render(<LocaleNotification locale="zh-CN" />);
+        const { getByText } = render(<LocaleNotification locale="zh-CN" />);
+        const elem = getByText('Confirm Reload');
 
-        await new Promise((resolve) => {
-            setTimeout(() => {
-                fireEvent.keyDown(document, { key: 'Enter', code: 'Enter' });
-                fireEvent.keyUp(document, { key: 'Enter', code: 'Enter' });
-                resolve(true);
-            }, 1000);
+        await waitFor(() => {
+            fireEvent.keyDown(elem, { key: 'Enter', code: 'Enter' });
+            fireEvent.keyUp(elem, { key: 'Enter', code: 'Enter' });
+
+            expect(jest.isMockFunction(window.location.reload)).toBeTruthy();
+            expect(mockFn).toBeCalled();
         });
-
-        expect(jest.isMockFunction(window.location.reload)).toBeTruthy();
-        expect(mockFn).toBeCalled();
 
         window.location.reload = originalFunction;
     });

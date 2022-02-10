@@ -166,4 +166,15 @@ describe('The Color Theme Service', () => {
         });
         expect(colorThemeService.getColorThemeMode()).toBe(ColorThemeMode.dark);
     });
+
+    test('Listen to the theme changed event', () => {
+        const fn = jest.fn();
+        colorThemeService.onChange(fn);
+        colorThemeService.setTheme(BuiltInColorTheme.id);
+
+        expect(fn).toBeCalledTimes(1);
+        expect(colorThemeService.getColorTheme()!.id).toEqual(
+            BuiltInColorTheme.id
+        );
+    });
 });

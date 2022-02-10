@@ -45,22 +45,32 @@ export function HorizontalView(props: IHorizontalViewProps) {
 
         const handleClickMenuBar = (e: MouseEvent) => {
             const isRootLiElem = checkIsRootLiElem(e);
-            if (!isRootLiElem) return;
-            if (autoDisplayMenu) {
-                e.preventDefault();
-                e.stopPropagation();
-                menuRef.current?.dispose?.();
+            const target = e.target as HTMLElement;
+
+            if (isRootLiElem) {
+                if (autoDisplayMenu) {
+                    menuRef.current?.dispose?.();
+                }
+                // Delay the execution of setAutoDisplayMenu to ensure that the menu can be displayed.
+                setTimeout(() => setAutoDisplayMenu(!autoDisplayMenu));
+            } else {
+                const liElem = target.closest('li');
+                const isNormalLiElem =
+                    liElem &&
+                    menuBarElem.contains(liElem) &&
+                    !liElem?.dataset.submenu;
+
+                if (!liElem || isNormalLiElem) {
+                    setAutoDisplayMenu(false);
+                }
             }
-            // Delay the execution of setAutoDisplayMenu to ensure that the menu can be displayed.
-            setTimeout(() => setAutoDisplayMenu(!autoDisplayMenu));
         };
 
         const clearAutoDisplay = (e: MouseEvent) => {
             if (!autoDisplayMenu) return;
-            const isRootLiElem = checkIsRootLiElem(e);
+
             const target = e.target as HTMLElement;
-            const liElem = target.closest('li');
-            if (!isRootLiElem && !liElem?.dataset.submenu) {
+            if (!menuBarElem.contains(target)) {
                 setAutoDisplayMenu(false);
             }
         };

@@ -140,12 +140,26 @@ describe('Test MenuBar Component', () => {
         const originalFunc = document.elementsFromPoint;
         document.elementsFromPoint = jest.fn(() => elemArr);
 
+        // Show the menu by clicking on the li element at the root
         fireEvent.click(elem);
         await waitFor(() => {
             expect(ulElem?.style.opacity).toBe('1');
         });
 
+        // Hide the menu by clicking on the li element at the root
         fireEvent.click(elem);
+        await waitFor(() => {
+            expect(ulElem?.style.opacity).toBe('0');
+        });
+
+        // Show the menu by clicking on the li element at the root
+        fireEvent.click(elem);
+        await waitFor(() => {
+            expect(ulElem?.style.opacity).toBe('1');
+        });
+
+        // Hide the menu by clicking on the li element of the submenu
+        fireEvent.click(spanElem);
         await waitFor(() => {
             expect(ulElem?.style.opacity).toBe('0');
         });

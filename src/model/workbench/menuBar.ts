@@ -20,6 +20,7 @@ export interface IMenuBarItem {
     icon?: string | JSX.Element;
     data?: ISubMenuProps[];
     render?: (data: IMenuItemProps) => React.ReactNode | JSX.Element;
+    disabled?: boolean;
 }
 
 export interface IMenuBar {

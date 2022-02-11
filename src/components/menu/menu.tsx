@@ -103,7 +103,7 @@ function MenuComp(props: React.PropsWithChildren<IMenuProps>, ref) {
                     );
                 }
                 return (
-                    <MenuItem key={item.id} onClick={handleClick} {...item}>
+                    <MenuItem {...item} key={item.id} onClick={handleClick}>
                         {item.name}
                     </MenuItem>
                 );

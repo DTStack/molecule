@@ -3,7 +3,7 @@ import { getBEMElement } from 'mo/common/className';
 
 interface ITabExtraProps {
     classNames?: string;
-    onClick?: () => void;
+    onClick?: React.MouseEventHandler<HTMLDivElement>;
     renderStatus?: (hover: boolean) => JSX.Element;
 }
 

@@ -156,7 +156,10 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
                         tabItemClassName,
                         status ? 'status' : 'op'
                     )}
-                    onClick={() => onCloseTab?.(id)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onCloseTab?.(id);
+                    }}
                     renderStatus={(isHover) => renderStatus(status, isHover)}
                 />
             )}

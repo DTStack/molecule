@@ -66,11 +66,8 @@ export class PanelController extends Controller implements IPanelController {
     }
 
     public readonly onTabChange = (key: UniqueId): void => {
-        const state = this.panelService.getState();
         if (key) {
-            this.panelService.setState({
-                current: state.data?.find((item) => item.id === key),
-            });
+            this.panelService.setActive(key);
         }
         this.emit(PanelEvent.onTabChange, key);
     };

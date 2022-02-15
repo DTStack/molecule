@@ -64,6 +64,7 @@ export const constants = {
     PANEL_TOOLBOX_RESIZE: 'panel.toolbox.maximize',
     PANEL_TOOLBOX_RESTORE_SIZE: 'panel.toolbox.restoreSize',
     PANEL_OUTPUT: 'panel.output.title',
+    MENU_APPEARANCE_ID: 'Appearance',
     MENU_FILE_OPEN: 'openFile',
     MENU_QUICK_COMMAND: 'editor.action.quickCommand',
     MENU_VIEW_MENUBAR: 'workbench.action.showMenuBar',
@@ -584,7 +585,7 @@ export const modules = {
                         name: localize('menu.openView', 'Open View'),
                     },
                     {
-                        id: 'Appearance',
+                        id: constants.MENU_APPEARANCE_ID,
                         name: localize('menu.appearance', 'Appearance'),
                         data: [
                             {

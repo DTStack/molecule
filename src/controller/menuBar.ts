@@ -217,8 +217,11 @@ export class MenuBarController
 
     private updateMenuBarDataByMode = (mode: keyof typeof MenuBarMode) => {
         const { builtInMenuBarData } = this.builtinService.getModules();
-        const { MENUBAR_MODE_HORIZONTAL, MENUBAR_MODE_VERTICAL } =
-            this.builtinService.getConstants();
+        const {
+            MENUBAR_MODE_HORIZONTAL,
+            MENUBAR_MODE_VERTICAL,
+            MENU_APPEARANCE_ID,
+        } = this.builtinService.getConstants();
         let removeKey = MENUBAR_MODE_HORIZONTAL;
         let appendKey = MENUBAR_MODE_VERTICAL;
 
@@ -229,7 +232,7 @@ export class MenuBarController
 
         const menuItem = this.getMenuBarItem(builtInMenuBarData, appendKey!);
         this.menuBarService.remove(removeKey!);
-        this.menuBarService.append(menuItem!, 'Appearance');
+        this.menuBarService.append(menuItem!, MENU_APPEARANCE_ID!);
     };
 
     private getMenuBarItem = (

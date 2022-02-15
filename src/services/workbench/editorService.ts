@@ -378,6 +378,7 @@ export class EditorService
                     const isOpened = this.isOpened(tabId);
                     // the model of closed tab should be disposed after closing
                     !isOpened && this.disposeModel(tab);
+                    this.explorerService.forceUpdate();
                 }
             );
             return;

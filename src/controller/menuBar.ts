@@ -110,7 +110,7 @@ export class MenuBarController
             }
         });
 
-        this.subscribe(MenuBarEvent.onChangeMode, this.updateMenuBarData);
+        this.subscribe(MenuBarEvent.onChangeMode, this.updateMenuBarDataByMode);
     }
 
     public updateFocusinEle = (ele: HTMLElement | null) => {
@@ -215,10 +215,42 @@ export class MenuBarController
         this.layoutService.setMenuBarMode(mode);
     };
 
-    public updateMenuBarData = (mode: keyof typeof MenuBarMode) => {
+    private updateMenuBarDataByMode = (mode: keyof typeof MenuBarMode) => {
         const { builtInMenuBarData } = this.builtinService.getModules();
-        const menuBarData = this.getMenuBarDataByMode(mode, builtInMenuBarData);
-        this.menuBarService.setMenus(menuBarData);
+        const {
+            MENUBAR_MODE_HORIZONTAL,
+            MENUBAR_MODE_VERTICAL,
+            MENU_APPEARANCE_ID,
+        } = this.builtinService.getConstants();
+        let removeKey = MENUBAR_MODE_HORIZONTAL;
+        let appendKey = MENUBAR_MODE_VERTICAL;
+
+        if (mode === MenuBarMode.vertical) {
+            removeKey = MENUBAR_MODE_VERTICAL;
+            appendKey = MENUBAR_MODE_HORIZONTAL;
+        }
+
+        const menuItem = this.getMenuBarItem(builtInMenuBarData, appendKey!);
+        this.menuBarService.remove(removeKey!);
+        this.menuBarService.append(menuItem!, MENU_APPEARANCE_ID!);
+    };
+
+    private getMenuBarItem = (
+        data: IMenuBarItem[],
+        id: string
+    ): IMenuBarItem | null => {
+        let item: IMenuBarItem;
+        for (item of data) {
+            if (item.id === id) {
+                return { ...item };
+            } else if (Array.isArray(item.data) && item.data.length > 0) {
+                const itemData = this.getMenuBarItem(item.data, id);
+                if (itemData) {
+                    return itemData;
+                }
+            }
+        }
+        return null;
     };
 
     public updateStatusBar = () => {

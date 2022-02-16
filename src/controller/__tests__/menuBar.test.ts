@@ -169,9 +169,6 @@ describe('The menuBar controller', () => {
     test('Should support to change the layout mode', () => {
         const mockEvent = {} as any;
         const mockItem = { id: constants.MENUBAR_MODE_HORIZONTAL };
-        const mockExecute = jest.fn();
-        const originalSetMenus = menuBarService.setMenus;
-        const originalUpdateMenuBarMode = menuBarController.updateMenuBarMode;
 
         // change default mode
         const defaultMode = layoutService.getMenuBarMode();
@@ -184,21 +181,20 @@ describe('The menuBar controller', () => {
         expect(layoutService.getMenuBarMode()).toBe(anotherMode);
 
         // update to horizontal mode
-        menuBarService.setMenus = mockExecute;
         layoutService.setMenuBarMode(MenuBarMode.vertical);
         menuBarController.onClick(mockEvent, mockItem);
-        expect(mockExecute).toBeCalled();
-        mockExecute.mockClear();
+        expect(
+            menuBarService.getMenuById(constants.MENUBAR_MODE_VERTICAL)
+        ).toBeTruthy();
 
         // update to vertical mode
         mockItem.id = constants.MENUBAR_MODE_VERTICAL;
         layoutService.setMenuBarMode(MenuBarMode.horizontal);
         menuBarController.onClick(mockEvent, mockItem);
-        expect(mockExecute).toBeCalled();
-        mockExecute.mockClear();
+        expect(
+            menuBarService.getMenuById(constants.MENUBAR_MODE_HORIZONTAL)
+        ).toBeTruthy();
 
-        menuBarService.setMenus = originalSetMenus;
-        menuBarController.updateMenuBarMode = originalUpdateMenuBarMode;
         layoutService.reset();
         menuBarService.reset();
     });

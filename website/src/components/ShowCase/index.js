@@ -12,6 +12,13 @@ const data = [
         enDesc: 'The examples showing how to integrate or use the Molecule.',
     },
     {
+        name: 'Taier',
+        sourceUrl: 'https://github.com/DTStack/Taier',
+        previewUrl: 'https://dtstack.github.io/taier/',
+        cnDesc: '一个分布式调度系统',
+        enDesc: 'A Distributed dispatching system',
+    },
+    {
         name: 'online-code-formatting',
         sourceUrl: 'https://github.com/wewoor/online-code-formatting',
         previewUrl: 'https://wewoor.github.io/online-code-formatting/',

@@ -1,6 +1,9 @@
 import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
-import { IEditorTab } from 'mo/model/workbench/editor';
+import {
+    IEditorTab,
+    BuiltInEditorTabDataType,
+} from 'mo/model/workbench/editor';
 
 export const ExtendsFolderTree: IExtension = {
     id: 'ExtendsFolderTree',
@@ -27,13 +30,15 @@ export const ExtendsFolderTree: IExtension = {
                 });
 
                 const groupId = molecule.editor.getGroupIdByTab(id.toString());
-                if (groupId || groupId === 0) {
-                    const prevTab = molecule.editor.getTabById(
-                        id.toString(),
-                        groupId
-                    );
+                const isValidGroupId = !!groupId || groupId === 0;
+                if (isValidGroupId) {
+                    const prevTab =
+                        molecule.editor.getTabById<BuiltInEditorTabDataType>(
+                            id.toString(),
+                            groupId
+                        );
                     const newTab: IEditorTab = { id: id.toString(), name };
-                    const prevTabData: any = prevTab?.data;
+                    const prevTabData = prevTab?.data;
                     if (prevTabData && prevTabData.path) {
                         newTab.data = { ...prevTabData, path: newLocation };
                     }

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-beta.3.2](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3.1...v0.9.0-beta.3.2) (2022-02-18)
+
+### Features
+
+-   LocaleNotification supports to trigger reload by pressing the Enter key ([#643](https://github.com/DTStack/molecule/issues/643)) ([4b7d8de](https://github.com/DTStack/molecule/commit/4b7d8de47dc49fed1a40c21f6911916a7f89d249))
+-   support listen to the theme changed event ([#646](https://github.com/DTStack/molecule/issues/646)) ([2590217](https://github.com/DTStack/molecule/commit/2590217ecd8c039afb6282713c312e750e1f1085))
+
+### Bug Fixes
+
+-   add icons to EditorTree and optimize its style ([#656](https://github.com/DTStack/molecule/issues/656)) ([859fd73](https://github.com/DTStack/molecule/commit/859fd7344d137f1b13a50464f35e33e954669287))
+-   customized MenuBar data will be lost when modifying the MenuBar's mode ([#650](https://github.com/DTStack/molecule/issues/650)) ([15e219b](https://github.com/DTStack/molecule/commit/15e219b4e718e530ccbf0d7705e8153b8cc03d9c))
+-   fix panels didn't active the next one after closing automatically ([#653](https://github.com/DTStack/molecule/issues/653)) ([784dc07](https://github.com/DTStack/molecule/commit/784dc075562e2414722c2d6385d09a7fe0d19609))
+-   improve the style of the Button in Notification ([#654](https://github.com/DTStack/molecule/issues/654)) ([4a3470f](https://github.com/DTStack/molecule/commit/4a3470fa023c67e642869f315f4d3f50713348cf))
+-   improve the style of the EditorTree node's icon ([#657](https://github.com/DTStack/molecule/issues/657)) ([ffe6955](https://github.com/DTStack/molecule/commit/ffe69557cdf8924f19b70fd6ec0c82b22977ccce))
+-   the interaction bug of MenuBar in horizontal mode ([#647](https://github.com/DTStack/molecule/issues/647)) ([2294b3d](https://github.com/DTStack/molecule/commit/2294b3d2f147c2c5dea8c130ffa98162d4919f94))
+-   the onClick property of MenuItem will be overridden by custom data ([#651](https://github.com/DTStack/molecule/issues/651)) ([467a7c0](https://github.com/DTStack/molecule/commit/467a7c0b0597eb48677be80787885eb37dbdbc9b))
+-   update explorer when closing editor tab ([#652](https://github.com/DTStack/molecule/issues/652)) ([953b2c0](https://github.com/DTStack/molecule/commit/953b2c069e325b0070d3f797c8d8b37a36c9a9e1))
+
 ## [0.9.0-beta.3.1](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3...v0.9.0-beta.3.1) (2022-02-08)
 
 ## [0.9.0-beta.3](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1.1...v0.9.0-beta.3) (2022-01-27)

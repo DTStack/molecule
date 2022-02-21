@@ -5,8 +5,9 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { classNames } from 'mo/common/className';
 import { debounce, isEqual } from 'lodash';
+import { cloneReactChildren } from 'mo/react';
+import { classNames } from 'mo/common/className';
 import { HTMLElementProps } from 'mo/common/types';
 import Pane, { IPaneConfigs } from './pane';
 import Sash from './sash';
@@ -22,7 +23,6 @@ import {
     sashVerticalClassName,
     splitClassName,
 } from './base';
-import { cloneReactChildren } from 'mo/react';
 /**
  * Keep for keep size when resize
  * Pave for NOT keep size when resize
@@ -158,13 +158,11 @@ const SplitPane = ({
 }: ISplitProps) => {
     const [sizes, setSize] = useState<number[]>([]);
     const limitedSizes = useRef<LimitedSizes[]>([]);
+    // for saving the sizes while dragging
+    const cachedSizes = useRef<number[]>([]);
     const [draging, setDrag] = useState<boolean[]>([]);
-    const [
-        sashActive,
-        handleMouseEnterSash,
-        handleMouseLeaveSash,
-        resetHover,
-    ] = useDelayHover();
+    const [sashActive, handleMouseEnterSash, handleMouseLeaveSash, resetHover] =
+        useDelayHover();
     const wrapper = useRef<HTMLDivElement>(null);
     const axis = useRef<IAxis>({
         startSize: [],
@@ -225,19 +223,6 @@ const SplitPane = ({
         }
     };
 
-    // recommended to set key for the Pane
-    const childrenKey: React.Key[] = useMemo(() => {
-        const nextKey = children.map((child, index) => {
-            limitedSizes.current[index] = registerLimitedSizes(child);
-            return child.key || index;
-        });
-        // improving performance
-        if (isEqual(nextKey, childrenKey)) {
-            return childrenKey;
-        }
-        return nextKey;
-    }, [children]);
-
     const handleMouseDown = (e, index) => {
         setDrag((dragList) => {
             const next = dragList.concat();
@@ -254,6 +239,8 @@ const SplitPane = ({
             dragSource: e.target,
             dragIndex: index,
         };
+
+        cachedSizes.current = [];
 
         // calculate the limited sizes
         // put it in window temporarily, delete it when mouseup
@@ -272,6 +259,11 @@ const SplitPane = ({
         window.addEventListener('mouseup', handleMouseUp);
     };
 
+    const validateSize = (size: number, limited: number[]) => {
+        const [minSize, maxSize] = limited;
+        return size > minSize && size < maxSize;
+    };
+
     const handleMouseMove = useCallback(function (
         this: { _limitedSizes: number[][] } & Window,
         e
@@ -286,23 +278,11 @@ const SplitPane = ({
 
         const limitedSizes = this._limitedSizes;
 
+        // to calculate the next sizes
         const nextSizes = axis.current.startSize.map(
             function (this: { offset: number }, size, index) {
                 if (index === axis.current.dragIndex - 1) {
                     const nSize = size - distanceX;
-
-                    const [minSize, maxSize] = limitedSizes[index];
-
-                    if (nSize < minSize) {
-                        this.offset = size - (minSize as number);
-                        return minSize as number;
-                    }
-
-                    if (nSize > maxSize) {
-                        this.offset = size - (maxSize as number);
-                        return maxSize as number;
-                    }
-
                     this.offset = distanceX;
                     return nSize;
                 }
@@ -314,7 +294,24 @@ const SplitPane = ({
             { offset: 0 }
         );
 
-        propOnChange(nextSizes);
+        // Validate the sizes
+        const prevValid = validateSize(
+            nextSizes[axis.current.dragIndex - 1],
+            limitedSizes[axis.current.dragIndex - 1]
+        );
+        const curValid = validateSize(
+            nextSizes[axis.current.dragIndex],
+            limitedSizes[axis.current.dragIndex]
+        );
+
+        if (prevValid && curValid) {
+            cachedSizes.current = nextSizes;
+        }
+
+        const finalSizes =
+            prevValid && curValid ? nextSizes : cachedSizes.current;
+
+        propOnChange(finalSizes);
     },
     []);
 
@@ -345,7 +342,7 @@ const SplitPane = ({
      * ```
      */
     const convertSizes = (sizes: (string | number)[]) => {
-        let res: (string | number)[] = [];
+        const res: (string | number)[] = [];
         // insert 'auto' to make the length completion
         if (sizes.length === children.length) {
             res.push(...sizes);
@@ -389,7 +386,7 @@ const SplitPane = ({
 
         // convert auto to absolute number
         if (count) {
-            let average = restSize / count;
+            const average = restSize / count;
 
             return nextRes.map((size) => {
                 if (typeof size === 'string') {
@@ -401,10 +398,6 @@ const SplitPane = ({
             return nextRes as number[];
         }
     };
-
-    useEffect(() => {
-        setSize(convertSizes(propSizes));
-    }, [propSizes]);
 
     const handleResize = useCallback(
         debounce(() => {
@@ -448,6 +441,23 @@ const SplitPane = ({
         return () => window.addEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        setSize(convertSizes(propSizes));
+    }, [propSizes]);
+
+    // recommended to set key for the Pane
+    const childrenKey: React.Key[] = useMemo(() => {
+        const nextKey = children.map((child, index) => {
+            limitedSizes.current[index] = registerLimitedSizes(child);
+            return child.key || index;
+        });
+        // improving performance
+        if (isEqual(nextKey, childrenKey)) {
+            return childrenKey;
+        }
+        return nextKey;
+    }, [children]);
+
     // perform the task for recalculating resizable
     const allowResize = useMemo(() => {
         if (typeof propAllowResize === 'boolean') {
@@ -474,17 +484,14 @@ const SplitPane = ({
     // perform the Panes
     const panes = useMemo(() => {
         return childrenKey.map(
-            function (_, paneIndex) {
-                // @ts-ignore
+            function (this: { sum: number }, _, paneIndex) {
                 const size = this.sum + (sizes[paneIndex - 1] || 0);
-                // @ts-ignore
                 this.sum = size;
 
                 const isPane = children[paneIndex].type === Pane;
                 if (isPane) {
-                    const { className = '', style = {} } = children[
-                        paneIndex
-                    ].props;
+                    const { className = '', style = {} } =
+                        children[paneIndex].props;
                     return cloneReactChildren(children[paneIndex], {
                         key: paneIndex,
                         className: classNames(

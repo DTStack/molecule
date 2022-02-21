@@ -18,7 +18,8 @@ export enum EditorEvent {
     onActionsClick = 'editor.actionsClick',
     OnSplitEditorRight = 'editor.splitEditorRight',
 }
-interface BuiltInEditorTabDataType {
+
+export interface BuiltInEditorTabDataType {
     language?: string | undefined;
     path?: string;
     value?: string;

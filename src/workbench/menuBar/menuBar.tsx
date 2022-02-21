@@ -6,12 +6,20 @@ import { DropDown, DropDownRef } from 'mo/components/dropdown';
 import { IMenuProps, Menu } from 'mo/components/menu';
 import { Icon } from 'mo/components/icon';
 import { KeybindingHelper } from 'mo/services/keybinding';
+import { MenuBarMode } from 'mo/model/workbench/layout';
+import { HorizontalView } from './horizontalView';
 
 export const defaultClassName = prefixClaName('menuBar');
 export const actionClassName = getBEMElement(defaultClassName, 'action');
 
 export function MenuBar(props: IMenuBar & IMenuBarController) {
-    const { data, onClick, updateFocusinEle } = props;
+    const {
+        data,
+        mode = MenuBarMode.vertical,
+        onClick,
+        updateFocusinEle,
+        logo,
+    } = props;
     const childRef = useRef<DropDownRef>(null);
 
     const addKeybindingForData = (
@@ -28,9 +36,10 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
                     const simplyKeybinding =
                         KeybindingHelper.queryGlobalKeybinding(head.id!) || [];
                     if (simplyKeybinding.length) {
-                        head.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
-                            simplyKeybinding
-                        );
+                        head.keybinding =
+                            KeybindingHelper.convertSimpleKeybindingToString(
+                                simplyKeybinding
+                            );
                     }
                 }
             }
@@ -42,6 +51,7 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
         onClick?.(e, item);
         childRef.current!.dispose();
     };
+
     const overlay = (
         <Menu
             role="menu"
@@ -61,6 +71,16 @@ export function MenuBar(props: IMenuBar & IMenuBarController) {
             document.body.removeEventListener('focusin', handleSaveFocusinEle);
         };
     }, []);
+
+    if (mode === MenuBarMode.horizontal) {
+        return (
+            <HorizontalView
+                data={addKeybindingForData(data)}
+                onClick={onClick}
+                logo={logo}
+            />
+        );
+    }
 
     return (
         <div className={defaultClassName}>

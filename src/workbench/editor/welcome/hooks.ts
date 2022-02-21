@@ -30,13 +30,13 @@ export const useGetKeys = () => {
     useEffect(() => {
         const res = KEYBINDINGS()
             .map((acessCommand) => {
-                const simpleKeybindings = KeybindingHelper.queryGlobalKeybinding(
-                    acessCommand.id
-                );
+                const simpleKeybindings =
+                    KeybindingHelper.queryGlobalKeybinding(acessCommand.id);
                 if (simpleKeybindings?.length) {
-                    const keybindings = KeybindingHelper.convertSimpleKeybindingToString(
-                        simpleKeybindings
-                    );
+                    const keybindings =
+                        KeybindingHelper.convertSimpleKeybindingToString(
+                            simpleKeybindings
+                        );
                     return { ...acessCommand, keybindings };
                 }
                 return null;

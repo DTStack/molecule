@@ -19,14 +19,15 @@ import { QuickCopyLineUp } from 'mo/monaco/quickCopyLineUp';
 import { QuickUndo } from 'mo/monaco/quickUndo';
 import { QuickRedo } from 'mo/monaco/quickRedo';
 import { QuickCreateFile } from 'mo/monaco/quickCreateFile';
-import type { Action2 } from 'mo/monaco/common';
+import type { Action2 } from 'mo/monaco/action';
 
 export interface IExtensionController extends Partial<Controller> {}
 
 @singleton()
 export class ExtensionController
     extends Controller
-    implements IExtensionController {
+    implements IExtensionController
+{
     private readonly extensionService: IExtensionService;
     private readonly builtinService: IBuiltinService;
     constructor() {
@@ -48,19 +49,21 @@ export class ExtensionController
             quickRedoAction,
             quickCreateFileAction,
         } = this.builtinService.getModules();
-        ([
-            [quickAcessViewAction, CommandQuickAccessViewAction],
-            [quickSelectColorThemeAction, SelectColorThemeAction],
-            [quickAccessSettingsAction, QuickAccessSettings],
-            [quickSelectLocaleAction, SelectLocaleAction],
-            [ID_SIDE_BAR, CommandQuickSideBarViewAction],
-            [quickTogglePanelAction, QuickTogglePanelAction],
-            [quickSelectAllAction, QuickSelectAllAction],
-            [quickCopyLineUpAction, QuickCopyLineUp],
-            [quickUndoAction, QuickUndo],
-            [quickRedoAction, QuickRedo],
-            [quickCreateFileAction, QuickCreateFile],
-        ] as [any, new () => Action2][]).forEach(([key, action]) => {
+        (
+            [
+                [quickAcessViewAction, CommandQuickAccessViewAction],
+                [quickSelectColorThemeAction, SelectColorThemeAction],
+                [quickAccessSettingsAction, QuickAccessSettings],
+                [quickSelectLocaleAction, SelectLocaleAction],
+                [ID_SIDE_BAR, CommandQuickSideBarViewAction],
+                [quickTogglePanelAction, QuickTogglePanelAction],
+                [quickSelectAllAction, QuickSelectAllAction],
+                [quickCopyLineUpAction, QuickCopyLineUp],
+                [quickUndoAction, QuickUndo],
+                [quickRedoAction, QuickRedo],
+                [quickCreateFileAction, QuickCreateFile],
+            ] as [any, new () => Action2][]
+        ).forEach(([key, action]) => {
             if (key) {
                 this.extensionService.registerAction(action);
             }

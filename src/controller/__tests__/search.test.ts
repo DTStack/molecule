@@ -54,11 +54,8 @@ describe('The search controller', () => {
 
     test('Should support to initView', () => {
         searchController.initView();
-        const {
-            headerToolBar,
-            searchAddons,
-            replaceAddons,
-        } = searchService.getState();
+        const { headerToolBar, searchAddons, replaceAddons } =
+            searchService.getState();
 
         expect(headerToolBar).toEqual(modules.builtInHeaderToolbar());
         expect(searchAddons).toEqual(modules.builtInSearchAddons());
@@ -229,12 +226,8 @@ describe('The search controller', () => {
             searchService.onSearch(mockFn);
             searchController.onSearch('test', 'ttt');
 
-            const {
-                isRegex,
-                isCaseSensitive,
-                isWholeWords,
-                preserveCase,
-            } = searchService.getState();
+            const { isRegex, isCaseSensitive, isWholeWords, preserveCase } =
+                searchService.getState();
             expect(mockFn.mock.calls[0][0]).toBe('test');
             expect(mockFn.mock.calls[0][1]).toBe('ttt');
             expect(mockFn.mock.calls[0][2]).toEqual({

@@ -55,4 +55,8 @@ $icon-size: 22px;
         right: 8px;
         top: 2px;
     }
+
+    #{$btn} {
+        color: var(--button-foreground);
+    }
 }

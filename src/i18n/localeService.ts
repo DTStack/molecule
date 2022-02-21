@@ -84,6 +84,7 @@ export interface ILocaleService {
 }
 
 export const STORE_KEY = `${APP_PREFIX}.localeId`;
+export const DEFAULT_LOCALE_ID = `${APP_PREFIX}.defaultLocaleId`;
 
 @singleton()
 export class LocaleService extends Component implements ILocaleService {

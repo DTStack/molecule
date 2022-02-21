@@ -2,6 +2,92 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-beta.3.2](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3.1...v0.9.0-beta.3.2) (2022-02-18)
+
+### Features
+
+-   LocaleNotification supports to trigger reload by pressing the Enter key ([#643](https://github.com/DTStack/molecule/issues/643)) ([4b7d8de](https://github.com/DTStack/molecule/commit/4b7d8de47dc49fed1a40c21f6911916a7f89d249))
+-   support listen to the theme changed event ([#646](https://github.com/DTStack/molecule/issues/646)) ([2590217](https://github.com/DTStack/molecule/commit/2590217ecd8c039afb6282713c312e750e1f1085))
+
+### Bug Fixes
+
+-   add icons to EditorTree and optimize its style ([#656](https://github.com/DTStack/molecule/issues/656)) ([859fd73](https://github.com/DTStack/molecule/commit/859fd7344d137f1b13a50464f35e33e954669287))
+-   customized MenuBar data will be lost when modifying the MenuBar's mode ([#650](https://github.com/DTStack/molecule/issues/650)) ([15e219b](https://github.com/DTStack/molecule/commit/15e219b4e718e530ccbf0d7705e8153b8cc03d9c))
+-   fix panels didn't active the next one after closing automatically ([#653](https://github.com/DTStack/molecule/issues/653)) ([784dc07](https://github.com/DTStack/molecule/commit/784dc075562e2414722c2d6385d09a7fe0d19609))
+-   improve the style of the Button in Notification ([#654](https://github.com/DTStack/molecule/issues/654)) ([4a3470f](https://github.com/DTStack/molecule/commit/4a3470fa023c67e642869f315f4d3f50713348cf))
+-   improve the style of the EditorTree node's icon ([#657](https://github.com/DTStack/molecule/issues/657)) ([ffe6955](https://github.com/DTStack/molecule/commit/ffe69557cdf8924f19b70fd6ec0c82b22977ccce))
+-   the interaction bug of MenuBar in horizontal mode ([#647](https://github.com/DTStack/molecule/issues/647)) ([2294b3d](https://github.com/DTStack/molecule/commit/2294b3d2f147c2c5dea8c130ffa98162d4919f94))
+-   the onClick property of MenuItem will be overridden by custom data ([#651](https://github.com/DTStack/molecule/issues/651)) ([467a7c0](https://github.com/DTStack/molecule/commit/467a7c0b0597eb48677be80787885eb37dbdbc9b))
+-   update explorer when closing editor tab ([#652](https://github.com/DTStack/molecule/issues/652)) ([953b2c0](https://github.com/DTStack/molecule/commit/953b2c069e325b0070d3f797c8d8b37a36c9a9e1))
+
+## [0.9.0-beta.3.1](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3...v0.9.0-beta.3.1) (2022-02-08)
+
+## [0.9.0-beta.3](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1.1...v0.9.0-beta.3) (2022-01-27)
+
+### Features
+
+-   add a Display component that controlling the Workbench Parts ([#564](https://github.com/DTStack/molecule/issues/564)) ([948f09c](https://github.com/DTStack/molecule/commit/948f09c05ec508c8e29f2c79d81fac4a598cfcbb))
+-   add Korean language pack ([#558](https://github.com/DTStack/molecule/issues/558)) ([b9f817d](https://github.com/DTStack/molecule/commit/b9f817d1761ff6329634909226eb4fb8598ce735))
+-   change the interaction of MenuBar in horizontal mode ([#636](https://github.com/DTStack/molecule/issues/636)) ([b352afd](https://github.com/DTStack/molecule/commit/b352afda1043a1c16f34cfb58e8d6b879ea0f783))
+-   provide types of Keybinding and QuickAccess ([#567](https://github.com/DTStack/molecule/issues/567)) ([0118b43](https://github.com/DTStack/molecule/commit/0118b4335b8557f2fbd4f256fcb23c08b617e16d))
+-   remove the onRemove processing logic in the built-in FolderTree extension ([#617](https://github.com/DTStack/molecule/issues/617)) ([7a77374](https://github.com/DTStack/molecule/commit/7a7737480a98c87e2c97a148e7f1730e28d075dd))
+-   support the horizontal layout of MenuBar ([#553](https://github.com/DTStack/molecule/issues/553)) ([2cf2abb](https://github.com/DTStack/molecule/commit/2cf2abba809cfa63d778a20e4b3d6c65f8f070f3))
+-   support to dispose the Action ([#599](https://github.com/DTStack/molecule/issues/599)) ([bfdf0bb](https://github.com/DTStack/molecule/commit/bfdf0bb34511254de3bb4b15e3b3796ef68fa023))
+-   support to get the mode of the current Color Theme ([#641](https://github.com/DTStack/molecule/issues/641)) ([57f8fab](https://github.com/DTStack/molecule/commit/57f8fab95182e4074fc66de2b0fef5a195dc972e))
+-   support to set the folderTree nodes whether to sort by default ([#614](https://github.com/DTStack/molecule/issues/614)) ([99754f9](https://github.com/DTStack/molecule/commit/99754f96db39403ab6edafd11f7730e6f059f9c4))
+
+### Bug Fixes
+
+-   Connect component supports to unsubscribe event by pass the callback ([#635](https://github.com/DTStack/molecule/issues/635)) ([bde0274](https://github.com/DTStack/molecule/commit/bde0274857bc3b56b62931824af2537e228dd472))
+-   correct the style of input and select ([#578](https://github.com/DTStack/molecule/issues/578)) ([e0ba0fc](https://github.com/DTStack/molecule/commit/e0ba0fc91cfe968c13357667b5eb0b375484eafa))
+-   increase the z-index value of SubMenu in horizontal mode ([#611](https://github.com/DTStack/molecule/issues/611)) ([b11b4e9](https://github.com/DTStack/molecule/commit/b11b4e90970d79a2000c2eb7fba8860348145262))
+-   let defaultLocale works ([#639](https://github.com/DTStack/molecule/issues/639)) ([2faaa9f](https://github.com/DTStack/molecule/commit/2faaa9f9977ea2ce6e4a3573cc788ca945fbc99c))
+-   not allowed to reload the initialize method ([#580](https://github.com/DTStack/molecule/issues/580)) ([7229fc5](https://github.com/DTStack/molecule/commit/7229fc5e4c01e2777934641d30676aacc31b6454))
+-   optimize the style of MenuBar ([#629](https://github.com/DTStack/molecule/issues/629)) ([f355c88](https://github.com/DTStack/molecule/commit/f355c88d6151ccddab773317776adf8c834790de))
+-   re-layout the Workbench when StatusBar is hidden ([#557](https://github.com/DTStack/molecule/issues/557)) ([2d89f56](https://github.com/DTStack/molecule/commit/2d89f568289c62b4c36ee506ac3b62e7f1fec20b))
+-   sync menuBar mode status ([#637](https://github.com/DTStack/molecule/issues/637)) ([ecdb312](https://github.com/DTStack/molecule/commit/ecdb3128f3308751f52db134ebf8019ff1e0e366))
+-   the style of the context menu of ActivityBarItem ([#613](https://github.com/DTStack/molecule/issues/613)) ([08fd30f](https://github.com/DTStack/molecule/commit/08fd30f8478028f5e05c3e855cbacd1f4844f827))
+
+## [0.9.0-beta.2](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1.1...v0.9.0-beta.2) (2022-01-05)
+
+### Features
+
+-   add a Display component that controlling the Workbench Parts ([#564](https://github.com/DTStack/molecule/issues/564)) ([948f09c](https://github.com/DTStack/molecule/commit/948f09c05ec508c8e29f2c79d81fac4a598cfcbb))
+-   add Korean language pack ([#558](https://github.com/DTStack/molecule/issues/558)) ([b9f817d](https://github.com/DTStack/molecule/commit/b9f817d1761ff6329634909226eb4fb8598ce735))
+-   provide types of Keybinding and QuickAccess ([#567](https://github.com/DTStack/molecule/issues/567)) ([0118b43](https://github.com/DTStack/molecule/commit/0118b4335b8557f2fbd4f256fcb23c08b617e16d))
+-   support the horizontal layout of MenuBar ([#553](https://github.com/DTStack/molecule/issues/553)) ([2cf2abb](https://github.com/DTStack/molecule/commit/2cf2abba809cfa63d778a20e4b3d6c65f8f070f3))
+
+### Bug Fixes
+
+-   correct the style of input and select ([#578](https://github.com/DTStack/molecule/issues/578)) ([e0ba0fc](https://github.com/DTStack/molecule/commit/e0ba0fc91cfe968c13357667b5eb0b375484eafa))
+-   not allowed to reload the initialize method ([#580](https://github.com/DTStack/molecule/issues/580)) ([7229fc5](https://github.com/DTStack/molecule/commit/7229fc5e4c01e2777934641d30676aacc31b6454))
+-   re-layout the Workbench when StatusBar is hidden ([#557](https://github.com/DTStack/molecule/issues/557)) ([2d89f56](https://github.com/DTStack/molecule/commit/2d89f568289c62b4c36ee506ac3b62e7f1fec20b))
+
+## [0.9.0-beta.1.1](https://github.com/DTStack/molecule/compare/v0.9.0-beta.1...v0.9.0-beta.1.1) (2021-12-13)
+
+### Features
+
+-   improve the colorTheme detail ([#541](https://github.com/DTStack/molecule/issues/541)) ([049f003](https://github.com/DTStack/molecule/commit/049f00311f4596356695cb2c6b9c62656a52775c))
+
+## [0.9.0-beta.1](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.6...v0.9.0-beta.1) (2021-12-06)
+
+### Features
+
+-   support a new Welcome page ([#508](https://github.com/DTStack/molecule/issues/508)) ([e5e0a0c](https://github.com/DTStack/molecule/commit/e5e0a0c42ffc4b717b87f8e1d7ffa6259c557788))
+-   support sort in folderTree ([#524](https://github.com/DTStack/molecule/issues/524)) ([8802b1f](https://github.com/DTStack/molecule/commit/8802b1f70ec85a597038f003ebf60feafb2ef127))
+
+### Bug Fixes
+
+-   adjust the menu icon size ([ed9cb8d](https://github.com/DTStack/molecule/commit/ed9cb8d7f50c0d75893593edaf83e7d7360812d5))
+-   fix can't clear the notifications ([#518](https://github.com/DTStack/molecule/issues/518)) ([2503f4a](https://github.com/DTStack/molecule/commit/2503f4a5699700b56247a94a51f38d64dfbf4ba0))
+-   fix create file node incorrect on contextMenu ([#522](https://github.com/DTStack/molecule/issues/522)) ([14c6057](https://github.com/DTStack/molecule/commit/14c6057b34e27cb69997f932867f4bebbf27a6eb))
+-   improve the circular dep error when execute yarn link ([#528](https://github.com/DTStack/molecule/issues/528)) ([486182b](https://github.com/DTStack/molecule/commit/486182b1ef62f72f954edfc08f3edb84ababa62c))
+-   improve the exports of models ([#507](https://github.com/DTStack/molecule/issues/507)) ([4b7ab03](https://github.com/DTStack/molecule/commit/4b7ab0331a0374567c4ad404413e49c40a0387aa))
+-   improve the insert strategy in folderTree ([#486](https://github.com/DTStack/molecule/issues/486)) ([3061b68](https://github.com/DTStack/molecule/commit/3061b68ecea6887aacdf1db19ae56261a144a76d))
+-   initView will override the setDefaultValue ([#513](https://github.com/DTStack/molecule/issues/513)) ([586335e](https://github.com/DTStack/molecule/commit/586335e2e5085f1fdc36c79861bf01c0346427c2))
+-   remove the warning in console ([#529](https://github.com/DTStack/molecule/issues/529)) ([059016c](https://github.com/DTStack/molecule/commit/059016cb4ca19854c200ac0791a198eb521a2d3f))
+-   show the SubMenu in right place when the Menu is horizontal mode ([#526](https://github.com/DTStack/molecule/issues/526)) ([0d76520](https://github.com/DTStack/molecule/commit/0d76520eb03076314ff2f5fda7f51ddfcf0cbdb9))
+
 ## [0.9.0-alpha.6](https://github.com/DTStack/molecule/compare/v0.9.0-alpha.5...v0.9.0-alpha.6) (2021-10-27)
 
 ### Features

@@ -82,7 +82,7 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
             isDragging: monitor.isDragging(),
         }),
         item: { type: 'DND_NODE', tab },
-    });
+    } as any);
 
     const [, drop] = useDrop({
         accept: 'DND_NODE',
@@ -92,9 +92,9 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
             /**
              * TODO: bad code needs to be removed
              */
-            const hoverBoundingRect = (findDOMNode(
-                component
-            ) as Element)?.getBoundingClientRect();
+            const hoverBoundingRect = (
+                findDOMNode(component) as Element
+            )?.getBoundingClientRect();
             const hoverMiddleX =
                 (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
             const clientOffset = monitor.getClientOffset();
@@ -156,7 +156,10 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
                         tabItemClassName,
                         status ? 'status' : 'op'
                     )}
-                    onClick={() => onCloseTab?.(id)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onCloseTab?.(id);
+                    }}
                     renderStatus={(isHover) => renderStatus(status, isHover)}
                 />
             )}

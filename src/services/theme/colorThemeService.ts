@@ -4,14 +4,20 @@
  */
 
 import 'reflect-metadata';
-import { IColorTheme } from 'mo/model/colorTheme';
+import {
+    IColorTheme,
+    ColorThemeMode,
+    ColorScheme,
+    ColorThemeEvent,
+} from 'mo/model/colorTheme';
 import { singleton } from 'tsyringe';
 import { editor as monacoEditor } from 'mo/monaco';
 import { applyStyleSheetRules } from 'mo/common/css';
 import { getThemeData, convertToCSSVars } from './helper';
 import logger from 'mo/common/logger';
 import { prefixClaName } from 'mo/common/className';
-import { searchById } from 'mo/common/utils';
+import { searchById, colorLightOrDark } from 'mo/common/utils';
+import { GlobalEvent } from 'mo/common/event';
 
 export interface IColorThemeService {
     /**
@@ -53,6 +59,21 @@ export interface IColorThemeService {
      * Reset theme
      */
     reset(): void;
+    /**
+     * Get the mode('dark' or 'light') of the current Color Theme
+     */
+    getColorThemeMode(): ColorThemeMode;
+    /**
+     * Listen to the theme changed event
+     * @param callback
+     */
+    onChange(
+        callback: (
+            prev: IColorTheme,
+            next: IColorTheme,
+            themeMode: ColorThemeMode
+        ) => void
+    ): void;
 }
 
 /**
@@ -70,11 +91,15 @@ export const BuiltInColorTheme: IColorTheme = {
 export const DEFAULT_THEME_CLASS_NAME = prefixClaName('customize-theme');
 
 @singleton()
-export class ColorThemeService implements IColorThemeService {
+export class ColorThemeService
+    extends GlobalEvent
+    implements IColorThemeService
+{
     private colorThemes: IColorTheme[] = [BuiltInColorTheme];
     private colorTheme: IColorTheme = BuiltInColorTheme;
 
     constructor() {
+        super();
         if (this.colorTheme) {
             this.setTheme(this.colorTheme.id);
         }
@@ -126,6 +151,7 @@ export class ColorThemeService implements IColorThemeService {
     }
 
     public setTheme(id: string) {
+        const prevTheme = this.getColorTheme();
         const theme = this.getThemeById(id);
         if (theme) {
             this.colorTheme = { ...theme };
@@ -136,6 +162,14 @@ export class ColorThemeService implements IColorThemeService {
             // Update monaco-editor theme
             monacoEditor.defineTheme(DEFAULT_THEME_CLASS_NAME, themeData);
             monacoEditor.setTheme(DEFAULT_THEME_CLASS_NAME);
+
+            const themeMode = this.getColorThemeMode();
+            this.emit(
+                ColorThemeEvent.onChange,
+                prevTheme,
+                { ...this.colorTheme },
+                themeMode
+            );
         } else {
             logger.error(`Can't get the theme by id:` + id);
         }
@@ -152,5 +186,38 @@ export class ColorThemeService implements IColorThemeService {
     public reset() {
         this.colorThemes = [BuiltInColorTheme];
         this.setTheme(BuiltInColorTheme.id);
+    }
+
+    public getColorThemeMode(): ColorThemeMode {
+        const { colors, type } = this.colorTheme;
+
+        // Try to get colorThemeMode from type
+        if (type === ColorScheme.DARK || type === ColorScheme.HIGH_CONTRAST) {
+            return ColorThemeMode.dark;
+        } else if (type === ColorScheme.LIGHT) {
+            return ColorThemeMode.light;
+        }
+
+        // Try to get colorThemeMode from background color
+        const background =
+            colors?.['editor.background'] ||
+            colors?.['tab.activeBackground'] ||
+            colors?.['molecule.welcomeBackground'];
+        if (background) {
+            return colorLightOrDark(background) as ColorThemeMode;
+        }
+
+        // Default dark
+        return ColorThemeMode.dark;
+    }
+
+    public onChange(
+        callback: (
+            prev: IColorTheme,
+            next: IColorTheme,
+            themeMode: ColorThemeMode
+        ) => void
+    ): void {
+        this.subscribe(ColorThemeEvent.onChange, callback);
     }
 }

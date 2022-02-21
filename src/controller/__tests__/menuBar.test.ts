@@ -1,25 +1,30 @@
 import { ID_SIDE_BAR } from 'mo/common/id';
 import { MonacoService } from 'mo/monaco/monacoService';
-import { MenuBarService, BuiltinService } from 'mo/services';
+import { MenuBarService, BuiltinService, LayoutService } from 'mo/services';
 import { constants, modules } from 'mo/services/builtinService/const';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { MenuBarController } from '../menuBar';
+import { MenuBarMode } from 'mo/model/workbench/layout';
 
 const menuBarController = container.resolve(MenuBarController);
 const menuBarService = container.resolve(MenuBarService);
 const monacoService = container.resolve(MonacoService);
 const builtinService = container.resolve(BuiltinService);
+const layoutService = container.resolve(LayoutService);
 
 const mockEle = document.createElement('div');
 
 describe('The menuBar controller', () => {
     test('Should support to inject the default value', () => {
         menuBarController.initView();
-
-        expect(menuBarService.getState().data).toEqual(
+        const mode = layoutService.getMenuBarMode();
+        const menuBarData = menuBarController.getMenuBarDataByMode(
+            mode,
             modules.builtInMenuBarData()
         );
+
+        expect(menuBarService.getState().data).toEqual(menuBarData);
         menuBarService.reset();
     });
 
@@ -36,7 +41,7 @@ describe('The menuBar controller', () => {
     test('Should support to update the focusin element', () => {
         menuBarController.updateFocusinEle(mockEle);
 
-        expect((menuBarController as any).focusinEle).toBe(mockEle);
+        expect((menuBarController as any)._focusinEle).toBe(mockEle);
     });
 
     test('Should support to execute the onClick method', () => {
@@ -159,5 +164,38 @@ describe('The menuBar controller', () => {
         expect(mockExecute.mock.calls[1][1]).toEqual({ icon: 'check' });
         mockExecute.mockClear();
         menuBarService.update = originalUpdate;
+    });
+
+    test('Should support to change the layout mode', () => {
+        const mockEvent = {} as any;
+        const mockItem = { id: constants.MENUBAR_MODE_HORIZONTAL };
+
+        // change default mode
+        const defaultMode = layoutService.getMenuBarMode();
+        const anotherMode =
+            defaultMode === MenuBarMode.horizontal
+                ? MenuBarMode.vertical
+                : MenuBarMode.horizontal;
+        layoutService.setMenuBarMode(anotherMode);
+        menuBarController.initView();
+        expect(layoutService.getMenuBarMode()).toBe(anotherMode);
+
+        // update to horizontal mode
+        layoutService.setMenuBarMode(MenuBarMode.vertical);
+        menuBarController.onClick(mockEvent, mockItem);
+        expect(
+            menuBarService.getMenuById(constants.MENUBAR_MODE_VERTICAL)
+        ).toBeTruthy();
+
+        // update to vertical mode
+        mockItem.id = constants.MENUBAR_MODE_VERTICAL;
+        layoutService.setMenuBarMode(MenuBarMode.horizontal);
+        menuBarController.onClick(mockEvent, mockItem);
+        expect(
+            menuBarService.getMenuById(constants.MENUBAR_MODE_HORIZONTAL)
+        ).toBeTruthy();
+
+        layoutService.reset();
+        menuBarService.reset();
     });
 });

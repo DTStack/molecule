@@ -45,7 +45,8 @@ export interface INotificationService extends Component<INotification> {
 @singleton()
 export class NotificationService
     extends Component<INotification>
-    implements INotificationService {
+    implements INotificationService
+{
     protected state: INotification;
 
     constructor() {

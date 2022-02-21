@@ -22,6 +22,8 @@ import {
     ISidebarViewState,
     LayoutModel,
     ViewVisibility,
+    IMenuBarViewState,
+    MenuBarMode,
 } from 'mo/model/workbench/layout';
 import { select, selectAll } from 'mo/common/dom';
 import {
@@ -89,7 +91,7 @@ describe('Test Workbench Component', () => {
             activityBar,
             layout.activityBar
         );
-        const menuBarState = Object.assign<IMenuBar, ViewVisibility>(
+        const menuBarState = Object.assign<IMenuBar, IMenuBarViewState>(
             menuBar,
             layout.menuBar
         );
@@ -217,6 +219,19 @@ describe('Test Workbench Component', () => {
         expect(select('.mo-statusBar')).toBeInTheDocument();
         workbench.statusBar.hidden = true;
         rerender(<WorkbenchView {...workbench} />);
-        expect(select('.mo-statusBar')).not.toBeInTheDocument();
+        expect(select('.mo-statusBar')?.parentElement?.style.display).toBe(
+            'none'
+        );
+    });
+
+    test('Should support to change the layout mode of MenuBar', async () => {
+        const workbench = workbenchModel();
+        workbench.menuBar.mode = MenuBarMode.vertical;
+        const { rerender } = render(<WorkbenchView {...workbench} />);
+        expect(select('.mo-menuBar')).toBeInTheDocument();
+
+        workbench.menuBar.mode = MenuBarMode.horizontal;
+        rerender(<WorkbenchView {...workbench} />);
+        expect(select('.mo-menuBar--horizontal')).toBeInTheDocument();
     });
 });

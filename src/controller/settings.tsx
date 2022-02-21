@@ -24,7 +24,8 @@ export interface ISettingsController extends Partial<Controller> {}
 @singleton()
 export class SettingsController
     extends Controller
-    implements ISettingsController {
+    implements ISettingsController
+{
     private readonly editorService: IEditorService;
     private readonly settingsService: ISettingsService;
     private readonly localeService: ILocaleService;

@@ -64,6 +64,7 @@ export const constants = {
     PANEL_TOOLBOX_RESIZE: 'panel.toolbox.maximize',
     PANEL_TOOLBOX_RESTORE_SIZE: 'panel.toolbox.restoreSize',
     PANEL_OUTPUT: 'panel.output.title',
+    MENU_APPEARANCE_ID: 'Appearance',
     MENU_FILE_OPEN: 'openFile',
     MENU_QUICK_COMMAND: 'editor.action.quickCommand',
     MENU_VIEW_MENUBAR: 'workbench.action.showMenuBar',
@@ -86,6 +87,9 @@ export const constants = {
     CONTEXT_MENU_EXPLORER: 'sidebar.explore.title',
     CONTEXT_MENU_SEARCH: 'sidebar.search.title',
     CONTEXT_MENU_HIDE: 'menu.hideActivityBar',
+    MENUBAR_MODE_HORIZONTAL: 'menuBar.mode.horizontal',
+    MENUBAR_MODE_VERTICAL: 'menuBar.mode.vertical',
+    MENUBAR_MENU_MODE_DIVIDER: 'menuBar.modeDivider',
 };
 
 export const modules = {
@@ -581,7 +585,7 @@ export const modules = {
                         name: localize('menu.openView', 'Open View'),
                     },
                     {
-                        id: 'Appearance',
+                        id: constants.MENU_APPEARANCE_ID,
                         name: localize('menu.appearance', 'Appearance'),
                         data: [
                             {
@@ -620,6 +624,24 @@ export const modules = {
                                 icon: 'check',
                                 id: constants.MENU_VIEW_PANEL,
                                 name: localize('menu.showPanel', 'Show Panel'),
+                            },
+                            {
+                                id: constants.MENUBAR_MENU_MODE_DIVIDER,
+                                type: 'divider',
+                            },
+                            {
+                                id: constants.MENUBAR_MODE_HORIZONTAL,
+                                name: localize(
+                                    'menu.menuBarHorizontal',
+                                    'Menu Bar Horizontal Mode'
+                                ),
+                            },
+                            {
+                                id: constants.MENUBAR_MODE_VERTICAL,
+                                name: localize(
+                                    'menu.menuBarVertical',
+                                    'Menu Bar Vertical Mode'
+                                ),
                             },
                         ],
                     },

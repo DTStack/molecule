@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { container, singleton } from 'tsyringe';
 import { IActivityBarItem, IMenuBarItem } from 'mo/model';
 import { MenuBarEvent } from 'mo/model/workbench/menuBar';
+import { MenuBarMode } from 'mo/model/workbench/layout';
 import { Controller } from 'mo/react/controller';
 import {
     IMenuBarService,
@@ -10,6 +11,8 @@ import {
     LayoutService,
     IBuiltinService,
     BuiltinService,
+    ActivityBarService,
+    IActivityBarService,
 } from 'mo/services';
 import { ID_APP, ID_SIDE_BAR } from 'mo/common/id';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
@@ -25,19 +28,26 @@ export interface IMenuBarController extends Partial<Controller> {
     updateMenuBar?: () => void;
     updateActivityBar?: () => void;
     updateSideBar?: () => void;
+    updateMenuBarMode?: (mode: keyof typeof MenuBarMode) => void;
+    getMenuBarDataByMode?: (
+        mode: keyof typeof MenuBarMode,
+        menuData: IMenuBarItem[]
+    ) => IMenuBarItem[];
 }
 
 @singleton()
 export class MenuBarController
     extends Controller
-    implements IMenuBarController {
+    implements IMenuBarController
+{
     private readonly menuBarService: IMenuBarService;
     private readonly layoutService: ILayoutService;
     private readonly monacoService: IMonacoService;
     private readonly builtinService: IBuiltinService;
-    private focusinEle: HTMLElement | null = null;
+    private readonly activityBarService: IActivityBarService;
 
-    private automation = {};
+    private _focusinEle: HTMLElement | null = null;
+    private _automation = {};
 
     constructor() {
         super();
@@ -45,6 +55,7 @@ export class MenuBarController
         this.layoutService = container.resolve(LayoutService);
         this.monacoService = container.resolve(MonacoService);
         this.builtinService = container.resolve(BuiltinService);
+        this.activityBarService = container.resolve(ActivityBarService);
     }
 
     public initView() {
@@ -60,32 +71,51 @@ export class MenuBarController
             MENU_VIEW_STATUSBAR,
             MENU_QUICK_COMMAND,
             MENU_VIEW_PANEL,
+            MENUBAR_MODE_HORIZONTAL,
+            MENUBAR_MODE_VERTICAL,
         } = this.builtinService.getConstants();
         if (builtInMenuBarData) {
-            this.menuBarService.setMenus(builtInMenuBarData);
+            const mode = this.layoutService.getMenuBarMode();
+            const menuBarData = this.getMenuBarDataByMode(
+                mode,
+                builtInMenuBarData
+            );
+            this.menuBarService.setMenus(menuBarData);
         }
-        ([
-            [ACTION_QUICK_CREATE_FILE, () => this.createFile()],
-            [ACTION_QUICK_UNDO, () => this.undo()],
-            [ACTION_QUICK_REDO, () => this.redo()],
-            [ACTION_QUICK_SELECT_ALL, () => this.selectAll()],
-            [ACTION_QUICK_COPY_LINE_UP, () => this.copyLineUp()],
-            [MENU_VIEW_ACTIVITYBAR, () => this.updateActivityBar()],
-            [MENU_VIEW_MENUBAR, () => this.updateMenuBar()],
-            [MENU_VIEW_STATUSBAR, () => this.updateStatusBar()],
-            [MENU_QUICK_COMMAND, () => this.gotoQuickCommand()],
-            [ID_SIDE_BAR, () => this.updateSideBar()],
-            [MENU_VIEW_PANEL, () => this.updatePanel()],
-        ] as [string, () => void][]).forEach(([key, value]) => {
+        (
+            [
+                [ACTION_QUICK_CREATE_FILE, () => this.createFile()],
+                [ACTION_QUICK_UNDO, () => this.undo()],
+                [ACTION_QUICK_REDO, () => this.redo()],
+                [ACTION_QUICK_SELECT_ALL, () => this.selectAll()],
+                [ACTION_QUICK_COPY_LINE_UP, () => this.copyLineUp()],
+                [MENU_VIEW_ACTIVITYBAR, () => this.updateActivityBar()],
+                [MENU_VIEW_MENUBAR, () => this.updateMenuBar()],
+                [MENU_VIEW_STATUSBAR, () => this.updateStatusBar()],
+                [MENU_QUICK_COMMAND, () => this.gotoQuickCommand()],
+                [ID_SIDE_BAR, () => this.updateSideBar()],
+                [MENU_VIEW_PANEL, () => this.updatePanel()],
+                [
+                    MENUBAR_MODE_HORIZONTAL,
+                    () => this.updateMenuBarMode(MenuBarMode.horizontal),
+                ],
+                [
+                    MENUBAR_MODE_VERTICAL,
+                    () => this.updateMenuBarMode(MenuBarMode.vertical),
+                ],
+            ] as [string, () => void][]
+        ).forEach(([key, value]) => {
             if (key) {
-                this.automation[key] = value;
+                this._automation[key] = value;
             }
         });
+
+        this.subscribe(MenuBarEvent.onChangeMode, this.updateMenuBarDataByMode);
     }
 
     public updateFocusinEle = (ele: HTMLElement | null) => {
         if (ele?.id == ID_APP) return;
-        this.focusinEle = ele;
+        this._focusinEle = ele;
     };
 
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
@@ -97,7 +127,10 @@ export class MenuBarController
          * 2、we have no way of knowing whether user-defined events are executed internally
          */
         this.emit(MenuBarEvent.onSelect, menuId);
-        this.automation[menuId]?.();
+        this._automation[menuId]?.();
+
+        // Update the check status of MenuBar in the contextmenu of ActivityBar
+        this.updateActivityBarContextMenu(menuId);
     };
 
     public createFile = () => {
@@ -114,7 +147,7 @@ export class MenuBarController
         if (ACTION_QUICK_UNDO) {
             this.monacoService.commandService.executeCommand(
                 ACTION_QUICK_UNDO,
-                this.focusinEle
+                this._focusinEle
             );
         }
     };
@@ -124,7 +157,7 @@ export class MenuBarController
         if (ACTION_QUICK_REDO) {
             this.monacoService.commandService.executeCommand(
                 ACTION_QUICK_REDO,
-                this.focusinEle
+                this._focusinEle
             );
         }
     };
@@ -153,15 +186,14 @@ export class MenuBarController
         if (ACTION_QUICK_SELECT_ALL) {
             this.monacoService.commandService.executeCommand(
                 ACTION_QUICK_SELECT_ALL,
-                this.focusinEle
+                this._focusinEle
             );
         }
     };
 
     public copyLineUp = () => {
-        const {
-            ACTION_QUICK_COPY_LINE_UP,
-        } = this.builtinService.getConstants();
+        const { ACTION_QUICK_COPY_LINE_UP } =
+            this.builtinService.getConstants();
         if (ACTION_QUICK_COPY_LINE_UP) {
             this.monacoService.commandService.executeCommand(
                 ACTION_QUICK_COPY_LINE_UP
@@ -177,6 +209,48 @@ export class MenuBarController
                 icon: hidden ? '' : 'check',
             });
         }
+    };
+
+    public updateMenuBarMode = (mode: keyof typeof MenuBarMode) => {
+        this.layoutService.setMenuBarMode(mode);
+    };
+
+    private updateMenuBarDataByMode = (mode: keyof typeof MenuBarMode) => {
+        const { builtInMenuBarData } = this.builtinService.getModules();
+        const {
+            MENUBAR_MODE_HORIZONTAL,
+            MENUBAR_MODE_VERTICAL,
+            MENU_APPEARANCE_ID,
+        } = this.builtinService.getConstants();
+        let removeKey = MENUBAR_MODE_HORIZONTAL;
+        let appendKey = MENUBAR_MODE_VERTICAL;
+
+        if (mode === MenuBarMode.vertical) {
+            removeKey = MENUBAR_MODE_VERTICAL;
+            appendKey = MENUBAR_MODE_HORIZONTAL;
+        }
+
+        const menuItem = this.getMenuBarItem(builtInMenuBarData, appendKey!);
+        this.menuBarService.remove(removeKey!);
+        this.menuBarService.append(menuItem!, MENU_APPEARANCE_ID!);
+    };
+
+    private getMenuBarItem = (
+        data: IMenuBarItem[],
+        id: string
+    ): IMenuBarItem | null => {
+        let item: IMenuBarItem;
+        for (item of data) {
+            if (item.id === id) {
+                return { ...item };
+            } else if (Array.isArray(item.data) && item.data.length > 0) {
+                const itemData = this.getMenuBarItem(item.data, id);
+                if (itemData) {
+                    return itemData;
+                }
+            }
+        }
+        return null;
     };
 
     public updateStatusBar = () => {
@@ -200,4 +274,53 @@ export class MenuBarController
             QuickTogglePanelAction.ID
         );
     };
+
+    /**
+     * Get the menu bar data after filtering out the menu contained in ids
+     * @param menuData
+     * @param ids
+     * @returns Filtered menu bar data
+     */
+    private getFilteredMenuBarData(
+        menuData: IMenuBarItem[],
+        ids: (UniqueId | undefined)[]
+    ): IMenuBarItem[] {
+        const newData: IMenuBarItem[] = [];
+        if (Array.isArray(menuData)) {
+            menuData.forEach((item: IMenuBarItem) => {
+                if (ids.includes(item.id)) return;
+                const newItem = { ...item };
+                if (Array.isArray(item.data) && item.data.length > 0) {
+                    newItem.data = this.getFilteredMenuBarData(item.data, ids);
+                }
+                newData.push(newItem);
+            });
+        }
+        return newData;
+    }
+
+    public getMenuBarDataByMode(
+        mode: keyof typeof MenuBarMode,
+        menuData: IMenuBarItem[]
+    ): IMenuBarItem[] {
+        const { MENUBAR_MODE_VERTICAL, MENUBAR_MODE_HORIZONTAL } =
+            this.builtinService.getConstants();
+        const ids: (string | undefined)[] = [];
+        if (mode === MenuBarMode.horizontal) {
+            ids.push(MENUBAR_MODE_HORIZONTAL);
+        } else if (mode === MenuBarMode.vertical) {
+            ids.push(MENUBAR_MODE_VERTICAL);
+        }
+
+        const menuBarData = this.getFilteredMenuBarData(menuData, ids);
+        return menuBarData;
+    }
+
+    private updateActivityBarContextMenu(menuId: UniqueId) {
+        const { MENU_VIEW_MENUBAR, CONTEXT_MENU_MENU } =
+            this.builtinService.getConstants();
+        if (CONTEXT_MENU_MENU && menuId === MENU_VIEW_MENUBAR) {
+            this.activityBarService.toggleContextMenuChecked(CONTEXT_MENU_MENU);
+        }
+    }
 }

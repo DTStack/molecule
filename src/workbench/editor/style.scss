@@ -28,6 +28,8 @@
     }
 
     &__group-header {
+        background: var(--editorGroupHeader-tabsBackground);
+        border-bottom: 1px solid var(--editorGroupHeader-tabsBorder);
         display: flex;
         position: relative;
     }
@@ -35,6 +37,10 @@
     &__group-tabs {
         flex-grow: 1;
         height: 35px;
+
+        #{$tab}__item--active {
+            border-top: 1px solid var(--tab-activeBorder);
+        }
     }
 
     &__group-actions {

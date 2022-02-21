@@ -1,14 +1,15 @@
 import 'reflect-metadata';
-import { localize } from 'mo/i18n/localize';
-
-import { KeyMod, KeyCode } from 'mo/monaco';
 import { container } from 'tsyringe';
+
+import { localize } from 'mo/i18n/localize';
 import { EditorService, IEditorService } from 'mo/services';
-import { Action2, KeybindingWeight } from './common';
 import { constants } from 'mo/services/builtinService/const';
+import { KeyMod, KeyCode } from 'mo/monaco';
+import { KeybindingWeight } from 'mo/monaco/common';
+import { Action2 } from 'mo/monaco/action';
 
 export class QuickSelectAllAction extends Action2 {
-    static ID = constants.ACTION_QUICK_SELECT_ALL;
+    static readonly ID = constants.ACTION_QUICK_SELECT_ALL;
     static readonly DESC = 'Select All';
     static readonly LABEL = localize('menu.selectAll', 'Select All');
     private readonly editorService: IEditorService;

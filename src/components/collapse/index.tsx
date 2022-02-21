@@ -187,9 +187,8 @@ export function Collapse({
                         restHeight = restHeight - HEADER_HEIGTH;
                         return HEADER_HEIGTH;
                     }
-                    const {
-                        height: contentHeight,
-                    } = correspondDOM.getBoundingClientRect();
+                    const { height: contentHeight } =
+                        correspondDOM.getBoundingClientRect();
                     // for preventing the loss of DOM height, don't set the display to be none for DOM
                     const height = contentHeight + HEADER_HEIGTH;
 

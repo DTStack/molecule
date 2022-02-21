@@ -3,14 +3,14 @@ import { container } from 'tsyringe';
 import React, { createContext, Component } from 'react';
 
 import { defaultExtensions } from 'mo/extensions';
-import { BuiltInDefault } from 'mo/extensions/locales-defaults';
+import { BuiltInId } from 'mo/extensions/locales-defaults';
 import { IExtension } from 'mo/model/extension';
 import {
     ExtensionService,
     IExtensionService,
 } from 'mo/services/extensionService';
 import { LocaleService, ILocaleService } from 'mo/i18n';
-import { STORE_KEY } from 'mo/i18n/localeService';
+import { STORE_KEY, DEFAULT_LOCALE_ID } from 'mo/i18n/localeService';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
 import { ILayoutService, LayoutService } from 'mo/services';
 import * as controllers from 'mo/controller';
@@ -48,15 +48,16 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     }
 
     componentDidMount() {
-        this.initialize();
+        if (!this.extensionService.isLoaded()) {
+            this.initialize();
+        }
     }
 
     initialize() {
         const { extensions = [] } = this.props;
 
-        const [languages, restExts] = this.extensionService.splitLanguagesExts(
-            extensions
-        );
+        const [languages, restExts] =
+            this.extensionService.splitLanguagesExts(extensions);
 
         // First to init the monacoService
         this.monacoService.initWorkspace(this.layoutService.container!);
@@ -73,17 +74,28 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
 
         // Finally, handle the rest of extensions
         this.extensionService.load(restExts);
+
+        // Mark the extensionService as loaded
+        this.extensionService.setLoaded();
     }
 
     initLocaleExts(languages: IExtension[]) {
-        const { defaultLocale = BuiltInDefault } = this.props;
+        const { defaultLocale = BuiltInId } = this.props;
 
         this.extensionService.load(languages);
 
         // And Molecule should set the correct locale before loading normal extensions in case of
         // the localize method returns incorrect international text caused by incorrect current locale in the normal extensions
         const currentLocale = localStorage.getItem(STORE_KEY) || defaultLocale;
-        this.localeService.setCurrentLocale(currentLocale);
+        const preDefaultLocale = localStorage.getItem(DEFAULT_LOCALE_ID);
+        let finalLocale = currentLocale;
+
+        if (defaultLocale !== preDefaultLocale) {
+            finalLocale = defaultLocale;
+        }
+
+        this.localeService.setCurrentLocale(finalLocale);
+        localStorage.setItem(DEFAULT_LOCALE_ID, defaultLocale);
     }
 
     /**

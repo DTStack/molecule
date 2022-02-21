@@ -104,9 +104,8 @@ describe('Test Panel Component', () => {
         const panel = new PanelModel(current, [current, panel2]);
 
         const { container, rerender } = render(<Panel {...panel} />);
-        const tabs = container.querySelectorAll<HTMLDivElement>(
-            '.mo-tab__item'
-        );
+        const tabs =
+            container.querySelectorAll<HTMLDivElement>('.mo-tab__item');
         expect(tabs![0].textContent).toEqual('test1');
         expect(tabs![1].textContent).toEqual('test2');
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Component, connect } from 'mo/react';
+import { Component, ComponentEvents, connect } from 'mo/react';
 import { fireEvent, render } from '@testing-library/react';
 
 class TestServiceA extends Component {
@@ -121,5 +121,28 @@ describe('Test Connector Component', () => {
         unmount();
 
         expect(serviceA.removeOnUpdateState).toBeCalled();
+    });
+
+    test('The Service connect multiple Components', () => {
+        const testService = new TestServiceA();
+
+        const TestView = connect({ A: testService }, TestComponent);
+        const TestView2 = connect({ A: testService }, TestComponent);
+
+        const { unmount } = render(<TestView />);
+        const { unmount: unmount2 } = render(<TestView2 />);
+        expect((testService as any)._event.count(ComponentEvents.Update)).toBe(
+            2
+        );
+
+        unmount();
+        expect((testService as any)._event.count(ComponentEvents.Update)).toBe(
+            1
+        );
+
+        unmount2();
+        expect((testService as any)._event.count(ComponentEvents.Update)).toBe(
+            0
+        );
     });
 });

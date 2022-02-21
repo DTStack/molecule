@@ -18,9 +18,8 @@ import { randomId } from 'mo/common/utils';
 const TEST_ID = 'test-id';
 
 describe('Test StatusBarService', () => {
-    const folderTreeService = container.resolve<IFolderTreeService>(
-        FolderTreeService
-    );
+    const folderTreeService =
+        container.resolve<IFolderTreeService>(FolderTreeService);
     const mockMenuProps = [
         {
             id: 'File',
@@ -272,7 +271,7 @@ describe('Test StatusBarService', () => {
         const children = data[0].children!;
         expect(children).toHaveLength(2);
         expect(children[0]).toEqual({
-            ...fileNode,
+            ...pendingNode,
         });
     });
 
@@ -312,6 +311,7 @@ describe('Test StatusBarService', () => {
             isLeaf: false,
             children: [ignoreFile, normalFile, normalFolder, ignoreFolder],
         });
+        folderTreeService.toggleAutoSort();
         folderTreeService.add(root);
 
         // let data = folderTreeService.getState().folderTree?.data || [];
@@ -389,6 +389,11 @@ describe('Test StatusBarService', () => {
             '.prettierignore',
             'file',
         ]);
+
+        // update tree node when autoSort is true
+        root.name = 'new-root';
+        folderTreeService.update(root);
+        expect(folderTreeService.get(root.id)?.name).toBe('new-root');
     });
 
     test('Should support to set entry', () => {

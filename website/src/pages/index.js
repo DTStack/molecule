@@ -24,7 +24,6 @@ function HomepageHeader() {
                         <Link
                             className="button button--secondary button--lg"
                             to="/docs/introduction"
-                            style={{ width: 140 }}
                         >
                             <Translate id="page.quickStart">
                                 Quick Start
@@ -34,7 +33,7 @@ function HomepageHeader() {
                     <div className={styles.buttons}>
                         <Link
                             className="button button--secondary button--lg"
-                            to="/docs/intro"
+                            to="https://dtstack.github.io/molecule-examples/"
                             style={{ width: 140 }}
                         >
                             <Translate id="page.preview" message="">

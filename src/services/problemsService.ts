@@ -47,7 +47,8 @@ export interface IProblemsService extends Component<IProblems> {
 @singleton()
 export class ProblemsService
     extends Component<IProblems>
-    implements IProblemsService {
+    implements IProblemsService
+{
     protected state: IProblems;
     private readonly statusBarService: IStatusBarService;
     private readonly builtinService: IBuiltinService;

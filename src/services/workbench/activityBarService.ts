@@ -74,7 +74,8 @@ export interface IActivityBarService extends Component<IActivityBar> {
 @singleton()
 export class ActivityBarService
     extends Component<IActivityBar>
-    implements IActivityBarService {
+    implements IActivityBarService
+{
     protected state: IActivityBar;
     private sidebarService: ISidebarService;
 

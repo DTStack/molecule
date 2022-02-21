@@ -217,9 +217,8 @@ describe('Test Search Component', () => {
                 onButtonClick={TEST_FN}
             />
         );
-        const icon = wrapper.container.getElementsByClassName(
-            replaceBtnClassName
-        )[0];
+        const icon =
+            wrapper.container.getElementsByClassName(replaceBtnClassName)[0];
         expect(icon).not.toBeNull();
 
         fireEvent.click(icon);
@@ -230,9 +229,10 @@ describe('Test Search Component', () => {
         )[0];
         expect(input).toBeInTheDocument();
 
-        const textarea = wrapper.container.querySelectorAll<HTMLTextAreaElement>(
-            `textarea[autoCorrect='off']`
-        )[1];
+        const textarea =
+            wrapper.container.querySelectorAll<HTMLTextAreaElement>(
+                `textarea[autoCorrect='off']`
+            )[1];
         expect(textarea!.value).toBe(INPUT_VALUE);
 
         expect(wrapper.getByTestId(TEST_ID)).toBeInTheDocument();

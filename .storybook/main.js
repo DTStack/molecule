@@ -7,4 +7,7 @@ module.exports = {
     webpackFinal: async (config) => {
         return merge(config, baseConf);
     },
+    typescript: {
+        reactDocgen: 'none',
+    },
 };

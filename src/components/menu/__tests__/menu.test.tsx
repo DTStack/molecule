@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { fireEvent, render, waitFor, screen } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 
@@ -11,6 +11,7 @@ import {
     horizontalMenuClassName,
     verticalMenuClassName,
 } from '../base';
+import { MenuRef } from '../index';
 
 const menuData = [
     {
@@ -117,6 +118,11 @@ const menuData = [
     },
 ];
 const TEST_ID = 'test-id';
+
+function MenuTest(props) {
+    const ref = useRef<MenuRef>(null);
+    return <Menu ref={ref} data={menuData} {...props} />;
+}
 
 describe('Test the Menu Component', () => {
     test('Match the List snapshot', () => {
@@ -305,5 +311,37 @@ describe('Test the Menu Component', () => {
                 expect(component.classList).not.toContain(activeClassName);
             });
         });
+    });
+
+    test('Dispose the Menu', () => {
+        const TEST_DATA1 = 'test1';
+        const TEST_DATA2 = 'test2';
+        const mockData = [
+            {
+                id: TEST_DATA1,
+                name: TEST_DATA1,
+                title: TEST_DATA1,
+                data: [
+                    {
+                        id: TEST_DATA2,
+                        name: TEST_DATA2,
+                        'data-testid': TEST_DATA2,
+                    },
+                ],
+            },
+        ];
+        const menu = renderer.create(<MenuTest />);
+        const menuNode: any = (
+            menu as renderer.ReactTestRenderer
+        ).root.findByType(Menu);
+        expect(menuNode._fiber).not.toBeUndefined();
+
+        const menuRef = menuNode._fiber.ref;
+        render(<Menu trigger="click" ref={menuRef} data={mockData} />);
+        expect(menuRef?.current?.dispose).not.toBeUndefined();
+
+        menuRef.current?.dispose();
+        const item = document.body.querySelectorAll('ul')[1];
+        expect(item.style.opacity).toEqual('0');
     });
 });

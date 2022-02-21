@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRef } from 'react';
 import { classNames } from 'mo/common/className';
 import { IActivityBarItem } from 'mo/model/workbench/activityBar';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
@@ -12,8 +11,7 @@ import {
     itemCheckedClassName,
     itemDisabledClassName,
 } from './base';
-import { DropDown, Icon } from 'mo/components';
-import { DropDownRef } from 'mo/components/dropdown';
+import { Icon, useContextView } from 'mo/components';
 import { KeybindingHelper } from 'mo/services/keybinding';
 
 export function ActivityBarItem(
@@ -33,19 +31,46 @@ export function ActivityBarItem(
         onContextMenuClick,
     } = props;
 
-    const contextMenuRef = useRef<DropDownRef>(null);
+    const renderContextMenu = () => (
+        <Menu
+            onClick={onClickMenuItem}
+            role="menu"
+            data={contextMenu.map((menu) => {
+                if (menu.id) {
+                    const keybindingObj =
+                        KeybindingHelper.queryGlobalKeybinding(
+                            menu.id.toString()
+                        );
+                    if (keybindingObj) {
+                        menu.keybinding =
+                            KeybindingHelper.convertSimpleKeybindingToString(
+                                keybindingObj
+                            );
+                    }
+                }
+                return menu;
+            })}
+        />
+    );
+
+    const contextView = useContextView({
+        render: renderContextMenu,
+    });
 
     const onClickMenuItem = (
         e: React.MouseEvent,
         item: IMenuItemProps | undefined
     ) => {
         onContextMenuClick?.(e, item);
-        contextMenuRef.current?.dispose();
+        contextView?.hide();
     };
 
     const onClickItem = function (event) {
         if (onClick) {
             onClick(props.id, props);
+        }
+        if (contextMenu.length > 0) {
+            contextView.show({ x: event.pageX, y: event.pageY });
         }
     };
 
@@ -54,28 +79,6 @@ export function ActivityBarItem(
             {render?.() || null}
         </Icon>
     );
-
-    const overlay = (
-        <Menu
-            onClick={onClickMenuItem}
-            role="menu"
-            data={contextMenu.map((menu) => {
-                if (menu.id) {
-                    const keybindingObj = KeybindingHelper.queryGlobalKeybinding(
-                        menu.id.toString()
-                    );
-                    if (keybindingObj) {
-                        menu.keybinding = KeybindingHelper.convertSimpleKeybindingToString(
-                            keybindingObj
-                        );
-                    }
-                }
-                return menu;
-            })}
-        />
-    );
-
-    const hasContextMenu = contextMenu.length > 0;
 
     return (
         <li
@@ -89,18 +92,7 @@ export function ActivityBarItem(
             )}
             data-id={data.id}
         >
-            {hasContextMenu ? (
-                <DropDown
-                    ref={contextMenuRef}
-                    trigger="click"
-                    placement="rightBottom"
-                    overlay={overlay}
-                >
-                    {content}
-                </DropDown>
-            ) : (
-                content
-            )}
+            {content}
             {checked ? <div className={indicatorClassName}></div> : null}
         </li>
     );

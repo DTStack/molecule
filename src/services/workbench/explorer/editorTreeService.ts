@@ -70,7 +70,8 @@ export interface IEditorTreeService extends Component<IEditor> {
 @singleton()
 export class EditorTreeService
     extends Component<IEditor>
-    implements IEditorTreeService {
+    implements IEditorTreeService
+{
     protected state: IEditor;
     private readonly editorService: EditorService;
 

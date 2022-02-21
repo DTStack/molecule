@@ -84,9 +84,9 @@ describe('Test Dropdown Component', () => {
     test('Dispose the Dropdown', () => {
         const tree = renderer.create(<DropdownTest />);
 
-        const dropdownNode: any = (tree as renderer.ReactTestRenderer).root.findByType(
-            DropDown
-        );
+        const dropdownNode: any = (
+            tree as renderer.ReactTestRenderer
+        ).root.findByType(DropDown);
 
         expect(dropdownNode._fiber).not.toBeUndefined();
 

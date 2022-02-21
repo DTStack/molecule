@@ -16,6 +16,15 @@ export enum ColorScheme {
     HIGH_CONTRAST = 'hc',
 }
 
+export enum ColorThemeMode {
+    dark = 'dark',
+    light = 'light',
+}
+
+export enum ColorThemeEvent {
+    onChange = 'colorTheme.onChange',
+}
+
 export interface IColorTheme {
     /**
      * The id of component, theme will be applied by this ID

@@ -1,9 +1,10 @@
+import 'reflect-metadata';
+import { container } from 'tsyringe';
 import { ServicesAccessor } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
+
 import { localize } from 'mo/i18n/localize';
 import { KeyMod, KeyCode } from 'mo/monaco';
-import { Action2, CATEGORIES, KeybindingWeight } from './common';
-import { container } from 'tsyringe';
 import {
     ActivityBarService,
     IActivityBarService,
@@ -16,6 +17,8 @@ import {
 } from 'mo/services';
 import { ID_SIDE_BAR } from 'mo/common/id';
 import type { UniqueId } from 'mo/common/types';
+import { Action2 } from 'mo/monaco/action';
+import { CATEGORIES, KeybindingWeight } from 'mo/monaco/common';
 
 export class CommandQuickSideBarViewAction extends Action2 {
     static readonly ID = ID_SIDE_BAR;

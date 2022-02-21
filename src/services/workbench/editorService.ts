@@ -202,7 +202,8 @@ export interface IEditorService extends Component<IEditor> {
 @singleton()
 export class EditorService
     extends Component<IEditor>
-    implements IEditorService {
+    implements IEditorService
+{
     protected state: IEditor;
     protected defaultActions: IEditorActionsProps[] = [];
     protected defaultMenus: IMenuItemProps[] = [];
@@ -377,6 +378,7 @@ export class EditorService
                     const isOpened = this.isOpened(tabId);
                     // the model of closed tab should be disposed after closing
                     !isOpened && this.disposeModel(tab);
+                    this.explorerService.forceUpdate();
                 }
             );
             return;

@@ -12,14 +12,8 @@ const panelToolbarClassName = getBEMElement(defaultClassName, 'toolbar');
 const panelContainerClassName = getBEMElement(defaultClassName, 'container');
 
 export function Panel(props: IPanel & IPanelController) {
-    const {
-        data,
-        current,
-        toolbox,
-        onTabChange,
-        onToolbarClick,
-        onClose,
-    } = props;
+    const { data, current, toolbox, onTabChange, onToolbarClick, onClose } =
+        props;
     let toolboxData = toolbox || [];
     if (current && current.toolbox) {
         toolboxData = current.toolbox.concat(toolboxData);
@@ -40,7 +34,7 @@ export function Panel(props: IPanel & IPanelController) {
     return (
         <div className={defaultClassName}>
             <div className={panelHeaderClassName}>
-                <Scrollable noScrollY isShowShadow>
+                <Scrollable noScrollY>
                     <Tabs
                         activeTab={current?.id}
                         data={sortedPanels}

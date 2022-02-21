@@ -32,7 +32,8 @@ export interface INotificationController extends Partial<Controller> {
 @singleton()
 export class NotificationController
     extends Controller
-    implements INotificationController {
+    implements INotificationController
+{
     private readonly notificationService: INotificationService;
     private readonly statusBarService: IStatusBarService;
     private readonly builtinService: IBuiltinService;
@@ -61,10 +62,8 @@ export class NotificationController
         item: IActionBarItemProps<any>
     ) => {
         const action = item.id;
-        const {
-            NOTIFICATION_CLEAR_ALL_ID,
-            NOTIFICATION_HIDE_ID,
-        } = this.builtinService.getConstants();
+        const { NOTIFICATION_CLEAR_ALL_ID, NOTIFICATION_HIDE_ID } =
+            this.builtinService.getConstants();
 
         if (action === NOTIFICATION_CLEAR_ALL_ID) {
             this.notificationService.clear();

@@ -66,11 +66,8 @@ export class PanelController extends Controller implements IPanelController {
     }
 
     public readonly onTabChange = (key: UniqueId): void => {
-        const state = this.panelService.getState();
         if (key) {
-            this.panelService.setState({
-                current: state.data?.find((item) => item.id === key),
-            });
+            this.panelService.setActive(key);
         }
         this.emit(PanelEvent.onTabChange, key);
     };
@@ -85,10 +82,8 @@ export class PanelController extends Controller implements IPanelController {
         e: React.MouseEvent,
         item: IActionBarItemProps
     ): void => {
-        const {
-            PANEL_TOOLBOX_CLOSE,
-            PANEL_TOOLBOX_RESIZE,
-        } = this.builtinService.getConstants();
+        const { PANEL_TOOLBOX_CLOSE, PANEL_TOOLBOX_RESIZE } =
+            this.builtinService.getConstants();
         if (item.id === PANEL_TOOLBOX_CLOSE) {
             this.monacoService.commandService.executeCommand(
                 QuickTogglePanelAction.ID

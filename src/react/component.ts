@@ -19,13 +19,14 @@ export interface IComponent<S = any> {
     render(nextState?: S): void;
     /**
      * Listen to the Component state update event
-     * @param callback
+     * @param listener
      */
-    onUpdateState(callback: (prevState: S, nextState: S) => void): void;
+    onUpdateState(listener: (prevState: S, nextState: S) => void): void;
     /**
-     * Remove the Component update event listening
+     * Remove the Component update event listening, default is remove all,
+     * also you can remove one by pass the listener
      */
-    removeOnUpdateState(): void;
+    removeOnUpdateState(listener?: Function): void;
     /**
      * Force to update the Component
      */
@@ -38,7 +39,8 @@ export interface IComponent<S = any> {
 
 export abstract class Component<S = any>
     extends GlobalEvent
-    implements IComponent<S> {
+    implements IComponent<S>
+{
     protected abstract state: S;
     private _event: EventEmitter;
 
@@ -68,12 +70,12 @@ export abstract class Component<S = any>
         this._event.emit(ComponentEvents.Update, this.state, nextState);
     }
 
-    public onUpdateState(callback: (prevState: S, nextState: S) => void) {
-        this._event.subscribe(ComponentEvents.Update, callback);
+    public onUpdateState(listener: (prevState: S, nextState: S) => void) {
+        this._event.subscribe(ComponentEvents.Update, listener);
     }
 
-    public removeOnUpdateState(): void {
-        this._event.unsubscribe(ComponentEvents.Update);
+    public removeOnUpdateState(listener?: Function): void {
+        this._event.unsubscribe(ComponentEvents.Update, listener);
     }
 
     public forceUpdate() {

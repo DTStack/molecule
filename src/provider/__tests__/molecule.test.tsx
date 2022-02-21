@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { select } from 'mo/common/dom';
-import { MoleculeProvider, Workbench } from 'mo';
+import molecule, { MoleculeProvider, Workbench } from 'mo';
 
 import { customExtensions } from '../../../stories/extensions';
 
@@ -16,6 +16,9 @@ describe('Test MoleculeProvider', () => {
             width: 500,
             height: 0,
         });
+
+        // Reset the extensions loaded state
+        molecule.extension.setLoaded(false);
     });
 
     afterEach(() => {
@@ -49,13 +52,13 @@ describe('Test MoleculeProvider', () => {
         ).toBeInTheDocument();
     });
 
-    test('MoleculeProvider load the extensions', () => {
+    test('MoleculeProvider load the extensions', async () => {
         render(
             <MoleculeProvider extensions={customExtensions}>
                 <Workbench />
             </MoleculeProvider>
         );
-        expect(
+        await expect(
             select('div[data-id="ActivityBarTestPane"]')
         ).toBeInTheDocument();
     });

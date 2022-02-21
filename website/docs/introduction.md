@@ -5,11 +5,11 @@ sidebar_position: 1
 ---
 
 <div align="center">
- <img src="../static/img/logo@1x.png" width="20%" height="20%" alt="watchman-logo" />
+ <img src="/molecule/img/logo@3x.png" width="20%" height="20%" alt="Molecule Logo" />
  <h1>Molecule</h1>
  <h3>A lightweight Web IDE UI Framework</h3>
 
-[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url]
+[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url] [![Chat][online-chat-img]][online-chat-url]
 
 </div>
 
@@ -21,6 +21,8 @@ sidebar_position: 1
 [download-url]: https://www.npmjs.com/package/@dtinsight/molecule
 [npm-version]: https://img.shields.io/npm/v/@dtinsight/molecule.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
+[online-chat-img]: https://img.shields.io/discord/920616811261743104?logo=Molecule
+[online-chat-url]: https://discord.com/invite/b62gpHwNA7
 
 The **Molecule** is a lightweight **Web IDE UI** Framework built with React.jsï¼Œand inspired by the VSCode. We also provide the Extension APIs the seem like VSCode, to help developers extend the Workbench easily. The Molecule integrates with React.js applications is simple. It has applied to many [DTStack](https://www.dtstack.com/) inner projects.
 
@@ -28,13 +30,13 @@ The **Molecule** is a lightweight **Web IDE UI** Framework built with React.jsï¼
 
 ## Features
 
--   Builtin the VSCode **Workbench** UI
+-   Built-in the VSCode **Workbench** UI
 -   Compatible with the VSCode **ColorTheme**
 -   Customize the Workbench via **React Component** easily
--   Builtin Monaco-Editor **Command Palette, Keybinding** features
--   Support the **i18n**, builtin zhCN, and English
--   Builtin **Settings**, support to edit and extend via the Extension
--   Builtin basic **Explorer, Search** components, and support extending via the Extension
+-   Built-in Monaco-Editor **Command Palette, Keybinding** features
+-   Support the **i18n**, built-in zhCN, and English
+-   Built-in **Settings**, support to edit and extend via the Extension
+-   Built-in basic **Explorer, Search** components, and support extending via the Extension
 -   **Typescript** Ready
 
 ## Installation
@@ -62,7 +64,7 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-The `extension` is the Extension applications entry, more details about Extension, please read the [Quick Start](./quickStart.md).
+The `extension` is the Extension applications entry, more details about Extension, please read the [Quick Start](./quick-start.md).
 
 ## Development
 

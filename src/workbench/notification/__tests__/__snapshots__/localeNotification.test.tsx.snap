@@ -5,35 +5,57 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
   style={
     Object {
       "lineHeight": "1.5",
-      "textAlign": "left",
-      "width": 350,
+      "textAlign": "right",
+      "width": 420,
     }
   }
 >
-  <p>
-    The current locale has changed to 
-    chinese
-    , click the button to reload the Page and applying the changes.
-  </p>
-  <p
+  <div
     style={
       Object {
-        "fontWeight": "bold",
+        "direction": "ltr",
+        "textAlign": "left",
+        "whiteSpace": "normal",
       }
     }
   >
-    Notice: Reload the Page could lose the data, Please confirm you have saved before.
-  </p>
-  <a
-    className="mo-btn mo-btn--normal"
-    onClick={[Function]}
+    <p>
+      The current locale has changed to 
+      chinese
+      , click the button to reload the Page and applying the changes.
+    </p>
+    <p
+      style={
+        Object {
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Notice: Reload the Page could lose the data, Please confirm you have saved before.
+    </p>
+  </div>
+  <div
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
     style={
       Object {
-        "width": 150,
+        "display": "inline-block",
+        "marginBottom": 2,
       }
     }
+    tabIndex={0}
   >
-    Confirm Reload
-  </a>
+    <a
+      className="mo-btn mo-btn--normal"
+      onClick={[Function]}
+      style={
+        Object {
+          "width": 150,
+        }
+      }
+    >
+      Confirm Reload
+    </a>
+  </div>
 </div>
 `;

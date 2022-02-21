@@ -320,7 +320,36 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
                         </h2>
                       </div>
                       <div
-                        class="mo-sidebar__toolbar"
+                        className="mo-collapse__content"
+                        data-content="sidebar.explore.openEditor"
+                        tabIndex={0}
+                      />
+                    </div>
+                    <div
+                      className="mo-collapse__item"
+                      data-content="sidebar.explore.folders"
+                    >
+                      <div
+                        className="mo-collapse__header"
+                        onClick={[Function]}
+                        tabIndex={0}
+                      >
+                        <span
+                          className="codicon codicon-chevron-right"
+                        />
+                        <span
+                          className="mo-collapse__header__title"
+                        >
+                          Default Project Name
+                        </span>
+                        <div
+                          className="mo-collapse__extra"
+                        />
+                      </div>
+                      <div
+                        className="mo-collapse__content"
+                        data-content="sidebar.explore.folders"
+                        tabIndex={0}
                       >
                         <div
                           class="mo-tool-bar"
@@ -589,97 +618,119 @@ exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
         </div>
       </div>
     </div>
+  </div>
+  <div
+    style={
+      Object {
+        "display": undefined,
+      }
+    }
+  >
     <div
-      class="mo-statusBar"
+      className="mo-statusBar"
       id="statusBar"
     >
       <div
-        class="mo-statusBar__left-items"
+        className="mo-statusBar__left-items"
       >
         <div
-          class="mo-statusBar__item"
+          className="mo-statusBar__item"
           id="statusbar.problems.title"
         >
           <a
-            tabindex="-1"
+            onClick={[Function]}
+            tabIndex={-1}
             title="Problems"
           >
             <span
-              class="codicon codicon-error"
+              className="codicon codicon-error"
             />
              0 
             <span
-              class="codicon codicon-warning"
+              className="codicon codicon-warning"
             />
              0 
             <span
-              class="codicon codicon-info"
+              className="codicon codicon-info"
             />
              0
           </a>
         </div>
       </div>
       <div
-        class="mo-statusBar__right-items"
+        className="mo-statusBar__right-items"
       >
         <div
-          class="mo-statusBar__item"
+          className="mo-statusBar__item"
           id="MO_NOTIFICATION"
         >
           <a
-            tabindex="-1"
+            onClick={[Function]}
+            tabIndex={-1}
             title="Notification"
           >
             <span
-              class="codicon codicon-bell"
+              className="codicon codicon-bell"
+              onClick={[Function]}
             />
             <div
-              class="mo-notification mo-context-view--shadow"
-              style="display: none;"
+              className="mo-notification mo-context-view--shadow"
+              style={
+                Object {
+                  "display": "none",
+                }
+              }
             >
               <header
-                class="mo-notification__header"
+                className="mo-notification__header"
               >
                 <span>
                   No new notifications
                 </span>
                 <div
-                  class="mo-action-bar"
+                  className="mo-action-bar"
                 >
                   <ul
-                    class="mo-action-bar__container"
+                    className="mo-action-bar__container"
                   >
                     <li
-                      class="mo-action-bar__item"
-                      data-index="0"
+                      className="mo-action-bar__item"
+                      data-index={0}
+                      onClick={[Function]}
                     >
                       <span
-                        class="codicon codicon-clear-all"
+                        className="codicon codicon-clear-all"
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
                       />
                     </li>
                     <li
-                      class="mo-action-bar__item"
-                      data-index="1"
+                      className="mo-action-bar__item"
+                      data-index={1}
+                      onClick={[Function]}
                     >
                       <span
-                        class="codicon codicon-chevron-down"
+                        className="codicon codicon-chevron-down"
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
                       />
                     </li>
                   </ul>
                 </div>
               </header>
               <div
-                class="mo-notification__body"
+                className="mo-notification__body"
               />
             </div>
           </a>
         </div>
         <div
-          class="mo-statusBar__item"
+          className="mo-statusBar__item"
           id="MoEditorInfo"
         >
           <a
-            tabindex="-1"
+            onClick={[Function]}
+            tabIndex={-1}
             title="Go to Line/Column"
           >
             <span>

@@ -53,7 +53,8 @@ export interface IMonacoService {
 @singleton()
 export class MonacoService implements IMonacoService {
     private _services: ServiceCollection;
-    private simpleEditorModelResolverService: SimpleEditorModelResolverService | null = null;
+    private simpleEditorModelResolverService: SimpleEditorModelResolverService | null =
+        null;
     private _container!: HTMLElement | null;
 
     constructor() {}
@@ -98,9 +99,10 @@ export class MonacoService implements IMonacoService {
 
         this.mergeEditorServices(overrides);
         if (!services.has(ITextModelService)) {
-            this.simpleEditorModelResolverService = new SimpleEditorModelResolverService(
-                StaticServices.modelService.get()
-            );
+            this.simpleEditorModelResolverService =
+                new SimpleEditorModelResolverService(
+                    StaticServices.modelService.get()
+                );
             services.set(
                 ITextModelService,
                 this.simpleEditorModelResolverService
@@ -146,9 +148,8 @@ export class MonacoService implements IMonacoService {
             );
         }
 
-        const quickInputService = instantiationService.createInstance(
-            QuickInputService
-        );
+        const quickInputService =
+            instantiationService.createInstance(QuickInputService);
         const layoutService = new SimpleLayoutService(
             StaticServices.codeEditorService.get(ICodeEditorService),
             this.container

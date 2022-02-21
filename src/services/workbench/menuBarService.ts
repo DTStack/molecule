@@ -52,7 +52,8 @@ export interface IMenuBarService extends Component<IMenuBar> {
 @singleton()
 export class MenuBarService
     extends Component<IMenuBar>
-    implements IMenuBarService {
+    implements IMenuBarService
+{
     protected state: IMenuBar;
     private sperator = '-';
 

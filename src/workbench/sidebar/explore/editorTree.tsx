@@ -251,7 +251,7 @@ const EditorTree = (props: IOpenEditProps) => {
                                             className={
                                                 editorTreeFileIconClassName
                                             }
-                                            type={file.data?.icon || ''}
+                                            type={file.data?.icon || file.icon}
                                         />
                                         <span
                                             className={

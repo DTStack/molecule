@@ -8,7 +8,7 @@ import { randomId } from 'mo/common/utils';
 
 export const ExtendsTestPane: IExtension = {
     id: 'ExtendsTestPane',
-    name: 'Test Pane ',
+    name: 'Test Pane',
     dispose() {},
     activate() {
         const TEST_PANE_ID = 'ActivityBarTestPane';
@@ -144,8 +144,7 @@ export const ExtendsTestPane: IExtension = {
                 value
                     ? {
                           type: 'warning',
-                          text:
-                              '结果集仅包含所有匹配项的子集，请使你的搜索更加精准',
+                          text: '结果集仅包含所有匹配项的子集，请使你的搜索更加精准',
                       }
                     : ''
             );
@@ -171,6 +170,10 @@ export const ExtendsTestPane: IExtension = {
                 },
             };
             molecule.editor.open(tabData);
+        });
+
+        molecule.folderTree.onRemove((id) => {
+            molecule.folderTree.remove(id);
         });
     },
 };

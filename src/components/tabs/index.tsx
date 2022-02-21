@@ -2,6 +2,9 @@ import React from 'react';
 import { useCallback } from 'react';
 import update from 'immutability-helper';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import {
     prefixClaName,
     getBEMElement,
@@ -10,7 +13,6 @@ import {
 } from 'mo/common/className';
 
 import { Tab, ITabProps } from './tab';
-import DragAndDrop from './dragAndDrop';
 import type { UniqueId } from 'mo/common/types';
 
 export type TabsType = 'line' | 'card';
@@ -96,7 +98,7 @@ export function Tabs(props: ITabsProps) {
     };
 
     return (
-        <DragAndDrop>
+        <DndProvider backend={HTML5Backend} context={window}>
             <div
                 style={style}
                 className={classNames(
@@ -122,6 +124,6 @@ export function Tabs(props: ITabsProps) {
                     })}
                 </div>
             </div>
-        </DragAndDrop>
+        </DndProvider>
     );
 }

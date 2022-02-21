@@ -51,10 +51,8 @@ export function Search(props: ISearchProps) {
         onSearch,
     } = props;
 
-    const [
-        searchPlaceholder = 'Search',
-        replacePlaceholder = 'Replace',
-    ] = placeholders;
+    const [searchPlaceholder = 'Search', replacePlaceholder = 'Replace'] =
+        placeholders;
 
     const [searchAddons, replaceAddons] = addons;
     const [searchVal, replaceVal] = values;

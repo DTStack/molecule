@@ -1,4 +1,10 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, {
+    useEffect,
+    useCallback,
+    useRef,
+    useImperativeHandle,
+    forwardRef,
+} from 'react';
 import { classNames } from 'mo/common/className';
 import { debounce } from 'lodash';
 import { mergeFunctions } from 'mo/common/utils';
@@ -45,9 +51,8 @@ const setPositionForSubMenu = (
     else {
         pos.x = pos.x + domRect.width;
         // The vertical menu default has padding 0.5em so that need reduce the padding
-        const fontSize = getComputedStyle(subMenu).getPropertyValue(
-            'font-size'
-        );
+        const fontSize =
+            getComputedStyle(subMenu).getPropertyValue('font-size');
         const paddingTop = em2Px(0.5, parseInt(fontSize.replace(/px/g, '')));
         pos.y = pos.y - paddingTop;
     }
@@ -56,7 +61,7 @@ const setPositionForSubMenu = (
     subMenu.style.left = `${pos.x}px`;
 };
 
-export function Menu(props: React.PropsWithChildren<IMenuProps>) {
+function MenuComp(props: React.PropsWithChildren<IMenuProps>, ref) {
     const {
         className,
         mode = MenuMode.Vertical,
@@ -82,7 +87,7 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
     if (data.length > 0) {
         const renderMenusByData = (menus: IMenuProps[]) => {
             return menus.map((item: IMenuProps) => {
-                if (item.type === 'divider') return <Divider />;
+                if (item.type === 'divider') return <Divider key={item.id} />;
 
                 const handleClick = mergeFunctions(onClick, item.onClick);
                 if (item.data && item.data.length > 0) {
@@ -98,7 +103,7 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
                     );
                 }
                 return (
-                    <MenuItem key={item.id} onClick={handleClick} {...item}>
+                    <MenuItem {...item} key={item.id} onClick={handleClick}>
                         {item.name}
                     </MenuItem>
                 );
@@ -200,6 +205,12 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         };
     }, []);
 
+    useImperativeHandle(ref, () => ({
+        dispose: () => {
+            initialMenuStyle();
+        },
+    }));
+
     return (
         <ul
             className={claNames}
@@ -213,3 +224,11 @@ export function Menu(props: React.PropsWithChildren<IMenuProps>) {
         </ul>
     );
 }
+
+export type MenuRef = {
+    dispose: () => void;
+};
+
+export const Menu = forwardRef<MenuRef, React.PropsWithChildren<IMenuProps>>(
+    MenuComp
+);

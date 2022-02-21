@@ -240,7 +240,7 @@ const SplitPane = ({
             dragIndex: index,
         };
 
-        cachedSizes.current = [];
+        cachedSizes.current = sizes.concat();
 
         // calculate the limited sizes
         // put it in window temporarily, delete it when mouseup
@@ -261,7 +261,7 @@ const SplitPane = ({
 
     const validateSize = (size: number, limited: number[]) => {
         const [minSize, maxSize] = limited;
-        return size > minSize && size < maxSize;
+        return size >= minSize && size <= maxSize;
     };
 
     const handleMouseMove = useCallback(function (
@@ -438,7 +438,7 @@ const SplitPane = ({
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
-        return () => window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     useEffect(() => {

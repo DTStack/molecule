@@ -271,17 +271,21 @@ describe('Test The SplitPane Component', () => {
         const wrapper = getByRole('split');
         const sashs = container.querySelectorAll(`.${sashItemClassName}`);
         fireEvent.mouseDown(sashs[1]);
+        fireEvent.mouseMove(wrapper, { screenX: -10, screenY: -10 });
+
+        expect(mockFn).toBeCalled();
+        expect(mockFn.mock.calls[0][0]).toEqual([40, 20, 440]);
+
+        fireEvent.mouseMove(wrapper, { screenX: -20, screenY: -20 });
+        expect(mockFn.mock.calls[1][0]).toEqual([30, 30, 440]);
+
+        fireEvent.mouseMove(wrapper, { screenX: -30, screenY: -30 });
+        expect(mockFn.mock.calls[2][0]).toEqual([20, 40, 440]);
+
+        // Invalid mouseMove will reset sizes by the prev valid sizes
         fireEvent.mouseMove(wrapper, { screenX: -40, screenY: -40 });
-        fireEvent.mouseUp(wrapper);
+        expect(mockFn.mock.calls[3][0]).toEqual([20, 40, 440]);
 
-        expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toEqual([20, 40, 440]);
-
-        mockFn.mockClear();
-        fireEvent.mouseDown(sashs[2]);
-        fireEvent.mouseMove(wrapper, { screenX: 100, screenY: 100 });
         fireEvent.mouseUp(wrapper);
-        expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toEqual([50, 50, 400]);
     });
 });

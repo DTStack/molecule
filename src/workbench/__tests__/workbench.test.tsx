@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { WorkbenchView, Workbench } from '../workbench';
@@ -30,6 +30,7 @@ import {
     sashHorizontalClassName,
     splitClassName,
 } from 'mo/components/split/base';
+import { sleep } from '@test/utils';
 
 function expectElementInOrNot(
     ele: Element | null,
@@ -140,7 +141,7 @@ describe('Test Workbench Component', () => {
         const wrapper = select<HTMLDivElement>(`.${splitClassName}`);
 
         fireEvent.mouseDown(sashs[1]);
-        fireEvent.mouseMove(wrapper!, { clientX: 10, clientY: 10 });
+        fireEvent.mouseMove(wrapper!, { screenX: 10, screenY: 10 });
         fireEvent.mouseUp(wrapper!);
 
         expect(fn).toBeCalled();
@@ -160,7 +161,7 @@ describe('Test Workbench Component', () => {
         const wrapper = selectAll<HTMLDivElement>(`.${splitClassName}`)[1];
 
         fireEvent.mouseDown(sashs[1]);
-        fireEvent.mouseMove(wrapper!, { clientX: 10, clientY: 10 });
+        fireEvent.mouseMove(wrapper!, { screenX: 10, screenY: 10 });
         fireEvent.mouseUp(wrapper!);
 
         expect(fn).toBeCalled();
@@ -233,5 +234,45 @@ describe('Test Workbench Component', () => {
         workbench.menuBar.mode = MenuBarMode.horizontal;
         rerender(<WorkbenchView {...workbench} />);
         expect(select('.mo-menuBar--horizontal')).toBeInTheDocument();
+    });
+
+    test('Should resize panes when called on window.resize', async () => {
+        const workbench = workbenchModel();
+        render(<WorkbenchView {...workbench} />);
+
+        const sidebarDOM = select<HTMLDivElement>('.mo-sidebar');
+        const editorDOM = select<HTMLDivElement>('.mo-editor');
+        const panelDOM = select<HTMLDivElement>('.mo-panel');
+
+        const sideBarPane = sidebarDOM?.parentElement;
+        const editorPane = editorDOM?.parentElement;
+        const panelPane = panelDOM?.parentElement;
+
+        expect(sideBarPane?.style.width).toBe('300px');
+        expect(
+            (sideBarPane?.nextElementSibling as HTMLDivElement).style.width
+        ).toBe('200px');
+        expect(editorPane?.style.height).toBe('350px');
+        expect(panelPane?.style.height).toBe('150px');
+
+        await act(async () => {
+            // mock resize
+            // @ts-ignore
+            HTMLElement.prototype.getBoundingClientRect = () => ({
+                width: 1000,
+                height: 1000,
+            });
+            fireEvent(window, new Event('resize'));
+            await sleep(150);
+        });
+
+        // expect the sidebar's size won't changed
+        expect(sideBarPane?.style.width).toBe('300px');
+        expect(
+            (sideBarPane?.nextElementSibling as HTMLDivElement).style.width
+        ).toBe('700px');
+        expect(editorPane?.style.height).toBe('850px');
+        // expect the panel's size won't changed
+        expect(panelPane?.style.height).toBe('150px');
     });
 });

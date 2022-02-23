@@ -157,6 +157,7 @@ const SplitPane = ({
     onResizeStrategy,
 }: ISplitProps) => {
     const [sizes, setSize] = useState<number[]>([]);
+    const sizesRef = useRef<number[]>([]);
     const limitedSizes = useRef<LimitedSizes[]>([]);
     // for saving the sizes while dragging
     const cachedSizes = useRef<number[]>([]);
@@ -173,6 +174,7 @@ const SplitPane = ({
     });
 
     const propOnChange = useMemoizedFn<ISplitProps['onChange']>(onChange);
+    sizesRef.current = sizes;
 
     /**
      * Get some size infos via split
@@ -402,43 +404,49 @@ const SplitPane = ({
     const handleResize = useCallback(
         debounce(() => {
             let stratygies: ResizeStratygy[] = [];
-            setSize((sizes) => {
-                if (!stratygies.length) {
-                    const res = onResizeStrategy?.(sizes);
-                    if (typeof res === 'string') {
-                        // global stratygies
-                        stratygies = sizes.map(() => res);
-                    } else if (Array.isArray(res)) {
-                        stratygies = res;
-                    } else {
-                        // default strategies
-                        stratygies = sizes.map(() => 'pave');
-                    }
+            const sizes = sizesRef.current;
+            if (!stratygies.length) {
+                const res = onResizeStrategy?.(sizes);
+                if (typeof res === 'string') {
+                    // global stratygies
+                    stratygies = sizes.map(() => res);
+                } else if (Array.isArray(res)) {
+                    stratygies = res;
+                } else {
+                    // default strategies
+                    stratygies = sizes.map(() => 'pave');
                 }
+            }
 
-                const rect = wrapper.current!.getBoundingClientRect();
-                let restSize = rect[getSplitSizeName().sizeName];
-                let count = 0;
-                const wipSizes = sizes.map((size, index) => {
-                    if (stratygies[index] === 'keep') {
-                        restSize = restSize - size;
-                        return size;
-                    }
-                    count += 1;
-                    return 'pave';
-                });
-
-                return wipSizes.map((size) =>
-                    size === 'pave' ? restSize / count : size
-                );
+            const rect = wrapper.current!.getBoundingClientRect();
+            let restSize = rect[getSplitSizeName().sizeName];
+            let count = 0;
+            const wipSizes = sizes.map((size, index) => {
+                if (stratygies[index] === 'keep') {
+                    restSize = restSize - size;
+                    return size;
+                }
+                count += 1;
+                return 'pave';
             });
+
+            const finalSizes = wipSizes.map((size) =>
+                size === 'pave' ? restSize / count : size
+            );
+
+            propOnChange(finalSizes);
         }, 150),
         []
     );
 
     useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        const resizeObserver = new ResizeObserver(function () {
+            handleResize();
+        });
+        resizeObserver.observe(wrapper.current!);
+        return () => {
+            resizeObserver.disconnect();
+        };
     }, []);
 
     useEffect(() => {

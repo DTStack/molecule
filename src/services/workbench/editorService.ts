@@ -17,6 +17,7 @@ import { editor as MonacoEditor, Uri } from 'mo/monaco';
 import { IMenuItemProps } from 'mo/components';
 import { ExplorerService, IExplorerService } from './explorer/explorerService';
 import type { UniqueId } from 'mo/common/types';
+import { ILayoutService, LayoutService } from './layoutService';
 
 export interface IEditorService extends Component<IEditor> {
     /**
@@ -208,11 +209,13 @@ export class EditorService
     protected defaultActions: IEditorActionsProps[] = [];
     protected defaultMenus: IMenuItemProps[] = [];
     protected explorerService: IExplorerService;
+    protected layoutService: ILayoutService;
 
     constructor() {
         super();
         this.state = container.resolve(EditorModel);
         this.explorerService = container.resolve(ExplorerService);
+        this.layoutService = container.resolve(LayoutService);
     }
 
     public updateEditorOptions(options: IEditorOptions): void {
@@ -380,6 +383,12 @@ export class EditorService
                     !isOpened && this.disposeModel(tab);
                     this.explorerService.forceUpdate();
                 }
+            );
+            // reset the editor group
+            this.layoutService.setGroupSplitSize(
+                nextGroups.length
+                    ? new Array(nextGroups.length + 1).fill('auto')
+                    : []
             );
             return;
         }
@@ -663,6 +672,12 @@ export class EditorService
                     this.disposeModel(removed);
                     this.explorerService.forceUpdate();
                 }
+            );
+            // reset editor group
+            this.layoutService.setGroupSplitSize(
+                nextGroups.length
+                    ? new Array(nextGroups.length + 1).fill('auto')
+                    : []
             );
         }
     }

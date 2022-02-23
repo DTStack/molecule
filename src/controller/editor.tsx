@@ -17,13 +17,14 @@ import {
     EditorService,
     IBuiltinService,
     IEditorService,
+    ILayoutService,
     IStatusBarService,
+    LayoutService,
     StatusBarService,
 } from 'mo/services';
 import type { UniqueId } from 'mo/common/types';
 
 export interface IEditorController extends Partial<Controller> {
-    groupSplitPos?: string[];
     open?<T = any>(tab: IEditorTab<T>, groupId?: UniqueId): void;
     onClickContextMenu?: (
         e: React.MouseEvent,
@@ -44,20 +45,20 @@ export interface IEditorController extends Partial<Controller> {
     onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onClickActions: (action: IEditorActionsProps) => void;
     onUpdateEditorIns?: (editorInstance: any, groupId: UniqueId) => void;
-    onPaneSizeChange?: (newSize: string[]) => void;
+    onPaneSizeChange?: (newSize: number[]) => void;
 }
 @singleton()
 export class EditorController extends Controller implements IEditorController {
-    // Group Pos locate here temporary, we can move it to state or localStorage in future.
-    public groupSplitPos: string[] = [];
     private editorStates = new Map();
     private readonly editorService: IEditorService;
     private readonly statusBarService: IStatusBarService;
     private readonly builtinService: IBuiltinService;
+    private readonly layoutService: ILayoutService;
 
     constructor() {
         super();
         this.editorService = container.resolve(EditorService);
+        this.layoutService = container.resolve(LayoutService);
         this.statusBarService = container.resolve(StatusBarService);
         this.builtinService = container.resolve(BuiltinService);
     }
@@ -221,6 +222,10 @@ export class EditorController extends Controller implements IEditorController {
             }
             case EDITOR_MENU_SPILIT: {
                 this.editorService.cloneGroup();
+                const { groupSplitPos } = this.layoutService.getState();
+                this.layoutService.setGroupSplitSize(
+                    new Array(groupSplitPos.length + 1).fill('auto')
+                );
                 this.emit(EditorEvent.OnSplitEditorRight);
                 break;
             }
@@ -230,8 +235,8 @@ export class EditorController extends Controller implements IEditorController {
         }
     };
 
-    public onPaneSizeChange = (newSize: string[]) => {
-        this.groupSplitPos = newSize;
+    public onPaneSizeChange = (newSize: number[]) => {
+        this.layoutService.setGroupSplitSize(newSize);
     };
 
     private initEditorEvents(

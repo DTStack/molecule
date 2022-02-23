@@ -87,6 +87,47 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         hideStatusBar
     );
 
+    const handleSideBarChanged = (sizes: number[]) => {
+        if (sidebar.hidden) {
+            const clientSize = sizes[1];
+            const sidebarSize = splitPanePos[0];
+            if (typeof sidebarSize === 'string') {
+                // the sideBar size is still a default value
+                const numbSize = parseInt(sidebarSize, 10);
+                onPaneSizeChange?.([numbSize, clientSize - numbSize]);
+            } else {
+                onPaneSizeChange?.([sidebarSize, clientSize - sidebarSize]);
+            }
+        } else {
+            onPaneSizeChange?.(sizes);
+        }
+    };
+
+    const handleEditorChanged = (sizes: number[]) => {
+        if (panel.hidden) {
+            // get the non-zero size means current client size
+            const clientSize = sizes.find((s) => s)!;
+            const panelSize = horizontalSplitPanePos[1];
+            if (typeof panelSize === 'string') {
+                // the editor size is still a default value
+                const editorPercent =
+                    parseInt(horizontalSplitPanePos[0] as string, 10) / 100;
+                const numbericSize = clientSize * editorPercent;
+                onHorizontalPaneSizeChange?.([
+                    numbericSize,
+                    clientSize - numbericSize,
+                ]);
+            } else {
+                onHorizontalPaneSizeChange?.([
+                    clientSize - panelSize,
+                    panelSize,
+                ]);
+            }
+        } else {
+            onHorizontalPaneSizeChange?.(sizes);
+        }
+    };
+
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>
             <div className={workbenchFinalClassName}>
@@ -109,7 +150,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         sizes={sidebar.hidden ? [0, '100%'] : splitPanePos}
                         split="vertical"
                         allowResize={[false]}
-                        onChange={(sizes) => onPaneSizeChange?.(sizes)}
+                        onChange={handleSideBarChanged}
                         onResizeStrategy={() => ['keep', 'pave']}
                     >
                         <Pane minSize={170} maxSize="80%">
@@ -119,9 +160,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                             sizes={getSizes()}
                             allowResize={[false]}
                             split="horizontal"
-                            onChange={(sizes) =>
-                                onHorizontalPaneSizeChange?.(sizes)
-                            }
+                            onChange={handleEditorChanged}
                             onResizeStrategy={() => ['pave', 'keep']}
                         >
                             <Pane minSize="10%" maxSize="80%">

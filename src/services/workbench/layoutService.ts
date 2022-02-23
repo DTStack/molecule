@@ -55,6 +55,11 @@ export interface ILayoutService extends Component<ILayout> {
      */
     setSideBarPosition(position: keyof typeof Position): void;
     /**
+     * Set the sizes between editor groups
+     * @param groupSplitPos
+     */
+    setGroupSplitSize(groupSplitPos: (number | string)[]): void;
+    /**
      * Set the mode of the MenuBar, default is `vertical`
      * @param mode
      * @unachieved
@@ -152,6 +157,12 @@ export class LayoutService
         horizontalSplitPanePos: (number | string)[]
     ): void {
         this.setState({ horizontalSplitPanePos });
+    }
+
+    public setGroupSplitSize(groupSplitPos: (string | number)[]): void {
+        this.setState({
+            groupSplitPos,
+        });
     }
 
     public setMenuBarMode(mode: keyof typeof MenuBarMode): void {

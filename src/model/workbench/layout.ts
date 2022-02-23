@@ -31,11 +31,13 @@ export interface ILayout {
     statusBar: ViewVisibility;
     sidebar: ISidebarViewState;
     menuBar: IMenuBarViewState;
+    groupSplitPos: (number | string)[];
 }
 
 export class LayoutModel implements ILayout {
     public splitPanePos: (number | string)[];
     public horizontalSplitPanePos: (number | string)[];
+    public groupSplitPos: (number | string)[];
     public activityBar: ViewVisibility;
     public panel: IPanelViewState;
     public statusBar: ViewVisibility;
@@ -44,6 +46,7 @@ export class LayoutModel implements ILayout {
     constructor(
         splitPanePos: string[] = ['300px', 'auto'],
         horizontalSplitPanePos = ['70%', 'auto'],
+        groupSplitPos = [],
         activityBar = { hidden: false },
         panel = { hidden: false, panelMaximized: false },
         statusBar = { hidden: false },
@@ -52,6 +55,7 @@ export class LayoutModel implements ILayout {
     ) {
         this.splitPanePos = splitPanePos;
         this.horizontalSplitPanePos = horizontalSplitPanePos;
+        this.groupSplitPos = groupSplitPos;
         this.activityBar = activityBar;
         this.panel = panel;
         this.statusBar = statusBar;

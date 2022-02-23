@@ -62,6 +62,7 @@ export function Editor(
                     sizes={groupSplitPos!}
                     split="vertical"
                     onChange={onPaneSizeChange!}
+                    allowResize={[false]}
                     onResizeStrategy={() => 'pave'}
                 >
                     {groups.map((g: IEditorGroup, index: number) => (

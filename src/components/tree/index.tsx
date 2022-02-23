@@ -55,7 +55,7 @@ export interface ITreeProps {
     data?: ITreeNodeItemProps[];
     className?: string;
     draggable?: boolean;
-    expandKeys?: string[];
+    expandKeys?: UniqueId[];
     onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
     onSelect?: (node: ITreeNodeItemProps, isUpdate?) => void;
     onTreeClick?: () => void;

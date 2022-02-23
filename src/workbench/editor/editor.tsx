@@ -63,7 +63,11 @@ export function Editor(
                     split="vertical"
                     onChange={onPaneSizeChange!}
                     allowResize={[false]}
-                    onResizeStrategy={() => 'pave'}
+                    onResizeStrategy={(sizes) =>
+                        sizes.map((_, index) =>
+                            index === sizes.length - 1 ? 'pave' : 'keep'
+                        )
+                    }
                 >
                     {groups.map((g: IEditorGroup, index: number) => (
                         <Pane key={`group-${index}${g.id}`} minSize="220px">

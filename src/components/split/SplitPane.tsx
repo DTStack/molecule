@@ -5,7 +5,7 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { debounce, isEqual } from 'lodash';
+import { isEqual, throttle } from 'lodash';
 import { cloneReactChildren } from 'mo/react';
 import { classNames } from 'mo/common/className';
 import { HTMLElementProps } from 'mo/common/types';
@@ -405,7 +405,7 @@ const SplitPane = ({
     };
 
     const handleResize = useCallback(
-        debounce(() => {
+        throttle(() => {
             let stratygies: ResizeStratygy[] = [];
             const sizes = sizesRef.current;
             if (!stratygies.length) {

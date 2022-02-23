@@ -22,4 +22,8 @@ $react-custom-scrollbars: '.ScrollbarsCustom';
     &-Wrapper {
         height: 100%;
     }
+
+    &-Scroller::-webkit-scrollbar {
+        display: none;
+    }
 }

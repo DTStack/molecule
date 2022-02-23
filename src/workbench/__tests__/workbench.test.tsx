@@ -63,6 +63,7 @@ function expectBasicPartsInTheDocument() {
 
 describe('Test Workbench Component', () => {
     let original;
+    const observerFnCollection: any[] = [];
     beforeEach(() => {
         original = HTMLElement.prototype.getBoundingClientRect;
         // @ts-ignore
@@ -70,10 +71,20 @@ describe('Test Workbench Component', () => {
             width: 500,
             height: 500,
         });
+
+        global.ResizeObserver = jest.fn().mockImplementation((fn) => {
+            observerFnCollection.push(fn);
+            return {
+                observe: jest.fn(),
+                unobserve: jest.fn(),
+                disconnect: jest.fn(),
+            };
+        });
     });
 
     afterEach(() => {
         HTMLElement.prototype.getBoundingClientRect = original;
+        observerFnCollection.length = 0;
     });
 
     function workbenchModel(): IWorkbench & ILayout {
@@ -113,6 +124,7 @@ describe('Test Workbench Component', () => {
             sidebar: sidebarState,
             splitPanePos: layout.splitPanePos,
             horizontalSplitPanePos: layout.horizontalSplitPanePos,
+            groupSplitPos: layout.groupSplitPos,
         };
     }
 
@@ -236,24 +248,17 @@ describe('Test Workbench Component', () => {
         expect(select('.mo-menuBar--horizontal')).toBeInTheDocument();
     });
 
-    test('Should resize panes when called on window.resize', async () => {
+    test('Should resize panes when called on ResizeObserver', async () => {
         const workbench = workbenchModel();
-        render(<WorkbenchView {...workbench} />);
-
-        const sidebarDOM = select<HTMLDivElement>('.mo-sidebar');
-        const editorDOM = select<HTMLDivElement>('.mo-editor');
-        const panelDOM = select<HTMLDivElement>('.mo-panel');
-
-        const sideBarPane = sidebarDOM?.parentElement;
-        const editorPane = editorDOM?.parentElement;
-        const panelPane = panelDOM?.parentElement;
-
-        expect(sideBarPane?.style.width).toBe('300px');
-        expect(
-            (sideBarPane?.nextElementSibling as HTMLDivElement).style.width
-        ).toBe('200px');
-        expect(editorPane?.style.height).toBe('350px');
-        expect(panelPane?.style.height).toBe('150px');
+        const horizontalMockFn = jest.fn();
+        const paneChangeMockFn = jest.fn();
+        render(
+            <WorkbenchView
+                {...workbench}
+                onHorizontalPaneSizeChange={horizontalMockFn}
+                onPaneSizeChange={paneChangeMockFn}
+            />
+        );
 
         await act(async () => {
             // mock resize
@@ -262,17 +267,14 @@ describe('Test Workbench Component', () => {
                 width: 1000,
                 height: 1000,
             });
-            fireEvent(window, new Event('resize'));
+            observerFnCollection.forEach((f) => f());
             await sleep(150);
         });
 
-        // expect the sidebar's size won't changed
-        expect(sideBarPane?.style.width).toBe('300px');
-        expect(
-            (sideBarPane?.nextElementSibling as HTMLDivElement).style.width
-        ).toBe('700px');
-        expect(editorPane?.style.height).toBe('850px');
-        // expect the panel's size won't changed
-        expect(panelPane?.style.height).toBe('150px');
+        expect(horizontalMockFn).toBeCalled();
+        expect(horizontalMockFn.mock.calls[0][0]).toEqual([850, 150]);
+
+        expect(paneChangeMockFn).toBeCalled();
+        expect(paneChangeMockFn.mock.calls[0][0]).toEqual([300, 700]);
     });
 });

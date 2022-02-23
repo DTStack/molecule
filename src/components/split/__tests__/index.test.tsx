@@ -15,6 +15,7 @@ afterEach(cleanup);
 
 describe('Test The SplitPane Component', () => {
     let original;
+    const observerFnCollection: any[] = [];
     beforeEach(() => {
         original = HTMLElement.prototype.getBoundingClientRect;
         // @ts-ignore
@@ -22,10 +23,20 @@ describe('Test The SplitPane Component', () => {
             width: 500,
             height: 0,
         });
+
+        global.ResizeObserver = jest.fn().mockImplementation((fn) => {
+            observerFnCollection.push(fn);
+            return {
+                observe: jest.fn(),
+                unobserve: jest.fn(),
+                disconnect: jest.fn(),
+            };
+        });
     });
 
     afterEach(() => {
         HTMLElement.prototype.getBoundingClientRect = original;
+        observerFnCollection.length = 0;
     });
 
     test('Match Snapshot', () => {
@@ -166,17 +177,18 @@ describe('Test The SplitPane Component', () => {
     });
 
     test('Should support to resize', async () => {
-        const mockFn = jest.fn();
-        mockFn
+        const mockFn = jest
+            .fn()
             .mockImplementationOnce(() => ['keep', 'keep', 'pave'])
             .mockImplementationOnce(() => 'keep')
             .mockImplementationOnce(() => undefined);
-        const { container } = render(
+        const mockChange = jest.fn();
+        render(
             <SplitPane
                 role="split"
                 sizes={['10%', '10px']}
                 style={{ width: 500 }}
-                onChange={jest.fn()}
+                onChange={mockChange}
                 onResizeStrategy={mockFn}
             >
                 <div>1</div>
@@ -191,20 +203,13 @@ describe('Test The SplitPane Component', () => {
                 width: 1000,
                 height: 0,
             });
-
-            // Trigger the window resize event.
-            fireEvent(window, new Event('resize'));
+            observerFnCollection.forEach((f) => f());
             await sleep(150);
         });
 
-        let panes = container.querySelectorAll<HTMLDivElement>(
-            `.${paneItemClassName}`
-        );
-        expect(mockFn).toBeCalled();
+        expect(mockFn).toBeCalledTimes(1);
         // normal strategy, to specify one pane to be pave
-        expect(panes[0].style.width).toBe('50px');
-        expect(panes[1].style.width).toBe('10px');
-        expect(panes[2].style.width).toBe('940px');
+        expect(mockChange.mock.calls[0][0]).toEqual([50, 10, 940]);
 
         await act(async () => {
             // @ts-ignore
@@ -212,20 +217,13 @@ describe('Test The SplitPane Component', () => {
                 width: 1500,
                 height: 0,
             });
-
-            // Trigger the window resize event.
-            fireEvent(window, new Event('resize'));
+            observerFnCollection.forEach((f) => f());
             await sleep(150);
         });
 
-        panes = container.querySelectorAll<HTMLDivElement>(
-            `.${paneItemClassName}`
-        );
-        expect(mockFn).toBeCalled();
+        expect(mockFn).toBeCalledTimes(2);
         // to specify global strategy to be keep
-        expect(panes[0].style.width).toBe('50px');
-        expect(panes[1].style.width).toBe('10px');
-        expect(panes[2].style.width).toBe('940px');
+        expect(mockChange.mock.calls[1][0]).toEqual([50, 10, 440]);
 
         await act(async () => {
             // @ts-ignore
@@ -233,20 +231,17 @@ describe('Test The SplitPane Component', () => {
                 width: 2000,
                 height: 0,
             });
-
-            // Trigger the window resize event.
-            fireEvent(window, new Event('resize'));
+            observerFnCollection.forEach((f) => f());
             await sleep(150);
         });
 
-        panes = container.querySelectorAll<HTMLDivElement>(
-            `.${paneItemClassName}`
-        );
-        expect(mockFn).toBeCalled();
+        expect(mockFn).toBeCalledTimes(3);
         // abnormal strategy, same as returns 'pave', we don't recommend to set it
-        expect(panes[0].style.width).toBe(`${2000 / 3}px`);
-        expect(panes[1].style.width).toBe(`${2000 / 3}px`);
-        expect(panes[2].style.width).toBe(`${2000 / 3}px`);
+        expect(mockChange.mock.calls[2][0]).toEqual([
+            2000 / 3,
+            2000 / 3,
+            2000 / 3,
+        ]);
     });
 
     test('Should have limited sizes', () => {

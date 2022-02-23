@@ -5,6 +5,7 @@ import Editor from '../editor';
 import EditorStatusBarView from '../statusBarView';
 import { defaultEditorClassName, groupClassName } from '../base';
 import { expectFnCalled } from '@test/utils';
+import { LayoutModel } from 'mo/model/workbench/layout';
 import '@testing-library/jest-dom';
 
 const mockItems = {
@@ -20,16 +21,6 @@ const current = {
     id: 1,
 };
 const TEST_ID = 'test-id';
-
-jest.mock('react', () => {
-    const originReact = jest.requireActual('react');
-    return {
-        ...originReact,
-        useRef: jest.fn(() => ({
-            current: null,
-        })),
-    };
-});
 
 jest.mock('mo/components/tabs', () => {
     const originalModule = jest.requireActual('mo/components/tabs');
@@ -65,16 +56,16 @@ describe('The Editor Component', () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    test('Match the esitor group snapshot', () => {
+    test('Match the editor group snapshot', () => {
         const groups = [current, Object.assign({}, current, { id: 2 })];
-        const component = renderer.create(
+        const { asFragment } = render(
             <Editor
                 onClickActions={jest.fn()}
-                current={current}
-                groups={groups}
+                editor={{ current, groups }}
+                layout={new LayoutModel()}
             />
         );
-        expect(component.toJSON()).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('Match the status snapshot', () => {
@@ -87,7 +78,7 @@ describe('The Editor Component', () => {
     test('Should support to set entry', () => {
         const testJSX = <div data-testid={TEST_ID}></div>;
         const { getByTestId } = render(
-            <Editor onClickActions={jest.fn()} entry={testJSX} />
+            <Editor onClickActions={jest.fn()} editor={{ entry: testJSX }} />
         );
 
         expect(getByTestId(TEST_ID)).toBeInTheDocument();
@@ -96,7 +87,7 @@ describe('The Editor Component', () => {
     test('Should support to set entry', () => {
         const testJSX = <div data-testid={TEST_ID}></div>;
         const { getByTestId } = render(
-            <Editor onClickActions={jest.fn()} entry={testJSX} />
+            <Editor onClickActions={jest.fn()} editor={{ entry: testJSX }} />
         );
 
         expect(getByTestId(TEST_ID)).toBeInTheDocument();
@@ -115,8 +106,10 @@ describe('The Editor Component', () => {
         const { container } = render(
             <Editor
                 onClickActions={jest.fn()}
-                current={current}
-                groups={groups}
+                editor={{
+                    current,
+                    groups,
+                }}
             />
         );
 
@@ -130,8 +123,11 @@ describe('The Editor Component', () => {
         const { container } = render(
             <Editor
                 onClickActions={jest.fn()}
-                current={current}
-                groups={groups}
+                editor={{
+                    current,
+                    groups,
+                }}
+                layout={new LayoutModel()}
             />
         );
 
@@ -146,8 +142,10 @@ describe('The Editor Component', () => {
             const { getByTestId } = render(
                 <Editor
                     onClickActions={jest.fn()}
-                    current={current}
-                    groups={groups}
+                    editor={{
+                        current,
+                        groups,
+                    }}
                     onMoveTab={fn}
                     onCloseTab={fn}
                     onSelectTab={fn}

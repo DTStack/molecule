@@ -1,153 +1,115 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The Editor Component Match the esitor group snapshot 1`] = `
-<div
-  className="mo-editor"
->
+exports[`The Editor Component Match the editor group snapshot 1`] = `
+<DocumentFragment>
   <div
-    className="css-1ndrsdj"
-    data-split="vertical"
-    data-type="SplitPane"
+    class="mo-editor"
   >
     <div
-      style={
-        Object {
-          "display": Array [
-            "-webkit-box",
-            "-moz-box",
-            "-ms-flexbox",
-            "-webkit-flex",
-            "flex",
-          ],
-          "flex": "1",
-          "maxWidth": "calc(100% - 1px*1)",
-          "minWidth": "220px",
-          "outline": "none",
-        }
-      }
+      class="mo-split"
     >
       <div
-        className="mo-editor__group"
+        class="mo-split__sash"
       >
         <div
-          className="mo-editor__group-header"
-        >
-          <div
-            className="mo-editor__group-tabs"
-          >
-            <div
-              data-testid="test-id"
-              editable={true}
-              onClick={[Function]}
-              onContextMenu={[Function]}
-              type="card"
-            />
-          </div>
-          <div
-            className="mo-editor__group-actions"
-          />
-        </div>
+          class="mo-split__sash__item mo-split__sash__item--vertical"
+          role="Resizer"
+          style="width: 4px; left: -2px;"
+        />
         <div
-          className="mo-editor__group-breadcrumb"
-        >
-          <div
-            className="mo-breadcrumb"
-            role="breadcrumb"
-          />
-        </div>
-        <div
-          className="mo-editor__group-container"
-        >
-          <div
-            className="mo-monaco-editor"
-            style={
-              Object {
-                "height": "100%",
-                "minHeight": "400px",
-                "position": "relative",
-                "width": "100%",
-              }
-            }
-          />
-        </div>
+          class="mo-split__sash__item mo-split__sash__item--vertical"
+          role="Resizer"
+          style="width: 4px; left: -2px;"
+        />
       </div>
-    </div>
-    <div
-      className="sc-htpNat fXAXjb sc-bdVaJa cjjWdp"
-      data-attribute="vertical"
-      data-type="Resizer"
-      onClick={[Function]}
-      onDoubleClick={[Function]}
-      onMouseDown={[Function]}
-      onTouchEnd={[Function]}
-      onTouchStart={[Function]}
-    />
-    <div
-      style={
-        Object {
-          "display": Array [
-            "-webkit-box",
-            "-moz-box",
-            "-ms-flexbox",
-            "-webkit-flex",
-            "flex",
-          ],
-          "flex": "1",
-          "maxWidth": "calc(100% - 1px*1)",
-          "minWidth": "220px",
-          "outline": "none",
-        }
-      }
-    >
       <div
-        className="mo-editor__group"
+        class="mo-split__pane"
       >
         <div
-          className="mo-editor__group-header"
+          class="mo-split__pane__item"
+          style="left: 0px; width: 0px;"
         >
           <div
-            className="mo-editor__group-tabs"
+            class="mo-editor__group"
           >
             <div
-              activeTab=""
-              data-testid="test-id"
-              editable={true}
-              onClick={[Function]}
-              onContextMenu={[Function]}
-              type="card"
-            />
+              class="mo-editor__group-header"
+            >
+              <div
+                class="mo-editor__group-tabs"
+              >
+                <div
+                  data-testid="test-id"
+                  type="card"
+                />
+              </div>
+              <div
+                class="mo-editor__group-actions"
+              />
+            </div>
+            <div
+              class="mo-editor__group-breadcrumb"
+            >
+              <div
+                class="mo-breadcrumb"
+                role="breadcrumb"
+              />
+            </div>
+            <div
+              class="mo-editor__group-container"
+            >
+              <div
+                class="mo-monaco-editor"
+                style="position: relative; min-height: 400px; height: 100%; width: 100%;"
+              />
+            </div>
           </div>
-          <div
-            className="mo-editor__group-actions"
-          />
         </div>
         <div
-          className="mo-editor__group-breadcrumb"
+          class="mo-split__pane__item"
+          style="left: 0px; width: 0px;"
         >
           <div
-            className="mo-breadcrumb"
-            role="breadcrumb"
-          />
-        </div>
-        <div
-          className="mo-editor__group-container"
-        >
-          <div
-            className="mo-monaco-editor"
-            style={
-              Object {
-                "height": "100%",
-                "minHeight": "400px",
-                "position": "relative",
-                "width": "100%",
-              }
-            }
-          />
+            class="mo-editor__group"
+          >
+            <div
+              class="mo-editor__group-header"
+            >
+              <div
+                class="mo-editor__group-tabs"
+              >
+                <div
+                  activetab=""
+                  data-testid="test-id"
+                  type="card"
+                />
+              </div>
+              <div
+                class="mo-editor__group-actions"
+              />
+            </div>
+            <div
+              class="mo-editor__group-breadcrumb"
+            >
+              <div
+                class="mo-breadcrumb"
+                role="breadcrumb"
+              />
+            </div>
+            <div
+              class="mo-editor__group-container"
+            >
+              <div
+                class="mo-monaco-editor"
+                style="position: relative; min-height: 400px; height: 100%; width: 100%;"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`The Editor Component Match the status snapshot 1`] = `

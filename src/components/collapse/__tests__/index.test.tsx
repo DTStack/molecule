@@ -15,16 +15,27 @@ describe('Test The Collapse Component', () => {
     });
 
     let original;
+    const observerFnCollection: any[] = [];
     beforeEach(() => {
         original = HTMLElement.prototype.getBoundingClientRect;
         // @ts-ignore
         HTMLElement.prototype.getBoundingClientRect = () => ({
             height: 500,
         });
+
+        global.ResizeObserver = jest.fn().mockImplementation((fn) => {
+            observerFnCollection.push(fn);
+            return {
+                observe: jest.fn(),
+                unobserve: jest.fn(),
+                disconnect: jest.fn(),
+            };
+        });
     });
 
     afterEach(() => {
         HTMLElement.prototype.getBoundingClientRect = original;
+        observerFnCollection.length = 0;
     });
 
     test('Match Snapshot', () => {
@@ -213,8 +224,7 @@ describe('Test The Collapse Component', () => {
             HTMLElement.prototype.getBoundingClientRect = () => ({
                 height: 1000,
             });
-            // Trigger the window resize event.
-            fireEvent(window, new Event('resize'));
+            observerFnCollection.forEach((f) => f());
             await sleep(150);
         });
 
@@ -277,7 +287,7 @@ describe('Test The Collapse Component', () => {
             />
         );
 
-        let mock1 = container.querySelector('div[data-collapse-id="mock1"]');
+        const mock1 = container.querySelector('div[data-collapse-id="mock1"]');
         expect(mock1?.parentElement?.style.height).toBe('26px');
 
         await act(async () => {
@@ -321,7 +331,7 @@ describe('Test The Collapse Component', () => {
                 ]}
             />
         );
-        let mock1 = container.querySelector('div[data-collapse-id="mock1"]');
+        const mock1 = container.querySelector('div[data-collapse-id="mock1"]');
         expect(mock1?.parentElement?.style.height).toBe('26px');
 
         await act(async () => {

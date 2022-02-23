@@ -12,7 +12,7 @@ import type { UniqueId } from 'mo/common/types';
 import { ILayout } from 'mo/model/workbench/layout';
 
 export function Editor(
-    props: { editor: IEditor; layout: ILayout } & IEditorController
+    props: { editor?: IEditor; layout?: ILayout } & IEditorController
 ) {
     const {
         onClickContextMenu,
@@ -26,8 +26,13 @@ export function Editor(
         editor,
         layout,
     } = props;
-    const { groups = [], current, entry = <Welcome />, editorOptions } = editor;
-    const { groupSplitPos } = layout;
+    const {
+        groups = [],
+        current,
+        entry = <Welcome />,
+        editorOptions,
+    } = editor || {};
+    const { groupSplitPos } = layout || {};
 
     const getEvents = (groupId: UniqueId) => {
         return {
@@ -54,7 +59,7 @@ export function Editor(
         } else if (groups.length > 1) {
             return (
                 <SplitPane
-                    sizes={groupSplitPos}
+                    sizes={groupSplitPos!}
                     split="vertical"
                     onChange={onPaneSizeChange!}
                     onResizeStrategy={() => 'pave'}

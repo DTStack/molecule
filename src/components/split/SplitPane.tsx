@@ -165,6 +165,8 @@ const SplitPane = ({
     const [sashActive, handleMouseEnterSash, handleMouseLeaveSash, resetHover] =
         useDelayHover();
     const wrapper = useRef<HTMLDivElement>(null);
+    // for saving the wrapper's while triggering observer
+    const cacheWrapperSize = useRef<number>(0);
     const axis = useRef<IAxis>({
         startSize: [],
         x: 0,
@@ -420,21 +422,25 @@ const SplitPane = ({
 
             const rect = wrapper.current!.getBoundingClientRect();
             let restSize = rect[getSplitSizeName().sizeName];
-            let count = 0;
-            const wipSizes = sizes.map((size, index) => {
-                if (stratygies[index] === 'keep') {
-                    restSize = restSize - size;
-                    return size;
-                }
-                count += 1;
-                return 'pave';
-            });
+            // improve perfomance
+            if (restSize !== cacheWrapperSize.current) {
+                cacheWrapperSize.current = restSize;
+                let count = 0;
+                const wipSizes = sizes.map((size, index) => {
+                    if (stratygies[index] === 'keep') {
+                        restSize = restSize - size;
+                        return size;
+                    }
+                    count += 1;
+                    return 'pave';
+                });
 
-            const finalSizes = wipSizes.map((size) =>
-                size === 'pave' ? restSize / count : size
-            );
+                const finalSizes = wipSizes.map((size) =>
+                    size === 'pave' ? restSize / count : size
+                );
 
-            propOnChange(finalSizes);
+                propOnChange(finalSizes);
+            }
         }, 150),
         []
     );

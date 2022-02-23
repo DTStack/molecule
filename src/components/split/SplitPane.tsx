@@ -365,6 +365,7 @@ const SplitPane = ({
 
         let count = 0;
         let restSize = rect[getSplitSizeName().sizeName];
+        cacheWrapperSize.current = restSize;
 
         const nextRes = res.map((size) => {
             // convert percent and px to absolute number

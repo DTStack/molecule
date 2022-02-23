@@ -12,7 +12,7 @@ exports[`The Editor Component Match the editor group snapshot 1`] = `
         class="mo-split__sash"
       >
         <div
-          class="mo-split__sash__item mo-split__sash__item--vertical"
+          class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--vertical"
           role="Resizer"
           style="width: 4px; left: -2px;"
         />

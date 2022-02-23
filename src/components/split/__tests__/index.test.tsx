@@ -283,4 +283,32 @@ describe('Test The SplitPane Component', () => {
 
         fireEvent.mouseUp(wrapper);
     });
+
+    test('Should NOT trigger onResize when unrelated size changed', async () => {
+        const mockFn = jest.fn();
+        render(
+            <SplitPane
+                role="split"
+                sizes={['10%', '10px']}
+                style={{ width: 500 }}
+                onChange={mockFn}
+            >
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+            </SplitPane>
+        );
+
+        await act(async () => {
+            // @ts-ignore
+            HTMLElement.prototype.getBoundingClientRect = () => ({
+                width: 500,
+                height: 1000,
+            });
+            observerFnCollection.forEach((f) => f());
+            await sleep(150);
+        });
+        // vertical SplitPane should NOT trigger onResize when height changed
+        expect(mockFn).not.toBeCalled();
+    });
 });

@@ -47,9 +47,7 @@ stories.add('Basic Usage', () => {
             </p>
             <div>
                 <h3>使用示例 1 - Modal</h3>
-                <Button type="primary" onClick={showModal}>
-                    Open Modal
-                </Button>
+                <Button onClick={showModal}>Open Modal</Button>
                 <Modal
                     width={520}
                     title="Tweet us your feedback"

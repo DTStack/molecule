@@ -22,6 +22,7 @@ export enum FolderTreeEvent {
     onCreate = 'folderTree.onCreate',
     onLoadData = 'folderTree.onLoadData',
     onDrop = 'folderTree.onDrop',
+    onExpandKeys = 'folderTree.onExpandKeys',
 }
 
 export interface IFolderInputEvent {
@@ -34,6 +35,7 @@ export interface IFolderTreeSubItem {
     contextMenu?: IMenuItemProps[];
     folderPanelContextMenu?: IMenuItemProps[];
     current?: IFolderTreeNodeProps | null;
+    expandKeys?: UniqueId[];
 }
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;
@@ -98,6 +100,7 @@ export class IFolderTreeModel implements IFolderTree {
             current: null,
             folderPanelContextMenu: [],
             data: [],
+            expandKeys: [],
         },
         autoSort: Boolean = false,
         entry?: React.ReactNode

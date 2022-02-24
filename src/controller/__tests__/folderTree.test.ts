@@ -238,4 +238,14 @@ describe('The folder tree controller', () => {
         expect(mockFn).toBeCalled();
         expect(folderTreeService.get(2)?.children).toHaveLength(1);
     });
+
+    test('Should support to execute the onExpandKeys method', () => {
+        expectFnCalled((fn) => {
+            const mockExpandKeys = [1, 2];
+            folderTreeService.onExpandKeys(fn);
+            folderTreeController.onExpandKeys(mockExpandKeys);
+
+            expect(fn.mock.calls[0][0]).toBe(mockExpandKeys);
+        });
+    });
 });

@@ -30,6 +30,7 @@ export interface IFolderTreeController extends Partial<Controller> {
         target: IFolderTreeNodeProps
     ) => void;
     readonly onLoadData?: (treeNode: IFolderTreeNodeProps) => Promise<void>;
+    readonly onExpandKeys?: (expandKeys: UniqueId[]) => void;
     readonly onRightClick?: (
         treeNode: IFolderTreeNodeProps
     ) => IMenuItemProps[];
@@ -99,6 +100,7 @@ export class FolderTreeController
                 current: null,
                 folderPanelContextMenu: FOLDER_PANEL_CONTEXT_MENU || [],
                 data: [],
+                expandKeys: [],
             },
         });
     }
@@ -172,7 +174,6 @@ export class FolderTreeController
         source: IFolderTreeNodeProps,
         target: IFolderTreeNodeProps
     ) => {
-        // this.folderTreeService.onDropTree(treeNode);
         this.emit(FolderTreeEvent.onDrop, source, target);
     };
 
@@ -216,5 +217,9 @@ export class FolderTreeController
         } else {
             return Promise.resolve();
         }
+    };
+
+    public onExpandKeys = (expandedKeys: UniqueId[]) => {
+        this.emit(FolderTreeEvent.onExpandKeys, expandedKeys);
     };
 }

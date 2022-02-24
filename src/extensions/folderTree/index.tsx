@@ -56,6 +56,10 @@ export const ExtendsFolderTree: IExtension = {
                 }
             }
         });
+
+        molecule.folderTree.onExpandKeys((expandKeys) => {
+            molecule.folderTree.setExpandKeys(expandKeys);
+        });
     },
     dispose() {},
 };

@@ -66,6 +66,13 @@ describe('Test StatusBarService', () => {
         expect(folderTreeService.getFolderContextMenu()).toEqual(mockMenuProps);
     });
 
+    test('Should support to set expandKeys', () => {
+        expect(folderTreeService.getExpandKeys()).toEqual([]);
+
+        folderTreeService.setExpandKeys([1, 2]);
+        expect(folderTreeService.getExpandKeys()).toEqual([1, 2]);
+    });
+
     test('Should support to set active node', () => {
         const mockRootTree: IFolderTreeNodeProps = {
             id: 0,
@@ -478,6 +485,13 @@ describe('Test StatusBarService', () => {
         expectFnCalled((fn) => {
             folderTreeService.onDropTree(fn);
             folderTreeService.emit(FolderTreeEvent.onDrop);
+        });
+    });
+
+    test('Should support to onExpandKey', () => {
+        expectFnCalled((fn) => {
+            folderTreeService.onExpandKeys(fn);
+            folderTreeService.emit(FolderTreeEvent.onExpandKeys);
         });
     });
 });

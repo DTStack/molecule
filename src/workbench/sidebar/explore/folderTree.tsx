@@ -78,10 +78,11 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         onRightClick,
         onLoadData,
         createTreeNode,
+        onExpandKeys,
         ...restProps
     } = props;
 
-    const { data = [], folderPanelContextMenu = [] } = folderTree;
+    const { data = [], folderPanelContextMenu = [], expandKeys } = folderTree;
 
     const handleAddRootFolder = () => {
         createTreeNode?.('RootFolder');
@@ -227,6 +228,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
             <div data-content={panel.id} style={{ height: '100%' }}>
                 <Tree
                     // root folder do not render
+                    expandKeys={expandKeys}
                     data={data[0]?.children || []}
                     className={classNames(
                         folderTreeClassName,
@@ -239,6 +241,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                     onRightClick={handleRightClick}
                     renderTitle={renderTitle}
                     onLoadData={onLoadData}
+                    onExpand={onExpandKeys}
                     {...restProps}
                 />
             </div>

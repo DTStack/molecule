@@ -53,6 +53,14 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     getFolderContextMenu: () => IMenuItemProps[];
     /**
+     * Get the expandKeys in folderTree
+     */
+    getExpandKeys: () => UniqueId[];
+    /**
+     * Set the expandKeys for folderTree
+     */
+    setExpandKeys: (expandKeys: UniqueId[]) => void;
+    /**
      * Active specific node,
      * or unactive any node in folder tree
      * @param id
@@ -139,6 +147,11 @@ export interface IFolderTreeService extends Component<IFolderTree> {
         ) => void
     ): void;
     /**
+     * Callback for expanding tree node
+     * @param callback
+     */
+    onExpandKeys(callback: (expandKeys: UniqueId[]) => void): void;
+    /**
      * Toggle whether to enable sorting, which is disabled by default.
      */
     toggleAutoSort(): void;
@@ -224,6 +237,17 @@ export class FolderTreeService
 
     public setFolderContextMenu(menus: IMenuItemProps[]) {
         this.folderContextMenu = menus;
+    }
+
+    public getExpandKeys() {
+        return this.state.folderTree?.expandKeys || [];
+    }
+
+    public setExpandKeys(expandKeys: UniqueId[]) {
+        const { folderTree } = this.state;
+        this.setState({
+            folderTree: { ...folderTree, expandKeys },
+        });
     }
 
     private setCurrentFolderLocation(data: IFolderTreeNodeProps, id: UniqueId) {
@@ -511,6 +535,10 @@ export class FolderTreeService
         ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onLoadData, callback);
+    };
+
+    public onExpandKeys = (callback: (expandKeys: UniqueId[]) => void) => {
+        this.subscribe(FolderTreeEvent.onExpandKeys, callback);
     };
 
     public toggleAutoSort() {

@@ -17,7 +17,8 @@
 
     &__pane {
         height: 100%;
-        position: relative;
+        position: absolute;
+        top: 0;
         width: 100%;
     }
 

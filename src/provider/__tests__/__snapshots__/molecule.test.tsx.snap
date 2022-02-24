@@ -1,30 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
-<div
-  className="mo"
-  id="molecule"
-  tabIndex={0}
->
+<DocumentFragment>
   <div
-    className="mo-workbench"
+    class="mo"
+    id="molecule"
+    tabindex="0"
   >
     <div
-      style={
-        Object {
-          "display": "none",
-        }
-      }
+      class="mo-workbench"
     >
       <div
-        className="mo-menuBar--horizontal"
+        style="display: none;"
       >
         <div
-          className="mo-menuBar--horizontal__logo"
+          class="mo-menuBar--horizontal"
         >
-          <img
-            className="mo-menuBar--horizontal__logo__content"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+          <div
+            class="mo-menuBar--horizontal__logo"
+          >
+            <img
+              class="mo-menuBar--horizontal__logo__content"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAA
 B3RJTUUH5QwPAyYJr4pYHwAAF6hJREFUeNrtnXm0VMW1xn/79L19GhUTnBAxGNfTuKKJeSsOaBxw
 QF5QURzRTODwUIw4RI1RHJ5RUROcgkHFRDEaNUEBjaISUZzBDPqSOORFo0EJkmeMaIQe7qn9/uju
@@ -143,790 +140,868 @@ Yjo6SW1hZ2U6OldpZHRoADEyMN5Wme8AAAAZdEVYdFRodW1iOjpNaW1ldHlwZQBpbWFnZS9wbmc/
 slZOAAAAF3RFWHRUaHVtYjo6TVRpbWUAMTYzOTQ4MTg4ObVTMPUAAAASdEVYdFRodW1iOjpTaXpl
 ADc2MjBCQiI6F3sAAABGdEVYdFRodW1iOjpVUkkAZmlsZTovLy9hcHAvdG1wL2ltYWdlbGMvaW1n
 dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
-          />
-        </div>
-        <ul
-          className="mo-menu mo-menu--horizontal"
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onMouseOut={[Function]}
-          role="menu"
-          style={
-            Object {
-              "width": "100%",
-            }
-          }
-        >
-          <li
-            className="mo-menu__item"
-            data-mode="horizontal"
-            data-submenu={true}
-            id="File"
+            />
+          </div>
+          <ul
+            class="mo-menu mo-menu--horizontal"
+            role="menu"
+            style="width: 100%;"
           >
-            <div
-              className="mo-menu__content"
-            >
-              <span
-                className="mo-menu__label"
-              >
-                File
-              </span>
-              <span
-                className="mo-menu__indicator codicon codicon-chevron-down"
-              />
-            </div>
-            <ul
-              className="mo-menu mo-menu--vertical mo-sub-menu"
+            <li
+              class="mo-menu__item"
+              data-mode="horizontal"
+              data-submenu="true"
               id="File"
-              style={
-                Object {
-                  "opacity": "0",
-                  "pointerEvents": "none",
-                }
-              }
             >
-              <li
-                className="mo-menu__item"
-                id="workbench.action.quickCreateFile"
-                onClick={[Function]}
+              <div
+                class="mo-menu__content"
               >
-                <div
-                  className="mo-menu__content"
+                <span
+                  class="mo-menu__label"
                 >
-                  <span
-                    className="mo-menu__label"
-                    title="New File"
-                  >
-                    New File
-                  </span>
-                </div>
-              </li>
-              <li
-                className="mo-menu__item"
-                id="openFile"
-                onClick={[Function]}
+                  File
+                </span>
+                <span
+                  class="mo-menu__indicator codicon codicon-chevron-down"
+                />
+              </div>
+              <ul
+                class="mo-menu mo-menu--vertical mo-sub-menu"
+                id="File"
+                style="opacity: 0; pointer-events: none;"
               >
-                <div
-                  className="mo-menu__content"
+                <li
+                  class="mo-menu__item"
+                  id="workbench.action.quickCreateFile"
                 >
-                  <span
-                    className="mo-menu__label"
-                    title="Open"
+                  <div
+                    class="mo-menu__content"
                   >
-                    Open
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li
-            className="mo-menu__item"
-            data-mode="horizontal"
-            data-submenu={true}
-            id="Edit"
-          >
-            <div
-              className="mo-menu__content"
-            >
-              <span
-                className="mo-menu__label"
-              >
-                Edit
-              </span>
-              <span
-                className="mo-menu__indicator codicon codicon-chevron-down"
-              />
-            </div>
-            <ul
-              className="mo-menu mo-menu--vertical mo-sub-menu"
+                    <span
+                      class="mo-menu__label"
+                      title="New File"
+                    >
+                      New File
+                    </span>
+                  </div>
+                </li>
+                <li
+                  class="mo-menu__item"
+                  id="openFile"
+                >
+                  <div
+                    class="mo-menu__content"
+                  >
+                    <span
+                      class="mo-menu__label"
+                      title="Open"
+                    >
+                      Open
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li
+              class="mo-menu__item"
+              data-mode="horizontal"
+              data-submenu="true"
               id="Edit"
-              style={
-                Object {
-                  "opacity": "0",
-                  "pointerEvents": "none",
-                }
-              }
             >
-              <li
-                className="mo-menu__item"
-                id="editor.action.undo"
-                onClick={[Function]}
+              <div
+                class="mo-menu__content"
               >
-                <div
-                  className="mo-menu__content"
+                <span
+                  class="mo-menu__label"
                 >
-                  <span
-                    className="mo-menu__label"
-                    title="Undo"
-                  >
-                    Undo
-                  </span>
-                </div>
-              </li>
-              <li
-                className="mo-menu__item"
-                id="editor.action.redo"
-                onClick={[Function]}
+                  Edit
+                </span>
+                <span
+                  class="mo-menu__indicator codicon codicon-chevron-down"
+                />
+              </div>
+              <ul
+                class="mo-menu mo-menu--vertical mo-sub-menu"
+                id="Edit"
+                style="opacity: 0; pointer-events: none;"
               >
-                <div
-                  className="mo-menu__content"
+                <li
+                  class="mo-menu__item"
+                  id="editor.action.undo"
                 >
-                  <span
-                    className="mo-menu__label"
-                    title="Redo"
+                  <div
+                    class="mo-menu__content"
                   >
-                    Redo
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li
-            className="mo-menu__item"
-            data-mode="horizontal"
-            data-submenu={true}
-            id="Selection"
-          >
-            <div
-              className="mo-menu__content"
-            >
-              <span
-                className="mo-menu__label"
-              >
-                Selection
-              </span>
-              <span
-                className="mo-menu__indicator codicon codicon-chevron-down"
-              />
-            </div>
-            <ul
-              className="mo-menu mo-menu--vertical mo-sub-menu"
+                    <span
+                      class="mo-menu__label"
+                      title="Undo"
+                    >
+                      Undo
+                    </span>
+                  </div>
+                </li>
+                <li
+                  class="mo-menu__item"
+                  id="editor.action.redo"
+                >
+                  <div
+                    class="mo-menu__content"
+                  >
+                    <span
+                      class="mo-menu__label"
+                      title="Redo"
+                    >
+                      Redo
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li
+              class="mo-menu__item"
+              data-mode="horizontal"
+              data-submenu="true"
               id="Selection"
-              style={
-                Object {
-                  "opacity": "0",
-                  "pointerEvents": "none",
-                }
-              }
             >
-              <li
-                className="mo-menu__item"
-                id="editor.action.quickSelectAll"
-                onClick={[Function]}
+              <div
+                class="mo-menu__content"
               >
-                <div
-                  className="mo-menu__content"
+                <span
+                  class="mo-menu__label"
                 >
-                  <span
-                    className="mo-menu__label"
-                    title="Select All"
-                  >
-                    Select All
-                  </span>
-                </div>
-              </li>
-              <li
-                className="mo-menu__item"
-                id="editor.action.copyLinesUpAction"
-                onClick={[Function]}
+                  Selection
+                </span>
+                <span
+                  class="mo-menu__indicator codicon codicon-chevron-down"
+                />
+              </div>
+              <ul
+                class="mo-menu mo-menu--vertical mo-sub-menu"
+                id="Selection"
+                style="opacity: 0; pointer-events: none;"
               >
-                <div
-                  className="mo-menu__content"
+                <li
+                  class="mo-menu__item"
+                  id="editor.action.quickSelectAll"
                 >
-                  <span
-                    className="mo-menu__label"
-                    title="Copy Line Up"
+                  <div
+                    class="mo-menu__content"
                   >
-                    Copy Line Up
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li
-            className="mo-menu__item"
-            data-mode="horizontal"
-            data-submenu={true}
-            id="View"
+                    <span
+                      class="mo-menu__label"
+                      title="Select All"
+                    >
+                      Select All
+                    </span>
+                  </div>
+                </li>
+                <li
+                  class="mo-menu__item"
+                  id="editor.action.copyLinesUpAction"
+                >
+                  <div
+                    class="mo-menu__content"
+                  >
+                    <span
+                      class="mo-menu__label"
+                      title="Copy Line Up"
+                    >
+                      Copy Line Up
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li
+              class="mo-menu__item"
+              data-mode="horizontal"
+              data-submenu="true"
+              id="View"
+            >
+              <div
+                class="mo-menu__content"
+              >
+                <span
+                  class="mo-menu__label"
+                >
+                  View
+                </span>
+                <span
+                  class="mo-menu__indicator codicon codicon-chevron-down"
+                />
+              </div>
+              <ul
+                class="mo-menu mo-menu--vertical mo-sub-menu"
+                id="View"
+                style="opacity: 0; pointer-events: none;"
+              >
+                <li
+                  class="mo-menu__item"
+                  id="editor.action.quickCommand"
+                >
+                  <div
+                    class="mo-menu__content"
+                  >
+                    <span
+                      class="mo-menu__label"
+                      title="Command Palette"
+                    >
+                      Command Palette
+                    </span>
+                  </div>
+                </li>
+                <li
+                  class="mo-menu__item"
+                  id="OpenView"
+                >
+                  <div
+                    class="mo-menu__content"
+                  >
+                    <span
+                      class="mo-menu__label"
+                      title="Open View"
+                    >
+                      Open View
+                    </span>
+                  </div>
+                </li>
+                <li
+                  class="mo-menu__item"
+                  data-mode="vertical"
+                  data-submenu="true"
+                  id="Appearance"
+                >
+                  <div
+                    class="mo-menu__content"
+                  >
+                    <span
+                      class="mo-menu__label"
+                    >
+                      Appearance
+                    </span>
+                    <span
+                      class="mo-menu__indicator codicon codicon-chevron-right"
+                    />
+                  </div>
+                  <ul
+                    class="mo-menu mo-menu--vertical mo-sub-menu"
+                    id="Appearance"
+                    style="opacity: 0; pointer-events: none;"
+                  >
+                    <li
+                      class="mo-menu__item"
+                      id="workbench.action.showMenuBar"
+                    >
+                      <div
+                        class="mo-menu__content"
+                      >
+                        <span
+                          class="mo-menu__check codicon codicon-check"
+                        />
+                        <span
+                          class="mo-menu__label"
+                          title="Show Menu Bar"
+                        >
+                          Show Menu Bar
+                        </span>
+                      </div>
+                    </li>
+                    <li
+                      class="mo-menu__item"
+                      id="sidebar"
+                    >
+                      <div
+                        class="mo-menu__content"
+                      >
+                        <span
+                          class="mo-menu__check codicon codicon-check"
+                        />
+                        <span
+                          class="mo-menu__label"
+                          title="Show Side bar"
+                        >
+                          Show Side bar
+                        </span>
+                      </div>
+                    </li>
+                    <li
+                      class="mo-menu__item"
+                      id="workbench.action.showStatusBar"
+                    >
+                      <div
+                        class="mo-menu__content"
+                      >
+                        <span
+                          class="mo-menu__check codicon codicon-check"
+                        />
+                        <span
+                          class="mo-menu__label"
+                          title="Show Status Bar"
+                        >
+                          Show Status Bar
+                        </span>
+                      </div>
+                    </li>
+                    <li
+                      class="mo-menu__item"
+                      id="workbench.action.showActivityBar"
+                    >
+                      <div
+                        class="mo-menu__content"
+                      >
+                        <span
+                          class="mo-menu__check codicon codicon-check"
+                        />
+                        <span
+                          class="mo-menu__label"
+                          title="Show Activity Bar"
+                        >
+                          Show Activity Bar
+                        </span>
+                      </div>
+                    </li>
+                    <li
+                      class="mo-menu__item"
+                      id="workbench.action.showPanel"
+                    >
+                      <div
+                        class="mo-menu__content"
+                      >
+                        <span
+                          class="mo-menu__check codicon codicon-check"
+                        />
+                        <span
+                          class="mo-menu__label"
+                          title="Show Panel"
+                        >
+                          Show Panel
+                        </span>
+                      </div>
+                    </li>
+                    <li
+                      class="mo-menu__item mo-menu__item--disabled"
+                      role="separator"
+                    >
+                      <a
+                        class="mo-menu__divider"
+                      />
+                    </li>
+                    <li
+                      class="mo-menu__item"
+                      id="menuBar.mode.horizontal"
+                    >
+                      <div
+                        class="mo-menu__content"
+                      >
+                        <span
+                          class="mo-menu__label"
+                          title="Menu Bar Horizontal Mode"
+                        >
+                          Menu Bar Horizontal Mode
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li
+              class="mo-menu__item"
+              data-mode="horizontal"
+              data-submenu="true"
+              id="Run"
+            >
+              <div
+                class="mo-menu__content"
+              >
+                <span
+                  class="mo-menu__label"
+                >
+                  Run
+                </span>
+                <span
+                  class="mo-menu__indicator codicon codicon-chevron-down"
+                />
+              </div>
+              <ul
+                class="mo-menu mo-menu--vertical mo-sub-menu"
+                id="Run"
+                style="opacity: 0; pointer-events: none;"
+              >
+                <li
+                  class="mo-menu__item"
+                  id="RunTask"
+                >
+                  <div
+                    class="mo-menu__content"
+                  >
+                    <span
+                      class="mo-menu__label"
+                      title="Run Task"
+                    >
+                      Run Task
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li
+              class="mo-menu__item"
+              data-mode="horizontal"
+              data-submenu="true"
+              id="Help"
+            >
+              <div
+                class="mo-menu__content"
+              >
+                <span
+                  class="mo-menu__label"
+                >
+                  Help
+                </span>
+                <span
+                  class="mo-menu__indicator codicon codicon-chevron-down"
+                />
+              </div>
+              <ul
+                class="mo-menu mo-menu--vertical mo-sub-menu"
+                id="Help"
+                style="opacity: 0; pointer-events: none;"
+              >
+                <li
+                  class="mo-menu__item"
+                  id="About"
+                >
+                  <div
+                    class="mo-menu__content"
+                  >
+                    <span
+                      class="mo-menu__label"
+                      title="About"
+                    >
+                      About
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="mo-mainBench"
+      >
+        <div
+          class="mo-compositeBar"
+        >
+          <div>
+            <div
+              class="mo-menuBar"
+            >
+              <div
+                class="mo-drop-down mo-drop-down--right mo-menuBar__action"
+              >
+                <span
+                  class="codicon codicon-menu"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="mo-workbench__display-activityBar"
           >
             <div
-              className="mo-menu__content"
+              class="mo-activityBar"
+              id="activityBar"
             >
-              <span
-                className="mo-menu__label"
+              <div
+                class="mo-activityBar__container"
               >
-                View
-              </span>
-              <span
-                className="mo-menu__indicator codicon codicon-chevron-down"
-              />
-            </div>
-            <ul
-              className="mo-menu mo-menu--vertical mo-sub-menu"
-              id="View"
-              style={
-                Object {
-                  "opacity": "0",
-                  "pointerEvents": "none",
-                }
-              }
-            >
-              <li
-                className="mo-menu__item"
-                id="editor.action.quickCommand"
-                onClick={[Function]}
-              >
-                <div
-                  className="mo-menu__content"
-                >
-                  <span
-                    className="mo-menu__label"
-                    title="Command Palette"
-                  >
-                    Command Palette
-                  </span>
-                </div>
-              </li>
-              <li
-                className="mo-menu__item"
-                id="OpenView"
-                onClick={[Function]}
-              >
-                <div
-                  className="mo-menu__content"
-                >
-                  <span
-                    className="mo-menu__label"
-                    title="Open View"
-                  >
-                    Open View
-                  </span>
-                </div>
-              </li>
-              <li
-                className="mo-menu__item"
-                data-mode="vertical"
-                data-submenu={true}
-                id="Appearance"
-              >
-                <div
-                  className="mo-menu__content"
-                >
-                  <span
-                    className="mo-menu__label"
-                  >
-                    Appearance
-                  </span>
-                  <span
-                    className="mo-menu__indicator codicon codicon-chevron-right"
-                  />
-                </div>
-                <ul
-                  className="mo-menu mo-menu--vertical mo-sub-menu"
-                  id="Appearance"
-                  style={
-                    Object {
-                      "opacity": "0",
-                      "pointerEvents": "none",
-                    }
-                  }
-                >
+                <ul>
                   <li
-                    className="mo-menu__item"
-                    id="workbench.action.showMenuBar"
-                    onClick={[Function]}
+                    class="mo-activityBar__item mo-activityBar__item--checked"
+                    id="sidebar.explore.title"
                   >
+                    <span
+                      class="mo-activityBar__label codicon codicon-files"
+                      title="Explorer"
+                    />
                     <div
-                      className="mo-menu__content"
-                    >
-                      <span
-                        className="mo-menu__check codicon codicon-check"
-                      />
-                      <span
-                        className="mo-menu__label"
-                        title="Show Menu Bar"
-                      >
-                        Show Menu Bar
-                      </span>
-                    </div>
-                  </li>
-                  <li
-                    className="mo-menu__item"
-                    id="sidebar"
-                    onClick={[Function]}
-                  >
-                    <div
-                      className="mo-menu__content"
-                    >
-                      <span
-                        className="mo-menu__check codicon codicon-check"
-                      />
-                      <span
-                        className="mo-menu__label"
-                        title="Show Side bar"
-                      >
-                        Show Side bar
-                      </span>
-                    </div>
-                  </li>
-                  <li
-                    className="mo-menu__item"
-                    id="workbench.action.showStatusBar"
-                    onClick={[Function]}
-                  >
-                    <div
-                      className="mo-menu__content"
-                    >
-                      <span
-                        className="mo-menu__check codicon codicon-check"
-                      />
-                      <span
-                        className="mo-menu__label"
-                        title="Show Status Bar"
-                      >
-                        Show Status Bar
-                      </span>
-                    </div>
-                  </li>
-                  <li
-                    className="mo-menu__item"
-                    id="workbench.action.showActivityBar"
-                    onClick={[Function]}
-                  >
-                    <div
-                      className="mo-menu__content"
-                    >
-                      <span
-                        className="mo-menu__check codicon codicon-check"
-                      />
-                      <span
-                        className="mo-menu__label"
-                        title="Show Activity Bar"
-                      >
-                        Show Activity Bar
-                      </span>
-                    </div>
-                  </li>
-                  <li
-                    className="mo-menu__item"
-                    id="workbench.action.showPanel"
-                    onClick={[Function]}
-                  >
-                    <div
-                      className="mo-menu__content"
-                    >
-                      <span
-                        className="mo-menu__check codicon codicon-check"
-                      />
-                      <span
-                        className="mo-menu__label"
-                        title="Show Panel"
-                      >
-                        Show Panel
-                      </span>
-                    </div>
-                  </li>
-                  <li
-                    className="mo-menu__item mo-menu__item--disabled"
-                    role="separator"
-                  >
-                    <a
-                      className="mo-menu__divider"
+                      class="mo-activityBar__indicator"
                     />
                   </li>
                   <li
-                    className="mo-menu__item"
-                    id="menuBar.mode.horizontal"
-                    onClick={[Function]}
+                    class="mo-activityBar__item"
+                    id="sidebar.search.title"
                   >
-                    <div
-                      className="mo-menu__content"
-                    >
-                      <span
-                        className="mo-menu__label"
-                        title="Menu Bar Horizontal Mode"
-                      >
-                        Menu Bar Horizontal Mode
-                      </span>
-                    </div>
+                    <span
+                      class="mo-activityBar__label codicon codicon-search"
+                      title="Search"
+                    />
                   </li>
                 </ul>
-              </li>
-            </ul>
-          </li>
-          <li
-            className="mo-menu__item"
-            data-mode="horizontal"
-            data-submenu={true}
-            id="Run"
-          >
-            <div
-              className="mo-menu__content"
-            >
-              <span
-                className="mo-menu__label"
-              >
-                Run
-              </span>
-              <span
-                className="mo-menu__indicator codicon codicon-chevron-down"
-              />
-            </div>
-            <ul
-              className="mo-menu mo-menu--vertical mo-sub-menu"
-              id="Run"
-              style={
-                Object {
-                  "opacity": "0",
-                  "pointerEvents": "none",
-                }
-              }
-            >
-              <li
-                className="mo-menu__item"
-                id="RunTask"
-                onClick={[Function]}
-              >
-                <div
-                  className="mo-menu__content"
+                <ul
+                  class="mo-activityBar__global"
                 >
-                  <span
-                    className="mo-menu__label"
-                    title="Run Task"
+                  <li
+                    class="mo-activityBar__item"
+                    id="global.menu.account"
                   >
-                    Run Task
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li
-            className="mo-menu__item"
-            data-mode="horizontal"
-            data-submenu={true}
-            id="Help"
-          >
-            <div
-              className="mo-menu__content"
-            >
-              <span
-                className="mo-menu__label"
-              >
-                Help
-              </span>
-              <span
-                className="mo-menu__indicator codicon codicon-chevron-down"
-              />
-            </div>
-            <ul
-              className="mo-menu mo-menu--vertical mo-sub-menu"
-              id="Help"
-              style={
-                Object {
-                  "opacity": "0",
-                  "pointerEvents": "none",
-                }
-              }
-            >
-              <li
-                className="mo-menu__item"
-                id="About"
-                onClick={[Function]}
-              >
-                <div
-                  className="mo-menu__content"
-                >
-                  <span
-                    className="mo-menu__label"
-                    title="About"
+                    <span
+                      class="mo-activityBar__label codicon codicon-account"
+                      title="Account"
+                    />
+                  </li>
+                  <li
+                    class="mo-activityBar__item"
+                    id="global.menu.settings"
                   >
-                    About
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div
-      className="mo-mainBench"
-    >
-      <div
-        className="mo-compositeBar"
-      >
-        <div
-          style={
-            Object {
-              "display": undefined,
-            }
-          }
-        >
-          <div
-            className="mo-menuBar"
-          >
-            <div
-              className="mo-drop-down mo-drop-down--right mo-menuBar__action"
-              onClick={[Function]}
-            >
-              <span
-                className="codicon codicon-menu"
-              />
+                    <span
+                      class="mo-activityBar__label codicon codicon-settings-gear"
+                      title="Settings"
+                    />
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
         <div
-          className="mo-workbench__display-activityBar"
-          style={
-            Object {
-              "display": undefined,
-            }
-          }
+          class="mo-split"
         >
           <div
-            className="mo-activityBar"
-            id="activityBar"
-            onContextMenu={[Function]}
+            class="mo-split__sash"
           >
             <div
-              className="mo-activityBar__container"
-            >
-              <ul>
-                <li
-                  className="mo-activityBar__item mo-activityBar__item--checked"
-                  id="sidebar.explore.title"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="mo-activityBar__label codicon codicon-files"
-                    title="Explorer"
-                  />
-                  <div
-                    className="mo-activityBar__indicator"
-                  />
-                </li>
-                <li
-                  className="mo-activityBar__item"
-                  id="sidebar.search.title"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="mo-activityBar__label codicon codicon-search"
-                    title="Search"
-                  />
-                </li>
-              </ul>
-              <ul
-                className="mo-activityBar__global"
-              >
-                <li
-                  className="mo-activityBar__item"
-                  id="global.menu.account"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="mo-activityBar__label codicon codicon-account"
-                    title="Account"
-                  />
-                </li>
-                <li
-                  className="mo-activityBar__item"
-                  id="global.menu.settings"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="mo-activityBar__label codicon codicon-settings-gear"
-                    title="Settings"
-                  />
-                </li>
-              </ul>
-            </div>
+              class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--vertical"
+              role="Resizer"
+              style="width: 4px; left: -2px;"
+            />
+            <div
+              class="mo-split__sash__item mo-split__sash__item--vertical"
+              role="Resizer"
+              style="width: 4px; left: 298px;"
+            />
           </div>
-        </div>
-      </div>
-      <div
-        className="css-1ndrsdj"
-        data-split="vertical"
-        data-type="SplitPane"
-      >
-        <div
-          className=""
-          style={
-            Object {
-              "WebkitBoxFlex": 0,
-              "display": Array [
-                "-webkit-box",
-                "-moz-box",
-                "-ms-flexbox",
-                "-webkit-flex",
-                "flex",
-              ],
-              "flexGrow": 0,
-              "maxWidth": "calc(80% - 1px*0.8)",
-              "minWidth": "170px",
-              "outline": "none",
-              "width": "300px",
-            }
-          }
-        >
           <div
-            className="mo-sidebar"
+            class="mo-split__pane"
           >
             <div
-              className="mo-sidebar__pane"
-              data-id="sidebar.explore.title"
-              style={
-                Object {
-                  "display": "block",
-                }
-              }
+              class="mo-split__pane__item mo-split__pane__item--visible"
+              style="left: 0px; width: 300px;"
             >
               <div
-                className="mo-sidebar-explorer"
+                class="mo-sidebar"
               >
-                <header
-                  className="mo-sidebar__header"
-                >
-                  <div
-                    className="mo-sidebar__title"
-                  >
-                    <h2>
-                      Explorer
-                    </h2>
-                  </div>
-                  <div
-                    className="mo-sidebar__toolbar"
-                  >
-                    <div
-                      className="mo-tool-bar"
-                    >
-                      <div
-                        className="mo-action-bar"
-                      >
-                        <ul
-                          className="mo-action-bar__container"
-                        >
-                          <li
-                            className="mo-action-bar__item"
-                            data-index={0}
-                            onClick={[Function]}
-                          >
-                            <span
-                              className="codicon codicon-ellipsis"
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </header>
                 <div
-                  className="mo-sidebar__content"
+                  class="mo-sidebar__pane"
+                  data-id="sidebar.explore.title"
+                  style="visibility: visible; z-index: 1;"
                 >
                   <div
-                    className="mo-collapse"
+                    class="mo-sidebar-explorer"
                   >
-                    <div
-                      className="mo-collapse__item"
-                      data-content="sidebar.explore.openEditor"
+                    <header
+                      class="mo-sidebar__header"
                     >
                       <div
-                        className="mo-collapse__header"
-                        onClick={[Function]}
-                        tabIndex={0}
+                        class="mo-sidebar__title"
                       >
-                        <span
-                          className="codicon codicon-chevron-right"
-                        />
-                        <span
-                          className="mo-collapse__header__title"
-                        >
-                          Open Editors
-                        </span>
-                        <div
-                          className="mo-collapse__extra"
-                        />
+                        <h2>
+                          Explorer
+                        </h2>
                       </div>
                       <div
-                        className="mo-collapse__content"
-                        data-content="sidebar.explore.openEditor"
-                        tabIndex={0}
-                      />
-                    </div>
-                    <div
-                      className="mo-collapse__item"
-                      data-content="sidebar.explore.folders"
-                    >
-                      <div
-                        className="mo-collapse__header"
-                        onClick={[Function]}
-                        tabIndex={0}
-                      >
-                        <span
-                          className="codicon codicon-chevron-right"
-                        />
-                        <span
-                          className="mo-collapse__header__title"
-                        >
-                          Default Project Name
-                        </span>
-                        <div
-                          className="mo-collapse__extra"
-                        />
-                      </div>
-                      <div
-                        className="mo-collapse__content"
-                        data-content="sidebar.explore.folders"
-                        tabIndex={0}
+                        class="mo-sidebar__toolbar"
                       >
                         <div
-                          data-content="sidebar.explore.folders"
+                          class="mo-tool-bar"
                         >
                           <div
-                            style={
-                              Object {
-                                "padding": "10px 5px",
-                              }
-                            }
+                            class="mo-action-bar"
                           >
-                            you have not yet opened a folder
-                            <a
-                              className="mo-btn mo-btn--normal"
-                              onClick={[Function]}
+                            <ul
+                              class="mo-action-bar__container"
                             >
-                              Add Folder
-                            </a>
+                              <li
+                                class="mo-action-bar__item"
+                                data-index="0"
+                              >
+                                <span
+                                  class="codicon codicon-ellipsis"
+                                />
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </header>
+                    <div
+                      class="mo-sidebar__content"
+                    >
+                      <div
+                        class="mo-collapse"
+                      >
+                        <div
+                          class="mo-split"
+                        >
+                          <div
+                            class="mo-split__sash"
+                          >
+                            <div
+                              class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+                              role="Resizer"
+                              style="height: 4px; top: -2px;"
+                            />
+                            <div
+                              class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+                              role="Resizer"
+                              style="height: 4px; top: 24px;"
+                            />
+                            <div
+                              class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+                              role="Resizer"
+                              style="height: 4px; top: 50px;"
+                            />
+                          </div>
+                          <div
+                            class="mo-split__pane"
+                          >
+                            <div
+                              class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
+                              style="top: 0px; height: 26px;"
+                            >
+                              <div
+                                class="mo-collapse__item"
+                                data-collapse-id="sidebar.explore.openEditor"
+                              >
+                                <div
+                                  class="mo-collapse__header"
+                                  tabindex="0"
+                                >
+                                  <span
+                                    class="codicon codicon-chevron-right"
+                                  />
+                                  <span
+                                    class="mo-collapse__header__title"
+                                  >
+                                    Open Editors
+                                  </span>
+                                  <div
+                                    class="mo-collapse__extra"
+                                  />
+                                </div>
+                                <div
+                                  class="mo-collapse__content"
+                                  data-collapse-index="0"
+                                  tabindex="0"
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
+                              style="top: 26px; height: 26px;"
+                            >
+                              <div
+                                class="mo-collapse__item"
+                                data-collapse-id="sidebar.explore.folders"
+                              >
+                                <div
+                                  class="mo-collapse__header"
+                                  tabindex="0"
+                                >
+                                  <span
+                                    class="codicon codicon-chevron-right"
+                                  />
+                                  <span
+                                    class="mo-collapse__header__title"
+                                  >
+                                    Default Project Name
+                                  </span>
+                                  <div
+                                    class="mo-collapse__extra"
+                                  />
+                                </div>
+                                <div
+                                  class="mo-collapse__content"
+                                  data-collapse-index="1"
+                                  tabindex="0"
+                                >
+                                  <div
+                                    data-content="sidebar.explore.folders"
+                                  >
+                                    <div
+                                      style="padding: 10px 5px;"
+                                    >
+                                      you have not yet opened a folder
+                                      <a
+                                        class="mo-btn mo-btn--normal"
+                                      >
+                                        Add Folder
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
+                              style="top: 52px; height: 26px;"
+                            >
+                              <div
+                                class="mo-collapse__item"
+                                data-collapse-id="outline"
+                              >
+                                <div
+                                  class="mo-collapse__header"
+                                  tabindex="0"
+                                >
+                                  <span
+                                    class="codicon codicon-chevron-right"
+                                  />
+                                  <span
+                                    class="mo-collapse__header__title"
+                                  >
+                                    Outline
+                                  </span>
+                                  <div
+                                    class="mo-collapse__extra"
+                                  />
+                                </div>
+                                <div
+                                  class="mo-collapse__content"
+                                  data-collapse-index="2"
+                                  tabindex="0"
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div
-                      className="mo-collapse__item"
-                      data-content="outline"
+                  </div>
+                </div>
+                <div
+                  class="mo-sidebar__pane"
+                  data-id="sidebar.search.title"
+                  style="visibility: hidden; z-index: -1;"
+                >
+                  <div
+                    class="sidebar-search-pane"
+                  >
+                    <header
+                      class="mo-sidebar__header"
                     >
                       <div
-                        className="mo-collapse__header"
-                        onClick={[Function]}
-                        tabIndex={0}
+                        class="mo-sidebar__title"
                       >
-                        <span
-                          className="codicon codicon-chevron-right"
-                        />
-                        <span
-                          className="mo-collapse__header__title"
-                        >
-                          Outline
-                        </span>
-                        <div
-                          className="mo-collapse__extra"
-                        />
+                        <h2>
+                          Search
+                        </h2>
                       </div>
                       <div
-                        className="mo-collapse__content"
-                        data-content="outline"
-                        tabIndex={0}
+                        class="mo-sidebar__toolbar"
+                      >
+                        <div
+                          class="mo-tool-bar"
+                        >
+                          <div
+                            class="mo-action-bar"
+                          >
+                            <ul
+                              class="mo-action-bar__container"
+                            >
+                              <li
+                                class="mo-action-bar__item mo-action-bar__item--disabled"
+                                data-index="0"
+                              >
+                                <span
+                                  class="codicon codicon-refresh"
+                                />
+                              </li>
+                              <li
+                                class="mo-action-bar__item mo-action-bar__item--disabled"
+                                data-index="1"
+                              >
+                                <span
+                                  class="codicon codicon-clear-all"
+                                />
+                              </li>
+                              <li
+                                class="mo-action-bar__item mo-action-bar__item--disabled"
+                                data-index="2"
+                              >
+                                <span
+                                  class="codicon codicon-collapse-all"
+                                />
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </header>
+                    <div
+                      class="mo-sidebar__content"
+                    >
+                      <div
+                        class="mo-search"
+                      >
+                        <span
+                          class="mo-search__replace__button codicon codicon-chevron-right"
+                        />
+                        <div
+                          class="mo-search__group"
+                        >
+                          <div
+                            class="mo-search__input mo-search__target"
+                          >
+                            <textarea
+                              autocapitalize="off"
+                              autocorrect="off"
+                              class=""
+                              placeholder="Search"
+                              spellcheck="false"
+                              title="Search"
+                            />
+                            <div
+                              class="mo-action-bar mo-search__toolbar"
+                            >
+                              <ul
+                                class="mo-action-bar__container"
+                              >
+                                <li
+                                  class="mo-action-bar__item"
+                                  data-index="0"
+                                >
+                                  <span
+                                    class="codicon codicon-case-sensitive"
+                                  />
+                                </li>
+                                <li
+                                  class="mo-action-bar__item"
+                                  data-index="1"
+                                >
+                                  <span
+                                    class="codicon codicon-whole-word"
+                                  />
+                                </li>
+                                <li
+                                  class="mo-action-bar__item"
+                                  data-index="2"
+                                >
+                                  <span
+                                    class="codicon codicon-regex"
+                                  />
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="mo-tree mo-search__tree"
+                        draggable="false"
+                        role="tree"
                       />
                     </div>
                   </div>
@@ -934,145 +1009,86 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
               </div>
             </div>
             <div
-              className="mo-sidebar__pane"
-              data-id="sidebar.search.title"
-              style={
-                Object {
-                  "display": "none",
-                }
-              }
+              class="mo-split__pane__item mo-split__pane__item--visible"
+              style="left: 300px; width: 200px;"
             >
               <div
-                className="sidebar-search-pane"
+                class="mo-split"
               >
-                <header
-                  className="mo-sidebar__header"
-                >
-                  <div
-                    className="mo-sidebar__title"
-                  >
-                    <h2>
-                      Search
-                    </h2>
-                  </div>
-                  <div
-                    className="mo-sidebar__toolbar"
-                  >
-                    <div
-                      className="mo-tool-bar"
-                    >
-                      <div
-                        className="mo-action-bar"
-                      >
-                        <ul
-                          className="mo-action-bar__container"
-                        >
-                          <li
-                            className="mo-action-bar__item mo-action-bar__item--disabled"
-                            data-index={0}
-                            onClick={[Function]}
-                          >
-                            <span
-                              className="codicon codicon-refresh"
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            />
-                          </li>
-                          <li
-                            className="mo-action-bar__item mo-action-bar__item--disabled"
-                            data-index={1}
-                            onClick={[Function]}
-                          >
-                            <span
-                              className="codicon codicon-clear-all"
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            />
-                          </li>
-                          <li
-                            className="mo-action-bar__item mo-action-bar__item--disabled"
-                            data-index={2}
-                            onClick={[Function]}
-                          >
-                            <span
-                              className="codicon codicon-collapse-all"
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </header>
                 <div
-                  className="mo-sidebar__content"
+                  class="mo-split__sash"
                 >
                   <div
-                    className="mo-search"
+                    class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
+                    role="Resizer"
+                    style="height: 4px; top: -2px;"
+                  />
+                  <div
+                    class="mo-split__sash__item mo-split__sash__item--horizontal"
+                    role="Resizer"
+                    style="height: 4px; top: -2px;"
+                  />
+                </div>
+                <div
+                  class="mo-split__pane"
+                >
+                  <div
+                    class="mo-split__pane__item"
+                    style="top: 0px; height: 0px;"
                   >
-                    <span
-                      className="mo-search__replace__button codicon codicon-chevron-right"
-                      onClick={[Function]}
-                    />
                     <div
-                      className="mo-search__group"
+                      class="mo-editor"
                     >
                       <div
-                        className="mo-search__input mo-search__target"
+                        class="mo-welcome"
                       >
-                        <textarea
-                          autoCapitalize="off"
-                          autoCorrect="off"
-                          className=""
-                          onBlur={[Function]}
-                          onChange={[Function]}
-                          onFocus={[Function]}
-                          onKeyDown={[Function]}
-                          placeholder="Search"
-                          spellCheck={false}
-                          title="Search"
-                          value=""
-                        />
-                        
-                        <div
-                          className="mo-action-bar mo-search__toolbar"
+                        <span
+                          style="font-size: 0px;"
                         >
-                          <ul
-                            className="mo-action-bar__container"
+                          <svg
+                            class="logo"
+                            height="1em"
+                            viewBox="0 0 120 120"
+                            width="1em"
                           >
-                            <li
-                              className="mo-action-bar__item"
-                              data-index={0}
-                              onClick={[Function]}
+                            <g
+                              fill="none"
+                              fill-rule="evenodd"
+                              opacity="0.48"
+                              stroke="none"
+                              stroke-width="1"
                             >
-                              <span
-                                className="codicon codicon-case-sensitive"
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              />
-                            </li>
+                              <g
+                                fill="#A2A2A2"
+                                transform="translate(-660 -152)"
+                              >
+                                <g
+                                  transform="translate(660 152)"
+                                >
+                                  <path
+                                    d="M59.3 96.335c4.87 0 8.817 3.954 8.817 8.832S64.169 114 59.3 114c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.832 8.818-8.832zm-22.444-6.826a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm44.887 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 72.245c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.833 8.818-8.833zm-42.483 0c4.87 0 8.817 3.955 8.817 8.833s-3.947 8.833-8.817 8.833S8 85.956 8 81.078s3.948-8.833 8.817-8.833zm85.366 0c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.833 8.817-8.833zm-65.327-6.022a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm44.887 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 48.156c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.833 8.818-8.833zm-42.483 0c4.87 0 8.817 3.955 8.817 8.833s-3.947 8.833-8.817 8.833S8 61.867 8 56.989s3.948-8.833 8.817-8.833zm85.366 0c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.833 8.817-8.833zM80.942 35.31c4.87 0 8.817 3.954 8.817 8.832s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.832 8.817-8.832zm-43.284 0c4.87 0 8.817 3.954 8.817 8.832s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.832 8.818-8.832zm64.525-11.242c4.87 0 8.817 3.954 8.817 8.833 0 4.878-3.948 8.832-8.817 8.832-4.87 0-8.817-3.954-8.817-8.832 0-4.879 3.947-8.833 8.817-8.833zm-85.366 0c4.87 0 8.817 3.954 8.817 8.833 0 4.878-3.947 8.832-8.817 8.832S8 37.778 8 32.9c0-4.879 3.948-8.833 8.817-8.833zm42.483 5.62a3.21 3.21 0 013.206 3.213 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.207-3.212 3.21 3.21 0 013.207-3.212zm-19.238-13.65a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm38.475 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 6a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.207-3.212A3.21 3.21 0 0159.3 6z"
+                                  />
+                                </g>
+                              </g>
+                            </g>
+                          </svg>
+                        </span>
+                        <h1
+                          class="title"
+                        >
+                          Molecule
+                        </h1>
+                        <div
+                          class="keybindings"
+                        >
+                          <ul>
                             <li
-                              className="mo-action-bar__item"
-                              data-index={1}
-                              onClick={[Function]}
+                              class="keys"
                             >
-                              <span
-                                className="codicon codicon-whole-word"
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              />
-                            </li>
-                            <li
-                              className="mo-action-bar__item"
-                              data-index={2}
-                              onClick={[Function]}
-                            >
-                              <span
-                                className="codicon codicon-regex"
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              />
+                              <span>
+                                Command Palette
+                              </span>
+                              <span />
                             </li>
                           </ul>
                         </div>
@@ -1080,232 +1096,72 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
                     </div>
                   </div>
                   <div
-                    className="mo-tree mo-search__tree"
-                    draggable={false}
-                    onClick={[Function]}
-                    role="tree"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="sc-htpNat fXAXjb sc-bdVaJa cjjWdp"
-          data-attribute="vertical"
-          data-type="Resizer"
-          onClick={[Function]}
-          onDoubleClick={[Function]}
-          onMouseDown={[Function]}
-          onTouchEnd={[Function]}
-          onTouchStart={[Function]}
-        />
-        <div
-          style={
-            Object {
-              "display": Array [
-                "-webkit-box",
-                "-moz-box",
-                "-ms-flexbox",
-                "-webkit-flex",
-                "flex",
-              ],
-              "flex": "1",
-              "maxWidth": "calc(100% - 1px*1)",
-              "minWidth": "0",
-              "outline": "none",
-            }
-          }
-        >
-          <div
-            className="css-f7b5xf"
-            data-split="horizontal"
-            data-type="SplitPane"
-          >
-            <div
-              style={
-                Object {
-                  "WebkitBoxFlex": 0,
-                  "display": Array [
-                    "-webkit-box",
-                    "-moz-box",
-                    "-ms-flexbox",
-                    "-webkit-flex",
-                    "flex",
-                  ],
-                  "flexGrow": 0,
-                  "height": "calc(70% - 1px*0.7)",
-                  "maxHeight": "calc(100% - 1px*1)",
-                  "minHeight": "calc(10% - 1px*0.1)",
-                  "outline": "none",
-                }
-              }
-            >
-              <div
-                className="mo-editor"
-              >
-                <div
-                  className="mo-welcome"
-                >
-                  <span
-                    style={
-                      Object {
-                        "fontSize": 0,
-                      }
-                    }
-                  >
-                    <svg
-                      className="logo"
-                      height="1em"
-                      viewBox="0 0 120 120"
-                      width="1em"
-                    >
-                      <g
-                        fill="none"
-                        fillRule="evenodd"
-                        opacity="0.48"
-                        stroke="none"
-                        strokeWidth="1"
-                      >
-                        <g
-                          fill="#A2A2A2"
-                          transform="translate(-660 -152)"
-                        >
-                          <g
-                            transform="translate(660 152)"
-                          >
-                            <path
-                              d="M59.3 96.335c4.87 0 8.817 3.954 8.817 8.832S64.169 114 59.3 114c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.832 8.818-8.832zm-22.444-6.826a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm44.887 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 72.245c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.833 8.818-8.833zm-42.483 0c4.87 0 8.817 3.955 8.817 8.833s-3.947 8.833-8.817 8.833S8 85.956 8 81.078s3.948-8.833 8.817-8.833zm85.366 0c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.833 8.817-8.833zm-65.327-6.022a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm44.887 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 48.156c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.833 8.818-8.833zm-42.483 0c4.87 0 8.817 3.955 8.817 8.833s-3.947 8.833-8.817 8.833S8 61.867 8 56.989s3.948-8.833 8.817-8.833zm85.366 0c4.87 0 8.817 3.955 8.817 8.833s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.833 8.817-8.833zM80.942 35.31c4.87 0 8.817 3.954 8.817 8.832s-3.948 8.833-8.817 8.833c-4.87 0-8.817-3.955-8.817-8.833s3.947-8.832 8.817-8.832zm-43.284 0c4.87 0 8.817 3.954 8.817 8.832s-3.948 8.833-8.817 8.833c-4.87 0-8.818-3.955-8.818-8.833s3.948-8.832 8.818-8.832zm64.525-11.242c4.87 0 8.817 3.954 8.817 8.833 0 4.878-3.948 8.832-8.817 8.832-4.87 0-8.817-3.954-8.817-8.832 0-4.879 3.947-8.833 8.817-8.833zm-85.366 0c4.87 0 8.817 3.954 8.817 8.833 0 4.878-3.947 8.832-8.817 8.832S8 37.778 8 32.9c0-4.879 3.948-8.833 8.817-8.833zm42.483 5.62a3.21 3.21 0 013.206 3.213 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.207-3.212 3.21 3.21 0 013.207-3.212zm-19.238-13.65a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zm38.475 0a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.206-3.212 3.21 3.21 0 013.206-3.212zM59.3 6a3.21 3.21 0 013.206 3.212 3.21 3.21 0 01-3.206 3.212 3.21 3.21 0 01-3.207-3.212A3.21 3.21 0 0159.3 6z"
-                            />
-                          </g>
-                        </g>
-                      </g>
-                    </svg>
-                  </span>
-                  <h1
-                    className="title"
-                  >
-                    Molecule
-                  </h1>
-                  <div
-                    className="keybindings"
-                  >
-                    <ul>
-                      <li
-                        className="keys"
-                      >
-                        <span>
-                          Command Palette
-                        </span>
-                        <span>
-                          
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="sc-bwzfXH hEACtv sc-bdVaJa cjjWdp"
-              data-attribute="horizontal"
-              data-type="Resizer"
-              onClick={[Function]}
-              onDoubleClick={[Function]}
-              onMouseDown={[Function]}
-              onTouchEnd={[Function]}
-              onTouchStart={[Function]}
-            />
-            <div
-              style={
-                Object {
-                  "display": Array [
-                    "-webkit-box",
-                    "-moz-box",
-                    "-ms-flexbox",
-                    "-webkit-flex",
-                    "flex",
-                  ],
-                  "flex": "1",
-                  "maxHeight": "calc(100% - 1px*1)",
-                  "minHeight": "0",
-                  "outline": "none",
-                }
-              }
-            >
-              <div
-                className="mo-panel"
-              >
-                <div
-                  className="mo-panel__header"
-                >
-                  <div
-                    className="mo-tabs mo-tabs--line"
+                    class="mo-split__pane__item"
+                    style="top: 0px; height: 0px;"
                   >
                     <div
-                      className="mo-tabs__header"
+                      class="mo-panel"
                     >
                       <div
-                        className="mo-tab__item mo-tab__item--active"
-                        onClick={[Function]}
-                        onContextMenu={[Function]}
+                        class="mo-panel__header"
                       >
-                        Problems
+                        <div
+                          class="mo-tabs mo-tabs--line"
+                        >
+                          <div
+                            class="mo-tabs__header"
+                          >
+                            <div
+                              class="mo-tab__item mo-tab__item--active"
+                              draggable="true"
+                            >
+                              Problems
+                            </div>
+                            <div
+                              class="mo-tab__item"
+                              draggable="true"
+                            >
+                              output
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mo-action-bar mo-panel__toolbar"
+                        >
+                          <ul
+                            class="mo-action-bar__container"
+                          >
+                            <li
+                              class="mo-action-bar__item"
+                              data-index="0"
+                            >
+                              <span
+                                class="codicon codicon-chevron-up"
+                              />
+                            </li>
+                            <li
+                              class="mo-action-bar__item"
+                              data-index="1"
+                            >
+                              <span
+                                class="codicon codicon-close"
+                              />
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                       <div
-                        className="mo-tab__item"
-                        onClick={[Function]}
-                        onContextMenu={[Function]}
+                        class="mo-panel__container"
+                        tabindex="0"
                       >
-                        output
+                        <div
+                          style="margin: 0px 18px; user-select: none;"
+                        >
+                          No problems have been detected in the workspace.
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    className="mo-action-bar mo-panel__toolbar"
-                  >
-                    <ul
-                      className="mo-action-bar__container"
-                    >
-                      <li
-                        className="mo-action-bar__item"
-                        data-index={0}
-                        onClick={[Function]}
-                      >
-                        <span
-                          className="codicon codicon-chevron-up"
-                          onMouseEnter={[Function]}
-                          onMouseLeave={[Function]}
-                        />
-                      </li>
-                      <li
-                        className="mo-action-bar__item"
-                        data-index={1}
-                        onClick={[Function]}
-                      >
-                        <span
-                          className="codicon codicon-close"
-                          onMouseEnter={[Function]}
-                          onMouseLeave={[Function]}
-                        />
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div
-                  className="mo-panel__container"
-                  tabIndex={0}
-                >
-                  <div
-                    style={
-                      Object {
-                        "margin": "0 18px",
-                        "userSelect": "none",
-                      }
-                    }
-                  >
-                    No problems have been detected in the workspace.
-                  </div>
                 </div>
               </div>
             </div>
@@ -1313,128 +1169,108 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
         </div>
       </div>
     </div>
-  </div>
-  <div
-    style={
-      Object {
-        "display": undefined,
-      }
-    }
-  >
-    <div
-      className="mo-statusBar"
-      id="statusBar"
-    >
+    <div>
       <div
-        className="mo-statusBar__left-items"
+        class="mo-statusBar"
+        id="statusBar"
       >
         <div
-          className="mo-statusBar__item"
-          id="statusbar.problems.title"
+          class="mo-statusBar__left-items"
         >
-          <a
-            onClick={[Function]}
-            tabIndex={-1}
-            title="Problems"
+          <div
+            class="mo-statusBar__item"
+            id="statusbar.problems.title"
           >
-            <span
-              className="codicon codicon-error"
-            />
-             0 
-            <span
-              className="codicon codicon-warning"
-            />
-             0 
-            <span
-              className="codicon codicon-info"
-            />
-             0
-          </a>
-        </div>
-      </div>
-      <div
-        className="mo-statusBar__right-items"
-      >
-        <div
-          className="mo-statusBar__item"
-          id="MO_NOTIFICATION"
-        >
-          <a
-            onClick={[Function]}
-            tabIndex={-1}
-            title="Notification"
-          >
-            <span
-              className="codicon codicon-bell"
-              onClick={[Function]}
-            />
-            <div
-              className="mo-notification mo-context-view--shadow"
-              style={
-                Object {
-                  "display": "none",
-                }
-              }
+            <a
+              tabindex="-1"
+              title="Problems"
             >
-              <header
-                className="mo-notification__header"
-              >
-                <span>
-                  No new notifications
-                </span>
-                <div
-                  className="mo-action-bar"
-                >
-                  <ul
-                    className="mo-action-bar__container"
-                  >
-                    <li
-                      className="mo-action-bar__item"
-                      data-index={0}
-                      onClick={[Function]}
-                    >
-                      <span
-                        className="codicon codicon-clear-all"
-                        onMouseEnter={[Function]}
-                        onMouseLeave={[Function]}
-                      />
-                    </li>
-                    <li
-                      className="mo-action-bar__item"
-                      data-index={1}
-                      onClick={[Function]}
-                    >
-                      <span
-                        className="codicon codicon-chevron-down"
-                        onMouseEnter={[Function]}
-                        onMouseLeave={[Function]}
-                      />
-                    </li>
-                  </ul>
-                </div>
-              </header>
-              <div
-                className="mo-notification__body"
+              <span
+                class="codicon codicon-error"
               />
-            </div>
-          </a>
+               0 
+              <span
+                class="codicon codicon-warning"
+              />
+               0 
+              <span
+                class="codicon codicon-info"
+              />
+               0
+            </a>
+          </div>
         </div>
         <div
-          className="mo-statusBar__item"
-          id="MoEditorInfo"
+          class="mo-statusBar__right-items"
         >
-          <a
-            onClick={[Function]}
-            tabIndex={-1}
-            title="Go to Line/Column"
+          <div
+            class="mo-statusBar__item"
+            id="MO_NOTIFICATION"
           >
-            <span>
-              Ln 0, Col 0
-            </span>
-          </a>
+            <a
+              tabindex="-1"
+              title="Notification"
+            >
+              <span
+                class="codicon codicon-bell"
+              />
+              <div
+                class="mo-notification mo-context-view--shadow"
+                style="display: none;"
+              >
+                <header
+                  class="mo-notification__header"
+                >
+                  <span>
+                    No new notifications
+                  </span>
+                  <div
+                    class="mo-action-bar"
+                  >
+                    <ul
+                      class="mo-action-bar__container"
+                    >
+                      <li
+                        class="mo-action-bar__item"
+                        data-index="0"
+                      >
+                        <span
+                          class="codicon codicon-clear-all"
+                        />
+                      </li>
+                      <li
+                        class="mo-action-bar__item"
+                        data-index="1"
+                      >
+                        <span
+                          class="codicon codicon-chevron-down"
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                </header>
+                <div
+                  class="mo-notification__body"
+                />
+              </div>
+            </a>
+          </div>
+          <div
+            class="mo-statusBar__item"
+            id="MoEditorInfo"
+          >
+            <a
+              tabindex="-1"
+              title="Go to Line/Column"
+            >
+              <span>
+                Ln 0, Col 0
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;

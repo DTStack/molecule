@@ -11,7 +11,7 @@ describe('The layout controller', () => {
         const original = layoutService.setPaneSize;
         const mockFn = jest.fn();
         layoutService.setPaneSize = mockFn;
-        const splitPanePos = ['20px', '20px'];
+        const splitPanePos = [20, 20];
         layoutController.onPaneSizeChange(splitPanePos);
 
         expect(mockFn).toBeCalled();
@@ -23,7 +23,7 @@ describe('The layout controller', () => {
         const original = layoutService.setHorizontalPaneSize;
         const mockFn = jest.fn();
         layoutService.setHorizontalPaneSize = mockFn;
-        const splitPanePos = ['20px', '20px'];
+        const splitPanePos = [20, 20];
         layoutController.onHorizontalPaneSizeChange(splitPanePos);
 
         expect(mockFn).toBeCalled();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { memo } from 'react';
-import SplitPane from 'react-split-pane';
-import Pane from 'react-split-pane/lib/Pane';
+import SplitPane from 'mo/components/split';
+import Pane from 'mo/components/split/pane';
 import { IEditor, IEditorGroup } from 'mo/model';
 
 import EditorGroup from './group';
@@ -9,23 +9,30 @@ import Welcome from './welcome';
 import { defaultEditorClassName } from './base';
 import { IEditorController } from 'mo/controller/editor';
 import type { UniqueId } from 'mo/common/types';
+import { ILayout } from 'mo/model/workbench/layout';
 
-export function Editor(props: IEditor & IEditorController) {
+export function Editor(
+    props: { editor?: IEditor; layout?: ILayout } & IEditorController
+) {
+    const {
+        onClickContextMenu,
+        onCloseTab,
+        onMoveTab,
+        onSelectTab,
+        onChangeEditorProps,
+        onClickActions,
+        onUpdateEditorIns,
+        onPaneSizeChange,
+        editor,
+        layout,
+    } = props;
     const {
         groups = [],
         current,
         entry = <Welcome />,
         editorOptions,
-        onClickContextMenu,
-        onCloseTab,
-        onMoveTab,
-        onSelectTab,
-        groupSplitPos = [],
-        onChangeEditorProps,
-        onClickActions,
-        onUpdateEditorIns,
-        onPaneSizeChange,
-    } = props;
+    } = editor || {};
+    const { groupSplitPos } = layout || {};
 
     const getEvents = (groupId: UniqueId) => {
         return {
@@ -52,19 +59,18 @@ export function Editor(props: IEditor & IEditorController) {
         } else if (groups.length > 1) {
             return (
                 <SplitPane
-                    split={'vertical'}
-                    onChange={onPaneSizeChange as any}
+                    sizes={groupSplitPos!}
+                    split="vertical"
+                    onChange={onPaneSizeChange!}
+                    allowResize={[false]}
+                    onResizeStrategy={(sizes) =>
+                        sizes.map((_, index) =>
+                            index === sizes.length - 1 ? 'pave' : 'keep'
+                        )
+                    }
                 >
                     {groups.map((g: IEditorGroup, index: number) => (
-                        <Pane
-                            key={`group-${index}${g.id}`}
-                            initialSize={
-                                groupSplitPos[index]
-                                    ? `${groupSplitPos[index]}ratio`
-                                    : undefined
-                            }
-                            minSize="220px"
-                        >
+                        <Pane key={`group-${index}${g.id}`} minSize="220px">
                             <EditorGroup
                                 editorOptions={editorOptions}
                                 currentGroup={current!}

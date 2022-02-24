@@ -9,6 +9,17 @@ export const collapseItemClassName = getBEMElement(
     defaultCollapseClassName,
     'item'
 );
+
+export const collapsePaneClassName = getBEMElement(
+    defaultCollapseClassName,
+    'pane'
+);
+
+export const collapsingClassName = getBEMModifier(
+    collapsePaneClassName,
+    'collapsing'
+);
+
 export const collapseActiveClassName = getBEMModifier(
     defaultCollapseClassName,
     'active'

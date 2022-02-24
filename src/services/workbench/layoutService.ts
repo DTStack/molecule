@@ -42,18 +42,23 @@ export interface ILayoutService extends Component<ILayout> {
      * Set the sizes between the side bar and main content area
      * @param splitPanePos
      */
-    setPaneSize(splitPanePos: string[]): void;
+    setPaneSize(splitPanePos: (number | string)[]): void;
     /**
      * Set the sizes between the editor and the panel
      * @param horizontalSplitPanePos
      */
-    setHorizontalPaneSize(horizontalSplitPanePos: string[]): void;
+    setHorizontalPaneSize(horizontalSplitPanePos: (number | string)[]): void;
     /**
      * Set the position of the side bar, default is in `left`
      * @param position
      * @unachieved
      */
     setSideBarPosition(position: keyof typeof Position): void;
+    /**
+     * Set the sizes between editor groups
+     * @param groupSplitPos
+     */
+    setGroupSplitSize(groupSplitPos: (number | string)[]): void;
     /**
      * Set the mode of the MenuBar, default is `vertical`
      * @param mode
@@ -145,11 +150,19 @@ export class LayoutService
         return !panelViewState.panelMaximized;
     }
 
-    public setPaneSize(splitPanePos: string[]): void {
+    public setPaneSize(splitPanePos: (number | string)[]): void {
         this.setState({ splitPanePos });
     }
-    public setHorizontalPaneSize(horizontalSplitPanePos: string[]): void {
+    public setHorizontalPaneSize(
+        horizontalSplitPanePos: (number | string)[]
+    ): void {
         this.setState({ horizontalSplitPanePos });
+    }
+
+    public setGroupSplitSize(groupSplitPos: (string | number)[]): void {
+        this.setState({
+            groupSplitPos,
+        });
     }
 
     public setMenuBarMode(mode: keyof typeof MenuBarMode): void {

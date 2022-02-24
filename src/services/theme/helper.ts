@@ -43,6 +43,7 @@ function perfectColors(colors: IColors): IColors {
         ['minimapSlider.hoverBackground', 'scrollbarSlider.hoverBackground'],
         ['minimapSlider.activeBackground', 'scrollbarSlider.activeBackground'],
         ['panel.background', 'workbenchBackground'],
+        ['sash.hoverBorder', 'focusBorder'],
     ];
 
     inheritMap.forEach(([inheritSourceColor, inheritTargetColor]) => {

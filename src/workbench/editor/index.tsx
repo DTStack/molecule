@@ -3,13 +3,18 @@ import { connect } from 'mo/react';
 import { container } from 'tsyringe';
 import { EditorController } from 'mo/controller/editor';
 import { Editor } from './editor';
-import { EditorService } from 'mo/services';
+import { EditorService, LayoutService } from 'mo/services';
 
 const editorService = container.resolve(EditorService);
+const layoutService = container.resolve(LayoutService);
 import { EditorStatusBarView } from './statusBarView';
 
 const editorController = container.resolve(EditorController);
 
-const EditorView = connect(editorService, Editor, editorController);
+const EditorView = connect(
+    { editor: editorService, layout: layoutService },
+    Editor,
+    editorController
+);
 
 export { Editor, EditorStatusBarView, EditorView };

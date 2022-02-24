@@ -34,7 +34,8 @@ exports[`The SideBar Component Match Snapshot 1`] = `
     data-id="test"
     style={
       Object {
-        "display": "block",
+        "visibility": "visible",
+        "zIndex": 1,
       }
     }
   >
@@ -49,7 +50,8 @@ exports[`The SideBar Component Match Snapshot 1`] = `
     data-id="another"
     style={
       Object {
-        "display": "none",
+        "visibility": "hidden",
+        "zIndex": -1,
       }
     }
   >

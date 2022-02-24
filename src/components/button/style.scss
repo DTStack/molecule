@@ -1,12 +1,16 @@
 @import 'mo/style/common';
 
 #{$btn} {
+    align-items: center;
     background-color: var(--button-background);
     border: 0;
     box-sizing: border-box;
     color: var(--button-foreground);
     cursor: pointer;
+    display: flex;
     height: 30px;
+    justify-content: center;
+    margin-bottom: 8px;
     outline-offset: 2px;
     padding: 4px 10px;
     text-align: center;

@@ -1,16 +1,12 @@
 @import 'mo/style/common';
 
 #{$btn} {
-    --button-hoverBackground: var(--button-background);
-    align-items: center;
     background-color: var(--button-background);
     border: 0;
     box-sizing: border-box;
     color: var(--button-foreground);
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    margin: 4px 5px;
+    height: 30px;
     outline-offset: 2px;
     padding: 4px 10px;
     text-align: center;
@@ -27,6 +23,7 @@
 
     &--large {
         font-size: 16px;
+        height: 32px;
         padding: 8px 15px;
     }
 

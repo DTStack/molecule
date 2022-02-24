@@ -107,7 +107,6 @@ const defaultDark = {
     'checkbox.border': '#CECECE',
     'button.background': '#0E639C',
     'button.foreground': Color.white,
-    'button.hoverBackground': Color.fromHex('#0E639C').transparent(0.2),
 
     'badge.background': '#4D4D4D',
     'badge.foreground': Color.white,

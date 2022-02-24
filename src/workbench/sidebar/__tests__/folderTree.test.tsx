@@ -66,7 +66,7 @@ describe('The FolderTree Component', () => {
                 'you have not yet opened a folder'
             );
 
-            fireEvent.click(wrapper?.querySelector('a')!);
+            fireEvent.click(wrapper?.querySelector('button')!);
 
             rerender(
                 <FolderTreeViewPanel

@@ -45,7 +45,7 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
     }
     tabIndex={0}
   >
-    <a
+    <button
       className="mo-btn mo-btn--normal"
       onClick={[Function]}
       style={
@@ -55,7 +55,7 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
       }
     >
       Confirm Reload
-    </a>
+    </button>
   </div>
 </div>
 `;

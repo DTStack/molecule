@@ -2,7 +2,7 @@ import React from 'react';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 
 type BtnSizeType = 'normal' | 'large';
-export interface IButtonProps extends React.ComponentProps<'a'> {
+export interface IButtonProps extends React.ComponentProps<'button'> {
     disabled?: boolean;
     size?: BtnSizeType;
     onClick?(event: React.MouseEvent): void;
@@ -38,8 +38,8 @@ export function Button(props: React.PropsWithChildren<IButtonProps>) {
     );
 
     return (
-        <a className={claNames} {...custom}>
+        <button className={claNames} {...custom}>
             {children}
-        </a>
+        </button>
     );
 }

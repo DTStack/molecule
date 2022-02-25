@@ -1,7 +1,6 @@
 @import 'mo/style/common';
 
 #{$btn} {
-    --button-hoverBackground: var(--button-background);
     align-items: center;
     background-color: var(--button-background);
     border: 0;
@@ -9,11 +8,13 @@
     color: var(--button-foreground);
     cursor: pointer;
     display: flex;
+    height: 30px;
     justify-content: center;
-    margin: 4px 5px;
+    margin-bottom: 8px;
     outline-offset: 2px;
     padding: 4px 10px;
     text-align: center;
+    width: 100%;
 
     &:hover {
         background-color: var(--button-hoverBackground);
@@ -26,6 +27,7 @@
 
     &--large {
         font-size: 16px;
+        height: 32px;
         padding: 8px 15px;
     }
 

@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import { Color } from 'monaco-editor/esm/vs/base/common/color';
 import { IColors, IColorTheme } from 'mo/model/colorTheme';
 import { getBuiltInColors } from 'mo/services/theme/colorRegistry';
 import { editor as MonacoEditor } from 'monaco-editor';
@@ -37,20 +38,40 @@ export function convertToCSSVars(colors: object) {
  */
 function perfectColors(colors: IColors): IColors {
     const nextColors = cloneDeep(colors);
-    const inheritMap = [
+    const inheritMap: (
+        | [string, string]
+        | [string, string, (color: string) => string]
+    )[] = [
         ['minimap.background', 'editor.background'],
         ['minimapSlider.background', 'scrollbarSlider.background'],
         ['minimapSlider.hoverBackground', 'scrollbarSlider.hoverBackground'],
         ['minimapSlider.activeBackground', 'scrollbarSlider.activeBackground'],
         ['panel.background', 'workbenchBackground'],
         ['sash.hoverBorder', 'focusBorder'],
+        [
+            'button.hoverBackground',
+            'button.background',
+            (color: string) => Color.fromHex(color).lighten(0.2),
+        ],
     ];
 
-    inheritMap.forEach(([inheritSourceColor, inheritTargetColor]) => {
-        if (!nextColors[inheritSourceColor] && nextColors[inheritTargetColor]) {
-            nextColors[inheritSourceColor] = nextColors[inheritTargetColor];
+    inheritMap.forEach(
+        ([inheritSourceColor, inheritTargetColor, transformer]) => {
+            if (
+                !nextColors[inheritSourceColor] &&
+                nextColors[inheritTargetColor]
+            ) {
+                if (transformer) {
+                    nextColors[inheritSourceColor] = transformer(
+                        nextColors[inheritTargetColor]
+                    );
+                } else {
+                    nextColors[inheritSourceColor] =
+                        nextColors[inheritTargetColor];
+                }
+            }
         }
-    });
+    );
     return nextColors;
 }
 

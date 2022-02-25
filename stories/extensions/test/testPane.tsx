@@ -83,6 +83,10 @@ export default class TestPane extends React.Component {
             });
         };
 
+        const showHideActivityBar = function () {
+            molecule.layout.toggleActivityBarVisibility();
+        };
+
         const addStatusBar = function () {
             const id = shortRandomId();
             molecule.statusBar.add(
@@ -112,6 +116,10 @@ export default class TestPane extends React.Component {
                     name: 'TestUpdate-' + lastItem?.id,
                 });
             }
+        };
+
+        const showHideStatusBar = () => {
+            molecule.layout.toggleStatusBarVisibility();
         };
 
         const addPanel = function () {
@@ -200,37 +208,19 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             molecule.editor.open(tabData);
         };
 
-        molecule.editor.onUpdateTab((newTab) => {
-            // const { current } = molecule.editor.getState();
-            // const tab = current?.tab!;
-            // molecule.editor.updateTab(
-            //     {
-            //         id: tab.id,
-            //         data: {
-            //             ...tab.data,
-            //             modified: true,
-            //         },
-            //     },
-            //     current?.id || -1
-            // );
-            // // TODO editorService add onSaveEditor() event.
-            // current?.editorInstance.addCommand(
-            //     monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
-            //     () => {
-            //         // ctrl + s
-            //         molecule.editor.updateTab(
-            //             {
-            //                 id: tab.id,
-            //                 data: {
-            //                     ...tab.data,
-            //                     modified: false,
-            //                 },
-            //             },
-            //             current?.id || -1
-            //         );
-            //     }
-            // );
-        });
+        const updateEntryPage = () => {
+            const style: React.CSSProperties = {
+                display: 'flex',
+                width: '100%',
+                height: '100%',
+                fontSize: 48,
+                alignItems: 'center',
+                justifyContent: 'center',
+            };
+            const entry = <div style={style}>Welcome</div>;
+            molecule.editor.setEntry(entry);
+        };
+
         const addANotification = function () {
             const { showNotifications } = molecule.notification.getState();
             if (!showNotifications) {
@@ -304,6 +294,28 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             notice(
                 `The Undo menu item under the MenuBar's Edit menu has been updated`
             );
+        };
+
+        const toggleMenuBarMode = () => {
+            const currentMode = molecule.layout.getMenuBarMode();
+            const newMode =
+                currentMode === 'horizontal' ? 'vertical' : 'horizontal';
+            molecule.layout.setMenuBarMode(newMode);
+        };
+
+        const updateMenuBarLogo = () => {
+            const randomColor = `hsl(${Math.floor(
+                Math.random() * 360
+            )}, 100%, 50%)`;
+            const logo = (
+                <span style={{ backgroundColor: randomColor }}>MO</span>
+            );
+            molecule.layout.setMenuBarMode('horizontal');
+            molecule.menuBar.setState({ logo });
+        };
+
+        const showHideMenuBar = () => {
+            molecule.layout.toggleMenuBarVisibility();
         };
 
         const addSettingsItem = function () {
@@ -380,20 +392,15 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
             );
         };
 
-        const toggleMenuBarMode = () => {
-            const currentMode = molecule.layout.getMenuBarMode();
-            const newMode =
-                currentMode === 'horizontal' ? 'vertical' : 'horizontal';
-            molecule.layout.setMenuBarMode(newMode);
-        };
-
         return (
             <Scrollable isShowShadow>
                 <div style={{ padding: 20 }}>
                     <div style={{ marginBottom: 50 }}>
                         <h2>Simple examples:</h2>
                         <Button onClick={newEditor}>New Editor</Button>
-                        <Button onClick={addABar}>Add ActivityBar Item</Button>
+                        <Button onClick={updateEntryPage}>
+                            Update Entry Page
+                        </Button>
                         <Button onClick={addSettingsItem}>
                             Append Settings Item
                         </Button>
@@ -405,6 +412,13 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                     <div style={{ marginBottom: 50 }}>
                         <h2>Select a localization language:</h2>
                         {this.renderLocales()}
+                    </div>
+                    <div style={{ marginBottom: 50 }}>
+                        <h2>ActivityBar:</h2>
+                        <Button onClick={addABar}>Add ActivityBar Item</Button>
+                        <Button onClick={showHideActivityBar}>
+                            Show/Hide ActivityBar
+                        </Button>
                     </div>
                     <div style={{ marginBottom: 50 }}>
                         <h2>Panel:</h2>
@@ -430,13 +444,19 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                         <h2>MenuBar:</h2>
                         <Button onClick={appendMenu}>Add MenuBar Item</Button>
                         <Button onClick={removeMenu}>
-                            Remove MenuBar Item{' '}
+                            Remove MenuBar Item
                         </Button>
                         <Button onClick={updateMenu}>
                             Update MenuBar Item
                         </Button>
                         <Button onClick={toggleMenuBarMode}>
                             Toggle MenuBar mode
+                        </Button>
+                        <Button onClick={updateMenuBarLogo}>
+                            Update MenuBar Logo
+                        </Button>
+                        <Button onClick={showHideMenuBar}>
+                            Show/Hide MenuBar
                         </Button>
                     </div>
                     <div style={{ marginBottom: 50 }}>
@@ -448,15 +468,18 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                     </div>
                     <div>
                         <h2>StatusBar:</h2>
-                        <molecule.component.Button onClick={addStatusBar}>
+                        <Button onClick={addStatusBar}>
                             Add StatusBar Item
-                        </molecule.component.Button>
-                        <molecule.component.Button onClick={removeStatusBar}>
+                        </Button>
+                        <Button onClick={removeStatusBar}>
                             Remove StatusBar Item
-                        </molecule.component.Button>
-                        <molecule.component.Button onClick={updateStatusBar}>
+                        </Button>
+                        <Button onClick={updateStatusBar}>
                             Update StatusBar Item
-                        </molecule.component.Button>
+                        </Button>
+                        <Button onClick={showHideStatusBar}>
+                            Show/Hide StatusBar
+                        </Button>
                     </div>
                 </div>
             </Scrollable>

@@ -1,72 +1,45 @@
 import { Button } from 'mo/components';
-import React, { useCallback, useEffect, useRef } from 'react';
+import { localize } from 'mo/i18n';
+import React, { useEffect, useRef } from 'react';
 
 interface ILocaleNotificationProps {
     locale: string;
 }
 
-export function LocaleNotification(props: ILocaleNotificationProps) {
-    const { locale } = props;
+export function LocaleNotification({ locale }: ILocaleNotificationProps) {
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
-    const reload = useCallback(() => {
+    const reload = () => {
         window.location.reload();
-    }, []);
-
-    const wrapperRef = useRef<HTMLDivElement>(null);
+    };
 
     useEffect(() => {
         // Delay execution to ensure focus on element
-        setTimeout(() => wrapperRef.current?.focus());
+        buttonRef.current?.focus();
     }, []);
-
-    let isOkToReload = false;
-
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            isOkToReload = true;
-        }
-    };
-
-    const handleKeyUp = (e) => {
-        if (e.key === 'Enter' && isOkToReload) {
-            reload();
-        }
-    };
 
     return (
         <div
             style={{
                 lineHeight: '1.5',
-                width: 420,
-                textAlign: 'right',
             }}
         >
             <div
                 style={{
                     direction: 'ltr',
+                    width: 440,
                     whiteSpace: 'normal',
                     textAlign: 'left',
                 }}
             >
-                <p>
-                    The current locale has changed to {locale}, click the button
-                    to reload the Page and applying the changes.
-                </p>
                 <p style={{ fontWeight: 'bold' }}>
-                    Notice: Reload the Page could lose the data, Please confirm
-                    you have saved before.
+                    {localize('notification.locale.title', '')}
                 </p>
+                <p>{localize('notification.locale.description', '')}</p>
             </div>
-            <div
-                ref={wrapperRef}
-                // make it focusable
-                tabIndex={0}
-                onKeyDown={handleKeyDown}
-                onKeyUp={handleKeyUp}
-                style={{ display: 'inline-block', marginBottom: 2 }}
-            >
-                <Button style={{ width: 150 }} onClick={reload}>
-                    Confirm Reload
+            <div style={{ marginBottom: 2 }}>
+                <Button ref={buttonRef} style={{ width: 150 }} onClick={reload}>
+                    {localize('notification.locale.button', '')}
                 </Button>
             </div>
         </div>

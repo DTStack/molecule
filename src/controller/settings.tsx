@@ -15,8 +15,6 @@ import {
 import { SettingsEvent } from 'mo/model/settings';
 import { ILocale, ILocaleService, LocaleService } from 'mo/i18n';
 import { INotificationService, NotificationService } from 'mo/services';
-import { NotificationController } from '.';
-import { INotificationController } from 'mo/workbench';
 import { LocaleNotification } from 'mo/workbench/notification/notificationPane/localeNotification';
 
 export interface ISettingsController extends Partial<Controller> {}
@@ -30,7 +28,6 @@ export class SettingsController
     private readonly settingsService: ISettingsService;
     private readonly localeService: ILocaleService;
     private readonly notificationService: INotificationService;
-    private readonly notificationController: INotificationController;
     private readonly builtinService: IBuiltinService;
 
     constructor() {
@@ -39,7 +36,6 @@ export class SettingsController
         this.settingsService = container.resolve(SettingsService);
         this.localeService = container.resolve(LocaleService);
         this.notificationService = container.resolve(NotificationService);
-        this.notificationController = container.resolve(NotificationController);
         this.builtinService = container.resolve(BuiltinService);
     }
 
@@ -73,10 +69,12 @@ export class SettingsController
             id: SETTING_ID!,
             value: next,
             render(value) {
-                return <LocaleNotification key={next.id} locale={next.id} />;
+                return <LocaleNotification key={next.id} locale={next.name} />;
             },
         };
+        if (!this.notificationService.getState().showNotifications) {
+            this.notificationService.toggleNotification();
+        }
         this.notificationService.add([notify]);
-        this.notificationController.toggleNotifications();
     }
 }

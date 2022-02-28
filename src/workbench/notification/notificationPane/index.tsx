@@ -21,6 +21,10 @@ const notificationBodyClassName = getBEMElement(
     defaultNotificationClassName,
     'body'
 );
+const notificationItemClassName = getBEMElement(
+    defaultNotificationClassName,
+    'item'
+);
 const notificationCloseClassName = getBEMModifier(
     defaultNotificationClassName,
     'close'
@@ -56,16 +60,16 @@ export function NotificationPane(
             </header>
             <div className={notificationBodyClassName}>
                 {data.map((item) => (
-                    <div key={item.id}>
-                        {typeof item.render === 'function'
-                            ? item.render(item)
-                            : item.value}
+                    <div className={notificationItemClassName} key={item.id}>
                         <Icon
                             title="Clear Notification"
                             onClick={() => onCloseNotification?.(item)}
                             className={notificationCloseClassName}
                             type="close"
                         />
+                        {typeof item.render === 'function'
+                            ? item.render(item)
+                            : item.value}
                     </div>
                 ))}
             </div>

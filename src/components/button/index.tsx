@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 
 type BtnSizeType = 'normal' | 'large';
-export interface IButtonProps extends React.ComponentProps<'button'> {
+export interface IButtonProps
+    extends Omit<React.ComponentProps<'button'>, 'ref'> {
     disabled?: boolean;
     size?: BtnSizeType;
     onClick?(event: React.MouseEvent): void;
@@ -22,7 +23,10 @@ export const disableButtonClassName = getBEMModifier(
     'disabled'
 );
 
-export function Button(props: React.PropsWithChildren<IButtonProps>) {
+export const Button = forwardRef(function (
+    props: React.PropsWithChildren<IButtonProps>,
+    ref: React.ForwardedRef<HTMLButtonElement> | undefined
+) {
     const { className, children, size = 'normal', ...custom } = props;
 
     const disabled = props.disabled ? disableButtonClassName : null;
@@ -38,8 +42,8 @@ export function Button(props: React.PropsWithChildren<IButtonProps>) {
     );
 
     return (
-        <button className={claNames} {...custom}>
+        <button ref={ref} className={claNames} {...custom}>
             {children}
         </button>
     );
-}
+});

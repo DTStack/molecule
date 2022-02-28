@@ -57,7 +57,7 @@ export function NotificationPane(
                 handleRightClick
             );
         };
-    }, []);
+    }, [onContextMenu]);
 
     return (
         <div

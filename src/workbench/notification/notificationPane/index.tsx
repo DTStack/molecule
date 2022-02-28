@@ -1,4 +1,4 @@
-import React, { memo, useRef, useEffect } from 'react';
+import React, { memo } from 'react';
 import { INotification } from 'mo/model/notification';
 import { INotificationController } from 'mo/controller/notification';
 import {
@@ -35,29 +35,12 @@ export function NotificationPane(
         showNotifications,
         onActionBarClick,
         onCloseNotification,
-        onContextMenu,
     } = props;
     const hasNotifications = data.length > 0;
     const title = hasNotifications
         ? localize('notification.title', 'notifications')
         : localize('notification.title.no', 'no new notifications');
     const display = showNotifications ? 'block' : 'none';
-    const wrapper = useRef<HTMLDivElement>(null);
-
-    // Prevent the contextmenu event of the upper element from being triggered by mistake.
-    useEffect(() => {
-        const handleRightClick = function (e: MouseEvent) {
-            e.stopPropagation();
-            onContextMenu?.(e);
-        };
-        wrapper.current?.addEventListener('contextmenu', handleRightClick);
-        return () => {
-            wrapper.current?.removeEventListener(
-                'contextmenu',
-                handleRightClick
-            );
-        };
-    }, [onContextMenu]);
 
     return (
         <div
@@ -65,7 +48,6 @@ export function NotificationPane(
                 defaultNotificationClassName,
                 shadowClassName
             )}
-            ref={wrapper}
             style={{ display }}
         >
             <header className={notificationHeaderClassName}>

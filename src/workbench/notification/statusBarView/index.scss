@@ -1,0 +1,21 @@
+.mo-bell {
+    height: 100%;
+    position: relative;
+
+    &::before {
+        vertical-align: sub;
+    }
+
+    &--active {
+        &::after {
+            border: 5px solid;
+            border-color: transparent transparent var(--statusBar-background);
+            content: '';
+            height: 0;
+            left: 2px;
+            position: absolute;
+            top: -10px;
+            width: 0;
+        }
+    }
+}

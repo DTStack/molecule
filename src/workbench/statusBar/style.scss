@@ -33,7 +33,7 @@
     &__right-items {
         direction: rtl;
 
-        > :last-child {
+        > :first-child {
             margin-right: 7px;
         }
     }
@@ -48,7 +48,6 @@
             display: flex;
             height: 100%;
             outline-width: 0;
-            overflow: hidden;
             padding: 0 5px;
             text-overflow: ellipsis;
             white-space: pre;

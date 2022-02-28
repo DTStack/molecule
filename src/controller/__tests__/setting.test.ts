@@ -10,7 +10,6 @@ import {
 import { constants } from 'mo/services/builtinService/const';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { NotificationController } from '../notification';
 import { SettingsController } from '../settings';
 
 const settingController = container.resolve(SettingsController);
@@ -19,7 +18,6 @@ const editorService = container.resolve(EditorService);
 const settingsService = container.resolve(SettingsService);
 const localeService = container.resolve(LocaleService);
 const notificationService = container.resolve(NotificationService);
-const notificationController = container.resolve(NotificationController);
 
 describe('The setting controller', () => {
     test('Should support to initialize', () => {
@@ -57,9 +55,9 @@ describe('The setting controller', () => {
     });
 
     test('Should support to execute the notification', () => {
-        const original = notificationController.toggleNotifications;
+        const original = notificationService.toggleNotification;
         const mockFn = jest.fn();
-        notificationController.toggleNotifications = mockFn;
+        notificationService.toggleNotification = mockFn;
         const locale = { id: 'local', name: 'local' };
         localeService.emit(LocalizationEvent.OnChange, {}, locale);
         const { data } = notificationService.getState();
@@ -67,6 +65,6 @@ describe('The setting controller', () => {
         expect(data![0]).toEqual(expect.objectContaining({ value: locale }));
         expect(mockFn).toBeCalled();
 
-        notificationController.toggleNotifications = original;
+        notificationService.toggleNotification = original;
     });
 });

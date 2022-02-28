@@ -101,4 +101,23 @@ describe('Test NotificationPane Component', () => {
             fireEvent.click(testDom!);
         });
     });
+
+    test('Listen to the contextmenu event', () => {
+        expectFnCalled((fn) => {
+            const { getByText } = render(
+                <NotificationPane
+                    id="test"
+                    onContextMenu={fn}
+                    data={[
+                        {
+                            id: 'test',
+                            value: 'Test Notification',
+                        },
+                    ]}
+                />
+            );
+            const testDom = getByText('Test Notification');
+            fireEvent.contextMenu(testDom);
+        });
+    });
 });

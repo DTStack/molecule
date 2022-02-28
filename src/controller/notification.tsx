@@ -27,6 +27,7 @@ export interface INotificationController extends Partial<Controller> {
      * Toggle the Notifications visibility
      */
     toggleNotifications(): void;
+    onContextMenu?: (e: MouseEvent) => void;
 }
 
 @singleton()

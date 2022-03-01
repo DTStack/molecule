@@ -6,6 +6,7 @@ import { NotificationPane } from '../notificationPane';
 import type { INotificationController } from 'mo/controller';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 import './index.scss';
+import { select } from 'mo/common/dom';
 
 const defaultBellClassName = prefixClaName('bell');
 const activeBellClassName = getBEMModifier(defaultBellClassName, 'active');
@@ -27,9 +28,7 @@ export function NotificationStatusBarView(
     const renderIcon = hasNotifications ? 'bell-dot' : 'bell';
 
     useEffect(() => {
-        const container = document.querySelector(
-            `.${prefixClaName('workbench')}`
-        );
+        const container = select(`.${prefixClaName('workbench')}`);
         if (container) {
             wrapper.current = wrapper.current || document.createElement('div');
             container.appendChild(wrapper.current);

@@ -29,6 +29,7 @@ export const constants = {
     EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS: 'sidebar.explore.closeGroupEditors',
     NEW_FILE_COMMAND_ID: 'explorer.newFile',
     NEW_FOLDER_COMMAND_ID: 'explorer.newFolder',
+    COLLAPSE_COMMAND_ID: 'explorer.collapse',
     RENAME_COMMAND_ID: 'explorer.rename',
     REMOVE_COMMAND_ID: 'explorer.remove',
     DELETE_COMMAND_ID: 'explorer.delete',
@@ -127,7 +128,7 @@ export const modules = {
                     icon: 'refresh',
                 },
                 {
-                    id: 'collapse',
+                    id: constants.COLLAPSE_COMMAND_ID,
                     title: localize(
                         'sidebar.explore.collapseFolders',
                         'Collapse Folders in Explorer'

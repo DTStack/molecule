@@ -131,6 +131,7 @@ export class ExplorerController
             NEW_FILE_COMMAND_ID,
             NEW_FOLDER_COMMAND_ID,
             REMOVE_COMMAND_ID,
+            COLLAPSE_COMMAND_ID,
             EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
             EXPLORER_TOGGLE_SAVE_ALL,
             EXPLORER_TOGGLE_VERTICAL,
@@ -147,6 +148,10 @@ export class ExplorerController
             }
             case REMOVE_COMMAND_ID: {
                 this.emit(ExplorerEvent.onRemovePanel, parentPanel);
+                break;
+            }
+            case COLLAPSE_COMMAND_ID: {
+                this.emit(ExplorerEvent.onCollapseAllFolders);
                 break;
             }
             case EXPLORER_TOGGLE_CLOSE_ALL_EDITORS: {

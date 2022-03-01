@@ -175,5 +175,9 @@ export const ExtendsTestPane: IExtension = {
         molecule.folderTree.onRemove((id) => {
             molecule.folderTree.remove(id);
         });
+
+        molecule.explorer.onCollapseAllFolders(() => {
+            molecule.folderTree.setExpandKeys([]);
+        });
     },
 };

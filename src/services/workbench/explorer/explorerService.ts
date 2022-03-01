@@ -69,6 +69,11 @@ export interface IExplorerService extends Component<IExplorer> {
      */
     onRemovePanel(callback: (panel: IExplorerPanelItem) => void): void;
     /**
+     * Listen to the FolderTree Panel collapse all folders event
+     * @param callback
+     */
+    onCollapseAllFolders(callback: () => void): void;
+    /**
      * Listen to the Explorer panel toolbar click event
      * @param callback
      */
@@ -311,6 +316,10 @@ export class ExplorerService
 
     public onRemovePanel(callback: (panel: IExplorerPanelItem) => void) {
         this.subscribe(ExplorerEvent.onRemovePanel, callback);
+    }
+
+    public onCollapseAllFolders(callback: () => void) {
+        this.subscribe(ExplorerEvent.onCollapseAllFolders, callback);
     }
 
     public onPanelToolbarClick(

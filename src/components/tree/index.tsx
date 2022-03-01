@@ -85,7 +85,7 @@ const TreeView = ({
     onLoadData,
     onTreeClick,
 }: ITreeProps) => {
-    const [expandKeys, setExpandKeys] = useState<string[]>([]);
+    const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
     const [activeKey, setActiveKey] = useState<string | null>(null);
     const loadDataCache = useRef<Record<string, boolean>>({});
     const [loadingKeys, setLoadingKeys] = useState<string[]>([]);
@@ -125,15 +125,16 @@ const TreeView = ({
     };
 
     const handleExpandKey = (key: string, node: ITreeNodeItemProps) => {
-        const index = expandKeys.findIndex((e) => e === key);
+        const nextExpandKeys = controlExpandKeys || expandKeys;
+        const index = nextExpandKeys.findIndex((e) => e === key);
         if (index > -1) {
-            expandKeys.splice(index, 1);
+            nextExpandKeys.splice(index, 1);
         } else {
-            expandKeys.push(key);
+            nextExpandKeys.push(key);
         }
         onExpand
-            ? onExpand(expandKeys.concat(), node)
-            : setExpandKeys(expandKeys.concat());
+            ? onExpand(nextExpandKeys.concat(), node)
+            : setExpandKeys(nextExpandKeys.concat());
     };
 
     const handleNodeClick = (
@@ -415,7 +416,7 @@ const TreeView = ({
                     return node.id.toString();
                 });
                 const nextExpandKeys = Array.from(
-                    new Set([...keys, ...expandKeys])
+                    new Set([...keys, ...(controlExpandKeys || expandKeys)])
                 );
 
                 onExpand

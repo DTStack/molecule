@@ -125,7 +125,7 @@ const TreeView = ({
     };
 
     const handleExpandKey = (key: string, node: ITreeNodeItemProps) => {
-        const nextExpandKeys = controlExpandKeys || expandKeys;
+        const nextExpandKeys = (controlExpandKeys || expandKeys).concat();
         const index = nextExpandKeys.findIndex((e) => e === key);
         if (index > -1) {
             nextExpandKeys.splice(index, 1);
@@ -333,6 +333,8 @@ const TreeView = ({
     };
 
     const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
+        console.log('controlExpandKeys:', controlExpandKeys);
+
         return data.map((item, index) => {
             const uuid = item.id.toString();
             const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);

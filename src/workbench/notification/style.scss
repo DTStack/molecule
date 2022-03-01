@@ -3,12 +3,12 @@ $icon-size: 22px;
 
 #{$notification} {
     background-color: var(--workbenchBackground);
-    bottom: 31px;
+    bottom: 10px;
     color: var(--foreground);
     cursor: default;
     display: none;
     overflow: hidden;
-    position: fixed;
+    position: absolute;
     right: 8px;
     z-index: 1000;
 

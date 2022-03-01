@@ -38,7 +38,11 @@ export function LocaleNotification({ locale }: ILocaleNotificationProps) {
                 <p>{localize('notification.locale.description', '')}</p>
             </div>
             <div style={{ marginBottom: 2 }}>
-                <Button ref={buttonRef} style={{ width: 150 }} onClick={reload}>
+                <Button
+                    ref={buttonRef}
+                    style={{ width: 150, margin: '0 0 0 auto' }}
+                    onClick={reload}
+                >
                     {localize('notification.locale.button', '')}
                 </Button>
             </div>

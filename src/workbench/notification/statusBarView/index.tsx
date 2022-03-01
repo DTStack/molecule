@@ -4,7 +4,6 @@ import { Icon } from 'mo/components/icon';
 import type { INotification } from 'mo/model';
 import { NotificationPane } from '../notificationPane';
 import type { INotificationController } from 'mo/controller';
-import { ID_APP } from 'mo/common/id';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 import './index.scss';
 
@@ -28,7 +27,9 @@ export function NotificationStatusBarView(
     const renderIcon = hasNotifications ? 'bell-dot' : 'bell';
 
     useEffect(() => {
-        const container = document.getElementById(ID_APP);
+        const container = document.querySelector(
+            `.${prefixClaName('workbench')}`
+        );
         if (container) {
             wrapper.current = wrapper.current || document.createElement('div');
             container.appendChild(wrapper.current);

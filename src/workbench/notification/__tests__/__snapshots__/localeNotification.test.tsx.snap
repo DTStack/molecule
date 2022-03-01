@@ -43,6 +43,7 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
       onClick={[Function]}
       style={
         Object {
+          "margin": "0 0 0 auto",
           "width": 150,
         }
       }

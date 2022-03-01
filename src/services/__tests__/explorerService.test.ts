@@ -1,6 +1,6 @@
 import { ExplorerEvent, IExplorerPanelItem } from 'mo/model';
 import 'reflect-metadata';
-import { expectLoggerErrorToBeCalled } from '@test/utils';
+import { expectFnCalled, expectLoggerErrorToBeCalled } from '@test/utils';
 import { container } from 'tsyringe';
 import { searchById } from 'mo/common/utils';
 import { ExplorerService } from '../workbench';
@@ -289,5 +289,13 @@ describe('Test the Explorer Service', () => {
         expect(mockFn).toBeCalled();
         expect(mockFn.mock.calls[0][0]).toEqual(panelData);
         expect(mockFn.mock.calls[0][1]).toEqual('toolbar-id');
+    });
+
+    test('Should support to subscribe onCollapseAllFolders event', () => {
+        expectFnCalled((fn) => {
+            explorerService.onCollapseAllFolders(fn);
+
+            explorerService.emit(ExplorerEvent.onCollapseAllFolders);
+        });
     });
 });

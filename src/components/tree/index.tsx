@@ -333,8 +333,6 @@ const TreeView = ({
     };
 
     const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
-        console.log('controlExpandKeys:', controlExpandKeys);
-
         return data.map((item, index) => {
             const uuid = item.id.toString();
             const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);

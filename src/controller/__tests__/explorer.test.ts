@@ -190,6 +190,19 @@ describe('The explorer controller', () => {
 
         expect(mockFn).toBeCalled();
 
+        // COLLAPSE_COMMAND_ID
+        mockItem.id = constants.COLLAPSE_COMMAND_ID;
+        mockFn.mockClear();
+        expect(mockFn).not.toBeCalled();
+        explorerController.subscribe(
+            ExplorerEvent.onCollapseAllFolders,
+            mockFn
+        );
+
+        explorerController.onToolbarClick(mockItem, mockParentPanel);
+
+        expect(mockFn).toBeCalled();
+
         // default
         mockItem.id = 'custom-id';
         mockFn.mockClear();

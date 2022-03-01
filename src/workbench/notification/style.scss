@@ -3,11 +3,12 @@ $icon-size: 22px;
 
 #{$notification} {
     background-color: var(--workbenchBackground);
-    bottom: 31px;
+    bottom: 10px;
     color: var(--foreground);
+    cursor: default;
     display: none;
     overflow: hidden;
-    position: fixed;
+    position: absolute;
     right: 8px;
     z-index: 1000;
 
@@ -42,18 +43,24 @@ $icon-size: 22px;
         padding: 0 8px;
         position: relative;
 
-        > div {
-            padding-right: 30px;
-            position: relative;
-            text-align: left;
+        &:not(:empty) {
+            padding-bottom: 8px;
+        }
+    }
+
+    &__item {
+        padding: 5px;
+        text-align: left;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: var(--list-hoverBackground);
         }
     }
 
     &--close {
         cursor: pointer;
-        position: absolute;
-        right: 8px;
-        top: 2px;
+        float: right;
     }
 
     #{$btn} {

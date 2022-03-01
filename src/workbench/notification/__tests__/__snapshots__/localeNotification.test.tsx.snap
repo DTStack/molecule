@@ -5,8 +5,6 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
   style={
     Object {
       "lineHeight": "1.5",
-      "textAlign": "right",
-      "width": 420,
     }
   }
 >
@@ -16,14 +14,10 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
         "direction": "ltr",
         "textAlign": "left",
         "whiteSpace": "normal",
+        "width": 440,
       }
     }
   >
-    <p>
-      The current locale has changed to 
-      chinese
-      , click the button to reload the Page and applying the changes.
-    </p>
     <p
       style={
         Object {
@@ -31,25 +25,25 @@ exports[`The LocaleNotification Component Match Snapshot 1`] = `
         }
       }
     >
-      Notice: Reload the Page could lose the data, Please confirm you have saved before.
+      A reload is required for the change in display language to take effect.
+    </p>
+    <p>
+      Press the confirm button to reload and change the display language.
     </p>
   </div>
   <div
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
     style={
       Object {
-        "display": "inline-block",
         "marginBottom": 2,
       }
     }
-    tabIndex={0}
   >
     <button
       className="mo-btn mo-btn--normal"
       onClick={[Function]}
       style={
         Object {
+          "margin": "0 0 0 auto",
           "width": 150,
         }
       }

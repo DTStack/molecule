@@ -1168,6 +1168,47 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
           </div>
         </div>
       </div>
+      <div>
+        <div
+          class="mo-notification mo-context-view--shadow"
+          style="display: none;"
+        >
+          <header
+            class="mo-notification__header"
+          >
+            <span>
+              No new notifications
+            </span>
+            <div
+              class="mo-action-bar"
+            >
+              <ul
+                class="mo-action-bar__container"
+              >
+                <li
+                  class="mo-action-bar__item"
+                  data-index="0"
+                >
+                  <span
+                    class="codicon codicon-clear-all"
+                  />
+                </li>
+                <li
+                  class="mo-action-bar__item"
+                  data-index="1"
+                >
+                  <span
+                    class="codicon codicon-chevron-down"
+                  />
+                </li>
+              </ul>
+            </div>
+          </header>
+          <div
+            class="mo-notification__body"
+          />
+        </div>
+      </div>
     </div>
     <div>
       <div
@@ -1212,47 +1253,8 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
               title="Notification"
             >
               <span
-                class="codicon codicon-bell"
+                class="mo-bell codicon codicon-bell"
               />
-              <div
-                class="mo-notification mo-context-view--shadow"
-                style="display: none;"
-              >
-                <header
-                  class="mo-notification__header"
-                >
-                  <span>
-                    No new notifications
-                  </span>
-                  <div
-                    class="mo-action-bar"
-                  >
-                    <ul
-                      class="mo-action-bar__container"
-                    >
-                      <li
-                        class="mo-action-bar__item"
-                        data-index="0"
-                      >
-                        <span
-                          class="codicon codicon-clear-all"
-                        />
-                      </li>
-                      <li
-                        class="mo-action-bar__item"
-                        data-index="1"
-                      >
-                        <span
-                          class="codicon codicon-chevron-down"
-                        />
-                      </li>
-                    </ul>
-                  </div>
-                </header>
-                <div
-                  class="mo-notification__body"
-                />
-              </div>
             </a>
           </div>
           <div

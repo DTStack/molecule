@@ -8,6 +8,7 @@ import { FileTypes, Float, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
 import { Scrollable } from 'mo/components';
 import { randomId } from 'mo/common/utils';
+import LocaleNotification from 'mo/workbench/notification/notificationPane/localeNotification';
 
 function shortRandomId() {
     return Math.round(Math.random() * 1000);
@@ -234,6 +235,19 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             ]);
         };
 
+        const addLocaleNotification = function () {
+            molecule.notification.add([
+                {
+                    id: 'locale',
+                    value: 'test',
+                    render: () => <LocaleNotification locale="简体中文" />,
+                },
+            ]);
+            if (!molecule.notification.getState().showNotifications) {
+                molecule.notification.toggleNotification();
+            }
+        };
+
         const removeNotification = function () {
             const { data = [], showNotifications } =
                 molecule.notification.getState();
@@ -432,6 +446,9 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                         <h2>Notification:</h2>
                         <Button onClick={addANotification}>
                             Add Notification Item
+                        </Button>
+                        <Button onClick={addLocaleNotification}>
+                            Add a locale Notification
                         </Button>
                         <Button onClick={removeNotification}>
                             Remove Notification Item

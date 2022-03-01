@@ -1,44 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test Notification StatusBar View Component Match The NotificationStatusBarView snapshot 1`] = `
-Array [
-  <span
-    className="codicon codicon-bell-dot"
-  />,
-  <div
-    className="mo-notification mo-context-view--shadow"
-    style={
-      Object {
-        "display": "none",
-      }
-    }
-  >
-    <header
-      className="mo-notification__header"
-    >
-      <span>
-        Notifications
-      </span>
-      <div
-        className="mo-action-bar"
-      >
-        <ul
-          className="mo-action-bar__container"
-        />
-      </div>
-    </header>
-    <div
-      className="mo-notification__body"
-    >
-      <div>
-        
-        <span
-          className="mo-notification--close codicon codicon-close"
-          onClick={[Function]}
-          title="Clear Notification"
-        />
-      </div>
-    </div>
-  </div>,
-]
+<span
+  className="mo-bell codicon codicon-bell-dot"
+/>
 `;

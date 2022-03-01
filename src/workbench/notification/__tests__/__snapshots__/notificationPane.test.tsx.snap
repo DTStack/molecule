@@ -26,13 +26,15 @@ exports[`Test NotificationPane Component Match The NotificationPane snapshot 1`]
   <div
     className="mo-notification__body"
   >
-    <div>
-      
+    <div
+      className="mo-notification__item"
+    >
       <span
         className="mo-notification--close codicon codicon-close"
         onClick={[Function]}
         title="Clear Notification"
       />
+      
     </div>
   </div>
 </div>

@@ -1,4 +1,8 @@
-import { normalizeFlattedObject, colorLightOrDark } from '../utils';
+import {
+    normalizeFlattedObject,
+    colorLightOrDark,
+    cloneInstance,
+} from '../utils';
 
 describe('Test Utils', () => {
     test('The normalizeFlattedObject function', () => {
@@ -39,5 +43,11 @@ describe('Test Utils', () => {
     test('The colorLightOrDark function', () => {
         expect(colorLightOrDark('#000')).toBe('dark');
         expect(colorLightOrDark('rgb(255,255,255)')).toBe('light');
+    });
+
+    test('The cloneInstance function', () => {
+        const obj1 = { name: 'test' };
+        const obj2 = cloneInstance(obj1);
+        expect(obj1.name).toEqual(obj2.name);
     });
 });

@@ -48,6 +48,10 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
     }
 
     componentDidMount() {
+        // The monacoService needs to be initialized each time the MoleculeProvider is loaded to
+        // ensure that Keybinding events can be bound to the latest dom.
+        this.monacoService.initWorkspace(this.layoutService.container!);
+
         if (!this.extensionService.isLoaded()) {
             this.initialize();
         }
@@ -58,9 +62,6 @@ export class MoleculeProvider extends Component<IMoleculeProps> {
 
         const [languages, restExts] =
             this.extensionService.splitLanguagesExts(extensions);
-
-        // First to init the monacoService
-        this.monacoService.initWorkspace(this.layoutService.container!);
 
         // Molecule should load the language extensions first to
         // ensure that the custom language extensions is registered in localeService

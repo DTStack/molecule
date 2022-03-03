@@ -88,9 +88,8 @@ export class LayoutService
     }
 
     public get container() {
-        if (!this._container) {
-            this._container = document.getElementById(ID_APP) || document.body;
-        }
+        // Make sure to get the latest dom element.
+        this._container = document.getElementById(ID_APP) || document.body;
         return this._container;
     }
 

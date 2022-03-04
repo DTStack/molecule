@@ -50,7 +50,6 @@
         "react-dnd": "14.0.0",
         "react-dnd-html5-backend": "14.0.0",
         "react-scrollbars-custom": "^4.0.25",
-        "react-split-pane": "^2.0.3",
         "reflect-metadata": "^0.1.13",
         "tsyringe": "4.5.0"
     },

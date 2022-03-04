@@ -1,4 +1,8 @@
-import { findParentByClassName, getPositionByPlacement } from '../dom';
+import {
+    findParentByClassName,
+    getPositionByPlacement,
+    getElementClientCenter,
+} from '../dom';
 
 describe('Test functions in dom.ts', () => {
     test('The getPositionByPlacement function', () => {
@@ -46,5 +50,24 @@ describe('Test functions in dom.ts', () => {
         expect(() => {
             findParentByClassName(1, 'test');
         }).toThrowError();
+    });
+
+    test('The getElementClientCenter function', () => {
+        const elem = document.createElement('div');
+        const domRect = {
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            top: 10,
+            right: 10,
+            bottom: 10,
+            left: 10,
+        } as DOMRect;
+        elem.getBoundingClientRect = jest.fn(() => domRect);
+
+        const center = getElementClientCenter(elem);
+        expect(center.x).toEqual(15);
+        expect(center.y).toEqual(15);
     });
 });

@@ -60,7 +60,6 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
                 primary="first"
                 split="horizontal"
                 allowResize={true}
-                // react-split-pane onChange: (newSizes: [size, ratio]) => void；
                 onChange={onHorizontalPaneSizeChange as any}
             >
                 {getContent(!!panel.panelMaximized, !!panel.hidden)}

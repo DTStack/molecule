@@ -60,7 +60,6 @@ First, open the [source code](https://github.com/DTStack/molecule) of Molecule, 
                 primary="first"
                 split="horizontal"
                 allowResize={true}
-                // react-split-pane onChange: (newSizes: [size, ratio]) => void；
                 onChange={onHorizontalPaneSizeChange as any}
             >
                 {getContent(!!panel.panelMaximized, !!panel.hidden)}

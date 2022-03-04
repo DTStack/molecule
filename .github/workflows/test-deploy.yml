@@ -2,7 +2,7 @@ name: Test GitHub Pages Deployment
 
 on:
     pull_request:
-        branches: [master]
+        branches: [main]
         paths: [website/**]
 
 jobs:

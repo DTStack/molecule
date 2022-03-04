@@ -98,7 +98,6 @@ The specific transformation is as follows:
                 primary="first"
                 split="horizontal"
                 allowResize={true}
-                // react-split-pane onChange: (newSizes: [size, ratio]) => void；
                 onChange={onHorizontalPaneSizeChange as any}
             >
                 {getContent(!!panel.panelMaximized, !!panel.hidden)}

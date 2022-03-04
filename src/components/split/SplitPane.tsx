@@ -5,7 +5,7 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { isEqual, throttle } from 'lodash';
+import { throttle } from 'lodash';
 import { cloneReactChildren } from 'mo/react';
 import { classNames } from 'mo/common/className';
 import { HTMLElementProps } from 'mo/common/types';
@@ -466,10 +466,6 @@ const SplitPane = ({
             limitedSizes.current[index] = registerLimitedSizes(child);
             return child.key || index;
         });
-        // improving performance
-        if (isEqual(nextKey, childrenKey)) {
-            return childrenKey;
-        }
         return nextKey;
     }, [children]);
 
@@ -477,9 +473,6 @@ const SplitPane = ({
     const allowResize = useMemo(() => {
         if (typeof propAllowResize === 'boolean') {
             const next = new Array(childrenKey.length).fill(propAllowResize);
-            if (isEqual(next, allowResize)) {
-                return allowResize;
-            }
             return next;
         }
         const res: boolean[] = [];
@@ -489,9 +482,6 @@ const SplitPane = ({
                     ? true
                     : propAllowResize[index]
             );
-        }
-        if (isEqual(res, allowResize)) {
-            return allowResize;
         }
         return res;
     }, [childrenKey.length, propAllowResize]);

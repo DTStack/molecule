@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0-beta.4.1](https://github.com/DTStack/molecule/compare/v0.9.0-beta.4...v0.9.0-beta.4.1) (2022-03-04)
+
+### Bug Fixes
+
+-   import Icon, Toolbar from relative path ([#692](https://github.com/DTStack/molecule/issues/692)) ([a95fbe2](https://github.com/DTStack/molecule/commit/a95fbe26ca0b0e77a895430af2dfc85eb17521d4))
+
 ## [0.9.0-beta.4](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3.2...v0.9.0-beta.4) (2022-03-04)
 
 ### Features

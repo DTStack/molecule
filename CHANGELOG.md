@@ -2,30 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.9.0-beta.4.1](https://github.com/DTStack/molecule/compare/v0.9.0-beta.4...v0.9.0-beta.4.1) (2022-03-04)
-
-
-### Bug Fixes
-
-* import Icon, Toolbar from relative path ([#692](https://github.com/DTStack/molecule/issues/692)) ([a95fbe2](https://github.com/DTStack/molecule/commit/a95fbe26ca0b0e77a895430af2dfc85eb17521d4))
-
-## [0.9.0-beta.4](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3.2...v0.9.0-beta.4) (2022-03-04)
-
-### Features
-
--   develop a Split Pane component ([#509](https://github.com/DTStack/molecule/issues/509)) ([3317aee](https://github.com/DTStack/molecule/commit/3317aeecefa4caa7612fbfccb5ee6ca68b423f89)), closes [#510](https://github.com/DTStack/molecule/issues/510)
--   Improve usage examples in TestPane ([#669](https://github.com/DTStack/molecule/issues/669)) ([0d42c0f](https://github.com/DTStack/molecule/commit/0d42c0ffd53dfb21845650d6f784f0ad84d3acc8))
--   support listen to onCollapseAllFolders ([#673](https://github.com/DTStack/molecule/issues/673)) ([c230885](https://github.com/DTStack/molecule/commit/c23088564c1a3a3d00e2da9de2f6bb31c0fc2971))
--   support to set the expandKeys ([#664](https://github.com/DTStack/molecule/issues/664)) ([e9a8cdd](https://github.com/DTStack/molecule/commit/e9a8cdd670664fab67872f115be2ffd42b1a8d63))
-
-### Bug Fixes
-
--   filename missing and file path in EditorTree is not updated ([#659](https://github.com/DTStack/molecule/issues/659)) ([aafa07d](https://github.com/DTStack/molecule/commit/aafa07d461b706f4f325363a5e86ff43a446428a))
--   improve scrollbar style on windows platform ([#665](https://github.com/DTStack/molecule/issues/665)) ([0be561d](https://github.com/DTStack/molecule/commit/0be561dfa8541c4a435d8d1e703ff91c05684f19))
--   make Keybinding work after reloading Molecule ([#686](https://github.com/DTStack/molecule/issues/686)) ([a88a71e](https://github.com/DTStack/molecule/commit/a88a71e1c05e6f35384398bb8daca27f1046489c))
--   move the style of statusBarView into mo.scss ([#689](https://github.com/DTStack/molecule/issues/689)) ([08d799b](https://github.com/DTStack/molecule/commit/08d799b9dc729c4956a0c6367853d5a808aa945e))
--   prevent the contextmenu event of Notification ([#670](https://github.com/DTStack/molecule/issues/670)) ([1aa9f7f](https://github.com/DTStack/molecule/commit/1aa9f7fa8ab24ad4c27a14819696ff37d021cbe2))
-
 ## [0.9.0-beta.3.2](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3.1...v0.9.0-beta.3.2) (2022-02-18)
 
 ### Features

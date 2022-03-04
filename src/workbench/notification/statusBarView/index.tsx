@@ -5,7 +5,6 @@ import type { INotification } from 'mo/model';
 import { NotificationPane } from '../notificationPane';
 import type { INotificationController } from 'mo/controller';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
-import './index.scss';
 import { select } from 'mo/common/dom';
 
 const defaultBellClassName = prefixClaName('bell');

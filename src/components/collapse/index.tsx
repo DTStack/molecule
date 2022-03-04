@@ -1,9 +1,10 @@
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+
 import { classNames } from 'mo/common/className';
 import { isEqual } from 'lodash';
 import { HTMLElementProps, UniqueId } from 'mo/common/types';
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { IActionBarItemProps, Icon, Toolbar } from '..';
-import SplitPane, { ResizeStratygy } from '../split/SplitPane';
+import { getDataAttributionsFromProps } from 'mo/common/dom';
+
 import {
     collapseActiveClassName,
     collapseContentClassName,
@@ -15,8 +16,12 @@ import {
     collapsingClassName,
     defaultCollapseClassName,
 } from './base';
-import { getDataAttributionsFromProps } from 'mo/common/dom';
+
 import { Pane } from '../split';
+import { IActionBarItemProps } from '../actionBar';
+import { Icon } from '../icon';
+import { Toolbar } from '../toolbar';
+import SplitPane, { ResizeStratygy } from '../split/SplitPane';
 
 type RenderFunctionProps = (data: ICollapseItem) => React.ReactNode;
 export interface ICollapseItem extends HTMLElementProps {

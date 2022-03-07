@@ -273,6 +273,15 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance.onDidChangeCursorSelection(() => {
             this.updateEditorLineColumnInfo(editorInstance);
         });
+
+        editorInstance.onDidBlurEditorText(() => {
+            const { current } = this.editorService.getState();
+            const tab = current?.tab;
+            if (tab?.id) {
+                const viewState = editorInstance?.saveViewState();
+                this.editorStates.set(tab.id?.toString(), viewState);
+            }
+        });
     }
 
     /**

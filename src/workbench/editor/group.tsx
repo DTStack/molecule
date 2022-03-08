@@ -120,7 +120,6 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
                         )
                     ) : (
                         <MonacoEditor
-                            key={tab?.id}
                             options={{
                                 ...editorOptions,
                                 value: tab?.data?.value,

@@ -46,6 +46,11 @@ export interface IEditorController extends Partial<Controller> {
     onClickActions: (action: IEditorActionsProps) => void;
     onUpdateEditorIns?: (editorInstance: any, groupId: UniqueId) => void;
     onPaneSizeChange?: (newSize: number[]) => void;
+    initEditorEvents?: (
+        editorInstance: MonacoEditor.IStandaloneCodeEditor,
+        groupId: UniqueId
+    ) => void;
+    getViewState?: (id: UniqueId) => MonacoEditor.ICodeEditorViewState;
 }
 @singleton()
 export class EditorController extends Controller implements IEditorController {
@@ -239,7 +244,7 @@ export class EditorController extends Controller implements IEditorController {
         this.layoutService.setGroupSplitSize(newSize);
     };
 
-    private initEditorEvents(
+    public initEditorEvents(
         editorInstance: MonacoEditor.IStandaloneCodeEditor,
         groupId: UniqueId
     ) {
@@ -273,7 +278,20 @@ export class EditorController extends Controller implements IEditorController {
         editorInstance.onDidChangeCursorSelection(() => {
             this.updateEditorLineColumnInfo(editorInstance);
         });
+
+        editorInstance.onDidBlurEditorText(() => {
+            const { current } = this.editorService.getState();
+            const tab = current?.tab;
+            if (tab?.id) {
+                const viewState = editorInstance?.saveViewState();
+                this.editorStates.set(tab.id?.toString(), viewState);
+            }
+        });
     }
+
+    public getViewState = (id: UniqueId) => {
+        return this.editorStates.get(id);
+    };
 
     /**
      * Called when Editor props changed

@@ -16,11 +16,9 @@ All code demos in this part are based on the [molecule-demo](https://github.com/
 First, we define the `KeybindingAction` object based on the `Action2` abstract class:
 
 ```ts title="src/extensions/action/keybindingAction.ts"
-import {
-    Action2,
-    KeybindingWeight,
-} from '@dtinsight/molecule/esm/monaco/common';
+import { KeybindingWeight } from '@dtinsight/molecule/esm/monaco/common';
 import { KeyCode, KeyMod } from '@dtinsight/molecule/esm/monaco';
+import { Action2 } from '@dtinsight/molecule/esm/monaco/action';
 //@ts-ignore
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 

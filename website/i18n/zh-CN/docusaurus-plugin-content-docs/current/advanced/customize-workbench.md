@@ -26,46 +26,51 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 首先我们打开 Molecule [源码](https://github.com/DTStack/molecule)仓库，找到 `src/workbench` 目录，拷贝 `workbench.tsx` 文件到项目的 `views` 或其他目录下，将其重命名为 `myWorkbench.tsx` 文件：
 
 ```tsx
-<div className={workbenchFinalClassName}>
-    <Display visible={isMenuBarHorizontal}>
-        <MenuBarView mode={MenuBarMode.horizontal} />
-    </Display>
-    <div className={mainBenchClassName}>
-        <div className={compositeBarClassName}>
-            <Display visible={isMenuBarVertical}>
-                <MenuBarView mode={MenuBarMode.vertical} />
-            </Display>
-            <Display
-                visible={!activityBar.hidden}
-                className={displayActivityBarClassName}
-            >
-                <ActivityBarView />
-            </Display>
-        </div>
-        <SplitPane
-            split="vertical"
-            primary="first"
-            allowResize={true}
-            onChange={onPaneSizeChange as any}
-        >
-            <Pane
-                minSize="170px"
-                initialSize={splitPanePos[0]}
-                maxSize="80%"
-                className={sidebar.hidden ? 'hidden' : ''}
-            >
-                <SidebarView />
-            </Pane>
+<div id={ID_APP} className={appClassName} tabIndex={0}>
+    <div className={workbenchFinalClassName}>
+        <Display visible={isMenuBarHorizontal}>
+            <MenuBarView mode={MenuBarMode.horizontal} />
+        </Display>
+        <div className={mainBenchClassName}>
+            <div className={compositeBarClassName}>
+                <Display visible={isMenuBarVertical}>
+                    <MenuBarView mode={MenuBarMode.vertical} />
+                </Display>
+                <Display
+                    visible={!activityBar.hidden}
+                    className={displayActivityBarClassName}
+                >
+                    <ActivityBarView />
+                </Display>
+            </div>
             <SplitPane
-                primary="first"
-                split="horizontal"
-                allowResize={true}
-                onChange={onHorizontalPaneSizeChange as any}
+                sizes={sidebar.hidden ? [0, '100%'] : splitPanePos}
+                split="vertical"
+                allowResize={[false]}
+                onChange={handleSideBarChanged}
+                onResizeStrategy={() => ['keep', 'pave']}
             >
-                {getContent(!!panel.panelMaximized, !!panel.hidden)}
+                <Pane minSize={170} maxSize="80%">
+                    <SidebarView />
+                </Pane>
+                <SplitPane
+                    sizes={getSizes()}
+                    allowResize={[false]}
+                    split="horizontal"
+                    onChange={handleEditorChanged}
+                    onResizeStrategy={() => ['pave', 'keep']}
+                >
+                    <Pane minSize="10%" maxSize="80%">
+                        <EditorView />
+                    </Pane>
+                    <PanelView />
+                </SplitPane>
             </SplitPane>
-        </SplitPane>
+        </div>
     </div>
+    <Display visible={!statusBar.hidden}>
+        <StatusBarView />
+    </Display>
 </div>
 ```
 
@@ -74,44 +79,58 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 具体改造如下：
 
 ```tsx title="/src/views/myWorkbench.tsx"
-<div className={workbenchClassName}>
-    {!menuBar.hidden && <MyMenuBarView />}
-    <div className={mainBenchClassName}>
-        <div className={compositeBarClassName}>
-            {!activityBar.hidden && <ActivityBarView />}
-        </div>
-        <SplitPane
-            split="vertical"
-            primary="first"
-            allowResize={true}
-            onChange={onPaneSizeChange as any}
-        >
-            <Pane
-                minSize="170px"
-                initialSize={splitPanePos[0]}
-                maxSize="80%"
-                className={sidebar.hidden && 'hidden'}
-            >
-                <SidebarView />
-            </Pane>
+<div
+    id={ID_APP}
+    className={classNames(appClassName, 'myMolecule')}
+    tabIndex={0}
+>
+    <div className={workbenchFinalClassName}>
+        <Display visible={isMenuBarHorizontal}>
+            <MenuBarView mode={MenuBarMode.horizontal} />
+        </Display>
+        <div className={mainBenchClassName}>
+            <div className={compositeBarClassName}>
+                <Display visible={isMenuBarVertical}>
+                    <MenuBarView mode={MenuBarMode.vertical} />
+                </Display>
+                <Display
+                    visible={!activityBar.hidden}
+                    className={displayActivityBarClassName}
+                >
+                    <ActivityBarView />
+                </Display>
+            </div>
             <SplitPane
-                primary="first"
-                split="horizontal"
-                allowResize={true}
-                onChange={onHorizontalPaneSizeChange as any}
+                sizes={sidebar.hidden ? [0, '100%'] : splitPanePos}
+                split="vertical"
+                allowResize={[false, true]}
+                onChange={handleSideBarChanged}
+                onResizeStrategy={() => ['keep', 'pave']}
             >
-                {getContent(!!panel.panelMaximized, !!panel.hidden)}
+                <Pane minSize={170} maxSize="80%">
+                    <SidebarView />
+                </Pane>
+                <SplitPane
+                    sizes={getSizes()}
+                    allowResize={[false, true]}
+                    split="horizontal"
+                    onChange={handleEditorChanged}
+                    onResizeStrategy={() => ['pave', 'keep']}
+                >
+                    <Pane minSize="10%" maxSize="80%">
+                        <EditorView />
+                    </Pane>
+                    <PanelView />
+                </SplitPane>
             </SplitPane>
-            <Pane
-                minSize="40px"
-                initialSize="240px"
-                maxSize="40%"
-                className={'rightSidebar'}
-            >
+            <div style={{ width: 300 }}>
                 <Sidebar current={MySidePane.id} panes={[MySidePane]} />
-            </Pane>
-        </SplitPane>
+            </div>
+        </div>
     </div>
+    <Display visible={!statusBar.hidden}>
+        <StatusBarView />
+    </Display>
 </div>
 ```
 
@@ -119,35 +138,11 @@ Molecule 默认的是 **VSCode 布局**的 Workbench。在上图示例中，我�
 以上代码仅仅是 `myWorkbench.tsx` 文件的部分代码，完整代码请查看 [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/views/myWorkbench.tsx)
 :::
 
-我们去掉了 `vertical` 模式下的 MenuBar，并直接根据 `menuBar.hidden` 来渲染自己定义的 `MyMenuBarView` 组件。在 `SplitPane` 组件中新增了一个 `className` 为 `rightSidebar` 的面板，使用了内置的 `Sidebar` 组件，并在 `Sidebar` 中使用了自定义的 `MySidePane` 组件。
-
-### 自定义 MenuBar
-
-上图中 MenuBar 包含了一个自定义的 **Logo** 元素，MenuBar 并使用了**横向（Horizontal）**的布局。 与 Workbench 一样，我们从 `src/workbench/menuBar` 下拷贝默认的 `menuBar.tsx` 组件，重命名为 `myMenuBar.tsx`：
-
-```tsx title="/src/views/myMenuBar/index.tsx"
-<div className="myMenuBar">
-    <Logo alt="logo" src="logo@3x.png" />
-    <Menu
-        role="menu"
-        mode={MenuMode.Horizontal}
-        trigger="click"
-        onClick={handleClick}
-        style={{ width: '100%' }}
-        data={addKeybindingForData(data)}
-    />
-</div>
-```
-
-代码中新增了 `Logo` 组件，并替换了原来的 [DropDown](../api/namespaces/molecule.component#dropdown) 为 [Menu](../api/namespaces/molecule.component#menu) 组件。
-
-:::tip
-上面 MenuBar 的自定义 **Logo** 和**横向（Horizontal）**布局功能，目前已内置，具体可查看 [菜单栏（MenuBar）](../guides/extend-workbench#菜单栏menubar)
-:::
+我们新增了一个`RightSidebar`，使用了内置的 `Sidebar` 组件，并在 `Sidebar` 中使用了自定义的 `MySidePane` 组件。
 
 ### 自定义 RightSideBar
 
-与 `MenuBar` 稍有不同的是，因为复用了内置的 [Sidebar](../api/namespaces/molecule#sidebar-1) 组件，所以这里我们只需要传入 [ISidebarPane](../api/interfaces/molecule.model.ISidebarPane) 类型的组件：
+我们复用了内置的 [Sidebar](../api/namespaces/molecule#sidebar-1) 组件，这里我们只需要传入 [ISidebarPane](../api/interfaces/molecule.model.ISidebarPane) 类型的组件：
 
 ```tsx title="/src/views/mySidePane.tsx"
 import React from 'react';

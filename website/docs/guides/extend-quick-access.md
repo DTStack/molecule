@@ -26,11 +26,9 @@ The **"Quick Access Search"** panel in the picture is opened by the shortcut key
 First, let's create a new `quickOpenAction.ts` file, which defines the `QuickOpenAction` Action object:
 
 ```ts title="/src/extensions/theFirstExtension/quickOpenAction.ts"
-import {
-    Action2,
-    KeybindingWeight,
-} from '@dtinsight/molecule/esm/monaco/common';
+import { KeybindingWeight } from '@dtinsight/molecule/esm/monaco/common';
 import { KeyCode, KeyMod } from '@dtinsight/molecule/esm/monaco';
+import { Action2 } from '@dtinsight/molecule/esm/monaco/action';
 import {
     IQuickInputService,
     //@ts-ignore

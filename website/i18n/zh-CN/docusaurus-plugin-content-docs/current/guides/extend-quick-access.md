@@ -26,11 +26,9 @@ Molecule 中的快捷访问功能，与[快捷键](./extend-keybinding.md)功能
 首先，我们新建一个 `quickOpenAction.ts` 文件, 文件中定义了 `QuickOpenAction` Action 对象：
 
 ```ts title="/src/extensions/theFirstExtension/quickOpenAction.ts"
-import {
-    Action2,
-    KeybindingWeight,
-} from '@dtinsight/molecule/esm/monaco/common';
+import { KeybindingWeight } from '@dtinsight/molecule/esm/monaco/common';
 import { KeyCode, KeyMod } from '@dtinsight/molecule/esm/monaco';
+import { Action2 } from '@dtinsight/molecule/esm/monaco/action';
 import {
     IQuickInputService,
     //@ts-ignore

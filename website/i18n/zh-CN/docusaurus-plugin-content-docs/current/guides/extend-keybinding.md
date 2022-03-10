@@ -17,11 +17,9 @@ sidebar_label: 快捷键
 首先，我们先基于 `Action2` 抽象类，定义 `KeybindingAction` 对象：
 
 ```ts title="src/extensions/action/keybindingAction.ts"
-import {
-    Action2,
-    KeybindingWeight,
-} from '@dtinsight/molecule/esm/monaco/common';
+import { KeybindingWeight } from '@dtinsight/molecule/esm/monaco/common';
 import { KeyCode, KeyMod } from '@dtinsight/molecule/esm/monaco';
+import { Action2 } from '@dtinsight/molecule/esm/monaco/action';
 //@ts-ignore
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 

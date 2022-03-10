@@ -26,46 +26,51 @@ At present, the top fixed layout for the **MenuBar** is integrated in Molecule. 
 First, open the [source code](https://github.com/DTStack/molecule) of Molecule, and find the `src/workbench` directory, then copy the `workbench.tsx` file to the `views` or other directories of your project, and rename it to `myWorkbench.tsx`:
 
 ```tsx
-<div className={workbenchFinalClassName}>
-    <Display visible={isMenuBarHorizontal}>
-        <MenuBarView mode={MenuBarMode.horizontal} />
-    </Display>
-    <div className={mainBenchClassName}>
-        <div className={compositeBarClassName}>
-            <Display visible={isMenuBarVertical}>
-                <MenuBarView mode={MenuBarMode.vertical} />
-            </Display>
-            <Display
-                visible={!activityBar.hidden}
-                className={displayActivityBarClassName}
-            >
-                <ActivityBarView />
-            </Display>
-        </div>
-        <SplitPane
-            split="vertical"
-            primary="first"
-            allowResize={true}
-            onChange={onPaneSizeChange as any}
-        >
-            <Pane
-                minSize="170px"
-                initialSize={splitPanePos[0]}
-                maxSize="80%"
-                className={sidebar.hidden ? 'hidden' : ''}
-            >
-                <SidebarView />
-            </Pane>
+<div id={ID_APP} className={appClassName} tabIndex={0}>
+    <div className={workbenchFinalClassName}>
+        <Display visible={isMenuBarHorizontal}>
+            <MenuBarView mode={MenuBarMode.horizontal} />
+        </Display>
+        <div className={mainBenchClassName}>
+            <div className={compositeBarClassName}>
+                <Display visible={isMenuBarVertical}>
+                    <MenuBarView mode={MenuBarMode.vertical} />
+                </Display>
+                <Display
+                    visible={!activityBar.hidden}
+                    className={displayActivityBarClassName}
+                >
+                    <ActivityBarView />
+                </Display>
+            </div>
             <SplitPane
-                primary="first"
-                split="horizontal"
-                allowResize={true}
-                onChange={onHorizontalPaneSizeChange as any}
+                sizes={sidebar.hidden ? [0, '100%'] : splitPanePos}
+                split="vertical"
+                allowResize={[false]}
+                onChange={handleSideBarChanged}
+                onResizeStrategy={() => ['keep', 'pave']}
             >
-                {getContent(!!panel.panelMaximized, !!panel.hidden)}
+                <Pane minSize={170} maxSize="80%">
+                    <SidebarView />
+                </Pane>
+                <SplitPane
+                    sizes={getSizes()}
+                    allowResize={[false]}
+                    split="horizontal"
+                    onChange={handleEditorChanged}
+                    onResizeStrategy={() => ['pave', 'keep']}
+                >
+                    <Pane minSize="10%" maxSize="80%">
+                        <EditorView />
+                    </Pane>
+                    <PanelView />
+                </SplitPane>
             </SplitPane>
-        </SplitPane>
+        </div>
     </div>
+    <Display visible={!statusBar.hidden}>
+        <StatusBarView />
+    </Display>
 </div>
 ```
 
@@ -74,44 +79,58 @@ In the code, the `MenuBarView` in `horizontal` mode and `vertical` mode are plac
 The specific transformation is as follows:
 
 ```tsx title="/src/views/myWorkbench.tsx"
-<div className={workbenchClassName}>
-    {!menuBar.hidden && <MyMenuBarView />}
-    <div className={mainBenchClassName}>
-        <div className={compositeBarClassName}>
-            {!activityBar.hidden && <ActivityBarView />}
-        </div>
-        <SplitPane
-            split="vertical"
-            primary="first"
-            allowResize={true}
-            onChange={onPaneSizeChange as any}
-        >
-            <Pane
-                minSize="170px"
-                initialSize={splitPanePos[0]}
-                maxSize="80%"
-                className={sidebar.hidden && 'hidden'}
-            >
-                <SidebarView />
-            </Pane>
+<div
+    id={ID_APP}
+    className={classNames(appClassName, 'myMolecule')}
+    tabIndex={0}
+>
+    <div className={workbenchFinalClassName}>
+        <Display visible={isMenuBarHorizontal}>
+            <MenuBarView mode={MenuBarMode.horizontal} />
+        </Display>
+        <div className={mainBenchClassName}>
+            <div className={compositeBarClassName}>
+                <Display visible={isMenuBarVertical}>
+                    <MenuBarView mode={MenuBarMode.vertical} />
+                </Display>
+                <Display
+                    visible={!activityBar.hidden}
+                    className={displayActivityBarClassName}
+                >
+                    <ActivityBarView />
+                </Display>
+            </div>
             <SplitPane
-                primary="first"
-                split="horizontal"
-                allowResize={true}
-                onChange={onHorizontalPaneSizeChange as any}
+                sizes={sidebar.hidden ? [0, '100%'] : splitPanePos}
+                split="vertical"
+                allowResize={[false, true]}
+                onChange={handleSideBarChanged}
+                onResizeStrategy={() => ['keep', 'pave']}
             >
-                {getContent(!!panel.panelMaximized, !!panel.hidden)}
+                <Pane minSize={170} maxSize="80%">
+                    <SidebarView />
+                </Pane>
+                <SplitPane
+                    sizes={getSizes()}
+                    allowResize={[false, true]}
+                    split="horizontal"
+                    onChange={handleEditorChanged}
+                    onResizeStrategy={() => ['pave', 'keep']}
+                >
+                    <Pane minSize="10%" maxSize="80%">
+                        <EditorView />
+                    </Pane>
+                    <PanelView />
+                </SplitPane>
             </SplitPane>
-            <Pane
-                minSize="40px"
-                initialSize="240px"
-                maxSize="40%"
-                className={'rightSidebar'}
-            >
+            <div style={{ width: 300 }}>
                 <Sidebar current={MySidePane.id} panes={[MySidePane]} />
-            </Pane>
-        </SplitPane>
+            </div>
+        </div>
     </div>
+    <Display visible={!statusBar.hidden}>
+        <StatusBarView />
+    </Display>
 </div>
 ```
 
@@ -119,35 +138,11 @@ The specific transformation is as follows:
 The above code is only part of the `myWorkbench.tsx` file, the complete code can refer to [molecule-demo](https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/views/myWorkbench.tsx).
 :::
 
-We removed the MenuBar in the `vertical` mode, and directly rendered the custom `MyMenuBarView` component based on the `menuBar.hidden`. A new panel with a `className` of `rightSidebar` is added to the `SplitPane` component, which uses a built-in `Sidebar` component, and a custom `MySidePane` component is used in this `Sidebar` component.
-
-### Custom MenuBar
-
-In the picture above, the MenuBar contains a custom **Logo** element, and the MenuBar uses a **Horizontal** layout. Like Workbench, we copy the default `menuBar.tsx` component from `src/workbench/menuBar` and rename it to `myMenuBar.tsx`:
-
-```tsx title="/src/views/myMenuBar/index.tsx"
-<div className="myMenuBar">
-    <Logo alt="logo" src="logo@1x.png" />
-    <Menu
-        role="menu"
-        mode={MenuMode.Horizontal}
-        trigger="click"
-        onClick={handleClick}
-        style={{ width: '100%' }}
-        data={addKeybindingForData(data)}
-    />
-</div>
-```
-
-The `Logo` component is added to the code, and the original [DropDown](../api/namespaces/molecule.component#dropdown) is replaced with [Menu](../api/namespaces/molecule.component#menu) Components.
-
-:::tip
-The custom **Logo** and **Horizontal** layout functions of the above MenuBar are currently built-in. For details, please refer to [MenuBar](../guides/extend-workbench#menubar)
-:::
+We added a `RightSidebar`, which uses a built-in `Sidebar` component, and a custom `MySidePane` component is used in this `Sidebar` component.
 
 ### Custom RightSideBar
 
-Slightly different from `MenuBar`, because the built-in [Sidebar](../api/namespaces/molecule#sidebar-1) component is reused, here we only need to pass in [ISidebarPane](../api/interfaces/molecule.model.ISidebarPane) type components:
+We reuse the built-in [Sidebar](../api/namespaces/molecule#sidebar-1) component, we only need to pass in the component of type [ISidebarPane](../api/interfaces/molecule.model.ISidebarPane):
 
 ```tsx title="/src/views/mySidePane.tsx"
 import React from 'react';

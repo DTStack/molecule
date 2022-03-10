@@ -16,6 +16,8 @@ jobs:
                   node-version: 14.x
                   cache: yarn
                   cache-dependency-path: website/yarn.lock
+            - name: Install dependencies
+              run: yarn
             - name: Build website
               working-directory: website
               run: |

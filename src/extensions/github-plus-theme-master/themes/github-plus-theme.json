@@ -41,6 +41,7 @@
         "quickInputList.focusForeground": "#24292e",
         "list.highlightForeground": "#0066BF",
         "list.focusHighlightForeground": "#0066BF",
+        "menu.selectionBackground": "#0060C0",
 
         "terminal.background": "#ffffff",
         "terminal.foreground": "#333333",

@@ -48,6 +48,8 @@ function perfectColors(colors: IColors): IColors {
         ['minimapSlider.activeBackground', 'scrollbarSlider.activeBackground'],
         ['panel.background', 'workbenchBackground'],
         ['sash.hoverBorder', 'focusBorder'],
+        ['button.background', 'textLink.foreground'],
+        ['menu.selectionBackground', 'button.background'],
         [
             'button.hoverBackground',
             'button.background',

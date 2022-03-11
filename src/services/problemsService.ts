@@ -4,6 +4,8 @@ import {
     IProblemsItem,
     ProblemsModel,
     MarkerSeverity,
+    IProblemsTreeNode,
+    ProblemsEvent,
 } from 'mo/model/problems';
 import { IStatusBarItem } from 'mo/model/workbench/statusBar';
 import {
@@ -42,6 +44,11 @@ export interface IProblemsService extends Component<IProblems> {
      * Toggle the Problems view between display or hidden
      */
     toggleProblems(): void;
+    /**
+     * Listen to select a problem tree node
+     * @param callback
+     */
+    onSelect(callback: (node: IProblemsTreeNode) => void): void;
 }
 
 @singleton()
@@ -145,6 +152,10 @@ export class ProblemsService
         if (builtInStatusProblems) {
             this.updateStatus(builtInStatusProblems);
         }
+    }
+
+    public onSelect(callback: (node: IProblemsTreeNode) => void) {
+        this.subscribe(ProblemsEvent.onSelect, callback);
     }
 
     private updateStatusBar<T>(): void {

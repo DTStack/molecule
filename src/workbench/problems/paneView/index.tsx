@@ -13,7 +13,7 @@ const treeLeafClassName = getBEMElement(treeClassName, 'treeLeaf');
 const treeLeafSubInfoClassName = getBEMElement(treeLeafClassName, 'subInfo');
 
 function ProblemsPaneView(props: IProblems) {
-    const { data } = props;
+    const { data, onSelect } = props;
     if (!data?.length) {
         return (
             <div style={{ margin: '0 18px', userSelect: 'none' }}>
@@ -70,6 +70,7 @@ function ProblemsPaneView(props: IProblems) {
                             </span>
                         );
                     }}
+                    onSelect={onSelect}
                 />
             </div>
         </Scrollable>

@@ -1,4 +1,4 @@
-import { Float } from 'mo/model';
+import { Float, IProblemsTreeNode } from 'mo/model';
 import { MonacoService } from 'mo/monaco/monacoService';
 import {
     PanelService,
@@ -10,6 +10,7 @@ import { constants, modules } from 'mo/services/builtinService/const';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { ProblemsController } from '../problems';
+import { expectFnCalled } from '@test/utils';
 
 const problemsController = container.resolve(ProblemsController);
 const panelService = container.resolve(PanelService);
@@ -87,5 +88,12 @@ describe('The problems controller', () => {
             expect.objectContaining(modules.builtInPanelProblems())
         );
         monacoService.commandService.executeCommand = original;
+    });
+
+    test('Should support to execute onSelect', () => {
+        expectFnCalled((fn) => {
+            problemsService.onSelect(fn);
+            problemsController.onSelect({} as IProblemsTreeNode);
+        });
     });
 });

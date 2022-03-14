@@ -1,6 +1,11 @@
 import 'reflect-metadata';
 import React from 'react';
-import { Float, IStatusBarItem } from 'mo/model';
+import {
+    Float,
+    IStatusBarItem,
+    ProblemsEvent,
+    IProblemsTreeNode,
+} from 'mo/model';
 import { Controller } from 'mo/react/controller';
 import {
     IPanelService,
@@ -20,6 +25,7 @@ import { ProblemsPaneView, ProblemsStatusBarView } from 'mo/workbench/problems';
 import { connect } from 'mo/react';
 export interface IProblemsController extends Partial<Controller> {
     onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
+    onSelect?: (node: IProblemsTreeNode) => void;
 }
 @singleton()
 export class ProblemsController
@@ -82,7 +88,9 @@ export class ProblemsController
                 ProblemsPaneView
             );
             const problemsPanel = builtInPanelProblems;
-            problemsPanel.renderPane = () => <ProblemsView />;
+            problemsPanel.renderPane = () => (
+                <ProblemsView onSelect={this.onSelect} />
+            );
 
             this.panelService.add(problemsPanel);
             this.panelService.setActive(problemsPanel.id);
@@ -96,4 +104,8 @@ export class ProblemsController
             name: PROBLEM_MODEL_NAME,
         });
     }
+
+    public onSelect = (node: IProblemsTreeNode) => {
+        this.emit(ProblemsEvent.onSelect, node);
+    };
 }

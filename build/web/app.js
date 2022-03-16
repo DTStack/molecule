@@ -1,7 +1,7 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import { Workbench, MoleculeProvider } from '../../esm';
-import '../../esm/style/mo.css';
+import { Workbench, MoleculeProvider } from '../../packages/molecule';
+import '../../packages/molecule/mo.css';
 
 const App = () => (
     <StrictMode>

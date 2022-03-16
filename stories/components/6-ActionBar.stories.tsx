@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { ActionBar, IActionBarItemProps } from 'mo/components/actionBar';
+import { ActionBar, IActionBarItemProps } from '@dtinsight/molecule/ui';
 
 const stories = storiesOf('ActionBar', module);
 stories.addDecorator(withKnobs);

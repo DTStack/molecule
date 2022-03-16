@@ -1,10 +1,10 @@
 import React from 'react';
-import molecule from 'mo';
+import molecule from '@dtinsight/molecule';
 
-import { FileTypes, IExtension, TreeNodeModel } from 'mo/model';
+import { FileTypes, IExtension, TreeNodeModel } from '@dtinsight/molecule';
 
 import TestPane from './testPane';
-import { randomId } from 'mo/common/utils';
+import { randomId } from '@dtinsight/molecule';
 
 export const ExtendsTestPane: IExtension = {
     id: 'ExtendsTestPane',

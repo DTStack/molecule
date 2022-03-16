@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
-import { Input } from 'mo/components/input';
+import { Input } from '@dtinsight/molecule/ui';
 import { propsTable } from '../common/propsTable';
 
 const TextArea = Input.TextArea;

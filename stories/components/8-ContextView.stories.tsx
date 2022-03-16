@@ -1,9 +1,15 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { Select, Option } from 'mo/components/select';
-import { useContextView } from 'mo/components/contextView';
-import { Menu, MenuMode, MenuItem, SubMenu } from 'mo/components/menu';
+import {
+    Select,
+    Option,
+    useContextView,
+    Menu,
+    MenuMode,
+    MenuItem,
+    SubMenu,
+} from '@dtinsight/molecule/ui';
 
 import { propsTable } from '../common/propsTable';
 

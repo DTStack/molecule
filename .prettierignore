@@ -2,6 +2,7 @@
 esm
 umd
 .history
+.turbo
 node_modules
 yarn.lock
 coverage
@@ -11,3 +12,5 @@ website/build
 website/docs/api
 website/.docusaurus
 website/node_modules
+*.yaml
+*.md

@@ -1,0 +1,35 @@
+// it's a undo feature about https://github.com/javierbrea/node-sass-alias-importer/issues/30, so write a alias about ~
+@import '~/@dtinsight/molecule-ui/esm/common';
+
+$prefix: 'mo';
+
+@function prefix($name, $cusPrefix: $prefix) {
+    @return '.' + $cusPrefix + '-' + $name;
+}
+
+// ============= The Workbench core component =============
+$compositeBar: prefix('compositeBar');
+$editor: prefix('editor');
+$menuBar: prefix('menuBar');
+$panel: prefix('panel');
+$settings: prefix('settings');
+$sidebar: prefix('sidebar');
+$statusBar: prefix('statusBar');
+$workbench: prefix('workbench');
+$mainBench: prefix('mainBench');
+$activityBar: prefix('activityBar');
+$notification: prefix('notification');
+$problems: prefix('problems');
+$output: prefix('output');
+$folderTree: prefix('folderTree');
+$editorTree: prefix('editorTree');
+
+// The Naming of BEM Element
+@function bem-ele($block, $element) {
+    @return $block + '__' + $element;
+}
+
+// The Naming of BEM Modifier
+@function bem-mod($blockOrElement, $modifier) {
+    @return $blockOrElement + '--' + $modifier;
+}

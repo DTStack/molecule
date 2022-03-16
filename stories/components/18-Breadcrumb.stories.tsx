@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { Breadcrumb, IBreadcrumbItemProps } from 'mo/components/breadcrumb';
+import { Breadcrumb, IBreadcrumbItemProps } from '@dtinsight/molecule/ui';
 
 const stories = storiesOf('Breadcrumb', module);
 stories.addDecorator(withKnobs);

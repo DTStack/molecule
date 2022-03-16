@@ -1,0 +1,32 @@
+$prefix: 'mo';
+
+@function prefix($name, $cusPrefix: $prefix) {
+    @return '.' + $cusPrefix + '-' + $name;
+}
+
+// ============= The Workbench parts =============
+$actionBar: prefix('action-bar');
+$btn: prefix('btn');
+$checkbox: prefix('checkbox');
+$collapse: prefix('collapse');
+$rcCollapse: prefix('collapse', 'rc');
+$name: prefix('context-view');
+$dropDown: prefix('drop-down');
+$input: prefix('input');
+$list: prefix('list');
+$menu: prefix('menu');
+$subMenu: prefix('sub-menu');
+$scrollbar: prefix('scrollbar');
+$select: prefix('select');
+$tabSwitcher: 'tab-switcher';
+$toolBar: prefix('tool-bar');
+$tree: prefix('tree');
+$tabs: prefix('tabs');
+$tab: prefix('tab');
+$modal: prefix('modal');
+$confirm: prefix('confirm');
+$breadcrumb: prefix('breadcrumb');
+$search: prefix('search');
+$rcTooltip: prefix('tooltip', 'rc');
+$split: prefix('split');
+$bell: prefix('bell');

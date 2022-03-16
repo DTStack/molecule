@@ -1,0 +1,55 @@
+{
+    "name": "@dtinsight/molecule-ui",
+    "version": "0.9.0-beta.4.2",
+    "description": "The UI components used in molecule",
+    "module": "./esm/index.js",
+    "typings": "./esm/index.d.ts",
+    "files": [
+        "esm"
+    ],
+    "scripts": {
+        "build": "gulp --gulpfile ./build/gulpfile.js",
+        "check-types": "tsc --noEmit"
+    },
+    "keywords": [
+        "react.js",
+        "vscode",
+        "ui",
+        "ide"
+    ],
+    "author": "DTStack Corporation",
+    "license": "MIT",
+    "dependencies": {
+        "@dtinsight/dt-utils": "^1.0.3",
+        "@dtinsight/molecule-common": "workspace:^0.9.0-beta.4.2",
+        "@dtinsight/molecule-glue": "workspace:^0.9.0-beta.4.2",
+        "@vscode/codicons": "^0.0.26",
+        "immutability-helper": "^3.1.1",
+        "rc-dialog": "8.2.1",
+        "rc-textarea": "~0.3.1",
+        "rc-tooltip": "^5.1.1",
+        "rc-util": "~5.5.0",
+        "react-dnd": "14.0.0",
+        "react-dnd-html5-backend": "14.0.0",
+        "react-scrollbars-custom": "^4.0.25",
+        "lodash": "^4.17.21"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.172",
+        "gulp": "^4.0.2",
+        "gulp-sass": "^5.0.0",
+        "gulp-typescript": "^6.0.0-alpha.1",
+        "node-sass-alias-importer": "^1.0.2",
+        "through2": "^4.0.2",
+        "rimraf": "^3.0.2",
+        "sass": "^1.26.10"
+    },
+    "peerDependencies": {
+        "react": "^16.14.0",
+        "react-dom": "^16.14.0"
+    },
+    "repository": "https://github.com/DTStack/molecule",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    }
+}

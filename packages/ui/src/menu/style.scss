@@ -1,0 +1,138 @@
+@import 'mo/common';
+
+#{$menu},
+#{$subMenu} {
+    background-color: var(--menu-background);
+    border-color: var(--menu-border);
+    box-shadow: var(--widget-shadow) 0 2px 4px;
+    color: var(--menu-foreground);
+    font-size: 13px;
+    line-height: 13px;
+}
+
+#{$menu}__divider {
+    border-bottom: 1px solid var(--menu-separatorBackground);
+    flex: 1;
+    font-size: inherit;
+    height: 0;
+    margin: 0 0.8em 0.2em;
+    padding: 0.2em 0 0;
+}
+
+#{$menu} {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    min-width: 200px;
+    padding: 0;
+    user-select: none;
+
+    &--vertical {
+        flex-direction: column;
+        padding: 0.5em 0;
+
+        #{$menu}__item--indicator {
+            &.codicon::before {
+                margin-left: auto;
+                margin-right: -20px;
+            }
+        }
+    }
+
+    &--horizontal {
+        flex-direction: row;
+        height: 100%;
+    }
+
+    &__item {
+        align-items: center;
+        border: thin solid transparent;
+        display: flex;
+        min-width: 120px;
+
+        &:hover {
+            background-color: var(--menu-selectionBackground);
+            color: var(--button-foreground);
+        }
+
+        &--active {
+            background-color: var(--menu-selectionBackground);
+            color: var(--button-foreground);
+        }
+
+        &--disabled {
+            cursor: default;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+    }
+
+    &__content {
+        align-items: center;
+        color: inherit;
+        cursor: pointer;
+        display: flex;
+        flex: 1 1 auto;
+        font-size: inherit;
+        height: 1.8em;
+        position: relative;
+        transition: transform 50ms ease;
+
+        .codicon {
+            align-items: center;
+            display: flex;
+            font-size: inherit;
+            justify-content: center;
+        }
+    }
+
+    &__label {
+        align-items: center;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        flex: auto;
+        font-size: inherit;
+        justify-content: center;
+        padding: 0 2em;
+        text-decoration: none;
+    }
+
+    &__check {
+        font-size: inherit;
+        height: 100%;
+        position: absolute;
+        width: 2em;
+    }
+
+    &__indicator {
+        padding: 0 1.8em;
+
+        &.codicon {
+            align-items: center;
+            display: flex;
+            font-size: 16px;
+        }
+    }
+
+    &__keybinding {
+        display: inline-block;
+        flex: 2 1 auto;
+        line-height: 1;
+        padding: 0 2em;
+        text-align: right;
+    }
+
+    &__separator {
+        background-color: var(--menu-separatorBackground);
+        height: 1px;
+        width: 100%;
+    }
+}
+
+#{$subMenu} {
+    display: block;
+    position: fixed;
+    transition: opacity 100ms ease-in-out;
+    z-index: 1;
+}

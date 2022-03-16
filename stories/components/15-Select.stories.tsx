@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
-import { Select, Option } from 'mo/components/select';
+import { Select, Option } from '@dtinsight/molecule/ui';
 import { useState } from 'react';
 
 const stories = storiesOf('Select', module);

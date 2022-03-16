@@ -1,6 +1,8 @@
-import logger from 'mo/common/logger';
+import {
+    Logger as logger,
+    getElementClientCenter,
+} from '@dtinsight/molecule-common';
 import { fireEvent } from '@testing-library/react';
-import { getElementClientCenter } from 'mo/common/dom';
 
 /**
  * Expect the `logger.error` method to be called when exec action

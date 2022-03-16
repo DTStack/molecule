@@ -1,0 +1,29 @@
+@import 'mo/common';
+
+$react-custom-scrollbars: '.ScrollbarsCustom';
+
+#{$scrollbar} {
+    .shadow.top {
+        box-shadow: none;
+        height: 3px;
+        position: absolute;
+        top: 0;
+        width: 100%;
+
+        &.active {
+            box-shadow: var(--widget-shadow) 0 6px 6px -6px inset;
+        }
+    }
+}
+
+#{$react-custom-scrollbars} {
+    &-Scroller,
+    &-Content,
+    &-Wrapper {
+        height: 100%;
+    }
+
+    &-Scroller::-webkit-scrollbar {
+        display: none;
+    }
+}

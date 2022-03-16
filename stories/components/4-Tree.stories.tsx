@@ -1,8 +1,8 @@
 import React from 'react';
-import Tree from 'mo/components/tree';
+import { TreeView as Tree } from '@dtinsight/molecule/ui';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FileType, FileTypes } from 'mo/model';
+import { FileType, FileTypes } from '@dtinsight/molecule';
 const stories = storiesOf('Tree', module);
 stories.addDecorator(withKnobs);
 

@@ -9,7 +9,7 @@ import {
     MenuItem,
     SubMenu,
     IMenuItemProps,
-} from 'mo/components/menu';
+} from '@dtinsight/molecule/ui';
 const stories = storiesOf('Menu', module);
 stories.addDecorator(withKnobs);
 

@@ -3,8 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { Icon } from 'mo/components/icon';
-import { Button } from 'mo/components/button';
+import { Icon, Button } from '@dtinsight/molecule/ui';
 
 const stories = storiesOf('Icon', module);
 stories.addDecorator(withKnobs);

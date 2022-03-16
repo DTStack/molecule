@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContextMenu } from 'mo/components/contextMenu';
+import { useContextMenu } from '@dtinsight/molecule/ui';
 import { useEffect } from 'react';
 import '../demo.scss';
 

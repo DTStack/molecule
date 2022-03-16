@@ -1,0 +1,39 @@
+@import 'mo/common';
+
+#{$btn} {
+    align-items: center;
+    background-color: var(--button-background);
+    border: 0;
+    box-sizing: border-box;
+    color: var(--button-foreground);
+    cursor: pointer;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    margin-bottom: 8px;
+    outline-offset: 2px;
+    padding: 4px 10px;
+    text-align: center;
+    width: 100%;
+
+    &:hover {
+        background-color: var(--button-hoverBackground);
+        opacity: 0.9;
+    }
+
+    &--normal {
+        padding: 4px 15px;
+    }
+
+    &--large {
+        font-size: 16px;
+        height: 32px;
+        padding: 8px 15px;
+    }
+
+    &--disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+        pointer-events: none;
+    }
+}

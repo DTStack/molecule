@@ -3,11 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { Menu } from 'mo/components/menu';
-import { Icon } from 'mo/components/icon';
-import { DropDown } from 'mo/components/dropdown';
+import { Menu, Icon, DropDown } from '@dtinsight/molecule/ui';
 import { useState } from 'react';
-import { PlacementType } from 'mo/common/dom';
+import { PlacementType } from '@dtinsight/molecule';
 
 const stories = storiesOf('DropDown', module);
 stories.addDecorator(withKnobs);

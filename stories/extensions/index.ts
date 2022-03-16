@@ -1,4 +1,4 @@
-import { IExtension } from 'mo/model/extension';
+import type { IExtension } from '@dtinsight/molecule';
 import { ExtendsDataSync } from './data-sync';
 import { ExtendsProblems } from './problems';
 import { ExtendsLocalesPlus } from './locales-plus';

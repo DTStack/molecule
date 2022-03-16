@@ -3,8 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { Menu, MenuItem } from 'mo/components/menu';
-import { Scrollable } from 'mo/components/scrollable';
+import { Menu, MenuItem, Scrollable } from '@dtinsight/molecule/ui';
 
 const stories = storiesOf('Scrollable', module);
 stories.addDecorator(withKnobs);

@@ -1,7 +1,7 @@
 import React from 'react';
-import { MoleculeProvider, Workbench } from 'mo';
-import 'mo/style/mo.scss';
+import { MoleculeProvider, Workbench } from '@dtinsight/molecule';
 import { customExtensions } from '../extensions';
+import '@dtinsight/molecule/mo.css';
 import '../demo.scss';
 
 export const IDEDemo = () => (

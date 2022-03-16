@@ -1,0 +1,35 @@
+{
+    "name": "@dtinsight/molecule-common",
+    "version": "0.9.0-beta.4.2",
+    "description": "The common utils used in molecule",
+    "module": "./esm/index.js",
+    "typings": "./esm/index.d.ts",
+    "files": [
+        "esm"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "check-types": "tsc --noEmit"
+    },
+    "keywords": [
+        "react.js",
+        "vscode",
+        "ui",
+        "ide",
+        "utils"
+    ],
+    "author": "DTStack Corporation",
+    "license": "MIT",
+    "dependencies": {
+        "@dtinsight/dt-utils": "^1.0.3",
+        "lodash": "^4.17.21"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.172"
+    },
+    "peerDependencies": {},
+    "repository": "https://github.com/DTStack/molecule",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    }
+}

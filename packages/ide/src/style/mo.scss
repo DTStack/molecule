@@ -1,0 +1,47 @@
+@import 'mo/style/common';
+@import 'mo/style/animation';
+@import '~@dtinsight/molecule-ui/esm/molecule.css';
+
+// ============= The Workbench core component =============
+@import 'mo/workbench/style';
+@import 'mo/workbench/activityBar/style';
+@import 'mo/workbench/editor/style';
+@import 'mo/workbench/editor/welcome/style';
+@import 'mo/workbench/menuBar/style';
+@import 'mo/workbench/panel/style';
+@import 'mo/workbench/settings/style';
+@import 'mo/workbench/sidebar/style';
+@import 'mo/workbench/statusBar/style';
+@import 'mo/workbench/notification/style';
+@import 'mo/workbench/sidebar/explore/style';
+@import 'mo/workbench/problems/style';
+@import 'mo/workbench/notification/statusBarView/style';
+
+.#{$prefix} {
+    bottom: 0;
+    box-sizing: border-box;
+    font-size: 13px;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    outline: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    user-select: none;
+    width: 100%;
+}
+
+.mac {
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+.center {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}

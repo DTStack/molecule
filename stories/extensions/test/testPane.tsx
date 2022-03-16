@@ -1,14 +1,16 @@
 import React from 'react';
-import molecule from 'mo';
+import molecule from '@dtinsight/molecule';
 
-import { Button } from 'mo/components/button';
-import { Select, Option } from 'mo/components/select';
-import { IColorTheme } from 'mo/model/colorTheme';
-import { FileTypes, Float, IEditorTab, TreeNodeModel } from 'mo/model';
-import { ILocale } from 'mo/i18n/localization';
-import { Scrollable } from 'mo/components';
-import { randomId } from 'mo/common/utils';
-import LocaleNotification from 'mo/workbench/notification/notificationPane/localeNotification';
+import { Button, Select, Option, Scrollable } from '@dtinsight/molecule/ui';
+import {
+    FileTypes,
+    Float,
+    IEditorTab,
+    TreeNodeModel,
+} from '@dtinsight/molecule';
+import type { ILocale } from '@dtinsight/molecule';
+import { randomId } from '@dtinsight/molecule';
+import LocaleNotification from '@dtinsight/molecule-ide/esm/workbench/notification/notificationPane/localeNotification';
 
 function shortRandomId() {
     return Math.round(Math.random() * 1000);
@@ -57,7 +59,7 @@ export default class TestPane extends React.Component {
     renderColorThemes() {
         const colorThemes = molecule.colorTheme.getThemes();
         const defaultTheme = molecule.colorTheme.getColorTheme();
-        const options = colorThemes.map((theme: IColorTheme) => {
+        const options = colorThemes.map((theme: molecule.model.IColorTheme) => {
             return (
                 <Option key={theme.id} value={theme.id}>
                     {theme.label}

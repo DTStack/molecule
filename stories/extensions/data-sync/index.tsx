@@ -1,9 +1,9 @@
 import React from 'react';
-import molecule from 'mo';
-import { IExtension } from 'mo/model/extension';
+import molecule from '@dtinsight/molecule';
+import { IExtension } from '@dtinsight/molecule';
 
 import { QuickOpenAction } from '../actions/quickOpen';
-import { Button } from 'mo/components';
+import { Button } from '@dtinsight/molecule/ui';
 
 const testItem = {
     id: '3333',

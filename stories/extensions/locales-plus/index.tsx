@@ -1,4 +1,4 @@
-import { IExtension, IContributeType } from 'mo/model/extension';
+import { IExtension, IContributeType } from '@dtinsight/molecule';
 
 const jp = require('./locale/jp.json');
 const languagePacks = [jp];

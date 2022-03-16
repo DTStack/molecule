@@ -1,6 +1,6 @@
-import molecule from 'mo';
-import { IEditor } from 'mo/model';
-import { connect } from 'mo/react';
+import molecule from '@dtinsight/molecule';
+import { IEditor } from '@dtinsight/molecule';
+import { connect } from '@dtinsight/molecule';
 import React from 'react';
 
 export const Pane = connect(molecule.editor, function ({ current }: IEditor) {

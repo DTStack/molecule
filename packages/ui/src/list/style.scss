@@ -1,0 +1,60 @@
+@import 'mo/common';
+
+#{$list} {
+    display: flex;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+
+    &--vertical {
+        flex-direction: column;
+
+        #{$list}__item {
+            height: 50px;
+            width: 100%;
+        }
+    }
+
+    &--horizontal {
+        flex-direction: row;
+    }
+
+    &__item {
+        align-items: center;
+        background-color: var(--list-dropBackground);
+        color: var(--foreground);
+        cursor: pointer;
+        display: flex;
+        justify-content: left;
+        list-style: none;
+        position: relative;
+
+        &:hover {
+            background-color: var(--list-hoverBackground);
+            opacity: 0.8;
+        }
+
+        &--active {
+            background-color: var(--list-focusBackground);
+            color: var(--list-focusForeground);
+        }
+
+        &--disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    &__label {
+        align-items: center;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        color: inherit;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        text-decoration: none;
+        width: 100%;
+    }
+}

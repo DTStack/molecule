@@ -24,12 +24,6 @@
         "emitDecoratorMetadata": true,
         "resolveJsonModule": true,
         "downlevelIteration": true,
-        "paths": {
-            "mo": ["./src/index.ts"],
-            "mo/*": ["./src/*"],
-            "@stories": ["./stories/*"],
-            "@test/*": ["./test/*"]
-        },
         "typeRoots": ["node", "node_modules/@types", "src/typings"]
     },
     "exclude": ["node_modules", "build", "scripts"]

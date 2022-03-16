@@ -2,9 +2,9 @@ import { IQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/com
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 
 import { debounce } from 'lodash';
-import { KeyCode, KeyMod } from 'mo/monaco';
-import { Action2 } from 'mo/monaco/action';
-import { KeybindingWeight } from 'mo/monaco/common';
+import { KeyCode, KeyMod } from '@dtinsight/molecule/monaco';
+import { Action2 } from '@dtinsight/molecule';
+import { KeybindingWeight } from '@dtinsight/molecule';
 
 export class QuickOpenAction extends Action2 {
     static readonly ID = 'QuickOpenFile';

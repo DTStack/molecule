@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
-import { Checkbox } from 'mo/components/checkbox';
+import { Checkbox } from '@dtinsight/molecule/ui';
 
 const stories = storiesOf('Checkbox', module);
 stories.addDecorator(withKnobs);

@@ -41,11 +41,10 @@ jobs:
               run: pnpm run build
 
     static-checking:
+        needs: ['build']
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-              with:
-                  fetch-depth: 0
 
             - name: install pnpm
               uses: pnpm/action-setup@v2
@@ -60,6 +59,9 @@ jobs:
 
             - name: install deps
               run: pnpm install
+
+            - name: Run build
+              run: pnpm run build
 
             - name: Run Check Types
               run: pnpm run check-types
@@ -71,11 +73,10 @@ jobs:
               run: pnpm run stylelint
 
     test:
+        needs: ['build']
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-              with:
-                  fetch-depth: 0
 
             - name: install pnpm
               uses: pnpm/action-setup@v2
@@ -90,6 +91,9 @@ jobs:
 
             - name: install deps
               run: pnpm install
+
+            - name: Run build
+              run: pnpm run build
 
             - name: Run Unit Test
               run: pnpm run test

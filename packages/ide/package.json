@@ -21,9 +21,9 @@
     "license": "MIT",
     "dependencies": {
         "@dtinsight/dt-utils": "^1.0.3",
-        "@dtinsight/molecule-common": "workspace:^0.9.0-beta.4.2",
-        "@dtinsight/molecule-glue": "workspace:^0.9.0-beta.4.2",
-        "@dtinsight/molecule-ui": "workspace:^0.9.0-beta.4.2",
+        "@dtinsight/molecule-common": "0.9.0-beta.4.2",
+        "@dtinsight/molecule-glue": "0.9.0-beta.4.2",
+        "@dtinsight/molecule-ui": "0.9.0-beta.4.2",
         "monaco-editor": "^0.30.1",
         "react-scrollbars-custom": "^4.0.25",
         "lodash": "^4.17.21",

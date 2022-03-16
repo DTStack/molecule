@@ -21,8 +21,8 @@
     "license": "MIT",
     "dependencies": {
         "@dtinsight/dt-utils": "^1.0.3",
-        "@dtinsight/molecule-common": "workspace:^0.9.0-beta.4.2",
-        "@dtinsight/molecule-glue": "workspace:^0.9.0-beta.4.2",
+        "@dtinsight/molecule-common": "0.9.0-beta.4.2",
+        "@dtinsight/molecule-glue": "0.9.0-beta.4.2",
         "@vscode/codicons": "^0.0.26",
         "immutability-helper": "^3.1.1",
         "rc-dialog": "8.2.1",

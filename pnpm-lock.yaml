@@ -14,9 +14,9 @@ importers:
       '@babel/runtime': ^7.17.7
       '@commitlint/cli': ^11.0.0
       '@commitlint/config-conventional': ^11.0.0
-      '@dtinsight/molecule': workspace:^0.9.0-beta.4.2
-      '@dtinsight/molecule-common': workspace:^0.9.0-beta.4.2
-      '@dtinsight/molecule-ide': workspace:^0.9.0-beta.4.2
+      '@dtinsight/molecule': workspace:*
+      '@dtinsight/molecule-common': workspace:*
+      '@dtinsight/molecule-ide': workspace:*
       '@storybook/addon-actions': 6.1.10
       '@storybook/addon-knobs': ^6.1.10
       '@storybook/addon-links': 6.1.10
@@ -127,7 +127,7 @@ importers:
 
   packages/glue:
     specifiers:
-      '@dtinsight/molecule-common': workspace:^0.9.0-beta.4.2
+      '@dtinsight/molecule-common': ^0.9.0-beta.4.2
       '@types/lodash': ^4.14.172
       lodash: ^4.17.21
       reflect-metadata: ^0.1.13
@@ -143,9 +143,9 @@ importers:
   packages/ide:
     specifiers:
       '@dtinsight/dt-utils': ^1.0.3
-      '@dtinsight/molecule-common': workspace:^0.9.0-beta.4.2
-      '@dtinsight/molecule-glue': workspace:^0.9.0-beta.4.2
-      '@dtinsight/molecule-ui': workspace:^0.9.0-beta.4.2
+      '@dtinsight/molecule-common': ^0.9.0-beta.4.2
+      '@dtinsight/molecule-glue': ^0.9.0-beta.4.2
+      '@dtinsight/molecule-ui': ^0.9.0-beta.4.2
       '@types/lodash': ^4.14.172
       gulp: ^4.0.2
       gulp-sass: ^5.0.0
@@ -181,10 +181,10 @@ importers:
 
   packages/molecule:
     specifiers:
-      '@dtinsight/molecule-common': workspace:^0.9.0-beta.4.2
-      '@dtinsight/molecule-glue': workspace:^0.9.0-beta.4.2
-      '@dtinsight/molecule-ide': workspace:^0.9.0-beta.4.2
-      '@dtinsight/molecule-ui': workspace:^0.9.0-beta.4.2
+      '@dtinsight/molecule-common': ^0.9.0-beta.4.2
+      '@dtinsight/molecule-glue': ^0.9.0-beta.4.2
+      '@dtinsight/molecule-ide': ^0.9.0-beta.4.2
+      '@dtinsight/molecule-ui': ^0.9.0-beta.4.2
     dependencies:
       '@dtinsight/molecule-common': link:../common
       '@dtinsight/molecule-glue': link:../glue
@@ -194,8 +194,8 @@ importers:
   packages/ui:
     specifiers:
       '@dtinsight/dt-utils': ^1.0.3
-      '@dtinsight/molecule-common': workspace:^0.9.0-beta.4.2
-      '@dtinsight/molecule-glue': workspace:^0.9.0-beta.4.2
+      '@dtinsight/molecule-common': ^0.9.0-beta.4.2
+      '@dtinsight/molecule-glue': ^0.9.0-beta.4.2
       '@types/lodash': ^4.14.172
       '@vscode/codicons': ^0.0.26
       gulp: ^4.0.2

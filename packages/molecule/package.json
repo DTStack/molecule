@@ -17,10 +17,10 @@
     "author": "DTStack Corporation",
     "license": "MIT",
     "dependencies": {
-        "@dtinsight/molecule-common": "workspace:^0.9.0-beta.4.2",
-        "@dtinsight/molecule-glue": "workspace:^0.9.0-beta.4.2",
-        "@dtinsight/molecule-ui": "workspace:^0.9.0-beta.4.2",
-        "@dtinsight/molecule-ide": "workspace:^0.9.0-beta.4.2"
+        "@dtinsight/molecule-common": "0.9.0-beta.4.2",
+        "@dtinsight/molecule-glue": "0.9.0-beta.4.2",
+        "@dtinsight/molecule-ui": "0.9.0-beta.4.2",
+        "@dtinsight/molecule-ide": "0.9.0-beta.4.2"
     },
     "devDependencies": {},
     "peerDependencies": {

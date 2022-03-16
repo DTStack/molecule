@@ -183,10 +183,12 @@ importers:
     specifiers:
       '@dtinsight/molecule-common': workspace:^0.9.0-beta.4.2
       '@dtinsight/molecule-glue': workspace:^0.9.0-beta.4.2
+      '@dtinsight/molecule-ide': workspace:^0.9.0-beta.4.2
       '@dtinsight/molecule-ui': workspace:^0.9.0-beta.4.2
     dependencies:
       '@dtinsight/molecule-common': link:../common
       '@dtinsight/molecule-glue': link:../glue
+      '@dtinsight/molecule-ide': link:../ide
       '@dtinsight/molecule-ui': link:../ui
 
   packages/ui:

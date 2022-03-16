@@ -5,7 +5,8 @@
     "module": "./esm/index.js",
     "typings": "./esm/index.d.ts",
     "files": [
-        "esm"
+        "esm",
+        "README.md"
     ],
     "scripts": {
         "build": "gulp --gulpfile ./build/gulpfile.js",

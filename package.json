@@ -16,7 +16,7 @@
         "precommit": "pretty-quick --staged && pnpm run check-types",
         "prettier": "prettier --ignore-unknown --check .",
         "stylelint": "stylelint packages/**/*.{css,scss,sass}",
-        "release": "standard-version --dry-run",
+        "release": "zx ./build/release.mjs",
         "web": "webpack serve --env prod --config ./build/web.js"
     },
     "keywords": [
@@ -81,7 +81,8 @@
         "webpack": "^4.44.2",
         "webpack-cli": "^4.9.2",
         "webpack-dev-server": "^4.7.4",
-        "webpack-merge": "^5.2.0"
+        "webpack-merge": "^5.2.0",
+        "zx": "^6.0.1"
     },
     "husky": {
         "hooks": {

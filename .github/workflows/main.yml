@@ -13,35 +13,48 @@ on:
 jobs:
     setup:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                os: [ubuntu-latest]
+                node_version: [12, 14, 16]
+            fail-fast: false
         steps:
             - name: checkout
               uses: actions/checkout@v2
 
-            - name: cache yarn.lock
+            - name: cache pnpm-lock.yml
               uses: actions/cache@v2
               with:
                   path: package-temp-dir
                   key: lock-${{ github.sha }}
-
-            - name: create yarn.lock
-              run: yarn generate-lock-entry
 
             - name: hack for single file
               run: |
                   if [ ! -d "package-temp-dir" ]; then
                     mkdir package-temp-dir
                   fi
-                  cp yarn.lock package-temp-dir
+                  cp pnpm-lock.yml package-temp-dir
             - name: cache node_modules
               id: node_modules_cache_id
               uses: actions/cache@v2
               with:
                   path: node_modules
-                  key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
+                  key: node_modules-${{ hashFiles('**/package-temp-dir/pnpm-lock.yml') }}
 
-            - name: install
+            - name: install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 6
+
+            - name: set node version to ${{ matrix.node_version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node_version }}
+                  cache: 'pnpm'
+
+            - name: install deps
               if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
-              run: yarn
+              run: pnpm install
 
     static-checking:
         needs: [setup]
@@ -49,7 +62,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - name: Restore cache from yarn.lock
+            - name: Restore cache from pnpm-lock.yml
               uses: actions/cache@v2
               with:
                   path: package-temp-dir
@@ -59,16 +72,16 @@ jobs:
               uses: actions/cache@v2
               with:
                   path: node_modules
-                  key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
+                  key: node_modules-${{ hashFiles('**/package-temp-dir/pnpm-lock.yml') }}
 
             - name: Run Check Types
-              run: yarn check-types
+              run: pnpm run check-types
             - name: Run ESlint
-              run: yarn eslint
+              run: pnpm run eslint
             - name: Run Prettier
-              run: yarn prettier --check
+              run: pnpm run prettier
             - name: Run StyleLint
-              run: yarn stylelint
+              run: pnpm run stylelint
 
     test:
         runs-on: ubuntu-latest
@@ -76,7 +89,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - name: Restore cache from yarn.lock
+            - name: Restore cache from pnpm-lock.yml
               uses: actions/cache@v2
               with:
                   path: package-temp-dir
@@ -86,10 +99,10 @@ jobs:
               uses: actions/cache@v2
               with:
                   path: node_modules
-                  key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
+                  key: node_modules-${{ hashFiles('**/package-temp-dir/pnpm-lock.yml') }}
 
             - name: Run Unit Test
-              run: yarn test
+              run: pnpm run test
 
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v2
@@ -106,7 +119,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - name: Restore cache from yarn.lock
+            - name: Restore cache from pnpm-lock.yml
               uses: actions/cache@v2
               with:
                   path: package-temp-dir
@@ -116,7 +129,7 @@ jobs:
               uses: actions/cache@v2
               with:
                   path: node_modules
-                  key: node_modules-${{ hashFiles('**/package-temp-dir/yarn.lock') }}
+                  key: node_modules-${{ hashFiles('**/package-temp-dir/pnpm-lock.yml') }}
 
             - name: Run Build
-              run: yarn build
+              run: pnpm run build

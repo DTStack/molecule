@@ -16,6 +16,7 @@
         "precommit": "pretty-quick --staged && pnpm run check-types",
         "prettier": "prettier --ignore-unknown --check .",
         "stylelint": "stylelint packages/**/*.{css,scss,sass}",
+        "release": "standard-version --dry-run",
         "web": "webpack serve --env prod --config ./build/web.js"
     },
     "keywords": [

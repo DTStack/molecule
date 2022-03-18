@@ -1,6 +1,6 @@
-import { expectLoggerErrorToBeCalled } from '../test/utils';
-import { TreeViewUtil } from '../src/treeUtil';
-import { searchById } from '../src/utils';
+import { expectLoggerErrorToBeCalled } from '../../test/utils';
+import { TreeViewUtil } from '../treeUtil';
+import { searchById } from '../utils';
 
 const mockTreeData = {
     id: 1,

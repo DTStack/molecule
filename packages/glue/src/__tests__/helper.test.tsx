@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { cloneReactChildren } from '../src';
+import { cloneReactChildren } from '..';
 
 describe('Test helper.ts', () => {
     test('Clone the React children', () => {

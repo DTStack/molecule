@@ -7,7 +7,7 @@
         "preserveConstEnums": true,
         "sourceMap": false,
         "outDir": "./esm",
-        "rootDir": "./src",
+        "rootDir": ".",
         "paths": {
             "@test/*": ["../../test/*"]
         }

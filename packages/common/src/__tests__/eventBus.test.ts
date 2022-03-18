@@ -1,4 +1,4 @@
-import { GlobalEvent } from '../src/event/index';
+import { GlobalEvent } from '../event/index';
 
 class Test extends GlobalEvent {}
 

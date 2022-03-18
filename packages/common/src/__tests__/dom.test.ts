@@ -2,7 +2,7 @@ import {
     findParentByClassName,
     getPositionByPlacement,
     getElementClientCenter,
-} from '../src/dom';
+} from '../dom';
 
 describe('Test functions in dom.ts', () => {
     test('The getPositionByPlacement function', () => {

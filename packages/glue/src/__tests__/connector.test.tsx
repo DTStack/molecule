@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { Component, ComponentEvents, connect, Controller } from '../src';
+import { Component, ComponentEvents, connect, Controller } from '..';
 
 class TestServiceA extends Component {
     state = {

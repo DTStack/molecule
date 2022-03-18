@@ -2,7 +2,7 @@ import {
     normalizeFlattedObject,
     colorLightOrDark,
     cloneInstance,
-} from '../src/utils';
+} from '../utils';
 
 describe('Test Utils', () => {
     test('The normalizeFlattedObject function', () => {

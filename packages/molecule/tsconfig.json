@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es6",
+        "declaration": true,
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "outDir": "./",
+        "rootDir": "./",
+        "baseUrl": "./"
+    },
+    "include": ["./"]
+}

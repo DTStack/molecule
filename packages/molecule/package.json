@@ -2,8 +2,8 @@
     "name": "@dtinsight/molecule",
     "version": "0.9.0-beta.4.2",
     "description": "A Web IDE UI Framework built with React.js, inspired by VSCode.",
-    "module": "./index.d.ts",
-    "typings": "./index.d.ts",
+    "module": "./molecule.d.ts",
+    "typings": "./molecule.d.ts",
     "scripts": {},
     "keywords": [
         "react.js",

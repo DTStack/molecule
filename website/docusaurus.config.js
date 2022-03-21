@@ -33,8 +33,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 'docusaurus-plugin-typedoc',
                 // Plugin / TypeDoc options
                 {
-                    entryPoints: ['../src/index.ts'],
-                    tsconfig: '../tsconfig.json',
+                    entryPoints: [
+                        '../packages/molecule/molecule.d.ts',
+                        '../packages/molecule/ui.d.ts',
+                        '../packages/molecule/monaco.d.ts',
+                    ],
+                    tsconfig: '../packages/molecule/tsconfig.json',
                     name: 'Molecule',
                     readme: 'none',
                     excludeExternals: true,

@@ -13,7 +13,10 @@ function replacePath(code, filePath, importOptions) {
     const sourcePath = path.dirname(filePath);
     const targetPath = path.resolve(output);
     const relativePath = path.relative(sourcePath, targetPath);
-    const finalPath = relativePath ? './' + relativePath + '/' : './';
+    // transform different platform separator to linux's separator
+    const finalPath = relativePath
+        ? './' + relativePath.split(path.sep).join('/') + '/'
+        : './';
     return code.replace(/([from|import]\s+)'(mo\/|\bmo\b)/g, "$1'" + finalPath);
 }
 

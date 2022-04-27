@@ -179,7 +179,7 @@ export class ExtensionService implements IExtensionService {
             // Then activate
             this.activate(unloadExtensions);
         } catch (e) {
-            logger.error(ErrorMsg.LoadExtensionFail);
+            logger.error(ErrorMsg.LoadExtensionFail, e);
         }
     }
 

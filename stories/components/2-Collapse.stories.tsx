@@ -1,5 +1,7 @@
 import React from 'react';
-import { Collapse } from '@dtinsight/molecule/ui';
+import molecule from '@dtinsight/molecule';
+
+const { Collapse } = molecule.component;
 
 export default {
     title: 'Collapse',

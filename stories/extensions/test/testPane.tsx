@@ -1,16 +1,8 @@
 import React from 'react';
 import molecule from '@dtinsight/molecule';
-
-import { Button, Select, Option, Scrollable } from '@dtinsight/molecule/ui';
-import {
-    FileTypes,
-    Float,
-    IEditorTab,
-    TreeNodeModel,
-} from '@dtinsight/molecule';
-import type { ILocale } from '@dtinsight/molecule';
-import { randomId } from '@dtinsight/molecule';
 import LocaleNotification from '@dtinsight/molecule-ide/esm/workbench/notification/notificationPane/localeNotification';
+
+const { Button, Select, Option, Scrollable } = molecule.component;
 
 function shortRandomId() {
     return Math.round(Math.random() * 1000);
@@ -42,7 +34,7 @@ export default class TestPane extends React.Component {
     renderLocales() {
         const data = molecule.i18n.getLocales();
         const current = molecule.i18n.getCurrentLocale();
-        const options = data.map((item: ILocale) => {
+        const options = data.map((item: molecule.ILocale) => {
             return (
                 <Option key={item.id} value={item.id}>
                     {item.name}
@@ -98,7 +90,7 @@ export default class TestPane extends React.Component {
                     name: 'StatusBarItem-' + id,
                     sortIndex: 2,
                 },
-                Float.right
+                molecule.model.Float.right
             );
         };
 
@@ -154,7 +146,7 @@ export default class TestPane extends React.Component {
             const { PANEL_PROBLEMS } = molecule.builtin.getConstants();
             molecule.panel.setActive(PANEL_PROBLEMS!);
             molecule.problems.add({
-                id: randomId(),
+                id: molecule.common.randomId(),
                 name: 'text.tsx',
                 isLeaf: false,
                 value: {
@@ -168,7 +160,7 @@ export default class TestPane extends React.Component {
                 },
                 children: [
                     {
-                        id: randomId(),
+                        id: molecule.common.randomId(),
                         name: '0-1',
                         isLeaf: true,
                         value: {
@@ -193,7 +185,7 @@ export default class TestPane extends React.Component {
         const newEditor = function () {
             const key = shortRandomId();
             const name = `editor-${key}.ts`;
-            const tabData: IEditorTab = {
+            const tabData: molecule.model.IEditorTab = {
                 id: `${key}`,
                 name,
                 icon: 'selection',
@@ -231,7 +223,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             }
             molecule.notification.add<string>([
                 {
-                    id: randomId(),
+                    id: molecule.common.randomId(),
                     value: 'Test Notification!',
                 },
             ]);
@@ -274,7 +266,7 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             }
             molecule.notification.add<string>([
                 {
-                    id: randomId(),
+                    id: molecule.common.randomId(),
                     value: msg,
                 },
             ]);
@@ -372,10 +364,10 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
         const addRootFolder = () => {
             const children = new Array(50).fill(1).map(
                 (_, index) =>
-                    new TreeNodeModel({
+                    new molecule.model.TreeNodeModel({
                         id: index,
                         name: `test_sql_${index}.sql`,
-                        fileType: FileTypes.File,
+                        fileType: molecule.model.FileTypes.File,
                         isLeaf: true,
                         content: `SHOW TABLES;
 
@@ -396,10 +388,10 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                     })
             );
             molecule.folderTree.add(
-                new TreeNodeModel({
-                    id: randomId(),
+                new molecule.model.TreeNodeModel({
+                    id: molecule.common.randomId(),
                     name: 'Sample SQLs',
-                    fileType: FileTypes.RootFolder,
+                    fileType: molecule.model.FileTypes.RootFolder,
                     children,
                 })
             );

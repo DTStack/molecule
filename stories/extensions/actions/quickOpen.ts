@@ -1,12 +1,9 @@
+import molecule from '@dtinsight/molecule';
 import { IQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
-
 import { debounce } from 'lodash';
-import { KeyCode, KeyMod } from '@dtinsight/molecule/monaco';
-import { Action2 } from '@dtinsight/molecule';
-import { KeybindingWeight } from '@dtinsight/molecule';
 
-export class QuickOpenAction extends Action2 {
+export class QuickOpenAction extends molecule.monaco.Action2 {
     static readonly ID = 'QuickOpenFile';
     static readonly LABEL = 'Search files by name';
 
@@ -19,10 +16,13 @@ export class QuickOpenAction extends Action2 {
             precondition: undefined,
             f1: true, // Whether show the QuickOpenFile in Command Palette
             keybinding: {
-                weight: KeybindingWeight.WorkbenchContrib,
+                weight: molecule.monaco.KeybindingWeight.WorkbenchContrib,
                 when: undefined,
                 // eslint-disable-next-line new-cap
-                primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KeyP),
+                primary: KeyChord(
+                    molecule.monacoApi.KeyMod.CtrlCmd |
+                        molecule.monacoApi.KeyCode.KeyP
+                ),
             },
         });
     }

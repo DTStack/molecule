@@ -1,9 +1,10 @@
-import molecule from '@dtinsight/molecule';
-import { IEditor } from '@dtinsight/molecule';
-import { connect } from '@dtinsight/molecule';
 import React from 'react';
+import molecule from '@dtinsight/molecule';
 
-export const Pane = connect(molecule.editor, function ({ current }: IEditor) {
-    const value: string = current?.tab?.data?.value || '!!!';
-    return <div style={{ padding: 20 }}>Editor Input: {value}</div>;
-});
+export const Pane = molecule.gule.connect(
+    molecule.editor,
+    function ({ current }: molecule.model.IEditor) {
+        const value: string = current?.tab?.data?.value || '!!!';
+        return <div style={{ padding: 20 }}>Editor Input: {value}</div>;
+    }
+);

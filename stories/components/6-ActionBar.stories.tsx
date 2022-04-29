@@ -2,8 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
+import molecule from '@dtinsight/molecule';
 
-import { ActionBar, IActionBarItemProps } from '@dtinsight/molecule/ui';
+const { ActionBar } = molecule.component;
 
 const stories = storiesOf('ActionBar', module);
 stories.addDecorator(withKnobs);
@@ -21,7 +22,7 @@ const propDefinitions = [
 stories.add(
     'Basic Usage',
     () => {
-        const data: IActionBarItemProps<any>[] = [
+        const data: molecule.component.IActionBarItemProps<any>[] = [
             {
                 id: '1',
                 title: 'bar1',

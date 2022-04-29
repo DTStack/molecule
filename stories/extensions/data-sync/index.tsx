@@ -1,9 +1,8 @@
 import React from 'react';
 import molecule from '@dtinsight/molecule';
-import { IExtension } from '@dtinsight/molecule';
-
 import { QuickOpenAction } from '../actions/quickOpen';
-import { Button } from '@dtinsight/molecule/ui';
+
+const { Button } = molecule.component;
 
 const testItem = {
     id: '3333',
@@ -11,7 +10,7 @@ const testItem = {
     name: 'Data Synchronization',
 };
 
-export const ExtendsDataSync: IExtension = {
+export const ExtendsDataSync: molecule.model.IExtension = {
     id: 'ExtendDataSync',
     name: 'Data Sync',
     activate() {

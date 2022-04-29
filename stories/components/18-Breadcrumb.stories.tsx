@@ -2,8 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
+import molecule from '@dtinsight/molecule';
 
-import { Breadcrumb, IBreadcrumbItemProps } from '@dtinsight/molecule/ui';
+const { Breadcrumb } = molecule.component;
 
 const stories = storiesOf('Breadcrumb', module);
 stories.addDecorator(withKnobs);
@@ -25,7 +26,7 @@ stories.add(
             console.log('onClick breadcrumb item.', e, item);
         };
 
-        const data: IBreadcrumbItemProps[] = [
+        const data: molecule.component.IBreadcrumbItemProps[] = [
             {
                 id: 'item1',
                 name: 'item1',

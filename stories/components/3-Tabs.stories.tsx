@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { Tabs } from '@dtinsight/molecule/ui';
+import molecule from '@dtinsight/molecule';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 const stories = storiesOf('Tab', module);
+const { Tabs } = molecule.component;
 stories.addDecorator(withKnobs);
 
 stories.add('Basic Usage', () => {

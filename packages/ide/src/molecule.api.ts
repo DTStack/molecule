@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 
 export * as monaco from 'mo/monaco/api';
+export * as monacoApi from 'mo/monaco';
 
 export * from 'mo/i18n';
 export * from 'mo/workbench';

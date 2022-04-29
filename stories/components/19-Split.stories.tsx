@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { SplitPane, Pane } from '@dtinsight/molecule/ui';
 import { Button } from '@storybook/react/demo';
+import molecule from '@dtinsight/molecule';
 
+const { SplitPane, Pane } = molecule.component;
 export default {
     title: 'Split',
 };

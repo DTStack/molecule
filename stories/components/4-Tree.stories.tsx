@@ -1,13 +1,14 @@
 import React from 'react';
-import { TreeView as Tree } from '@dtinsight/molecule/ui';
+import molecule from '@dtinsight/molecule';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { FileType, FileTypes } from '@dtinsight/molecule';
 const stories = storiesOf('Tree', module);
 stories.addDecorator(withKnobs);
 
-const folder = FileTypes.Folder as FileType;
-const file = FileTypes.File as FileType;
+const { TreeView: Tree } = molecule.component;
+
+const folder = molecule.model.FileTypes.Folder as molecule.model.FileType;
+const file = molecule.model.FileTypes.File as molecule.model.FileType;
 
 stories.add('Basic Usage', () => {
     const treeData = [

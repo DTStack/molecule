@@ -3,9 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { Menu, Icon, DropDown } from '@dtinsight/molecule/ui';
+import molecule from '@dtinsight/molecule';
 import { useState } from 'react';
-import { PlacementType } from '@dtinsight/molecule';
+
+const { Menu, Icon, DropDown } = molecule.component;
 
 const stories = storiesOf('DropDown', module);
 stories.addDecorator(withKnobs);
@@ -128,7 +129,8 @@ stories.add(
             },
         ];
 
-        const [placement, setPlacement] = useState<PlacementType>('right');
+        const [placement, setPlacement] =
+            useState<molecule.common.PlacementType>('right');
 
         const onSelectPlacement = (e) => {
             const value = e.target.value;

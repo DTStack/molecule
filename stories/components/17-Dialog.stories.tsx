@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { Modal } from 'mo/components/dialog';
-import { Button } from 'mo/components/button';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
+import molecule from '@dtinsight/molecule';
 
+const { Modal, Button } = molecule.component;
 const confirm = Modal.confirm;
 const stories = storiesOf('Dialog', module);
 stories.addDecorator(withKnobs);

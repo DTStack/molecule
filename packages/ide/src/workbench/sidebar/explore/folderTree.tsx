@@ -1,0 +1,254 @@
+import 'reflect-metadata';
+import React, { memo, useRef, useEffect, useLayoutEffect } from 'react';
+import { IFolderTree, IFolderTreeNodeProps } from 'mo/model';
+import { select, getEventPosition } from '@dtinsight/molecule-common';
+import {
+    TreeView as Tree,
+    IMenuItemProps,
+    Menu,
+    Button,
+    Scrollable,
+    useContextView,
+    useContextMenu,
+} from '@dtinsight/molecule-ui';
+import type { IFolderTreeController } from 'mo/controller/explorer/folderTree';
+import {
+    folderTreeClassName,
+    folderTreeEditClassName,
+    folderTreeInputClassName,
+} from './base';
+import { classNames } from '@dtinsight/molecule-common';
+import type { ICollapseItem } from '@dtinsight/molecule-ui/esm/collapse';
+
+export interface IFolderTreeProps extends IFolderTreeController, IFolderTree {
+    panel: ICollapseItem;
+}
+
+const detectHasEditableStatus = (data) => {
+    const stack = [...data];
+    let res = false;
+    while (stack.length) {
+        const headElm = stack.pop();
+        if (headElm?.isEditable) {
+            res = true;
+            break;
+        } else {
+            stack.push(...(headElm?.children || []));
+        }
+    }
+    return res;
+};
+
+/**
+ * A simple wrapper Input, achieve autoFucus & auto select file name
+ */
+const Input = React.forwardRef(
+    (
+        // same as raw input
+        props: React.DetailedHTMLProps<
+            React.InputHTMLAttributes<HTMLInputElement>,
+            HTMLInputElement
+        >,
+        ref: React.LegacyRef<HTMLInputElement>
+    ) => {
+        const inputRef = useRef<HTMLInputElement>(null);
+        useLayoutEffect(() => {
+            if (inputRef.current) {
+                const ext = ((props.defaultValue || '') as string).lastIndexOf(
+                    '.'
+                );
+                inputRef.current.selectionStart = 0;
+                inputRef.current.selectionEnd =
+                    // if period at position of 0, then this period means hidden file
+                    ext > 0
+                        ? ext
+                        : ((props.defaultValue || '') as string).length;
+            }
+        }, []);
+        return <input {...props} ref={inputRef} />;
+    }
+);
+
+const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
+    const {
+        folderTree = {},
+        entry,
+        panel,
+        onUpdateFileName,
+        onSelectFile,
+        onDropTree,
+        onClickContextMenu,
+        onRightClick,
+        onLoadData,
+        createTreeNode,
+        onExpandKeys,
+        ...restProps
+    } = props;
+
+    const { data = [], folderPanelContextMenu = [], expandKeys } = folderTree;
+
+    const handleAddRootFolder = () => {
+        createTreeNode?.('RootFolder');
+    };
+
+    const welcomePage = (
+        <div data-content={panel.id}>
+            {entry ? (
+                <>{entry}</>
+            ) : (
+                <div style={{ padding: '10px 5px' }}>
+                    you have not yet opened a folder
+                    <Button onClick={handleAddRootFolder}>Add Folder</Button>
+                </div>
+            )}
+        </div>
+    );
+
+    if (!data.length) return welcomePage;
+
+    const inputRef = useRef<HTMLInputElement>(null);
+    // tree context view
+    const contextMenu = useRef<ReturnType<typeof useContextMenu>>();
+
+    // panel context view
+    const contextView = useContextView();
+
+    // to detect current tree whether is editable
+    const hasEditable = detectHasEditableStatus(data);
+
+    const onClickMenuItem = (e, item) => {
+        onClickContextMenu?.(item);
+        contextMenu.current?.hide();
+    };
+
+    // init context menu
+    const initContextMenu = () => {
+        return useContextMenu({
+            anchor: select(`.${folderTreeClassName}`),
+            render: () => (
+                <Menu
+                    role="menu"
+                    onClick={onClickMenuItem}
+                    data={folderPanelContextMenu}
+                />
+            ),
+        });
+    };
+
+    const handleMenuClick = (
+        item: IMenuItemProps,
+        data: IFolderTreeNodeProps
+    ) => {
+        onClickContextMenu?.(item, data);
+        contextView.hide();
+    };
+
+    const handleRightClick = (event, data) => {
+        const menuItems = onRightClick?.(data) || [];
+
+        menuItems.length &&
+            contextView?.show(getEventPosition(event), () => (
+                <Menu
+                    role="menu"
+                    onClick={(_, item) => handleMenuClick(item!, data)}
+                    data={menuItems}
+                />
+            ));
+    };
+
+    const handleUpdateFile = (
+        e: HTMLInputElement,
+        node: IFolderTreeNodeProps
+    ) => {
+        const newName = e.value;
+        onUpdateFileName?.({
+            ...node,
+            name: newName,
+        });
+    };
+
+    /**
+     * update file info when input blur
+     */
+    const handleInputBlur = (
+        e: React.FocusEvent<HTMLInputElement>,
+        node: IFolderTreeNodeProps
+    ) => {
+        handleUpdateFile(e.target, node);
+    };
+
+    /**
+     * update file info when press `Enter` or `esc`
+     */
+    const handleInputKeyDown = (
+        e: React.KeyboardEvent<HTMLInputElement>,
+        node: IFolderTreeNodeProps
+    ) => {
+        if (e.keyCode === 13 || e.keyCode === 27) {
+            handleUpdateFile(e.target as EventTarget & HTMLInputElement, node);
+        }
+    };
+
+    const renderTitle = (node: IFolderTreeNodeProps) => {
+        const { isEditable, name } = node;
+
+        return isEditable ? (
+            <Input
+                role="input"
+                className={folderTreeInputClassName}
+                type="text"
+                defaultValue={name}
+                ref={inputRef}
+                onKeyDown={(e) => handleInputKeyDown(e, node)}
+                autoComplete="off"
+                autoFocus
+                onBlur={(e) => handleInputBlur(e, node)}
+            />
+        ) : (
+            name!
+        );
+    };
+
+    const handleTreeClick = () => {
+        onSelectFile?.();
+    };
+
+    const handleDropTree = (source, target) => {
+        onDropTree?.(source, target);
+    };
+
+    useEffect(() => {
+        if (folderPanelContextMenu.length > 0) {
+            contextMenu.current = initContextMenu();
+        }
+        return () => {
+            contextMenu.current?.dispose();
+        };
+    }, [data.length]);
+
+    return (
+        <Scrollable noScrollX isShowShadow>
+            <div data-content={panel.id} style={{ height: '100%' }}>
+                <Tree
+                    // root folder do not render
+                    expandKeys={expandKeys}
+                    data={data[0]?.children || []}
+                    className={classNames(
+                        folderTreeClassName,
+                        hasEditable && folderTreeEditClassName
+                    )}
+                    draggable={!hasEditable}
+                    onDropTree={handleDropTree}
+                    onSelect={onSelectFile}
+                    onTreeClick={handleTreeClick}
+                    onRightClick={handleRightClick}
+                    renderTitle={renderTitle}
+                    onLoadData={onLoadData}
+                    onExpand={onExpandKeys}
+                    {...restProps}
+                />
+            </div>
+        </Scrollable>
+    );
+};
+export default memo(FolderTree);

@@ -3,9 +3,10 @@ import { useCallback, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
-import { Input } from 'mo/components/input';
 import { propsTable } from '../common/propsTable';
+import molecule from '@dtinsight/molecule';
 
+const { Input } = molecule.component;
 const TextArea = Input.TextArea;
 const stories = storiesOf('Input', module);
 stories.addDecorator(withKnobs);

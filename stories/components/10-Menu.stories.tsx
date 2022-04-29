@@ -2,16 +2,12 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
+import molecule from '@dtinsight/molecule';
 
-import {
-    Menu,
-    MenuMode,
-    MenuItem,
-    SubMenu,
-    IMenuItemProps,
-} from 'mo/components/menu';
 const stories = storiesOf('Menu', module);
 stories.addDecorator(withKnobs);
+
+const { Menu, MenuMode, MenuItem, SubMenu } = molecule.component;
 
 const propDefinitions = [
     {
@@ -131,7 +127,10 @@ stories.add(
             },
         ];
 
-        const handleClick = (e: React.MouseEvent, item?: IMenuItemProps) => {
+        const handleClick = (
+            e: React.MouseEvent,
+            item?: molecule.component.IMenuItemProps
+        ) => {
             console.log('click Menu', e, item);
         };
 

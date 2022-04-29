@@ -1,6 +1,6 @@
-import { IExtensionService } from 'mo/services';
-import { IExtension } from 'mo/model';
-import molecule from 'mo';
+import { IExtensionService } from '@dtinsight/molecule';
+import { IExtension } from '@dtinsight/molecule';
+import molecule from '@dtinsight/molecule';
 
 function init() {
     const MockItem = {

@@ -1,0 +1,52 @@
+{
+    "name": "@dtinsight/molecule-ide",
+    "version": "0.9.0-beta.4.2",
+    "description": "The IDE used in molecule",
+    "module": "./esm/index.js",
+    "typings": "./esm/index.d.ts",
+    "files": [
+        "esm",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "gulp --gulpfile ./build/gulpfile.js",
+        "check-types": "tsc --noEmit"
+    },
+    "keywords": [
+        "react.js",
+        "vscode",
+        "ui",
+        "ide"
+    ],
+    "author": "DTStack Corporation",
+    "license": "MIT",
+    "dependencies": {
+        "@dtinsight/dt-utils": "^1.0.3",
+        "@dtinsight/molecule-common": "0.9.0-beta.4.2",
+        "@dtinsight/molecule-glue": "0.9.0-beta.4.2",
+        "@dtinsight/molecule-ui": "0.9.0-beta.4.2",
+        "monaco-editor": "^0.30.1",
+        "react-scrollbars-custom": "^4.0.25",
+        "lodash": "^4.17.21",
+        "reflect-metadata": "^0.1.13",
+        "tsyringe": "4.5.0"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.172",
+        "gulp": "^4.0.2",
+        "gulp-sass": "^5.0.0",
+        "gulp-typescript": "^6.0.0-alpha.1",
+        "node-sass-alias-importer": "^1.0.2",
+        "through2": "^4.0.2",
+        "rimraf": "^3.0.2",
+        "sass": "^1.26.10"
+    },
+    "peerDependencies": {
+        "react": "^16.14.0",
+        "react-dom": "^16.14.0"
+    },
+    "repository": "https://github.com/DTStack/molecule",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    }
+}

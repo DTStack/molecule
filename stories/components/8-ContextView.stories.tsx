@@ -1,11 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { Select, Option } from 'mo/components/select';
-import { useContextView } from 'mo/components/contextView';
-import { Menu, MenuMode, MenuItem, SubMenu } from 'mo/components/menu';
-
+import molecule from '@dtinsight/molecule';
 import { propsTable } from '../common/propsTable';
+
+const { Select, Option, useContextView, Menu, MenuMode, MenuItem, SubMenu } =
+    molecule.component;
 
 const stories = storiesOf('ContextView', module);
 stories.addDecorator(withKnobs);

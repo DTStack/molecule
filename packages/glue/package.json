@@ -1,0 +1,39 @@
+{
+    "name": "@dtinsight/molecule-glue",
+    "version": "0.9.0-beta.4.2",
+    "description": "A MVC pattern for developer used in molecule",
+    "module": "./esm/index.js",
+    "typings": "./esm/index.d.ts",
+    "files": [
+        "esm",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "check-types": "tsc --noEmit"
+    },
+    "keywords": [
+        "pattern",
+        "molecule",
+        "MVC"
+    ],
+    "author": "DTStack Corporation",
+    "license": "MIT",
+    "dependencies": {
+        "@dtinsight/molecule-common": "0.9.0-beta.4.2",
+        "lodash": "^4.17.21",
+        "reflect-metadata": "^0.1.13",
+        "tsyringe": "4.5.0"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.172"
+    },
+    "peerDependencies": {
+        "react": "^16.14.0",
+        "react-dom": "^16.14.0"
+    },
+    "repository": "https://github.com/DTStack/molecule",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    }
+}

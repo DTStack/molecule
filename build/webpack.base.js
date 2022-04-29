@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const varables = require('./variables');
 
 module.exports = {
     mode: 'development',
@@ -9,7 +8,6 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.tsx', '.ts'],
         alias: {
-            mo: path.resolve(__dirname, '../src'),
             '@stories': path.resolve(__dirname, '../stories'),
             '@test': path.resolve(__dirname, '../test'),
         },
@@ -41,6 +39,8 @@ module.exports = {
         new MonacoWebpackPlugin({
             languages: ['html', 'typescript', 'javascript', 'json', 'css'],
         }),
-        new webpack.DefinePlugin(varables),
+        new webpack.DefinePlugin({
+            'process.env.__DEVELOPMENT__': true,
+        }),
     ],
 };

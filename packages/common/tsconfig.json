@@ -1,0 +1,17 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es6",
+        "declaration": true,
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "outDir": "./esm",
+        "rootDir": "./src",
+        "paths": {
+            "@test/*": ["../../test/*"]
+        }
+    },
+    "include": ["./src"],
+    "exclude": ["src/**/__tests__/*"]
+}

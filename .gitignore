@@ -6,6 +6,7 @@ coverage
 .DS_Store
 storybook-static
 .yarn-error.log
+.turbo
 lib
 docs/api
 
@@ -32,3 +33,5 @@ website/.env.production.local
 website/npm-debug.log*
 website/yarn-debug.log*
 website/yarn-error.log*
+
+*.log

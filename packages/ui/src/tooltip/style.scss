@@ -1,0 +1,27 @@
+@import 'mo/common';
+
+#{$rcTooltip} {
+    background-color: var(--menu-background);
+    box-sizing: border-box;
+    color: var(--menu-foreground);
+    font-size: 13px;
+    margin: 0;
+    opacity: 1;
+    padding: 0;
+
+    &-inner {
+        background-color: inherit;
+        border-radius: 2px;
+        box-shadow: 0 2px 8px var(--widget-shadow);
+        box-sizing: border-box;
+        color: inherit;
+        min-height: auto;
+        min-width: 30px;
+        padding: 6px 8px;
+    }
+}
+
+#{$rcTooltip}-placement-bottom #{$rcTooltip}-arrow {
+    border-bottom-color: var(--menu-background);
+    top: -5px;
+}

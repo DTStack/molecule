@@ -2,9 +2,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
-import { Select, Option } from 'mo/components/select';
 import { useState } from 'react';
+import molecule from '@dtinsight/molecule';
 
+const { Select, Option } = molecule.component;
 const stories = storiesOf('Select', module);
 stories.addDecorator(withKnobs);
 

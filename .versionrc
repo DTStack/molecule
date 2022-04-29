@@ -1,0 +1,28 @@
+{
+    "bumpFiles": [
+        {
+            "filename": "package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/molecule/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/ide/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/common/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/ui/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/glue/package.json",
+            "type": "json"
+        }
+    ]
+}

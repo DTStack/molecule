@@ -2,9 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
+import molecule from '@dtinsight/molecule';
 
-import { Button } from 'mo/components/button';
-import { Icon } from 'mo/components/icon';
+const { Button, Icon } = molecule.component;
 
 const stories = storiesOf('Button', module);
 stories.addDecorator(withKnobs);

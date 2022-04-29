@@ -1,6 +1,6 @@
 import React from 'react';
 
-jest.mock('mo/monaco/monacoService', () => {
+jest.mock('@dtinsight/molecule-ide/src/monaco/monacoService', () => {
     function MonacoService() {}
     const getter = { get: () => {} };
 
@@ -18,8 +18,8 @@ jest.mock('mo/monaco/monacoService', () => {
 });
 
 // mock Scrollable component
-jest.mock('mo/components/scrollable', () => {
-    const originalModule = jest.requireActual('mo/components/scrollable');
+jest.mock('@dtinsight/molecule-ui', () => {
+    const originalModule = jest.requireActual('@dtinsight/molecule-ui');
     return {
         ...originalModule,
         Scrollable: ({ children }) => {

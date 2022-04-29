@@ -1,7 +1,9 @@
 import React from 'react';
-import { useContextMenu } from 'mo/components/contextMenu';
+import molecule from '@dtinsight/molecule';
 import { useEffect } from 'react';
 import '../demo.scss';
+
+const { useContextMenu } = molecule.component;
 
 export const ContextMenuDemo = () => {
     useEffect(() => {

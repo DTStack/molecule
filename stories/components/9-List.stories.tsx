@@ -3,9 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
-import { List, Item } from 'mo/components/list';
+import molecule from '@dtinsight/molecule';
 import { useState } from 'react';
-import { Button } from 'mo/components';
+
+const { List, Item, Button } = molecule.component;
 
 const stories = storiesOf('List', module);
 stories.addDecorator(withKnobs);

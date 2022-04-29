@@ -8,7 +8,7 @@
     },
     "ignoreFiles": [
         "coverage/**/*.css",
-        "esm/**/*.css",
+        "**/esm/**/*.css",
         "umd/**/*.css",
         "website/**/*.css"
     ]

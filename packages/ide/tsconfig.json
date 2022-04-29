@@ -1,0 +1,21 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es6",
+        "declaration": true,
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "outDir": "./esm",
+        "rootDir": "./src",
+        "baseUrl": "./",
+        "paths": {
+            "mo": ["./src/index.ts"],
+            "mo/*": ["./src/*"],
+            "@test/utils": [
+                "node_modules/@dtinsight/molecule-common/test/utils"
+            ]
+        }
+    },
+    "include": ["./src"]
+}

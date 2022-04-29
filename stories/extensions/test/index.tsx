@@ -1,12 +1,8 @@
 import React from 'react';
-import molecule from 'mo';
-
-import { FileTypes, IExtension, TreeNodeModel } from 'mo/model';
-
+import molecule from '@dtinsight/molecule';
 import TestPane from './testPane';
-import { randomId } from 'mo/common/utils';
 
-export const ExtendsTestPane: IExtension = {
+export const ExtendsTestPane: molecule.model.IExtension = {
     id: 'ExtendsTestPane',
     name: 'Test Pane',
     dispose() {},
@@ -98,18 +94,18 @@ export const ExtendsTestPane: IExtension = {
         molecule.folderTree.onCreate((type, nodeId) => {
             if (type === 'RootFolder') {
                 molecule.folderTree.add(
-                    new TreeNodeModel({
-                        id: randomId(),
+                    new molecule.model.TreeNodeModel({
+                        id: molecule.common.randomId(),
                         name: 'molecule',
                         isLeaf: false,
                         location: 'molecule',
-                        fileType: FileTypes.RootFolder,
+                        fileType: molecule.model.FileTypes.RootFolder,
                     })
                 );
             } else {
                 molecule.folderTree.add(
-                    new TreeNodeModel({
-                        id: randomId(),
+                    new molecule.model.TreeNodeModel({
+                        id: molecule.common.randomId(),
                         name: '',
                         fileType: type,
                         icon: 'file-code',

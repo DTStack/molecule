@@ -1,9 +1,9 @@
-import * as molecule from './molecule.api';
+import * as moleculeAPI from './molecule.api';
 
-export { MoleculeProvider } from 'mo/provider';
-export type { IMoleculeProps } from 'mo/provider';
+import { molecule } from './provider/create';
 
 export { Workbench } from 'mo/workbench/workbench';
-export { molecule };
+export { create } from 'mo/provider';
 
-export default molecule;
+// TODO: put API into moleucle temporarily, should consider it
+export default Object.assign(molecule, moleculeAPI);

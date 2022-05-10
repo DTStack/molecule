@@ -1,14 +1,18 @@
 import React from 'react';
-import { MoleculeProvider, Workbench } from 'mo';
+import molecule, { create, Workbench } from 'mo';
 import 'mo/style/mo.scss';
 import { customExtensions } from '../extensions';
 import '../demo.scss';
 
-export const IDEDemo = () => (
-    <MoleculeProvider extensions={customExtensions} defaultLocale="en">
-        <Workbench />
-    </MoleculeProvider>
-);
+// this line will console.warn a tip
+console.log('molecule:', molecule.editor.isOpened(1));
+
+const moInstance = create({
+    extensions: customExtensions,
+    defaultLocale: 'en',
+});
+
+export const IDEDemo = () => moInstance.render(<Workbench />);
 
 IDEDemo.story = {
     name: 'Workbench',

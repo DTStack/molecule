@@ -12,6 +12,10 @@ const moInstance = create({
     defaultLocale: 'en',
 });
 
+moInstance.onBeforeInit(() => {
+    molecule.builtin.inactiveModule('activityBarData');
+});
+
 export const IDEDemo = () => moInstance.render(<Workbench />);
 
 IDEDemo.story = {

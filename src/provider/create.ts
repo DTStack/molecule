@@ -115,7 +115,7 @@ namespace stanalone {
         molecule[uuid] = new Proxy(<any>{}, {
             get: function (_, prop) {
                 // Allow user to access `molecule.xxx`, but should forbid access `molecule.xxx.yyy()`
-                // Because there are some connects should use `molecule.xxx` directly exported from molecule
+                // Because there are some connects should be used with `molecule.xxx` directly exported from molecule
                 if (!instance) {
                     console.warn(
                         new Error(

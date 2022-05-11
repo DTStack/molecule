@@ -96,10 +96,6 @@ export class LocaleService extends Component implements ILocaleService {
 
     constructor() {
         super();
-        /**
-         * TODO: It will then be removed accordingly
-         */
-        this.initialize(BuiltInLocales);
     }
 
     public reset(): void {

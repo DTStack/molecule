@@ -9,7 +9,7 @@ console.log('molecule:', molecule.editor.isOpened(1));
 
 const moInstance = create({
     extensions: customExtensions,
-    defaultLocale: 'en',
+    defaultLocale: 'japanese',
 });
 
 moInstance.onBeforeInit(() => {

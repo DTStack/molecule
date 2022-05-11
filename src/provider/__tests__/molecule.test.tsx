@@ -1,8 +1,11 @@
 import '@testing-library/jest-dom';
-import molecule, { create } from 'mo';
+import React from 'react';
+import molecule, { create, Workbench } from 'mo';
 import InstanceService from 'mo/services/instanceService';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { clearInstance } from '../create';
+import Provider from '../molecule';
+import { render } from '@testing-library/react';
 
 describe('The create function', () => {
     afterEach(() => {
@@ -31,5 +34,16 @@ describe('The create function', () => {
     test('Should call methods normally', () => {
         create({});
         molecule.editor.isOpened(1);
+    });
+});
+
+describe('The molecule Provider', () => {
+    test('Match the Snapshot', () => {
+        const { asFragment } = render(
+            <Provider>
+                <Workbench />
+            </Provider>
+        );
+        expect(asFragment()).toMatchSnapshot();
     });
 });

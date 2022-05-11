@@ -10,6 +10,7 @@ import { IExtension } from 'mo/model';
 import { STORE_KEY } from 'mo/i18n/localeService';
 
 interface IInstanceServiceProps {
+    getConfig: () => IConfigProps;
     render: (dom: ReactElement) => ReactElement;
     onBeforeInit: (callback: () => void) => void;
     onBeforeLoad: (callback: () => void) => void;
@@ -26,7 +27,7 @@ export default class InstanceService
 {
     private _services: IServiceCollection;
     private _config = {
-        extensions: defaultExtensions,
+        extensions: defaultExtensions.concat(),
         defaultLocale: 'en',
     };
 
@@ -43,7 +44,7 @@ export default class InstanceService
         }
     }
 
-    public initialLocaleService = (languagesExts: IExtension[]) => {
+    private initialLocaleService = (languagesExts: IExtension[]) => {
         const locales = languagesExts.reduce((pre, cur) => {
             const languages = cur.contributes?.languages || [];
             return pre.concat(languages);
@@ -53,6 +54,10 @@ export default class InstanceService
             locales,
             localStorage.getItem(STORE_KEY) || this._config.defaultLocale
         );
+    };
+
+    public getConfig: () => IConfigProps = () => {
+        return Object.assign({}, this._config);
     };
 
     public render = (workbench: ReactElement) => {

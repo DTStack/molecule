@@ -99,8 +99,7 @@ export class LocaleService extends Component implements ILocaleService {
         if (this._locales.get(localeId)) {
             this._current = this._locales.get(localeId);
         } else {
-            logger.warn(`Cannot initialize the locale with ${localeId}`);
-            this._current = this._locales.values().next().value;
+            logger.error(`Cannot initialize the locale with ${localeId}`);
         }
     }
 

@@ -1,78 +1,35 @@
-import React from 'react';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import molecule, { create } from 'mo';
+import InstanceService from 'mo/services/instanceService';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
+import { clearInstance } from '../create';
 
-import { select } from 'mo/common/dom';
-import molecule, { MoleculeProvider, Workbench } from 'mo';
-
-import { customExtensions } from '../../../stories/extensions';
-
-describe('Test MoleculeProvider', () => {
-    let original;
-    beforeEach(() => {
-        original = HTMLElement.prototype.getBoundingClientRect;
-        // @ts-ignore
-        HTMLElement.prototype.getBoundingClientRect = () => ({
-            width: 500,
-            height: 0,
-        });
-
-        // Reset the extensions loaded state
-        molecule.extension.setLoaded(false);
-    });
-
+describe('The create function', () => {
     afterEach(() => {
-        HTMLElement.prototype.getBoundingClientRect = original;
+        clearInstance();
     });
 
-    test('Match The MoleculeProvider snapshot', () => {
-        const { asFragment } = render(
-            <MoleculeProvider>
-                <Workbench />
-            </MoleculeProvider>
-        );
-        expect(asFragment()).toMatchSnapshot();
+    test('Should create an instance', () => {
+        const instance = create({});
+        expect(instance).toBeInstanceOf(InstanceService);
     });
 
-    test('MoleculeProvider should render built-in Workbench extensions', () => {
-        render(
-            <MoleculeProvider>
-                <Workbench />
-            </MoleculeProvider>
-        );
-        expect(
-            select('div[data-id="sidebar.explore.title"]')
-        ).toBeInTheDocument();
-        expect(
-            select('div[data-id="sidebar.search.title"]')
-        ).toBeInTheDocument();
-        expect(select('.mo-welcome')).toBeInTheDocument();
-        expect(
-            select('div[id="statusbar.problems.title"]')
-        ).toBeInTheDocument();
+    test('Should log error when call method before initialize', () => {
+        expectLoggerErrorToBeCalled(() => {
+            molecule.editor.isOpened(1);
+            create({});
+        });
     });
 
-    test('MoleculeProvider load the extensions', async () => {
-        render(
-            <MoleculeProvider extensions={customExtensions}>
-                <Workbench />
-            </MoleculeProvider>
-        );
-        await expect(
-            select('div[data-id="ActivityBarTestPane"]')
-        ).toBeInTheDocument();
+    test('Should to be a standalone', () => {
+        const instance = create({});
+        const nextInstance = create({});
+
+        expect(instance).toBe(nextInstance);
     });
 
-    test('MoleculeProvider load the locale language extensions', () => {
-        localStorage.removeItem('mo.localeId');
-
-        render(
-            <MoleculeProvider
-                extensions={customExtensions}
-                defaultLocale="zh-CN"
-            >
-                <Workbench />
-            </MoleculeProvider>
-        );
+    test('Should call methods normally', () => {
+        create({});
+        molecule.editor.isOpened(1);
     });
 });

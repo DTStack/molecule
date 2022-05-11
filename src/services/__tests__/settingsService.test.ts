@@ -1,4 +1,3 @@
-import { BuiltInDefault } from 'mo/i18n/localization';
 import { ISettings, SettingsEvent } from 'mo/model/settings';
 import 'reflect-metadata';
 import { SettingsService } from '../settingsService';
@@ -25,7 +24,7 @@ describe('Test the SettingsService', () => {
         const config = settingsService.getSettings();
         expect(config.colorTheme).toEqual(BuiltInColorTheme.id);
         expect(config.editor).toEqual({});
-        expect(config.locale).toEqual(BuiltInDefault.id);
+        expect(config.locale).toBeUndefined();
     });
 
     test('Append a new setting item', () => {
@@ -60,7 +59,7 @@ describe('Test the SettingsService', () => {
         settingsService.update(expectedSettings);
         const config = settingsService.getSettings() as TestSetting;
         expect(config.colorTheme).toEqual(BuiltInColorTheme.id);
-        expect(config.locale).toEqual(BuiltInDefault!.id);
+        expect(config.locale).toBeUndefined();
         expect(config.editor?.tabSize).toBe(expectedSettings.editor.tabSize);
         expect(config.project).toEqual(expectedSettings.project);
     });

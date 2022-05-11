@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import React from 'react';
 import { render } from '@testing-library/react';
 import renderer from 'react-test-renderer';
@@ -10,6 +11,9 @@ import { select } from 'mo/common/dom';
 import { modules } from 'mo/services/builtinService/const';
 import { cloneDeep } from 'lodash';
 import Output from '../output';
+import { container } from 'tsyringe';
+import { ExtendsLocales } from 'mo/extensions/locales-defaults';
+import { LocaleService } from 'mo/i18n';
 
 function panelMockModel(): PanelModel {
     const output = modules.builtInOutputPanel();
@@ -32,6 +36,10 @@ function panelMockModel(): PanelModel {
 }
 
 describe('Test Panel Component', () => {
+    // initial locales
+    const localeService = container.resolve(LocaleService);
+    localeService.initialize(ExtendsLocales.contributes!.languages!, 'en');
+
     test('Match the PanelView snapshot', () => {
         const component = renderer.create(<PanelView />);
         expect(component.toJSON()).toMatchSnapshot();

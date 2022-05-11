@@ -1,10 +1,18 @@
+import 'reflect-metadata';
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
 import { create } from 'react-test-renderer';
+import { container } from 'tsyringe';
+import { LocaleService } from 'mo/i18n';
+import { ExtendsLocales } from 'mo/extensions/locales-defaults';
+import { fireEvent, render } from '@testing-library/react';
 import LocaleNotification from '../notificationPane/localeNotification';
 import '@testing-library/jest-dom';
 
 describe('The LocaleNotification Component', () => {
+    // initial locales
+    const localeService = container.resolve(LocaleService);
+    localeService.initialize(ExtendsLocales.contributes!.languages!, 'en');
+
     test('Match Snapshot', () => {
         const component = create(<LocaleNotification locale="chinese" />);
         expect(component.toJSON()).toMatchSnapshot();

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { cleanup, fireEvent, render } from '@testing-library/react';
@@ -10,6 +11,9 @@ import {
     editorTreeGroupClassName,
 } from '../explore/base';
 import { constants } from 'mo/services/builtinService/const';
+import { container } from 'tsyringe';
+import { LocaleService } from 'mo/i18n';
+import { ExtendsLocales } from 'mo/extensions/locales-defaults';
 
 const PaneEditorTree = (props: Omit<IOpenEditProps, 'panel'>) => {
     return <EditorTree panel={{ id: 'test', name: 'test' }} {...props} />;
@@ -73,6 +77,10 @@ jest.mock('react', () => {
 });
 
 describe('The EditorTree Component', () => {
+    // initial locales
+    const localeService = container.resolve(LocaleService);
+    localeService.initialize(ExtendsLocales.contributes!.languages!, 'en');
+
     afterEach(cleanup);
 
     test('Match Snapshot', () => {

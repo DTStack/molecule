@@ -1,3 +1,4 @@
+import logger from 'mo/common/logger';
 import { ILocaleService, LocaleService } from 'mo/i18n';
 import { IExtension } from 'mo/model';
 import { IMonacoService, MonacoService } from 'mo/monaco/monacoService';
@@ -117,7 +118,7 @@ namespace stanalone {
                 // Allow user to access `molecule.xxx`, but should forbid access `molecule.xxx.yyy()`
                 // Because there are some connects should be used with `molecule.xxx` directly exported from molecule
                 if (!instance) {
-                    console.warn(
+                    logger.error(
                         new Error(
                             "Don't call service's methods before initialize the instance"
                         )
@@ -160,6 +161,13 @@ namespace stanalone {
         instance = new InstanceService(config, _services);
         return instance;
     }
+
+    /**
+     * Do NOT call it in production, ONLY used for test cases
+     */
+    export function clearInstance() {
+        instance = null;
+    }
 }
 
 export default function create(config: IConfigProps) {
@@ -167,3 +175,10 @@ export default function create(config: IConfigProps) {
 }
 
 export const molecule = <IServiceCollection>stanalone.molecule;
+
+/**
+ * Do NOT call it in production, ONLY used for test cases
+ */
+export function clearInstance() {
+    stanalone.clearInstance();
+}

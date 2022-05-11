@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 import { ILocale } from 'mo/i18n';
 import { container } from 'tsyringe';
 import * as controllers from 'mo/controller';
@@ -10,7 +10,7 @@ import { IExtension } from 'mo/model';
 import { STORE_KEY } from 'mo/i18n/localeService';
 
 interface IInstanceServiceProps {
-    render: (dom: any) => void;
+    render: (dom: ReactElement) => ReactElement;
     onBeforeInit: (callback: () => void) => void;
     onBeforeLoad: (callback: () => void) => void;
 }
@@ -55,7 +55,7 @@ export default class InstanceService
         );
     };
 
-    public render = (workbench: ReactNode) => {
+    public render = (workbench: ReactElement) => {
         this.emit(InstanceHookKind.beforeInit);
 
         // get all locales including builtin and custom locales

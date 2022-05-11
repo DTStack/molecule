@@ -1,23 +1,17 @@
 import { APP_PREFIX } from 'mo/common/const';
-import {
-    ILocale,
-    LocalizationEvent,
-    BuiltInLocales,
-    BuiltInDefault,
-} from 'mo/i18n/localization';
+import logger from 'mo/common/logger';
+import { ILocale, LocalizationEvent } from 'mo/i18n/localization';
 
 import { Component } from 'mo/react';
 import { singleton } from 'tsyringe';
 
 export interface ILocaleService {
     /**
-     * Initialize the locales data, and the default current locale language,
-     * this method first uses the cached `locale` in localStorage, then use the
-     * localeId argument, if both the values are null, finally apply the built-in BuiltInZhCN
+     * Initialize the locales data, and the current locale language,
      * @param locales
      * @param localeId
      */
-    initialize(locales: ILocale[], localeId?: string): void;
+    initialize(locales: ILocale[], localeId: string): void;
     /**
      * Set the current locale language by id
      * @param id
@@ -36,14 +30,6 @@ export interface ILocaleService {
      * @param id
      */
     getLocale(id: string): ILocale | undefined;
-    /**
-     * Get the default locale
-     */
-    getDefaultLocale(): ILocale;
-    /**
-     * Get the default locales;
-     */
-    getDefaultLocales(): ILocale[];
     /**
      * Add multiple local languages
      * @param locales
@@ -91,7 +77,7 @@ export class LocaleService extends Component implements ILocaleService {
     state = {};
     private static LOCALIZE_REPLACED_WORD = '${i}';
 
-    private _locales: Map<string, ILocale> = new Map();
+    private _locales = new Map<string, ILocale>();
     private _current: ILocale | undefined;
 
     constructor() {
@@ -104,37 +90,22 @@ export class LocaleService extends Component implements ILocaleService {
         this._locales.clear();
     }
 
-    public getDefaultLocale(): ILocale {
-        return Object.assign({}, BuiltInDefault);
-    }
-
-    public getDefaultLocales(): ILocale[] {
-        return BuiltInLocales.concat();
-    }
-
     public getLocales(): ILocale[] {
         return Array.from(this._locales.values());
     }
 
-    public initialize(locales: ILocale[], localeId?: string) {
+    public initialize(locales: ILocale[], localeId: string) {
         this.addLocales(locales);
-        let finalLocale = BuiltInDefault!.id;
-        if (localeId) {
-            finalLocale = localeId;
+        if (this._locales.get(localeId)) {
+            this._current = this._locales.get(localeId);
+        } else {
+            logger.warn(`Cannot initialize the locale with ${localeId}`);
+            this._current = this._locales.values().next().value;
         }
-        const cachedLocaleId = localStorage.getItem(STORE_KEY);
-        if (cachedLocaleId) {
-            finalLocale = cachedLocaleId;
-        }
-
-        this.setCurrentLocale(finalLocale);
     }
 
     public getCurrentLocale(): ILocale | undefined {
-        return (
-            (this._current && Object.assign({}, this._current)) ||
-            BuiltInDefault
-        );
+        return this._current && Object.assign({}, this._current);
     }
 
     public getLocale(id: string | null): ILocale | undefined {
@@ -145,8 +116,14 @@ export class LocaleService extends Component implements ILocaleService {
     public removeLocale(id: string): ILocale | undefined {
         const locale = this._locales.get(id);
         if (locale !== undefined) {
+            if (this._locales.size === 1) {
+                logger.error(
+                    "You can't remove this Locale because there must have one locale at least"
+                );
+                return undefined;
+            }
             if (this._current && this._current.id === locale.id) {
-                this._current = this.getDefaultLocale();
+                this._current = this._locales.values().next().value;
             }
             this._locales.delete(id);
             return locale;

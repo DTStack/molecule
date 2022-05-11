@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { ILocale } from 'mo/i18n';
 import { container } from 'tsyringe';
 import * as controllers from 'mo/controller';
@@ -5,8 +6,8 @@ import type { Controller } from 'mo/react';
 import { defaultExtensions } from 'mo/extensions';
 import { GlobalEvent } from 'mo/common/event';
 import { IConfigProps, IServiceCollection } from 'mo/provider/create';
-import { ReactNode } from 'react';
 import { IExtension } from 'mo/model';
+import { STORE_KEY } from 'mo/i18n/localeService';
 
 interface IInstanceServiceProps {
     render: (dom: any) => void;
@@ -47,8 +48,11 @@ export default class InstanceService
             const languages = cur.contributes?.languages || [];
             return pre.concat(languages);
         }, [] as ILocale[]);
-        this._services.i18n.initialize(locales);
-        this._services.i18n.setCurrentLocale(this._config.defaultLocale);
+
+        this._services.i18n.initialize(
+            locales,
+            localStorage.getItem(STORE_KEY) || this._config.defaultLocale
+        );
     };
 
     public render = (workbench: ReactNode) => {

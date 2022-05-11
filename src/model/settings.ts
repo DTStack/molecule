@@ -20,9 +20,9 @@ export interface ISettings {
 export class SettingsModel implements ISettings {
     colorTheme: string;
     editor: IEditorOptions;
-    locale: string;
+    locale?: string;
 
-    constructor(colorTheme: string, editor: IEditorOptions, locale: string) {
+    constructor(colorTheme: string, editor: IEditorOptions, locale?: string) {
         this.colorTheme = colorTheme;
         this.editor = editor;
         this.locale = locale;

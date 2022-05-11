@@ -107,7 +107,7 @@ export class SettingsService extends GlobalEvent implements ISettingsService {
         const editorOptions = this.editorService.getState().editorOptions;
         const theme = this.colorThemeService.getColorTheme();
         const locale = this.localeService.getCurrentLocale();
-        return new SettingsModel(theme.id, editorOptions!, locale!.id);
+        return new SettingsModel(theme.id, editorOptions!, locale?.id);
     }
 
     public getDefaultSettingsTab(): BuiltInSettingsTabType {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import create, { IConfigProps } from './create';
 
 export default function Provider({
@@ -6,7 +6,7 @@ export default function Provider({
     extensions,
     children,
 }: IConfigProps & { children: React.ReactElement }) {
-    useEffect(() => {
+    useLayoutEffect(() => {
         const instance = create({
             defaultLocale,
             extensions,

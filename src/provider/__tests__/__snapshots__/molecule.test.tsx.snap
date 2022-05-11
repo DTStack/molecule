@@ -1081,7 +1081,16 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
                         <div
                           class="keybindings"
                         >
-                          <ul />
+                          <ul>
+                            <li
+                              class="keys"
+                            >
+                              <span>
+                                Command Palette
+                              </span>
+                              <span />
+                            </li>
+                          </ul>
                         </div>
                       </div>
                     </div>

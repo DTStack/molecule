@@ -13,20 +13,17 @@ exports[`The Tabs Components The snapshot 1`] = `
       onContextMenu={[Function]}
     >
       test-title-1
-      <a
-        className="mo-tab__item__op"
+      <div
+        className="mo-tab__item__extra"
+        onClick={[Function]}
         onMouseOut={[Function]}
         onMouseOver={[Function]}
+        role="button"
       >
-        <div
-          className="mo-tab__item__op__button"
-          onClick={[Function]}
-        >
-          <span
-            className="codicon codicon-close"
-          />
-        </div>
-      </a>
+        <span
+          className="codicon codicon-close"
+        />
+      </div>
     </div>
     <div
       className="mo-tab__item"
@@ -34,20 +31,17 @@ exports[`The Tabs Components The snapshot 1`] = `
       onContextMenu={[Function]}
     >
       test-title-2
-      <a
-        className="mo-tab__item__op"
+      <div
+        className="mo-tab__item__extra"
+        onClick={[Function]}
         onMouseOut={[Function]}
         onMouseOver={[Function]}
+        role="button"
       >
-        <div
-          className="mo-tab__item__op__button"
-          onClick={[Function]}
-        >
-          <span
-            className="codicon codicon-close"
-          />
-        </div>
-      </a>
+        <span
+          className="codicon codicon-close"
+        />
+      </div>
     </div>
   </div>
 </div>

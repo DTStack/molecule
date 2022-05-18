@@ -209,6 +209,17 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             molecule.editor.open(tabData);
         };
 
+        const toggleEditorStatus = () => {
+            const { current } = molecule.editor.getState();
+            if (current?.tab) {
+                molecule.editor.updateTab({
+                    id: current.tab.id,
+                    status:
+                        current.tab.status === 'edited' ? undefined : 'edited',
+                });
+            }
+        };
+
         const updateEntryPage = () => {
             const style: React.CSSProperties = {
                 display: 'flex',
@@ -412,6 +423,9 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                     <div style={{ marginBottom: 50 }}>
                         <h2>Simple examples:</h2>
                         <Button onClick={newEditor}>New Editor</Button>
+                        <Button onClick={toggleEditorStatus}>
+                            Toggle Editor status
+                        </Button>
                         <Button onClick={updateEntryPage}>
                             Update Entry Page
                         </Button>

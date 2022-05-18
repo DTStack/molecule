@@ -3,7 +3,12 @@ import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom';
 import { Tabs, tabsClassName } from '..';
-import { ITabProps, tabItemActiveClassName, tabItemClassName } from '../tab';
+import {
+    ITabProps,
+    tabItemActiveClassName,
+    tabItemClassName,
+    tabItemExtraClassName,
+} from '../tab';
 import { dragToTargetNode } from '@test/utils';
 
 const mockData: ITabProps[] = [
@@ -98,7 +103,9 @@ describe('The Tabs Components', () => {
         fireEvent.contextMenu(testHeader);
         expect(mockContextFn).toBeCalled();
 
-        fireEvent.mouseOver(testHeader.querySelector('.mo-tab__item__op')!);
+        fireEvent.mouseOver(
+            testHeader.querySelector(`.${tabItemExtraClassName}`)!
+        );
         await waitFor(() => {
             fireEvent.click(testHeader.querySelector('.codicon-close')!);
         });

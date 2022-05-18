@@ -17,8 +17,7 @@ describe('The Tab Component', () => {
     test('Should render with classNames', () => {
         const { container } = render(<TabExtra classNames="test" />);
         const wrapper = container.querySelector('.test');
-        const innerWrapper = wrapper?.querySelector('.test__button');
-        expect(innerWrapper).toBeInTheDocument();
+        expect(wrapper).toBeInTheDocument();
     });
 
     test('Should support to the click event', () => {
@@ -27,10 +26,9 @@ describe('The Tab Component', () => {
                 <TabExtra classNames="test" onClick={fn} />
             );
             const wrapper = container.querySelector('.test');
-            const innerWrapper = wrapper?.querySelector('.test__button');
-            expect(innerWrapper).not.toBeUndefined();
+            expect(wrapper).not.toBeUndefined();
 
-            fireEvent.click(innerWrapper!);
+            fireEvent.click(wrapper!);
         });
     });
 

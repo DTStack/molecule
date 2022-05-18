@@ -43,7 +43,7 @@ describe('Test StatusBarService', () => {
         statusBarService.add(mockStatusData, Float.left);
         statusBarService.add(anotherStatusData, Float.right);
 
-        let result = statusBarService.getStatusBarItem(mockStatusData.id);
+        const result = statusBarService.getStatusBarItem(mockStatusData.id);
         expect(result).toEqual(mockStatusData);
         expect(statusBarService.getStatusBarItem(anotherStatusData.id)).toEqual(
             anotherStatusData

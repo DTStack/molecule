@@ -92,9 +92,11 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
             /**
              * TODO: bad code needs to be removed
              */
+            /* eslint-disable */
             const hoverBoundingRect = (
                 findDOMNode(component) as Element
             )?.getBoundingClientRect();
+            /* eslint-enable */
             const hoverMiddleX =
                 (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
             const clientOffset = monitor.getClientOffset();

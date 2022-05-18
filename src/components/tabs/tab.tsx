@@ -60,6 +60,7 @@ export const tabItemActiveClassName = getBEMModifier(
     'active'
 );
 export const tabItemLabelClassName = getBEMElement(tabItemClassName, 'label');
+export const tabItemExtraClassName = getBEMElement(tabItemClassName, 'extra');
 
 /**
  * The type definition for The Tab Component
@@ -152,10 +153,7 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
             {name}
             {(typeof closable === 'undefined' || closable) && (
                 <TabExtra
-                    classNames={getBEMElement(
-                        tabItemClassName,
-                        status ? 'status' : 'op'
-                    )}
+                    classNames={tabItemExtraClassName}
                     onClick={(e) => {
                         e.stopPropagation();
                         onCloseTab?.(id);

@@ -58,41 +58,24 @@
             }
         }
 
-        &:hover {
-            #{$tab}__item__op {
-                opacity: 1;
-            }
-        }
-
-        &__status,
-        &__op {
+        &__extra {
             font-size: 0;
+            padding: 0 4px;
+
+            .codicon-close {
+                opacity: 0;
+            }
         }
 
-        &__op {
-            color: var(--icon-foreground);
-            margin-left: 10px;
-            opacity: 0;
-            transform: translateY(1px);
-            width: 20px;
-
-            &__close {
-                cursor: pointer;
-                display: block;
-                font-weight: 500;
-                height: 18px;
-                width: 18px;
-            }
+        &:hover .codicon-close,
+        &--active .codicon-close {
+            opacity: 1;
         }
 
         &--active {
             background: var(--tab-activeBackground);
             border-bottom-color: var(--tab-activeBorder);
             color: var(--tab-activeForeground);
-
-            #{$tab}__item__op {
-                opacity: 1;
-            }
         }
 
         &--close {

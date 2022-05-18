@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { getBEMElement } from 'mo/common/className';
 
 interface ITabExtraProps {
     classNames?: string;
@@ -19,17 +18,14 @@ export default ({ onClick, classNames = '', renderStatus }: ITabExtraProps) => {
     };
 
     return (
-        <a
+        <div
+            role="button"
             className={classNames}
+            onClick={onClick}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
-            <div
-                className={getBEMElement(classNames, 'button')}
-                onClick={onClick}
-            >
-                {renderStatus?.(hover)}
-            </div>
-        </a>
+            {renderStatus?.(hover)}
+        </div>
     );
 };

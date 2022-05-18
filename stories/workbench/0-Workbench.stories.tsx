@@ -22,6 +22,10 @@ IDEDemo.story = {
     name: 'Workbench',
 };
 
+if (module.hot) {
+    module.hot.accept();
+}
+
 export default {
     title: 'Workbench',
     component: IDEDemo,

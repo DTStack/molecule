@@ -10,6 +10,14 @@
         display: flex;
         justify-content: left;
         text-decoration: none;
+        background-color: var(--breadcrumb-background);
+        color: var(--breadcrumb-foreground);
+
+        &:focus {
+            color: var(--breadcrumb-focusForeground);
+            outline: 1px solid var(--list-focusOutline);
+            outline-offset: -1px;
+        }
 
         &:hover {
             opacity: 0.8;

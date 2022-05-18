@@ -74,6 +74,8 @@ export function Breadcrumb(props: IBreadcrumbProps) {
                         title={title}
                         style={style}
                         href={href}
+                        tabIndex={0}
+                        onContextMenu={(e) => e.preventDefault()}
                         onClick={(e) => onClick?.(e, route)}
                         {...getDataAttributionsFromProps(rest)}
                     >

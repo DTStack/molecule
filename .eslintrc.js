@@ -38,5 +38,6 @@ module.exports = {
         'spaced-comment': 0,
         'react/display-name': 0,
         'react/prop-types': 0,
+        'new-cap': ['warn', { newIsCap: false }],
     },
 };

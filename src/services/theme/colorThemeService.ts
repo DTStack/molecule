@@ -46,7 +46,7 @@ export interface IColorThemeService {
      * Get specific theme via id
      * @param id
      */
-    getThemeById(id: string): void;
+    getThemeById(id: string): IColorTheme | undefined;
     /**
      * Get the current Color Theme
      */

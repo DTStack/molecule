@@ -7,6 +7,8 @@ exports[`Test Breadcrumb Component Should render Breadcrumb multiply levels 1`] 
   <a
     className="mo-breadcrumb__item"
     onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
   >
     <span
       className="mo-breadcrumb__label"
@@ -20,6 +22,8 @@ exports[`Test Breadcrumb Component Should render Breadcrumb multiply levels 1`] 
   <a
     className="mo-breadcrumb__item"
     onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
   >
     <span
       className="mo-breadcrumb__label"
@@ -33,6 +37,8 @@ exports[`Test Breadcrumb Component Should render Breadcrumb multiply levels 1`] 
   <a
     className="mo-breadcrumb__item"
     onClick={[Function]}
+    onContextMenu={[Function]}
+    tabIndex={0}
   >
     <span
       className="mo-breadcrumb__label"

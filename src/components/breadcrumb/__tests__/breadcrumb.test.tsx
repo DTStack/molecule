@@ -1,9 +1,13 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { fireEvent, render } from '@testing-library/react';
+import { createEvent, fireEvent, render } from '@testing-library/react';
 import { Breadcrumb } from 'mo/components/breadcrumb';
 import type { IBreadcrumbItemProps } from 'mo/components/breadcrumb';
-import { breadcrumbLabelClassName, defaultBreadcrumbClassName } from '../base';
+import {
+    breadcrumbItemClassName,
+    breadcrumbLabelClassName,
+    defaultBreadcrumbClassName,
+} from '../base';
 
 const mockData: IBreadcrumbItemProps[] = new Array(3)
     .fill(1)
@@ -125,5 +129,19 @@ describe('Test Breadcrumb Component', () => {
 
         expect(container?.title).toBe('test');
         expect(container?.dataset.jest).toBe('test');
+    });
+
+    test('Should forbid the default of contextMenu', () => {
+        const wrapper = render(<Breadcrumb routes={mockData} />);
+        const doms = wrapper.container.querySelectorAll(
+            `.${breadcrumbItemClassName}`
+        );
+        const breadcrumb = doms[0];
+
+        const myEvent = createEvent.contextMenu(breadcrumb);
+        Object.assign(myEvent, { preventDefault: jest.fn() });
+        fireEvent(breadcrumb, myEvent);
+
+        expect(myEvent.preventDefault).toBeCalledTimes(1);
     });
 });

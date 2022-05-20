@@ -4,7 +4,7 @@ export const KeyCodeString: Partial<{ [key in KeyCode]: string }> = {
     [KeyCode.Unknown]: '',
     [KeyCode.Backspace]: '⌫',
     [KeyCode.Tab]: '⇥',
-    [KeyCode.Enter]: '↩︎',
+    [KeyCode.Enter]: '↩',
     [KeyCode.PageUp]: '↑',
     [KeyCode.PageDown]: '↓',
     [KeyCode.Digit0]: '0',

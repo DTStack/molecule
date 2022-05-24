@@ -1,4 +1,10 @@
-import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
+import React, {
+    useState,
+    useRef,
+    useCallback,
+    useLayoutEffect,
+    useEffect,
+} from 'react';
 import { Icon } from 'mo/components/icon';
 import { debounce } from 'lodash';
 import { classNames } from 'mo/common/className';
@@ -56,6 +62,7 @@ export interface ITreeProps {
     className?: string;
     draggable?: boolean;
     expandKeys?: UniqueId[];
+    activeKey?: UniqueId;
     onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
     onSelect?: (node: ITreeNodeItemProps, isUpdate?) => void;
     onTreeClick?: () => void;
@@ -77,6 +84,7 @@ const TreeView = ({
     data = [],
     draggable = false,
     expandKeys: controlExpandKeys,
+    activeKey: controlActiveKey,
     onExpand,
     onDropTree,
     onRightClick,
@@ -433,6 +441,10 @@ const TreeView = ({
             }
         }
     }, [data]);
+
+    useEffect(() => {
+        controlActiveKey && setActiveKey(controlActiveKey.toString());
+    }, [controlActiveKey]);
 
     return (
         <div

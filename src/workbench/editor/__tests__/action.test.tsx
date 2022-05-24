@@ -5,6 +5,7 @@ import { expectFnCalled } from '@test/utils';
 import '@testing-library/jest-dom';
 
 import EditorAction from '../action';
+import { groupActionItemDisabledClassName } from '../base';
 
 const current: IEditorActionsProps = {
     id: '1',
@@ -70,5 +71,33 @@ describe('The Editor Component', () => {
 
         expect(container.querySelector(`.codicon-warning`)).toBeInTheDocument();
         expect(container.querySelectorAll(`.codicon-warning`)!.length).toBe(8);
+    });
+
+    test('The EditorAction item disabled', () => {
+        const mockAction: IEditorActionsProps[] = Array(8)
+            .fill(1)
+            .map((_, index) => ({
+                id: index.toString(),
+                place: 'outer',
+                icon: 'warning',
+            }));
+        mockAction[0].disabled = true;
+        const mockCallback = jest.fn();
+
+        const { container } = render(
+            <EditorAction
+                isActiveGroup={true}
+                actions={mockAction}
+                onClickActions={jest.fn()}
+            />
+        );
+
+        const liDom = container.querySelector(
+            `.${groupActionItemDisabledClassName}`
+        );
+
+        expect(liDom).not.toBeNull();
+        liDom && fireEvent.click(liDom);
+        expect(mockCallback).not.toBeCalled();
     });
 });

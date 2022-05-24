@@ -82,7 +82,9 @@ function EditorAction(props: IEditorActionProps & IEditorController) {
                 outer.map((action) => (
                     <Tooltip key={action.id} overlay={action.title}>
                         <div
-                            onClick={() => handleActionsClick(action)}
+                            onClick={() =>
+                                !action.disabled && handleActionsClick(action)
+                            }
                             className={classNames(
                                 groupActionsItemClassName,
                                 action.disabled &&

@@ -28,7 +28,7 @@ export function Panel(props: IPanel & IPanelController) {
         if (a.sortIndex && b.sortIndex) {
             return a.sortIndex - b.sortIndex;
         }
-        return 1;
+        return 0;
     });
 
     return (

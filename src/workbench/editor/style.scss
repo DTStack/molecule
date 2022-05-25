@@ -32,6 +32,10 @@
         border-bottom: 1px solid var(--editorGroupHeader-tabsBorder);
         display: flex;
         position: relative;
+
+        #{$tab}__item:hover {
+            background: var(--tab-hoverBackground);
+        }
     }
 
     &__group-tabs {

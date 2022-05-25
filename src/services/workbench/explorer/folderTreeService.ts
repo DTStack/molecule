@@ -323,7 +323,6 @@ export class FolderTreeService
     }
 
     private getCurrentRootFolderInfo(id: UniqueId) {
-        debugger;
         const currentRootFolder = this.getRootFolderById(id);
         if (!currentRootFolder) {
             return {
@@ -436,7 +435,6 @@ export class FolderTreeService
     }
 
     public update(data: IFolderTreeNodeProps) {
-        debugger;
         const { id, ...restData } = data;
         const { autoSort } = this.state;
         if (!id && id !== 0) throw new Error('Id is required in updating data');

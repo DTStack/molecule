@@ -1,3 +1,11 @@
+/*
+ * @Author: mumiao mumiao@dtstack.com
+ * @Date: 2022-05-25 14:50:36
+ * @LastEditors: mumiao mumiao@dtstack.com
+ * @LastEditTime: 2022-05-25 18:40:42
+ * @FilePath: /molecule/src/extensions/folderTree/index.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import molecule from 'mo';
 import { IExtension } from 'mo/model/extension';
 import {
@@ -10,7 +18,6 @@ export const ExtendsFolderTree: IExtension = {
     name: 'Extends FolderTree',
     activate() {
         molecule.folderTree.onRename((id) => {
-            debugger;
             molecule.folderTree.update({
                 id,
                 isEditable: true,

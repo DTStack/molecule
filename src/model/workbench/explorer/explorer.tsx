@@ -39,17 +39,21 @@ export interface IExplorerPanelItem {
 export interface IExplorer {
     data: IExplorerPanelItem[];
     headerToolBar?: IActionBarItemProps;
+    activePanelKeys?: React.Key[];
 }
 
 export class IExplorerModel implements IExplorer {
     public data: IExplorerPanelItem[];
     public headerToolBar?: IActionBarItemProps;
+    activePanelKeys?: React.Key[];
 
     constructor(
         data: IExplorerPanelItem[] = [],
-        headerToolBar?: IActionBarItemProps
+        headerToolBar?: IActionBarItemProps,
+        activePanelKeys?: React.Key[]
     ) {
         this.data = data;
         this.headerToolBar = headerToolBar;
+        this.activePanelKeys = activePanelKeys;
     }
 }

@@ -23,6 +23,7 @@ export interface IExplorerService extends Component<IExplorer> {
      * Update the panels data, as well as modify toolbar data
      */
     updatePanel(data: Partial<IExplorerPanelItem>): void;
+    setExpandedPanels(activePanelKeys: React.Key[]): void;
     /**
      * Remove a panel via id, as well as remove the corresponding action bar
      */
@@ -91,6 +92,12 @@ export class ExplorerService
     constructor() {
         super();
         this.state = container.resolve(IExplorerModel);
+    }
+
+    public setExpandedPanels(activePanelKeys: React.Key[]) {
+        this.setState({
+            activePanelKeys,
+        });
     }
 
     private toggleIcon(icon?: string) {

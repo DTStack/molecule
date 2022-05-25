@@ -9,6 +9,7 @@ import { ILocale } from 'mo/i18n/localization';
 import { Scrollable } from 'mo/components';
 import { randomId } from 'mo/common/utils';
 import LocaleNotification from 'mo/workbench/notification/notificationPane/localeNotification';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 
 function shortRandomId() {
     return Math.round(Math.random() * 1000);
@@ -138,6 +139,12 @@ export default class TestPane extends React.Component {
 
         const showHidePanel = function () {
             molecule.layout.togglePanelVisibility();
+        };
+
+        const setExpandedPanels = () => {
+            const { SAMPLE_FOLDER_PANEL_ID } = molecule.builtin.getConstants();
+
+            molecule.explorer.setExpandedPanels([SAMPLE_FOLDER_PANEL_ID]);
         };
 
         const updateOutput = () => {
@@ -494,6 +501,9 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                         <h2>Exploer:</h2>
                         <Button onClick={addExplorer}>
                             Add Explorer Panel
+                        </Button>
+                        <Button onClick={setExpandedPanels}>
+                            setExpandedPanels
                         </Button>
                         <Button onClick={addRootFolder}>Add Root Folder</Button>
                     </div>

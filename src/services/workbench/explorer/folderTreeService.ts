@@ -45,6 +45,11 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     get(id: UniqueId): IFolderTreeNodeProps | null;
     /**
+     * get the current treeNode's parentNode
+     * @param id
+     */
+    getParentNode(id: UniqueId): IFolderTreeNodeProps | null;
+    /**
      * Get the context menus for file
      */
     getFileContextMenu: () => IMenuItemProps[];
@@ -227,6 +232,15 @@ export class FolderTreeService
         return this.fileContextMenu;
     }
 
+    public getParentNode(id: UniqueId): IFolderTreeNodeProps | null {
+        const root = this.state.folderTree?.data?.[0];
+        if (!root) return null;
+        const treeHelper = new TreeViewUtil<IFolderTreeNodeProps>(root);
+        const node = treeHelper.getHashMap(id);
+        if (!node) return null;
+        return node.parent ? treeHelper.getNode(node.parent) : null;
+    }
+
     public setFileContextMenu(menus: IMenuItemProps[]) {
         this.fileContextMenu = menus;
     }
@@ -309,6 +323,7 @@ export class FolderTreeService
     }
 
     private getCurrentRootFolderInfo(id: UniqueId) {
+        debugger;
         const currentRootFolder = this.getRootFolderById(id);
         if (!currentRootFolder) {
             return {
@@ -421,6 +436,7 @@ export class FolderTreeService
     }
 
     public update(data: IFolderTreeNodeProps) {
+        debugger;
         const { id, ...restData } = data;
         const { autoSort } = this.state;
         if (!id && id !== 0) throw new Error('Id is required in updating data');

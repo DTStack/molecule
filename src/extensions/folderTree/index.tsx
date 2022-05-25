@@ -10,6 +10,7 @@ export const ExtendsFolderTree: IExtension = {
     name: 'Extends FolderTree',
     activate() {
         molecule.folderTree.onRename((id) => {
+            debugger;
             molecule.folderTree.update({
                 id,
                 isEditable: true,

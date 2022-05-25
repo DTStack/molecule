@@ -5,6 +5,7 @@ import { container } from 'tsyringe';
 import { EditorEvent, IEditorTab } from 'mo/model';
 import { expectFnCalled } from '@test/utils';
 import { modules } from 'mo/services/builtinService/const';
+import { editor as MonacoEditor } from 'mo/monaco';
 import { cloneDeep } from 'lodash';
 
 describe('Test EditorService', () => {
@@ -153,6 +154,39 @@ describe('Test EditorService', () => {
         expect(
             editor.getTabById(mockTab.id!, editor.getState().current!.id!)!.name
         ).toBe('updated1');
+    });
+
+    test('Set the editor text for a specific group', () => {
+        const editor = new EditorService();
+        const tabData = {
+            ...mockTab,
+            data: {
+                value: 'tabData',
+            },
+        };
+        editor.open(tabData);
+        const { groups } = editor.getState();
+        if (groups) {
+            const modifyText = 'newValue';
+            const editorData = {
+                value: '',
+            };
+            const editorInstance = {} as MonacoEditor.IStandaloneCodeEditor;
+            editorInstance.getModel = jest.fn(() => {
+                return {
+                    getValue: () => editorData.value,
+                    setValue: (newValue: string) => {
+                        editorData.value = newValue;
+                    },
+                } as MonacoEditor.ITextModel;
+            });
+
+            groups[0].editorInstance = editorInstance;
+            editor.setGroupEditorValue(groups[0], modifyText);
+            expect(groups[0].editorInstance?.getModel()?.getValue()).toBe(
+                modifyText
+            );
+        }
     });
 
     test('Close a tab', () => {

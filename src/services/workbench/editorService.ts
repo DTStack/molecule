@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep, isString } from 'lodash';
 import { Component } from 'mo/react';
 import {
     EditorModel,
@@ -41,6 +41,12 @@ export interface IEditorService extends Component<IEditor> {
      * @param groupId
      */
     updateTab(tab: IEditorTab, groupId?: UniqueId): IEditorTab;
+    /**
+     * Updates the editor content for a specific group
+     * @param group The editorInstance is required
+     * @param value
+     */
+    setGroupEditorValue(group: IEditorGroup, value: string): void;
     /**
      * Specify the Entry page of Workbench
      */
@@ -308,6 +314,7 @@ export class EditorService
 
     public updateTab(tab: IEditorTab, groupId?: UniqueId): IEditorTab {
         let updatedTab;
+        const editorValue = tab?.data?.value;
         if (groupId) {
             const group = this.getGroupById(groupId);
 
@@ -317,8 +324,9 @@ export class EditorService
                 if (tabData) {
                     updatedTab = Object.assign(tabData, tab);
                 }
-
                 if (group.activeTab === tab.id) {
+                    isString(editorValue) &&
+                        this.setGroupEditorValue(group, editorValue);
                     updatedTab = Object.assign(group.tab, tab);
                 }
                 this.updateGroup(groupId, group);
@@ -336,6 +344,8 @@ export class EditorService
                 }
 
                 if (group.activeTab === tab.id) {
+                    isString(editorValue) &&
+                        this.setGroupEditorValue(group, editorValue);
                     updatedTab = Object.assign(group.tab, tab);
                 }
             });
@@ -349,7 +359,18 @@ export class EditorService
                 groups,
             });
         }
+
         return updatedTab;
+    }
+
+    public setGroupEditorValue(group: IEditorGroup, value: string) {
+        const model = group.editorInstance?.getModel();
+        if (!model) return;
+
+        const currentValue = model?.getValue();
+        if (currentValue !== value) {
+            model?.setValue(value);
+        }
     }
 
     public closeTab(tabId: UniqueId, groupId: UniqueId) {

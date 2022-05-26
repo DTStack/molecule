@@ -255,6 +255,10 @@ export class EditorController extends Controller implements IEditorController {
             const tab = current?.tab;
             if (!tab) return;
 
+            const currentEditorUri = current.editorInstance?.getModel()?.uri;
+            const updateEditorUri = editorInstance?.getModel()?.uri;
+            if (currentEditorUri?.path !== updateEditorUri?.path) return;
+
             const newValue = editorInstance.getModel()?.getValue();
             const updatedTab = {
                 ...tab,

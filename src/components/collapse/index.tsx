@@ -40,9 +40,9 @@ export interface ICollapseItem extends HTMLElementProps {
 }
 
 export interface ICollapseProps extends HTMLElementProps {
-    expandPanelKeys: React.Key[];
+    activePanelKeys?: UniqueId[];
     data?: ICollapseItem[];
-    onCollapseChange?: (keys: React.Key[]) => void;
+    onCollapseChange?: (keys: UniqueId[]) => void;
     onResize?: (resizes: number[]) => void;
     onToolbarClick?: (
         item: IActionBarItemProps,
@@ -61,7 +61,7 @@ export const HEADER_HEIGTH = 26;
 
 export function Collapse({
     data = [],
-    expandPanelKeys = [],
+    activePanelKeys: controlActivePanelKeys = [],
     className,
     title,
     style,
@@ -72,7 +72,7 @@ export function Collapse({
     ...restProps
 }: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] =
-        useState<React.Key[]>(expandPanelKeys);
+        useState<UniqueId[]>(controlActivePanelKeys);
 
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
@@ -122,7 +122,7 @@ export function Collapse({
         return null;
     };
 
-    const handleChangeCallback = (key: React.Key) => {
+    const handleChangeCallback = (key: UniqueId) => {
         const currentKeys = activePanelKeys.concat();
         if (currentKeys.includes(key)) {
             currentKeys.splice(currentKeys.indexOf(key), 1);
@@ -246,8 +246,8 @@ export function Collapse({
     }, [activePanelKeys, data]);
 
     useLayoutEffect(() => {
-        setActivePanelKeys(expandPanelKeys);
-    }, [expandPanelKeys]);
+        setActivePanelKeys(controlActivePanelKeys => controlActivePanelKeys);
+    }, []);
 
     // perform the next resizes value via sizes
     // the effects of data changes will lead to perform recalculate sizes, which cause recalculate the resizers

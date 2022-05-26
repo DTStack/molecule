@@ -36,7 +36,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
             <Content>
                 <Collapse
                     data={data}
-                    expandPanelKeys={activePanelKeys}
+                    activePanelKeys={activePanelKeys}
                     onCollapseChange={onCollapseChange}
                     onToolbarClick={onToolbarClick}
                 />

@@ -45,12 +45,12 @@ export interface IExplorer {
 export class IExplorerModel implements IExplorer {
     public data: IExplorerPanelItem[];
     public headerToolBar?: IActionBarItemProps;
-    activePanelKeys?: React.Key[];
+    public activePanelKeys?: UniqueId[];
 
     constructor(
         data: IExplorerPanelItem[] = [],
         headerToolBar?: IActionBarItemProps,
-        activePanelKeys?: React.Key[]
+        activePanelKeys?: UniqueId[]
     ) {
         this.data = data;
         this.headerToolBar = headerToolBar;

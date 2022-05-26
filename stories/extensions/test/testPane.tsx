@@ -9,7 +9,6 @@ import { ILocale } from 'mo/i18n/localization';
 import { Scrollable } from 'mo/components';
 import { randomId } from 'mo/common/utils';
 import LocaleNotification from 'mo/workbench/notification/notificationPane/localeNotification';
-import { DEFAULT_EXTENSIONS } from '@babel/core';
 
 function shortRandomId() {
     return Math.round(Math.random() * 1000);
@@ -142,8 +141,8 @@ export default class TestPane extends React.Component {
         };
 
         const setExpandedPanels = () => {
-            const { SAMPLE_FOLDER_PANEL_ID } = molecule.builtin.getConstants();
-
+            const constants = molecule.builtin.getConstants();
+            const { SAMPLE_FOLDER_PANEL_ID } = constants as { SAMPLE_FOLDER_PANEL_ID: string }
             molecule.explorer.setExpandedPanels([SAMPLE_FOLDER_PANEL_ID]);
         };
 

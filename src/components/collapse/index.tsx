@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { isEqual } from 'lodash';
 
 import { classNames } from 'mo/common/className';
 import { HTMLElementProps, UniqueId } from 'mo/common/types';
@@ -61,7 +62,7 @@ export const HEADER_HEIGTH = 26;
 
 export function Collapse({
     data = [],
-    activePanelKeys: controlActivePanelKeys = [],
+    activePanelKeys: controlActivePanelKeys,
     className,
     title,
     style,
@@ -71,9 +72,7 @@ export function Collapse({
     onResize,
     ...restProps
 }: ICollapseProps) {
-    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(
-        controlActivePanelKeys
-    );
+    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>([]);
 
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
@@ -83,6 +82,16 @@ export function Collapse({
     // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
     const first = useRef(true);
+
+    const useCampare = (value: UniqueId[], compare: Function) => {
+        const ref = useRef<UniqueId[]>();
+
+        if (!compare(value, ref.current)) {
+            ref.current = value;
+        }
+
+        return ref.current;
+    };
 
     // compare two sizes to find the change one
     const compareTheSizes = (sizes: number[], otherSizes: number[]) => {
@@ -246,9 +255,11 @@ export function Collapse({
         first.current = false;
     }, [activePanelKeys, data]);
 
+    const compareObject = useCampare(controlActivePanelKeys, isEqual);
+
     useLayoutEffect(() => {
-        setActivePanelKeys((controlActivePanelKeys) => controlActivePanelKeys);
-    }, []);
+        setActivePanelKeys(compareObject);
+    }, [compareObject]);
 
     // perform the next resizes value via sizes
     // the effects of data changes will lead to perform recalculate sizes, which cause recalculate the resizers
@@ -297,6 +308,7 @@ export function Collapse({
                 onResizeStrategy={handleStrategies}
             >
                 {data.map((panel, index) => {
+                    debugger;
                     const isActive = activePanelKeys.includes(panel.id);
                     return (
                         <Pane key={panel.id} minSize={HEADER_HEIGTH}>

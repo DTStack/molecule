@@ -39,7 +39,7 @@ export interface IExplorerPanelItem {
 export interface IExplorer {
     data: IExplorerPanelItem[];
     headerToolBar?: IActionBarItemProps;
-    activePanelKeys?: React.Key[];
+    activePanelKeys?: UniqueId[];
 }
 
 export class IExplorerModel implements IExplorer {

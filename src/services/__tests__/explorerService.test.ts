@@ -8,7 +8,7 @@ import { BuiltinService } from '../builtinService';
 import { modules } from '../builtinService/const';
 
 const explorerService = container.resolve(ExplorerService);
-const builtinService = container.resolve(BuiltinService)
+const builtinService = container.resolve(BuiltinService);
 
 const panelData: IExplorerPanelItem = {
     id: 'test',
@@ -303,10 +303,11 @@ describe('Test the Explorer Service', () => {
 
     test('Should support to set expanded panels', () => {
         const constants = builtinService.getConstants();
-        const { SAMPLE_FOLDER_PANEL_ID } = constants as { SAMPLE_FOLDER_PANEL_ID: string }
+        const { SAMPLE_FOLDER_PANEL_ID } = constants as {
+            SAMPLE_FOLDER_PANEL_ID: string;
+        };
         explorerService.setExpandedPanels([SAMPLE_FOLDER_PANEL_ID]);
         const state = explorerService.getState();
         expect(state.activePanelKeys).toEqual([SAMPLE_FOLDER_PANEL_ID]);
     });
-
 });

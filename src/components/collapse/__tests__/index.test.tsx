@@ -6,7 +6,6 @@ import { sleep } from '@test/utils';
 import { sashItemClassName } from 'mo/components/split/base';
 import { collapsePaneClassName } from '../base';
 
-
 afterEach(cleanup);
 
 describe('Test The Collapse Component', () => {
@@ -455,9 +454,10 @@ describe('Test The Collapse Component', () => {
                 activePanelKeys={['mock2']}
             />
         );
-        const metaData = ((container.querySelector('div[data-collapse-id="mock2"]')) as any)?.dataset.collapseId;
+        const metaData = (
+            container.querySelector('div[data-collapse-id="mock2"]') as any
+        )?.dataset.collapseId;
 
         expect(metaData).toBe('mock2');
-
     });
 });

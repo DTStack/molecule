@@ -71,8 +71,9 @@ export function Collapse({
     onResize,
     ...restProps
 }: ICollapseProps) {
-    const [activePanelKeys, setActivePanelKeys] =
-        useState<UniqueId[]>(controlActivePanelKeys);
+    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(
+        controlActivePanelKeys
+    );
 
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
@@ -246,7 +247,7 @@ export function Collapse({
     }, [activePanelKeys, data]);
 
     useLayoutEffect(() => {
-        setActivePanelKeys(controlActivePanelKeys => controlActivePanelKeys);
+        setActivePanelKeys((controlActivePanelKeys) => controlActivePanelKeys);
     }, []);
 
     // perform the next resizes value via sizes

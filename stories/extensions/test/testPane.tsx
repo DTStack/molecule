@@ -142,7 +142,9 @@ export default class TestPane extends React.Component {
 
         const setExpandedPanels = () => {
             const constants = molecule.builtin.getConstants();
-            const { SAMPLE_FOLDER_PANEL_ID } = constants as { SAMPLE_FOLDER_PANEL_ID: string }
+            const { SAMPLE_FOLDER_PANEL_ID } = constants as {
+                SAMPLE_FOLDER_PANEL_ID: string;
+            };
             molecule.explorer.setExpandedPanels([SAMPLE_FOLDER_PANEL_ID]);
         };
 

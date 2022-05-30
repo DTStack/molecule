@@ -45,6 +45,11 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     get(id: UniqueId): IFolderTreeNodeProps | null;
     /**
+     * get the current treeNode's parentNode
+     * @param id
+     */
+    getParentNode(id: UniqueId): IFolderTreeNodeProps | null;
+    /**
      * Get the context menus for file
      */
     getFileContextMenu: () => IMenuItemProps[];
@@ -225,6 +230,15 @@ export class FolderTreeService
 
     public getFileContextMenu() {
         return this.fileContextMenu;
+    }
+
+    public getParentNode(id: UniqueId): IFolderTreeNodeProps | null {
+        const root = this.state.folderTree?.data?.[0];
+        if (!root) return null;
+        const treeHelper = new TreeViewUtil<IFolderTreeNodeProps>(root);
+        const node = treeHelper.getHashMap(id);
+        if (!node) return null;
+        return node.parent ? treeHelper.getNode(node.parent) : null;
     }
 
     public setFileContextMenu(menus: IMenuItemProps[]) {

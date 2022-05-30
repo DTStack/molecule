@@ -494,4 +494,46 @@ describe('Test StatusBarService', () => {
             folderTreeService.emit(FolderTreeEvent.onExpandKeys);
         });
     });
+
+    test('Should support to get the current treeNodes parentNode', () => {
+        const mockRootTree: IFolderTreeNodeProps = {
+            id: '0',
+            name: 'test0',
+            fileType: 'RootFolder',
+            location: 'test0',
+        };
+
+        const mockFolderData = {
+            id: '2',
+            name: 'test1-1',
+            icon: 'test',
+            isLeaf: false,
+            fileType: FileTypes.Folder,
+        };
+
+        const mockFileData = {
+            id: '3',
+            name: 'test1-2',
+            icon: 'test',
+            isLeaf: true,
+            fileType: FileTypes.File,
+        };
+
+        folderTreeService.add(mockRootTree);
+        expect(folderTreeService.get(mockRootTree.id)).toEqual(mockRootTree);
+
+        folderTreeService.add(mockFolderData, mockRootTree.id);
+        expect(folderTreeService.get(mockFolderData.id)).toEqual(
+            mockFolderData
+        );
+
+        folderTreeService.add(mockFileData, mockFolderData.id);
+        expect(folderTreeService.get(mockFileData.id)).toEqual(mockFileData);
+
+        const expectedData = folderTreeService.get(mockFolderData.id);
+
+        expect(folderTreeService.getParentNode(mockFileData.id)).toEqual(
+            expectedData
+        );
+    });
 });

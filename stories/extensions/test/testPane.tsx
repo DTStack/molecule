@@ -412,6 +412,7 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                     children,
                 })
             );
+
             notice(
                 `The root folder has been added to Explorer and you can switch to Explorer to view it`
             );

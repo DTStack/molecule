@@ -1,6 +1,4 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { isEqual } from 'lodash';
-
 import { classNames } from 'mo/common/className';
 import { HTMLElementProps, UniqueId } from 'mo/common/types';
 import { getDataAttributionsFromProps } from 'mo/common/dom';
@@ -82,16 +80,6 @@ export function Collapse({
     // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
     const first = useRef(true);
-
-    const useCampare = (value: UniqueId[], compare: Function) => {
-        const ref = useRef<UniqueId[]>();
-
-        if (!compare(value, ref.current)) {
-            ref.current = value;
-        }
-
-        return ref.current!;
-    };
 
     // compare two sizes to find the change one
     const compareTheSizes = (sizes: number[], otherSizes: number[]) => {
@@ -255,12 +243,9 @@ export function Collapse({
         first.current = false;
     }, [activePanelKeys, data]);
 
-    const compareActivePanelKeys = useCampare(controlActivePanelKeys, isEqual);
-
     useLayoutEffect(() => {
-        setActivePanelKeys(compareActivePanelKeys);
-    }, [compareActivePanelKeys]);
-
+        setActivePanelKeys(controlActivePanelKeys);
+    }, [controlActivePanelKeys]);
     // perform the next resizes value via sizes
     // the effects of data changes will lead to perform recalculate sizes, which cause recalculate the resizers
     // so don't need to add data into deps

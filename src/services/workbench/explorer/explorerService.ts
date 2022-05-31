@@ -23,6 +23,10 @@ export interface IExplorerService extends Component<IExplorer> {
      * Update the panels data, as well as modify toolbar data
      */
     updatePanel(data: Partial<IExplorerPanelItem>): void;
+    /**
+     *
+     * Set expanded Panels of Explore
+     */
     setExpandedPanels(activePanelKeys: UniqueId[]): void;
     /**
      * Remove a panel via id, as well as remove the corresponding action bar

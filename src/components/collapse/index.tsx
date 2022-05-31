@@ -60,7 +60,7 @@ export const HEADER_HEIGTH = 26;
 
 export function Collapse({
     data = [],
-    activePanelKeys: controlActivePanelKeys = [],
+    activePanelKeys: controlActivePanelKeys,
     className,
     title,
     style,
@@ -244,7 +244,8 @@ export function Collapse({
     }, [activePanelKeys, data]);
 
     useLayoutEffect(() => {
-        setActivePanelKeys(controlActivePanelKeys);
+        Array.isArray(controlActivePanelKeys) &&
+            setActivePanelKeys(controlActivePanelKeys);
     }, [controlActivePanelKeys]);
     // perform the next resizes value via sizes
     // the effects of data changes will lead to perform recalculate sizes, which cause recalculate the resizers

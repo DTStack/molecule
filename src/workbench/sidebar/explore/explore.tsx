@@ -13,7 +13,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
     props: IExplorerProps
 ) => {
     const {
-        activePanelKeys = [],
+        activePanelKeys,
         data = [],
         headerToolBar,
         onClick,

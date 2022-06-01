@@ -52,6 +52,7 @@ export function Editor(
                 <EditorGroup
                     editorOptions={editorOptions}
                     currentGroup={current!}
+                    group={groups[0]}
                     {...groups[0]}
                     {...getEvents(groups[0].id!)}
                 />
@@ -74,6 +75,7 @@ export function Editor(
                             <EditorGroup
                                 editorOptions={editorOptions}
                                 currentGroup={current!}
+                                group={g}
                                 {...g}
                                 {...getEvents(g.id!)}
                             />

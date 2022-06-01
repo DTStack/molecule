@@ -3,15 +3,17 @@ import { useRef } from 'react';
 import { findDOMNode } from 'react-dom';
 import { useDrag, useDrop } from 'react-dnd';
 
+import { IEditorGroup } from 'mo/model';
+import type { UniqueId } from 'mo/common/types';
 import {
     classNames,
     getBEMElement,
     getBEMModifier,
     prefixClaName,
 } from 'mo/common/className';
+
 import TabExtra from './tabExtra';
 import { Icon } from '../icon';
-import type { UniqueId } from 'mo/common/types';
 
 export interface ITabEvent {
     onDrag?: (
@@ -49,7 +51,9 @@ export interface ITabProps<T = any, P = any> {
     icon?: string | JSX.Element;
     id: UniqueId;
     name?: string;
-    renderPane?: ((item: P) => React.ReactNode) | React.ReactNode;
+    renderPane?:
+        | ((item: P, tab?: ITabProps, group?: IEditorGroup) => React.ReactNode)
+        | React.ReactNode;
     data?: T;
 }
 

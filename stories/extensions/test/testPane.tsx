@@ -219,6 +219,30 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
                 });
             }
         };
+        const newPane = function () {
+            const key = shortRandomId();
+            const name = `pane-${key}.ts`;
+            const tabData: IEditorTab = {
+                id: `${key}`,
+                name,
+                icon: 'selection',
+                data: {},
+                breadcrumb: [{ id: `${key}`, name }],
+                renderPane: (tabData, tab, group) => {
+                    console.log(tabData, tab, group);
+                    const style: React.CSSProperties = {
+                        display: 'flex',
+                        width: '100%',
+                        height: '100%',
+                        fontSize: 48,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    };
+                    return <div style={style}>{name}</div>;
+                },
+            };
+            molecule.editor.open(tabData);
+        };
 
         const updateEntryPage = () => {
             const style: React.CSSProperties = {
@@ -427,6 +451,7 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                         <Button onClick={toggleEditorStatus}>
                             Toggle Editor status
                         </Button>
+                        <Button onClick={newPane}>New Pane</Button>
                         <Button onClick={updateEntryPage}>
                             Update Entry Page
                         </Button>

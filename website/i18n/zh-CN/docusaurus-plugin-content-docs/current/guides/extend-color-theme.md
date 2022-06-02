@@ -93,13 +93,11 @@ export { OneDarkPro };
 ```js title="src/App.js"
 import { OneDarkPro } from './extensions/OneDark-Pro';
 
-function App() {
-    return (
-        <MoleculeProvider extensions={[OneDarkPro]}>
-            <Workbench />
-        </MoleculeProvider>
-    );
-}
+const moInstance = create({
+    extensions: [OneDarkPro],
+});
+
+const App = () => moInstance.render(<Workbench />);
 ```
 
 我们可以通过快捷键 `Command/Ctrl + K` 快速访问**「颜色主题面板」**。
@@ -216,19 +214,17 @@ export { MyTheme };
 
 ### 应用颜色主题扩展
 
-同样, 自定义的主题扩展程序也是在 `App.js` 中的 [MoleculeProvider](../api/classes/MoleculeProvider) 组件中引入：
+同样, 自定义的主题扩展程序也是在 `App.js` 中的 [create](../api#create) 方法中传入：
 
 ```js title="src/App.js"
 import { OneDarkPro } from './extensions/OneDark-Pro';
 import { MyTheme } from './extensions/MyTheme';
 
-function App() {
-    return (
-        <MoleculeProvider extensions={[OneDarkPro, MyTheme]}>
-            <Workbench />
-        </MoleculeProvider>
-    );
-}
+const moInstance = create({
+    extensions: [OneDarkPro, MyTheme],
+});
+
+const App = () => moInstance.render(<Workbench />);
 ```
 
 打开在**颜色主题快速访问面板**，我们应该就能看到 `My Theme` 的主题了。选择该主题后，底部 [StatusBar](extend-workbench#状态栏statusbar) 的**背景颜色**即变成了红色。

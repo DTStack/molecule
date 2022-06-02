@@ -93,13 +93,9 @@ Finally, we add the extension package in `App.js`
 ```js title="src/App.js"
 import { OneDarkPro } from './extensions/OneDark-Pro';
 
-function App() {
-    return (
-        <MoleculeProvider extensions={[OneDarkPro]}>
-            <Workbench />
-        </MoleculeProvider>
-    );
-}
+const moInstance = create({
+    extensions: [OneDarkPro],
+});
 ```
 
 We can use the shortcut key `Command/Ctrl + K` to quickly access the **Color Theme Panel**.
@@ -215,19 +211,15 @@ export { MyTheme };
 
 ### Apply color theme extension
 
-Similarly, custom theme extensions are also need to be introduced in the [MoleculeProvider](../api/classes/MoleculeProvider) component in `App.js`:
+Similarly, custom theme extensions are also need to be introduced in the params of [create](../api#create) component in `App.js`:
 
 ```js title="src/App.js"
 import { OneDarkPro } from './extensions/OneDark-Pro';
 import { MyTheme } from './extensions/MyTheme';
 
-function App() {
-    return (
-        <MoleculeProvider extensions={[OneDarkPro, MyTheme]}>
-            <Workbench />
-        </MoleculeProvider>
-    );
-}
+const moInstance = create({
+    extensions: [OneDarkPro, MyTheme],
+});
 ```
 
 Open **the color theme quick access panel**, we should be able to see the theme of `My Theme`. After selecting this theme, the **background color** of the [StatusBar](extend-workbench#statusbar) at the bottom changes to red.

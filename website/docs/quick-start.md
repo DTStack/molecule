@@ -47,16 +47,14 @@ Open the `src/App.js` file and replace the contents of the file with the followi
 
 ```js title="src/App.js"
 import React from 'react';
-import { MoleculeProvider, Workbench } from '@dtinsight/molecule';
+import { create, Workbench } from '@dtinsight/molecule';
 import '@dtinsight/molecule/esm/style/mo.css';
 
-function App() {
-    return (
-        <MoleculeProvider extensions={[]}>
-            <Workbench />
-        </MoleculeProvider>
-    );
-}
+const moInstance = create({
+    extensions: [],
+});
+
+const App = () => moInstance.render(<Workbench />);
 
 export default App;
 ```

@@ -67,32 +67,30 @@ molecule.extension.getExtension(extensionId);
 ```ts
 import React from 'react';
 import molecule from '@dtinsight/molecule';
-import { MoleculeProvider, Workbench } from '@dtinsight/molecule';
+import { create, Workbench } from '@dtinsight/molecule';
 import '@dtinsight/molecule/esm/style/mo.css';
 
 // All Extension instances
 import extensions from './extensions';
 
-molecule.extension.inactive((extension: IExtension) => {
-    // Inactive the Extension which id is ExampleExt
-    if (extension.id === 'ExampleExt') {
-        return true;
-    }
+const moInstance = create({
+    extensions,
 });
 
-function App() {
-    return (
-        <MoleculeProvider extensions={extensions}>
-            <Workbench />
-        </MoleculeProvider>
-    );
-}
+moInstance.onBeforeLoad(() => {
+    molecule.extension.inactive((ext) => {
+        // Inactive the Extension which id is ExampleExt
+        return extension.id === 'ExampleExt';
+    });
+});
+
+const App = () => moInstance.render(<Workbench />);
 
 export default App;
 ```
 
 :::caution
-需要注意到是，[inactive][inactive-url] 方法，需要在 [MoleculeProvider](../api/classes/MoleculeProvider) 之前声明
+需要注意到是，[inactive][inactive-url] 方法，需要在 [create](../api#create) 导出的生命周期 onBeforeLoad 中使用。
 :::
 
 [inactive-url]: ../api/interfaces/molecule.IExtensionService#inactive

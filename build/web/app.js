@@ -1,14 +1,17 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import { Workbench, MoleculeProvider } from '../../esm';
+import { create, Workbench } from '../../esm';
 import '../../esm/style/mo.css';
 
-const App = () => (
-    <StrictMode>
-        <MoleculeProvider>
-            <Workbench />
-        </MoleculeProvider>
-    </StrictMode>
-);
+const moInstance = create({
+    extensions: [],
+});
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export const App = () => moInstance.render(<Workbench />);
+
+ReactDOM.render(
+    <StrictMode>
+        <App />
+    </StrictMode>,
+    document.getElementById('root')
+);

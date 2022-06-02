@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import molecule, { create, Workbench } from 'mo';
 import InstanceService from 'mo/services/instanceService';
-import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { clearInstance } from '../create';
 import Provider from '../molecule';
 import { render } from '@testing-library/react';
@@ -15,13 +14,6 @@ describe('The create function', () => {
     test('Should create an instance', () => {
         const instance = create({});
         expect(instance).toBeInstanceOf(InstanceService);
-    });
-
-    test('Should log error when call method before initialize', () => {
-        expectLoggerErrorToBeCalled(() => {
-            molecule.editor.isOpened(1);
-            create({});
-        });
     });
 
     test('Should to be a standalone', () => {

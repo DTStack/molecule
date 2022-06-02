@@ -4,9 +4,6 @@ import 'mo/style/mo.scss';
 import { customExtensions } from '../extensions';
 import '../demo.scss';
 
-// this line will console.warn a tip
-console.log('molecule:', molecule.editor.isOpened(1));
-
 const moInstance = create({
     extensions: customExtensions,
     defaultLocale: 'japanese',

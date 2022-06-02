@@ -5,9 +5,10 @@ import * as controllers from 'mo/controller';
 import type { Controller } from 'mo/react';
 import { defaultExtensions } from 'mo/extensions';
 import { GlobalEvent } from 'mo/common/event';
-import { IConfigProps, IServiceCollection } from 'mo/provider/create';
+import { IConfigProps } from 'mo/provider/create';
 import { IExtension } from 'mo/model';
 import { STORE_KEY } from 'mo/i18n/localeService';
+import molecule from 'mo';
 
 interface IInstanceServiceProps {
     getConfig: () => IConfigProps;
@@ -25,16 +26,13 @@ export default class InstanceService
     extends GlobalEvent
     implements IInstanceServiceProps
 {
-    private _services: IServiceCollection;
     private _config = {
         extensions: defaultExtensions.concat(),
         defaultLocale: 'en',
     };
 
-    constructor(config: IConfigProps, services: IServiceCollection) {
+    constructor(config: IConfigProps) {
         super();
-        this._services = services;
-
         if (config.defaultLocale) {
             this._config.defaultLocale = config.defaultLocale;
         }
@@ -50,7 +48,7 @@ export default class InstanceService
             return pre.concat(languages);
         }, [] as ILocale[]);
 
-        this._services.i18n.initialize(
+        molecule.i18n.initialize(
             locales,
             localStorage.getItem(STORE_KEY) || this._config.defaultLocale
         );
@@ -64,7 +62,7 @@ export default class InstanceService
         this.emit(InstanceHookKind.beforeInit);
 
         // get all locales including builtin and custom locales
-        const [languages, others] = this._services.extension.splitLanguagesExts(
+        const [languages, others] = molecule.extension.splitLanguagesExts(
             this._config.extensions
         );
         this.initialLocaleService(languages);
@@ -77,11 +75,9 @@ export default class InstanceService
         });
 
         this.emit(InstanceHookKind.beforeLoad);
-        this._services.extension.load(others);
+        molecule.extension.load(others);
 
-        this._services.monacoService.initWorkspace(
-            this._services.layout.container!
-        );
+        molecule.monacoService.initWorkspace(molecule.layout.container!);
 
         return workbench;
     };

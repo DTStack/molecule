@@ -440,4 +440,24 @@ describe('Test The Collapse Component', () => {
             toolbar: [{ id: 'toolbar1', 'data-testid': 'toolbar1' }],
         });
     });
+    test('Should support to set activePanelKeys', async () => {
+        const { container } = render(
+            <Collapse
+                data={[
+                    { id: 'mock1', name: 'test1', config: { grow: 0 } },
+                    {
+                        id: 'mock2',
+                        name: 'mock2',
+                    },
+                    { id: 'mock3', name: 'test3' },
+                ]}
+                activePanelKeys={['mock2']}
+            />
+        );
+        const metaData = (
+            container.querySelector('div[data-collapse-id="mock2"]') as any
+        )?.dataset.collapseId;
+
+        expect(metaData).toBe('mock2');
+    });
 });

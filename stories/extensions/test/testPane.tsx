@@ -140,6 +140,14 @@ export default class TestPane extends React.Component {
             molecule.layout.togglePanelVisibility();
         };
 
+        const setExpandedPanels = () => {
+            const constants = molecule.builtin.getConstants();
+            const { SAMPLE_FOLDER_PANEL_ID } = constants as {
+                SAMPLE_FOLDER_PANEL_ID: string;
+            };
+            molecule.explorer.setExpandedPanels([SAMPLE_FOLDER_PANEL_ID]);
+        };
+
         const updateOutput = () => {
             const { PANEL_OUTPUT } = molecule.builtin.getConstants();
             const editorIns = molecule.panel.outputEditorInstance;
@@ -495,6 +503,9 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                         <h2>Exploer:</h2>
                         <Button onClick={addExplorer}>
                             Add Explorer Panel
+                        </Button>
+                        <Button onClick={setExpandedPanels}>
+                            setExpandedPanels
                         </Button>
                         <Button onClick={addRootFolder}>Add Root Folder</Button>
                     </div>

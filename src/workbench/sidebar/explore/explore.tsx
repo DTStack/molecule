@@ -13,6 +13,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
     props: IExplorerProps
 ) => {
     const {
+        activePanelKeys,
         data = [],
         headerToolBar,
         onClick,
@@ -35,6 +36,7 @@ export const Explorer: React.FunctionComponent<IExplorerProps> = (
             <Content>
                 <Collapse
                     data={data}
+                    activePanelKeys={activePanelKeys}
                     onCollapseChange={onCollapseChange}
                     onToolbarClick={onToolbarClick}
                 />

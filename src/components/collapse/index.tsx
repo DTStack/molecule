@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
-
 import { classNames } from 'mo/common/className';
 import { HTMLElementProps, UniqueId } from 'mo/common/types';
 import { getDataAttributionsFromProps } from 'mo/common/dom';
@@ -40,8 +39,9 @@ export interface ICollapseItem extends HTMLElementProps {
 }
 
 export interface ICollapseProps extends HTMLElementProps {
+    activePanelKeys?: UniqueId[];
     data?: ICollapseItem[];
-    onCollapseChange?: (keys: React.Key[]) => void;
+    onCollapseChange?: (keys: UniqueId[]) => void;
     onResize?: (resizes: number[]) => void;
     onToolbarClick?: (
         item: IActionBarItemProps,
@@ -60,6 +60,7 @@ export const HEADER_HEIGTH = 26;
 
 export function Collapse({
     data = [],
+    activePanelKeys: controlActivePanelKeys,
     className,
     title,
     style,
@@ -69,7 +70,8 @@ export function Collapse({
     onResize,
     ...restProps
 }: ICollapseProps) {
-    const [activePanelKeys, setActivePanelKeys] = useState<React.Key[]>([]);
+    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>([]);
+
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
     const [sizes, setSizes] = useState<number[]>(
@@ -118,7 +120,7 @@ export function Collapse({
         return null;
     };
 
-    const handleChangeCallback = (key: React.Key) => {
+    const handleChangeCallback = (key: UniqueId) => {
         const currentKeys = activePanelKeys.concat();
         if (currentKeys.includes(key)) {
             currentKeys.splice(currentKeys.indexOf(key), 1);
@@ -241,6 +243,10 @@ export function Collapse({
         first.current = false;
     }, [activePanelKeys, data]);
 
+    useLayoutEffect(() => {
+        Array.isArray(controlActivePanelKeys) &&
+            setActivePanelKeys(controlActivePanelKeys);
+    }, [controlActivePanelKeys]);
     // perform the next resizes value via sizes
     // the effects of data changes will lead to perform recalculate sizes, which cause recalculate the resizers
     // so don't need to add data into deps

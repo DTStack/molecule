@@ -66,33 +66,30 @@ In some cases, you may want to **disable** some built-in extensions in Molecule.
 
 ```ts
 import React from 'react';
-import molecule from '@dtinsight/molecule';
-import { MoleculeProvider, Workbench } from '@dtinsight/molecule';
+import molecule, { create, Workbench } from '@dtinsight/molecule';
 import '@dtinsight/molecule/esm/style/mo.css';
 
 // All Extension instances
 import extensions from './extensions';
 
-molecule.extension.inactive((extension: IExtension) => {
-    // Inactive the Extension which id is ExampleExt
-    if (extension.id === 'ExampleExt') {
-        return true;
-    }
+const moInstance = create({
+    extensions,
 });
 
-function App() {
-    return (
-        <MoleculeProvider extensions={extensions}>
-            <Workbench />
-        </MoleculeProvider>
-    );
-}
+moInstance.onBeforeLoad(() => {
+    molecule.extension.inactive((ext) => {
+        // Inactive the Extension which id is ExampleExt
+        return extension.id === 'ExampleExt';
+    });
+});
+
+const App = () => moInstance.render(<Workbench />);
 
 export default App;
 ```
 
 :::caution
-It should be noted that the [inactive][inactive-url] method needs to be declared before [MoleculeProvider](../api/classes/MoleculeProvider).
+It should be noted that the [inactive][inactive-url] method needs to be declared after [create](../api#create).
 :::
 
 [inactive-url]: ../api/interfaces/molecule.IExtensionService#inactive

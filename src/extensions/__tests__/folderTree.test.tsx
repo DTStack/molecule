@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import molecule, { MoleculeProvider, Workbench } from 'mo';
+import molecule, { create, Workbench } from 'mo';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import type { ITreeNodeItemProps } from 'mo/components';
 import type { IEditorTab } from 'mo/model/workbench/editor';
@@ -35,11 +35,10 @@ describe('folderTree extension', () => {
     afterEach(cleanup);
 
     test('Execute the listener function of onUpdateFileName', () => {
-        const { getByRole } = render(
-            <MoleculeProvider>
-                <Workbench />
-            </MoleculeProvider>
-        );
+        const container = create({
+            extensions: [],
+        }).render(<Workbench />);
+        const { getByRole } = render(container);
 
         molecule.folderTree.setState({ folderTree: { data: mockTreeData } });
         expect(molecule.folderTree.getState().folderTree?.data).toEqual(

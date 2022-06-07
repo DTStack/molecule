@@ -1,78 +1,41 @@
-import React from 'react';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import React from 'react';
+import molecule, { create, Workbench } from 'mo';
+import InstanceService from 'mo/services/instanceService';
+import { clearInstance } from '../create';
+import Provider from '../molecule';
+import { render } from '@testing-library/react';
 
-import { select } from 'mo/common/dom';
-import molecule, { MoleculeProvider, Workbench } from 'mo';
-
-import { customExtensions } from '../../../stories/extensions';
-
-describe('Test MoleculeProvider', () => {
-    let original;
-    beforeEach(() => {
-        original = HTMLElement.prototype.getBoundingClientRect;
-        // @ts-ignore
-        HTMLElement.prototype.getBoundingClientRect = () => ({
-            width: 500,
-            height: 0,
-        });
-
-        // Reset the extensions loaded state
-        molecule.extension.setLoaded(false);
-    });
-
+describe('The create function', () => {
     afterEach(() => {
-        HTMLElement.prototype.getBoundingClientRect = original;
+        clearInstance();
     });
 
-    test('Match The MoleculeProvider snapshot', () => {
+    test('Should create an instance', () => {
+        const instance = create({});
+        expect(instance).toBeInstanceOf(InstanceService);
+    });
+
+    test('Should to be a standalone', () => {
+        const instance = create({});
+        const nextInstance = create({});
+
+        expect(instance).toBe(nextInstance);
+    });
+
+    test('Should call methods normally', () => {
+        create({});
+        molecule.editor.isOpened(1);
+    });
+});
+
+describe('The molecule Provider', () => {
+    test('Match the Snapshot', () => {
         const { asFragment } = render(
-            <MoleculeProvider>
+            <Provider>
                 <Workbench />
-            </MoleculeProvider>
+            </Provider>
         );
         expect(asFragment()).toMatchSnapshot();
-    });
-
-    test('MoleculeProvider should render built-in Workbench extensions', () => {
-        render(
-            <MoleculeProvider>
-                <Workbench />
-            </MoleculeProvider>
-        );
-        expect(
-            select('div[data-id="sidebar.explore.title"]')
-        ).toBeInTheDocument();
-        expect(
-            select('div[data-id="sidebar.search.title"]')
-        ).toBeInTheDocument();
-        expect(select('.mo-welcome')).toBeInTheDocument();
-        expect(
-            select('div[id="statusbar.problems.title"]')
-        ).toBeInTheDocument();
-    });
-
-    test('MoleculeProvider load the extensions', async () => {
-        render(
-            <MoleculeProvider extensions={customExtensions}>
-                <Workbench />
-            </MoleculeProvider>
-        );
-        await expect(
-            select('div[data-id="ActivityBarTestPane"]')
-        ).toBeInTheDocument();
-    });
-
-    test('MoleculeProvider load the locale language extensions', () => {
-        localStorage.removeItem('mo.localeId');
-
-        render(
-            <MoleculeProvider
-                extensions={customExtensions}
-                defaultLocale="zh-CN"
-            >
-                <Workbench />
-            </MoleculeProvider>
-        );
     });
 });

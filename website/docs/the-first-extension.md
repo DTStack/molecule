@@ -99,7 +99,7 @@ Pay more attention: In reality, the **data type** returned by `API.getFolderTree
 
 ### Use extension
 
-After defining class `FirstExtension`, it is used with [MoleculeProvider][provider-url]. Here we export all **extension objects** that need to be loaded in `extensions/index.ts` by default:
+After defining class `FirstExtension`, it is used with [create][create-url]. Here we export all **extension objects** that need to be loaded in `extensions/index.ts` by default:
 
 ```ts title="/src/extensions/index.ts"
 import { IExtension } from '@dtinsight/molecule/esm/model';
@@ -115,12 +115,12 @@ Import the `FirstExtension` object and instantiate it, and finally use `extensio
 ```tsx title="/src/app.tsx"
 import extensions from './extensions';
 
-<MoleculeProvider extensions={extensions}>
-    <Workbench />
-</MoleculeProvider>;
+const moInstance = create({
+    extensions,
+});
 ```
 
-Finally, introduce `extensions` and pass in the `extensions` property of [MoleculeProvider][provider-url].
+Finally, introduce `extensions` and pass in the `extensions` property of [create][create-url].
 
 :::info
 The above example is just a very simple application scenario. If you want to achieve a richer extension to [Workbench](/guides/extend-workbench.md), you can refer to [Workbench Extension Guide](./guides/extend-workbench.md) ).
@@ -137,4 +137,4 @@ Please [view][demo-url] the complete source code of **First Extension**
 
 [demo-url]: https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/theFirstExtension
 [foldertree-url]: ./guides/extend-builtin-ui#foldertree
-[provider-url]: ./api/classes/MoleculeProvider
+[create-url]: ./api#create

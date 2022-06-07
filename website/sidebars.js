@@ -22,6 +22,7 @@ module.exports = {
             label: 'Guides',
             collapsed: false,
             items: [
+                'guides/builtin',
                 'guides/extension',
                 {
                     type: 'category',

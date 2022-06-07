@@ -98,7 +98,7 @@ export function handleSelectFolderTree() {
 
 ### 使用扩展
 
-定义好的 `FirstExtension` 对象，最后需要配合 [MoleculeProvider][provider-url] 来使用。这里我们默认在 `extensions/index.ts` 中导出所有需要加载的**扩展对象**：
+定义好的 `FirstExtension` 对象，最后需要配合 [create][create-url] 来使用。这里我们默认在 `extensions/index.ts` 中导出所有需要加载的**扩展对象**：
 
 ```ts title="/src/extensions/index.ts"
 import { IExtension } from '@dtinsight/molecule/esm/model';
@@ -109,17 +109,17 @@ const extensions: IExtension[] = [new FirstExtension()];
 export default extensions;
 ```
 
-导入 `FirstExtension` 对象并将其实例化，最后使用 `extensions` 导出所有**扩展对象实例**。
+导入 `FirstExtension` 对象并将其实例化，最后使用 `create` 传入所有**扩展对象实例**。
 
 ```tsx title="/src/app.tsx"
 import extensions from './extensions';
 
-<MoleculeProvider extensions={extensions}>
-    <Workbench />
-</MoleculeProvider>;
+const moInstance = create({
+    extensions,
+});
 ```
 
-最后，引入 `extensions` 并传入 [MoleculeProvider][provider-url] 的 `extensions` 属性。
+最后，引入 `extensions` 并传入 [create][create-url] 的 `extensions` 参数。
 
 :::info
 上例只是一个很简单的应用场景，想要实现对 [Workbench](/guides/extend-workbench.md) 更丰富的扩展，可以参考 [工作台扩展指南](./guides/extend-workbench.md)。
@@ -135,4 +135,4 @@ import extensions from './extensions';
 
 [demo-url]: https://github.com/DTStack/molecule-examples/tree/main/packages/molecule-demo/src/extensions/theFirstExtension
 [foldertree-url]: ./guides/extend-builtin-ui#文件树foldertree
-[provider-url]: ./api/classes/MoleculeProvider
+[create-url]: ./api#create

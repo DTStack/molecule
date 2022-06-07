@@ -1,13 +1,25 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
+import { expectLoggerErrorToBeCalled } from '@test/utils';
+import { ILocale } from '../localization';
 import { LocaleService } from '..';
-import { BuiltInLocales, BuiltInDefault, ILocale } from '../localization';
 
 describe('The Locale Service', () => {
-    const TestLocale = {
+    const TestLocale: ILocale = {
         id: 'test',
         source: new Map(),
         name: 'test',
+    };
+
+    // LocaleService is support to add an object source but ILocale is banned
+    const TestEnLocale: ILocale = {
+        id: 'en',
+        name: 'English',
+        source: {
+            // @ts-ignore
+            'molecule.welcome': 'Welcome to Molecule',
+            'test.id': 'hello ${i}',
+        },
     };
 
     afterEach(() => {
@@ -19,82 +31,72 @@ describe('The Locale Service', () => {
         expect(localeService).not.toBeUndefined();
     });
 
+    test('Initialize the locales with testLocale', () => {
+        const localeService = new LocaleService();
+        localeService.initialize([TestLocale], TestLocale.id);
+
+        expect(localeService.getCurrentLocale()?.id).toEqual(TestLocale.id);
+        expect(localeService.getLocales().length).toBe(1);
+
+        localeService.reset();
+        expectLoggerErrorToBeCalled(() => {
+            // @ts-ignore
+            localeService.initialize([TestEnLocale, TestLocale]);
+        });
+    });
+
     test('Reset the LocaleService', () => {
         const localeService = new LocaleService();
-        expect(localeService.getCurrentLocale()!.id).toBe(BuiltInDefault.id);
+        expect(localeService.getCurrentLocale()).toBeUndefined();
+
+        localeService.initialize([TestLocale], TestLocale.id);
+        expect(localeService.getCurrentLocale()).toEqual(TestLocale);
+
         localeService.reset();
-        expect(localeService.getCurrentLocale()!.id).toBe(BuiltInDefault.id);
-    });
-
-    test('Get default Locale', () => {
-        const localeService = new LocaleService();
-        const defaultLocale = localeService.getDefaultLocale();
-        expect(defaultLocale).toEqual(BuiltInDefault);
-    });
-
-    test('Get default Locales', () => {
-        const localeService = new LocaleService();
-        const defaultLocale = localeService.getDefaultLocales();
-        expect(defaultLocale).toEqual(BuiltInLocales);
-    });
-
-    test('The size of Built-in Locales should be 3', () => {
-        const localeService = new LocaleService();
-        const locales = localeService.getLocales();
-        expect(locales.length).toBe(3);
-    });
-
-    test('Initialize the locales', () => {
-        const localeService = new LocaleService();
-        localeService.initialize([TestLocale]);
-        expect(localeService.getCurrentLocale()!.id).toEqual(
-            localeService.getDefaultLocale().id
-        );
-        expect(localeService.getLocales().length).toBe(4);
-        localeService.initialize([], 'test');
-        expect(localeService.getCurrentLocale()!.id).toEqual(BuiltInDefault.id);
-        // Clear the cached locale value
-        localStorage.clear();
-        localeService.initialize([], 'test');
-        expect(localeService.getCurrentLocale()!.id).toEqual('test');
-        localeService.initialize([]);
-        // Get from the localStorage cache
-        expect(localeService.getCurrentLocale()!.id).toEqual('test');
+        expect(localeService.getCurrentLocale()).toBeUndefined();
     });
 
     test('Get/Set current locale', () => {
         const localeService = new LocaleService();
-        (localeService as any)._current = undefined;
-        expect(localeService.getCurrentLocale()).toBe(BuiltInDefault);
-        localeService.addLocales([TestLocale]);
-        localeService.setCurrentLocale(TestLocale.id);
-        expect(localeService.getCurrentLocale()!.id).toEqual(TestLocale.id);
+        expect(localeService.getCurrentLocale()).toBeUndefined();
 
+        localeService.initialize([TestLocale, TestEnLocale], TestLocale.id);
+
+        expect(localeService.getCurrentLocale()?.id).toEqual(TestLocale.id);
+
+        localeService.setCurrentLocale(TestEnLocale.id);
+        expect(localeService.getCurrentLocale()?.id).toEqual(TestEnLocale.id);
+        // set an unknow locale will fail
         expect(localeService.setCurrentLocale('unknown')).toEqual(false);
     });
 
     test('Add locales', () => {
         const localeService = new LocaleService();
-        expect(localeService.getLocales().length).toBe(3);
+        expect(localeService.getLocales().length).toBe(0);
+
         localeService.addLocales([TestLocale]);
-        expect(localeService.getLocales().length).toBe(4);
+        expect(localeService.getLocales().length).toBe(1);
+
         localeService.addLocales([]);
-        expect(localeService.getLocales().length).toBe(4);
+        expect(localeService.getLocales().length).toBe(1);
+
         // Add an existed locale
         localeService.addLocales([TestLocale]);
-        expect(localeService.getLocales().length).toBe(4);
+        expect(localeService.getLocales().length).toBe(1);
     });
 
     test('Add an locale inherit the en', () => {
         const localeService = new LocaleService();
+        localeService.initialize([TestEnLocale], TestEnLocale.id);
+
         expect(TestLocale.source.size).toBe(0);
-        (TestLocale as ILocale).inherit = 'en';
+        TestLocale.inherit = 'en';
         localeService.addLocales([TestLocale]);
         expect(localeService.getLocale(TestLocale.id)?.source.size).not.toBe(0);
 
         // Inherit an not exist locale
         localeService.removeLocale(TestLocale.id);
-        (TestLocale as ILocale).inherit = 'unknown';
+        TestLocale.inherit = 'unknown';
         localeService.addLocales([TestLocale]);
         expect(localeService.getLocale(TestLocale.id)?.source.size).toBe(0);
     });
@@ -110,38 +112,47 @@ describe('The Locale Service', () => {
 
     test('Remove a locale', () => {
         const localeService = new LocaleService();
-        localeService.addLocales([TestLocale]);
+        localeService.initialize([TestLocale, TestEnLocale], TestLocale.id);
         expect(localeService.getLocale(TestLocale.id)?.id).toEqual(
             TestLocale.id
         );
-        localeService.removeLocale(TestLocale.id);
+
+        const removedLocale = localeService.removeLocale(TestLocale.id);
         expect(localeService.getLocale(TestLocale.id)).toBeUndefined();
+        expect(removedLocale).toEqual(TestLocale);
+
         localeService.addLocales([TestLocale]);
         localeService.setCurrentLocale(TestLocale.id);
 
         //Remove the current locale
-        expect(localeService.getCurrentLocale()!.id).toEqual(TestLocale.id);
+        expect(localeService.getCurrentLocale()?.id).toEqual(TestLocale.id);
         localeService.removeLocale(TestLocale.id);
-        expect(localeService.getCurrentLocale()!.id).toEqual(
-            localeService.getDefaultLocale().id
-        );
+        expect(localeService.getCurrentLocale()!.id).toEqual(TestEnLocale.id);
 
         // Remove an undefined
         expect(localeService.removeLocale(TestLocale.id));
+
+        expect(localeService.getLocales().length).toBe(1);
+        // The last one couldn't be removed
+        expect(localeService.removeLocale(TestEnLocale.id)).toBeFalsy();
     });
 
     test('Listen to the current locale change event', () => {
-        const target = 'zh-CN';
         const localeService = new LocaleService();
         const fn = jest.fn();
         localeService.onChange(fn);
-        localeService.setCurrentLocale(target);
+
+        localeService.initialize([TestLocale, TestEnLocale], TestLocale.id);
+        localeService.setCurrentLocale(TestEnLocale.id);
+
         expect(fn).toBeCalledTimes(1);
-        expect(localeService.getCurrentLocale()!.id).toEqual(target);
+        expect(localeService.getCurrentLocale()!.id).toEqual(TestEnLocale.id);
     });
 
     test('Localize the source key', () => {
         const localeService = new LocaleService();
+
+        localeService.initialize([TestLocale, TestEnLocale], TestEnLocale.id);
         let res = localeService.localize('test');
         expect(res).toEqual('');
 
@@ -154,19 +165,10 @@ describe('The Locale Service', () => {
         res = localeService.localize('molecule.welcome', 'default');
         expect(res).toEqual('Welcome to Molecule');
 
-        const map = new Map();
-        map.set('test.id', 'hello ${i}');
-        const mockData = {
-            id: 'mock',
-            name: 'mock',
-            source: map,
-        };
-        localeService.addLocales([mockData]);
-        localeService.setCurrentLocale(mockData.id);
         res = localeService.localize('test.id', '', 'world');
         expect(res).toEqual('hello world');
 
-        (localeService as any)._current = null;
+        localeService.setCurrentLocale(TestLocale.id);
         res = localeService.localize('molecule.welcome', 'default');
         expect(res).toEqual('default');
     });

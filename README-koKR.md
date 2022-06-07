@@ -50,14 +50,14 @@ yarn add @dtinsight/molecule
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MoleculeProvider, Workbench } from '@dtinsight/molecule';
+import { create, Workbench } from '@dtinsight/molecule';
 import '@dtinsight/molecule/esm/style/mo.css';
 
-const App = () => (
-    <MoleculeProvider extensions={[]}>
-        <Workbench />
-    </MoleculeProvider>
-);
+const moInstance = create({
+    extensions: [],
+});
+
+const App = () => moInstance.render(<Workbench />);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```

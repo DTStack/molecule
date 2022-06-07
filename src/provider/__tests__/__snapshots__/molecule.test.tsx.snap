@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test MoleculeProvider Match The MoleculeProvider snapshot 1`] = `
+exports[`The molecule Provider Match the Snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mo"
@@ -1010,7 +1010,7 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
             </div>
             <div
               class="mo-split__pane__item mo-split__pane__item--visible"
-              style="left: 300px; width: 200px;"
+              style="left: 300px; width: -300px;"
             >
               <div
                 class="mo-split"

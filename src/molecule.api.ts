@@ -5,7 +5,6 @@ export * as event from 'mo/common/event';
 export * as react from 'mo/react';
 export * as component from 'mo/components';
 export * as monaco from 'mo/monaco/api';
-
 export * from 'mo/i18n';
 export * from 'mo/workbench';
 export * from 'mo/services';
@@ -49,6 +48,7 @@ import {
 } from 'mo/services';
 
 import { ILocaleService, LocaleService } from 'mo/i18n';
+import { IMonacoService, MonacoService } from './monaco/monacoService';
 
 /**
  * The locale service
@@ -103,3 +103,5 @@ export const builtin = container.resolve(BuiltinService);
  * The Extension service
  */
 export const extension = container.resolve<IExtensionService>(ExtensionService);
+
+export const monacoService = container.resolve<IMonacoService>(MonacoService);

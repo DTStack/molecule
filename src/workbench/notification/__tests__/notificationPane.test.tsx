@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import renderer from 'react-test-renderer';
@@ -9,8 +10,15 @@ import {
 } from '../notificationPane';
 import { select } from 'mo/common/dom';
 import { expectFnCalled } from '@test/utils';
+import { container } from 'tsyringe';
+import { ExtendsLocales } from 'mo/extensions/locales-defaults';
+import { LocaleService } from 'mo/i18n';
 
 describe('Test NotificationPane Component', () => {
+    // initial locales
+    const localeService = container.resolve(LocaleService);
+    localeService.initialize(ExtendsLocales.contributes!.languages!, 'en');
+
     test('Match The NotificationPane snapshot', () => {
         const component = renderer.create(
             <NotificationPane data={[{ id: 1, value: '' }]} id="test" />

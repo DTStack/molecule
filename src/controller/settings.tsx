@@ -69,6 +69,7 @@ export class SettingsController
             id: SETTING_ID!,
             value: next,
             render(value) {
+                /* istanbul ignore next */
                 return <LocaleNotification key={next.id} locale={next.name} />;
             },
         };

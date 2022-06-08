@@ -22,6 +22,7 @@ import { tabItemActiveClassName } from 'mo/components/tabs/tab';
 export interface IEditorGroupProps extends IEditorGroup {
     currentGroup?: IEditorGroup;
     editorOptions?: IEditorOptions;
+    group?: IEditorGroup;
 }
 
 export function EditorGroup(props: IEditorGroupProps & IEditorController) {
@@ -30,6 +31,7 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
         data,
         tab,
         currentGroup,
+        group,
         actions = [],
         menu = [],
         onMoveTab,
@@ -114,7 +116,13 @@ export function EditorGroup(props: IEditorGroupProps & IEditorController) {
                     // Default we use monaco editor, but also you can customize by renderPanel() function or a react element
                     tab?.renderPane ? (
                         typeof tab.renderPane === 'function' ? (
-                            tab.renderPane(tab.data)
+                            tab.renderPane(
+                                {
+                                    ...tab.data,
+                                },
+                                tab,
+                                group
+                            )
                         ) : (
                             tab.renderPane
                         )

@@ -1,8 +1,10 @@
+import 'reflect-metadata';
 import React from 'react';
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { tabItemActiveClassName } from 'mo/components/tabs/tab';
 
 import EditorGroup from '../group';
+import { IEditorTab } from 'mo/model';
 
 const TEST_ID = 'test-id';
 const TEST_MENU = 'test-menu';
@@ -129,5 +131,25 @@ describe('The Editor Component', () => {
 
             expect(fn).toBeCalled();
         });
+    });
+
+    test('use renderPane method', async () => {
+        const renderPane = jest.fn((tabData, tab, group) => {
+            return <div className={tab.id}>{tab.id}</div>;
+        });
+
+        const testTab: IEditorTab = {
+            id: TEST_ID,
+            name: TEST_ID,
+            data: {},
+            renderPane,
+        };
+
+        const { container } = render(
+            <EditorGroup id="test" onClickActions={jest.fn()} tab={testTab} />
+        );
+        const renderDiv = container.querySelector(`.${TEST_ID}`);
+
+        expect(renderDiv?.innerHTML).toEqual(TEST_ID);
     });
 });

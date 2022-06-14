@@ -151,7 +151,6 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         split="vertical"
                         allowResize={[false]}
                         onChange={handleSideBarChanged}
-                        onResizeStrategy={() => ['keep', 'pave']}
                     >
                         <Pane minSize={170} maxSize="80%">
                             <SidebarView />
@@ -161,7 +160,6 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                             allowResize={[false]}
                             split="horizontal"
                             onChange={handleEditorChanged}
-                            onResizeStrategy={() => ['pave', 'keep']}
                         >
                             <Pane minSize="10%" maxSize="80%">
                                 <EditorView />

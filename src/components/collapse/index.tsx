@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { classNames } from 'mo/common/className';
 import { HTMLElementProps, UniqueId } from 'mo/common/types';
 import { getDataAttributionsFromProps } from 'mo/common/dom';
@@ -17,7 +17,7 @@ import {
 import { IActionBarItemProps } from '../actionBar';
 import { Icon } from '../icon';
 import { Toolbar } from '../toolbar';
-import SplitPane, { ResizeStratygy, Pane } from '../split';
+import SplitPane, { Pane } from '../split';
 
 type RenderFunctionProps = (data: ICollapseItem) => React.ReactNode;
 export interface ICollapseItem extends HTMLElementProps {
@@ -77,6 +77,7 @@ export function Collapse({
     const [sizes, setSizes] = useState<number[]>(
         data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGTH))
     );
+    const [showSashs, setShowSashes] = useState<boolean | boolean[]>(false);
     // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
     const first = useRef(true);
@@ -120,34 +121,15 @@ export function Collapse({
         return null;
     };
 
-    const handleChangeCallback = (key: UniqueId) => {
-        const currentKeys = activePanelKeys.concat();
-        if (currentKeys.includes(key)) {
-            currentKeys.splice(currentKeys.indexOf(key), 1);
+    const handleChangeCallback = (key: React.Key, index) => {
+        const currentKeys = [...activePanelKeys];
+        if (currentKeys[index]) {
+            delete currentKeys[index];
         } else {
-            currentKeys.push(key);
+            currentKeys[index] = key;
         }
         onCollapseChange?.(currentKeys);
         setActivePanelKeys(currentKeys.concat());
-    };
-
-    const handleStrategies = (sizes: number[]): ResizeStratygy[] => {
-        let maxGrowIndex = -1;
-        let maxGrow = Number.MIN_SAFE_INTEGER;
-        const wip: ResizeStratygy[] = sizes.map((size, index) => {
-            const grow =
-                typeof data[index].config?.grow === 'undefined'
-                    ? 1
-                    : data[index].config!.grow!;
-            if (grow > maxGrow && size !== HEADER_HEIGTH) {
-                maxGrow = grow;
-                maxGrowIndex = index;
-            }
-            return 'keep';
-        });
-        // set pave for max grow data
-        wip[maxGrowIndex] = 'pave';
-        return wip;
     };
 
     // perform smoothly the task to recalculate sizes
@@ -224,6 +206,16 @@ export function Collapse({
                     : size
             );
 
+            const nextSash: boolean[] = [];
+            for (let i = 1; i < activePanelKeys.length; i++) {
+                if (activePanelKeys[i - 1] && activePanelKeys[i]) {
+                    nextSash.push(true);
+                } else {
+                    nextSash.push(false);
+                }
+            }
+            setShowSashes(nextSash);
+
             onResize?.(nextSizes);
             setSizes(nextSizes);
         } else {
@@ -247,30 +239,6 @@ export function Collapse({
         Array.isArray(controlActivePanelKeys) &&
             setActivePanelKeys(controlActivePanelKeys);
     }, [controlActivePanelKeys]);
-    // perform the next resizes value via sizes
-    // the effects of data changes will lead to perform recalculate sizes, which cause recalculate the resizers
-    // so don't need to add data into deps
-    const resize = useMemo(() => {
-        const res: boolean[] = [];
-        sizes.forEach((size, index) => {
-            if (!index) {
-                // the first pane couldn't be resized
-                res.push(false);
-            } else if (data[index].config?.grow === 2) {
-                // when specify grow to be 2, this pane couldn't be resized
-                res.push(false);
-            } else {
-                const isCollapsing = !!size && size !== HEADER_HEIGTH;
-                const lastCollasping =
-                    !!sizes[index - 1] && sizes[index - 1] !== HEADER_HEIGTH;
-                // the pane could be resized only when the last pane is collapsing and the current pane is collapsing
-                res.push(isCollapsing && lastCollasping);
-            }
-        });
-
-        return res;
-    }, [sizes]);
-
     const dataAttrProps = getDataAttributionsFromProps(restProps);
 
     return (
@@ -286,12 +254,12 @@ export function Collapse({
                 sizes={sizes}
                 onChange={handleSplitChange}
                 split="horizontal"
-                allowResize={resize}
+                allowResize={false}
+                showSashes={showSashs}
                 paneClassName={classNames(
                     collapsePaneClassName,
                     collapsing && collapsingClassName
                 )}
-                onResizeStrategy={handleStrategies}
             >
                 {data.map((panel, index) => {
                     const isActive = activePanelKeys.includes(panel.id);
@@ -309,7 +277,7 @@ export function Collapse({
                                     className={collapseHeaderClassName}
                                     tabIndex={0}
                                     onClick={() =>
-                                        handleChangeCallback(panel.id)
+                                        handleChangeCallback(panel.id, index)
                                     }
                                 >
                                     <Icon

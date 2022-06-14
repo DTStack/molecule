@@ -113,7 +113,7 @@ yarn web # 预览打包后的 Web
 我们使用[钉钉](https://www.dingtalk.com/) 沟通交流，可以搜索群号 `30537511` 或者扫描下面的二维码进入钉钉群
 
 <div align="center"> 
- <img src="website/static/img/qrcode-chat.jpg" width="260" />
+ <img src="/website/static/img/qrcode-chat.jpg" width="300" />
 </div>
 
 ## License

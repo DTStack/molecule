@@ -70,6 +70,14 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 更多请参考 [CONTRIBUTING](./contributing.md).
 
+## 交流
+
+我们使用[钉钉](https://www.dingtalk.com/) 沟通交流，可以搜索群号 `30537511` 或者扫描下面的二维码进入钉钉群
+
+<div align="center"> 
+ <img src="/molecule/img/qrcode-chat.jpg" width="300" />
+</div>
+
 ## License
 
 Copyright © DTStack. All rights reserved.

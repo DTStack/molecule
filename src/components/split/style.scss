@@ -8,10 +8,10 @@
 
     &__pane {
         height: 100%;
+        overflow: hidden;
         position: absolute;
         white-space: normal;
         width: 100%;
-        overflow: hidden;
     }
 
     &__sash {

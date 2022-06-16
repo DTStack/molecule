@@ -45,7 +45,7 @@ export class LayoutModel implements ILayout {
     public menuBar: IMenuBarViewState;
     constructor(
         splitPanePos: string[] = ['300px', 'auto'],
-        horizontalSplitPanePos = ['70%', 'auto'],
+        horizontalSplitPanePos = ['auto', '150px'],
         groupSplitPos = [],
         activityBar = { hidden: false },
         panel = { hidden: false, panelMaximized: false },

@@ -157,7 +157,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         </Pane>
                         <SplitPane
                             sizes={getSizes()}
-                            allowResize={[false]}
+                            allowResize={[true, false]}
                             split="horizontal"
                             onChange={handleEditorChanged}
                         >

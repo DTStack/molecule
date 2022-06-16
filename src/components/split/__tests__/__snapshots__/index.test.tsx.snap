@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test The SplitPane Component Match Snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-split mo-split--vertical"
+  >
+    <div
+      class="mo-split__pane"
+      style="width: 100px; left: 0px;"
+    >
+      <div>
+        1
+      </div>
+    </div>
+    <div
+      class="mo-split__sash mo-split__sash--vertical"
+      role="Resizer"
+      style="width: 4px; left: 98px;"
+    />
+    <div
+      class="mo-split__pane"
+      style="width: 200px; left: 100px;"
+    >
+      <div>
+        2
+      </div>
+    </div>
+    <div
+      class="mo-split__sash mo-split__sash--vertical"
+      role="Resizer"
+      style="width: 4px; left: 298px;"
+    />
+    <div
+      class="mo-split__pane"
+      style="width: 200px; left: 300px;"
+    >
+      <div>
+        3
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Test The SplitPane Component Match Snapshot in horizontal 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-split mo-split--horizontal"
+  >
+    <div
+      class="mo-split__pane"
+      style="height: 100px; top: 0px;"
+    >
+      <div>
+        1
+      </div>
+    </div>
+    <div
+      class="mo-split__sash mo-split__sash--horizontal"
+      role="Resizer"
+      style="height: 4px; top: 98px;"
+    />
+    <div
+      class="mo-split__pane"
+      style="height: 200px; top: 100px;"
+    >
+      <div>
+        2
+      </div>
+    </div>
+    <div
+      class="mo-split__sash mo-split__sash--horizontal"
+      role="Resizer"
+      style="height: 4px; top: 298px;"
+    />
+    <div
+      class="mo-split__pane"
+      style="height: 200px; top: 300px;"
+    >
+      <div>
+        3
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

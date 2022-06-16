@@ -254,7 +254,12 @@ export function Collapse({
                 sizes={sizes}
                 onChange={handleSplitChange}
                 split="horizontal"
-                allowResize={false}
+                allowResize={data.map((item, index) => {
+                    if (item?.config?.grow === 0) {
+                        return false;
+                    }
+                    return !!activePanelKeys[index];
+                })}
                 showSashes={showSashs}
                 paneClassName={classNames(
                     collapsePaneClassName,

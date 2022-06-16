@@ -212,13 +212,19 @@ const SplitPane = ({
     );
 
     const onDragStart = useCallback(function (e) {
-        axis.current = { x: e.pageX, y: e.pageY };
+        axis.current = {
+            x: e.pageX ?? e.screenX,
+            y: e.pageY ?? e.screenY,
+        };
         setDrag(true);
     }, []);
 
     const onDragging = useCallback(
         function (e, i) {
-            const curAxis = { x: e.pageX, y: e.pageY };
+            const curAxis = {
+                x: e.pageX ?? e.screenX,
+                y: e.pageY ?? e.screenY,
+            };
             let distanceX = curAxis[sAxis] - axis.current[sAxis];
 
             const leftBorder = -Math.min(

@@ -29,6 +29,7 @@ import { select, selectAll } from 'mo/common/dom';
 import {
     sashHorizontalClassName,
     splitClassName,
+    paneItemClassName,
 } from 'mo/components/split/base';
 import { sleep } from '@test/utils';
 
@@ -73,6 +74,7 @@ describe('Test Workbench Component', () => {
         });
 
         global.ResizeObserver = jest.fn().mockImplementation((fn) => {
+            fn();
             observerFnCollection.push(fn);
             return {
                 observe: jest.fn(),
@@ -152,7 +154,7 @@ describe('Test Workbench Component', () => {
         const sashs = selectAll<HTMLDivElement>('div[role="Resizer"]');
         const wrapper = select<HTMLDivElement>(`.${splitClassName}`);
 
-        fireEvent.mouseDown(sashs[1]);
+        fireEvent.mouseDown(sashs[0], { screenX: 0, screenY: 0 });
         fireEvent.mouseMove(wrapper!, { screenX: 10, screenY: 10 });
         fireEvent.mouseUp(wrapper!);
 
@@ -172,7 +174,7 @@ describe('Test Workbench Component', () => {
         const sashs = selectAll<HTMLDivElement>(`.${sashHorizontalClassName}`);
         const wrapper = selectAll<HTMLDivElement>(`.${splitClassName}`)[1];
 
-        fireEvent.mouseDown(sashs[1]);
+        fireEvent.mouseDown(sashs[0], { screenX: 0, screenY: 0 });
         fireEvent.mouseMove(wrapper!, { screenX: 10, screenY: 10 });
         fireEvent.mouseUp(wrapper!);
 
@@ -252,7 +254,7 @@ describe('Test Workbench Component', () => {
         const workbench = workbenchModel();
         const horizontalMockFn = jest.fn();
         const paneChangeMockFn = jest.fn();
-        render(
+        const { container } = render(
             <WorkbenchView
                 {...workbench}
                 onHorizontalPaneSizeChange={horizontalMockFn}
@@ -271,10 +273,14 @@ describe('Test Workbench Component', () => {
             await sleep(150);
         });
 
-        expect(horizontalMockFn).toBeCalled();
-        expect(horizontalMockFn.mock.calls[0][0]).toEqual([850, 150]);
+        const panes = container.querySelectorAll<HTMLDivElement>(
+            `.${paneItemClassName}`
+        );
 
-        expect(paneChangeMockFn).toBeCalled();
-        expect(paneChangeMockFn.mock.calls[0][0]).toEqual([300, 700]);
+        expect(panes.length).toBe(4);
+        expect(panes[0].style.width).toBe('300px');
+        expect(panes[1].style.width).toBe('700px');
+        expect(panes[2].style.height).toBe('850px');
+        expect(panes[3].style.height).toBe('150px');
     });
 });

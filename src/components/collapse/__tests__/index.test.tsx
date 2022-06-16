@@ -53,6 +53,12 @@ describe('Test The Collapse Component', () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
+    test('Match Snapshot Empty', () => {
+        const { asFragment } = render(<Collapse />);
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+
     test('Should uncollapsing the mock2', async () => {
         const mockFn = jest.fn();
         const mockResize = jest.fn();
@@ -270,6 +276,16 @@ describe('Test The Collapse Component', () => {
         });
 
         // didn't effect the hidden pane
+        expect(mock1?.parentElement?.style.height).toBe('0px');
+
+        await act(async () => {
+            const mock2 = container.querySelector(
+                'div[data-collapse-id="mock2"]'
+            );
+            fireEvent.click(mock2?.childNodes[0]!);
+            await sleep(300);
+        });
+
         expect(mock1?.parentElement?.style.height).toBe('0px');
     });
 

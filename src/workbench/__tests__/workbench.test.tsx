@@ -30,6 +30,7 @@ import {
     sashHorizontalClassName,
     splitClassName,
     paneItemClassName,
+    sashItemClassName,
 } from 'mo/components/split/base';
 import { sleep } from '@test/utils';
 
@@ -282,5 +283,22 @@ describe('Test Workbench Component', () => {
         expect(panes[1].style.width).toBe('700px');
         expect(panes[2].style.height).toBe('850px');
         expect(panes[3].style.height).toBe('150px');
+
+        const wrapper = container.querySelector(`.${splitClassName}`)!;
+        const sashs = container.querySelectorAll(`.${sashItemClassName}`);
+
+        fireEvent.mouseDown(sashs[0], { screenX: 0 });
+        fireEvent.mouseMove(wrapper, { screenX: 50 });
+        fireEvent.mouseUp(wrapper);
+
+        expect(paneChangeMockFn).toBeCalled();
+        expect(paneChangeMockFn.mock.calls[0][0]).toEqual([350, 650]);
+
+        fireEvent.mouseDown(sashs[1], { screenY: 0 });
+        fireEvent.mouseMove(wrapper, { screenY: 50 });
+        fireEvent.mouseUp(wrapper);
+
+        expect(horizontalMockFn).toBeCalled();
+        expect(horizontalMockFn.mock.calls[0][0]).toEqual([800, 200]);
     });
 });

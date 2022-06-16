@@ -80,7 +80,11 @@ describe('Test The Collapse Component', () => {
             await sleep(300);
         });
         expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toEqual([, 'mock2']);
+        expect(mockFn.mock.calls[0][0]).toEqual([
+            undefined,
+            'mock2',
+            undefined,
+        ]);
 
         expect(mockResize).toBeCalled();
         expect(mockResize.mock.calls[0][0]).toEqual([26, 448, 26]);
@@ -94,7 +98,11 @@ describe('Test The Collapse Component', () => {
             await sleep(300);
         });
         expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toEqual([, ,]);
+        expect(mockFn.mock.calls[0][0]).toEqual([
+            undefined,
+            undefined,
+            undefined,
+        ]);
 
         expect(mockResize).toBeCalled();
         expect(mockResize.mock.calls[0][0]).toEqual([26, 26, 26]);

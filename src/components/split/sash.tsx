@@ -15,7 +15,7 @@ export default function Sash({
     onDragStart,
     onDragging,
     onDragEnd,
-    ...others
+    ...restProps
 }: ISashProps) {
     const timeout = useRef<NodeJS.Timeout>();
     const [active, setActive] = useState(false);
@@ -58,7 +58,7 @@ export default function Sash({
                 window.addEventListener('mousemove', handleMouseMove);
                 window.addEventListener('mouseup', handleMouseUp);
             }}
-            {...others}
+            {...restProps}
         />
     );
 }

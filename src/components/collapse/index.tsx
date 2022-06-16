@@ -70,7 +70,9 @@ export function Collapse({
     onResize,
     ...restProps
 }: ICollapseProps) {
-    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>([]);
+    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(
+        new Array(data.length)
+    );
 
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
@@ -81,6 +83,10 @@ export function Collapse({
     // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
     const first = useRef(true);
+
+    const isUndefined = (key): boolean => {
+        return key === undefined;
+    };
 
     // compare two sizes to find the change one
     const compareTheSizes = (sizes: number[], otherSizes: number[]) => {
@@ -121,9 +127,9 @@ export function Collapse({
         return null;
     };
 
-    const handleChangeCallback = (key: React.Key, index) => {
+    const handleChangeCallback = (key: UniqueId, index) => {
         const currentKeys = [...activePanelKeys];
-        if (currentKeys[index]) {
+        if (!isUndefined(currentKeys[index])) {
             delete currentKeys[index];
         } else {
             currentKeys[index] = key;
@@ -143,7 +149,9 @@ export function Collapse({
 
     // perform the tasks to recalculate sizes
     const performSizes = () => {
-        const activeLength = activePanelKeys.length;
+        const activeLength = activePanelKeys.filter(
+            (v) => !isUndefined(v)
+        ).length;
         if (activeLength) {
             const { height } = wrapper.current!.getBoundingClientRect();
             let restHeight = height;
@@ -208,11 +216,11 @@ export function Collapse({
 
             const nextSash: boolean[] = [];
             for (let i = 1; i < activePanelKeys.length; i++) {
-                if (activePanelKeys[i - 1] && activePanelKeys[i]) {
-                    nextSash.push(true);
-                } else {
-                    nextSash.push(false);
-                }
+                nextSash.push(
+                    !isUndefined(activePanelKeys[i - 1]) &&
+                        data[i - 1]?.config?.grow !== 0 &&
+                        !isUndefined(activePanelKeys[i])
+                );
             }
             setShowSashes(nextSash);
 

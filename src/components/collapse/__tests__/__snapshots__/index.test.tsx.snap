@@ -127,15 +127,3 @@ exports[`Test The Collapse Component Match Snapshot Empty 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`Test The Collapse Component Match empty Snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="mo-collapse"
-  >
-    <div
-      class="mo-split mo-split--horizontal"
-    />
-  </div>
-</DocumentFragment>
-`;

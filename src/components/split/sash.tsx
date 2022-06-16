@@ -1,4 +1,4 @@
-import React, { useRef, useState, CSSProperties } from 'react';
+import React, { useRef, useEffect, useState, CSSProperties } from 'react';
 import { classNames } from 'mo/common/className';
 import { sashHoverClassName, sashItemClassName } from './base';
 
@@ -21,16 +21,11 @@ export default function Sash({
     const [active, setActive] = useState(false);
     const [draging, setDrag] = useState(false);
 
-    const handleMouseMove = function (e) {
-        onDragging(e);
-    };
-
-    const handleMouseUp = function (e) {
-        setDrag(false);
-        onDragEnd(e);
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-    };
+    useEffect(function () {
+        return function () {
+            clearTimeout(timeout.current!);
+        };
+    }, []);
 
     return (
         <div
@@ -54,7 +49,15 @@ export default function Sash({
             onMouseDown={(e) => {
                 setDrag(true);
                 onDragStart(e);
-
+                const handleMouseMove = function (e) {
+                    onDragging(e);
+                };
+                const handleMouseUp = function (e) {
+                    setDrag(false);
+                    onDragEnd(e);
+                    window.removeEventListener('mousemove', handleMouseMove);
+                    window.removeEventListener('mouseup', handleMouseUp);
+                };
                 window.addEventListener('mousemove', handleMouseMove);
                 window.addEventListener('mouseup', handleMouseUp);
             }}

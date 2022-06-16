@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState, useMemo } from 'react';
 import { classNames } from 'mo/common/className';
 import { HTMLElementProps, UniqueId } from 'mo/common/types';
 import { getDataAttributionsFromProps } from 'mo/common/dom';
@@ -73,13 +73,11 @@ export function Collapse({
     const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(
         new Array(data.length)
     );
-
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
     const [sizes, setSizes] = useState<number[]>(
         data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGTH))
     );
-    const [showSashs, setShowSashes] = useState<boolean | boolean[]>(false);
     // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
     const first = useRef(true);
@@ -214,16 +212,6 @@ export function Collapse({
                     : size
             );
 
-            const nextSash: boolean[] = [];
-            for (let i = 1; i < activePanelKeys.length; i++) {
-                nextSash.push(
-                    !isUndefined(activePanelKeys[i - 1]) &&
-                        data[i - 1]?.config?.grow !== 0 &&
-                        !isUndefined(activePanelKeys[i])
-                );
-            }
-            setShowSashes(nextSash);
-
             onResize?.(nextSizes);
             setSizes(nextSizes);
         } else {
@@ -234,6 +222,34 @@ export function Collapse({
             setSizes(nextSizes);
         }
     };
+
+    const { nextSashes, allowResize } = useMemo(
+        function () {
+            const nextSashes: boolean[] = [];
+            for (let i = 1; i < activePanelKeys.length; i++) {
+                const prevPaneActive: boolean = !isUndefined(
+                    activePanelKeys[i - 1]
+                );
+                const prePaneAutoHeight: boolean =
+                    data[i - 1]?.config?.grow !== 0;
+                const curPaneActive: boolean = !isUndefined(activePanelKeys[i]);
+                const showSash =
+                    prevPaneActive && prePaneAutoHeight && curPaneActive;
+
+                nextSashes.push(showSash);
+            }
+            return {
+                nextSashes,
+                allowResize: data.map((pane, index) => {
+                    if (pane?.config?.grow === 0) {
+                        return false;
+                    }
+                    return !isUndefined(activePanelKeys[index]);
+                }),
+            };
+        },
+        [activePanelKeys, data]
+    );
 
     useLayoutEffect(() => {
         if (!first.current) {
@@ -262,13 +278,8 @@ export function Collapse({
                 sizes={sizes}
                 onChange={handleSplitChange}
                 split="horizontal"
-                allowResize={data.map((item, index) => {
-                    if (item?.config?.grow === 0) {
-                        return false;
-                    }
-                    return !!activePanelKeys[index];
-                })}
-                showSashes={showSashs}
+                allowResize={allowResize}
+                showSashes={nextSashes}
                 paneClassName={classNames(
                     collapsePaneClassName,
                     collapsing && collapsingClassName

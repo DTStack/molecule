@@ -108,6 +108,14 @@ We compile the source code into the ES6 modules and output to the **`esm`** fold
 
 Refer to the [CONTRIBUTING](./CONTRIBUTING.md).
 
+## Communication
+
+-   We use [DingTalk](https://www.dingtalk.com/) to communicate,You can search the group number `30537511` or scan the QR code below to join the communication group
+
+<div align="center">
+    <img src="website/static/img/qrcode-chat.jpg" width="300" />
+</div>
+
 ## License
 
 Copyright © DTStack. All rights reserved.

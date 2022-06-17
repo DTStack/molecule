@@ -20,7 +20,7 @@ The categories of extension
 
 #### Defined in
 
-[model/extension.ts:61](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L61)
+[model/extension.ts:61](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L61)
 
 ---
 
@@ -33,7 +33,7 @@ Extension system will load the extension by this file
 
 #### Defined in
 
-[model/extension.ts:70](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L70)
+[model/extension.ts:70](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L70)
 
 ---
 
@@ -45,7 +45,7 @@ The description of extension
 
 #### Defined in
 
-[model/extension.ts:82](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L82)
+[model/extension.ts:82](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L82)
 
 ---
 
@@ -57,7 +57,7 @@ Whether disable current extension, the extension default status is enable
 
 #### Defined in
 
-[model/extension.ts:94](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L94)
+[model/extension.ts:94](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L94)
 
 ---
 
@@ -69,7 +69,7 @@ The display name of extension
 
 #### Defined in
 
-[model/extension.ts:53](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L53)
+[model/extension.ts:53](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L53)
 
 ---
 
@@ -81,7 +81,7 @@ The kind of extension
 
 #### Defined in
 
-[model/extension.ts:65](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L65)
+[model/extension.ts:65](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L65)
 
 ---
 
@@ -93,7 +93,7 @@ The Icon of extension
 
 #### Defined in
 
-[model/extension.ts:78](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L78)
+[model/extension.ts:78](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L78)
 
 ---
 
@@ -105,7 +105,7 @@ The ID of extension required
 
 #### Defined in
 
-[model/extension.ts:45](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L45)
+[model/extension.ts:45](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L45)
 
 ---
 
@@ -117,7 +117,7 @@ The entry of extension
 
 #### Defined in
 
-[model/extension.ts:74](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L74)
+[model/extension.ts:74](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L74)
 
 ---
 
@@ -129,7 +129,7 @@ The name of extension
 
 #### Defined in
 
-[model/extension.ts:49](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L49)
+[model/extension.ts:49](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L49)
 
 ---
 
@@ -141,7 +141,7 @@ The path of extension
 
 #### Defined in
 
-[model/extension.ts:90](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L90)
+[model/extension.ts:90](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L90)
 
 ---
 
@@ -153,7 +153,7 @@ The publisher of extension
 
 #### Defined in
 
-[model/extension.ts:86](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L86)
+[model/extension.ts:86](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L86)
 
 ---
 
@@ -165,7 +165,7 @@ The version of extension
 
 #### Defined in
 
-[model/extension.ts:57](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L57)
+[model/extension.ts:57](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L57)
 
 ## Methods
 
@@ -189,7 +189,7 @@ added the Extension instance.
 
 #### Defined in
 
-[model/extension.ts:101](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L101)
+[model/extension.ts:101](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L101)
 
 ---
 
@@ -212,4 +212,4 @@ For example, you can recover the UI state, or remove the Objects in memory.
 
 #### Defined in
 
-[model/extension.ts:107](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L107)
+[model/extension.ts:107](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L107)

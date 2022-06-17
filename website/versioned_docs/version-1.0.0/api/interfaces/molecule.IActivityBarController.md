@@ -37,7 +37,7 @@ Partial.count
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -64,7 +64,7 @@ Partial.emit
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -82,7 +82,7 @@ Partial.initView
 
 #### Defined in
 
-[react/controller.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/controller.ts#L4)
+[react/controller.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/controller.ts#L4)
 
 ---
 
@@ -105,7 +105,7 @@ Called when activity bar item which is not global is changed
 
 #### Defined in
 
-[controller/activityBar.ts:29](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/activityBar.ts#L29)
+[controller/activityBar.ts:29](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/activityBar.ts#L29)
 
 ---
 
@@ -128,7 +128,7 @@ Called when activity bar item is clicked
 
 #### Defined in
 
-[controller/activityBar.ts:25](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/activityBar.ts#L25)
+[controller/activityBar.ts:25](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/activityBar.ts#L25)
 
 ---
 
@@ -149,7 +149,7 @@ Called when activity bar item is clicked
 
 #### Defined in
 
-[controller/activityBar.ts:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/activityBar.ts#L30)
+[controller/activityBar.ts:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/activityBar.ts#L30)
 
 ---
 
@@ -176,7 +176,7 @@ Partial.subscribe
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -203,4 +203,4 @@ Partial.unsubscribe
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)

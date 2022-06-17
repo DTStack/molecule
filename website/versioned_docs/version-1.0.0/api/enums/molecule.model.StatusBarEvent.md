@@ -19,7 +19,7 @@ Activity bar data changed
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:36](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L36)
+[model/workbench/statusBar.tsx:36](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L36)
 
 ---
 
@@ -31,4 +31,4 @@ Selected an activity bar
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:32](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L32)
+[model/workbench/statusBar.tsx:32](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L32)

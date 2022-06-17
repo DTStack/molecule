@@ -43,7 +43,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:33](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L33)
+[model/notification.tsx:33](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L33)
 
 ## Properties
 
@@ -57,7 +57,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:31](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L31)
+[model/notification.tsx:31](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L31)
 
 ---
 
@@ -71,7 +71,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:27](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L27)
+[model/notification.tsx:27](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L27)
 
 ---
 
@@ -85,7 +85,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:25](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L25)
+[model/notification.tsx:25](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L25)
 
 ---
 
@@ -99,7 +99,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:26](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L26)
+[model/notification.tsx:26](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L26)
 
 ---
 
@@ -121,7 +121,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:29](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L29)
+[model/notification.tsx:29](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L29)
 
 ---
 
@@ -135,7 +135,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L30)
+[model/notification.tsx:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L30)
 
 ---
 
@@ -149,4 +149,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L28)
+[model/notification.tsx:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L28)

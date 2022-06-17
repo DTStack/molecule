@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/split/pane.tsx:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/pane.tsx#L7)
+[components/split/pane.tsx:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/pane.tsx#L7)
 
 ---
 
@@ -25,4 +25,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/split/pane.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/pane.tsx#L8)
+[components/split/pane.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/pane.tsx#L8)

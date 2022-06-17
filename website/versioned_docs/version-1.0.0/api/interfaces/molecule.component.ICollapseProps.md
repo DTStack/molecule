@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/collapse/index.tsx:42](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/collapse/index.tsx#L42)
+[components/collapse/index.tsx:42](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/collapse/index.tsx#L42)
 
 ---
 
@@ -39,7 +39,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[common/types.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L4)
+[common/types.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L4)
 
 ---
 
@@ -49,7 +49,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[components/collapse/index.tsx:43](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/collapse/index.tsx#L43)
+[components/collapse/index.tsx:43](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/collapse/index.tsx#L43)
 
 ---
 
@@ -63,7 +63,7 @@ HTMLElementProps.role
 
 #### Defined in
 
-[common/types.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L5)
+[common/types.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L5)
 
 ---
 
@@ -77,7 +77,7 @@ HTMLElementProps.style
 
 #### Defined in
 
-[common/types.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L3)
+[common/types.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L3)
 
 ---
 
@@ -91,7 +91,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[common/types.ts:2](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L2)
+[common/types.ts:2](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L2)
 
 ## Methods
 
@@ -111,7 +111,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[components/collapse/index.tsx:44](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/collapse/index.tsx#L44)
+[components/collapse/index.tsx:44](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/collapse/index.tsx#L44)
 
 ---
 
@@ -131,7 +131,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[components/collapse/index.tsx:45](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/collapse/index.tsx#L45)
+[components/collapse/index.tsx:45](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/collapse/index.tsx#L45)
 
 ---
 
@@ -152,4 +152,4 @@ HTMLElementProps.title
 
 #### Defined in
 
-[components/collapse/index.tsx:46](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/collapse/index.tsx#L46)
+[components/collapse/index.tsx:46](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/collapse/index.tsx#L46)

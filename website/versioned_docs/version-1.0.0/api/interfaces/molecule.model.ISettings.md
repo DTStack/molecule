@@ -23,7 +23,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/settings.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/settings.ts#L14)
+[model/settings.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/settings.ts#L14)
 
 ---
 
@@ -33,7 +33,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/settings.ts:15](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/settings.ts#L15)
+[model/settings.ts:15](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/settings.ts#L15)
 
 ---
 
@@ -43,4 +43,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/settings.ts:16](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/settings.ts#L16)
+[model/settings.ts:16](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/settings.ts#L16)

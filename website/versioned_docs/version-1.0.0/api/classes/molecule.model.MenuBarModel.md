@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/menuBar.ts:34](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/menuBar.ts#L34)
+[model/workbench/menuBar.ts:34](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/menuBar.ts#L34)
 
 ## Properties
 
@@ -39,4 +39,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/menuBar.ts:32](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/menuBar.ts#L32)
+[model/workbench/menuBar.ts:32](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/menuBar.ts#L32)

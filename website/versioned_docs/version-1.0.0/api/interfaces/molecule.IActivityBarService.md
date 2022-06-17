@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[react/component.ts:44](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L44)
+[react/component.ts:44](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L44)
 
 ## Methods
 
@@ -52,7 +52,7 @@ Add IActivityBarItem data
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:27](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L27)
+[services/workbench/activityBarService.ts:27](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L27)
 
 ---
 
@@ -74,7 +74,7 @@ Add new contextMenus for the activityBar
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:50](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L50)
+[services/workbench/activityBarService.ts:50](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L50)
 
 ---
 
@@ -100,7 +100,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -127,7 +127,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -147,7 +147,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -167,7 +167,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -189,7 +189,7 @@ Called when activity bar item which is not global is changed
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:66](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L66)
+[services/workbench/activityBarService.ts:66](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L66)
 
 ---
 
@@ -211,7 +211,7 @@ Add click event listener
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:62](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L62)
+[services/workbench/activityBarService.ts:62](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L62)
 
 ---
 
@@ -237,7 +237,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -259,7 +259,7 @@ Remove the specific activity bar by id
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:36](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L36)
+[services/workbench/activityBarService.ts:36](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L36)
 
 ---
 
@@ -281,7 +281,7 @@ Remove the specific contextMenu item by id
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:57](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L57)
+[services/workbench/activityBarService.ts:57](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L57)
 
 ---
 
@@ -308,7 +308,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -334,7 +334,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -352,7 +352,7 @@ and then using the activityBar.add() method to fill the data you need.
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:22](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L22)
+[services/workbench/activityBarService.ts:22](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L22)
 
 ---
 
@@ -374,7 +374,7 @@ Set active bar
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:31](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L31)
+[services/workbench/activityBarService.ts:31](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L31)
 
 ---
 
@@ -401,7 +401,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -428,7 +428,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -450,7 +450,7 @@ Toggle the specific activity bar between show or hide
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:41](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L41)
+[services/workbench/activityBarService.ts:41](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L41)
 
 ---
 
@@ -472,7 +472,7 @@ Toggle the contextMenu between checked or unchecked
 
 #### Defined in
 
-[services/workbench/activityBarService.ts:46](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/activityBarService.ts#L46)
+[services/workbench/activityBarService.ts:46](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/activityBarService.ts#L46)
 
 ---
 
@@ -499,4 +499,4 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)

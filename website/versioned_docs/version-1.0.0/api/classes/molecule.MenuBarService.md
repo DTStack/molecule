@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:60](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L60)
+[services/workbench/menuBarService.ts:60](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L60)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:58](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L58)
+[services/workbench/menuBarService.ts:58](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L58)
 
 ---
 
@@ -57,7 +57,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:57](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L57)
+[services/workbench/menuBarService.ts:57](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L57)
 
 ## Methods
 
@@ -84,7 +84,7 @@ Append a new menu into the specific menu found by `parentId`
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:106](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L106)
+[services/workbench/menuBarService.ts:106](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L106)
 
 ---
 
@@ -114,7 +114,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -145,7 +145,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -169,7 +169,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -195,7 +195,7 @@ Get the specific menu item
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:95](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L95)
+[services/workbench/menuBarService.ts:95](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L95)
 
 ---
 
@@ -219,7 +219,7 @@ source is the target menu and path is the collections of indexs that contain the
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:70](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L70)
+[services/workbench/menuBarService.ts:70](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L70)
 
 ---
 
@@ -243,7 +243,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -269,7 +269,7 @@ listen to the onSelect event in menu
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:168](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L168)
+[services/workbench/menuBarService.ts:168](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L168)
 
 ---
 
@@ -299,7 +299,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -325,7 +325,7 @@ Remove the specific menu item
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:123](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L123)
+[services/workbench/menuBarService.ts:123](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L123)
 
 ---
 
@@ -356,7 +356,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -386,7 +386,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -406,7 +406,7 @@ Reset menu bar data;
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:162](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L162)
+[services/workbench/menuBarService.ts:162](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L162)
 
 ---
 
@@ -432,7 +432,7 @@ Set the menus data
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:100](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L100)
+[services/workbench/menuBarService.ts:100](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L100)
 
 ---
 
@@ -463,7 +463,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -494,7 +494,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -525,7 +525,7 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -552,4 +552,4 @@ Update the specific menu item data
 
 #### Defined in
 
-[services/workbench/menuBarService.ts:149](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/menuBarService.ts#L149)
+[services/workbench/menuBarService.ts:149](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/menuBarService.ts#L149)

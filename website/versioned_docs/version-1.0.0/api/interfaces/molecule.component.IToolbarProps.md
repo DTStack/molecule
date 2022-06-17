@@ -31,7 +31,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/types.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L4)
+[common/types.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L4)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/actionBar/index.tsx:36](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/actionBar/index.tsx#L36)
+[components/actionBar/index.tsx:36](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/actionBar/index.tsx#L36)
 
 ---
 
@@ -59,7 +59,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/types.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L5)
+[common/types.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L5)
 
 ---
 
@@ -73,7 +73,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/types.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L3)
+[common/types.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L3)
 
 ---
 
@@ -87,7 +87,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/types.ts:2](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L2)
+[common/types.ts:2](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L2)
 
 ## Methods
 
@@ -112,7 +112,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/actionBar/index.tsx:41](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/actionBar/index.tsx#L41)
+[components/actionBar/index.tsx:41](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/actionBar/index.tsx#L41)
 
 ---
 
@@ -137,4 +137,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/actionBar/index.tsx:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/actionBar/index.tsx#L37)
+[components/actionBar/index.tsx:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/actionBar/index.tsx#L37)

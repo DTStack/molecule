@@ -37,7 +37,7 @@ Partial.count
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -64,7 +64,7 @@ Partial.emit
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -82,7 +82,7 @@ Partial.initView
 
 #### Defined in
 
-[react/controller.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/controller.ts#L4)
+[react/controller.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/controller.ts#L4)
 
 ---
 
@@ -103,7 +103,7 @@ Partial.initView
 
 #### Defined in
 
-[controller/notification.tsx:22](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/notification.tsx#L22)
+[controller/notification.tsx:22](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/notification.tsx#L22)
 
 ---
 
@@ -124,7 +124,7 @@ Partial.initView
 
 #### Defined in
 
-[controller/notification.tsx:21](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/notification.tsx#L21)
+[controller/notification.tsx:21](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/notification.tsx#L21)
 
 ---
 
@@ -144,7 +144,7 @@ Partial.initView
 
 #### Defined in
 
-[controller/notification.tsx:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/notification.tsx#L20)
+[controller/notification.tsx:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/notification.tsx#L20)
 
 ---
 
@@ -171,7 +171,7 @@ Partial.subscribe
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -187,7 +187,7 @@ Toggle the Notifications visibility
 
 #### Defined in
 
-[controller/notification.tsx:29](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/notification.tsx#L29)
+[controller/notification.tsx:29](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/notification.tsx#L29)
 
 ---
 
@@ -214,4 +214,4 @@ Partial.unsubscribe
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)

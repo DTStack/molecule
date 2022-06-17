@@ -20,7 +20,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/event/eventBus.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L3)
+[common/event/eventBus.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L3)
 
 ## Functions
 
@@ -57,7 +57,7 @@ it's going to notify the listener
 
 #### Defined in
 
-[common/event/decorator.ts:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/decorator.ts#L8)
+[common/event/decorator.ts:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/decorator.ts#L8)
 
 ---
 
@@ -93,4 +93,4 @@ When the event emitted, it's going to call target function
 
 #### Defined in
 
-[common/event/decorator.ts:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/decorator.ts#L30)
+[common/event/decorator.ts:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/decorator.ts#L30)

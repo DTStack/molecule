@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:54](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L54)
+[services/workbench/sidebarService.ts:54](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L54)
 
 ## Properties
 
@@ -47,7 +47,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:52](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L52)
+[services/workbench/sidebarService.ts:52](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L52)
 
 ## Methods
 
@@ -74,7 +74,7 @@ Add a new Sidebar pane
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:70](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L70)
+[services/workbench/sidebarService.ts:70](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L70)
 
 ---
 
@@ -104,7 +104,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -135,7 +135,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -159,7 +159,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -185,7 +185,7 @@ Get a specific pane via id
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:65](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L65)
+[services/workbench/sidebarService.ts:65](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L65)
 
 ---
 
@@ -205,7 +205,7 @@ Get a specific pane via id
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:59](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L59)
+[services/workbench/sidebarService.ts:59](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L59)
 
 ---
 
@@ -229,7 +229,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -259,7 +259,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -285,7 +285,7 @@ Remove a pane
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:105](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L105)
+[services/workbench/sidebarService.ts:105](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L105)
 
 ---
 
@@ -316,7 +316,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -346,7 +346,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -366,7 +366,7 @@ Reset the sidebar data
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:143](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L143)
+[services/workbench/sidebarService.ts:143](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L143)
 
 ---
 
@@ -392,7 +392,7 @@ Set the specific pane as active
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:126](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L126)
+[services/workbench/sidebarService.ts:126](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L126)
 
 ---
 
@@ -423,7 +423,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -454,7 +454,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -485,7 +485,7 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -511,4 +511,4 @@ Update a specific pane
 
 #### Defined in
 
-[services/workbench/sidebarService.ts:91](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/sidebarService.ts#L91)
+[services/workbench/sidebarService.ts:91](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/sidebarService.ts#L91)

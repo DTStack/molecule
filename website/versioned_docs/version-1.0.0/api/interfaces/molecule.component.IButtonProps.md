@@ -25,7 +25,7 @@ Omit.disabled
 
 #### Defined in
 
-[components/button/index.tsx:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/button/index.tsx#L7)
+[components/button/index.tsx:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/button/index.tsx#L7)
 
 ---
 
@@ -35,7 +35,7 @@ Omit.disabled
 
 #### Defined in
 
-[components/button/index.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/button/index.tsx#L8)
+[components/button/index.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/button/index.tsx#L8)
 
 ## Methods
 
@@ -59,4 +59,4 @@ Omit.onClick
 
 #### Defined in
 
-[components/button/index.tsx:9](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/button/index.tsx#L9)
+[components/button/index.tsx:9](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/button/index.tsx#L9)

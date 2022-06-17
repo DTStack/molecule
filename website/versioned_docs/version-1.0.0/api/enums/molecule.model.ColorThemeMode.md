@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/colorTheme.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L20)
+[model/colorTheme.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L20)
 
 ---
 
@@ -25,4 +25,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/colorTheme.ts:21](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L21)
+[model/colorTheme.ts:21](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L21)

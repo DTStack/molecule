@@ -33,7 +33,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/tabs/tab.tsx:40](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L40)
+[components/tabs/tab.tsx:40](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L40)
 
 ---
 
@@ -43,7 +43,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:42](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L42)
+[model/workbench/editor.ts:42](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L42)
 
 ---
 
@@ -60,7 +60,7 @@ Default is true
 
 #### Defined in
 
-[components/tabs/tab.tsx:45](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L45)
+[components/tabs/tab.tsx:45](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L45)
 
 ---
 
@@ -74,7 +74,7 @@ Default is true
 
 #### Defined in
 
-[components/tabs/tab.tsx:57](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L57)
+[components/tabs/tab.tsx:57](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L57)
 
 ---
 
@@ -90,7 +90,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:49](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L49)
+[components/tabs/tab.tsx:49](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L49)
 
 ---
 
@@ -104,7 +104,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:51](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L51)
+[components/tabs/tab.tsx:51](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L51)
 
 ---
 
@@ -118,7 +118,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:52](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L52)
+[components/tabs/tab.tsx:52](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L52)
 
 ---
 
@@ -132,7 +132,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:53](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L53)
+[components/tabs/tab.tsx:53](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L53)
 
 ---
 
@@ -146,7 +146,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:54](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L54)
+[components/tabs/tab.tsx:54](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L54)
 
 ---
 
@@ -160,4 +160,4 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:50](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L50)
+[components/tabs/tab.tsx:50](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L50)

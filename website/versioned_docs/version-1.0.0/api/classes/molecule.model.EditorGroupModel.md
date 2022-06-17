@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:86](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L86)
+[model/workbench/editor.ts:86](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L86)
 
 ## Properties
 
@@ -59,7 +59,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L81)
+[model/workbench/editor.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L81)
 
 ---
 
@@ -73,7 +73,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:84](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L84)
+[model/workbench/editor.ts:84](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L84)
 
 ---
 
@@ -87,7 +87,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:80](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L80)
+[model/workbench/editor.ts:80](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L80)
 
 ---
 
@@ -101,7 +101,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:83](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L83)
+[model/workbench/editor.ts:83](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L83)
 
 ---
 
@@ -115,7 +115,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:78](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L78)
+[model/workbench/editor.ts:78](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L78)
 
 ---
 
@@ -129,7 +129,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:82](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L82)
+[model/workbench/editor.ts:82](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L82)
 
 ---
 
@@ -145,4 +145,4 @@ Current editor group tab
 
 #### Defined in
 
-[model/workbench/editor.ts:79](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L79)
+[model/workbench/editor.ts:79](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L79)

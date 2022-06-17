@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/contextMenu/index.tsx:6](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/contextMenu/index.tsx#L6)
+[components/contextMenu/index.tsx:6](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/contextMenu/index.tsx#L6)
 
 ## Methods
 
@@ -29,4 +29,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/contextMenu/index.tsx:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/contextMenu/index.tsx#L7)
+[components/contextMenu/index.tsx:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/contextMenu/index.tsx#L7)

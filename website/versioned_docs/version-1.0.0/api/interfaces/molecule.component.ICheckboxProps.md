@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/checkbox/checkbox.tsx:9](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/checkbox/checkbox.tsx#L9)
+[components/checkbox/checkbox.tsx:9](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/checkbox/checkbox.tsx#L9)
 
 ---
 
@@ -39,7 +39,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[common/types.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L4)
+[common/types.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L4)
 
 ---
 
@@ -49,7 +49,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[components/checkbox/checkbox.tsx:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/checkbox/checkbox.tsx#L7)
+[components/checkbox/checkbox.tsx:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/checkbox/checkbox.tsx#L7)
 
 ---
 
@@ -63,7 +63,7 @@ HTMLElementProps.role
 
 #### Defined in
 
-[common/types.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L5)
+[common/types.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L5)
 
 ---
 
@@ -77,7 +77,7 @@ HTMLElementProps.style
 
 #### Defined in
 
-[common/types.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L3)
+[common/types.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L3)
 
 ---
 
@@ -91,7 +91,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[common/types.ts:2](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L2)
+[common/types.ts:2](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L2)
 
 ---
 
@@ -101,7 +101,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[components/checkbox/checkbox.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/checkbox/checkbox.tsx#L8)
+[components/checkbox/checkbox.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/checkbox/checkbox.tsx#L8)
 
 ## Methods
 
@@ -122,4 +122,4 @@ HTMLElementProps.title
 
 #### Defined in
 
-[components/checkbox/checkbox.tsx:10](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/checkbox/checkbox.tsx#L10)
+[components/checkbox/checkbox.tsx:10](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/checkbox/checkbox.tsx#L10)

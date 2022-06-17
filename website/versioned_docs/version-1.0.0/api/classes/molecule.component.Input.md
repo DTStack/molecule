@@ -31,7 +31,7 @@ React.Component&lt;IInputProps, InputState\&gt;.constructor
 
 #### Defined in
 
-[components/input/input.tsx:80](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L80)
+[components/input/input.tsx:80](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L80)
 
 ## Properties
 
@@ -41,7 +41,7 @@ React.Component&lt;IInputProps, InputState\&gt;.constructor
 
 #### Defined in
 
-[components/input/input.tsx:78](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L78)
+[components/input/input.tsx:78](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L78)
 
 ---
 
@@ -65,7 +65,7 @@ React.Component&lt;IInputProps, InputState\&gt;.constructor
 
 #### Defined in
 
-[components/input/input.tsx:72](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L72)
+[components/input/input.tsx:72](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L72)
 
 ---
 
@@ -81,7 +81,7 @@ React.Component&lt;IInputProps, InputState\&gt;.constructor
 
 #### Defined in
 
-[components/input/input.tsx:74](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L74)
+[components/input/input.tsx:74](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L74)
 
 ## Methods
 
@@ -101,7 +101,7 @@ React.Component&lt;IInputProps, InputState\&gt;.constructor
 
 #### Defined in
 
-[components/input/input.tsx:115](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L115)
+[components/input/input.tsx:115](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L115)
 
 ---
 
@@ -121,7 +121,7 @@ React.Component&lt;IInputProps, InputState\&gt;.constructor
 
 #### Defined in
 
-[components/input/input.tsx:123](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L123)
+[components/input/input.tsx:123](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L123)
 
 ---
 
@@ -139,7 +139,7 @@ React.Component.render
 
 #### Defined in
 
-[components/input/input.tsx:132](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L132)
+[components/input/input.tsx:132](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L132)
 
 ---
 
@@ -159,7 +159,7 @@ React.Component.render
 
 #### Defined in
 
-[components/input/input.tsx:105](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L105)
+[components/input/input.tsx:105](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L105)
 
 ---
 
@@ -179,7 +179,7 @@ React.Component.render
 
 #### Defined in
 
-[components/input/input.tsx:109](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L109)
+[components/input/input.tsx:109](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L109)
 
 ---
 
@@ -200,4 +200,4 @@ React.Component.render
 
 #### Defined in
 
-[components/input/input.tsx:93](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L93)
+[components/input/input.tsx:93](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L93)

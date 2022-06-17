@@ -32,7 +32,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[react/connector.tsx:12](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/connector.tsx#L12)
+[react/connector.tsx:12](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/connector.tsx#L12)
 
 ---
 
@@ -46,7 +46,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[react/connector.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/connector.tsx#L8)
+[react/connector.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/connector.tsx#L8)
 
 ## Functions
 
@@ -75,7 +75,7 @@ Clone react children props
 
 #### Defined in
 
-[react/helper.ts:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/helper.ts#L8)
+[react/helper.ts:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/helper.ts#L8)
 
 ---
 
@@ -103,4 +103,4 @@ Clone react children props
 
 #### Defined in
 
-[react/connector.tsx:16](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/connector.tsx#L16)
+[react/connector.tsx:16](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/connector.tsx#L16)

@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:66](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L66)
+[model/workbench/explorer/folderTree.tsx:66](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L66)
 
 ## Properties
 
@@ -41,7 +41,7 @@ The children of this tree node
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:59](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L59)
+[model/workbench/explorer/folderTree.tsx:59](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L59)
 
 ---
 
@@ -55,7 +55,7 @@ The children of this tree node
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:62](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L62)
+[model/workbench/explorer/folderTree.tsx:62](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L62)
 
 ---
 
@@ -71,7 +71,7 @@ Store the custom data
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:64](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L64)
+[model/workbench/explorer/folderTree.tsx:64](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L64)
 
 ---
 
@@ -85,7 +85,7 @@ Store the custom data
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:58](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L58)
+[model/workbench/explorer/folderTree.tsx:58](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L58)
 
 ---
 
@@ -101,7 +101,7 @@ The icon of this tree node, which is rendered in front of the name
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:60](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L60)
+[model/workbench/explorer/folderTree.tsx:60](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L60)
 
 ---
 
@@ -117,7 +117,7 @@ The unique id in tree node
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:54](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L54)
+[model/workbench/explorer/folderTree.tsx:54](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L54)
 
 ---
 
@@ -133,7 +133,7 @@ The status of editable, mark whether the node is being edited
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:61](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L61)
+[model/workbench/explorer/folderTree.tsx:61](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L61)
 
 ---
 
@@ -149,7 +149,7 @@ The type of this tree node.
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:57](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L57)
+[model/workbench/explorer/folderTree.tsx:57](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L57)
 
 ---
 
@@ -163,7 +163,7 @@ The type of this tree node.
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L56)
+[model/workbench/explorer/folderTree.tsx:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L56)
 
 ---
 
@@ -179,4 +179,4 @@ The name of this tree node
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:55](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L55)
+[model/workbench/explorer/folderTree.tsx:55](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L55)

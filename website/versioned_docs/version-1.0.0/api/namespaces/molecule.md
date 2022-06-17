@@ -160,7 +160,7 @@ Re-exports [IWorkbench](../interfaces/molecule.model.IWorkbench)
 
 #### Defined in
 
-[services/settingsService.ts:21](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L21)
+[services/settingsService.ts:21](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L21)
 
 ---
 
@@ -170,7 +170,7 @@ Re-exports [IWorkbench](../interfaces/molecule.model.IWorkbench)
 
 #### Defined in
 
-[services/builtinService/index.ts:23](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/builtinService/index.ts#L23)
+[services/builtinService/index.ts:23](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/builtinService/index.ts#L23)
 
 ## Variables
 
@@ -182,7 +182,7 @@ The activityBar service
 
 #### Defined in
 
-[molecule.api.ts:66](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L66)
+[molecule.api.ts:66](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L66)
 
 ---
 
@@ -192,7 +192,7 @@ The activityBar service
 
 #### Defined in
 
-[molecule.api.ts:100](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L100)
+[molecule.api.ts:100](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L100)
 
 ---
 
@@ -204,7 +204,7 @@ The ColorTheme service
 
 #### Defined in
 
-[molecule.api.ts:92](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L92)
+[molecule.api.ts:92](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L92)
 
 ---
 
@@ -214,7 +214,7 @@ The ColorTheme service
 
 #### Defined in
 
-[molecule.api.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L81)
+[molecule.api.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L81)
 
 ---
 
@@ -224,7 +224,7 @@ The ColorTheme service
 
 #### Defined in
 
-[molecule.api.ts:75](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L75)
+[molecule.api.ts:75](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L75)
 
 ---
 
@@ -234,7 +234,7 @@ The ColorTheme service
 
 #### Defined in
 
-[molecule.api.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L69)
+[molecule.api.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L69)
 
 ---
 
@@ -246,7 +246,7 @@ The Extension service
 
 #### Defined in
 
-[molecule.api.ts:105](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L105)
+[molecule.api.ts:105](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L105)
 
 ---
 
@@ -256,7 +256,7 @@ The Extension service
 
 #### Defined in
 
-[molecule.api.ts:72](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L72)
+[molecule.api.ts:72](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L72)
 
 ---
 
@@ -268,7 +268,7 @@ The locale service
 
 #### Defined in
 
-[molecule.api.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L56)
+[molecule.api.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L56)
 
 ---
 
@@ -280,7 +280,7 @@ The layout service
 
 #### Defined in
 
-[molecule.api.ts:61](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L61)
+[molecule.api.ts:61](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L61)
 
 ---
 
@@ -290,7 +290,7 @@ The layout service
 
 #### Defined in
 
-[molecule.api.ts:80](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L80)
+[molecule.api.ts:80](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L80)
 
 ---
 
@@ -300,7 +300,7 @@ The layout service
 
 #### Defined in
 
-[molecule.api.ts:107](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L107)
+[molecule.api.ts:107](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L107)
 
 ---
 
@@ -310,7 +310,7 @@ The layout service
 
 #### Defined in
 
-[molecule.api.ts:84](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L84)
+[molecule.api.ts:84](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L84)
 
 ---
 
@@ -320,7 +320,7 @@ The layout service
 
 #### Defined in
 
-[molecule.api.ts:83](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L83)
+[molecule.api.ts:83](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L83)
 
 ---
 
@@ -330,7 +330,7 @@ The layout service
 
 #### Defined in
 
-[molecule.api.ts:87](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L87)
+[molecule.api.ts:87](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L87)
 
 ---
 
@@ -340,7 +340,7 @@ The layout service
 
 #### Defined in
 
-[molecule.api.ts:78](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L78)
+[molecule.api.ts:78](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L78)
 
 ---
 
@@ -352,7 +352,7 @@ The Settings service
 
 #### Defined in
 
-[molecule.api.ts:98](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L98)
+[molecule.api.ts:98](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L98)
 
 ---
 
@@ -362,7 +362,7 @@ The Settings service
 
 #### Defined in
 
-[molecule.api.ts:79](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L79)
+[molecule.api.ts:79](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L79)
 
 ---
 
@@ -372,7 +372,7 @@ The Settings service
 
 #### Defined in
 
-[molecule.api.ts:82](https://github.com/DTStack/molecule/blob/ff1a27ef/src/molecule.api.ts#L82)
+[molecule.api.ts:82](https://github.com/DTStack/molecule/blob/3e6bc450/src/molecule.api.ts#L82)
 
 ## Functions
 
@@ -392,7 +392,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/activityBar/activityBar.tsx:22](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/activityBar/activityBar.tsx#L22)
+[workbench/activityBar/activityBar.tsx:22](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/activityBar/activityBar.tsx#L22)
 
 ---
 
@@ -412,7 +412,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/activityBar/activityBarItem.tsx:17](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/activityBar/activityBarItem.tsx#L17)
+[workbench/activityBar/activityBarItem.tsx:17](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/activityBar/activityBarItem.tsx#L17)
 
 ---
 
@@ -432,7 +432,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/editor/editor.tsx:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/editor/editor.tsx#L14)
+[workbench/editor/editor.tsx:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/editor/editor.tsx#L14)
 
 ---
 
@@ -452,7 +452,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/editor/group.tsx:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/editor/group.tsx#L28)
+[workbench/editor/group.tsx:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/editor/group.tsx#L28)
 
 ---
 
@@ -472,7 +472,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/menuBar/menuBar.tsx:15](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/menuBar/menuBar.tsx#L15)
+[workbench/menuBar/menuBar.tsx:15](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/menuBar/menuBar.tsx#L15)
 
 ---
 
@@ -492,7 +492,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/panel/panel.tsx:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/panel/panel.tsx#L14)
+[workbench/panel/panel.tsx:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/panel/panel.tsx#L14)
 
 ---
 
@@ -512,7 +512,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/sidebar/sidebar.tsx:33](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/sidebar/sidebar.tsx#L33)
+[workbench/sidebar/sidebar.tsx:33](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/sidebar/sidebar.tsx#L33)
 
 ---
 
@@ -532,7 +532,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/statusBar/statusBar.tsx:18](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/statusBar/statusBar.tsx#L18)
+[workbench/statusBar/statusBar.tsx:18](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/statusBar/statusBar.tsx#L18)
 
 ---
 
@@ -552,7 +552,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/statusBar/item.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/statusBar/item.tsx#L8)
+[workbench/statusBar/item.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/statusBar/item.tsx#L8)
 
 ---
 
@@ -572,7 +572,7 @@ The Settings service
 
 #### Defined in
 
-[workbench/workbench.tsx:53](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/workbench.tsx#L53)
+[workbench/workbench.tsx:53](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/workbench.tsx#L53)
 
 ---
 
@@ -603,4 +603,4 @@ localize('id', 'default value', 'world', 'molecule'); // hello world, molecule
 
 #### Defined in
 
-[i18n/localize.tsx:24](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localize.tsx#L24)
+[i18n/localize.tsx:24](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localize.tsx#L24)

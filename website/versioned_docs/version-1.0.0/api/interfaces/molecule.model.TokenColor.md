@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/colorTheme.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L5)
+[model/colorTheme.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L5)
 
 ---
 
@@ -31,7 +31,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/colorTheme.ts:6](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L6)
+[model/colorTheme.ts:6](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L6)
 
 ---
 
@@ -41,4 +41,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/colorTheme.ts:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L7)
+[model/colorTheme.ts:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L7)

@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:2](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L2)
+[model/workbench/explorer/editorTree.ts:2](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L2)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:6](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L6)
+[model/workbench/explorer/editorTree.ts:6](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L6)
 
 ---
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L4)
+[model/workbench/explorer/editorTree.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L4)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L5)
+[model/workbench/explorer/editorTree.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L5)
 
 ---
 
@@ -55,7 +55,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:10](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L10)
+[model/workbench/explorer/editorTree.ts:10](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L10)
 
 ---
 
@@ -65,7 +65,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L7)
+[model/workbench/explorer/editorTree.ts:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L7)
 
 ---
 
@@ -75,7 +75,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L3)
+[model/workbench/explorer/editorTree.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L3)
 
 ---
 
@@ -85,7 +85,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L8)
+[model/workbench/explorer/editorTree.ts:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L8)
 
 ---
 
@@ -95,4 +95,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/editorTree.ts:9](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/editorTree.ts#L9)
+[model/workbench/explorer/editorTree.ts:9](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/editorTree.ts#L9)

@@ -19,7 +19,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/extensionService.ts:126](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L126)
+[services/extensionService.ts:126](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L126)
 
 ## Properties
 
@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/extensionService.ts:118](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L118)
+[services/extensionService.ts:118](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L118)
 
 ---
 
@@ -42,7 +42,7 @@ we are going to refactor this logic after redesign the Molecule lifecycle.
 
 #### Defined in
 
-[services/extensionService.ts:124](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L124)
+[services/extensionService.ts:124](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L124)
 
 ---
 
@@ -52,7 +52,7 @@ we are going to refactor this logic after redesign the Molecule lifecycle.
 
 #### Defined in
 
-[services/extensionService.ts:116](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L116)
+[services/extensionService.ts:116](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L116)
 
 ---
 
@@ -62,7 +62,7 @@ we are going to refactor this logic after redesign the Molecule lifecycle.
 
 #### Defined in
 
-[services/extensionService.ts:115](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L115)
+[services/extensionService.ts:115](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L115)
 
 ---
 
@@ -72,7 +72,7 @@ we are going to refactor this logic after redesign the Molecule lifecycle.
 
 #### Defined in
 
-[services/extensionService.ts:119](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L119)
+[services/extensionService.ts:119](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L119)
 
 ---
 
@@ -82,7 +82,7 @@ we are going to refactor this logic after redesign the Molecule lifecycle.
 
 #### Defined in
 
-[services/extensionService.ts:117](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L117)
+[services/extensionService.ts:117](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L117)
 
 ## Methods
 
@@ -110,7 +110,7 @@ which means you can't get the Extension by the `ExtensionService. getExtension` 
 
 #### Defined in
 
-[services/extensionService.ts:211](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L211)
+[services/extensionService.ts:211](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L211)
 
 ---
 
@@ -138,7 +138,7 @@ Unload Extensions
 
 #### Defined in
 
-[services/extensionService.ts:152](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L152)
+[services/extensionService.ts:152](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L152)
 
 ---
 
@@ -164,7 +164,7 @@ Dispose the specific extension, and remove it from the ExtensionService
 
 #### Defined in
 
-[services/extensionService.ts:229](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L229)
+[services/extensionService.ts:229](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L229)
 
 ---
 
@@ -184,7 +184,7 @@ Dispose all extensions, and reset the ExtensionService
 
 #### Defined in
 
-[services/extensionService.ts:239](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L239)
+[services/extensionService.ts:239](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L239)
 
 ---
 
@@ -211,7 +211,7 @@ Execute the registered command
 
 #### Defined in
 
-[services/extensionService.ts:207](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L207)
+[services/extensionService.ts:207](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L207)
 
 ---
 
@@ -233,7 +233,7 @@ Extension Array
 
 #### Defined in
 
-[services/extensionService.ts:148](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L148)
+[services/extensionService.ts:148](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L148)
 
 ---
 
@@ -259,7 +259,7 @@ Get an extension by the ID
 
 #### Defined in
 
-[services/extensionService.ts:140](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L140)
+[services/extensionService.ts:140](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L140)
 
 ---
 
@@ -286,7 +286,7 @@ extensions no need to activate. You need register the inactive event before the 
 
 #### Defined in
 
-[services/extensionService.ts:246](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L246)
+[services/extensionService.ts:246](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L246)
 
 ---
 
@@ -306,7 +306,7 @@ extensions no need to activate. You need register the inactive event before the 
 
 #### Defined in
 
-[services/extensionService.ts:250](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L250)
+[services/extensionService.ts:250](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L250)
 
 ---
 
@@ -326,7 +326,7 @@ whether the extensions are loaded
 
 #### Defined in
 
-[services/extensionService.ts:136](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L136)
+[services/extensionService.ts:136](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L136)
 
 ---
 
@@ -355,7 +355,7 @@ remove a extension, you can use the `ExtensionService.dispose` method.
 
 #### Defined in
 
-[services/extensionService.ts:172](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L172)
+[services/extensionService.ts:172](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L172)
 
 ---
 
@@ -375,7 +375,7 @@ remove a extension, you can use the `ExtensionService.dispose` method.
 
 #### Defined in
 
-[services/extensionService.ts:185](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L185)
+[services/extensionService.ts:185](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L185)
 
 ---
 
@@ -403,7 +403,7 @@ IDisposable The Disposable instance
 
 #### Defined in
 
-[services/extensionService.ts:203](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L203)
+[services/extensionService.ts:203](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L203)
 
 ---
 
@@ -423,7 +423,7 @@ Reset the extensions to `[]`
 
 #### Defined in
 
-[services/extensionService.ts:144](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L144)
+[services/extensionService.ts:144](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L144)
 
 ---
 
@@ -449,7 +449,7 @@ Set the extensions are loaded
 
 #### Defined in
 
-[services/extensionService.ts:132](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L132)
+[services/extensionService.ts:132](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L132)
 
 ---
 
@@ -475,4 +475,4 @@ Distinguish the language extensions from extensions
 
 #### Defined in
 
-[services/extensionService.ts:257](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/extensionService.ts#L257)
+[services/extensionService.ts:257](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/extensionService.ts#L257)

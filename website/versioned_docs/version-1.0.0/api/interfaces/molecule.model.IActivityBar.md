@@ -19,7 +19,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/activityBar.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L37)
+[model/workbench/activityBar.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L37)
 
 ---
 
@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/activityBar.ts:36](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L36)
+[model/workbench/activityBar.ts:36](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L36)
 
 ---
 
@@ -39,4 +39,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/activityBar.ts:38](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L38)
+[model/workbench/activityBar.ts:38](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L38)

@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/layoutService.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L85)
+[services/workbench/layoutService.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L85)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/layoutService.ts:84](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L84)
+[services/workbench/layoutService.ts:84](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L84)
 
 ---
 
@@ -57,7 +57,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/layoutService.ts:83](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L83)
+[services/workbench/layoutService.ts:83](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L83)
 
 ## Accessors
 
@@ -77,7 +77,7 @@ Get the container of the molecule
 
 #### Defined in
 
-[services/workbench/layoutService.ts:90](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L90)
+[services/workbench/layoutService.ts:90](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L90)
 
 ## Methods
 
@@ -107,7 +107,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -138,7 +138,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -162,7 +162,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -182,7 +182,7 @@ Get the mode of the MenuBar
 
 #### Defined in
 
-[services/workbench/layoutService.ts:176](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L176)
+[services/workbench/layoutService.ts:176](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L176)
 
 ---
 
@@ -206,7 +206,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -236,7 +236,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -267,7 +267,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -297,7 +297,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -317,7 +317,7 @@ Reset all layout data as default value
 
 #### Defined in
 
-[services/workbench/layoutService.ts:181](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L181)
+[services/workbench/layoutService.ts:181](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L181)
 
 ---
 
@@ -343,7 +343,7 @@ Set the sizes between editor groups
 
 #### Defined in
 
-[services/workbench/layoutService.ts:161](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L161)
+[services/workbench/layoutService.ts:161](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L161)
 
 ---
 
@@ -369,7 +369,7 @@ Set the sizes between the editor and the panel
 
 #### Defined in
 
-[services/workbench/layoutService.ts:155](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L155)
+[services/workbench/layoutService.ts:155](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L155)
 
 ---
 
@@ -395,7 +395,7 @@ Set the mode of the MenuBar, default is `vertical`
 
 #### Defined in
 
-[services/workbench/layoutService.ts:167](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L167)
+[services/workbench/layoutService.ts:167](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L167)
 
 ---
 
@@ -421,7 +421,7 @@ Set the sizes between the side bar and main content area
 
 #### Defined in
 
-[services/workbench/layoutService.ts:152](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L152)
+[services/workbench/layoutService.ts:152](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L152)
 
 ---
 
@@ -447,7 +447,7 @@ Set the position of the side bar, default is in `left`
 
 #### Defined in
 
-[services/workbench/layoutService.ts:131](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L131)
+[services/workbench/layoutService.ts:131](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L131)
 
 ---
 
@@ -478,7 +478,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -509,7 +509,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -529,7 +529,7 @@ Toggle the visibility of the activity bar, returns the status of activity bar's 
 
 #### Defined in
 
-[services/workbench/layoutService.ts:117](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L117)
+[services/workbench/layoutService.ts:117](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L117)
 
 ---
 
@@ -549,7 +549,7 @@ Toggle the visibility of menu bar, returns the status of menu bar's `hidden`
 
 #### Defined in
 
-[services/workbench/layoutService.ts:96](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L96)
+[services/workbench/layoutService.ts:96](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L96)
 
 ---
 
@@ -569,7 +569,7 @@ Toggle the maximized status of the panel, returns the status of maximized panel
 
 #### Defined in
 
-[services/workbench/layoutService.ts:141](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L141)
+[services/workbench/layoutService.ts:141](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L141)
 
 ---
 
@@ -589,7 +589,7 @@ Toggle the visibility of the panel, returns the status of panel's `hidden`
 
 #### Defined in
 
-[services/workbench/layoutService.ts:103](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L103)
+[services/workbench/layoutService.ts:103](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L103)
 
 ---
 
@@ -609,7 +609,7 @@ Toggle the visibility of side bar, returns the status of side bar's `hidden`
 
 #### Defined in
 
-[services/workbench/layoutService.ts:110](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L110)
+[services/workbench/layoutService.ts:110](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L110)
 
 ---
 
@@ -629,7 +629,7 @@ Toggle the visibility of the status bar, returns the status of status bar's `hid
 
 #### Defined in
 
-[services/workbench/layoutService.ts:124](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/layoutService.ts#L124)
+[services/workbench/layoutService.ts:124](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/layoutService.ts#L124)
 
 ---
 
@@ -660,4 +660,4 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)

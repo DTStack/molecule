@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/problems.tsx:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/problems.tsx#L37)
+[model/problems.tsx:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/problems.tsx#L37)
 
 ---
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/problems.tsx:35](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/problems.tsx#L35)
+[model/problems.tsx:35](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/problems.tsx#L35)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/problems.tsx:36](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/problems.tsx#L36)
+[model/problems.tsx:36](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/problems.tsx#L36)
 
 ---
 
@@ -55,7 +55,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/problems.tsx:38](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/problems.tsx#L38)
+[model/problems.tsx:38](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/problems.tsx#L38)
 
 ## Methods
 
@@ -75,4 +75,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/problems.tsx:39](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/problems.tsx#L39)
+[model/problems.tsx:39](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/problems.tsx#L39)

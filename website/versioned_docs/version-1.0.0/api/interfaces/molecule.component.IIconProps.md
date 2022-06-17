@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/icon/index.tsx:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/icon/index.tsx#L7)
+[components/icon/index.tsx:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/icon/index.tsx#L7)
 
 ## Methods
 
@@ -45,4 +45,4 @@ ComponentProps.onClick
 
 #### Defined in
 
-[components/icon/index.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/icon/index.tsx#L8)
+[components/icon/index.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/icon/index.tsx#L8)

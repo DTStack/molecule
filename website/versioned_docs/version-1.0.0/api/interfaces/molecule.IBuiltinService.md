@@ -31,7 +31,7 @@ Get the specific constant by id
 
 #### Defined in
 
-[services/builtinService/index.ts:38](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/builtinService/index.ts#L38)
+[services/builtinService/index.ts:38](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/builtinService/index.ts#L38)
 
 ---
 
@@ -47,7 +47,7 @@ Get all constants
 
 #### Defined in
 
-[services/builtinService/index.ts:42](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/builtinService/index.ts#L42)
+[services/builtinService/index.ts:42](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/builtinService/index.ts#L42)
 
 ---
 
@@ -75,7 +75,7 @@ Get the specific module by id
 
 #### Defined in
 
-[services/builtinService/index.ts:46](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/builtinService/index.ts#L46)
+[services/builtinService/index.ts:46](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/builtinService/index.ts#L46)
 
 ---
 
@@ -91,7 +91,7 @@ Get all modules
 
 #### Defined in
 
-[services/builtinService/index.ts:50](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/builtinService/index.ts#L50)
+[services/builtinService/index.ts:50](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/builtinService/index.ts#L50)
 
 ---
 
@@ -115,7 +115,7 @@ Mark the specific constant as inactive
 
 #### Defined in
 
-[services/builtinService/index.ts:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/builtinService/index.ts#L30)
+[services/builtinService/index.ts:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/builtinService/index.ts#L30)
 
 ---
 
@@ -137,7 +137,7 @@ Mark the specific module as inactive
 
 #### Defined in
 
-[services/builtinService/index.ts:34](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/builtinService/index.ts#L34)
+[services/builtinService/index.ts:34](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/builtinService/index.ts#L34)
 
 ---
 
@@ -153,4 +153,4 @@ Reset all constants and modules
 
 #### Defined in
 
-[services/builtinService/index.ts:54](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/builtinService/index.ts#L54)
+[services/builtinService/index.ts:54](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/builtinService/index.ts#L54)

@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localize.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localize.tsx#L8)
+[i18n/localize.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localize.tsx#L8)
 
 ---
 
@@ -25,4 +25,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localize.tsx:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localize.tsx#L7)
+[i18n/localize.tsx:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localize.tsx#L7)

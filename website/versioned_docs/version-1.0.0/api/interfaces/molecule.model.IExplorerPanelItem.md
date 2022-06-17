@@ -19,7 +19,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:29](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L29)
+[model/workbench/explorer/explorer.tsx:29](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L29)
 
 ---
 
@@ -31,7 +31,7 @@ whether hidden in explorer
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:35](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L35)
+[model/workbench/explorer/explorer.tsx:35](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L35)
 
 ---
 
@@ -43,7 +43,7 @@ It must be unique in the Explorer Panel Data
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:18](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L18)
+[model/workbench/explorer/explorer.tsx:18](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L18)
 
 ---
 
@@ -56,7 +56,7 @@ explorer panel's title
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:23](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L23)
+[model/workbench/explorer/explorer.tsx:23](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L23)
 
 ---
 
@@ -66,7 +66,7 @@ explorer panel's title
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:31](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L31)
+[model/workbench/explorer/explorer.tsx:31](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L31)
 
 ---
 
@@ -79,7 +79,7 @@ the bigger the number is ranked previous
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L28)
+[model/workbench/explorer/explorer.tsx:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L28)
 
 ---
 
@@ -89,4 +89,4 @@ the bigger the number is ranked previous
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L30)
+[model/workbench/explorer/explorer.tsx:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L30)

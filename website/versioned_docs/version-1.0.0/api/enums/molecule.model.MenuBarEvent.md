@@ -17,7 +17,7 @@ The activity bar event definition
 
 #### Defined in
 
-[model/workbench/menuBar.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/menuBar.ts#L14)
+[model/workbench/menuBar.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/menuBar.ts#L14)
 
 ---
 
@@ -29,4 +29,4 @@ Selected an activity bar
 
 #### Defined in
 
-[model/workbench/menuBar.ts:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/menuBar.ts#L13)
+[model/workbench/menuBar.ts:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/menuBar.ts#L13)

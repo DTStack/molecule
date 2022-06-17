@@ -27,7 +27,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/tabs/tab.tsx:40](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L40)
+[components/tabs/tab.tsx:40](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L40)
 
 ---
 
@@ -44,7 +44,7 @@ Default is true
 
 #### Defined in
 
-[components/tabs/tab.tsx:45](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L45)
+[components/tabs/tab.tsx:45](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L45)
 
 ---
 
@@ -58,7 +58,7 @@ Default is true
 
 #### Defined in
 
-[model/workbench/panel.tsx:10](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L10)
+[model/workbench/panel.tsx:10](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L10)
 
 ---
 
@@ -74,7 +74,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:49](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L49)
+[components/tabs/tab.tsx:49](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L49)
 
 ---
 
@@ -88,7 +88,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:51](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L51)
+[components/tabs/tab.tsx:51](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L51)
 
 ---
 
@@ -102,7 +102,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:52](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L52)
+[components/tabs/tab.tsx:52](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L52)
 
 ---
 
@@ -116,7 +116,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:53](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L53)
+[components/tabs/tab.tsx:53](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L53)
 
 ---
 
@@ -126,7 +126,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[model/workbench/panel.tsx:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L30)
+[model/workbench/panel.tsx:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L30)
 
 ---
 
@@ -140,7 +140,7 @@ Mark the tab status to be editing
 
 #### Defined in
 
-[components/tabs/tab.tsx:54](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L54)
+[components/tabs/tab.tsx:54](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L54)
 
 ---
 
@@ -156,7 +156,7 @@ The sort of panel item
 
 #### Defined in
 
-[model/workbench/panel.tsx:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L14)
+[model/workbench/panel.tsx:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L14)
 
 ---
 
@@ -170,7 +170,7 @@ The sort of panel item
 
 #### Defined in
 
-[components/tabs/tab.tsx:50](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/tabs/tab.tsx#L50)
+[components/tabs/tab.tsx:50](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/tabs/tab.tsx#L50)
 
 ---
 
@@ -186,7 +186,7 @@ The same as HTMLElement title attribute
 
 #### Defined in
 
-[model/workbench/panel.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L8)
+[model/workbench/panel.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L8)
 
 ---
 
@@ -200,7 +200,7 @@ The same as HTMLElement title attribute
 
 #### Defined in
 
-[model/workbench/panel.tsx:9](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L9)
+[model/workbench/panel.tsx:9](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L9)
 
 ## Methods
 
@@ -220,4 +220,4 @@ The same as HTMLElement title attribute
 
 #### Defined in
 
-[model/workbench/panel.tsx:31](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L31)
+[model/workbench/panel.tsx:31](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L31)

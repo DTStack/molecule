@@ -19,7 +19,7 @@ Activity bar data changed
 
 #### Defined in
 
-[model/workbench/activityBar.ts:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L13)
+[model/workbench/activityBar.ts:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L13)
 
 ---
 
@@ -29,7 +29,7 @@ Activity bar data changed
 
 #### Defined in
 
-[model/workbench/activityBar.ts:9](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L9)
+[model/workbench/activityBar.ts:9](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L9)
 
 ---
 
@@ -39,7 +39,7 @@ Activity bar data changed
 
 #### Defined in
 
-[model/workbench/activityBar.ts:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L8)
+[model/workbench/activityBar.ts:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L8)
 
 ---
 
@@ -49,4 +49,4 @@ Activity bar data changed
 
 #### Defined in
 
-[model/workbench/activityBar.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L14)
+[model/workbench/activityBar.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L14)

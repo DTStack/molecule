@@ -31,7 +31,7 @@ Add multiple local languages
 
 #### Defined in
 
-[i18n/localeService.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L37)
+[i18n/localeService.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L37)
 
 ---
 
@@ -47,7 +47,7 @@ Get the current locale language
 
 #### Defined in
 
-[i18n/localeService.ts:23](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L23)
+[i18n/localeService.ts:23](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L23)
 
 ---
 
@@ -69,7 +69,7 @@ Get a locale language by the id
 
 #### Defined in
 
-[i18n/localeService.ts:32](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L32)
+[i18n/localeService.ts:32](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L32)
 
 ---
 
@@ -85,7 +85,7 @@ Get All locale languages
 
 #### Defined in
 
-[i18n/localeService.ts:27](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L27)
+[i18n/localeService.ts:27](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L27)
 
 ---
 
@@ -108,7 +108,7 @@ Initialize the locales data, and the current locale language,
 
 #### Defined in
 
-[i18n/localeService.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L14)
+[i18n/localeService.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L14)
 
 ---
 
@@ -139,7 +139,7 @@ localize('id', 'default value', 'world', 'molecule'); // hello world, molecule
 
 #### Defined in
 
-[i18n/localeService.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L56)
+[i18n/localeService.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L56)
 
 ---
 
@@ -161,7 +161,7 @@ Listen to the local language changed event
 
 #### Defined in
 
-[i18n/localeService.ts:65](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L65)
+[i18n/localeService.ts:65](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L65)
 
 ---
 
@@ -183,7 +183,7 @@ Remove a locale language by the id
 
 #### Defined in
 
-[i18n/localeService.ts:42](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L42)
+[i18n/localeService.ts:42](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L42)
 
 ---
 
@@ -199,7 +199,7 @@ Reset the LocaleService to the initial state
 
 #### Defined in
 
-[i18n/localeService.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L69)
+[i18n/localeService.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L69)
 
 ---
 
@@ -221,4 +221,4 @@ Set the current locale language by id
 
 #### Defined in
 
-[i18n/localeService.ts:19](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L19)
+[i18n/localeService.ts:19](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L19)

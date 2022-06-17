@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/searchService.ts:101](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L101)
+[services/workbench/searchService.ts:101](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L101)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/searchService.ts:100](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L100)
+[services/workbench/searchService.ts:100](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L100)
 
 ---
 
@@ -57,7 +57,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/searchService.ts:99](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L99)
+[services/workbench/searchService.ts:99](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L99)
 
 ## Methods
 
@@ -87,7 +87,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -118,7 +118,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -142,7 +142,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -166,7 +166,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -192,7 +192,7 @@ Listen to the event about the value of search input changed
 
 #### Defined in
 
-[services/workbench/searchService.ts:230](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L230)
+[services/workbench/searchService.ts:230](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L230)
 
 ---
 
@@ -218,7 +218,7 @@ Listen to the event about replace all text in result
 
 #### Defined in
 
-[services/workbench/searchService.ts:226](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L226)
+[services/workbench/searchService.ts:226](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L226)
 
 ---
 
@@ -244,7 +244,7 @@ Listen to the click event in result data
 
 #### Defined in
 
-[services/workbench/searchService.ts:251](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L251)
+[services/workbench/searchService.ts:251](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L251)
 
 ---
 
@@ -270,7 +270,7 @@ Listen to the event about going to search result via values or config changed
 
 #### Defined in
 
-[services/workbench/searchService.ts:236](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L236)
+[services/workbench/searchService.ts:236](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L236)
 
 ---
 
@@ -300,7 +300,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -331,7 +331,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -361,7 +361,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -381,7 +381,7 @@ Reset the search input data
 
 #### Defined in
 
-[services/workbench/searchService.ts:209](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L209)
+[services/workbench/searchService.ts:209](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L209)
 
 ---
 
@@ -407,7 +407,7 @@ Set replace value for replace input
 
 #### Defined in
 
-[services/workbench/searchService.ts:125](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L125)
+[services/workbench/searchService.ts:125](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L125)
 
 ---
 
@@ -433,7 +433,7 @@ Set result data for searching result
 
 #### Defined in
 
-[services/workbench/searchService.ts:131](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L131)
+[services/workbench/searchService.ts:131](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L131)
 
 ---
 
@@ -459,7 +459,7 @@ Set search value for search input
 
 #### Defined in
 
-[services/workbench/searchService.ts:119](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L119)
+[services/workbench/searchService.ts:119](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L119)
 
 ---
 
@@ -490,7 +490,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -516,7 +516,7 @@ Set informations about validating,
 
 #### Defined in
 
-[services/workbench/searchService.ts:107](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L107)
+[services/workbench/searchService.ts:107](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L107)
 
 ---
 
@@ -547,7 +547,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -567,7 +567,7 @@ Toggle the rule for case senstitive when searching
 
 #### Defined in
 
-[services/workbench/searchService.ts:143](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L143)
+[services/workbench/searchService.ts:143](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L143)
 
 ---
 
@@ -593,7 +593,7 @@ Toggle search mode, `true` for replace mode
 
 #### Defined in
 
-[services/workbench/searchService.ts:137](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L137)
+[services/workbench/searchService.ts:137](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L137)
 
 ---
 
@@ -613,7 +613,7 @@ Toggle the rule for preserving case when replacing
 
 #### Defined in
 
-[services/workbench/searchService.ts:182](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L182)
+[services/workbench/searchService.ts:182](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L182)
 
 ---
 
@@ -633,7 +633,7 @@ Toggle the rule for enabling regex when searching
 
 #### Defined in
 
-[services/workbench/searchService.ts:170](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L170)
+[services/workbench/searchService.ts:170](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L170)
 
 ---
 
@@ -653,7 +653,7 @@ Toggle the rule for finding whole word when searching
 
 #### Defined in
 
-[services/workbench/searchService.ts:158](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L158)
+[services/workbench/searchService.ts:158](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L158)
 
 ---
 
@@ -684,7 +684,7 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -711,4 +711,4 @@ Update the status of specific addon icon to `checked`
 
 #### Defined in
 
-[services/workbench/searchService.ts:194](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/searchService.ts#L194)
+[services/workbench/searchService.ts:194](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/searchService.ts#L194)

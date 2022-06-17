@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/activityBar.ts:23](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L23)
+[model/workbench/activityBar.ts:23](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L23)
 
 ---
 
@@ -35,7 +35,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[common/types.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L4)
+[common/types.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L4)
 
 ---
 
@@ -45,7 +45,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/activityBar.ts:26](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L26)
+[model/workbench/activityBar.ts:26](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L26)
 
 ---
 
@@ -55,7 +55,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/activityBar.ts:21](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L21)
+[model/workbench/activityBar.ts:21](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L21)
 
 ---
 
@@ -65,7 +65,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/activityBar.ts:24](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L24)
+[model/workbench/activityBar.ts:24](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L24)
 
 ---
 
@@ -75,7 +75,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/activityBar.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L20)
+[model/workbench/activityBar.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L20)
 
 ---
 
@@ -85,7 +85,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/activityBar.ts:22](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L22)
+[model/workbench/activityBar.ts:22](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L22)
 
 ---
 
@@ -95,7 +95,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/activityBar.ts:18](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L18)
+[model/workbench/activityBar.ts:18](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L18)
 
 ---
 
@@ -105,7 +105,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/activityBar.ts:19](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L19)
+[model/workbench/activityBar.ts:19](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L19)
 
 ---
 
@@ -119,7 +119,7 @@ HTMLElementProps.role
 
 #### Defined in
 
-[common/types.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L5)
+[common/types.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L5)
 
 ---
 
@@ -129,7 +129,7 @@ HTMLElementProps.role
 
 #### Defined in
 
-[model/workbench/activityBar.ts:27](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L27)
+[model/workbench/activityBar.ts:27](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L27)
 
 ---
 
@@ -143,7 +143,7 @@ HTMLElementProps.style
 
 #### Defined in
 
-[common/types.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L3)
+[common/types.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L3)
 
 ---
 
@@ -157,7 +157,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[common/types.ts:2](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L2)
+[common/types.ts:2](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L2)
 
 ---
 
@@ -167,7 +167,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[model/workbench/activityBar.ts:25](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L25)
+[model/workbench/activityBar.ts:25](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L25)
 
 ## Methods
 
@@ -181,4 +181,4 @@ HTMLElementProps.title
 
 #### Defined in
 
-[model/workbench/activityBar.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/activityBar.ts#L28)
+[model/workbench/activityBar.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/activityBar.ts#L28)

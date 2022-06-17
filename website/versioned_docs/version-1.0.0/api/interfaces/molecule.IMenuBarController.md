@@ -37,7 +37,7 @@ Partial.count
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -64,7 +64,7 @@ Partial.emit
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -85,7 +85,7 @@ Partial.emit
 
 #### Defined in
 
-[controller/menuBar.ts:32](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L32)
+[controller/menuBar.ts:32](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L32)
 
 ---
 
@@ -103,7 +103,7 @@ Partial.initView
 
 #### Defined in
 
-[react/controller.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/controller.ts#L4)
+[react/controller.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/controller.ts#L4)
 
 ---
 
@@ -124,7 +124,7 @@ Partial.initView
 
 #### Defined in
 
-[controller/menuBar.ts:25](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L25)
+[controller/menuBar.ts:25](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L25)
 
 ---
 
@@ -145,7 +145,7 @@ Partial.initView
 
 #### Defined in
 
-[controller/menuBar.ts:24](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L24)
+[controller/menuBar.ts:24](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L24)
 
 ---
 
@@ -172,7 +172,7 @@ Partial.subscribe
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -199,7 +199,7 @@ Partial.unsubscribe
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -213,7 +213,7 @@ Partial.unsubscribe
 
 #### Defined in
 
-[controller/menuBar.ts:29](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L29)
+[controller/menuBar.ts:29](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L29)
 
 ---
 
@@ -233,7 +233,7 @@ Partial.unsubscribe
 
 #### Defined in
 
-[controller/menuBar.ts:26](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L26)
+[controller/menuBar.ts:26](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L26)
 
 ---
 
@@ -247,7 +247,7 @@ Partial.unsubscribe
 
 #### Defined in
 
-[controller/menuBar.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L28)
+[controller/menuBar.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L28)
 
 ---
 
@@ -267,7 +267,7 @@ Partial.unsubscribe
 
 #### Defined in
 
-[controller/menuBar.ts:31](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L31)
+[controller/menuBar.ts:31](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L31)
 
 ---
 
@@ -281,7 +281,7 @@ Partial.unsubscribe
 
 #### Defined in
 
-[controller/menuBar.ts:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L30)
+[controller/menuBar.ts:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L30)
 
 ---
 
@@ -295,4 +295,4 @@ Partial.unsubscribe
 
 #### Defined in
 
-[controller/menuBar.ts:27](https://github.com/DTStack/molecule/blob/ff1a27ef/src/controller/menuBar.ts#L27)
+[controller/menuBar.ts:27](https://github.com/DTStack/molecule/blob/3e6bc450/src/controller/menuBar.ts#L27)

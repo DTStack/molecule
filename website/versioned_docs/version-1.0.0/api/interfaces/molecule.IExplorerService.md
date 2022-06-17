@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[react/component.ts:44](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L44)
+[react/component.ts:44](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L44)
 
 ## Methods
 
@@ -51,7 +51,7 @@ Only add an action in toolbar actions
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:46](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L46)
+[services/workbench/explorer/explorerService.ts:46](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L46)
 
 ---
 
@@ -73,7 +73,7 @@ Add a new panel, as well as add a new data for toolbar data
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:21](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L21)
+[services/workbench/explorer/explorerService.ts:21](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L21)
 
 ---
 
@@ -99,7 +99,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -126,7 +126,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -146,7 +146,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -168,7 +168,7 @@ Get the specific action in toolbar actions
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:51](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L51)
+[services/workbench/explorer/explorerService.ts:51](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L51)
 
 ---
 
@@ -188,7 +188,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -210,7 +210,7 @@ Listen to the Explorer header toolbar click event
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:70](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L70)
+[services/workbench/explorer/explorerService.ts:70](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L70)
 
 ---
 
@@ -232,7 +232,7 @@ Listen to the FolderTree Panel collapse all folders event
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:80](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L80)
+[services/workbench/explorer/explorerService.ts:80](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L80)
 
 ---
 
@@ -254,7 +254,7 @@ Listen to the Explorer panel toolbar click event
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L85)
+[services/workbench/explorer/explorerService.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L85)
 
 ---
 
@@ -276,7 +276,7 @@ Listen to the Explorer panel remove event
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:75](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L75)
+[services/workbench/explorer/explorerService.ts:75](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L75)
 
 ---
 
@@ -302,7 +302,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -324,7 +324,7 @@ Remove the specific header toolbar action
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:61](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L61)
+[services/workbench/explorer/explorerService.ts:61](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L61)
 
 ---
 
@@ -351,7 +351,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -373,7 +373,7 @@ Remove a panel via id, as well as remove the corresponding action bar
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:34](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L34)
+[services/workbench/explorer/explorerService.ts:34](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L34)
 
 ---
 
@@ -399,7 +399,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -415,7 +415,7 @@ Reset the ExplorerService state, it's mainly for customizing the Explorer
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:65](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L65)
+[services/workbench/explorer/explorerService.ts:65](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L65)
 
 ---
 
@@ -437,7 +437,7 @@ Set expanded Panels of Explore
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L30)
+[services/workbench/explorer/explorerService.ts:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L30)
 
 ---
 
@@ -464,7 +464,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -491,7 +491,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -513,7 +513,7 @@ Only toggle the toolbar status
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:42](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L42)
+[services/workbench/explorer/explorerService.ts:42](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L42)
 
 ---
 
@@ -535,7 +535,7 @@ Toggle panel hidden, as well as toggle the toolbar status
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:38](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L38)
+[services/workbench/explorer/explorerService.ts:38](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L38)
 
 ---
 
@@ -562,7 +562,7 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -584,7 +584,7 @@ Update the action in toolbar actions
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L56)
+[services/workbench/explorer/explorerService.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L56)
 
 ---
 
@@ -606,4 +606,4 @@ Update the panels data, as well as modify toolbar data
 
 #### Defined in
 
-[services/workbench/explorer/explorerService.ts:25](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/explorerService.ts#L25)
+[services/workbench/explorer/explorerService.ts:25](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/explorerService.ts#L25)

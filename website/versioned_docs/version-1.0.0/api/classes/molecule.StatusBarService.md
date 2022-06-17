@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L69)
+[services/workbench/statusBarService.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L69)
 
 ## Properties
 
@@ -47,7 +47,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:67](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L67)
+[services/workbench/statusBarService.ts:67](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L67)
 
 ## Methods
 
@@ -74,7 +74,7 @@ Add a new StatusBar item into right or left status
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:121](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L121)
+[services/workbench/statusBarService.ts:121](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L121)
 
 ---
 
@@ -104,7 +104,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -135,7 +135,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -159,7 +159,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -182,7 +182,7 @@ Get the item informations in right position or left position
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:79](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L79)
+[services/workbench/statusBarService.ts:79](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L79)
 
 ---
 
@@ -206,7 +206,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -233,7 +233,7 @@ Get the specific StatusBar item
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:153](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L153)
+[services/workbench/statusBarService.ts:153](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L153)
 
 ---
 
@@ -259,7 +259,7 @@ Listen to the StatusBar click event
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:182](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L182)
+[services/workbench/statusBarService.ts:182](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L182)
 
 ---
 
@@ -289,7 +289,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -316,7 +316,7 @@ Remove the specific StatusBar item
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:158](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L158)
+[services/workbench/statusBarService.ts:158](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L158)
 
 ---
 
@@ -347,7 +347,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -377,7 +377,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -397,7 +397,7 @@ Reset the contextMenu data and the StatusBar data , including right and left
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:174](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L174)
+[services/workbench/statusBarService.ts:174](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L174)
 
 ---
 
@@ -428,7 +428,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -459,7 +459,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -490,7 +490,7 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -517,4 +517,4 @@ Update the specific StatusBar item, it'll update the item found in left
 
 #### Defined in
 
-[services/workbench/statusBarService.ts:137](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/statusBarService.ts#L137)
+[services/workbench/statusBarService.ts:137](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/statusBarService.ts#L137)

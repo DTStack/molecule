@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/keybinding.ts:62](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/keybinding.ts#L62)
+[model/keybinding.ts:62](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/keybinding.ts#L62)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/keybinding.ts:60](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/keybinding.ts#L60)
+[model/keybinding.ts:60](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/keybinding.ts#L60)
 
 ---
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/keybinding.ts:64](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/keybinding.ts#L64)
+[model/keybinding.ts:64](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/keybinding.ts#L64)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/keybinding.ts:63](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/keybinding.ts#L63)
+[model/keybinding.ts:63](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/keybinding.ts#L63)
 
 ---
 
@@ -55,4 +55,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/keybinding.ts:61](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/keybinding.ts#L61)
+[model/keybinding.ts:61](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/keybinding.ts#L61)

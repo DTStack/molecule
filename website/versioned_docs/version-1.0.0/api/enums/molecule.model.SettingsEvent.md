@@ -19,4 +19,4 @@ The settings content changed
 
 #### Defined in
 
-[model/settings.ts:10](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/settings.ts#L10)
+[model/settings.ts:10](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/settings.ts#L10)

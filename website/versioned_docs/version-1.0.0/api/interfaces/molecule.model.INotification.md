@@ -31,7 +31,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:21](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L21)
+[model/notification.tsx:21](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L21)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/types.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L4)
+[common/types.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L4)
 
 ---
 
@@ -59,7 +59,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L13)
+[model/workbench/statusBar.tsx:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L13)
 
 ---
 
@@ -73,7 +73,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L11)
+[model/workbench/statusBar.tsx:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L11)
 
 ---
 
@@ -87,7 +87,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:16](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L16)
+[model/workbench/statusBar.tsx:16](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L16)
 
 ---
 
@@ -101,7 +101,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/types.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L5)
+[common/types.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L5)
 
 ---
 
@@ -111,7 +111,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L20)
+[model/notification.tsx:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L20)
 
 ---
 
@@ -125,7 +125,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:12](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L12)
+[model/workbench/statusBar.tsx:12](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L12)
 
 ---
 
@@ -139,7 +139,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/types.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L3)
+[common/types.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L3)
 
 ---
 
@@ -153,7 +153,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[common/types.ts:2](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L2)
+[common/types.ts:2](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L2)
 
 ## Methods
 
@@ -178,7 +178,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L14)
+[model/workbench/statusBar.tsx:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L14)
 
 ---
 
@@ -202,4 +202,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:15](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L15)
+[model/workbench/statusBar.tsx:15](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L15)

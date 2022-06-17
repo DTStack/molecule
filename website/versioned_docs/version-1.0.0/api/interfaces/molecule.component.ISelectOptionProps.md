@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/select/option.tsx:10](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/select/option.tsx#L10)
+[components/select/option.tsx:10](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/select/option.tsx#L10)
 
 ---
 
@@ -31,7 +31,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/select/option.tsx:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/select/option.tsx#L11)
+[components/select/option.tsx:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/select/option.tsx#L11)
 
 ---
 
@@ -41,7 +41,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/select/option.tsx:9](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/select/option.tsx#L9)
+[components/select/option.tsx:9](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/select/option.tsx#L9)
 
 ---
 
@@ -51,4 +51,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/select/option.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/select/option.tsx#L8)
+[components/select/option.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/select/option.tsx#L8)

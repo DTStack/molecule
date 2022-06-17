@@ -31,7 +31,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:33](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L33)
+[react/component.ts:33](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L33)
 
 ---
 
@@ -47,7 +47,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L37)
+[react/component.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L37)
 
 ---
 
@@ -69,7 +69,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:24](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L24)
+[react/component.ts:24](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L24)
 
 ---
 
@@ -92,7 +92,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:29](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L29)
+[react/component.ts:29](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L29)
 
 ---
 
@@ -114,7 +114,7 @@ Trigger the Component update event
 
 #### Defined in
 
-[react/component.ts:19](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L19)
+[react/component.ts:19](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L19)
 
 ---
 
@@ -137,4 +137,4 @@ Set the Component state
 
 #### Defined in
 
-[react/component.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L14)
+[react/component.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L14)

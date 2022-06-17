@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/settingsService.ts:97](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L97)
+[services/settingsService.ts:97](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L97)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/settingsService.ts:95](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L95)
+[services/settingsService.ts:95](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L95)
 
 ---
 
@@ -49,7 +49,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/settingsService.ts:93](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L93)
+[services/settingsService.ts:93](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L93)
 
 ---
 
@@ -59,7 +59,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/settingsService.ts:92](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L92)
+[services/settingsService.ts:92](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L92)
 
 ---
 
@@ -69,7 +69,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/settingsService.ts:94](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L94)
+[services/settingsService.ts:94](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L94)
 
 ---
 
@@ -79,7 +79,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/settingsService.ts:91](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L91)
+[services/settingsService.ts:91](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L91)
 
 ## Methods
 
@@ -106,7 +106,7 @@ eg: ` append({ project: { name: 'example' } })`
 
 #### Defined in
 
-[services/settingsService.ts:130](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L130)
+[services/settingsService.ts:130](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L130)
 
 ---
 
@@ -132,7 +132,7 @@ Apply the nextSettings configuration
 
 #### Defined in
 
-[services/settingsService.ts:139](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L139)
+[services/settingsService.ts:139](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L139)
 
 ---
 
@@ -158,7 +158,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -185,7 +185,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -212,7 +212,7 @@ eg: { a: { b: 'test' }}, result is : { 'a.b': 'test' }.
 
 #### Defined in
 
-[services/settingsService.ts:174](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L174)
+[services/settingsService.ts:174](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L174)
 
 ---
 
@@ -239,7 +239,7 @@ eg: { a: { b: 'test' }}, result is : `{ 'a.b': 'test' }`.
 
 #### Defined in
 
-[services/settingsService.ts:178](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L178)
+[services/settingsService.ts:178](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L178)
 
 ---
 
@@ -253,7 +253,7 @@ eg: { a: { b: 'test' }}, result is : `{ 'a.b': 'test' }`.
 
 #### Defined in
 
-[services/settingsService.ts:106](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L106)
+[services/settingsService.ts:106](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L106)
 
 ---
 
@@ -273,7 +273,7 @@ Get the default Settings Tab object
 
 #### Defined in
 
-[services/settingsService.ts:113](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L113)
+[services/settingsService.ts:113](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L113)
 
 ---
 
@@ -293,7 +293,7 @@ Get the settings object
 
 #### Defined in
 
-[services/settingsService.ts:134](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L134)
+[services/settingsService.ts:134](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L134)
 
 ---
 
@@ -328,7 +328,7 @@ T
 
 #### Defined in
 
-[services/settingsService.ts:163](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L163)
+[services/settingsService.ts:163](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L163)
 
 ---
 
@@ -354,7 +354,7 @@ Listen to the Settings change event.
 
 #### Defined in
 
-[services/settingsService.ts:118](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L118)
+[services/settingsService.ts:118](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L118)
 
 ---
 
@@ -374,7 +374,7 @@ Open the `settings.json` in the Editor Panel
 
 #### Defined in
 
-[services/settingsService.ts:153](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L153)
+[services/settingsService.ts:153](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L153)
 
 ---
 
@@ -401,7 +401,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -428,7 +428,7 @@ It converts an object to JSON string
 
 #### Defined in
 
-[services/settingsService.ts:182](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L182)
+[services/settingsService.ts:182](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L182)
 
 ---
 
@@ -455,7 +455,7 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -482,4 +482,4 @@ a settings item if it existed.
 
 #### Defined in
 
-[services/settingsService.ts:124](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/settingsService.ts#L124)
+[services/settingsService.ts:124](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/settingsService.ts#L124)

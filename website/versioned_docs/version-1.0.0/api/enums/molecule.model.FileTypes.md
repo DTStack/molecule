@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L8)
+[model/workbench/explorer/folderTree.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L8)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:9](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L9)
+[model/workbench/explorer/folderTree.tsx:9](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L9)
 
 ---
 
@@ -35,4 +35,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:10](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L10)
+[model/workbench/explorer/folderTree.tsx:10](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L10)

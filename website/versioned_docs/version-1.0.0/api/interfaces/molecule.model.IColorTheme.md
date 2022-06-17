@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/colorTheme.ts:39](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L39)
+[model/colorTheme.ts:39](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L39)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/colorTheme.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L37)
+[model/colorTheme.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L37)
 
 ---
 
@@ -37,7 +37,7 @@ The id of component, theme will be applied by this ID
 
 #### Defined in
 
-[model/colorTheme.ts:32](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L32)
+[model/colorTheme.ts:32](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L32)
 
 ---
 
@@ -47,7 +47,7 @@ The id of component, theme will be applied by this ID
 
 #### Defined in
 
-[model/colorTheme.ts:33](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L33)
+[model/colorTheme.ts:33](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L33)
 
 ---
 
@@ -57,7 +57,7 @@ The id of component, theme will be applied by this ID
 
 #### Defined in
 
-[model/colorTheme.ts:34](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L34)
+[model/colorTheme.ts:34](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L34)
 
 ---
 
@@ -67,7 +67,7 @@ The id of component, theme will be applied by this ID
 
 #### Defined in
 
-[model/colorTheme.ts:36](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L36)
+[model/colorTheme.ts:36](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L36)
 
 ---
 
@@ -82,7 +82,7 @@ More info visit: https://code.visualstudio.com/api/language-extensions/semantic-
 
 #### Defined in
 
-[model/colorTheme.ts:47](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L47)
+[model/colorTheme.ts:47](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L47)
 
 ---
 
@@ -92,7 +92,7 @@ More info visit: https://code.visualstudio.com/api/language-extensions/semantic-
 
 #### Defined in
 
-[model/colorTheme.ts:40](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L40)
+[model/colorTheme.ts:40](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L40)
 
 ---
 
@@ -102,7 +102,7 @@ More info visit: https://code.visualstudio.com/api/language-extensions/semantic-
 
 #### Defined in
 
-[model/colorTheme.ts:38](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L38)
+[model/colorTheme.ts:38](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L38)
 
 ---
 
@@ -112,4 +112,4 @@ More info visit: https://code.visualstudio.com/api/language-extensions/semantic-
 
 #### Defined in
 
-[model/colorTheme.ts:35](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L35)
+[model/colorTheme.ts:35](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L35)

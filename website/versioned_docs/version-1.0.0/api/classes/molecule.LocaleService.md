@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localeService.ts:83](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L83)
+[i18n/localeService.ts:83](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L83)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localeService.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L81)
+[i18n/localeService.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L81)
 
 ---
 
@@ -49,7 +49,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localeService.ts:80](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L80)
+[i18n/localeService.ts:80](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L80)
 
 ---
 
@@ -63,7 +63,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localeService.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L77)
+[i18n/localeService.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L77)
 
 ---
 
@@ -73,7 +73,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localeService.ts:78](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L78)
+[i18n/localeService.ts:78](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L78)
 
 ## Methods
 
@@ -99,7 +99,7 @@ Add multiple local languages
 
 #### Defined in
 
-[i18n/localeService.ts:164](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L164)
+[i18n/localeService.ts:164](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L164)
 
 ---
 
@@ -125,7 +125,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -152,7 +152,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -172,7 +172,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -192,7 +192,7 @@ Get the current locale language
 
 #### Defined in
 
-[i18n/localeService.ts:106](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L106)
+[i18n/localeService.ts:106](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L106)
 
 ---
 
@@ -218,7 +218,7 @@ Get a locale language by the id
 
 #### Defined in
 
-[i18n/localeService.ts:110](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L110)
+[i18n/localeService.ts:110](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L110)
 
 ---
 
@@ -238,7 +238,7 @@ Get All locale languages
 
 #### Defined in
 
-[i18n/localeService.ts:93](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L93)
+[i18n/localeService.ts:93](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L93)
 
 ---
 
@@ -258,7 +258,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -285,7 +285,7 @@ Initialize the locales data, and the current locale language,
 
 #### Defined in
 
-[i18n/localeService.ts:97](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L97)
+[i18n/localeService.ts:97](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L97)
 
 ---
 
@@ -320,7 +320,7 @@ localize('id', 'default value', 'world', 'molecule'); // hello world, molecule
 
 #### Defined in
 
-[i18n/localeService.ts:180](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L180)
+[i18n/localeService.ts:180](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L180)
 
 ---
 
@@ -346,7 +346,7 @@ Listen to the local language changed event
 
 #### Defined in
 
-[i18n/localeService.ts:176](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L176)
+[i18n/localeService.ts:176](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L176)
 
 ---
 
@@ -372,7 +372,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -398,7 +398,7 @@ Remove a locale language by the id
 
 #### Defined in
 
-[i18n/localeService.ts:115](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L115)
+[i18n/localeService.ts:115](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L115)
 
 ---
 
@@ -425,7 +425,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -451,7 +451,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -471,7 +471,7 @@ Reset the LocaleService to the initial state
 
 #### Defined in
 
-[i18n/localeService.ts:87](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L87)
+[i18n/localeService.ts:87](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L87)
 
 ---
 
@@ -497,7 +497,7 @@ Set the current locale language by id
 
 #### Defined in
 
-[i18n/localeService.ts:133](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L133)
+[i18n/localeService.ts:133](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L133)
 
 ---
 
@@ -524,7 +524,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -551,7 +551,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -571,7 +571,7 @@ Subscribe the service event
 
 #### Defined in
 
-[i18n/localeService.ts:145](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localeService.ts#L145)
+[i18n/localeService.ts:145](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localeService.ts#L145)
 
 ---
 
@@ -598,4 +598,4 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)

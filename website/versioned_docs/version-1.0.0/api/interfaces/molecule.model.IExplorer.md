@@ -19,7 +19,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:42](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L42)
+[model/workbench/explorer/explorer.tsx:42](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L42)
 
 ---
 
@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:40](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L40)
+[model/workbench/explorer/explorer.tsx:40](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L40)
 
 ---
 
@@ -39,4 +39,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:41](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L41)
+[model/workbench/explorer/explorer.tsx:41](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L41)

@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:7](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L7)
+[model/notification.tsx:7](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L7)
 
 ---
 
@@ -25,4 +25,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/notification.tsx:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/notification.tsx#L8)
+[model/notification.tsx:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/notification.tsx#L8)

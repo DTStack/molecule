@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:101](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L101)
+[services/theme/colorThemeService.ts:101](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L101)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:99](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L99)
+[services/theme/colorThemeService.ts:99](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L99)
 
 ---
 
@@ -49,7 +49,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:98](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L98)
+[services/theme/colorThemeService.ts:98](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L98)
 
 ## Methods
 
@@ -77,7 +77,7 @@ This will update the duplicated themes found in `colorThemes`
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:108](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L108)
+[services/theme/colorThemeService.ts:108](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L108)
 
 ---
 
@@ -103,7 +103,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -130,7 +130,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -150,7 +150,7 @@ Get the current Color Theme
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:149](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L149)
+[services/theme/colorThemeService.ts:149](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L149)
 
 ---
 
@@ -170,7 +170,7 @@ Get the mode('dark' or 'light') of the current Color Theme
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:191](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L191)
+[services/theme/colorThemeService.ts:191](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L191)
 
 ---
 
@@ -196,7 +196,7 @@ Get specific theme via id
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:144](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L144)
+[services/theme/colorThemeService.ts:144](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L144)
 
 ---
 
@@ -216,7 +216,7 @@ Get all themes in `colorThemes`
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:178](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L178)
+[services/theme/colorThemeService.ts:178](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L178)
 
 ---
 
@@ -242,7 +242,7 @@ Listen to the theme changed event
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:214](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L214)
+[services/theme/colorThemeService.ts:214](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L214)
 
 ---
 
@@ -262,7 +262,7 @@ Reload current theme
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:182](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L182)
+[services/theme/colorThemeService.ts:182](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L182)
 
 ---
 
@@ -282,7 +282,7 @@ Reset theme
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:186](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L186)
+[services/theme/colorThemeService.ts:186](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L186)
 
 ---
 
@@ -309,7 +309,7 @@ Please ensure the theme could be found in `colorThemes`
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:153](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L153)
+[services/theme/colorThemeService.ts:153](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L153)
 
 ---
 
@@ -336,7 +336,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -363,7 +363,7 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -389,4 +389,4 @@ Update specific theme,
 
 #### Defined in
 
-[services/theme/colorThemeService.ts:123](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/theme/colorThemeService.ts#L123)
+[services/theme/colorThemeService.ts:123](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/theme/colorThemeService.ts#L123)

@@ -99,7 +99,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/folderTree.tsx:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/folderTree.tsx#L13)
+[model/workbench/explorer/folderTree.tsx:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/folderTree.tsx#L13)
 
 ---
 
@@ -109,7 +109,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/editor.ts:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/editor.ts#L30)
+[model/workbench/editor.ts:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/editor.ts#L30)
 
 ---
 
@@ -133,7 +133,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/explorer/explorer.tsx:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/explorer/explorer.tsx#L13)
+[model/workbench/explorer/explorer.tsx:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/explorer/explorer.tsx#L13)
 
 ## Variables
 
@@ -143,4 +143,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/keybinding.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/keybinding.ts#L3)
+[model/keybinding.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/keybinding.ts#L3)

@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localization.ts:91](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localization.ts#L91)
+[i18n/localization.ts:91](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localization.ts#L91)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[i18n/localization.ts:89](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localization.ts#L89)
+[i18n/localization.ts:89](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localization.ts#L89)
 
 ---
 
@@ -37,7 +37,7 @@ Whether inherit an exist locale, if it's exist, merge the parent locale
 
 #### Defined in
 
-[i18n/localization.ts:95](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localization.ts#L95)
+[i18n/localization.ts:95](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localization.ts#L95)
 
 ---
 
@@ -47,7 +47,7 @@ Whether inherit an exist locale, if it's exist, merge the parent locale
 
 #### Defined in
 
-[i18n/localization.ts:90](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localization.ts#L90)
+[i18n/localization.ts:90](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localization.ts#L90)
 
 ---
 
@@ -57,4 +57,4 @@ Whether inherit an exist locale, if it's exist, merge the parent locale
 
 #### Defined in
 
-[i18n/localization.ts:96](https://github.com/DTStack/molecule/blob/ff1a27ef/src/i18n/localization.ts#L96)
+[i18n/localization.ts:96](https://github.com/DTStack/molecule/blob/3e6bc450/src/i18n/localization.ts#L96)

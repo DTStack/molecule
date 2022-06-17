@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/sidebar.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/sidebar.ts#L4)
+[model/workbench/sidebar.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/sidebar.ts#L4)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/sidebar.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/sidebar.ts#L5)
+[model/workbench/sidebar.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/sidebar.ts#L5)
 
 ## Methods
 
@@ -39,4 +39,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/sidebar.ts:6](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/sidebar.ts#L6)
+[model/workbench/sidebar.ts:6](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/sidebar.ts#L6)

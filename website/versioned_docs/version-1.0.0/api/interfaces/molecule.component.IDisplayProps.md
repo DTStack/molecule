@@ -21,4 +21,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/display/index.tsx:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/display/index.tsx#L4)
+[components/display/index.tsx:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/display/index.tsx#L4)

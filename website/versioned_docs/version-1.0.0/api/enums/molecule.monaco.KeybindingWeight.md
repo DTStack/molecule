@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[monaco/common.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/monaco/common.ts#L11)
+[monaco/common.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/monaco/common.ts#L11)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[monaco/common.ts:9](https://github.com/DTStack/molecule/blob/ff1a27ef/src/monaco/common.ts#L9)
+[monaco/common.ts:9](https://github.com/DTStack/molecule/blob/3e6bc450/src/monaco/common.ts#L9)
 
 ---
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[monaco/common.ts:8](https://github.com/DTStack/molecule/blob/ff1a27ef/src/monaco/common.ts#L8)
+[monaco/common.ts:8](https://github.com/DTStack/molecule/blob/3e6bc450/src/monaco/common.ts#L8)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[monaco/common.ts:12](https://github.com/DTStack/molecule/blob/ff1a27ef/src/monaco/common.ts#L12)
+[monaco/common.ts:12](https://github.com/DTStack/molecule/blob/3e6bc450/src/monaco/common.ts#L12)
 
 ---
 
@@ -55,4 +55,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[monaco/common.ts:10](https://github.com/DTStack/molecule/blob/ff1a27ef/src/monaco/common.ts#L10)
+[monaco/common.ts:10](https://github.com/DTStack/molecule/blob/3e6bc450/src/monaco/common.ts#L10)

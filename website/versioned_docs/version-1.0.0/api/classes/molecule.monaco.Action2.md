@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[monaco/action.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/monaco/action.ts#L14)
+[monaco/action.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/monaco/action.ts#L14)
 
 ## Properties
 
@@ -37,7 +37,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[monaco/action.ts:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/monaco/action.ts#L13)
+[monaco/action.ts:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/monaco/action.ts#L13)
 
 ## Methods
 
@@ -58,4 +58,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[monaco/action.ts:23](https://github.com/DTStack/molecule/blob/ff1a27ef/src/monaco/action.ts#L23)
+[monaco/action.ts:23](https://github.com/DTStack/molecule/blob/3e6bc450/src/monaco/action.ts#L23)

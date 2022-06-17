@@ -25,7 +25,7 @@ Renames and re-exports [molecule](namespaces/molecule)
 
 #### Defined in
 
-[workbench/workbench.tsx:140](https://github.com/DTStack/molecule/blob/ff1a27ef/src/workbench/workbench.tsx#L140)
+[workbench/workbench.tsx:140](https://github.com/DTStack/molecule/blob/3e6bc450/src/workbench/workbench.tsx#L140)
 
 ## Functions
 
@@ -45,4 +45,4 @@ Renames and re-exports [molecule](namespaces/molecule)
 
 #### Defined in
 
-[provider/create.ts:39](https://github.com/DTStack/molecule/blob/ff1a27ef/src/provider/create.ts#L39)
+[provider/create.ts:39](https://github.com/DTStack/molecule/blob/3e6bc450/src/provider/create.ts#L39)

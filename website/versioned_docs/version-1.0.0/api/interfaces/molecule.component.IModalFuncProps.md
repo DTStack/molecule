@@ -21,7 +21,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:33](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L33)
+[components/dialog/modal.tsx:33](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L33)
 
 ---
 
@@ -31,7 +31,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:26](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L26)
+[components/dialog/modal.tsx:26](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L26)
 
 ---
 
@@ -41,7 +41,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:34](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L34)
+[components/dialog/modal.tsx:34](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L34)
 
 ---
 
@@ -51,7 +51,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:29](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L29)
+[components/dialog/modal.tsx:29](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L29)
 
 ---
 
@@ -61,7 +61,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L28)
+[components/dialog/modal.tsx:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L28)
 
 ---
 
@@ -71,7 +71,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:32](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L32)
+[components/dialog/modal.tsx:32](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L32)
 
 ---
 
@@ -81,7 +81,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:35](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L35)
+[components/dialog/modal.tsx:35](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L35)
 
 ---
 
@@ -91,7 +91,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:27](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L27)
+[components/dialog/modal.tsx:27](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L27)
 
 ---
 
@@ -101,7 +101,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:36](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L36)
+[components/dialog/modal.tsx:36](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L36)
 
 ## Methods
 
@@ -121,7 +121,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:31](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L31)
+[components/dialog/modal.tsx:31](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L31)
 
 ---
 
@@ -141,4 +141,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[components/dialog/modal.tsx:30](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/dialog/modal.tsx#L30)
+[components/dialog/modal.tsx:30](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/dialog/modal.tsx#L30)

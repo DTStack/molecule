@@ -25,7 +25,7 @@ Omit.className
 
 #### Defined in
 
-[components/input/input.tsx:23](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L23)
+[components/input/input.tsx:23](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L23)
 
 ---
 
@@ -39,7 +39,7 @@ Omit.defaultValue
 
 #### Defined in
 
-[components/input/input.tsx:22](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L22)
+[components/input/input.tsx:22](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L22)
 
 ---
 
@@ -53,7 +53,7 @@ Omit.disabled
 
 #### Defined in
 
-[components/input/input.tsx:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L13)
+[components/input/input.tsx:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L13)
 
 ---
 
@@ -63,7 +63,7 @@ Omit.disabled
 
 #### Defined in
 
-[components/input/input.tsx:24](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L24)
+[components/input/input.tsx:24](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L24)
 
 ---
 
@@ -77,7 +77,7 @@ Omit.placeholder
 
 #### Defined in
 
-[components/input/input.tsx:19](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L19)
+[components/input/input.tsx:19](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L19)
 
 ---
 
@@ -87,7 +87,7 @@ Omit.placeholder
 
 #### Defined in
 
-[components/input/input.tsx:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L14)
+[components/input/input.tsx:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L14)
 
 ---
 
@@ -101,7 +101,7 @@ Omit.style
 
 #### Defined in
 
-[components/input/input.tsx:21](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L21)
+[components/input/input.tsx:21](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L21)
 
 ---
 
@@ -115,7 +115,7 @@ Omit.type
 
 #### Defined in
 
-[components/input/input.tsx:15](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L15)
+[components/input/input.tsx:15](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L15)
 
 ---
 
@@ -129,7 +129,7 @@ Omit.value
 
 #### Defined in
 
-[components/input/input.tsx:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L20)
+[components/input/input.tsx:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L20)
 
 ## Methods
 
@@ -149,7 +149,7 @@ Omit.value
 
 #### Defined in
 
-[components/input/input.tsx:26](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L26)
+[components/input/input.tsx:26](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L26)
 
 ---
 
@@ -169,4 +169,4 @@ Omit.value
 
 #### Defined in
 
-[components/input/input.tsx:25](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/input/input.tsx#L25)
+[components/input/input.tsx:25](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/input/input.tsx#L25)

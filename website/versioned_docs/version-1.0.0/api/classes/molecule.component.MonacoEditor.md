@@ -31,7 +31,7 @@ PureComponent&lt;IMonacoEditorProps\&gt;.constructor
 
 #### Defined in
 
-[components/monaco/index.tsx:40](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/monaco/index.tsx#L40)
+[components/monaco/index.tsx:40](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/monaco/index.tsx#L40)
 
 ## Properties
 
@@ -43,7 +43,7 @@ The dom element of editor container
 
 #### Defined in
 
-[components/monaco/index.tsx:36](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/monaco/index.tsx#L36)
+[components/monaco/index.tsx:36](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/monaco/index.tsx#L36)
 
 ---
 
@@ -55,7 +55,7 @@ The instance of monaco
 
 #### Defined in
 
-[components/monaco/index.tsx:32](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/monaco/index.tsx#L32)
+[components/monaco/index.tsx:32](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/monaco/index.tsx#L32)
 
 ---
 
@@ -65,7 +65,7 @@ The instance of monaco
 
 #### Defined in
 
-[components/monaco/index.tsx:38](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/monaco/index.tsx#L38)
+[components/monaco/index.tsx:38](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/monaco/index.tsx#L38)
 
 ## Methods
 
@@ -83,7 +83,7 @@ PureComponent.componentDidMount
 
 #### Defined in
 
-[components/monaco/index.tsx:45](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/monaco/index.tsx#L45)
+[components/monaco/index.tsx:45](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/monaco/index.tsx#L45)
 
 ---
 
@@ -107,7 +107,7 @@ PureComponent.componentDidUpdate
 
 #### Defined in
 
-[components/monaco/index.tsx:55](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/monaco/index.tsx#L55)
+[components/monaco/index.tsx:55](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/monaco/index.tsx#L55)
 
 ---
 
@@ -125,4 +125,4 @@ PureComponent.render
 
 #### Defined in
 
-[components/monaco/index.tsx:62](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/monaco/index.tsx#L62)
+[components/monaco/index.tsx:62](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/monaco/index.tsx#L62)

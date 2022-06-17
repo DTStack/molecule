@@ -19,7 +19,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/sidebar.ts:10](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/sidebar.ts#L10)
+[model/workbench/sidebar.ts:10](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/sidebar.ts#L10)
 
 ---
 
@@ -29,4 +29,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/sidebar.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/sidebar.ts#L11)
+[model/workbench/sidebar.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/sidebar.ts#L11)

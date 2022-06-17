@@ -25,7 +25,7 @@ default is true
 
 #### Defined in
 
-[components/split/SplitPane.tsx:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L37)
+[components/split/SplitPane.tsx:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L37)
 
 ---
 
@@ -35,7 +35,7 @@ default is true
 
 #### Defined in
 
-[components/split/SplitPane.tsx:31](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L31)
+[components/split/SplitPane.tsx:31](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L31)
 
 ---
 
@@ -49,7 +49,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[components/split/SplitPane.tsx:55](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L55)
+[components/split/SplitPane.tsx:55](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L55)
 
 ---
 
@@ -59,7 +59,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[components/split/SplitPane.tsx:57](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L57)
+[components/split/SplitPane.tsx:57](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L57)
 
 ---
 
@@ -73,7 +73,7 @@ defualt size is 4px
 
 #### Defined in
 
-[components/split/SplitPane.tsx:63](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L63)
+[components/split/SplitPane.tsx:63](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L63)
 
 ---
 
@@ -87,7 +87,7 @@ HTMLElementProps.role
 
 #### Defined in
 
-[common/types.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L5)
+[common/types.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L5)
 
 ---
 
@@ -97,7 +97,7 @@ HTMLElementProps.role
 
 #### Defined in
 
-[components/split/SplitPane.tsx:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L56)
+[components/split/SplitPane.tsx:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L56)
 
 ---
 
@@ -111,7 +111,7 @@ default is true
 
 #### Defined in
 
-[components/split/SplitPane.tsx:43](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L43)
+[components/split/SplitPane.tsx:43](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L43)
 
 ---
 
@@ -123,7 +123,7 @@ Only support controlled mode, so it's required
 
 #### Defined in
 
-[components/split/SplitPane.tsx:53](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L53)
+[components/split/SplitPane.tsx:53](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L53)
 
 ---
 
@@ -137,7 +137,7 @@ default is vertical
 
 #### Defined in
 
-[components/split/SplitPane.tsx:49](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L49)
+[components/split/SplitPane.tsx:49](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L49)
 
 ---
 
@@ -151,7 +151,7 @@ HTMLElementProps.style
 
 #### Defined in
 
-[common/types.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L3)
+[common/types.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L3)
 
 ---
 
@@ -165,7 +165,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[common/types.ts:2](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L2)
+[common/types.ts:2](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L2)
 
 ## Methods
 
@@ -185,4 +185,4 @@ HTMLElementProps.title
 
 #### Defined in
 
-[components/split/SplitPane.tsx:54](https://github.com/DTStack/molecule/blob/ff1a27ef/src/components/split/SplitPane.tsx#L54)
+[components/split/SplitPane.tsx:54](https://github.com/DTStack/molecule/blob/3e6bc450/src/components/split/SplitPane.tsx#L54)

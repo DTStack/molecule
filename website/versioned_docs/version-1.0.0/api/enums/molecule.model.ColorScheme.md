@@ -17,7 +17,7 @@ Color scheme used by the OS and by color themes.
 
 #### Defined in
 
-[model/colorTheme.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L14)
+[model/colorTheme.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L14)
 
 ---
 
@@ -27,7 +27,7 @@ Color scheme used by the OS and by color themes.
 
 #### Defined in
 
-[model/colorTheme.ts:16](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L16)
+[model/colorTheme.ts:16](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L16)
 
 ---
 
@@ -37,4 +37,4 @@ Color scheme used by the OS and by color themes.
 
 #### Defined in
 
-[model/colorTheme.ts:15](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/colorTheme.ts#L15)
+[model/colorTheme.ts:15](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/colorTheme.ts#L15)

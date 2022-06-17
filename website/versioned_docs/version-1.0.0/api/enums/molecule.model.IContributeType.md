@@ -15,7 +15,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/extension.ts:21](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L21)
+[model/extension.ts:21](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L21)
 
 ---
 
@@ -25,7 +25,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/extension.ts:22](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L22)
+[model/extension.ts:22](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L22)
 
 ---
 
@@ -35,7 +35,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/extension.ts:23](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L23)
+[model/extension.ts:23](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L23)
 
 ---
 
@@ -45,7 +45,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/extension.ts:25](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L25)
+[model/extension.ts:25](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L25)
 
 ---
 
@@ -55,7 +55,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/extension.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L20)
+[model/extension.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L20)
 
 ---
 
@@ -65,4 +65,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/extension.ts:24](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L24)
+[model/extension.ts:24](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L24)

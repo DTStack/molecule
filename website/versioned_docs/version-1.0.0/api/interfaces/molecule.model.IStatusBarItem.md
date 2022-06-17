@@ -33,7 +33,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[common/types.ts:4](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L4)
+[common/types.ts:4](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L4)
 
 ---
 
@@ -43,7 +43,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L13)
+[model/workbench/statusBar.tsx:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L13)
 
 ---
 
@@ -53,7 +53,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L11)
+[model/workbench/statusBar.tsx:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L11)
 
 ---
 
@@ -63,7 +63,7 @@ HTMLElementProps.className
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:16](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L16)
+[model/workbench/statusBar.tsx:16](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L16)
 
 ---
 
@@ -77,7 +77,7 @@ HTMLElementProps.role
 
 #### Defined in
 
-[common/types.ts:5](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L5)
+[common/types.ts:5](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L5)
 
 ---
 
@@ -87,7 +87,7 @@ HTMLElementProps.role
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:12](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L12)
+[model/workbench/statusBar.tsx:12](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L12)
 
 ---
 
@@ -101,7 +101,7 @@ HTMLElementProps.style
 
 #### Defined in
 
-[common/types.ts:3](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L3)
+[common/types.ts:3](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L3)
 
 ---
 
@@ -115,7 +115,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[common/types.ts:2](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/types.ts#L2)
+[common/types.ts:2](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/types.ts#L2)
 
 ## Methods
 
@@ -136,7 +136,7 @@ HTMLElementProps.title
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L14)
+[model/workbench/statusBar.tsx:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L14)
 
 ---
 
@@ -156,4 +156,4 @@ HTMLElementProps.title
 
 #### Defined in
 
-[model/workbench/statusBar.tsx:15](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/statusBar.tsx#L15)
+[model/workbench/statusBar.tsx:15](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/statusBar.tsx#L15)

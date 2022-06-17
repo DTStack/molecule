@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[react/component.ts:44](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L44)
+[react/component.ts:44](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L44)
 
 ## Methods
 
@@ -55,7 +55,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -82,7 +82,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -102,7 +102,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -122,7 +122,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -144,7 +144,7 @@ Callabck for close a certain tab
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L14)
+[services/workbench/explorer/editorTreeService.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L14)
 
 ---
 
@@ -167,7 +167,7 @@ When specify groupId, it'll close that group
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L37)
+[services/workbench/explorer/editorTreeService.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L37)
 
 ---
 
@@ -189,7 +189,7 @@ Callback for close others tabs except this tabItem
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:19](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L19)
+[services/workbench/explorer/editorTreeService.ts:19](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L19)
 
 ---
 
@@ -211,7 +211,7 @@ Callback for close saved tabs in this group
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:26](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L26)
+[services/workbench/explorer/editorTreeService.ts:26](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L26)
 
 ---
 
@@ -233,7 +233,7 @@ Callback for context menu click event which isn't in buit-in menus
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:61](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L61)
+[services/workbench/explorer/editorTreeService.ts:61](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L61)
 
 ---
 
@@ -255,7 +255,7 @@ Callback for adjust editor layout
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L56)
+[services/workbench/explorer/editorTreeService.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L56)
 
 ---
 
@@ -278,7 +278,7 @@ When specify groupId, it'll save that group
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:43](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L43)
+[services/workbench/explorer/editorTreeService.ts:43](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L43)
 
 ---
 
@@ -300,7 +300,7 @@ Callback for select tab in this group
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:31](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L31)
+[services/workbench/explorer/editorTreeService.ts:31](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L31)
 
 ---
 
@@ -323,7 +323,7 @@ if you want to subscribe to the click events for these two buttons, please use t
 
 #### Defined in
 
-[services/workbench/explorer/editorTreeService.ts:49](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/workbench/explorer/editorTreeService.ts#L49)
+[services/workbench/explorer/editorTreeService.ts:49](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/workbench/explorer/editorTreeService.ts#L49)
 
 ---
 
@@ -349,7 +349,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -376,7 +376,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -402,7 +402,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -429,7 +429,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -456,7 +456,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -483,4 +483,4 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)

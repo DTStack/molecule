@@ -27,7 +27,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/panel.tsx:43](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L43)
+[model/workbench/panel.tsx:43](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L43)
 
 ## Properties
 
@@ -41,7 +41,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/panel.tsx:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L37)
+[model/workbench/panel.tsx:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L37)
 
 ---
 
@@ -55,7 +55,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/panel.tsx:38](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L38)
+[model/workbench/panel.tsx:38](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L38)
 
 ---
 
@@ -65,7 +65,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/panel.tsx:39](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L39)
+[model/workbench/panel.tsx:39](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L39)
 
 ---
 
@@ -75,7 +75,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/panel.tsx:40](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L40)
+[model/workbench/panel.tsx:40](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L40)
 
 ---
 
@@ -89,4 +89,4 @@ custom_edit_url: null
 
 #### Defined in
 
-[model/workbench/panel.tsx:41](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/workbench/panel.tsx#L41)
+[model/workbench/panel.tsx:41](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/workbench/panel.tsx#L41)

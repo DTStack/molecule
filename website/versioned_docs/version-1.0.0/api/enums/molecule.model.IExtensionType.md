@@ -17,7 +17,7 @@ Defines extension types
 
 #### Defined in
 
-[model/extension.ts:14](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L14)
+[model/extension.ts:14](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L14)
 
 ---
 
@@ -27,7 +27,7 @@ Defines extension types
 
 #### Defined in
 
-[model/extension.ts:15](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L15)
+[model/extension.ts:15](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L15)
 
 ---
 
@@ -37,7 +37,7 @@ Defines extension types
 
 #### Defined in
 
-[model/extension.ts:12](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L12)
+[model/extension.ts:12](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L12)
 
 ---
 
@@ -47,7 +47,7 @@ Defines extension types
 
 #### Defined in
 
-[model/extension.ts:13](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L13)
+[model/extension.ts:13](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L13)
 
 ---
 
@@ -57,7 +57,7 @@ Defines extension types
 
 #### Defined in
 
-[model/extension.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L11)
+[model/extension.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L11)
 
 ---
 
@@ -67,4 +67,4 @@ Defines extension types
 
 #### Defined in
 
-[model/extension.ts:16](https://github.com/DTStack/molecule/blob/ff1a27ef/src/model/extension.ts#L16)
+[model/extension.ts:16](https://github.com/DTStack/molecule/blob/3e6bc450/src/model/extension.ts#L16)

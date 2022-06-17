@@ -29,7 +29,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/problemsService.ts:62](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L62)
+[services/problemsService.ts:62](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L62)
 
 ## Properties
 
@@ -39,7 +39,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/problemsService.ts:61](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L61)
+[services/problemsService.ts:61](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L61)
 
 ---
 
@@ -57,7 +57,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/problemsService.ts:59](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L59)
+[services/problemsService.ts:59](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L59)
 
 ---
 
@@ -67,7 +67,7 @@ custom_edit_url: null
 
 #### Defined in
 
-[services/problemsService.ts:60](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L60)
+[services/problemsService.ts:60](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L60)
 
 ## Methods
 
@@ -99,7 +99,7 @@ Add single or multiple items data
 
 #### Defined in
 
-[services/problemsService.ts:75](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L75)
+[services/problemsService.ts:75](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L75)
 
 ---
 
@@ -129,7 +129,7 @@ Count the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L28)
+[common/event/eventBus.ts:28](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L28)
 
 ---
 
@@ -160,7 +160,7 @@ Emit the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L20)
+[common/event/eventBus.ts:20](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L20)
 
 ---
 
@@ -184,7 +184,7 @@ Force to update the Component
 
 #### Defined in
 
-[react/component.ts:81](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L81)
+[react/component.ts:81](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L81)
 
 ---
 
@@ -210,7 +210,7 @@ Force to update the Component
 
 #### Defined in
 
-[services/problemsService.ts:179](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L179)
+[services/problemsService.ts:179](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L179)
 
 ---
 
@@ -234,7 +234,7 @@ Get the Component state
 
 #### Defined in
 
-[react/component.ts:85](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L85)
+[react/component.ts:85](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L85)
 
 ---
 
@@ -260,7 +260,7 @@ Listen to select a problem tree node
 
 #### Defined in
 
-[services/problemsService.ts:157](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L157)
+[services/problemsService.ts:157](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L157)
 
 ---
 
@@ -290,7 +290,7 @@ Listen to the Component state update event
 
 #### Defined in
 
-[react/component.ts:73](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L73)
+[react/component.ts:73](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L73)
 
 ---
 
@@ -316,7 +316,7 @@ Remove the specific problem items
 
 #### Defined in
 
-[services/problemsService.ts:121](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L121)
+[services/problemsService.ts:121](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L121)
 
 ---
 
@@ -347,7 +347,7 @@ also you can remove one by pass the listener
 
 #### Defined in
 
-[react/component.ts:77](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L77)
+[react/component.ts:77](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L77)
 
 ---
 
@@ -377,7 +377,7 @@ Initiative notify the component to render the view by the state
 
 #### Defined in
 
-[react/component.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L69)
+[react/component.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L69)
 
 ---
 
@@ -397,7 +397,7 @@ Reset the ProblemsService state data
 
 #### Defined in
 
-[services/problemsService.ts:146](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L146)
+[services/problemsService.ts:146](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L146)
 
 ---
 
@@ -428,7 +428,7 @@ Set the state values, and notify the view component to re render
 
 #### Defined in
 
-[react/component.ts:56](https://github.com/DTStack/molecule/blob/ff1a27ef/src/react/component.ts#L56)
+[react/component.ts:56](https://github.com/DTStack/molecule/blob/3e6bc450/src/react/component.ts#L56)
 
 ---
 
@@ -459,7 +459,7 @@ Subscribe the service event
 
 #### Defined in
 
-[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L11)
+[common/event/eventBus.ts:11](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L11)
 
 ---
 
@@ -479,7 +479,7 @@ Toggle the Problems view between display or hidden
 
 #### Defined in
 
-[services/problemsService.ts:69](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L69)
+[services/problemsService.ts:69](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L69)
 
 ---
 
@@ -510,7 +510,7 @@ Unsubscribe the specific event and the listener function
 
 #### Defined in
 
-[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/ff1a27ef/src/common/event/eventBus.ts#L37)
+[common/event/eventBus.ts:37](https://github.com/DTStack/molecule/blob/3e6bc450/src/common/event/eventBus.ts#L37)
 
 ---
 
@@ -542,7 +542,7 @@ Update the specific data
 
 #### Defined in
 
-[services/problemsService.ts:97](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L97)
+[services/problemsService.ts:97](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L97)
 
 ---
 
@@ -568,7 +568,7 @@ Update the specific data
 
 #### Defined in
 
-[services/problemsService.ts:175](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L175)
+[services/problemsService.ts:175](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L175)
 
 ---
 
@@ -588,4 +588,4 @@ Update the specific data
 
 #### Defined in
 
-[services/problemsService.ts:161](https://github.com/DTStack/molecule/blob/ff1a27ef/src/services/problemsService.ts#L161)
+[services/problemsService.ts:161](https://github.com/DTStack/molecule/blob/3e6bc450/src/services/problemsService.ts#L161)

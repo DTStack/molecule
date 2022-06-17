@@ -89,7 +89,7 @@ const SplitPane = ({
     paneClassName,
     resizerSize = 4,
     onChange,
-    ...others
+    ...restProps
 }: ISplitProps) => {
     const axis = useRef<IAxis>({ x: 0, y: 0 });
     const wrapper = useRef<HTMLDivElement>(null);
@@ -247,7 +247,7 @@ const SplitPane = ({
             nextSizes[i] += distanceX;
             nextSizes[i + 1] -= distanceX;
 
-            onChange(nextSizes);
+            onChange?.(nextSizes);
         },
         [paneLimitSizes, onChange, sizes]
     );
@@ -262,7 +262,7 @@ const SplitPane = ({
                 className
             )}
             ref={wrapper}
-            {...others}
+            {...restProps}
         >
             {children.map((childNode, idx) => {
                 const paneClasses = classNames(

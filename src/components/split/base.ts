@@ -6,10 +6,21 @@ import {
 
 export const splitClassName = prefixClaName('split');
 
-export const sashContainerClassName = getBEMElement(splitClassName, 'sash');
-export const paneContainerClassName = getBEMElement(splitClassName, 'pane');
-export const sashItemClassName = getBEMElement(sashContainerClassName, 'item');
-export const paneItemClassName = getBEMElement(paneContainerClassName, 'item');
+export const splitDraggingClassName = getBEMModifier(
+    splitClassName,
+    'dragging'
+);
+export const splitVerticalClassName = getBEMModifier(
+    splitClassName,
+    'vertical'
+);
+export const splitHorizontalClassName = getBEMModifier(
+    splitClassName,
+    'horizontal'
+);
+
+export const paneItemClassName = getBEMElement(splitClassName, 'pane');
+export const sashItemClassName = getBEMElement(splitClassName, 'sash');
 
 export const sashVerticalClassName = getBEMModifier(
     sashItemClassName,
@@ -24,8 +35,3 @@ export const sashDisabledClassName = getBEMModifier(
     'disabled'
 );
 export const sashHoverClassName = getBEMModifier(sashItemClassName, 'hover');
-
-export const paneItemVisibleClassName = getBEMModifier(
-    paneItemClassName,
-    'visible'
-);

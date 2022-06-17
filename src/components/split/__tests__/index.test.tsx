@@ -15,17 +15,15 @@ afterEach(cleanup);
 
 describe('Test The SplitPane Component', () => {
     let original;
-    const observerFnCollection: any[] = [];
     beforeEach(() => {
         original = HTMLElement.prototype.getBoundingClientRect;
         // @ts-ignore
         HTMLElement.prototype.getBoundingClientRect = () => ({
             width: 500,
-            height: 0,
+            height: 500,
         });
-
         global.ResizeObserver = jest.fn().mockImplementation((fn) => {
-            observerFnCollection.push(fn);
+            fn();
             return {
                 observe: jest.fn(),
                 unobserve: jest.fn(),
@@ -36,14 +34,14 @@ describe('Test The SplitPane Component', () => {
 
     afterEach(() => {
         HTMLElement.prototype.getBoundingClientRect = original;
-        observerFnCollection.length = 0;
     });
 
     test('Match Snapshot', () => {
         const { asFragment } = render(
-            <SplitPane sizes={[20, 20]} onChange={jest.fn()}>
+            <SplitPane sizes={[100, 200]} onChange={jest.fn()}>
                 <div>1</div>
                 <div>2</div>
+                <div>3</div>
             </SplitPane>
         );
         expect(asFragment()).toMatchSnapshot();
@@ -51,9 +49,14 @@ describe('Test The SplitPane Component', () => {
 
     test('Match Snapshot in horizontal', () => {
         const { asFragment } = render(
-            <SplitPane sizes={[20, 20]} split="horizontal" onChange={jest.fn()}>
+            <SplitPane
+                sizes={[100, 200]}
+                split="horizontal"
+                onChange={jest.fn()}
+            >
                 <div>1</div>
                 <div>2</div>
+                <div>3</div>
             </SplitPane>
         );
         expect(asFragment()).toMatchSnapshot();
@@ -62,12 +65,13 @@ describe('Test The SplitPane Component', () => {
     test('Should NOT resizable', () => {
         const { container } = render(
             <SplitPane
-                sizes={[20, 20]}
-                allowResize={false}
+                sizes={[100, 200]}
+                showSashes={false}
                 onChange={jest.fn()}
             >
                 <div>1</div>
                 <div>2</div>
+                <div>3</div>
             </SplitPane>
         );
 
@@ -85,11 +89,12 @@ describe('Test The SplitPane Component', () => {
         const { container } = render(
             <SplitPane
                 sizes={[20, 20]}
-                allowResize={[false, true]}
+                showSashes={[false, true]}
                 onChange={jest.fn()}
             >
                 <div>1</div>
                 <div>2</div>
+                <div>3</div>
             </SplitPane>
         );
 
@@ -128,7 +133,7 @@ describe('Test The SplitPane Component', () => {
         const { container, getByRole } = render(
             <SplitPane
                 role="split"
-                sizes={['10%', '10px']}
+                sizes={[100, 200]}
                 style={{ width: 500 }}
                 onChange={mockFn}
             >
@@ -140,12 +145,12 @@ describe('Test The SplitPane Component', () => {
 
         const wrapper = getByRole('split');
         const sashs = container.querySelectorAll(`.${sashItemClassName}`);
-        fireEvent.mouseDown(sashs[2]);
-        fireEvent.mouseMove(wrapper, { screenX: 10, screenY: 10 });
+        fireEvent.mouseDown(sashs[0], { screenX: 0 });
+        fireEvent.mouseMove(wrapper, { screenX: 50 });
         fireEvent.mouseUp(wrapper);
 
         expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toEqual([50, 20, 430]);
+        expect(mockFn.mock.calls[0][0]).toEqual([150, 150, 200]);
     });
 
     test('Should with hover className in sashs', async () => {
@@ -177,86 +182,64 @@ describe('Test The SplitPane Component', () => {
     });
 
     test('Should support to resize', async () => {
-        const mockFn = jest
-            .fn()
-            .mockImplementationOnce(() => ['keep', 'keep', 'pave'])
-            .mockImplementationOnce(() => 'keep')
-            .mockImplementationOnce(() => undefined);
-        const mockChange = jest.fn();
-        render(
-            <SplitPane
-                role="split"
-                sizes={['10%', '10px']}
-                style={{ width: 500 }}
-                onChange={mockChange}
-                onResizeStrategy={mockFn}
-            >
+        const mockFn = jest.fn();
+        // @ts-ignore
+        HTMLElement.prototype.getBoundingClientRect = () => ({
+            width: 1000,
+            height: 500,
+        });
+        const { container } = render(
+            <SplitPane role="split" sizes={[250, 250]} onChange={mockFn}>
                 <div>1</div>
                 <div>2</div>
-                <div>3</div>
             </SplitPane>
         );
 
-        await act(async () => {
-            // @ts-ignore
-            HTMLElement.prototype.getBoundingClientRect = () => ({
-                width: 1000,
-                height: 0,
-            });
-            observerFnCollection.forEach((f) => f());
-            await sleep(150);
+        const panes = container.querySelectorAll<HTMLDivElement>(
+            `.${paneItemClassName}`
+        );
+
+        expect(panes.length).toBe(2);
+        expect(panes[0].style.width).toBe('500px');
+        expect(panes[1].style.width).toBe('500px');
+    });
+
+    test('Only the specified panel can be resized', async () => {
+        const mockFn = jest.fn();
+        // @ts-ignore
+        HTMLElement.prototype.getBoundingClientRect = () => ({
+            width: 1000,
+            height: 500,
         });
+        const { container } = render(
+            <SplitPane
+                role="split"
+                sizes={[250, 250]}
+                allowResize={[false]}
+                onChange={mockFn}
+            >
+                <div>1</div>
+                <div>2</div>
+            </SplitPane>
+        );
 
-        expect(mockFn).toBeCalledTimes(1);
-        // normal strategy, to specify one pane to be pave
-        expect(mockChange.mock.calls[0][0]).toEqual([50, 10, 940]);
+        const panes = container.querySelectorAll<HTMLDivElement>(
+            `.${paneItemClassName}`
+        );
 
-        await act(async () => {
-            // @ts-ignore
-            HTMLElement.prototype.getBoundingClientRect = () => ({
-                width: 1500,
-                height: 0,
-            });
-            observerFnCollection.forEach((f) => f());
-            await sleep(150);
-        });
-
-        expect(mockFn).toBeCalledTimes(2);
-        // to specify global strategy to be keep
-        expect(mockChange.mock.calls[1][0]).toEqual([50, 10, 440]);
-
-        await act(async () => {
-            // @ts-ignore
-            HTMLElement.prototype.getBoundingClientRect = () => ({
-                width: 2000,
-                height: 0,
-            });
-            observerFnCollection.forEach((f) => f());
-            await sleep(150);
-        });
-
-        expect(mockFn).toBeCalledTimes(3);
-        // abnormal strategy, same as returns 'pave', we don't recommend to set it
-        expect(mockChange.mock.calls[2][0]).toEqual([
-            2000 / 3,
-            2000 / 3,
-            2000 / 3,
-        ]);
+        expect(panes.length).toBe(2);
+        expect(panes[0].style.width).toBe('250px');
+        expect(panes[1].style.width).toBe('750px');
     });
 
     test('Should have limited sizes', () => {
         const mockFn = jest.fn();
         const { container, getByRole } = render(
-            <SplitPane
-                role="split"
-                sizes={['10%', '10px']}
-                style={{ width: 500 }}
-                onChange={mockFn}
-            >
-                <Pane maxSize={100} minSize="20px">
+            <SplitPane role="split" sizes={[100, 200]} onChange={mockFn}>
+                <Pane maxSize={150} minSize="50px">
                     <div>1</div>
                 </Pane>
-                <Pane maxSize={50}>
+                <Pane maxSize={280}>
                     <div>2</div>
                 </Pane>
                 <div>3</div>
@@ -265,50 +248,15 @@ describe('Test The SplitPane Component', () => {
 
         const wrapper = getByRole('split');
         const sashs = container.querySelectorAll(`.${sashItemClassName}`);
-        fireEvent.mouseDown(sashs[1]);
-        fireEvent.mouseMove(wrapper, { screenX: -10, screenY: -10 });
+        fireEvent.mouseDown(sashs[0], { screenX: 0 });
+        fireEvent.mouseMove(wrapper, { screenX: -60 });
 
         expect(mockFn).toBeCalled();
-        expect(mockFn.mock.calls[0][0]).toEqual([40, 20, 440]);
+        expect(mockFn.mock.calls[0][0]).toEqual([50, 250, 200]);
 
-        fireEvent.mouseMove(wrapper, { screenX: -20, screenY: -20 });
-        expect(mockFn.mock.calls[1][0]).toEqual([30, 30, 440]);
-
-        fireEvent.mouseMove(wrapper, { screenX: -30, screenY: -30 });
-        expect(mockFn.mock.calls[2][0]).toEqual([20, 40, 440]);
-
-        // Invalid mouseMove will reset sizes by the prev valid sizes
-        fireEvent.mouseMove(wrapper, { screenX: -40, screenY: -40 });
-        expect(mockFn.mock.calls[3][0]).toEqual([20, 40, 440]);
+        fireEvent.mouseMove(wrapper, { screenX: 1000 });
+        expect(mockFn.mock.calls[1][0]).toEqual([150, 150, 200]);
 
         fireEvent.mouseUp(wrapper);
-    });
-
-    test('Should NOT trigger onResize when unrelated size changed', async () => {
-        const mockFn = jest.fn();
-        render(
-            <SplitPane
-                role="split"
-                sizes={['10%', '10px']}
-                style={{ width: 500 }}
-                onChange={mockFn}
-            >
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-            </SplitPane>
-        );
-
-        await act(async () => {
-            // @ts-ignore
-            HTMLElement.prototype.getBoundingClientRect = () => ({
-                width: 500,
-                height: 1000,
-            });
-            observerFnCollection.forEach((f) => f());
-            await sleep(150);
-        });
-        // vertical SplitPane should NOT trigger onResize when height changed
-        expect(mockFn).not.toBeCalled();
     });
 });

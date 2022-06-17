@@ -51,114 +51,93 @@ exports[`The Explorer Component Match Snapshot 1`] = `
       className="mo-collapse"
     >
       <div
-        className="mo-split"
+        className="mo-split mo-split--horizontal"
       >
         <div
-          className="mo-split__sash"
+          className="mo-split__pane mo-collapse__pane"
+          style={
+            Object {
+              "height": 26,
+              "top": 0,
+            }
+          }
         >
           <div
-            className="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
-            onMouseDown={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            role="Resizer"
-            style={
-              Object {
-                "height": 4,
-                "top": -2,
-              }
-            }
-          />
-          <div
-            className="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
-            onMouseDown={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            role="Resizer"
-            style={
-              Object {
-                "height": 4,
-                "top": -2,
-              }
-            }
-          />
+            className="mo-collapse__item"
+            data-collapse-id="open"
+          >
+            <div
+              className="mo-collapse__header"
+              onClick={[Function]}
+              tabIndex={0}
+            >
+              <span
+                className="codicon codicon-chevron-right"
+              />
+              <span
+                className="mo-collapse__header__title"
+              >
+                Open
+              </span>
+              <div
+                className="mo-collapse__extra"
+              />
+            </div>
+            <div
+              className="mo-collapse__content"
+              data-collapse-index={0}
+              tabIndex={0}
+            />
+          </div>
         </div>
         <div
-          className="mo-split__pane"
+          className="mo-split__sash mo-split__sash--disabled mo-split__sash--horizontal"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          role="Resizer"
+          style={
+            Object {
+              "height": 4,
+              "top": 24,
+            }
+          }
+        />
+        <div
+          className="mo-split__pane mo-collapse__pane"
+          style={
+            Object {
+              "height": 26,
+              "top": 26,
+            }
+          }
         >
           <div
-            className="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
-            style={
-              Object {
-                "height": undefined,
-                "top": 0,
-              }
-            }
+            className="mo-collapse__item"
+            data-collapse-id="test"
           >
             <div
-              className="mo-collapse__item"
-              data-collapse-id="open"
+              className="mo-collapse__header"
+              onClick={[Function]}
+              tabIndex={0}
             >
-              <div
-                className="mo-collapse__header"
-                onClick={[Function]}
-                tabIndex={0}
+              <span
+                className="codicon codicon-chevron-right"
+              />
+              <span
+                className="mo-collapse__header__title"
               >
-                <span
-                  className="codicon codicon-chevron-right"
-                />
-                <span
-                  className="mo-collapse__header__title"
-                >
-                  Open
-                </span>
-                <div
-                  className="mo-collapse__extra"
-                />
-              </div>
+                test
+              </span>
               <div
-                className="mo-collapse__content"
-                data-collapse-index={0}
-                tabIndex={0}
+                className="mo-collapse__extra"
               />
             </div>
-          </div>
-          <div
-            className="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
-            style={
-              Object {
-                "height": undefined,
-                "top": 0,
-              }
-            }
-          >
             <div
-              className="mo-collapse__item"
-              data-collapse-id="test"
-            >
-              <div
-                className="mo-collapse__header"
-                onClick={[Function]}
-                tabIndex={0}
-              >
-                <span
-                  className="codicon codicon-chevron-right"
-                />
-                <span
-                  className="mo-collapse__header__title"
-                >
-                  test
-                </span>
-                <div
-                  className="mo-collapse__extra"
-                />
-              </div>
-              <div
-                className="mo-collapse__content"
-                data-collapse-index={1}
-                tabIndex={0}
-              />
-            </div>
+              className="mo-collapse__content"
+              data-collapse-index={1}
+              tabIndex={0}
+            />
           </div>
         </div>
       </div>

@@ -6,58 +6,50 @@
     position: relative;
     width: 100%;
 
-    &__sash {
-        height: 100%;
-        pointer-events: none;
-        position: absolute;
-        width: 100%;
-
-        &__item {
-            height: 100%;
-            pointer-events: initial;
-            position: absolute;
-            top: 0;
-            touch-action: none;
-            transition: background 0.1s;
-            width: 100%;
-            z-index: 35;
-
-            &--hover {
-                background: var(--sash-hoverBorder);
-            }
-
-            &--disabled {
-                pointer-events: inherit;
-            }
-
-            &--vertical {
-                cursor: col-resize;
-            }
-
-            &--horizontal {
-                cursor: row-resize;
-            }
-        }
-    }
-
     &__pane {
         height: 100%;
         overflow: hidden;
-        position: relative;
-        white-space: nowrap;
+        position: absolute;
+        white-space: normal;
         width: 100%;
+    }
 
-        &__item {
-            height: 100%;
-            position: absolute;
-            white-space: normal;
-            width: 100%;
+    &__sash {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        transition: background-color 0.1s;
+        width: 100%;
+        z-index: 2;
 
-            &:not(&--visible) {
-                cursor: pointer;
-                visibility: hidden;
-                z-index: -1;
-            }
+        &--disabled {
+            pointer-events: none;
+        }
+
+        &--hover {
+            background-color: var(--sash-hoverBorder);
+        }
+
+        &--vertical {
+            cursor: col-resize;
+        }
+
+        &--horizontal {
+            cursor: row-resize;
+        }
+    }
+
+    &--dragging {
+        #{$split}__pane {
+            user-select: none;
+        }
+
+        &#{$split}--vertical {
+            cursor: col-resize;
+        }
+
+        &#{$split}--horizontal {
+            cursor: row-resize;
         }
     }
 }

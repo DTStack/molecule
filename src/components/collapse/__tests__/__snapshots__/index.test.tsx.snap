@@ -6,125 +6,124 @@ exports[`Test The Collapse Component Match Snapshot 1`] = `
     class="mo-collapse"
   >
     <div
-      class="mo-split"
+      class="mo-split mo-split--horizontal"
     >
       <div
-        class="mo-split__sash"
+        class="mo-split__pane mo-collapse__pane"
+        style="height: 26px; top: 0px;"
       >
         <div
-          class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
-          role="Resizer"
-          style="height: 4px; top: -2px;"
-        />
-        <div
-          class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
-          role="Resizer"
-          style="height: 4px; top: 24px;"
-        />
-        <div
-          class="mo-split__sash__item mo-split__sash__item--disabled mo-split__sash__item--horizontal"
-          role="Resizer"
-          style="height: 4px; top: 50px;"
-        />
+          class="mo-collapse__item"
+          data-collapse-id="mock1"
+        >
+          <div
+            class="mo-collapse__header"
+            tabindex="0"
+          >
+            <span
+              class="codicon codicon-chevron-right"
+            />
+            <span
+              class="mo-collapse__header__title"
+            >
+              test1
+            </span>
+            <div
+              class="mo-collapse__extra"
+            />
+          </div>
+          <div
+            class="mo-collapse__content"
+            data-collapse-index="0"
+            tabindex="0"
+          />
+        </div>
       </div>
       <div
-        class="mo-split__pane"
+        class="mo-split__sash mo-split__sash--disabled mo-split__sash--horizontal"
+        role="Resizer"
+        style="height: 4px; top: 24px;"
+      />
+      <div
+        class="mo-split__pane mo-collapse__pane"
+        style="height: 26px; top: 26px;"
       >
         <div
-          class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
-          style="top: 0px; height: 26px;"
+          class="mo-collapse__item"
+          data-collapse-id="mock2"
         >
           <div
-            class="mo-collapse__item"
-            data-collapse-id="mock1"
+            class="mo-collapse__header"
+            tabindex="0"
           >
-            <div
-              class="mo-collapse__header"
-              tabindex="0"
+            <span
+              class="codicon codicon-chevron-right"
+            />
+            <span
+              class="mo-collapse__header__title"
             >
-              <span
-                class="codicon codicon-chevron-right"
-              />
-              <span
-                class="mo-collapse__header__title"
-              >
-                test1
-              </span>
-              <div
-                class="mo-collapse__extra"
-              />
-            </div>
+              test2
+            </span>
             <div
-              class="mo-collapse__content"
-              data-collapse-index="0"
-              tabindex="0"
+              class="mo-collapse__extra"
             />
           </div>
+          <div
+            class="mo-collapse__content"
+            data-collapse-index="1"
+            tabindex="0"
+          />
         </div>
+      </div>
+      <div
+        class="mo-split__sash mo-split__sash--disabled mo-split__sash--horizontal"
+        role="Resizer"
+        style="height: 4px; top: 50px;"
+      />
+      <div
+        class="mo-split__pane mo-collapse__pane"
+        style="height: 26px; top: 52px;"
+      >
         <div
-          class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
-          style="top: 26px; height: 26px;"
+          class="mo-collapse__item"
+          data-collapse-id="mock2"
         >
           <div
-            class="mo-collapse__item"
-            data-collapse-id="mock2"
+            class="mo-collapse__header"
+            tabindex="0"
           >
-            <div
-              class="mo-collapse__header"
-              tabindex="0"
+            <span
+              class="codicon codicon-chevron-right"
+            />
+            <span
+              class="mo-collapse__header__title"
             >
-              <span
-                class="codicon codicon-chevron-right"
-              />
-              <span
-                class="mo-collapse__header__title"
-              >
-                test2
-              </span>
-              <div
-                class="mo-collapse__extra"
-              />
-            </div>
+              test2
+            </span>
             <div
-              class="mo-collapse__content"
-              data-collapse-index="1"
-              tabindex="0"
+              class="mo-collapse__extra"
             />
           </div>
-        </div>
-        <div
-          class="mo-split__pane__item mo-split__pane__item--visible mo-collapse__pane"
-          style="top: 52px; height: 26px;"
-        >
           <div
-            class="mo-collapse__item"
-            data-collapse-id="mock2"
-          >
-            <div
-              class="mo-collapse__header"
-              tabindex="0"
-            >
-              <span
-                class="codicon codicon-chevron-right"
-              />
-              <span
-                class="mo-collapse__header__title"
-              >
-                test2
-              </span>
-              <div
-                class="mo-collapse__extra"
-              />
-            </div>
-            <div
-              class="mo-collapse__content"
-              data-collapse-index="2"
-              tabindex="0"
-            />
-          </div>
+            class="mo-collapse__content"
+            data-collapse-index="2"
+            tabindex="0"
+          />
         </div>
       </div>
     </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Test The Collapse Component Match Snapshot Empty 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-collapse"
+  >
+    <div
+      class="mo-split mo-split--horizontal"
+    />
   </div>
 </DocumentFragment>
 `;

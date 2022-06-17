@@ -64,6 +64,7 @@ export const Horizontal = () => {
             <SplitPane
                 split="horizontal"
                 sizes={sizes}
+                allowResize={[true, false]}
                 onChange={(sizes) => setSizes(sizes)}
             >
                 <div style={{ ...layoutCSS, background: '#ddd' }}>

@@ -4,28 +4,30 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [1.0.0](https://github.com/DTStack/molecule/compare/v0.9.0-beta.4.2...v1.0.0) (2022-06-17)
 
+
 ### Features
 
--   add getParentNode interface for folderTreeService ([#752](https://github.com/DTStack/molecule/issues/752)) ([4c09eea](https://github.com/DTStack/molecule/commit/4c09eea2a90a3739190915232793be9afd53f639))
--   create instanceService ([#733](https://github.com/DTStack/molecule/issues/733)) ([3093a21](https://github.com/DTStack/molecule/commit/3093a21078c33144532df54532e015dbfc572695))
--   the tree in Problems panel supports onSelect event ([#712](https://github.com/DTStack/molecule/issues/712)) ([4c809eb](https://github.com/DTStack/molecule/commit/4c809eb4ad49dbaac62f79c7b0cf428d9c5a87df))
+* add getParentNode interface for folderTreeService ([#752](https://github.com/DTStack/molecule/issues/752)) ([4c09eea](https://github.com/DTStack/molecule/commit/4c09eea2a90a3739190915232793be9afd53f639))
+* create instanceService ([#733](https://github.com/DTStack/molecule/issues/733)) ([3093a21](https://github.com/DTStack/molecule/commit/3093a21078c33144532df54532e015dbfc572695))
+* the tree in Problems panel supports onSelect event ([#712](https://github.com/DTStack/molecule/issues/712)) ([4c809eb](https://github.com/DTStack/molecule/commit/4c809eb4ad49dbaac62f79c7b0cf428d9c5a87df))
+
 
 ### Bug Fixes
 
--   add hover style to tab within group ([#716](https://github.com/DTStack/molecule/issues/716)) ([#751](https://github.com/DTStack/molecule/issues/751)) ([0f97d83](https://github.com/DTStack/molecule/commit/0f97d8346b85b63459f1d0763be9e039623027c4))
--   change sort default value 0 to be compatible with Firefox ([#722](https://github.com/DTStack/molecule/issues/722)) ([#748](https://github.com/DTStack/molecule/issues/748)) ([22f310f](https://github.com/DTStack/molecule/commit/22f310fe92965f882c4c58b6a629d57ac4861817))
--   compatible background color for buttons and menu items ([#711](https://github.com/DTStack/molecule/issues/711)) ([a5134b0](https://github.com/DTStack/molecule/commit/a5134b08522b2be675d6cf2eb4d7782d798c5047))
--   **components:** add color variables for breadcrumb ([#740](https://github.com/DTStack/molecule/issues/740)) ([a87accd](https://github.com/DTStack/molecule/commit/a87accdbadf6394083628742e90a16cbe5789097))
--   disable click event when action is disabled ([#745](https://github.com/DTStack/molecule/issues/745)) ([ad0310d](https://github.com/DTStack/molecule/commit/ad0310d1c0856570651f39d42939fa91edb27ae4)), closes [#725](https://github.com/DTStack/molecule/issues/725)
--   **editor:** fix styles in editor tab extra ([#736](https://github.com/DTStack/molecule/issues/736)) ([a5bf2af](https://github.com/DTStack/molecule/commit/a5bf2af38f4fa2ac173419707bb2afae0914732d))
--   enable the editor to save viewState ([#696](https://github.com/DTStack/molecule/issues/696)) ([1d4f6da](https://github.com/DTStack/molecule/commit/1d4f6daddab56f433c74439af82347262e4a3148))
--   make editor not re-initialize when switching tabs ([#698](https://github.com/DTStack/molecule/issues/698)) ([814c5b2](https://github.com/DTStack/molecule/commit/814c5b2425c89dd72c083dd658b9ae0325afc4b1))
--   **service:** improve the styles in colorTheme Service ([#739](https://github.com/DTStack/molecule/issues/739)) ([5d93078](https://github.com/DTStack/molecule/commit/5d930784a85d493180f0027d148926428c7f1229))
--   throws the full Error message when the Extension load exception ([#735](https://github.com/DTStack/molecule/issues/735)) ([61b1753](https://github.com/DTStack/molecule/commit/61b1753fe8b6a1d3030dfa46d9ab4a1c3a3f7804))
--   update tab set value ([#750](https://github.com/DTStack/molecule/issues/750)) ([f97e00c](https://github.com/DTStack/molecule/commit/f97e00c6d68ad9780e6b82dff488ecad043ac2fd)), closes [#714](https://github.com/DTStack/molecule/issues/714)
--   use activeKey to control highlighting ([#724](https://github.com/DTStack/molecule/issues/724)) ([#742](https://github.com/DTStack/molecule/issues/742)) ([52d79b0](https://github.com/DTStack/molecule/commit/52d79b092502d71f30b4bad9f83b9aa45d1e8f5e))
--   use the enter character \u21a9 ([#746](https://github.com/DTStack/molecule/issues/746)) ([7fd02ab](https://github.com/DTStack/molecule/commit/7fd02ab5ba78fd319ecdc12f8916017099c9fbc1))
--   yarn web failed in windows ([#719](https://github.com/DTStack/molecule/issues/719)) ([05ad264](https://github.com/DTStack/molecule/commit/05ad264912b169d86ff503c243940821bb5d7273))
+* add hover style to tab within group ([#716](https://github.com/DTStack/molecule/issues/716)) ([#751](https://github.com/DTStack/molecule/issues/751)) ([0f97d83](https://github.com/DTStack/molecule/commit/0f97d8346b85b63459f1d0763be9e039623027c4))
+* change sort default value 0 to be compatible with Firefox ([#722](https://github.com/DTStack/molecule/issues/722)) ([#748](https://github.com/DTStack/molecule/issues/748)) ([22f310f](https://github.com/DTStack/molecule/commit/22f310fe92965f882c4c58b6a629d57ac4861817))
+* compatible background color for buttons and menu items ([#711](https://github.com/DTStack/molecule/issues/711)) ([a5134b0](https://github.com/DTStack/molecule/commit/a5134b08522b2be675d6cf2eb4d7782d798c5047))
+* **components:** add color variables for breadcrumb ([#740](https://github.com/DTStack/molecule/issues/740)) ([a87accd](https://github.com/DTStack/molecule/commit/a87accdbadf6394083628742e90a16cbe5789097))
+* disable click event when action is disabled ([#745](https://github.com/DTStack/molecule/issues/745)) ([ad0310d](https://github.com/DTStack/molecule/commit/ad0310d1c0856570651f39d42939fa91edb27ae4)), closes [#725](https://github.com/DTStack/molecule/issues/725)
+* **editor:** fix styles in editor tab extra ([#736](https://github.com/DTStack/molecule/issues/736)) ([a5bf2af](https://github.com/DTStack/molecule/commit/a5bf2af38f4fa2ac173419707bb2afae0914732d))
+* enable the editor to save viewState ([#696](https://github.com/DTStack/molecule/issues/696)) ([1d4f6da](https://github.com/DTStack/molecule/commit/1d4f6daddab56f433c74439af82347262e4a3148))
+* make editor not re-initialize when switching tabs ([#698](https://github.com/DTStack/molecule/issues/698)) ([814c5b2](https://github.com/DTStack/molecule/commit/814c5b2425c89dd72c083dd658b9ae0325afc4b1))
+* **service:** improve the styles in colorTheme Service ([#739](https://github.com/DTStack/molecule/issues/739)) ([5d93078](https://github.com/DTStack/molecule/commit/5d930784a85d493180f0027d148926428c7f1229))
+* throws the full Error message when the Extension load exception ([#735](https://github.com/DTStack/molecule/issues/735)) ([61b1753](https://github.com/DTStack/molecule/commit/61b1753fe8b6a1d3030dfa46d9ab4a1c3a3f7804))
+* update tab set value ([#750](https://github.com/DTStack/molecule/issues/750)) ([f97e00c](https://github.com/DTStack/molecule/commit/f97e00c6d68ad9780e6b82dff488ecad043ac2fd)), closes [#714](https://github.com/DTStack/molecule/issues/714)
+* use activeKey to control highlighting ([#724](https://github.com/DTStack/molecule/issues/724)) ([#742](https://github.com/DTStack/molecule/issues/742)) ([52d79b0](https://github.com/DTStack/molecule/commit/52d79b092502d71f30b4bad9f83b9aa45d1e8f5e))
+* use the enter character \u21a9 ([#746](https://github.com/DTStack/molecule/issues/746)) ([7fd02ab](https://github.com/DTStack/molecule/commit/7fd02ab5ba78fd319ecdc12f8916017099c9fbc1))
+* yarn web failed in windows ([#719](https://github.com/DTStack/molecule/issues/719)) ([05ad264](https://github.com/DTStack/molecule/commit/05ad264912b169d86ff503c243940821bb5d7273))
 
 ## [0.9.0-beta.4.2](https://github.com/DTStack/molecule/compare/v0.9.0-beta.3.2...v0.9.0-beta.4.2) (2022-03-04)
 

@@ -81,7 +81,7 @@ export default class InstanceService
             molecule.extension.load(others);
 
             molecule.monacoService.initWorkspace(molecule.layout.container!);
-            this.firstRender = false;
+            this.rendered = true;
         }
 
         return workbench;

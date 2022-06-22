@@ -31,7 +31,7 @@ export default class InstanceService
         defaultLocale: 'en',
     };
 
-    private firstRender = true;
+    private rendered = false;
 
     constructor(config: IConfigProps) {
         super();

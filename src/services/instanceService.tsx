@@ -31,6 +31,8 @@ export default class InstanceService
         defaultLocale: 'en',
     };
 
+    private firstRender = true;
+
     constructor(config: IConfigProps) {
         super();
         if (config.defaultLocale) {
@@ -59,25 +61,28 @@ export default class InstanceService
     };
 
     public render = (workbench: ReactElement) => {
-        this.emit(InstanceHookKind.beforeInit);
+        if (this.firstRender) {
+            this.emit(InstanceHookKind.beforeInit);
 
-        // get all locales including builtin and custom locales
-        const [languages, others] = molecule.extension.splitLanguagesExts(
-            this._config.extensions
-        );
-        this.initialLocaleService(languages);
+            // get all locales including builtin and custom locales
+            const [languages, others] = molecule.extension.splitLanguagesExts(
+                this._config.extensions
+            );
+            this.initialLocaleService(languages);
 
-        // resolve all controllers, and call `initView` to inject initial values into services
-        Object.keys(controllers).forEach((key) => {
-            const module = controllers[key];
-            const controller = container.resolve<Controller>(module);
-            controller.initView?.();
-        });
+            // resolve all controllers, and call `initView` to inject initial values into services
+            Object.keys(controllers).forEach((key) => {
+                const module = controllers[key];
+                const controller = container.resolve<Controller>(module);
+                controller.initView?.();
+            });
 
-        this.emit(InstanceHookKind.beforeLoad);
-        molecule.extension.load(others);
+            this.emit(InstanceHookKind.beforeLoad);
+            molecule.extension.load(others);
 
-        molecule.monacoService.initWorkspace(molecule.layout.container!);
+            molecule.monacoService.initWorkspace(molecule.layout.container!);
+            this.firstRender = false;
+        }
 
         return workbench;
     };

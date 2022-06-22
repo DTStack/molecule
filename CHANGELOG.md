@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/DTStack/molecule/compare/v1.0.0...v1.0.1) (2022-06-22)
+
+### Bug Fixes
+
+-   prevent multiply calls of render function ([#768](https://github.com/DTStack/molecule/issues/768)) ([b34a8f2](https://github.com/DTStack/molecule/commit/b34a8f235b2fe8defad406077b7824e299a8fed7))
+
 ## [1.0.0](https://github.com/DTStack/molecule/compare/v0.9.0-beta.4.2...v1.0.0) (2022-06-17)
 
 ### Features

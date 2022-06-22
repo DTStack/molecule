@@ -1,6 +1,6 @@
 {
     "name": "@dtinsight/molecule",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A Web IDE UI Framework built with React.js, inspired by VSCode.",
     "module": "./esm/index.js",
     "typings": "./esm/index.d.ts",

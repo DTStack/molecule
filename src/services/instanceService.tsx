@@ -61,7 +61,7 @@ export default class InstanceService
     };
 
     public render = (workbench: ReactElement) => {
-        if (this.firstRender) {
+        if (!this.rendered) {
             this.emit(InstanceHookKind.beforeInit);
 
             // get all locales including builtin and custom locales

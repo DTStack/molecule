@@ -120,3 +120,6 @@ jobs:
 
             - name: Run Build
               run: yarn build
+
+            - name: Run Build Web
+              run: yarn web

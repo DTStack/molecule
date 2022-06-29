@@ -25,7 +25,8 @@
         "release": "standard-version",
         "precommit": "pretty-quick --staged && npm run check-types",
         "docs": "typedoc --entryPoints src/index.ts --out docs/api --name 'Molecule API'",
-        "web": "webpack serve --env prod --config ./build/web.js"
+        "web": "webpack serve --env prod --config ./build/web.js",
+        "build-web": "webpack --env prod --config ./build/web.js"
     },
     "keywords": [
         "react.js",

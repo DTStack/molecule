@@ -122,4 +122,4 @@ jobs:
               run: yarn build
 
             - name: Run Build Web
-              run: yarn web
+              run: yarn build-web

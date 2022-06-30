@@ -22,7 +22,7 @@
         "stylelint": "stylelint '**/*.{css,scss,sass}'",
         "prettier": "prettier --ignore-unknown .",
         "pretty-quick": "pretty-quick",
-        "release": "standard-version",
+        "release": "zx ./scripts/release.mjs",
         "precommit": "pretty-quick --staged && npm run check-types",
         "docs": "typedoc --entryPoints src/index.ts --out docs/api --name 'Molecule API'",
         "web": "webpack serve --env prod --config ./build/web.js"
@@ -108,7 +108,8 @@
         "typescript": "^4.0.5",
         "webpack-cli": "^4.0.0",
         "webpack-dev-server": "^3.11.0",
-        "webpack-merge": "^5.2.0"
+        "webpack-merge": "^5.2.0",
+        "zx": "^7.0.4"
     },
     "husky": {
         "hooks": {

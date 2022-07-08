@@ -34,17 +34,18 @@ const mockTabData: IEditorTab = {
 describe('folderTree extension', () => {
     afterEach(cleanup);
 
-    test('Execute the listener function of onUpdateFileName', () => {
+    test.skip('Execute the listener function of onUpdateFileName', () => {
         const container = create({
             extensions: [],
         }).render(<Workbench />);
-        const { getByRole } = render(container);
+        const { getByRole, asFragment } = render(container);
 
         molecule.folderTree.setState({ folderTree: { data: mockTreeData } });
         expect(molecule.folderTree.getState().folderTree?.data).toEqual(
             mockTreeData
         );
 
+        console.log(asFragment());
         molecule.editor.open(mockTabData);
         expect(molecule.editor.getState().current?.data?.length).toBe(1);
 

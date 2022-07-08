@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 import '@testing-library/jest-dom';
 import { Select, Option, inputClassName } from '../index';
 
@@ -40,7 +40,10 @@ describe('Test Select Component', () => {
     });
 
     test('Match the Select snapshot', () => {
-        const component = renderer.create(<SelectTest />);
+        let component;
+        act(() => {
+            component = renderer.create(<SelectTest />);
+        });
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();
     });

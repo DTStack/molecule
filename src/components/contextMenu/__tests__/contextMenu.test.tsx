@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { IContextMenu, useContextMenu } from '../index';
+import { act } from 'react-test-renderer';
 
 describe('Test ContextMenu Component', () => {
     const container = render(<div data-testid="anchor"></div>);
@@ -17,19 +18,25 @@ describe('Test ContextMenu Component', () => {
     });
 
     test('Test the useContextMenu method', () => {
-        contextMenu = useContextMenu({
-            anchor: anchorEle,
-            render() {
-                return <span data-testid="menuitem">Test context menu</span>;
-            },
+        act(() => {
+            contextMenu = useContextMenu({
+                anchor: anchorEle,
+                render() {
+                    return (
+                        <span data-testid="menuitem">Test context menu</span>
+                    );
+                },
+            });
         });
         expect(contextMenu).not.toBeUndefined();
     });
 
     test('Test the useContextMenu show method', () => {
-        contextMenu?.show({
-            x: anchorEle.offsetTop,
-            y: anchorEle.offsetLeft,
+        act(() => {
+            contextMenu?.show({
+                x: anchorEle.offsetTop,
+                y: anchorEle.offsetLeft,
+            });
         });
         const content = container.getByTestId('menuitem');
         expect(content).not.toBeUndefined();
@@ -37,7 +44,9 @@ describe('Test ContextMenu Component', () => {
     });
 
     test('Test the useContextMenu hide method', () => {
-        contextMenu?.hide();
+        act(() => {
+            contextMenu?.hide();
+        });
         expect(contextMenu?.view?.style.visibility).toEqual('hidden');
     });
 });

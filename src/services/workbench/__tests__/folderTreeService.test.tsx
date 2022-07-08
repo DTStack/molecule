@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from 'mo/components/button';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
@@ -404,8 +405,9 @@ describe('Test StatusBarService', () => {
     });
 
     test('Should support to set entry', () => {
-        folderTreeService.setEntry(Button);
-        expect(folderTreeService.getState().entry).toEqual(Button);
+        const entryBtn = <Button />;
+        folderTreeService.setEntry(entryBtn);
+        expect(folderTreeService.getState().entry).toEqual(entryBtn);
     });
 
     test('Should support to rename', () => {

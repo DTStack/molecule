@@ -3,6 +3,8 @@ import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { IScrollbarProps, Scrollable } from '../index';
+import { act } from 'react-test-renderer';
+import { sleep } from '@test/utils';
 
 // to make sure the Scrollable component not be mocked by global
 jest.mock('mo/components/scrollable', () => {
@@ -96,7 +98,11 @@ describe('Test Scrollable Component', () => {
             <TestScrollable isShowShadow />
         );
         const rootEle = getByTestId('mytest');
-        fireEvent.scroll(rootEle);
+        await act(async () => {
+            fireEvent.mouseEnter(rootEle);
+            await sleep(300);
+        });
+
         expect(trackElement(container).style.opacity).toBe('1');
     });
 

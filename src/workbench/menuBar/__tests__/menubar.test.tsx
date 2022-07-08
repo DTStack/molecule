@@ -1,10 +1,11 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import MenuBar, { actionClassName } from '../menuBar';
 import { MenuBarMode } from 'mo/model/workbench/layout';
+import { sleep } from '@test/utils';
 
 const TEST_ID = 'test-id';
 const TEST_DATA = 'test-data';
@@ -31,7 +32,10 @@ const menuData = [
 const TEST_FN: jest.Mock<any, any> = jest.fn();
 
 describe('Test MenuBar Component', () => {
-    afterEach(cleanup);
+    afterEach(() => {
+        cleanup();
+        document.body.innerHTML = '';
+    });
 
     test('Match the MenuBar snapshot', () => {
         const component = renderer.create(
@@ -59,7 +63,7 @@ describe('Test MenuBar Component', () => {
 
     test('Should support to get the focus element', () => {
         const mockFn = jest.fn();
-        const {} = render(
+        render(
             <MenuBar
                 data={menuData}
                 onClick={TEST_FN}
@@ -140,15 +144,17 @@ describe('Test MenuBar Component', () => {
         const originalFunc = document.elementsFromPoint;
         document.elementsFromPoint = jest.fn(() => elemArr);
 
-        fireEvent.click(elem);
-        await waitFor(() => {
-            expect(ulElem?.style.opacity).toBe('1');
+        await act(async () => {
+            fireEvent.click(elem);
+            await sleep(300);
         });
+        expect(ulElem?.style.opacity).toBe('1');
 
-        fireEvent.click(elem);
-        await waitFor(() => {
-            expect(ulElem?.style.opacity).toBe('0');
+        await act(async () => {
+            fireEvent.click(elem);
+            await sleep(300);
         });
+        expect(ulElem?.style.opacity).toBe('0');
 
         document.elementsFromPoint = originalFunc;
     });

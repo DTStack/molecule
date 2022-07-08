@@ -35,6 +35,7 @@ function TestComponent(props: any) {
 }
 
 import { Controller } from '../controller';
+import { act } from 'react-test-renderer';
 describe('Test Connector Component', () => {
     const serviceA = new TestServiceA();
     const serviceB = new TestServiceB();
@@ -102,11 +103,15 @@ describe('Test Connector Component', () => {
         );
         expect(getByText('A')).not.toBeNull();
         expect(getByText('B')).not.toBeNull();
-        serviceA.setState({
-            data: 'updateA',
+        act(() => {
+            serviceA.setState({
+                data: 'updateA',
+            });
         });
-        serviceB.setState({
-            data: 'updateB',
+        act(() => {
+            serviceB.setState({
+                data: 'updateB',
+            });
         });
         expect(getByText('updateA')).not.toBeNull();
         expect(getByText('updateB')).not.toBeNull();

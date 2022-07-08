@@ -3,25 +3,39 @@ import React from 'react';
 
 import { IContextView, useContextView } from '../index';
 import { shadowClassName } from '../base';
+import { act } from 'react-test-renderer';
 
 afterEach(() => cleanup());
 
 describe('Test ContextView Component', () => {
     test('Create the contextView by the useContextView', () => {
-        const contextView: IContextView = useContextView();
-        expect(contextView.view).not.toBeUndefined();
-        contextView.dispose();
+        let contextView: IContextView;
+        act(() => {
+            contextView = useContextView();
+            expect(contextView.view).not.toBeUndefined();
+        });
+        act(() => {
+            contextView.dispose();
+        });
     });
 
     test('Create the contextView by the render ReactNode content', () => {
         const contextView: IContextView = useContextView({
             render: () => <div id="contextViewId">Hello</div>,
         });
-        contextView.show({ x: 10, y: 10 });
+
+        act(() => {
+            contextView.show({ x: 10, y: 10 });
+        });
+
         expect(
             contextView.view?.querySelector('#contextViewId')
         ).not.toBeNull();
-        contextView.hide();
+
+        act(() => {
+            contextView.hide();
+        });
+
         expect(contextView.view?.querySelector('#contextViewId')).toBeNull();
         contextView.dispose();
     });
@@ -48,9 +62,12 @@ describe('Test ContextView Component', () => {
         const contextView: IContextView = useContextView({
             render: () => <div>test</div>,
         });
-        contextView.show({
-            x: 10,
-            y: 10,
+
+        act(() => {
+            contextView.show({
+                x: 10,
+                y: 10,
+            });
         });
         expect(contextView.view?.style.top).toEqual('10px');
         expect(contextView.view?.style.visibility).toEqual('visible');
@@ -61,13 +78,15 @@ describe('Test ContextView Component', () => {
         const contextView: IContextView = useContextView({
             render: () => <div>test</div>,
         });
-        contextView.show(
-            {
-                x: 10,
-                y: 10,
-            },
-            () => <div id="testId">custom content</div>
-        );
+        act(() => {
+            contextView.show(
+                {
+                    x: 10,
+                    y: 10,
+                },
+                () => <div id="testId">custom content</div>
+            );
+        });
         expect(contextView.view?.style.visibility).toEqual('visible');
         expect(contextView.view?.querySelector('#testId')).not.toBeUndefined();
         contextView.dispose();
@@ -78,13 +97,16 @@ describe('Test ContextView Component', () => {
             shadowOutline: false,
             render: () => <div>test</div>,
         });
-        contextView.show(
-            {
-                x: 10,
-                y: 10,
-            },
-            () => <div>test</div>
-        );
+
+        act(() => {
+            contextView.show(
+                {
+                    x: 10,
+                    y: 10,
+                },
+                () => <div>test</div>
+            );
+        });
         expect(contextView.view?.style.visibility).toEqual('visible');
         contextView.hide();
         expect(contextView.view?.style.visibility).toEqual('hidden');
@@ -98,9 +120,11 @@ describe('Test ContextView Component', () => {
         const mockFun = jest.fn();
         contextView.onHide(mockFun);
 
-        contextView.show({
-            x: 10,
-            y: 10,
+        act(() => {
+            contextView.show({
+                x: 10,
+                y: 10,
+            });
         });
 
         contextView.hide();
@@ -110,22 +134,30 @@ describe('Test ContextView Component', () => {
     });
 
     test('Dispose the contextView', async () => {
-        const contextView: IContextView = useContextView({
-            render: () => <div>test</div>,
+        let contextView: IContextView;
+        act(() => {
+            contextView = useContextView({
+                render: () => <div>test</div>,
+            });
         });
         const mockFun = jest.fn();
+        // @ts-ignore
         contextView.onHide(mockFun);
 
-        contextView.show({
-            x: 10,
-            y: 10,
+        act(() => {
+            contextView.show({
+                x: 10,
+                y: 10,
+            });
         });
 
+        // @ts-ignore
         contextView.hide();
         expect(mockFun).toHaveBeenCalled();
 
         // After the contextView disposed, the view now is hidden,
         // and the onHide is invalid
+        // @ts-ignore
         contextView.dispose();
         waitFor(async () => {
             await expect(mockFun).not.toHaveBeenCalled();
@@ -135,12 +167,18 @@ describe('Test ContextView Component', () => {
     test('Append the contextView to the molecule element', () => {
         document.body.innerHTML = `<div id="molecule"></div>`;
 
-        const contextView: IContextView = useContextView({
-            render: () => <div>test</div>,
+        let contextView: IContextView;
+        act(() => {
+            contextView = useContextView({
+                render: () => <div>test</div>,
+            });
         });
-        contextView.show({
-            x: 10,
-            y: 10,
+
+        act(() => {
+            contextView.show({
+                x: 10,
+                y: 10,
+            });
         });
 
         const root = document.getElementById('molecule');
@@ -148,32 +186,43 @@ describe('Test ContextView Component', () => {
 
         const view = root?.querySelector('.mo-context-view');
         expect(view).not.toBeNull();
+        // @ts-ignore
         contextView.dispose();
     });
 
     test('Click the Mask overlay', async () => {
-        const contextView: IContextView = useContextView({
-            render: () => <div>test</div>,
+        let contextView: IContextView;
+        act(() => {
+            contextView = useContextView({
+                render: () => <div>test</div>,
+            });
         });
+
         const mockFun = jest.fn();
+        // @ts-ignore
         contextView.onHide(mockFun);
 
-        contextView.show({
-            x: 10,
-            y: 10,
+        act(() => {
+            contextView.show({
+                x: 10,
+                y: 10,
+            });
         });
 
         const maskLayer = document.querySelector<HTMLDivElement>(
             '.mo-context-view__block'
         );
 
-        if (maskLayer) {
-            maskLayer.click();
-        }
+        act(() => {
+            if (maskLayer) {
+                maskLayer.click();
+            }
+        });
 
         await waitFor(() => {
             expect(mockFun).toHaveBeenCalled();
         });
+        // @ts-ignore
         contextView.dispose();
     });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { create, act } from 'react-test-renderer';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { expectFnCalled } from '@test/utils';
@@ -76,9 +76,12 @@ describe('The Explorer Component', () => {
     afterEach(cleanup);
 
     test('Match Snapshot', () => {
-        const component = renderer.create(
-            <Explorer data={mockData} headerToolBar={mockToolbar} />
-        );
+        let component;
+        act(() => {
+            component = create(
+                <Explorer data={mockData} headerToolBar={mockToolbar} />
+            );
+        });
         expect(component.toJSON()).toMatchSnapshot();
     });
 

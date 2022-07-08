@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { fireEvent, screen, render } from '@testing-library/react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 
 import { DropDown, DropDownRef } from '../index';
 
@@ -42,7 +42,10 @@ describe('Test Dropdown Component', () => {
     });
 
     test('Test the Dropdown snapshot', () => {
-        const component = renderer.create(<DropdownTest />);
+        let component;
+        act(() => {
+            component = renderer.create(<DropdownTest />);
+        });
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();
     });
@@ -61,28 +64,37 @@ describe('Test Dropdown Component', () => {
     test('Trigger the overlay by the click event', () => {
         const body = render(<DropdownTest />);
         const dropdown = body.getByTestId('dropdown');
-        fireEvent.click(dropdown);
+        act(() => {
+            fireEvent.click(dropdown);
+        });
         expect(screen.getByTestId('overlay')).not.toBeNull();
     });
 
     test('Trigger the overlay by the hover event', () => {
         const body = render(<DropdownTest trigger="hover" />);
         const dropdown = body.getByTestId('dropdown');
-        fireEvent.mouseOver(dropdown);
+        act(() => {
+            fireEvent.mouseOver(dropdown);
+        });
         expect(screen.getByTestId('overlay')).not.toBeNull();
     });
 
     test('Trigger the overlay by the contextmenu event', () => {
         const body = render(<DropdownTest trigger="contextmenu" />);
         const dropdown = body.getByTestId('dropdown');
-        if (dropdown) {
-            fireEvent.contextMenu(dropdown);
-        }
+        act(() => {
+            if (dropdown) {
+                fireEvent.contextMenu(dropdown);
+            }
+        });
         expect(screen.getByTestId('overlay')).not.toBeNull();
     });
 
     test('Dispose the Dropdown', () => {
-        const tree = renderer.create(<DropdownTest />);
+        let tree;
+        act(() => {
+            tree = renderer.create(<DropdownTest />);
+        });
 
         const dropdownNode: any = (
             tree as renderer.ReactTestRenderer

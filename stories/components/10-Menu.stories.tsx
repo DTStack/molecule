@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
 import {
@@ -11,7 +10,6 @@ import {
     IMenuItemProps,
 } from 'mo/components/menu';
 const stories = storiesOf('Menu', module);
-stories.addDecorator(withKnobs);
 
 const propDefinitions = [
     {

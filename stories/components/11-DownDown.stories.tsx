@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
 import { Menu } from 'mo/components/menu';
@@ -10,7 +9,6 @@ import { useState } from 'react';
 import { PlacementType } from 'mo/common/dom';
 
 const stories = storiesOf('DropDown', module);
-stories.addDecorator(withKnobs);
 
 const propDefinitions = [
     {

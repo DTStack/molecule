@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render as renderUtils, unmout } from 'mo/common/render';
 import { classNames } from 'mo/common/className';
 import {
     getRelativePosition,
@@ -46,33 +46,45 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
     let contextView: HTMLElementType = select(`.${contextViewClass}`); // Singleton contextView dom
 
     const show = (anchorPos: IPosition, render?: () => React.ReactNode) => {
-        const content = select('.' + contentClassName);
+        const content = select<HTMLElement>('.' + contentClassName);
         const renderContent = render || props?.render;
         if (!renderContent)
             throw new Error(
                 'ContextView show Error: the render parameter is required!'
             );
-        ReactDOM.render(<>{renderContent()}</>, content, () => {
-            // Notice: if want to get the computed offsetHeight of contextView,
-            // must display contextView ahead.
-            if (contextView) {
-                const position = getRelativePosition(contextView, anchorPos);
-                contextView.style.cssText = `
+        renderUtils(
+            <div
+                ref={() => {
+                    // Notice: if want to get the computed offsetHeight of contextView,
+                    // must display contextView ahead.
+                    if (contextView) {
+                        const position = getRelativePosition(
+                            contextView,
+                            anchorPos
+                        );
+                        contextView.style.cssText = `
                     visibility: visible;
                     top: ${position.y}px;
                     left: ${position.x}px;
                 `;
-            }
-        });
+                    }
+                }}
+            >
+                {renderContent()}
+            </div>,
+            content!
+        );
     };
 
     const hide = () => {
         if (contextView) {
-            contextView.style.visibility = 'hidden';
-            const contentContainer = select(`.${contentClassName}`);
+            const contentContainer = select<HTMLElement>(
+                `.${contentClassName}`
+            );
             if (contentContainer) {
-                ReactDOM.unmountComponentAtNode(contentContainer);
+                unmout(contentContainer);
             }
+            contextView.style.visibility = 'hidden';
             Emitter.emit(ContextViewEvent.onHide);
         }
     };
@@ -107,7 +119,7 @@ export function useContextView(props: IContextViewProps = {}): IContextView {
         }
         const shadowClass = shadowOutline === false ? '' : shadowClassName;
 
-        ReactDOM.render(
+        renderUtils(
             <>
                 <div
                     className={blockClassName}

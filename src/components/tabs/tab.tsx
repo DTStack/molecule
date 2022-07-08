@@ -86,12 +86,13 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
-        item: { type: 'DND_NODE', tab },
+        type: 'DND_NODE',
+        item: tab,
     } as any);
 
     const [, drop] = useDrop({
         accept: 'DND_NODE',
-        hover(item: { type: string; tab: ITabProps }, monitor) {
+        hover(item: ITabProps, monitor) {
             if (!ref.current) return;
             const component = ref.current;
             /**
@@ -113,7 +114,7 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
                 hoverMiddleX,
                 hoverClientX,
             };
-            onDrag?.(item.tab, tab, dragInfo);
+            onDrag?.(item, tab, dragInfo);
         },
     });
 

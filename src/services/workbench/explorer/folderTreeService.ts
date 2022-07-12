@@ -383,7 +383,7 @@ export class FolderTreeService
         if (currentIndex.node.fileType === FileTypes.File) {
             data.location =
                 currentIndex.node.location?.replace(
-                    /(?<=\/)[^\/]+$/,
+                    /[^\/]+$/,
                     `${data.name}`
                 ) || '';
 

@@ -12,7 +12,7 @@ const reactdom: typeof ReactDOM & {
 
 let nextReactDOMClient: typeof createRoot | undefined;
 
-const renderedSign = Symbol('__molecule__root');
+export const renderedSign = Symbol('__molecule__root');
 
 if (ReactDOM.version.startsWith('18')) {
     nextReactDOMClient = reactdom.createRoot;

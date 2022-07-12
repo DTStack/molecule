@@ -1,5 +1,5 @@
 import React from 'react';
-import { render as renderUtils, unmout } from 'mo/common/render';
+import { render as renderUtils, unmout } from 'mo/react/render';
 import { classNames } from 'mo/common/className';
 import {
     getRelativePosition,

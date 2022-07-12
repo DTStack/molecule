@@ -5,7 +5,7 @@ import { NotificationPane } from '../notificationPane';
 import type { INotificationController } from 'mo/controller';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 import { select } from 'mo/common/dom';
-import { render } from 'mo/common/render';
+import { render } from 'mo/react/render';
 
 const defaultBellClassName = prefixClaName('bell');
 const activeBellClassName = getBEMModifier(defaultBellClassName, 'active');

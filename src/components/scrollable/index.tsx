@@ -44,6 +44,7 @@ const Scrollable = forwardRef<Scrollbar, IScrollbarProps>(function (
     }, []);
 
     const onScrollStart = useCallback(() => {
+        /* istanbul ignore next */
         setIsScrolling(true);
     }, []);
     const onScrollStop = useCallback(() => {

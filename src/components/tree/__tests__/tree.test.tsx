@@ -458,9 +458,12 @@ describe('Test the Tree component', () => {
             fireEvent.click(getByText('test1'));
         });
 
-        expect(mockFn).toBeCalledTimes(1);
         expect(container.querySelector('.codicon-spin')).toBeInTheDocument();
-        await sleep(1000);
+        expect(mockFn).toBeCalledTimes(1);
+
+        await act(async () => {
+            await sleep(1000);
+        });
         expect(container.querySelector('.codicon-spin')).toBeNull();
 
         act(() => {

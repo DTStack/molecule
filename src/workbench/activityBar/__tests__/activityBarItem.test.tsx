@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ActivityBarItem } from '../activityBarItem';
@@ -16,7 +16,10 @@ import { KeyCode } from 'mo/monaco';
 
 describe('The ActivityBar Item Component', () => {
     test('match the snapshot', () => {
-        const component = renderer.create(<ActivityBarItem id="test" />);
+        let component;
+        act(() => {
+            component = renderer.create(<ActivityBarItem id="test" />);
+        });
         expect(component.toJSON()).toMatchSnapshot();
     });
 

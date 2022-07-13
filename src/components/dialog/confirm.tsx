@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
+import { render as renderUtils, unmout } from 'mo/react/render';
 import { Icon } from 'mo/components/icon';
 import { IModalFuncProps, destroyFns } from './modal';
 import ConfirmDialog from './confirmDialog';
@@ -29,7 +28,7 @@ export default function confirm(config: IModalFuncProps) {
             config.onCancel(...args);
         }
 
-        const unmountResult = ReactDOM.unmountComponentAtNode(div);
+        const unmountResult = unmout(div);
         if (unmountResult && div.parentNode) {
             div.parentNode.removeChild(div);
         }
@@ -49,7 +48,7 @@ export default function confirm(config: IModalFuncProps) {
          * TODO: Please determine if this really needs to be a macro task
          */
         setTimeout(() => {
-            ReactDOM.render(
+            renderUtils(
                 <ConfirmDialog
                     {...props}
                     okText={okText}

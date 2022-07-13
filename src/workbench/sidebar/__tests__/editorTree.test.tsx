@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { expectFnCalled } from '@test/utils';
@@ -84,9 +84,10 @@ describe('The EditorTree Component', () => {
     afterEach(cleanup);
 
     test('Match Snapshot', () => {
-        const component = renderer.create(
-            <PaneEditorTree groups={mockGroups} />
-        );
+        let component;
+        act(() => {
+            component = renderer.create(<PaneEditorTree groups={mockGroups} />);
+        });
         expect(component.toJSON()).toMatchSnapshot();
     });
 

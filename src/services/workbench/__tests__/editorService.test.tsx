@@ -451,6 +451,19 @@ describe('Test EditorService', () => {
         expect(editor.getDefaultMenus()).toEqual(menus);
     });
 
+    test('Should dispose model after closing a tab', () => {
+        const editor = new EditorService();
+        const disposeFn = jest.fn();
+        const originalGetModel = MonacoEditor.getModel;
+        // @ts-ignore
+        MonacoEditor.getModel = jest.fn(() => ({ dispose: disposeFn }));
+        // @ts-ignore
+        editor.disposeModel([{ id: 1 }]);
+
+        expect(disposeFn).toBeCalled();
+        MonacoEditor.getModel = originalGetModel;
+    });
+
     test('Listen to the Tab update event', () => {
         const editor = new EditorService();
         expectFnCalled((testFn) => {

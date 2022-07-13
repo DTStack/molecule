@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ID_ACTIVITY_BAR } from 'mo/common/id';
@@ -29,7 +29,10 @@ const mockData: IActivityBarItem[] = [
 
 describe('The ActivityBar Component', () => {
     test('match the snapshot', () => {
-        const component = renderer.create(<ActivityBar data={mockData} />);
+        let component;
+        act(() => {
+            component = renderer.create(<ActivityBar data={mockData} />);
+        });
         expect(component.toJSON()).toMatchSnapshot();
     });
 

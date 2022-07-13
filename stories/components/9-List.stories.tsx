@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
 import { List, Item } from 'mo/components/list';
@@ -8,7 +7,6 @@ import { useState } from 'react';
 import { Button } from 'mo/components';
 
 const stories = storiesOf('List', module);
-stories.addDecorator(withKnobs);
 
 const propDefinitions = [
     {

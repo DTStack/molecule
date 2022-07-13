@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import React from 'react';
+import React, { useRef } from 'react';
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { tabItemActiveClassName } from 'mo/components/tabs/tab';
 
@@ -151,5 +151,84 @@ describe('The Editor Component', () => {
         const renderDiv = container.querySelector(`.${TEST_ID}`);
 
         expect(renderDiv?.innerHTML).toEqual(TEST_ID);
+    });
+
+    test('Should update editor props', () => {
+        const fn = jest.fn();
+        const { rerender } = render(
+            <EditorGroup
+                id="test"
+                editorOptions={{
+                    minimap: {
+                        enabled: false,
+                    },
+                }}
+                isActiveGroup={true}
+                onClickActions={jest.fn()}
+                onChangeEditorProps={fn}
+                menu={menuData}
+                data={tabData}
+            />
+        );
+
+        rerender(
+            <EditorGroup
+                id="test"
+                editorOptions={{
+                    minimap: {
+                        enabled: true,
+                    },
+                }}
+                isActiveGroup={true}
+                onClickActions={jest.fn()}
+                onChangeEditorProps={fn}
+                menu={menuData}
+                data={tabData}
+            />
+        );
+
+        expect(fn).toBeCalled();
+    });
+
+    test('Should scroll to view', () => {
+        Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
+            configurable: true,
+            value: 500,
+        });
+
+        Object.defineProperty(HTMLElement.prototype, 'offsetLeft', {
+            configurable: true,
+            value: 1000,
+        });
+
+        const mockScrollToFn = jest.fn();
+        (useRef as jest.Mock).mockReturnValueOnce({
+            current: { scrollTo: mockScrollToFn },
+        });
+
+        render(
+            <EditorGroup
+                id="test"
+                currentGroup={{
+                    id: 'test',
+                }}
+                tab={{
+                    id: '1',
+                }}
+                editorOptions={{
+                    minimap: {
+                        enabled: false,
+                    },
+                }}
+                isActiveGroup={true}
+                onClickActions={jest.fn()}
+                menu={menuData}
+                data={tabData}
+            />
+        );
+
+        expect(mockScrollToFn).toBeCalled();
+        expect(mockScrollToFn.mock.calls[0][0]).toBe(1000);
+        expect(mockScrollToFn.mock.calls[0][1]).toBe(0);
     });
 });

@@ -34,7 +34,6 @@ exports[`Test NotificationPane Component Match The NotificationPane snapshot 1`]
         onClick={[Function]}
         title="Clear Notification"
       />
-      
     </div>
   </div>
 </div>

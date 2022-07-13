@@ -1,4 +1,3 @@
-import ReactDOM from 'react-dom';
 import React, { memo, useEffect, useRef } from 'react';
 import { Icon } from 'mo/components/icon';
 import type { INotification } from 'mo/model';
@@ -6,6 +5,7 @@ import { NotificationPane } from '../notificationPane';
 import type { INotificationController } from 'mo/controller';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
 import { select } from 'mo/common/dom';
+import { render } from 'mo/react/render';
 
 const defaultBellClassName = prefixClaName('bell');
 const activeBellClassName = getBEMModifier(defaultBellClassName, 'active');
@@ -31,7 +31,7 @@ export function NotificationStatusBarView(
         if (container) {
             wrapper.current = wrapper.current || document.createElement('div');
             container.appendChild(wrapper.current);
-            ReactDOM.render(
+            render(
                 <NotificationPane
                     id={id}
                     data={data}

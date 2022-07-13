@@ -113,17 +113,20 @@ describe('Test The Collapse Component', () => {
         expect(mockResize).toBeCalled();
         expect(mockResize.mock.calls[0][0]).toEqual([26, 26, 26]);
 
+        // collapsing mock2 and mock3
         await act(async () => {
-            // collapsing mock2 and mock3
+            fireEvent.click(collaspeItem?.childNodes[0]!);
+            await sleep(300);
+        });
+
+        await act(async () => {
             const mock3 = container.querySelector(
                 'div[data-collapse-id="mock3"]'
             );
-            fireEvent.click(collaspeItem?.childNodes[0]!);
-            await sleep(300);
             fireEvent.click(mock3?.childNodes[0]!);
-
             await sleep(300);
         });
+
         expect(mockResize).toBeCalled();
         // divided the remaining space by grow number
         expect(mockResize.mock.calls[2][0]).toEqual([26, 316, 158]);
@@ -151,11 +154,14 @@ describe('Test The Collapse Component', () => {
             const mock2 = container.querySelector(
                 'div[data-collapse-id="mock2"]'
             );
+            fireEvent.click(mock2?.childNodes[0]!);
+            await sleep(300);
+        });
+
+        await act(async () => {
             const mock3 = container.querySelector(
                 'div[data-collapse-id="mock3"]'
             );
-            fireEvent.click(mock2?.childNodes[0]!);
-            await sleep(300);
             fireEvent.click(mock3?.childNodes[0]!);
             await sleep(300);
         });
@@ -326,6 +332,9 @@ describe('Test The Collapse Component', () => {
             // collapsing it
             fireEvent.click(mock1?.childNodes[0]!);
             await sleep(300);
+        });
+
+        await act(async () => {
             // @ts-ignore
             HTMLElement.prototype.getBoundingClientRect = () => ({
                 height: 100,
@@ -335,6 +344,7 @@ describe('Test The Collapse Component', () => {
             fireEvent.click(mock1?.childNodes[0]!);
             await sleep(300);
         });
+
         expect(mock1?.parentElement?.style.height).toBe('126px');
     });
 
@@ -384,6 +394,9 @@ describe('Test The Collapse Component', () => {
         await act(async () => {
             fireEvent.click(mock2?.childNodes[0]!);
             await sleep(300);
+        });
+
+        await act(async () => {
             fireEvent.click(mock3?.childNodes[0]!);
             await sleep(300);
         });

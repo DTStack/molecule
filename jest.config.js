@@ -14,6 +14,12 @@ module.exports = {
     testPathIgnorePatterns: ['/node_modules/', 'esm', 'umd', 'stories'],
     // The directory where Jest should output its coverage files
     coverageDirectory: 'coverage',
+    collectCoverageFrom: [
+        'src/**/*.{ts,tsx}',
+        '!src/molecule.api.ts',
+        '!src/index.ts',
+        '!src/extensions/**',
+    ],
     transformIgnorePatterns: ['node_modules/(?!(monaco-editor|.*dnd.*)/)'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
     moduleNameMapper: {

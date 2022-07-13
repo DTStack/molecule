@@ -10,4 +10,8 @@ module.exports = {
     typescript: {
         reactDocgen: 'none',
     },
+    features: {
+        postcss: false,
+        babelModeV7: true,
+    },
 };

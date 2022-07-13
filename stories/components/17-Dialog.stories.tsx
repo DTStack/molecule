@@ -3,11 +3,9 @@ import { useState } from 'react';
 import { Modal } from 'mo/components/dialog';
 import { Button } from 'mo/components/button';
 import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
 
 const confirm = Modal.confirm;
 const stories = storiesOf('Dialog', module);
-stories.addDecorator(withKnobs);
 
 stories.add('Basic Usage', () => {
     const [isModalVisible, setIsModalVisible] = useState(false);

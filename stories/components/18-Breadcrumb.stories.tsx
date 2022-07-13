@@ -1,12 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { propsTable } from '../common/propsTable';
 
 import { Breadcrumb, IBreadcrumbItemProps } from 'mo/components/breadcrumb';
 
 const stories = storiesOf('Breadcrumb', module);
-stories.addDecorator(withKnobs);
 
 const propDefinitions = [
     {

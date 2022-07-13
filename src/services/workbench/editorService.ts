@@ -355,8 +355,8 @@ export class EditorService
             }
 
             this.setState({
-                current,
-                groups,
+                current: current ? { ...current } : current,
+                groups: [...groups],
             });
         }
 

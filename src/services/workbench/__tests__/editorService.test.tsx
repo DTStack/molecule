@@ -7,6 +7,7 @@ import { expectFnCalled } from '@test/utils';
 import { modules } from 'mo/services/builtinService/const';
 import { editor as MonacoEditor } from 'mo/monaco';
 import { cloneDeep } from 'lodash';
+import { act } from 'react-dom/test-utils';
 
 describe('Test EditorService', () => {
     let mockTab: IEditorTab;
@@ -187,6 +188,67 @@ describe('Test EditorService', () => {
                 modifyText
             );
         }
+    });
+
+    test('Should update editor text via updateTab', () => {
+        const editor = new EditorService();
+        editor.open({ ...mockTab, data: { value: 'tabData' } });
+
+        const { groups } = editor.getState();
+        expect(groups?.length).toBe(1);
+
+        const setValFn = jest.fn();
+        const getValFn = jest.fn(() => '');
+        groups![0].editorInstance = {
+            getModel: () => ({
+                getValue: getValFn,
+                setValue: setValFn,
+            }),
+        };
+
+        act(() => {
+            editor.updateTab({
+                id: mockTab.id,
+                data: {
+                    value: 'test',
+                },
+            });
+        });
+
+        expect(setValFn).toBeCalled();
+        expect(setValFn.mock.calls[0][0]).toBe('test');
+    });
+
+    test('Should prevent update editor text if current tab with renderPane', () => {
+        const editor = new EditorService();
+        editor.open({
+            ...mockTab,
+            data: { value: 'tabData' },
+            renderPane: () => <div>test</div>,
+        });
+
+        const { groups } = editor.getState();
+        expect(groups?.length).toBe(1);
+
+        const setValFn = jest.fn();
+        const getValFn = jest.fn(() => '');
+        groups![0].editorInstance = {
+            getModel: () => ({
+                getValue: getValFn,
+                setValue: setValFn,
+            }),
+        };
+
+        act(() => {
+            editor.updateTab({
+                id: mockTab.id,
+                data: {
+                    value: 'test',
+                },
+            });
+        });
+
+        expect(setValFn).not.toBeCalled();
     });
 
     test('Close a tab', () => {

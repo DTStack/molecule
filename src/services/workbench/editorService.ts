@@ -50,7 +50,7 @@ export interface IEditorService extends Component<IEditor> {
     /**
      * Specify the Entry page of Workbench
      */
-    setEntry(component: React.ReactNode): void;
+    setEntry(component: JSX.Element): void;
     /**
      * Judge the specific tabs whether opened in Editor view
      * @param tabId The tabId is required

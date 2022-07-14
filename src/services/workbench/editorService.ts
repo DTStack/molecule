@@ -326,6 +326,7 @@ export class EditorService
                 }
                 if (group.activeTab === tab.id) {
                     isString(editorValue) &&
+                        !tabData?.renderPane &&
                         this.setGroupEditorValue(group, editorValue);
                     updatedTab = Object.assign(group.tab, tab);
                 }
@@ -345,6 +346,7 @@ export class EditorService
 
                 if (group.activeTab === tab.id) {
                     isString(editorValue) &&
+                        !tabData?.renderPane &&
                         this.setGroupEditorValue(group, editorValue);
                     updatedTab = Object.assign(group.tab, tab);
                 }

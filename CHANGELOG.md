@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/DTStack/molecule/compare/v1.0.2...v1.1.0) (2022-07-15)
+
+### Features
+
+-   bump react'version to 18.x ([#774](https://github.com/DTStack/molecule/issues/774)) ([819696e](https://github.com/DTStack/molecule/commit/819696e20001112e8dbfdbd2715702ffa88c4337))
+-   the text of the optimized tree item is too long ([#773](https://github.com/DTStack/molecule/issues/773)) ([32c877a](https://github.com/DTStack/molecule/commit/32c877a635bf65eb250451508d613464be3150c4))
+
+### Bug Fixes
+
+-   fix set entry failed at some situations ([#778](https://github.com/DTStack/molecule/issues/778)) ([a8b608d](https://github.com/DTStack/molecule/commit/a8b608d7ad85f4bfd033909adc97e016ae71e8ed))
+-   prevent updateTab with renderPanel tab ([#781](https://github.com/DTStack/molecule/issues/781)) ([2d77923](https://github.com/DTStack/molecule/commit/2d779231d64fbef9fff7eed35517aea567b8c043))
+-   remove invalid Regx in Safari ([#777](https://github.com/DTStack/molecule/issues/777)) ([66da95e](https://github.com/DTStack/molecule/commit/66da95e9a181b9182eb74ba418127c15ee5f263c))
+-   updateTab will change the reference of current tab ([#779](https://github.com/DTStack/molecule/issues/779)) ([3114bd5](https://github.com/DTStack/molecule/commit/3114bd50aaeddff8d08c91f585009365c86585e4))
+
 ### [1.0.2](https://github.com/DTStack/molecule/compare/v1.0.1...v1.0.2) (2022-06-22)
 
 ### [1.0.1](https://github.com/DTStack/molecule/compare/v1.0.0...v1.0.1) (2022-06-22)

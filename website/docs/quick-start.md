@@ -61,6 +61,20 @@ export default App;
 
 `extensions` are extensions that need to be customized.
 
+And open the `src/index.js` file and change it to the following:
+
+```diff title="src/index.js"
+root.render(
+-  <React.StrictMode>
+    <App />
+-  </React.StrictMode>
+);
+```
+
+:::caution
+It's **noticed** that the Molecule for now is not compatible with `React.StrictMode`. So we should remove `React.StrictMode` from `src/index.js`.
+:::
+
 ## Startup Project
 
 Finally, run the `start` command in the terminal:

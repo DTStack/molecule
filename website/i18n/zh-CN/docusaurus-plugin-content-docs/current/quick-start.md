@@ -61,6 +61,20 @@ export default App;
 
 `extensions` 是需要自定义的扩展程序。
 
+然后，打开 `src/index.js` 文件，并修改如下的部分:
+
+```diff title="src/index.js"
+root.render(
+-  <React.StrictMode>
+    <App />
+-  </React.StrictMode>
+);
+```
+
+:::caution
+需要注意的是目前 Molecule 还无法与 `React.StrictMode` 兼容，所以我们需要在 `src/index.js` 中移除 `React.StrictMode`。
+:::
+
 ## 启动项目
 
 最后，在终端中运行`start` 命令：

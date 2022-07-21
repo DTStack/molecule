@@ -16,7 +16,7 @@ use the `node -v` command to view the current Node version. It is recommended to
 
 ## Create a Project in One Line
 
-We provide an command line tool to create a project quickly. It uses [create-react-app](https://github.com/facebook/create-react-app) to create this project.
+We provide a command line tool to create a project quickly. It uses [create-react-app](https://github.com/facebook/create-react-app) to create this project.
 
 ### npx
 

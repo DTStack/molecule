@@ -9,7 +9,7 @@ sidebar_position: 1
  <h1>Molecule</h1>
  <h3>一个轻量的 Web IDE UI 框架</h3>
 
-[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url] [![Chat][online-chat-img]][online-chat-url]
+[![CI][ci-image]][ci-url] [![CII Best Practices][cii-img]][cii-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url] [![Chat][online-chat-img]][online-chat-url]
 
 </div>
 
@@ -23,6 +23,8 @@ sidebar_position: 1
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 [online-chat-img]: https://img.shields.io/discord/920616811261743104?logo=Molecule
 [online-chat-url]: https://discord.com/invite/b62gpHwNA7
+[cii-img]: https://bestpractices.coreinfrastructure.org/projects/6307/badge
+[cii-url]: https://bestpractices.coreinfrastructure.org/projects/6307
 
 ## 简介
 

@@ -4,7 +4,7 @@
  <h1>Molecule</h1>
  <h3>A lightweight Web IDE UI Framework</h3>
 
-[![CI][ci-image]][ci-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url] [![Chat][online-chat-img]][online-chat-url]
+[![CI][ci-image]][ci-url] [![CII Best Practices][CII-img]][CII-url] [![Codecov][codecov-image]][codecov-url] [![NPM downloads][download-img]][download-url] [![NPM version][npm-version]][npm-version-url] [![Chat][online-chat-img]][online-chat-url]
 
 </div>
 
@@ -18,6 +18,8 @@
 [npm-version-url]: https://www.npmjs.com/package/@dtinsight/molecule
 [online-chat-img]: https://img.shields.io/discord/920616811261743104?logo=Molecule
 [online-chat-url]: https://discord.com/invite/b62gpHwNA7
+[CII-img]: https://bestpractices.coreinfrastructure.org/projects/6307/badge
+[CII-url]: https://bestpractices.coreinfrastructure.org/projects/6307
 
 [中文](./README-zhCN.md) | [English](./README.md) | [한국어](./README-koKR.md)
 

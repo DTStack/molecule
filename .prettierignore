@@ -11,3 +11,4 @@ website/build
 website/docs/api
 website/.docusaurus
 website/node_modules
+lib

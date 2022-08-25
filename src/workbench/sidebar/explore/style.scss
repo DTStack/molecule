@@ -34,12 +34,12 @@
             font-family: inherit;
             font-size: 13px;
             height: 20px;
-            left: -2px;
+            left: 0;
             margin: 0;
             outline: none;
             padding: 0;
             position: relative;
-            width: 100%;
+            width: calc(100% - 2px);
 
             &:focus,
             &:active {

@@ -205,6 +205,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                 autoComplete="off"
                 autoFocus
                 onBlur={(e) => handleInputBlur(e, node)}
+                onClick={(e) => e.stopPropagation()}
             />
         ) : (
             name!

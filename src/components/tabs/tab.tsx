@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRef } from 'react';
-import { findDOMNode } from 'react-dom';
 import { useDrag, useDrop } from 'react-dnd';
 
 import { IEditorGroup } from 'mo/model';
@@ -95,14 +94,7 @@ export function Tab({ tab, active, ...restEvents }: ITabComponent) {
         hover(item: ITabProps, monitor) {
             if (!ref.current) return;
             const component = ref.current;
-            /**
-             * TODO: bad code needs to be removed
-             */
-            /* eslint-disable */
-            const hoverBoundingRect = (
-                findDOMNode(component) as Element
-            )?.getBoundingClientRect();
-            /* eslint-enable */
+            const hoverBoundingRect = component?.getBoundingClientRect();
             const hoverMiddleX =
                 (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
             const clientOffset = monitor.getClientOffset();

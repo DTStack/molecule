@@ -148,6 +148,24 @@ describe('The FolderTree Component', () => {
         ).toContain(folderTreeEditClassName);
     });
 
+    test('Should NOT call loadData in editing', () => {
+        const mockFn = jest.fn(() => Promise.resolve());
+        const { getByRole } = render(
+            <FolderTreeViewPanel
+                folderTree={{
+                    data: [{ ...mockTreeData[0], children: [mockEditFile] }],
+                }}
+                onLoadData={mockFn}
+            />
+        );
+
+        const input = getByRole('input') as HTMLInputElement;
+        expect(input).toBeInTheDocument();
+
+        fireEvent.click(input);
+        expect(mockFn).not.toBeCalled();
+    });
+
     test('Should support to update file name via blur or keypress', () => {
         const mockFn = jest.fn();
         const { getByRole } = render(

@@ -121,11 +121,6 @@ export class MenuBarController
     public readonly onClick = (event: React.MouseEvent, item: IMenuBarItem) => {
         const menuId = item.id || '';
 
-        /**
-         * TODO: Two issues remain to be addressed
-         * 1、the default event is executed twice
-         * 2、we have no way of knowing whether user-defined events are executed internally
-         */
         this.emit(MenuBarEvent.onSelect, menuId);
         this._automation[menuId]?.();
 

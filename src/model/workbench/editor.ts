@@ -45,7 +45,7 @@ export interface IEditorAction {
     actions?: IEditorActionsProps[];
     menu?: IMenuItemProps[];
 }
-export interface IEditorGroup<E = any, T = any> extends ITabsProps<T> {
+export interface IEditorGroup<E = any, T = any> extends ITabsProps {
     id: UniqueId;
     /**
      * Current editor group tab

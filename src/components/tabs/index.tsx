@@ -17,9 +17,9 @@ import type { UniqueId } from 'mo/common/types';
 
 export type TabsType = 'line' | 'card';
 /**
- * TODO: Get rid of the generic and remove the ComponentProps
+ * TODO: Get rid of the ComponentProps in next version
  */
-export interface ITabsProps<T = any> extends React.ComponentProps<any> {
+export interface ITabsProps extends React.ComponentProps<any> {
     className?: string;
     style?: React.CSSProperties;
     role?: string;

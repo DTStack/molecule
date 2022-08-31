@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/DTStack/molecule/compare/v1.1.0...v1.1.1) (2022-08-31)
+
+### Bug Fixes
+
+-   prevent call loadData when editing ([#789](https://github.com/DTStack/molecule/issues/789)) ([80d99bc](https://github.com/DTStack/molecule/commit/80d99bcfed349a27345ac602a0f373f3c004f856))
+-   remove findDOMNode usage ([#790](https://github.com/DTStack/molecule/issues/790)) ([289288b](https://github.com/DTStack/molecule/commit/289288b83fccec277215152ca912c74ea170d542))
+-   remove useless generic type ([bee51e2](https://github.com/DTStack/molecule/commit/bee51e2b46a942442195999c2b4eea58567003de))
+
 ## [1.1.0](https://github.com/DTStack/molecule/compare/v1.0.2...v1.1.0) (2022-07-15)
 
 ### Features

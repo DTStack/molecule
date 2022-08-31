@@ -44,19 +44,14 @@ export default function confirm(config: IModalFuncProps) {
     }
 
     function render({ okText, cancelText, ...props }: any) {
-        /**
-         * TODO: Please determine if this really needs to be a macro task
-         */
-        setTimeout(() => {
-            renderUtils(
-                <ConfirmDialog
-                    {...props}
-                    okText={okText}
-                    cancelText={cancelText}
-                />,
-                div
-            );
-        });
+        renderUtils(
+            <ConfirmDialog
+                {...props}
+                okText={okText}
+                cancelText={cancelText}
+            />,
+            div
+        );
     }
 
     function close(...args: any[]) {

@@ -86,6 +86,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         data = [],
         folderPanelContextMenu = [],
         expandKeys,
+        loadedKeys,
         current,
     } = folderTree;
 
@@ -236,6 +237,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                     // root folder do not render
                     activeKey={current?.id}
                     expandKeys={expandKeys}
+                    loadedKeys={loadedKeys}
                     data={data[0]?.children || []}
                     className={classNames(
                         folderTreeClassName,

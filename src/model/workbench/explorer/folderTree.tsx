@@ -36,6 +36,7 @@ export interface IFolderTreeSubItem {
     folderPanelContextMenu?: IMenuItemProps[];
     current?: IFolderTreeNodeProps | null;
     expandKeys?: UniqueId[];
+    loadedKeys?: string[];
 }
 export interface IFolderTree {
     folderTree?: IFolderTreeSubItem;

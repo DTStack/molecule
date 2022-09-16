@@ -62,6 +62,7 @@ export interface ITreeProps {
     className?: string;
     draggable?: boolean;
     expandKeys?: UniqueId[];
+    loadedKeys?: string[];
     activeKey?: UniqueId;
     onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
     onSelect?: (node: ITreeNodeItemProps, isUpdate?) => void;
@@ -83,6 +84,7 @@ const TreeView = ({
     className,
     data = [],
     draggable = false,
+    loadedKeys,
     expandKeys: controlExpandKeys,
     activeKey: controlActiveKey,
     onExpand,
@@ -95,7 +97,6 @@ const TreeView = ({
 }: ITreeProps) => {
     const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
     const [activeKey, setActiveKey] = useState<string | null>(null);
-    const loadDataCache = useRef<Record<string, boolean>>({});
     const [loadingKeys, setLoadingKeys] = useState<string[]>([]);
     const dragOverNode = useRef<ITreeNodeItemProps>();
     const dragInfo = useRef<{
@@ -108,7 +109,7 @@ const TreeView = ({
 
     const canLoadData = (key: string) => {
         if (!onLoadData) return false;
-        if (loadDataCache.current.hasOwnProperty(key)) return false;
+        if (loadedKeys?.includes(key)) return false;
         return true;
     };
 
@@ -120,7 +121,6 @@ const TreeView = ({
                 nextKeys.push(uuid!);
                 return nextKeys;
             });
-            loadDataCache.current[uuid] = true;
             onLoadData!(node).finally(() => {
                 setLoadingKeys((keys) => {
                     const nextKeys = keys.concat();

@@ -66,6 +66,14 @@ export interface IFolderTreeService extends Component<IFolderTree> {
      */
     setExpandKeys: (expandKeys: UniqueId[]) => void;
     /**
+     * Get the loadedKeys for folderTree
+     */
+    getLoadedKeys: () => string[];
+    /**
+     * Set the loadedKeys for folderTree
+     */
+    setLoadedKeys: (loadedKeys: string[]) => void;
+    /**
      * Active specific node,
      * or unactive any node in folder tree
      * @param id
@@ -264,6 +272,17 @@ export class FolderTreeService
         });
     }
 
+    public getLoadedKeys() {
+        return this.state.folderTree?.loadedKeys || [];
+    }
+
+    public setLoadedKeys(loadedKeys: string[]) {
+        const { folderTree } = this.state;
+        this.setState({
+            folderTree: { ...folderTree, loadedKeys },
+        });
+    }
+
     private setCurrentFolderLocation(data: IFolderTreeNodeProps, id: UniqueId) {
         const children = data.children;
         const { tree } = this.getCurrentRootFolderInfo(id);
@@ -429,6 +448,12 @@ export class FolderTreeService
 
         tree.removeNode(id);
         if (index > -1) nextData[index] = tree.obj;
+        // Remove loadedKey while removing node
+        if (folderTree.loadedKeys?.includes(id.toString())) {
+            folderTree.loadedKeys = folderTree.loadedKeys.filter(
+                (key) => key !== id.toString()
+            );
+        }
         this.setState({
             folderTree,
         });

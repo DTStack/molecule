@@ -424,6 +424,28 @@ describe('Test StatusBarService', () => {
         });
     });
 
+    test('Should remove loadedCached when removed successfully', () => {
+        folderTreeService.add({
+            id: '1',
+            name: 'test0',
+            fileType: 'RootFolder',
+            location: 'test0',
+            children: [
+                {
+                    id: '2',
+                    name: 'test',
+                    fileType: 'Folder',
+                    children: [],
+                },
+            ],
+        });
+        folderTreeService.setLoadedKeys(['1', '2']);
+        expect(folderTreeService.getLoadedKeys()).toEqual(['1', '2']);
+
+        folderTreeService.remove('2');
+        expect(folderTreeService.getLoadedKeys()).toEqual(['1']);
+    });
+
     test('Should support to logger ERROR message when remove failed', () => {
         expectLoggerErrorToBeCalled(() => {
             folderTreeService.remove('1');

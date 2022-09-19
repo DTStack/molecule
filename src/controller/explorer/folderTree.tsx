@@ -207,6 +207,11 @@ export class FolderTreeController
     public onLoadData = (treeNode: IFolderTreeNodeProps) => {
         const count = this.count(FolderTreeEvent.onLoadData);
         if (count) {
+            // define current treeNode to be loaded
+            this.folderTreeService.setLoadedKeys([
+                ...this.folderTreeService.getLoadedKeys(),
+                treeNode.id.toString(),
+            ]);
             return new Promise<void>((resolve, reject) => {
                 const callback = (node: IFolderTreeNodeProps) => {
                     this.folderTreeService.update(node);

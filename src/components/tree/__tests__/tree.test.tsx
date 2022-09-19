@@ -450,8 +450,8 @@ describe('Test the Tree component', () => {
             },
         ];
         const mockFn = jest.fn().mockImplementation(() => sleep(1000));
-        const { getByText, container } = render(
-            <TreeView data={data} onLoadData={mockFn} />
+        const { getByText, container, rerender } = render(
+            <TreeView data={data} onLoadData={mockFn} loadedKeys={[]} />
         );
 
         act(() => {
@@ -465,6 +465,10 @@ describe('Test the Tree component', () => {
             await sleep(1000);
         });
         expect(container.querySelector('.codicon-spin')).toBeNull();
+
+        rerender(
+            <TreeView data={data} onLoadData={mockFn} loadedKeys={['1']} />
+        );
 
         act(() => {
             // unfold it and open it again

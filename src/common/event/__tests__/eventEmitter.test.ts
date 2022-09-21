@@ -1,4 +1,5 @@
 import { EventEmitter } from '../index';
+import type { ListenerContextProps } from '../index';
 
 describe('Test the EventEmitter class', () => {
     const event = new EventEmitter();
@@ -59,5 +60,42 @@ describe('Test the EventEmitter class', () => {
 
         evt.unsubscribe(eventName);
         expect(evt.count(eventName)).toBe(0);
+    });
+
+    test('Should stop delivering event', () => {
+        const evt = new EventEmitter();
+        const eventName = 'event1';
+
+        const mockFn = jest.fn();
+        evt.subscribe(eventName, mockFn);
+        evt.subscribe(eventName, function (this: ListenerContextProps) {
+            this.stopDelivery();
+            mockFn();
+        });
+        evt.subscribe(eventName, mockFn);
+
+        evt.emit(eventName);
+        expect(mockFn).toBeCalledTimes(2);
+    });
+
+    test('Should stop async function in event chain', () => {
+        const evt = new EventEmitter();
+        const eventName = 'event1';
+
+        const mockFn = jest.fn();
+        evt.subscribe(eventName, mockFn);
+        evt.subscribe(eventName, async function (this: ListenerContextProps) {
+            await new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    this.stopDelivery();
+                    resolve();
+                }, 0);
+            });
+            mockFn();
+        });
+        evt.subscribe(eventName, mockFn);
+
+        evt.emit(eventName);
+        expect(mockFn).toBeCalledTimes(2);
     });
 });

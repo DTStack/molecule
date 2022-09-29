@@ -90,25 +90,6 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         current,
     } = folderTree;
 
-    const handleAddRootFolder = () => {
-        createTreeNode?.('RootFolder');
-    };
-
-    const welcomePage = (
-        <div data-content={panel.id}>
-            {entry ? (
-                <>{entry}</>
-            ) : (
-                <div style={{ padding: '10px 5px' }}>
-                    you have not yet opened a folder
-                    <Button onClick={handleAddRootFolder}>Add Folder</Button>
-                </div>
-            )}
-        </div>
-    );
-
-    if (!data.length) return welcomePage;
-
     const inputRef = useRef<HTMLInputElement>(null);
     // tree context view
     const contextMenu = useRef<ReturnType<typeof useContextMenu>>();
@@ -221,6 +202,10 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         onDropTree?.(source, target);
     };
 
+    const handleAddRootFolder = () => {
+        createTreeNode?.('RootFolder');
+    };
+
     useEffect(() => {
         if (folderPanelContextMenu.length > 0) {
             contextMenu.current = initContextMenu();
@@ -229,6 +214,21 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
             contextMenu.current?.dispose();
         };
     }, [data.length]);
+
+    const welcomePage = (
+        <div data-content={panel.id}>
+            {entry ? (
+                <>{entry}</>
+            ) : (
+                <div style={{ padding: '10px 5px' }}>
+                    you have not yet opened a folder
+                    <Button onClick={handleAddRootFolder}>Add Folder</Button>
+                </div>
+            )}
+        </div>
+    );
+
+    if (!data.length) return welcomePage;
 
     return (
         <Scrollable noScrollX isShowShadow>

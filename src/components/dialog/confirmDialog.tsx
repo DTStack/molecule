@@ -29,14 +29,14 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         onOk,
         close,
         maskStyle,
-        okText = 'delete',
+        okText = 'Ok',
         okButtonProps,
-        cancelText = 'cancel',
+        cancelText = 'Cancel',
         cancelButtonProps,
-        bodyStyle,
-        closable = true,
-        className,
         okCancel,
+        bodyStyle,
+        closable = false,
+        className,
         width = 520,
         style = {},
         mask = true,
@@ -44,11 +44,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         transitionName = 'zoom',
         maskTransitionName = 'fade',
         type,
-        ...resetProps
+        ...restProps
     } = props;
 
     const confirmDescriperClassName = iconConfirmClassName(type);
-
     const classString = classNames(
         confirmClassName,
         confirmDescriperClassName,
@@ -73,16 +72,16 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                 [centeredConfirmClassName]: !!props.centered,
             })}
             onCancel={() => close({ triggerCancel: true })}
-            title=""
             transitionName={transitionName}
-            footer=""
             maskTransitionName={maskTransitionName}
             mask={mask}
             maskClosable={maskClosable}
             style={style}
             width={width}
             closable={closable}
-            {...resetProps}
+            {...restProps}
+            footer=""
+            title=""
         >
             <div className={containerConfirmClassName} style={bodyStyle}>
                 <div className={contentConfirmClassName}>

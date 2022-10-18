@@ -63,16 +63,17 @@
         background: var(--notificationCenterHeader-background);
         color: var(--notificationCenterHeader-foreground);
         font-size: 24px;
-        padding: 16px 0;
+        padding: 16px 0px;
     }
 
     &-footer {
         display: flex;
-        font-size: 13px;
+        flex-direction: row;
         justify-content: flex-end;
-        padding: 20px 10px 10px;
-
-        .mo-botton {
+        padding: 10px 16px;
+        border-radius: 0 0 2px 2px;
+        .mo-btn {
+            margin-left: 8px;
             width: fit-content;
         }
     }
@@ -98,10 +99,10 @@
         &--x {
             display: block;
             font-size: 16px;
-            height: 40px;
+            height: 54px;
             line-height: 40px;
             text-align: center;
-            width: 40px;
+            width: 54px;
         }
     }
 }
@@ -155,7 +156,12 @@
 
     &__btns {
         display: flex;
+        flex-direction: row;
         justify-content: flex-end;
-        padding: 20px 10px 10px;
+        padding: 10px 16px;
+        .mo-btn {
+            margin-left: 8px;
+            width: fit-content;
+        }
     }
 }

@@ -1,4 +1,4 @@
-export interface ListenerContextProps {
+export interface ListenerEventContext {
     stopDelivery: () => void;
 }
 

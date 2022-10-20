@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
 import { editor as MonacoEditor } from 'monaco-editor';
+import { StandaloneEditor } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
 import { cloneDeepWith, cloneDeep } from 'lodash';
 import pickBy from 'lodash/pickBy';
 import { Component } from 'mo/react';
@@ -194,7 +195,7 @@ export class PanelService extends Component<IPanel> implements IPanelService {
             if (
                 value &&
                 typeof value === 'object' &&
-                value.constructor.name === 'StandaloneEditor'
+                value instanceof StandaloneEditor
             ) {
                 return value;
             }

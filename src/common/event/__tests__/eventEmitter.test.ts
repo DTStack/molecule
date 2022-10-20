@@ -1,5 +1,5 @@
 import { EventEmitter } from '../index';
-import type { ListenerContextProps } from '../index';
+import type { ListenerEventContext } from '../index';
 
 describe('Test the EventEmitter class', () => {
     const event = new EventEmitter();
@@ -68,7 +68,7 @@ describe('Test the EventEmitter class', () => {
 
         const mockFn = jest.fn();
         evt.subscribe(eventName, mockFn);
-        evt.subscribe(eventName, function (this: ListenerContextProps) {
+        evt.subscribe(eventName, function (this: ListenerEventContext) {
             this.stopDelivery();
             mockFn();
         });
@@ -84,7 +84,7 @@ describe('Test the EventEmitter class', () => {
 
         const mockFn = jest.fn();
         evt.subscribe(eventName, mockFn);
-        evt.subscribe(eventName, async function (this: ListenerContextProps) {
+        evt.subscribe(eventName, async function (this: ListenerEventContext) {
             await new Promise<void>((resolve) => {
                 setTimeout(() => {
                     this.stopDelivery();

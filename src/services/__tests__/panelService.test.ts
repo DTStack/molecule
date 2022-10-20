@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { PanelService } from '../workbench/panelService';
+import { StandaloneEditor } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
 import { PanelEvent } from 'mo/model/workbench/panel';
 import { expectLoggerErrorToBeCalled } from '@test/utils';
 import { modules } from '../builtinService/const';
@@ -12,6 +13,15 @@ const resize = modules.builtInPanelToolboxResize();
 const restore = modules.builtInPanelToolboxReStore();
 
 const panelService = container.resolve(PanelService);
+
+jest.mock(
+    'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor',
+    () => {
+        return {
+            StandaloneEditor: class {},
+        };
+    }
+);
 
 describe('The PanelService test', () => {
     afterEach(() => {
@@ -128,20 +138,20 @@ describe('The PanelService test', () => {
     });
 
     test('Should NOT clone StandaloneEditor when get the panel', () => {
-        class StandaloneEditor {}
-        const standaloneEditor = new StandaloneEditor();
         panelService.setState({
             data: [
                 {
                     ...paneOutput,
-                    outputEditorInstance: standaloneEditor,
+                    outputEditorInstance: new StandaloneEditor(),
                 } as any,
             ],
         });
 
         const target = panelService.getPanel(paneOutput.id);
         expect(target).toEqual(expect.objectContaining(paneOutput));
-        expect((target as any).outputEditorInstance).toBe(standaloneEditor);
+        expect((target as any).outputEditorInstance).toBeInstanceOf(
+            StandaloneEditor
+        );
     });
 
     test('Should support to active a exist panel', () => {

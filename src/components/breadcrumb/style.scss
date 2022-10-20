@@ -2,12 +2,13 @@
 
 #{$breadcrumb} {
     display: flex;
+    overflow: auto;
+    white-space: nowrap;
 
     &__item {
         align-items: center;
         background-color: var(--breadcrumb-background);
         color: var(--breadcrumb-foreground);
-        color: inherit;
         cursor: pointer;
         display: flex;
         justify-content: left;

@@ -1,3 +1,7 @@
+export interface ListenerEventContext {
+    stopDelivery: () => void;
+}
+
 export class EventEmitter {
     private _events = new Map<string, Function[]>();
 
@@ -9,9 +13,19 @@ export class EventEmitter {
     public emit(name: string, ...args) {
         const events = this._events.get(name);
         if (events && events.length > 0) {
-            events.forEach((callEvent) => {
-                callEvent(...args);
-            });
+            let continued = true;
+            // call in descending order
+            for (let index = events.length - 1; index >= 0; index--) {
+                if (continued) {
+                    const evt = events[index];
+                    evt.call(
+                        {
+                            stopDelivery: () => (continued = false),
+                        },
+                        ...args
+                    );
+                }
+            }
         }
     }
 

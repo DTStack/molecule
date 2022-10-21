@@ -10,7 +10,7 @@ describe('Test ActionButton Component', () => {
     test('Match ActionButton Snapshot', () => {
         const TEST_FN = jest.fn();
         const component = renderer.create(
-            <ActionButton closeModal={TEST_FN}></ActionButton>
+            <ActionButton close={TEST_FN}></ActionButton>
         );
         const tree = component.toJSON();
 
@@ -24,7 +24,7 @@ describe('Test ActionButton Component', () => {
             <ActionButton
                 data-testid={TEST_ID}
                 actionFn={ACTION_FN}
-                closeModal={MODAL_FN}
+                close={MODAL_FN}
             />
         );
         const button = wrapper.getByTestId(TEST_ID);
@@ -41,7 +41,7 @@ describe('Test ActionButton Component', () => {
             <ActionButton
                 data-testid={TEST_ID}
                 actionFn={ACTION_FN}
-                closeModal={CLOSE_FN}
+                close={CLOSE_FN}
             />
         );
         const button = wrapper.getByTestId(TEST_ID);

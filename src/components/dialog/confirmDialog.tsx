@@ -55,7 +55,11 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
     );
 
     const cancelButton = okCancel && (
-        <ActionButton actionFn={onCancel} close={close} {...cancelButtonProps}>
+        <ActionButton
+            actionFn={onCancel}
+            close={close}
+            buttonProps={cancelButtonProps}
+        >
             {cancelText}
         </ActionButton>
     );
@@ -102,7 +106,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                                 <ActionButton
                                     actionFn={onOk}
                                     close={close}
-                                    {...okButtonProps}
+                                    buttonProps={okButtonProps}
                                 >
                                     {okText}
                                 </ActionButton>

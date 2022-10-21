@@ -44,7 +44,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         transitionName = 'zoom',
         maskTransitionName = 'fade',
         type,
-        ...restProps
+        visible,
     } = props;
 
     const confirmDescriperClassName = iconConfirmClassName(type);
@@ -55,11 +55,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
     );
 
     const cancelButton = okCancel && (
-        <ActionButton
-            actionFn={onCancel}
-            closeModal={close}
-            {...cancelButtonProps}
-        >
+        <ActionButton actionFn={onCancel} close={close} {...cancelButtonProps}>
             {cancelText}
         </ActionButton>
     );
@@ -79,9 +75,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
             style={style}
             width={width}
             closable={closable}
-            {...restProps}
             footer=""
             title=""
+            maskStyle={maskStyle}
+            visible={visible}
         >
             <div className={containerConfirmClassName} style={bodyStyle}>
                 <div className={contentConfirmClassName}>
@@ -104,7 +101,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                             {
                                 <ActionButton
                                     actionFn={onOk}
-                                    closeModal={close}
+                                    close={close}
                                     {...okButtonProps}
                                 >
                                     {okText}

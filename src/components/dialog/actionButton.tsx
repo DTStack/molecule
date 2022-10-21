@@ -2,20 +2,21 @@ import React, { useRef } from 'react';
 import { Button, IButtonProps } from 'mo/components/button';
 export interface ActionButtonProps extends IButtonProps {
     actionFn?: (...args: any[]) => any | PromiseLike<any>;
-    closeModal: Function;
+    close?: Function;
+    buttonProps?: IButtonProps;
 }
 
 const ActionButton: React.FC<ActionButtonProps> = (props) => {
     const clickedRef = useRef<boolean>(false);
+    const { close } = props;
 
     const handlePromiseOnOk = (returnValueOfOnOk?: PromiseLike<any>) => {
-        const { closeModal } = props;
         if (!returnValueOfOnOk || !returnValueOfOnOk.then) {
             return;
         }
         returnValueOfOnOk.then(
             (...args: any[]) => {
-                closeModal(...args);
+                close?.(...args);
             },
             (e: Error) => {
                 // eslint-disable-next-line no-console
@@ -26,32 +27,32 @@ const ActionButton: React.FC<ActionButtonProps> = (props) => {
     };
 
     const onClick = () => {
-        const { actionFn, closeModal } = props;
+        const { actionFn, close } = props;
         if (clickedRef.current) {
             return;
         }
         clickedRef.current = true;
         if (!actionFn) {
-            closeModal();
+            close?.();
             return;
         }
         let returnValueOfOnOk;
         if (actionFn!.length) {
-            returnValueOfOnOk = actionFn(closeModal);
+            returnValueOfOnOk = actionFn(close);
             clickedRef.current = false;
         } else {
             returnValueOfOnOk = actionFn();
             if (!returnValueOfOnOk) {
-                closeModal();
+                close?.();
                 return;
             }
         }
         handlePromiseOnOk(returnValueOfOnOk);
     };
 
-    const { children, ...resetProps } = props;
+    const { children, buttonProps } = props;
     return (
-        <Button onClick={onClick} {...resetProps}>
+        <Button onClick={onClick} {...buttonProps}>
             {children}
         </Button>
     );

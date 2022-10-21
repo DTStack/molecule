@@ -46,21 +46,16 @@ export default function confirm(config: IModalFuncProps) {
     function render({ okText, cancelText, ...props }: any) {
         renderUtils(
             <ConfirmDialog
-                {...props}
                 okText={okText}
                 cancelText={cancelText}
+                {...props}
             />,
             div
         );
     }
 
     function close(...args: any[]) {
-        currentConfig = {
-            ...currentConfig,
-            visible: false,
-            afterClose: () => destroy(...args),
-        };
-        render(currentConfig);
+        destroy(...args);
     }
 
     render(currentConfig);

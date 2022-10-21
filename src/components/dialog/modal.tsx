@@ -89,8 +89,8 @@ export const Modal: React.FC<IModalProps> = (props: IModalProps) => {
         centered,
         getContainer,
         closeIcon,
-        cancelText = 'cancel',
-        okText = 'ok',
+        cancelText = 'Cancel',
+        okText = 'Ok',
         ...restProps
     } = props;
 

@@ -24,14 +24,19 @@ stories.add('Basic Usage', () => {
 
     function showConfirm() {
         confirm({
-            title: 'Are you sure you want to permanently delete ?',
-            content: 'This action is irreversible!',
-            cancelButtonProps: { disabled: true },
+            title: 'Tweet us your feedback',
+            content: (
+                <div>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </div>
+            ),
             onOk() {
-                console.log('OK');
+                console.log('onOk');
             },
             onCancel() {
-                console.log('Cancel');
+                console.log('onCancel');
             },
         });
     }

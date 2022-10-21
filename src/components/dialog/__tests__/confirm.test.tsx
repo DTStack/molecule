@@ -68,9 +68,6 @@ describe('Test Confirm Component', () => {
             const icon = querySelector('.codicon-warning');
             expect(icon).not.toBeNull();
 
-            const title = querySelector('.mo-modal-title');
-            expect(title?.textContent).toBe(TEST_TITLE);
-
             const confirmTitle = querySelector(`.${textConfirmClassName}`);
             expect(confirmTitle?.textContent).toBe(TEST_TITLE);
 

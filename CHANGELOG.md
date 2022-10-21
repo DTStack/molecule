@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/DTStack/molecule/compare/v1.1.1...v1.2.0) (2022-10-21)
+
+### Features
+
+-   define loadedKey to be controlled ([#803](https://github.com/DTStack/molecule/issues/803)) ([219b937](https://github.com/DTStack/molecule/commit/219b937215994a17beff99f745c75aec15be35d5))
+-   support stop event emit ([#807](https://github.com/DTStack/molecule/issues/807)) ([f8451eb](https://github.com/DTStack/molecule/commit/f8451ebfd40bdc8ad1e235dee19d6a991d442b77))
+
+### Bug Fixes
+
+-   delcare the useEffect before return ([#808](https://github.com/DTStack/molecule/issues/808)) ([3b73285](https://github.com/DTStack/molecule/commit/3b73285bdcd37f4b425b007df0f554127c17d5cb))
+-   fix switch panels between problem and output ([32641b9](https://github.com/DTStack/molecule/commit/32641b9730586e408740d7ad5c150493fad17476))
+-   improve breadcrumb ([#815](https://github.com/DTStack/molecule/issues/815)) ([60a66ab](https://github.com/DTStack/molecule/commit/60a66abed67148127f0faf1189661d15b77e83ed))
+
 ### [1.1.1](https://github.com/DTStack/molecule/compare/v1.1.0...v1.1.1) (2022-08-31)
 
 ### Bug Fixes

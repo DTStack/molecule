@@ -63,15 +63,16 @@
         background: var(--notificationCenterHeader-background);
         color: var(--notificationCenterHeader-foreground);
         font-size: 24px;
-        padding: 16px 0px;
+        padding: 16px 0;
     }
 
     &-footer {
+        border-radius: 0 0 2px 2px;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
         padding: 10px 16px;
-        border-radius: 0 0 2px 2px;
+
         .mo-btn {
             margin-left: 8px;
             width: fit-content;
@@ -159,6 +160,7 @@
         flex-direction: row;
         justify-content: flex-end;
         padding: 10px 16px;
+
         .mo-btn {
             margin-left: 8px;
             width: fit-content;

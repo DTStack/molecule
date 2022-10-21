@@ -18,7 +18,7 @@ export default function confirm(config: IModalFuncProps) {
     const div = document.createElement('div');
     document.body.appendChild(div);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    let currentConfig = { ...config, close, visible: true } as any;
+    const currentConfig = { ...config, close, visible: true } as any;
 
     function destroy(...args: any[]) {
         const triggerCancel = args.some(

@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import { Button, IButtonProps } from 'mo/components/button';
-export interface ActionButtonProps extends IButtonProps {
+export interface ActionButtonProps {
     actionFn?: (...args: any[]) => any | PromiseLike<any>;
     close?: Function;
     buttonProps?: IButtonProps;
+    children?: React.ReactNode;
 }
 
 const ActionButton: React.FC<ActionButtonProps> = (props) => {

@@ -35,6 +35,10 @@ module.exports = {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
+            {
+                test: /monaco-editor\/.*\.js/,
+                loader: 'babel-loader',
+            },
         ],
     },
     plugins: [

@@ -127,6 +127,7 @@ describe('Test Workbench Component', () => {
             splitPanePos: layout.splitPanePos,
             horizontalSplitPanePos: layout.horizontalSplitPanePos,
             groupSplitPos: layout.groupSplitPos,
+            editorGroupDirection: layout.editorGroupDirection,
         };
     }
 

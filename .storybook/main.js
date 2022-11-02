@@ -14,4 +14,7 @@ module.exports = {
         postcss: false,
         babelModeV7: true,
     },
+    core: {
+        builder: 'webpack5',
+    },
 };

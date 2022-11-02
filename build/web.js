@@ -7,7 +7,6 @@ module.exports = function (env) {
     return merge(webpackConf, {
         devtool: 'inline-source-map',
         devServer: {
-            progress: false,
             hot: true,
             port: 8888,
         },

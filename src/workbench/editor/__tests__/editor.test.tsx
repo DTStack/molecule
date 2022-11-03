@@ -5,7 +5,7 @@ import Editor from '../editor';
 import EditorStatusBarView from '../statusBarView';
 import { defaultEditorClassName, groupClassName } from '../base';
 import { expectFnCalled } from '@test/utils';
-import { LayoutModel } from 'mo/model/workbench/layout';
+import { LayoutModel, MenuBarMode } from 'mo/model/workbench/layout';
 import '@testing-library/jest-dom';
 
 const mockItems = {
@@ -68,20 +68,35 @@ describe('The Editor Component', () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
+    test('Match the horizontal editor group', () => {
+        const groups = [current, Object.assign({}, current, { id: 2 })];
+        const { asFragment } = render(
+            <Editor
+                onClickActions={jest.fn()}
+                editor={{ current, groups }}
+                layout={
+                    new LayoutModel(
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        MenuBarMode.horizontal
+                    )
+                }
+            />
+        );
+        expect(asFragment()).toMatchSnapshot();
+    });
+
     test('Match the status snapshot', () => {
         const component = renderer.create(
             <EditorStatusBarView {...mockItems} />
         );
         expect(component.toJSON()).toMatchSnapshot();
-    });
-
-    test('Should support to set entry', () => {
-        const testJSX = <div data-testid={TEST_ID}></div>;
-        const { getByTestId } = render(
-            <Editor onClickActions={jest.fn()} editor={{ entry: testJSX }} />
-        );
-
-        expect(getByTestId(TEST_ID)).toBeInTheDocument();
     });
 
     test('Should support to set entry', () => {

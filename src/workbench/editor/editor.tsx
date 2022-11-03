@@ -32,7 +32,7 @@ export function Editor(
         entry = <Welcome />,
         editorOptions,
     } = editor || {};
-    const { groupSplitPos } = layout || {};
+    const { groupSplitPos, editorGroupDirection } = layout || {};
 
     const getEvents = (groupId: UniqueId) => {
         return {
@@ -61,7 +61,7 @@ export function Editor(
             return (
                 <SplitPane
                     sizes={groupSplitPos!}
-                    split="vertical"
+                    split={editorGroupDirection}
                     onChange={onPaneSizeChange!}
                 >
                     {groups.map((g: IEditorGroup, index: number) => (

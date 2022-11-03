@@ -1,5 +1,5 @@
 import { ID_APP } from 'mo/common/id';
-import { Position } from 'mo/model/workbench/layout';
+import { MenuBarMode, Position } from 'mo/model/workbench/layout';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { LayoutService } from '../workbench';
@@ -116,6 +116,21 @@ describe('The layout service', () => {
             const nextSize = ['auto', '300px'];
             layoutService.setHorizontalPaneSize(nextSize);
             expect(state.horizontalSplitPanePos).toEqual(nextSize);
+        });
+
+        test('Should support to change the direction of editor group', () => {
+            const state = layoutService.getState();
+            expect(state.editorGroupDirection).toBe(MenuBarMode.vertical);
+
+            layoutService.setEditorGroupDirection(MenuBarMode.horizontal);
+            expect(state.editorGroupDirection).toBe(MenuBarMode.horizontal);
+
+            layoutService.setEditorGroupDirection((prev) =>
+                prev === MenuBarMode.vertical
+                    ? MenuBarMode.horizontal
+                    : MenuBarMode.vertical
+            );
+            expect(state.editorGroupDirection).toBe(MenuBarMode.vertical);
         });
     });
 });

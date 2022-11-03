@@ -99,6 +99,105 @@ exports[`The Editor Component Match the editor group snapshot 1`] = `
 </DocumentFragment>
 `;
 
+exports[`The Editor Component Match the horizontal editor group 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-editor"
+  >
+    <div
+      class="mo-split mo-split--horizontal"
+    >
+      <div
+        class="mo-split__pane"
+        style="height: 0px; top: 0px;"
+      >
+        <div
+          class="mo-editor__group"
+        >
+          <div
+            class="mo-editor__group-header"
+          >
+            <div
+              class="mo-editor__group-tabs"
+            >
+              <div
+                data-testid="test-id"
+                type="card"
+              />
+            </div>
+            <div
+              class="mo-editor__group-actions"
+            />
+          </div>
+          <div
+            class="mo-editor__group-breadcrumb"
+          >
+            <div
+              class="mo-breadcrumb"
+              role="breadcrumb"
+            />
+          </div>
+          <div
+            class="mo-editor__group-container"
+          >
+            <div
+              class="mo-monaco-editor"
+              style="position: relative; min-height: 400px; height: 100%; width: 100%;"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="mo-split__sash mo-split__sash--horizontal"
+        role="Resizer"
+        style="height: 4px; top: -2px;"
+      />
+      <div
+        class="mo-split__pane"
+        style="height: 0px; top: 0px;"
+      >
+        <div
+          class="mo-editor__group"
+        >
+          <div
+            class="mo-editor__group-header"
+          >
+            <div
+              class="mo-editor__group-tabs"
+            >
+              <div
+                activetab=""
+                data-testid="test-id"
+                type="card"
+              />
+            </div>
+            <div
+              class="mo-editor__group-actions"
+            />
+          </div>
+          <div
+            class="mo-editor__group-breadcrumb"
+          >
+            <div
+              class="mo-breadcrumb"
+              role="breadcrumb"
+            />
+          </div>
+          <div
+            class="mo-editor__group-container"
+          >
+            <div
+              class="mo-monaco-editor"
+              style="position: relative; min-height: 400px; height: 100%; width: 100%;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`The Editor Component Match the status snapshot 1`] = `
 <span>
   Ln 0, Col 0

@@ -70,6 +70,12 @@ export interface ILayoutService extends Component<ILayout> {
      */
     getMenuBarMode(): keyof typeof MenuBarMode;
     /**
+     * Set the direction of editor group,default is `vertical`
+     */
+    setEditorGroupDirection(
+        direction: MenuBarMode | ((prev: MenuBarMode) => MenuBarMode)
+    ): void;
+    /**
      * Reset all layout data as default value
      */
     reset(): void;
@@ -176,6 +182,22 @@ export class LayoutService
     public getMenuBarMode(): keyof typeof MenuBarMode {
         const { menuBar } = this.state;
         return menuBar.mode;
+    }
+
+    public setEditorGroupDirection(
+        direction: MenuBarMode | ((prev: MenuBarMode) => MenuBarMode)
+    ) {
+        if (typeof direction === 'function') {
+            this.setState({
+                editorGroupDirection: direction(
+                    this.state.editorGroupDirection
+                ),
+            });
+        } else {
+            this.setState({
+                editorGroupDirection: direction,
+            });
+        }
     }
 
     public reset() {

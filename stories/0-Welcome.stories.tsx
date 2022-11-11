@@ -5,7 +5,7 @@ import { Welcome } from '@storybook/react/demo';
 export default {
     title: 'Welcome',
     component: Welcome,
-};
+} as any;
 
 export const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;
 

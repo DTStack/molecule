@@ -7,5 +7,6 @@
         "source.fixAll.markdownlint": false,
         "source.fixAll.stylelint": true
     },
-    "markdownlint.ignore": ["**/*.md"]
+    "markdownlint.ignore": ["**/*.md"],
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

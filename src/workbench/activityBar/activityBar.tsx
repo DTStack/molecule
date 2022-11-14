@@ -6,7 +6,7 @@ import { ID_ACTIVITY_BAR } from 'mo/common/id';
 import { IActivityBar, IActivityBarItem } from 'mo/model/workbench/activityBar';
 
 import { ActivityBarItem } from './activityBarItem';
-import { Scrollable } from 'mo/components/scrollable';
+import { Scrollbar } from 'mo/components';
 import { IActivityBarController } from 'mo/controller/activityBar';
 
 import {
@@ -125,9 +125,9 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
             id={ID_ACTIVITY_BAR}
         >
             <div className={containerClassName}>
-                <Scrollable className={normalItemsClassName}>
+                <Scrollbar className={normalItemsClassName}>
                     <ul>{normalBarItems.map(renderItems)}</ul>
-                </Scrollable>
+                </Scrollbar>
                 <ul className={globalItemsClassName}>
                     {globalBarItems.map(renderItems)}
                 </ul>

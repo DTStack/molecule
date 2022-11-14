@@ -6,7 +6,7 @@ import { Select, Option } from 'mo/components/select';
 import { IColorTheme } from 'mo/model/colorTheme';
 import { FileTypes, Float, IEditorTab, TreeNodeModel } from 'mo/model';
 import { ILocale } from 'mo/i18n/localization';
-import { Scrollable } from 'mo/components';
+import { Scrollbar } from 'mo/components';
 import { randomId } from 'mo/common/utils';
 import LocaleNotification from 'mo/workbench/notification/notificationPane/localeNotification';
 
@@ -466,7 +466,7 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
         };
 
         return (
-            <Scrollable isShowShadow>
+            <Scrollbar isShowShadow>
                 <div style={{ padding: 20 }}>
                     <div style={{ marginBottom: 50 }}>
                         <h2>Simple examples:</h2>
@@ -574,7 +574,7 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                         </Button>
                     </div>
                 </div>
-            </Scrollable>
+            </Scrollbar>
         );
     }
 }

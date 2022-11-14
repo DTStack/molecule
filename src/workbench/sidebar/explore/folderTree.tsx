@@ -13,7 +13,7 @@ import {
     folderTreeInputClassName,
 } from './base';
 import { classNames } from 'mo/common/className';
-import { Scrollable, useContextViewEle } from 'mo/components';
+import { Scrollbar, useContextViewEle } from 'mo/components';
 import { ICollapseItem } from 'mo/components/collapse';
 
 export interface IFolderTreeProps extends IFolderTreeController, IFolderTree {
@@ -230,7 +230,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     if (!data.length) return welcomePage;
 
     return (
-        <Scrollable noScrollX isShowShadow>
+        <Scrollbar isShowShadow>
             <div data-content={panel.id} style={{ height: '100%' }}>
                 <Tree
                     // root folder do not render
@@ -253,7 +253,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
                     {...restProps}
                 />
             </div>
-        </Scrollable>
+        </Scrollbar>
     );
 };
 export default memo(FolderTree);

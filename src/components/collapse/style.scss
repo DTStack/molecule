@@ -23,8 +23,6 @@ $split_pane_visible: #{$split}__pane__item--visible;
     }
 
     &__item {
-        display: flex;
-        flex-direction: column;
         height: 100%;
         line-height: 22px;
         overflow: hidden;
@@ -75,6 +73,7 @@ $split_pane_visible: #{$split}__pane__item--visible;
 
     &__content {
         flex: 1;
+        height: calc(100% - 25px);
         outline: 1px solid transparent;
         outline-offset: -1px;
 

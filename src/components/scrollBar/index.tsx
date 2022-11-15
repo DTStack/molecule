@@ -52,6 +52,15 @@ export interface IScrollRef {
     scrollTo: (offset: number) => void;
 }
 
+function isVertical(
+    direction: DirectionKind
+): direction is DirectionKind.vertical {
+    return direction === DirectionKind.vertical;
+}
+
+/**
+ * Concat width or height with string or just get width and height
+ */
 function getSizeLiteral(direction: DirectionKind): 'width' | 'height';
 function getSizeLiteral<T extends string>(
     direction: DirectionKind,
@@ -61,13 +70,34 @@ function getSizeLiteral<T extends string>(
     direction: DirectionKind,
     concatStr?: T
 ) {
-    const sizeLiteral =
-        direction === DirectionKind.horizontal ? 'width' : 'height';
+    const sizeLiteral = !isVertical(direction) ? 'width' : 'height';
     if (!concatStr) return sizeLiteral;
 
     const upperCase = `${sizeLiteral
         .substring(0, 1)
         .toUpperCase()}${sizeLiteral.substring(1)}` as 'Width' | 'Height';
+
+    return `${concatStr}${upperCase}`;
+}
+
+/**
+ * Concat top or left with string or just get top and left
+ */
+function getOffsetLiteral(direction: DirectionKind): 'top' | 'left';
+function getOffsetLiteral<T extends string>(
+    direction: DirectionKind,
+    concatStr: T
+): `${T}Top` | `${T}Left`;
+function getOffsetLiteral<T extends string>(
+    direction: DirectionKind,
+    concatStr?: T
+) {
+    const offsetLiteral = isVertical(direction) ? 'top' : 'left';
+    if (!concatStr) return offsetLiteral;
+
+    const upperCase = `${offsetLiteral
+        .substring(0, 1)
+        .toUpperCase()}${offsetLiteral.substring(1)}` as 'Top' | 'Left';
 
     return `${concatStr}${upperCase}`;
 }
@@ -102,6 +132,7 @@ const ScrollBar = forwardRef<
 
     const dragPosition = useRef({
         y: 0,
+        startOffset: 0,
     });
 
     /**
@@ -116,6 +147,13 @@ const ScrollBar = forwardRef<
      */
     const getWrapperClientSize = (): number => {
         return wrapper.current?.[getSizeLiteral(direction, 'client')] || 0;
+    };
+
+    /**
+     * Get the scrollTop or scrollLeft of wrapper area
+     */
+    const getWrapperScrollOffset = () => {
+        return wrapper.current?.[getOffsetLiteral(direction, 'scroll')] || 0;
     };
 
     /**
@@ -136,6 +174,13 @@ const ScrollBar = forwardRef<
             thumb.current?.getBoundingClientRect()[getSizeLiteral(direction)] ||
             0
         );
+    };
+
+    /**
+     * Get the top or left of thumb
+     */
+    const getThumbOffset = () => {
+        return thumb.current?.[getOffsetLiteral(direction, 'offset')] || 0;
     };
 
     useImperativeHandle(ref, () => ({
@@ -164,12 +209,7 @@ const ScrollBar = forwardRef<
                 // prevent contentHeight to be 0
                 if (Number.isNaN(rate)) rate = 1;
 
-                const scrollOffset =
-                    entry.target[
-                        direction === DirectionKind.vertical
-                            ? 'scrollTop'
-                            : 'scrollLeft'
-                    ];
+                const scrollOffset = getWrapperScrollOffset();
 
                 const thumbOffset =
                     (scrollOffset / contentSize) * getTrackSize();
@@ -209,12 +249,7 @@ const ScrollBar = forwardRef<
             if (!isSupportScroll()) return;
             e.preventDefault();
 
-            const scrollOffset =
-                this[
-                    direction === DirectionKind.vertical
-                        ? 'scrollTop'
-                        : 'scrollLeft'
-                ];
+            const scrollOffset = getWrapperScrollOffset();
 
             if (!timeout) {
                 onScrollStart?.({ scrollTop: scrollOffset }, e);
@@ -228,21 +263,15 @@ const ScrollBar = forwardRef<
                 setDragging(false);
             }, 150);
 
-            const factor =
-                e[direction === DirectionKind.vertical ? 'deltaY' : 'deltaX'] /
-                10;
+            const factor = e[isVertical(direction) ? 'deltaY' : 'deltaX'] / 10;
             const threshold = 5 * factor;
 
             const thumbOffset =
                 (scrollOffset /
                     this[
-                        direction === DirectionKind.vertical
-                            ? 'scrollHeight'
-                            : 'scrollWidth'
+                        isVertical(direction) ? 'scrollHeight' : 'scrollWidth'
                     ]) *
-                track.current!.getBoundingClientRect()[
-                    direction === DirectionKind.vertical ? 'height' : 'width'
-                ];
+                getTrackSize();
 
             thumbScrollTo(thumbOffset);
             contentScrollTo(scrollOffset + threshold);
@@ -264,8 +293,7 @@ const ScrollBar = forwardRef<
         const trackSize = getTrackSize();
         const thumbSize = getThumbSize();
         requestAnimationFrame(() => {
-            const offsetLiteral =
-                direction === DirectionKind.vertical ? 'top' : 'left';
+            const offsetLiteral = getOffsetLiteral(direction);
             if (offset <= 0) {
                 thumb.current!.style[offsetLiteral] = '0px';
             } else if (offset >= trackSize - thumbSize) {
@@ -279,9 +307,8 @@ const ScrollBar = forwardRef<
     };
 
     const contentScrollTo = (offset: number) => {
-        requestIdleCallback(() => {
-            const offsetLiteral =
-                direction === DirectionKind.vertical ? 'top' : 'left';
+        requestAnimationFrame(() => {
+            const offsetLiteral = getOffsetLiteral(direction);
             if (offset <= 0) {
                 wrapper.current?.scrollTo({ [offsetLiteral]: 0 });
                 setOffsetZero(true);
@@ -310,21 +337,15 @@ const ScrollBar = forwardRef<
         const contentSize = getContentScrollSize();
 
         const thumbOffset =
-            e[direction === DirectionKind.vertical ? 'clientY' : 'clientX'] -
-            (direction === DirectionKind.vertical ? y : x);
+            e[isVertical(direction) ? 'clientY' : 'clientX'] -
+            (isVertical(direction) ? y : x);
 
         const thumbCenterOffset = thumbOffset - halfThumbSize;
         const rate =
-            thumbCenterOffset /
-            (direction === DirectionKind.vertical ? height : width);
+            thumbCenterOffset / (isVertical(direction) ? height : width);
         onScrollStart?.(
             {
-                scrollTop:
-                    wrapper.current?.[
-                        direction === DirectionKind.vertical
-                            ? 'scrollTop'
-                            : 'scrollLeft'
-                    ] || 0,
+                scrollTop: getWrapperScrollOffset(),
             },
             e
         );
@@ -334,38 +355,23 @@ const ScrollBar = forwardRef<
 
         onScroll?.(
             {
-                scrollTop:
-                    wrapper.current?.[
-                        direction === DirectionKind.vertical
-                            ? 'scrollTop'
-                            : 'scrollLeft'
-                    ] || 0,
+                scrollTop: getWrapperScrollOffset(),
             },
             e
         );
         onScrollEnd?.(
             {
-                scrollTop:
-                    wrapper.current?.[
-                        direction === DirectionKind.vertical
-                            ? 'scrollTop'
-                            : 'scrollLeft'
-                    ] || 0,
+                scrollTop: getWrapperScrollOffset(),
             },
             e
         );
     };
 
     const handleMouseDrag = useCallback((e: MouseEvent) => {
-        const distanceChanged =
-            e[direction === DirectionKind.vertical ? 'clientY' : 'clientX'] -
-            dragPosition.current.y;
-        const currentThumbOffset =
-            thumb.current![
-                direction === DirectionKind.vertical
-                    ? 'offsetTop'
-                    : 'offsetLeft'
-            ];
+        const clientOffset = e[isVertical(direction) ? 'clientY' : 'clientX'];
+        const distanceChanged = clientOffset - dragPosition.current.y;
+        const currentThumbOffset = dragPosition.current.startOffset;
+
         const trackSize = getTrackSize();
         const nextThumbOffset = currentThumbOffset + distanceChanged;
 
@@ -374,17 +380,10 @@ const ScrollBar = forwardRef<
 
         contentScrollTo(contentHeight * rate);
         thumbScrollTo(nextThumbOffset);
-        dragPosition.current.y =
-            e[direction === DirectionKind.vertical ? 'clientY' : 'clientX'];
 
         onScroll?.(
             {
-                scrollTop:
-                    wrapper.current?.[
-                        direction === DirectionKind.vertical
-                            ? 'scrollTop'
-                            : 'scrollLeft'
-                    ] || 0,
+                scrollTop: getWrapperScrollOffset(),
             },
             e
         );
@@ -398,17 +397,13 @@ const ScrollBar = forwardRef<
         setDragging(true);
         onScrollStart?.(
             {
-                scrollTop:
-                    wrapper.current?.[
-                        direction === DirectionKind.vertical
-                            ? 'scrollTop'
-                            : 'scrollLeft'
-                    ] || 0,
+                scrollTop: getWrapperScrollOffset(),
             },
             e
         );
         dragPosition.current = {
-            y: e[direction === DirectionKind.vertical ? 'clientY' : 'clientX'],
+            y: e[isVertical(direction) ? 'clientY' : 'clientX'],
+            startOffset: getThumbOffset(),
         };
 
         document.body.style.userSelect = 'none';
@@ -421,12 +416,7 @@ const ScrollBar = forwardRef<
                 setDragging(false);
                 onScrollEnd?.(
                     {
-                        scrollTop:
-                            wrapper.current?.[
-                                direction === DirectionKind.vertical
-                                    ? 'scrollTop'
-                                    : 'scrollLeft'
-                            ] || 0,
+                        scrollTop: getWrapperScrollOffset(),
                     },
                     e
                 );
@@ -447,9 +437,8 @@ const ScrollBar = forwardRef<
 
         // if content's height less than wrapper's height
         // it's no need to scroll
-        if (contentSize <= wrapperSize) {
-            return true;
-        }
+        if (contentSize <= wrapperSize) return true;
+
         return !isDragging && !isMouseOver;
     }, [isDragging, isMouseOver]);
 
@@ -472,9 +461,9 @@ const ScrollBar = forwardRef<
             <div
                 className={classNames(
                     scrollBarContainerClassName,
-                    direction === DirectionKind.horizontal
-                        ? scrollBarContainerHorizontalClassName
-                        : scrollBarContainerVerticalClassName
+                    isVertical(direction)
+                        ? scrollBarContainerVerticalClassName
+                        : scrollBarContainerHorizontalClassName
                 )}
                 ref={content}
             >
@@ -483,9 +472,9 @@ const ScrollBar = forwardRef<
             <div
                 className={classNames(
                     scrollBarTrackClassName,
-                    direction === DirectionKind.horizontal
-                        ? scrollBarTrackHorizontalClassName
-                        : scrollBarTrackVerticalClassName,
+                    isVertical(direction)
+                        ? scrollBarTrackVerticalClassName
+                        : scrollBarTrackHorizontalClassName,
                     inactiveHidden && isHidden && scrollBarTrackHiddenClassName
                 )}
                 ref={track}

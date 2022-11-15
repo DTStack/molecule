@@ -23,7 +23,7 @@
         background-color: transparent;
         margin: auto;
         position: sticky;
-        transition: opacity 0.3s;
+        transition: opacity 0.1s linear;
         z-index: 99;
 
         &--horizontal {
@@ -42,6 +42,7 @@
 
         &--hidden {
             opacity: 0;
+            transition: opacity 0.8s linear;
         }
     }
 

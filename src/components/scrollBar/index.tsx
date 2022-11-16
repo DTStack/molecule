@@ -102,7 +102,7 @@ function getOffsetLiteral<T extends string>(
     return `${concatStr}${upperCase}`;
 }
 
-const ScrollBar = forwardRef<
+export const ScrollBar = forwardRef<
     IScrollRef,
     React.PropsWithChildren<IScrollbarProps>
 >(function (
@@ -494,5 +494,3 @@ const ScrollBar = forwardRef<
         </div>
     );
 });
-
-export default ScrollBar;

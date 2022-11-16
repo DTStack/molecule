@@ -47,7 +47,7 @@ export type { IMenuProps, IMenuItemProps, ISubMenuProps } from './menu';
 export { MonacoEditor } from './monaco';
 export type { IMonacoEditorProps } from './monaco';
 
-export { default as Scrollbar, DirectionKind } from './scrollBar';
+export { ScrollBar as Scrollbar, DirectionKind } from './scrollBar';
 export type { IScrollEvent, IScrollbarProps, IScrollRef } from './scrollBar';
 
 export { Search } from './search';

@@ -25,7 +25,6 @@ const mockData: ITreeNodeItemProps[] = [
     },
 ];
 
-// mock Scrollable component
 jest.mock('lodash', () => {
     const originalModule = jest.requireActual('lodash');
     return {

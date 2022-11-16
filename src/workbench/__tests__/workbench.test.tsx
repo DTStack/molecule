@@ -76,7 +76,7 @@ describe('Test Workbench Component', () => {
         });
 
         global.ResizeObserver = jest.fn().mockImplementation((fn) => {
-            fn();
+            fn([]);
             observerFnCollection.push(fn);
             return {
                 observe: jest.fn(),
@@ -359,7 +359,7 @@ describe('Test Workbench Component', () => {
                 width: 1000,
                 height: 1000,
             });
-            observerFnCollection.forEach((f) => f());
+            observerFnCollection.forEach((f) => f([]));
             await sleep(150);
         });
 

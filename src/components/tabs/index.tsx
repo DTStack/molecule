@@ -14,7 +14,7 @@ import {
 
 import { Tab, ITabProps, tabItemActiveClassName } from './tab';
 import type { UniqueId } from 'mo/common/types';
-import ScrollBar, { DirectionKind, IScrollRef } from '../scrollBar';
+import { ScrollBar, DirectionKind, IScrollRef } from '../scrollBar';
 
 export type TabsType = 'line' | 'card';
 /**

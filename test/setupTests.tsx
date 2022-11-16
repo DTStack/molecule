@@ -17,13 +17,17 @@ jest.mock('mo/monaco/monacoService', () => {
     };
 });
 
-// mock Scrollable component
-jest.mock('mo/components/scrollable', () => {
-    const originalModule = jest.requireActual('mo/components/scrollable');
+// mock scrollBar component
+jest.mock('mo/components/scrollBar', () => {
+    const originalModule = jest.requireActual('mo/components/scrollBar');
     return {
         ...originalModule,
-        Scrollable: ({ children }) => {
-            return <>{children}</>;
+        ScrollBar: ({ children, className }) => {
+            return className ? (
+                <div className={className}>{children}</div>
+            ) : (
+                <>{children}</>
+            );
         },
     };
 });

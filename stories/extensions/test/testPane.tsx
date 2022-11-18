@@ -84,6 +84,16 @@ export default class TestPane extends React.Component {
             });
         };
 
+        const addAGlobalBar = function () {
+            const id = shortRandomId();
+            molecule.activityBar.add({
+                id: id + '',
+                name: 'ActivityBarItem-' + id,
+                type: 'global',
+                icon: 'account',
+            });
+        };
+
         const showHideActivityBar = function () {
             molecule.layout.toggleActivityBarVisibility();
         };
@@ -493,6 +503,9 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                     <div style={{ marginBottom: 50 }}>
                         <h2>ActivityBar:</h2>
                         <Button onClick={addABar}>Add ActivityBar Item</Button>
+                        <Button onClick={addAGlobalBar}>
+                            Add Global ActivityBar Item
+                        </Button>
                         <Button onClick={showHideActivityBar}>
                             Show/Hide ActivityBar
                         </Button>

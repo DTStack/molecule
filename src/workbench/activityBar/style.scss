@@ -4,6 +4,7 @@
     background-color: var(--activityBar-background);
     border-color: var(--activityBar-border);
     color: var(--activityBar-foreground);
+    height: 100%;
     width: 48px;
 
     &__container {
@@ -21,7 +22,6 @@
     }
 
     &__normal {
-        height: calc(100vh - 57px);
         margin-bottom: auto;
         overflow: hidden;
     }

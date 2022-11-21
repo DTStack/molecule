@@ -82,7 +82,7 @@ export function Collapse({
     const adjustedSize = useRef<number[]>([]);
     const first = useRef(true);
 
-    const isUndefined = (key): boolean => {
+    const isUndefined = (key: UniqueId): boolean => {
         return key === undefined;
     };
 
@@ -125,7 +125,7 @@ export function Collapse({
         return null;
     };
 
-    const handleChangeCallback = (key: UniqueId, index) => {
+    const handleChangeCallback = (key: UniqueId, index: number) => {
         const currentKeys = [...activePanelKeys];
         if (!isUndefined(currentKeys[index])) {
             delete currentKeys[index];

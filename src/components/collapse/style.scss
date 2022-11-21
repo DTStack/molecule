@@ -15,14 +15,10 @@ $split_pane_visible: #{$split}__pane__item--visible;
     }
 
     &__pane {
-        &--collapsing {
-            transition: top ease-in-out 0.2s, height ease-in-out 0.2s;
-        }
+        transition: top ease-out 0.15s, height ease-out 0.15s;
 
-        &:not(#{$split_pane_visible} ~ #{$split_pane_visible}) {
-            #{$collapse}__header {
-                border-top: 0;
-            }
+        &:first-child #{$collapse}__header {
+            border-top-color: transparent;
         }
     }
 
@@ -43,14 +39,14 @@ $split_pane_visible: #{$split}__pane__item--visible;
 
     &__header {
         align-items: center;
-        border-top: 1px solid var(--sideBarSectionHeader-border);
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid var(--sideBarSectionHeader-border, transparent);
         box-sizing: border-box;
         cursor: pointer;
         display: flex;
         font-size: 11px;
         font-weight: bold;
-        height: 25px;
-        outline: none;
+        height: 26px;
         outline: 1px solid transparent;
         outline-offset: -1px;
         padding: 1px 2px;

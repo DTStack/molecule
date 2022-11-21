@@ -142,29 +142,24 @@ export class EditorController extends Controller implements IEditorController {
     };
 
     public onCloseAll = (groupId: UniqueId) => {
-        this.editorService.closeAll(groupId);
         this.emit(EditorEvent.OnCloseAll, groupId);
     };
 
     public onCloseTab = (tabId?: UniqueId, groupId?: UniqueId) => {
         if (tabId && groupId) {
-            this.editorService.closeTab(tabId, groupId);
             this.emit(EditorEvent.OnCloseTab, tabId, groupId);
         }
     };
 
     public onCloseToRight = (tabItem: IEditorTab, groupId: UniqueId) => {
-        this.editorService.closeToRight(tabItem, groupId);
         this.emit(EditorEvent.OnCloseToRight, tabItem, groupId);
     };
 
     public onCloseToLeft = (tabItem: IEditorTab, groupId: UniqueId) => {
-        this.editorService.closeToLeft(tabItem, groupId);
         this.emit(EditorEvent.OnCloseToLeft, tabItem, groupId);
     };
 
     public onCloseOther = (tabItem: IEditorTab, groupId: UniqueId) => {
-        this.editorService.closeOther(tabItem, groupId);
         this.emit(EditorEvent.OnCloseOther, tabItem, groupId);
     };
 

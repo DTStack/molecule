@@ -5,6 +5,8 @@ import { FileTypes, IExtension, TreeNodeModel } from 'mo/model';
 
 import TestPane from './testPane';
 import { randomId } from 'mo/common/utils';
+import { ListenerEventContext } from 'mo/common/event';
+import { UniqueId } from 'mo/common/types';
 
 export const ExtendsTestPane: IExtension = {
     id: 'ExtendsTestPane',
@@ -179,5 +181,25 @@ export const ExtendsTestPane: IExtension = {
         molecule.explorer.onCollapseAllFolders(() => {
             molecule.folderTree.setExpandKeys([]);
         });
+
+        function closeTabHandler(
+            this: ListenerEventContext,
+            tabId: UniqueId,
+            groupId?: UniqueId
+        ) {
+            this.stopDelivery();
+            molecule.component.Modal.confirm({
+                title: '确认关闭 tab 吗',
+                content: '关闭后数据会丢失',
+                onOk() {
+                    if (groupId !== undefined && tabId !== undefined) {
+                        molecule.editor.closeTab(tabId, groupId);
+                    }
+                },
+                onCancel() {},
+            });
+        }
+        molecule.editorTree.onClose(closeTabHandler);
+        molecule.editor.onCloseTab(closeTabHandler);
     },
 };

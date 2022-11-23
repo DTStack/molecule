@@ -40,6 +40,9 @@ enum ContextViewEvent {
 
 const Emitter = new EventEmitter();
 
+/**
+ * TODO: It's not a hook, don't begin with use
+ */
 export function useContextView(props: IContextViewProps = {}): IContextView {
     const { shadowOutline = true } = props;
     const claName = classNames(contextViewClass, 'fade-in');

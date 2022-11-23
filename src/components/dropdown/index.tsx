@@ -20,6 +20,8 @@ export type DropDownRef = {
 
 export const defaultDropDownClassName = prefixClaName('drop-down');
 
+const contextView = useContextView();
+
 export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
     (props: IDropDownProps, ref) => {
         const {
@@ -30,9 +32,6 @@ export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
             trigger = 'click',
             ...restProps
         } = props;
-        const contextView = useContextView({
-            render: () => overlay,
-        });
 
         useImperativeHandle(ref, () => ({
             contextView,
@@ -49,17 +48,18 @@ export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
         const events = {
             [triggerEvent(trigger)]: function (e: React.MouseEvent) {
                 const target = e.currentTarget;
-                const rect = target.getBoundingClientRect();
-                let position = getPositionByPlacement(placement, rect);
-                contextView.show(position);
+                const targetRect = target.getBoundingClientRect();
+                let position = getPositionByPlacement(placement, targetRect);
+                contextView.show(position, () => overlay);
                 // If placement is left or top,
                 // need re calculate the position by menu size
                 if (placement === 'left' || placement === 'top') {
-                    const overlay = contextView.view!.getBoundingClientRect();
-                    overlay.x = rect.x;
-                    overlay.y = rect.y;
-                    position = getPositionByPlacement(placement, overlay);
-                    contextView.show(position);
+                    const contextRect =
+                        contextView.view!.getBoundingClientRect();
+                    contextRect.x = targetRect.x;
+                    contextRect.y = targetRect.y;
+                    position = getPositionByPlacement(placement, contextRect);
+                    contextView.show(position, () => overlay);
                 }
             },
         };

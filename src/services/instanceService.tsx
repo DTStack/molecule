@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import { ILocale } from 'mo/i18n';
 import { container } from 'tsyringe';
-import * as controllers from 'mo/controller';
 import type { Controller } from 'mo/react';
 import { defaultExtensions } from 'mo/extensions';
 import { GlobalEvent } from 'mo/common/event';
@@ -9,6 +8,24 @@ import { IConfigProps } from 'mo/provider/create';
 import { IExtension } from 'mo/model';
 import { STORE_KEY } from 'mo/i18n/localeService';
 import molecule from 'mo';
+import {
+    ActivityBarController,
+    EditorController,
+    EditorTreeController,
+    ExplorerController,
+    ExtensionController,
+    FolderTreeController,
+    LayoutController,
+    MenuBarController,
+    NotificationController,
+    OutlineController,
+    PanelController,
+    ProblemsController,
+    SearchController,
+    SettingsController,
+    SidebarController,
+    StatusBarController,
+} from 'mo/controller';
 
 interface IInstanceServiceProps {
     getConfig: () => IConfigProps;
@@ -69,6 +86,29 @@ export default class InstanceService
                 this._config.extensions
             );
             this.initialLocaleService(languages);
+
+            const controllers = [
+                ActivityBarController,
+                EditorController,
+                /**
+                 * Explorer should called before EditorTreeController,
+                 * @refer https://github.com/DTStack/molecule/issues/829
+                 */
+                ExplorerController,
+                EditorTreeController,
+                ExtensionController,
+                FolderTreeController,
+                LayoutController,
+                MenuBarController,
+                NotificationController,
+                OutlineController,
+                PanelController,
+                ProblemsController,
+                SearchController,
+                SettingsController,
+                SidebarController,
+                StatusBarController,
+            ];
 
             // resolve all controllers, and call `initView` to inject initial values into services
             Object.keys(controllers).forEach((key) => {

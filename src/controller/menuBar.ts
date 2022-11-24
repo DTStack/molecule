@@ -67,6 +67,7 @@ export class MenuBarController
             ACTION_QUICK_SELECT_ALL,
             ACTION_QUICK_COPY_LINE_UP,
             MENU_VIEW_ACTIVITYBAR,
+            MENU_VIEW_AUXILIARY,
             MENU_VIEW_MENUBAR,
             MENU_VIEW_STATUSBAR,
             MENU_QUICK_COMMAND,
@@ -94,6 +95,7 @@ export class MenuBarController
                 [MENU_VIEW_STATUSBAR, () => this.updateStatusBar()],
                 [MENU_QUICK_COMMAND, () => this.gotoQuickCommand()],
                 [ID_SIDE_BAR, () => this.updateSideBar()],
+                [MENU_VIEW_AUXILIARY, () => this.updateAuxiliaryBar()],
                 [MENU_VIEW_PANEL, () => this.updatePanel()],
                 [
                     MENUBAR_MODE_HORIZONTAL,
@@ -262,6 +264,19 @@ export class MenuBarController
         this.monacoService.commandService.executeCommand(
             CommandQuickSideBarViewAction.ID
         );
+    };
+
+    public updateAuxiliaryBar = () => {
+        const nextHidden = this.layoutService.setAuxiliaryBar(
+            (hidden) => !hidden
+        );
+
+        const { MENU_VIEW_AUXILIARY } = this.builtinService.getConstants();
+        if (MENU_VIEW_AUXILIARY) {
+            this.menuBarService.update(MENU_VIEW_AUXILIARY, {
+                icon: nextHidden ? '' : 'check',
+            });
+        }
     };
 
     private updatePanel = () => {

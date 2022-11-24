@@ -76,6 +76,14 @@ export interface ILayoutService extends Component<ILayout> {
         direction: MenuBarMode | ((prev: MenuBarMode) => MenuBarMode)
     ): void;
     /**
+     * Set the visibility of auxiliary bar
+     *
+     * Returns the next state of hidden
+     */
+    setAuxiliaryBar(
+        hidden: boolean | ((preState: boolean) => boolean)
+    ): boolean;
+    /**
      * Reset all layout data as default value
      */
     reset(): void;
@@ -198,6 +206,23 @@ export class LayoutService
                 editorGroupDirection: direction,
             });
         }
+    }
+
+    public setAuxiliaryBar(hidden: boolean | ((preState: boolean) => boolean)) {
+        if (typeof hidden === 'boolean') {
+            this.setState({
+                auxiliaryBar: { hidden },
+            });
+
+            return hidden;
+        }
+
+        const nextHidden = hidden(this.state.auxiliaryBar.hidden);
+        this.setState({
+            auxiliaryBar: { hidden: nextHidden },
+        });
+
+        return nextHidden;
     }
 
     public reset() {

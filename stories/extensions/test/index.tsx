@@ -201,5 +201,33 @@ export const ExtendsTestPane: IExtension = {
         }
         molecule.editorTree.onClose(closeTabHandler);
         molecule.editor.onCloseTab(closeTabHandler);
+
+        molecule.auxiliaryBar.onTabClick(() => {
+            const tab = molecule.auxiliaryBar.getCurrentTab();
+            const TabContent = () => {
+                return (
+                    <div
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <div>
+                            自定义面板
+                            <pre>{JSON.stringify(tab, null, 2)}</pre>
+                        </div>
+                    </div>
+                );
+            };
+
+            if (tab) {
+                molecule.auxiliaryBar.setChildren(<TabContent />);
+            }
+
+            molecule.layout.setAuxiliaryBar(!tab);
+        });
     },
 };

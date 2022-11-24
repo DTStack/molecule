@@ -1,4 +1,5 @@
 export * from './activityBarService';
+export * from './auxiliaryBarService';
 export * from './menuBarService';
 export * from './sidebarService';
 export * from './editorService';

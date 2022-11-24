@@ -47,6 +47,7 @@ $problems: prefix('problems');
 $output: prefix('output');
 $folderTree: prefix('folderTree');
 $editorTree: prefix('editorTree');
+$auxiliaryBar: prefix('auxiliaryBar');
 
 // The Naming of BEM Element
 @function bem-ele($block, $element) {

@@ -390,6 +390,20 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             );
         };
 
+        const toggleAuxiliaryBar = () => {
+            molecule.layout.setAuxiliaryBar((hidden) => !hidden);
+        };
+
+        const setAuxiliaryToTabs = () => {
+            molecule.auxiliaryBar.setMode('tabs');
+            molecule.auxiliaryBar.addAuxiliaryBar([
+                {
+                    key: ~~(Math.random() * 10) + new Date().getTime(),
+                    title: '任务属性',
+                },
+            ]);
+        };
+
         const addExplorer = () => {
             const id = ~~(Math.random() * 10) + new Date().getTime();
             const panels = [
@@ -481,6 +495,15 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                         <Button onClick={addABar}>Add ActivityBar Item</Button>
                         <Button onClick={showHideActivityBar}>
                             Show/Hide ActivityBar
+                        </Button>
+                    </div>
+                    <div style={{ marginBottom: 50 }}>
+                        <h2>Auxiliary Bar:</h2>
+                        <Button onClick={toggleAuxiliaryBar}>
+                            Show/Hide Auxiliary Bar
+                        </Button>
+                        <Button onClick={setAuxiliaryToTabs}>
+                            Set Auxiliary Bar mode to 「Tabs」
                         </Button>
                     </div>
                     <div style={{ marginBottom: 50 }}>

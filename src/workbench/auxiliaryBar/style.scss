@@ -1,0 +1,35 @@
+@import 'mo/style/common';
+
+$tabs: #{$auxiliaryBar}__tabs;
+$container: #{$auxiliaryBar}__container;
+
+#{$container} {
+    height: 100%;
+    user-select: auto;
+    width: 100%;
+}
+
+#{$tabs} {
+    background: var(--editorGroupHeader-tabsBackground);
+    margin: 0;
+    padding: 0;
+
+    &__tab {
+        border-bottom: 1px solid var(--sideBarSectionHeader-border);
+        color: var(--tab-inactiveForeground);
+        cursor: pointer;
+        letter-spacing: 4px;
+        list-style: none;
+        padding: 2px 4px;
+        writing-mode: vertical-rl;
+
+        &:hover {
+            background: var(--tab-hoverBackground);
+        }
+
+        &--active {
+            background: var(--tab-activeBackground);
+            color: var(--tab-activeForeground);
+        }
+    }
+}

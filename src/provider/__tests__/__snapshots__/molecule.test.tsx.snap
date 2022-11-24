@@ -418,9 +418,24 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
                         />
                         <span
                           class="mo-menu__label"
-                          title="Show Side bar"
+                          title="Show Side Bar"
                         >
-                          Show Side bar
+                          Show Side Bar
+                        </span>
+                      </div>
+                    </li>
+                    <li
+                      class="mo-menu__item"
+                      id="workbench.action.showAuxiliary"
+                    >
+                      <div
+                        class="mo-menu__content"
+                      >
+                        <span
+                          class="mo-menu__label"
+                          title="Show Auxiliary Bar"
+                        >
+                          Show Auxiliary Bar
                         </span>
                       </div>
                     </li>
@@ -671,7 +686,7 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
         >
           <div
             class="mo-split__pane"
-            style="width: 300px; left: 0px;"
+            style="width: 0px; left: 0px;"
           >
             <div
               class="mo-sidebar"
@@ -981,11 +996,11 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
           <div
             class="mo-split__sash mo-split__sash--vertical"
             role="Resizer"
-            style="width: 4px; left: 298px;"
+            style="width: 4px; left: -2px;"
           />
           <div
             class="mo-split__pane"
-            style="width: 0px; left: 300px;"
+            style="width: 0px; left: 0px;"
           >
             <div
               class="mo-split mo-split--horizontal"
@@ -1126,6 +1141,19 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
                 </div>
               </div>
             </div>
+          </div>
+          <div
+            class="mo-split__sash mo-split__sash--disabled mo-split__sash--vertical"
+            role="Resizer"
+            style="width: 4px; left: -2px;"
+          />
+          <div
+            class="mo-split__pane"
+            style="width: 0px; left: 0px;"
+          >
+            <div
+              class="mo-auxiliaryBar__container"
+            />
           </div>
         </div>
       </div>

@@ -5,7 +5,9 @@ import '@testing-library/jest-dom';
 import { WorkbenchView, Workbench } from '../workbench';
 import {
     ActivityBarModel,
+    AuxiliaryModel,
     IActivityBar,
+    IAuxiliaryBar,
     IMenuBar,
     IPanel,
     ISidebar,
@@ -92,6 +94,7 @@ describe('Test Workbench Component', () => {
     function workbenchModel(): IWorkbench & ILayout {
         const panel = new PanelModel();
         const activityBar = new ActivityBarModel();
+        const auxiliaryBar = new AuxiliaryModel();
         const menuBar = new MenuBarModel();
         const statusBar = new StatusBarModel();
         const sidebar = new SidebarModel();
@@ -103,6 +106,10 @@ describe('Test Workbench Component', () => {
         );
         const activityBarState = Object.assign<IActivityBar, ViewVisibility>(
             activityBar,
+            layout.activityBar
+        );
+        const auxiliaryBarState = Object.assign<IAuxiliaryBar, ViewVisibility>(
+            auxiliaryBar,
             layout.activityBar
         );
         const menuBarState = Object.assign<IMenuBar, IMenuBarViewState>(
@@ -128,6 +135,7 @@ describe('Test Workbench Component', () => {
             horizontalSplitPanePos: layout.horizontalSplitPanePos,
             groupSplitPos: layout.groupSplitPos,
             editorGroupDirection: layout.editorGroupDirection,
+            auxiliaryBar: auxiliaryBarState,
         };
     }
 
@@ -161,7 +169,7 @@ describe('Test Workbench Component', () => {
 
         expect(fn).toBeCalled();
         // Compare the splitPanePos arguments
-        expect(fn.mock.calls[0][0].length).toBe(2);
+        expect(fn.mock.calls[0][0].length).toBe(3);
     });
 
     test('Listen to The WorkbenchView onHorizontalPaneSizeChange event', async () => {
@@ -278,10 +286,18 @@ describe('Test Workbench Component', () => {
             `.${paneItemClassName}`
         );
 
-        expect(panes.length).toBe(4);
+        // sidebar + editor + auxiliary bar = 1000
+        // IDE content + panel = 1000
+        expect(panes.length).toBe(5);
+        // sidebar
         expect(panes[0].style.width).toBe('300px');
-        expect(panes[1].style.width).toBe('700px');
+        // editor
+        expect(panes[1].style.width).toBe('400px');
+        // IDE content
         expect(panes[2].style.height).toBe('850px');
+        // panel
         expect(panes[3].style.height).toBe('150px');
+        // auxiliary bar
+        expect(panes[4].style.width).toBe('300px');
     });
 });

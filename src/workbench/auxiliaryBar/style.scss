@@ -5,7 +5,7 @@ $container: #{$auxiliaryBar}__container;
 
 #{$container} {
     height: 100%;
-    user-select: auto;
+    user-select: text;
     width: 100%;
 }
 

@@ -317,6 +317,17 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
         />
       </div>
     </div>
+    <div
+      class="mo-context-view fade-in"
+      style="visibility: hidden;"
+    >
+      <div
+        class="mo-context-view__block"
+      />
+      <div
+        class="mo-context-view__content mo-context-view--shadow"
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;

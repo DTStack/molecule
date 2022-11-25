@@ -16,7 +16,7 @@ import {
     itemClassName,
     normalItemsClassName,
 } from './base';
-import { useContextView } from 'mo/components';
+import { useContextViewEle } from 'mo/components';
 import { UniqueId } from 'mo/common/types';
 
 export function ActivityBar(props: IActivityBar & IActivityBarController) {
@@ -63,9 +63,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
         <Menu role="menu" onClick={onClickMenuItem} data={contextMenu} />
     );
 
-    const contextView = useContextView({
-        render: renderContextMenu,
-    });
+    const contextView = useContextViewEle({ render: renderContextMenu });
 
     const onClickMenuItem = useCallback(
         (e: React.MouseEvent, item: IMenuItemProps | undefined) => {
@@ -78,6 +76,7 @@ export function ActivityBar(props: IActivityBar & IActivityBarController) {
     const handleRightClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (!contextView) return;
         const doms = document.elementsFromPoint(e.pageX, e.pageY);
         const itemDom = doms.find((dom) =>
             dom.classList.contains(itemClassName)

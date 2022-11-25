@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
-import { useContextView } from '../contextView';
+import { useContextViewEle } from '../contextView';
 import {
     triggerEvent,
     TriggerEvent,
@@ -20,8 +20,6 @@ export type DropDownRef = {
 
 export const defaultDropDownClassName = prefixClaName('drop-down');
 
-const contextView = useContextView();
-
 export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
     (props: IDropDownProps, ref) => {
         const {
@@ -32,6 +30,9 @@ export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
             trigger = 'click',
             ...restProps
         } = props;
+        const contextView = useContextViewEle({
+            render: () => overlay,
+        });
 
         useImperativeHandle(ref, () => ({
             contextView,
@@ -47,19 +48,19 @@ export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
         );
         const events = {
             [triggerEvent(trigger)]: function (e: React.MouseEvent) {
+                if (!contextView) return;
                 const target = e.currentTarget;
-                const targetRect = target.getBoundingClientRect();
-                let position = getPositionByPlacement(placement, targetRect);
-                contextView.show(position, () => overlay);
+                const rect = target.getBoundingClientRect();
+                let position = getPositionByPlacement(placement, rect);
+                contextView.show(position);
                 // If placement is left or top,
                 // need re calculate the position by menu size
                 if (placement === 'left' || placement === 'top') {
-                    const contextRect =
-                        contextView.view!.getBoundingClientRect();
-                    contextRect.x = targetRect.x;
-                    contextRect.y = targetRect.y;
-                    position = getPositionByPlacement(placement, contextRect);
-                    contextView.show(position, () => overlay);
+                    const overlay = contextView.view!.getBoundingClientRect();
+                    overlay.x = rect.x;
+                    overlay.y = rect.y;
+                    position = getPositionByPlacement(placement, overlay);
+                    contextView.show(position);
                 }
             },
         };

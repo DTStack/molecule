@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { render as renderUtils, unmout } from 'mo/react/render';
 import { classNames } from 'mo/common/className';
 import {
@@ -39,6 +39,21 @@ enum ContextViewEvent {
 }
 
 const Emitter = new EventEmitter();
+
+/**
+ * It's a hook used in functional component
+ */
+export function useContextViewEle(props?: IContextViewProps) {
+    const [contextView, setContextView] = useState<IContextView>();
+
+    useEffect(() => {
+        // The useContextView can't be called at initial of useState
+        // Because this function has rendered an element
+        setContextView(useContextView(props));
+    }, []);
+
+    return contextView;
+}
 
 /**
  * TODO: It's not a hook, don't begin with use

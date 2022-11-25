@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The Auxiliary Bar Tab Component Should match snapshot 1`] = `<DocumentFragment />`;
+
+exports[`The Auxiliary Bar Tab Component Should match snapshot in tabs mode 1`] = `
+<DocumentFragment>
+  <ul
+    class="mo-auxiliaryBar__tabs"
+  />
+</DocumentFragment>
+`;

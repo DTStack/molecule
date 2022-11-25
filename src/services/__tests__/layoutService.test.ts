@@ -132,5 +132,16 @@ describe('The layout service', () => {
             );
             expect(state.editorGroupDirection).toBe(MenuBarMode.vertical);
         });
+
+        test('Should support to set the visibility of auxiliary bar', () => {
+            // hidden in default
+            expect(layoutService.getState().auxiliaryBar.hidden).toBe(true);
+
+            layoutService.setAuxiliaryBar(false);
+            expect(layoutService.getState().auxiliaryBar.hidden).toBe(false);
+
+            layoutService.setAuxiliaryBar((pre) => !pre);
+            expect(layoutService.getState().auxiliaryBar.hidden).toBe(true);
+        });
     });
 });

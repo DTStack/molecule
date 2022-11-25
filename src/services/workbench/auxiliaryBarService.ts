@@ -44,7 +44,7 @@ export interface IAuxiliaryBarService extends Component<IAuxiliaryBar> {
 }
 
 @singleton()
-export class AuxiliaryService
+export class AuxiliaryBarService
     extends Component<IAuxiliaryBar>
     implements IAuxiliaryBarService
 {

@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { Controller } from 'mo/react/controller';
 import { container, singleton } from 'tsyringe';
-import { AuxiliaryService, IAuxiliaryBarService } from 'mo/services';
-import type { UniqueId } from 'mo/common/types';
+import { AuxiliaryBarService, IAuxiliaryBarService } from 'mo/services';
 import { AuxiliaryEventKind } from 'mo/model';
+import type { UniqueId } from 'mo/common/types';
 
 export interface IAuxiliaryController {
     onClick?: (key: UniqueId) => void;
@@ -17,7 +17,7 @@ export class AuxiliaryController
     private readonly auxiliaryService: IAuxiliaryBarService;
     constructor() {
         super();
-        this.auxiliaryService = container.resolve(AuxiliaryService);
+        this.auxiliaryService = container.resolve(AuxiliaryBarService);
     }
 
     public initView = () => {};

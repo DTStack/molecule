@@ -46,7 +46,7 @@ import {
     ExtensionService,
     IExtensionService,
     IAuxiliaryBarService,
-    AuxiliaryService,
+    AuxiliaryBarService,
 } from 'mo/services';
 
 import { ILocaleService, LocaleService } from 'mo/i18n';
@@ -69,7 +69,7 @@ export const activityBar: IActivityBarService =
     container.resolve<IActivityBarService>(ActivityBarService);
 
 export const auxiliaryBar =
-    container.resolve<IAuxiliaryBarService>(AuxiliaryService);
+    container.resolve<IAuxiliaryBarService>(AuxiliaryBarService);
 
 export const explorer: IExplorerService =
     container.resolve<IExplorerService>(ExplorerService);

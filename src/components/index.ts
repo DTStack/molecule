@@ -22,7 +22,7 @@ export type { ICollapseProps } from './collapse';
 export { useContextMenu } from './contextMenu';
 export type { IContextMenuProps } from './contextMenu';
 
-export { useContextView } from './contextView';
+export { useContextView, useContextViewEle } from './contextView';
 export type { IContextViewProps, IContextView } from './contextView';
 
 export { Modal } from './dialog';

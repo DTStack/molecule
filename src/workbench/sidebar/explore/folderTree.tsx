@@ -6,7 +6,6 @@ import Tree from 'mo/components/tree';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { Button } from 'mo/components/button';
 import type { IFolderTreeController } from 'mo/controller/explorer/folderTree';
-import { useContextView } from 'mo/components/contextView';
 import { useContextMenu } from 'mo/components/contextMenu';
 import {
     folderTreeClassName,
@@ -14,7 +13,7 @@ import {
     folderTreeInputClassName,
 } from './base';
 import { classNames } from 'mo/common/className';
-import { Scrollable } from 'mo/components';
+import { Scrollable, useContextViewEle } from 'mo/components';
 import { ICollapseItem } from 'mo/components/collapse';
 
 export interface IFolderTreeProps extends IFolderTreeController, IFolderTree {
@@ -95,7 +94,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
     const contextMenu = useRef<ReturnType<typeof useContextMenu>>();
 
     // panel context view
-    const contextView = useContextView();
+    const contextView = useContextViewEle();
 
     // to detect current tree whether is editable
     const hasEditable = detectHasEditableStatus(data);
@@ -124,7 +123,7 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         data: IFolderTreeNodeProps
     ) => {
         onClickContextMenu?.(item, data);
-        contextView.hide();
+        contextView?.hide();
     };
 
     const handleRightClick = (event, data) => {

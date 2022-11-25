@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { classNames, getBEMModifier, prefixClaName } from 'mo/common/className';
-import { useContextView } from '../contextView';
+import { useContextViewEle } from '../contextView';
 import {
     triggerEvent,
     TriggerEvent,
@@ -30,7 +30,7 @@ export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
             trigger = 'click',
             ...restProps
         } = props;
-        const contextView = useContextView({
+        const contextView = useContextViewEle({
             render: () => overlay,
         });
 
@@ -48,6 +48,7 @@ export const DropDown = forwardRef<DropDownRef, IDropDownProps>(
         );
         const events = {
             [triggerEvent(trigger)]: function (e: React.MouseEvent) {
+                if (!contextView) return;
                 const target = e.currentTarget;
                 const rect = target.getBoundingClientRect();
                 let position = getPositionByPlacement(placement, rect);

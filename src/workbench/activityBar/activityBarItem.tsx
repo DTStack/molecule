@@ -11,7 +11,7 @@ import {
     itemCheckedClassName,
     itemDisabledClassName,
 } from './base';
-import { Icon, useContextView } from 'mo/components';
+import { Icon, useContextViewEle } from 'mo/components';
 import { KeybindingHelper } from 'mo/services/keybinding';
 
 export function ActivityBarItem(
@@ -53,9 +53,7 @@ export function ActivityBarItem(
         />
     );
 
-    const contextView = useContextView({
-        render: renderContextMenu,
-    });
+    const contextView = useContextViewEle({ render: renderContextMenu });
 
     const onClickMenuItem = (
         e: React.MouseEvent,
@@ -70,7 +68,7 @@ export function ActivityBarItem(
             onClick(props.id, props);
         }
         if (contextMenu.length > 0) {
-            contextView.show({ x: event.pageX, y: event.pageY });
+            contextView?.show({ x: event.pageX, y: event.pageY });
         }
     };
 

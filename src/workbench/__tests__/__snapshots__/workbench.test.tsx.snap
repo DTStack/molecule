@@ -345,7 +345,7 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
 </DocumentFragment>
 `;
 
-exports[`Test Workbench Component Should match snapshots 1`] = `
+exports[`Test Workbench Component Should Match Snapshots 1`] = `
 <DocumentFragment>
   <div
     class="mo"
@@ -679,7 +679,7 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
 </DocumentFragment>
 `;
 
-exports[`Test Workbench Component Should match snapshots 2`] = `
+exports[`Test Workbench Component Should Match Snapshots 2`] = `
 <DocumentFragment>
   <div
     class="mo"
@@ -1013,7 +1013,7 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
 </DocumentFragment>
 `;
 
-exports[`Test Workbench Component Should match snapshots 3`] = `
+exports[`Test Workbench Component Should Match Snapshots 3`] = `
 <DocumentFragment>
   <div
     class="mo"
@@ -1347,7 +1347,7 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
 </DocumentFragment>
 `;
 
-exports[`Test Workbench Component Should match snapshots 4`] = `
+exports[`Test Workbench Component Should Match Snapshots 4`] = `
 <DocumentFragment>
   <div
     class="mo"

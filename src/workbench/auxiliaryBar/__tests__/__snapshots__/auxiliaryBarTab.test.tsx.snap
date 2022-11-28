@@ -9,3 +9,31 @@ exports[`The Auxiliary Bar Tab Component Should match snapshot in tabs mode 1`] 
   />
 </DocumentFragment>
 `;
+
+exports[`The Auxiliary Bar Tab Component Should match snapshot with active data 1`] = `
+<DocumentFragment>
+  <ul
+    class="mo-auxiliaryBar__tabs"
+  >
+    <li
+      class="mo-auxiliaryBar__tabs__tab mo-auxiliaryBar__tabs__tab--active"
+    >
+      1
+    </li>
+  </ul>
+</DocumentFragment>
+`;
+
+exports[`The Auxiliary Bar Tab Component Should match snapshot with data 1`] = `
+<DocumentFragment>
+  <ul
+    class="mo-auxiliaryBar__tabs"
+  >
+    <li
+      class="mo-auxiliaryBar__tabs__tab"
+    >
+      1
+    </li>
+  </ul>
+</DocumentFragment>
+`;

@@ -152,8 +152,6 @@ describe('Test Workbench Component', () => {
             height: 1000,
         });
 
-        console.log('workbenchModel():', workbenchModel());
-
         expect(
             render(<WorkbenchView {...workbenchModel()} />).asFragment()
         ).toMatchSnapshot();

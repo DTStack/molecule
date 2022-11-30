@@ -10,6 +10,7 @@ import { STORE_KEY } from 'mo/i18n/localeService';
 import molecule from 'mo';
 import {
     ActivityBarController,
+    AuxiliaryController,
     EditorController,
     EditorTreeController,
     ExplorerController,
@@ -89,6 +90,7 @@ export default class InstanceService
 
             const controllers = [
                 ActivityBarController,
+                AuxiliaryController,
                 EditorController,
                 /**
                  * Explorer should called before EditorTreeController,

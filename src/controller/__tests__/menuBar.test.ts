@@ -140,6 +140,19 @@ describe('The menuBar controller', () => {
         expect(mockExecute.mock.calls[1][1]).toEqual({ icon: 'check' });
         mockExecute.mockClear();
 
+        // update auxiliary bar
+        mockItem.id = constants.MENU_VIEW_AUXILIARY;
+        menuBarController.onClick(mockEvent, mockItem);
+        expect(mockExecute).toBeCalled();
+        expect(mockExecute.mock.calls[0][0]).toBe(
+            constants.MENU_VIEW_AUXILIARY
+        );
+        expect(mockExecute.mock.calls[0][1]).toEqual({ icon: 'check' });
+
+        menuBarController.onClick(mockEvent, mockItem);
+        expect(mockExecute.mock.calls[1][1]).toEqual({ icon: '' });
+        mockExecute.mockClear();
+
         // update menu bar
         mockItem.id = constants.MENU_VIEW_MENUBAR;
         menuBarController.onClick(mockEvent, mockItem);

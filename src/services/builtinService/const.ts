@@ -69,6 +69,7 @@ export const constants = {
     MENU_FILE_OPEN: 'openFile',
     MENU_QUICK_COMMAND: 'editor.action.quickCommand',
     MENU_VIEW_MENUBAR: 'workbench.action.showMenuBar',
+    MENU_VIEW_AUXILIARY: 'workbench.action.showAuxiliary',
     MENU_VIEW_ACTIVITYBAR: 'workbench.action.showActivityBar',
     MENU_VIEW_STATUSBAR: 'workbench.action.showStatusBar',
     MENU_VIEW_PANEL: 'workbench.action.showPanel',
@@ -603,6 +604,13 @@ export const modules = {
                                 name: localize(
                                     'menu.showSideBar',
                                     'Show Side Bar'
+                                ),
+                            },
+                            {
+                                id: constants.MENU_VIEW_AUXILIARY,
+                                name: localize(
+                                    'menu.showAuxiliaryBar',
+                                    'Show Auxiliary Bar'
                                 ),
                             },
                             {

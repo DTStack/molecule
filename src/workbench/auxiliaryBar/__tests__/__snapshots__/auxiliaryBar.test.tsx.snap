@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The Auxiliary Bar Component Should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mo-auxiliaryBar__container"
+  />
+</DocumentFragment>
+`;

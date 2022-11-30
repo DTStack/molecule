@@ -5,7 +5,9 @@ import '@testing-library/jest-dom';
 import { WorkbenchView, Workbench } from '../workbench';
 import {
     ActivityBarModel,
+    AuxiliaryModel,
     IActivityBar,
+    IAuxiliaryBar,
     IMenuBar,
     IPanel,
     ISidebar,
@@ -92,6 +94,7 @@ describe('Test Workbench Component', () => {
     function workbenchModel(): IWorkbench & ILayout {
         const panel = new PanelModel();
         const activityBar = new ActivityBarModel();
+        const auxiliaryBar = new AuxiliaryModel();
         const menuBar = new MenuBarModel();
         const statusBar = new StatusBarModel();
         const sidebar = new SidebarModel();
@@ -103,6 +106,10 @@ describe('Test Workbench Component', () => {
         );
         const activityBarState = Object.assign<IActivityBar, ViewVisibility>(
             activityBar,
+            layout.activityBar
+        );
+        const auxiliaryBarState = Object.assign<IAuxiliaryBar, ViewVisibility>(
+            auxiliaryBar,
             layout.activityBar
         );
         const menuBarState = Object.assign<IMenuBar, IMenuBarViewState>(
@@ -128,6 +135,7 @@ describe('Test Workbench Component', () => {
             horizontalSplitPanePos: layout.horizontalSplitPanePos,
             groupSplitPos: layout.groupSplitPos,
             editorGroupDirection: layout.editorGroupDirection,
+            auxiliaryBar: auxiliaryBarState,
         };
     }
 
@@ -135,6 +143,46 @@ describe('Test Workbench Component', () => {
         const component = render(<WorkbenchView {...workbenchModel()} />);
         const tree = component.asFragment();
         expect(tree).toMatchSnapshot();
+    });
+
+    test('Should Match Snapshots', () => {
+        // @ts-ignore
+        HTMLElement.prototype.getBoundingClientRect = () => ({
+            width: 1000,
+            height: 1000,
+        });
+
+        expect(
+            render(<WorkbenchView {...workbenchModel()} />).asFragment()
+        ).toMatchSnapshot();
+
+        expect(
+            render(
+                <WorkbenchView
+                    {...workbenchModel()}
+                    sidebar={{ ...workbenchModel().sidebar, hidden: true }}
+                />
+            ).asFragment()
+        ).toMatchSnapshot();
+
+        expect(
+            render(
+                <WorkbenchView
+                    {...workbenchModel()}
+                    auxiliaryBar={{ hidden: true }}
+                />
+            ).asFragment()
+        ).toMatchSnapshot();
+
+        expect(
+            render(
+                <WorkbenchView
+                    {...workbenchModel()}
+                    sidebar={{ ...workbenchModel().sidebar, hidden: true }}
+                    auxiliaryBar={{ hidden: false }}
+                />
+            ).asFragment()
+        ).toMatchSnapshot();
     });
 
     test('Workbench should render all basic parts', () => {
@@ -149,19 +197,60 @@ describe('Test Workbench Component', () => {
     });
 
     test('Listen to The WorkbenchView onPaneSizeChange event', async () => {
+        // @ts-ignore
+        HTMLElement.prototype.getBoundingClientRect = () => ({
+            width: 1000,
+            height: 1000,
+        });
+
         const fn = jest.fn();
-        render(<WorkbenchView {...workbenchModel()} onPaneSizeChange={fn} />);
+        const { rerender } = render(
+            <WorkbenchView {...workbenchModel()} onPaneSizeChange={fn} />
+        );
 
         const sashs = selectAll<HTMLDivElement>('div[role="Resizer"]');
         const wrapper = select<HTMLDivElement>(`.${splitClassName}`);
 
+        // 1. Both auxiliary and sidebar are visible
         fireEvent.mouseDown(sashs[0], { screenX: 0, screenY: 0 });
         fireEvent.mouseMove(wrapper!, { screenX: 10, screenY: 10 });
         fireEvent.mouseUp(wrapper!);
 
         expect(fn).toBeCalled();
         // Compare the splitPanePos arguments
-        expect(fn.mock.calls[0][0].length).toBe(2);
+        expect(fn.mock.calls[0][0]).toEqual([310, 390, 300]);
+
+        // 2. hidden the sidebar
+        rerender(
+            <WorkbenchView
+                {...workbenchModel()}
+                sidebar={{ ...workbenchModel().sidebar, hidden: true }}
+                onPaneSizeChange={fn}
+            />
+        );
+        fireEvent.mouseDown(sashs[sashs.length - 1], {
+            screenX: 0,
+            screenY: 0,
+        });
+        fireEvent.mouseMove(wrapper!, { screenX: 10, screenY: 10 });
+        fireEvent.mouseUp(wrapper!);
+        // Compare the splitPanePos arguments
+        expect(fn.mock.calls[1][0]).toEqual([300, 410, 290]);
+
+        // 3. hidden the sidebar and auxiliary
+        rerender(
+            <WorkbenchView
+                {...workbenchModel()}
+                sidebar={{ ...workbenchModel().sidebar, hidden: true }}
+                auxiliaryBar={{ hidden: true }}
+                onPaneSizeChange={fn}
+            />
+        );
+        fireEvent.mouseDown(sashs[0], { screenX: 0, screenY: 0 });
+        fireEvent.mouseMove(wrapper!, { screenX: 10, screenY: 10 });
+        fireEvent.mouseUp(wrapper!);
+        // Compare the splitPanePos arguments
+        expect(fn.mock.calls[2][0]).toEqual([300, 400, 300]);
     });
 
     test('Listen to The WorkbenchView onHorizontalPaneSizeChange event', async () => {
@@ -278,10 +367,18 @@ describe('Test Workbench Component', () => {
             `.${paneItemClassName}`
         );
 
-        expect(panes.length).toBe(4);
+        // sidebar + editor + auxiliary bar = 1000
+        // IDE content + panel = 1000
+        expect(panes.length).toBe(5);
+        // sidebar
         expect(panes[0].style.width).toBe('300px');
-        expect(panes[1].style.width).toBe('700px');
+        // editor
+        expect(panes[1].style.width).toBe('400px');
+        // IDE content
         expect(panes[2].style.height).toBe('850px');
+        // panel
         expect(panes[3].style.height).toBe('150px');
+        // auxiliary bar
+        expect(panes[4].style.width).toBe('300px');
     });
 });

@@ -29,6 +29,7 @@ import { IWorkbench } from 'mo/model';
 import SplitPane from 'mo/components/split/SplitPane';
 import { Pane } from 'mo/components/split';
 import { Display } from 'mo/components';
+import { AuxiliaryBar, AuxiliaryBarTab } from './auxiliaryBar';
 
 const mainBenchClassName = prefixClaName('mainBench');
 const workbenchClassName = prefixClaName('workbench');
@@ -53,6 +54,7 @@ const layoutService = container.resolve(LayoutService);
 export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
     const {
         activityBar,
+        auxiliaryBar,
         menuBar,
         panel,
         sidebar,
@@ -71,6 +73,39 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
             return [0, '100%'];
         }
         return horizontalSplitPanePos;
+    };
+
+    const getContentSize = () => {
+        if (!sidebar.hidden && !auxiliaryBar.hidden) return splitPanePos;
+
+        if (sidebar.hidden) {
+            return auxiliaryBar.hidden
+                ? [0, '100%', 0]
+                : [0, 'auto', splitPanePos[2]];
+        }
+
+        return [splitPanePos[0], 'auto', 0];
+    };
+
+    const getContentSashes = () => {
+        if (!sidebar.hidden && !auxiliaryBar.hidden) return true;
+
+        if (sidebar.hidden) {
+            return auxiliaryBar.hidden ? false : [false, true];
+        }
+
+        return [true, false];
+    };
+
+    const handleContentChanged = (sizes: number[]) => {
+        const nextPos: number[] = [];
+        nextPos[0] = sidebar.hidden ? Number(splitPanePos[0]) : sizes[0];
+        nextPos[2] = auxiliaryBar.hidden ? Number(splitPanePos[2]) : sizes[2];
+
+        nextPos[1] =
+            sizes.reduce((acc, cur) => acc + cur, 0) - nextPos[0] - nextPos[2];
+
+        onPaneSizeChange?.(nextPos);
     };
 
     const isMenuBarVertical =
@@ -106,11 +141,10 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                         </Display>
                     </div>
                     <SplitPane
-                        sizes={sidebar.hidden ? [0, '100%'] : splitPanePos}
+                        sizes={getContentSize()}
                         split="vertical"
-                        showSashes={!sidebar.hidden}
-                        allowResize={[false]}
-                        onChange={onPaneSizeChange!}
+                        showSashes={getContentSashes()}
+                        onChange={handleContentChanged}
                     >
                         <Pane minSize={170} maxSize="80%">
                             <SidebarView />
@@ -127,7 +161,11 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
                             </Pane>
                             <PanelView />
                         </SplitPane>
+                        <Pane minSize={100} maxSize="80%">
+                            <AuxiliaryBar />
+                        </Pane>
                     </SplitPane>
+                    <AuxiliaryBarTab />
                 </div>
             </div>
             <Display visible={!statusBar.hidden}>

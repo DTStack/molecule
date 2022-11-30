@@ -1,4 +1,5 @@
 export * from './activityBar';
+export * from './auxiliaryBar';
 export * from './editor';
 export * from './menuBar';
 export * from './notification';

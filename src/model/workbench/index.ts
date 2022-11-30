@@ -1,6 +1,7 @@
 import { IActivityBar, IMenuBar, IPanel, ISidebar, IStatusBar } from 'mo/model';
 
 export * from './activityBar';
+export * from './auxiliaryBar';
 export * from './editor';
 export * from './sidebar';
 export * from './statusBar';

@@ -84,6 +84,7 @@ describe('The Editor Component', () => {
                         undefined,
                         undefined,
                         undefined,
+                        undefined,
                         MenuBarMode.horizontal
                     )
                 }

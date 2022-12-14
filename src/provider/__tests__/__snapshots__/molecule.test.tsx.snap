@@ -632,29 +632,33 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
               <div
                 class="mo-activityBar__container"
               >
-                <ul>
-                  <li
-                    class="mo-activityBar__item mo-activityBar__item--checked"
-                    id="sidebar.explore.title"
-                  >
-                    <span
-                      class="mo-activityBar__label codicon codicon-files"
-                      title="Explorer"
-                    />
-                    <div
-                      class="mo-activityBar__indicator"
-                    />
-                  </li>
-                  <li
-                    class="mo-activityBar__item"
-                    id="sidebar.search.title"
-                  >
-                    <span
-                      class="mo-activityBar__label codicon codicon-search"
-                      title="Search"
-                    />
-                  </li>
-                </ul>
+                <div
+                  class="mo-activityBar__normal"
+                >
+                  <ul>
+                    <li
+                      class="mo-activityBar__item mo-activityBar__item--checked"
+                      id="sidebar.explore.title"
+                    >
+                      <span
+                        class="mo-activityBar__label codicon codicon-files"
+                        title="Explorer"
+                      />
+                      <div
+                        class="mo-activityBar__indicator"
+                      />
+                    </li>
+                    <li
+                      class="mo-activityBar__item"
+                      id="sidebar.search.title"
+                    >
+                      <span
+                        class="mo-activityBar__label codicon codicon-search"
+                        title="Search"
+                      />
+                    </li>
+                  </ul>
+                </div>
                 <ul
                   class="mo-activityBar__global"
                 >

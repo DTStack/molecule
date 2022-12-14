@@ -178,7 +178,11 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
               <div
                 class="mo-activityBar__container"
               >
-                <ul />
+                <div
+                  class="mo-activityBar__normal"
+                >
+                  <ul />
+                </div>
                 <ul
                   class="mo-activityBar__global"
                 />
@@ -523,7 +527,11 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
               <div
                 class="mo-activityBar__container"
               >
-                <ul />
+                <div
+                  class="mo-activityBar__normal"
+                >
+                  <ul />
+                </div>
                 <ul
                   class="mo-activityBar__global"
                 />
@@ -868,7 +876,11 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
               <div
                 class="mo-activityBar__container"
               >
-                <ul />
+                <div
+                  class="mo-activityBar__normal"
+                >
+                  <ul />
+                </div>
                 <ul
                   class="mo-activityBar__global"
                 />
@@ -1202,7 +1214,11 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
               <div
                 class="mo-activityBar__container"
               >
-                <ul />
+                <div
+                  class="mo-activityBar__normal"
+                >
+                  <ul />
+                </div>
                 <ul
                   class="mo-activityBar__global"
                 />
@@ -1536,7 +1552,11 @@ dmlldzJfOV8xNjM4ODQ4MDI1NDI2MTE4Ml8zOF9bMF0TNSl1AAAAAElFTkSuQmCC"
               <div
                 class="mo-activityBar__container"
               >
-                <ul />
+                <div
+                  class="mo-activityBar__normal"
+                >
+                  <ul />
+                </div>
                 <ul
                   class="mo-activityBar__global"
                 />

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { getBEMElement, prefixClaName } from 'mo/common/className';
 import TreeView from 'mo/components/tree';
 import { localize } from 'mo/i18n/localize';
-import { Icon, Scrollable } from 'mo/components';
+import { Icon, Scrollbar } from 'mo/components';
 import { IProblems, MarkerSeverity } from 'mo/model';
 
 const defaultClassName = prefixClaName('problems');
@@ -43,7 +43,7 @@ function ProblemsPaneView(props: IProblems) {
     };
 
     return (
-        <Scrollable>
+        <Scrollbar>
             <div className={defaultClassName}>
                 <TreeView
                     className={treeClassName}
@@ -73,7 +73,7 @@ function ProblemsPaneView(props: IProblems) {
                     onSelect={onSelect}
                 />
             </div>
-        </Scrollable>
+        </Scrollbar>
     );
 }
 

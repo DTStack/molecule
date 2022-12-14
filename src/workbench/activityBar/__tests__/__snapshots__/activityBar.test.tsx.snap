@@ -9,18 +9,22 @@ exports[`The ActivityBar Component match the snapshot 1`] = `
   <div
     className="mo-activityBar__container"
   >
-    <ul>
-      <li
-        className="mo-activityBar__item"
-        id="test3"
-        onClick={[Function]}
-      >
-        <span
-          className="mo-activityBar__label codicon codicon-debug"
-          title=""
-        />
-      </li>
-    </ul>
+    <div
+      className="mo-activityBar__normal"
+    >
+      <ul>
+        <li
+          className="mo-activityBar__item"
+          id="test3"
+          onClick={[Function]}
+        >
+          <span
+            className="mo-activityBar__label codicon codicon-debug"
+            title=""
+          />
+        </li>
+      </ul>
+    </div>
     <ul
       className="mo-activityBar__global"
     >

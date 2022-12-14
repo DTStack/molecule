@@ -7,9 +7,10 @@ import {
     IMenuItemProps,
     ITabProps,
     Menu,
-    Scrollable,
     Toolbar,
     useContextView,
+    Scrollbar,
+    IScrollRef,
 } from 'mo/components';
 import {
     editorTreeActiveItemClassName,
@@ -29,7 +30,6 @@ import {
     HEADER_HEIGTH,
     MAX_GROW_HEIGHT,
 } from 'mo/components/collapse';
-import Scrollbar from 'react-scrollbars-custom';
 import { constants } from 'mo/services/builtinService/const';
 import type { UniqueId } from 'mo/common/types';
 
@@ -77,7 +77,7 @@ const EditorTree = (props: IOpenEditProps) => {
     } = props;
 
     const wrapper = useRef<HTMLDivElement>(null);
-    const scrollable = useRef<Scrollbar>(null);
+    const scrollable = useRef<IScrollRef>(null);
 
     // scroll into view
     useLayoutEffect(() => {
@@ -88,7 +88,7 @@ const EditorTree = (props: IOpenEditProps) => {
             );
             if (activeItem) {
                 const top = activeItem.offsetTop;
-                scrollable.current?.scrollTo(0, top);
+                scrollable.current?.scrollTo(top);
             }
         }
     }, [current?.id && current.tab?.id]);
@@ -177,7 +177,7 @@ const EditorTree = (props: IOpenEditProps) => {
     };
 
     return (
-        <Scrollable noScrollX isShowShadow ref={scrollable}>
+        <Scrollbar ref={scrollable} isShowShadow>
             <div
                 className={editorTreeClassName}
                 ref={wrapper}
@@ -274,7 +274,7 @@ const EditorTree = (props: IOpenEditProps) => {
                     );
                 })}
             </div>
-        </Scrollable>
+        </Scrollbar>
     );
 };
 

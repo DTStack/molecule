@@ -48,13 +48,6 @@ describe('The Tabs Components', () => {
         expect(tabs).toMatchSnapshot();
     });
 
-    test('Should render nothing', () => {
-        const { container } = render(<Tabs />);
-        const header = container.querySelector('.mo-tabs__header');
-
-        expect(header?.childElementCount).toBe(0);
-    });
-
     test('Default type is line', () => {
         const { container } = render(
             <Tabs data={mockData} className="test-tabs" />

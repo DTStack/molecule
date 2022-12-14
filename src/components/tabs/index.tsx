@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useCallback } from 'react';
 import update from 'immutability-helper';
 
@@ -12,8 +12,9 @@ import {
     classNames,
 } from 'mo/common/className';
 
-import { Tab, ITabProps } from './tab';
+import { Tab, ITabProps, tabItemActiveClassName } from './tab';
 import type { UniqueId } from 'mo/common/types';
+import { ScrollBar, DirectionKind, IScrollRef } from '../scrollBar';
 
 export type TabsType = 'line' | 'card';
 /**
@@ -59,6 +60,10 @@ export function Tabs(props: ITabsProps) {
         onSelectTab,
         onContextMenu,
     } = props;
+
+    const tabContainer = useRef<HTMLDivElement>(null);
+    const scroll = useRef<IScrollRef>(null);
+
     const onChangeTab = useCallback(
         (dragIndex, hoverIndex) => {
             const dragTab = data[dragIndex];
@@ -97,6 +102,23 @@ export function Tabs(props: ITabsProps) {
         onChangeTab?.(dragIndex, hoverIndex);
     };
 
+    useEffect(() => {
+        const activeItem = tabContainer.current?.querySelector<HTMLDivElement>(
+            `.${tabItemActiveClassName}`
+        );
+
+        if (activeItem) {
+            const width = tabContainer.current?.clientWidth || 0;
+            const left = activeItem.offsetLeft;
+            if (left > width) {
+                // Because of useEffect is executed before scroll's ResizeObserver
+                setTimeout(() => {
+                    scroll.current?.scrollTo(left + activeItem.clientWidth);
+                }, 0);
+            }
+        }
+    }, [tabContainer.current?.querySelector(`.${tabItemActiveClassName}`)]);
+
     return (
         <DndProvider backend={HTML5Backend} context={window}>
             <div
@@ -107,8 +129,14 @@ export function Tabs(props: ITabsProps) {
                     className
                 )}
                 role={role}
+                ref={tabContainer}
             >
-                <div className={tabsHeader}>
+                <ScrollBar
+                    className={tabsHeader}
+                    direction={DirectionKind.horizontal}
+                    ref={scroll}
+                    trackStyle={{ height: 3 }}
+                >
                     {data.map((tab, index) => {
                         return (
                             <Tab
@@ -122,7 +150,7 @@ export function Tabs(props: ITabsProps) {
                             />
                         );
                     })}
-                </div>
+                </ScrollBar>
             </div>
         </DndProvider>
     );

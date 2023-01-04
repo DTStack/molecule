@@ -32,12 +32,11 @@
             border: 1px solid var(--list-focusOutline);
             color: var(--input-foreground);
             font-family: inherit;
-            font-size: 13px;
-            height: 20px;
-            left: 0;
+            font-size: inherit;
+            left: -2px;
             margin: 0;
             outline: none;
-            padding: 0;
+            padding: 2px 1px;
             position: relative;
             width: calc(100% - 2px);
 

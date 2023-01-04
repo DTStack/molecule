@@ -27,8 +27,8 @@ $treenode-height: 22px;
         }
 
         &__title {
-            margin-left: 5px;
             overflow: hidden;
+            padding-left: 5px;
             text-overflow: ellipsis;
             white-space: nowrap;
             width: 100%;

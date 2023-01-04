@@ -71,6 +71,7 @@ function ProblemsPaneView(props: IProblems) {
                         );
                     }}
                     onSelect={onSelect}
+                    onRightClick={(e) => e.preventDefault()}
                 />
             </div>
         </Scrollbar>

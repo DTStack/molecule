@@ -14,6 +14,7 @@ const SearchTree = (props: SearchTreeProps) => {
             data={data}
             renderTitle={renderTitle}
             onSelect={onSelect}
+            onRightClick={(e) => e.preventDefault()}
         />
     );
 };

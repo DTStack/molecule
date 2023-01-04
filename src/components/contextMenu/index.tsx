@@ -23,14 +23,17 @@ export function useContextMenu(
     });
 
     const onContextMenu = (e: MouseEvent) => {
-        e.preventDefault();
-        contextView!.show(
-            {
-                x: e.clientX,
-                y: e.clientY,
-            },
-            render
-        );
+        // ONLY works over the anchor ele
+        if (e.target === e.currentTarget) {
+            e.preventDefault();
+            contextView!.show(
+                {
+                    x: e.clientX,
+                    y: e.clientY,
+                },
+                render
+            );
+        }
     };
 
     anchor.addEventListener('contextmenu', onContextMenu);

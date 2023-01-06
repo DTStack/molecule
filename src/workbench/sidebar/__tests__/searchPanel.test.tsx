@@ -1,5 +1,10 @@
 import React from 'react';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import {
+    cleanup,
+    createEvent,
+    fireEvent,
+    render,
+} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { expectFnCalled } from '@test/utils';
 import { SearchPanel } from '../search';
@@ -218,5 +223,27 @@ describe('The SearchPanel Component', () => {
         );
 
         expect(getByTitle(resultTree[0].name)).toBeInTheDocument();
+    });
+
+    test("Should prevent default on tree's contextMenu event handler", () => {
+        expectFnCalled((mockFn) => {
+            const { container } = render(
+                <SearchPanel
+                    value="test"
+                    result={mockResult}
+                    getSearchIndex={() => 0}
+                />
+            );
+
+            const target = mockResult[1];
+            const dom = container.querySelector(
+                `.${defaultTreeNodeClassName}[data-key="${target.id}"]`
+            )!;
+
+            const myEvent = createEvent.contextMenu(dom!);
+            myEvent.preventDefault = mockFn;
+
+            fireEvent(dom!, myEvent);
+        });
     });
 });

@@ -180,7 +180,6 @@ const TreeView = ({
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
         info: ITreeNodeItemProps
     ) => {
-        e.preventDefault();
         e.stopPropagation();
         onRightClick?.(e, info);
     };

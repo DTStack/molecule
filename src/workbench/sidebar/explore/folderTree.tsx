@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import React, { memo, useRef, useEffect, useLayoutEffect } from 'react';
 import { IFolderTree, IFolderTreeNodeProps } from 'mo/model';
 import { select, getEventPosition } from 'mo/common/dom';
-import Tree from 'mo/components/tree';
+import Tree, { ITreeProps } from 'mo/components/tree';
 import { IMenuItemProps, Menu } from 'mo/components/menu';
 import { Button } from 'mo/components/button';
 import type { IFolderTreeController } from 'mo/controller/explorer/folderTree';
@@ -126,17 +126,20 @@ const FolderTree: React.FunctionComponent<IFolderTreeProps> = (props) => {
         contextView?.hide();
     };
 
-    const handleRightClick = (event, data) => {
-        const menuItems = onRightClick?.(data) || [];
+    const handleRightClick: ITreeProps['onRightClick'] = (event, data) => {
+        if ((event.target as HTMLElement).nodeName !== 'INPUT') {
+            event.preventDefault();
+            const menuItems = onRightClick?.(data) || [];
 
-        menuItems.length &&
-            contextView?.show(getEventPosition(event), () => (
-                <Menu
-                    role="menu"
-                    onClick={(_, item) => handleMenuClick(item!, data)}
-                    data={menuItems}
-                />
-            ));
+            menuItems.length &&
+                contextView?.show(getEventPosition(event), () => (
+                    <Menu
+                        role="menu"
+                        onClick={(_, item) => handleMenuClick(item!, data)}
+                        data={menuItems}
+                    />
+                ));
+        }
     };
 
     const handleUpdateFile = (

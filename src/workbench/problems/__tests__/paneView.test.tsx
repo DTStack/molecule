@@ -1,5 +1,10 @@
 import React from 'react';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import {
+    cleanup,
+    createEvent,
+    fireEvent,
+    render,
+} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ProblemsPaneView from '../paneView';
 import { MarkerSeverity } from 'mo/model';
@@ -112,5 +117,21 @@ describe('The PaneView Component', () => {
             'No problems have been detected in the workspace.'
         );
         expect(tips).toBeInTheDocument();
+    });
+
+    test('Should prevent default on contextMenu', () => {
+        const { container } = render(<ProblemsPaneView {...mockRootData} />);
+
+        const dom = container.querySelector(
+            `div[data-key="${mockProblemFile.id}"]`
+        );
+        expect(dom).toBeInTheDocument();
+
+        const myEvent = createEvent.contextMenu(dom!);
+        myEvent.preventDefault = jest.fn();
+
+        fireEvent(dom!, myEvent);
+
+        expect(myEvent.preventDefault as jest.Mock).toBeCalled();
     });
 });

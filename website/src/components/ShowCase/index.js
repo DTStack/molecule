@@ -21,7 +21,7 @@ const data = [
     {
         name: 'online-code-formatting',
         sourceUrl: 'https://github.com/wewoor/online-code-formatting',
-        previewUrl: 'https://wewoor.github.io/online-code-formatting/',
+        previewUrl: 'https://wewoor.github.io/prettier-studio/',
         cnDesc: '使用 Molecule 开发的一个简单的在线代码格式化工具',
         enDesc: 'A simple online code formatting tool built with Molecule.',
     },

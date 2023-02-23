@@ -81,7 +81,7 @@ export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAcces
             ...c,
             buttons: [
                 {
-                    iconClass: Codicon.gear.classNames,
+                    iconClass: new Codicon('gear').classNames,
                     tooltip: localize(
                         'configure keybinding',
                         'Configure Keybinding'

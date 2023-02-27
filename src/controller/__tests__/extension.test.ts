@@ -32,7 +32,7 @@ describe('The extension controller', () => {
         expect(mockFn.mock.calls[0][0]).toBe(CommandQuickAccessViewAction);
 
         mockFn.mockClear();
-        builtinService.inactiveModule('quickAcessViewAction');
+        builtinService.inactiveModule('quickAccessViewAction');
 
         extensionController.initView();
         expect(mockFn.mock.calls).toHaveLength(10);

@@ -38,7 +38,7 @@ export class ExtensionController
 
     public initView() {
         const {
-            quickAcessViewAction,
+            quickAccessViewAction,
             quickSelectColorThemeAction,
             quickAccessSettingsAction,
             quickSelectLocaleAction,
@@ -51,7 +51,7 @@ export class ExtensionController
         } = this.builtinService.getModules();
         (
             [
-                [quickAcessViewAction, CommandQuickAccessViewAction],
+                [quickAccessViewAction, CommandQuickAccessViewAction],
                 [quickSelectColorThemeAction, SelectColorThemeAction],
                 [quickAccessSettingsAction, QuickAccessSettings],
                 [quickSelectLocaleAction, SelectLocaleAction],

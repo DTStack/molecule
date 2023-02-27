@@ -678,7 +678,7 @@ export const modules = {
             },
         ] as IMenuItemProps[],
 
-    quickAcessViewAction: () => ({
+    quickAccessViewAction: () => ({
         id: constants.ACTION_QUICK_COMMAND,
     }),
 

@@ -145,13 +145,13 @@ export class BuiltinService implements IBuiltinService {
 
     public getModules() {
         const res: any = {};
-        this.builtinModules.forEach((biultinModule) => {
-            if (biultinModule.active) {
-                const isExcute = !!biultinModule.value;
-                if (!isExcute) {
-                    biultinModule.value = biultinModule.module();
+        this.builtinModules.forEach((builtinModule) => {
+            if (builtinModule.active) {
+                const isExecute = !!builtinModule.value;
+                if (!isExecute) {
+                    builtinModule.value = builtinModule.module();
                 }
-                res[biultinModule.id] = cloneDeep(biultinModule.value);
+                res[builtinModule.id] = cloneDeep(builtinModule.value);
             }
         });
         return res;

@@ -8403,7 +8403,7 @@ gulp-typescript@^6.0.0-alpha.1:
   dependencies:
     ansi-colors "^4.1.1"
     plugin-error "^1.0.1"
-    source-map "^0.7.3"
+    source-map "^0.7.4"
     through2 "^3.0.1"
     vinyl "^2.2.0"
     vinyl-fs "^3.0.3"

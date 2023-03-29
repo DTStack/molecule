@@ -122,7 +122,11 @@ export default class InstanceService
             this.emit(InstanceHookKind.beforeLoad);
             molecule.extension.load(others);
 
-            molecule.monacoService.initWorkspace(molecule.layout.container!);
+            molecule.layout.onWorkbenchDidMount(() => {
+                molecule.monacoService.initWorkspace(
+                    molecule.layout.container!
+                );
+            });
             this.rendered = true;
         }
 

@@ -1,5 +1,5 @@
 import { ID_APP } from 'mo/common/id';
-import { MenuBarMode, Position } from 'mo/model/workbench/layout';
+import { LayoutEvents, MenuBarMode, Position } from 'mo/model/workbench/layout';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { LayoutService } from '../workbench';
@@ -142,6 +142,15 @@ describe('The layout service', () => {
 
             layoutService.setAuxiliaryBar((pre) => !pre);
             expect(layoutService.getState().auxiliaryBar.hidden).toBe(true);
+        });
+
+        test('Should support to listen to the Workbench did mount event', () => {
+            const mockFn = jest.fn();
+            layoutService.onWorkbenchDidMount(mockFn);
+
+            layoutService.emit(LayoutEvents.OnWorkbenchDidMount);
+
+            expect(mockFn).toBeCalled();
         });
     });
 });

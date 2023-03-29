@@ -6,6 +6,7 @@ import {
     Position,
     LayoutModel,
     MenuBarMode,
+    LayoutEvents,
 } from 'mo/model/workbench/layout';
 import { MenuBarEvent } from 'mo/model/workbench/menuBar';
 
@@ -87,6 +88,11 @@ export interface ILayoutService extends Component<ILayout> {
      * Reset all layout data as default value
      */
     reset(): void;
+    /**
+     * Listen to the workbench did mount event
+     * @param callback callback function
+     */
+    onWorkbenchDidMount(callback: Function): void;
 }
 
 @singleton()
@@ -99,6 +105,10 @@ export class LayoutService
     constructor() {
         super();
         this.state = container.resolve(LayoutModel);
+    }
+
+    public onWorkbenchDidMount(callback: Function): void {
+        this.subscribe(LayoutEvents.OnWorkbenchDidMount, callback);
     }
 
     public get container() {

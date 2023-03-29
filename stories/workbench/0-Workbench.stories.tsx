@@ -13,17 +13,35 @@ moInstance.onBeforeInit(() => {
     molecule.builtin.inactiveModule('activityBarData');
 });
 
-export const IDEDemo = () => moInstance.render(<Workbench />);
-
-IDEDemo.story = {
-    name: 'Workbench',
-};
-
-if (module.hot) {
-    module.hot.accept();
-}
-
 export default {
     title: 'Workbench',
-    component: IDEDemo,
+};
+
+export const NormalWorkbench = () => moInstance.render(<Workbench />);
+
+export const EmbeddedWorkbench = () => {
+    return (
+        <div
+            style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                top: 0,
+                left: 0,
+            }}
+        >
+            <h1 style={{ textAlign: 'center', lineHeight: '40px' }}>
+                Embedded
+            </h1>
+            <div
+                style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: 'calc(100% - 40px)',
+                }}
+            >
+                {moInstance.render(<Workbench />)}
+            </div>
+        </div>
+    );
 };

@@ -8,6 +8,10 @@ export enum MenuBarMode {
     vertical = 'vertical',
 }
 
+export enum LayoutEvents {
+    OnWorkbenchDidMount = 'workbench.didMount',
+}
+
 export interface ViewVisibility {
     hidden: boolean;
 }

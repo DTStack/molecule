@@ -14,7 +14,7 @@ export interface IConfigProps {
     defaultLocale?: string;
 }
 
-namespace stanalone {
+namespace standalone {
     let instance: InstanceService | null = null;
 
     /**
@@ -37,12 +37,12 @@ namespace stanalone {
 }
 
 export default function create(config: IConfigProps) {
-    return stanalone.create(config);
+    return standalone.create(config);
 }
 
 /**
  * Do NOT call it in production, ONLY used for test cases
  */
 export function clearInstance() {
-    stanalone.clearInstance();
+    standalone.clearInstance();
 }

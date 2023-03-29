@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { container } from 'tsyringe';
 
 import {
@@ -60,6 +60,7 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         sidebar,
         statusBar,
         onPaneSizeChange,
+        onWorkbenchDidMount,
         onHorizontalPaneSizeChange,
         splitPanePos,
         horizontalSplitPanePos,
@@ -121,6 +122,11 @@ export function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
         horizontalMenuBar,
         hideStatusBar
     );
+
+    useEffect(() => {
+        // call onWorkbenchDidMount after the first render
+        onWorkbenchDidMount?.();
+    }, []);
 
     return (
         <div id={ID_APP} className={appClassName} tabIndex={0}>

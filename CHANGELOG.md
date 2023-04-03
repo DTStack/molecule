@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.3](https://github.com/DTStack/molecule/compare/v1.3.2...v1.3.3) (2023-04-03)
+
+### Bug Fixes
+
+-   replace the Codicon.gear.classNames with codicon string ([#847](https://github.com/DTStack/molecule/issues/847)) ([ded6b52](https://github.com/DTStack/molecule/commit/ded6b52be2124520333f708fef928b8eeb8d9dbe))
+
 ### [1.3.2](https://github.com/DTStack/molecule/compare/v1.2.0...v1.3.2) (2023-04-03)
 
 ### Features

@@ -80,7 +80,7 @@ const pkg = require(pkgPath);
         process.exit(1);
     }
     // use npm pack --dry-run to check publish pack
-    await $`npm publish`;
+    await $`npm publish -otp=${await question('Input the OTP: ')}`;
     succeeDoneLog();
 
     infoLog(`10. git push`);

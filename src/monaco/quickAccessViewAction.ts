@@ -17,7 +17,6 @@ import { IKeybindingService } from 'monaco-editor/esm/vs/platform/keybinding/com
 import { ICommandService } from 'monaco-editor/esm/vs/platform/commands/common/commands';
 import { ITelemetryService } from 'monaco-editor/esm/vs/platform/telemetry/common/telemetry';
 import { INotificationService } from 'monaco-editor/esm/vs/platform/notification/common/notification';
-import { Codicon } from 'monaco-editor/esm/vs/base/common/codicons';
 import { TriggerAction } from 'monaco-editor/esm/vs/platform/quickinput/browser/pickerQuickAccess';
 import {
     MenuId,
@@ -81,7 +80,7 @@ export class CommandQuickAccessProvider extends AbstractEditorCommandsQuickAcces
             ...c,
             buttons: [
                 {
-                    iconClass: Codicon.gear.classNames,
+                    iconClass: 'codicon codicon-gear',
                     tooltip: localize(
                         'configure keybinding',
                         'Configure Keybinding'

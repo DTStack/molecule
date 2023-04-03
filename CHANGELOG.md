@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/DTStack/molecule/compare/v1.2.0...v1.3.2) (2023-04-03)
+
+### Features
+
+-   develop auxiliary bar ([#833](https://github.com/DTStack/molecule/issues/833)) ([cfd7c7c](https://github.com/DTStack/molecule/commit/cfd7c7cebbacbbc2893e69b0934b4724eac5b24c))
+-   develop scrollBar to replace scrollable component ([#826](https://github.com/DTStack/molecule/issues/826)) ([a276038](https://github.com/DTStack/molecule/commit/a27603864143596d4169e670ffe4b387d795de1a))
+-   support to set the direction of editor group ([#822](https://github.com/DTStack/molecule/issues/822)) ([f0ca348](https://github.com/DTStack/molecule/commit/f0ca348ec82b43fc2dfb3556dcd0ea087b251f94))
+
+### Bug Fixes
+
+-   adjust the order of controller ([#831](https://github.com/DTStack/molecule/issues/831)) ([8a63067](https://github.com/DTStack/molecule/commit/8a630677d9a509951109fead67a11f8cb91d90ed))
+-   can't prevent close tab with confirm ([#828](https://github.com/DTStack/molecule/issues/828)) ([9418d40](https://github.com/DTStack/molecule/commit/9418d40d6767ec05d83f150bb5ede371e9dadd75))
+-   fix lost open animation of collapse ([#827](https://github.com/DTStack/molecule/issues/827)) ([d1cdbe1](https://github.com/DTStack/molecule/commit/d1cdbe110ea1f82615945789d23585c39adde11a))
+-   get container after Workbench is mounted ([#848](https://github.com/DTStack/molecule/issues/848)) ([222e536](https://github.com/DTStack/molecule/commit/222e53688cfada84ffe38ef9ecebd3a21cde8655))
+-   improve the style of edit's input ([#838](https://github.com/DTStack/molecule/issues/838)) ([534b050](https://github.com/DTStack/molecule/commit/534b050d756680b320262eaa1473f05ff7e87082))
+-   remove contextView warning in console ([#832](https://github.com/DTStack/molecule/issues/832)) ([2cf87db](https://github.com/DTStack/molecule/commit/2cf87db11b6ec9d310d6fae59f4500f91cb69bad))
+-   update the previewUrl of online-code-formatting ([#844](https://github.com/DTStack/molecule/issues/844)) ([bc31969](https://github.com/DTStack/molecule/commit/bc31969e6100564df349ebf61743583ddb399d68))
+
 ## [1.3.0](https://github.com/DTStack/molecule/compare/v1.2.0...v1.3.0) (2022-12-16)
 
 ### Features

@@ -112,22 +112,26 @@ export default class InstanceService
                 StatusBarController,
             ];
 
-            // resolve all controllers, and call `initView` to inject initial values into services
-            Object.keys(controllers).forEach((key) => {
-                const module = controllers[key];
-                const controller = container.resolve<Controller>(module);
-                controller.initView?.();
-            });
-
-            this.emit(InstanceHookKind.beforeLoad);
-            molecule.extension.load(others);
-
             molecule.layout.onWorkbenchDidMount(() => {
-                molecule.monacoService.initWorkspace(
-                    molecule.layout.container!
-                );
+                if (!this.rendered) {
+                    molecule.monacoService.initWorkspace(
+                        molecule.layout.container!
+                    );
+
+                    // resolve all controllers, and call `initView` to inject initial values into services
+                    Object.keys(controllers).forEach((key) => {
+                        const module = controllers[key];
+                        const controller =
+                            container.resolve<Controller>(module);
+                        controller.initView?.();
+                    });
+
+                    this.emit(InstanceHookKind.beforeLoad);
+                    molecule.extension.load(others);
+
+                    this.rendered = true;
+                }
             });
-            this.rendered = true;
         }
 
         return workbench;

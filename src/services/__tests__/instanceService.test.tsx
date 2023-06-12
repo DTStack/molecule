@@ -2,6 +2,8 @@ import React from 'react';
 import { defaultExtensions } from 'mo/extensions';
 import InstanceService from '../instanceService';
 import { render } from '@testing-library/react';
+import { LayoutEvents } from 'mo/model/workbench/layout';
+import molecule from 'mo';
 
 describe('The InstanceService', () => {
     test('Constuctor with default config', () => {
@@ -39,6 +41,7 @@ describe('The InstanceService', () => {
         const mockFn = jest.fn();
         instance.onBeforeInit(mockFn);
         instance.onBeforeLoad(mockFn);
+        molecule.layout.emit(LayoutEvents.OnWorkbenchDidMount);
         instance.render(<div>123</div>);
 
         expect(mockFn).toBeCalledTimes(2);

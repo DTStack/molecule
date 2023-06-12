@@ -44,12 +44,14 @@ export class MonacoEditor extends PureComponent<IMonacoEditorProps> {
 
     componentDidMount() {
         const { options = {}, override, editorInstanceRef } = this.props;
-        this.monacoInstance = this.monacoService?.create(
-            this.monacoDom,
-            options,
-            override
-        );
-        editorInstanceRef?.(this.monacoInstance);
+        if (!this.monacoInstance) {
+            this.monacoInstance = this.monacoService?.create(
+                this.monacoDom,
+                options,
+                override
+            );
+            editorInstanceRef?.(this.monacoInstance);
+        }
     }
 
     componentDidUpdate(prevProps) {

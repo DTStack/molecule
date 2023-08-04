@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`The InstanceService Should support render workbench 1`] = `
-<DocumentFragment>
-  <div>
-    123
-  </div>
-</DocumentFragment>
-`;

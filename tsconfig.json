@@ -1,8 +1,18 @@
 {
-    "extends": "./tsconfig.base.json",
     "compilerOptions": {
-        "outDir": "esm",
-        "rootDirs": ["src", "stories"]
+        "lib": ["es5", "es6", "es7", "es2017", "dom", "ESNext"],
+        "allowJs": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "strict": true /* Enable all strict type-checking options. */,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "paths": {
+            "mo/*": ["./src/*"]
+        }
     },
-    "include": ["src/**/*", "test/**/*", "stories/**/*"]
+    "include": ["src"]
 }

@@ -8,6 +8,7 @@
         "esm"
     ],
     "scripts": {
+        "dev": "gulp dev",
         "lint": "npx eslint './src/**/*.ts' './src/**/*.tsx'",
         "lint-fix": "npx eslint './src/**/*.ts' './src/**/*.tsx' --fix",
         "lint-css": "npx stylelint './src/**/*.scss' './src/**/*.css'",
@@ -30,14 +31,20 @@
         "registry": "https://registry.npmjs.org/"
     },
     "devDependencies": {
+        "@types/node": "^20.4.7",
         "@types/react": "^18.2.18",
         "@types/react-dom": "^18.2.7",
+        "esbuild": "^0.18.17",
+        "glob": "^10.3.3",
+        "gulp": "^4.0.2",
         "ko-lint-config": "^2.2.21",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "ts-node": "^10.9.1",
         "typescript": "4.7.4"
     },
     "dependencies": {
+        "@types/gulp": "^4.0.13",
         "reflect-metadata": "^0.1.13",
         "tapable": "^2.2.1",
         "tsyringe": "^4.8.0"

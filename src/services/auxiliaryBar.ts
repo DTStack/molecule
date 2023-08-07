@@ -1,6 +1,6 @@
 import React from 'react';
 import { BaseService } from 'mo/glue';
-import { auxiliaryBar } from 'mo/models/';
+import { auxiliaryBar } from 'mo/models';
 import type { UniqueId } from 'mo/types';
 
 export interface IAuxiliaryBarService extends BaseService<auxiliaryBar.IAuxiliaryBar> {

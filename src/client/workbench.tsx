@@ -5,5 +5,5 @@ type IWorkbenchProps = any;
 export default function Workbench({ molecule }: IWorkbenchProps) {
     console.log('molecule:', molecule);
 
-    return <div>123</div>;
+    return <div>workbench</div>;
 }

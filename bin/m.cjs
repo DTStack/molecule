@@ -41,6 +41,7 @@ async function transform(entryPoints) {
         bundle: false,
         format: 'esm',
         outdir: dist,
+        jsx: 'automatic',
         plugins: [
             {
                 name: 'alias',

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import defaultExtensions from 'mo/extensions';
-import { BaseService, GlobalEvent } from 'mo/glue';
+import { GlobalEvent } from 'mo/glue';
 import { container } from 'tsyringe';
 
 import { AuxiliaryBarService } from './auxiliaryBar';
@@ -39,8 +39,6 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         defaultLocale: 'en',
     };
 
-    private molecule: Record<string, BaseService> = {};
-
     private childContainer = container.createChildContainer();
 
     constructor(config: IConfigProps) {
@@ -52,6 +50,8 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         if (Array.isArray(config.extensions)) {
             this._config.extensions.push(...config.extensions);
         }
+
+        this.childContainer.register('auxiliaryBar', AuxiliaryBarService);
     }
 
     // private initialLocaleService = (languagesExts: IExtension[]) => {
@@ -74,11 +74,9 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
 
         this.emit(InstanceHookKind.beforeLoad);
 
-        this.childContainer.register('auxiliaryBar', AuxiliaryBarService);
         const auxiliaryBar = this.childContainer.resolve<AuxiliaryBarService>('auxiliaryBar');
-        this.molecule.auxiliaryBar = auxiliaryBar;
 
-        return React.cloneElement(workbench, { molecule: this.molecule });
+        return React.cloneElement(workbench, { molecule: { auxiliaryBar } });
     };
 
     public onBeforeInit = (callback: () => void) => {

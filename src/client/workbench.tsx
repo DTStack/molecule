@@ -1,9 +1,16 @@
-import React from 'react';
+import { createContext } from 'react';
 
-type IWorkbenchProps = any;
+import AuxiliaryBar from './slots/auxiliaryBar';
 
-export default function Workbench({ molecule }: IWorkbenchProps) {
-    console.log('molecule:', molecule);
+export type IContext = any;
 
-    return <div>workbench</div>;
+export const Context = createContext<IContext>({});
+
+export default function Workbench({ molecule }: any) {
+    return (
+        <Context.Provider value={{ molecule }}>
+            workbench12
+            <AuxiliaryBar />
+        </Context.Provider>
+    );
 }

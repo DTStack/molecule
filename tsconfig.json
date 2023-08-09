@@ -2,7 +2,7 @@
     "compilerOptions": {
         "lib": ["es5", "es6", "es7", "es2017", "dom", "ESNext"],
         "allowJs": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "moduleResolution": "node",
         "declaration": true,
         "emitDeclarationOnly": true,

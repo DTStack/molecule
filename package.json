@@ -8,8 +8,7 @@
         "esm"
     ],
     "scripts": {
-        "dev": "gulp dev",
-        "watch": "./bin/m.cjs dev",
+        "dev": "./bin/m.cjs dev",
         "web": "vite serve app/ -c app/vite.config.ts",
         "lint": "npx eslint './src/**/*.ts' './src/**/*.tsx'",
         "lint-fix": "npx eslint './src/**/*.ts' './src/**/*.tsx' --fix",

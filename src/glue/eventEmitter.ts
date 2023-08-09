@@ -18,7 +18,7 @@ export default class EventEmitter {
         return events.taps.length;
     }
 
-    public emit(name: string, ...args) {
+    public emit(name: string, ...args: any[]) {
         const hook = this._events.get(name);
         if (hook) {
             hook.callAsync(

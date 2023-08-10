@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { Context } from 'mo/client/context';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
 import { container } from 'tsyringe';
@@ -76,7 +77,11 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
 
         const auxiliaryBar = this.childContainer.resolve<AuxiliaryBarService>('auxiliaryBar');
 
-        return React.cloneElement(workbench, { molecule: { auxiliaryBar } });
+        return React.createElement(
+            Context.Provider,
+            { value: { molecule: { auxiliaryBar } } },
+            React.cloneElement(workbench)
+        );
     };
 
     public onBeforeInit = (callback: () => void) => {

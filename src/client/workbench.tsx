@@ -1,16 +1,14 @@
-import { createContext } from 'react';
-
+import useConnector from './hooks/useConnector';
 import AuxiliaryBar from './slots/auxiliaryBar';
 
-export type IContext = any;
+export default function Workbench() {
+    const molecule = useConnector();
+    console.log('molecule:', molecule);
 
-export const Context = createContext<IContext>({});
-
-export default function Workbench({ molecule }: any) {
     return (
-        <Context.Provider value={{ molecule }}>
-            workbench12
+        <main>
+            Workbench
             <AuxiliaryBar />
-        </Context.Provider>
+        </main>
     );
 }

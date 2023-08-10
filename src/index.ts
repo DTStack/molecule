@@ -1,3 +1,7 @@
 import 'reflect-metadata';
 
-export { default as create } from './client/provider';
+import InstanceService, { type IConfigProps } from './services/instance';
+
+export function create(config: IConfigProps) {
+    return new InstanceService(config);
+}

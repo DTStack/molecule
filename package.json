@@ -33,6 +33,7 @@
     },
     "devDependencies": {
         "@dtinsight/molecule": "./",
+        "@types/lodash-es": "^4.17.8",
         "@types/node": "^20.4.7",
         "@types/react": "^18.2.18",
         "@types/react-dom": "^18.2.7",
@@ -49,6 +50,8 @@
         "yargs": "^17.7.2"
     },
     "dependencies": {
+        "@dtinsight/dt-utils": "^1.1.2",
+        "lodash-es": "^4.17.21",
         "reflect-metadata": "^0.1.13",
         "tapable": "^2.2.1",
         "tsyringe": "^4.8.0"

@@ -1,10 +1,13 @@
 import React, { ReactElement } from 'react';
-import { Context } from 'mo/client/context';
+import Container from 'mo/client/container';
+import { IWorkbenchProps } from 'mo/client/workbench';
+import * as controller from 'mo/controllers';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
-import { container } from 'tsyringe';
+import { container, Lifecycle } from 'tsyringe';
 
 import { AuxiliaryBarService } from './auxiliaryBar';
+import { LayoutService } from './layout';
 
 // [TODO)
 type IExtension = any;
@@ -52,7 +55,12 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
             this._config.extensions.push(...config.extensions);
         }
 
-        this.childContainer.register('auxiliaryBar', AuxiliaryBarService);
+        this.childContainer.register('auxiliaryBar', AuxiliaryBarService, {
+            lifecycle: Lifecycle.ContainerScoped,
+        });
+        this.childContainer.register('layout', LayoutService, {
+            lifecycle: Lifecycle.ContainerScoped,
+        });
     }
 
     // private initialLocaleService = (languagesExts: IExtension[]) => {
@@ -76,11 +84,17 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.emit(InstanceHookKind.beforeLoad);
 
         const auxiliaryBar = this.childContainer.resolve<AuxiliaryBarService>('auxiliaryBar');
+        const layout = this.childContainer.resolve<LayoutService>('layout');
+
+        const layoutController = this.childContainer.resolve(controller.layout.LayoutController);
 
         return React.createElement(
-            Context.Provider,
-            { value: { molecule: { auxiliaryBar } } },
-            React.cloneElement(workbench)
+            Container,
+            { value: { molecule: { auxiliaryBar, layout } } },
+            React.cloneElement(workbench, {
+                onEditorChange: layoutController.onEditorChange,
+                onSideChange: layoutController.onSideChange,
+            } as IWorkbenchProps)
         );
     };
 

@@ -1,3 +1,5 @@
+import { isEqual } from 'lodash-es';
+
 import GlobalEvent from './event';
 
 export enum ComponentEvents {
@@ -52,6 +54,10 @@ export default abstract class BaseService<S = any> extends GlobalEvent implement
             nextState = { ...this.state, ...values(this.state) };
         } else {
             nextState = { ...this.state, ...values };
+        }
+        // improve performance
+        if (isEqual(nextState, this.state)) {
+            return;
         }
         this.render(nextState);
         callback?.(this.state, nextState);

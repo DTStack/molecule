@@ -17,5 +17,5 @@
             "mo/*": ["./src/*"]
         }
     },
-    "include": ["src"]
+    "include": ["src", "typing.d.ts"]
 }

@@ -1,0 +1,54 @@
+@import '../../classNames/style.scss';
+
+$container: $prefix;
+$main: prefix('mainBench');
+
+.#{$prefix} {
+    background-color: var(--workbenchBackground);
+    color: var(--foreground);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+
+    *::selection {
+        background-color: var(--editor-selectionBackground);
+    }
+
+    code {
+        background: var(--textCodeBlock-background);
+    }
+
+    &.codicon {
+        color: var(--icon-foreground);
+    }
+
+
+
+    .#{$main} {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        width: 100%;
+
+        .monaco-scrollable-element {
+
+            /* stylelint-disable-next-line*/
+            &>.scrollbar>.slider {
+                background: var(--scrollbarSlider-activeBackground);
+
+                /* stylelint-disable-next-line*/
+                &:hover {
+                    background: var(--scrollbarSlider-hoverBackground);
+                }
+            }
+        }
+    }
+
+}
+
+:export {
+    container: $container;
+    main: $main;
+}

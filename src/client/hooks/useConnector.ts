@@ -4,7 +4,10 @@ import { IContext } from 'mo/types';
 
 import { Context } from '../context';
 
-export default function useConnector(selector: keyof IContext) {
+type Selector = keyof IContext;
+type StateType<T extends keyof IContext> = ReturnType<IContext[T]['getState']>;
+
+export default function useConnector<T extends Selector>(selector: T): StateType<T> {
     const { molecule } = useContext(Context);
     const target = useMemo(() => molecule[selector], [molecule, selector]);
 
@@ -48,5 +51,5 @@ export default function useConnector(selector: keyof IContext) {
         };
     }, []);
 
-    return data as ReturnType<(typeof target)['getState']>;
+    return data as StateType<T>;
 }

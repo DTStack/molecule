@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { create } from '@dtinsight/molecule';
-import Workbench from '@dtinsight/molecule/esm/client/workbench';
+import Workbench from '@dtinsight/molecule/esm/client/slots/workbench';
 
 const moInstance = create({
     extensions: [],

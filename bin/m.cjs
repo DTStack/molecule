@@ -7,25 +7,36 @@ const { hideBin } = require('yargs/helpers');
 const esbuild = require('esbuild');
 const { spawn } = require('child_process');
 const chalk = require('chalk');
+const { rimrafSync } = require('rimraf');
+const chokidar = require('chokidar');
+const sass = require('sass');
 
 const src = path.join(__dirname, '..', 'src');
 const dist = path.join(__dirname, '..', 'esm');
 
 const tsFilePath = path.join(src, '**', '*.ts');
 const tsxFilePath = path.join(src, '**', '*.tsx');
+const scssFilePath = path.join(src, '**', '*.scss');
 
-const gray = chalk.rgb(138, 146, 155);
-const blur = chalk.rgb(50, 189, 200);
+const styleVariablesFileName = 'style__variables.js';
+
+const gray = chalk.rgb(104, 106, 102);
+const blue = chalk.rgb(50, 189, 200);
 const yellow = chalk.rgb(240, 152, 95);
+const green = chalk.rgb(100, 182, 120);
 
 // 打印 process.argv
 yargs(hideBin(process.argv))
     .command('dev', false, async () => {
+        rimrafSync(dist);
         const tsfiles = await glob(tsFilePath);
         const tsxfiles = await glob(tsxFilePath);
 
+        const scssfiles = await glob(scssFilePath);
+
         transform([...tsfiles, ...tsxfiles]);
         transformTyping();
+        transformStyle(scssfiles);
     })
     .parse();
 
@@ -35,7 +46,7 @@ yargs(hideBin(process.argv))
  * @returns
  */
 async function transform(entryPoints) {
-    log(`Starting ${blur('transform')}...`);
+    log(`Starting ${blue('transform')}...`);
     const ctx = await esbuild.context({
         entryPoints,
         bundle: false,
@@ -48,7 +59,7 @@ async function transform(entryPoints) {
                 setup(build) {
                     build.onLoad({ filter: /.*/ }, async (args) => {
                         const source = await fs.promises.readFile(args.path, 'utf8');
-                        const contents = replacePaths(source, args.path);
+                        const contents = sassLoader(alias(source, args.path));
                         return {
                             contents,
                             loader: args.path.endsWith('.tsx') ? 'tsx' : 'ts',
@@ -59,14 +70,69 @@ async function transform(entryPoints) {
         ],
     });
     await ctx.watch();
-    log(`Starting ${yellow('watching Files change')}...`);
+    log(`Finishing ${blue('transform')}`);
+    log(`Starting ${yellow('watching tsx Files change')}...`);
+}
+
+async function transformTyping() {
+    spawn('tsc', ['--watch', '--preserveWatchOutput'], { stdio: 'inherit' });
 }
 
 /**
- * @type {ChildProcess}
+ *
+ * @param {string[]} entrys
  */
-async function transformTyping() {
-    spawn('tsc', ['--watch'], { stdio: 'inherit' });
+async function transformStyle(entrys) {
+    log(`Starting ${green('transform styles')}...`);
+    await Promise.all(entrys.map((entry) => _transform(entry)));
+    log(`Finishing ${green('transform styles')}`);
+    log(`Starting ${yellow('watching style Files change')}...`);
+    // One-liner for current directory
+    chokidar.watch(entrys).on('change', (path) => {
+        log(`Starting ${green('transform styles', path)}...`);
+        _transform(path)
+            .then(() => {
+                log(`Finishing ${green('transform styles')}`);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
+
+    /**
+     *
+     * @param {string} entry
+     */
+    async function _transform(entry) {
+        const res = await sass.compileAsync(entry);
+        const regex = /^:export {(\n|.)+}$/m;
+        const target = entry.replace(/src\//, 'esm/').replace(/.scss/, '.css');
+        const dirname = path.dirname(target);
+        if (!fs.existsSync(dirname)) {
+            fs.mkdirSync(dirname, { recursive: true });
+        }
+        const css = res.css.replace(regex, '');
+        fs.writeFileSync(target, css);
+        if (regex.test(res.css)) {
+            const exportModules = res.css.match(regex)[0];
+            console.log('exportModules:', exportModules);
+            fs.writeFileSync(
+                path.join(dirname, styleVariablesFileName),
+                exportModules
+                    .replace(':export', 'export default')
+                    .replace(/: .*;/gm, (substring) => {
+                        const stringLiteral = /(?<="|')\S+(?="|')/g;
+                        if (!stringLiteral.test(substring)) {
+                            const startIdx = substring.indexOf(':');
+                            const endIdx = substring.indexOf(';');
+                            return `:"${substring.substring(startIdx + 1, endIdx).trim()}",`;
+                        } else {
+                            return substring.replace(';', ',');
+                        }
+                    })
+            );
+        }
+    }
 }
 
 /**
@@ -75,7 +141,7 @@ async function transformTyping() {
  * @param {string} filePath
  * @returns
  */
-function replacePaths(source, filePath) {
+function alias(source, filePath) {
     let target = source;
     const regex = /^import.*(mo\/.*)';/gm;
     target = target.replace(regex, (substring, $1) => {
@@ -83,6 +149,23 @@ function replacePaths(source, filePath) {
         const absolutePath = $1.replace('mo', src);
         const relative = path.relative(path.dirname(filePath), absolutePath);
         return substring.substring(0, idx) + relative + substring.substring(idx + $1.length);
+    });
+    return target;
+}
+
+/**
+ *
+ * @param {string} source
+ */
+function sassLoader(source) {
+    let target = source;
+    const regex = /^import.*(.scss)';/gm;
+    target = target.replace(regex, (substring) => {
+        const matcher = substring.match(/'(.*')/);
+        return `import ${matcher[0].replace(/.scss/, '.css')}\n${substring.substring(
+            0,
+            matcher.index
+        )} './${styleVariablesFileName}'`;
     });
     return target;
 }

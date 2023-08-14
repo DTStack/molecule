@@ -40,11 +40,13 @@
         "@types/yargs": "^17.0.24",
         "@vitejs/plugin-react": "^4.0.4",
         "chalk": "4.x",
+        "chokidar": "^3.5.3",
         "esbuild": "^0.18.17",
         "glob": "^10.3.3",
         "ko-lint-config": "^2.2.21",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "rimraf": "^5.0.1",
         "typescript": "4.7.4",
         "vite": "^4.4.9",
         "yargs": "^17.7.2"
@@ -52,7 +54,9 @@
     "dependencies": {
         "@dtinsight/dt-utils": "^1.1.2",
         "lodash-es": "^4.17.21",
+        "normalize.css": "^8.0.1",
         "reflect-metadata": "^0.1.13",
+        "sass": "^1.65.1",
         "tapable": "^2.2.1",
         "tsyringe": "^4.8.0"
     }

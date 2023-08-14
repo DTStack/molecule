@@ -13,8 +13,6 @@ export class LayoutController extends BaseController implements ILayoutControlle
         super();
     }
 
-    public initView() {}
-
     public onSideChange = (pos: number[]) => {
         const { sidebar, splitPanePos, auxiliaryBar } = this.layout.getState();
         const nextPos: number[] = [];

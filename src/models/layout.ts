@@ -24,7 +24,7 @@ export interface ILayout {
     panel: WithHiddenProperty<{ panelMaximized: boolean }>;
     statusBar: WithHiddenProperty<void>;
     sidebar: WithHiddenProperty<{ position: PositionStr }>;
-    menuBar: WithHiddenProperty<{ mode: keyof typeof MenuBarMode }>;
+    menuBar: WithHiddenProperty<{ mode: MenuBarModeStr }>;
     groupSplitPos: (number | string)[];
     editorGroupDirection: MenuBarMode;
 }

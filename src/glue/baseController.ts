@@ -1,5 +1,3 @@
 import GlobalEvent from './event';
 
-export default abstract class BaseController extends GlobalEvent {
-    public abstract initView(): void;
-}
+export default abstract class BaseController extends GlobalEvent {}

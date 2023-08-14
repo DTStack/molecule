@@ -1,10 +1,10 @@
 import { APP_PREFIX } from 'mo/const';
 
-import { classNames, getBEMElement, getBEMModifier, getFontInMac, prefixClaName } from '.';
+import { classNames, getBEMElement, getBEMModifier, getFontInMac, prefix } from '.';
 
-export const mainBenchClassName = prefixClaName('mainBench');
-export const workbenchClassName = prefixClaName('workbench');
-export const compositeBarClassName = prefixClaName('compositeBar');
+export const mainBenchClassName = prefix('mainBench');
+export const workbenchClassName = prefix('workbench');
+export const compositeBarClassName = prefix('compositeBar');
 export const appClassName = classNames(APP_PREFIX, getFontInMac());
 export const workbenchWithHorizontalMenuBarClassName = getBEMModifier(
     workbenchClassName,

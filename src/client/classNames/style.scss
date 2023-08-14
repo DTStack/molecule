@@ -1,0 +1,5 @@
+$prefix: 'mo';
+
+@function prefix($name, $cusPrefix: $prefix) {
+    @return $cusPrefix+'-'+$name;
+}

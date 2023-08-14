@@ -1,0 +1,15 @@
+@import '../../classNames/style.scss';
+
+$auxiliaryBar: prefix('auxiliaryBar');
+$container: #{$auxiliaryBar}__container;
+
+
+.#{$container} {
+    height: 100%;
+    user-select: text;
+    width: 100%;
+}
+
+:export {
+    container: $container;
+}

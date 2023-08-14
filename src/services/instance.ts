@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
 import Container from 'mo/client/container';
-import { IWorkbenchProps } from 'mo/client/workbench';
+import type { IWorkbenchProps } from 'mo/client/slots/workbench';
 import * as controller from 'mo/controllers';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
 import { container, Lifecycle } from 'tsyringe';
+import type { constructor } from 'tsyringe/dist/typings/types';
 
 import { AuxiliaryBarService } from './auxiliaryBar';
 import { LayoutService } from './layout';
@@ -45,6 +46,12 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
 
     private childContainer = container.createChildContainer();
 
+    private register<T>(token: string, cto: constructor<T>) {
+        this.childContainer.register(token, cto, {
+            lifecycle: Lifecycle.ContainerScoped,
+        });
+    }
+
     constructor(config: IConfigProps) {
         super();
         if (config.defaultLocale) {
@@ -55,12 +62,8 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
             this._config.extensions.push(...config.extensions);
         }
 
-        this.childContainer.register('auxiliaryBar', AuxiliaryBarService, {
-            lifecycle: Lifecycle.ContainerScoped,
-        });
-        this.childContainer.register('layout', LayoutService, {
-            lifecycle: Lifecycle.ContainerScoped,
-        });
+        this.register('auxiliaryBar', AuxiliaryBarService);
+        this.register('layout', LayoutService);
     }
 
     // private initialLocaleService = (languagesExts: IExtension[]) => {

@@ -1,0 +1,41 @@
+@import '../../classNames/style.scss';
+
+$statusBar: prefix('statusBar');
+$container: BEMElement($statusBar, 'item');
+$label: BEMElement($statusBar, 'label');
+
+.#{$container} {
+    height: 100%;
+
+    .#{$label} {
+        align-items: center;
+        color: inherit;
+        cursor: pointer;
+        display: flex;
+        height: 100%;
+        outline-width: 0;
+        padding: 0 5px;
+        text-overflow: ellipsis;
+        white-space: pre;
+        overflow: hidden;
+        margin: 0 3px;
+        line-height: 22px;
+    }
+
+    &:hover {
+        background-color: var(--statusBarItem-hoverBackground);
+    }
+
+    &:active {
+        background-color: var(--statusBarItem-activeBackground);
+    }
+
+    .codicon {
+        font-size: 14px;
+    }
+}
+
+:export {
+    container: $container;
+    label: $label;
+}

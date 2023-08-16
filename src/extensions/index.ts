@@ -1,1 +1,3 @@
-export default [];
+import { LocalesExtends } from './locales';
+
+export default [LocalesExtends];

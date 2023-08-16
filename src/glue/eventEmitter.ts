@@ -20,8 +20,7 @@ export default class EventEmitter {
         const hook = this._events.get(name);
         if (hook) {
             // FIXME: uncertain way to resolve unlimited args for tapable
-            // @ts-ignore
-            hook.callAsync(...args, () => {});
+            hook.callAsync(...(args as never[]), (() => {}) as never);
         }
     }
 
@@ -41,8 +40,7 @@ export default class EventEmitter {
                 if (fn) {
                     const index = hooks.taps.findIndex((tap) => tap.fn === fn);
                     if (index > -1) {
-                        // @ts-ignore
-                        hooks._resetCompilation();
+                        (hooks as any)._resetCompilation();
                         hooks.taps.splice(index, 1);
                     }
                 }

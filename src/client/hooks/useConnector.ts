@@ -1,11 +1,11 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { get } from 'lodash-es';
-import { IContext } from 'mo/types';
+import type { IMoleculeContext } from 'mo/types';
 
 import { Context } from '../context';
 
-type Selector = keyof IContext;
-type StateType<T extends keyof IContext> = ReturnType<IContext[T]['getState']>;
+type Selector = keyof IMoleculeContext;
+type StateType<T extends keyof IMoleculeContext> = ReturnType<IMoleculeContext[T]['getState']>;
 
 export default function useConnector<T extends Selector>(selector: T): StateType<T> {
     const { molecule } = useContext(Context);

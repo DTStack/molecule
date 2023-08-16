@@ -1,0 +1,37 @@
+@import '../../classNames/style.scss';
+
+$statusBar: prefix('statusBar');
+$container: BEMElement($statusBar, 'container');
+$leftItem: BEMElement($container, 'left-items');
+$rightItem: BEMElement($container, 'right-items');
+
+
+.#{$container} {
+    background-color: var(--statusBar-background);
+    border-color: var(--statusBar-border);
+    border-top: 1px solid var(--statusBar-border);
+    color: var(--statusBar-foreground);
+    height: 22px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 7px;
+    font-size: 12px;
+
+    .#{$leftItem},
+    .#{$rightItem} {
+        align-items: center;
+        display: flex;
+        height: 100%;
+    }
+
+    .#{$leftItem} {
+        flex-grow: 1;
+    }
+}
+
+
+:export {
+    container: $container;
+    leftItem: $leftItem;
+    rightItem: $rightItem;
+}

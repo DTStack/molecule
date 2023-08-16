@@ -1,6 +1,6 @@
 import { BaseController } from 'mo/glue';
 import { auxiliaryBar } from 'mo/models';
-import { type auxiliaryBar as auxiliaryBarService } from 'mo/services';
+import { type IAuxiliaryBarService } from 'mo/services/auxiliaryBar';
 import type { UniqueId } from 'mo/types';
 
 export interface IAuxiliaryController {
@@ -8,7 +8,7 @@ export interface IAuxiliaryController {
 }
 
 export class AuxiliaryController extends BaseController implements IAuxiliaryController {
-    constructor(private readonly auxiliaryService: auxiliaryBarService.IAuxiliaryBarService) {
+    constructor(private readonly auxiliaryService: IAuxiliaryBarService) {
         super();
     }
 

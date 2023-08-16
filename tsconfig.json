@@ -1,9 +1,11 @@
 {
     "compilerOptions": {
         "lib": ["es5", "es6", "es7", "es2017", "dom", "ESNext"],
+        "target": "ESNext",
         "allowJs": true,
         "jsx": "react-jsx",
         "moduleResolution": "node",
+        "module": "ESNext",
         "declaration": true,
         "emitDeclarationOnly": true,
         "outDir": "./esm",

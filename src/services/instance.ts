@@ -1,14 +1,17 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 import Container from 'mo/client/container';
-import type { IWorkbenchProps } from 'mo/client/slots/workbench';
 import * as controller from 'mo/controllers';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
-import { container, Lifecycle } from 'tsyringe';
+import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
 
 import { AuxiliaryBarService } from './auxiliaryBar';
+import { BuiltinService } from './builtin';
 import { LayoutService } from './layout';
+import { LocaleService } from './locale';
+import { StatusBarService } from './statusBar';
 
 // [TODO)
 type IExtension = any;
@@ -28,7 +31,7 @@ export interface IConfigProps {
 
 interface IInstanceServiceProps {
     getConfig: () => IConfigProps;
-    render: (dom: ReactElement) => ReactElement;
+    render: (container?: HTMLElement | null) => void;
     onBeforeInit: (callback: () => void) => void;
     onBeforeLoad: (callback: () => void) => void;
 }
@@ -39,6 +42,7 @@ enum InstanceHookKind {
 }
 
 export default class InstanceService extends GlobalEvent implements IInstanceServiceProps {
+    private root: ReturnType<typeof createRoot> | undefined;
     private _config: Required<IConfigProps> = {
         extensions: defaultExtensions.concat(),
         defaultLocale: 'en',
@@ -52,6 +56,10 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         });
     }
 
+    private resolve<T>(token: InjectionToken<T>) {
+        return this.childContainer.resolve<T>(token);
+    }
+
     constructor(config: IConfigProps) {
         super();
         if (config.defaultLocale) {
@@ -62,8 +70,11 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
             this._config.extensions.push(...config.extensions);
         }
 
+        this.register('locale', LocaleService);
+        this.register('builtin', BuiltinService);
         this.register('auxiliaryBar', AuxiliaryBarService);
         this.register('layout', LayoutService);
+        this.register('statusBar', StatusBarService);
     }
 
     // private initialLocaleService = (languagesExts: IExtension[]) => {
@@ -81,23 +92,32 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         return Object.assign({}, this._config);
     };
 
-    public render = (workbench: ReactElement) => {
+    public render = (container?: HTMLElement | null) => {
+        if (!container) return null;
+        const locale = this.resolve<LocaleService>('locale');
+        const builtin = this.resolve<BuiltinService>('builtin');
         this.emit(InstanceHookKind.beforeInit);
 
         this.emit(InstanceHookKind.beforeLoad);
 
-        const auxiliaryBar = this.childContainer.resolve<AuxiliaryBarService>('auxiliaryBar');
-        const layout = this.childContainer.resolve<LayoutService>('layout');
+        const auxiliaryBar = this.resolve<AuxiliaryBarService>('auxiliaryBar');
+        const layout = this.resolve<LayoutService>('layout');
+        const statusBar = this.resolve<StatusBarService>('statusBar');
 
-        const layoutController = this.childContainer.resolve(controller.layout.LayoutController);
+        const layoutController = this.resolve(controller.layout.LayoutController);
+        const statusBarController = this.resolve(controller.statusBar.StatusBarController);
 
-        return React.createElement(
-            Container,
-            { value: { molecule: { auxiliaryBar, layout } } },
-            React.cloneElement(workbench, {
-                onEditorChange: layoutController.onEditorChange,
-                onSideChange: layoutController.onSideChange,
-            } as IWorkbenchProps)
+        this.root = this.root || createRoot(container);
+        this.root.render(
+            React.createElement(Container, {
+                value: {
+                    molecule: { auxiliaryBar, layout, statusBar, locale, builtin },
+                    controllers: {
+                        layout: layoutController,
+                        statusBar: statusBarController,
+                    } as any,
+                },
+            })
         );
     };
 
@@ -108,4 +128,8 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
     public onBeforeLoad = (callback: () => void) => {
         this.subscribe(InstanceHookKind.beforeLoad, callback);
     };
+
+    public dispose() {
+        this.childContainer.clearInstances();
+    }
 }

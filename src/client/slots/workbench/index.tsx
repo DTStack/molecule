@@ -1,3 +1,5 @@
+import Display from 'mo/client/components/display';
+
 import useConnector from '../../hooks/useConnector';
 import useSlots from '../../hooks/useSlots';
 import 'normalize.css';
@@ -8,9 +10,9 @@ export interface IWorkbenchProps {
     onEditorChange?: (pos: number[]) => void;
 }
 
-export default function Workbench({}: IWorkbenchProps) {
+export default function Workbench() {
     const layout = useConnector('layout');
-    const AuxiliaryBar = useSlots(import('../../slots/auxiliaryBar'));
+    const StatusBar = useSlots('statusBar');
 
     return (
         <main className={variables.container} tabIndex={0}>
@@ -19,9 +21,9 @@ export default function Workbench({}: IWorkbenchProps) {
                 {!layout.activityBar.hidden && <section>activityBar</section>}
                 {!layout.sidebar.hidden && <section>sideBar</section>}
                 <section style={{ flex: 1 }}>editor</section>
-                {AuxiliaryBar}
+                <section>auxiliaryBar</section>
             </section>
-            <section>statusBar</section>
+            <Display visible={!layout.statusBar.hidden}>{StatusBar}</Display>
         </main>
     );
 }

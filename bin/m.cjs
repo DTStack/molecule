@@ -115,7 +115,6 @@ async function transformStyle(entrys) {
         fs.writeFileSync(target, css);
         if (regex.test(res.css)) {
             const exportModules = res.css.match(regex)[0];
-            console.log('exportModules:', exportModules);
             fs.writeFileSync(
                 path.join(dirname, styleVariablesFileName),
                 exportModules
@@ -143,12 +142,17 @@ async function transformStyle(entrys) {
  */
 function alias(source, filePath) {
     let target = source;
-    const regex = /^import.*(mo\/.*)';/gm;
-    target = target.replace(regex, (substring, $1) => {
-        const idx = substring.indexOf($1);
-        const absolutePath = $1.replace('mo', src);
-        const relative = path.relative(path.dirname(filePath), absolutePath);
-        return substring.substring(0, idx) + relative + substring.substring(idx + $1.length);
+    const regex = /(?<=from).*(?=;)/gm;
+    target = target.replace(regex, (substring) => {
+        if (/mo\//.test(substring)) {
+            const absolutePath = substring
+                .match(/(?<="|')\S+(?="|')/gm)[0]
+                .replace(/mo\//, `${src}/`);
+            const relative = path.relative(path.dirname(filePath), absolutePath);
+            return `"${relative}"`;
+        } else {
+            return substring;
+        }
     });
     return target;
 }

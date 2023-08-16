@@ -1,10 +1,17 @@
-import { IContext } from 'mo/types';
+import type { IContext } from 'mo/types';
 
+import useSlots from './hooks/useSlots';
 import { Context } from './context';
 
-export default function Container({
-    children,
-    value,
-}: React.PropsWithChildren<{ value: { molecule: IContext } }>) {
-    return <Context.Provider value={value}>{children}</Context.Provider>;
+function Outlet() {
+    const Workbench = useSlots('layout', import('./slots/workbench'));
+    return <>{Workbench}</>;
+}
+
+export default function Container({ value }: { value: IContext }) {
+    return (
+        <Context.Provider value={value}>
+            <Outlet />
+        </Context.Provider>
+    );
 }

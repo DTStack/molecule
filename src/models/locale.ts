@@ -84,7 +84,11 @@ export type LocaleKind = {
     'contextmenu.addFolderToSpace': string;
     'contextmenu.findInSpace': string;
     'contextmenu.download': string;
-    "status.editor.info.name": string;
+    'statusBar.title': string;
+    'statusBar.hide': string;
+    'statusBar.editorStatus.singleSelection': string;
+    'statusBar.editorStatus.gotoLine': string;
+    'statusBar.hideStatusBar': string;
 };
 type LocaleKindLiteral = keyof LocaleKind;
 
@@ -105,5 +109,5 @@ export interface ILocaleModel {
 }
 
 export class LocaleModel implements ILocaleModel {
-    constructor(public locales = [], public current = '') {}
+    constructor(public locales = [], public current = undefined) {}
 }

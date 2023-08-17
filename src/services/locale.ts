@@ -68,9 +68,6 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
     private static LOCALIZE_REPLACED_WORD = '${i}';
     protected state: ILocaleModel;
 
-    // private _locales = new Map<string, ILocale>();
-    // private _current: ILocale | undefined;
-
     constructor() {
         super();
         this.state = new LocaleModel();
@@ -87,24 +84,12 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
     }
 
     public reset(): void {
-        // localStorage.removeItem(STORE_KEY);
-        // this._current = undefined;
-        // this._locales.clear();
         this.state = new LocaleModel();
     }
 
     public getLocales() {
         return this.state.locales;
     }
-
-    // public initialize(locales: ILocale[], localeId: string) {
-    //     this.addLocales(locales);
-    //     if (this._locales.get(localeId)) {
-    //         this._current = this._locales.get(localeId);
-    //     } else {
-    //         logger.error(`Cannot initialize the locale with ${localeId}`);
-    //     }
-    // }
 
     public getCurrentLocale(): ILocale | undefined {
         const { current } = this.state;
@@ -143,12 +128,10 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
     public setCurrentLocale(id: UniqueId): boolean {
         const { current } = this.state;
         if (current === id) return true;
-        const locale = this.getLocale(id);
-        if (!locale) return false;
         this.setState({
             current: id,
         });
-        setValue(LocaleService.STORE_KEY, locale.id.toString());
+        setValue(LocaleService.STORE_KEY, id.toString());
         return true;
     }
 
@@ -174,16 +157,15 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
     }
 
     public localize: Localize = (sourceKey, defaultValue = '', ...args) => {
-        return sourceKey;
-        // let result = defaultValue;
-        // if (this._current) {
-        //     result = this._current.source.get(sourceKey) || defaultValue;
-        // }
-        // if (args.length) {
-        //     args.forEach((replacedVal) => {
-        //         result = result.replace(LocaleService.LOCALIZE_REPLACED_WORD, replacedVal);
-        //     });
-        // }
-        // return result;
+        const locale = this.getCurrentLocale();
+        if (!locale) return defaultValue;
+        let result = locale.source[sourceKey];
+        if (args.length) {
+            args.forEach((replacedVal) => {
+                result = result.replace(LocaleService.LOCALIZE_REPLACED_WORD, replacedVal);
+            });
+        }
+        console.log('result:', result);
+        return result;
     };
 }

@@ -53,8 +53,11 @@
     },
     "dependencies": {
         "@dtinsight/dt-utils": "^1.1.2",
+        "@vscode/codicons": "^0.0.33",
         "lodash-es": "^4.17.21",
         "normalize.css": "^8.0.1",
+        "rc-dropdown": "^4.1.0",
+        "rc-menu": "^9.11.1",
         "reflect-metadata": "^0.1.13",
         "sass": "^1.65.1",
         "tapable": "^2.2.1",

@@ -3,8 +3,9 @@
 :root {
     --workbenchBackground: #252526;
     --foreground: #cccccc;
-    --widget-shadow: #000000;
+    --widget-shadow: rgba(0, 0, 0, 0.36);
     --errorForeground: #f48771;
+    --menu-border: #454545;
     --descriptionForeground: rgba(204, 204, 204, 0.7);
     --icon-foreground: #c5c5c5;
     --focusBorder: #007fd4;

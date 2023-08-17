@@ -6,6 +6,7 @@ $label: BEMElement($statusBar, 'label');
 
 .#{$container} {
     height: 100%;
+    user-select: none;
 
     .#{$label} {
         align-items: center;

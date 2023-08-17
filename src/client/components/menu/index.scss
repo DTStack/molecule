@@ -1,0 +1,96 @@
+@import '../../classNames/style.scss';
+
+$menu: prefix('menu');
+$container: BEMElement($menu, 'container');
+$item: BEMElement($menu, 'item');
+$label: BEMElement($menu, 'label');
+$divider: BEMElement($menu, 'divider');
+$icon: BEMElement($menu, 'icon');
+$keybinding: BEMElement($menu, 'keybinding');
+$indicator: BEMElement($menu, 'indicator');
+
+
+.#{$container} {
+    background-color: var(--menu-background);
+    outline: 1px solid var(--menu-border);
+    box-shadow: 0 2px 8px var(--widget-shadow);
+    border-radius: 5px;
+    color: var(--menu-foreground);
+    font-size: 13px;
+    min-width: 160px;
+    max-height: 841px;
+    overflow: scroll;
+    margin: 0;
+    padding: 4px 0;
+
+    .#{$item} {
+        list-style: none;
+        height: 2em;
+        display: flex;
+        align-items: center;
+        margin: 0 4px;
+        border-radius: 4px;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+            background-color: var(--menu-selectionBackground);
+            color: var(--button-foreground);
+        }
+    }
+
+    .#{$divider} {
+        background-color: var(--menu-separatorBackground);
+        height: 1px;
+        width: 100%;
+        margin: 4px 0;
+        pointer-events: none;
+    }
+
+    .#{$label} {
+        flex: 1;
+    }
+
+    .#{$icon} {
+        font-size: 12px;
+        line-height: 12px;
+        width: 2em;
+        text-align: center;
+        flex: 0 1 2em;
+    }
+
+    .#{$keybinding} {
+        flex: 2 1 auto;
+        text-align: right;
+    }
+
+    .#{$indicator} {
+        text-align: right;
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    >ul {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.rc-menu-submenu-popup {
+    position: absolute;
+    z-index: 9999;
+}
+
+.rc-menu-submenu-hidden {
+    display: none;
+}
+
+:export {
+    container: $container;
+    item: $item;
+    divider: $divider;
+    label: $label;
+    icon: $icon;
+    keybinding: $keybinding;
+    indicator: $indicator;
+}

@@ -7,11 +7,12 @@ export enum Float {
 }
 export type FloatStr = keyof typeof Float;
 
-export interface IStatusBarItem<T = any> extends Omit<HTMLElementProps, 'id'> {
+export interface IStatusBarItem<T = any> extends Omit<HTMLElementProps, 'id' | 'hidden'> {
     id: UniqueId;
     sortIndex?: number;
     data?: T;
     name?: string;
+    hidden?: boolean;
     render?: (item: IStatusBarItem) => React.ReactNode;
 }
 
@@ -29,6 +30,10 @@ export enum StatusBarEvent {
      * Selected an activity bar
      */
     onClick = 'statusBar.onClick',
+    /**
+     * ContextMenu event
+     */
+    onContextMenu = 'statusBar.onContextMenu',
     /**
      * Activity bar data changed
      */

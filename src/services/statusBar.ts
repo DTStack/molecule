@@ -138,7 +138,12 @@ export class StatusBarService extends BaseService<IStatusBar> implements IStatus
         this.setState(new StatusBarModel());
     }
 
+    // ===================== Subscriptions =====================
     public onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void) {
         this.subscribe(StatusBarEvent.onClick, callback);
+    }
+
+    public onContextMenu(callback: (e: MouseEvent, item: IStatusBarItem) => void) {
+        this.subscribe(StatusBarEvent.onContextMenu, callback);
     }
 }

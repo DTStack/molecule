@@ -1,13 +1,12 @@
-import BaseExtension from 'mo/glue/baseExtension';
-import { IContributeType, type UniqueId } from 'mo/types';
+import { IContributeType, type IExtension } from 'mo/types';
 
-export class LocalesExtends implements BaseExtension {
-    id: UniqueId = 'ExtendsLocales';
-    name = 'Extends locales';
-    contributes = {
-        [IContributeType.Languages]: [],
-    };
-    activate(): void {
-        console.log('test');
-    }
-}
+import zhCN from './zh-CN.json';
+
+export const LocalesExtends: IExtension = {
+    contributes: {
+        [IContributeType.Languages]: [zhCN],
+    },
+    id: 'ExtendsLocales',
+    name: 'Extends locales',
+    activate() {},
+};

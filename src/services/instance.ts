@@ -4,17 +4,16 @@ import Container from 'mo/client/container';
 import * as controller from 'mo/controllers';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
+import type { IExtension } from 'mo/types';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
 
 import { AuxiliaryBarService } from './auxiliaryBar';
 import { BuiltinService } from './builtin';
+import { ExtensionService } from './extension';
 import { LayoutService } from './layout';
 import { LocaleService } from './locale';
 import { StatusBarService } from './statusBar';
-
-// [TODO)
-type IExtension = any;
 
 export interface IConfigProps {
     /**
@@ -44,7 +43,7 @@ enum InstanceHookKind {
 export default class InstanceService extends GlobalEvent implements IInstanceServiceProps {
     private root: ReturnType<typeof createRoot> | undefined;
     private _config: Required<IConfigProps> = {
-        extensions: defaultExtensions.concat(),
+        extensions: [],
         defaultLocale: 'en',
     };
 
@@ -65,16 +64,20 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         if (config.defaultLocale) {
             this._config.defaultLocale = config.defaultLocale;
         }
+        this._config.extensions.push(...defaultExtensions);
 
         if (Array.isArray(config.extensions)) {
             this._config.extensions.push(...config.extensions);
         }
 
+        // ================ register all service ====================
         this.register('locale', LocaleService);
         this.register('builtin', BuiltinService);
+        this.register('extension', ExtensionService);
         this.register('auxiliaryBar', AuxiliaryBarService);
         this.register('layout', LayoutService);
         this.register('statusBar', StatusBarService);
+        // ==========================================================
     }
 
     // private initialLocaleService = (languagesExts: IExtension[]) => {
@@ -95,6 +98,10 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
     public render = (container?: HTMLElement | null) => {
         if (!container) return null;
         const locale = this.resolve<LocaleService>('locale');
+        locale.setCurrentLocale(this._config.defaultLocale);
+        const extension = this.resolve<ExtensionService>('extension');
+        extension.add(this._config.extensions);
+
         const builtin = this.resolve<BuiltinService>('builtin');
         this.emit(InstanceHookKind.beforeInit);
 
@@ -112,6 +119,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
             React.createElement(Container, {
                 value: {
                     molecule: { auxiliaryBar, layout, statusBar, locale, builtin },
+                    localize: locale.localize,
                     controllers: {
                         layout: layoutController,
                         statusBar: statusBarController,

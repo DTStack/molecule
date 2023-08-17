@@ -3,6 +3,7 @@ import type { Localize } from 'mo/types';
 export class BuiltinModel {
     #constants = {
         STATUS_EDITOR_INFO_ID: 'MoEditorInfo',
+        STATUS_BAR_HIDE_ID: 'hide',
     };
     #modules = {
         STATUS_EDITOR_INFO: () => ({
@@ -12,7 +13,12 @@ export class BuiltinModel {
                 ln: 0,
                 col: 0,
             },
-            name: this.localize('status.editor.info.name', 'Go to Line/Column'),
+            name: this.localize('statusBar.title', 'Editor Selection'),
+            render: () => this.localize('statusBar.editorStatus.gotoLine', 'Go to Line/Column'),
+        }),
+        CONTEXT_MENU_HIDE_STATUS_BAR: () => ({
+            id: this.#constants.STATUS_BAR_HIDE_ID,
+            name: this.localize('statusBar.hideStatusBar', 'Hide Status Bar'),
         }),
     };
     constructor(private localize: Localize) {}

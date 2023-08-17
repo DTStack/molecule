@@ -1,3 +1,5 @@
+import useLocale from '../../hooks/useLocale';
+
 export interface ILineInfoProps {
     data: {
         ln: number;
@@ -6,5 +8,15 @@ export interface ILineInfoProps {
 }
 
 export default function LineInfo({ data }: ILineInfoProps) {
-    return <span>{`Ln ${data.ln}, Col ${data.col}`}</span>;
+    const localize = useLocale();
+    return (
+        <span>
+            {localize(
+                'statusBar.editorStatus.singleSelection',
+                `Ln ${data.ln}, Col ${data.col}`,
+                data.ln,
+                data.col
+            )}
+        </span>
+    );
 }

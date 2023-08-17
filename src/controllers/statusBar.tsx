@@ -1,13 +1,14 @@
 import LineInfo from 'mo/client/components/lineInfo';
 import { BaseController } from 'mo/glue';
-import { type IStatusBarItem, StatusBarEvent } from 'mo/models/statusBar';
+import { StatusBarEvent } from 'mo/models/statusBar';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { StatusBarService } from 'mo/services/statusBar';
+import type { UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IStatusBarController extends BaseController {
-    onClick?: (e: React.MouseEvent, item: IStatusBarItem) => void;
-    // onContextMenuClick?: (e: React.MouseEvent, item: IMenuItemProps | undefined) => void;
+    onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>, key: UniqueId) => void;
+    onContextMenuClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>, key: UniqueId) => void;
 }
 
 @injectable()
@@ -17,21 +18,13 @@ export class StatusBarController extends BaseController implements IStatusBarCon
         @inject('builtin') private builtin: BuiltinService
     ) {
         super();
-        // this.menuBarController = container.resolve(MenuBarController);
-        // this.statusBarService = container.resolve(StatusBarService);
-        // this.builtinService = container.resolve(BuiltinService);
         this.initView();
     }
 
     private initView() {
         const state = this.builtin.getState();
-        const { STATUS_EDITOR_INFO } = state.modules;
-        // const nextRightItems = cloneDeep(this.statusBar.getState().rightItems);
+        const { STATUS_EDITOR_INFO, CONTEXT_MENU_HIDE_STATUS_BAR } = state.modules;
         if (STATUS_EDITOR_INFO) {
-            // nextRightItems.push({
-            //     ...STATUS_EDITOR_INFO,
-            //     render: (item: IStatusBarItem) => <EditorStatusBarView {...item} />,
-            // });
             this.statusBar.add(
                 {
                     ...STATUS_EDITOR_INFO,
@@ -40,41 +33,26 @@ export class StatusBarController extends BaseController implements IStatusBarCon
                 'right'
             );
         }
-        // const { STATUS_EDITOR_INFO, CONTEXT_MENU_HIDE_STATUS_BAR } =
-        //     this.builtinService.getModules();
 
-        // const nextRightItems = cloneDeep(this.statusBar.getState().rightItems);
-        // const nextContextMenu = cloneDeep(this.statusBar.getState().contextMenu || []);
-        // if (STATUS_EDITOR_INFO) {
-        //     nextRightItems.push({
-        //         ...STATUS_EDITOR_INFO,
-        //         render: (item: IStatusBarItem) => <EditorStatusBarView {...item} />,
-        //     });
-        // }
-
-        // if (CONTEXT_MENU_HIDE_STATUS_BAR) {
-        //     nextContextMenu.push(CONTEXT_MENU_HIDE_STATUS_BAR);
-        // }
-        // this.statusBar.setState({
-        //     rightItems: nextRightItems,
-        //     contextMenu: nextContextMenu,
-        // });
+        if (CONTEXT_MENU_HIDE_STATUS_BAR) {
+            this.statusBar.setState((prev) => ({
+                ...prev,
+                contextMenu: [...(prev.contextMenu || []), CONTEXT_MENU_HIDE_STATUS_BAR],
+            }));
+        }
     }
 
-    public onClick = (e: React.MouseEvent, item: IStatusBarItem) => {
+    public onClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, key: UniqueId) => {
+        const item =
+            this.statusBar.getStatusBarItem(key, 'left') ||
+            this.statusBar.getStatusBarItem(key, 'right');
         this.emit(StatusBarEvent.onClick, e, item);
     };
 
-    // public readonly onContextMenuClick = (
-    //     e: React.MouseEvent,
-    //     item: IMenuItemProps | undefined
-    // ) => {
-    //     const menuId = item?.id;
-    //     const { STATUS_BAR_HIDE_ID } = this.builtinService.getConstants();
-    //     switch (menuId) {
-    //         case STATUS_BAR_HIDE_ID:
-    //             this.menuBarController.updateStatusBar();
-    //             break;
-    //     }
-    // };
+    public readonly onContextMenuClick = (e: React.MouseEvent, key: UniqueId) => {
+        const item =
+            this.statusBar.getStatusBarItem(key, 'left') ||
+            this.statusBar.getStatusBarItem(key, 'right');
+        this.emit(StatusBarEvent.onContextMenu, e, item);
+    };
 }

@@ -17,6 +17,7 @@ const dist = path.join(__dirname, '..', 'esm');
 const tsFilePath = path.join(src, '**', '*.ts');
 const tsxFilePath = path.join(src, '**', '*.tsx');
 const scssFilePath = path.join(src, '**', '*.scss');
+const jsonFilePath = path.join(src, '**', '*.json');
 
 const styleVariablesFileName = 'style__variables.js';
 
@@ -24,6 +25,7 @@ const gray = chalk.rgb(104, 106, 102);
 const blue = chalk.rgb(50, 189, 200);
 const yellow = chalk.rgb(240, 152, 95);
 const green = chalk.rgb(100, 182, 120);
+const red = chalk.rgb(199, 134, 109);
 
 // 打印 process.argv
 yargs(hideBin(process.argv))
@@ -34,9 +36,12 @@ yargs(hideBin(process.argv))
 
         const scssfiles = await glob(scssFilePath);
 
+        const jsonfiles = await glob(jsonFilePath);
+
         transform([...tsfiles, ...tsxfiles]);
         transformTyping();
         transformStyle(scssfiles);
+        copyFile(jsonfiles);
     })
     .parse();
 
@@ -87,7 +92,6 @@ async function transformStyle(entrys) {
     await Promise.all(entrys.map((entry) => _transform(entry)));
     log(`Finishing ${green('transform styles')}`);
     log(`Starting ${yellow('watching style Files change')}...`);
-    // One-liner for current directory
     chokidar.watch(entrys).on('change', (path) => {
         log(`Starting ${green('transform styles', path)}...`);
         _transform(path)
@@ -136,6 +140,35 @@ async function transformStyle(entrys) {
 
 /**
  *
+ * @param {string[]} entrys
+ */
+async function copyFile(entrys) {
+    log(`Starting ${red('copy files')}...`);
+    entrys.map((entry) => _copyFile(entry));
+    log(`Finishing ${red('copy files')}`);
+
+    chokidar.watch(entrys).on('change', (path) => {
+        log(`Starting ${red('copy files')}...`);
+        _copyFile(path);
+        log(`Finishing ${red('copy files')}`);
+    });
+
+    /**
+     *
+     * @param {string} filePath
+     */
+    function _copyFile(filePath) {
+        const dest = filePath.replace(/src\//, 'esm/');
+        const dirname = path.dirname(dest);
+        if (!fs.existsSync(dirname)) {
+            fs.mkdirSync(dirname, { recursive: true });
+        }
+        fs.createReadStream(filePath, 'utf-8').pipe(fs.createWriteStream(dest));
+    }
+}
+
+/**
+ *
  * @param {string} source
  * @param {string} filePath
  * @returns
@@ -166,10 +199,11 @@ function sassLoader(source) {
     const regex = /^import.*(.scss)';/gm;
     target = target.replace(regex, (substring) => {
         const matcher = substring.match(/'(.*')/);
-        return `import ${matcher[0].replace(/.scss/, '.css')}\n${substring.substring(
-            0,
-            matcher.index
-        )} './${styleVariablesFileName}'`;
+        const isVariables = substring.includes('from');
+        return [
+            `import ${matcher[0].replace(/.scss/, '.css')}`,
+            isVariables && `${substring.substring(0, matcher.index)} './${styleVariablesFileName}'`,
+        ].join('\n');
     });
     return target;
 }

@@ -3,6 +3,7 @@ import { create } from '@dtinsight/molecule';
 
 const instance = create({
     extensions: [],
+    defaultLocale: 'zh-CN',
 });
 
 export default function App() {

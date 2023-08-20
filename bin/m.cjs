@@ -46,13 +46,29 @@ yargs(hideBin(process.argv))
     .parse();
 
 /**
+ * @type {Awaited<ReturnType<esbuild.context>> | undefined}
+ */
+let transformCtx;
+/**
+ * @type {ReturnType<spawn> | undefined}
+ */
+let typingCtx;
+
+process.on('exit', () => {
+    typingCtx?.kill();
+    typingCtx?.disconnect();
+    transformCtx?.cancel();
+    transformCtx?.dispose();
+});
+
+/**
  *
  * @param {string[]} entryPoints
  * @returns
  */
 async function transform(entryPoints) {
     log(`Starting ${blue('transform')}...`);
-    const ctx = await esbuild.context({
+    transformCtx = await esbuild.context({
         entryPoints,
         bundle: false,
         format: 'esm',
@@ -74,13 +90,13 @@ async function transform(entryPoints) {
             },
         ],
     });
-    await ctx.watch();
+    await transformCtx.watch();
     log(`Finishing ${blue('transform')}`);
     log(`Starting ${yellow('watching tsx Files change')}...`);
 }
 
 async function transformTyping() {
-    spawn('tsc', ['--watch', '--preserveWatchOutput'], { stdio: 'inherit' });
+    typingCtx = spawn('tsc', ['--watch', '--preserveWatchOutput'], { stdio: 'inherit' });
 }
 
 /**

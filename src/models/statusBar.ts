@@ -5,7 +5,7 @@ export enum Float {
     left = 'left',
     right = 'right',
 }
-export type FloatStr = keyof typeof Float;
+export type FloatLiteral = keyof typeof Float;
 
 export interface IStatusBarItem<T = any> extends Omit<HTMLElementProps, 'id' | 'hidden'> {
     id: UniqueId;

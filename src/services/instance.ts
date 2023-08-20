@@ -13,6 +13,7 @@ import { BuiltinService } from './builtin';
 import { ExtensionService } from './extension';
 import { LayoutService } from './layout';
 import { LocaleService } from './locale';
+import { MenuBarService } from './menuBar';
 import { StatusBarService } from './statusBar';
 
 export interface IConfigProps {
@@ -77,6 +78,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('auxiliaryBar', AuxiliaryBarService);
         this.register('layout', LayoutService);
         this.register('statusBar', StatusBarService);
+        this.register('menuBar', MenuBarService);
         // ==========================================================
     }
 
@@ -110,19 +112,22 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const auxiliaryBar = this.resolve<AuxiliaryBarService>('auxiliaryBar');
         const layout = this.resolve<LayoutService>('layout');
         const statusBar = this.resolve<StatusBarService>('statusBar');
+        const menuBar = this.resolve<MenuBarService>('menuBar');
 
         const layoutController = this.resolve(controller.layout.LayoutController);
         const statusBarController = this.resolve(controller.statusBar.StatusBarController);
+        const menuBarController = this.resolve(controller.menuBar.MenuBarController);
 
         this.root = this.root || createRoot(container);
         this.root.render(
             React.createElement(Container, {
                 value: {
-                    molecule: { auxiliaryBar, layout, statusBar, locale, builtin },
+                    molecule: { auxiliaryBar, layout, statusBar, locale, builtin, menuBar },
                     localize: locale.localize,
                     controllers: {
                         layout: layoutController,
                         statusBar: statusBarController,
+                        menuBar: menuBarController,
                     } as any,
                 },
             })

@@ -1,0 +1,35 @@
+@use '../index.scss' as variables;
+@import '../../../classNames/style.scss';
+
+$dragging: BEMModifer(variables.$split, 'dragging');
+$vertical: BEMModifer(variables.$split, 'vertical');
+$horizontal: BEMModifer(variables.$split, 'horizontal');
+
+.#{variables.$split} {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    &--dragging {
+        .#{variables.$pane} {
+            user-select: none;
+        }
+
+        .#{$vertical} {
+            cursor: col-resize;
+        }
+
+        .#{$horizontal} {
+            cursor: row-resize;
+        }
+    }
+}
+
+
+:export {
+    container: variables.$split;
+    dragging: $dragging;
+    vertical: $vertical;
+    horizontal: $horizontal;
+}

@@ -1,0 +1,41 @@
+@use '../index.scss' as split;
+@import '../../../classNames/style.scss';
+
+$container: split.$sash;
+$hover: BEMModifer($container, 'hover');
+$disabled: BEMModifer($container, 'disabled');
+$vertical: BEMModifer($container, 'vertical');
+$horizontal: BEMModifer($container, 'horizontal');
+
+.#{$container} {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    transition: background-color 0.1s;
+    width: 100%;
+    z-index: 2;
+
+    &.#{$disabled} {
+        pointer-events: none;
+    }
+
+    &.#{$hover} {
+        background-color: var(--sash-hoverBorder);
+    }
+
+    &.#{$vertical} {
+        cursor: col-resize;
+    }
+
+    &.#{$horizontal} {
+        cursor: row-resize;
+    }
+}
+
+:export {
+    container: $container;
+    hover: $hover;
+    disabled: $disabled;
+    vertical: $vertical;
+    horizontal: $horizontal;
+}

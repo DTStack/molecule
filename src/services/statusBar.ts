@@ -1,7 +1,7 @@
 import { BaseService } from 'mo/glue';
 import {
     Float,
-    type FloatStr,
+    type FloatLiteral,
     type IStatusBar,
     type IStatusBarItem,
     StatusBarEvent,
@@ -17,24 +17,24 @@ export interface IStatusBarService extends BaseService<IStatusBar> {
      * @param item
      * @param float position the item to left or right
      */
-    add(item: IStatusBarItem, float: FloatStr): void;
+    add(item: IStatusBarItem, float: FloatLiteral): void;
     /**
      * Remove the specific StatusBar item
      * @param id
      * @param float position the item to left or right
      */
-    remove(id: UniqueId, float: FloatStr): void;
+    remove(id: UniqueId, float: FloatLiteral): void;
     /**
      * Update the specific StatusBar item, it'll update the item found in left
      * @param item the id field is required
      * @param float position the item to left or right
      */
-    update(item: IStatusBarItem, float: FloatStr): void;
+    update(item: IStatusBarItem, float: FloatLiteral): void;
     /**
      * Get the specific StatusBar item
      * @param id
      */
-    getStatusBarItem(id: UniqueId, float: FloatStr): IStatusBarItem | null;
+    getStatusBarItem(id: UniqueId, float: FloatLiteral): IStatusBarItem | null;
     /**
      * Reset the contextMenu data and the StatusBar data , including right and left
      */
@@ -69,7 +69,7 @@ export class StatusBarService extends BaseService<IStatusBar> implements IStatus
     /**
      * Get the item informations in right position or left position
      */
-    private getItem(id: IStatusBarItem['id'], float: FloatStr): StatusBarItemInfos {
+    private getItem(id: IStatusBarItem['id'], float: FloatLiteral): StatusBarItemInfos {
         const { rightItems, leftItems } = this.state;
         // specific the position
         const sourceArr = float === Float.left ? leftItems : rightItems;
@@ -81,7 +81,7 @@ export class StatusBarService extends BaseService<IStatusBar> implements IStatus
         };
     }
 
-    public add(item: IStatusBarItem<any>, float: FloatStr) {
+    public add(item: IStatusBarItem<any>, float: FloatLiteral) {
         const target = this.getItem(item.id, float);
         if (target.item) {
             logger.error(
@@ -97,7 +97,7 @@ export class StatusBarService extends BaseService<IStatusBar> implements IStatus
         });
     }
 
-    public update(item: IStatusBarItem, float: FloatStr): void {
+    public update(item: IStatusBarItem, float: FloatLiteral): void {
         const workInProgressItem = this.getItem(item.id, float);
 
         if (!workInProgressItem.source) {
@@ -113,7 +113,7 @@ export class StatusBarService extends BaseService<IStatusBar> implements IStatus
         });
     }
 
-    public getStatusBarItem(id: UniqueId, float: FloatStr) {
+    public getStatusBarItem(id: UniqueId, float: FloatLiteral) {
         const itemInfo = this.getItem(id, float);
         return itemInfo.item;
     }

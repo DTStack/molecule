@@ -3,10 +3,24 @@ import type { AuxiliaryBarService } from './services/auxiliaryBar';
 import type { BuiltinService } from './services/builtin';
 import type { LayoutService } from './services/layout';
 import type { LocaleService } from './services/locale';
+import type { MenuBarService } from './services/menuBar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
 
-export interface HTMLElementProps extends Omit<HTMLElement, 'title' | 'style' | 'className'> {
+export interface TreeModel<T> {
+    id: UniqueId;
+    children?: T[];
+    [key: string]: any;
+}
+
+export enum Direction {
+    vertical = 'vertical',
+    horizontal = 'horizontal',
+}
+
+export type DirectionLiteral = keyof typeof Direction;
+
+export interface HTMLElementProps {
     title?: string;
     style?: React.CSSProperties;
     className?: string;
@@ -22,6 +36,7 @@ export interface IContext {
         statusBar: StatusBarService;
         locale: LocaleService;
         builtin: BuiltinService;
+        menuBar: MenuBarService;
     };
     controllers: { [key in keyof IContext['molecule']]: BaseController };
     localize: Localize;

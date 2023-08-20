@@ -1,0 +1,15 @@
+@use '../index.scss' as variables;
+
+$container: variables.$pane;
+
+.#{$container} {
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    white-space: normal;
+    width: 100%;
+}
+
+:export {
+    pane: $container;
+}

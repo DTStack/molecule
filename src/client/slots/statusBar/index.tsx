@@ -21,6 +21,8 @@ export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarCon
 
     return (
         <Dropdown
+            trigger="contextMenu"
+            alignPoint
             data={statusBar.contextMenu?.concat(
                 { id: 'divider1', type: 'divider' },
                 statusBar.rightItems.map((i) => ({

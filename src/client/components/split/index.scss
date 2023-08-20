@@ -1,0 +1,5 @@
+@import '../../classNames/style.scss';
+
+$split: prefix('split');
+$sash: BEMElement($split, 'sash');
+$pane: BEMElement($split, 'pane');

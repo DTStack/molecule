@@ -1,14 +1,20 @@
 import React from 'react';
 import { BaseService } from 'mo/glue';
-import { auxiliaryBar } from 'mo/models';
+import {
+    AuxiliaryEventKind,
+    AuxiliaryModel,
+    type IAuxiliaryBar,
+    type IAuxiliaryBarMode,
+    type IAuxiliaryData,
+} from 'mo/models/auxiliaryBar';
 import type { UniqueId } from 'mo/types';
 
-export interface IAuxiliaryBarService extends BaseService<auxiliaryBar.IAuxiliaryBar> {
+export interface IAuxiliaryBarService extends BaseService<IAuxiliaryBar> {
     /**
      * Get the current tab
      */
-    getCurrentTab(): auxiliaryBar.IAuxiliaryData | undefined;
-    addAuxiliaryBar(tabs: auxiliaryBar.IAuxiliaryData[] | auxiliaryBar.IAuxiliaryData): void;
+    getCurrentTab(): IAuxiliaryData | undefined;
+    addAuxiliaryBar(tabs: IAuxiliaryData[] | IAuxiliaryData): void;
     /**
      * Set the active one on data
      */
@@ -17,9 +23,7 @@ export interface IAuxiliaryBarService extends BaseService<auxiliaryBar.IAuxiliar
      * Set the mode of auxiliary bar
      */
     setMode: (
-        mode:
-            | auxiliaryBar.IAuxiliaryBarMode
-            | ((preState: auxiliaryBar.IAuxiliaryBarMode) => auxiliaryBar.IAuxiliaryBarMode)
+        mode: IAuxiliaryBarMode | ((preState: IAuxiliaryBarMode) => IAuxiliaryBarMode)
     ) => void;
     /**
      * Set the children of auxiliary bar
@@ -36,14 +40,14 @@ export interface IAuxiliaryBarService extends BaseService<auxiliaryBar.IAuxiliar
 }
 
 export class AuxiliaryBarService
-    extends BaseService<auxiliaryBar.IAuxiliaryBar>
+    extends BaseService<IAuxiliaryBar>
     implements IAuxiliaryBarService
 {
-    public state: auxiliaryBar.IAuxiliaryBar;
+    public state: IAuxiliaryBar;
 
     constructor() {
         super();
-        this.state = new auxiliaryBar.AuxiliaryModel();
+        this.state = new AuxiliaryModel();
     }
 
     getCurrentTab = () => {
@@ -52,7 +56,7 @@ export class AuxiliaryBarService
         return tab;
     };
 
-    addAuxiliaryBar = (tabs: auxiliaryBar.IAuxiliaryData | auxiliaryBar.IAuxiliaryData[]) => {
+    addAuxiliaryBar = (tabs: IAuxiliaryData | IAuxiliaryData[]) => {
         const next = Array.isArray(tabs) ? tabs : [tabs];
         this.setState({
             data: this.state.data.concat(next),
@@ -69,11 +73,7 @@ export class AuxiliaryBarService
         });
     };
 
-    setMode = (
-        mode:
-            | auxiliaryBar.IAuxiliaryBarMode
-            | ((preState: auxiliaryBar.IAuxiliaryBarMode) => auxiliaryBar.IAuxiliaryBarMode)
-    ) => {
+    setMode = (mode: IAuxiliaryBarMode | ((preState: IAuxiliaryBarMode) => IAuxiliaryBarMode)) => {
         if (typeof mode === 'string') {
             this.setState({
                 mode,
@@ -87,11 +87,11 @@ export class AuxiliaryBarService
     };
 
     reset = () => {
-        this.setState(new auxiliaryBar.AuxiliaryModel());
+        this.setState(new AuxiliaryModel());
     };
 
     // ====== The belows for subscribe activity bar events ======
     public onTabClick(callback: (key: UniqueId) => void) {
-        this.subscribe(auxiliaryBar.AuxiliaryEventKind.onTabClick, callback);
+        this.subscribe(AuxiliaryEventKind.onTabClick, callback);
     }
 }

@@ -8,5 +8,6 @@ export const LocalesExtends: IExtension = {
     },
     id: 'ExtendsLocales',
     name: 'Extends locales',
-    activate() {},
+    activate() {
+    },
 };

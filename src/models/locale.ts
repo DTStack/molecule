@@ -20,6 +20,8 @@ export type LocaleKind = {
     'menu.edit': string;
     'menu.undo': string;
     'menu.redo': string;
+    'menu.runTask': string;
+    'menu.about': string;
     'menu.selection': string;
     'menu.selectAll': string;
     'menu.copyLineUp': string;
@@ -36,8 +38,7 @@ export type LocaleKind = {
     'menu.showPanel.title': string;
     'menu.run': string;
     'menu.help': string;
-    'menu.menuBarHorizontal': string;
-    'menu.menuBarVertical': string;
+    'menu.showAuxiliaryBar': string;
     'sidebar.explore.title': string;
     'sidebar.explore.folders': string;
     'sidebar.explore.openEditor': string;

@@ -1,3 +1,4 @@
+import { Children, cloneElement, isValidElement } from 'react';
 import type { UniqueId } from 'mo/types';
 
 export function searchById<T extends { id: UniqueId; [key: string]: any }>(id: UniqueId) {
@@ -19,4 +20,18 @@ export function getDataAttributionsFromProps(props: Record<string, any>) {
         }
         return pre;
     }, {});
+}
+
+/**
+ * Clone react children props
+ * @param children React.ReactNode
+ * @param props Parent props
+ */
+export function cloneReactChildren<P>(children: React.ReactNode, props: P): React.ReactNode {
+    return Children.map(children, (child) => {
+        if (isValidElement(child)) {
+            return cloneElement(child, props);
+        }
+        return child;
+    });
 }

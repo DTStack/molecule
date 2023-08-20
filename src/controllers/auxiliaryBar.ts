@@ -1,5 +1,5 @@
 import { BaseController } from 'mo/glue';
-import { auxiliaryBar } from 'mo/models';
+import { AuxiliaryEventKind } from 'mo/models/auxiliaryBar';
 import { type IAuxiliaryBarService } from 'mo/services/auxiliaryBar';
 import type { UniqueId } from 'mo/types';
 
@@ -18,6 +18,6 @@ export class AuxiliaryController extends BaseController implements IAuxiliaryCon
         this.auxiliaryService.setActive(
             this.auxiliaryService.getState().current === key ? undefined : key
         );
-        this.emit(auxiliaryBar.AuxiliaryEventKind.onTabClick, key);
+        this.emit(AuxiliaryEventKind.onTabClick, key);
     };
 }

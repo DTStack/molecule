@@ -7,3 +7,7 @@ $prefix: 'mo';
 @function BEMElement($name, $element) {
     @return $name+'__'+$element;
 }
+
+@function BEMModifer($element, $modifier) {
+    @return $element+'--'+$modifier;
+}

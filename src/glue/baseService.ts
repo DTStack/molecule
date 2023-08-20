@@ -44,6 +44,7 @@ export default abstract class BaseService<S = any> extends GlobalEvent implement
     /**
      * Set the state values, and notify the view component to re render
      * @param values update target state values
+     * @FIXME Should support batchUpdate based on fiber
      */
     public setState(
         values: Partial<S> | ((prev: S) => Partial<S>),

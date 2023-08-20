@@ -1,8 +1,8 @@
 import { BaseService } from 'mo/glue';
-import { layout } from 'mo/models';
-import { Functional } from 'mo/types';
+import { type ILayout, LayoutModel, type PositionLiteral } from 'mo/models/layout';
+import { Direction, Functional } from 'mo/types';
 
-export interface ILayoutService extends BaseService<layout.ILayout> {
+export interface ILayoutService extends BaseService<ILayout> {
     /**
      * Toggle the visibility of menu bar, returns the status of menu bar's `hidden`
      */
@@ -42,26 +42,16 @@ export interface ILayoutService extends BaseService<layout.ILayout> {
      * @param position
      * @unachieved
      */
-    setSideBarPosition(position: layout.PositionStr): void;
+    setSideBarPosition(position: PositionLiteral): void;
     /**
      * Set the sizes between editor groups
      * @param groupSplitPos
      */
     setGroupSplitSize(groupSplitPos: (number | string)[]): void;
     /**
-     * Set the mode of the MenuBar, default is `vertical`
-     * @param mode
-     * @unachieved
-     */
-    setMenuBarMode(mode: layout.MenuBarModeStr): void;
-    /**
-     * Get the mode of the MenuBar
-     */
-    getMenuBarMode(): layout.MenuBarModeStr;
-    /**
      * Set the direction of editor group,default is `vertical`
      */
-    setEditorGroupDirection(direction: layout.MenuBarMode | Functional<layout.MenuBarMode>): void;
+    setEditorGroupDirection(direction: Direction | Functional<Direction>): void;
     /**
      * Set the visibility of auxiliary bar
      *
@@ -74,11 +64,11 @@ export interface ILayoutService extends BaseService<layout.ILayout> {
     reset(): void;
 }
 
-export class LayoutService extends BaseService<layout.ILayout> implements ILayoutService {
-    protected state: layout.ILayout;
+export class LayoutService extends BaseService<ILayout> implements ILayoutService {
+    protected state: ILayout;
     constructor() {
         super();
-        this.state = new layout.LayoutModel();
+        this.state = new LayoutModel();
     }
 
     public setMenuBarVisibility(visibility: boolean | Functional<boolean>) {
@@ -140,7 +130,7 @@ export class LayoutService extends BaseService<layout.ILayout> implements ILayou
         }));
     }
 
-    public setSideBarPosition(position: layout.PositionStr): void {
+    public setSideBarPosition(position: PositionLiteral): void {
         this.setState({
             sidebar: { position, hidden: false },
         });
@@ -172,19 +162,7 @@ export class LayoutService extends BaseService<layout.ILayout> implements ILayou
         });
     }
 
-    public setMenuBarMode(mode: layout.MenuBarModeStr): void {
-        const { menuBar } = this.state;
-        this.setState({ menuBar: { ...menuBar, mode, hidden: false } });
-        // [TODO)
-        // this.emit(MenuBarEvent.onChangeMode, mode);
-    }
-
-    public getMenuBarMode(): layout.MenuBarModeStr {
-        const { menuBar } = this.state;
-        return menuBar.mode;
-    }
-
-    public setEditorGroupDirection(direction: layout.MenuBarMode | Functional<layout.MenuBarMode>) {
+    public setEditorGroupDirection(direction: Direction | Functional<Direction>) {
         this.setState((prev) => ({
             ...prev,
             editorGroupDirection:
@@ -203,6 +181,6 @@ export class LayoutService extends BaseService<layout.ILayout> implements ILayou
     }
 
     public reset() {
-        this.setState(new layout.LayoutModel());
+        this.setState(new LayoutModel());
     }
 }

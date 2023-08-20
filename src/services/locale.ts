@@ -165,7 +165,6 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
                 result = result.replace(LocaleService.LOCALIZE_REPLACED_WORD, replacedVal);
             });
         }
-        console.log('result:', result);
         return result;
     };
 }

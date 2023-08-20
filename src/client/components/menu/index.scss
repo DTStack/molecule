@@ -49,6 +49,7 @@ $indicator: BEMElement($menu, 'indicator');
 
     .#{$label} {
         flex: 1;
+        line-height: normal;
     }
 
     .#{$icon} {

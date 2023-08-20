@@ -1,16 +1,10 @@
-import { WithHiddenProperty } from 'mo/types';
+import { Direction, type WithHiddenProperty } from 'mo/types';
 
 export enum Position {
     left = 'left',
     right = 'right',
 }
-export type PositionStr = keyof typeof Position;
-
-export enum MenuBarMode {
-    horizontal = 'horizontal',
-    vertical = 'vertical',
-}
-export type MenuBarModeStr = keyof typeof MenuBarMode;
+export type PositionLiteral = keyof typeof Position;
 
 export enum LayoutEvents {
     OnWorkbenchDidMount = 'workbench.didMount',
@@ -23,10 +17,10 @@ export interface ILayout {
     auxiliaryBar: WithHiddenProperty<void>;
     panel: WithHiddenProperty<{ panelMaximized: boolean }>;
     statusBar: WithHiddenProperty<void>;
-    sidebar: WithHiddenProperty<{ position: PositionStr }>;
-    menuBar: WithHiddenProperty<{ mode: MenuBarModeStr }>;
+    sidebar: WithHiddenProperty<{ position: PositionLiteral }>;
+    menuBar: WithHiddenProperty<void>;
     groupSplitPos: (number | string)[];
-    editorGroupDirection: MenuBarMode;
+    editorGroupDirection: Direction;
 }
 
 export class LayoutModel implements ILayout {
@@ -39,7 +33,7 @@ export class LayoutModel implements ILayout {
         public panel = { hidden: false, panelMaximized: false },
         public statusBar = { hidden: false },
         public sidebar = { hidden: false, position: Position.left },
-        public menuBar = { hidden: false, mode: MenuBarMode.vertical },
-        public editorGroupDirection = MenuBarMode.vertical
+        public menuBar = { hidden: false },
+        public editorGroupDirection = Direction.vertical
     ) {}
 }

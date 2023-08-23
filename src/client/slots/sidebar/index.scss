@@ -1,0 +1,85 @@
+@import '../../classNames/style.scss';
+
+$sidebar: prefix('sidebar');
+$container: BEMElement($sidebar, 'container');
+$pane: BEMElement($sidebar, 'pane');
+$header: BEMElement($sidebar, 'header');
+$title: BEMElement($sidebar, 'title');
+$toolbar: BEMElement($sidebar, 'toolbar');
+$content: BEMElement($sidebar, 'content');
+
+
+.#{$container} {
+    background-color: var(--sideBar-background);
+    border-color: var(--sideBar-border);
+    border-right: 1px solid var(--sideBar-border);
+    color: var(--sideBar-foreground);
+    height: 100%;
+    left: 0;
+    outline-color: var(--sideBar-border);
+    position: relative;
+    width: 100%;
+
+    .#{$pane} {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .#{$header} {
+        align-items: center;
+        box-sizing: border-box;
+        display: flex;
+        height: 35px;
+        overflow: hidden;
+        padding-left: 8px;
+        padding-right: 8px;
+        position: relative;
+        user-select: none;
+    }
+
+    .#{$title} {
+        line-height: 35px;
+        overflow: hidden;
+        padding-left: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        h2 {
+            color: var(--sideBarTitle-foreground);
+            cursor: default;
+            font-size: 11px;
+            font-weight: normal;
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+    }
+
+    .#{$toolbar} {
+        flex: 1;
+        padding-left: 5px;
+    }
+
+    .#{$content} {
+        bottom: 0;
+        height: calc(100% - 35px);
+        left: 0;
+        position: relative;
+        right: 0;
+        top: 0;
+    }
+}
+
+
+:export {
+    container: $container;
+    pane: $pane;
+    header: $header;
+    title: $title;
+    toolbar: $toolbar;
+    content: $content;
+}

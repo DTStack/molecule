@@ -1,0 +1,102 @@
+@import '../../classNames/style.scss';
+
+$collapse: prefix('collapse');
+$item: BEMElement($collapse, 'item');
+$pane: BEMElement($collapse, 'pane');
+$header: BEMElement($collapse, 'header');
+$title: BEMElement($collapse, 'title');
+$content: BEMElement($collapse, 'content');
+$extra: BEMElement($collapse, 'extra');
+
+$collapsing: BEMModifier($pane, 'collapsing');
+$active: BEMModifier($collapse, 'active');
+
+$header-size: 26px;
+
+.#{$collapse} {
+    background-color: var(--sideBar-background);
+    color: var(--sideBar-foreground);
+    height: 100%;
+
+    &:focus-within {
+        .#{$extra} {
+            opacity: 1;
+        }
+    }
+
+    .#{$pane} {
+        transition: top ease-out 0.15s, height ease-out 0.15s;
+
+        &:first-child .#{$header} {
+            border-top-color: transparent;
+        }
+    }
+
+    .#{$item} {
+        height: 100%;
+        line-height: 22px;
+        overflow: hidden;
+        width: 100%;
+
+        &:hover {
+            .#{$extra} {
+                opacity: 1;
+            }
+        }
+    }
+
+    .#{$header} {
+        align-items: center;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid var(--sideBarSectionHeader-border, transparent);
+        box-sizing: border-box;
+        cursor: pointer;
+        display: flex;
+        font-size: 11px;
+        font-weight: bold;
+        height: $header-size;
+        outline: 1px solid transparent;
+        outline-offset: -1px;
+        padding: 1px 2px;
+        user-select: none;
+
+        &:focus {
+            outline-color: var(--list-focusOutline);
+        }
+
+        .#{$title} {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .#{$extra} {
+        margin: 0 0 0 auto;
+        opacity: 0;
+    }
+
+    .#{$content} {
+        flex: 1;
+        height: calc(100% - $header-size);
+        outline: 1px solid transparent;
+        outline-offset: -1px;
+        padding: 0 1px;
+
+        &:focus {
+            outline-color: var(--list-focusOutline);
+        }
+    }
+}
+
+:export {
+    collapse: $collapse;
+    item: $item;
+    pane: $pane;
+    header: $header;
+    title: $title;
+    content: $content;
+    extra: $extra;
+    collapsing: $collapsing;
+    active: $active;
+}

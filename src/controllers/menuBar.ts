@@ -48,8 +48,7 @@ export class MenuBarController extends BaseController implements IMenuBarControl
         const state = this.builtin.getState();
         const { builtInMenuBarData } = state.modules;
         if (builtInMenuBarData) {
-            const viewMenu = (builtInMenuBarData as IMenuItemProps[]).find((i) => i.id === 'View');
-            this.checkView(viewMenu);
+            this.checkView(builtInMenuBarData);
             this.menuBar.setMenus(builtInMenuBarData);
         }
     }
@@ -61,17 +60,20 @@ export class MenuBarController extends BaseController implements IMenuBarControl
     private checkView(data?: IMenuItemProps) {
         if (!data) return;
         const treeHelper = new TreeHelper(data);
-        const { menuBar, auxiliaryBar, activityBar, statusBar, panel } = this.layout.getState();
+        const { menuBar, auxiliaryBar, activityBar, statusBar, panel, sidebar } =
+            this.layout.getState();
         const {
             MENU_VIEW_MENUBAR,
             MENU_VIEW_AUXILIARY,
             MENU_VIEW_ACTIVITYBAR,
             MENU_VIEW_STATUSBAR,
             MENU_VIEW_PANEL,
+            MENU_VIEW_SIBEBAR,
         } = this.builtin.getState().constants;
         const viewItems = [
             { key: MENU_VIEW_MENUBAR, icon: this.getCheck(menuBar.hidden) },
             { key: MENU_VIEW_AUXILIARY, icon: this.getCheck(auxiliaryBar.hidden) },
+            { key: MENU_VIEW_SIBEBAR, icon: this.getCheck(sidebar.hidden) },
             { key: MENU_VIEW_ACTIVITYBAR, icon: this.getCheck(activityBar.hidden) },
             { key: MENU_VIEW_STATUSBAR, icon: this.getCheck(statusBar.hidden) },
             { key: MENU_VIEW_PANEL, icon: this.getCheck(panel.hidden) },

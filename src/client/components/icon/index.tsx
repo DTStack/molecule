@@ -1,10 +1,11 @@
 import { ComponentProps } from 'react';
 import { classNames, prefix } from 'mo/client/classNames';
+import type { IconType } from 'mo/types';
 
 import '@vscode/codicons/dist/codicon.css';
 
 export interface IIconProps extends ComponentProps<'span'> {
-    type?: string | JSX.Element;
+    type?: IconType;
     onClick?: (e: React.MouseEvent) => void;
 }
 

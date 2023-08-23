@@ -147,6 +147,7 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         this.setState(new MenuBarModel());
     }
 
+    // ===================== Subscriptions =====================
     public onSelect = (callback: (menuId: UniqueId) => void) => {
         this.subscribe(MenuBarEvent.onSelect, callback);
     };

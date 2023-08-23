@@ -1,18 +1,18 @@
-import type { IMenuItemProps } from 'mo/types';
+import type { ContextMenuEventHandler, IMenuItemProps } from 'mo/types';
 import RcDropdown from 'rc-dropdown';
 import type { DropdownProps } from 'rc-dropdown/es/Dropdown';
-import type { MenuClickEventHandler } from 'rc-menu/lib/interface';
 
 import Menu from '../menu';
 import './index.scss';
 
 type ActionType = Exclude<DropdownProps['trigger'], Array<any> | 'focus'>;
 
-interface IDropdownProps extends Pick<DropdownProps, 'children' | 'visible' | 'onVisibleChange'> {
+interface IDropdownProps
+    extends Pick<DropdownProps, 'children' | 'visible' | 'onVisibleChange' | 'placement'> {
     trigger?: ActionType;
     data?: IMenuItemProps[];
     alignPoint?: boolean;
-    onClick?: MenuClickEventHandler;
+    onClick?: ContextMenuEventHandler;
 }
 
 export default function Dropdown({
@@ -20,11 +20,12 @@ export default function Dropdown({
     data,
     alignPoint,
     visible,
+    placement,
     trigger = 'click',
     onVisibleChange,
     onClick,
 }: IDropdownProps) {
-    return (
+    return data?.length ? (
         <RcDropdown
             visible={visible}
             onVisibleChange={onVisibleChange}
@@ -32,8 +33,11 @@ export default function Dropdown({
             overlay={<Menu data={data} onClick={onClick} />}
             minOverlayWidthMatchTrigger={false}
             alignPoint={alignPoint}
+            placement={placement}
         >
             {children}
         </RcDropdown>
+    ) : (
+        children
     );
 }

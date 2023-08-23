@@ -90,6 +90,9 @@ export type LocaleKind = {
     'statusBar.editorStatus.singleSelection': string;
     'statusBar.editorStatus.gotoLine': string;
     'statusBar.hideStatusBar': string;
+    'menu.account': string;
+    menubar: string;
+    'menu.hideActivityBar': string;
 };
 type LocaleKindLiteral = keyof LocaleKind;
 

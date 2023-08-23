@@ -1,0 +1,77 @@
+@import '../../classNames/style.scss';
+
+$activityBar: prefix('activityBar');
+$item: BEMElement($activityBar, 'item');
+$label: BEMElement($activityBar, 'label');
+$indicator: BEMElement($activityBar, 'indicator');
+
+$checked: BEMModifier($item, 'checked');
+$disabled: BEMModifier($item, 'disabled');
+
+.#{$item} {
+    align-items: center;
+    color: var(--activityBar-inactiveForeground);
+    cursor: pointer;
+    display: flex;
+    height: 48px;
+    justify-content: center;
+    position: relative;
+    transition: transform 50ms ease;
+    width: 48px;
+    z-index: 1;
+
+    &:hover {
+        background-color: var(--activityBar-activeBackground);
+        border-color: var(--activityBar-activeBorder);
+        color: var(--activityBar-activeBorder);
+    }
+
+    &.#{$disabled} {
+        cursor: default;
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    &.#{$checked} {
+        color: var(--activityBar-activeBorder);
+    }
+
+    .#{$label} {
+        box-sizing: border-box;
+        color: inherit;
+        display: flex;
+        height: 48px;
+        margin-right: 0;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        background-color: var(--activityBar-activeBackground);
+        border-color: var(--activityBar-activeBorder);
+        color: var(--activityBar-activeBorder);
+
+        &.codicon {
+            align-items: center;
+            color: inherit;
+            display: flex;
+            font-size: 24px;
+            justify-content: center;
+        }
+    }
+
+    .#{$indicator} {
+        background: var(--activityBar-activeBorder);
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 2px;
+    }
+}
+
+:export {
+    item: $item;
+    label: $label;
+    indicator: $indicator;
+    checked: $checked;
+    disabled: $disabled;
+}

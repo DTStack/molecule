@@ -1,17 +1,18 @@
 import type { ILocale, LocaleKind } from './models/locale';
+import type { ActivityBarService } from './services/activityBar';
 import type { AuxiliaryBarService } from './services/auxiliaryBar';
 import type { BuiltinService } from './services/builtin';
+import type { ExplorerService } from './services/explorer';
 import type { LayoutService } from './services/layout';
 import type { LocaleService } from './services/locale';
 import type { MenuBarService } from './services/menuBar';
+import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
 
-export interface TreeModel<T> {
-    id: UniqueId;
-    children?: T[];
-    [key: string]: any;
-}
+export type RecordWithId<T> = { id: UniqueId; [key: string]: any } & T;
+
+export type TreeModel<T> = RecordWithId<{ children?: T[] }>;
 
 export enum Direction {
     vertical = 'vertical',
@@ -37,6 +38,9 @@ export interface IContext {
         locale: LocaleService;
         builtin: BuiltinService;
         menuBar: MenuBarService;
+        activityBar: ActivityBarService;
+        sidebar: SidebarService;
+        explorer: ExplorerService;
     };
     controllers: { [key in keyof IContext['molecule']]: BaseController };
     localize: Localize;
@@ -44,6 +48,8 @@ export interface IContext {
 export type IMoleculeContext = IContext['molecule'];
 
 export type Functional<T> = (prev: T) => T;
+export type FunctionalOrSingle<T> = T | ((prev: T) => T);
+export type ArraylizeOrSingle<T> = T[] | T;
 
 export type WithHiddenProperty<T extends object | void> = T extends void
     ? { hidden: boolean }
@@ -68,13 +74,21 @@ export type Localize = (
     ...args: any[]
 ) => string;
 
-export interface IMenuItemProps {
-    id: UniqueId;
+export type IconType = string | JSX.Element;
+
+/**
+ * Context Menu types
+ */
+export interface IMenuItemProps extends TreeModel<IMenuItemProps> {
     /**
      * The name of icon
      */
-    icon?: string | JSX.Element;
+    icon?: IconType;
     type?: 'divider';
+    /**
+     * the grouping of menu items.
+     */
+    group?: 'inline';
     /**
      * Item Name
      */
@@ -90,7 +104,6 @@ export interface IMenuItemProps {
      */
     render?: (data: IMenuItemProps) => React.ReactNode;
     sortIndex?: number;
-    children?: IMenuItemProps[];
 }
 
 /**
@@ -164,7 +177,7 @@ export interface IExtension {
     /**
      * The Icon of extension
      */
-    icon?: string | JSX.Element;
+    icon?: IconType;
     /**
      * The description of extension
      */
@@ -195,3 +208,7 @@ export interface IExtension {
      */
     dispose?(extensionCtx: any): void;
 }
+
+export type ContextMenuEventHandler = (item: IMenuItemProps) => void;
+
+export type RenderFunctionProps<T> = (item: T) => React.ReactNode;

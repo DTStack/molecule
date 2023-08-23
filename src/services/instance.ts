@@ -8,12 +8,15 @@ import type { IExtension } from 'mo/types';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
 
+import { ActivityBarService } from './activityBar';
 import { AuxiliaryBarService } from './auxiliaryBar';
 import { BuiltinService } from './builtin';
+import { ExplorerService } from './explorer';
 import { ExtensionService } from './extension';
 import { LayoutService } from './layout';
 import { LocaleService } from './locale';
 import { MenuBarService } from './menuBar';
+import { SidebarService } from './sidebar';
 import { StatusBarService } from './statusBar';
 
 export interface IConfigProps {
@@ -71,7 +74,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
             this._config.extensions.push(...config.extensions);
         }
 
-        // ================ register all service ====================
+        // ===================== Registers =====================
         this.register('locale', LocaleService);
         this.register('builtin', BuiltinService);
         this.register('extension', ExtensionService);
@@ -79,7 +82,10 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('layout', LayoutService);
         this.register('statusBar', StatusBarService);
         this.register('menuBar', MenuBarService);
-        // ==========================================================
+        this.register('activityBar', ActivityBarService);
+        this.register('sidebar', SidebarService);
+        this.register('explorer', ExplorerService);
+        // =====================================================
     }
 
     // private initialLocaleService = (languagesExts: IExtension[]) => {
@@ -113,21 +119,40 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const layout = this.resolve<LayoutService>('layout');
         const statusBar = this.resolve<StatusBarService>('statusBar');
         const menuBar = this.resolve<MenuBarService>('menuBar');
+        const activityBar = this.resolve<ActivityBarService>('activityBar');
+        const sidebar = this.resolve<SidebarService>('sidebar');
+        const explorer = this.resolve<ExplorerService>('explorer');
 
         const layoutController = this.resolve(controller.layout.LayoutController);
         const statusBarController = this.resolve(controller.statusBar.StatusBarController);
         const menuBarController = this.resolve(controller.menuBar.MenuBarController);
+        const activityBarController = this.resolve(controller.activityBar.ActivityBarController);
+        const sidebarController = this.resolve(controller.sidebar.SidebarController);
+        const explorerController = this.resolve(controller.explorer.ExplorerController);
 
         this.root = this.root || createRoot(container);
         this.root.render(
             React.createElement(Container, {
                 value: {
-                    molecule: { auxiliaryBar, layout, statusBar, locale, builtin, menuBar },
+                    molecule: {
+                        auxiliaryBar,
+                        layout,
+                        statusBar,
+                        locale,
+                        builtin,
+                        menuBar,
+                        activityBar,
+                        sidebar,
+                        explorer,
+                    },
                     localize: locale.localize,
                     controllers: {
                         layout: layoutController,
                         statusBar: statusBarController,
                         menuBar: menuBarController,
+                        activityBar: activityBarController,
+                        sidebar: sidebarController,
+                        explorer: explorerController,
                     } as any,
                 },
             })

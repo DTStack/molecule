@@ -1,9 +1,9 @@
 @use '../index.scss' as variables;
 @import '../../../classNames/style.scss';
 
-$dragging: BEMModifer(variables.$split, 'dragging');
-$vertical: BEMModifer(variables.$split, 'vertical');
-$horizontal: BEMModifer(variables.$split, 'horizontal');
+$dragging: BEMModifier(variables.$split, 'dragging');
+$vertical: BEMModifier(variables.$split, 'vertical');
+$horizontal: BEMModifier(variables.$split, 'horizontal');
 
 .#{variables.$split} {
     flex: 1;

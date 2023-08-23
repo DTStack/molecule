@@ -3,12 +3,12 @@ import { BaseController } from 'mo/glue';
 import { StatusBarEvent } from 'mo/models/statusBar';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { StatusBarService } from 'mo/services/statusBar';
-import type { UniqueId } from 'mo/types';
+import type { ContextMenuEventHandler, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IStatusBarController extends BaseController {
     onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>, key: UniqueId) => void;
-    onContextMenuClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>, key: UniqueId) => void;
+    onContextMenuClick?: ContextMenuEventHandler;
 }
 
 @injectable()
@@ -49,10 +49,7 @@ export class StatusBarController extends BaseController implements IStatusBarCon
         this.emit(StatusBarEvent.onClick, e, item);
     };
 
-    public readonly onContextMenuClick = (e: React.MouseEvent, key: UniqueId) => {
-        const item =
-            this.statusBar.getStatusBarItem(key, 'left') ||
-            this.statusBar.getStatusBarItem(key, 'right');
-        this.emit(StatusBarEvent.onContextMenu, e, item);
+    public readonly onContextMenuClick: ContextMenuEventHandler = (data) => {
+        this.emit(StatusBarEvent.onContextMenu, data);
     };
 }

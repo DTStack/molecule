@@ -1,17 +1,24 @@
 import { useMemo } from 'react';
-import type { IMenuItemProps } from 'mo/types';
+import type { ContextMenuEventHandler, IMenuItemProps } from 'mo/types';
+import { get } from 'mo/utils';
 import RcMenu, { Divider, Item as MenuItem, SubMenu } from 'rc-menu';
-import type { MenuClickEventHandler } from 'rc-menu/lib/interface';
 
 import Icon from '../icon';
 import variables from './index.scss';
 
 interface IMenuProps {
     data?: IMenuItemProps[];
-    onClick?: MenuClickEventHandler;
+    onClick?: ContextMenuEventHandler;
 }
 
 export default function Menu({ data, onClick }: IMenuProps) {
+    const handleMenuClick = (keyPath: string[]) => {
+        if (!data) return;
+        const item = get(data, keyPath.reverse());
+        if (!item) return;
+        onClick?.(item);
+    };
+
     function generateMenuItem(menuItem: IMenuItemProps) {
         if (menuItem.type === 'divider') {
             return <Divider key={menuItem.id} className={variables.divider} />;
@@ -68,7 +75,7 @@ export default function Menu({ data, onClick }: IMenuProps) {
             className={variables.container}
             selectable={false}
             triggerSubMenuAction="hover"
-            onClick={onClick}
+            onClick={({ keyPath }) => handleMenuClick(keyPath)}
         >
             {Menu}
         </RcMenu>

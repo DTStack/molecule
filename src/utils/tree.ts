@@ -9,7 +9,7 @@ interface TreeModelNode<T extends TreeModel<T>> {
  * Traverse tree-like structures in javascript.
  * Since it not manipulates data, re-new dataModel each time data structure changed
  */
-export class TreeHelper<T extends TreeModel<T>> {
+export class TreeHelper<T extends TreeModel<any>> {
     private map = new Map<UniqueId, TreeModelNode<T>>();
 
     constructor(data: T | T[]) {
@@ -31,5 +31,9 @@ export class TreeHelper<T extends TreeModel<T>> {
 
     public getNode(key: UniqueId) {
         return this.map.get(key)?.node;
+    }
+
+    public getParent(key: UniqueId) {
+        return this.map.get(key)?.parent;
     }
 }

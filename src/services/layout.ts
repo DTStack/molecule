@@ -1,32 +1,32 @@
 import { BaseService } from 'mo/glue';
 import { type ILayout, LayoutModel, type PositionLiteral } from 'mo/models/layout';
-import { Direction, Functional } from 'mo/types';
+import { Direction, FunctionalOrSingle } from 'mo/types';
 
 export interface ILayoutService extends BaseService<ILayout> {
     /**
      * Toggle the visibility of menu bar, returns the status of menu bar's `hidden`
      */
-    setMenuBarVisibility(visibility: boolean | Functional<boolean>): void;
+    setMenuBarVisibility(visibility: FunctionalOrSingle<boolean>): void;
     /**
      * Toggle the visibility of side bar, returns the status of side bar's `hidden`
      */
-    setSidebarVisibility(visibility: boolean | Functional<boolean>): void;
+    setSidebarVisibility(visibility: FunctionalOrSingle<boolean>): void;
     /**
      * Toggle the visibility of the panel, returns the status of panel's `hidden`
      */
-    setPanelVisibility(visibility: boolean | Functional<boolean>): void;
+    setPanelVisibility(visibility: FunctionalOrSingle<boolean>): void;
     /**
      * Toggle the visibility of the activity bar, returns the status of activity bar's `hidden`
      */
-    setActivityBarVisibility(visibility: boolean | Functional<boolean>): void;
+    setActivityBarVisibility(visibility: FunctionalOrSingle<boolean>): void;
     /**
      * Toggle the visibility of the status bar, returns the status of status bar's `hidden`
      */
-    setStatusBarVisibility(visibility: boolean | Functional<boolean>): void;
+    setStatusBarVisibility(visibility: FunctionalOrSingle<boolean>): void;
     /**
      * Toggle the maximized status of the panel, returns the status of maximized panel
      */
-    setPanelMaximized(maximized: boolean | Functional<boolean>): void;
+    setPanelMaximized(maximized: FunctionalOrSingle<boolean>): void;
     /**
      * Set the sizes between the side bar and main content area
      * @param splitPanePos
@@ -51,13 +51,13 @@ export interface ILayoutService extends BaseService<ILayout> {
     /**
      * Set the direction of editor group,default is `vertical`
      */
-    setEditorGroupDirection(direction: Direction | Functional<Direction>): void;
+    setEditorGroupDirection(direction: FunctionalOrSingle<Direction>): void;
     /**
      * Set the visibility of auxiliary bar
      *
      * Returns the next state of hidden
      */
-    setAuxiliaryBar(hidden: boolean | Functional<boolean>): void;
+    setAuxiliaryBar(hidden: FunctionalOrSingle<boolean>): void;
     /**
      * Reset all layout data as default value
      */
@@ -71,7 +71,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         this.state = new LayoutModel();
     }
 
-    public setMenuBarVisibility(visibility: boolean | Functional<boolean>) {
+    public setMenuBarVisibility(visibility: FunctionalOrSingle<boolean>) {
         this.setState((prev) => ({
             ...prev,
             menuBar: {
@@ -82,7 +82,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
     }
 
-    public setPanelVisibility(visibility: boolean | Functional<boolean>): void {
+    public setPanelVisibility(visibility: FunctionalOrSingle<boolean>): void {
         this.setState((prev) => ({
             ...prev,
             panel: {
@@ -93,7 +93,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
     }
 
-    public setSidebarVisibility(visibility: boolean | Functional<boolean>): void {
+    public setSidebarVisibility(visibility: FunctionalOrSingle<boolean>): void {
         this.setState((prev) => ({
             ...prev,
             sidebar: {
@@ -104,7 +104,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
     }
 
-    public setActivityBarVisibility(visibility: boolean | Functional<boolean>): void {
+    public setActivityBarVisibility(visibility: FunctionalOrSingle<boolean>): void {
         this.setState((prev) => ({
             ...prev,
             activityBar: {
@@ -117,7 +117,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
     }
 
-    public setStatusBarVisibility(visibility: boolean | Functional<boolean>): void {
+    public setStatusBarVisibility(visibility: FunctionalOrSingle<boolean>): void {
         this.setState((prev) => ({
             ...prev,
             statusBar: {
@@ -136,7 +136,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         });
     }
 
-    public setPanelMaximized(maximized: boolean | Functional<boolean>) {
+    public setPanelMaximized(maximized: FunctionalOrSingle<boolean>) {
         this.setState((prev) => ({
             ...prev,
             panel: {
@@ -162,7 +162,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         });
     }
 
-    public setEditorGroupDirection(direction: Direction | Functional<Direction>) {
+    public setEditorGroupDirection(direction: FunctionalOrSingle<Direction>) {
         this.setState((prev) => ({
             ...prev,
             editorGroupDirection:
@@ -170,7 +170,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
     }
 
-    public setAuxiliaryBar(hidden: boolean | Functional<boolean>) {
+    public setAuxiliaryBar(hidden: FunctionalOrSingle<boolean>) {
         this.setState((prev) => ({
             ...prev,
             auxiliaryBar: {

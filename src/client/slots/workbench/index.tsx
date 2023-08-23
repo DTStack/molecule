@@ -15,6 +15,8 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
     const layout = useConnector('layout');
     const StatusBar = useSlots('statusBar');
     const MenuBar = useSlots('menuBar');
+    const ActivityBar = useSlots('activityBar');
+    const Sidebar = useSlots('sidebar');
 
     const bothVisibility = !layout.sidebar.hidden && !layout.auxiliaryBar.hidden;
     const sidebarHidden = layout.sidebar.hidden;
@@ -45,7 +47,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
         <main className={variables.container} tabIndex={0}>
             <Display visible={!layout.menuBar.hidden}>{MenuBar}</Display>
             <section className={variables.main}>
-                {!layout.activityBar.hidden && <section>activityBar</section>}
+                <Display visible={!layout.activityBar.hidden}>{ActivityBar}</Display>
                 <SplitPane
                     sizes={getContentSize()}
                     split="vertical"
@@ -54,7 +56,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                 >
                     <Pane minSize={170} maxSize="80%">
                         <Display visible={!layout.sidebar.hidden}>
-                            <section>sideBar</section>
+                            {Sidebar}
                         </Display>
                     </Pane>
                     <SplitPane

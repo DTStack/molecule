@@ -254,13 +254,14 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
         const trackSize = getTrackSize();
         const thumbSize = getThumbSize();
         requestAnimationFrame(() => {
+            if (!thumb.current) return;
             const offsetLiteral = getOffsetLiteral(direction);
             if (offset <= 0) {
-                thumb.current!.style[offsetLiteral] = '0px';
+                thumb.current.style[offsetLiteral] = '0px';
             } else if (offset >= trackSize - thumbSize) {
-                thumb.current!.style[offsetLiteral] = `${trackSize - thumbSize}px`;
+                thumb.current.style[offsetLiteral] = `${trackSize - thumbSize}px`;
             } else {
-                thumb.current!.style[offsetLiteral] = `${offset}px`;
+                thumb.current.style[offsetLiteral] = `${offset}px`;
             }
         });
     };

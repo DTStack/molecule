@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { create } from '@dtinsight/molecule';
 
+import { TestExtension } from './extensions/testPane';
+
 const instance = create({
-    extensions: [],
+    extensions: [TestExtension],
     defaultLocale: 'zh-CN',
 });
 

@@ -1,4 +1,4 @@
-import { HTMLElementProps, IconType, IMenuItemProps, TreeModel, UniqueId } from 'mo/types';
+import { AlignmentLiteral, HTMLElementProps, IconType, IMenuItemProps, UniqueId } from 'mo/types';
 
 /**
  * The activity bar event definition
@@ -8,26 +8,14 @@ export enum ActivityBarEvent {
     OnContextMenu = 'activityBar.onContextMenu',
 }
 
-export enum ActivityType {
-    normal = 'normal',
-    global = 'global',
-}
-
-type ActivityTypeLiteral = keyof typeof ActivityType;
-
-export interface IActivityBarContextMenu
-    extends Omit<IMenuItemProps, 'type'>,
-        TreeModel<IMenuItemProps> {
-    type: ActivityTypeLiteral;
-}
-
+export type PartialAlignment = Extract<AlignmentLiteral, 'top' | 'bottom'>;
 export interface IActivityBarItem extends HTMLElementProps {
     id: UniqueId;
     name?: string;
     hidden?: boolean;
     icon?: IconType;
     disabled?: boolean;
-    type?: ActivityTypeLiteral;
+    alignment?: PartialAlignment;
     contextMenu?: IMenuItemProps[];
     sortIndex?: number;
     render?: (data: IActivityBarItem) => JSX.Element;
@@ -35,17 +23,9 @@ export interface IActivityBarItem extends HTMLElementProps {
 
 export interface IActivityBar {
     data: IActivityBarItem[];
-    /**
-     * Global context menu
-     */
-    contextMenu: IActivityBarContextMenu[];
     selected: UniqueId;
 }
 
 export class ActivityBarModel implements IActivityBar {
-    constructor(
-        public data: IActivityBarItem[] = [],
-        public contextMenu: IActivityBarContextMenu[] = [],
-        public selected: UniqueId = ''
-    ) {}
+    constructor(public data: IActivityBarItem[] = [], public selected: UniqueId = '') {}
 }

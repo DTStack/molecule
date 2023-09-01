@@ -1,7 +1,8 @@
 import { classNames } from 'mo/client/classNames';
+import useContextMenu from 'mo/client/hooks/useContextMenu';
 import type { IStatusBarItem } from 'mo/models/statusBar';
-import { getDataAttributionsFromProps } from 'mo/utils';
 
+import Dropdown from '../dropdown';
 import variables from './index.scss';
 
 export interface IStatusItemProps {
@@ -10,21 +11,29 @@ export interface IStatusItemProps {
 }
 
 export default function StatusItem({ data, onClick }: IStatusItemProps) {
-    const { className, style, name, render, ...restProps } = data;
+    const { className, style, name, hidden, title, role, render } = data;
+    const contextMenuData = useContextMenu('statusBar', data);
 
-    const attrProps = getDataAttributionsFromProps(restProps);
+    if (hidden) return null;
 
     return (
-        <div className={classNames(variables.container, className)} style={style} {...attrProps}>
-            <a
-                tabIndex={-1}
-                className={variables.label}
-                role="button"
-                title={name}
-                onClick={onClick}
+        <Dropdown trigger="contextMenu" data={contextMenuData} stopPropagation>
+            <div
+                className={classNames(variables.container, className)}
+                style={style}
+                title={title}
+                role={role}
             >
-                {render ? render(data) : name}
-            </a>
-        </div>
+                <a
+                    tabIndex={-1}
+                    className={variables.label}
+                    role="button"
+                    title={name}
+                    onClick={onClick}
+                >
+                    {render ? render(data) : name}
+                </a>
+            </div>
+        </Dropdown>
     );
 }

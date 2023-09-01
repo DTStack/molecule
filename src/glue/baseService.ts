@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash-es';
+import { cloneDeep } from 'lodash-es';
 
 import GlobalEvent from './event';
 
@@ -56,10 +56,7 @@ export default abstract class BaseService<S = any> extends GlobalEvent implement
         } else {
             nextState = { ...this.state, ...values };
         }
-        // improve performance
-        if (isEqual(nextState, this.state)) {
-            return;
-        }
+        nextState = cloneDeep(nextState);
         this.render(nextState);
         callback?.(this.state, nextState);
         this.state = nextState;

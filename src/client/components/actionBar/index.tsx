@@ -8,9 +8,17 @@ import variables from './index.scss';
 
 interface IActionBarProps extends HTMLElementProps {
     data: IMenuItemProps[];
+    onClick?: (item: IMenuItemProps) => void;
 }
 
-export default function ActionBar({ data, style, className, title, role }: IActionBarProps) {
+export default function ActionBar({
+    data,
+    style,
+    className,
+    title,
+    role,
+    onClick,
+}: IActionBarProps) {
     if (!data) return null;
     const [inline, ellipsis] = classify(data, (i) => i.group === 'inline');
     return (
@@ -20,7 +28,7 @@ export default function ActionBar({ data, style, className, title, role }: IActi
             title={title}
             role={role}
         >
-            {inline.map((i) => (
+            {inline?.map((i) => (
                 <div
                     key={i.id}
                     title={i.name}
@@ -29,8 +37,8 @@ export default function ActionBar({ data, style, className, title, role }: IActi
                     <Icon type={i.icon}>{i.name}</Icon>
                 </div>
             ))}
-            {!!ellipsis.length && (
-                <Dropdown data={ellipsis} trigger="click">
+            {!!ellipsis?.length && (
+                <Dropdown data={ellipsis} trigger="click" onClick={onClick}>
                     <Icon className={variables.item} type="ellipsis" />
                 </Dropdown>
             )}

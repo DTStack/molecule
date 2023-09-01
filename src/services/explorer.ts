@@ -1,7 +1,7 @@
 import { BaseService } from 'mo/glue';
 import { ExplorerEvent, ExplorerModel, IExplorerPanelItem } from 'mo/models/explorer';
 import { ArraylizeOrSingle, IMenuItemProps, UniqueId } from 'mo/types';
-import { arraylize, searchById, toggleNextIcon } from 'mo/utils';
+import { arraylize, searchById, sortByIndex, toggleNextIcon } from 'mo/utils';
 import logger from 'mo/utils/logger';
 import { TreeHelper } from 'mo/utils/tree';
 
@@ -152,11 +152,7 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
             const panel = this.getPanel(item.id);
             return !panel;
         });
-
-        // sort by sortIndex
-        next.sort(
-            ({ sortIndex: preIndex = 0 }, { sortIndex: nextIndex = 0 }) => nextIndex - preIndex
-        );
+        next.sort(sortByIndex);
 
         this.setState((prev) => ({
             ...prev,
@@ -174,10 +170,7 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
             if (!parentAction) return;
             parentAction.children ??= [];
             parentAction.children.push(...next);
-            // sort by sortIndex
-            parentAction.children.sort(
-                ({ sortIndex: preIndex = 0 }, { sortIndex: nextIndex = 0 }) => nextIndex - preIndex
-            );
+            parentAction.children.sort(sortByIndex);
             this.setState((prev) => ({
                 ...prev,
                 headerToolBar: [...prev.headerToolBar],
@@ -185,10 +178,7 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
         } else {
             this.setState((prev) => {
                 const toolbar = [...prev.headerToolBar, ...next];
-                toolbar.sort(
-                    ({ sortIndex: preIndex = 0 }, { sortIndex: nextIndex = 0 }) =>
-                        nextIndex - preIndex
-                );
+                toolbar.sort(sortByIndex);
                 return {
                     ...prev,
                     headerToolBar: toolbar,

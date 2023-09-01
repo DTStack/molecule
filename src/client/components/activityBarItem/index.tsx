@@ -1,4 +1,5 @@
 import { classNames } from 'mo/client/classNames';
+import useContextMenu from 'mo/client/hooks/useContextMenu';
 import { IActivityBarItem } from 'mo/models/activityBar';
 import type { ContextMenuEventHandler } from 'mo/types';
 
@@ -19,29 +20,37 @@ export default function ActivityBarItem({
     onClick,
     onContextMenuClick,
 }: IActivityBarItemProps) {
-    const { disabled, icon, className, hidden, contextMenu, style, role, title, render } = data;
+    const { disabled, icon, className, hidden, style, role, title, render } = data;
+    const contextMenu = useContextMenu('activityBar', data);
 
     if (hidden) return null;
 
     return (
-        <Dropdown data={contextMenu} placement="topRight" onClick={onContextMenuClick}>
-            <li
-                onClick={() => onClick?.(data)}
-                className={classNames(
-                    className,
-                    variables.item,
-                    checked && variables.checked,
-                    disabled && variables.disabled
-                )}
-                role={role}
-                style={style}
-                title={title}
+        <Dropdown data={data.contextMenu}>
+            <Dropdown
+                data={contextMenu}
+                trigger="contextMenu"
+                onClick={onContextMenuClick}
+                stopPropagation
             >
-                <Icon type={icon} className={variables.label}>
-                    {render?.(data) || null}
-                </Icon>
-                {checked ? <div className={variables.indicator} /> : null}
-            </li>
+                <li
+                    onClick={() => onClick?.(data)}
+                    className={classNames(
+                        className,
+                        variables.item,
+                        checked && variables.checked,
+                        disabled && variables.disabled
+                    )}
+                    role={role}
+                    style={style}
+                    title={title}
+                >
+                    <Icon type={icon} className={variables.label}>
+                        {render?.(data) || null}
+                    </Icon>
+                    {checked ? <div className={variables.indicator} /> : null}
+                </li>
+            </Dropdown>
         </Dropdown>
     );
 }

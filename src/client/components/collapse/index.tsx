@@ -46,7 +46,7 @@ export function Collapse({
     style,
     role,
     onCollapseChange,
-    // onToolbarClick,
+    onToolbarClick,
     onResize,
 }: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(new Array(data.length));
@@ -83,14 +83,9 @@ export function Collapse({
         setSizes(nextSizes);
     };
 
-    // const handleToolbarClick = (
-    //     e: React.MouseEvent,
-    //     item: IMenuItemProps,
-    //     panel: ICollapseItem
-    // ) => {
-    //     e.stopPropagation();
-    //     onToolbarClick?.(item, panel);
-    // };
+    const handleToolbarClick = (item: IMenuItemProps, panel: ICollapseItem) => {
+        onToolbarClick?.(item, panel);
+    };
 
     const renderPanels = (data: ICollapseItem, render?: RenderFunctionProps<ICollapseItem>) => {
         if (render) {
@@ -264,9 +259,7 @@ export function Collapse({
                                             <ActionBar
                                                 key={panel.id}
                                                 data={panel.toolbar || []}
-                                                // onClick={(e, item) =>
-                                                //     handleToolbarClick(e, item, panel)
-                                                // }
+                                                onClick={(item) => handleToolbarClick(item, panel)}
                                             />
                                         )}
                                     </div>

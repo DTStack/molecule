@@ -92,6 +92,7 @@ export class BuiltinModel {
                 col: 0,
             },
             name: this.localize('statusBar.title', 'Editor Selection'),
+            alignment: 'right',
             render: () => this.localize('statusBar.editorStatus.gotoLine', 'Go to Line/Column'),
         }),
         CONTEXT_MENU_HIDE_STATUS_BAR: () => ({
@@ -212,14 +213,14 @@ export class BuiltinModel {
                 name: this.localize('menu.account', 'Account'),
                 title: this.localize('menu.account', 'Account'),
                 icon: 'account',
-                type: 'global',
+                alignment: 'bottom',
             },
             {
                 id: this.constants.ACTIVITY_BAR_GLOBAL_SETTINGS,
                 name: this.localize('menu.settings', 'Settings'),
                 title: this.localize('menu.settings', 'Settings'),
                 icon: 'settings-gear',
-                type: 'global',
+                alignment: 'bottom',
                 contextMenu: [
                     {
                         id: this.constants.ACTION_QUICK_COMMAND,
@@ -250,10 +251,10 @@ export class BuiltinModel {
             //     id: this.constants.CONTEXT_MENU_SEARCH,
             //     name: this.localize('sidebar.search.title', 'Search'),
             // },
-            // {
-            //     id: this.constants.CONTEXT_MENU_HIDE,
-            //     name: this.localize('menu.hideActivityBar', 'Hide Activity Bar'),
-            // },
+            {
+                id: this.constants.CONTEXT_MENU_HIDE,
+                name: this.localize('menu.hideActivityBar', 'Hide Activity Bar'),
+            },
         ],
         EXPLORER_ACTIVITY_ITEM: () => ({
             id: this.constants.EXPLORER_ACTIVITY_ITEM,
@@ -265,7 +266,55 @@ export class BuiltinModel {
             icon: 'files',
             title: this.localize(this.constants.EXPLORER_ACTIVITY_ITEM, 'Explore'),
             sortIndex: 1,
-            type: 'normal',
+            alignment: 'top',
+        }),
+        FILE_CONTEXT_MENU: () => [
+            {
+                id: this.constants.OPEN_TO_SIDE_COMMAND_ID,
+                name: this.localize('contextmenu.openToTheSide', 'Open to the Side'),
+            },
+        ],
+        BASE_CONTEXT_MENU: () => [
+            {
+                id: this.constants.NEW_FILE_COMMAND_ID,
+                name: this.localize('contextmenu.newFile', 'New File'),
+            },
+            {
+                id: this.constants.NEW_FOLDER_COMMAND_ID,
+                name: this.localize('contextmenu.newFolder', 'New Folder'),
+            },
+        ],
+        COMMON_CONTEXT_MENU: () => [
+            {
+                id: this.constants.RENAME_COMMAND_ID,
+                name: this.localize('contextmenu.rename', 'Rename'),
+            },
+            {
+                id: this.constants.DELETE_COMMAND_ID,
+                name: this.localize('contextmenu.delete', 'Delete'),
+            },
+        ],
+        FOLDER_PANEL_CONTEXT_MENU: () => [
+            {
+                id: this.constants.NEW_FOLDER_COMMAND_ID,
+                name: this.localize('contextmenu.addFolderToSpace', 'Add Folder to Workspace...'),
+            },
+            {
+                id: this.constants.FIND_IN_WORKSPACE_ID,
+                name: this.localize('contextmenu.findInSpace', 'Find in Workspace...'),
+            },
+            {
+                id: this.constants.DOWNLOAD_COMMAND_ID,
+                name: this.localize('contextmenu.download', 'Download...'),
+            },
+        ],
+        builtInExplorerFolderPanel: () => ({
+            id: this.constants.SAMPLE_FOLDER_PANEL_ID,
+            sortIndex: 8,
+            name: this.localize('menu.defaultProjectName', 'No Open Folder'),
+            config: {
+                grow: 2,
+            },
         }),
     };
     constructor(private localize: Localize) {}

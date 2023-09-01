@@ -1,3 +1,4 @@
+import { ExtendsActivityBar } from './activityBar';
 import { LocalesExtends } from './locales';
 
-export default [LocalesExtends];
+export default [LocalesExtends, ExtendsActivityBar];

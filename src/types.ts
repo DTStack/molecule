@@ -2,7 +2,9 @@ import type { ILocale, LocaleKind } from './models/locale';
 import type { ActivityBarService } from './services/activityBar';
 import type { AuxiliaryBarService } from './services/auxiliaryBar';
 import type { BuiltinService } from './services/builtin';
+import type { ContextMenuService } from './services/contextMenu';
 import type { ExplorerService } from './services/explorer';
+import type { FolderTreeService } from './services/folderTree';
 import type { LayoutService } from './services/layout';
 import type { LocaleService } from './services/locale';
 import type { MenuBarService } from './services/menuBar';
@@ -14,12 +16,27 @@ export type RecordWithId<T> = { id: UniqueId; [key: string]: any } & T;
 
 export type TreeModel<T> = RecordWithId<{ children?: T[] }>;
 
+export enum Alignment {
+    top = 'top',
+    bottom = 'bottom',
+    left = 'left',
+    right = 'right',
+}
+export type AlignmentLiteral = keyof typeof Alignment;
+
 export enum Direction {
     vertical = 'vertical',
     horizontal = 'horizontal',
 }
 
 export type DirectionLiteral = keyof typeof Direction;
+
+export enum FileTypes {
+    File = 'File',
+    Folder = 'Folder',
+    RootFolder = 'RootFolder',
+}
+export type FileTypeLiteral = keyof typeof FileTypes;
 
 export interface HTMLElementProps {
     title?: string;
@@ -32,6 +49,7 @@ export type UniqueId = string | number;
 
 export interface IContext {
     molecule: {
+        contextMenu: ContextMenuService;
         auxiliaryBar: AuxiliaryBarService;
         layout: LayoutService;
         statusBar: StatusBarService;
@@ -41,6 +59,7 @@ export interface IContext {
         activityBar: ActivityBarService;
         sidebar: SidebarService;
         explorer: ExplorerService;
+        folderTree: FolderTreeService;
     };
     controllers: { [key in keyof IContext['molecule']]: BaseController };
     localize: Localize;
@@ -198,15 +217,15 @@ export interface IExtension {
      * Do something you want when the Extension is activating.
      * The ExtensionService will call the `activate` method after
      * added the Extension instance.
-     * @param extensionCtx The Context of Extension instance
+     * @param ctx The Context of Extension instance
      */
-    activate(extensionCtx: any): void;
+    activate(ctx: IMoleculeContext): void;
     /**
      * Do something when the Extension disposing.
      * For example, you can recover the UI state, or remove the Objects in memory.
-     * @param extensionCtx The Context of Extension instance
+     * @param ctx The Context of Extension instance
      */
-    dispose?(extensionCtx: any): void;
+    dispose?(ctx: IMoleculeContext): void;
 }
 
 export type ContextMenuEventHandler = (item: IMenuItemProps) => void;

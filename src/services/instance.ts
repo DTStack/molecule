@@ -11,8 +11,10 @@ import type { constructor } from 'tsyringe/dist/typings/types';
 import { ActivityBarService } from './activityBar';
 import { AuxiliaryBarService } from './auxiliaryBar';
 import { BuiltinService } from './builtin';
+import { ContextMenuService } from './contextMenu';
 import { ExplorerService } from './explorer';
 import { ExtensionService } from './extension';
+import { FolderTreeService } from './folderTree';
 import { LayoutService } from './layout';
 import { LocaleService } from './locale';
 import { MenuBarService } from './menuBar';
@@ -77,6 +79,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         // ===================== Registers =====================
         this.register('locale', LocaleService);
         this.register('builtin', BuiltinService);
+        this.register('contextMenu', ContextMenuService);
         this.register('extension', ExtensionService);
         this.register('auxiliaryBar', AuxiliaryBarService);
         this.register('layout', LayoutService);
@@ -85,6 +88,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('activityBar', ActivityBarService);
         this.register('sidebar', SidebarService);
         this.register('explorer', ExplorerService);
+        this.register('folderTree', FolderTreeService);
         // =====================================================
     }
 
@@ -107,14 +111,11 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         if (!container) return null;
         const locale = this.resolve<LocaleService>('locale');
         locale.setCurrentLocale(this._config.defaultLocale);
-        const extension = this.resolve<ExtensionService>('extension');
-        extension.add(this._config.extensions);
-
         const builtin = this.resolve<BuiltinService>('builtin');
         this.emit(InstanceHookKind.beforeInit);
 
         this.emit(InstanceHookKind.beforeLoad);
-
+        const contextMenu = this.resolve<ContextMenuService>('contextMenu');
         const auxiliaryBar = this.resolve<AuxiliaryBarService>('auxiliaryBar');
         const layout = this.resolve<LayoutService>('layout');
         const statusBar = this.resolve<StatusBarService>('statusBar');
@@ -122,6 +123,11 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const activityBar = this.resolve<ActivityBarService>('activityBar');
         const sidebar = this.resolve<SidebarService>('sidebar');
         const explorer = this.resolve<ExplorerService>('explorer');
+        const folderTree = this.resolve<FolderTreeService>('folderTree');
+
+        // extensions should resolved after all other services
+        const extension = this.resolve<ExtensionService>('extension');
+        extension.add(this._config.extensions);
 
         const layoutController = this.resolve(controller.layout.LayoutController);
         const statusBarController = this.resolve(controller.statusBar.StatusBarController);
@@ -129,12 +135,14 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const activityBarController = this.resolve(controller.activityBar.ActivityBarController);
         const sidebarController = this.resolve(controller.sidebar.SidebarController);
         const explorerController = this.resolve(controller.explorer.ExplorerController);
+        const folderTreeController = this.resolve(controller.folderTree.FolderTreeController);
 
         this.root = this.root || createRoot(container);
         this.root.render(
             React.createElement(Container, {
                 value: {
                     molecule: {
+                        contextMenu,
                         auxiliaryBar,
                         layout,
                         statusBar,
@@ -144,6 +152,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         activityBar,
                         sidebar,
                         explorer,
+                        folderTree,
                     },
                     localize: locale.localize,
                     controllers: {
@@ -153,6 +162,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         activityBar: activityBarController,
                         sidebar: sidebarController,
                         explorer: explorerController,
+                        folderTree: folderTreeController,
                     } as any,
                 },
             })

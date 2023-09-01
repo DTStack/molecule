@@ -1,4 +1,4 @@
-import type { TreeModel, UniqueId } from 'mo/types';
+import type { FileTypeLiteral, TreeModel, UniqueId } from 'mo/types';
 
 interface TreeModelNode<T extends TreeModel<T>> {
     node: T;
@@ -36,4 +36,38 @@ export class TreeHelper<T extends TreeModel<any>> {
     public getParent(key: UniqueId) {
         return this.map.get(key)?.parent;
     }
+}
+
+export class TreeNodeModel<T> {
+    constructor(
+        /**
+         * The unique id in tree node
+         * @aware Please be aware of that id should be global unique on one tree
+         */
+        public id: UniqueId,
+        /**
+         * The name of this tree node
+         */
+        public name: string,
+        /**
+         * The type of this tree node
+         */
+        public fileType: FileTypeLiteral,
+        /**
+         * The children of this tree node
+         */
+        public children?: TreeNodeModel<T>[],
+        /**
+         * The icon of this tree node, which is rendered in front of the name
+         */
+        public icon?: string | JSX.Element,
+        /**
+         * The status of disabled
+         */
+        public disabled?: boolean,
+        /**
+         * Store the custom data
+         */
+        public data?: T
+    ) {}
 }

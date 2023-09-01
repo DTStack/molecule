@@ -93,6 +93,7 @@ export type LocaleKind = {
     'menu.account': string;
     menubar: string;
     'menu.hideActivityBar': string;
+    'menu.defaultProjectName': string;
 };
 type LocaleKindLiteral = keyof LocaleKind;
 

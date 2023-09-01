@@ -1,14 +1,11 @@
 import React from 'react';
-import type { HTMLElementProps, IMenuItemProps, UniqueId } from 'mo/types';
+import type { AlignmentLiteral, HTMLElementProps, UniqueId } from 'mo/types';
 
-export enum Float {
-    left = 'left',
-    right = 'right',
-}
-export type FloatLiteral = keyof typeof Float;
+export type PartialAlignment = Extract<AlignmentLiteral, 'left' | 'right'>;
 
-export interface IStatusBarItem<T = any> extends Omit<HTMLElementProps, 'id' | 'hidden'> {
+export interface IStatusBarItem<T = any> extends HTMLElementProps {
     id: UniqueId;
+    alignment: PartialAlignment;
     sortIndex?: number;
     data?: T;
     name?: string;
@@ -17,9 +14,7 @@ export interface IStatusBarItem<T = any> extends Omit<HTMLElementProps, 'id' | '
 }
 
 export interface IStatusBar {
-    rightItems: IStatusBarItem[];
-    leftItems: IStatusBarItem[];
-    contextMenu?: IMenuItemProps[];
+    data: IStatusBarItem[];
 }
 
 /**
@@ -41,9 +36,5 @@ export enum StatusBarEvent {
 }
 
 export class StatusBarModel implements IStatusBar {
-    constructor(
-        public leftItems: IStatusBarItem[] = [],
-        public rightItems: IStatusBarItem[] = [],
-        public contextMenu: IMenuItemProps[] = []
-    ) {}
+    constructor(public data: IStatusBarItem[] = []) {}
 }

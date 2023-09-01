@@ -1,11 +1,8 @@
 import { BaseController } from 'mo/glue';
-import {
-    ActivityBarEvent,
-    IActivityBarContextMenu,
-    type IActivityBarItem,
-} from 'mo/models/activityBar';
+import { ActivityBarEvent, type IActivityBarItem } from 'mo/models/activityBar';
 import type { ActivityBarService } from 'mo/services/activityBar';
 import type { BuiltinService } from 'mo/services/builtin';
+import { ContextMenuService } from 'mo/services/contextMenu';
 import type { IMenuItemProps } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
@@ -20,8 +17,9 @@ export interface IActivityBarController extends BaseController {
 @injectable()
 export class ActivityBarController extends BaseController implements IActivityBarController {
     constructor(
-        @inject('builtin') public builtin: BuiltinService,
-        @inject('activityBar') public activityBar: ActivityBarService
+        @inject('builtin') private builtin: BuiltinService,
+        @inject('activityBar') private activityBar: ActivityBarService,
+        @inject('contextMenu') private contextMenu: ContextMenuService
     ) {
         super();
         this.initView();
@@ -31,18 +29,9 @@ export class ActivityBarController extends BaseController implements IActivityBa
         const { activityBarData, contextMenuData } = this.builtin.getState().modules;
         if (activityBarData) {
             this.activityBar.add(activityBarData);
-            const next: IActivityBarContextMenu[] = (activityBarData as IActivityBarItem[]).map(
-                (i) => ({
-                    id: i.id,
-                    name: i.name,
-                    icon: 'check',
-                    type: 'global',
-                })
-            );
-            this.activityBar.addContextMenu(next);
         }
         if (contextMenuData) {
-            this.activityBar.addContextMenu(contextMenuData);
+            this.contextMenu.add('activityBar', contextMenuData);
         }
     }
 

@@ -28,7 +28,7 @@ export default function Sidebar() {
                         </div>
                     )}
                 </section>
-                <div className={variables.content}>{pane.render?.() || null}</div>
+                <div className={variables.content}>{pane.render?.()}</div>
             </div>
         </div>
     );

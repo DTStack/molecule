@@ -1,11 +1,21 @@
 import { BaseService } from 'mo/glue';
 import { ExtensionModel } from 'mo/models/extension';
 import { ILocale } from 'mo/models/locale';
-import { IContribute, IContributeType, IExtension, UniqueId } from 'mo/types';
+import { IContribute, IContributeType, IExtension, IMoleculeContext, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 import { inject, injectable } from 'tsyringe';
 
-import { LocaleService } from './locale';
+import type { ActivityBarService } from './activityBar';
+import type { AuxiliaryBarService } from './auxiliaryBar';
+import { BuiltinService } from './builtin';
+import type { ContextMenuService } from './contextMenu';
+import type { ExplorerService } from './explorer';
+import type { FolderTreeService } from './folderTree';
+import type { LayoutService } from './layout';
+import type { LocaleService } from './locale';
+import type { MenuBarService } from './menuBar';
+import type { SidebarService } from './sidebar';
+import type { StatusBarService } from './statusBar';
 
 export interface IExtensionService {
     /**
@@ -81,10 +91,38 @@ export interface IExtensionService {
 export class ExtensionService extends BaseService<ExtensionModel> implements IExtensionService {
     protected state: ExtensionModel;
     private _predicate: (extension: IExtension) => boolean = () => true;
-    constructor(@inject('locale') private locale: LocaleService) {
+    constructor(
+        @inject('locale') private locale: LocaleService,
+        @inject('builtin') private builtin: BuiltinService,
+        @inject('contextMenu') private contextMenu: ContextMenuService,
+        @inject('auxiliaryBar') private auxiliaryBar: AuxiliaryBarService,
+        @inject('layout') private layout: LayoutService,
+        @inject('statusBar') private statusBar: StatusBarService,
+        @inject('menuBar') private menuBar: MenuBarService,
+        @inject('activityBar') private activityBar: ActivityBarService,
+        @inject('sidebar') private sidebar: SidebarService,
+        @inject('explorer') private explorer: ExplorerService,
+        @inject('folderTree') private folderTree: FolderTreeService
+    ) {
         super();
         this.state = new ExtensionModel();
     }
+
+    private getContext = (): IMoleculeContext => {
+        return {
+            locale: this.locale,
+            builtin: this.builtin,
+            contextMenu: this.contextMenu,
+            auxiliaryBar: this.auxiliaryBar,
+            layout: this.layout,
+            statusBar: this.statusBar,
+            menuBar: this.menuBar,
+            activityBar: this.activityBar,
+            sidebar: this.sidebar,
+            explorer: this.explorer,
+            folderTree: this.folderTree,
+        };
+    };
 
     private isExtension(extension: any): extension is IExtension {
         if (!extension) return false;
@@ -125,7 +163,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         const extensions = this.getAllExtensions();
         if (!Array.isArray(extensions)) return;
 
-        const ctx = this;
+        const ctx = this.getContext();
         extensions.filter(this._predicate).forEach((extension) => {
             if (!this.isExtension(extension)) return;
 
@@ -157,7 +195,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
     }
 
     public dispose(extensionId: UniqueId): void {
-        const ctx = this;
+        const ctx = this.getContext();
         const extension = this.getExtension(extensionId);
         if (extension) {
             extension.dispose?.(ctx);
@@ -171,7 +209,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
     public disposeAll() {
         const extensions = this.getAllExtensions();
         extensions.forEach((ext) => {
-            const ctx = this;
+            const ctx = this.getContext();
             ext.dispose?.(ctx);
         });
         this.reset();

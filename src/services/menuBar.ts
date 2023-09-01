@@ -109,7 +109,7 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         } else {
             parentMenu.children = [menuItem];
         }
-        this.setState({ data: { ...data } });
+        this.setMenus([...data]);
     }
 
     public remove(menuId: UniqueId): void {
@@ -123,7 +123,7 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         if (parent) {
             const idx = parent.children!.findIndex((menu) => menu.id === menuId);
             parent.children!.splice(idx, 1);
-            this.setMenus({ ...data });
+            this.setMenus([...data]);
         } else {
             // Root menu doesn't have parent node
             const root = data.filter((i) => i.id !== menuId);
@@ -140,7 +140,7 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         }
         const currentMenuItem = menuInfo.source;
         Object.assign(currentMenuItem, menuItem);
-        this.setMenus({ ...data });
+        this.setMenus([...data]);
     }
 
     public reset() {

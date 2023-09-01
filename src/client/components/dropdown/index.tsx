@@ -12,6 +12,7 @@ interface IDropdownProps
     trigger?: ActionType;
     data?: IMenuItemProps[];
     alignPoint?: boolean;
+    stopPropagation?: boolean;
     onClick?: ContextMenuEventHandler;
 }
 
@@ -20,11 +21,26 @@ export default function Dropdown({
     data,
     alignPoint,
     visible,
+    stopPropagation,
     placement,
     trigger = 'click',
     onVisibleChange,
     onClick,
 }: IDropdownProps) {
+    const getEvents = () => {
+        if (!stopPropagation) return {};
+        switch (trigger) {
+            case 'click':
+                return { onClick: (e: React.MouseEvent) => e.stopPropagation() };
+            case 'contextMenu':
+                return { onContextMenu: (e: React.MouseEvent) => e.stopPropagation() };
+            default:
+                break;
+        }
+    };
+
+    const events = getEvents();
+
     return data?.length ? (
         <RcDropdown
             visible={visible}
@@ -35,7 +51,7 @@ export default function Dropdown({
             alignPoint={alignPoint}
             placement={placement}
         >
-            {children}
+            <span {...events}>{children}</span>
         </RcDropdown>
     ) : (
         children

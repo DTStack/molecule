@@ -96,7 +96,10 @@ async function transform(entryPoints) {
 }
 
 async function transformTyping() {
-    typingCtx = spawn('tsc', ['--watch', '--preserveWatchOutput'], { stdio: 'inherit' });
+    typingCtx = spawn('tsc && (concurrently "tsc -w" "tsc-alias -w")', {
+        stdio: 'inherit',
+        shell: true,
+    });
 }
 
 /**

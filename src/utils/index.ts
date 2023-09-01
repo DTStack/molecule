@@ -1,25 +1,18 @@
 import { Children, cloneElement, isValidElement } from 'react';
-import type { ArraylizeOrSingle, IconType, RecordWithId, UniqueId } from 'mo/types';
+import type { ArraylizeOrSingle, IconType, IMenuItemProps, RecordWithId, UniqueId } from 'mo/types';
 
 export function searchById<T extends RecordWithId<Record<string, any>>>(id: UniqueId) {
     return (item: T) => item.id === id;
 }
 
 type sortIndexRequired = { sortIndex?: number; [key: string]: any };
-export function sortByIndex(a: sortIndexRequired, b: sortIndexRequired) {
-    return a.sortIndex !== undefined && b.sortIndex !== undefined ? a.sortIndex - b.sortIndex : 0;
-}
-
 /**
- * Access dataset values
+ * The smaller the sort number is, the more front the order is
  */
-export function getDataAttributionsFromProps(props: Record<string, any>) {
-    return Object.keys(props).reduce<Record<string, any>>((pre, cur) => {
-        if (cur.startsWith('data-')) {
-            pre[cur] = props[cur];
-        }
-        return pre;
-    }, {});
+export function sortByIndex(a: sortIndexRequired, b: sortIndexRequired) {
+    const prev = a.sortIndex || 0;
+    const next = b.sortIndex || 0;
+    return prev - next;
 }
 
 /**
@@ -54,17 +47,19 @@ export function extract<T extends { id: UniqueId }>(arr: T[], ids: UniqueId[]) {
  * Classify arr into two parts
  */
 export function classify<T>(arr: T[], predicate: (value: T, index: number) => boolean) {
-    return arr.reduce<[T[], T[]]>(
-        (acc, cur, index) => {
-            if (predicate(cur, index)) {
-                acc[0].push(cur);
-            } else {
-                acc[1].push(cur);
-            }
-            return acc;
-        },
-        [[], []]
-    );
+    return classifyBy(arr, (...args) => Number(!predicate(...args)));
+}
+
+/**
+ * Classify arr into multiply parts
+ */
+export function classifyBy<T>(arr: T[], predicate: (value: T, index: number) => number) {
+    return arr.reduce<T[][]>((acc, cur, index) => {
+        const idx = predicate(cur, index);
+        acc[idx] ??= [];
+        acc[idx].push(cur);
+        return acc;
+    }, []);
 }
 
 export function get<T extends RecordWithId<{ children?: T[] }>>(
@@ -96,4 +91,16 @@ export function toggleNextIcon(prev?: IconType, checked?: boolean) {
     }
     // JSX.Element doesn't change icon status
     return prev as IconType;
+}
+
+export function randomId() {
+    return Date.now() + Math.round(Math.random() * 1000);
+}
+
+export function concatMenu(...args: IMenuItemProps[][]) {
+    const nonEmptyArgs = args.filter((i) => i.length);
+    if (!nonEmptyArgs.length) return [];
+    return nonEmptyArgs.reduce((acc, cur) => {
+        return acc.concat({ id: randomId(), type: 'divider' }, cur);
+    });
 }

@@ -1,6 +1,6 @@
 import { AsyncSeriesBailHook, type UnsetAdditionalOptions } from 'tapable';
 
-type IEventContext = any[];
+type IEventContext = [any];
 
 export default class EventEmitter {
     private _events = new Map<
@@ -19,8 +19,7 @@ export default class EventEmitter {
     public emit(name: string, ...args: any[]) {
         const hook = this._events.get(name);
         if (hook) {
-            // FIXME: uncertain way to resolve unlimited args for tapable
-            hook.callAsync(...(args as never[]), (() => {}) as never);
+            hook.callAsync(args, (() => {}) as never);
         }
     }
 
@@ -53,16 +52,13 @@ export default class EventEmitter {
     private assignEvent(name: string, listener: Function) {
         const event = this._events.get(name);
         if (event) {
-            const fn = (...args: IEventContext) => Promise.resolve(listener(...args));
+            const fn = (args: any) => Promise.resolve(listener(...args));
             this._eventHash.set(listener, fn);
             event.tapPromise(name, fn);
         } else {
-            const hook = new AsyncSeriesBailHook<IEventContext, unknown, UnsetAdditionalOptions>([
-                'context',
-                'context2',
-            ]);
+            const hook = new AsyncSeriesBailHook<[''], unknown, UnsetAdditionalOptions>(['args']);
             this._events.set(name, hook);
-            const fn = (...args: IEventContext) => Promise.resolve(listener(...args));
+            const fn = (args: any) => Promise.resolve(listener(...args));
             this._eventHash.set(listener, fn);
             hook.tapPromise(name, fn);
         }

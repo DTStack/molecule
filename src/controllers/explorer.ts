@@ -1,3 +1,4 @@
+import React from 'react';
 import Explorer from 'mo/client/slots/explorer';
 import { BaseController } from 'mo/glue';
 import { ActivityBarService } from 'mo/services/activityBar';
@@ -26,11 +27,6 @@ export class ExplorerController extends BaseController implements IExplorerContr
         @inject('activityBar') private activitybar: ActivityBarService
     ) {
         super();
-        // this.activityBarService = container.resolve(ActivityBarService);
-        // this.sidebarService = container.resolve(SidebarService);
-        // this.explorerService = container.resolve(ExplorerService);
-        // this.folderTreeController = container.resolve(FolderTreeController);
-        // this.builtinService = container.resolve(BuiltinService);
         this.initView();
     }
 
@@ -38,54 +34,13 @@ export class ExplorerController extends BaseController implements IExplorerContr
         const { EXPLORER_ACTIVITY_ITEM, builtInExplorerActivityItem } =
             this.builtin.getState().modules;
         this.activitybar.add(builtInExplorerActivityItem, true);
-        this.activitybar.addContextMenu({
-            id: builtInExplorerActivityItem.id,
-            name: builtInExplorerActivityItem.name,
-            icon: 'check',
-            type: 'normal',
-        });
         this.sidebar.add(
             {
                 ...EXPLORER_ACTIVITY_ITEM,
-                render: Explorer,
+                render: () => React.createElement(Explorer),
             },
             true
         );
-        // const explorerEvent = {
-        //     onClick: this.onClick,
-        //     onCollapseChange: this.onCollapseChange,
-        //     onActionsContextMenuClick: this.onActionsContextMenuClick,
-        //     onToolbarClick: this.onToolbarClick,
-        // };
-        // const ExplorerView = connect(this.explorerService, Explorer);
-        // const id = this.builtinService.getConstants().EXPLORER_ACTIVITY_ITEM;
-        // if (!id) return;
-        // const explorePane = {
-        //     id,
-        //     title: 'EXPLORER',
-        //     render() {
-        //         return <ExplorerView {...explorerEvent} />;
-        //     },
-        // };
-        // const {
-        //     builtInExplorerActivityItem,
-        //     builtInExplorerFolderPanel,
-        //     builtInExplorerHeaderToolbar,
-        // } = this.builtinService.getModules();
-        // if (builtInExplorerHeaderToolbar) {
-        //     this.explorerService.setState({
-        //         headerToolBar: builtInExplorerHeaderToolbar,
-        //     });
-        // }
-        // if (builtInExplorerActivityItem && builtInExplorerFolderPanel) {
-        //     this.activityBarService.add(builtInExplorerActivityItem, true);
-        //     // this.sidebarService.add(explorePane, true);
-        //     // add folder panel
-        //     this.explorerService.addPanel({
-        //         ...builtInExplorerFolderPanel,
-        //         renderPanel: this.renderFolderTree,
-        //     });
-        // }
     }
 
     // public readonly onClick = (event: React.MouseEvent, item: IActionBarItemProps) => {

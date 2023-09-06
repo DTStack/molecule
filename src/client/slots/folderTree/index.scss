@@ -1,0 +1,12 @@
+@import '../../classNames/style.scss';
+
+$folderTree: prefix('folderTree');
+$input: BEMElement($folderTree, 'input');
+$editing: BEMModifier($folderTree, 'editing');
+
+
+:export {
+    folderTree: $folderTree;
+    input: $input;
+    editing: $editing;
+}

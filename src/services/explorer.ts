@@ -1,9 +1,8 @@
 import { BaseService } from 'mo/glue';
 import { ExplorerEvent, ExplorerModel, IExplorerPanelItem } from 'mo/models/explorer';
 import { ArraylizeOrSingle, IMenuItemProps, UniqueId } from 'mo/types';
-import { arraylize, searchById, sortByIndex, toggleNextIcon } from 'mo/utils';
+import { arraylize, searchById, sortByIndex } from 'mo/utils';
 import logger from 'mo/utils/logger';
-import { TreeHelper } from 'mo/utils/tree';
 
 export interface IExplorerService extends BaseService<ExplorerModel> {
     /**
@@ -31,29 +30,6 @@ export interface IExplorerService extends BaseService<ExplorerModel> {
      * Toggle panel hidden
      */
     togglePanel(id: UniqueId, hidden?: boolean): void;
-    /**
-     * Only toggle the toolbar status
-     */
-    toggleHeaderBar(id: UniqueId, hidden?: boolean): void;
-    /**
-     * Only add an action in toolbar actions
-     */
-    addAction(action: IMenuItemProps, parent?: UniqueId): void;
-    /**
-     * Get the specific action in toolbar actions
-     * @param id
-     */
-    getAction(id: UniqueId): IMenuItemProps | undefined;
-    /**
-     * Update the action in toolbar actions
-     * @param action
-     */
-    updateAction(action: Partial<IMenuItemProps>): void;
-    /**
-     * Remove the specific header toolbar action
-     * @param id action id
-     */
-    removeAction(id: UniqueId): void;
     /**
      * Reset the ExplorerService state, it's mainly for customizing the Explorer
      */
@@ -97,18 +73,6 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
         });
     }
 
-    private toggleIcon(icon?: string) {
-        return icon === 'check' ? '' : 'check';
-    }
-
-    // FIXME: generate treeHelper each time, improve it
-    public getAction(id: UniqueId): IMenuItemProps | undefined {
-        const { headerToolBar } = this.getState();
-        const treeHelper = new TreeHelper(headerToolBar);
-        const action = treeHelper.getNode(id);
-        return action;
-    }
-
     public updatePanel(data: Partial<IExplorerPanelItem>) {
         if (!data.id) {
             logger.error('Must provide id property in update data');
@@ -126,27 +90,6 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
         }));
     }
 
-    public updateAction(action: Partial<IMenuItemProps>) {
-        if (!action.id) {
-            logger.error('Must provide id property in action data');
-            return;
-        }
-        const target = this.getAction(action.id);
-        if (!target) {
-            logger.error(`There is no action found in actions whose id is ${action.id}`);
-            return;
-        }
-
-        Object.assign(target, action);
-
-        this.setState((prev) => ({
-            ...prev,
-            headerToolBar: {
-                ...prev.headerToolBar,
-            },
-        }));
-    }
-
     public addPanel(data: ArraylizeOrSingle<IExplorerPanelItem>) {
         const next = arraylize(data).filter((item) => {
             const panel = this.getPanel(item.id);
@@ -160,33 +103,6 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
         }));
     }
 
-    public addAction(action: ArraylizeOrSingle<IMenuItemProps>, parent?: UniqueId) {
-        const next = arraylize(action).filter((item) => {
-            const action = this.getAction(item.id);
-            return !action;
-        });
-        if (parent) {
-            const parentAction = this.getAction(parent);
-            if (!parentAction) return;
-            parentAction.children ??= [];
-            parentAction.children.push(...next);
-            parentAction.children.sort(sortByIndex);
-            this.setState((prev) => ({
-                ...prev,
-                headerToolBar: [...prev.headerToolBar],
-            }));
-        } else {
-            this.setState((prev) => {
-                const toolbar = [...prev.headerToolBar, ...next];
-                toolbar.sort(sortByIndex);
-                return {
-                    ...prev,
-                    headerToolBar: toolbar,
-                };
-            });
-        }
-    }
-
     public removePanel(id: UniqueId) {
         const panel = this.getPanel(id);
         if (panel) {
@@ -197,31 +113,11 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
         }
     }
 
-    public removeAction(id: UniqueId) {
-        const { headerToolBar } = this.state;
-        const treeHelper = new TreeHelper(headerToolBar);
-        const parent = treeHelper.getParent(id);
-        if (!parent?.children?.length) return;
-        const idx = parent.children.findIndex((i) => i.id === id);
-        parent.children.splice(idx, 1);
-        this.setState({
-            headerToolBar: [...headerToolBar],
-        });
-    }
-
     // update panel hidden
     public togglePanel(id: UniqueId, hidden?: boolean) {
         const panel = this.getPanel(id);
         if (!panel) return;
         panel.hidden = typeof hidden === 'boolean' ? hidden : !panel.hidden;
-        this.setState((prev) => ({ ...prev }));
-    }
-
-    // update header toolbar status
-    public toggleHeaderBar(id: UniqueId, hidden?: boolean) {
-        const action = this.getAction(id);
-        if (!action) return;
-        action.icon = toggleNextIcon(action.icon, typeof hidden === 'boolean' ? !hidden : hidden);
         this.setState((prev) => ({ ...prev }));
     }
 

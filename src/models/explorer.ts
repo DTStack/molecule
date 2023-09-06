@@ -32,14 +32,9 @@ export interface IExplorerPanelItem extends HTMLElementProps {
 }
 export interface IExplorer {
     data: IExplorerPanelItem[];
-    headerToolBar?: IMenuItemProps[];
     activePanelKeys?: UniqueId[];
 }
 
 export class ExplorerModel implements IExplorer {
-    constructor(
-        public data: IExplorerPanelItem[] = [],
-        public headerToolBar: IMenuItemProps[] = [],
-        public activePanelKeys?: UniqueId[]
-    ) {}
+    constructor(public data: IExplorerPanelItem[] = [], public activePanelKeys?: UniqueId[]) {}
 }

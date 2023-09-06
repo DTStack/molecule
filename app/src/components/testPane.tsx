@@ -1,6 +1,7 @@
 import { Button } from '@dtinsight/molecule/esm/client/components/button';
 import { ScrollBar } from '@dtinsight/molecule/esm/client/components/scrollBar';
 import type { IMoleculeContext } from '@dtinsight/molecule/esm/types';
+import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
 
 function randomId() {
     return Math.round(Math.random() * 1000);
@@ -114,6 +115,17 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
     // ====================================================================
 
+    // ================= Folder Tree Operation Region ====================
+    const addRootFolder = () => {
+        const children = new Array(50)
+            .fill(1)
+            .map((_, index) => new TreeNodeModel(index, `test_sql_${index}.sql`, 'File'));
+        molecule.folderTree.add(
+            new TreeNodeModel(randomId(), 'Sample SQLs', 'RootFolder', children)
+        );
+    };
+    // ====================================================================
+
     return (
         <ScrollBar isShowShadow>
             <div style={{ padding: 16 }}>
@@ -121,20 +133,19 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <Button onClick={handleAddActivityBar}>Add ActivityBar Item</Button>
                 <Button onClick={handleAddGloablActivityBar}>Add Global ActivityBar Item</Button>
                 <Button onClick={handleHiddenActivityBar}>Show/Hide ActivityBar</Button>
-
                 <h2>StatusBar:</h2>
                 <Button onClick={addStatusBar}>Add StatusBar Item</Button>
                 <Button onClick={removeStatusBar}>Remove Last StatusBar Item</Button>
                 <Button onClick={showHideStatusBar}>Show/Hide StatusBar</Button>
-
                 <h2>MenuBar:</h2>
                 <Button onClick={appendMenu}>Add MenuBar Item</Button>
                 <Button onClick={removeMenu}>Remove MenuBar Item</Button>
                 <Button onClick={updateMenu}>Update MenuBar Item</Button>
                 <Button onClick={showHideMenuBar}>Show/Hide MenuBar</Button>
-
                 <h2>Explorer:</h2>
                 <Button onClick={addExplorer}>Add Explorer Panel</Button>
+                <h2>FolderTree:</h2>
+                <Button onClick={addRootFolder}>Add Root Folder</Button>
             </div>
         </ScrollBar>
     );

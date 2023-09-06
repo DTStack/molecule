@@ -1,7 +1,12 @@
+import { createElement } from 'react';
+import FolderTree from 'mo/client/slots/folderTree';
 import { BaseController } from 'mo/glue';
-import { BuiltinService } from 'mo/services/builtin';
-import { ExplorerService } from 'mo/services/explorer';
-import { FolderTreeService } from 'mo/services/folderTree';
+import { FolderTreeEvent } from 'mo/models/folderTree';
+import type { BuiltinService } from 'mo/services/builtin';
+import type { ExplorerService } from 'mo/services/explorer';
+import type { FolderTreeService } from 'mo/services/folderTree';
+import type { UniqueId } from 'mo/types';
+import type { TreeNodeModel } from 'mo/utils/tree';
 import { inject, injectable } from 'tsyringe';
 
 export interface IFolderTreeController extends BaseController {
@@ -10,11 +15,11 @@ export interface IFolderTreeController extends BaseController {
     //     contextMenu: IMenuItemProps,
     //     treeNode?: IFolderTreeNodeProps
     // ) => void;
-    // readonly onUpdateFileName?: (file: IFolderTreeNodeProps) => void;
-    // readonly onSelectFile?: (file?: IFolderTreeNodeProps) => void;
-    // readonly onDropTree?: (source: IFolderTreeNodeProps, target: IFolderTreeNodeProps) => void;
-    // readonly onLoadData?: (treeNode: IFolderTreeNodeProps) => Promise<void>;
-    // readonly onExpandKeys?: (expandKeys: UniqueId[]) => void;
+    readonly onUpdateFileName?: (file: TreeNodeModel<any>) => void;
+    readonly onSelectFile?: (file?: TreeNodeModel<any>) => void;
+    readonly onDropTree?: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void;
+    readonly onLoadData?: (treeNode: TreeNodeModel<any>) => Promise<void>;
+    readonly onExpandKeys?: (expandKeys: UniqueId[]) => void;
     // readonly onRightClick?: (treeNode: IFolderTreeNodeProps) => IMenuItemProps[];
 }
 
@@ -66,6 +71,7 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
         const { builtInExplorerFolderPanel } = this.builtin.getState().modules;
         this.explorer.addPanel({
             ...builtInExplorerFolderPanel,
+            render: (panel) => createElement(FolderTree, { panel, ...this }),
         });
         // const {
         //     FILE_CONTEXT_MENU,
@@ -152,21 +158,21 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
     //     return menus;
     // };
 
-    // public readonly onDropTree = (source: IFolderTreeNodeProps, target: IFolderTreeNodeProps) => {
-    //     this.emit(FolderTreeEvent.onDrop, source, target);
-    // };
+    public readonly onDropTree = (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => {
+        this.emit(FolderTreeEvent.onDrop, source, target);
+    };
 
-    // public onUpdateFileName = (file: IFolderTreeNodeProps) => {
-    //     this.emit(FolderTreeEvent.onUpdateFileName, file);
-    // };
+    public onUpdateFileName = (file: TreeNodeModel<any>) => {
+        this.emit(FolderTreeEvent.onUpdateFileName, file);
+    };
 
-    // public readonly onSelectFile = (file?: IFolderTreeNodeProps) => {
-    //     this.folderTreeService.setActive(file?.id);
-    //     // editing file won't emit onSelectFile
-    //     if (file && !file.isEditable && file.fileType === FileTypes.File) {
-    //         this.emit(FolderTreeEvent.onSelectFile, file);
-    //     }
-    // };
+    public readonly onSelectFile = (file?: TreeNodeModel<any>) => {
+        this.folderTree.setActive(file?.id);
+        // editing file won't emit onSelectFile
+        if (file && file.id !== this.folderTree.getState().editing && file.fileType === 'File') {
+            this.emit(FolderTreeEvent.onSelectFile, file);
+        }
+    };
 
     // private onContextMenuClick = (contextMenu: IMenuItemProps, treeNode?: IFolderTreeNodeProps) => {
     //     this.emit(FolderTreeEvent.onContextMenuClick, contextMenu, treeNode);
@@ -180,27 +186,27 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
     //     this.emit(FolderTreeEvent.onDelete, id);
     // };
 
-    // public onLoadData = (treeNode: IFolderTreeNodeProps) => {
-    //     const count = this.count(FolderTreeEvent.onLoadData);
-    //     if (count) {
-    //         // define current treeNode to be loaded
-    //         this.folderTreeService.setLoadedKeys([
-    //             ...this.folderTreeService.getLoadedKeys(),
-    //             treeNode.id.toString(),
-    //         ]);
-    //         return new Promise<void>((resolve, reject) => {
-    //             const callback = (node: IFolderTreeNodeProps) => {
-    //                 this.folderTreeService.update(node);
-    //                 resolve();
-    //             };
-    //             this.emit(FolderTreeEvent.onLoadData, treeNode, callback);
-    //         });
-    //     } else {
-    //         return Promise.resolve();
-    //     }
-    // };
+    public onLoadData = (treeNode: TreeNodeModel<any>) => {
+        const count = this.count(FolderTreeEvent.onLoadData);
+        if (count) {
+            // define current treeNode to be loaded
+            this.folderTree.setLoadedKeys([
+                ...this.folderTree.getLoadedKeys(),
+                treeNode.id.toString(),
+            ]);
+            return new Promise<void>((resolve) => {
+                const callback = (node: TreeNodeModel<any>) => {
+                    this.folderTree.update(node);
+                    resolve();
+                };
+                this.emit(FolderTreeEvent.onLoadData, treeNode, callback);
+            });
+        } else {
+            return Promise.resolve();
+        }
+    };
 
-    // public onExpandKeys = (expandedKeys: UniqueId[]) => {
-    //     this.emit(FolderTreeEvent.onExpandKeys, expandedKeys);
-    // };
+    public onExpandKeys = (expandedKeys: UniqueId[]) => {
+        this.emit(FolderTreeEvent.onExpandKeys, expandedKeys);
+    };
 }

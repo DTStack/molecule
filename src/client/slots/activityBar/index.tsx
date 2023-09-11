@@ -11,29 +11,54 @@ import variables from './index.scss';
 
 export default function ActivityBar({ onClick, onContextMenuClick }: IActivityBarController) {
     const activityBar = useConnector('activityBar');
+    const layout = useConnector('layout');
+    const menuBar = useConnector('menuBar');
     const contextMenu = useContextMenu('activityBar');
 
     const [top, bottom] = classify(activityBar.data, (item) => item.alignment === 'top');
 
-    const renderItems = (item: IActivityBarItem) => {
-        return (
-            <ActivityBarItem
-                checked={activityBar.selected === item.id}
-                key={item.id}
-                data={item}
-                onClick={onClick}
-                onContextMenuClick={onContextMenuClick}
-            />
-        );
+    const renderMenu = () => {
+        if (layout.menuBar.hidden) {
+            return (
+                <ActivityBarItem
+                    key="inline-menu"
+                    data={{
+                        id: 'menu',
+                        name: 'menu',
+                        icon: 'menu',
+                        contextMenu: menuBar.data,
+                    }}
+                />
+            );
+        }
     };
 
     return (
         <Dropdown data={contextMenu} trigger="contextMenu" alignPoint onClick={onContextMenuClick}>
             <div className={variables.container}>
                 <ScrollBar className={variables.normal}>
-                    <ul>{top.map(renderItems)}</ul>
+                    <ul>
+                        {renderMenu()}
+                        {top.map((item: IActivityBarItem) => (
+                            <ActivityBarItem
+                                checked={activityBar.selected === item.id}
+                                key={item.id}
+                                data={item}
+                                onClick={onClick}
+                                onContextMenuClick={onContextMenuClick}
+                            />
+                        ))}
+                    </ul>
                 </ScrollBar>
-                <ul className={variables.global}>{bottom.map(renderItems)}</ul>
+                <ul className={variables.global}>
+                    {bottom.map((item: IActivityBarItem) => (
+                        <ActivityBarItem
+                            key={item.id}
+                            data={item}
+                            onContextMenuClick={onContextMenuClick}
+                        />
+                    ))}
+                </ul>
             </div>
         </Dropdown>
     );

@@ -45,7 +45,7 @@ export class ActivityBarService
     // private sidebarService: ISidebarService;
 
     constructor() {
-        super();
+        super('activityBar');
         this.state = new ActivityBarModel();
     }
 

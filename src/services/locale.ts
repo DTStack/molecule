@@ -69,7 +69,7 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
     protected state: ILocaleModel;
 
     constructor() {
-        super();
+        super('locale');
         this.state = new LocaleModel();
     }
 

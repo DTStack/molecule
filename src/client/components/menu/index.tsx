@@ -56,7 +56,10 @@ export default function Menu({ data, onClick }: IMenuProps) {
                 }
                 key={subMenu.id}
             >
-                {subMenu.children.map((child) => generateMenuItem(child))}
+                {subMenu.children.map((child) => {
+                    if (Array.isArray(child.children)) return generateSubMenu(child);
+                    return generateMenuItem(child);
+                })}
             </SubMenu>
         );
     }

@@ -1,10 +1,6 @@
-import { cloneDeep } from 'lodash-es';
+import { cloneDeepWith } from 'lodash-es';
 
 import GlobalEvent from './event';
-
-export enum ComponentEvents {
-    Update = 'Component.Update',
-}
 
 export interface IComponent<S = any> {
     /**
@@ -40,6 +36,9 @@ export interface IComponent<S = any> {
 
 export default abstract class BaseService<S = any> extends GlobalEvent implements IComponent<S> {
     protected abstract state: S;
+    constructor(private name: string) {
+        super();
+    }
 
     /**
      * Set the state values, and notify the view component to re render
@@ -56,7 +55,12 @@ export default abstract class BaseService<S = any> extends GlobalEvent implement
         } else {
             nextState = { ...this.state, ...values };
         }
-        nextState = cloneDeep(nextState);
+        nextState = cloneDeepWith(nextState, (value) => {
+            // FIXME: NOT clone ITextModel
+            if (value && typeof value === 'object' && 'uri' in value) {
+                return value;
+            }
+        });
         this.render(nextState);
         callback?.(this.state, nextState);
         this.state = nextState;
@@ -67,15 +71,15 @@ export default abstract class BaseService<S = any> extends GlobalEvent implement
      * @param nextState
      */
     public render(nextState: S) {
-        this.emit(ComponentEvents.Update, this.state, nextState);
+        this.emit(this.name, this.state, nextState);
     }
 
     public onUpdateState(listener: (prevState: S, nextState: S) => void) {
-        this.subscribe(ComponentEvents.Update, listener);
+        this.subscribe(this.name, listener);
     }
 
     public removeOnUpdateState(listener?: Function): void {
-        this.unsubscribe(ComponentEvents.Update, listener);
+        this.unsubscribe(this.name, listener);
     }
 
     public forceUpdate() {

@@ -1,0 +1,12 @@
+@import '../../classNames/style.scss';
+
+$output: prefix('output');
+
+.#{$output} {
+    height: 100%;
+    width: 100%;
+}
+
+:export {
+    output: $output;
+}

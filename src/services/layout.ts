@@ -67,7 +67,7 @@ export interface ILayoutService extends BaseService<ILayout> {
 export class LayoutService extends BaseService<ILayout> implements ILayoutService {
     protected state: ILayout;
     constructor() {
-        super();
+        super('layout');
         this.state = new LayoutModel();
     }
 

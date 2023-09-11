@@ -1,0 +1,55 @@
+@import '../../classNames/style.scss';
+
+$container: prefix('breadcrumb');
+$item: BEMElement($container, 'item');
+$label: BEMElement($container, 'label');
+
+.#{$container} {
+    display: flex;
+    overflow: auto;
+    white-space: nowrap;
+
+    .#{$item} {
+        align-items: center;
+        background-color: var(--breadcrumb-background);
+        color: var(--breadcrumb-foreground);
+        cursor: pointer;
+        display: flex;
+        gap: 4px;
+        justify-content: left;
+        text-decoration: none;
+
+        &:focus {
+            color: var(--breadcrumb-focusForeground);
+            outline: 1px solid var(--list-focusOutline);
+            outline-offset: -1px;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+
+        .codicon {
+            font-size: 14px;
+        }
+    }
+
+    .#{$label} {
+        align-items: center;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        text-decoration: none;
+        width: 100%;
+    }
+}
+
+
+:export {
+    container: $container;
+    item: $item;
+    label: $label;
+}

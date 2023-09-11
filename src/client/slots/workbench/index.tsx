@@ -17,6 +17,8 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
     const MenuBar = useSlots('menuBar');
     const ActivityBar = useSlots('activityBar');
     const Sidebar = useSlots('sidebar');
+    const Panel = useSlots('panel');
+    const Editor = useSlots('editor');
 
     const bothVisibility = !layout.sidebar.hidden && !layout.auxiliaryBar.hidden;
     const sidebarHidden = layout.sidebar.hidden;
@@ -55,9 +57,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                     onChange={onSideChange}
                 >
                     <Pane minSize={170} maxSize="80%">
-                        <Display visible={!layout.sidebar.hidden}>
-                            {Sidebar}
-                        </Display>
+                        <Display visible={!layout.sidebar.hidden}>{Sidebar}</Display>
                     </Pane>
                     <SplitPane
                         sizes={getSizes()}
@@ -67,9 +67,9 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                         onChange={onEditorChange}
                     >
                         <Pane minSize="10%" maxSize="80%">
-                            <section>editor</section>
+                            {Editor}
                         </Pane>
-                        <section>panel</section>
+                        <Display visible={!layout.panel.hidden}>{Panel}</Display>
                     </SplitPane>
                     <Pane minSize={100} maxSize="80%">
                         <section>auxiliaryBar</section>

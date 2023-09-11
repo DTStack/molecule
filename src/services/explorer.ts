@@ -59,7 +59,7 @@ export interface IExplorerService extends BaseService<ExplorerModel> {
 export class ExplorerService extends BaseService<ExplorerModel> implements IExplorerService {
     protected state: ExplorerModel;
     constructor() {
-        super();
+        super('explorer');
         this.state = new ExplorerModel();
     }
 

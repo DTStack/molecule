@@ -8,7 +8,7 @@ import { IMenuItemProps, UniqueId } from 'mo/types';
 export class ContextMenuService extends BaseService<ContextMenuModel> {
     protected state: ContextMenuModel;
     constructor() {
-        super();
+        super('contextMenu');
         this.state = new ContextMenuModel();
     }
 

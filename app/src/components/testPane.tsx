@@ -126,9 +126,61 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
     // ====================================================================
 
+    // ================= Panel Operation Region ====================
+    const addPanel = () => {
+        const id = randomId();
+        const panelId = `Panel-${id}`;
+        molecule.panel.open({
+            id: panelId,
+            name: panelId,
+            closable: true,
+            sortIndex: 3,
+            render: () => <div style={{ padding: 20 }}>Test {panelId}</div>,
+        });
+    };
+
+    const showHidePanel = () => {
+        molecule.layout.setPanelVisibility((prev) => !prev);
+    };
+    // ====================================================================
+
+    // ================= Output Operation Region ====================
+    const updateOutput = () => {
+        molecule.panel.setActive(molecule.builtin.getState().constants.PANEL_OUTPUT);
+        molecule.output.append('Number: ' + Math.random() * 10 + '\n');
+    };
+    // ====================================================================
+
+    // ================= Editor Operation Region ====================
+    const newEditor = function () {
+        const key = randomId();
+        const name = `editor-${key}.ts`;
+        molecule.editor.open(
+            {
+                id: key,
+                name,
+                icon: 'file',
+                value: `// editor-${key}
+            // export interface Type<T> { new (...args: any[]): T; }
+            // export type GenericClassDecorator<T> = (target: T) => void;`,
+                language: 'typescript',
+                breadcrumb: [
+                    { id: 'app', name: 'app' },
+                    { id: 'src', name: 'src' },
+                    { id: 'components', name: 'components' },
+                    { id: 'editor', name, icon: 'file' },
+                ],
+            },
+            molecule.editor.getState().groups?.at(0)?.id
+        );
+    };
+    // ====================================================================
+
     return (
         <ScrollBar isShowShadow>
             <div style={{ padding: 16 }}>
+                <h2>Editor:</h2>
+                <Button onClick={newEditor}>New Editor</Button>
                 <h2>ActivityBar:</h2>
                 <Button onClick={handleAddActivityBar}>Add ActivityBar Item</Button>
                 <Button onClick={handleAddGloablActivityBar}>Add Global ActivityBar Item</Button>
@@ -146,6 +198,11 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <Button onClick={addExplorer}>Add Explorer Panel</Button>
                 <h2>FolderTree:</h2>
                 <Button onClick={addRootFolder}>Add Root Folder</Button>
+                <h2>Panel:</h2>
+                <Button onClick={addPanel}>Add Panel</Button>
+                <Button onClick={showHidePanel}>Show/Hide Panel</Button>
+                <h2>Output:</h2>
+                <Button onClick={updateOutput}>Update Output</Button>
             </div>
         </ScrollBar>
     );

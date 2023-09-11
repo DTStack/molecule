@@ -3,11 +3,14 @@ import type { ActivityBarService } from './services/activityBar';
 import type { AuxiliaryBarService } from './services/auxiliaryBar';
 import type { BuiltinService } from './services/builtin';
 import type { ContextMenuService } from './services/contextMenu';
+import type { EditorService } from './services/editor';
 import type { ExplorerService } from './services/explorer';
 import type { FolderTreeService } from './services/folderTree';
 import type { LayoutService } from './services/layout';
 import type { LocaleService } from './services/locale';
 import type { MenuBarService } from './services/menuBar';
+import type { OutputService } from './services/output';
+import type { PanelService } from './services/panel';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
@@ -60,6 +63,9 @@ export interface IContext {
         sidebar: SidebarService;
         explorer: ExplorerService;
         folderTree: FolderTreeService;
+        panel: PanelService;
+        output: OutputService;
+        editor: EditorService;
     };
     controllers: { [key in keyof IContext['molecule']]: BaseController };
     localize: Localize;
@@ -231,3 +237,26 @@ export interface IExtension {
 export type ContextMenuEventHandler = (item: IMenuItemProps) => void;
 
 export type RenderFunctionProps<T> = (item: T) => React.ReactNode;
+
+/**
+ * The type definition for the Tab data construct
+ */
+export interface ITabProps<T = any, P = any> {
+    id: UniqueId;
+    name?: string;
+    /**
+     * Mark the tab status to be closable,
+     * Default is true
+     */
+    closable?: boolean;
+    icon?: IconType;
+    data?: T;
+    render?: (item: ITabProps<T, P>) => React.ReactNode;
+}
+
+export interface IBreadcrumbItemProps {
+    id: UniqueId;
+    name: string;
+    icon?: IconType;
+    render?: (item: IBreadcrumbItemProps) => React.ReactNode;
+}

@@ -11,7 +11,7 @@ export class BuiltinService extends BaseService<BuiltinModel> implements IBuilti
     protected state: BuiltinModel;
 
     constructor(@inject('locale') private locale: LocaleService) {
-        super();
+        super('builtin');
         this.state = new BuiltinModel(this.locale.localize);
     }
 }

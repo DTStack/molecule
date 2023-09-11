@@ -12,8 +12,8 @@ export default function useConnector<T extends Selector>(selector: T): StateType
     const target = useMemo(() => molecule[selector], [molecule, selector]);
 
     // ONLY way to emit re-render is by forceUpdate
-    const [_, dispatch] = useState(false);
-    const forceUpdate = () => dispatch((p) => !p);
+    const [_, dispatch] = useState([]);
+    const forceUpdate = () => dispatch([]);
 
     const depsMap = useRef(new Set<string | symbol>());
 

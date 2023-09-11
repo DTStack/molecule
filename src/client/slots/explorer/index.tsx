@@ -16,10 +16,11 @@ export default function Explorer() {
         next[idx].name = rootFolderName;
         return next;
     }, [explorer.data, rootFolderName]);
+
     if (!data.length) return null;
     return (
         <Collapse
-            data={explorer.data}
+            data={data}
             activePanelKeys={explorer.activePanelKeys}
             // onCollapseChange={onCollapseChange}
             // onToolbarClick={onToolbarClick}

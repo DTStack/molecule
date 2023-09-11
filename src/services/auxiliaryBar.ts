@@ -46,7 +46,7 @@ export class AuxiliaryBarService
     public state: IAuxiliaryBar;
 
     constructor() {
-        super();
+        super('auxiliaryBar');
         this.state = new AuxiliaryModel();
     }
 

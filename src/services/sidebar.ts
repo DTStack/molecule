@@ -41,7 +41,7 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
     protected state: SidebarModel;
 
     constructor() {
-        super();
+        super('sidebar');
         this.state = new SidebarModel();
     }
 

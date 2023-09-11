@@ -45,7 +45,7 @@ export class StatusBarService extends BaseService<StatusBarModel> implements ISt
     protected state: StatusBarModel;
 
     constructor() {
-        super();
+        super('statusBar');
         this.state = new StatusBarModel();
     }
 

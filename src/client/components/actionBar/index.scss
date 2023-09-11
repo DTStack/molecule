@@ -17,6 +17,11 @@ $icon-size: 20px;
     padding: 0;
     width: 100%;
 
+    &:empty {
+        width: 0;
+        height: 0;
+    }
+
     .#{$item} {
         box-sizing: border-box;
         cursor: pointer;

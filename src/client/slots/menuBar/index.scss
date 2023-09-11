@@ -13,6 +13,7 @@ $item: BEMElement($menuBar, 'item');
 
     .#{$item} {
         font-size: 13px;
+        display: inline-block;
         padding: 0 1em;
         height: 30px;
         line-height: 30px;

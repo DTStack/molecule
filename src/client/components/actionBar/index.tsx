@@ -32,6 +32,7 @@ export default function ActionBar({
                 <div
                     key={i.id}
                     title={i.name}
+                    onClick={() => onClick?.(i)}
                     className={classNames(variables.item, i.disabled && variables.disabled)}
                 >
                     <Icon type={i.icon}>{i.name}</Icon>

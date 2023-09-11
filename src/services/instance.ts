@@ -12,12 +12,15 @@ import { ActivityBarService } from './activityBar';
 import { AuxiliaryBarService } from './auxiliaryBar';
 import { BuiltinService } from './builtin';
 import { ContextMenuService } from './contextMenu';
+import { EditorService } from './editor';
 import { ExplorerService } from './explorer';
 import { ExtensionService } from './extension';
 import { FolderTreeService } from './folderTree';
 import { LayoutService } from './layout';
 import { LocaleService } from './locale';
 import { MenuBarService } from './menuBar';
+import { OutputService } from './output';
+import { PanelService } from './panel';
 import { SidebarService } from './sidebar';
 import { StatusBarService } from './statusBar';
 
@@ -89,6 +92,9 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('sidebar', SidebarService);
         this.register('explorer', ExplorerService);
         this.register('folderTree', FolderTreeService);
+        this.register('panel', PanelService);
+        this.register('output', OutputService);
+        this.register('editor', EditorService);
         // =====================================================
     }
 
@@ -124,6 +130,9 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const sidebar = this.resolve<SidebarService>('sidebar');
         const explorer = this.resolve<ExplorerService>('explorer');
         const folderTree = this.resolve<FolderTreeService>('folderTree');
+        const panel = this.resolve<PanelService>('panel');
+        const output = this.resolve<OutputService>('output');
+        const editor = this.resolve<EditorService>('editor');
 
         // extensions should resolved after all other services
         const extension = this.resolve<ExtensionService>('extension');
@@ -136,6 +145,9 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const sidebarController = this.resolve(controller.sidebar.SidebarController);
         const explorerController = this.resolve(controller.explorer.ExplorerController);
         const folderTreeController = this.resolve(controller.folderTree.FolderTreeController);
+        const panelController = this.resolve(controller.panel.PanelController);
+        const outputController = this.resolve(controller.output.OutputController);
+        const editorController = this.resolve(controller.editor.EditorController);
 
         this.root = this.root || createRoot(container);
         this.root.render(
@@ -153,6 +165,9 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         sidebar,
                         explorer,
                         folderTree,
+                        panel,
+                        output,
+                        editor,
                     },
                     localize: locale.localize,
                     controllers: {
@@ -163,6 +178,9 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         sidebar: sidebarController,
                         explorer: explorerController,
                         folderTree: folderTreeController,
+                        panel: panelController,
+                        output: outputController,
+                        editor: editorController,
                     } as any,
                 },
             })

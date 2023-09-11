@@ -1,19 +1,28 @@
 import { BaseService } from 'mo/glue';
 import { ExtensionModel } from 'mo/models/extension';
-import { ILocale } from 'mo/models/locale';
-import { IContribute, IContributeType, IExtension, IMoleculeContext, UniqueId } from 'mo/types';
+import type { ILocale } from 'mo/models/locale';
+import {
+    type IContribute,
+    IContributeType,
+    type IExtension,
+    type IMoleculeContext,
+    type UniqueId,
+} from 'mo/types';
 import { searchById } from 'mo/utils';
 import { inject, injectable } from 'tsyringe';
 
 import type { ActivityBarService } from './activityBar';
 import type { AuxiliaryBarService } from './auxiliaryBar';
-import { BuiltinService } from './builtin';
+import type { BuiltinService } from './builtin';
 import type { ContextMenuService } from './contextMenu';
+import type { EditorService } from './editor';
 import type { ExplorerService } from './explorer';
 import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
+import type { OutputService } from './output';
+import type { PanelService } from './panel';
 import type { SidebarService } from './sidebar';
 import type { StatusBarService } from './statusBar';
 
@@ -102,9 +111,12 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         @inject('activityBar') private activityBar: ActivityBarService,
         @inject('sidebar') private sidebar: SidebarService,
         @inject('explorer') private explorer: ExplorerService,
-        @inject('folderTree') private folderTree: FolderTreeService
+        @inject('folderTree') private folderTree: FolderTreeService,
+        @inject('panel') private panel: PanelService,
+        @inject('output') private output: OutputService,
+        @inject('editor') private editor: EditorService
     ) {
-        super();
+        super('extension');
         this.state = new ExtensionModel();
     }
 
@@ -121,6 +133,9 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             sidebar: this.sidebar,
             explorer: this.explorer,
             folderTree: this.folderTree,
+            panel: this.panel,
+            output: this.output,
+            editor: this.editor,
         };
     };
 

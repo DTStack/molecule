@@ -316,6 +316,30 @@ export class BuiltinModel {
                 grow: 2,
             },
         }),
+        builtInOutputPanel: () => ({
+            id: this.constants.PANEL_OUTPUT,
+            name: this.localize(this.constants.PANEL_OUTPUT, 'output'),
+            data: '',
+            sortIndex: 2,
+            closable: false,
+        }),
+        builtInEditorInitialActions: () => [
+            {
+                id: this.constants.EDITOR_MENU_SPILIT,
+                name: 'Split Editor Right',
+                title: this.localize('editor.actions.splitRight', 'Split Editor Right'),
+                icon: 'split-horizontal',
+                group: 'inline',
+            },
+            {
+                id: this.constants.EDITOR_MENU_SHOW_OPENEDITORS,
+                name: 'Show Opened Editors',
+            },
+            {
+                id: this.constants.EDITOR_MENU_CLOSE_ALL,
+                name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+            },
+        ],
     };
     constructor(private localize: Localize) {}
 

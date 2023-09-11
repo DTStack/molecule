@@ -26,7 +26,7 @@ export interface ILayout {
 export class LayoutModel implements ILayout {
     constructor(
         public splitPanePos: (number | string)[] = [300, 'auto', 300],
-        public horizontalSplitPanePos = ['auto', '150px'],
+        public horizontalSplitPanePos = ['auto', '230px'],
         public groupSplitPos = [],
         public activityBar = { hidden: false },
         public auxiliaryBar = { hidden: true },

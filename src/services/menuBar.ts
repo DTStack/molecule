@@ -47,7 +47,7 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
     private sperator = '-';
 
     constructor() {
-        super();
+        super('menuBar');
         this.state = new MenuBarModel();
     }
 

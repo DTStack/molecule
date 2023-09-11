@@ -147,7 +147,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
     protected state: FolderTreeModel;
 
     constructor() {
-        super();
+        super('folderTree');
         this.state = new FolderTreeModel();
     }
 

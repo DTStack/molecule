@@ -1,0 +1,29 @@
+@import '../../classNames/style.scss';
+
+$header: prefix('header');
+$content: BEMElement($header, 'content');
+$extra: BEMElement($header, 'extra');
+
+.#{$header} {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+
+    .#{$content} {
+        height: 100%;
+        flex: 1;
+    }
+
+    .#{$extra} {
+        padding: 0 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+:export {
+    header: $header;
+    content: $content;
+    extra: $extra;
+}

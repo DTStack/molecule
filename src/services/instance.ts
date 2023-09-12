@@ -11,6 +11,7 @@ import type { constructor } from 'tsyringe/dist/typings/types';
 import { ActivityBarService } from './activityBar';
 import { AuxiliaryBarService } from './auxiliaryBar';
 import { BuiltinService } from './builtin';
+import { ColorThemeService } from './colorTheme';
 import { ContextMenuService } from './contextMenu';
 import { EditorService } from './editor';
 import { ExplorerService } from './explorer';
@@ -95,6 +96,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('panel', PanelService);
         this.register('output', OutputService);
         this.register('editor', EditorService);
+        this.register('colorTheme', ColorThemeService);
         // =====================================================
     }
 
@@ -133,6 +135,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const panel = this.resolve<PanelService>('panel');
         const output = this.resolve<OutputService>('output');
         const editor = this.resolve<EditorService>('editor');
+        const colorTheme = this.resolve<ColorThemeService>('colorTheme');
 
         // extensions should resolved after all other services
         const extension = this.resolve<ExtensionService>('extension');
@@ -168,6 +171,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         panel,
                         output,
                         editor,
+                        colorTheme,
                     },
                     localize: locale.localize,
                     controllers: {

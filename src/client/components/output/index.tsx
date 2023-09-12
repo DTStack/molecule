@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import Editor from '@monaco-editor/react';
+import { Editor } from '@monaco-editor/react';
 import useConnector from 'mo/client/hooks/useConnector';
+import { ColorThemeService } from 'mo/services/colorTheme';
 import type { editor } from 'monaco-editor';
 
 import variables from './index.scss';
@@ -33,8 +34,7 @@ export default function Output() {
                 scrollBeyondLastLine: false,
                 contextmenu: false,
             }}
-            // FIXME: Support competitable with current theme
-            theme="vs-dark"
+            theme={ColorThemeService.DEFAULT_THEME_CLASS_NAME}
             onMount={(editor) => (instance.current = editor)}
         />
     );

@@ -1,7 +1,11 @@
+import type { editor } from 'monaco-editor';
+
+import type { IColorTheme } from './models/colorTheme';
 import type { ILocale, LocaleKind } from './models/locale';
 import type { ActivityBarService } from './services/activityBar';
 import type { AuxiliaryBarService } from './services/auxiliaryBar';
 import type { BuiltinService } from './services/builtin';
+import type { ColorThemeService } from './services/colorTheme';
 import type { ContextMenuService } from './services/contextMenu';
 import type { EditorService } from './services/editor';
 import type { ExplorerService } from './services/explorer';
@@ -14,6 +18,8 @@ import type { PanelService } from './services/panel';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
+
+export type BuiltinTheme = editor.BuiltinTheme;
 
 export type RecordWithId<T> = { id: UniqueId; [key: string]: any } & T;
 
@@ -66,6 +72,7 @@ export interface IContext {
         panel: PanelService;
         output: OutputService;
         editor: EditorService;
+        colorTheme: ColorThemeService;
     };
     controllers: { [key in keyof IContext['molecule']]: BaseController };
     localize: Localize;
@@ -152,12 +159,23 @@ export enum IContributeType {
     IconTheme = 'iconThemes',
 }
 
+/**
+ * Color scheme used by the OS and by color themes.
+ */
+export enum ColorScheme {
+    DARK = 'dark',
+    LIGHT = 'light',
+    HIGH_CONTRAST = 'hc',
+}
+
+export type ColorSchemeLiteral = Lowercase<keyof typeof ColorScheme>;
+
 export interface IContribute {
     [IContributeType.Languages]?: ILocale[];
     // [IContributeType.Commands]?: any;
     // [IContributeType.Configuration]?: any;
     // [IContributeType.Grammar]?: any;
-    // [IContributeType.Themes]?: IColorTheme[];
+    [IContributeType.Themes]?: IColorTheme[];
     // [IContributeType.IconTheme]?: IIconTheme[];
 }
 

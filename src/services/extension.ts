@@ -14,6 +14,7 @@ import { inject, injectable } from 'tsyringe';
 import type { ActivityBarService } from './activityBar';
 import type { AuxiliaryBarService } from './auxiliaryBar';
 import type { BuiltinService } from './builtin';
+import type { ColorThemeService } from './colorTheme';
 import type { ContextMenuService } from './contextMenu';
 import type { EditorService } from './editor';
 import type { ExplorerService } from './explorer';
@@ -88,12 +89,6 @@ export interface IExtensionService {
      * Reset the extensions to `[]`
      */
     reset(): void;
-    /**
-     * Distinguish the language extensions from extensions
-     * @param extensions
-     * @returns [ languagesExts, otherExtensions ]
-     */
-    // splitLanguagesExts(extensions: IExtension[]): [IExtension[], IExtension[]];
 }
 
 @injectable()
@@ -114,7 +109,8 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         @inject('folderTree') private folderTree: FolderTreeService,
         @inject('panel') private panel: PanelService,
         @inject('output') private output: OutputService,
-        @inject('editor') private editor: EditorService
+        @inject('editor') private editor: EditorService,
+        @inject('colorTheme') private colorTheme: ColorThemeService
     ) {
         super('extension');
         this.state = new ExtensionModel();
@@ -136,6 +132,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             panel: this.panel,
             output: this.output,
             editor: this.editor,
+            colorTheme: this.colorTheme,
         };
     };
 
@@ -182,11 +179,10 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         extensions.filter(this._predicate).forEach((extension) => {
             if (!this.isExtension(extension)) return;
 
-            extension.activate(ctx);
-
             if (extension.contributes) {
                 this.loadContributes(extension.contributes);
             }
+            extension.activate(ctx);
         });
     }
 
@@ -195,15 +191,16 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         contributeKeys.forEach((type: string) => {
             switch (type) {
                 case IContributeType.Themes: {
-                    // const themes: IColorTheme[] | undefined = contributes[type];
-                    // if (!themes) return;
-                    // return this.colorThemeService.addThemes(themes);
+                    const themes = contributes[type];
+                    if (!themes) return;
+                    this.colorTheme.addThemes(themes);
                     break;
                 }
                 case IContributeType.Languages: {
                     const locales: ILocale[] | undefined = contributes[type];
                     if (!Array.isArray(locales)) return;
                     this.locale.addLocales(locales);
+                    break;
                 }
             }
         });

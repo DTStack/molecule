@@ -1,5 +1,14 @@
 import { Children, cloneElement, isValidElement } from 'react';
-import type { ArraylizeOrSingle, IconType, IMenuItemProps, RecordWithId, UniqueId } from 'mo/types';
+import type { IColorTheme } from 'mo/models/colorTheme';
+import {
+    type ArraylizeOrSingle,
+    ColorScheme,
+    type IconType,
+    type IMenuItemProps,
+    type RecordWithId,
+    type UniqueId,
+} from 'mo/types';
+import type { editor } from 'monaco-editor';
 
 export function searchById<T extends RecordWithId<Record<string, any>>>(id: UniqueId) {
     return (item: T) => item.id === id;
@@ -103,4 +112,103 @@ export function concatMenu(...args: IMenuItemProps[][]) {
     return nonEmptyArgs.reduce((acc, cur) => {
         return acc.concat({ id: randomId(), type: 'divider' }, cur);
     });
+}
+
+/**
+ * Determine if a color is light or dark.
+ * @param color HEX or RGB
+ */
+export function colorLightOrDark(color: string) {
+    // Variables for red, green, blue values
+    let r: number;
+    let g: number;
+    let b: number;
+
+    // Check the format of the color, HEX or RGB?
+    if (color.match(/^rgb/)) {
+        // If RGB --> store the red, green, blue values in separate variables
+        const matchArray =
+            color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/) || [];
+        r = +matchArray[1];
+        g = +matchArray[2];
+        b = +matchArray[3];
+    } else {
+        // If hex --> Convert it to RGB
+        let rgbNum = +('0x' + color.slice(1, 7));
+        if (color.length < 5) {
+            rgbNum = +('0x' + color.slice(1).replace(/./g, '$&$&').slice(0, 6));
+        }
+        r = rgbNum >> 16;
+        g = (rgbNum >> 8) & 255;
+        b = rgbNum & 255;
+    }
+
+    // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+    const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+
+    // Using the HSP value, determine whether the color is light or dark
+    if (hsp > 127.5) {
+        return ColorScheme.LIGHT;
+    }
+    return ColorScheme.DARK;
+}
+
+/**
+ * Converts an object of color values into CSS variables.
+ *
+ * @param {Record<string, string>} colors - The object containing color values.
+ * @return {string} The CSS variables string.
+ */
+export function convertToCSSVars(colors: Record<string, string>): string {
+    return `
+        :root {
+            ${Object.keys(colors)
+                .map((id) => {
+                    const color = colors[id];
+                    const colorName = id.replace('.', '-');
+                    return `--${colorName}: ${color};`;
+                })
+                .join('\n')}
+        }
+    `;
+}
+
+/**
+ * Converts a token to a token theme rule.
+ *
+ * @param {IColorTheme['tokenColors']} token - The token to be converted.
+ * @return {editor.ITokenThemeRule[]} The converted token theme rule.
+ */
+export function convertToToken(token?: IColorTheme['tokenColors']) {
+    return token?.reduce<editor.ITokenThemeRule[]>((acc, cur) => {
+        if (Array.isArray(cur.scope)) {
+            cur.scope.forEach((s) => () => {
+                if (!s) return;
+                const target = acc.find((r) => r.token === s);
+                if (target) {
+                    Object.assign(target, {
+                        ...cur.settings,
+                    });
+                } else {
+                    acc.push({
+                        token: s,
+                        ...cur.settings,
+                    });
+                }
+            });
+        }
+        return acc;
+    }, []);
+}
+
+export function colorsToString(colors: Record<string, string | Object>) {
+    return Object.keys(colors).reduce<Record<string, string>>((acc, key) => {
+        const value = colors[key];
+        if (value instanceof Object) {
+            acc[key] = value.toString();
+        } else {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
 }

@@ -1,14 +1,15 @@
 import { useRef } from 'react';
-import { Editor, EditorProps } from '@monaco-editor/react';
+import { Editor, type EditorProps } from '@monaco-editor/react';
 import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
 import Header from 'mo/client/components/header';
 import Icon from 'mo/client/components/icon';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
+import { ColorThemeService } from 'mo/services/colorTheme';
 import { UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
-import { editor } from 'monaco-editor';
+import type { editor } from 'monaco-editor';
 
 import variables from './index.scss';
 
@@ -73,12 +74,11 @@ export default function Group({ group, options, onSelectTab, onMount, onChange }
                         options={{
                             ...options,
                             automaticLayout: true,
-                            language: tab?.language,
                         }}
+                        language={tab?.language}
+                        theme={ColorThemeService.DEFAULT_THEME_CLASS_NAME}
                         keepCurrentModel
                         key={tab?.id}
-                        // FIXME: Support competitable with current theme
-                        theme="vs-dark"
                         onMount={handleMount}
                         onChange={onChange}
                     />

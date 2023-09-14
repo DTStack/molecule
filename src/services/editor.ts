@@ -1,7 +1,8 @@
 import { BaseService } from 'mo/glue';
-import { EditorGroupModel, EditorModel, IEditorTab } from 'mo/models/editor';
-import { UniqueId } from 'mo/types';
+import { EditorEvent, EditorGroupModel, EditorModel, type IEditorTab } from 'mo/models/editor';
+import type { UniqueId } from 'mo/types';
 import { randomId, searchById } from 'mo/utils';
+import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
 import { BuiltinService } from './builtin';
@@ -25,6 +26,7 @@ export interface IEditorService extends BaseService<EditorModel> {
      * @param groupId
      */
     updateTab(tab: IEditorTab<any>, groupId: UniqueId): void;
+    getCurrent<T>(): IEditorTab<T> | undefined;
     // /**
     //  * Updates the editor content for a specific group
     //  * @param group The editorInstance is required
@@ -185,6 +187,13 @@ export interface IEditorService extends BaseService<EditorModel> {
     //  * @param tabId
     //  */
     // getGroupIdByTab(tabId: UniqueId): UniqueId | null;
+    onFocus(callback: (instance: editor.IStandaloneCodeEditor) => void): void;
+    onCursorSelection(
+        callback: (
+            instance: editor.IStandaloneCodeEditor,
+            ev: editor.ICursorSelectionChangedEvent
+        ) => void
+    ): void;
 }
 
 @injectable()
@@ -201,6 +210,14 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         // this.explorerService = container.resolve(ExplorerService);
         // this.layoutService = container.resolve(LayoutService);
         this.state = new EditorModel();
+    }
+
+    public getCurrent<T>(): IEditorTab<T> | undefined {
+        const { current, groups } = this.getState();
+        if (!current) return undefined;
+        const group = groups.find(searchById(current));
+        if (!group?.activeTab) return undefined;
+        return group.data.find(searchById(group.activeTab));
     }
 
     // public updateEditorOptions(options: IEditorOptions): void {
@@ -706,4 +723,17 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     // public onActionsClick(callback: (menuId: UniqueId, currentGroup: IEditorGroup) => void) {
     //     this.subscribe(EditorEvent.onActionsClick, callback);
     // }
+
+    public onFocus(callback: (instance: editor.IStandaloneCodeEditor) => void) {
+        this.subscribe(EditorEvent.onFocus, callback);
+    }
+
+    public onCursorSelection(
+        callback: (
+            instance: editor.IStandaloneCodeEditor,
+            ev: editor.ICursorSelectionChangedEvent
+        ) => void
+    ) {
+        this.subscribe(EditorEvent.onCursorSelection, callback);
+    }
 }

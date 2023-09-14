@@ -66,12 +66,19 @@ export default abstract class BaseService<S = any> extends GlobalEvent implement
         this.state = nextState;
     }
 
+    private _renderRecord: { prev?: S; next?: S } = {};
     /**
      * Initiative notify the component to render the view by the state
      * @param nextState
      */
     public render(nextState: S) {
-        this.emit(this.name, this.state, nextState);
+        this._renderRecord.prev ??= this.state;
+        this._renderRecord.next = nextState;
+
+        window.queueMicrotask(() => {
+            this.emit(this.name, this._renderRecord.prev, this._renderRecord.next);
+            this._renderRecord = {};
+        });
     }
 
     public onUpdateState(listener: (prevState: S, nextState: S) => void) {

@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { Editor } from '@monaco-editor/react';
 import useConnector from 'mo/client/hooks/useConnector';
-import { ColorThemeService } from 'mo/services/colorTheme';
-import type { editor } from 'monaco-editor';
+import { editor } from 'monaco-editor';
 
+import MonacoEditor from '../monaco';
 import variables from './index.scss';
 
 export default function Output() {
@@ -19,10 +18,8 @@ export default function Output() {
     }, [output.value]);
 
     return (
-        <Editor
-            height="100%"
+        <MonacoEditor
             className={variables.ouput}
-            defaultValue={output.value}
             options={{
                 readOnly: true,
                 lineDecorationsWidth: 0,
@@ -33,8 +30,8 @@ export default function Output() {
                 automaticLayout: true,
                 scrollBeyondLastLine: false,
                 contextmenu: false,
+                value: output.value,
             }}
-            theme={ColorThemeService.DEFAULT_THEME_CLASS_NAME}
             onMount={(editor) => (instance.current = editor)}
         />
     );

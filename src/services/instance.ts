@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Container from 'mo/client/container';
+import { APP_PREFIX } from 'mo/const';
 import * as controller from 'mo/controllers';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
@@ -8,6 +9,7 @@ import type { IExtension } from 'mo/types';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
 
+import { ActionService } from './action';
 import { ActivityBarService } from './activityBar';
 import { AuxiliaryBarService } from './auxiliaryBar';
 import { BuiltinService } from './builtin';
@@ -20,6 +22,7 @@ import { FolderTreeService } from './folderTree';
 import { LayoutService } from './layout';
 import { LocaleService } from './locale';
 import { MenuBarService } from './menuBar';
+import { MonacoService } from './monaco';
 import { OutputService } from './output';
 import { PanelService } from './panel';
 import { SidebarService } from './sidebar';
@@ -69,6 +72,12 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         return this.childContainer.resolve<T>(token);
     }
 
+    private createRootElement() {
+        const div = document.createElement('div');
+        div.id = APP_PREFIX;
+        return div;
+    }
+
     constructor(config: IConfigProps) {
         super();
         if (config.defaultLocale) {
@@ -97,6 +106,8 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('output', OutputService);
         this.register('editor', EditorService);
         this.register('colorTheme', ColorThemeService);
+        this.register('action', ActionService);
+        this.register('monaco', MonacoService);
         // =====================================================
     }
 
@@ -123,6 +134,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.emit(InstanceHookKind.beforeInit);
 
         this.emit(InstanceHookKind.beforeLoad);
+        const monaco = this.resolve<MonacoService>('monaco');
         const contextMenu = this.resolve<ContextMenuService>('contextMenu');
         const auxiliaryBar = this.resolve<AuxiliaryBarService>('auxiliaryBar');
         const layout = this.resolve<LayoutService>('layout');
@@ -137,9 +149,15 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const editor = this.resolve<EditorService>('editor');
         const colorTheme = this.resolve<ColorThemeService>('colorTheme');
 
+        const action = this.resolve<ActionService>('action');
+
         // extensions should resolved after all other services
         const extension = this.resolve<ExtensionService>('extension');
+
+        monaco.initWorkspace(container);
         extension.add(this._config.extensions);
+        // load contributes
+        extension.load();
 
         const layoutController = this.resolve(controller.layout.LayoutController);
         const statusBarController = this.resolve(controller.statusBar.StatusBarController);
@@ -152,7 +170,12 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const outputController = this.resolve(controller.output.OutputController);
         const editorController = this.resolve(controller.editor.EditorController);
 
-        this.root = this.root || createRoot(container);
+        // activate extensions
+        extension.activate();
+
+        const root = this.createRootElement();
+
+        this.root ||= createRoot(root);
         this.root.render(
             React.createElement(Container, {
                 value: {
@@ -172,7 +195,9 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         output,
                         editor,
                         colorTheme,
+                        action,
                     },
+                    monaco,
                     localize: locale.localize,
                     controllers: {
                         layout: layoutController,
@@ -189,6 +214,8 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                 },
             })
         );
+
+        container.appendChild(root);
     };
 
     public onBeforeInit = (callback: () => void) => {

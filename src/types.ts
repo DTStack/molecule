@@ -2,6 +2,7 @@ import type { editor } from 'monaco-editor';
 
 import type { IColorTheme } from './models/colorTheme';
 import type { ILocale, LocaleKind } from './models/locale';
+import type { ActionService } from './services/action';
 import type { ActivityBarService } from './services/activityBar';
 import type { AuxiliaryBarService } from './services/auxiliaryBar';
 import type { BuiltinService } from './services/builtin';
@@ -13,17 +14,28 @@ import type { FolderTreeService } from './services/folderTree';
 import type { LayoutService } from './services/layout';
 import type { LocaleService } from './services/locale';
 import type { MenuBarService } from './services/menuBar';
+import type { MonacoService } from './services/monaco';
 import type { OutputService } from './services/output';
 import type { PanelService } from './services/panel';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
 
+export type RequiredId<T extends { id: UniqueId }> = Partial<T> & Required<Pick<T, 'id'>>;
+
 export type BuiltinTheme = editor.BuiltinTheme;
 
 export type RecordWithId<T> = { id: UniqueId; [key: string]: any } & T;
 
 export type TreeModel<T> = RecordWithId<{ children?: T[] }>;
+
+export enum KeybindingWeight {
+    EditorCore = 0,
+    EditorContrib = 100,
+    WorkbenchContrib = 200,
+    BuiltinExtension = 300,
+    ExternalExtension = 400,
+}
 
 export enum Alignment {
     top = 'top',
@@ -73,7 +85,9 @@ export interface IContext {
         output: OutputService;
         editor: EditorService;
         colorTheme: ColorThemeService;
+        action: ActionService;
     };
+    monaco: MonacoService;
     controllers: { [key in keyof IContext['molecule']]: BaseController };
     localize: Localize;
 }
@@ -172,7 +186,7 @@ export type ColorSchemeLiteral = Lowercase<keyof typeof ColorScheme>;
 
 export interface IContribute {
     [IContributeType.Languages]?: ILocale[];
-    // [IContributeType.Commands]?: any;
+    [IContributeType.Commands]?: any[];
     // [IContributeType.Configuration]?: any;
     // [IContributeType.Grammar]?: any;
     [IContributeType.Themes]?: IColorTheme[];

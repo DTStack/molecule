@@ -2,7 +2,6 @@
  * VSCode theme extends guides: https://code.visualstudio.com/api/extension-guides/color-theme
  * https://code.visualstudio.com/api/references/theme-color
  */
-import { loader } from '@monaco-editor/react';
 import { prefix } from 'mo/client/classNames';
 import { defaultDark, defaultHc, defaultVS } from 'mo/const/theme';
 import { BaseService } from 'mo/glue';
@@ -23,6 +22,7 @@ import {
     searchById,
 } from 'mo/utils';
 import logger from 'mo/utils/logger';
+import { editor } from 'monaco-editor';
 
 export interface IColorThemeService extends BaseService<ColorThemeModel> {
     /**
@@ -115,15 +115,13 @@ export class ColorThemeService extends BaseService<ColorThemeModel> implements I
                 styleEle.innerHTML = styleSheetContent;
             }
         });
-        loader.init().then((monaco) => {
-            monaco.editor.defineTheme(ColorThemeService.DEFAULT_THEME_CLASS_NAME, {
-                inherit: true,
-                base: current.uiTheme || 'vs-dark',
-                colors: colorsToString(current.colors || {}),
-                rules: convertToToken(current.tokenColors) || [],
-            });
-            monaco.editor.setTheme(ColorThemeService.DEFAULT_THEME_CLASS_NAME);
+        editor.defineTheme(ColorThemeService.DEFAULT_THEME_CLASS_NAME, {
+            inherit: true,
+            base: current.uiTheme || 'vs-dark',
+            colors: colorsToString(current.colors || {}),
+            rules: convertToToken(current.tokenColors) || [],
         });
+        editor.setTheme(ColorThemeService.DEFAULT_THEME_CLASS_NAME);
     }
 
     public addThemes(themes: ArraylizeOrSingle<IColorTheme>): void {

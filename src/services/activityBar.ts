@@ -1,7 +1,7 @@
 import { BaseService } from 'mo/glue';
 import { ActivityBarEvent, ActivityBarModel, type IActivityBarItem } from 'mo/models/activityBar';
-import type { ArraylizeOrSingle, UniqueId } from 'mo/types';
-import { arraylize, extract, sortByIndex } from 'mo/utils';
+import type { ArraylizeOrSingle, RequiredId, UniqueId } from 'mo/types';
+import { arraylize, extract, searchById, sortByIndex } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
 export interface IActivityBarService extends BaseService<ActivityBarModel> {
@@ -16,6 +16,8 @@ export interface IActivityBarService extends BaseService<ActivityBarModel> {
      * @param isActive If provide, Activity Bar will set data active automatically. Only works in one data
      */
     add(data: ArraylizeOrSingle<IActivityBarItem>, isActive?: boolean): void;
+    get(id: UniqueId): IActivityBarItem | undefined;
+    update(data: RequiredId<IActivityBarItem>): void;
     /**
      * Set active bar
      */
@@ -55,8 +57,8 @@ export class ActivityBarService
         });
     }
 
-    public reset() {
-        this.setState(new ActivityBarModel());
+    public get(id: UniqueId) {
+        return this.getState().data.find(searchById(id));
     }
 
     public add(data: ArraylizeOrSingle<IActivityBarItem>, isActive = false) {
@@ -70,6 +72,13 @@ export class ActivityBarService
             ...prev,
             data: [...prev.data, ...arrayData].sort(sortByIndex),
         }));
+    }
+
+    public update(data: RequiredId<IActivityBarItem>) {
+        const target = this.get(data.id);
+        if (!target) return;
+        Object.assign(target, data);
+        this.setState((prev) => ({ ...prev }));
     }
 
     public remove(id: ArraylizeOrSingle<UniqueId>) {
@@ -98,6 +107,10 @@ export class ActivityBarService
                 data: next,
             };
         });
+    }
+
+    public reset() {
+        this.setState(new ActivityBarModel());
     }
 
     // ===================== Subscriptions =====================

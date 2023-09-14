@@ -6,7 +6,13 @@ import type { IEditorController } from 'mo/controllers/editor';
 import Group from '../group';
 import variables from './index.scss';
 
-export default function Editor({ onMount, onSelectTab, onPaneSizeChange }: IEditorController) {
+export default function Editor({
+    onMount,
+    onSelectTab,
+    onPaneSizeChange,
+    onFocus,
+    onCursorSelection,
+}: IEditorController) {
     const editor = useConnector('editor');
     const layout = useConnector('layout');
 
@@ -26,6 +32,8 @@ export default function Editor({ onMount, onSelectTab, onPaneSizeChange }: IEdit
                             options={editorOptions}
                             onMount={onMount}
                             onSelectTab={onSelectTab}
+                            onFocus={onFocus}
+                            onCursorSelection={onCursorSelection}
                         />
                     </Pane>
                 ))}

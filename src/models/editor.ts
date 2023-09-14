@@ -13,6 +13,8 @@ export enum EditorEvent {
     OnUpdateTab = 'editor.updateTab',
     onActionsClick = 'editor.actionsClick',
     OnSplitEditorRight = 'editor.splitEditorRight',
+    onFocus = 'editor.onFocus',
+    onCursorSelection = 'editor.onCursorSelection',
 }
 
 export type IEditorOptions = MonacoEditor.IEditorOptions & MonacoEditor.IGlobalEditorOptions;

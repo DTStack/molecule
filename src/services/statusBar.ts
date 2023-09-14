@@ -1,11 +1,6 @@
 import { BaseService } from 'mo/glue';
-import {
-    type IStatusBar,
-    type IStatusBarItem,
-    StatusBarEvent,
-    StatusBarModel,
-} from 'mo/models/statusBar';
-import type { UniqueId } from 'mo/types';
+import { type IStatusBarItem, StatusBarEvent, StatusBarModel } from 'mo/models/statusBar';
+import type { RequiredId, UniqueId } from 'mo/types';
 import { searchById, sortByIndex } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
@@ -24,7 +19,7 @@ export interface IStatusBarService extends BaseService<StatusBarModel> {
      * Update the specific StatusBar item
      * @param item the id field is required
      */
-    update(item: IStatusBarItem): void;
+    update(item: RequiredId<IStatusBarItem>): void;
     /**
      * Get the specific StatusBar item
      * @param id
@@ -63,7 +58,7 @@ export class StatusBarService extends BaseService<StatusBarModel> implements ISt
         }));
     }
 
-    public update(item: IStatusBarItem): void {
+    public update(item: RequiredId<IStatusBarItem>): void {
         const target = this.get(item.id);
 
         if (!target) {

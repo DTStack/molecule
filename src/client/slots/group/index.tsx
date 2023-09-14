@@ -1,13 +1,12 @@
 import { useRef } from 'react';
-import { Editor, type EditorProps } from '@monaco-editor/react';
 import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
 import Header from 'mo/client/components/header';
 import Icon from 'mo/client/components/icon';
+import MonacoEditor from 'mo/client/components/monaco';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
-import { ColorThemeService } from 'mo/services/colorTheme';
-import { UniqueId } from 'mo/types';
+import type { UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 
@@ -17,17 +16,42 @@ export interface IGroupProps {
     group: EditorGroupModel;
     options: EditorModel['editorOptions'];
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
-    onChange?: EditorProps['onChange'];
+    onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent) => void;
     onSelectTab?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
+    onCursorSelection?: (
+        instance: editor.IStandaloneCodeEditor,
+        ev: editor.ICursorSelectionChangedEvent
+    ) => void;
 }
 
-export default function Group({ group, options, onSelectTab, onMount, onChange }: IGroupProps) {
+export default function Group({
+    group,
+    options,
+    onSelectTab,
+    onMount,
+    onChange,
+    onFocus,
+    onCursorSelection,
+}: IGroupProps) {
     const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
 
     const tab = group.activeTab ? group.data.find(searchById(group.activeTab)) : undefined;
 
     const handleMount = (editor: editor.IStandaloneCodeEditor) => {
         instance.current = editor;
+
+        instance.current.onDidChangeModelContent((ev) => {
+            onChange?.(instance.current?.getModel()?.getValue(), ev);
+        });
+
+        instance.current.onDidFocusEditorText(() => {
+            onFocus?.(instance.current!);
+        });
+
+        instance.current.onDidChangeCursorSelection((ev) => {
+            onCursorSelection?.(instance.current!, ev);
+        });
 
         if (!tab) return;
         if (tab.model) {
@@ -68,19 +92,15 @@ export default function Group({ group, options, onSelectTab, onMount, onChange }
             <Breadcrumb className={variables.breadcrumb} routes={tab?.breadcrumb || []} />
             <div className={variables.content}>
                 {tab?.render?.(tab) || (
-                    <Editor
-                        height="100%"
-                        defaultValue={tab?.value}
+                    <MonacoEditor
                         options={{
                             ...options,
                             automaticLayout: true,
+                            value: tab?.value,
+                            language: tab?.language,
                         }}
-                        language={tab?.language}
-                        theme={ColorThemeService.DEFAULT_THEME_CLASS_NAME}
-                        keepCurrentModel
                         key={tab?.id}
                         onMount={handleMount}
-                        onChange={onChange}
                     />
                 )}
             </div>

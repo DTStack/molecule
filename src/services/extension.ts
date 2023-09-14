@@ -11,6 +11,7 @@ import {
 import { searchById } from 'mo/utils';
 import { inject, injectable } from 'tsyringe';
 
+import type { ActionService } from './action';
 import type { ActivityBarService } from './activityBar';
 import type { AuxiliaryBarService } from './auxiliaryBar';
 import type { BuiltinService } from './builtin';
@@ -67,6 +68,8 @@ export interface IExtensionService {
      * @param predicate The predicate function
      */
     inactive(predicate: (extension: IExtension) => boolean): void;
+    load(): void;
+    activate(): void;
     /**
      * Register a new action which is extends the Action2, and return a disposable instance.
      * @example
@@ -110,7 +113,8 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         @inject('panel') private panel: PanelService,
         @inject('output') private output: OutputService,
         @inject('editor') private editor: EditorService,
-        @inject('colorTheme') private colorTheme: ColorThemeService
+        @inject('colorTheme') private colorTheme: ColorThemeService,
+        @inject('action') private action: ActionService
     ) {
         super('extension');
         this.state = new ExtensionModel();
@@ -133,6 +137,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             output: this.output,
             editor: this.editor,
             colorTheme: this.colorTheme,
+            action: this.action,
         };
     };
 
@@ -145,7 +150,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
     }
 
     public getExtension(id: UniqueId): IExtension | undefined {
-        return this.state.data.find(searchById(id));
+        return this.getState().data.find(searchById(id));
     }
 
     public reset(): void {
@@ -153,7 +158,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
     }
 
     public getAllExtensions(): IExtension[] {
-        return this.state.data.concat();
+        return this.getState().data.concat();
     }
 
     public inactive(predicate: (extension: IExtension) => boolean): void {
@@ -168,20 +173,29 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             ...prev,
             data: [...prev.data, ...extensions],
         }));
-        this.load();
+        // this.load();
     }
 
-    private load() {
+    public load() {
         const extensions = this.getAllExtensions();
         if (!Array.isArray(extensions)) return;
 
-        const ctx = this.getContext();
         extensions.filter(this._predicate).forEach((extension) => {
             if (!this.isExtension(extension)) return;
 
             if (extension.contributes) {
                 this.loadContributes(extension.contributes);
             }
+        });
+    }
+
+    public activate() {
+        const extensions = this.getAllExtensions();
+        if (!Array.isArray(extensions)) return;
+
+        const ctx = this.getContext();
+        extensions.filter(this._predicate).forEach((extension) => {
+            if (!this.isExtension(extension)) return;
             extension.activate(ctx);
         });
     }
@@ -192,7 +206,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             switch (type) {
                 case IContributeType.Themes: {
                     const themes = contributes[type];
-                    if (!themes) return;
+                    if (!Array.isArray(themes)) return;
                     this.colorTheme.addThemes(themes);
                     break;
                 }
@@ -200,6 +214,12 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
                     const locales: ILocale[] | undefined = contributes[type];
                     if (!Array.isArray(locales)) return;
                     this.locale.addLocales(locales);
+                    break;
+                }
+                case IContributeType.Commands: {
+                    const commands = contributes[type];
+                    if (!Array.isArray(commands)) return;
+                    commands.forEach((command) => this.action.registerAction(command));
                     break;
                 }
             }

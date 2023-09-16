@@ -1,6 +1,10 @@
 import { BaseService } from 'mo/glue';
 import { type ILayout, LayoutModel, type PositionLiteral } from 'mo/models/layout';
 import { Direction, FunctionalOrSingle } from 'mo/types';
+import { inject, injectable } from 'tsyringe';
+
+import type { BuiltinService } from './builtin';
+import type { MenuBarService } from './menuBar';
 
 export interface ILayoutService extends BaseService<ILayout> {
     /**
@@ -64,9 +68,13 @@ export interface ILayoutService extends BaseService<ILayout> {
     reset(): void;
 }
 
+@injectable()
 export class LayoutService extends BaseService<ILayout> implements ILayoutService {
     protected state: ILayout;
-    constructor() {
+    constructor(
+        @inject('menuBar') private menuBar: MenuBarService,
+        @inject('builtin') private builtin: BuiltinService
+    ) {
         super('layout');
         this.state = new LayoutModel();
     }
@@ -80,6 +88,9 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
                     typeof visibility === 'function' ? visibility(prev.menuBar.hidden) : visibility,
             },
         }));
+
+        // effects
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_MENUBAR);
     }
 
     public setPanelVisibility(visibility: FunctionalOrSingle<boolean>): void {
@@ -91,6 +102,9 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
                     typeof visibility === 'function' ? visibility(prev.panel.hidden) : visibility,
             },
         }));
+
+        // effects
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_PANEL);
     }
 
     public setSidebarVisibility(visibility: FunctionalOrSingle<boolean>): void {
@@ -102,6 +116,9 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
                     typeof visibility === 'function' ? visibility(prev.sidebar.hidden) : visibility,
             },
         }));
+
+        // effects
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_SIBEBAR);
     }
 
     public setActivityBarVisibility(visibility: FunctionalOrSingle<boolean>): void {

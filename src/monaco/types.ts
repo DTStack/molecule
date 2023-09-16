@@ -2,6 +2,7 @@
 // ===================== Override monaco-editor's types =====================
 import type { UniqueId } from 'mo/types';
 import type { IDisposable } from 'monaco-editor';
+import { Color as MonacoColor } from 'monaco-editor/esm/vs/base/common/color';
 import { KeyChord as MonacoKeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 import { DisposableStore as MonacoDisposableStore } from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { localize as MonacoLocalize } from 'monaco-editor/esm/vs/nls';
@@ -12,6 +13,7 @@ import {
 import { CommandsRegistry as MonacoCommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
 import { ContextKeyExpr as MonacoContextKeyExpr } from 'monaco-editor/esm/vs/platform/contextkey/common/contextkey';
 import { KeybindingsRegistry as MonacoKeybindingsRegistry } from 'monaco-editor/esm/vs/platform/keybinding/common/keybindingsRegistry';
+import { ResolvedKeybindingItem as MonacoResolvedKeybindingItem } from 'monaco-editor/esm/vs/platform/keybinding/common/resolvedKeybindingItem';
 import { IQuickInputService as MonacoIQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 
 /**
@@ -117,9 +119,60 @@ const ContextKeyExpr: {
 
 const KeybindingsRegistry: {
     registerKeybindingRule(rule: any): IDisposable;
+    getDefaultKeybindings(): ResolvedKeybindingItem[];
 } = MonacoKeybindingsRegistry;
 
+export const CATEGORIES = {
+    View: { value: localize('view', 'View'), original: 'View' },
+    Help: { value: localize('help', 'Help'), original: 'Help' },
+    Preferences: {
+        value: localize('preferences', 'Preferences'),
+        original: 'Preferences',
+    },
+    Developer: {
+        value: localize(
+            {
+                key: 'developer',
+                comment: ['A developer on Code itself or someone diagnosing issues in Code'],
+            },
+            'Developer'
+        ),
+        original: 'Developer',
+    },
+};
+
+interface ResolvedKeybindingItem {
+    when: any;
+    command: any;
+    keybinding: any;
+}
+const ResolvedKeybindingItem: ResolvedKeybindingItem = MonacoResolvedKeybindingItem;
+
+type ColorClass = {
+    transparent: (factor: number) => string;
+    lighten(factor: number): string;
+    darken(factor: number): string;
+    isDarkerThan: (another: ColorClass) => boolean;
+    toString(): string;
+};
+interface Color {
+    fromHex(hex: null): null;
+    fromHex(hex: string): ColorClass;
+    fromHex(hex: string | null): ColorClass | null;
+    white: ColorClass;
+    transparent: ColorClass;
+    blue: ColorClass;
+    cyan: ColorClass;
+    black: ColorClass;
+    getLighterColor: (of: ColorClass, relative: ColorClass, factor: number) => ColorClass;
+    getDarkerColor: (of: ColorClass, relative: ColorClass, factor: number) => ColorClass;
+    new (): ColorClass;
+}
+
+const Color: Color = MonacoColor;
+
 export {
+    Color,
     CommandsRegistry,
     ContextKeyExpr,
     DisposableStore,
@@ -129,4 +182,5 @@ export {
     localize,
     MenuId,
     MenuRegistry,
+    ResolvedKeybindingItem,
 };

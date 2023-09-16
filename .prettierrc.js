@@ -1,5 +1,5 @@
-const prettier = require("ko-lint-config/.prettierrc");
+const prettier = require('ko-lint-config/.prettierrc');
 
 module.exports = {
-  ...prettier,
+    ...prettier,
 };

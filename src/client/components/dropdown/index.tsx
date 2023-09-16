@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { ContextMenuEventHandler, IMenuItemProps } from 'mo/types';
 import RcDropdown from 'rc-dropdown';
 import type { DropdownProps } from 'rc-dropdown/es/Dropdown';
@@ -27,11 +28,14 @@ export default function Dropdown({
     onVisibleChange,
     onClick,
 }: IDropdownProps) {
+    const [stateVisible, setVisible] = useState(false);
     const getEvents = () => {
         if (!stopPropagation) return {};
         switch (trigger) {
             case 'click':
-                return { onClick: (e: React.MouseEvent) => e.stopPropagation() };
+                return {
+                    onClick: (e: React.MouseEvent) => e.stopPropagation(),
+                };
             case 'contextMenu':
                 return { onContextMenu: (e: React.MouseEvent) => e.stopPropagation() };
             default:
@@ -41,12 +45,26 @@ export default function Dropdown({
 
     const events = getEvents();
 
+    const handleVisibleChange = (next: boolean) => {
+        onVisibleChange?.(next);
+        if (typeof visible !== 'boolean') {
+            setVisible(next);
+        }
+    };
+
+    const handleClick = (item: IMenuItemProps) => {
+        if (typeof visible !== 'boolean') {
+            setVisible(false);
+        }
+        onClick?.(item);
+    };
+
     return data?.length ? (
         <RcDropdown
-            visible={visible}
-            onVisibleChange={onVisibleChange}
+            visible={visible ?? stateVisible}
+            onVisibleChange={handleVisibleChange}
             trigger={trigger}
-            overlay={<Menu data={data} onClick={onClick} />}
+            overlay={<Menu data={data} onClick={handleClick} />}
             minOverlayWidthMatchTrigger={false}
             alignPoint={alignPoint}
             placement={placement}

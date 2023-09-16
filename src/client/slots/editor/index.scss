@@ -3,7 +3,7 @@
 $container: prefix('editor');
 
 .#{$container} {
-    background: var(--editorGroup-background);
+    background: var(--editor-background);
     display: flex;
     height: 100%;
     position: relative;

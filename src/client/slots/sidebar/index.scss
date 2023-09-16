@@ -11,14 +11,12 @@ $content: BEMElement($sidebar, 'content');
 
 .#{$container} {
     background-color: var(--sideBar-background);
-    border-color: var(--sideBar-border);
     border-right: 1px solid var(--sideBar-border);
     color: var(--sideBar-foreground);
     height: 100%;
     left: 0;
     outline-color: var(--sideBar-border);
     position: relative;
-    width: 100%;
 
     .#{$pane} {
         height: 100%;

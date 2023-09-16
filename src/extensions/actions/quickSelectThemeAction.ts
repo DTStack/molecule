@@ -3,12 +3,13 @@ import type { IColorTheme } from 'mo/models/colorTheme';
 import {
     IQuickInputService,
     KeyChord,
+    KeyCode,
+    KeyMod,
     localize,
     type QuickPickInput,
     type ServicesAccessor,
 } from 'mo/monaco';
 import { type IMoleculeContext, KeybindingWeight } from 'mo/types';
-import { KeyCode, KeyMod } from 'monaco-editor';
 
 export default class QuickSelectThemeAction extends BaseAction {
     static readonly ID = 'workbench.action.selectTheme';

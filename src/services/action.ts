@@ -1,3 +1,5 @@
+import { Utils } from '@dtinsight/dt-utils/lib';
+import { KeyCodeString } from 'mo/const/keyCode';
 import { BaseService } from 'mo/glue';
 import type { BaseAction } from 'mo/glue/baseAction';
 import { ActionModel } from 'mo/models/action';
@@ -8,8 +10,9 @@ import {
     KeybindingsRegistry,
     MenuId,
     MenuRegistry,
+    ResolvedKeybindingItem,
 } from 'mo/monaco';
-import type { IMoleculeContext } from 'mo/types';
+import type { IMoleculeContext, ISimpleKeybinding, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 import type { ActivityBarService } from './activityBar';
@@ -23,6 +26,7 @@ import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
+import type { MonacoService } from './monaco';
 import type { OutputService } from './output';
 import type { PanelService } from './panel';
 import type { SidebarService } from './sidebar';
@@ -31,6 +35,7 @@ import type { StatusBarService } from './statusBar';
 @injectable()
 export class ActionService extends BaseService<ActionModel> {
     protected state = new ActionModel();
+    private _isMac = Utils.isMacOs();
     constructor(
         @inject('locale') private locale: LocaleService,
         @inject('builtin') private builtin: BuiltinService,
@@ -46,7 +51,8 @@ export class ActionService extends BaseService<ActionModel> {
         @inject('panel') private panel: PanelService,
         @inject('output') private output: OutputService,
         @inject('editor') private editor: EditorService,
-        @inject('colorTheme') private colorTheme: ColorThemeService
+        @inject('colorTheme') private colorTheme: ColorThemeService,
+        @inject('monaco') private monaco: MonacoService
     ) {
         super('action');
     }
@@ -133,5 +139,55 @@ export class ActionService extends BaseService<ActionModel> {
         }
 
         this.setState((prev) => ({ ...prev, actions: [...prev.actions, disposables] }));
+    }
+
+    public queryGlobalKeybinding(id: UniqueId) {
+        const defaultKeybindings: ResolvedKeybindingItem[] =
+            KeybindingsRegistry.getDefaultKeybindings();
+        const globalKeybindings = defaultKeybindings.filter((key) => !key.when);
+
+        // 'Cause one action can occupy multiply keybinding, so there should be filter rather than find
+        const targetKeybinding = globalKeybindings.filter((i) => i.command === id);
+
+        if (targetKeybinding.length) {
+            // Since it's sorted out by the weight when getDefaultKeybindings, the targetKeybinding is sorted by weight
+            // Get lower priority keybinding
+            const lowerPriorty = targetKeybinding[targetKeybinding.length - 1];
+            // keybinding which is chord key[组合键] can get more than 1 parts
+            const keybindings: ISimpleKeybinding[] = lowerPriorty.keybinding;
+            return keybindings;
+        }
+        return null;
+    }
+
+    public convertSimpleKeybindingToString(keybinding: ISimpleKeybinding[] = []) {
+        return (
+            keybinding
+                .map((key) => {
+                    const res: string[] = [];
+                    if (key.altKey) {
+                        res.push(this._isMac ? '⌥' : 'Alt');
+                    }
+                    if (key.ctrlKey) {
+                        res.push(this._isMac ? '⌃' : 'Ctrl');
+                    }
+                    if (key.metaKey) {
+                        res.push(this._isMac ? '⌘' : 'Meta');
+                    }
+                    if (key.shiftKey) {
+                        res.push(this._isMac ? '⇧' : 'Shift');
+                    }
+                    if (key.keyCode) {
+                        res.push(KeyCodeString[key.keyCode] || '');
+                    }
+                    return res.join(this._isMac ? '' : '+');
+                })
+                // Insert a space between chord key
+                .join(' ')
+        );
+    }
+
+    public execute(id: UniqueId, ...args: any[]) {
+        this.monaco.commandService.executeCommand(id, ...args);
     }
 }

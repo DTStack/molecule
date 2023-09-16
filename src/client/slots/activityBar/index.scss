@@ -8,7 +8,7 @@ $global: BEMElement($activityBar, 'global');
 
 .#{$container} {
     background-color: var(--activityBar-background);
-    border-color: var(--activityBar-border);
+    border-right: 1px solid var(--activityBar-border);
     color: var(--activityBar-foreground);
     display: flex;
     flex-direction: column;

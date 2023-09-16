@@ -5,11 +5,12 @@ $container: BEMElement($menuBar, 'container');
 $item: BEMElement($menuBar, 'item');
 
 .#{$container} {
-    align-items: center;
-    background-color: var(--activityBar-background);
+    background-color: var(--titleBar-activeBackground);
+    color: var(--titleBar-inactiveForeground);
     display: flex;
     align-items: center;
     width: 100%;
+    border-bottom: 1px solid var(--titleBar-border);
 
     .#{$item} {
         font-size: 13px;
@@ -22,7 +23,9 @@ $item: BEMElement($menuBar, 'item');
 
         &:hover {
             background-color: var(--menu-selectionBackground);
-            color: var(--button-foreground);
+            color: var(--menu-selectionForeground);
+            outline: dashed 1px var(--menubar-selectionBorder);
+            outline-offset: -1px;
         }
     }
 }

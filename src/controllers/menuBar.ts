@@ -8,7 +8,7 @@ import { TreeHelper } from 'mo/utils/tree';
 import { inject, injectable } from 'tsyringe';
 
 export interface IMenuBarController extends BaseController {
-    onSelect: (event: React.MouseEvent, item: IMenuItemProps) => void;
+    onSelect: (item: IMenuItemProps) => void;
     // updateStatusBar?: () => void;
     // updateMenuBar?: () => void;
     // updateActivityBar?: () => void;
@@ -22,25 +22,12 @@ export interface IMenuBarController extends BaseController {
 
 @injectable()
 export class MenuBarController extends BaseController implements IMenuBarController {
-    // private readonly menuBarService: IMenuBarService;
-    // private readonly layoutService: ILayoutService;
-    // private readonly monacoService: IMonacoService;
-    // private readonly builtinService: IBuiltinService;
-    // private readonly activityBarService: IActivityBarService;
-
-    // private _automation = {};
-
     constructor(
         @inject('builtin') private builtin: BuiltinService,
         @inject('menuBar') private menuBar: MenuBarService,
         @inject('layout') private layout: LayoutService
     ) {
         super();
-        // this.menuBarService = container.resolve(MenuBarService);
-        // this.layoutService = container.resolve(LayoutService);
-        // this.monacoService = container.resolve(MonacoService);
-        // this.builtinService = container.resolve(BuiltinService);
-        // this.activityBarService = container.resolve(ActivityBarService);
         this.initView();
     }
 
@@ -86,7 +73,27 @@ export class MenuBarController extends BaseController implements IMenuBarControl
         });
     }
 
-    public readonly onSelect = (_: React.MouseEvent, item: IMenuItemProps) => {
-        this.emit(MenuBarEvent.onSelect, item.id);
+    public readonly onSelect = (item: IMenuItemProps) => {
+        const { MENU_VIEW_PANEL, MENU_VIEW_MENUBAR, MENU_VIEW_SIBEBAR } =
+            this.builtin.getState().constants;
+
+        switch (item.id) {
+            case MENU_VIEW_PANEL: {
+                this.layout.setPanelVisibility((prev) => !prev);
+                break;
+            }
+            case MENU_VIEW_MENUBAR: {
+                this.layout.setMenuBarVisibility((prev) => !prev);
+                break;
+            }
+            case MENU_VIEW_SIBEBAR: {
+                this.layout.setSidebarVisibility((prev) => !prev);
+                break;
+            }
+
+            default: {
+                this.emit(MenuBarEvent.onSelect, item.id);
+            }
+        }
     };
 }

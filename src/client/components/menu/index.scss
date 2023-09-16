@@ -35,7 +35,9 @@ $indicator: BEMElement($menu, 'indicator');
 
         &:hover {
             background-color: var(--menu-selectionBackground);
-            color: var(--button-foreground);
+            color: var(--menu-selectionForeground);
+            outline: solid 1px var(--menu-selectionBorder);
+            outline-offset: -1px;
         }
     }
 
@@ -50,6 +52,7 @@ $indicator: BEMElement($menu, 'indicator');
     .#{$label} {
         flex: 1;
         line-height: normal;
+        white-space: nowrap;
     }
 
     .#{$icon} {
@@ -63,6 +66,7 @@ $indicator: BEMElement($menu, 'indicator');
     .#{$keybinding} {
         flex: 2 1 auto;
         text-align: right;
+        margin: 0 16px;
     }
 
     .#{$indicator} {

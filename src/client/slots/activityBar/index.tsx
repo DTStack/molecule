@@ -41,7 +41,7 @@ export default function ActivityBar({ onClick, onContextMenuClick }: IActivityBa
                         {renderMenu()}
                         {top.map((item: IActivityBarItem) => (
                             <ActivityBarItem
-                                checked={activityBar.selected === item.id}
+                                checked={!layout.sidebar.hidden && activityBar.selected === item.id}
                                 key={item.id}
                                 data={item}
                                 onClick={onClick}

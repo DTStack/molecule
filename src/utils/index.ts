@@ -1,4 +1,5 @@
 import { Children, cloneElement, isValidElement } from 'react';
+import { omitBy } from 'lodash-es';
 import type { IColorTheme } from 'mo/models/colorTheme';
 import {
     type ArraylizeOrSingle,
@@ -159,15 +160,17 @@ export function colorLightOrDark(color: string) {
  * @param {Record<string, string>} colors - The object containing color values.
  * @return {string} The CSS variables string.
  */
-export function convertToCSSVars(colors: Record<string, string>): string {
+export function convertToCSSVars(colors: Record<string, string | null>): string {
     return `
         :root {
             ${Object.keys(colors)
                 .map((id) => {
                     const color = colors[id];
+                    if (!color) return '';
                     const colorName = id.replace('.', '-');
                     return `--${colorName}: ${color};`;
                 })
+                .filter(Boolean)
                 .join('\n')}
         }
     `;
@@ -201,14 +204,15 @@ export function convertToToken(token?: IColorTheme['tokenColors']) {
     }, []);
 }
 
-export function colorsToString(colors: Record<string, string | Object>) {
-    return Object.keys(colors).reduce<Record<string, string>>((acc, key) => {
-        const value = colors[key];
-        if (value instanceof Object) {
-            acc[key] = value.toString();
-        } else {
-            acc[key] = value;
-        }
-        return acc;
-    }, {});
+export function colorsToString(colors: Record<string, string | null>) {
+    return omitBy(colors, (value) => !value) as Record<string, string>;
+    // return Object.keys(colors).reduce<Record<string, string>>((acc, key) => {
+    //     const value = colors[key];
+    //     if (value instanceof Object) {
+    //         acc[key] = value.toString();
+    //     } else {
+    //         acc[key] = value;
+    //     }
+    //     return acc;
+    // }, {});
 }

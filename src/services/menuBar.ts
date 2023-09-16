@@ -1,9 +1,11 @@
 import { BaseService } from 'mo/glue';
 import { MenuBarEvent, MenuBarModel } from 'mo/models/menuBar';
-import type { IMenuItemProps, UniqueId } from 'mo/types';
+import type { IMenuItemProps, RequiredId, UniqueId } from 'mo/types';
+import { toggleNextIcon } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
 export interface IMenuBarService extends BaseService<MenuBarModel> {
+    toggleChecked(menuId: UniqueId): void;
     /**
      * Set the menus data
      * @param data
@@ -27,10 +29,8 @@ export interface IMenuBarService extends BaseService<MenuBarModel> {
     getMenuById(menuId: UniqueId): IMenuItemProps | undefined;
     /**
      * Update the specific menu item data
-     * @param menuId
-     * @param menuItem
      */
-    update(menuId: UniqueId, menuItem?: Omit<Partial<IMenuItemProps>, 'id'>): void;
+    update(menuItem: RequiredId<IMenuItemProps>): void;
     /**
      * Reset menu bar data;
      */
@@ -85,6 +85,17 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         return res;
     }
 
+    public toggleChecked(menuId: UniqueId) {
+        const { data } = this.state;
+        const menuInfo = this.getReferenceMenu(menuId);
+        if (!menuInfo) {
+            logger.error(`There is no menu found by ${menuId}`);
+            return;
+        }
+        menuInfo.source.icon = toggleNextIcon(menuInfo.source.icon);
+        this.setMenus(data);
+    }
+
     public getMenuById(menuId: UniqueId) {
         const res = this.getReferenceMenu(menuId);
         return res?.source;
@@ -131,11 +142,11 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         }
     }
 
-    public update(menuId: UniqueId, menuItem: Omit<Partial<IMenuItemProps>, 'id'> = {}): void {
+    public update(menuItem: RequiredId<IMenuItemProps>): void {
         const { data } = this.state;
-        const menuInfo = this.getReferenceMenu(menuId);
+        const menuInfo = this.getReferenceMenu(menuItem.id);
         if (!menuInfo) {
-            logger.error(`There is no menu found by ${menuId}`);
+            logger.error(`There is no menu found by ${menuItem.id}`);
             return;
         }
         const currentMenuItem = menuInfo.source;

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import Dropdown from 'mo/client/components/dropdown';
 import useConnector from 'mo/client/hooks/useConnector';
+import type { IMenuBarController } from 'mo/controllers/menuBar';
 import type { UniqueId } from 'mo/types';
 
 import variables from './index.scss';
 
-export default function MenuBar() {
+export default function MenuBar({ onSelect }: IMenuBarController) {
     const menuBar = useConnector('menuBar');
 
     const [visibleMenu, setVisibleMenu] = useState<UniqueId | undefined>(undefined);
@@ -24,7 +25,10 @@ export default function MenuBar() {
                     key={menu.id}
                     data={menu.children}
                     visible={visibleMenu === menu.id}
-                    onClick={() => setVisibleMenu(undefined)}
+                    onClick={(item) => {
+                        setVisibleMenu(undefined);
+                        onSelect?.(item);
+                    }}
                     onVisibleChange={(visible) => {
                         setVisibleMenu(visible ? menu.id : undefined);
                     }}

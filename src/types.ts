@@ -1,4 +1,4 @@
-import type { editor } from 'monaco-editor';
+import type { editor, KeyCode } from 'monaco-editor';
 
 import type { IColorTheme } from './models/colorTheme';
 import type { ILocale, LocaleKind } from './models/locale';
@@ -28,6 +28,14 @@ export type BuiltinTheme = editor.BuiltinTheme;
 export type RecordWithId<T> = { id: UniqueId; [key: string]: any } & T;
 
 export type TreeModel<T> = RecordWithId<{ children?: T[] }>;
+
+export interface ISimpleKeybinding {
+    ctrlKey: boolean;
+    shiftKey: boolean;
+    altKey: boolean;
+    metaKey: boolean;
+    keyCode: KeyCode;
+}
 
 export enum KeybindingWeight {
     EditorCore = 0,

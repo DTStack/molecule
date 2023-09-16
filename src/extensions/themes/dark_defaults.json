@@ -36,6 +36,7 @@
         "menu.foreground": "#CCCCCC",
         "menu.selectionBackground": "#094771",
         "menu.separatorBackground": "#BBBBBB",
+        "menu.border": "#454545",
         "minimapSlider.activeBackground": "#bfbfbf66",
         "minimapSlider.background": "#79797980",
         "minimapSlider.hoverBackground": "#64646480",

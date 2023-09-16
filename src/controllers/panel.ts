@@ -1,7 +1,8 @@
 import { BaseController } from 'mo/glue';
 import { PanelEvent } from 'mo/models/panel';
 import type { BuiltinService } from 'mo/services/builtin';
-import { LayoutService } from 'mo/services/layout';
+import type { LayoutService } from 'mo/services/layout';
+import type { MenuBarService } from 'mo/services/menuBar';
 import type { IMenuItemProps, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
@@ -15,7 +16,8 @@ export interface IPanelController extends BaseController {
 export class PanelController extends BaseController implements IPanelController {
     constructor(
         @inject('builtin') private builtin: BuiltinService,
-        @inject('layout') private layout: LayoutService
+        @inject('layout') private layout: LayoutService,
+        @inject('menuBar') private menuBar: MenuBarService
     ) {
         super();
     }

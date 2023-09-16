@@ -20,7 +20,7 @@ export interface IColorTheme {
     uiTheme?: BuiltinTheme;
     description?: string;
     type?: ColorScheme;
-    colors?: Record<string, string>;
+    colors?: Record<string, string | null>;
     tokenColors?: TokenColor[];
     /**
      * The semanticTokenColors mappings as well as

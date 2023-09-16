@@ -2,8 +2,9 @@
  * VSCode theme extends guides: https://code.visualstudio.com/api/extension-guides/color-theme
  * https://code.visualstudio.com/api/references/theme-color
  */
+import { omitBy } from 'lodash-es';
 import { prefix } from 'mo/client/classNames';
-import { defaultDark, defaultHc, defaultVS } from 'mo/const/theme';
+import { DefaultColor } from 'mo/const/theme';
 import { BaseService } from 'mo/glue';
 import { ColorThemeEvent, ColorThemeModel, type IColorTheme } from 'mo/models/colorTheme';
 import {
@@ -84,15 +85,16 @@ export class ColorThemeService extends BaseService<ColorThemeModel> implements I
     }
 
     private getDefaultTheme(uiTheme?: BuiltinTheme) {
+        const colors = new DefaultColor();
         switch (uiTheme) {
             case 'vs-dark': {
-                return { ...defaultDark };
+                return omitBy({ ...colors.getDefualtColor('dark') }, (value) => !value);
             }
             case 'vs': {
-                return { ...defaultVS };
+                return omitBy({ ...colors.getDefualtColor('light') }, (value) => !value);
             }
             default: {
-                return { ...defaultHc };
+                return omitBy({ ...colors.getDefualtColor('hcDark') }, (value) => !value);
             }
         }
     }

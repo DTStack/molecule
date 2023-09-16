@@ -24,7 +24,8 @@ $icon-size: 35px;
     .#{$item} {
         color: var(--panelTitle-inactiveForeground);
         font-size: 11px;
-        margin: 0 10px;
+        margin: 2px 6px;
+        padding: 0 4px;
         line-height: 35px;
         text-transform: uppercase;
         user-select: none;
@@ -42,6 +43,7 @@ $icon-size: 35px;
 
         &.#{$active} {
             color: var(--panelTitle-activeForeground);
+            outline: var(--contrastActiveBorder,unset) solid 1px;
 
             &::after {
                 background-color: var(--panelTitle-activeBorder);

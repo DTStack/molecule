@@ -78,7 +78,10 @@ export default function Menu({ data, onClick }: IMenuProps) {
             className={variables.container}
             selectable={false}
             triggerSubMenuAction="hover"
-            onClick={({ keyPath }) => handleMenuClick(keyPath)}
+            onClick={({ keyPath, domEvent }) => {
+                domEvent.stopPropagation();
+                handleMenuClick(keyPath);
+            }}
         >
             {Menu}
         </RcMenu>

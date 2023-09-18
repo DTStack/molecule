@@ -1,9 +1,10 @@
 import { BaseController } from 'mo/glue';
 import { ActivityBarEvent, type IActivityBarItem } from 'mo/models/activityBar';
+import { MenuBarEvent } from 'mo/models/menuBar';
 import type { ActivityBarService } from 'mo/services/activityBar';
 import type { BuiltinService } from 'mo/services/builtin';
-import { ContextMenuService } from 'mo/services/contextMenu';
-import type { IMenuItemProps } from 'mo/types';
+import type { ContextMenuService } from 'mo/services/contextMenu';
+import type { ContextMenuEventHandler } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IActivityBarController extends BaseController {
@@ -11,7 +12,8 @@ export interface IActivityBarController extends BaseController {
      * Called when activity bar item is clicked
      */
     onClick?: (item: IActivityBarItem) => void;
-    onContextMenuClick?: (item: IMenuItemProps) => void;
+    onContextMenuClick?: ContextMenuEventHandler;
+    onMenuClick?: ContextMenuEventHandler;
 }
 
 @injectable()
@@ -39,7 +41,11 @@ export class ActivityBarController extends BaseController implements IActivityBa
         this.emit(ActivityBarEvent.OnClick, item);
     };
 
-    public readonly onContextMenuClick = (item: IMenuItemProps) => {
+    public readonly onContextMenuClick: ContextMenuEventHandler = (item) => {
         this.emit(ActivityBarEvent.OnContextMenu, item);
+    };
+
+    public readonly onMenuClick: ContextMenuEventHandler = (item) => {
+        this.emit(MenuBarEvent.onSelect, item.id);
     };
 }

@@ -195,10 +195,7 @@ export class ColorThemeService extends BaseService<ColorThemeModel> implements I
         }
 
         // Try to get ColorScheme from background color
-        const background =
-            colors?.['editor.background'] ||
-            colors?.['tab.activeBackground'] ||
-            colors?.['molecule.welcomeBackground'];
+        const background = colors?.['editor.background'] || colors?.['tab.activeBackground'];
         if (background) {
             return colorLightOrDark(background);
         }

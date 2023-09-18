@@ -34,6 +34,7 @@ export type LocaleKind = {
     'menu.showSideBar.label': string;
     'menu.showStatusBar': string;
     'menu.showActivityBar': string;
+    "menu.hidePanel": string,
     'menu.showPanel': string;
     'menu.showPanel.title': string;
     'menu.run': string;

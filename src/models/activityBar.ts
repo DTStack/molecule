@@ -1,4 +1,10 @@
-import { AlignmentLiteral, HTMLElementProps, IconType, IMenuItemProps, UniqueId } from 'mo/types';
+import type {
+    AlignmentLiteral,
+    HTMLElementProps,
+    IItemProps,
+    IMenuItemProps,
+    UniqueId,
+} from 'mo/types';
 
 /**
  * The activity bar event definition
@@ -9,15 +15,10 @@ export enum ActivityBarEvent {
 }
 
 export type PartialAlignment = Extract<AlignmentLiteral, 'top' | 'bottom'>;
-export interface IActivityBarItem extends HTMLElementProps {
-    id: UniqueId;
-    name?: string;
-    hidden?: boolean;
-    icon?: IconType;
+export interface IActivityBarItem extends HTMLElementProps, IItemProps {
     disabled?: boolean;
     alignment?: PartialAlignment;
     contextMenu?: IMenuItemProps[];
-    sortIndex?: number;
     render?: (data: IActivityBarItem) => JSX.Element;
 }
 

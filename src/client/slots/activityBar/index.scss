@@ -3,7 +3,6 @@
 $activityBar: prefix('activityBar');
 $container: BEMElement($activityBar, 'container');
 $normal: BEMElement($activityBar, 'normal');
-$global: BEMElement($activityBar, 'global');
 
 
 .#{$container} {
@@ -35,5 +34,4 @@ $global: BEMElement($activityBar, 'global');
 :export {
     container: $container;
     normal: $normal;
-    global: $global;
 }

@@ -1,4 +1,4 @@
-import { IContributeType, type IExtension,UniqueId } from 'mo/types';
+import { IContributeType, type IExtension, UniqueId } from 'mo/types';
 
 import QuickSelectThemeAction from './quickSelectThemeAction';
 import QuickTogglePanelAction from './quickTogglePanelAction';
@@ -31,20 +31,32 @@ export const ExtendsActions: IExtension = {
             molecule.activityBar.update(setting);
         }
 
-        // Add keybinding
-        addMenuKeybinding(QuickTogglePanelAction.ID);
-        addMenuKeybinding(QuickToggleSidebarAction.ID);
-
         molecule.activityBar.onContextMenuClick((item) => {
             if (item.id === QuickSelectThemeAction.ID) {
                 molecule.action.execute(QuickSelectThemeAction.ID);
             }
         });
 
-        function addMenuKeybinding(id: UniqueId) {
+        // update menu's keybinding
+        updateMenuKeybinding(QuickTogglePanelAction.ID);
+        updateMenuKeybinding(QuickToggleSidebarAction.ID);
+
+        updateContextMenuKeybinding(QuickTogglePanelAction.ID, 'panel');
+
+        function updateMenuKeybinding(id: UniqueId) {
             const keybinding = molecule.action.queryGlobalKeybinding(id);
             if (keybinding) {
                 molecule.menuBar.update({
+                    id,
+                    keybinding: molecule.action.convertSimpleKeybindingToString(keybinding),
+                });
+            }
+        }
+
+        function updateContextMenuKeybinding(id: UniqueId, token: string) {
+            const keybinding = molecule.action.queryGlobalKeybinding(id);
+            if (keybinding) {
+                molecule.contextMenu.updateItem(token, {
                     id,
                     keybinding: molecule.action.convertSimpleKeybindingToString(keybinding),
                 });

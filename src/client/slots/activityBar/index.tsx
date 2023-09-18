@@ -9,13 +9,17 @@ import { classify } from 'mo/utils';
 
 import variables from './index.scss';
 
-export default function ActivityBar({ onClick, onContextMenuClick }: IActivityBarController) {
+export default function ActivityBar({
+    onClick,
+    onContextMenuClick,
+    onMenuClick,
+}: IActivityBarController) {
     const activityBar = useConnector('activityBar');
     const layout = useConnector('layout');
     const menuBar = useConnector('menuBar');
     const contextMenu = useContextMenu('activityBar');
 
-    const [top, bottom] = classify(activityBar.data, (item) => item.alignment === 'top');
+    const [top = [], bottom = []] = classify(activityBar.data, (item) => item.alignment === 'top');
 
     const renderMenu = () => {
         if (layout.menuBar.hidden) {
@@ -28,6 +32,7 @@ export default function ActivityBar({ onClick, onContextMenuClick }: IActivityBa
                         icon: 'menu',
                         contextMenu: menuBar.data,
                     }}
+                    onContextMenuClick={onMenuClick}
                 />
             );
         }
@@ -50,7 +55,7 @@ export default function ActivityBar({ onClick, onContextMenuClick }: IActivityBa
                         ))}
                     </ul>
                 </ScrollBar>
-                <ul className={variables.global}>
+                <ul>
                     {bottom.map((item: IActivityBarItem) => (
                         <ActivityBarItem
                             key={item.id}

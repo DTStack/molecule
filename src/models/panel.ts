@@ -1,17 +1,21 @@
-import type { IMenuItemProps, ITabProps, UniqueId } from 'mo/types';
+import type { IItemProps, IMenuItemProps, UniqueId } from 'mo/types';
 
-export interface IPanelItem<T = any> extends ITabProps<T> {
+export interface IPanelItem<T = any> extends IItemProps {
     /**
-     * The sort of panel item
+     * Mark the tab status to be closable,
+     * Default is true
      */
-    sortIndex?: number;
+    closable?: boolean;
+    data?: T;
     toolbar?: IMenuItemProps[];
+    render?: (item: IPanelItem<T>) => React.ReactNode;
 }
 
 export enum PanelEvent {
     onTabChange = 'panel.onTabChange',
     onToolbarClick = 'panel.onToolbarClick',
     onTabClose = 'panel.onTabClose',
+    onTabContextMenu = 'panel.onContextMenu',
 }
 
 export interface IPanel {

@@ -145,6 +145,9 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
                         : visibility,
             },
         }));
+
+        // effects
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_STATUSBAR);
     }
 
     public setSideBarPosition(position: PositionLiteral): void {

@@ -108,7 +108,7 @@ export function randomId() {
 }
 
 export function concatMenu(...args: IMenuItemProps[][]) {
-    const nonEmptyArgs = args.filter((i) => i.length);
+    const nonEmptyArgs = args.filter((i) => Array.isArray(i) && i.length);
     if (!nonEmptyArgs.length) return [];
     return nonEmptyArgs.reduce((acc, cur) => {
         return acc.concat({ id: randomId(), type: 'divider' }, cur);
@@ -206,13 +206,15 @@ export function convertToToken(token?: IColorTheme['tokenColors']) {
 
 export function colorsToString(colors: Record<string, string | null>) {
     return omitBy(colors, (value) => !value) as Record<string, string>;
-    // return Object.keys(colors).reduce<Record<string, string>>((acc, key) => {
-    //     const value = colors[key];
-    //     if (value instanceof Object) {
-    //         acc[key] = value.toString();
-    //     } else {
-    //         acc[key] = value;
-    //     }
-    //     return acc;
-    // }, {});
+}
+
+/**
+ * Clone a menu item
+ */
+export function cloneMenuItem(item: IMenuItemProps): IMenuItemProps {
+    return {
+        ...item,
+        id: `${item.id}$clone`,
+        clone: item.id,
+    };
 }

@@ -1,6 +1,7 @@
 import { BaseService } from 'mo/glue';
 import { ContextMenuModel } from 'mo/models/contextMenu';
-import { IMenuItemProps, UniqueId } from 'mo/types';
+import { IMenuItemProps, RequiredId, UniqueId } from 'mo/types';
+import { searchById } from 'mo/utils';
 
 /**
  * Delegate all contextMenu values
@@ -53,5 +54,13 @@ export class ContextMenuService extends BaseService<ContextMenuModel> {
             ...prev,
             data: new Map([...prev.data, [key, value]]),
         }));
+    }
+
+    public updateItem(key: UniqueId, menuItem: RequiredId<IMenuItemProps>) {
+        const contextMenus = this.get(key);
+        const target = contextMenus?.find(searchById(menuItem.id));
+        if (!target) return;
+        Object.assign(target, menuItem);
+        this.update(key, contextMenus || []);
     }
 }

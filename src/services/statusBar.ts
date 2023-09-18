@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { type IStatusBarItem, StatusBarEvent, StatusBarModel } from 'mo/models/statusBar';
-import type { RequiredId, UniqueId } from 'mo/types';
+import type { ContextMenuEventHandler, RequiredId, UniqueId } from 'mo/types';
 import { searchById, sortByIndex } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
@@ -34,6 +34,7 @@ export interface IStatusBarService extends BaseService<StatusBarModel> {
      * @param callback
      */
     onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void): void;
+    onContextMenu: (callback: ContextMenuEventHandler) => void;
 }
 
 export class StatusBarService extends BaseService<StatusBarModel> implements IStatusBarService {
@@ -95,7 +96,7 @@ export class StatusBarService extends BaseService<StatusBarModel> implements ISt
         this.subscribe(StatusBarEvent.onClick, callback);
     }
 
-    public onContextMenu(callback: (e: MouseEvent, item: IStatusBarItem) => void) {
+    public onContextMenu(callback: ContextMenuEventHandler) {
         this.subscribe(StatusBarEvent.onContextMenu, callback);
     }
 }

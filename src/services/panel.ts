@@ -1,6 +1,11 @@
 import { BaseService } from 'mo/glue';
 import { IPanelItem, PanelEvent, PanelModel } from 'mo/models/panel';
-import { ArraylizeOrSingle, IMenuItemProps, UniqueId } from 'mo/types';
+import type {
+    ArraylizeOrSingle,
+    ContextMenuEventHandler,
+    IMenuItemProps,
+    UniqueId,
+} from 'mo/types';
 import { arraylize, searchById, sortByIndex } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
@@ -53,6 +58,7 @@ export interface IPanelService extends BaseService<PanelModel> {
      * @param callback
      */
     onTabClose(callback: (panelId: UniqueId) => void): void;
+    onTabContextMenu(callback: ContextMenuEventHandler): void;
 }
 
 export class PanelService extends BaseService<PanelModel> implements IPanelService {
@@ -126,5 +132,9 @@ export class PanelService extends BaseService<PanelModel> implements IPanelServi
 
     public onTabClose(callback: (key: UniqueId) => void) {
         this.subscribe(PanelEvent.onTabClose, callback);
+    }
+
+    public onTabContextMenu(callback: ContextMenuEventHandler): void {
+        this.subscribe(PanelEvent.onTabContextMenu, callback);
     }
 }

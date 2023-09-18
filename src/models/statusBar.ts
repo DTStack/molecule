@@ -1,15 +1,11 @@
 import React from 'react';
-import type { AlignmentLiteral, HTMLElementProps, UniqueId } from 'mo/types';
+import type { AlignmentLiteral, HTMLElementProps, IItemProps } from 'mo/types';
 
 export type PartialAlignment = Extract<AlignmentLiteral, 'left' | 'right'>;
 
-export interface IStatusBarItem<T = any> extends HTMLElementProps {
-    id: UniqueId;
+export interface IStatusBarItem<T = any> extends HTMLElementProps, IItemProps {
     alignment: PartialAlignment;
-    sortIndex?: number;
     data?: T;
-    name?: string;
-    hidden?: boolean;
     render?: (item: IStatusBarItem) => React.ReactNode;
 }
 

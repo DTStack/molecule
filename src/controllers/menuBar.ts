@@ -74,26 +74,6 @@ export class MenuBarController extends BaseController implements IMenuBarControl
     }
 
     public readonly onSelect = (item: IMenuItemProps) => {
-        const { MENU_VIEW_PANEL, MENU_VIEW_MENUBAR, MENU_VIEW_SIBEBAR } =
-            this.builtin.getState().constants;
-
-        switch (item.id) {
-            case MENU_VIEW_PANEL: {
-                this.layout.setPanelVisibility((prev) => !prev);
-                break;
-            }
-            case MENU_VIEW_MENUBAR: {
-                this.layout.setMenuBarVisibility((prev) => !prev);
-                break;
-            }
-            case MENU_VIEW_SIBEBAR: {
-                this.layout.setSidebarVisibility((prev) => !prev);
-                break;
-            }
-
-            default: {
-                this.emit(MenuBarEvent.onSelect, item.id);
-            }
-        }
+        this.emit(MenuBarEvent.onSelect, item.id);
     };
 }

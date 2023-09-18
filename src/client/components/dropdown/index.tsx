@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import type { ContextMenuEventHandler, IMenuItemProps } from 'mo/types';
+import type { ContextMenuEventHandler, IMenuItemProps, UniqueId } from 'mo/types';
+import { searchById } from 'mo/utils';
 import RcDropdown from 'rc-dropdown';
 import type { DropdownProps } from 'rc-dropdown/es/Dropdown';
 
@@ -8,10 +9,15 @@ import './index.scss';
 
 type ActionType = Exclude<DropdownProps['trigger'], Array<any> | 'focus'>;
 
+/**
+ * If a dropdown item has a clone property, it will trigger corresponding click event
+ */
+type DropdownData = IMenuItemProps & { clone?: UniqueId };
+
 interface IDropdownProps
     extends Pick<DropdownProps, 'children' | 'visible' | 'onVisibleChange' | 'placement'> {
     trigger?: ActionType;
-    data?: IMenuItemProps[];
+    data?: DropdownData[];
     alignPoint?: boolean;
     stopPropagation?: boolean;
     onClick?: ContextMenuEventHandler;
@@ -52,11 +58,13 @@ export default function Dropdown({
         }
     };
 
-    const handleClick = (item: IMenuItemProps) => {
+    const handleClick = (item: DropdownData) => {
         if (typeof visible !== 'boolean') {
             setVisible(false);
         }
-        onClick?.(item);
+        const dropdownItem = item.clone ? data?.find(searchById(item.clone)) : item;
+        if (!dropdownItem) return;
+        onClick?.(dropdownItem);
     };
 
     return data?.length ? (

@@ -29,6 +29,17 @@ export type RecordWithId<T> = { id: UniqueId; [key: string]: any } & T;
 
 export type TreeModel<T> = RecordWithId<{ children?: T[] }>;
 
+/**
+ * The type definition for the each iterable item
+ */
+export interface IItemProps {
+    id: UniqueId;
+    name?: string;
+    hidden?: boolean;
+    icon?: IconType;
+    sortIndex?: number;
+}
+
 export interface ISimpleKeybinding {
     ctrlKey: boolean;
     shiftKey: boolean;
@@ -289,6 +300,7 @@ export interface ITabProps<T = any, P = any> {
      * Default is true
      */
     closable?: boolean;
+    hidden?: boolean;
     icon?: IconType;
     data?: T;
     render?: (item: ITabProps<T, P>) => React.ReactNode;

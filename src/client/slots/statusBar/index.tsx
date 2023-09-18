@@ -25,6 +25,7 @@ export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarCon
                             key={item.id}
                             data={item}
                             onClick={(e) => onClick?.(e, item.id)}
+                            onContextMenuClick={onContextMenuClick}
                         />
                     ))}
                 </div>
@@ -34,6 +35,7 @@ export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarCon
                             key={item.id}
                             data={item}
                             onClick={(e) => onClick?.(e, item.id)}
+                            onContextMenuClick={onContextMenuClick}
                         />
                     ))}
                 </div>

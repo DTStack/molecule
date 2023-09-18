@@ -10,7 +10,7 @@ export default function Sidebar() {
 
     const pane = sidebar.panes.find((i) => i.id === sidebar.current);
 
-    if (!pane) return null;
+    if (!pane) return <div className={variables.container} />;
 
     const toolbar = pane.toolbar || [];
     if (pane.id === 'sidebar.explore.title') {

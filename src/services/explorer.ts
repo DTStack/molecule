@@ -95,11 +95,10 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
             const panel = this.getPanel(item.id);
             return !panel;
         });
-        next.sort(sortByIndex);
 
         this.setState((prev) => ({
             ...prev,
-            data: [...prev.data, ...next],
+            data: [...prev.data, ...next].sort(sortByIndex),
         }));
     }
 

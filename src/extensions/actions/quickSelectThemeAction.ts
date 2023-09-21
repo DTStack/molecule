@@ -58,6 +58,7 @@ export default class QuickSelectThemeAction extends BaseAction {
 
             const autoFocusIndex = picks.findIndex((p) => p.id === currentTheme?.id);
             const quickPick = quickInputService.createQuickPick<IColorTheme>();
+
             quickPick.items = picks;
             // TODO: Better to use molecule's localize
             quickPick.placeholder = localize(

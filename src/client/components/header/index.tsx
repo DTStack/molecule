@@ -11,6 +11,8 @@ interface IHeaderProps {
     contentClassName?: string;
     extraClassName?: string;
     trackStyle?: CSSProperties;
+    onClick?: React.MouseEventHandler<HTMLDivElement>;
+    onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export default function Header({
@@ -20,9 +22,15 @@ export default function Header({
     extra,
     trackStyle,
     children,
+    onClick,
+    onContextMenu,
 }: PropsWithChildren<IHeaderProps>) {
     return (
-        <div className={classNames(variables.header, className)}>
+        <div
+            className={classNames(variables.header, className)}
+            onClick={onClick}
+            onContextMenu={onContextMenu}
+        >
             <div className={classNames(variables.content, contentClassName)}>
                 <ScrollBar trackStyle={trackStyle} direction={Direction.horizontal}>
                     {children}

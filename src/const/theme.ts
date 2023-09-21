@@ -608,80 +608,79 @@ export class DefaultColor {
         return 'op' in color;
     }
 
-    public getDefualtColor(uiTheme: keyof ColorMap) {
-        const colors: Record<string, string | null> = {};
-        this.colors.forEach((value, key) => {
-            const color: ColorDefined = value[uiTheme];
-            if (color === null) {
-                colors[key] = color;
-            } else if (typeof color === 'string') {
-                colors[key] = color.startsWith('#') ? color : colors[color];
-            } else if (!this.isTransformType(color)) {
-                colors[key] = color.toString();
-            } else if (typeof color === 'object') {
-                switch (color.op) {
-                    case ColorTransformType.Lighten: {
-                        const source = colors[color.value as string];
-                        if (!source) break;
-                        colors[key] = Color.fromHex(source)?.lighten(color.factor).toString();
-                        break;
-                    }
-                    case ColorTransformType.Darken: {
-                        const source = colors[color.value as string];
-                        if (!source) break;
-                        colors[key] = Color.fromHex(source)?.darken(color.factor).toString();
-                        break;
-                    }
-                    case ColorTransformType.Transparent: {
-                        const source = colors[color.value as string];
-                        if (!source) break;
-                        colors[key] = Color.fromHex(source)?.transparent(color.factor).toString();
-                        break;
-                    }
-                    case ColorTransformType.IfDefinedThenElse: {
-                        const ifArg = colors[color.if as string];
-                        const thenArg = colors[color.then as string];
-                        const elseArg = colors[color.else as string];
-                        colors[key] = ifArg
-                            ? Color.fromHex(thenArg)!.toString()
-                            : Color.fromHex(elseArg)!.toString();
-                        break;
-                    }
-                    case ColorTransformType.OneOf: {
-                        colors[key] = Color.fromHex(
-                            color.values.reduce<string | null>((acc, cur) => {
-                                if (acc !== null) return acc;
-                                return colors[cur as string];
-                            }, null)
-                        )!.toString();
-                        break;
-                    }
-                    case ColorTransformType.LessProminent: {
-                        const valueColor = Color.fromHex(colors[color.value as string]);
-                        if (!valueColor) break;
-                        const backgroundColor = Color.fromHex(colors[color.background as string]);
-                        if (!backgroundColor) {
-                            colors[key] = valueColor.transparent(color.factor * color.transparency);
-                            break;
-                        }
-                        colors[key] = valueColor.isDarkerThan(backgroundColor)
-                            ? Color.getLighterColor(
-                                  valueColor,
-                                  backgroundColor,
-                                  color.factor
-                              ).transparent(color.transparency)
-                            : Color.getDarkerColor(
-                                  valueColor,
-                                  backgroundColor,
-                                  color.factor
-                              ).transparent(color.transparency);
-                        break;
-                    }
-                    default:
-                        break;
+    private getHexColor(
+        hex: ColorDefined,
+        uiTheme: keyof ColorMap
+    ): Exclude<ColorDefined, ColorTransform | string> {
+        if (hex === null) return hex;
+        if (typeof hex === 'string') {
+            if (hex.startsWith('#')) return Color.fromHex(hex);
+            if (!this.colors.has(hex)) return null;
+            return this.getHexColor(this.colors.get(hex)?.[uiTheme] || null, uiTheme);
+        }
+        if (this.isTransformType(hex)) {
+            switch (hex.op) {
+                case ColorTransformType.Lighten: {
+                    const source = this.getHexColor(hex.value, uiTheme);
+                    if (!source) return source;
+                    return source.lighten(hex.factor);
                 }
+                case ColorTransformType.Darken: {
+                    const source = this.getHexColor(hex.value, uiTheme);
+                    if (!source) return source;
+                    return source.darken(hex.factor);
+                }
+                case ColorTransformType.Transparent: {
+                    const source = this.getHexColor(hex.value, uiTheme);
+                    if (!source) return source;
+                    return source.transparent(hex.factor);
+                }
+                case ColorTransformType.IfDefinedThenElse: {
+                    const ifArg = this.getHexColor(hex.if, uiTheme);
+                    const thenArg = this.getHexColor(hex.then, uiTheme);
+                    const elseArg = this.getHexColor(hex.else, uiTheme);
+                    return ifArg ? thenArg : elseArg;
+                }
+                case ColorTransformType.OneOf: {
+                    return hex.values.reduce<ReturnType<typeof this.getHexColor>>((acc, cur) => {
+                        if (acc !== null) return acc;
+                        return this.getHexColor(cur, uiTheme);
+                    }, null);
+                }
+                case ColorTransformType.LessProminent: {
+                    const source = this.getHexColor(hex.value, uiTheme);
+                    if (!source) return null;
+                    const backgroundColor = this.getHexColor(hex.background, uiTheme);
+                    if (!backgroundColor) {
+                        return source.transparent(hex.factor * hex.transparency);
+                    }
+                    return source.isDarkerThan(backgroundColor)
+                        ? Color.getLighterColor(source, backgroundColor, hex.factor).transparent(
+                              hex.transparency
+                          )
+                        : Color.getDarkerColor(source, backgroundColor, hex.factor).transparent(
+                              hex.transparency
+                          );
+                }
+                default:
+                    return null;
             }
+        }
+
+        return hex;
+    }
+
+    public getDefualtColor(uiTheme: keyof ColorMap) {
+        const tmp: Record<string, string | null> = {};
+
+        this.colors.forEach((value, key) => {
+            const color = value[uiTheme];
+            const hex = this.getHexColor(color, uiTheme);
+            // Have to translate color to hex, since call editor.setTheme() will call Color.Format.CSS.parseHex to parse color, rgba color will be parsed failed
+            tmp[key] = hex ? Color.Format.CSS.formatHexA(hex) : hex;
         });
-        return colors;
+        console.log(tmp);
+
+        return tmp;
     }
 }

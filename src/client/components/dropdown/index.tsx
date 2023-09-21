@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import type { ContextMenuEventHandler, IMenuItemProps, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 import RcDropdown from 'rc-dropdown';
@@ -77,7 +77,8 @@ export default function Dropdown({
             alignPoint={alignPoint}
             placement={placement}
         >
-            <span {...events}>{children}</span>
+            {/* Children should support onClick and onContextMenu event */}
+            {React.cloneElement(children, { ...events })}
         </RcDropdown>
     ) : (
         children

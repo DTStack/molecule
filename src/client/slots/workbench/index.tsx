@@ -4,6 +4,7 @@ import { Pane, SplitPane } from 'mo/client/components/split';
 import useConnector from '../../hooks/useConnector';
 import useSlots from '../../hooks/useSlots';
 import 'normalize.css';
+import '../../classNames/common.css';
 import variables from './index.scss';
 
 export interface IWorkbenchProps {

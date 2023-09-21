@@ -16,6 +16,7 @@ import { BuiltinService } from './builtin';
 import { ColorThemeService } from './colorTheme';
 import { ContextMenuService } from './contextMenu';
 import { EditorService } from './editor';
+import { EditorTreeService } from './editorTree';
 import { ExplorerService } from './explorer';
 import { ExtensionService } from './extension';
 import { FolderTreeService } from './folderTree';
@@ -108,6 +109,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('colorTheme', ColorThemeService);
         this.register('action', ActionService);
         this.register('monaco', MonacoService);
+        this.register('editorTree', EditorTreeService);
         // =====================================================
     }
 
@@ -148,6 +150,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const output = this.resolve<OutputService>('output');
         const editor = this.resolve<EditorService>('editor');
         const colorTheme = this.resolve<ColorThemeService>('colorTheme');
+        const editorTree = this.resolve<EditorTreeService>('editorTree');
 
         const action = this.resolve<ActionService>('action');
 
@@ -169,6 +172,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const panelController = this.resolve(controller.panel.PanelController);
         const outputController = this.resolve(controller.output.OutputController);
         const editorController = this.resolve(controller.editor.EditorController);
+        const editorTreeController = this.resolve(controller.editorTree.EditorTreeController);
 
         // activate extensions
         extension.activate();
@@ -196,6 +200,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         editor,
                         colorTheme,
                         action,
+                        editorTree,
                     },
                     monaco,
                     localize: locale.localize,
@@ -210,6 +215,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         panel: panelController,
                         output: outputController,
                         editor: editorController,
+                        editorTree: editorTreeController,
                     } as any,
                 },
             })

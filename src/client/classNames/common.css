@@ -1,0 +1,37 @@
+*:focus-visible {
+    outline: none;
+}
+
+body [tabindex='0']:focus,
+body [tabindex='-1']:focus,
+body .synthetic-focus,
+body select:focus,
+body input[type='button']:focus,
+body input[type='text']:focus,
+body button:focus,
+body textarea:focus,
+body input[type='search']:focus,
+body input[type='checkbox']:focus {
+    outline-width: 1px;
+    outline-style: solid;
+    outline-offset: -1px;
+    outline-color: var(--focusBorder);
+    opacity: 1;
+}
+
+body .synthetic-focus :focus {
+    outline: 0 !important; /* elements within widgets that draw synthetic-focus should never show focus */
+}
+
+body .monaco-inputbox.info.synthetic-focus,
+body .monaco-inputbox.warning.synthetic-focus,
+body .monaco-inputbox.error.synthetic-focus,
+body .monaco-inputbox.info input[type='text']:focus,
+body .monaco-inputbox.warning input[type='text']:focus,
+body .monaco-inputbox.error input[type='text']:focus {
+    outline: 0 !important; /* outline is not going well with decoration */
+}
+
+body .monaco-list:focus {
+    outline: 0 !important; /* tree indicates focus not via outline but through the focused item */
+}

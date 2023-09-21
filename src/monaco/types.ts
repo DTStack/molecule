@@ -149,9 +149,9 @@ interface ResolvedKeybindingItem {
 const ResolvedKeybindingItem: ResolvedKeybindingItem = MonacoResolvedKeybindingItem;
 
 type ColorClass = {
-    transparent: (factor: number) => string;
-    lighten(factor: number): string;
-    darken(factor: number): string;
+    transparent: (factor: number) => ColorClass;
+    lighten(factor: number): ColorClass;
+    darken(factor: number): ColorClass;
     isDarkerThan: (another: ColorClass) => boolean;
     toString(): string;
 };
@@ -166,6 +166,11 @@ interface Color {
     black: ColorClass;
     getLighterColor: (of: ColorClass, relative: ColorClass, factor: number) => ColorClass;
     getDarkerColor: (of: ColorClass, relative: ColorClass, factor: number) => ColorClass;
+    Format: {
+        CSS: {
+            formatHexA(hex: ColorClass, compact?: boolean): string;
+        };
+    };
     new (): ColorClass;
 }
 

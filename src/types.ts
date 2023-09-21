@@ -9,6 +9,7 @@ import type { BuiltinService } from './services/builtin';
 import type { ColorThemeService } from './services/colorTheme';
 import type { ContextMenuService } from './services/contextMenu';
 import type { EditorService } from './services/editor';
+import type { EditorTreeService } from './services/editorTree';
 import type { ExplorerService } from './services/explorer';
 import type { FolderTreeService } from './services/folderTree';
 import type { LayoutService } from './services/layout';
@@ -105,6 +106,7 @@ export interface IContext {
         editor: EditorService;
         colorTheme: ColorThemeService;
         action: ActionService;
+        editorTree: EditorTreeService;
     };
     monaco: MonacoService;
     controllers: { [key in keyof IContext['molecule']]: BaseController };

@@ -12,7 +12,7 @@ export class BuiltinModel {
         EXPLORER_ACTIVITY_ITEM: 'sidebar.explore.title',
         EXPLORER_ACTION_TITLE: 'sidebar.explore.actionDesc',
         EXPLORER_TOGGLE_VERTICAL: 'sidebar.explore.toggleVertical',
-        EXPLORER_TOGGLE_SAVE_ALL: 'sidebar.explore.saveALL',
+        EXPLORER_TOGGLE_SAVE_ALL: 'sidebar.explore.saveAll',
         EXPLORER_TOGGLE_CLOSE_ALL_EDITORS: 'sidebar.explore.closeAllEditors',
         EXPLORER_TOGGLE_SAVE_GROUP: 'sidebar.explore.saveGroup',
         EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS: 'sidebar.explore.closeGroupEditors',
@@ -339,6 +339,52 @@ export class BuiltinModel {
                 name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
             },
         ],
+        builtInExplorerEditorPanel: () => ({
+            id: this.constants.EDITOR_PANEL_ID,
+            sortIndex: 1,
+            name: this.localize(this.constants.EDITOR_PANEL_ID, 'OPEN EDITORS'),
+            toolbar: [
+                {
+                    id: this.constants.EXPLORER_TOGGLE_VERTICAL,
+                    title: this.localize(
+                        this.constants.EXPLORER_TOGGLE_VERTICAL,
+                        'Toggle Vertical'
+                    ),
+                    icon: 'editor-layout',
+                },
+                {
+                    id: this.constants.EXPLORER_TOGGLE_SAVE_ALL,
+                    title: this.localize(this.constants.EXPLORER_TOGGLE_SAVE_ALL, 'Save All'),
+                    icon: 'save-all',
+                },
+                {
+                    id: this.constants.EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
+                    title: this.localize(
+                        this.constants.EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
+                        'Close All Editors'
+                    ),
+                    icon: 'close-all',
+                },
+            ],
+            // groupToolbar: [
+            //     {
+            //         id: this.constants.EXPLORER_TOGGLE_SAVE_GROUP,
+            //         title: this.localize(this.constants.EXPLORER_TOGGLE_SAVE_GROUP, 'Save Group'),
+            //         icon: 'save-all',
+            //     },
+            //     {
+            //         id: this.constants.EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
+            //         title: this.localize(
+            //             this.constants.EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
+            //             'Close Group Editors'
+            //         ),
+            //         icon: 'close-all',
+            //     },
+            // ],
+            config: {
+                grow: 0,
+            },
+        }),
     };
     constructor(private localize: Localize) {}
 

@@ -18,6 +18,7 @@ import type { BuiltinService } from './builtin';
 import type { ColorThemeService } from './colorTheme';
 import type { ContextMenuService } from './contextMenu';
 import type { EditorService } from './editor';
+import type { EditorTreeService } from './editorTree';
 import type { ExplorerService } from './explorer';
 import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
@@ -114,7 +115,8 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         @inject('output') private output: OutputService,
         @inject('editor') private editor: EditorService,
         @inject('colorTheme') private colorTheme: ColorThemeService,
-        @inject('action') private action: ActionService
+        @inject('action') private action: ActionService,
+        @inject('editorTree') private editorTree: EditorTreeService
     ) {
         super('extension');
         this.state = new ExtensionModel();
@@ -138,6 +140,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             editor: this.editor,
             colorTheme: this.colorTheme,
             action: this.action,
+            editorTree: this.editorTree,
         };
     };
 

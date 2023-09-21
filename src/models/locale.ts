@@ -34,7 +34,7 @@ export type LocaleKind = {
     'menu.showSideBar.label': string;
     'menu.showStatusBar': string;
     'menu.showActivityBar': string;
-    "menu.hidePanel": string,
+    'menu.hidePanel': string;
     'menu.showPanel': string;
     'menu.showPanel.title': string;
     'menu.run': string;
@@ -53,6 +53,9 @@ export type LocaleKind = {
     'sidebar.explore.saveAll': string;
     'sidebar.explore.actionDesc': string;
     'sidebar.explore.outlineMore': string;
+    'sidebar.explore.closeAllEditors': string;
+    'sidebar.explore.saveGroup': string;
+    'sidebar.explore.closeGroupEditors': string;
     'toolbar.refresh': string;
     'toolbar.clearAll': string;
     'toolbar.collapseAll': string;

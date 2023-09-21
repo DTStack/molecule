@@ -1,6 +1,7 @@
 import { ExtendsActions } from './actions';
 import { ExtendsActivityBar } from './activityBar';
 import { ExtendsEditor } from './editor';
+import { ExtendsEditorTree } from './editorTree';
 import { LocalesExtends } from './locales';
 import { ExtendsMenuBar } from './menuBar';
 import { ExtendsPanel } from './panel';
@@ -13,6 +14,7 @@ export default [
     ExtendsActions,
     ExtendsEditor,
     ExtendsActivityBar,
+    ExtendsEditorTree,
     ExtendsPanel,
     ExtendsMenuBar,
     ExtendsStatusBar,

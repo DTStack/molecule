@@ -17,6 +17,7 @@ const dist = path.join(__dirname, '..', 'esm');
 const tsFilePath = path.join(src, '**', '*.ts');
 const tsxFilePath = path.join(src, '**', '*.tsx');
 const scssFilePath = path.join(src, '**', '*.scss');
+const cssFilePath = path.join(src, '**', '*.css');
 const jsonFilePath = path.join(src, '**', '*.json');
 
 const styleVariablesFileName = 'style__variables.js';
@@ -37,11 +38,12 @@ yargs(hideBin(process.argv))
         const scssfiles = await glob(scssFilePath);
 
         const jsonfiles = await glob(jsonFilePath);
+        const cssfiles = await glob(cssFilePath);
 
         transform([...tsfiles, ...tsxfiles]);
         transformTyping();
         transformStyle(scssfiles);
-        copyFile(jsonfiles);
+        copyFile([...jsonfiles, ...cssfiles]);
     })
     .parse();
 

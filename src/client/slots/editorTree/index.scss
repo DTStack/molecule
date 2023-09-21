@@ -1,0 +1,138 @@
+@import "../../classNames/style.scss";
+
+$editorTree: prefix('editorTree');
+$group: BEMElement($editorTree, 'group');
+$item: BEMElement($editorTree, 'item');
+$close: BEMElement($item, 'close');
+$file: BEMElement($item, 'file');
+$name: BEMElement($item, 'name');
+$path: BEMElement($item, 'path');
+
+$active: BEMModifier($item, 'active');
+
+
+.#{$editorTree} {
+    font-size: 13px;
+
+    .#{$item} {
+        // keep same with tree node
+        align-items: center;
+        border: 1px solid transparent;
+        cursor: pointer;
+        display: flex;
+        height: 22px;
+        line-height: 22px;
+        list-style: none;
+        margin: 0;
+        outline: 0;
+        padding-left: 16px;
+        user-select: none;
+        white-space: nowrap;
+
+        &.#{$active} {
+            // 这里的 inactive 是相对于 focus 的 active 来说的，是相对的 inactive
+            background-color: var(--list-inactiveSelectionBackground);
+
+            .#{$close} {
+                color: var(--icon-foreground);
+                opacity: 1;
+            }
+        }
+
+        &:hover {
+            &:not(.#{$active}) {
+                background-color: var(--list-hoverBackground);
+            }
+
+            .#{$close} {
+                opacity: 1;
+            }
+        }
+
+        &:focus {
+            background: var(--list-activeSelectionBackground);
+            border-color: var(--list-focusOutline);
+            color: #fff;
+        }
+
+        .#{$name} {
+            flex-basis: auto;
+            margin-left: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: pre;
+        }
+
+        .#{$path} {
+            flex: 1;
+            font-size: 0.9em;
+            margin-left: 5px;
+            opacity: 0.8;
+            overflow: hidden;
+            padding-top: 2px;
+            text-overflow: ellipsis;
+            white-space: pre;
+        }
+    }
+
+    .#{$group} {
+        align-items: center;
+        display: flex;
+        font-size: 11px;
+        height: 22px;
+        line-height: 22px;
+        padding-left: 16px;
+        user-select: none;
+
+        &:hover {
+            background-color: var(--list-hoverBackground);
+
+            // #{$toolBar} {
+            //     opacity: 1;
+            // }
+        }
+
+        // #{$toolBar} {
+        //     margin-left: auto;
+        //     opacity: 0;
+
+        //     .codicon {
+        //         color: var(--activityBar-inactiveForeground);
+
+        //         &:hover {
+        //             color: var(--activityBar-activeBorder);
+        //         }
+        //     }
+        // }
+    }
+
+    .#{$close} {
+        color: var(--icon-foreground);
+        margin-right: 2px;
+        opacity: 0;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    // &__file[class*='codicon-'] {
+    //     flex-shrink: 0;
+    //     height: 22px;
+    //     line-height: 23px;
+    //     width: 16px;
+    // }
+}
+
+
+:export {
+    editorTree: $editorTree;
+    group: $group;
+    item: $item;
+    close: $close;
+    file: $file;
+    name: $name;
+    path: $path;
+
+    active: $active;
+}

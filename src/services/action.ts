@@ -21,6 +21,7 @@ import type { BuiltinService } from './builtin';
 import type { ColorThemeService } from './colorTheme';
 import type { ContextMenuService } from './contextMenu';
 import type { EditorService } from './editor';
+import type { EditorTreeService } from './editorTree';
 import type { ExplorerService } from './explorer';
 import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
@@ -52,7 +53,8 @@ export class ActionService extends BaseService<ActionModel> {
         @inject('output') private output: OutputService,
         @inject('editor') private editor: EditorService,
         @inject('colorTheme') private colorTheme: ColorThemeService,
-        @inject('monaco') private monaco: MonacoService
+        @inject('monaco') private monaco: MonacoService,
+        @inject('editorTree') private editorTree: EditorTreeService
     ) {
         super('action');
     }
@@ -74,6 +76,7 @@ export class ActionService extends BaseService<ActionModel> {
             output: this.output,
             editor: this.editor,
             colorTheme: this.colorTheme,
+            editorTree: this.editorTree,
         };
     };
 

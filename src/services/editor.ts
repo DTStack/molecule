@@ -1,6 +1,7 @@
+import { cloneDeepWith } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { EditorEvent, EditorGroupModel, EditorModel, type IEditorTab } from 'mo/models/editor';
-import type { UniqueId } from 'mo/types';
+import type { ContextMenuEditorHandler, ContextMenuGroupHandler, UniqueId } from 'mo/types';
 import { randomId, searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
@@ -42,46 +43,41 @@ export interface IEditorService extends BaseService<EditorModel> {
     //  * @param tabId The tabId is required
     //  */
     // isOpened(tabId: UniqueId): boolean;
-    // /**
-    //  * Close the specific Tab opened in Editor Group view
-    //  * @param tabId The tabId is required
-    //  * @param groupId The groupId is required
-    //  */
-    // closeTab(tabId: UniqueId, groupId: UniqueId): void;
-    // /**
-    //  * Close other opened tabs in Editor Group
-    //  * @param tab The id is required
-    //  * @param groupId The groupId is required
-    //  */
-    // closeOther(tab: IEditorTab, groupId: UniqueId): void;
-    // /**
-    //  * Close the right opened tabs in Editor Group
-    //  * @param tab The id is required, the start point of close to right
-    //  * @param groupId The groupId is required
-    //  */
-    // closeToRight(tab: IEditorTab, groupId: UniqueId): void;
-    // /**
-    //  * Close the left opened Tabs in Editor Group
-    //  * @param tab The id is required, the start point of close to left
-    //  * @param groupId The groupId is required
-    //  */
-    // closeToLeft(tab: IEditorTab, groupId: UniqueId): void;
-    // /**
-    //  * Close the specific group all opened tabs
-    //  * @param groupId The groupId is required
-    //  */
-    // closeAll(groupId: UniqueId): void;
+    /**
+     * Close the specific Tab opened in Editor Group view
+     * @param tabId The tabId is required
+     * @param groupId The groupId is required
+     */
+    closeTab(tabId: UniqueId, groupId: UniqueId): void;
+    /**
+     * Close other opened tabs in Editor Group
+     * @param tabId The id is required
+     * @param groupId The groupId is required
+     */
+    closeOther(tabId: UniqueId, groupId: UniqueId): void;
+    /**
+     * Close the right opened tabs in Editor Group
+     * @param tab The id is required, the start point of close to right
+     * @param groupId The groupId is required
+     */
+    closeToRight(tabId: UniqueId, groupId: UniqueId): void;
+    /**
+     * Close the left opened Tabs in Editor Group
+     * @param tab The id is required, the start point of close to left
+     * @param groupId The groupId is required
+     */
+    closeToLeft(tabId: UniqueId, groupId: UniqueId): void;
+    /**
+     * Close the specific group all opened tabs
+     * @param groupId The groupId is required
+     */
+    closeAll(groupId: UniqueId): void;
     /**
      * Get the specific group
      * @param groupId The groupId is required
      */
     getGroupById<T>(groupId: UniqueId): EditorGroupModel<T> | undefined;
-    // /**
-    //  * Clone a specific group, if the argument `groupId` is undefined,
-    //  * there default clone the current group
-    //  * @param groupId
-    //  */
-    // cloneGroup(groupId?: UniqueId): IEditorGroup;
+    cloneTab(tabId: UniqueId, groupId: UniqueId): void;
     // /**
     //  * Listen to the Editor tab changed event
     //  * @param callback
@@ -97,11 +93,11 @@ export interface IEditorService extends BaseService<EditorModel> {
     //  * @param callback
     //  */
     // onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void);
-    // /**
-    //  * Listen to the tab select event
-    //  * @param callback
-    //  */
-    // onSelectTab(callback: (tabId: UniqueId, groupId?: UniqueId) => void);
+    /**
+     * Listen to the tab select event
+     * @param callback
+     */
+    onSelectTab(callback: (tabId: UniqueId, groupId: UniqueId) => void): void;
     // /**
     //  * Listen to the all tabs close event
     //  * @param callback
@@ -194,6 +190,8 @@ export interface IEditorService extends BaseService<EditorModel> {
             ev: editor.ICursorSelectionChangedEvent
         ) => void
     ): void;
+    onContextMenu(callback: ContextMenuEditorHandler): void;
+    onToolbarClick(callback: ContextMenuGroupHandler): void;
 }
 
 @injectable()
@@ -210,6 +208,10 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         // this.explorerService = container.resolve(ExplorerService);
         // this.layoutService = container.resolve(LayoutService);
         this.state = new EditorModel();
+    }
+
+    public getGroupById(groupId: UniqueId) {
+        return this.getState().groups.find(searchById(groupId));
     }
 
     public getCurrent<T>(): IEditorTab<T> | undefined {
@@ -361,166 +363,106 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     //     }
     // }
 
-    // public closeTab(tabId: UniqueId, groupId: UniqueId) {
-    //     const groupIndex = this.getGroupIndexById(groupId);
-    //     if (groupIndex === -1) return;
+    private disposeModels(tabs: IEditorTab<any>[]) {
+        const { groups } = this.getState();
+        const disposing = tabs.filter((tab) => {
+            if (!tab.model) return false;
+            const count = groups.reduce((acc, cur) => {
+                if (cur.data.find((i) => i.model === tab.model)) {
+                    return acc + 1;
+                }
+                return acc;
+            }, 0);
+            return count === 1;
+        });
+        disposing.forEach((tab) => {
+            tab.model?.dispose();
+        });
+    }
 
-    //     const { groups = [] } = this.state;
-    //     const nextGroups = [...groups];
-    //     const nextGroup = nextGroups[groupIndex];
-    //     const tabIndex = nextGroup.data!.findIndex(searchById(tabId));
+    public closeTab(tabId: UniqueId, groupId: UniqueId) {
+        const group = this.getGroupById(groupId);
+        const tab = this.getTabById(tabId, groupId);
+        if (!group || !tab) return;
+        if (group.data.length === 1 && group.data[0].id === tab.id) {
+            // Closing the ONLY tab will dispose the group too
+            this.disposeModels(group.data);
+            this.setState((prev) => {
+                const index = prev.groups.indexOf(group);
+                const nextActiveGroup = prev.groups[index + 1] ?? prev.groups[index - 1];
+                const next = prev.current === group.id ? nextActiveGroup?.id : prev.current;
+                return {
+                    ...prev,
+                    groups: prev.groups.filter((i) => i !== group),
+                    current: next,
+                };
+            });
+            // TODO: reset the editor group
+        } else {
+            group.data = group.data.filter((i) => i !== tab);
+            if (group.activeTab === tabId) {
+                const index = group.data.indexOf(tab);
+                group.activeTab = group.data[index + 1].id ?? group.data[index - 1].id;
+            }
+            this.disposeModels([tab]);
+            this.setState((prev) => ({ ...prev }));
+        }
+    }
 
-    //     const tab = cloneDeep(nextGroup.data![tabIndex]);
-    //     if (tabIndex === -1) return;
+    public closeOther(tabId: UniqueId, groupId: UniqueId): void {
+        const group = this.getGroupById(groupId);
+        const tab = this.getTabById(tabId, groupId);
+        if (!group || !tab) return;
+        const closedTab = group.data.filter((i) => i !== tab);
+        this.disposeModels(closedTab);
+        group.data = [tab];
+        group.activeTab = tabId;
+        this.setState((prev) => ({ ...prev }));
+    }
 
-    //     if (nextGroup.data!.length === 1 && tabIndex === 0) {
-    //         // the tab which is closing is the only one tab in current group,
-    //         // so delete group and choose last or former group as current one
-    //         const activeGroup = nextGroups[groupIndex + 1] || nextGroups[groupIndex - 1];
+    public closeToRight(tabId: UniqueId, groupId: UniqueId) {
+        const group = this.getGroupById(groupId);
+        const tab = this.getTabById(tabId, groupId);
+        if (!group || !tab) return;
+        const index = group.data.indexOf(tab);
+        const removedTabs = group.data.slice(index + 1);
+        group.data = group.data.slice(0, index + 1);
+        if (group.activeTab && removedTabs.find(searchById(group.activeTab))) {
+            group.activeTab = tabId;
+        }
+        this.disposeModels(removedTabs);
+        this.setState((prev) => ({ ...prev }));
+    }
 
-    //         nextGroups.splice(groupIndex, 1);
+    public closeToLeft(tabId: UniqueId, groupId: UniqueId) {
+        const group = this.getGroupById(groupId);
+        const tab = this.getTabById(tabId, groupId);
+        if (!group || !tab) return;
+        const index = group.data.indexOf(tab);
+        const removedTabs = group.data.slice(0, index);
+        group.data = group.data.slice(index);
+        if (group.activeTab && removedTabs.find(searchById(group.activeTab))) {
+            group.activeTab = tabId;
+        }
+        this.disposeModels(removedTabs);
+        this.setState((prev) => ({ ...prev }));
+    }
 
-    //         this.setState(
-    //             {
-    //                 groups: nextGroups,
-    //                 current: nextGroups?.length === 0 ? undefined : activeGroup,
-    //             },
-    //             () => {
-    //                 const isOpened = this.isOpened(tabId);
-    //                 // the model of closed tab should be disposed after closing
-    //                 !isOpened && this.disposeModel(tab);
-    //                 this.explorerService.forceUpdate();
-    //             }
-    //         );
-    //         // reset the editor group
-    //         this.layoutService.setGroupSplitSize(
-    //             nextGroups.length ? new Array(nextGroups.length + 1).fill('auto') : []
-    //         );
-    //         return;
-    //     }
-
-    //     if (tabId === nextGroup.activeTab) {
-    //         // the tab which is closing is the active one,
-    //         // then choose last or former tab as current one
-    //         const nextTab = nextGroup.data![tabIndex + 1] || nextGroup.data![tabIndex - 1];
-    //         nextGroup.tab = { ...nextTab };
-    //         nextGroup.activeTab = nextTab?.id;
-    //     }
-
-    //     nextGroup.data!.splice(tabIndex, 1);
-    //     nextGroups[groupIndex] = nextGroup;
-
-    //     this.setState(
-    //         {
-    //             current: nextGroup,
-    //             groups: nextGroups,
-    //         },
-    //         () => {
-    //             const isOpened = this.isOpened(tabId);
-    //             !isOpened && this.disposeModel(tab);
-    //             this.explorerService.forceUpdate();
-    //         }
-    //     );
-    // }
-
-    // public closeOther(tab: IEditorTab, groupId: UniqueId): void {
-    //     const groupIndex = this.getGroupIndexById(groupId);
-    //     if (groupIndex <= -1) return;
-
-    //     const { groups = [] } = this.state;
-    //     const nextGroups = [...groups];
-    //     const tabId = tab.id;
-    //     const nextGroup = nextGroups[groupIndex];
-    //     const nextTabData = nextGroup.data!;
-
-    //     const updateTabs = nextTabData!.filter(searchById(tabId));
-    //     // tab data is unlikely to be large enough to affect exec time, so we filter twice for maintainability
-    //     const removedTabs = cloneDeep(
-    //         nextTabData!.filter(
-    //             (item) =>
-    //                 item.id !== tabId &&
-    //                 !this.isOpened(
-    //                     item.id!,
-    //                     nextGroups.filter((g) => g.id !== groupId)
-    //                 )
-    //         )
-    //     );
-
-    //     this.updateGroup(groupId, {
-    //         data: updateTabs,
-    //     });
-    //     this.setActive(groupId, tabId!);
-
-    //     this.disposeModel(removedTabs);
-    //     this.explorerService.forceUpdate();
-    // }
-
-    // public closeToRight(tab: IEditorTab, groupId: UniqueId) {
-    //     const groupIndex = this.getGroupIndexById(groupId);
-    //     if (groupIndex <= -1) return;
-
-    //     const { groups = [] } = this.state;
-    //     const nextGroups = [...groups];
-    //     const tabId = tab.id;
-    //     const nextGroup = nextGroups[groupIndex];
-    //     const nextTabData = nextGroup.data;
-
-    //     const tabIndex = nextTabData!.findIndex(searchById(tabId));
-    //     if (tabIndex <= -1) return;
-
-    //     const updateTabs = nextTabData?.slice(0, tabIndex + 1);
-    //     const removedTabs = cloneDeep(
-    //         nextTabData?.slice(tabIndex + 1).filter(
-    //             (item) =>
-    //                 !this.isOpened(
-    //                     item.id!,
-    //                     nextGroups.filter((g) => g.id !== groupId)
-    //                 )
-    //         )
-    //     );
-
-    //     this.updateGroup(groupId, {
-    //         data: updateTabs,
-    //     });
-    //     this.setActive(groupId, tabId!);
-    //     this.disposeModel(removedTabs || []);
-    //     this.explorerService.forceUpdate();
-    // }
-
-    // public closeToLeft(tab: IEditorTab, groupId: UniqueId) {
-    //     const groupIndex = this.getGroupIndexById(groupId);
-    //     if (groupIndex <= -1) return;
-
-    //     const { groups = [] } = this.state;
-    //     const nextGroups = [...groups];
-    //     const tabId = tab.id;
-    //     const nextGroup = nextGroups[groupIndex];
-    //     const nextTabData = nextGroup.data;
-
-    //     const tabIndex = nextTabData!.findIndex(searchById(tabId));
-    //     if (tabIndex <= -1) return;
-
-    //     const updateTabs = nextTabData?.slice(tabIndex, nextTabData.length);
-    //     const removedTabs = cloneDeep(
-    //         nextTabData?.slice(0, tabIndex).filter(
-    //             (item) =>
-    //                 !this.isOpened(
-    //                     item.id!,
-    //                     nextGroups.filter((g) => g.id !== groupId)
-    //                 )
-    //         )
-    //     );
-
-    //     this.updateGroup(groupId, {
-    //         data: updateTabs,
-    //     });
-    //     this.setActive(groupId, tabId!);
-    //     this.disposeModel(removedTabs || []);
-    //     this.explorerService.forceUpdate();
-    // }
-
-    public getGroupById(groupId: UniqueId) {
-        return this.getState().groups.find(searchById(groupId));
+    public closeAll(groupId: UniqueId) {
+        const group = this.getGroupById(groupId);
+        if (!group) return;
+        this.disposeModels(group.data);
+        this.setState((prev) => {
+            const index = prev.groups.indexOf(group);
+            const nextActiveGroup = prev.groups[index + 1] ?? prev.groups[index - 1];
+            const next = prev.current === group.id ? nextActiveGroup?.id : prev.current;
+            return {
+                ...prev,
+                groups: prev.groups.filter((i) => i !== group),
+                current: next,
+            };
+        });
+        // TODO: reset the editor group
     }
 
     // public getGroupIndexById(id: UniqueId): number {
@@ -576,6 +518,15 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     //     this.setState({ current: nextGroup });
     // }
 
+    private createGroup(tab: IEditorTab<any>) {
+        return new EditorGroupModel(
+            randomId(),
+            [tab],
+            tab.id,
+            this.builtin.getState().modules.builtInEditorInitialActions
+        );
+    }
+
     /**
      * @param groupId If provided, will open tab in specific group
      */
@@ -608,13 +559,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
             }
         } else {
             // if group isn't exist, open a new group
-            const newGroup = new EditorGroupModel(
-                randomId(),
-                [tab],
-                undefined,
-                tab.id,
-                this.builtin.getState().modules.builtInEditorInitialActions
-            );
+            const newGroup = this.createGroup(tab);
             this.setState((prev) => ({
                 ...prev,
                 current: newGroup.id,
@@ -627,66 +572,23 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     //     this.subscribe(EditorEvent.OpenTab, callback);
     // }
 
-    // public closeAll(groupId: UniqueId) {
-    //     const { current, groups = [] } = this.state;
-    //     const groupIndex = this.getGroupIndexById(groupId);
-
-    //     if (groupIndex > -1) {
-    //         const nextGroups = [...groups];
-    //         let nextCurrentGroup = current;
-
-    //         const removedGroup = nextGroups.splice(groupIndex, 1);
-
-    //         const removed = cloneDeep(
-    //             removedGroup[0].data?.filter((item) => !this.isOpened(item.id!, nextGroups)) || []
-    //         );
-
-    //         if (current && current.id === groupId) {
-    //             nextCurrentGroup = groups[groupIndex + 1] || groups[groupIndex - 1];
-    //         }
-
-    //         this.setState(
-    //             {
-    //                 groups: nextGroups,
-    //                 current: nextCurrentGroup,
-    //             },
-    //             () => {
-    //                 // dispose all models in specific group
-    //                 this.disposeModel(removed);
-    //                 this.explorerService.forceUpdate();
-    //             }
-    //         );
-    //         // reset editor group
-    //         this.layoutService.setGroupSplitSize(
-    //             nextGroups.length ? new Array(nextGroups.length + 1).fill('auto') : []
-    //         );
-    //     }
-    // }
-
-    // public cloneGroup(groupId?: UniqueId): IEditorGroup {
-    //     const { current, groups = [] } = this.state;
-
-    //     const cloneGroup: IEditorGroup = Object.assign(
-    //         {},
-    //         groupId ? this.getGroupById(groupId) : current
-    //     );
-
-    //     // get an random id for new group
-    //     const id = randomId();
-
-    //     const initialTab = Object.assign({}, cloneGroup.tab);
-    //     cloneGroup.data = [initialTab];
-    //     cloneGroup.tab = initialTab;
-    //     cloneGroup.activeTab = initialTab.id;
-    //     cloneGroup.id = id;
-
-    //     this.setState({
-    //         current: cloneGroup,
-    //         groups: [...groups, cloneGroup],
-    //     });
-
-    //     return cloneGroup;
-    // }
+    public cloneTab(tabId: UniqueId, groupId: UniqueId): void {
+        const tab = this.getTabById(tabId, groupId);
+        if (!tab) return;
+        const newGroup = this.createGroup(
+            cloneDeepWith(tab, (value) => {
+                // FIXME: NOT clone ITextModel
+                if (value && typeof value === 'object' && 'uri' in value) {
+                    return value;
+                }
+            })
+        );
+        this.setState((prev) => ({
+            ...prev,
+            groups: [...prev.groups, newGroup],
+            current: newGroup.id,
+        }));
+    }
 
     // public onUpdateTab(callback: (tab: IEditorTab) => void) {
     //     this.subscribe(EditorEvent.OnUpdateTab, callback);
@@ -694,10 +596,6 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
 
     // public onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void) {
     //     this.subscribe(EditorEvent.OnMoveTab, callback);
-    // }
-
-    // public onSelectTab(callback: (tabId: UniqueId, groupId?: UniqueId) => void) {
-    //     this.subscribe(EditorEvent.OnSelectTab, callback);
     // }
 
     // public onCloseAll(callback: (groupId?: UniqueId) => void) {
@@ -724,6 +622,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     //     this.subscribe(EditorEvent.onActionsClick, callback);
     // }
 
+    // ===================== Subscriptions =====================
     public onFocus(callback: (instance: editor.IStandaloneCodeEditor) => void) {
         this.subscribe(EditorEvent.onFocus, callback);
     }
@@ -735,5 +634,17 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         ) => void
     ) {
         this.subscribe(EditorEvent.onCursorSelection, callback);
+    }
+
+    public onSelectTab(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnSelectTab, callback);
+    }
+
+    public onContextMenu(callback: ContextMenuEditorHandler) {
+        this.subscribe(EditorEvent.onContextMenu, callback);
+    }
+
+    public onToolbarClick(callback: ContextMenuGroupHandler) {
+        this.subscribe(EditorEvent.onToolbarClick, callback);
     }
 }

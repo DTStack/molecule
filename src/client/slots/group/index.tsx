@@ -2,11 +2,17 @@ import { useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
+import Dropdown from 'mo/client/components/dropdown';
 import Header from 'mo/client/components/header';
 import Icon from 'mo/client/components/icon';
 import MonacoEditor from 'mo/client/components/monaco';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
-import type { UniqueId } from 'mo/types';
+import type {
+    ContextMenuEditorHandler,
+    ContextMenuGroupHandler,
+    IMenuItemProps,
+    UniqueId,
+} from 'mo/types';
 import { searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 
@@ -15,6 +21,7 @@ import variables from './index.scss';
 export interface IGroupProps {
     group: EditorGroupModel;
     options: EditorModel['editorOptions'];
+    contextMenu?: IMenuItemProps[];
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
     onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent) => void;
     onSelectTab?: (tabId: UniqueId, groupId: UniqueId) => void;
@@ -23,16 +30,21 @@ export interface IGroupProps {
         instance: editor.IStandaloneCodeEditor,
         ev: editor.ICursorSelectionChangedEvent
     ) => void;
+    onContextMenu?: ContextMenuEditorHandler;
+    onToolbarClick?: ContextMenuGroupHandler;
 }
 
 export default function Group({
     group,
     options,
+    contextMenu,
     onSelectTab,
     onMount,
     onChange,
     onFocus,
     onCursorSelection,
+    onContextMenu,
+    onToolbarClick,
 }: IGroupProps) {
     const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
 
@@ -66,27 +78,40 @@ export default function Group({
             <Header
                 className={variables.header}
                 trackStyle={{ height: 3 }}
-                extra={<ActionBar data={group.toolbar} />}
+                extra={
+                    <ActionBar
+                        data={group.toolbar}
+                        onClick={(item) => onToolbarClick?.(item, group.id)}
+                    />
+                }
             >
                 {group.data.map((tab) => (
-                    <div
+                    <Dropdown
                         key={tab.id}
-                        className={classNames(
-                            variables.tab,
-                            group.activeTab === tab.id && variables.active
-                        )}
-                        onClick={() => onSelectTab?.(tab.id, group.id)}
+                        data={contextMenu}
+                        stopPropagation
+                        trigger="contextMenu"
+                        alignPoint={false}
+                        onClick={(item) => onContextMenu?.(item, tab.id, group.id)}
                     >
-                        <Icon type={tab.icon} />
-                        {tab.name}
-                        <Icon
-                            type={tab.modified ? 'primitive-dot' : 'close'}
+                        <div
                             className={classNames(
-                                variables.extra,
-                                tab.modified && variables.activeExtra
+                                variables.tab,
+                                group.activeTab === tab.id && variables.active
                             )}
-                        />
-                    </div>
+                            onClick={() => onSelectTab?.(tab.id, group.id)}
+                        >
+                            <Icon type={tab.icon} />
+                            {tab.name}
+                            <Icon
+                                type={tab.modified ? 'primitive-dot' : 'close'}
+                                className={classNames(
+                                    variables.extra,
+                                    tab.modified && variables.activeExtra
+                                )}
+                            />
+                        </div>
+                    </Dropdown>
                 ))}
             </Header>
             <Breadcrumb className={variables.breadcrumb} routes={tab?.breadcrumb || []} />

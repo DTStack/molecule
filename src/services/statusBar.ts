@@ -34,6 +34,9 @@ export interface IStatusBarService extends BaseService<StatusBarModel> {
      * @param callback
      */
     onClick(callback: (e: MouseEvent, item: IStatusBarItem) => void): void;
+    /**
+     * Listen to the StatusBar contextMenu event
+     */
     onContextMenu: (callback: ContextMenuEventHandler) => void;
 }
 

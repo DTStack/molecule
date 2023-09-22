@@ -288,6 +288,12 @@ export interface IExtension {
 }
 
 export type ContextMenuEventHandler = (item: IMenuItemProps) => void;
+export type ContextMenuEditorHandler = (
+    item: IMenuItemProps,
+    tabId: UniqueId,
+    groupId: UniqueId
+) => void;
+export type ContextMenuGroupHandler = (item: IMenuItemProps, groupId: UniqueId) => void;
 
 export type RenderFunctionProps<T> = (item: T) => React.ReactNode;
 

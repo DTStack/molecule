@@ -11,10 +11,13 @@ export default function Editor({
     onSelectTab,
     onPaneSizeChange,
     onFocus,
+    onContextMenu,
     onCursorSelection,
+    onToolbarClick,
 }: IEditorController) {
     const editor = useConnector('editor');
     const layout = useConnector('layout');
+    const { data } = useConnector('contextMenu');
 
     const { groups = [], current, entry = <Welcome />, editorOptions } = editor;
 
@@ -29,11 +32,14 @@ export default function Editor({
                     <Pane key={g.id} minSize="220px">
                         <Group
                             group={g}
+                            contextMenu={data.get('editorTab')}
                             options={editorOptions}
                             onMount={onMount}
                             onSelectTab={onSelectTab}
                             onFocus={onFocus}
                             onCursorSelection={onCursorSelection}
+                            onContextMenu={onContextMenu}
+                            onToolbarClick={onToolbarClick}
                         />
                     </Pane>
                 ))}

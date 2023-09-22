@@ -31,7 +31,6 @@ export class BuiltinModel {
         EDITOR_MENU_CLOSE_OTHERS: 'editor.closeOthers',
         EDITOR_MENU_CLOSE_SAVED: 'editor.closeSaved',
         EDITOR_MENU_CLOSE: 'editor.close',
-        EDITOR_MENU_SHOW_OPENEDITORS: 'editor.showOpenEditors',
         EDITOR_MENU_SPILIT: 'editor.split',
         SETTING_ID: 'Setting',
         PROBLEM_MODEL_ID: 'MO_PROBLEMS',
@@ -331,10 +330,6 @@ export class BuiltinModel {
                 group: 'inline',
             },
             {
-                id: this.constants.EDITOR_MENU_SHOW_OPENEDITORS,
-                name: 'Show Opened Editors',
-            },
-            {
                 id: this.constants.EDITOR_MENU_CLOSE_ALL,
                 name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
             },
@@ -385,6 +380,28 @@ export class BuiltinModel {
                 grow: 0,
             },
         }),
+        builtInEditorInitialMenu: () => [
+            {
+                id: this.constants.EDITOR_MENU_CLOSE,
+                name: this.localize(this.constants.EDITOR_MENU_CLOSE, 'Close'),
+            },
+            {
+                id: this.constants.EDITOR_MENU_CLOSE_OTHERS,
+                name: this.localize(this.constants.EDITOR_MENU_CLOSE_OTHERS, 'Close Others'),
+            },
+            {
+                id: this.constants.EDITOR_MENU_CLOSE_TO_RIGHT,
+                name: this.localize(this.constants.EDITOR_MENU_CLOSE_TO_RIGHT, 'Close To Right'),
+            },
+            {
+                id: this.constants.EDITOR_MENU_CLOSE_TO_LEFT,
+                name: this.localize(this.constants.EDITOR_MENU_CLOSE_TO_LEFT, 'Close To Left'),
+            },
+            {
+                id: this.constants.EDITOR_MENU_CLOSE_ALL,
+                name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+            },
+        ],
     };
     constructor(private localize: Localize) {}
 

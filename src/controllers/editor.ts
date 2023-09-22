@@ -1,8 +1,10 @@
 import { BaseController } from 'mo/glue';
 import { EditorEvent } from 'mo/models/editor';
+import { BuiltinService } from 'mo/services/builtin';
+import { ContextMenuService } from 'mo/services/contextMenu';
 import { EditorService } from 'mo/services/editor';
 import { LayoutService } from 'mo/services/layout';
-import type { UniqueId } from 'mo/types';
+import type { ContextMenuEditorHandler, ContextMenuGroupHandler, UniqueId } from 'mo/types';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
@@ -15,15 +17,24 @@ export interface IEditorController extends BaseController {
         instance: editor.IStandaloneCodeEditor,
         ev: editor.ICursorSelectionChangedEvent
     ) => void;
+    onContextMenu?: ContextMenuEditorHandler;
+    onToolbarClick?: ContextMenuGroupHandler;
 }
 
 @injectable()
 export class EditorController extends BaseController implements IEditorController {
     constructor(
         @inject('layout') private layout: LayoutService,
-        @inject('editor') private editor: EditorService
+        @inject('editor') private editor: EditorService,
+        @inject('contextMenu') private contextMenu: ContextMenuService,
+        @inject('builtin') private builtin: BuiltinService
     ) {
         super();
+        this.initView();
+    }
+    private initView() {
+        const { builtInEditorInitialMenu } = this.builtin.getState().modules;
+        this.contextMenu.add('editorTab', builtInEditorInitialMenu);
     }
 
     public onPaneSizeChange = (size: number[]) => {
@@ -39,7 +50,7 @@ export class EditorController extends BaseController implements IEditorControlle
     };
 
     public onSelectTab = (tabId: UniqueId, groupId: UniqueId) => {
-        this.editor.setActive(tabId, groupId);
+        this.emit(EditorEvent.OnSelectTab, tabId, groupId);
     };
 
     public onFocus = (instance: editor.IStandaloneCodeEditor) => {
@@ -51,5 +62,13 @@ export class EditorController extends BaseController implements IEditorControlle
         ev: editor.ICursorSelectionChangedEvent
     ) => {
         this.emit(EditorEvent.onCursorSelection, instance, ev);
+    };
+
+    public onContextMenu?: ContextMenuEditorHandler | undefined = (item, tabId, groupId) => {
+        this.emit(EditorEvent.onContextMenu, item, tabId, groupId);
+    };
+
+    public onToolbarClick?: ContextMenuGroupHandler | undefined = (item, groupId) => {
+        this.emit(EditorEvent.onToolbarClick, item, groupId);
     };
 }

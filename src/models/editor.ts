@@ -2,19 +2,21 @@ import type { IBreadcrumbItemProps, IconType, IMenuItemProps, UniqueId } from 'm
 import type { editor as MonacoEditor } from 'monaco-editor';
 
 export enum EditorEvent {
-    OnCloseTab = 'editor.closeTab',
-    OnCloseAll = 'editor.closeAll',
-    OnCloseOther = 'editor.closeOther',
-    OnCloseToLeft = 'editor.closeToLeft',
-    OnCloseToRight = 'editor.closeToRight',
-    OnMoveTab = 'editor.moveTab',
-    OpenTab = 'editor.openTab',
+    // OnCloseTab = 'editor.closeTab',
+    // OnCloseAll = 'editor.closeAll',
+    // OnCloseOther = 'editor.closeOther',
+    // OnCloseToLeft = 'editor.closeToLeft',
+    // OnCloseToRight = 'editor.closeToRight',
+    // OnMoveTab = 'editor.moveTab',
+    // OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
-    OnUpdateTab = 'editor.updateTab',
+    // OnUpdateTab = 'editor.updateTab',
     onActionsClick = 'editor.actionsClick',
-    OnSplitEditorRight = 'editor.splitEditorRight',
+    // OnSplitEditorRight = 'editor.splitEditorRight',
     onFocus = 'editor.onFocus',
     onCursorSelection = 'editor.onCursorSelection',
+    onContextMenu = 'editor.onContextMenu',
+    onToolbarClick = 'editor.onToolbarClick',
 }
 
 export type IEditorOptions = MonacoEditor.IEditorOptions & MonacoEditor.IGlobalEditorOptions;
@@ -32,11 +34,10 @@ export interface IEditorTab<T> {
     data?: T;
 }
 
-export class EditorGroupModel<E = any, T = any> {
+export class EditorGroupModel<T = any> {
     constructor(
         public id: UniqueId,
         public data: IEditorTab<T>[] = [],
-        public editorInstance: E,
         public activeTab?: UniqueId,
         public toolbar: IMenuItemProps[] = [],
         public contextMenu: IMenuItemProps[] = []

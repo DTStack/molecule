@@ -8,6 +8,56 @@ export const ExtendsEditor: IExtension = {
         molecule.editor.onFocus(updateCursorPosition);
         molecule.editor.onCursorSelection(updateCursorPosition);
 
+        molecule.editor.onSelectTab((tabId, groupId) => molecule.editor.setActive(tabId, groupId));
+
+        molecule.editor.onToolbarClick((item, groupId) => {
+            const { EDITOR_MENU_SPILIT, EDITOR_MENU_CLOSE_ALL } =
+                molecule.builtin.getState().constants;
+            switch (item.id) {
+                case EDITOR_MENU_SPILIT: {
+                    const group = molecule.editor.getGroupById(groupId);
+                    if (!group || !group.activeTab) return;
+                    molecule.editor.cloneTab(group.activeTab, group.id);
+                    break;
+                }
+                case EDITOR_MENU_CLOSE_ALL: {
+                    molecule.editor.closeAll(groupId);
+                    break;
+                }
+                default:
+                    break;
+            }
+        });
+
+        molecule.editor.onContextMenu((item, tabId, groupId) => {
+            const {
+                EDITOR_MENU_CLOSE,
+                EDITOR_MENU_CLOSE_OTHERS,
+                EDITOR_MENU_CLOSE_TO_RIGHT,
+                EDITOR_MENU_CLOSE_TO_LEFT,
+                EDITOR_MENU_CLOSE_ALL,
+            } = molecule.builtin.getState().constants;
+            switch (item.id) {
+                case EDITOR_MENU_CLOSE:
+                    molecule.editor.closeTab(tabId, groupId);
+                    break;
+                case EDITOR_MENU_CLOSE_OTHERS:
+                    molecule.editor.closeOther(tabId, groupId);
+                    break;
+                case EDITOR_MENU_CLOSE_TO_RIGHT:
+                    molecule.editor.closeToRight(tabId, groupId);
+                    break;
+                case EDITOR_MENU_CLOSE_TO_LEFT:
+                    molecule.editor.closeToLeft(tabId, groupId);
+                    break;
+                case EDITOR_MENU_CLOSE_ALL:
+                    molecule.editor.closeAll(groupId);
+                    break;
+                default:
+                    break;
+            }
+        });
+
         /**
          * Updates the cursor position in the given code editor instance.
          *

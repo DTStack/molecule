@@ -27,30 +27,32 @@ export default function ActivityBarItem({
 
     return (
         <Dropdown data={data.contextMenu} onClick={onContextMenuClick} stopPropagation>
-            <Dropdown
-                data={contextMenu}
-                trigger="contextMenu"
-                onClick={onContextMenuClick}
-                stopPropagation
-            >
-                <li
-                    onClick={() => onClick?.(data)}
-                    className={classNames(
-                        className,
-                        variables.item,
-                        checked && variables.checked,
-                        disabled && variables.disabled
-                    )}
-                    role={role}
-                    style={style}
-                    title={title}
+            <section>
+                <Dropdown
+                    data={contextMenu}
+                    trigger="contextMenu"
+                    onClick={onContextMenuClick}
+                    stopPropagation
                 >
-                    <Icon type={icon} className={variables.label}>
-                        {render?.(data) || null}
-                    </Icon>
-                    {checked ? <div className={variables.indicator} /> : null}
-                </li>
-            </Dropdown>
+                    <li
+                        onClick={() => onClick?.(data)}
+                        className={classNames(
+                            className,
+                            variables.item,
+                            checked && variables.checked,
+                            disabled && variables.disabled
+                        )}
+                        role={role}
+                        style={style}
+                        title={title}
+                    >
+                        <Icon type={icon} className={variables.label}>
+                            {render?.(data) || null}
+                        </Icon>
+                        {checked ? <div className={variables.indicator} /> : null}
+                    </li>
+                </Dropdown>
+            </section>
         </Dropdown>
     );
 }

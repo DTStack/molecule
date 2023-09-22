@@ -72,24 +72,6 @@ export interface IExtensionService {
     load(): void;
     activate(): void;
     /**
-     * Register a new action which is extends the Action2, and return a disposable instance.
-     * @example
-     * ```ts
-     * const action = class Action extends Action2 {};
-     * const disposableAction = registerAction(action);
-     * disposableAction.dispose(); // Dispose the action
-     * ```
-     * @param ctor The action class
-     * @return IDisposable The Disposable instance
-     */
-    // registerAction(ctor: { new (): Action2 }): IDisposable;
-    /**
-     * Execute the registered command
-     * @param id The command ID
-     * @param args
-     */
-    // executeCommand(id: string, ...args: any): void;
-    /**
      * Reset the extensions to `[]`
      */
     reset(): void;
@@ -176,7 +158,6 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             ...prev,
             data: [...prev.data, ...extensions],
         }));
-        // this.load();
     }
 
     public load() {

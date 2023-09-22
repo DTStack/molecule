@@ -11,6 +11,10 @@ $main: prefix('mainBench');
     height: 100vh;
     width: 100vw;
 
+    &:focus {
+        outline: none !important;
+    }
+
     *::selection {
         background-color: var(--editor-selectionBackground);
     }

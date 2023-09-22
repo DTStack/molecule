@@ -16,7 +16,13 @@ export interface IActivityBarService extends BaseService<ActivityBarModel> {
      * @param isActive If provide, Activity Bar will set data active automatically. Only works in one data
      */
     add(data: ArraylizeOrSingle<IActivityBarItem>, isActive?: boolean): void;
+    /**
+     * Get the specific activity bar by id
+     */
     get(id: UniqueId): IActivityBarItem | undefined;
+    /**
+     * Update the specific activity bar by id
+     */
     update(data: RequiredId<IActivityBarItem>): void;
     /**
      * Set active bar
@@ -37,6 +43,9 @@ export interface IActivityBarService extends BaseService<ActivityBarModel> {
      * @param callback
      */
     onClick(callback: (item: IActivityBarItem) => void): void;
+    /**
+     * Add context menu click event listener
+     */
     onContextMenuClick(callback: ContextMenuEventHandler): void;
 }
 
@@ -45,7 +54,6 @@ export class ActivityBarService
     implements IActivityBarService
 {
     protected state: ActivityBarModel;
-    // private sidebarService: ISidebarService;
 
     constructor() {
         super('activityBar');
@@ -91,10 +99,6 @@ export class ActivityBarService
     }
 
     public toggleBar(id: UniqueId, hidden?: boolean) {
-        const { selected } = this.state;
-        if (selected === id) {
-            // TODO, Should have sidebar hidden
-        }
         this.setState((prev) => {
             const next = [...prev.data];
             const target = next.find((i) => i.id === id);
@@ -118,6 +122,7 @@ export class ActivityBarService
     public onClick(callback: (item: IActivityBarItem) => void) {
         this.subscribe(ActivityBarEvent.OnClick, callback);
     }
+
     public onContextMenuClick(callback: ContextMenuEventHandler) {
         this.subscribe(ActivityBarEvent.OnContextMenu, callback);
     }

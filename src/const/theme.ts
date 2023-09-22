@@ -679,8 +679,6 @@ export class DefaultColor {
             // Have to translate color to hex, since call editor.setTheme() will call Color.Format.CSS.parseHex to parse color, rgba color will be parsed failed
             tmp[key] = hex ? Color.Format.CSS.formatHexA(hex) : hex;
         });
-        console.log(tmp);
-
         return tmp;
     }
 }

@@ -78,7 +78,6 @@
         "editor.closeOthers": "Close Others",
         "editor.close": "Close",
         "editor.actions.splitRight": "Split Editor Right",
-        "editor.showOpenEditors": "Show Opened Editors",
         "contextmenu.rename": "Rename",
         "contextmenu.delete": "Delete",
         "contextmenu.newFile": "New File",

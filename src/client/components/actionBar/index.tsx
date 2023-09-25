@@ -7,7 +7,7 @@ import Icon from '../icon';
 import variables from './index.scss';
 
 interface IActionBarProps extends HTMLElementProps {
-    data: IMenuItemProps[];
+    data?: IMenuItemProps[];
     onClick?: (item: IMenuItemProps) => void;
 }
 

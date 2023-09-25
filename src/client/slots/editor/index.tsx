@@ -19,7 +19,7 @@ export default function Editor({
     const layout = useConnector('layout');
     const { data } = useConnector('contextMenu');
 
-    const { groups = [], current, entry = <Welcome />, editorOptions } = editor;
+    const { groups = [], current, entry = <Welcome />, editorOptions, toolbar } = editor;
 
     const renderGroups = () => {
         return (
@@ -33,6 +33,7 @@ export default function Editor({
                         <Group
                             group={g}
                             contextMenu={data.get('editorTab')}
+                            toolbar={toolbar}
                             options={editorOptions}
                             onMount={onMount}
                             onSelectTab={onSelectTab}

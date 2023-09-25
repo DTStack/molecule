@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Button } from '@dtinsight/molecule/esm/client/components/button';
 import { ScrollBar } from '@dtinsight/molecule/esm/client/components/scrollBar';
 import type { IMoleculeContext } from '@dtinsight/molecule/esm/types';
@@ -8,6 +9,7 @@ function randomId() {
 }
 
 export default function TestPane({ context: molecule }: { context: IMoleculeContext }) {
+    const timeout = useRef<number | undefined>();
     // ================= Activity Bar Operation Region ====================
     const handleAddActivityBar = () => {
         const id = randomId();
@@ -85,7 +87,8 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         if (!parent) return;
         if (!parent.children?.length) return;
         const last = parent.children.at(-1)!;
-        molecule.menuBar.update(last.id, {
+        molecule.menuBar.update({
+            id: last.id,
             icon: last.icon === 'check' ? undefined : 'check',
         });
     };
@@ -174,13 +177,66 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             molecule.editor.getState().groups?.at(0)?.id
         );
     };
+
+    const updateWelcome = function () {
+        molecule.editor.setEntry(<div>Update Welcome Page</div>);
+    };
+
+    const updateOptions = function () {
+        molecule.editor.updateEditorOptions({
+            readOnly: !molecule.editor.getState().editorOptions.readOnly,
+        });
+    };
+
+    const addAction = function () {
+        if (!molecule.editor.getAction('testPane.excute')) {
+            molecule.editor.addActions([
+                {
+                    id: 'testPane.excute',
+                    icon: 'play',
+                    group: 'inline',
+                    sortIndex: 1,
+                },
+            ]);
+        }
+    };
+
+    const updateAction = function () {
+        if (molecule.editor.getAction('testPane.excute')) {
+            molecule.editor.updateAction({
+                id: 'testPane.excute',
+                icon: 'loading~spin',
+                disabled: true,
+            });
+
+            timeout.current = window.setTimeout(() => {
+                molecule.editor.updateAction({
+                    id: 'testPane.excute',
+                    icon: 'play',
+                    disabled: false,
+                });
+            }, 5000);
+        }
+    };
     // ====================================================================
+
+    useEffect(() => {
+        return () => {
+            if (timeout) {
+                clearTimeout(timeout.current);
+            }
+        };
+    }, []);
 
     return (
         <ScrollBar isShowShadow>
             <div style={{ padding: 16 }}>
                 <h2>Editor:</h2>
                 <Button onClick={newEditor}>New Editor</Button>
+                <Button onClick={updateWelcome}>Update Welcome Page</Button>
+                <Button onClick={updateOptions}>Update ReadOnly</Button>
+                <Button onClick={addAction}>Add excute action</Button>
+                <Button onClick={updateAction}>update excute action</Button>
                 <h2>ActivityBar:</h2>
                 <Button onClick={handleAddActivityBar}>Add ActivityBar Item</Button>
                 <Button onClick={handleAddGloablActivityBar}>Add Global ActivityBar Item</Button>

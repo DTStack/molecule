@@ -33,8 +33,10 @@ export class EditorController extends BaseController implements IEditorControlle
         this.initView();
     }
     private initView() {
-        const { builtInEditorInitialMenu } = this.builtin.getState().modules;
+        const { builtInEditorInitialMenu, builtInEditorInitialActions } =
+            this.builtin.getState().modules;
         this.contextMenu.add('editorTab', builtInEditorInitialMenu);
+        this.editor.addActions(builtInEditorInitialActions);
     }
 
     public onPaneSizeChange = (size: number[]) => {

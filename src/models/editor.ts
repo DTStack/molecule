@@ -8,9 +8,9 @@ export enum EditorEvent {
     // OnCloseToLeft = 'editor.closeToLeft',
     // OnCloseToRight = 'editor.closeToRight',
     // OnMoveTab = 'editor.moveTab',
-    // OpenTab = 'editor.openTab',
+    OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
-    // OnUpdateTab = 'editor.updateTab',
+    OnUpdateTab = 'editor.updateTab',
     onActionsClick = 'editor.actionsClick',
     // OnSplitEditorRight = 'editor.splitEditorRight',
     onFocus = 'editor.onFocus',
@@ -38,9 +38,7 @@ export class EditorGroupModel<T = any> {
     constructor(
         public id: UniqueId,
         public data: IEditorTab<T>[] = [],
-        public activeTab?: UniqueId,
-        public toolbar: IMenuItemProps[] = [],
-        public contextMenu: IMenuItemProps[] = []
+        public activeTab?: UniqueId
     ) {}
 }
 
@@ -61,12 +59,17 @@ export interface IEditor {
      * Built-in editor options, there is main apply it to monaco-editor
      */
     editorOptions?: IEditorOptions;
+    /**
+     * Toolbar items
+     */
+    toolbar?: IMenuItemProps[];
 }
 
 export class EditorModel implements IEditor {
     constructor(
         public groups: EditorGroupModel[] = [],
         public editorOptions: IEditorOptions = {},
+        public toolbar: IMenuItemProps[] = [],
         public entry?: React.ReactNode,
         public current?: UniqueId | undefined
     ) {}

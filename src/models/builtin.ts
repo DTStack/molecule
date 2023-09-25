@@ -328,6 +328,7 @@ export class BuiltinModel {
                 title: this.localize('editor.actions.splitRight', 'Split Editor Right'),
                 icon: 'split-horizontal',
                 group: 'inline',
+                sortIndex: 99,
             },
             {
                 id: this.constants.EDITOR_MENU_CLOSE_ALL,

@@ -89,7 +89,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
             },
         }));
 
-        // effects
+        // ===================== effects =====================
         this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_MENUBAR);
     }
 
@@ -103,7 +103,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
             },
         }));
 
-        // effects
+        // ===================== effects =====================
         this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_PANEL);
     }
 
@@ -117,7 +117,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
             },
         }));
 
-        // effects
+        // ===================== effects =====================
         this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_SIBEBAR);
     }
 
@@ -146,7 +146,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
             },
         }));
 
-        // effects
+        // ===================== effects =====================
         this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_STATUSBAR);
     }
 

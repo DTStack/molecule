@@ -1,0 +1,80 @@
+@import '../../classNames/style.scss';
+
+$container: prefix('welcome');
+$logo: BEMElement($container, 'logo');
+$title: BEMElement($container, 'title');
+$keybindings: BEMElement($container, 'keybindings');
+$keys: BEMElement($keybindings, 'keys');
+
+
+$border-color: rgba(115, 115, 115, 0.4);
+
+.#{$container} {
+    background-color: var(--editor-background);
+    display: flex;
+    flex-flow: column wrap;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+
+    >* {
+        width: 100%;
+    }
+
+    .#{$logo} {
+        font-size: 120px;
+        margin-top: 10vh;
+    }
+
+    .#{$title} {
+        color: #a2a2a2;
+        font-family: GEETYPE-TakaLineGB-Flash-Heavy, GEETYPE-TakaLineGB-Flash,
+            sans-serif;
+        font-weight: 800;
+        height: 24px;
+        letter-spacing: 2.667px;
+        line-height: 24px;
+        margin: 3vh auto 0;
+        opacity: 0.48;
+        user-select: none;
+        width: 132px;
+    }
+
+    .#{$keybindings} {
+        user-select: none;
+
+        >ul {
+            align-items: center;
+            border-top: 1px solid $border-color;
+            box-sizing: border-box;
+            color: #b6b6b6;
+            display: inline-grid;
+            font-size: 14px;
+            grid-template-rows: repeat(3, 1fr);
+            height: 148px;
+            line-height: 20px;
+            list-style: none;
+            margin: 8vh auto 0;
+            min-width: 183px;
+            opacity: 0.6;
+            padding: 24px;
+        }
+
+        .#{$keys} {
+            display: grid;
+            grid-gap: 32px;
+            grid-template-columns: 1fr minmax(47px, max-content);
+            text-align: left;
+        }
+    }
+}
+
+
+:export {
+    container: $container;
+    logo: $logo;
+    title: $title;
+    keybindings: $keybindings;
+    keys: $keys;
+}

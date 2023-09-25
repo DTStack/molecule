@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
@@ -21,6 +21,7 @@ import variables from './index.scss';
 export interface IGroupProps {
     group: EditorGroupModel;
     options: EditorModel['editorOptions'];
+    toolbar?: IMenuItemProps[];
     contextMenu?: IMenuItemProps[];
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
     onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent) => void;
@@ -37,6 +38,7 @@ export interface IGroupProps {
 export default function Group({
     group,
     options,
+    toolbar,
     contextMenu,
     onSelectTab,
     onMount,
@@ -73,6 +75,12 @@ export default function Group({
         }
     };
 
+    useEffect(() => {
+        if (instance.current) {
+            instance.current.updateOptions(options);
+        }
+    }, [options]);
+
     return (
         <div className={variables.group}>
             <Header
@@ -80,7 +88,7 @@ export default function Group({
                 trackStyle={{ height: 3 }}
                 extra={
                     <ActionBar
-                        data={group.toolbar}
+                        data={toolbar}
                         onClick={(item) => onToolbarClick?.(item, group.id)}
                     />
                 }

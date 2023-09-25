@@ -3,6 +3,7 @@ import { classNames, prefix } from 'mo/client/classNames';
 import type { IconType } from 'mo/types';
 
 import '@vscode/codicons/dist/codicon.css';
+import './index.scss';
 
 export interface IIconProps extends ComponentProps<'span'> {
     type?: IconType;

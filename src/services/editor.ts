@@ -1,8 +1,20 @@
 import { cloneDeepWith } from 'lodash-es';
 import { BaseService } from 'mo/glue';
-import { EditorEvent, EditorGroupModel, EditorModel, type IEditorTab } from 'mo/models/editor';
-import type { ContextMenuEditorHandler, ContextMenuGroupHandler, UniqueId } from 'mo/types';
-import { randomId, searchById } from 'mo/utils';
+import {
+    EditorEvent,
+    EditorGroupModel,
+    EditorModel,
+    IEditorOptions,
+    type IEditorTab,
+} from 'mo/models/editor';
+import type {
+    ContextMenuEditorHandler,
+    ContextMenuGroupHandler,
+    IMenuItemProps,
+    RequiredId,
+    UniqueId,
+} from 'mo/types';
+import { randomId, searchById, sortByIndex } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
@@ -28,21 +40,10 @@ export interface IEditorService extends BaseService<EditorModel> {
      */
     updateTab(tab: IEditorTab<any>, groupId: UniqueId): void;
     getCurrent<T>(): IEditorTab<T> | undefined;
-    // /**
-    //  * Updates the editor content for a specific group
-    //  * @param group The editorInstance is required
-    //  * @param value
-    //  */
-    // setGroupEditorValue(group: IEditorGroup, value: string): void;
-    // /**
-    //  * Specify the Entry page of Workbench
-    //  */
-    // setEntry(component: JSX.Element): void;
-    // /**
-    //  * Judge the specific tabs whether opened in Editor view
-    //  * @param tabId The tabId is required
-    //  */
-    // isOpened(tabId: UniqueId): boolean;
+    /**
+     * Specify the Entry page of Workbench
+     */
+    setEntry(component: JSX.Element): void;
     /**
      * Close the specific Tab opened in Editor Group view
      * @param tabId The tabId is required
@@ -78,111 +79,27 @@ export interface IEditorService extends BaseService<EditorModel> {
      */
     getGroupById<T>(groupId: UniqueId): EditorGroupModel<T> | undefined;
     cloneTab(tabId: UniqueId, groupId: UniqueId): void;
-    // /**
-    //  * Listen to the Editor tab changed event
-    //  * @param callback
-    //  */
-    // onUpdateTab(callback: (tab: IEditorTab) => void): void;
-    // /**
-    //  * Listen to the tab opening event
-    //  * @param callback
-    //  */
-    // onOpenTab(callback: (tab: IEditorTab) => void): void;
-    // /**
-    //  * Listen to the tab move event
-    //  * @param callback
-    //  */
-    // onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void);
     /**
      * Listen to the tab select event
      * @param callback
      */
     onSelectTab(callback: (tabId: UniqueId, groupId: UniqueId) => void): void;
-    // /**
-    //  * Listen to the all tabs close event
-    //  * @param callback
-    //  */
-    // onCloseAll(callback: (groupId?: UniqueId) => void);
-    // /**
-    //  * Listen to the tab close event
-    //  * @param callback
-    //  */
-    // onCloseTab(callback: (tabId: UniqueId, groupId?: UniqueId) => void);
-    // /**
-    //  * Listen to the other tabs close event
-    //  * @param callback
-    //  */
-    // onCloseOther(callback: (tabItem: IEditorTab, groupId?: UniqueId) => void);
-    // /**
-    //  * Listen to the left tabs close event
-    //  * @param callback
-    //  */
-    // onCloseToLeft(callback: (tabItem: IEditorTab, groupId?: UniqueId) => void);
-    // /**
-    //  * Listen to the right tabs close event
-    //  * @param callback
-    //  */
-    // onCloseToRight(callback: (tabItem: IEditorTab, groupId?: UniqueId) => void);
-    // /**
-    //  * Listen to the Group Actions click event
-    //  * @param callback
-    //  */
-    // onActionsClick(callback: (menuId: UniqueId, currentGroup: IEditorGroup) => void): void;
     /**
      * Set active group and tab
      * @param tabId Target tab ID
      * @param groupId Target group ID
      */
     setActive(tabId: UniqueId, groupId: UniqueId): void;
-    // /**
-    //  * Update the specific group
-    //  * @param groupId
-    //  * @param groupValues
-    //  */
-    // updateGroup(groupId: UniqueId, groupValues: Omit<IEditorGroup, 'id'>): void;
-    // /**
-    //  * Set default actions when create a new group
-    //  * @param actions
-    //  */
-    // setDefaultActions(actions: IEditorActionsProps[]): void;
-    // /**
-    //  * Set default menus when create a new group
-    //  * @param menus
-    //  */
-    // setDefaultMenus(menus: IMenuItemProps[]): void;
-    // /**
-    //  * Update actions in specific group
-    //  * @param actions
-    //  * @param groupId
-    //  */
-    // updateActions(actions: IMenuItemProps[], groupId?: UniqueId): void;
-    // /**
-    //  * Update the current group
-    //  * @param currentValues
-    //  */
-    // updateCurrentGroup(currentValues): void;
-    // /**
-    //  * Get the default group actions
-    //  */
-    // getDefaultActions(): IEditorActionsProps[];
-    // /**
-    //  * Get the default group menus
-    //  */
-    // getDefaultMenus(): IMenuItemProps[];
-    // /**
-    //  * Update the editor options
-    //  * @param options
-    //  */
-    // updateEditorOptions(options: IEditorOptions): void;
-    // /**
-    //  * The instance of MonacoEditor
-    //  */
-    // readonly editorInstance: MonacoEditor.IStandaloneCodeEditor;
-    // /**
-    //  * Get the group's id which contains the tab
-    //  * @param tabId
-    //  */
-    // getGroupIdByTab(tabId: UniqueId): UniqueId | null;
+    addActions(actions: IMenuItemProps[]): void;
+    /**
+     * Update actions in specific group
+     */
+    updateAction(action: RequiredId<IMenuItemProps>): void;
+    /**
+     * Update the editor options
+     * @param options
+     */
+    updateEditorOptions(options: IEditorOptions): void;
     onFocus(callback: (instance: editor.IStandaloneCodeEditor) => void): void;
     onCursorSelection(
         callback: (
@@ -192,6 +109,21 @@ export interface IEditorService extends BaseService<EditorModel> {
     ): void;
     onContextMenu(callback: ContextMenuEditorHandler): void;
     onToolbarClick(callback: ContextMenuGroupHandler): void;
+    /**
+     * Listen to the Editor tab changed event
+     * @param callback
+     */
+    onUpdateTab<T>(callback: (tab: IEditorTab<T>) => void): void;
+    /**
+     * Listen to the tab opening event
+     * @param callback
+     */
+    onOpenTab<T>(callback: (tab: IEditorTab<T>) => void): void;
+    // /**
+    //  * Listen to the tab move event
+    //  * @param callback
+    //  */
+    // onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void);
 }
 
 @injectable()
@@ -222,71 +154,35 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         return group.data.find(searchById(group.activeTab));
     }
 
-    // public updateEditorOptions(options: IEditorOptions): void {
-    //     const editorOptions = Object.assign({}, this.state.editorOptions, options);
-    //     this.setState({
-    //         editorOptions,
-    //     });
-    //     this.editorInstance?.updateOptions(editorOptions);
-    // }
+    public getAction(actionId: UniqueId) {
+        return this.getState().toolbar.find(searchById(actionId));
+    }
 
-    // public getDefaultActions() {
-    //     return cloneDeep(this.defaultActions);
-    // }
+    public updateEditorOptions(options: IEditorOptions): void {
+        this.setState({
+            editorOptions: { ...this.state.editorOptions, ...options },
+        });
+    }
 
-    // public getDefaultMenus() {
-    //     return cloneDeep(this.defaultMenus);
-    // }
+    public setEntry(component: React.ReactNode) {
+        this.setState({
+            entry: component,
+        });
+    }
 
-    // private disposeModel(tabs: IEditorTab | IEditorTab[]) {
-    //     const arr = Array.isArray(tabs) ? tabs : [tabs];
-    //     arr.forEach((tab) => {
-    //         MonacoEditor.getModel(Uri.parse(tab.id!.toString()))?.dispose();
-    //     });
-    // }
+    public addActions = (actions: IMenuItemProps[]) => {
+        this.setState((prev) => ({
+            ...prev,
+            toolbar: [...prev.toolbar, ...actions].sort(sortByIndex),
+        }));
+    };
 
-    // public isOpened(tabId: UniqueId, filterGroups?: IEditorGroup<any, any>[]): boolean {
-    //     const groups = filterGroups || this.state.groups || [];
-    //     return groups.some((group) => this.getTabById(tabId, group.id!));
-    // }
-
-    // public setDefaultActions(actions: IEditorActionsProps[]): void {
-    //     this.defaultActions = actions;
-    // }
-
-    // public setDefaultMenus(menus: IMenuItemProps[]): void {
-    //     this.defaultMenus = menus;
-    // }
-
-    // public setEntry(component: React.ReactNode) {
-    //     this.setState({
-    //         entry: component,
-    //     });
-    // }
-
-    // public updateActions = (actions: IMenuItemProps[], groupId?: UniqueId) => {
-    //     const { current, groups: rawGroups } = this.getState();
-    //     if (!current) return;
-
-    //     const groups = rawGroups?.concat() || [];
-    //     const targetGroup = groups.find(searchById(groupId || current.id));
-
-    //     if (targetGroup) {
-    //         const newActions = targetGroup.actions?.concat() || [];
-    //         newActions.forEach((action) => {
-    //             const target = actions.find((item) => item.id === action.id);
-    //             if (target) {
-    //                 Object.assign(action, target);
-    //             }
-    //         });
-    //         targetGroup.actions = newActions;
-
-    //         this.setState({
-    //             current: targetGroup.id === current.id ? targetGroup : current,
-    //             groups,
-    //         });
-    //     }
-    // };
+    public updateAction = (action: RequiredId<IMenuItemProps>) => {
+        const current = this.getAction(action.id);
+        if (!current) return;
+        Object.assign(current, action);
+        this.setState((prev) => ({ ...prev }));
+    };
 
     public getTabById(tabId: UniqueId, groupId: UniqueId) {
         const group = this.getGroupById(groupId);
@@ -296,10 +192,6 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         return undefined;
     }
 
-    // public get editorInstance() {
-    //     return this.state.current?.editorInstance;
-    // }
-
     public updateTab(tab: IEditorTab<any>, groupId: UniqueId) {
         const exsit = this.getTabById(tab.id, groupId);
         if (!exsit) return;
@@ -308,60 +200,10 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }
         Object.assign(exsit, tab);
         this.setState((prev) => ({ ...prev }));
-        // let updatedTab;
-        // const editorValue = tab?.data?.value;
-        // if (groupId) {
-        //     const group = this.getGroupById(groupId);
-        //     if (group?.data?.length) {
-        //         const tabData = group.data.find(searchById(tab.id));
-        //         if (tabData) {
-        //             updatedTab = Object.assign(tabData, tab);
-        //         }
-        //         if (group.activeTab === tab.id) {
-        //             isString(editorValue) &&
-        //                 !tabData?.renderPane &&
-        //                 this.setGroupEditorValue(group, editorValue);
-        //             updatedTab = Object.assign(group.tab, tab);
-        //         }
-        //         this.updateGroup(groupId, group);
-        //         if (groupId === this.state.current?.id) {
-        //             this.updateCurrentGroup(group);
-        //         }
-        //     }
-        // } else {
-        //     const { groups = [], current } = this.state;
-        //     groups.forEach((group) => {
-        //         const tabData = this.getTabById(tab.id!, group.id!);
-        //         if (tabData) {
-        //             updatedTab = Object.assign(tabData, tab);
-        //         }
-        //         if (group.activeTab === tab.id) {
-        //             isString(editorValue) &&
-        //                 !tabData?.renderPane &&
-        //                 this.setGroupEditorValue(group, editorValue);
-        //             updatedTab = Object.assign(group.tab, tab);
-        //         }
-        //     });
-        //     if (current?.activeTab === tab.id) {
-        //         updatedTab = Object.assign(current!.tab, tab);
-        //     }
-        //     this.setState({
-        //         current: current ? { ...current } : current,
-        //         groups: [...groups],
-        //     });
-        // }
-        // return updatedTab;
+
+        // ===================== effects =====================
+        this.emit(EditorEvent.OnUpdateTab, exsit);
     }
-
-    // public setGroupEditorValue(group: IEditorGroup, value: string) {
-    //     const model = group.editorInstance?.getModel();
-    //     if (!model) return;
-
-    //     const currentValue = model?.getValue();
-    //     if (currentValue !== value) {
-    //         model?.setValue(value);
-    //     }
-    // }
 
     private disposeModels(tabs: IEditorTab<any>[]) {
         const { groups } = this.getState();
@@ -482,9 +324,6 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     // }
 
     public setActive(tabId: UniqueId, groupId: UniqueId) {
-        // const { groups = [] } = this.state;
-        // const groupIndex = this.getGroupIndexById(groupId);
-
         const group = this.getGroupById(groupId);
 
         if (group) {
@@ -519,12 +358,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     // }
 
     private createGroup(tab: IEditorTab<any>) {
-        return new EditorGroupModel(
-            randomId(),
-            [tab],
-            tab.id,
-            this.builtin.getState().modules.builtInEditorInitialActions
-        );
+        return new EditorGroupModel(randomId(), [tab], tab.id);
     }
 
     /**
@@ -566,11 +400,10 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
                 groups: [...prev.groups, newGroup],
             }));
         }
-    }
 
-    // public onOpenTab(callback: (tab: IEditorTab) => void): void {
-    //     this.subscribe(EditorEvent.OpenTab, callback);
-    // }
+        // ===================== effects =====================
+        this.emit(EditorEvent.OpenTab, tab);
+    }
 
     public cloneTab(tabId: UniqueId, groupId: UniqueId): void {
         const tab = this.getTabById(tabId, groupId);
@@ -589,10 +422,6 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
             current: newGroup.id,
         }));
     }
-
-    // public onUpdateTab(callback: (tab: IEditorTab) => void) {
-    //     this.subscribe(EditorEvent.OnUpdateTab, callback);
-    // }
 
     // public onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void) {
     //     this.subscribe(EditorEvent.OnMoveTab, callback);
@@ -646,5 +475,13 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
 
     public onToolbarClick(callback: ContextMenuGroupHandler) {
         this.subscribe(EditorEvent.onToolbarClick, callback);
+    }
+
+    public onUpdateTab<T>(callback: (tab: IEditorTab<T>) => void) {
+        this.subscribe(EditorEvent.OnUpdateTab, callback);
+    }
+
+    public onOpenTab<T>(callback: (tab: IEditorTab<T>) => void): void {
+        this.subscribe(EditorEvent.OpenTab, callback);
     }
 }

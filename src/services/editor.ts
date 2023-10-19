@@ -119,11 +119,16 @@ export interface IEditorService extends BaseService<EditorModel> {
      * @param callback
      */
     onOpenTab<T>(callback: (tab: IEditorTab<T>) => void): void;
-    // /**
-    //  * Listen to the tab move event
-    //  * @param callback
-    //  */
-    // onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void);
+    /**
+     * Listen to the tab move event
+     * @param callback
+     */
+    onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void): void;
+    /**
+     * Listen to the tab close event
+     * @param callback
+     */
+    onCloseTab(callback: (tabId: UniqueId, groupId?: UniqueId) => void): void;
 }
 
 @injectable()
@@ -307,10 +312,10 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         // TODO: reset the editor group
     }
 
-    // public getGroupIndexById(id: UniqueId): number {
-    //     const { groups } = this.state;
-    //     return groups!.findIndex(searchById(id));
-    // }
+    public getGroupIndexById(id: UniqueId): number {
+        const { groups } = this.state;
+        return groups!.findIndex(searchById(id));
+    }
 
     // public getGroupIdByTab(tabId: UniqueId) {
     //     const { groups = [] } = this.state;
@@ -336,20 +341,20 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }
     }
 
-    // public updateGroup(groupId: UniqueId, groupValues: Omit<IEditorGroup, 'id'>) {
-    //     const { groups = [] } = this.state;
-    //     const nextGroups = [...groups];
-    //     const groupIndex = this.getGroupIndexById(groupId);
+    public updateGroup(groupId: UniqueId, groupValues: Omit<EditorGroupModel, 'id'>) {
+        const { groups = [] } = this.state;
+        const nextGroups = [...groups];
+        const groupIndex = this.getGroupIndexById(groupId);
 
-    //     if (groupIndex > -1) {
-    //         const nextGroup = Object.assign({}, nextGroups[groupIndex], groupValues);
-    //         nextGroups[groupIndex] = nextGroup;
+        if (groupIndex > -1) {
+            const nextGroup = Object.assign({}, nextGroups[groupIndex], groupValues);
+            nextGroups[groupIndex] = nextGroup;
 
-    //         this.setState({
-    //             groups: nextGroups,
-    //         });
-    //     }
-    // }
+            this.setState({
+                groups: nextGroups,
+            });
+        }
+    }
 
     // public updateCurrentGroup(currentValues: Partial<IEditorGroup>) {
     //     const { current } = this.state;
@@ -423,17 +428,17 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }));
     }
 
-    // public onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void) {
-    //     this.subscribe(EditorEvent.OnMoveTab, callback);
-    // }
+    public onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnMoveTab, callback);
+    }
 
     // public onCloseAll(callback: (groupId?: UniqueId) => void) {
     //     this.subscribe(EditorEvent.OnCloseAll, callback);
     // }
 
-    // public onCloseTab(callback: (tabId: UniqueId, groupId?: UniqueId) => void) {
-    //     this.subscribe(EditorEvent.OnCloseTab, callback);
-    // }
+    public onCloseTab(callback: (tabId: UniqueId, groupId?: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseTab, callback);
+    }
 
     // public onCloseOther(callback: (tabItem: IEditorTab, groupId?: UniqueId) => void) {
     //     this.subscribe(EditorEvent.OnCloseOther, callback);

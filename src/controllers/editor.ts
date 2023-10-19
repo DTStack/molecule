@@ -1,5 +1,5 @@
 import { BaseController } from 'mo/glue';
-import { EditorEvent } from 'mo/models/editor';
+import { EditorEvent, type IEditorTab } from 'mo/models/editor';
 import { BuiltinService } from 'mo/services/builtin';
 import { ContextMenuService } from 'mo/services/contextMenu';
 import { EditorService } from 'mo/services/editor';
@@ -13,6 +13,8 @@ export interface IEditorController extends BaseController {
     onPaneSizeChange?: (size: number[]) => void;
     onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
+    onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onMoveTab?: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void;
     onCursorSelection?: (
         instance: editor.IStandaloneCodeEditor,
         ev: editor.ICursorSelectionChangedEvent
@@ -57,6 +59,16 @@ export class EditorController extends BaseController implements IEditorControlle
 
     public onFocus = (instance: editor.IStandaloneCodeEditor) => {
         this.emit(EditorEvent.onFocus, instance);
+    };
+
+    public onCloseTab = (tabId: UniqueId, groupId: UniqueId) => {
+        this.emit(EditorEvent.OnCloseTab, tabId, groupId);
+        this.editor.closeTab(tabId, groupId);
+    };
+
+    public onMoveTab = (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => {
+        this.emit(EditorEvent.OnMoveTab, updateTabs, groupId);
+        this.editor.updateGroup(groupId!, { data: updateTabs });
     };
 
     public onCursorSelection = (

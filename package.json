@@ -57,11 +57,14 @@
     "dependencies": {
         "@dtinsight/dt-utils": "^1.1.2",
         "@vscode/codicons": "^0.0.33",
+        "immutability-helper": "^3.1.1",
         "lodash-es": "^4.17.21",
         "monaco-editor": "^0.31.0",
         "normalize.css": "^8.0.1",
         "rc-dropdown": "^4.1.0",
         "rc-menu": "^9.11.1",
+        "react-dnd": "^16.0.1",
+        "react-dnd-html5-backend": "^16.0.1",
         "reflect-metadata": "^0.1.13",
         "tapable": "^2.2.1",
         "tsyringe": "^4.8.0"

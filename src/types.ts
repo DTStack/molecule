@@ -22,6 +22,8 @@ import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
 
+export type { IEditorTab } from './models/editor';
+
 export type RequiredId<T extends { id: UniqueId }> = Partial<T> & Required<Pick<T, 'id'>>;
 
 export type BuiltinTheme = editor.BuiltinTheme;

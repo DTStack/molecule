@@ -25,7 +25,7 @@ export interface IGroupProps {
     toolbar?: IMenuItemProps[];
     contextMenu?: IMenuItemProps[];
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
-    onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent) => void;
+    onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => void;
     onSelectTab?: (tabId: UniqueId, groupId: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
     onCursorSelection?: (
@@ -35,7 +35,7 @@ export interface IGroupProps {
     onContextMenu?: ContextMenuEditorHandler;
     onToolbarClick?: ContextMenuGroupHandler;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onMoveTab?: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void;
+    onMoveTab?: (params: { tabs: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId }) => void;
 }
 
 export default function Group({
@@ -62,7 +62,7 @@ export default function Group({
         instance.current = editor;
 
         instance.current.onDidChangeModelContent((ev) => {
-            onChange?.(instance.current?.getModel()?.getValue(), ev);
+            onChange?.(instance.current?.getModel()?.getValue(), ev, { tabId: tab?.id, groupId: group?.id });
         });
 
         instance.current.onDidFocusEditorText(() => {
@@ -89,13 +89,18 @@ export default function Group({
 
     const onChangeTab = useCallback(
         (dragIndex: number, hoverIndex: number) => {
-            const dragTab = group.data[dragIndex];
-            onMoveTab?.(update(group.data, {
+            const dragTab = group?.data?.[dragIndex];
+            const updateTabs = update(group?.data, {
                 $splice: [
                     [dragIndex, 1],
                     [hoverIndex, 0, dragTab],
                 ],
-            }), group.id);
+            });
+            onMoveTab?.({
+                tabs: updateTabs,
+                groupId: group?.id,
+                tabId: dragTab?.id,
+            });
         }, [onMoveTab, group.data, group.id]);
 
     const handleDrag = (
@@ -103,8 +108,8 @@ export default function Group({
         target: EditorGroupModel['data'][number],
         infos: Record<string, any>
     ) => {
-        const dragIndex = group.data.indexOf(source);
-        const hoverIndex = group.data.indexOf(target);
+        const dragIndex = group?.data?.findIndex?.(({ id }) => id === source?.id);
+        const hoverIndex = group?.data?.findIndex?.(({ id }) => id === target?.id);
         const { hoverClientX, hoverMiddleX } = infos;
         // Don't replace items with themselves
         if (dragIndex === hoverIndex) {

@@ -16,6 +16,7 @@ export default function Editor({
     onToolbarClick,
     onCloseTab,
     onMoveTab,
+    onChange,
 }: IEditorController) {
     const editor = useConnector('editor');
     const layout = useConnector('layout');
@@ -45,6 +46,7 @@ export default function Editor({
                             onToolbarClick={onToolbarClick}
                             onCloseTab={onCloseTab}
                             onMoveTab={onMoveTab}
+                            onChange={onChange}
                         />
                     </Pane>
                 ))}

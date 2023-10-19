@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { throttle } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
 import Dropdown from 'mo/client/components/dropdown';
 import Icon from 'mo/client/components/icon';
@@ -27,7 +28,7 @@ export interface ITabsProps {
   variables: Record<string, string>;
 };
 
-export default function (props: ITabsProps) {
+function HeaderTabs(props: ITabsProps) {
   const { contextMenu, onContextMenu, group, tab, onSelectTab, onCloseTab, onDrag, variables } = props;
   const ref = useRef<HTMLDivElement>(null);
 
@@ -39,7 +40,7 @@ export default function (props: ITabsProps) {
 
   const [, drop] = useDrop({
     accept: 'DND_NODE',
-    drop(item: any, monitor) {
+    hover: throttle((item: any, monitor) => {
       if (!ref.current) return;
       const component = ref.current;
       const hoverBoundingRect = component?.getBoundingClientRect();
@@ -52,7 +53,7 @@ export default function (props: ITabsProps) {
           hoverClientX,
       };
       onDrag?.(item, tab, dragInfo);
-    },
+    }),
   });
 
   drag(drop(ref));
@@ -90,3 +91,6 @@ export default function (props: ITabsProps) {
   </Dropdown>
   );
 };
+
+
+export default memo(HeaderTabs);

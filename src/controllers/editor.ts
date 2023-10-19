@@ -5,6 +5,7 @@ import { ContextMenuService } from 'mo/services/contextMenu';
 import { EditorService } from 'mo/services/editor';
 import { LayoutService } from 'mo/services/layout';
 import type { ContextMenuEditorHandler, ContextMenuGroupHandler, UniqueId } from 'mo/types';
+import { searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
@@ -14,7 +15,8 @@ export interface IEditorController extends BaseController {
     onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onMoveTab?: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void;
+    onMoveTab?: (params: { tabs: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId }) => void;
+    onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => void;
     onCursorSelection?: (
         instance: editor.IStandaloneCodeEditor,
         ev: editor.ICursorSelectionChangedEvent
@@ -66,9 +68,10 @@ export class EditorController extends BaseController implements IEditorControlle
         this.editor.closeTab(tabId, groupId);
     };
 
-    public onMoveTab = (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => {
-        this.emit(EditorEvent.OnMoveTab, updateTabs, groupId);
-        this.editor.updateGroup(groupId!, { data: updateTabs });
+    public onMoveTab: IEditorController['onMoveTab'] = ({ groupId, tabs, tabId }) => {
+        this.emit(EditorEvent.OnMoveTab, tabs, groupId);
+        // moveTab set dragTab is activeTab
+        this.editor.updateGroup(groupId!, { data: tabs, activeTab: tabId, dragHoverTab: undefined });
     };
 
     public onCursorSelection = (
@@ -84,5 +87,28 @@ export class EditorController extends BaseController implements IEditorControlle
 
     public onToolbarClick?: ContextMenuGroupHandler | undefined = (item, groupId) => {
         this.emit(EditorEvent.onToolbarClick, item, groupId);
+    };
+
+    public onChange = (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => {
+        const { tabId, groupId } = extraProps;
+        const { groups } = this.editor.getState();
+        const groupIndex = groups.findIndex?.(searchById(groupId as UniqueId));
+        if (groupIndex === -1) return;
+        this.editor.setState({
+            groups: groups.map((groupItem) => {
+                if (groupItem.id !== groupId) return groupItem;
+                return {
+                    ...groupItem,
+                    data: groupItem?.data?.map?.((tabItem) => {
+                        if (tabItem.id !== tabId) return tabItem;
+                        return {
+                            ...tabItem,
+                            // TODO use hash compare
+                            modified: tabItem.value !== value,
+                        };
+                    }),
+                };
+            }),
+        });
     };
 }

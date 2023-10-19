@@ -123,7 +123,7 @@ export interface IEditorService extends BaseService<EditorModel> {
      * Listen to the tab move event
      * @param callback
      */
-    onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void): void;
+    onMoveTab(callback: (params: { tabs: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId }) => void): void;
     /**
      * Listen to the tab close event
      * @param callback
@@ -428,7 +428,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }));
     }
 
-    public onMoveTab(callback: (updateTabs: IEditorTab<any>[], groupId?: UniqueId) => void) {
+    public onMoveTab(callback: (params: { tabs: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId }) => void) {
         this.subscribe(EditorEvent.OnMoveTab, callback);
     }
 

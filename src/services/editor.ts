@@ -129,6 +129,31 @@ export interface IEditorService extends BaseService<EditorModel> {
      * @param callback
      */
     onCloseTab(callback: (tabId: UniqueId, groupId?: UniqueId) => void): void;
+    /**
+     * Listen to the all tabs close event
+     * @param callback
+     */
+    onCloseAll(callback: (groupId?: UniqueId) => void): void;
+    /**
+     * Listen to the other tabs close event
+     * @param callback
+     */
+    onCloseOther(callback: (tabId?: UniqueId, groupId?: UniqueId) => void): void;
+    /**
+     * Listen to the left tabs close event
+     * @param callback
+     */
+    onCloseToLeft(callback: (tabId?: UniqueId, groupId?: UniqueId) => void): void;
+    /**
+     * Listen to the right tabs close event
+     * @param callback
+     */
+    onCloseToRight(callback: (tabId?: UniqueId, groupId?: UniqueId) => void): void;
+    // /**
+    //  * Listen to the Group Actions click event
+    //  * @param callback
+    //  */
+    // onActionsClick(callback: (menuId: UniqueId, currentGroup: EditorGroupModel) => void): void;
 }
 
 @injectable()
@@ -432,27 +457,27 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         this.subscribe(EditorEvent.OnMoveTab, callback);
     }
 
-    // public onCloseAll(callback: (groupId?: UniqueId) => void) {
-    //     this.subscribe(EditorEvent.OnCloseAll, callback);
-    // }
+    public onCloseAll(callback: (groupId?: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseAll, callback);
+    }
 
-    public onCloseTab(callback: (tabId: UniqueId, groupId?: UniqueId) => void) {
+    public onCloseTab(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
         this.subscribe(EditorEvent.OnCloseTab, callback);
     }
 
-    // public onCloseOther(callback: (tabItem: IEditorTab, groupId?: UniqueId) => void) {
-    //     this.subscribe(EditorEvent.OnCloseOther, callback);
-    // }
+    public onCloseOther(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseOther, callback);
+    }
 
-    // public onCloseToLeft(callback: (tabItem: IEditorTab, groupId?: UniqueId) => void) {
-    //     this.subscribe(EditorEvent.OnCloseToLeft, callback);
-    // }
+    public onCloseToLeft(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseToLeft, callback);
+    }
 
-    // public onCloseToRight(callback: (tabItem: IEditorTab, groupId?: UniqueId) => void) {
-    //     this.subscribe(EditorEvent.OnCloseToRight, callback);
-    // }
+    public onCloseToRight(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseToRight, callback);
+    }
 
-    // public onActionsClick(callback: (menuId: UniqueId, currentGroup: IEditorGroup) => void) {
+    // public onActionsClick(callback: (menuId: UniqueId, currentGroup: EditorGroupModel) => void) {
     //     this.subscribe(EditorEvent.onActionsClick, callback);
     // }
 

@@ -3,10 +3,10 @@ import type { editor as MonacoEditor } from 'monaco-editor';
 
 export enum EditorEvent {
     OnCloseTab = 'editor.closeTab',
-    // OnCloseAll = 'editor.closeAll',
-    // OnCloseOther = 'editor.closeOther',
-    // OnCloseToLeft = 'editor.closeToLeft',
-    // OnCloseToRight = 'editor.closeToRight',
+    OnCloseAll = 'editor.closeAll',
+    OnCloseOther = 'editor.closeOther',
+    OnCloseToLeft = 'editor.closeToLeft',
+    OnCloseToRight = 'editor.closeToRight',
     OnMoveTab = 'editor.moveTab',
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',

@@ -138,6 +138,25 @@ export class EditorController extends BaseController implements IEditorControlle
 
     public onToolbarClick?: ContextMenuGroupHandler | undefined = (item, groupId) => {
         this.emit(EditorEvent.onToolbarClick, item, groupId);
+        const {
+            EDITOR_MENU_SPLIT,
+            EDITOR_MENU_CLOSE_ALL,
+        } = this.builtin.getState().constants;
+
+    switch (item.id) {
+        case EDITOR_MENU_SPLIT: {
+            const group = this.editor.getGroupById(groupId);
+            if (!group || !group.activeTab) return;
+            this.editor.cloneTab(group.activeTab, group.id);
+            break;
+        }
+        case EDITOR_MENU_CLOSE_ALL: {
+            this.editor.closeAll(groupId);
+            break;
+        }
+        default:
+            break;
+    }
     };
 
     public onChange = (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => {

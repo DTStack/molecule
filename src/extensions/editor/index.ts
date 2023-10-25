@@ -11,10 +11,10 @@ export const ExtendsEditor: IExtension = {
         molecule.editor.onSelectTab((tabId, groupId) => molecule.editor.setActive(tabId, groupId));
 
         molecule.editor.onToolbarClick((item, groupId) => {
-            const { EDITOR_MENU_SPILIT, EDITOR_MENU_CLOSE_ALL } =
+            const { EDITOR_MENU_SPLIT, EDITOR_MENU_CLOSE_ALL } =
                 molecule.builtin.getState().constants;
             switch (item.id) {
-                case EDITOR_MENU_SPILIT: {
+                case EDITOR_MENU_SPLIT: {
                     const group = molecule.editor.getGroupById(groupId);
                     if (!group || !group.activeTab) return;
                     molecule.editor.cloneTab(group.activeTab, group.id);

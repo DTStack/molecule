@@ -80,6 +80,13 @@ export interface IEditorService extends BaseService<EditorModel> {
     getGroupById<T>(groupId: UniqueId): EditorGroupModel<T> | undefined;
     cloneTab(tabId: UniqueId, groupId: UniqueId): void;
     /**
+     * Changed value Tabs in Editor Group
+     * @param value Editor newValue
+     * @param ev editor.IModelContentChangedEvent
+     * @param extraProps tabId、groupId
+     */
+    changeTab(value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }): void;
+    /**
      * Listen to the tab select event
      * @param callback
      */
@@ -149,11 +156,15 @@ export interface IEditorService extends BaseService<EditorModel> {
      * @param callback
      */
     onCloseToRight(callback: (tabId?: UniqueId, groupId?: UniqueId) => void): void;
-    // /**
-    //  * Listen to the Group Actions click event
-    //  * @param callback
-    //  */
-    // onActionsClick(callback: (menuId: UniqueId, currentGroup: EditorGroupModel) => void): void;
+    /**
+     * Listen to the editor split right event
+     * @param callback
+     */
+    onSplitEditorRight(callback: (activeTabId: UniqueId, groupId: UniqueId) => void): void;
+    /**
+     * Listen to the tabs Editor values change
+     */
+    onTabChange(callback: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => void): void;
 }
 
 @injectable()
@@ -337,6 +348,30 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         // TODO: reset the editor group
     }
 
+    public changeTab(value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId | undefined; groupId?: UniqueId | undefined; }): void {
+        const { tabId, groupId } = extraProps;
+        const { groups } = this.getState();
+        const groupIndex = groups.findIndex?.(searchById(groupId as UniqueId));
+        if (groupIndex === -1) return;
+        this.setState({
+            groups: groups.map((groupItem) => {
+                if (groupItem.id !== groupId) return groupItem;
+                return {
+                    ...groupItem,
+                    data: groupItem?.data?.map?.((tabItem) => {
+                        if (tabItem.id !== tabId) return tabItem;
+                        return {
+                            ...tabItem,
+                            // TODO use hash compare
+                            modified: tabItem.value !== value,
+                        };
+                    }),
+                };
+            }),
+        });
+    }
+
+
     public getGroupIndexById(id: UniqueId): number {
         const { groups } = this.state;
         return groups!.findIndex(searchById(id));
@@ -477,9 +512,9 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         this.subscribe(EditorEvent.OnCloseToRight, callback);
     }
 
-    // public onActionsClick(callback: (menuId: UniqueId, currentGroup: EditorGroupModel) => void) {
-    //     this.subscribe(EditorEvent.onActionsClick, callback);
-    // }
+    public onSplitEditorRight(callback: (activeTabId: UniqueId, groupId: UniqueId) => void): void {
+        this.subscribe(EditorEvent.OnSplitEditorRight, callback);
+    }
 
     // ===================== Subscriptions =====================
     public onFocus(callback: (instance: editor.IStandaloneCodeEditor) => void) {
@@ -514,4 +549,9 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     public onOpenTab<T>(callback: (tab: IEditorTab<T>) => void): void {
         this.subscribe(EditorEvent.OpenTab, callback);
     }
+
+    public onTabChange(callback: (value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId | undefined; groupId?: UniqueId | undefined; }) => void): void {
+        this.subscribe(EditorEvent.OnChangeTab, callback);
+    }
+
 }

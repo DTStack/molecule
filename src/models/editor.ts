@@ -10,6 +10,7 @@ export enum EditorEvent {
     OnCloseToLeft = 'editor.closeToLeft',
     OnCloseToRight = 'editor.closeToRight',
     OnMoveTab = 'editor.moveTab',
+    OnMoveTabOver = 'editor.moveTabOver',
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
     OnUpdateTab = 'editor.updateTab',
@@ -39,7 +40,16 @@ export class EditorGroupModel<T = any> {
     constructor(
         public id: UniqueId,
         public data: IEditorTab<T>[] = [],
-        public activeTab?: UniqueId
+        public activeTab?: UniqueId,
+        /**
+         * hover tab when tabs moving
+         */
+        public coveredTabInMove?: UniqueId,
+        /**
+         * update time hover simple tab when tabs moving
+         * simple tab hover MAX_WAIT_MS_COVERED_TAB ms set active tab is coveredTab
+         */
+        public lastUpdateTime?: number
     ) {}
 }
 
@@ -74,4 +84,11 @@ export class EditorModel implements IEditor {
         public entry?: React.ReactNode,
         public current?: UniqueId | undefined
     ) {}
+    /**
+     * update time hover simple tab when tabs moving
+     * simple tab hover max wait ms set active tab is coveredTab
+     *
+     * @ EditorGroupModel.lastUpdateTime
+     */
+    public MAX_WAIT_MS_COVERED_TAB = 1000;
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
@@ -16,6 +16,7 @@ import type {
 import { searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 
+import { Action } from './components/tab';
 import { Tab } from './components';
 import variables from './index.scss';
 
@@ -35,7 +36,8 @@ export interface IGroupProps {
     onContextMenu?: ContextMenuEditorHandler;
     onToolbarClick?: ContextMenuGroupHandler;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onMoveTab?: (params: { tabs: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId }) => void;
+    onMoveTab?: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void;
+    onMoveTabOver?: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void;
 }
 
 export default function Group({
@@ -52,6 +54,7 @@ export default function Group({
     onToolbarClick,
     onCloseTab,
     onMoveTab,
+    onMoveTabOver,
 }: IGroupProps) {
     const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
 
@@ -87,26 +90,11 @@ export default function Group({
         }
     }, [options]);
 
-    const onChangeTab = useCallback(
-        (dragIndex: number, hoverIndex: number) => {
-            const dragTab = group?.data?.[dragIndex];
-            const updateTabs = update(group?.data, {
-                $splice: [
-                    [dragIndex, 1],
-                    [hoverIndex, 0, dragTab],
-                ],
-            });
-            onMoveTab?.({
-                tabs: updateTabs,
-                groupId: group?.id,
-                tabId: dragTab?.id,
-            });
-        }, [onMoveTab, group.data, group.id]);
-
     const handleDrag = (
         source: EditorGroupModel['data'][number],
         target: EditorGroupModel['data'][number],
-        infos: Record<string, any>
+        infos: Record<string, any>,
+        type: Action
     ) => {
         const dragIndex = group?.data?.findIndex?.(({ id }) => id === source?.id);
         const hoverIndex = group?.data?.findIndex?.(({ id }) => id === target?.id);
@@ -123,7 +111,30 @@ export default function Group({
         if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
             return;
         }
-        onChangeTab?.(dragIndex, hoverIndex);
+        const dragTab = group?.data?.[dragIndex];
+        const hoverTab = group?.data?.[hoverIndex];
+        const updateTabs = update(group?.data, {
+            $splice: [
+                [dragIndex, 1],
+                [hoverIndex, 0, dragTab],
+            ],
+        });
+        if (type === Action.hover) {
+            onMoveTab?.({
+                // tabs: updateTabs,
+                groupId: group?.id,
+                // tabId: dragTab?.id,
+                coveredTabInMove: hoverTab?.id,
+            });
+        } else if (type === Action.drop) {
+            onMoveTabOver?.({
+                tabs: updateTabs,
+                groupId: group?.id,
+                tabId: dragTab?.id,
+                coveredTabInMove: hoverTab?.id,
+            });
+
+        }
     };
 
     return (

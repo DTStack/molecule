@@ -19,7 +19,8 @@ export interface IEditorController extends BaseController {
     onCloseToLeft?: (tabId: UniqueId, groupId: UniqueId) => void;
     onCloseAll?: (groupId: UniqueId) => void;
     onSplitEditorRight?: (activeTabId: UniqueId, groupId: UniqueId) => void;
-    onMoveTab?: (params: { tabs: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId }) => void;
+    onMoveTab?: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void;
+    onMoveTabOver?: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void;
     onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => void;
     onCursorSelection?: (
         instance: editor.IStandaloneCodeEditor,
@@ -67,12 +68,16 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onFocus, instance);
     };
 
-    public onCloseTab = (tabId: UniqueId, groupId: UniqueId) => {
+    public onCloseTab: IEditorController['onCloseTab'] = (tabId, groupId) => {
         this.emit(EditorEvent.OnCloseTab, tabId, groupId);
     };
 
-    public onMoveTab: IEditorController['onMoveTab'] = ({ groupId, tabs, tabId }) => {
-        this.emit(EditorEvent.OnMoveTab, { tabs, groupId, tabId });
+    public onMoveTab: IEditorController['onMoveTab'] = ({ groupId, tabs, tabId, coveredTabInMove }) => {
+        this.emit(EditorEvent.OnMoveTab, { tabs, groupId, tabId, coveredTabInMove });
+    };
+
+    public onMoveTabOver: IEditorController['onMoveTabOver'] = ({ groupId, tabs, tabId, coveredTabInMove }) => {
+        this.emit(EditorEvent.OnMoveTabOver, { tabs, groupId, tabId, coveredTabInMove });
     };
 
     public onCloseOther: IEditorController['onCloseOther'] = (tabId, groupId) => {
@@ -102,14 +107,17 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onContextMenu, item, tabId, groupId);
     };
 
+    // ActionBar callback
     public onToolbarClick?: ContextMenuGroupHandler | undefined = (item, groupId) => {
         this.emit(EditorEvent.onToolbarClick, item, groupId);
     };
 
+    // ActionBar splitEditor Right callback
     public onSplitEditorRight?: IEditorController['onSplitEditorRight'] = (activeTabId, groupId) => {
         this.emit(EditorEvent.OnSplitEditorRight, activeTabId, groupId);
     };
 
+    // Editor value onChange callback
     public onChange = (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => {
         this.emit(EditorEvent.OnChangeTab, value, ev, extraProps);
     };

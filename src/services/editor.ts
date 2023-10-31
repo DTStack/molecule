@@ -130,7 +130,12 @@ export interface IEditorService extends BaseService<EditorModel> {
      * Listen to the tab move event
      * @param callback
      */
-    onMoveTab(callback: (params: { tabs: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId }) => void): void;
+    onMoveTab(callback: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void): void;
+    /**
+     * Listen to the tab move over event
+     * @param callback
+     */
+    onMoveTabOver(callback: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void): void;
     /**
      * Listen to the tab close event
      * @param callback
@@ -401,7 +406,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }
     }
 
-    public updateGroup(groupId: UniqueId, groupValues: Omit<EditorGroupModel, 'id'>) {
+    public updateGroup(groupId: UniqueId, groupValues: Partial<Omit<EditorGroupModel, 'id'>>) {
         const { groups = [] } = this.state;
         const nextGroups = [...groups];
         const groupIndex = this.getGroupIndexById(groupId);
@@ -488,8 +493,12 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }));
     }
 
-    public onMoveTab(callback: (params: { tabs: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId }) => void) {
+    public onMoveTab(callback: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId, coveredTabInMove?: UniqueId }) => void) {
         this.subscribe(EditorEvent.OnMoveTab, callback);
+    }
+
+    public onMoveTabOver(callback: (params: { tabs?: IEditorTab<any>[] | undefined; groupId?: UniqueId; tabId?: UniqueId; coveredTabInMove?: UniqueId; }) => void) {
+        this.subscribe(EditorEvent.OnMoveTabOver, callback);
     }
 
     public onCloseAll(callback: (groupId?: UniqueId) => void) {

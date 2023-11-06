@@ -10,6 +10,7 @@ import {
 import type {
     ContextMenuEditorHandler,
     ContextMenuGroupHandler,
+    IDragProps,
     IMenuItemProps,
     RequiredId,
     UniqueId,
@@ -74,6 +75,11 @@ export interface IEditorService extends BaseService<EditorModel> {
      */
     closeAll(groupId: UniqueId): void;
     /**
+     * drag tabs in Editor Group
+     * @param params from to info type
+     */
+    drag(params: IDragProps): void;
+    /**
      * Get the specific group
      * @param groupId The groupId is required
      */
@@ -130,12 +136,7 @@ export interface IEditorService extends BaseService<EditorModel> {
      * Listen to the tab move event
      * @param callback
      */
-    onMoveTab(callback: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void): void;
-    /**
-     * Listen to the tab move over event
-     * @param callback
-     */
-    onMoveTabOver(callback: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void): void;
+    onDrag(callback: (params: IDragProps) => void): void;
     /**
      * Listen to the tab close event
      * @param callback
@@ -359,6 +360,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         const groupIndex = groups.findIndex?.(searchById(groupId as UniqueId));
         if (groupIndex === -1) return;
         this.setState({
+            current: groupId,
             groups: groups.map((groupItem) => {
                 if (groupItem.id !== groupId) return groupItem;
                 return {
@@ -376,6 +378,41 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         });
     }
 
+    public drag(params: IDragProps): void {
+        const { from, to } = params;
+        const { groups = [] } = this.state;
+        const newGroups = groups.map((group) => {
+            if (![from.groupId, to.groupId].includes(group.id)) return group;
+            const tab: any = this.getTabById(from.tabId, from.groupId);
+            if (!tab) return group;
+            if (to.groupId === group.id) {
+                const hoverIndex = group?.data?.findIndex?.(({ id }) => id === to?.tabId) || 0;
+                const cloneTabs = group?.data?.filter?.(({ id }) => id !== from.tabId) || [];
+                const updateTabs = [...cloneTabs];
+                updateTabs.splice(hoverIndex, 0, tab);
+                return {
+                    ...group,
+                    data: updateTabs,
+                    activeTab: from.tabId,
+                };
+            }
+            if (from.groupId === group.id) {
+                const dragIndex = group?.data?.findIndex?.(({ id }) => id === from?.tabId);
+                const nextIndex = dragIndex <= 0 ? 1 : dragIndex - 1;
+                const nextActiveTabId = group?.data?.[nextIndex]?.id;
+                return {
+                    ...group,
+                    data: group.data?.filter((tab) => tab.id !== from.tabId),
+                    activeTab: nextActiveTabId,
+                };
+            }
+            return group;
+        });
+        this.setState({
+            groups: newGroups?.filter(({ data }) => data?.length),
+            current: to.groupId,
+        });
+    }
 
     public getGroupIndexById(id: UniqueId): number {
         const { groups } = this.state;
@@ -493,12 +530,8 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }));
     }
 
-    public onMoveTab(callback: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId, coveredTabInMove?: UniqueId }) => void) {
+    public onDrag(callback: (params: IDragProps) => void) {
         this.subscribe(EditorEvent.OnMoveTab, callback);
-    }
-
-    public onMoveTabOver(callback: (params: { tabs?: IEditorTab<any>[] | undefined; groupId?: UniqueId; tabId?: UniqueId; coveredTabInMove?: UniqueId; }) => void) {
-        this.subscribe(EditorEvent.OnMoveTabOver, callback);
     }
 
     public onCloseAll(callback: (groupId?: UniqueId) => void) {

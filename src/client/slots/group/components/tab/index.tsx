@@ -7,16 +7,13 @@ import Icon from 'mo/client/components/icon';
 import type { EditorGroupModel } from 'mo/models/editor';
 import type {
     ContextMenuEditorHandler,
+    IDragProps,
     IMenuItemProps,
     UniqueId,
 } from 'mo/types';
+import { DragAction } from 'mo/types';
 
 type IDataItem = EditorGroupModel['data'][number];
-
-export enum Action {
-  hover = 'hover',
-  drop = 'drop',
-};
 
 export interface ITabsProps {
   contextMenu?: IMenuItemProps[];
@@ -25,7 +22,7 @@ export interface ITabsProps {
   group: EditorGroupModel;
   tab: IDataItem;
   onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
-  onDrag?: (source: IDataItem, target: IDataItem, dragInfos: Record<string, any>, type: Action) => void;
+  onDrag?: (props: IDragProps) => void;
   variables: Record<string, string>;
 };
 
@@ -45,28 +42,29 @@ function HeaderTabs(props: ITabsProps) {
   const [, drag] = useDrag({
     collect: (monitor: any) => ({ isDragging: monitor?.isDragging?.() }),
     type: 'DND_NODE',
-    item: tab,
+    item: { groupId: group.id, tabId: tab.id },
   });
 
-  const actionHoc = (type: Action) => throttle((item, monitor) => {
+  const actionHoc = (type: DragAction) => throttle((item, monitor) => {
     if (!ref.current) return;
     const component = ref.current;
     const hoverBoundingRect = component?.getBoundingClientRect();
-    const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
+    const hoverMiddleX = (hoverBoundingRect?.right - hoverBoundingRect?.left) / 2;
     const clientOffset = monitor?.getClientOffset?.();
-    const hoverClientX = (clientOffset as { x: number; y: number }).x - hoverBoundingRect.left;
+    const hoverClientX = (clientOffset as { x: number; y: number })?.x - hoverBoundingRect?.left;
 
-    const dragInfo = {
+    const info: IDragProps['info'] = {
         hoverMiddleX,
         hoverClientX,
     };
-    onDrag?.(item, tab, dragInfo, type);
-  });
+    const targetItem = { groupId: group?.id, tabId: tab.id };
+    onDrag?.({ from: item, to: targetItem, info, type });
+  }, 500);
 
   const [, drop] = useDrop({
     accept: 'DND_NODE',
-    hover: actionHoc(Action.hover),
-    drop: actionHoc(Action.drop),
+    hover: actionHoc(DragAction.hover),
+    // drop: actionHoc(DragAction.drop),
   });
 
   drag(drop(ref));

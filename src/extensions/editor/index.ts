@@ -25,28 +25,8 @@ export const ExtendsEditor: IExtension = {
             molecule.editor.closeToRight(tabId, groupId);
         });
 
-        molecule.editor.onMoveTab(({ groupId, coveredTabInMove: nextCoveredTab }) => {
-            const { groups = [], MAX_WAIT_MS_COVERED_TAB } = molecule.editor.getState();
-            const { lastUpdateTime, coveredTabInMove: currCoveredTab } = groups?.find?.((group) => group.id === groupId) || {};
-            const extraProps = { coveredTabInMove: nextCoveredTab };
-            const timeStamp = Date.now();
-            if (currCoveredTab === nextCoveredTab) {
-                if (timeStamp - (lastUpdateTime as number) >= MAX_WAIT_MS_COVERED_TAB) {
-                    Object.assign(extraProps, { activeTab:  nextCoveredTab });
-                }
-            } else {
-                Object.assign(extraProps, { lastUpdateTime: timeStamp });
-            };
-            molecule.editor.updateGroup(groupId!, { ...extraProps });
-        });
-
-        molecule.editor.onMoveTabOver(({ groupId, tabId, tabs }) => {
-            molecule.editor.updateGroup(groupId!, {
-                data: tabs,
-                activeTab: tabId,
-                lastUpdateTime: undefined,
-                coveredTabInMove: undefined,
-            });
+        molecule.editor.onDrag((props) => {
+            molecule.editor.drag(props);
         });
 
         molecule.editor.onTabChange((value, ev, extraProps) => {

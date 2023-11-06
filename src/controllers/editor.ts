@@ -1,10 +1,10 @@
 import { BaseController } from 'mo/glue';
-import { EditorEvent, type IEditorTab } from 'mo/models/editor';
+import { EditorEvent } from 'mo/models/editor';
 import { BuiltinService } from 'mo/services/builtin';
 import { ContextMenuService } from 'mo/services/contextMenu';
 import { EditorService } from 'mo/services/editor';
 import { LayoutService } from 'mo/services/layout';
-import type { ContextMenuEditorHandler, ContextMenuGroupHandler, UniqueId } from 'mo/types';
+import type { ContextMenuEditorHandler, ContextMenuGroupHandler, IDragProps, UniqueId } from 'mo/types';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
@@ -19,8 +19,7 @@ export interface IEditorController extends BaseController {
     onCloseToLeft?: (tabId: UniqueId, groupId: UniqueId) => void;
     onCloseAll?: (groupId: UniqueId) => void;
     onSplitEditorRight?: (activeTabId: UniqueId, groupId: UniqueId) => void;
-    onMoveTab?: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void;
-    onMoveTabOver?: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void;
+    onDrag?: (params: IDragProps) => void;
     onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => void;
     onCursorSelection?: (
         instance: editor.IStandaloneCodeEditor,
@@ -72,12 +71,8 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.OnCloseTab, tabId, groupId);
     };
 
-    public onMoveTab: IEditorController['onMoveTab'] = ({ groupId, tabs, tabId, coveredTabInMove }) => {
-        this.emit(EditorEvent.OnMoveTab, { tabs, groupId, tabId, coveredTabInMove });
-    };
-
-    public onMoveTabOver: IEditorController['onMoveTabOver'] = ({ groupId, tabs, tabId, coveredTabInMove }) => {
-        this.emit(EditorEvent.OnMoveTabOver, { tabs, groupId, tabId, coveredTabInMove });
+    public onDrag: IEditorController['onDrag'] = (props) => {
+        this.emit(EditorEvent.OnMoveTab, props);
     };
 
     public onCloseOther: IEditorController['onCloseOther'] = (tabId, groupId) => {

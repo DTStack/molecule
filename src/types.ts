@@ -322,3 +322,23 @@ export interface IBreadcrumbItemProps {
     icon?: IconType;
     render?: (item: IBreadcrumbItemProps) => React.ReactNode;
 }
+
+export enum DragAction {
+    /** dragOver */
+    hover = 'hover',
+    /** drop */
+    drop = 'drop',
+  };
+
+export type IDragProps = {
+    type: DragAction,
+    from: {
+        groupId: UniqueId,
+        tabId: UniqueId,
+    },
+    to: {
+        groupId: UniqueId,
+        tabId: UniqueId,
+    },
+    info: Record<string, any>
+};

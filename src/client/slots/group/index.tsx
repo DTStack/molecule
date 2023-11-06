@@ -1,22 +1,19 @@
 import { useEffect, useRef } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import update from 'immutability-helper';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
 import Header from 'mo/client/components/header';
 import MonacoEditor from 'mo/client/components/monaco';
-import type { EditorGroupModel, EditorModel, IEditorTab } from 'mo/models/editor';
+import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type {
     ContextMenuEditorHandler,
     ContextMenuGroupHandler,
+    IDragProps,
     IMenuItemProps,
     UniqueId,
 } from 'mo/types';
 import { searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 
-import { Action } from './components/tab';
 import { Tab } from './components';
 import variables from './index.scss';
 
@@ -36,8 +33,7 @@ export interface IGroupProps {
     onContextMenu?: ContextMenuEditorHandler;
     onToolbarClick?: ContextMenuGroupHandler;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onMoveTab?: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void;
-    onMoveTabOver?: (params: { tabs?: IEditorTab<any>[]; groupId?: UniqueId, tabId?: UniqueId; coveredTabInMove?: UniqueId }) => void;
+    onDrag?: (params: IDragProps) => void;
 }
 
 export default function Group({
@@ -53,8 +49,7 @@ export default function Group({
     onContextMenu,
     onToolbarClick,
     onCloseTab,
-    onMoveTab,
-    onMoveTabOver,
+    onDrag,
 }: IGroupProps) {
     const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
 
@@ -90,52 +85,6 @@ export default function Group({
         }
     }, [options]);
 
-    const handleDrag = (
-        source: EditorGroupModel['data'][number],
-        target: EditorGroupModel['data'][number],
-        infos: Record<string, any>,
-        type: Action
-    ) => {
-        const dragIndex = group?.data?.findIndex?.(({ id }) => id === source?.id);
-        const hoverIndex = group?.data?.findIndex?.(({ id }) => id === target?.id);
-        const { hoverClientX, hoverMiddleX } = infos;
-        // Don't replace items with themselves
-        if (dragIndex === hoverIndex) {
-            return;
-        }
-        // drag down
-        if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
-            return;
-        }
-        // drag up
-        if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
-            return;
-        }
-        const dragTab = group?.data?.[dragIndex];
-        const hoverTab = group?.data?.[hoverIndex];
-        const updateTabs = update(group?.data, {
-            $splice: [
-                [dragIndex, 1],
-                [hoverIndex, 0, dragTab],
-            ],
-        });
-        if (type === Action.hover) {
-            onMoveTab?.({
-                // tabs: updateTabs,
-                groupId: group?.id,
-                // tabId: dragTab?.id,
-                coveredTabInMove: hoverTab?.id,
-            });
-        } else if (type === Action.drop) {
-            onMoveTabOver?.({
-                tabs: updateTabs,
-                groupId: group?.id,
-                tabId: dragTab?.id,
-                coveredTabInMove: hoverTab?.id,
-            });
-
-        }
-    };
 
     return (
         <div className={variables.group}>
@@ -149,7 +98,6 @@ export default function Group({
                     />
                 }
             >
-            <DndProvider backend={HTML5Backend} context={window}>
                 {group.data.map((tab) => (
                     <Tab
                         key={tab.id}
@@ -160,10 +108,9 @@ export default function Group({
                         group={group}
                         tab={tab}
                         variables={variables}
-                        onDrag={handleDrag}
+                        onDrag={onDrag}
                     />
                 ))}
-            </DndProvider>
             </Header>
             <Breadcrumb className={variables.breadcrumb} routes={tab?.breadcrumb || []} />
             <div className={variables.content}>

@@ -530,34 +530,6 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }));
     }
 
-    public onDrag(callback: (params: IDragProps) => void) {
-        this.subscribe(EditorEvent.OnMoveTab, callback);
-    }
-
-    public onCloseAll(callback: (groupId?: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseAll, callback);
-    }
-
-    public onCloseTab(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseTab, callback);
-    }
-
-    public onCloseOther(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseOther, callback);
-    }
-
-    public onCloseToLeft(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseToLeft, callback);
-    }
-
-    public onCloseToRight(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseToRight, callback);
-    }
-
-    public onSplitEditorRight(callback: (activeTabId: UniqueId, groupId: UniqueId) => void): void {
-        this.subscribe(EditorEvent.OnSplitEditorRight, callback);
-    }
-
     // ===================== Subscriptions =====================
     public onFocus(callback: (instance: editor.IStandaloneCodeEditor) => void) {
         this.subscribe(EditorEvent.onFocus, callback);
@@ -594,6 +566,34 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
 
     public onTabChange(callback: (value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId | undefined; groupId?: UniqueId | undefined; }) => void): void {
         this.subscribe(EditorEvent.OnChangeTab, callback);
+    }
+
+    public onDrag(callback: (params: IDragProps) => void) {
+        this.subscribe(EditorEvent.OnMoveTab, callback);
+    }
+
+    public onCloseAll(callback: (groupId?: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseAll, callback);
+    }
+
+    public onCloseTab(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseTab, callback);
+    }
+
+    public onCloseOther(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseOther, callback);
+    }
+
+    public onCloseToLeft(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseToLeft, callback);
+    }
+
+    public onCloseToRight(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
+        this.subscribe(EditorEvent.OnCloseToRight, callback);
+    }
+
+    public onSplitEditorRight(callback: (activeTabId: UniqueId, groupId: UniqueId) => void): void {
+        this.subscribe(EditorEvent.OnSplitEditorRight, callback);
     }
 
 }

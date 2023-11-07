@@ -9,7 +9,6 @@ $breadcrumb: BEMElement($group, 'breadcrumb');
 $extra: BEMElement($group, 'extra');
 
 $active: BEMModifier($tab, 'active');
-$coveredTab: BEMModifier($tab, 'coveredTab');
 $activeExtra: BEMModifier($extra, 'active');
 
 .#{$group} {
@@ -71,11 +70,6 @@ $activeExtra: BEMModifier($extra, 'active');
                 opacity: 1;
             }
         }
-        &.#{$coveredTab} {
-            background: var(--tab-coveredBackground);
-            color: var(--tab-coveredForeground);
-            border-right-color: var(--tab-coveredBorder);
-        }
 
         &:hover {
             background: var(--tab-hoverBackground);
@@ -96,5 +90,4 @@ $activeExtra: BEMModifier($extra, 'active');
     extra: $extra;
     active: $active;
     activeExtra: $activeExtra;
-    coveredTab: $coveredTab,
 }

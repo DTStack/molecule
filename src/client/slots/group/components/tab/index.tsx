@@ -70,7 +70,6 @@ function HeaderTabs(props: ITabsProps) {
   drag(drop(ref));
 
   const hasActive = group.activeTab === tab.id;
-  const hasCovered = group.coveredTabInMove === tab.id;
 
   return (
     <Dropdown
@@ -84,8 +83,7 @@ function HeaderTabs(props: ITabsProps) {
         ref={ref}
         className={classNames(
             variables.tab,
-            hasActive && variables.active,
-            (!hasActive && hasCovered) && variables.coveredTab
+            hasActive && variables.active
         )}
         onClick={() => onSelectTab?.(tab.id, group.id)}
       >

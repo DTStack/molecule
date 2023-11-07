@@ -445,7 +445,6 @@ export class DefaultColor {
         this.registerColor('tab.unfocusedActiveBackground', { dark: TAB_ACTIVE_BACKGROUND, light: TAB_ACTIVE_BACKGROUND, hcDark: TAB_ACTIVE_BACKGROUND, hcLight: TAB_ACTIVE_BACKGROUND });
         const TAB_INACTIVE_BACKGROUND = this.registerColor('tab.inactiveBackground', { dark: '#2D2D2D', light: '#ECECEC', hcDark: null, hcLight: null });
         this.registerColor('tab.unfocusedInactiveBackground', { dark: TAB_INACTIVE_BACKGROUND, light: TAB_INACTIVE_BACKGROUND, hcDark: TAB_INACTIVE_BACKGROUND, hcLight: TAB_INACTIVE_BACKGROUND });
-        this.registerColor('tab.coveredBackground', { dark: '#53595D80', light: '#2677CB2E', hcDark: null, hcLight: null });
 
         /**
          * Tab Foreground
@@ -454,7 +453,6 @@ export class DefaultColor {
         const TAB_INACTIVE_FOREGROUND = this.registerColor('tab.inactiveForeground', { dark: transparent(TAB_ACTIVE_FOREGROUND, 0.5), light: transparent(TAB_ACTIVE_FOREGROUND, 0.7), hcDark: Color.white, hcLight: '#292929' });
         this.registerColor('tab.unfocusedActiveForeground', { dark: transparent(TAB_ACTIVE_FOREGROUND, 0.5), light: transparent(TAB_ACTIVE_FOREGROUND, 0.7), hcDark: Color.white, hcLight: '#292929' });
         this.registerColor('tab.unfocusedInactiveForeground', { dark: transparent(TAB_INACTIVE_FOREGROUND, 0.5), light: transparent(TAB_INACTIVE_FOREGROUND, 0.5), hcDark: Color.white, hcLight: '#292929' });
-        this.registerColor('tab.coveredForeground', { dark: '#FFFFFF80', light: '#868686FF', hcDark: null, hcLight: null });
 
         /**
          * Tab Hover Foreground/Background
@@ -475,7 +473,6 @@ export class DefaultColor {
         const TAB_UNFOCUSED_ACTIVE_BORDER_TOP = this.registerColor('tab.unfocusedActiveBorderTop', { dark: transparent(TAB_ACTIVE_BORDER_TOP, 0.5), light: transparent(TAB_ACTIVE_BORDER_TOP, 0.7), hcDark: null, hcLight: '#B5200D' });
         const TAB_HOVER_BORDER = this.registerColor('tab.hoverBorder', { dark: null, light: null, hcDark: null, hcLight: null });
         const TAB_UNFOCUSED_HOVER_BORDER = this.registerColor('tab.unfocusedHoverBorder', { dark: transparent(TAB_HOVER_BORDER, 0.5), light: transparent(TAB_HOVER_BORDER, 0.7), hcDark: null, hcLight: contrastBorder });
-        this.registerColor('tab.coveredBorder', { dark: '#252526FF', light: '#E5E5E5FF', hcDark: null, hcLight: null });
 
         /**
          * Tab Modified Border

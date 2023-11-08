@@ -57,7 +57,6 @@
     "dependencies": {
         "@dtinsight/dt-utils": "^1.1.2",
         "@vscode/codicons": "^0.0.33",
-        "immutability-helper": "^3.1.1",
         "lodash-es": "^4.17.21",
         "monaco-editor": "^0.31.0",
         "normalize.css": "^8.0.1",

@@ -12,7 +12,7 @@ import type {
     UniqueId,
 } from 'mo/types';
 import { searchById } from 'mo/utils';
-import type { editor } from 'monaco-editor';
+import type { editor, IDisposable } from 'monaco-editor';
 
 import { Tab } from './components';
 import variables from './index.scss';
@@ -52,24 +52,33 @@ export default function Group({
     onDrag,
 }: IGroupProps) {
     const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
+    const disposesRef = useRef<IDisposable[]>([]);
 
     const tab = group.activeTab ? group.data.find?.(searchById(group.activeTab)) : undefined;
 
 
     const handleMount = (editor: editor.IStandaloneCodeEditor) => {
         instance.current = editor;
+        if (instance.current) {
+            while (disposesRef?.current?.length) {
+                disposesRef.current.pop()?.dispose();
+            }
+        }
 
-        instance.current.onDidChangeModelContent((ev) => {
+        const disposes: IDisposable[] = [];
+
+        disposes.push(instance.current.onDidChangeModelContent((ev) => {
             onChange?.(instance.current?.getModel()?.getValue(), ev, { tabId: tab?.id, groupId: group?.id });
-        });
+        }));
 
-        instance.current.onDidFocusEditorText(() => {
+        disposes.push(instance.current.onDidFocusEditorText(() => {
             onFocus?.(instance.current!);
-        });
+        }));
 
-        instance.current.onDidChangeCursorSelection((ev) => {
+        disposes.push(instance.current.onDidChangeCursorSelection((ev) => {
             onCursorSelection?.(instance.current!, ev);
-        });
+        }));
+        disposesRef.current = disposes;
 
         if (!tab) return;
         if (tab.model) {
@@ -84,7 +93,6 @@ export default function Group({
             instance.current.updateOptions(options);
         }
     }, [options]);
-
 
     return (
         <div className={variables.group}>
@@ -114,18 +122,21 @@ export default function Group({
             </Header>
             <Breadcrumb className={variables.breadcrumb} routes={tab?.breadcrumb || []} />
             <div className={variables.content}>
-                {tab?.render?.(tab) || (
-                    <MonacoEditor
-                        options={{
-                            ...options,
-                            automaticLayout: true,
-                            value: tab?.value,
-                            language: tab?.language,
-                        }}
-                        key={tab?.id}
-                        onMount={handleMount}
-                    />
-                )}
+                {tab?.render
+                    ? tab?.render?.(tab)
+                    : (
+                        <MonacoEditor
+                            options={{
+                                ...options,
+                                automaticLayout: true,
+                                value: tab?.value,
+                                language: tab?.language,
+                            }}
+                            key={tab?.id}
+                            onMount={handleMount}
+                        />
+                    )
+                }
             </div>
         </div>
     );

@@ -75,23 +75,16 @@ export interface IEditorService extends BaseService<EditorModel> {
      */
     closeAll(groupId: UniqueId): void;
     /**
-     * drag tabs in Editor Group
+     * move tabs in Editor Group
      * @param params from to info type
      */
-    drag(params: IDragProps): void;
+    moveTab(params: IDragProps): void;
     /**
      * Get the specific group
      * @param groupId The groupId is required
      */
     getGroupById<T>(groupId: UniqueId): EditorGroupModel<T> | undefined;
     cloneTab(tabId: UniqueId, groupId: UniqueId): void;
-    /**
-     * Changed value Tabs in Editor Group
-     * @param value Editor newValue
-     * @param ev editor.IModelContentChangedEvent
-     * @param extraProps tabId、groupId
-     */
-    changeTab(value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }): void;
     /**
      * Listen to the tab select event
      * @param callback
@@ -126,7 +119,7 @@ export interface IEditorService extends BaseService<EditorModel> {
      * Listen to the Editor tab changed event
      * @param callback
      */
-    onUpdateTab<T>(callback: (tab: IEditorTab<T>) => void): void;
+    onUpdateTab<T>(callback: (tab: IEditorTab<T>, groupId: UniqueId) => void): void;
     /**
      * Listen to the tab opening event
      * @param callback
@@ -136,7 +129,7 @@ export interface IEditorService extends BaseService<EditorModel> {
      * Listen to the tab move event
      * @param callback
      */
-    onDrag(callback: (params: IDragProps) => void): void;
+    onMoveTab(callback: (params: IDragProps) => void): void;
     /**
      * Listen to the tab close event
      * @param callback
@@ -170,7 +163,7 @@ export interface IEditorService extends BaseService<EditorModel> {
     /**
      * Listen to the tabs Editor values change
      */
-    onTabChange(callback: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => void): void;
+    onChangeTab(callback: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId: UniqueId; groupId: UniqueId }) => void): void;
 }
 
 @injectable()
@@ -240,16 +233,32 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     }
 
     public updateTab(tab: IEditorTab<any>, groupId: UniqueId) {
-        const exsit = this.getTabById(tab.id, groupId);
-        if (!exsit) return;
-        if (exsit.model && tab.value !== exsit.value) {
-            exsit.model.setValue(tab.value || '');
+        const exist = this.getTabById(tab.id, groupId);
+        const { groups } = this.getState();
+        if (!exist) return;
+        this.setState({
+            current: groupId,
+            groups: groups.map((group) => {
+                if (group.id !== groupId) return group;
+                const { data = [] } = group;
+                return {
+                    ...group,
+                    data: data?.map?.((tabItem) => {
+                        if (tabItem.id !== tab.id) return tabItem;
+                        return {
+                            ...tabItem,
+                            ...tab,
+                            modified: tabItem.value !== tab.value,
+                        };
+                    }),
+                };
+            }),
+        });
+        if (exist.model && exist.model.getValue() !== tab.value) {
+            exist.model.setValue(tab.value ?? '');
         }
-        Object.assign(exsit, tab);
-        this.setState((prev) => ({ ...prev }));
-
         // ===================== effects =====================
-        this.emit(EditorEvent.OnUpdateTab, exsit);
+        this.emit(EditorEvent.OnUpdateTab, exist);
     }
 
     private disposeModels(tabs: IEditorTab<any>[]) {
@@ -354,36 +363,12 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         // TODO: reset the editor group
     }
 
-    public changeTab(value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId | undefined; groupId?: UniqueId | undefined; }): void {
-        const { tabId, groupId } = extraProps;
-        const { groups } = this.getState();
-        const groupIndex = groups.findIndex?.(searchById(groupId as UniqueId));
-        if (groupIndex === -1) return;
-        this.setState({
-            current: groupId,
-            groups: groups.map((groupItem) => {
-                if (groupItem.id !== groupId) return groupItem;
-                return {
-                    ...groupItem,
-                    data: groupItem?.data?.map?.((tabItem) => {
-                        if (tabItem.id !== tabId) return tabItem;
-                        return {
-                            ...tabItem,
-                            // TODO use hash compare
-                            modified: tabItem.value !== value,
-                        };
-                    }),
-                };
-            }),
-        });
-    }
-
-    public drag(params: IDragProps): void {
+    public moveTab(params: IDragProps): void {
         const { from, to } = params;
         const { groups = [] } = this.state;
         const newGroups = groups.map((group) => {
             if (![from.groupId, to.groupId].includes(group.id)) return group;
-            const tab: any = this.getTabById(from.tabId, from.groupId);
+            const tab = this.getTabById(from.tabId, from.groupId);
             if (!tab) return group;
             if (to.groupId === group.id) {
                 const hoverIndex = group?.data?.findIndex?.(({ id }) => id === to?.tabId) || 0;
@@ -556,7 +541,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         this.subscribe(EditorEvent.onToolbarClick, callback);
     }
 
-    public onUpdateTab<T>(callback: (tab: IEditorTab<T>) => void) {
+    public onUpdateTab<T>(callback: (tab: IEditorTab<T>, groupId: UniqueId) => void) {
         this.subscribe(EditorEvent.OnUpdateTab, callback);
     }
 
@@ -564,11 +549,11 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         this.subscribe(EditorEvent.OpenTab, callback);
     }
 
-    public onTabChange(callback: (value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId | undefined; groupId?: UniqueId | undefined; }) => void): void {
+    public onChangeTab(callback: (value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId: UniqueId; groupId: UniqueId; }) => void): void {
         this.subscribe(EditorEvent.OnChangeTab, callback);
     }
 
-    public onDrag(callback: (params: IDragProps) => void) {
+    public onMoveTab(callback: (params: IDragProps) => void) {
         this.subscribe(EditorEvent.OnMoveTab, callback);
     }
 

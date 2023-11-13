@@ -25,12 +25,14 @@ export const ExtendsEditor: IExtension = {
             molecule.editor.closeToRight(tabId, groupId);
         });
 
-        molecule.editor.onDrag((props) => {
-            molecule.editor.drag(props);
+        molecule.editor.onMoveTab((props) => {
+            molecule.editor.moveTab(props);
         });
 
-        molecule.editor.onTabChange((value, ev, extraProps) => {
-            molecule.editor.changeTab(value, ev, extraProps);
+        molecule.editor.onChangeTab((value, ev, { tabId, groupId }) => {
+            const tab = molecule.editor.getTabById(tabId, groupId);
+            if (!tab) return;
+            molecule.editor.updateTab({ ...tab, value }, groupId);
         });
 
         molecule.editor.onSplitEditorRight((activeTabId, groupId) => {

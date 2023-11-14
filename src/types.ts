@@ -22,6 +22,8 @@ import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
 
+export type { IEditorTab } from './models/editor';
+
 export type RequiredId<T extends { id: UniqueId }> = Partial<T> & Required<Pick<T, 'id'>>;
 
 export type BuiltinTheme = editor.BuiltinTheme;
@@ -320,3 +322,23 @@ export interface IBreadcrumbItemProps {
     icon?: IconType;
     render?: (item: IBreadcrumbItemProps) => React.ReactNode;
 }
+
+export enum DragAction {
+    /** dragOver */
+    hover = 'hover',
+    /** drop */
+    drop = 'drop',
+  };
+
+export type IDragProps = {
+    type: DragAction,
+    from: {
+        groupId: UniqueId,
+        tabId: UniqueId,
+    },
+    to: {
+        groupId: UniqueId,
+        tabId: UniqueId,
+    },
+    info: Record<string, any>
+};

@@ -31,7 +31,7 @@ export class BuiltinModel {
         EDITOR_MENU_CLOSE_OTHERS: 'editor.closeOthers',
         EDITOR_MENU_CLOSE_SAVED: 'editor.closeSaved',
         EDITOR_MENU_CLOSE: 'editor.close',
-        EDITOR_MENU_SPILIT: 'editor.split',
+        EDITOR_MENU_SPLIT: 'editor.split',
         SETTING_ID: 'Setting',
         PROBLEM_MODEL_ID: 'MO_PROBLEMS',
         PROBLEM_MODEL_NAME: 'Problems',
@@ -323,7 +323,7 @@ export class BuiltinModel {
         }),
         builtInEditorInitialActions: () => [
             {
-                id: this.constants.EDITOR_MENU_SPILIT,
+                id: this.constants.EDITOR_MENU_SPLIT,
                 name: 'Split Editor Right',
                 title: this.localize('editor.actions.splitRight', 'Split Editor Right'),
                 icon: 'split-horizontal',

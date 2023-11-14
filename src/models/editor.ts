@@ -2,17 +2,18 @@ import type { IBreadcrumbItemProps, IconType, IMenuItemProps, UniqueId } from 'm
 import type { editor as MonacoEditor } from 'monaco-editor';
 
 export enum EditorEvent {
-    // OnCloseTab = 'editor.closeTab',
-    // OnCloseAll = 'editor.closeAll',
-    // OnCloseOther = 'editor.closeOther',
-    // OnCloseToLeft = 'editor.closeToLeft',
-    // OnCloseToRight = 'editor.closeToRight',
-    // OnMoveTab = 'editor.moveTab',
+    // edit Editor event
+    OnChangeTab = 'editor.changeTab',
+    OnCloseTab = 'editor.closeTab',
+    OnCloseAll = 'editor.closeAll',
+    OnCloseOther = 'editor.closeOther',
+    OnCloseToLeft = 'editor.closeToLeft',
+    OnCloseToRight = 'editor.closeToRight',
+    OnMoveTab = 'editor.moveTab',
     OpenTab = 'editor.openTab',
     OnSelectTab = 'editor.selectTab',
     OnUpdateTab = 'editor.updateTab',
-    onActionsClick = 'editor.actionsClick',
-    // OnSplitEditorRight = 'editor.splitEditorRight',
+    OnSplitEditorRight = 'editor.splitEditorRight',
     onFocus = 'editor.onFocus',
     onCursorSelection = 'editor.onCursorSelection',
     onContextMenu = 'editor.onContextMenu',

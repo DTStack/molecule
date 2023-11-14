@@ -1,3 +1,5 @@
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Pane, SplitPane } from 'mo/client/components/split';
 import Welcome from 'mo/client/components/welcome';
 import useConnector from 'mo/client/hooks/useConnector';
@@ -14,6 +16,9 @@ export default function Editor({
     onContextMenu,
     onCursorSelection,
     onToolbarClick,
+    onCloseTab,
+    onChange,
+    onDrag,
 }: IEditorController) {
     const editor = useConnector('editor');
     const layout = useConnector('layout');
@@ -23,28 +28,33 @@ export default function Editor({
 
     const renderGroups = () => {
         return (
-            <SplitPane
-                sizes={layout.groupSplitPos}
-                split={layout.editorGroupDirection}
-                onChange={onPaneSizeChange}
-            >
-                {groups.map((g) => (
-                    <Pane key={g.id} minSize="220px">
-                        <Group
-                            group={g}
-                            contextMenu={data.get('editorTab')}
-                            toolbar={toolbar}
-                            options={editorOptions}
-                            onMount={onMount}
-                            onSelectTab={onSelectTab}
-                            onFocus={onFocus}
-                            onCursorSelection={onCursorSelection}
-                            onContextMenu={onContextMenu}
-                            onToolbarClick={onToolbarClick}
-                        />
-                    </Pane>
-                ))}
-            </SplitPane>
+            <DndProvider backend={HTML5Backend} context={window}>
+                <SplitPane
+                    sizes={layout.groupSplitPos}
+                    split={layout.editorGroupDirection}
+                    onChange={onPaneSizeChange}
+                >
+                    {groups.map((g) => (
+                        <Pane key={g.id} minSize="220px">
+                            <Group
+                                group={g}
+                                contextMenu={data.get('editorTab')}
+                                toolbar={toolbar}
+                                options={editorOptions}
+                                onMount={onMount}
+                                onSelectTab={onSelectTab}
+                                onFocus={onFocus}
+                                onCursorSelection={onCursorSelection}
+                                onContextMenu={onContextMenu}
+                                onToolbarClick={onToolbarClick}
+                                onCloseTab={onCloseTab}
+                                onDrag={onDrag}
+                                onChange={onChange}
+                            />
+                        </Pane>
+                    ))}
+                </SplitPane>
+            </DndProvider>
         );
     };
 

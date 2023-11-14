@@ -1,21 +1,20 @@
 import { useEffect, useRef } from 'react';
-import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
-import Dropdown from 'mo/client/components/dropdown';
 import Header from 'mo/client/components/header';
-import Icon from 'mo/client/components/icon';
 import MonacoEditor from 'mo/client/components/monaco';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type {
     ContextMenuEditorHandler,
     ContextMenuGroupHandler,
+    IDragProps,
     IMenuItemProps,
     UniqueId,
 } from 'mo/types';
 import { searchById } from 'mo/utils';
-import type { editor } from 'monaco-editor';
+import type { editor, IDisposable } from 'monaco-editor';
 
+import { Tab } from './components';
 import variables from './index.scss';
 
 export interface IGroupProps {
@@ -24,7 +23,7 @@ export interface IGroupProps {
     toolbar?: IMenuItemProps[];
     contextMenu?: IMenuItemProps[];
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
-    onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent) => void;
+    onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => void;
     onSelectTab?: (tabId: UniqueId, groupId: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
     onCursorSelection?: (
@@ -33,6 +32,8 @@ export interface IGroupProps {
     ) => void;
     onContextMenu?: ContextMenuEditorHandler;
     onToolbarClick?: ContextMenuGroupHandler;
+    onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDrag?: (params: IDragProps) => void;
 }
 
 export default function Group({
@@ -47,25 +48,37 @@ export default function Group({
     onCursorSelection,
     onContextMenu,
     onToolbarClick,
+    onCloseTab,
+    onDrag,
 }: IGroupProps) {
     const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
+    const disposesRef = useRef<IDisposable[]>([]);
 
-    const tab = group.activeTab ? group.data.find(searchById(group.activeTab)) : undefined;
+    const tab = group.activeTab ? group.data.find?.(searchById(group.activeTab)) : undefined;
+
 
     const handleMount = (editor: editor.IStandaloneCodeEditor) => {
         instance.current = editor;
+        if (instance.current) {
+            while (disposesRef?.current?.length) {
+                disposesRef.current.pop()?.dispose();
+            }
+        }
 
-        instance.current.onDidChangeModelContent((ev) => {
-            onChange?.(instance.current?.getModel()?.getValue(), ev);
-        });
+        const disposes: IDisposable[] = [];
 
-        instance.current.onDidFocusEditorText(() => {
+        disposes.push(instance.current.onDidChangeModelContent((ev) => {
+            onChange?.(instance.current?.getModel()?.getValue(), ev, { tabId: tab?.id, groupId: group?.id });
+        }));
+
+        disposes.push(instance.current.onDidFocusEditorText(() => {
             onFocus?.(instance.current!);
-        });
+        }));
 
-        instance.current.onDidChangeCursorSelection((ev) => {
+        disposes.push(instance.current.onDidChangeCursorSelection((ev) => {
             onCursorSelection?.(instance.current!, ev);
-        });
+        }));
+        disposesRef.current = disposes;
 
         if (!tab) return;
         if (tab.model) {
@@ -94,48 +107,36 @@ export default function Group({
                 }
             >
                 {group.data.map((tab) => (
-                    <Dropdown
+                    <Tab
                         key={tab.id}
-                        data={contextMenu}
-                        stopPropagation
-                        trigger="contextMenu"
-                        alignPoint={false}
-                        onClick={(item) => onContextMenu?.(item, tab.id, group.id)}
-                    >
-                        <div
-                            className={classNames(
-                                variables.tab,
-                                group.activeTab === tab.id && variables.active
-                            )}
-                            onClick={() => onSelectTab?.(tab.id, group.id)}
-                        >
-                            <Icon type={tab.icon} />
-                            {tab.name}
-                            <Icon
-                                type={tab.modified ? 'primitive-dot' : 'close'}
-                                className={classNames(
-                                    variables.extra,
-                                    tab.modified && variables.activeExtra
-                                )}
-                            />
-                        </div>
-                    </Dropdown>
+                        contextMenu={contextMenu}
+                        onContextMenu={onContextMenu}
+                        onCloseTab={onCloseTab}
+                        onSelectTab={onSelectTab}
+                        group={group}
+                        tab={tab}
+                        variables={variables}
+                        onDrag={onDrag}
+                    />
                 ))}
             </Header>
             <Breadcrumb className={variables.breadcrumb} routes={tab?.breadcrumb || []} />
             <div className={variables.content}>
-                {tab?.render?.(tab) || (
-                    <MonacoEditor
-                        options={{
-                            ...options,
-                            automaticLayout: true,
-                            value: tab?.value,
-                            language: tab?.language,
-                        }}
-                        key={tab?.id}
-                        onMount={handleMount}
-                    />
-                )}
+                {tab?.render
+                    ? tab?.render?.(tab)
+                    : (
+                        <MonacoEditor
+                            options={{
+                                ...options,
+                                automaticLayout: true,
+                                value: tab?.value,
+                                language: tab?.language,
+                            }}
+                            key={tab?.id}
+                            onMount={handleMount}
+                        />
+                    )
+                }
             </div>
         </div>
     );

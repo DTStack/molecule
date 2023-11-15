@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Button } from '@dtinsight/molecule/esm/client/components/button';
+// import LocaleNotification from '@dtinsight/molecule/esm/client/components/notification/localeNotification';
 import { ScrollBar } from '@dtinsight/molecule/esm/client/components/scrollBar';
 import type { IMoleculeContext } from '@dtinsight/molecule/esm/types';
 import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
@@ -218,6 +219,48 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             }, 5000);
         }
     };
+
+    const addNotification = function () {
+        const { showNotifications } = molecule.notification.getState();
+        if (!showNotifications) {
+            toggleNotification();
+        }
+        molecule.notification.add<string>([
+            {
+                id: randomId(),
+                value: 'Test Notification!',
+            },
+        ]);
+    };
+
+    // const addLocaleNotification = function () {
+    //     molecule.notification.add([
+    //         {
+    //             id: 'locale',
+    //             value: 'test',
+    //             render: () => <LocaleNotification />,
+    //         },
+    //     ]);
+    //     if (!molecule.notification.getState().showNotifications) {
+    //         molecule.notification.toggleNotification();
+    //     }
+    // };
+
+    const removeNotification = function () {
+        const { data = [], showNotifications } = molecule.notification.getState();
+        const lastItemId = data[data.length - 1]?.id;
+        if (!showNotifications) {
+            toggleNotification();
+        }
+        if (lastItemId) {
+            molecule.notification.remove(lastItemId);
+        }
+    };
+
+    const toggleNotification = function () {
+        molecule.notification.toggleNotification();
+    };
+
     // ====================================================================
 
     useEffect(() => {
@@ -259,6 +302,11 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <Button onClick={showHidePanel}>Show/Hide Panel</Button>
                 <h2>Output:</h2>
                 <Button onClick={updateOutput}>Update Output</Button>
+                <h2>Notification:</h2>
+                <Button onClick={addNotification}>Add Notification Item</Button>
+                {/* <Button onClick={addLocaleNotification}>Add a locale Notification</Button> */}
+                <Button onClick={removeNotification}>Remove Notification Item</Button>
+                <Button onClick={toggleNotification}>Toggle Notification</Button>
             </div>
         </ScrollBar>
     );

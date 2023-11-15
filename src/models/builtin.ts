@@ -403,6 +403,23 @@ export class BuiltinModel {
                 name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
             },
         ],
+        builtInNotification: () => ({
+            id: this.constants.NOTIFICATION_MODEL_ID,
+            name: this.constants.NOTIFICATION_MODEL_NAME,
+            sortIndex: 1,
+        }),
+        NOTIFICATION_CLEAR_ALL: () => ({
+            id: this.constants.NOTIFICATION_CLEAR_ALL_ID,
+            title: 'Clear All Notifications',
+            icon: 'clear-all',
+            group: 'inline',
+        }),
+        NOTIFICATION_HIDE: () => ({
+            id: this.constants.NOTIFICATION_HIDE_ID,
+            title: 'Hide Notifications',
+            icon: 'chevron-down',
+            group: 'inline',
+        }),
     };
     constructor(private localize: Localize) {}
 

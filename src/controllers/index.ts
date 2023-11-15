@@ -6,6 +6,7 @@ export * as explorer from './explorer';
 export * as folderTree from './folderTree';
 export * as layout from './layout';
 export * as menuBar from './menuBar';
+export * as notification from './notification';
 export * as output from './output';
 export * as panel from './panel';
 export * as sidebar from './sidebar';

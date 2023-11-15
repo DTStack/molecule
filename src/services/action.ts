@@ -28,6 +28,7 @@ import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
 import type { MonacoService } from './monaco';
+import type { NotificationService } from './notification';
 import type { OutputService } from './output';
 import type { PanelService } from './panel';
 import type { SidebarService } from './sidebar';
@@ -54,7 +55,8 @@ export class ActionService extends BaseService<ActionModel> {
         @inject('editor') private editor: EditorService,
         @inject('colorTheme') private colorTheme: ColorThemeService,
         @inject('monaco') private monaco: MonacoService,
-        @inject('editorTree') private editorTree: EditorTreeService
+        @inject('editorTree') private editorTree: EditorTreeService,
+        @inject('notification') private notification: NotificationService
     ) {
         super('action');
     }
@@ -77,6 +79,7 @@ export class ActionService extends BaseService<ActionModel> {
             editor: this.editor,
             colorTheme: this.colorTheme,
             editorTree: this.editorTree,
+            notification: this.notification,
         };
     };
 

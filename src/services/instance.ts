@@ -24,6 +24,7 @@ import { LayoutService } from './layout';
 import { LocaleService } from './locale';
 import { MenuBarService } from './menuBar';
 import { MonacoService } from './monaco';
+import { NotificationService } from './notification';
 import { OutputService } from './output';
 import { PanelService } from './panel';
 import { SidebarService } from './sidebar';
@@ -110,6 +111,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('action', ActionService);
         this.register('monaco', MonacoService);
         this.register('editorTree', EditorTreeService);
+        this.register('notification', NotificationService);
         // =====================================================
     }
 
@@ -151,6 +153,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const editor = this.resolve<EditorService>('editor');
         const colorTheme = this.resolve<ColorThemeService>('colorTheme');
         const editorTree = this.resolve<EditorTreeService>('editorTree');
+        const notification = this.resolve<NotificationService>('notification');
 
         const action = this.resolve<ActionService>('action');
 
@@ -173,6 +176,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const outputController = this.resolve(controller.output.OutputController);
         const editorController = this.resolve(controller.editor.EditorController);
         const editorTreeController = this.resolve(controller.editorTree.EditorTreeController);
+        const notificationController = this.resolve(controller.notification.NotificationController);
 
         // activate extensions
         extension.activate();
@@ -201,6 +205,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         colorTheme,
                         action,
                         editorTree,
+                        notification,
                     },
                     monaco,
                     localize: locale.localize,
@@ -216,6 +221,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         output: outputController,
                         editor: editorController,
                         editorTree: editorTreeController,
+                        notification: notificationController,
                     } as any,
                 },
             })

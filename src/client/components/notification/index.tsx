@@ -1,6 +1,5 @@
-import { memo, useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
-import { classNames, prefix } from 'mo/client/classNames';
+import { createPortal } from 'react-dom';
+import { classNames } from 'mo/client/classNames';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { INotificationController } from 'mo/controllers/notification';
 
@@ -14,8 +13,6 @@ export function Notification({
     onActionBarClick,
     onCloseNotification,
 }: Partial<INotificationController>) {
-    const wrapper = useRef<HTMLDivElement>();
-    const rootRef = useRef<ReturnType<typeof createRoot>>();
     const notification = useConnector('notification');
     const localize = useLocale();
 
@@ -26,13 +23,14 @@ export function Notification({
         ? localize('notification.title', 'notifications')
         : localize('notification.title.no', 'no new notifications');
 
-    useEffect(() => {
-        const container = document.querySelector(`.${prefix('mainBench')}`);
-        if (container) {
-            wrapper.current = wrapper.current || document.createElement('div');
-            container.appendChild(wrapper.current);
-            rootRef.current ||= createRoot(wrapper.current);
-            rootRef.current.render(
+    return (
+        <>
+            <Icon
+                className={classNames(variables.bell, showNotifications && variables.activeBell)}
+                onClick={onClick}
+                type={renderIcon}
+            />
+            {createPortal(
                 <NotificationPane
                     title={title}
                     id={id}
@@ -41,18 +39,11 @@ export function Notification({
                     showNotifications={showNotifications}
                     onActionBarClick={onActionBarClick}
                     onCloseNotification={onCloseNotification}
-                />
-            );
-        }
-    }, [id, data, actionBar, showNotifications, title, onActionBarClick, onCloseNotification]);
-
-    return (
-        <Icon
-            className={classNames(variables.bell, showNotifications && variables.activeBell)}
-            onClick={onClick}
-            type={renderIcon}
-        />
+                />,
+                document.body
+            )}
+        </>
     );
 }
 
-export default memo(Notification);
+export default Notification;

@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { INotificationController } from 'mo/controllers/notification';
 import { INotification } from 'mo/models/notification';
 
@@ -39,4 +38,4 @@ export function NotificationPane(props: INotification & Partial<INotificationCon
         </div>
     );
 }
-export default memo(NotificationPane);
+export default NotificationPane;

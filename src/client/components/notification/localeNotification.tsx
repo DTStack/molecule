@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button } from 'mo/client/components/button';
 
 import useLocale from '../../hooks/useLocale';
@@ -41,4 +41,4 @@ export function LocaleNotification() {
         </div>
     );
 }
-export default React.memo(LocaleNotification);
+export default LocaleNotification;

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Button } from '@dtinsight/molecule/esm/client/components/button';
-// import LocaleNotification from '@dtinsight/molecule/esm/client/components/notification/localeNotification';
+import LocaleNotification from '@dtinsight/molecule/esm/client/components/notification/localeNotification';
 import { ScrollBar } from '@dtinsight/molecule/esm/client/components/scrollBar';
 import type { IMoleculeContext } from '@dtinsight/molecule/esm/types';
 import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
@@ -233,18 +233,18 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         ]);
     };
 
-    // const addLocaleNotification = function () {
-    //     molecule.notification.add([
-    //         {
-    //             id: 'locale',
-    //             value: 'test',
-    //             render: () => <LocaleNotification />,
-    //         },
-    //     ]);
-    //     if (!molecule.notification.getState().showNotifications) {
-    //         molecule.notification.toggleNotification();
-    //     }
-    // };
+    const addLocaleNotification = function () {
+        molecule.notification.add([
+            {
+                id: 'locale',
+                value: 'test',
+                render: () => <LocaleNotification />,
+            },
+        ]);
+        if (!molecule.notification.getState().showNotifications) {
+            molecule.notification.toggleNotification();
+        }
+    };
 
     const removeNotification = function () {
         const { data = [], showNotifications } = molecule.notification.getState();
@@ -304,7 +304,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <Button onClick={updateOutput}>Update Output</Button>
                 <h2>Notification:</h2>
                 <Button onClick={addNotification}>Add Notification Item</Button>
-                {/* <Button onClick={addLocaleNotification}>Add a locale Notification</Button> */}
+                <Button onClick={addLocaleNotification}>Add a locale Notification</Button>
                 <Button onClick={removeNotification}>Remove Notification Item</Button>
                 <Button onClick={toggleNotification}>Toggle Notification</Button>
             </div>

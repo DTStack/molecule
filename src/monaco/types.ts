@@ -67,7 +67,10 @@ interface IQuickPick<T> {
     hide(): void;
 }
 
+type QuickAccessController = any;
+
 interface IQuickInputService {
+    quickAccess: QuickAccessController;
     /**
      * Provides raw access to the quick pick controller.
      */

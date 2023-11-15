@@ -1,5 +1,6 @@
 import { IContributeType, type IExtension, UniqueId } from 'mo/types';
 
+import QuickJumpToLineAction from './quickJumpToLineAction';
 import QuickSelectThemeAction from './quickSelectThemeAction';
 import QuickTogglePanelAction from './quickTogglePanelAction';
 import QuickToggleSidebarAction from './quickToggleSideBarAction';
@@ -12,6 +13,7 @@ export const ExtendsActions: IExtension = {
             QuickSelectThemeAction,
             QuickTogglePanelAction,
             QuickToggleSidebarAction,
+            QuickJumpToLineAction,
         ],
     },
     activate: function (molecule): void {

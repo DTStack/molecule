@@ -26,13 +26,19 @@ export default function ActivityBarItem({
     if (hidden) return null;
 
     return (
-        <Dropdown data={data.contextMenu} onClick={onContextMenuClick} stopPropagation>
+        <Dropdown
+            data={data.contextMenu}
+            placement="rightTop"
+            onClick={onContextMenuClick}
+            stopPropagation
+        >
             <section>
                 <Dropdown
                     data={contextMenu}
                     trigger="contextMenu"
                     onClick={onContextMenuClick}
                     stopPropagation
+                    placement="rightTop"
                 >
                     <li
                         onClick={() => onClick?.(data)}

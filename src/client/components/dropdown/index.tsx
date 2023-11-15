@@ -5,6 +5,7 @@ import RcDropdown from 'rc-dropdown';
 import type { DropdownProps } from 'rc-dropdown/es/Dropdown';
 
 import Menu from '../menu';
+import placements from './placements';
 import './index.scss';
 
 type ActionType = Exclude<DropdownProps['trigger'], Array<any> | 'focus'>;
@@ -14,13 +15,13 @@ type ActionType = Exclude<DropdownProps['trigger'], Array<any> | 'focus'>;
  */
 type DropdownData = IMenuItemProps & { clone?: UniqueId };
 
-interface IDropdownProps
-    extends Pick<DropdownProps, 'children' | 'visible' | 'onVisibleChange' | 'placement'> {
+interface IDropdownProps extends Pick<DropdownProps, 'children' | 'visible' | 'onVisibleChange'> {
     trigger?: ActionType;
     data?: DropdownData[];
     alignPoint?: boolean;
     stopPropagation?: boolean;
     onClick?: ContextMenuEventHandler;
+    placement?: keyof typeof placements;
 }
 
 export default function Dropdown({
@@ -75,7 +76,8 @@ export default function Dropdown({
             overlay={<Menu data={data} onClick={handleClick} />}
             minOverlayWidthMatchTrigger={false}
             alignPoint={alignPoint}
-            placement={placement}
+            placement={placement as any}
+            placements={placements}
         >
             {/* Children should support onClick and onContextMenu event */}
             {React.cloneElement(children, { ...events })}

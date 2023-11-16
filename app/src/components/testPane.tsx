@@ -221,11 +221,11 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
 
     const addNotification = function () {
-        const { showNotifications } = molecule.notification.getState();
-        if (!showNotifications) {
+        const { visible } = molecule.notification.getState();
+        if (!visible) {
             toggleNotification();
         }
-        molecule.notification.add<string>([
+        molecule.notification.add([
             {
                 id: randomId(),
                 value: 'Test Notification!',
@@ -241,15 +241,15 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 render: () => <LocaleNotification />,
             },
         ]);
-        if (!molecule.notification.getState().showNotifications) {
-            molecule.notification.toggleNotification();
+        if (!molecule.notification.getState().visible) {
+            toggleNotification();
         }
     };
 
     const removeNotification = function () {
-        const { data = [], showNotifications } = molecule.notification.getState();
+        const { data = [], visible } = molecule.notification.getState();
         const lastItemId = data[data.length - 1]?.id;
-        if (!showNotifications) {
+        if (!visible) {
             toggleNotification();
         }
         if (lastItemId) {
@@ -258,7 +258,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
 
     const toggleNotification = function () {
-        molecule.notification.toggleNotification();
+        molecule.notification.setNotificationVisibility((visible) => !visible);
     };
 
     // ====================================================================

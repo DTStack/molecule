@@ -1,6 +1,6 @@
 import Notification from 'mo/client/components/notification';
 import { BaseController } from 'mo/glue';
-import { INotificationItem } from 'mo/models/notification';
+import { INotificationItem, NotificationEvent } from 'mo/models/notification';
 import type { IStatusBarItem } from 'mo/models/statusBar';
 import type { BuiltinService } from 'mo/services/builtin';
 import { NotificationService } from 'mo/services/notification';
@@ -34,7 +34,6 @@ export class NotificationController extends BaseController implements INotificat
             /* istanbul ignore next */
             const defaultNotification = {
                 ...builtInNotification,
-                alignment: 'right',
                 actionBar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(Boolean),
                 render: () => (
                     <Notification
@@ -52,26 +51,18 @@ export class NotificationController extends BaseController implements INotificat
     }
 
     public onCloseNotification = (item: INotificationItem<any>): void => {
-        this.notification.remove(item.id);
+        this.emit(NotificationEvent.onCloseNotification, item);
     };
 
     public toggleNotifications() {
-        this.notification.toggleNotification();
+        this.emit(NotificationEvent.toggleNotifications);
     }
 
     public onClick = () => {
-        this.toggleNotifications();
+        this.emit(NotificationEvent.onClick);
     };
 
     public onActionBarClick = (item: IMenuItemProps) => {
-        const state = this.builtin.getState();
-        const { NOTIFICATION_CLEAR_ALL_ID, NOTIFICATION_HIDE_ID } = state.constants;
-        const action = item.id;
-
-        if (action === NOTIFICATION_CLEAR_ALL_ID) {
-            this.notification.clear();
-        } else if (action === NOTIFICATION_HIDE_ID) {
-            this.toggleNotifications();
-        }
+        this.emit(NotificationEvent.onActionBarClick, item);
     };
 }

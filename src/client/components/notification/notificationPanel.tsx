@@ -1,20 +1,28 @@
 import { INotificationController } from 'mo/controllers/notification';
 import { INotification } from 'mo/models/notification';
 
+import useLocale from '../../hooks/useLocale';
 import ActionBar from '../actionBar';
 import Icon from '../icon';
 import variables from './index.scss';
 
-export function NotificationPane(props: INotification & Partial<INotificationController>) {
+export function NotificationPane(
+    props: INotification<any> &
+        Pick<INotificationController, 'onActionBarClick' | 'onCloseNotification'>
+) {
     const {
-        title,
         data = [],
         actionBar = [],
-        showNotifications,
+        visible = false,
         onActionBarClick,
         onCloseNotification,
     } = props;
-    const display = showNotifications ? 'block' : 'none';
+    const localize = useLocale();
+    const hasNotifications = data.length > 0;
+    const title = hasNotifications
+        ? localize('notification.title', 'notifications')
+        : localize('notification.title.no', 'no new notifications');
+    const display = visible ? 'block' : 'none';
 
     return (
         <div className={variables.notification} style={{ display }}>
@@ -26,7 +34,7 @@ export function NotificationPane(props: INotification & Partial<INotificationCon
                 {data.map((item) => (
                     <div className={variables.item} key={item.id}>
                         <Icon
-                            title="Clear Notification"
+                            title={localize('notification.clear', 'Clear Notification')}
                             onClick={() => onCloseNotification?.(item)}
                             className={variables.close}
                             type="close"

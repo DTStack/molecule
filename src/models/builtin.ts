@@ -407,6 +407,7 @@ export class BuiltinModel {
             id: this.constants.NOTIFICATION_MODEL_ID,
             name: this.constants.NOTIFICATION_MODEL_NAME,
             sortIndex: 1,
+            alignment: 'right',
         }),
         NOTIFICATION_CLEAR_ALL: () => ({
             id: this.constants.NOTIFICATION_CLEAR_ALL_ID,

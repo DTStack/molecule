@@ -72,6 +72,7 @@ export type LocaleKind = {
     'panel.problems.empty': string;
     'notification.title': string;
     'notification.title.no': string;
+    'notification.clear': string;
     'notification.locale.title': string;
     'notification.locale.description': string;
     'notification.locale.button': string;

@@ -68,6 +68,7 @@
         "panel.toolbox.restoreSize": "恢复面板大小",
         "notification.title": "通知",
         "notification.title.no": "没有新通知",
+        "notification.clear": "清除通知",
         "notification.locale.title": "要使显示语言更改生效, 需要重新加载页面。",
         "notification.locale.description": "按下确认按钮来重新加载页面并更改显示语言。",
         "notification.locale.button": "确认重新加载",

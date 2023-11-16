@@ -1,5 +1,6 @@
 import { BaseController } from 'mo/glue';
 import { EditorEvent } from 'mo/models/editor';
+import { SettingsEvent } from 'mo/models/setting';
 import { BuiltinService } from 'mo/services/builtin';
 import { ContextMenuService } from 'mo/services/contextMenu';
 import { EditorService } from 'mo/services/editor';
@@ -113,7 +114,15 @@ export class EditorController extends BaseController implements IEditorControlle
     };
 
     // Editor value onChange callback
-    public onChange = (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => {
+    public onChange = (
+        value: string | undefined,
+        ev: editor.IModelContentChangedEvent,
+        extraProps: { tabId?: UniqueId; groupId?: UniqueId }
+    ) => {
+        if (extraProps.tabId === this.builtin.getState().constants.SETTING_ID) {
+            this.emit(SettingsEvent.OnChange, value);
+        }
+
         this.emit(EditorEvent.OnChangeTab, value, ev, extraProps);
     };
 }

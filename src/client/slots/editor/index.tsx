@@ -1,8 +1,10 @@
+import { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Pane, SplitPane } from 'mo/client/components/split';
 import Welcome from 'mo/client/components/welcome';
 import useConnector from 'mo/client/hooks/useConnector';
+import useSettings from 'mo/client/hooks/useSettings';
 import type { IEditorController } from 'mo/controllers/editor';
 
 import Group from '../group';
@@ -23,8 +25,17 @@ export default function Editor({
     const editor = useConnector('editor');
     const layout = useConnector('layout');
     const { data } = useConnector('contextMenu');
+    const settings = useSettings();
 
     const { groups = [], current, entry = <Welcome />, editorOptions, toolbar } = editor;
+
+    const options = useMemo(
+        () => ({
+            ...editorOptions,
+            ...settings.editor,
+        }),
+        [editorOptions, settings.editor]
+    );
 
     const renderGroups = () => {
         return (
@@ -40,7 +51,7 @@ export default function Editor({
                                 group={g}
                                 contextMenu={data.get('editorTab')}
                                 toolbar={toolbar}
-                                options={editorOptions}
+                                options={options}
                                 onMount={onMount}
                                 onSelectTab={onSelectTab}
                                 onFocus={onFocus}

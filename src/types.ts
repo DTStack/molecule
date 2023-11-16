@@ -19,6 +19,7 @@ import type { MonacoService } from './services/monaco';
 import type { NotificationService } from './services/notification';
 import type { OutputService } from './services/output';
 import type { PanelService } from './services/panel';
+import type { SettingsService } from './services/setting';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
@@ -111,6 +112,7 @@ export interface IContext {
         action: ActionService;
         editorTree: EditorTreeService;
         notification: NotificationService;
+        settings: SettingsService;
     };
     monaco: MonacoService;
     controllers: { [key in keyof IContext['molecule']]: BaseController };

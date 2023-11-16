@@ -1,5 +1,5 @@
 import { Children, cloneElement, isValidElement } from 'react';
-import { omitBy } from 'lodash-es';
+import { merge, omitBy } from 'lodash-es';
 import type { IColorTheme } from 'mo/models/colorTheme';
 import {
     type ArraylizeOrSingle,
@@ -217,4 +217,39 @@ export function cloneMenuItem(item: IMenuItemProps): IMenuItemProps {
         id: `${item.id}$clone`,
         clone: item.id,
     };
+}
+
+/**
+ * It's converts a flatted object to a normal object,
+ *  eg: { 'a.b': 'test' }, result is : { a: { b: 'test' }}
+ * @param target flat target
+ */
+export function normalizeFlattedObject(target: Record<string, any>): Record<string, any> {
+    let normalized: Record<string, any> = {};
+
+    for (const prop in target) {
+        if (prop) {
+            const flattedProps = prop.split('.');
+            let prevProp = '';
+            let root: Record<string, any> = {};
+            let prevObj = root;
+            for (let i = 0; i < flattedProps.length; ++i) {
+                if (i === flattedProps.length) break;
+                const key = flattedProps[i];
+                const current = { [key]: '' };
+
+                if (prevProp) {
+                    prevObj[prevProp] = current;
+                }
+                prevObj = current;
+                prevProp = key;
+                if (i === 0) {
+                    root = current;
+                }
+            }
+            prevObj[prevProp] = target[prop];
+            normalized = merge(normalized, root);
+        }
+    }
+    return normalized;
 }

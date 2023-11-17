@@ -16,6 +16,7 @@ import type { LayoutService } from './services/layout';
 import type { LocaleService } from './services/locale';
 import type { MenuBarService } from './services/menuBar';
 import type { MonacoService } from './services/monaco';
+import type { NotificationService } from './services/notification';
 import type { OutputService } from './services/output';
 import type { PanelService } from './services/panel';
 import type { SidebarService } from './services/sidebar';
@@ -109,6 +110,7 @@ export interface IContext {
         colorTheme: ColorThemeService;
         action: ActionService;
         editorTree: EditorTreeService;
+        notification: NotificationService;
     };
     monaco: MonacoService;
     controllers: { [key in keyof IContext['molecule']]: BaseController };

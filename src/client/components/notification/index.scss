@@ -1,0 +1,115 @@
+@import '../../classNames/style.scss';
+
+$btn: prefix('btn');
+$bell: prefix('bell');
+$actionBar: prefix('actionBar');
+$notification: prefix('notification');
+
+$header: BEMElement($notification, 'header');
+$body: BEMElement($notification, 'body');
+$item: BEMElement($notification, 'item');
+$actionBarContainer: BEMElement($actionBar, 'container');
+
+$activeBell: BEMModifier($bell, 'active');
+$close: BEMModifier($notification, 'close');
+
+.#{$bell} {
+    height: 100%;
+    position: relative;
+
+    &::before {
+        vertical-align: sub;
+    }
+
+    &.#{$activeBell} {
+        &::after {
+            border: 5px solid;
+            border-color: transparent transparent var(--statusBar-background);
+            content: '';
+            height: 0;
+            left: 2px;
+            position: absolute;
+            top: -10px;
+            width: 0;
+        }
+    }
+}
+
+.#{$notification} {
+    background-color: var(--notifications-background);
+    bottom: 32px;
+    box-shadow: var(--widget-shadow) 0px 0px 8px 2px;
+    color: var(--notifications-foreground);
+    cursor: default;
+    display: none;
+    overflow: hidden;
+    position: fixed;
+    right: 8px;
+    z-index: 1000;
+
+    .#{$header} {
+        align-items: center;
+        direction: ltr;
+        display: flex;
+        height: 35px;
+        padding-left: 8px;
+        padding-right: 5px;
+
+        > span {
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .#{$actionBarContainer} {
+            flex: 1;
+
+            &__item .codicon {
+                height: 22px;
+                width: 22px;
+            }
+        }
+    }
+
+    .#{$body} {
+        max-height: 500px;
+        min-width: 450px;
+        overflow: hidden;
+        overflow-y: auto;
+        padding: 0 8px;
+        position: relative;
+
+        &:not(:empty) {
+            padding-bottom: 8px;
+        }
+    }
+
+    .#{$item} {
+        padding: 5px;
+        text-align: left;
+        font-size: 13px;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: var(--list-hoverBackground);
+        }
+    }
+
+    .#{$close} {
+        cursor: pointer;
+        float: right;
+    }
+
+    .#{$btn} {
+        color: var(--button-foreground);
+    }
+}
+
+:export {
+    bell: $bell;
+    activeBell: $activeBell;
+    notification: $notification;
+    header: $header;
+    body: $body;
+    item: $item;
+    close: $close;
+}

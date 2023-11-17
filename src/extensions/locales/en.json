@@ -68,6 +68,7 @@
         "panel.problems.empty": "No problems have been detected in the workspace.",
         "notification.title": "Notifications",
         "notification.title.no": "No new notifications",
+        "notification.clear": "Clear Notification",
         "notification.locale.title": "A reload is required for the change in display language to take effect.",
         "notification.locale.description": "Press the confirm button to reload and change the display language.",
         "notification.locale.button": "Confirm Reload",

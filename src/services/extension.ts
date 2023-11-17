@@ -24,6 +24,7 @@ import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
+import type { NotificationService } from './notification';
 import type { OutputService } from './output';
 import type { PanelService } from './panel';
 import type { SidebarService } from './sidebar';
@@ -98,7 +99,8 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         @inject('editor') private editor: EditorService,
         @inject('colorTheme') private colorTheme: ColorThemeService,
         @inject('action') private action: ActionService,
-        @inject('editorTree') private editorTree: EditorTreeService
+        @inject('editorTree') private editorTree: EditorTreeService,
+        @inject('notification') private notification: NotificationService
     ) {
         super('extension');
         this.state = new ExtensionModel();
@@ -123,6 +125,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             colorTheme: this.colorTheme,
             action: this.action,
             editorTree: this.editorTree,
+            notification: this.notification,
         };
     };
 

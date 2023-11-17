@@ -1,5 +1,6 @@
 import { BaseController } from 'mo/glue';
 import { SettingsService } from 'mo/services/setting';
+import { flatObject } from 'mo/utils';
 import { inject, injectable } from 'tsyringe';
 
 export interface ISettingsController extends BaseController {}
@@ -12,9 +13,8 @@ export class SettingsController extends BaseController implements ISettingsContr
     }
 
     private initView() {
-        this.settings.update({
-            'editor.fontSize': 12,
-            'editor.tabSize': 4,
+        import('../const/options').then((options) => {
+            this.settings.update(flatObject({ editor: options.default }));
         });
     }
 }

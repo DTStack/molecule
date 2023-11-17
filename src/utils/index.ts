@@ -253,3 +253,26 @@ export function normalizeFlattedObject(target: Record<string, any>): Record<stri
     }
     return normalized;
 }
+/**
+ * It's converts an object to a flatted object,
+ * eg: { a: { b: 'test' }}, result is : { 'a.b': 'test' }
+ * @param target flat target
+ */
+export function flatObject(target: Record<string, any>): Record<string, any> {
+    const flatted: Record<string, any> = {};
+    const recurse = (parent: string, target: Record<string, any>) => {
+        for (const prop in target) {
+            if (prop) {
+                const value = target[prop];
+                const path = parent ? `${parent}.${prop}` : prop;
+                if (typeof value === 'object') {
+                    recurse(path, value);
+                } else {
+                    flatted[path] = value;
+                }
+            }
+        }
+    };
+    recurse('', target);
+    return flatted;
+}

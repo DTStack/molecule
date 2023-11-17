@@ -31,8 +31,8 @@ export default function Editor({
 
     const options = useMemo(
         () => ({
-            ...editorOptions,
             ...settings.editor,
+            ...editorOptions,
         }),
         [editorOptions, settings.editor]
     );

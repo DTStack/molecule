@@ -332,17 +332,19 @@ export enum DragAction {
     hover = 'hover',
     /** drop */
     drop = 'drop',
-  };
+}
 
 export type IDragProps = {
-    type: DragAction,
+    type: DragAction;
     from: {
-        groupId: UniqueId,
-        tabId: UniqueId,
-    },
+        groupId: UniqueId;
+        tabId: UniqueId;
+    };
     to: {
-        groupId: UniqueId,
-        tabId: UniqueId,
-    },
-    info: Record<string, any>
+        groupId: UniqueId;
+        tabId: UniqueId;
+    };
+    info: Record<string, any>;
 };
+
+export type IEditorOptions = editor.IEditorOptions;

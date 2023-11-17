@@ -1,16 +1,11 @@
 import { cloneDeepWith } from 'lodash-es';
 import { BaseService } from 'mo/glue';
-import {
-    EditorEvent,
-    EditorGroupModel,
-    EditorModel,
-    IEditorOptions,
-    type IEditorTab,
-} from 'mo/models/editor';
+import { EditorEvent, EditorGroupModel, EditorModel, type IEditorTab } from 'mo/models/editor';
 import type {
     ContextMenuEditorHandler,
     ContextMenuGroupHandler,
     IDragProps,
+    IEditorOptions,
     IMenuItemProps,
     RequiredId,
     UniqueId,
@@ -163,22 +158,21 @@ export interface IEditorService extends BaseService<EditorModel> {
     /**
      * Listen to the tabs Editor values change
      */
-    onChangeTab(callback: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId: UniqueId; groupId: UniqueId }) => void): void;
+    onChangeTab(
+        callback: (
+            value: string | undefined,
+            ev: editor.IModelContentChangedEvent,
+            extraProps: { tabId: UniqueId; groupId: UniqueId }
+        ) => void
+    ): void;
 }
 
 @injectable()
 export class EditorService extends BaseService<EditorModel> implements IEditorService {
     protected state: EditorModel;
-    // protected defaultActions: IEditorActionsProps[] = [];
-    // protected defaultMenus: IMenuItemProps[] = [];
-    // protected explorerService: IExplorerService;
-    // protected layoutService: ILayoutService;
 
     constructor(@inject('builtin') private builtin: BuiltinService) {
         super('editor');
-        // this.state = container.resolve(EditorModel);
-        // this.explorerService = container.resolve(ExplorerService);
-        // this.layoutService = container.resolve(LayoutService);
         this.state = new EditorModel();
     }
 
@@ -404,17 +398,6 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         return groups!.findIndex(searchById(id));
     }
 
-    // public getGroupIdByTab(tabId: UniqueId) {
-    //     const { groups = [] } = this.state;
-    //     const isOpened = this.isOpened(tabId, groups);
-    //     if (isOpened) {
-    //         const targetGroup = groups.find((group) => this.getTabById(tabId, group.id!))!;
-    //         return targetGroup.id!;
-    //     } else {
-    //         return null;
-    //     }
-    // }
-
     public setActive(tabId: UniqueId, groupId: UniqueId) {
         const group = this.getGroupById(groupId);
 
@@ -442,12 +425,6 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
             });
         }
     }
-
-    // public updateCurrentGroup(currentValues: Partial<IEditorGroup>) {
-    //     const { current } = this.state;
-    //     const nextGroup = Object.assign({}, current, currentValues);
-    //     this.setState({ current: nextGroup });
-    // }
 
     private createGroup(tab: IEditorTab<any>) {
         return new EditorGroupModel(randomId(), [tab], tab.id);
@@ -549,7 +526,13 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         this.subscribe(EditorEvent.OpenTab, callback);
     }
 
-    public onChangeTab(callback: (value: string, ev: editor.IModelContentChangedEvent, extraProps: { tabId: UniqueId; groupId: UniqueId; }) => void): void {
+    public onChangeTab(
+        callback: (
+            value: string,
+            ev: editor.IModelContentChangedEvent,
+            extraProps: { tabId: UniqueId; groupId: UniqueId }
+        ) => void
+    ): void {
         this.subscribe(EditorEvent.OnChangeTab, callback);
     }
 
@@ -580,5 +563,4 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     public onSplitEditorRight(callback: (activeTabId: UniqueId, groupId: UniqueId) => void): void {
         this.subscribe(EditorEvent.OnSplitEditorRight, callback);
     }
-
 }

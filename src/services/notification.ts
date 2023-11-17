@@ -99,12 +99,13 @@ export class NotificationService
 
     public add(items: INotificationItem[]) {
         if (items && items.length) {
-            items.forEach((item) => {
-                if (item.id === undefined) item.id = randomId();
-                item.status = NotificationStatus.WaitRead;
-            });
+            const nextItems = items.map((item) => ({
+                ...item,
+                id: item.id === undefined ? randomId() : item.id,
+                status: NotificationStatus.WaitRead,
+            }));
             this.setState((prev) => ({
-                data: [...prev.data, ...items],
+                data: [...prev.data, ...nextItems],
             }));
         }
     }

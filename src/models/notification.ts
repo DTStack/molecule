@@ -23,17 +23,16 @@ export class NotificationModel<T> implements INotification<T> {
     constructor(
         public data: INotificationItem<T>[] = [],
         public visible: boolean = false,
-        public actionBar: IMenuItemProps[] = [],
-        public render: () => React.ReactNode = () => null
+        public actionBar: IMenuItemProps[] = []
     ) {}
 }
 
 /**
  * The notification event definition
  */
- export enum NotificationEvent {
+export enum NotificationEvent {
     onClick = 'notification.onClick',
     onActionBarClick = 'notification.onContextMenu',
     onCloseNotification = 'notification.onCloseNotification',
-    toggleNotifications = 'notification.toggleNotifications'
+    toggleNotifications = 'notification.toggleNotifications',
 }

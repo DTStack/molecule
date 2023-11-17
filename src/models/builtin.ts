@@ -69,7 +69,6 @@ export class BuiltinModel {
         ACTION_QUICK_REDO: 'editor.action.redo',
         ACTION_QUICK_CREATE_FILE: 'workbench.action.quickCreateFile',
         ACTION_QUICK_CREATE_FOLDER: 'workbench.action.quickCreateFolder',
-        ACTION_QUICK_ACCESS_SETTINGS: 'workbench.action.quickAccessSettings',
         ACTION_SELECT_LOCALE: 'workbench.action.selectLocale',
         ACTIVITY_BAR_GLOBAL_SETTINGS: 'global.menu.settings',
         ACTIVITY_BAR_GLOBAL_ACCOUNT: 'global.menu.account',
@@ -219,20 +218,7 @@ export class BuiltinModel {
                 title: this.localize('menu.settings', 'Settings'),
                 icon: 'settings-gear',
                 alignment: 'bottom',
-                contextMenu: [
-                    {
-                        id: this.constants.ACTION_QUICK_COMMAND,
-                        name: this.localize('menu.commandPalette', 'Command Palette'),
-                    },
-                    {
-                        id: this.constants.ACTION_QUICK_ACCESS_SETTINGS,
-                        name: this.localize('menu.settings', 'Settings'),
-                    },
-                    // {
-                    //     id: this.constants.ACTION_SELECT_THEME,
-                    //     name: this.localize('menu.colorTheme', 'Color Theme'),
-                    // },
-                ],
+                contextMenu: [],
             },
         ],
         contextMenuData: () => [

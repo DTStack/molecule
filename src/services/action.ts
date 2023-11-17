@@ -31,6 +31,7 @@ import type { MonacoService } from './monaco';
 import type { NotificationService } from './notification';
 import type { OutputService } from './output';
 import type { PanelService } from './panel';
+import type { SettingsService } from './setting';
 import type { SidebarService } from './sidebar';
 import type { StatusBarService } from './statusBar';
 
@@ -56,7 +57,8 @@ export class ActionService extends BaseService<ActionModel> {
         @inject('colorTheme') private colorTheme: ColorThemeService,
         @inject('monaco') private monaco: MonacoService,
         @inject('editorTree') private editorTree: EditorTreeService,
-        @inject('notification') private notification: NotificationService
+        @inject('notification') private notification: NotificationService,
+        @inject('settings') private settings: SettingsService
     ) {
         super('action');
     }
@@ -80,6 +82,7 @@ export class ActionService extends BaseService<ActionModel> {
             colorTheme: this.colorTheme,
             editorTree: this.editorTree,
             notification: this.notification,
+            settings: this.settings,
         };
     };
 

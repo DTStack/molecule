@@ -4,7 +4,11 @@ import { Direction, FunctionalOrSingle } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 import type { BuiltinService } from './builtin';
+import type { ColorThemeService } from './colorTheme';
+import type { EditorService } from './editor';
+import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
+import type { SettingsService } from './setting';
 
 export interface ILayoutService extends BaseService<ILayout> {
     /**
@@ -63,6 +67,10 @@ export interface ILayoutService extends BaseService<ILayout> {
      */
     setAuxiliaryBar(hidden: FunctionalOrSingle<boolean>): void;
     /**
+     * Access setting tab on editor
+     */
+    accessSettings(): void;
+    /**
      * Reset all layout data as default value
      */
     reset(): void;
@@ -73,7 +81,11 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
     protected state: ILayout;
     constructor(
         @inject('menuBar') private menuBar: MenuBarService,
-        @inject('builtin') private builtin: BuiltinService
+        @inject('builtin') private builtin: BuiltinService,
+        @inject('editor') private editor: EditorService,
+        @inject('settings') private settings: SettingsService,
+        @inject('locale') private locale: LocaleService,
+        @inject('colorTheme') private colorTheme: ColorThemeService
     ) {
         super('layout');
         this.state = new LayoutModel();
@@ -198,6 +210,30 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
                 hidden: typeof hidden === 'function' ? hidden(prev.auxiliaryBar.hidden) : hidden,
             },
         }));
+    }
+
+    public accessSettings() {
+        const { SETTING_ID } = this.builtin.getState().constants;
+        const settings: Record<string, any> = {
+            locale: this.locale.getState().current,
+            colorTheme: this.colorTheme.getState().current,
+            ...this.settings.getAll(),
+        };
+        const { current } = this.editor.getState();
+        if (!current || !this.editor.getTabById(SETTING_ID, current)) {
+            this.editor.open(
+                {
+                    id: SETTING_ID,
+                    name: 'Settings',
+                    icon: 'file',
+                    value: JSON.stringify(settings, null, 4),
+                    language: 'json',
+                },
+                current
+            );
+        } else {
+            this.editor.setActive(SETTING_ID, current);
+        }
     }
 
     public reset() {

@@ -1,4 +1,10 @@
-import type { IBreadcrumbItemProps, IconType, IMenuItemProps, UniqueId } from 'mo/types';
+import type {
+    IBreadcrumbItemProps,
+    IconType,
+    IEditorOptions,
+    IMenuItemProps,
+    UniqueId,
+} from 'mo/types';
 import type { editor as MonacoEditor } from 'monaco-editor';
 
 export enum EditorEvent {
@@ -19,8 +25,6 @@ export enum EditorEvent {
     onContextMenu = 'editor.onContextMenu',
     onToolbarClick = 'editor.onToolbarClick',
 }
-
-export type IEditorOptions = MonacoEditor.IEditorOptions & MonacoEditor.IGlobalEditorOptions;
 
 export interface IEditorTab<T> {
     id: UniqueId;

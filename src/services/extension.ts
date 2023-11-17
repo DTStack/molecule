@@ -27,6 +27,7 @@ import type { MenuBarService } from './menuBar';
 import type { NotificationService } from './notification';
 import type { OutputService } from './output';
 import type { PanelService } from './panel';
+import type { SettingsService } from './setting';
 import type { SidebarService } from './sidebar';
 import type { StatusBarService } from './statusBar';
 
@@ -100,7 +101,8 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         @inject('colorTheme') private colorTheme: ColorThemeService,
         @inject('action') private action: ActionService,
         @inject('editorTree') private editorTree: EditorTreeService,
-        @inject('notification') private notification: NotificationService
+        @inject('notification') private notification: NotificationService,
+        @inject('settings') private settings: SettingsService
     ) {
         super('extension');
         this.state = new ExtensionModel();
@@ -126,6 +128,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             action: this.action,
             editorTree: this.editorTree,
             notification: this.notification,
+            settings: this.settings,
         };
     };
 

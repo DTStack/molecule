@@ -19,6 +19,7 @@ import type { MonacoService } from './services/monaco';
 import type { NotificationService } from './services/notification';
 import type { OutputService } from './services/output';
 import type { PanelService } from './services/panel';
+import type { SettingsService } from './services/setting';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { BaseController } from './glue';
@@ -111,6 +112,7 @@ export interface IContext {
         action: ActionService;
         editorTree: EditorTreeService;
         notification: NotificationService;
+        settings: SettingsService;
     };
     monaco: MonacoService;
     controllers: { [key in keyof IContext['molecule']]: BaseController };
@@ -330,17 +332,19 @@ export enum DragAction {
     hover = 'hover',
     /** drop */
     drop = 'drop',
-  };
+}
 
 export type IDragProps = {
-    type: DragAction,
+    type: DragAction;
     from: {
-        groupId: UniqueId,
-        tabId: UniqueId,
-    },
+        groupId: UniqueId;
+        tabId: UniqueId;
+    };
     to: {
-        groupId: UniqueId,
-        tabId: UniqueId,
-    },
-    info: Record<string, any>
+        groupId: UniqueId;
+        tabId: UniqueId;
+    };
+    info: Record<string, any>;
 };
+
+export type IEditorOptions = editor.IEditorOptions;

@@ -12,7 +12,7 @@ import {
 import { type IMoleculeContext, KeybindingWeight } from 'mo/types';
 
 export default class QuickSelectThemeAction extends BaseAction {
-    static readonly ID = 'workbench.action.selectTheme';
+    static readonly ID = 'menu.colorTheme';
 
     constructor(private ctx: IMoleculeContext) {
         super({

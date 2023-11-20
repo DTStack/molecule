@@ -284,7 +284,7 @@ export interface IExtension {
      * added the Extension instance.
      * @param ctx The Context of Extension instance
      */
-    activate(ctx: IMoleculeContext): void;
+    activate(ctx: IMoleculeContext, monaco: MonacoService): void;
     /**
      * Do something when the Extension disposing.
      * For example, you can recover the UI state, or remove the Objects in memory.

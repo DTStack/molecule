@@ -1,9 +1,11 @@
 import { IExtension } from 'mo/types';
 
+import { QuickAccessCommandAction } from '../actions/quickAccessCommandAction';
+
 export const ExtendsMenuBar: IExtension = {
     id: 'ExtendsMenuBar',
     name: 'Extend The Default MenuBar',
-    activate: function (molecule): void {
+    activate: function (molecule, monaco): void {
         molecule.menuBar.onSelect((menuId) => {
             const {
                 MENU_VIEW_PANEL,
@@ -32,6 +34,10 @@ export const ExtendsMenuBar: IExtension = {
                 }
                 case MENU_VIEW_ACTIVITYBAR: {
                     molecule.layout.setActivityBarVisibility((prev) => !prev);
+                    break;
+                }
+                case QuickAccessCommandAction.ID: {
+                    monaco.commandService.executeCommand(QuickAccessCommandAction.ID);
                     break;
                 }
 

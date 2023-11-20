@@ -24,6 +24,7 @@ import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
+import type { MonacoService } from './monaco';
 import type { NotificationService } from './notification';
 import type { OutputService } from './output';
 import type { PanelService } from './panel';
@@ -102,7 +103,8 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         @inject('action') private action: ActionService,
         @inject('editorTree') private editorTree: EditorTreeService,
         @inject('notification') private notification: NotificationService,
-        @inject('settings') private settings: SettingsService
+        @inject('settings') private settings: SettingsService,
+        @inject('monaco') private monaco: MonacoService
     ) {
         super('extension');
         this.state = new ExtensionModel();
@@ -186,7 +188,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         const ctx = this.getContext();
         extensions.filter(this._predicate).forEach((extension) => {
             if (!this.isExtension(extension)) return;
-            extension.activate(ctx);
+            extension.activate(ctx, this.monaco);
         });
     }
 

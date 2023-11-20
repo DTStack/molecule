@@ -9,15 +9,6 @@ import { inject, injectable } from 'tsyringe';
 
 export interface IMenuBarController extends BaseController {
     onSelect: (item: IMenuItemProps) => void;
-    // updateStatusBar?: () => void;
-    // updateMenuBar?: () => void;
-    // updateActivityBar?: () => void;
-    // updateSideBar?: () => void;
-    // updateMenuBarMode?: (mode: MenuBarModeLiteral) => void;
-    // getMenuBarDataByMode?: (
-    //     mode: MenuBarModeLiteral,
-    //     menuData: IMenuItemProps[]
-    // ) => IMenuItemProps[];
 }
 
 @injectable()

@@ -32,7 +32,7 @@ export const ExtendsEditor: IExtension = {
         molecule.editor.onChangeTab((value, ev, { tabId, groupId }) => {
             const tab = molecule.editor.getTabById(tabId, groupId);
             if (!tab) return;
-            molecule.editor.updateTab({ ...tab, value }, groupId);
+            molecule.editor.updateTab({ ...tab, value, modified: true }, groupId);
         });
 
         molecule.editor.onSplitEditorRight((activeTabId, groupId) => {

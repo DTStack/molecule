@@ -5,7 +5,7 @@ import { FolderTreeEvent } from 'mo/models/folderTree';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { FolderTreeService } from 'mo/services/folderTree';
-import type { UniqueId } from 'mo/types';
+import type { KeyboardEventHandler, UniqueId } from 'mo/types';
 import type { TreeNodeModel } from 'mo/utils/tree';
 import { inject, injectable } from 'tsyringe';
 
@@ -20,6 +20,7 @@ export interface IFolderTreeController extends BaseController {
     readonly onDropTree?: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void;
     readonly onLoadData?: (treeNode: TreeNodeModel<any>) => Promise<void>;
     readonly onExpandKeys?: (expandKeys: UniqueId[]) => void;
+    readonly onFileKeyDown?: KeyboardEventHandler;
     // readonly onRightClick?: (treeNode: IFolderTreeNodeProps) => IMenuItemProps[];
 }
 
@@ -208,5 +209,9 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
 
     public onExpandKeys = (expandedKeys: UniqueId[]) => {
         this.emit(FolderTreeEvent.onExpandKeys, expandedKeys);
+    };
+
+    public onFileKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, node: TreeNodeModel<any>) => {
+        this.emit(FolderTreeEvent.onFileKeyDown, e, node);
     };
 }

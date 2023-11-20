@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { KeyboardEventHandler } from 'mo/types';
 import { TreeNodeModel } from 'mo/utils/tree';
 
 import variables from './index.scss';
@@ -20,6 +21,7 @@ interface ITreeNodeProps {
     onNodeDragOver?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDragEnd?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDrop?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
+    onFileKeyDown?: KeyboardEventHandler;
 }
 const INDENT = 8;
 
@@ -38,6 +40,7 @@ export default ({
     onNodeDragOver,
     onNodeDrop,
     onNodeDragEnd,
+    onFileKeyDown,
 }: ITreeNodeProps) => {
     const uuid = data.id;
     const ref = useRef<HTMLDivElement>(null);
@@ -77,6 +80,11 @@ export default ({
         onNodeDragEnd?.(e, data);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        onFileKeyDown?.(e, data);
+    };
+
     // calculate key automatically via parent path and self id
     const nodeKey = `${indent ? indent + '_' : ''}${data.id}`;
 
@@ -98,6 +106,7 @@ export default ({
             onDragEnter={handleDragEnter}
             onDragEnd={handleDragEnd}
             onDrop={handleDrop}
+            onKeyDown={handleKeyDown}
         >
             <div className={variables.indent} style={{ width: INDENT * indent }}>
                 {new Array(indent).fill('').map((_, index) => (

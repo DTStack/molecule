@@ -36,6 +36,7 @@ export default function FolderTree({
     onUpdateFileName,
     onDropTree,
     onExpandKeys,
+    onFileKeyDown,
 }: { panel: IExplorerPanelItem } & IFolderTreeController) {
     const folderTree = useConnector('folderTree');
     const { entry, current, data, expandKeys, loadedKeys, editing } = folderTree;
@@ -79,6 +80,8 @@ export default function FolderTree({
                                 type="text"
                                 defaultValue={node.name}
                                 onKeyDown={(e) => {
+                                    // stop propagation, avoid conflict to onKeyDown event
+                                    e.stopPropagation();
                                     if (e.keyCode === 13 || e.keyCode === 27) {
                                         onUpdateFileName?.({
                                             ...node,
@@ -95,6 +98,7 @@ export default function FolderTree({
                     }}
                     onLoadData={onLoadData}
                     onExpand={onExpandKeys}
+                    onFileKeyDown={onFileKeyDown}
                 />
             </div>
         </ScrollBar>

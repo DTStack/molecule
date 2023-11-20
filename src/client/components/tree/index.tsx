@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
-import type { UniqueId } from 'mo/types';
+import type { KeyboardEventHandler, UniqueId } from 'mo/types';
 import { TreeHelper, type TreeNodeModel } from 'mo/utils/tree';
 
 import Icon from '../icon';
@@ -31,6 +31,7 @@ export interface ITreeProps {
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
         node: ITreeNodeItemProps
     ) => void;
+    onFileKeyDown?: KeyboardEventHandler;
 }
 
 export default function Tree({
@@ -47,6 +48,7 @@ export default function Tree({
     onSelect,
     onLoadData,
     onTreeClick,
+    onFileKeyDown,
 }: ITreeProps) {
     const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
     const [activeKey, setActiveKey] = useState<string | null>(null);
@@ -307,6 +309,7 @@ export default function Tree({
                     onNodeDragOver={draggable ? handleDragOver : undefined}
                     onNodeDragEnd={draggable ? handleDragEnd : undefined}
                     onNodeDrop={draggable ? handleDrop : undefined}
+                    onFileKeyDown={onFileKeyDown}
                 />
             );
 

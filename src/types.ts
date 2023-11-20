@@ -378,3 +378,6 @@ type ISearchResultData = {
     breadcrumb: string[];
 };
 export type SearchResultItem = TreeNodeModel<ISearchResultData>;
+export type MouseEventHandler<T = HTMLDivElement> = (e: React.MouseEvent<T, MouseEvent>, node: TreeNodeModel<any>) => void;
+
+export type KeyboardEventHandler<T = HTMLDivElement> = (e: React.KeyboardEvent<T>, node: TreeNodeModel<any>) => void;

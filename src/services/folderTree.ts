@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
-import type { FileTypeLiteral, IMenuItemProps, UniqueId } from 'mo/types';
+import type { FileTypeLiteral, IMenuItemProps, KeyboardEventHandler, UniqueId } from 'mo/types';
 import logger from 'mo/utils/logger';
 import { TreeHelper, TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
@@ -81,6 +81,16 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @param menus
      */
     setFolderContextMenu: (menus: IMenuItemProps[]) => void;
+    /**
+     *
+     * @param id itemId
+     */
+    setEditing: (id: UniqueId) => void;
+    /**
+     * Listen to event about onKeyDown file item
+     * @params callback
+     */
+    onFileKeyDown(callback: KeyboardEventHandler): void;
     // /**
     //  * Listen to event about clicking rename button
     //  * @param callback
@@ -91,16 +101,16 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
     //  * @param callback
     //  */
     // onRemove(callback: (id: UniqueId) => void): void;
-    // /**
-    //  * Listen to update file or folder name
-    //  * @param callback
-    //  */
-    // onUpdateFileName(callback: (file: IFolderTreeNodeProps) => void): void;
-    // /**
-    //  * Listen to select a file
-    //  * @param callback
-    //  */
-    // onSelectFile(callback: (file: IFolderTreeNodeProps) => void): void;
+    /**
+     * Listen to update file or folder name
+     * @param callback
+     */
+    onUpdateFileName(callback: (file: TreeNodeModel<any>) => void): void;
+    /**
+     * Listen to select a file
+     * @param callback
+     */
+    onSelectFile(callback: (file: TreeNodeModel<any>) => void): void;
     // /**
     //  * Listen to drop event
     //  * @param treeData
@@ -131,15 +141,15 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
     //  */
     // onLoadData(
     //     callback: (
-    //         treeNode: IFolderTreeNodeProps,
-    //         callback: (treeNode: IFolderTreeNodeProps) => void
+    //         treeNode: TreeNodeModel<any>,
+    //         callback: (treeNode: TreeNodeModel<any>) => void
     //     ) => void
     // ): void;
-    // /**
-    //  * Callback for expanding tree node
-    //  * @param callback
-    //  */
-    // onExpandKeys(callback: (expandKeys: UniqueId[]) => void): void;
+    /**
+     * Callback for expanding tree node
+     * @param callback
+     */
+    onExpandKeys(callback: (expandKeys: UniqueId[]) => void): void;
 }
 
 @injectable()
@@ -283,6 +293,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.setState((prev) => ({
             ...prev,
             data: [...prev.data],
+            editing: undefined,
         }));
     }
 
@@ -303,6 +314,10 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
             entry,
         });
     }
+
+    public setEditing(id: UniqueId) {
+        this.setState({ editing: id });
+    };
 
     // ===================== Subscriptions =====================
     public onRename(callback: (id: UniqueId) => void) {
@@ -355,4 +370,8 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
     public onExpandKeys = (callback: (expandKeys: UniqueId[]) => void) => {
         this.subscribe(FolderTreeEvent.onExpandKeys, callback);
     };
+
+    public onFileKeyDown(callback: KeyboardEventHandler): void {
+        this.subscribe(FolderTreeEvent.onFileKeyDown, callback);
+    }
 }

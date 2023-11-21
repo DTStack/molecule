@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
-import type { FileTypeLiteral, IMenuItemProps, KeyboardEventHandler, UniqueId } from 'mo/types';
+import type { IMenuItemProps, KeyboardEventHandler, UniqueId } from 'mo/types';
 import logger from 'mo/utils/logger';
 import { TreeHelper, TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
@@ -91,16 +91,16 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @params callback
      */
     onFileKeyDown(callback: KeyboardEventHandler): void;
-    // /**
-    //  * Listen to event about clicking rename button
-    //  * @param callback
-    //  */
-    // onRename(callback: (id: UniqueId) => void): void;
-    // /**
-    //  * Listen to remove a node
-    //  * @param callback
-    //  */
-    // onRemove(callback: (id: UniqueId) => void): void;
+    /**
+     * Listen to event about clicking rename button
+     * @param callback
+     */
+    onRename(callback: (id: UniqueId) => void): void;
+    /**
+     * Listen to remove a node
+     * @param callback
+     */
+    onRemove(callback: (id: UniqueId) => void): void;
     /**
      * Listen to update file or folder name
      * @param callback
@@ -118,33 +118,33 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
     // onDropTree(
     //     callback: (source: IFolderTreeNodeProps, target: IFolderTreeNodeProps) => void
     // ): void;
-    // /**
-    //  * Listen to right click event
-    //  * @param callback
-    //  */
-    // onRightClick(callback: (treeData: IFolderTreeNodeProps, menus: IMenuItemProps[]) => void): void;
-    // /**
-    //  * Listen to create a node for folder tree
-    //  * @param callback
-    //  */
-    // onCreate(callback: (type: FileType, nodeId?: UniqueId) => void): void;
-    // /**
-    //  * Listen to the click event about the context menu except for built-in menus
-    //  * @param callback
-    //  */
-    // onContextMenu(
-    //     callback: (contextMenu: IMenuItemProps, treeNode?: IFolderTreeNodeProps) => void
-    // ): void;
-    // /**
-    //  * Callback for load folder tree data
-    //  * @param callback
-    //  */
-    // onLoadData(
-    //     callback: (
-    //         treeNode: TreeNodeModel<any>,
-    //         callback: (treeNode: TreeNodeModel<any>) => void
-    //     ) => void
-    // ): void;
+    /**
+     * Listen to right click event
+     * @param callback
+     */
+    onRightClick(callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeData: TreeNodeModel<any>) => void): void;
+    /**
+     * Listen to create a node for folder tree
+     * @param callback
+     */
+    onCreate(callback: (data: TreeNodeModel<any>, nodeId?: UniqueId) => void): void;
+    /**
+     * Listen to the click event about the context menu except for built-in menus
+     * @param callback
+     */
+    onContextMenu(
+        callback: (contextMenuItem: IMenuItemProps, treeNode?: TreeNodeModel<any>) => void
+    ): void;
+    /**
+     * Callback for load folder tree data
+     * @param callback
+     */
+    onLoadData(
+        callback: (
+            treeNode: TreeNodeModel<any>,
+            callback: (treeNode: TreeNodeModel<any>) => void
+        ) => void
+    ): void;
     /**
      * Callback for expanding tree node
      * @param callback
@@ -343,12 +343,12 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
     };
 
     public onRightClick = (
-        callback: (treeData: TreeNodeModel<any>, menus: IMenuItemProps[]) => void
+        callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeData: TreeNodeModel<any>) => void
     ) => {
         this.subscribe(FolderTreeEvent.onRightClick, callback);
     };
 
-    public onCreate = (callback: (type: FileTypeLiteral, nodeId?: UniqueId) => void) => {
+    public onCreate = (callback: (data: TreeNodeModel<any>, nodeId?: UniqueId) => void) => {
         this.subscribe(FolderTreeEvent.onCreate, callback);
     };
 

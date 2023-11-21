@@ -1,10 +1,13 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { Button } from 'mo/client/components/button';
 import Tree from 'mo/client/components/tree';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { IFolderTreeController } from 'mo/controllers/folderTree';
 import type { IExplorerPanelItem } from 'mo/models/explorer';
+import { FileTypes } from 'mo/types';
+import { randomId } from 'mo/utils';
+import { TreeNodeModel } from 'mo/utils/tree';
 
 import { ScrollBar } from '../../components/scrollBar';
 import variables from './index.scss';
@@ -37,9 +40,22 @@ export default function FolderTree({
     onDropTree,
     onExpandKeys,
     onFileKeyDown,
+    createTreeNode,
+    onRightClick,
+    onContextMenuClick,
 }: { panel: IExplorerPanelItem } & IFolderTreeController) {
     const folderTree = useConnector('folderTree');
     const { entry, current, data, expandKeys, loadedKeys, editing } = folderTree;
+
+    const handleCreateFolder = useCallback(() => {
+        createTreeNode?.({
+            id: randomId(),
+            name: 'molecule',
+            fileType: FileTypes.RootFolder,
+            icon: 'folder',
+            children: [],
+        });
+    }, []);
 
     const welcomePage = (
         <div data-content={panel.id}>
@@ -48,13 +64,17 @@ export default function FolderTree({
             ) : (
                 <div style={{ padding: '10px 5px' }}>
                     you have not yet opened a folder
-                    <Button>Add Folder</Button>
+                    <Button onClick={handleCreateFolder}>Add Folder</Button>
                 </div>
             )}
         </div>
     );
 
     if (!folderTree.data.length) return welcomePage;
+
+    const handleRightClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, info: TreeNodeModel<any>) => {
+        onRightClick?.(e, info);
+    };
 
     return (
         <ScrollBar isShowShadow>
@@ -70,7 +90,8 @@ export default function FolderTree({
                     onDropTree={onDropTree}
                     onSelect={onSelectFile}
                     onTreeClick={onSelectFile}
-                    // onRightClick={handleRightClick}
+                    onContextMenu={onContextMenuClick}
+                    onRightClick={handleRightClick}
                     renderTitle={(node) => {
                         if (node.id !== editing) return node.name;
                         return (

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
-import type { KeyboardEventHandler, UniqueId } from 'mo/types';
+import { FileTypes, type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
 import { TreeHelper, type TreeNodeModel } from 'mo/utils/tree';
 
 import Icon from '../icon';
@@ -32,6 +32,7 @@ export interface ITreeProps {
         node: ITreeNodeItemProps
     ) => void;
     onFileKeyDown?: KeyboardEventHandler;
+    onContextMenu?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
 }
 
 export default function Tree({
@@ -49,6 +50,7 @@ export default function Tree({
     onLoadData,
     onTreeClick,
     onFileKeyDown,
+    onContextMenu,
 }: ITreeProps) {
     const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
     const [activeKey, setActiveKey] = useState<string | null>(null);
@@ -232,7 +234,7 @@ export default function Tree({
     };
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => {
-        if (node.fileType === 'File') {
+        if (node.fileType === FileTypes.File) {
             // Can't drag into a file, so the target would to be the parent of this target
             const parentNode = getParentNodeViaNode(node);
             const dragParent = getParentNodeViaNode(dragInfo.current.dragNode!);
@@ -302,7 +304,7 @@ export default function Tree({
                         renderIcon(IconComponent, item.fileType === 'File', isExpand, isLoading)
                     }
                     renderTitle={() => title}
-                    onContextMenu={(e) => handleRightClick(e, item)}
+                    onRightClick={(e) => handleRightClick(e, item)}
                     onClick={(e) => handleNodeClick(item, e)}
                     onNodeDragStart={draggable ? handleDragStart : undefined}
                     onNodeDragEnter={draggable ? handleDragEnter : undefined}
@@ -310,6 +312,7 @@ export default function Tree({
                     onNodeDragEnd={draggable ? handleDragEnd : undefined}
                     onNodeDrop={draggable ? handleDrop : undefined}
                     onFileKeyDown={onFileKeyDown}
+                    onContextMenu={onContextMenu}
                 />
             );
 

@@ -1,5 +1,7 @@
 import { useRef } from 'react';
-import { KeyboardEventHandler } from 'mo/types';
+import Dropdown from 'mo/client/components/dropdown';
+import useConnector from 'mo/client/hooks/useConnector';
+import { IMenuItemProps, KeyboardEventHandler  } from 'mo/types';
 import { TreeNodeModel } from 'mo/utils/tree';
 
 import variables from './index.scss';
@@ -14,7 +16,7 @@ interface ITreeNodeProps {
     draggable?: boolean;
     renderIcon: () => JSX.Element | null;
     renderTitle: () => React.ReactNode;
-    onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
+    onRightClick?: React.MouseEventHandler<HTMLDivElement>;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
     onNodeDragStart?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDragEnter?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
@@ -22,6 +24,7 @@ interface ITreeNodeProps {
     onNodeDragEnd?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDrop?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onFileKeyDown?: KeyboardEventHandler;
+    onContextMenu?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
 }
 const INDENT = 8;
 
@@ -33,7 +36,7 @@ export default ({
     renderIcon,
     renderTitle,
     draggable,
-    onContextMenu,
+    onRightClick,
     onClick,
     onNodeDragStart,
     onNodeDragEnter,
@@ -41,9 +44,11 @@ export default ({
     onNodeDrop,
     onNodeDragEnd,
     onFileKeyDown,
+    onContextMenu,
 }: ITreeNodeProps) => {
     const uuid = data.id;
     const ref = useRef<HTMLDivElement>(null);
+    const { contextMenu } = useConnector('folderTree');
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -55,6 +60,10 @@ export default ({
         } catch (error) {
             // empty
         }
+    };
+
+    const handleContextMenu = (item: IMenuItemProps) => {
+        onContextMenu?.(item, data);
     };
 
     const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
@@ -89,32 +98,40 @@ export default ({
     const nodeKey = `${indent ? indent + '_' : ''}${data.id}`;
 
     return (
-        <div
-            ref={ref}
-            key={`${uuid}-${indent}`}
-            tabIndex={0}
-            data-indent={indent}
-            data-key={uuid}
-            data-id={`mo_treeNode_${nodeKey}`}
-            className={className}
-            title={name}
-            draggable={draggable}
-            onContextMenu={onContextMenu}
-            onClick={onClick}
-            onDragStart={handleDragStart}
-            onDragOver={handleDragOver}
-            onDragEnter={handleDragEnter}
-            onDragEnd={handleDragEnd}
-            onDrop={handleDrop}
-            onKeyDown={handleKeyDown}
+        <Dropdown
+            data={contextMenu}
+            // stopPropagation
+            trigger="contextMenu"
+            alignPoint={false}
+            onClick={handleContextMenu}
         >
-            <div className={variables.indent} style={{ width: INDENT * indent }}>
-                {new Array(indent).fill('').map((_, index) => (
-                    <div key={index} className={variables.guide} />
-                ))}
+            <div
+                ref={ref}
+                key={`${uuid}-${indent}`}
+                tabIndex={0}
+                data-indent={indent}
+                data-key={uuid}
+                data-id={`mo_treeNode_${nodeKey}`}
+                className={className}
+                title={name}
+                draggable={draggable}
+                onContextMenu={onRightClick}
+                onClick={onClick}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDragEnter={handleDragEnter}
+                onDragEnd={handleDragEnd}
+                onDrop={handleDrop}
+                onKeyDown={handleKeyDown}
+            >
+                <div className={variables.indent} style={{ width: INDENT * indent }}>
+                    {new Array(indent).fill('').map((_, index) => (
+                        <div key={index} className={variables.guide} />
+                    ))}
+                </div>
+                {renderIcon()}
+                <span className={variables.treeNodeTitle}>{renderTitle()}</span>
             </div>
-            {renderIcon()}
-            <span className={variables.treeNodeTitle}>{renderTitle()}</span>
-        </div>
+        </Dropdown>
     );
 };

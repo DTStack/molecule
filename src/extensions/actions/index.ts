@@ -1,5 +1,6 @@
 import { IContributeType, type IExtension, UniqueId } from 'mo/types';
 
+import { QuickAccessCommandAction } from './quickAccessCommandAction';
 import { QuickAccessSettingsAction } from './quickAccessSettingsAction';
 import QuickJumpToLineAction from './quickJumpToLineAction';
 import QuickSelectThemeAction from './quickSelectThemeAction';
@@ -16,16 +17,19 @@ export const ExtendsActions: IExtension = {
             QuickToggleSidebarAction,
             QuickJumpToLineAction,
             QuickAccessSettingsAction,
+            QuickAccessCommandAction,
         ],
     },
     activate: function (molecule): void {
         // append actions into settings' menu
         appendActionInMenu(QuickAccessSettingsAction);
         appendActionInMenu(QuickSelectThemeAction);
+        appendActionInMenu(QuickAccessCommandAction);
 
         // update menu's keybinding
         updateMenuKeybinding(QuickTogglePanelAction.ID);
         updateMenuKeybinding(QuickToggleSidebarAction.ID);
+        updateMenuKeybinding(QuickAccessCommandAction.ID);
 
         updateContextMenuKeybinding(QuickTogglePanelAction.ID, 'panel');
 

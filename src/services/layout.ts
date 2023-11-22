@@ -144,6 +144,9 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
                         : visibility,
             },
         }));
+
+        // ===================== effects =====================
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_ACTIVITYBAR);
     }
 
     public setStatusBarVisibility(visibility: FunctionalOrSingle<boolean>): void {

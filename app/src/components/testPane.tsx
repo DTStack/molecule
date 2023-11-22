@@ -220,6 +220,57 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         }
     };
 
+    const openFile = function () {
+        const input = document.createElement('input');
+        const getFile = (event: Event) => {
+            const input = event.target as HTMLInputElement;
+            const file = (input.files?.[0] || {
+                arrayBuffer: Promise.resolve(null),
+            }) as File;
+
+            input?.remove();
+            if (!file) return;
+
+            file.arrayBuffer().then((res) => {
+                if (!res) return;
+                const decoder = new TextDecoder();
+                const fileName = file.name;
+                const nameArr = fileName?.split('.') || [];
+                const typeAutomation: Record<string, string> = {
+                    js: 'javascript',
+                    jsx: 'javascript',
+                    ts: 'typescript',
+                    tsx: 'typescript',
+                    html: 'html',
+                    css: 'css',
+                    scss: 'css',
+                    less: 'css',
+                    json: 'json',
+                };
+                const extName = nameArr[nameArr.length - 1] || '';
+                const contentFile = {
+                    id: file.lastModified.toString() + fileName,
+                    name: fileName,
+                    icon: 'file',
+                    value: decoder.decode(res),
+                    language: typeAutomation[extName] || '',
+                    breadcrumb: [
+                        { id: 'molecule', name: 'molecule' },
+                        { id: 'editor', name: fileName, icon: 'file' },
+                    ],
+                };
+
+                molecule.editor.open(contentFile);
+            });
+        };
+
+        input.type = 'file';
+        input.hidden = true;
+        input.addEventListener('change', getFile, { once: true });
+        document.body.append(input);
+        input.click();
+    };
+
     const addNotification = function () {
         const { visible } = molecule.notification.getState();
         if (!visible) {
@@ -278,8 +329,9 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <Button onClick={newEditor}>New Editor</Button>
                 <Button onClick={updateWelcome}>Update Welcome Page</Button>
                 <Button onClick={updateOptions}>Update ReadOnly</Button>
-                <Button onClick={addAction}>Add excute action</Button>
-                <Button onClick={updateAction}>update excute action</Button>
+                <Button onClick={addAction}>Add Excute Action</Button>
+                <Button onClick={updateAction}>Update Excute Action</Button>
+                <Button onClick={openFile}>Open File</Button>
                 <h2>ActivityBar:</h2>
                 <Button onClick={handleAddActivityBar}>Add ActivityBar Item</Button>
                 <Button onClick={handleAddGloablActivityBar}>Add Global ActivityBar Item</Button>

@@ -68,7 +68,7 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
             | { source: IMenuItemProps; path: string; parent: IMenuItemProps | null }
             | undefined;
         while (stack.length) {
-            const { source, path, parent } = stack.shift()!;
+            const { source, path, parent } = stack.shift() as (typeof stack)[number];
             if (source.id === menuId) {
                 res = { source, path, parent };
             } else {
@@ -123,7 +123,7 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         this.setMenus([...data]);
     }
 
-    public remove(menuId: UniqueId): void {
+    public remove(menuId: UniqueId) {
         const { data } = this.state;
         const menuInfo = this.getReferenceMenu(menuId);
         if (!menuInfo) {
@@ -132,9 +132,11 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         }
         const { parent } = menuInfo;
         if (parent) {
-            const idx = parent.children!.findIndex((menu) => menu.id === menuId);
-            parent.children!.splice(idx, 1);
-            this.setMenus([...data]);
+            const idx = parent.children?.findIndex((menu) => menu.id === menuId);
+            if (typeof idx === 'number' && idx > -1) {
+                parent.children?.splice(idx, 1);
+                this.setMenus([...data]);
+            }
         } else {
             // Root menu doesn't have parent node
             const root = data.filter((i) => i.id !== menuId);
@@ -142,7 +144,7 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
         }
     }
 
-    public update(menuItem: RequiredId<IMenuItemProps>): void {
+    public update(menuItem: RequiredId<IMenuItemProps>) {
         const { data } = this.state;
         const menuInfo = this.getReferenceMenu(menuItem.id);
         if (!menuInfo) {

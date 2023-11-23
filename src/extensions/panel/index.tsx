@@ -40,8 +40,14 @@ export const ExtendsPanel: IExtension = {
                     break;
                 }
 
-                default:
+                default: {
+                    const panelItem = molecule.panel.getPanel(item.id);
+                    molecule.panel.update({
+                        id: item.id,
+                        hidden: !panelItem?.hidden,
+                    });
                     break;
+                }
             }
         });
     },

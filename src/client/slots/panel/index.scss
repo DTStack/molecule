@@ -8,7 +8,6 @@ $item: BEMElement($panel, 'item');
 
 $active: BEMModifier($item, 'active');
 
-
 $icon-size: 35px;
 
 .#{$panel} {
@@ -37,22 +36,34 @@ $icon-size: 35px;
         white-space: nowrap;
         cursor: pointer;
 
+        & > .codicon-close {
+            opacity: 0;
+        }
+
         &:hover {
             color: var(--panelTitle-activeForeground);
+
+            & > .codicon-close {
+                opacity: 1;
+            }
         }
 
         &.#{$active} {
             color: var(--panelTitle-activeForeground);
-            outline: var(--contrastActiveBorder,unset) solid 1px;
+            outline: var(--contrastActiveBorder, unset) solid 1px;
 
             &::after {
                 background-color: var(--panelTitle-activeBorder);
                 bottom: 4px;
-                content: " ";
+                content: ' ';
                 height: 1px;
                 left: 0;
                 position: absolute;
                 width: 100%;
+            }
+
+            & > .codicon-close {
+                opacity: 1;
             }
         }
     }
@@ -66,12 +77,12 @@ $icon-size: 35px;
         }
     }
 
-
     .#{$content} {
         outline: 1px solid transparent;
         outline-offset: -1px;
         height: calc(100% - 36px);
         width: 100%;
+        font-size: 13px;
 
         &:focus {
             outline-color: var(--list-focusOutline);

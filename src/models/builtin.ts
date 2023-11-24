@@ -40,15 +40,15 @@ export class BuiltinModel {
         NOTIFICATION_MODEL_ID: 'MO_NOTIFICATION',
         NOTIFICATION_MODEL_NAME: 'Notification',
         STATUS_BAR_HIDE_ID: 'hide',
-        SEARCH_CASE_SENSITIVE_COMMAND_ID: 'search.matchCase',
-        SEARCH_WHOLE_WORD_COMMAND_ID: 'search.matchWholeWord',
-        SEARCH_REGULAR_EXPRESSION_COMMAND_ID: 'search.useRegularExpression',
-        SEARCH_PRESERVE_CASE_COMMAND_ID: 'search.preserveCase',
-        SEARCH_REPLACE_ALL_COMMAND_ID: 'search.replaceAll',
         SEARCH_ACTIVITY_ITEM: 'sidebar.search.title',
         SEARCH_TOOLBAR_REFRESH: 'search.toolbar.refresh',
-        SEARCH_TOOLBAR_CLEAR: 'search.toolbar.clearAll',
-        SEARCH_TOOLBAR_COLLAPSE: 'search.toolbar.collapseAll',
+        SEARCH_TOOLBAR_CLEAR_ALL: 'search.toolbar.clearAll',
+        SEARCH_TOOLBAR_VIEW_AS_LIST_TREE: 'search.toolbar.listTree',
+        SEARCH_TOOLBAR_VIEW_AS_LIST: 'search.toolbar.viewAsList',
+        SEARCH_TOOLBAR_VIEW_AS_TREE: 'search.toolbar.viewAsTree',
+        SEARCH_TOOLBAR_COLLAPSE_EXPAND: 'search.toolbar.collapseExpand',
+        SEARCH_TOOLBAR_COLLAPSE_ALL: 'search.toolbar.collapseAll',
+        SEARCH_TOOLBAR_EXPAND_ALL: 'search.toolbar.expandAll',
         PANEL_TOOLBOX_CLOSE: 'panel.toolbox.closePanel',
         PANEL_TOOLBOX_RESIZE: 'panel.toolbox.maximize',
         PANEL_TOOLBOX_RESTORE_SIZE: 'panel.toolbox.restoreSize',
@@ -74,7 +74,6 @@ export class BuiltinModel {
         ACTIVITY_BAR_GLOBAL_ACCOUNT: 'global.menu.account',
         CONTEXT_MENU_MENU: 'menubar',
         CONTEXT_MENU_EXPLORER: 'sidebar.explore.title',
-        CONTEXT_MENU_SEARCH: 'sidebar.search.title',
         CONTEXT_MENU_HIDE: 'menu.hideActivityBar',
         MENUBAR_MODE_HORIZONTAL: 'menuBar.mode.horizontal',
         MENUBAR_MODE_VERTICAL: 'menuBar.mode.vertical',
@@ -222,19 +221,6 @@ export class BuiltinModel {
             },
         ],
         contextMenuData: () => [
-            // TODO: the following items should adding by their controller
-            // {
-            //     id: this.constants.CONTEXT_MENU_MENU,
-            //     name: this.localize('menubar', 'Menu'),
-            // },
-            // {
-            //     id: this.constants.CONTEXT_MENU_EXPLORER,
-            //     name: this.localize('sidebar.explore.title', 'Explorer'),
-            // },
-            // {
-            //     id: this.constants.CONTEXT_MENU_SEARCH,
-            //     name: this.localize('sidebar.search.title', 'Search'),
-            // },
             {
                 id: this.constants.CONTEXT_MENU_HIDE,
                 name: this.localize('menu.hideActivityBar', 'Hide Activity Bar'),
@@ -252,6 +238,60 @@ export class BuiltinModel {
             sortIndex: 1,
             alignment: 'top',
         }),
+        builtInSearchSidePane: () => ({
+            id: this.constants.SEARCH_ACTIVITY_ITEM,
+            title: this.localize(this.constants.SEARCH_ACTIVITY_ITEM, 'Search'),
+        }),
+        builtInSearchContextMenu: () => ({
+            id: this.constants.SEARCH_ACTIVITY_ITEM,
+            name: this.localize(this.constants.SEARCH_ACTIVITY_ITEM, 'Search'),
+        }),
+        builtInSearchActivityItem: () => ({
+            id: this.constants.SEARCH_ACTIVITY_ITEM,
+            name: this.localize(this.constants.SEARCH_ACTIVITY_ITEM, 'Search'),
+            icon: 'search',
+            title: this.localize(this.constants.SEARCH_ACTIVITY_ITEM, 'Search'),
+            sortIndex: 2,
+            alignment: 'top',
+        }),
+        builtInSearchToolBar: () => [
+            {
+                id: this.constants.SEARCH_TOOLBAR_REFRESH,
+                icon: 'refresh',
+                name: this.localize(this.constants.SEARCH_TOOLBAR_REFRESH, 'Refresh'),
+                group: 'inline',
+                sortIndex: 5,
+                disabled: false,
+            },
+            {
+                id: this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
+                icon: 'clear-all',
+                name: this.localize(
+                    this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
+                    'Clear Search Results'
+                ),
+                group: 'inline',
+                sortIndex: 6,
+                disabled: false,
+            },
+            {
+                id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
+                icon: 'list-tree',
+                name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_TREE, 'View as Tree'),
+                group: 'inline',
+                sortIndex: 7,
+                disabled: false,
+            },
+            {
+                id: this.constants.SEARCH_TOOLBAR_COLLAPSE_EXPAND,
+                icon: 'collapse-all',
+                name: this.localize(this.constants.SEARCH_TOOLBAR_COLLAPSE_ALL, 'Collapse All'),
+                group: 'inline',
+                sortIndex: 8,
+                disabled: false,
+            },
+        ],
+
         FILE_CONTEXT_MENU: () => [
             {
                 id: this.constants.OPEN_TO_SIDE_COMMAND_ID,

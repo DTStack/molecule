@@ -1,5 +1,9 @@
 import type { IMenuItemProps, UniqueId } from 'mo/types';
 
+export enum SidebarEvent {
+    onToolbarClick = 'sidebar.onToolbarClick',
+}
+
 export interface ISidebarPane {
     id: UniqueId;
     title: string;

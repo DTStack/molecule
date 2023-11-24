@@ -1,0 +1,28 @@
+@import '../../classNames/style.scss';
+
+$action: prefix('action');
+$disabled: BEMModifier($action, 'disabled');
+
+.#{$action} {
+    box-sizing: border-box;
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 5px;
+    margin: 0 1px;
+    line-height: 0;
+
+    &:hover {
+        background: var(--toolbar-hoverBackground);
+        outline-color: var(--toolbar-hoverOutline);
+    }
+
+    &.#{$disabled} {
+        cursor: not-allowed;
+        opacity: 0.4;
+    }
+}
+
+:export {
+    action: $action;
+    disabled: $disabled;
+}

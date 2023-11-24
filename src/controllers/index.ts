@@ -9,6 +9,7 @@ export * as menuBar from './menuBar';
 export * as notification from './notification';
 export * as output from './output';
 export * as panel from './panel';
+export * as search from './search';
 export * as settings from './settings';
 export * as sidebar from './sidebar';
 export * as statusBar from './statusBar';

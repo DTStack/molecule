@@ -1,0 +1,112 @@
+@import '../../classNames/style.scss';
+
+$input: prefix('input');
+$info: BEMModifier($input, 'info');
+$warning: BEMModifier($input, 'warning');
+$error: BEMModifier($input, 'error');
+$validating: BEMModifier($input, 'validating');
+
+$validation: BEMElement($input, 'validation');
+
+.#{$input} {
+    font-size: 13px;
+    input {
+        background: var(--input-background);
+        border: 1px solid transparent;
+        box-sizing: border-box;
+        color: var(--input-foreground);
+        font-family: inherit;
+        font-size: inherit;
+        height: 24px;
+        line-height: 15px;
+        min-height: 23px;
+        outline: none;
+        overflow: hidden;
+        padding: 3px 62px 3px 4px;
+        resize: none;
+        width: 100%;
+
+        &:focus {
+            border-color: var(--focusBorder);
+        }
+
+        // TODO: better to mock a scroll bar
+        // invisible scroll bar
+        &::-webkit-scrollbar {
+            opacity: 0;
+        }
+    }
+
+    // validation styles
+    &__base {
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+
+        &:not(input) {
+            margin-top: -1px;
+            width: calc(100% - 12px);
+        }
+    }
+
+    &.#{$info} {
+        border: 1px solid var(--inputValidation-infoBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-infoBorder);
+        }
+
+        &:not(input) {
+            background: var(--inputValidation-infoBackground);
+        }
+    }
+
+    &.#{$warning} {
+        border: 1px solid var(--inputValidation-warningBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-warningBorder);
+        }
+
+        &:not(input) {
+            background: var(--inputValidation-warningBackground);
+        }
+    }
+
+    &.#{$error} {
+        border: 1px solid var(--inputValidation-errorBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-errorBorder);
+        }
+
+        &:not(input) {
+            background: var(--inputValidation-errorBackground);
+        }
+    }
+
+    &.#{$validating} {
+        border: 1px solid var(--inputValidation-infoBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-infoBorder);
+        }
+
+        &:not(input) {
+            background: var(--inputValidation-infoBackground);
+        }
+    }
+}
+
+:export {
+    input: $input;
+    info: $info;
+    warning: $warning;
+    error: $error;
+    validating: $validating;
+    validation: $validation;
+}

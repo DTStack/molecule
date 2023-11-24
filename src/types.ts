@@ -19,9 +19,11 @@ import type { MonacoService } from './services/monaco';
 import type { NotificationService } from './services/notification';
 import type { OutputService } from './services/output';
 import type { PanelService } from './services/panel';
+import { SearchService } from './services/search';
 import type { SettingsService } from './services/setting';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
+import { TreeNodeModel } from './utils/tree';
 import type { BaseController } from './glue';
 
 export type { IEditorTab } from './models/editor';
@@ -112,6 +114,7 @@ export interface IContext {
         action: ActionService;
         editorTree: EditorTreeService;
         notification: NotificationService;
+        search: SearchService;
         settings: SettingsService;
     };
     monaco: MonacoService;
@@ -147,6 +150,7 @@ export type Localize = (
     ...args: any[]
 ) => string;
 
+// https://code.visualstudio.com/api/references/icons-in-labels#icon-listing
 export type IconType = string | JSX.Element;
 
 /**
@@ -348,3 +352,29 @@ export type IDragProps = {
 };
 
 export type IEditorOptions = editor.IEditorOptions;
+
+/**
+ * validate status
+ */
+export enum ValidateStatus {
+    info = 'info',
+    warning = 'warning',
+    error = 'error',
+    validating = 'validating',
+}
+export type ValidateStatusLiteral = keyof typeof ValidateStatus;
+
+/**
+ * validate status for input
+ */
+export type InputValidateInfo = {
+    status: ValidateStatusLiteral;
+    message: string;
+};
+
+type ISearchResultData = {
+    language: 'typescript' | 'javascript' | 'html' | 'json';
+    value: string;
+    breadcrumb: string[];
+};
+export type SearchResultItem = TreeNodeModel<ISearchResultData>;

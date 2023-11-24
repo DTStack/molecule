@@ -1,10 +1,11 @@
 import ActionBar from 'mo/client/components/actionBar';
 import useConnector from 'mo/client/hooks/useConnector';
+import { ISideBarController } from 'mo/controllers/sidebar';
 import type { IMenuItemProps } from 'mo/types';
 
 import variables from './index.scss';
 
-export default function Sidebar() {
+export default function Sidebar({ onToolbarClick }: ISideBarController) {
     const sidebar = useConnector('sidebar');
     const explorer = useConnector('explorer');
 
@@ -33,7 +34,10 @@ export default function Sidebar() {
                     </div>
                     {!!toolbar.length && (
                         <div className={variables.toolbar}>
-                            <ActionBar data={toolbar} />
+                            <ActionBar
+                                data={toolbar}
+                                onClick={(item: IMenuItemProps) => onToolbarClick?.(item, pane.id)}
+                            />
                         </div>
                     )}
                 </section>

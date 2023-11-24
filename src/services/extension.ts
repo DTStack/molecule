@@ -28,6 +28,7 @@ import type { MonacoService } from './monaco';
 import type { NotificationService } from './notification';
 import type { OutputService } from './output';
 import type { PanelService } from './panel';
+import type { SearchService } from './search';
 import type { SettingsService } from './setting';
 import type { SidebarService } from './sidebar';
 import type { StatusBarService } from './statusBar';
@@ -103,6 +104,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         @inject('action') private action: ActionService,
         @inject('editorTree') private editorTree: EditorTreeService,
         @inject('notification') private notification: NotificationService,
+        @inject('search') private search: SearchService,
         @inject('settings') private settings: SettingsService,
         @inject('monaco') private monaco: MonacoService
     ) {
@@ -130,6 +132,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
             action: this.action,
             editorTree: this.editorTree,
             notification: this.notification,
+            search: this.search,
             settings: this.settings,
         };
     };

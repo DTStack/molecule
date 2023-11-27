@@ -21,9 +21,7 @@ export const ExtendsFolderTree: IExtension = {
     name: 'Extend The Default Folder Tree',
     activate: function (molecule): void {
       molecule.folderTree.onExpandKeys((expandedKeys) => {
-        // const { expandKeys } = molecule.folderTree.getState();
         molecule.folderTree.setState({
-          // expandKeys: [...expandKeys, ...expandedKeys],
           expandKeys: expandedKeys,
         });
       });

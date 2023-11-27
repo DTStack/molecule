@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import { Collapse } from 'mo/client/components/collapse';
 import useConnector from 'mo/client/hooks/useConnector';
+import { IExplorerController } from 'mo/controllers/explorer';
 
-export default function Explorer() {
+export default function Explorer({ onToolbarClick }: IExplorerController) {
     const explorer = useConnector('explorer');
     const folderTree = useConnector('folderTree');
     const rootFolderName = folderTree.data?.at(0)?.name;
@@ -23,7 +24,7 @@ export default function Explorer() {
             data={data}
             activePanelKeys={explorer.activePanelKeys}
             // onCollapseChange={onCollapseChange}
-            // onToolbarClick={onToolbarClick}
+            onToolbarClick={onToolbarClick}
         />
     );
 }

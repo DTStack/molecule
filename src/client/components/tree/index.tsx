@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
-import { FileTypes, type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
+import { type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
 import { TreeHelper, type TreeNodeModel } from 'mo/utils/tree';
 
 import Icon from '../icon';
@@ -173,7 +173,7 @@ export default function Tree({
             const uuid = node.id.toString();
             const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
             const dragNode = dragInfo.current.dragNode!;
-            const dragNodeUuid = dragNode.id.toString();
+            const dragNodeUuid = dragNode?.id?.toString();
             const isSelfNode = uuid === dragNodeUuid;
             if (node.fileType !== 'File' && !isSelfNode && !isExpand && !canLoadData(uuid)) {
                 handleExpandKey(uuid, node);
@@ -205,17 +205,11 @@ export default function Tree({
         });
     };
 
-    const getParentNodeViaNode = (node: ITreeNodeItemProps) => {
-        const treeUtils: TreeHelper<any> = dragInfo.current.flattenTree;
-        return treeUtils.getParent(node.id);
-    };
-
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => {
-        const parent = node.fileType === 'File' ? getParentNodeViaNode(node) : node;
-        if (parent !== dragOverNode.current) {
+        if (node !== dragOverNode.current) {
             clearOverClass();
-            dragOverNode.current = parent;
-            addOverClassViaNode(parent);
+            dragOverNode.current = node;
+            addOverClassViaNode(node);
         }
     };
 
@@ -234,45 +228,7 @@ export default function Tree({
     };
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => {
-        if (node.fileType === FileTypes.File) {
-            // Can't drag into a file, so the target would to be the parent of this target
-            const parentNode = getParentNodeViaNode(node);
-            const dragParent = getParentNodeViaNode(dragInfo.current.dragNode!);
-            const parentUuid = (parentNode.key || parentNode.id).toString();
-            const dragParentUuid = (dragParent.key || dragParent.id).toString();
-            // prevent to drop node into same level
-            if (parentUuid === dragParentUuid) {
-                dragInfo.current = {
-                    x: 0,
-                    y: 0,
-                    dragNode: null,
-                    flattenTree: null,
-                };
-                return;
-            }
-
-            onDropTree?.(dragInfo.current.dragNode!, parentNode);
-        } else {
-            const dragParent = getParentNodeViaNode(dragInfo.current.dragNode!);
-            const parentUuid = (dragParent.key || dragParent.id).toString();
-            const nodeUuid = node.id.toString();
-            const dragNode = dragInfo.current.dragNode!;
-            const dragUuid = dragNode.id.toString();
-            // prevent the situations like
-            // 1. drag a node into parentNode
-            // 2. drag a folder node into self
-            if (parentUuid === nodeUuid || dragUuid === nodeUuid) {
-                dragInfo.current = {
-                    x: 0,
-                    y: 0,
-                    dragNode: null,
-                    flattenTree: null,
-                };
-                return;
-            }
-
-            onDropTree?.(dragInfo.current.dragNode!, node);
-        }
+        onDropTree?.(dragInfo.current.dragNode!, node);
         dragInfo.current = { x: 0, y: 0, dragNode: null, flattenTree: null };
     };
 

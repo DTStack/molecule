@@ -2,7 +2,7 @@ import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
 import type { IMenuItemProps, KeyboardEventHandler, UniqueId } from 'mo/types';
 import logger from 'mo/utils/logger';
-import { TreeHelper, TreeNodeModel } from 'mo/utils/tree';
+import { loopTreeAddNode, loopTreeRemoveNode, TreeHelper, TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
 
 export interface IFolderTreeService extends BaseService<FolderTreeModel> {
@@ -82,10 +82,16 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      */
     setFolderContextMenu: (menus: IMenuItemProps[]) => void;
     /**
-     *
+     * Set editing FolderTree item
      * @param id itemId
      */
     setEditing: (id: UniqueId) => void;
+    /**
+     * update data when drop tree
+     * @param source dragNode
+     * @param target dropNode
+     */
+    dropTree: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void;
     /**
      * Listen to event about onKeyDown file item
      * @params callback
@@ -111,13 +117,13 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @param callback
      */
     onSelectFile(callback: (file: TreeNodeModel<any>) => void): void;
-    // /**
-    //  * Listen to drop event
-    //  * @param treeData
-    //  */
-    // onDropTree(
-    //     callback: (source: IFolderTreeNodeProps, target: IFolderTreeNodeProps) => void
-    // ): void;
+    /**
+     * Listen to drop event
+     * @param treeData
+     */
+    onDropTree(
+        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
+    ): void;
     /**
      * Listen to right click event
      * @param callback
@@ -296,6 +302,19 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
             editing: undefined,
         }));
     }
+
+    public dropTree(source: TreeNodeModel<any>, target: TreeNodeModel<any>) {
+        const { data = [] } = this.getState();
+        const cpData = [...data];
+        /**
+         * 1. Remove source node.
+         * 2. Create new source node, before target.
+         * Required first remove node, and then add node.
+         */
+        loopTreeRemoveNode({ tree: cpData, source });
+        loopTreeAddNode({ tree: cpData, source, target });
+        this.setState({ data: cpData });
+    };
 
     public get(id: UniqueId) {
         if (!this.getState().data.length) return;

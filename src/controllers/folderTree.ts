@@ -26,8 +26,6 @@ export interface IFolderTreeController extends BaseController {
 
 @injectable()
 export class FolderTreeController extends BaseController implements IFolderTreeController {
-    // private readonly folderTreeService: IFolderTreeService;
-    // private readonly builtinService: IBuiltinService;
 
     constructor(
         @inject('builtin') private builtin: BuiltinService,
@@ -35,8 +33,6 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
         @inject('explorer') private explorer: ExplorerService
     ) {
         super();
-        // this.folderTreeService = container.resolve(FolderTreeService);
-        // this.builtinService = container.resolve(BuiltinService);
         this.initView();
     }
 

@@ -53,7 +53,13 @@ export default function FolderTree({
             name: 'molecule',
             fileType: FileTypes.RootFolder,
             icon: 'folder',
-            children: [],
+            children: [
+                { id: randomId(), name: 'folder1', fileType: FileTypes.Folder, children: [{ id: randomId(), name: 'file1', fileType: FileTypes.File } ]},
+                { id: randomId(), name: 'folder2', fileType: FileTypes.Folder, children: [{ id: randomId(), name: 'file2', fileType: FileTypes.File }, { id: randomId(), name: 'file3', fileType: FileTypes.File }]},
+                { id: randomId(), name: 'file4', fileType: FileTypes.File },
+                { id: randomId(), name: 'file5', fileType: FileTypes.File },
+                { id: randomId(), name: 'file6', fileType: FileTypes.File },
+            ],
         });
     }, []);
 

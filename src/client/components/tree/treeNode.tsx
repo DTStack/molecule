@@ -62,10 +62,6 @@ export default ({
         }
     };
 
-    const handleContextMenu = (item: IMenuItemProps) => {
-        onContextMenu?.(item, data);
-    };
-
     const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
@@ -92,6 +88,10 @@ export default ({
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault();
         onFileKeyDown?.(e, data);
+    };
+
+    const handleContextMenu = (item: IMenuItemProps) => {
+        onContextMenu?.(item, data);
     };
 
     // calculate key automatically via parent path and self id

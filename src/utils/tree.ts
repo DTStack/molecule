@@ -1,4 +1,4 @@
-import type { FileTypeLiteral, TreeModel, UniqueId } from 'mo/types';
+import { FileTypes, type TreeModel, type UniqueId } from 'mo/types';
 
 interface TreeModelNode<T extends TreeModel<T>> {
     node: T;
@@ -52,7 +52,7 @@ export class TreeNodeModel<T> {
         /**
          * The type of this tree node
          */
-        public fileType: FileTypeLiteral,
+        public fileType: FileTypes,
         /**
          * The children of this tree node
          */
@@ -71,3 +71,65 @@ export class TreeNodeModel<T> {
         public data?: T
     ) {}
 }
+
+interface IRemoveNodeParams {
+    /** tree data */
+    tree: TreeNodeModel<any>[];
+    /** source node item */
+    source: TreeNodeModel<any>;
+};
+
+/**
+ * Delete source node recursively
+ * @param param0 tree
+ * @param param1 source
+ */
+export function loopTreeRemoveNode({ tree, source }: IRemoveNodeParams) {
+    let stop = false;
+    let idx = 0;
+    do {
+        const item = tree[idx] || {};
+        if (item?.id === source.id) {
+            stop = true;
+            tree.splice(idx, 1);
+        } else {
+            if (item?.children && item?.children?.length) {
+                loopTreeRemoveNode({ tree: item?.children || [], source });
+            }
+        }
+        idx += 1;
+        if (idx + 1 > tree?.length) {
+            stop = true;
+        }
+    } while (!stop);
+};
+
+/**
+ * Add source node recursively
+ * @param param0 tree
+ * @param param1 source
+ * @param param2 target
+ */
+export function loopTreeAddNode({ tree, source, target }: IRemoveNodeParams & { target: TreeNodeModel<any> }) {
+    let stop = false;
+    let idx = 0;
+    do {
+        const item = tree[idx] || {};
+        if (item?.id === target.id) {
+            stop = true;
+            if ([FileTypes.Folder, FileTypes.RootFolder].includes(target.fileType) && idx !==0) {
+                tree[idx].children?.push(source);
+            } else {
+                tree?.splice?.(idx, 0, source);
+            }
+        } else {
+            if (item?.children && item?.children?.length) {
+                loopTreeAddNode({ tree: item?.children || [], source, target });
+            }
+        }
+        idx += 1;
+        if (idx + 1 > tree?.length) {
+            stop = true;
+        }
+    } while (!stop);
+};

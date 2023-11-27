@@ -148,6 +148,10 @@ export const ExtendsFolderTree: IExtension = {
         }
       });
 
+      molecule.folderTree.onDropTree((source, target) => {
+        molecule.folderTree.dropTree(source, target);
+      });
+
       molecule.folderTree.onLoadData(async (treeNode, cb) => {
         try {
           await sleep({a: 1});

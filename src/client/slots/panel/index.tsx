@@ -7,7 +7,7 @@ import useConnector from 'mo/client/hooks/useConnector';
 import useContextMenu from 'mo/client/hooks/useContextMenu';
 import useLocale from 'mo/client/hooks/useLocale';
 import type { IPanelController } from 'mo/controllers/panel';
-import { searchById } from 'mo/utils';
+import { searchById, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
@@ -79,6 +79,7 @@ export default function Panel({
                 >
                     {panel.data
                         .filter((p) => !p.hidden)
+                        .sort(sortByIndex)
                         .map((p) => (
                             <PanelItem
                                 key={p.id}

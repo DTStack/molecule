@@ -5,7 +5,6 @@ $content: BEMElement($header, 'content');
 $extra: BEMElement($header, 'extra');
 
 .#{$header} {
-    display: flex;
     width: 100%;
     box-sizing: border-box;
 
@@ -16,9 +15,6 @@ $extra: BEMElement($header, 'extra');
 
     .#{$extra} {
         padding: 0 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 }
 

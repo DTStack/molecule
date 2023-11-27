@@ -2,6 +2,7 @@ import type { CSSProperties, PropsWithChildren } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { Direction } from 'mo/types';
 
+import Flex from '../flex';
 import { ScrollBar } from '../scrollBar';
 import variables from './index.scss';
 
@@ -26,7 +27,7 @@ export default function Header({
     onContextMenu,
 }: PropsWithChildren<IHeaderProps>) {
     return (
-        <div
+        <Flex
             className={classNames(variables.header, className)}
             onClick={onClick}
             onContextMenu={onContextMenu}
@@ -36,7 +37,9 @@ export default function Header({
                     {children}
                 </ScrollBar>
             </div>
-            {!!extra && <div className={classNames(variables.extra, extraClassName)}>{extra}</div>}
-        </div>
+            {!!extra && (
+                <Flex className={classNames(variables.extra, extraClassName)}>{extra}</Flex>
+            )}
+        </Flex>
     );
 }

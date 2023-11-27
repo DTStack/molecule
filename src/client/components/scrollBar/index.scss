@@ -59,6 +59,7 @@ $shadowHidden: BEMModifier($shadow, 'hidden');
         &.#{$trackHidden} {
             opacity: 0;
             transition: opacity 0.8s linear;
+            pointer-events: none;
         }
     }
 

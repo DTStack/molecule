@@ -1,0 +1,12 @@
+@import '../../classNames/style.scss';
+
+$flex: prefix('flex');
+
+.#{$flex} {
+    display: flex;
+    align-items: center;
+}
+
+:export {
+    flex: $flex;
+}

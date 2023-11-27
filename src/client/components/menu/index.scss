@@ -2,6 +2,7 @@
 
 $menu: prefix('menu');
 $container: BEMElement($menu, 'container');
+$subMenu: BEMElement($menu, 'subMenu');
 $item: BEMElement($menu, 'item');
 $label: BEMElement($menu, 'label');
 $divider: BEMElement($menu, 'divider');
@@ -22,6 +23,12 @@ $indicator: BEMElement($menu, 'indicator');
     overflow: scroll;
     margin: 0;
     padding: 4px 0;
+    outline-offset: -1px;
+
+    &:focus {
+        // override global *[tabIndex=0]'s outline style
+        outline: 1px solid var(--menu-border) !important;
+    }
 
     .#{$item} {
         list-style: none;
@@ -81,6 +88,15 @@ $indicator: BEMElement($menu, 'indicator');
     }
 }
 
+
+.#{$subMenu} {
+    >.rc-menu-submenu-title:focus {
+        // override global *[tabIndex=0]'s outline style
+        outline: none;
+        outline-offset: 0;
+    }
+}
+
 .rc-menu-submenu-popup {
     position: absolute;
     z-index: 9999;
@@ -92,6 +108,7 @@ $indicator: BEMElement($menu, 'indicator');
 
 :export {
     container: $container;
+    subMenu: $subMenu;
     item: $item;
     divider: $divider;
     label: $label;

@@ -1,0 +1,11 @@
+@import '../../classNames/style.scss';
+
+$container: prefix('notificationCenter');
+
+.#{$container} {
+    width: 100%;
+}
+
+:export {
+    container: $container;
+}

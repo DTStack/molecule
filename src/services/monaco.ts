@@ -1,38 +1,36 @@
-// @ts-nocheck
-import { editor as MonacoEditor } from 'monaco-editor';
-import { ICodeEditorService } from 'monaco-editor/esm/vs/editor/browser/services/codeEditorService';
-import { OpenerService } from 'monaco-editor/esm/vs/editor/browser/services/openerService';
-import { IModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
-import { IModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
-import { ITextModelService } from 'monaco-editor/esm/vs/editor/common/services/resolverService';
-import {
-    SimpleEditorModelResolverService,
-    SimpleLayoutService,
-} from 'monaco-editor/esm/vs/editor/standalone/browser/simpleServices';
-import {
-    IStandaloneEditorConstructionOptions,
-    StandaloneEditor,
-} from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
 import {
     DynamicStandaloneServices,
-    IEditorOverrideServices,
+    IAccessibilityService,
+    ICodeEditorService,
+    ICommandService,
+    IConfigurationService,
+    IContextKeyService,
+    IContextViewService,
+    IInstantiationService,
+    IKeybindingService,
+    ILayoutService,
+    IModelService,
+    IModeService,
+    INotificationService,
+    IOpenerService,
+    IQuickInputService,
+    IStandaloneThemeService,
+    ITextModelService,
+    OpenerService,
+    QuickInputService,
+    ServiceCollection,
+    SimpleEditorModelResolverService,
+    SimpleLayoutService,
+    StandaloneEditor,
     StaticServices,
-} from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices';
-import { IStandaloneThemeService } from 'monaco-editor/esm/vs/editor/standalone/common/standaloneThemeService';
-import { IAccessibilityService } from 'monaco-editor/esm/vs/platform/accessibility/common/accessibility';
-import { ICommandService } from 'monaco-editor/esm/vs/platform/commands/common/commands';
-import { IConfigurationService } from 'monaco-editor/esm/vs/platform/configuration/common/configuration';
-import { IContextKeyService } from 'monaco-editor/esm/vs/platform/contextkey/common/contextkey';
-import { IContextViewService } from 'monaco-editor/esm/vs/platform/contextview/browser/contextView';
-import { IInstantiationService } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
-import { ServiceCollection } from 'monaco-editor/esm/vs/platform/instantiation/common/serviceCollection';
-import { IKeybindingService } from 'monaco-editor/esm/vs/platform/keybinding/common/keybinding';
-import { ILayoutService } from 'monaco-editor/esm/vs/platform/layout/browser/layoutService';
-import { INotificationService } from 'monaco-editor/esm/vs/platform/notification/common/notification';
-import { IOpenerService } from 'monaco-editor/esm/vs/platform/opener/common/opener';
-import { QuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/browser/quickInput';
-import { IQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
+} from 'mo/monaco';
+import type { editor as MonacoEditor } from 'monaco-editor';
 import { injectable } from 'tsyringe';
+
+type IStandaloneEditorConstructionOptions = MonacoEditor.IEditorOptions &
+    MonacoEditor.IGlobalEditorOptions;
+
+type IEditorOverrideServices = MonacoEditor.IEditorOverrideServices;
 
 export interface IMonacoService {
     readonly services: ServiceCollection;
@@ -130,7 +128,7 @@ export class MonacoService implements IMonacoService {
 
     private createStandaloneServices(): ServiceCollection {
         const services = new DynamicStandaloneServices(this.container);
-        const instantiationService = services.get(IInstantiationService);
+        const instantiationService = services.get<any>(IInstantiationService);
 
         if (!services.has(IOpenerService)) {
             services.set(

@@ -3,8 +3,10 @@ import EditorTree from 'mo/client/slots/editorTree';
 import { BaseController } from 'mo/glue';
 import { EditorTreeEvent } from 'mo/models/editorTree';
 import type { BuiltinService } from 'mo/services/builtin';
+import type { ContextMenuService } from 'mo/services/contextMenu';
 import type { ExplorerService } from 'mo/services/explorer';
-import { UniqueId } from 'mo/types';
+import type { SidebarService } from 'mo/services/sidebar';
+import type { ContextMenuEditorHandler, ContextMenuGroupHandler, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IEditorTreeController extends BaseController {
@@ -14,94 +16,59 @@ export interface IEditorTreeController extends BaseController {
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
         groupId: UniqueId
     ) => void;
-    // readonly onCloseGroup?: (groupId: UniqueId) => void;
-    // readonly onSaveGroup?: (groupId: UniqueId) => void;
-    // readonly onToolbarClick?: (toolbar: IActionBarItemProps, groupId: UniqueId) => void;
-    // /**
-    //  * Trigger by context menu click event
-    //  * When click the context menu from group header, it doesn't have file info
-    //  */
-    // readonly onContextMenu?: (menu: IMenuItemProps, groupId: UniqueId, file?: ITabProps) => void;
+    readonly onToolbarClick?: ContextMenuGroupHandler;
+    readonly onGroupContextMenu?: ContextMenuGroupHandler;
+    /**
+     * Trigger by context menu click event
+     * When click the context menu from group header, it doesn't have file info
+     */
+    readonly onContextMenu?: ContextMenuEditorHandler;
 }
 
 @injectable()
 export class EditorTreeController extends BaseController implements IEditorTreeController {
     constructor(
         @inject('builtin') private builtin: BuiltinService,
-        @inject('explorer') private explorer: ExplorerService
+        @inject('explorer') private explorer: ExplorerService,
+        @inject('contextMenu') private contextMenu: ContextMenuService,
+        @inject('sidebar') private sidebar: SidebarService
     ) {
         super();
         this.initView();
     }
 
     private initView() {
-        // const EditorTreeView = connect<IOpenEditProps>(this.editService, EditorTree);
-        const {
-            builtInExplorerEditorPanel,
-            // builtInEditorTreeContextMenu,
-            // builtInEditorTreeHeaderContextMenu,
-        } = this.builtin.getState().modules;
+        const { builtInExplorerEditorPanel, builtInEditorTreeHeaderContextMenu } =
+            this.builtin.getState().modules;
+        const { EXPLORER_ACTIVITY_ITEM } = this.builtin.getState().constants;
 
         this.explorer.addPanel({
             ...builtInExplorerEditorPanel,
             render: (panel) => createElement(EditorTree, { panel, ...this }),
         });
 
-        // if (builtInExplorerEditorPanel) {
-        //     const { groupToolbar, ...restEditor } = builtInExplorerEditorPanel;
-        //     const contextMenu = builtInEditorTreeContextMenu || [];
-        //     const headerContextMenu = builtInEditorTreeHeaderContextMenu || [];
+        const explorer = this.sidebar.get(EXPLORER_ACTIVITY_ITEM);
+        if (explorer) {
+            this.sidebar.update({
+                id: EXPLORER_ACTIVITY_ITEM,
+                toolbar: [
+                    ...(explorer.toolbar || []),
+                    {
+                        id: builtInExplorerEditorPanel.id,
+                        name: builtInExplorerEditorPanel.name,
+                        icon: 'check',
+                        sortIndex: builtInExplorerEditorPanel.sortIndex,
+                    },
+                ],
+            });
+        }
 
-        //     this.explorerService.addPanel({
-        //         ...restEditor,
-        //         renderPanel: (panel) => (
-        //             <EditorTreeView
-        //                 panel={panel}
-        //                 contextMenu={contextMenu}
-        //                 headerContextMenu={headerContextMenu}
-        //                 groupToolbar={groupToolbar}
-        //                 onClose={this.onClose}
-        //                 onSelect={this.onSelect}
-        //                 onCloseGroup={this.onCloseGroup}
-        //                 onSaveGroup={this.onSaveGroup}
-        //                 onContextMenu={this.onContextMenu}
-        //                 onToolbarClick={this.onToolbarClick}
-        //             />
-        //         ),
-        //     });
-        // }
+        this.contextMenu.add('editorTreeHeader', builtInEditorTreeHeaderContextMenu);
     }
 
-    // public onContextMenu = (menu: IMenuItemProps, groupId: UniqueId, file?: ITabProps) => {
-    //     const {
-    //         EDITOR_MENU_CLOSE,
-    //         EDITOR_MENU_CLOSE_OTHERS,
-    //         EDITOR_MENU_CLOSE_SAVED,
-    //         EDITOR_MENU_CLOSE_ALL,
-    //     } = this.builtinService.getConstants();
-
-    //     switch (menu.id) {
-    //         case EDITOR_MENU_CLOSE:
-    //             this.onClose(file?.id!, groupId);
-    //             break;
-
-    //         case EDITOR_MENU_CLOSE_OTHERS:
-    //             this.emit(EditorTreeEvent.onCloseOthers, file, groupId);
-    //             break;
-
-    //         case EDITOR_MENU_CLOSE_SAVED:
-    //             this.emit(EditorTreeEvent.onCloseSaved, groupId);
-    //             break;
-
-    //         case EDITOR_MENU_CLOSE_ALL:
-    //             this.emit(EditorTreeEvent.onCloseAll, groupId);
-    //             break;
-
-    //         default:
-    //             this.emit(EditorTreeEvent.onContextMenu, menu, file, groupId);
-    //             break;
-    //     }
-    // };
+    public onContextMenu: ContextMenuEditorHandler = (menu, tabId, groupId) => {
+        this.emit(EditorTreeEvent.onContextMenu, menu, tabId, groupId);
+    };
 
     public onGroupClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, groupId: UniqueId) => {
         this.emit(EditorTreeEvent.onGroupClick, groupId);
@@ -115,15 +82,11 @@ export class EditorTreeController extends BaseController implements IEditorTreeC
         this.emit(EditorTreeEvent.onSelect, tabId, groupId);
     };
 
-    // public onCloseGroup = (groupId: UniqueId) => {
-    //     this.emit(EditorTreeEvent.onCloseAll, groupId);
-    // };
+    public onGroupContextMenu: ContextMenuGroupHandler = (menu, groupId) => {
+        this.emit(EditorTreeEvent.onGroupContextMenu, menu, groupId);
+    };
 
-    // public onSaveGroup = (groupId: UniqueId) => {
-    //     this.emit(EditorTreeEvent.onSaveAll, groupId);
-    // };
-
-    // public onToolbarClick = (toolbar: IActionBarItemProps, groupId: UniqueId) => {
-    //     this.emit(EditorTreeEvent.onToolbarClick, toolbar, groupId);
-    // };
+    public onToolbarClick: ContextMenuGroupHandler = (toolbar, groupId) => {
+        this.emit(EditorTreeEvent.onToolbarClick, toolbar, groupId);
+    };
 }

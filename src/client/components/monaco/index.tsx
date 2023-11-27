@@ -31,7 +31,6 @@ export default function MonacoEditor({
     useEffect(() => {
         if (!monacoInstance.current) {
             monacoInstance.current = monaco.create(monacoDom.current!, options, override);
-            // editorInstanceRef?.(this.monacoInstance);
             onMount?.(monacoInstance.current!);
         }
     }, []);

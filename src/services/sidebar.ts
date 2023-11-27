@@ -16,6 +16,7 @@ export interface ISidebarService extends BaseService<SidebarModel> {
      * @param id
      */
     get(id: UniqueId): ISidebarPane | undefined;
+    getToolbar(paneId: UniqueId, toolbarId: UniqueId): IMenuItemProps | undefined;
     /**
      * Add a new Sidebar pane
      * @param pane
@@ -26,7 +27,8 @@ export interface ISidebarService extends BaseService<SidebarModel> {
      * Update a specific pane
      * @param pane
      */
-    update(pane: ISidebarPane): void;
+    update(pane: RequiredId<ISidebarPane>): void;
+    updateToolbar(paneId: UniqueId, toolbar: RequiredId<IMenuItemProps>): void;
     /**
      * Update a toolbar item
      * @param paneId
@@ -68,6 +70,16 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
         return this.getPane(id);
     }
 
+    public getToolbar(paneId: UniqueId, toolbar: UniqueId) {
+        const pane = this.getPane(paneId);
+        if (!pane) {
+            logger.error(`There is no pane found via the ${paneId} id`);
+            return;
+        }
+        const target = pane.toolbar?.find(searchById(toolbar));
+        return target;
+    }
+
     public add(data: ISidebarPane, isActive = false) {
         const pane = this.getPane(data.id);
         if (pane) {
@@ -85,7 +97,7 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
         }));
     }
 
-    public update(pane: ISidebarPane) {
+    public update(pane: RequiredId<ISidebarPane>) {
         const targetPane = this.getPane(pane.id);
         if (!targetPane) {
             logger.error(`There is no pane found via the ${pane.id} id`);
@@ -148,6 +160,7 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
     public reset() {
         this.setState(new SidebarModel());
     }
+
     public onToolbarClick = (callback: ContextMenuGroupHandler) => {
         this.subscribe(SidebarEvent.onToolbarClick, callback);
     };

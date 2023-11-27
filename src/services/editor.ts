@@ -10,11 +10,9 @@ import type {
     RequiredId,
     UniqueId,
 } from 'mo/types';
-import { randomId, searchById, sortByIndex } from 'mo/utils';
+import { randomId, searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
-import { inject, injectable } from 'tsyringe';
-
-import { BuiltinService } from './builtin';
+import { injectable } from 'tsyringe';
 
 export interface IEditorService extends BaseService<EditorModel> {
     /**
@@ -34,12 +32,13 @@ export interface IEditorService extends BaseService<EditorModel> {
      * @param tab The id is required
      * @param groupId
      */
-    updateTab(tab: IEditorTab<any>, groupId: UniqueId): void;
+    updateTab(tab: RequiredId<IEditorTab<any>>, groupId: UniqueId): void;
     getCurrent<T>(): IEditorTab<T> | undefined;
     /**
      * Specify the Entry page of Workbench
      */
     setEntry(component: JSX.Element): void;
+    saveTabs(tabsId: UniqueId[], groupId: UniqueId): void;
     /**
      * Close the specific Tab opened in Editor Group view
      * @param tabId The tabId is required
@@ -64,11 +63,11 @@ export interface IEditorService extends BaseService<EditorModel> {
      * @param groupId The groupId is required
      */
     closeToLeft(tabId: UniqueId, groupId: UniqueId): void;
+    closeSaved(groupId: UniqueId): void;
     /**
      * Close the specific group all opened tabs
-     * @param groupId The groupId is required
      */
-    closeAll(groupId: UniqueId): void;
+    closeAll(groupId?: UniqueId): void;
     /**
      * move tabs in Editor Group
      * @param params from to info type
@@ -101,6 +100,7 @@ export interface IEditorService extends BaseService<EditorModel> {
      * @param options
      */
     updateEditorOptions(options: IEditorOptions): void;
+    updateGroup<T>(group: RequiredId<EditorGroupModel<T>>): void;
     onFocus(callback: (instance: editor.IStandaloneCodeEditor) => void): void;
     onCursorSelection(
         callback: (
@@ -171,7 +171,7 @@ export interface IEditorService extends BaseService<EditorModel> {
 export class EditorService extends BaseService<EditorModel> implements IEditorService {
     protected state: EditorModel;
 
-    constructor(@inject('builtin') private builtin: BuiltinService) {
+    constructor() {
         super('editor');
         this.state = new EditorModel();
     }
@@ -204,19 +204,31 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         });
     }
 
-    public addActions = (actions: IMenuItemProps[]) => {
+    public saveTabs(tabsId: UniqueId[], groupId: UniqueId) {
+        const group = this.getGroupById(groupId);
+        if (!group) return;
+        group.data = group.data.map((tab) => {
+            if (tabsId.includes(tab.id)) {
+                tab.modified = false;
+            }
+            return tab;
+        });
+        this.setState((prev) => ({ ...prev }));
+    }
+
+    public addActions(actions: IMenuItemProps[]) {
         this.setState((prev) => ({
             ...prev,
-            toolbar: [...prev.toolbar, ...actions].sort(sortByIndex),
+            toolbar: [...prev.toolbar, ...actions],
         }));
-    };
+    }
 
-    public updateAction = (action: RequiredId<IMenuItemProps>) => {
+    public updateAction(action: RequiredId<IMenuItemProps>) {
         const current = this.getAction(action.id);
         if (!current) return;
         Object.assign(current, action);
         this.setState((prev) => ({ ...prev }));
-    };
+    }
 
     public getTabById(tabId: UniqueId, groupId: UniqueId) {
         const group = this.getGroupById(groupId);
@@ -226,7 +238,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         return undefined;
     }
 
-    public updateTab(tab: IEditorTab<any>, groupId: UniqueId) {
+    public updateTab(tab: RequiredId<IEditorTab<any>>, groupId: UniqueId) {
         const exist = this.getTabById(tab.id, groupId);
         const { groups } = this.getState();
         if (!exist) return;
@@ -287,13 +299,16 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
             });
             // TODO: reset the editor group
         } else {
-            group.data = group.data.filter((i) => i !== tab);
-            if (group.activeTab === tabId) {
-                const index = group.data.indexOf(tab);
-                group.activeTab = group.data[index + 1].id ?? group.data[index - 1].id;
-            }
+            const index = group.data.indexOf(tab);
             this.disposeModels([tab]);
-            this.setState((prev) => ({ ...prev }));
+            this.updateGroup({
+                id: group.id,
+                activeTab:
+                    group.activeTab === tabId
+                        ? group.data[index + 1]?.id ?? group.data[index - 1]?.id
+                        : group.activeTab,
+                data: group.data.filter((i) => i !== tab),
+            });
         }
     }
 
@@ -336,21 +351,43 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         this.setState((prev) => ({ ...prev }));
     }
 
-    public closeAll(groupId: UniqueId) {
+    public closeSaved(groupId: UniqueId) {
         const group = this.getGroupById(groupId);
         if (!group) return;
-        this.disposeModels(group.data);
-        this.setState((prev) => {
-            const index = prev.groups.indexOf(group);
-            const nextActiveGroup = prev.groups[index + 1] ?? prev.groups[index - 1];
-            const next = prev.current === group.id ? nextActiveGroup?.id : prev.current;
-            return {
-                ...prev,
-                groups: prev.groups.filter((i) => i !== group),
-                current: next,
-            };
-        });
-        // TODO: reset the editor group
+        const removedTabs = group.data.filter((i) => !i.modified) || [];
+        if (removedTabs.length === group.data.length) {
+            // Close All
+            this.closeAll(groupId);
+        } else {
+            group.data = group.data.filter((i) => !i.modified);
+            group.activeTab = group.data.find((i) => i.id === group.activeTab)
+                ? group.activeTab
+                : group.data[0]?.id;
+            this.disposeModels(removedTabs);
+            this.setState((prev) => ({ ...prev }));
+        }
+    }
+
+    public closeAll(groupId?: UniqueId) {
+        if (groupId) {
+            const group = this.getGroupById(groupId);
+            if (!group) return;
+            this.disposeModels(group.data);
+            this.setState((prev) => {
+                const index = prev.groups.indexOf(group);
+                const nextActiveGroup = prev.groups[index + 1] ?? prev.groups[index - 1];
+                const next = prev.current === group.id ? nextActiveGroup?.id : prev.current;
+                return {
+                    ...prev,
+                    groups: prev.groups.filter((i) => i !== group),
+                    current: next,
+                };
+            });
+            // TODO: reset the editor group
+        } else {
+            // Close all groups
+            this.setState((prev) => ({ ...prev, groups: [], current: undefined }));
+        }
     }
 
     public moveTab(params: IDragProps): void {
@@ -407,13 +444,13 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
         }
     }
 
-    public updateGroup(groupId: UniqueId, groupValues: Partial<Omit<EditorGroupModel, 'id'>>) {
+    public updateGroup<T>(group: RequiredId<EditorGroupModel<T>>) {
         const { groups = [] } = this.state;
         const nextGroups = [...groups];
-        const groupIndex = this.getGroupIndexById(groupId);
+        const groupIndex = this.getGroupIndexById(group.id);
 
         if (groupIndex > -1) {
-            const nextGroup = Object.assign({}, nextGroups[groupIndex], groupValues);
+            const nextGroup = Object.assign({}, nextGroups[groupIndex], group);
             nextGroups[groupIndex] = nextGroup;
 
             this.setState({

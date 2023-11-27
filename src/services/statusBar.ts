@@ -1,7 +1,7 @@
 import { BaseService } from 'mo/glue';
 import { type IStatusBarItem, StatusBarEvent, StatusBarModel } from 'mo/models/statusBar';
 import type { ContextMenuEventHandler, RequiredId, UniqueId } from 'mo/types';
-import { searchById, sortByIndex } from 'mo/utils';
+import { searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
 export interface IStatusBarService extends BaseService<StatusBarModel> {
@@ -58,7 +58,7 @@ export class StatusBarService extends BaseService<StatusBarModel> implements ISt
         }
         this.setState((prev) => ({
             ...prev,
-            data: [...prev.data, item].sort(sortByIndex),
+            data: [...prev.data, item],
         }));
     }
 
@@ -71,7 +71,7 @@ export class StatusBarService extends BaseService<StatusBarModel> implements ISt
         }
 
         Object.assign(target, item);
-        this.setState((prev) => ({ ...prev, data: [...prev.data].sort(sortByIndex) }));
+        this.setState((prev) => ({ ...prev, data: [...prev.data] }));
     }
 
     public get(id: UniqueId) {

@@ -6,6 +6,7 @@ import * as controller from 'mo/controllers';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
 import type { IExtension } from 'mo/types';
+import { getValue } from 'mo/utils/storage';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
 
@@ -39,8 +40,8 @@ export interface IConfigProps {
      */
     extensions?: IExtension[];
     /**
-     * Specify a default locale Id, the Molecule built-in `zh-CN`, `en` two languages, and
-     * default locale Id is `en`.
+     * Specify a default locale Id, the Molecule built-in `zh-CN`, `en-US` two languages, and
+     * default locale Id is `en-US`.
      */
     defaultLocale?: string;
 }
@@ -61,7 +62,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
     private root: ReturnType<typeof createRoot> | undefined;
     private _config: Required<IConfigProps> = {
         extensions: [],
-        defaultLocale: 'en',
+        defaultLocale: 'en-US',
     };
 
     private childContainer = container.createChildContainer();
@@ -82,11 +83,14 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         return div;
     }
 
+    private localeInit(defaultLocale: IConfigProps['defaultLocale']) {
+        const storedLocale = getValue(LocaleService.STORE_KEY);
+        return storedLocale || defaultLocale || this._config.defaultLocale;
+    }
+
     constructor(config: IConfigProps) {
         super();
-        if (config.defaultLocale) {
-            this._config.defaultLocale = config.defaultLocale;
-        }
+        this._config.defaultLocale = this.localeInit(config.defaultLocale);
         this._config.extensions.push(...defaultExtensions);
 
         if (Array.isArray(config.extensions)) {

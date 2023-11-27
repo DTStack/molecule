@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Dropdown from 'mo/client/components/dropdown';
+import Icon from 'mo/client/components/icon';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { IMenuBarController } from 'mo/controllers/menuBar';
 import type { UniqueId } from 'mo/types';
@@ -36,8 +37,13 @@ export default function MenuBar({ onSelect }: IMenuBarController) {
                     <span
                         className={variables.item}
                         onMouseEnter={() => handleActiveDropdown(menu.id)}
+                        tabIndex={-1}
                     >
-                        {menu.render?.(menu) || menu.name || ''}
+                        {menu.render?.(menu) || (
+                            <span className={variables.name}>
+                                {menu.name || <Icon type={menu.icon} /> || ''}
+                            </span>
+                        )}
                     </span>
                 </Dropdown>
             ))}

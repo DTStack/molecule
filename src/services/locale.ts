@@ -64,7 +64,7 @@ export interface ILocaleService {
 export const DEFAULT_LOCALE_ID = `${APP_PREFIX}.defaultLocaleId`;
 
 export class LocaleService extends BaseService<ILocaleModel> implements ILocaleService {
-    private static STORE_KEY = `${APP_PREFIX}.localeId`;
+    public static STORE_KEY = `${APP_PREFIX}.localeId`;
     private static LOCALIZE_REPLACED_WORD = '${i}';
     protected state: ILocaleModel;
 
@@ -116,8 +116,8 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
             }
             const nextCurrent = current === id ? this.getNextOrLastLocales(locale)?.id : current;
             const nextLocales = locales.filter((l) => l.id !== id);
+            this.setCurrentLocale(nextCurrent);
             this.setState({
-                current: nextCurrent,
                 locales: nextLocales,
             });
             return locale;
@@ -125,13 +125,18 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
         return undefined;
     }
 
-    public setCurrentLocale(id: UniqueId): boolean {
+    public setCurrentLocale(id?: UniqueId): boolean {
         const { current } = this.state;
         if (current === id) return true;
+        if (current && id && current !== id) {
+            this.emit(LocalizationEvent.OnChange, current, id);
+        }
         this.setState({
             current: id,
         });
-        setValue(LocaleService.STORE_KEY, id.toString());
+        if (id) {
+            setValue(LocaleService.STORE_KEY, id.toString());
+        }
         return true;
     }
 

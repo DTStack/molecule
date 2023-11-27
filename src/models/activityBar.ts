@@ -3,6 +3,7 @@ import type {
     HTMLElementProps,
     IItemProps,
     IMenuItemProps,
+    RenderProps,
     UniqueId,
 } from 'mo/types';
 
@@ -15,11 +16,13 @@ export enum ActivityBarEvent {
 }
 
 export type PartialAlignment = Extract<AlignmentLiteral, 'top' | 'bottom'>;
-export interface IActivityBarItem extends HTMLElementProps, IItemProps {
+export interface IActivityBarItem
+    extends HTMLElementProps,
+        IItemProps,
+        RenderProps<IActivityBarItem> {
     disabled?: boolean;
     alignment?: PartialAlignment;
     contextMenu?: IMenuItemProps[];
-    render?: (data: IActivityBarItem) => JSX.Element;
 }
 
 export interface IActivityBar {

@@ -1,19 +1,50 @@
 // @ts-nocheck
 // ===================== Override monaco-editor's types =====================
 import type { UniqueId } from 'mo/types';
-import type { IDisposable } from 'monaco-editor';
+import type { editor, IDisposable } from 'monaco-editor';
 import { Color as MonacoColor } from 'monaco-editor/esm/vs/base/common/color';
 import { KeyChord as MonacoKeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
 import { DisposableStore as MonacoDisposableStore } from 'monaco-editor/esm/vs/base/common/lifecycle';
+import { ICodeEditorService as MonacoICodeEditorService } from 'monaco-editor/esm/vs/editor/browser/services/codeEditorService';
+import { OpenerService as MonacoOpenerService } from 'monaco-editor/esm/vs/editor/browser/services/openerService';
+import { IModelService as MonacoIModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
+import { IModeService as MonacoIModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
+import { ITextModelService as MonacoITextModelService } from 'monaco-editor/esm/vs/editor/common/services/resolverService';
+import {
+    SimpleEditorModelResolverService as MonacoSimpleEditorModelResolverService,
+    SimpleLayoutService as MonacoSimpleLayoutService,
+} from 'monaco-editor/esm/vs/editor/standalone/browser/simpleServices';
+import { StandaloneEditor as MonacoStandaloneEditor } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
+import {
+    DynamicStandaloneServices as MonacoDynamicStandaloneServices,
+    StaticServices as MonacoStaticServices,
+} from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices';
+import { IStandaloneThemeService as MonacoIStandaloneThemeService } from 'monaco-editor/esm/vs/editor/standalone/common/standaloneThemeService';
 import { localize as MonacoLocalize } from 'monaco-editor/esm/vs/nls';
+import { IAccessibilityService as MonacoIAccessibilityService } from 'monaco-editor/esm/vs/platform/accessibility/common/accessibility';
 import {
     MenuId as MonacoMenuId,
     MenuRegistry as MonacoMenuRegistry,
 } from 'monaco-editor/esm/vs/platform/actions/common/actions';
-import { CommandsRegistry as MonacoCommandsRegistry } from 'monaco-editor/esm/vs/platform/commands/common/commands';
-import { ContextKeyExpr as MonacoContextKeyExpr } from 'monaco-editor/esm/vs/platform/contextkey/common/contextkey';
+import {
+    CommandsRegistry as MonacoCommandsRegistry,
+    ICommandService as MonacoICommandService,
+} from 'monaco-editor/esm/vs/platform/commands/common/commands';
+import { IConfigurationService as MonacoIConfigurationService } from 'monaco-editor/esm/vs/platform/configuration/common/configuration';
+import {
+    ContextKeyExpr as MonacoContextKeyExpr,
+    IContextKeyService as MonacoIContextKeyService,
+} from 'monaco-editor/esm/vs/platform/contextkey/common/contextkey';
+import { IContextViewService as MonacoIContextViewService } from 'monaco-editor/esm/vs/platform/contextview/browser/contextView';
+import { IInstantiationService as MonacoIInstantiationService } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
+import { ServiceCollection as MonacoServiceCollection } from 'monaco-editor/esm/vs/platform/instantiation/common/serviceCollection';
+import { IKeybindingService as MonacoIKeybindingService } from 'monaco-editor/esm/vs/platform/keybinding/common/keybinding';
 import { KeybindingsRegistry as MonacoKeybindingsRegistry } from 'monaco-editor/esm/vs/platform/keybinding/common/keybindingsRegistry';
 import { ResolvedKeybindingItem as MonacoResolvedKeybindingItem } from 'monaco-editor/esm/vs/platform/keybinding/common/resolvedKeybindingItem';
+import { ILayoutService as MonacoILayoutService } from 'monaco-editor/esm/vs/platform/layout/browser/layoutService';
+import { INotificationService as MonacoINotificationService } from 'monaco-editor/esm/vs/platform/notification/common/notification';
+import { IOpenerService as MonacoIOpenerService } from 'monaco-editor/esm/vs/platform/opener/common/opener';
+import { QuickInputService as MonacoQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/browser/quickInput';
 import { IQuickInputService as MonacoIQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 
 /**
@@ -33,6 +64,8 @@ export interface ServiceIdentifier<T> {
  */
 export interface ServicesAccessor {
     get<T>(id: ServiceIdentifier<T>): T;
+    has(id: ServiceIdentifier<any>): boolean;
+    set(id: ServiceIdentifier, service: any): void;
 }
 
 export interface IQuickPickItem {
@@ -43,7 +76,7 @@ export interface IQuickPickItem {
 }
 
 export interface IQuickPickSeparator {
-    type: 'separator';
+    type?: 'separator';
     id?: UniqueId;
     label?: string;
 }
@@ -77,10 +110,25 @@ interface IQuickInputService {
     createQuickPick<T>(): IQuickPick<T>;
 }
 
+interface ICodeEditorService {}
+
+interface IOpenerService {
+    new (editorService: any, commandService: any): {} & IDisposable;
+}
+
+interface IModeService {}
+interface IModelService {}
+interface ITextModelService {}
+
 // Redefine the types from monaco
 const KeyChord: (firstPart: any, secondPart?: any) => number = MonacoKeyChord;
 const localize: (data: string, message: string, ...args: any[]) => string = MonacoLocalize;
+const ICodeEditorService: ServiceIdentifier<ICodeEditorService> = MonacoICodeEditorService;
 const IQuickInputService: ServiceIdentifier<IQuickInputService> = MonacoIQuickInputService;
+const IModeService: ServiceIdentifier<IModeService> = MonacoIModeService;
+const IModelService: ServiceIdentifier<IModelService> = MonacoIModelService;
+const ITextModelService: ServiceIdentifier<ITextModelService> = MonacoITextModelService;
+const OpenerService: IOpenerService = MonacoOpenerService;
 
 const DisposableStore: {
     DISABLE_DISPOSED_WARNING: boolean;
@@ -177,18 +225,124 @@ interface Color {
     new (): ColorClass;
 }
 
+interface SimpleEditorModelResolverService {
+    new (modelService: IModelService): SimpleEditorModelResolverService & IDisposable;
+    setEditor(editor: editor.IStandaloneCodeEditor): void;
+}
+const SimpleEditorModelResolverService: SimpleEditorModelResolverService =
+    MonacoSimpleEditorModelResolverService;
+
+interface SimpleLayoutService {
+    dimension: any;
+    container: any;
+    focus(): void;
+}
+const SimpleLayoutService: new (
+    _codeEditorService: ICodeEditorService,
+    _container: any
+) => SimpleLayoutService = MonacoSimpleLayoutService;
+
 const Color: Color = MonacoColor;
+
+type StandaloneEditor = new (
+    domElement: any,
+    _options: any,
+    toDispose: any,
+    instantiationService: any,
+    codeEditorService: any,
+    commandService: any,
+    contextKeyService: any,
+    keybindingService: any,
+    contextViewService: any,
+    themeService: any,
+    notificationService: any,
+    configurationService: any,
+    accessibilityService: any,
+    modelService: any,
+    modeService: any
+) => editor.IStandaloneCodeEditor;
+const StandaloneEditor: StandaloneEditor = MonacoStandaloneEditor;
+
+type DynamicStandaloneServices = new (
+    domElement: HTMLElement | null,
+    overrides?: editor.IEditorOverrideServices
+) => ServicesAccessor;
+const DynamicStandaloneServices: DynamicStandaloneServices = MonacoDynamicStandaloneServices;
+
+type StaticServices = Record<string, any>;
+const StaticServices: StaticServices = MonacoStaticServices;
+
+type IStandaloneThemeService = any;
+const IStandaloneThemeService: IStandaloneThemeService = MonacoIStandaloneThemeService;
+
+type IAccessibilityService = any;
+const IAccessibilityService: IAccessibilityService = MonacoIAccessibilityService;
+
+type IConfigurationService = any;
+const IConfigurationService: IConfigurationService = MonacoIConfigurationService;
+
+type IContextKeyService = any;
+const IContextKeyService: IContextKeyService = MonacoIContextKeyService;
+
+type IContextViewService = any;
+const IContextViewService: IContextViewService = MonacoIContextViewService;
+
+type IInstantiationService = any;
+const IInstantiationService: IInstantiationService = MonacoIInstantiationService;
+
+type ICommandService = any;
+const ICommandService: ICommandService = MonacoICommandService;
+
+type ServiceCollection = any;
+const ServiceCollection: ServiceCollection = MonacoServiceCollection;
+
+type IKeybindingService = any;
+const IKeybindingService: IKeybindingService = MonacoIKeybindingService;
+
+type ILayoutService = any;
+const ILayoutService: ILayoutService = MonacoILayoutService;
+
+type INotificationService = any;
+const INotificationService: INotificationService = MonacoINotificationService;
+
+const IOpenerService: ServiceIdentifier<IOpenerService> = MonacoIOpenerService;
+
+type QuickInputService = any;
+const QuickInputService: QuickInputService = MonacoQuickInputService;
 
 export {
     Color,
     CommandsRegistry,
     ContextKeyExpr,
     DisposableStore,
+    DynamicStandaloneServices,
+    IAccessibilityService,
+    ICodeEditorService,
+    ICommandService,
+    IConfigurationService,
+    IContextKeyService,
+    IContextViewService,
+    IInstantiationService,
+    IKeybindingService,
+    ILayoutService,
+    IModelService,
+    IModeService,
+    INotificationService,
+    IOpenerService,
     IQuickInputService,
+    IStandaloneThemeService,
+    ITextModelService,
     KeybindingsRegistry,
     KeyChord,
     localize,
     MenuId,
     MenuRegistry,
+    OpenerService,
+    QuickInputService,
     ResolvedKeybindingItem,
+    ServiceCollection,
+    SimpleEditorModelResolverService,
+    SimpleLayoutService,
+    StandaloneEditor,
+    StaticServices,
 };

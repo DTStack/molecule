@@ -6,7 +6,7 @@ import type {
     IMenuItemProps,
     UniqueId,
 } from 'mo/types';
-import { arraylize, searchById, sortByIndex } from 'mo/utils';
+import { arraylize, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
 export interface IPanelService extends BaseService<PanelModel> {
@@ -91,7 +91,7 @@ export class PanelService extends BaseService<PanelModel> implements IPanelServi
 
     public add(data: ArraylizeOrSingle<IPanelItem>) {
         const next = arraylize(data);
-        this.setState((prev) => ({ ...prev, data: [...prev.data, ...next].sort(sortByIndex) }));
+        this.setState((prev) => ({ ...prev, data: [...prev.data, ...next] }));
     }
 
     public update(data: IPanelItem): IPanelItem | undefined {

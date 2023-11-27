@@ -31,13 +31,7 @@ export default function StatusItem({ data, onClick, onContextMenuClick }: IStatu
                 title={title}
                 role={role}
             >
-                <a
-                    tabIndex={-1}
-                    className={variables.label}
-                    role="button"
-                    title={name}
-                    onClick={onClick}
-                >
+                <a className={variables.label} role="button" title={name} onClick={onClick}>
                     {render ? render(data) : name}
                 </a>
             </div>

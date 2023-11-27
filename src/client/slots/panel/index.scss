@@ -2,22 +2,21 @@
 
 $panel: prefix('panel');
 $header: BEMElement($panel, 'header');
-$toolbar: BEMElement($panel, 'toolbar');
 $content: BEMElement($panel, 'content');
 $item: BEMElement($panel, 'item');
 
 $active: BEMModifier($item, 'active');
 
-$icon-size: 35px;
+$header-size: 35px;
 
 .#{$panel} {
     background-color: var(--panel-background);
     height: 100%;
     width: 100%;
+    border-top: 1px solid var(--panel-border);
 
     .#{$header} {
-        border-top: 1px solid var(--panel-border);
-        height: 35px;
+        height: $header-size;
     }
 
     .#{$item} {
@@ -68,21 +67,11 @@ $icon-size: 35px;
         }
     }
 
-    .#{$toolbar} {
-        .codicon {
-            height: $icon-size;
-            line-height: $icon-size;
-            margin-right: 4px;
-            min-width: 28px;
-        }
-    }
 
     .#{$content} {
-        outline: 1px solid transparent;
-        outline-offset: -1px;
-        height: calc(100% - 36px);
+        height: calc(100% - $header-size);
         width: 100%;
-        font-size: 13px;
+        transform: translateY(-1px);
 
         &:focus {
             outline-color: var(--list-focusOutline);
@@ -93,7 +82,6 @@ $icon-size: 35px;
 :export {
     container: $panel;
     header: $header;
-    toolbar: $toolbar;
     content: $content;
     item: $item;
     active: $active;

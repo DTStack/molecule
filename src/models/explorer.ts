@@ -1,34 +1,15 @@
-import type { HTMLElementProps, IMenuItemProps, RenderFunctionProps, UniqueId } from 'mo/types';
+import type { HTMLElementProps, IItemProps, IMenuItemProps, RenderProps, UniqueId } from 'mo/types';
 
 export enum ExplorerEvent {
-    onClick = 'explorer.onClick',
     onPanelToolbarClick = 'explorer.onPanelToolbarClick',
     onCollapseChange = 'explorer.onCollapseChange',
-    onRemovePanel = 'explorer.onRemovePanel',
-    onCollapseAllFolders = 'explorer.onCollapseAllFolders',
 }
 
-export interface IExplorerPanelItem extends HTMLElementProps {
-    /**
-     * It must be unique in the Explorer Panel Data
-     */
-    id: UniqueId;
-    /**
-     * @requires true
-     * explorer panel's title
-     */
-    name: string;
-    /**
-     * specify panel order
-     * the bigger the number is ranked previous
-     */
-    sortIndex?: number;
+export interface IExplorerPanelItem
+    extends HTMLElementProps,
+        RenderProps<IExplorerPanelItem>,
+        Omit<IItemProps, 'icon'> {
     toolbar?: IMenuItemProps[];
-    /**
-     * whether hidden in explorer
-     */
-    hidden?: boolean;
-    render?: RenderFunctionProps<IExplorerPanelItem>;
 }
 export interface IExplorer {
     data: IExplorerPanelItem[];
@@ -36,5 +17,5 @@ export interface IExplorer {
 }
 
 export class ExplorerModel implements IExplorer {
-    constructor(public data: IExplorerPanelItem[] = [], public activePanelKeys?: UniqueId[]) {}
+    constructor(public data: IExplorerPanelItem[] = [], public activePanelKeys: UniqueId[] = []) {}
 }

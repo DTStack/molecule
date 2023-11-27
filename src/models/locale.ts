@@ -49,7 +49,6 @@ export type LocaleKind = {
     'sidebar.replace.placement': string;
     'sidebar.explore.refresh': string;
     'sidebar.explore.collapseFolders': string;
-    'sidebar.explore.toggleVertical': string;
     'sidebar.explore.saveAll': string;
     'sidebar.explore.actionDesc': string;
     'sidebar.explore.outlineMore': string;

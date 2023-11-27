@@ -1,6 +1,6 @@
-import type { IItemProps, IMenuItemProps, UniqueId } from 'mo/types';
+import type { IItemProps, IMenuItemProps, RenderProps, UniqueId } from 'mo/types';
 
-export interface IPanelItem<T = any> extends IItemProps {
+export interface IPanelItem<T = any> extends IItemProps, RenderProps<IPanelItem<T>> {
     /**
      * Mark the tab status to be closable,
      * Default is true
@@ -8,7 +8,6 @@ export interface IPanelItem<T = any> extends IItemProps {
     closable?: boolean;
     data?: T;
     toolbar?: IMenuItemProps[];
-    render?: (item: IPanelItem<T>) => React.ReactNode;
 }
 
 export enum PanelEvent {

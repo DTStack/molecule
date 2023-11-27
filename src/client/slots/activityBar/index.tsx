@@ -5,7 +5,8 @@ import useConnector from 'mo/client/hooks/useConnector';
 import useContextMenu from 'mo/client/hooks/useContextMenu';
 import type { IActivityBarController } from 'mo/controllers/activityBar';
 import type { IActivityBarItem } from 'mo/models/activityBar';
-import { classify } from 'mo/utils';
+import { Alignment } from 'mo/types';
+import { classify, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
@@ -19,7 +20,10 @@ export default function ActivityBar({
     const menuBar = useConnector('menuBar');
     const contextMenu = useContextMenu('activityBar');
 
-    const [top = [], bottom = []] = classify(activityBar.data, (item) => item.alignment === 'top');
+    const [top = [], bottom = []] = classify(
+        activityBar.data,
+        (item) => item.alignment === Alignment.top
+    );
 
     const renderMenu = () => {
         if (layout.menuBar.hidden) {
@@ -44,7 +48,7 @@ export default function ActivityBar({
                 <ScrollBar className={variables.normal}>
                     <ul>
                         {renderMenu()}
-                        {top.map((item: IActivityBarItem) => (
+                        {top.sort(sortByIndex).map((item: IActivityBarItem) => (
                             <ActivityBarItem
                                 checked={!layout.sidebar.hidden && activityBar.selected === item.id}
                                 key={item.id}
@@ -56,7 +60,7 @@ export default function ActivityBar({
                     </ul>
                 </ScrollBar>
                 <ul>
-                    {bottom.map((item: IActivityBarItem) => (
+                    {bottom.sort(sortByIndex).map((item: IActivityBarItem) => (
                         <ActivityBarItem
                             key={item.id}
                             data={item}

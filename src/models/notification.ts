@@ -1,16 +1,14 @@
-import React from 'react';
-import type { IMenuItemProps, UniqueId } from 'mo/types';
+import type { IMenuItemProps, RenderProps, UniqueId } from 'mo/types';
 
 export enum NotificationStatus {
     Read = 1,
     WaitRead = 2,
 }
 
-export interface INotificationItem<T = any> {
+export interface INotificationItem<T = any> extends RenderProps<INotificationItem> {
     id: UniqueId;
     value: T;
     status?: NotificationStatus;
-    render?: (item: INotificationItem) => React.ReactNode;
 }
 
 export interface INotification<T> {

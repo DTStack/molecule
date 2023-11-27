@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { ContextMenuEventHandler, IMenuItemProps } from 'mo/types';
-import { get } from 'mo/utils';
+import { get, sortByIndex } from 'mo/utils';
 import RcMenu, { Divider, Item as MenuItem, SubMenu } from 'rc-menu';
 
 import Icon from '../icon';
@@ -43,6 +43,7 @@ export default function Menu({ data, onClick }: IMenuProps) {
         return (
             <SubMenu
                 popupClassName={variables.container}
+                className={variables.subMenu}
                 title={
                     <div className={variables.item}>
                         <span className={variables.icon} />
@@ -66,11 +67,14 @@ export default function Menu({ data, onClick }: IMenuProps) {
 
     const Menu = useMemo(() => {
         if (!Array.isArray(data)) return null;
-        return data.map((i) => {
-            if (Array.isArray(i.children)) return generateSubMenu(i);
+        return data
+            .concat()
+            .sort(sortByIndex)
+            .map((i) => {
+                if (Array.isArray(i.children)) return generateSubMenu(i);
 
-            return generateMenuItem(i);
-        });
+                return generateMenuItem(i);
+            });
     }, [data]);
 
     return (

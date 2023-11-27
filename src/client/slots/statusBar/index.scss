@@ -2,8 +2,7 @@
 
 $statusBar: prefix('statusBar');
 $container: BEMElement($statusBar, 'container');
-$leftItem: BEMElement($container, 'left-items');
-$rightItem: BEMElement($container, 'right-items');
+$items: BEMElement($container, 'items');
 
 
 .#{$container} {
@@ -12,26 +11,17 @@ $rightItem: BEMElement($container, 'right-items');
     border-top: 1px solid var(--statusBar-border);
     color: var(--statusBar-foreground);
     height: 22px;
-    display: flex;
-    justify-content: space-between;
     padding: 0 7px;
     font-size: 12px;
 
-    .#{$leftItem},
-    .#{$rightItem} {
-        align-items: center;
-        display: flex;
+    .#{$items} {
         height: 100%;
-    }
-
-    .#{$leftItem} {
-        flex-grow: 1;
+        overflow: hidden;
     }
 }
 
 
 :export {
     container: $container;
-    leftItem: $leftItem;
-    rightItem: $rightItem;
+    items: $items;
 }

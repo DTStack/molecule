@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { InputValidateInfo, ValidateStatus, ValidateStatusLiteral } from 'mo/types';
 
@@ -15,7 +15,6 @@ export const Input = (props: IBaseInputProps) => {
     const { className, placeholder, info, onChange } = props;
 
     const [isFocus, setIsFocus] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
 
     const getInputClassName = (status: ValidateStatusLiteral) => {
         switch (status) {
@@ -45,7 +44,7 @@ export const Input = (props: IBaseInputProps) => {
     };
 
     const handleInputKeyPress = (e: any) => {
-        // detect Enter press
+        // enter press
         if (e?.keyCode === 13) {
             onChange?.(e?.target?.value || '');
             e?.preventDefault();
@@ -55,7 +54,6 @@ export const Input = (props: IBaseInputProps) => {
     return (
         <div className={className}>
             <input
-                ref={inputRef}
                 className={classNames(
                     info?.message && getInputClassName(info?.status || ValidateStatus.info)
                 )}

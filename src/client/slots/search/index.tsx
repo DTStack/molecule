@@ -1,22 +1,14 @@
 import { classNames } from 'mo/client/classNames';
 import useConnector from 'mo/client/hooks/useConnector';
 import useLocale from 'mo/client/hooks/useLocale';
-import { InputValidateInfo, SearchResultItem } from 'mo/types';
+import { ISearchController } from 'mo/controllers/search';
+import { SearchResultItem } from 'mo/types';
 
 import { Input } from '../../components/input';
 import Tree from '../../components/tree';
 import variables from './index.scss';
 
-export interface ISearchProps {
-    className?: string;
-    expandKeys?: [];
-    validateInfo?: InputValidateInfo;
-    onChange?: (value: string) => void;
-    onSearch?: (value: string) => void;
-    onResultClick?: (item: SearchResultItem) => void;
-}
-
-export const Search = ({ validateInfo, onChange, onSearch, onResultClick }: ISearchProps) => {
+export default function Search({ onChange, onSearch, onResultClick }: ISearchController) {
     const builtin = useConnector('builtin');
     const search = useConnector('search');
     const localize = useLocale();
@@ -36,7 +28,7 @@ export const Search = ({ validateInfo, onChange, onSearch, onResultClick }: ISea
         <>
             <Input
                 className={classNames(variables.search)}
-                info={validateInfo}
+                info={search.validateInfo}
                 placeholder={placeholder}
                 onChange={handleChange}
             />

@@ -15,23 +15,13 @@ export interface ISearchProps {
 }
 
 export class SearchModel implements ISearchProps {
-    public value: string;
-    public result: SearchResultItem[];
-    public expandKeys: UniqueId[];
-    public validateInfo: InputValidateInfo;
-
     constructor(
-        value = '',
-        result = [],
-        expandKeys = [],
-        validateInfo: InputValidateInfo = {
+        public value: string = '',
+        public result: SearchResultItem[] = [],
+        public expandKeys: UniqueId[] = [],
+        public validateInfo: InputValidateInfo = {
             status: 'info',
             message: '',
         }
-    ) {
-        this.value = value;
-        this.result = result;
-        this.expandKeys = expandKeys;
-        this.validateInfo = validateInfo;
-    }
+    ) {}
 }

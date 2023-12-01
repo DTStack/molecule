@@ -1,0 +1,54 @@
+@import '../../classNames/style.scss';
+
+$progress: prefix('progress');
+$bit: prefix('bit');
+
+$active: BEMModifier($progress, 'active');
+
+$width-size: 3%;
+
+.#{$progress} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    height: 2px;
+    overflow: hidden;
+    pointer-events: none;
+    display: none;
+
+    .#{$bit} {
+        background-color: var(--progressBar-background);
+        width: $width-size;
+        height: 2px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 5px;
+    }
+}
+
+.#{$progress}.#{$active} {
+    display: block;
+
+    .#{$bit} {
+        animation: 4s linear 0s infinite alternate moveToRight;
+    }
+}
+
+@keyframes moveToRight {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: calc(100% - $width-size);
+    }
+}
+
+:export {
+    progress: $progress;
+    bit: $bit;
+    active: $active;
+}

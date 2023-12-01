@@ -13,8 +13,13 @@ export interface ISidebarPane extends RenderProps<void> {
 export interface ISidebar {
     current: UniqueId;
     panes: ISidebarPane[];
+    loading: boolean;
 }
 
 export class SidebarModel implements ISidebar {
-    constructor(public panes: ISidebarPane[] = [], public current: UniqueId = '') {}
+    constructor(
+        public panes: ISidebarPane[] = [],
+        public current: UniqueId = '',
+        public loading: boolean = false
+    ) {}
 }

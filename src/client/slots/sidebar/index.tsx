@@ -1,5 +1,6 @@
 import ActionBar from 'mo/client/components/actionBar';
 import Flex from 'mo/client/components/flex';
+import Progress from 'mo/client/components/progress';
 import useConnector from 'mo/client/hooks/useConnector';
 import { ISideBarController } from 'mo/controllers/sidebar';
 import { sortByIndex } from 'mo/utils';
@@ -32,7 +33,10 @@ export default function Sidebar({ onToolbarClick }: ISideBarController) {
                         </div>
                     )}
                 </Flex>
-                <div className={variables.content}>{pane.render?.()}</div>
+                <div className={variables.content}>
+                    <Progress active={sidebar.loading} />
+                    {pane.render?.()}
+                </div>
             </div>
         </div>
     );

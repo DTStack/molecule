@@ -3,6 +3,7 @@ import { type ISidebarPane, SidebarEvent, SidebarModel } from 'mo/models/sideBar
 import type {
     ArraylizeOrSingle,
     ContextMenuGroupHandler,
+    FunctionalOrSingle,
     IMenuItemProps,
     RequiredId,
     UniqueId,
@@ -45,6 +46,7 @@ export interface ISidebarService extends BaseService<SidebarModel> {
      * @param id
      */
     setActive(id?: UniqueId): void;
+    setLoading(loading: FunctionalOrSingle<boolean>): void;
     /**
      * Reset the sidebar data
      */
@@ -155,6 +157,13 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
         this.setState({
             current: id,
         });
+    }
+
+    public setLoading(loading: FunctionalOrSingle<boolean>): void {
+        this.setState((prev) => ({
+            ...prev,
+            loading: typeof loading === 'function' ? loading(prev.loading) : loading,
+        }));
     }
 
     public reset() {

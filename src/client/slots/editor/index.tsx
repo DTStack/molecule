@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Progress from 'mo/client/components/progress';
 import { Pane, SplitPane } from 'mo/client/components/split';
 import Welcome from 'mo/client/components/welcome';
 import useConnector from 'mo/client/hooks/useConnector';
@@ -27,7 +28,7 @@ export default function Editor({
     const { data } = useConnector('contextMenu');
     const settings = useSettings();
 
-    const { groups = [], current, entry = <Welcome />, editorOptions, toolbar } = editor;
+    const { groups = [], current, entry = <Welcome />, editorOptions, toolbar, loading } = editor;
 
     const options = useMemo(
         () => ({
@@ -69,5 +70,10 @@ export default function Editor({
         );
     };
 
-    return <div className={variables.container}>{current ? renderGroups() : entry}</div>;
+    return (
+        <div className={variables.container}>
+            <Progress active={loading} />
+            {current ? renderGroups() : entry}
+        </div>
+    );
 }

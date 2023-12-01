@@ -4,6 +4,7 @@ import { EditorEvent, EditorGroupModel, EditorModel, type IEditorTab } from 'mo/
 import type {
     ContextMenuEditorHandler,
     ContextMenuGroupHandler,
+    FunctionalOrSingle,
     IDragProps,
     IEditorOptions,
     IMenuItemProps,
@@ -101,6 +102,7 @@ export interface IEditorService extends BaseService<EditorModel> {
      */
     updateEditorOptions(options: IEditorOptions): void;
     updateGroup<T>(group: RequiredId<EditorGroupModel<T>>): void;
+    setLoading(loading: FunctionalOrSingle<boolean>): void;
     onFocus(callback: (instance: editor.IStandaloneCodeEditor) => void): void;
     onCursorSelection(
         callback: (
@@ -457,6 +459,12 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
                 groups: nextGroups,
             });
         }
+    }
+    public setLoading(loading: FunctionalOrSingle<boolean>): void {
+        this.setState((prev) => ({
+            ...prev,
+            loading: typeof loading === 'function' ? loading(prev.loading) : loading,
+        }));
     }
 
     private createGroup(tab: IEditorTab<any>) {

@@ -35,6 +35,12 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
     // ====================================================================
 
+    // ================= Sidebar Operation Region ====================
+    const handleToggleLoading = () => {
+        molecule.sidebar.setLoading((p) => !p);
+    };
+    // ====================================================================
+
     // ================= Status Bar Operation Region ====================
     const addStatusBar = function () {
         const id = randomId();
@@ -179,6 +185,10 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             tabData,
             molecule.editor.getState().groups?.at(0)?.id
         );
+    };
+
+    const handleToggleEditorLoading = () => {
+        molecule.editor.setLoading((p) => !p);
     };
 
     const updateWelcome = function () {
@@ -369,6 +379,9 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <Button block onClick={newEditor}>
                     New Editor
                 </Button>
+                <Button block onClick={handleToggleEditorLoading}>
+                    Toggle Loading
+                </Button>
                 <Button block onClick={updateWelcome}>
                     Update Welcome Page
                 </Button>
@@ -393,6 +406,10 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 </Button>
                 <Button block onClick={handleHiddenActivityBar}>
                     Show/Hide ActivityBar
+                </Button>
+                <h2>Sidebar:</h2>
+                <Button block onClick={handleToggleLoading}>
+                    Toggle Loading
                 </Button>
                 <h2>StatusBar:</h2>
                 <Button block onClick={addStatusBar}>

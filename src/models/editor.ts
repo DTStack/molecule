@@ -67,6 +67,7 @@ export interface IEditor {
      * Toolbar items
      */
     toolbar?: IMenuItemProps[];
+    loading?: boolean;
 }
 
 export class EditorModel implements IEditor {
@@ -74,6 +75,7 @@ export class EditorModel implements IEditor {
         public groups: EditorGroupModel[] = [],
         public editorOptions: IEditorOptions = {},
         public toolbar: IMenuItemProps[] = [],
+        public loading: boolean = false,
         public entry?: React.ReactNode,
         public current?: UniqueId | undefined
     ) {}

@@ -1,7 +1,7 @@
 import SearchToolbarIcon from 'mo/client/components/searchToolbarIcon';
 import { Search } from 'mo/client/slots/search';
 import { BaseController } from 'mo/glue';
-import { ISearchProps, SearchEvent } from 'mo/models/search';
+import { SearchEvent } from 'mo/models/search';
 import { ActivityBarService } from 'mo/services/activityBar';
 import { BuiltinService } from 'mo/services/builtin';
 import { ContextMenuService } from 'mo/services/contextMenu';
@@ -10,8 +10,6 @@ import type { IMenuItemProps, SearchResultItem } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface ISearchController extends BaseController {
-    setValue?: (value?: string) => void;
-    setValidateInfo?: (message: string | ISearchProps['validateInfo']) => void;
     validateValue?: (value: string, callback: (err: void | Error) => void) => void;
     onResultClick?: (item: SearchResultItem) => void;
     onToolbarClick?: (item: SearchResultItem) => void;

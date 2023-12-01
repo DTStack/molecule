@@ -32,5 +32,15 @@ export const TestExtension: IExtension = {
                 updateContextMenuIcon(molecule, 'activityBar', item, nextHidden);
             }
         });
+
+        molecule.panel.onTabContextMenu((item) => {
+            if (typeof item.id === 'string' && item.id.startsWith('Panel-')) {
+                const panelItem = molecule.panel.getPanel(item.id);
+                molecule.panel.update({
+                    id: item.id,
+                    hidden: !panelItem?.hidden,
+                });
+            }
+        });
     },
 };

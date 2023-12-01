@@ -94,7 +94,7 @@ export const TestExtension: IExtension = {
                 );
 
             const resultIsTree = _toolbar?.icon === 'list-flat';
-            let result: IMenuItemProps[] = [];
+            let result: SearchResultItem[] = [];
             defaultExpandKeys = [];
             if (value) {
                 if (resultIsTree) {
@@ -111,9 +111,28 @@ export const TestExtension: IExtension = {
         }, 400);
         molecule.search.onSearch(debounceSearch);
 
-        // molecule.search.onChange((value) => {
-        //     console.log(`onChange, value is: ${value}`);
-        // });
+        molecule.search.onChange((value: string) => {
+            console.log(`onChange, value is: ${value}`);
+            if (value === 'info') {
+                molecule.search.setValidateInfo({
+                    status: 'info',
+                    message: 'This is info message.',
+                });
+            } else if (value === 'warning') {
+                molecule.search.setValidateInfo({
+                    status: 'warning',
+                    message: 'This is warning message.',
+                });
+            } else if (value === 'error') {
+                molecule.search.setValidateInfo({
+                    status: 'error',
+                    message: 'This is error message.',
+                });
+            } else {
+                molecule.search.setValidateInfo('');
+            }
+        });
+
         // molecule.search.onResultClick((item) => {
         //     console.log('onResultClick', item);
         // });

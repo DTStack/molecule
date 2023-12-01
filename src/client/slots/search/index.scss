@@ -7,7 +7,7 @@ $actionBar: prefix('actionBar');
     font-size: 13px;
     margin: 0 8px 5px;
 
-    input {
+    textarea {
         background: var(--input-background);
         border: 1px solid transparent;
         box-sizing: border-box;
@@ -19,7 +19,7 @@ $actionBar: prefix('actionBar');
         min-height: 23px;
         outline: none;
         overflow: hidden;
-        padding: 3px 62px 3px 4px;
+        padding: 4px 8px 4px 4px;
         resize: none;
         width: 100%;
 
@@ -73,13 +73,13 @@ $actionBar: prefix('actionBar');
         position: absolute;
         z-index: 1;
 
-        &:not(input) {
+        &:not(textarea) {
             margin-top: -1px;
             width: calc(100% - 12px);
         }
     }
 
-    & &__info {
+    &--info {
         border: 1px solid var(--inputValidation-infoBorder);
 
         &:active,
@@ -87,12 +87,12 @@ $actionBar: prefix('actionBar');
             border-color: var(--inputValidation-infoBorder);
         }
 
-        &:not(input) {
+        &:not(textarea) {
             background: var(--inputValidation-infoBackground);
         }
     }
 
-    & &__warning {
+    &--warning {
         border: 1px solid var(--inputValidation-warningBorder);
 
         &:active,
@@ -100,12 +100,12 @@ $actionBar: prefix('actionBar');
             border-color: var(--inputValidation-warningBorder);
         }
 
-        &:not(input) {
+        &:not(textarea) {
             background: var(--inputValidation-warningBackground);
         }
     }
 
-    & &__error {
+    &--error {
         border: 1px solid var(--inputValidation-errorBorder);
 
         &:active,
@@ -113,7 +113,7 @@ $actionBar: prefix('actionBar');
             border-color: var(--inputValidation-errorBorder);
         }
 
-        &:not(input) {
+        &:not(textarea) {
             background: var(--inputValidation-errorBackground);
         }
     }

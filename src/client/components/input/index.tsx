@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { InputValidateInfo, ValidateStatus, ValidateStatusLiteral } from 'mo/types';
 
@@ -15,6 +15,7 @@ export const Input = (props: IBaseInputProps) => {
     const { className, placeholder, info, onChange } = props;
 
     const [isFocus, setIsFocus] = useState(false);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const getInputClassName = (status: ValidateStatusLiteral) => {
         switch (status) {
@@ -40,6 +41,19 @@ export const Input = (props: IBaseInputProps) => {
     };
 
     const handleInputChange = (e: any) => {
+        if (textareaRef.current) {
+            // base height
+            textareaRef.current.style.height = '24px';
+            const currentScrollHeight = textareaRef.current.scrollHeight;
+            // count the lines
+            const lines = currentScrollHeight / 24;
+            const maxLines = 5;
+            if (lines > maxLines) {
+                textareaRef.current.style.height = `${24 * maxLines}px`;
+            } else {
+                textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+            }
+        }
         onChange?.(e?.target?.value || '');
     };
 
@@ -53,7 +67,11 @@ export const Input = (props: IBaseInputProps) => {
 
     return (
         <div className={className}>
-            <input
+            <textarea
+                ref={textareaRef}
+                spellCheck={false}
+                autoCorrect="off"
+                autoCapitalize="off"
                 className={classNames(
                     info?.message && getInputClassName(info?.status || ValidateStatus.info)
                 )}
@@ -67,7 +85,7 @@ export const Input = (props: IBaseInputProps) => {
             {info?.message && isFocus && (
                 <div
                     className={classNames(
-                        variables.validation,
+                        variables.base,
                         getInputClassName(info?.status || ValidateStatus.info)
                     )}
                 >

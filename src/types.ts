@@ -373,7 +373,7 @@ export type InputValidateInfo = {
 };
 
 type ISearchResultData = {
-    language: 'typescript' | 'javascript' | 'html' | 'json';
+    language: string;
     value: string;
     breadcrumb: string[];
 };

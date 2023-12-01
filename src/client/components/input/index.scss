@@ -1,16 +1,17 @@
 @import '../../classNames/style.scss';
 
-$input: prefix('input');
-$info: BEMModifier($input, 'info');
-$warning: BEMModifier($input, 'warning');
-$error: BEMModifier($input, 'error');
-$validating: BEMModifier($input, 'validating');
+$textarea: prefix('textarea');
+$info: BEMModifier($textarea, 'info');
+$warning: BEMModifier($textarea, 'warning');
+$error: BEMModifier($textarea, 'error');
+$validating: BEMModifier($textarea, 'validating');
 
-$validation: BEMElement($input, 'validation');
+$base: BEMElement($textarea, 'base');
 
-.#{$input} {
+.#{$textarea} {
     font-size: 13px;
-    input {
+
+    textarea {
         background: var(--input-background);
         border: 1px solid transparent;
         box-sizing: border-box;
@@ -22,7 +23,7 @@ $validation: BEMElement($input, 'validation');
         min-height: 23px;
         outline: none;
         overflow: hidden;
-        padding: 3px 62px 3px 4px;
+        padding: 4px 8px 4px 4px;
         resize: none;
         width: 100%;
 
@@ -43,13 +44,13 @@ $validation: BEMElement($input, 'validation');
         position: absolute;
         z-index: 1;
 
-        &:not(input) {
+        &:not(textarea) {
             margin-top: -1px;
-            width: calc(100% - 12px);
+            width: calc(100% - 28px);
         }
     }
 
-    &.#{$info} {
+    &--info {
         border: 1px solid var(--inputValidation-infoBorder);
 
         &:active,
@@ -57,12 +58,12 @@ $validation: BEMElement($input, 'validation');
             border-color: var(--inputValidation-infoBorder);
         }
 
-        &:not(input) {
+        &:not(textarea) {
             background: var(--inputValidation-infoBackground);
         }
     }
 
-    &.#{$warning} {
+    &--warning {
         border: 1px solid var(--inputValidation-warningBorder);
 
         &:active,
@@ -70,12 +71,12 @@ $validation: BEMElement($input, 'validation');
             border-color: var(--inputValidation-warningBorder);
         }
 
-        &:not(input) {
+        &:not(textarea) {
             background: var(--inputValidation-warningBackground);
         }
     }
 
-    &.#{$error} {
+    &--error {
         border: 1px solid var(--inputValidation-errorBorder);
 
         &:active,
@@ -83,12 +84,12 @@ $validation: BEMElement($input, 'validation');
             border-color: var(--inputValidation-errorBorder);
         }
 
-        &:not(input) {
+        &:not(textarea) {
             background: var(--inputValidation-errorBackground);
         }
     }
 
-    &.#{$validating} {
+    &--validating {
         border: 1px solid var(--inputValidation-infoBorder);
 
         &:active,
@@ -96,17 +97,17 @@ $validation: BEMElement($input, 'validation');
             border-color: var(--inputValidation-infoBorder);
         }
 
-        &:not(input) {
+        &:not(textarea) {
             background: var(--inputValidation-infoBackground);
         }
     }
 }
 
 :export {
-    input: $input;
+    textarea: $textarea;
     info: $info;
     warning: $warning;
     error: $error;
     validating: $validating;
-    validation: $validation;
+    base: $base;
 }

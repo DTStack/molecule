@@ -1,4 +1,4 @@
-import { FileTypes, type TreeModel, type UniqueId } from 'mo/types';
+import { FileTypeLiteral, FileTypes, type TreeModel, type UniqueId } from 'mo/types';
 
 interface TreeModelNode<T extends TreeModel<T>> {
     node: T;
@@ -52,7 +52,7 @@ export class TreeNodeModel<T> {
         /**
          * The type of this tree node
          */
-        public fileType: FileTypes,
+        public fileType: FileTypeLiteral,
         /**
          * The children of this tree node
          */

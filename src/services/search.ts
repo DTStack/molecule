@@ -24,6 +24,10 @@ export interface ISearchService extends BaseService<SearchModel> {
      */
     setExpandKeys: (expandKeys: UniqueId[]) => void;
     /**
+     * Set result tree folder's expand key
+     */
+    onResultFolderClick: (expandKey: UniqueId) => void;
+    /**
      * Reset the search input and result data
      */
     reset(): void;
@@ -76,6 +80,17 @@ export class SearchService extends BaseService<SearchModel> implements ISearchSe
         this.setState({
             expandKeys,
         });
+    }
+
+    public onResultFolderClick(folderId: UniqueId) {
+        const expandKeys = this.getState().expandKeys;
+        const index = expandKeys.indexOf(folderId);
+        if (index > -1) {
+            expandKeys.splice(index, 1);
+        } else {
+            expandKeys.push(folderId);
+        }
+        this.setExpandKeys(expandKeys);
     }
 
     public reset() {

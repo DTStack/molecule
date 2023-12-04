@@ -133,9 +133,42 @@ export const TestExtension: IExtension = {
             }
         });
 
-        // molecule.search.onResultClick((item) => {
-        //     console.log('onResultClick', item);
-        // });
+        molecule.search.onResultClick((item: SearchResultItem) => {
+            console.log('onResultClick', item);
+
+            // open file in editor
+            if (item.fileType === 'File') {
+                const name = `editor-${item.name}`;
+                molecule.editor.open(
+                    {
+                        id: item.id,
+                        name,
+                        icon: 'file',
+                        value: item?.data?.value,
+                        language: item?.data?.language || 'typescript',
+                        breadcrumb: item?.data?.breadcrumb
+                            ?.map((bread) => {
+                                return {
+                                    id: `${bread}`,
+                                    name: bread,
+                                    icon: '',
+                                };
+                            })
+                            ?.concat({
+                                id: `${item.id}`,
+                                name: item.name,
+                                icon: 'file',
+                            }),
+                    },
+                    molecule.editor.getState().groups?.at(0)?.id
+                );
+            }
+
+            // collapse or expand folder
+            if (item.fileType === 'Folder') {
+                molecule.search.onResultFolderClick(item.id);
+            }
+        });
 
         // click search toolbar item
         molecule.search.onToolbarClick((item: IMenuItemProps) => {

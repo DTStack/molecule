@@ -86,6 +86,8 @@ export default ({
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        // https://medium.com/trabe/react-syntheticevent-reuse-889cd52981b6
+        e.persist();
         e.preventDefault();
         onTreeItemKeyDown?.(e, data);
     };

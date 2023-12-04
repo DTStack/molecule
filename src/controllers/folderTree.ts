@@ -5,12 +5,12 @@ import { FolderTreeEvent } from 'mo/models/folderTree';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { FolderTreeService } from 'mo/services/folderTree';
-import { IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
+import { FolderTreeInsertOption, IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
 import type { TreeNodeModel } from 'mo/utils/tree';
 import { inject, injectable } from 'tsyringe';
 
 export interface IFolderTreeController extends BaseController {
-    readonly createTreeNode?: (data: TreeNodeModel<any>, id?: UniqueId) => void;
+    readonly createTreeNode?: (data: TreeNodeModel<any>, id?: UniqueId, opts?: FolderTreeInsertOption) => void;
     readonly onContextMenuClick?: (
         contextMenu: IMenuItemProps,
         treeNode?: TreeNodeModel<any>
@@ -64,8 +64,8 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
         });
     }
 
-    public createTreeNode = (data: TreeNodeModel<any>, id?: UniqueId) => {
-        this.emit(FolderTreeEvent.onCreate, data, id);
+    public createTreeNode = (data: TreeNodeModel<any>, id?: UniqueId, opts?: FolderTreeInsertOption) => {
+        this.emit(FolderTreeEvent.onCreate, data, id, opts);
     };
 
     public onRightClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeNode: TreeNodeModel<any>) => {

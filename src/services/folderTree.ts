@@ -1,8 +1,8 @@
 import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
-import type { IMenuItemProps, KeyboardEventHandler, UniqueId } from 'mo/types';
+import { FileTypes, FolderTreeInsertOption, type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
 import logger from 'mo/utils/logger';
-import { loopTreeAddNode, loopTreeRemoveNode, TreeHelper, TreeNodeModel } from 'mo/utils/tree';
+import { TreeHelper, TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
 
 export interface IFolderTreeService extends BaseService<FolderTreeModel> {
@@ -133,7 +133,7 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Listen to create a node for folder tree
      * @param callback
      */
-    onCreate(callback: (data: TreeNodeModel<any>, nodeId?: UniqueId) => void): void;
+    onCreate(callback: (data: TreeNodeModel<any>, nodeId?: UniqueId, opts?: FolderTreeInsertOption) => void): void;
     /**
      * Listen to the click event about the context menu except for built-in menus
      * @param callback
@@ -232,7 +232,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         });
     }
 
-    public add(data: TreeNodeModel<any>, id?: UniqueId): void {
+    public add(data: TreeNodeModel<any>, id?: UniqueId, opts?: FolderTreeInsertOption): void {
         const isRootFolder = data.fileType === 'RootFolder';
 
         if (isRootFolder) {
@@ -242,13 +242,34 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         if (!id && id !== 0) throw new Error('File node or folder node both need id');
 
         const treeHelper = new TreeHelper(this.getState().data);
-        const target = treeHelper.getParent(id);
-        if (!target) {
-            logger.error('Please check id again, there is not folder tree');
-            return;
+        const target = treeHelper.getNode(id);
+        if (!opts?.gap) {
+            // same level
+            const targetParent = treeHelper.getParent(id);
+            if (!targetParent) {
+                logger.error('Please check id again, there is not folder tree');
+                return;
+            }
+            targetParent.children ??= [];
+            if (!Object.hasOwn((opts || {}), 'index')) {
+                targetParent.children.push(data);
+            } else {
+                targetParent.children.splice(opts?.index || 0, 0, data);
+            }
+        } else {
+            // child level
+            if (target?.fileType === FileTypes.File) {
+                throw new Error('File node can not use Folder');
+            }
+            if (target) {
+                target.children ??= [];
+            }
+            if (!Object.hasOwn((opts || {}), 'index')) {
+                target?.children?.push(data);
+            } else {
+                target?.children?.splice(opts?.index || 0, 0, data);
+            }
         }
-        target.children ??= [];
-        target.children.push(data);
         this.setState((prev) => ({
             ...prev,
             data: [...prev.data],
@@ -309,15 +330,20 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
 
     public dropTree(source: TreeNodeModel<any>, target: TreeNodeModel<any>) {
         const { data = [] } = this.getState();
-        const cpData = [...data];
         /**
          * 1. Remove source node.
          * 2. Create new source node, before target.
          * Required first remove node, and then add node.
          */
-        loopTreeRemoveNode({ tree: cpData, source });
-        loopTreeAddNode({ tree: cpData, source, target });
-        this.setState({ data: cpData });
+        this.remove(source.id);
+        const treeHelper = new TreeHelper(data);
+        const targetParent = treeHelper.getParent(target.id);
+        const idx = targetParent?.children?.findIndex(({ id }) => id === target.id);
+        if ([FileTypes.Folder, FileTypes.RootFolder].includes(target.fileType) && idx !== 0) {
+            this.add(source, target?.id, { gap: true });
+        } else {
+            this.add(source, targetParent?.id, { gap: true, index: idx });
+        }
     };
 
     public get(id: UniqueId) {
@@ -371,7 +397,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.subscribe(FolderTreeEvent.onRightClick, callback);
     };
 
-    public onCreate = (callback: (data: TreeNodeModel<any>, nodeId?: UniqueId) => void) => {
+    public onCreate = (callback: (data: TreeNodeModel<any>, nodeId?: UniqueId, opts?: FolderTreeInsertOption) => void) => {
         this.subscribe(FolderTreeEvent.onCreate, callback);
     };
 

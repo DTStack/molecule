@@ -26,8 +26,8 @@ export const ExtendsFolderTree: IExtension = {
         });
       });
 
-      molecule.folderTree.onCreate((data, nodeId) => {
-        molecule.folderTree.add(data, nodeId);
+      molecule.folderTree.onCreate((data, nodeId, opts) => {
+        molecule.folderTree.add(data, nodeId, opts);
       });
 
       molecule.folderTree.onRename((id) => {

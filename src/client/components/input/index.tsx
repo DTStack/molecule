@@ -73,6 +73,7 @@ export const Input = (props: IBaseInputProps) => {
                 autoCorrect="off"
                 autoCapitalize="off"
                 className={classNames(
+                    variables.input,
                     info?.message && getInputClassName(info?.status || ValidateStatus.info)
                 )}
                 placeholder={placeholder}

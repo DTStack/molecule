@@ -7,7 +7,7 @@ $actionBar: prefix('actionBar');
     font-size: 13px;
     margin: 0 8px 5px;
 
-    textarea {
+    &__input {
         background: var(--input-background);
         border: 1px solid transparent;
         box-sizing: border-box;

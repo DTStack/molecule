@@ -7,11 +7,12 @@ $error: BEMModifier($textarea, 'error');
 $validating: BEMModifier($textarea, 'validating');
 
 $base: BEMElement($textarea, 'base');
+$input: BEMElement($textarea, 'input');
 
 .#{$textarea} {
     font-size: 13px;
 
-    textarea {
+    &__input {
         background: var(--input-background);
         border: 1px solid transparent;
         box-sizing: border-box;
@@ -109,5 +110,6 @@ $base: BEMElement($textarea, 'base');
     warning: $warning;
     error: $error;
     validating: $validating;
+    input: $input;
     base: $base;
 }

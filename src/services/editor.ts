@@ -244,7 +244,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
                 };
             }),
         });
-        if (tab.hasOwnProperty('value') && exist.model && exist.model.getValue() !== tab.value) {
+        if (Object.hasOwn(tab, 'value') && exist.model && exist.model.getValue() !== tab.value) {
             exist.model.setValue(tab.value ?? '');
         }
         // ===================== effects =====================

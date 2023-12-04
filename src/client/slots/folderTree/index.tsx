@@ -39,7 +39,7 @@ export default function FolderTree({
     onUpdateFileName,
     onDropTree,
     onExpandKeys,
-    onFileKeyDown,
+    onTreeItemKeyDown,
     createTreeNode,
     onRightClick,
     onContextMenuClick,
@@ -125,7 +125,7 @@ export default function FolderTree({
                     }}
                     onLoadData={onLoadData}
                     onExpand={onExpandKeys}
-                    onFileKeyDown={onFileKeyDown}
+                    onTreeItemKeyDown={onTreeItemKeyDown}
                 />
             </div>
         </ScrollBar>

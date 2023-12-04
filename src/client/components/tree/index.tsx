@@ -31,7 +31,7 @@ export interface ITreeProps {
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
         node: ITreeNodeItemProps
     ) => void;
-    onFileKeyDown?: KeyboardEventHandler;
+    onTreeItemKeyDown?: KeyboardEventHandler;
     onContextMenu?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
 }
 
@@ -49,7 +49,7 @@ export default function Tree({
     onSelect,
     onLoadData,
     onTreeClick,
-    onFileKeyDown,
+    onTreeItemKeyDown,
     onContextMenu,
 }: ITreeProps) {
     const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
@@ -267,7 +267,7 @@ export default function Tree({
                     onNodeDragOver={draggable ? handleDragOver : undefined}
                     onNodeDragEnd={draggable ? handleDragEnd : undefined}
                     onNodeDrop={draggable ? handleDrop : undefined}
-                    onFileKeyDown={onFileKeyDown}
+                    onTreeItemKeyDown={onTreeItemKeyDown}
                     onContextMenu={onContextMenu}
                 />
             );

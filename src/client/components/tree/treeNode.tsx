@@ -23,7 +23,7 @@ interface ITreeNodeProps {
     onNodeDragOver?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDragEnd?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDrop?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
-    onFileKeyDown?: KeyboardEventHandler;
+    onTreeItemKeyDown?: KeyboardEventHandler;
     onContextMenu?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
 }
 const INDENT = 8;
@@ -43,7 +43,7 @@ export default ({
     onNodeDragOver,
     onNodeDrop,
     onNodeDragEnd,
-    onFileKeyDown,
+    onTreeItemKeyDown,
     onContextMenu,
 }: ITreeNodeProps) => {
     const uuid = data.id;
@@ -87,7 +87,7 @@ export default ({
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault();
-        onFileKeyDown?.(e, data);
+        onTreeItemKeyDown?.(e, data);
     };
 
     const handleContextMenu = (item: IMenuItemProps) => {

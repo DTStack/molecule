@@ -96,7 +96,7 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Listen to event about onKeyDown file item
      * @params callback
      */
-    onFileKeyDown(callback: KeyboardEventHandler): void;
+    onTreeItemKeyDown(callback: KeyboardEventHandler): void;
     /**
      * Listen to event about clicking rename button
      * @param callback
@@ -390,7 +390,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.subscribe(FolderTreeEvent.onExpandKeys, callback);
     };
 
-    public onFileKeyDown(callback: KeyboardEventHandler): void {
-        this.subscribe(FolderTreeEvent.onFileKeyDown, callback);
+    public onTreeItemKeyDown(callback: KeyboardEventHandler): void {
+        this.subscribe(FolderTreeEvent.onTreeItemKeyDown, callback);
     }
 }

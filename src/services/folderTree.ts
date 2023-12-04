@@ -156,6 +156,10 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @param callback
      */
     onExpandKeys(callback: (expandKeys: UniqueId[]) => void): void;
+    /**
+     * Callback of the Add Button when data is none
+     */
+    onCreateRoot: (callback: (e: React.MouseEvent<Element, MouseEvent>) => void) => void;
 }
 
 @injectable()
@@ -393,4 +397,8 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
     public onTreeItemKeyDown(callback: KeyboardEventHandler): void {
         this.subscribe(FolderTreeEvent.onTreeItemKeyDown, callback);
     }
+
+    public onCreateRoot(callback: (e: React.MouseEvent<Element, MouseEvent>) => void): void {
+        this.subscribe(FolderTreeEvent.onCreateRoot, callback);
+    };
 }

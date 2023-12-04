@@ -13,6 +13,7 @@ export enum FolderTreeEvent {
     onDrop = 'folderTree.onDrop',
     onExpandKeys = 'folderTree.onExpandKeys',
     onTreeItemKeyDown = 'folderTree.onTreeItemKeyDown',
+    onCreateRoot = 'folderTree.onCreateRoot',
 }
 
 export interface IFolderTree {

@@ -1,12 +1,10 @@
-import { useCallback, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { Button } from 'mo/client/components/button';
 import Tree from 'mo/client/components/tree';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { IFolderTreeController } from 'mo/controllers/folderTree';
 import type { IExplorerPanelItem } from 'mo/models/explorer';
-import { FileTypes } from 'mo/types';
-import { randomId } from 'mo/utils';
 import { TreeNodeModel } from 'mo/utils/tree';
 
 import { ScrollBar } from '../../components/scrollBar';
@@ -40,28 +38,12 @@ export default function FolderTree({
     onDropTree,
     onExpandKeys,
     onTreeItemKeyDown,
-    createTreeNode,
     onRightClick,
     onContextMenuClick,
+    onCreateRoot,
 }: { panel: IExplorerPanelItem } & IFolderTreeController) {
     const folderTree = useConnector('folderTree');
     const { entry, current, data, expandKeys, loadedKeys, editing } = folderTree;
-
-    const handleCreateFolder = useCallback(() => {
-        createTreeNode?.({
-            id: randomId(),
-            name: 'molecule',
-            fileType: FileTypes.RootFolder,
-            icon: 'folder',
-            children: [
-                { id: randomId(), name: 'folder1', fileType: FileTypes.Folder, children: [{ id: randomId(), name: 'file1', fileType: FileTypes.File } ]},
-                { id: randomId(), name: 'folder2', fileType: FileTypes.Folder, children: [{ id: randomId(), name: 'file2', fileType: FileTypes.File }, { id: randomId(), name: 'file3', fileType: FileTypes.File }]},
-                { id: randomId(), name: 'file4', fileType: FileTypes.File },
-                { id: randomId(), name: 'file5', fileType: FileTypes.File },
-                { id: randomId(), name: 'file6', fileType: FileTypes.File },
-            ],
-        });
-    }, []);
 
     const welcomePage = (
         <div data-content={panel.id}>
@@ -70,7 +52,7 @@ export default function FolderTree({
             ) : (
                 <div style={{ padding: '10px 5px' }}>
                     you have not yet opened a folder
-                    <Button onClick={handleCreateFolder}>Add Folder</Button>
+                    <Button onClick={onCreateRoot}>Add Folder</Button>
                 </div>
             )}
         </div>

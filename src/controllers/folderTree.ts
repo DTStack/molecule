@@ -22,6 +22,7 @@ export interface IFolderTreeController extends BaseController {
     readonly onExpandKeys?: (expandKeys: UniqueId[]) => void;
     readonly onTreeItemKeyDown?: KeyboardEventHandler;
     readonly onRightClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeNode: TreeNodeModel<any>) => void;
+    readonly onCreateRoot?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
 @injectable()
@@ -144,5 +145,9 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
 
     public onTreeItemKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, node: TreeNodeModel<any>) => {
         this.emit(FolderTreeEvent.onTreeItemKeyDown, e, node);
+    };
+
+    public onCreateRoot = (e: React.MouseEvent<Element, MouseEvent>) => {
+        this.emit(FolderTreeEvent.onCreateRoot, e);
     };
 }

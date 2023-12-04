@@ -3,7 +3,8 @@ import {
     toggleNextActive,
     updateContextMenuIcon,
 } from '@dtinsight/molecule/esm/extensions/utils';
-import { IExtension, SearchResultItem, UniqueId } from '@dtinsight/molecule/esm/types';
+import { FileTypes, IExtension, SearchResultItem, UniqueId  } from '@dtinsight/molecule/esm/types';
+import { randomId } from '@dtinsight/molecule/esm/utils';
 import { cloneDeep, debounce } from 'lodash-es';
 
 import { IMenuItemProps } from '../../../esm/types';
@@ -232,6 +233,22 @@ export const TestExtension: IExtension = {
                     molecule.search.setExpandKeys(expandKeys);
                 }
             }
+        });
+
+        molecule.folderTree.onCreateRoot(() => {
+            molecule.folderTree.add({
+                id: randomId(),
+                name: 'molecule',
+                fileType: FileTypes.RootFolder,
+                icon: 'folder',
+                children: [
+                    { id: randomId(), name: 'folder1', fileType: FileTypes.Folder, children: [{ id: randomId(), name: 'file1', fileType: FileTypes.File } ]},
+                    { id: randomId(), name: 'folder2', fileType: FileTypes.Folder, children: [{ id: randomId(), name: 'file2', fileType: FileTypes.File }, { id: randomId(), name: 'file3', fileType: FileTypes.File }]},
+                    { id: randomId(), name: 'file4', fileType: FileTypes.File },
+                    { id: randomId(), name: 'file5', fileType: FileTypes.File },
+                    { id: randomId(), name: 'file6', fileType: FileTypes.File },
+                ],
+            });
         });
     },
 };

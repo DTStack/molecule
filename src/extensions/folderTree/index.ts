@@ -50,7 +50,7 @@ export const ExtendsFolderTree: IExtension = {
         molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
       });
 
-      molecule.folderTree.onFileKeyDown((e, node) => {
+      molecule.folderTree.onTreeItemKeyDown((e, node) => {
         molecule.folderTree.setEditing(node.id);
       });
 

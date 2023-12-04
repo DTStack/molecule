@@ -89,26 +89,7 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
     };
 
     public onContextMenuClick = (contextMenuItem: IMenuItemProps, treeNode?: TreeNodeModel<any>) => {
-        const menuId = contextMenuItem.id;
-        const {
-            RENAME_COMMAND_ID,
-            DELETE_COMMAND_ID,
-            // NEW_FILE_COMMAND_ID,
-            // NEW_FOLDER_COMMAND_ID,
-            // OPEN_TO_SIDE_COMMAND_ID,
-        } = this.builtin.getState().constants;
-        const { id } = treeNode!;
-        switch (menuId) {
-            case RENAME_COMMAND_ID:
-                this.onRename(id);
-                break;
-            case DELETE_COMMAND_ID:
-                this.onDelete(id);
-                break;
-            default:
-                this.emit(FolderTreeEvent.onContextMenuClick, contextMenuItem, treeNode);
-                break;
-        }
+        this.emit(FolderTreeEvent.onContextMenuClick, contextMenuItem, treeNode);
     };
 
     private onRename = (id: UniqueId) => {

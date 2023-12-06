@@ -40,5 +40,21 @@ export const ExtendsFolderTree: IExtension = {
       molecule.folderTree.onDropTree((source, target) => {
         molecule.folderTree.dropTree(source, target);
       });
+
+      molecule.folderTree.onContextMenu((contextMenuItem, treeNode) => {
+        const menuId = contextMenuItem.id;
+        const { RENAME_COMMAND_ID, DELETE_COMMAND_ID } = molecule.builtin.getState().constants;
+        const { id } = treeNode!;
+        switch (menuId) {
+          case RENAME_COMMAND_ID: {
+            molecule.folderTree.setEditing(id);
+            break;
+          }
+          case DELETE_COMMAND_ID: {
+            molecule.folderTree.remove(id);
+            break;
+          }
+        }
+      });
     },
 };

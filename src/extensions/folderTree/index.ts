@@ -1,4 +1,3 @@
-import { type IEditorTab } from 'mo/models/editor';
 import { IExtension } from 'mo/types';
 
 export const ExtendsFolderTree: IExtension = {
@@ -24,10 +23,6 @@ export const ExtendsFolderTree: IExtension = {
         groupIds?.forEach((groupId) => {
             molecule.editor.updateTab({ id: file.id, name: file.name }, groupId);
         });
-      });
-
-      molecule.folderTree.onCreate((data, nodeId, opts) => {
-        molecule.folderTree.add(data, nodeId, opts);
       });
 
       molecule.folderTree.onRename((id) => {

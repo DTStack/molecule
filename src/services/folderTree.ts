@@ -130,11 +130,6 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      */
     onRightClick(callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeData: TreeNodeModel<any>) => void): void;
     /**
-     * Listen to create a node for folder tree
-     * @param callback
-     */
-    onCreate(callback: (data: TreeNodeModel<any>, nodeId?: UniqueId, opts?: FolderTreeInsertOption) => void): void;
-    /**
      * Listen to the click event about the context menu except for built-in menus
      * @param callback
      */
@@ -395,10 +390,6 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeData: TreeNodeModel<any>) => void
     ) => {
         this.subscribe(FolderTreeEvent.onRightClick, callback);
-    };
-
-    public onCreate = (callback: (data: TreeNodeModel<any>, nodeId?: UniqueId, opts?: FolderTreeInsertOption) => void) => {
-        this.subscribe(FolderTreeEvent.onCreate, callback);
     };
 
     public onContextMenu = (

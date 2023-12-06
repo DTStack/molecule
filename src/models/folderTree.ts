@@ -8,7 +8,6 @@ export enum FolderTreeEvent {
     onUpdateFileName = 'folderTree.onUpdateFileName',
     onRightClick = 'folderTree.onRightClick',
     onContextMenuClick = 'folderTree.onContextMenuClick',
-    onCreate = 'folderTree.onCreate',
     onLoadData = 'folderTree.onLoadData',
     onDrop = 'folderTree.onDrop',
     onExpandKeys = 'folderTree.onExpandKeys',

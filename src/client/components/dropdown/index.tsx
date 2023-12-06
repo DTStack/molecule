@@ -18,6 +18,7 @@ type DropdownData = IMenuItemProps & { clone?: UniqueId };
 interface IDropdownProps extends Pick<DropdownProps, 'children' | 'visible' | 'onVisibleChange'> {
     trigger?: ActionType;
     data?: DropdownData[];
+    disabled?: boolean;
     alignPoint?: boolean;
     stopPropagation?: boolean;
     onClick?: ContextMenuEventHandler;
@@ -28,6 +29,7 @@ export default function Dropdown({
     children,
     data,
     alignPoint,
+    disabled,
     visible,
     stopPropagation,
     placement,
@@ -53,6 +55,7 @@ export default function Dropdown({
     const events = getEvents();
 
     const handleVisibleChange = (next: boolean) => {
+        if (disabled) return;
         onVisibleChange?.(next);
         if (typeof visible !== 'boolean') {
             setVisible(next);

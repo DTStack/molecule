@@ -42,6 +42,7 @@
         "sidebar.explore.openEditor.group": "第 ${i} 组",
         "sidebar.explore.outline": "轮廓",
         "sidebar.search.title": "搜索",
+        "sidebar.search.notFound": "未找到任何结果",
         "sidebar.replace.placement": "替换",
         "sidebar.explore.refresh": "刷新浏览",
         "sidebar.explore.collapseFolders": "折叠文件夹",

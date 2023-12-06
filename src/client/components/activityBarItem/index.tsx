@@ -30,6 +30,7 @@ export default function ActivityBarItem({
             data={data.contextMenu}
             placement="rightTop"
             onClick={onContextMenuClick}
+            disabled={disabled}
             stopPropagation
         >
             <section>
@@ -37,11 +38,12 @@ export default function ActivityBarItem({
                     data={contextMenu}
                     trigger="contextMenu"
                     onClick={onContextMenuClick}
+                    disabled={disabled}
                     stopPropagation
                     placement="rightTop"
                 >
                     <li
-                        onClick={() => onClick?.(data)}
+                        onClick={() => !disabled && onClick?.(data)}
                         className={classNames(
                             className,
                             variables.item,

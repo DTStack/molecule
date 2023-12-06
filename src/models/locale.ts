@@ -46,6 +46,7 @@ export type LocaleKind = {
     'sidebar.explore.openEditor.group': string;
     'sidebar.explore.outline': string;
     'sidebar.search.title': string;
+    'sidebar.search.notFound': string;
     'sidebar.replace.placement': string;
     'sidebar.explore.refresh': string;
     'sidebar.explore.collapseFolders': string;

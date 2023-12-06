@@ -5,15 +5,14 @@ import { InputValidateInfo, ValidateStatus, ValidateStatusLiteral } from 'mo/typ
 import variables from './index.scss';
 
 export interface IBaseInputProps {
+    value?: string;
     className?: string;
     placeholder?: string;
     info?: InputValidateInfo;
     onChange?: (value: string) => void;
 }
 
-export const Input = (props: IBaseInputProps) => {
-    const { className, placeholder, info, onChange } = props;
-
+export const Input = ({ value, className, placeholder, info, onChange }: IBaseInputProps) => {
     const [isFocus, setIsFocus] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -66,16 +65,20 @@ export const Input = (props: IBaseInputProps) => {
     };
 
     return (
-        <div className={className}>
+        <div
+            className={classNames(
+                variables.container,
+                info?.message && getInputClassName(info?.status || ValidateStatus.info),
+                className
+            )}
+        >
             <textarea
+                value={value}
                 ref={textareaRef}
                 spellCheck={false}
                 autoCorrect="off"
                 autoCapitalize="off"
-                className={classNames(
-                    variables.input,
-                    info?.message && getInputClassName(info?.status || ValidateStatus.info)
-                )}
+                className={classNames(variables.widget)}
                 placeholder={placeholder}
                 title={placeholder}
                 onKeyDown={handleInputKeyPress}
@@ -84,14 +87,7 @@ export const Input = (props: IBaseInputProps) => {
                 onChange={handleInputChange}
             />
             {info?.message && isFocus && (
-                <div
-                    className={classNames(
-                        variables.base,
-                        getInputClassName(info?.status || ValidateStatus.info)
-                    )}
-                >
-                    {info?.message}
-                </div>
+                <div className={classNames(variables.validation)}>{info?.message}</div>
             )}
         </div>
     );

@@ -41,6 +41,7 @@ export class BuiltinModel {
         NOTIFICATION_MODEL_NAME: 'Notification',
         STATUS_BAR_HIDE_ID: 'hide',
         SEARCH_ACTIVITY_ITEM: 'sidebar.search.title',
+        SEARCH_RESULT_NOT_FOUND: 'sidebar.search.notFound',
         SEARCH_TOOLBAR_REFRESH: 'search.toolbar.refresh',
         SEARCH_TOOLBAR_CLEAR_ALL: 'search.toolbar.clearAll',
         SEARCH_TOOLBAR_VIEW_AS_LIST_TREE: 'search.toolbar.listTree',

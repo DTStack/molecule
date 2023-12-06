@@ -11,10 +11,11 @@ $disabled: BEMModifier($action, 'disabled');
     margin: 0 1px;
     line-height: 0;
 
-    &:hover {
+    &:not(.#{$disabled}):hover {
         background: var(--toolbar-hoverBackground);
         outline-color: var(--toolbar-hoverOutline);
     }
+
 
     &.#{$disabled} {
         cursor: not-allowed;

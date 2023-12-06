@@ -12,13 +12,14 @@ function randomId() {
 export default function TestPane({ context: molecule }: { context: IMoleculeContext }) {
     const timeout = useRef<number | undefined>();
     // ================= Activity Bar Operation Region ====================
-    const handleAddActivityBar = () => {
+    const handleAddActivityBar = (disabled = false) => {
         const id = randomId();
         molecule.activityBar.add({
             id,
             name: `ActivityBarItem-${id}`,
             icon: 'edit',
             alignment: 'top',
+            disabled,
         });
     };
     const handleAddGloablActivityBar = () => {
@@ -398,8 +399,11 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                     Open File
                 </Button>
                 <h2>ActivityBar:</h2>
-                <Button block onClick={handleAddActivityBar}>
+                <Button block onClick={() => handleAddActivityBar()}>
                     Add ActivityBar Item
+                </Button>
+                <Button block onClick={() => handleAddActivityBar(true)}>
+                    Add Disabled ActivityBar Item
                 </Button>
                 <Button block onClick={handleAddGloablActivityBar}>
                     Add Global ActivityBar Item

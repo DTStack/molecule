@@ -16,6 +16,10 @@ export interface ISearchService extends BaseService<SearchModel> {
      */
     setValue: (value?: string) => void;
     /**
+     * Set status for result is tree
+     */
+    setResultIsTree: (isTree: boolean) => void;
+    /**
      * Set result data for search
      */
     setResult: (resultData?: SearchResultItem[]) => void;
@@ -43,10 +47,6 @@ export interface ISearchService extends BaseService<SearchModel> {
      * Listen to the click event in result data
      */
     onResultClick(callback: (item: SearchResultItem) => void): void;
-    /**
-     * Listen to toolbar item click
-     */
-    onToolbarClick(callback: (item: SearchResultItem) => void): void;
 }
 
 @injectable()
@@ -67,6 +67,12 @@ export class SearchService extends BaseService<SearchModel> implements ISearchSe
     public setValue(value?: string) {
         this.setState({
             value,
+        });
+    }
+
+    public setResultIsTree(resultIsTree: boolean) {
+        this.setState({
+            resultIsTree,
         });
     }
 
@@ -107,9 +113,5 @@ export class SearchService extends BaseService<SearchModel> implements ISearchSe
 
     public onResultClick(callback: (item: SearchResultItem) => void): void {
         this.subscribe(SearchEvent.onResultClick, callback);
-    }
-
-    public onToolbarClick(callback: (item: SearchResultItem) => void): void {
-        this.subscribe(SearchEvent.onToolbarClick, callback);
     }
 }

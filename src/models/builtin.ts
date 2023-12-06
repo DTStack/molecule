@@ -261,7 +261,7 @@ export class BuiltinModel {
                 name: this.localize(this.constants.SEARCH_TOOLBAR_REFRESH, 'Refresh'),
                 group: 'inline',
                 sortIndex: 5,
-                disabled: false,
+                disabled: true,
             },
             {
                 id: this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
@@ -272,7 +272,7 @@ export class BuiltinModel {
                 ),
                 group: 'inline',
                 sortIndex: 6,
-                disabled: false,
+                disabled: true,
             },
             {
                 id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
@@ -280,7 +280,7 @@ export class BuiltinModel {
                 name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_TREE, 'View as Tree'),
                 group: 'inline',
                 sortIndex: 7,
-                disabled: false,
+                disabled: true,
             },
             {
                 id: this.constants.SEARCH_TOOLBAR_COLLAPSE_EXPAND,
@@ -288,7 +288,7 @@ export class BuiltinModel {
                 name: this.localize(this.constants.SEARCH_TOOLBAR_COLLAPSE_ALL, 'Collapse All'),
                 group: 'inline',
                 sortIndex: 8,
-                disabled: false,
+                disabled: true,
             },
         ],
 

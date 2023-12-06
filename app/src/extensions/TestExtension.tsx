@@ -85,15 +85,7 @@ export const TestExtension: IExtension = {
         const debounceSearch = debounce((value) => {
             console.log(`onSearch, value is: ${value}`);
 
-            const { SEARCH_ACTIVITY_ITEM, SEARCH_TOOLBAR_VIEW_AS_LIST_TREE } =
-                molecule.builtin.getState().constants;
-            const _toolbar = molecule.sidebar
-                .get(SEARCH_ACTIVITY_ITEM)
-                ?.toolbar?.find(
-                    (item: IMenuItemProps) => item.id === SEARCH_TOOLBAR_VIEW_AS_LIST_TREE
-                );
-
-            const resultIsTree = _toolbar?.icon === 'list-flat';
+            const resultIsTree = molecule.search.getState().resultIsTree;
             let result: SearchResultItem[] = [];
             defaultExpandKeys = [];
             if (value) {
@@ -170,8 +162,9 @@ export const TestExtension: IExtension = {
             }
         });
 
-        // click search toolbar item
-        molecule.search.onToolbarClick((item: IMenuItemProps) => {
+        // click sidebar search toolbar item
+        molecule.sidebar.onToolbarClick((item: IMenuItemProps) => {
+            const { value, result, resultIsTree } = molecule.search.getState() || {};
             const {
                 SEARCH_ACTIVITY_ITEM,
                 SEARCH_TOOLBAR_REFRESH,
@@ -185,11 +178,11 @@ export const TestExtension: IExtension = {
             } = molecule.builtin.getState().constants;
 
             if (item.id === SEARCH_TOOLBAR_REFRESH) {
-                debounceSearch(molecule.search.getState().value);
+                debounceSearch(value);
             } else if (item.id === SEARCH_TOOLBAR_CLEAR_ALL) {
                 molecule.search.reset();
             } else if (item.id === SEARCH_TOOLBAR_VIEW_AS_LIST_TREE) {
-                if (item.icon === 'list-flat') {
+                if (resultIsTree) {
                     molecule.sidebar.updateToolbar(SEARCH_ACTIVITY_ITEM, [
                         {
                             id: item.id,
@@ -209,15 +202,15 @@ export const TestExtension: IExtension = {
                         },
                     ]);
 
-                    debounceSearch(molecule.search.getState().value);
-                } else if (item.icon === 'list-tree') {
+                    debounceSearch(value);
+                } else {
                     molecule.sidebar.updateToolbar(SEARCH_ACTIVITY_ITEM, {
                         id: item.id,
                         icon: 'list-flat',
                         name: molecule.locale.localize(SEARCH_TOOLBAR_VIEW_AS_LIST, 'View as List'),
                     });
 
-                    debounceSearch(molecule.search.getState().value);
+                    debounceSearch(value);
                 }
             } else if (item.id === SEARCH_TOOLBAR_COLLAPSE_EXPAND) {
                 if (item.icon === 'collapse-all') {
@@ -235,7 +228,7 @@ export const TestExtension: IExtension = {
                         name: molecule.locale.localize(SEARCH_TOOLBAR_COLLAPSE_ALL, 'Collapse All'),
                     });
 
-                    const expandKeys = getExpandKeysByLoopResult(molecule.search.getState().result);
+                    const expandKeys = getExpandKeysByLoopResult(result);
                     molecule.search.setExpandKeys(expandKeys);
                 }
             }

@@ -90,7 +90,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this._config.extensions.push(...defaultExtensions);
 
         if (Array.isArray(config.extensions)) {
-            this._config.extensions.push(...config.extensions);
+            this._config.extensions.unshift(...config.extensions);
         }
 
         // ===================== Registers =====================

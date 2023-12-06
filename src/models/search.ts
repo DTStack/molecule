@@ -4,11 +4,11 @@ export enum SearchEvent {
     onChange = 'search.onChange',
     onSearch = 'search.onSearch',
     onResultClick = 'search.onResultClick',
-    onToolbarClick = 'search.onToolbarClick',
 }
 
 export interface ISearchProps {
     value?: string;
+    resultIsTree?: boolean;
     result: SearchResultItem[];
     expandKeys: UniqueId[];
     validateInfo?: InputValidateInfo;
@@ -17,6 +17,7 @@ export interface ISearchProps {
 export class SearchModel implements ISearchProps {
     constructor(
         public value: string = '',
+        public resultIsTree: boolean = false,
         public result: SearchResultItem[] = [],
         public expandKeys: UniqueId[] = [],
         public validateInfo: InputValidateInfo = {

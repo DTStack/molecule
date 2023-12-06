@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchToolbarIcon from 'mo/client/components/searchToolbarIcon';
 import Search from 'mo/client/slots/search';
 import { BaseController } from 'mo/glue';
 import { SearchEvent } from 'mo/models/search';
@@ -7,13 +6,12 @@ import { ActivityBarService } from 'mo/services/activityBar';
 import { BuiltinService } from 'mo/services/builtin';
 import { ContextMenuService } from 'mo/services/contextMenu';
 import { SidebarService } from 'mo/services/sidebar';
-import type { IMenuItemProps, SearchResultItem } from 'mo/types';
+import type { SearchResultItem } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface ISearchController extends BaseController {
     onChange?: (value: string) => void;
     onSearch?: (value: string) => void;
-    onToolbarClick?: (item: SearchResultItem) => void;
     onResultClick?: (item: SearchResultItem) => void;
 }
 
@@ -40,13 +38,8 @@ export class SearchController extends BaseController implements ISearchControlle
         this.contextMenu.add('activityBar', builtInSearchContextMenu);
         this.sidebar.add({
             ...builtInSearchSidePane,
-            toolbar: builtInSearchToolBar.map((item: IMenuItemProps) => {
-                return {
-                    ...item,
-                    render: (data: IMenuItemProps) => React.createElement(SearchToolbarIcon, { ...data, onClick: this.onToolbarClick } ),
-                };
-            }),
-            render: () => React.createElement(Search, { ...this } ),
+            toolbar: builtInSearchToolBar,
+            render: () => React.createElement(Search, { ...this }),
         });
         this.activitybar.add(builtInSearchActivityItem);
     }
@@ -61,9 +54,5 @@ export class SearchController extends BaseController implements ISearchControlle
 
     public onResultClick = (item: SearchResultItem) => {
         this.emit(SearchEvent.onResultClick, item);
-    };
-
-    public onToolbarClick = (item: SearchResultItem) => {
-        this.emit(SearchEvent.onToolbarClick, item);
     };
 }

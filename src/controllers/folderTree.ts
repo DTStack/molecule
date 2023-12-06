@@ -87,14 +87,6 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
         this.emit(FolderTreeEvent.onContextMenuClick, contextMenuItem, treeNode);
     };
 
-    private onRename = (id: UniqueId) => {
-        this.emit(FolderTreeEvent.onRename, id);
-    };
-
-    private onDelete = (id: UniqueId) => {
-        this.emit(FolderTreeEvent.onDelete, id);
-    };
-
     public onLoadData = (treeNode: TreeNodeModel<any>) => {
         const count = this.count(FolderTreeEvent.onLoadData);
         if (count) {

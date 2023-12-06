@@ -5,7 +5,7 @@ import type { UniqueId } from 'mo/types';
 import { TreeHelper, type TreeNodeModel } from 'mo/utils/tree';
 
 import Icon from '../icon';
-import TreeNode from './treenode';
+import TreeNode from './treeNode';
 import variables from './index.scss';
 
 type ITreeNodeItemProps = TreeNodeModel<any>;
@@ -18,7 +18,7 @@ export interface ITreeProps {
     loadedKeys?: UniqueId[];
     activeKey?: UniqueId;
     onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
-    onSelect?: (node: ITreeNodeItemProps, isUpdate?: boolean) => void;
+    onSelect?: (node: ITreeNodeItemProps) => void;
     onTreeClick?: () => void;
     renderTitle?: (
         node: ITreeNodeItemProps,

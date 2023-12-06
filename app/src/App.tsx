@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { create } from '@dtinsight/molecule';
 
-import { TestExtension } from './extensions/testPane';
+import { TestExtension } from './extensions/TestExtension';
 
 const instance = create({
     extensions: [TestExtension],

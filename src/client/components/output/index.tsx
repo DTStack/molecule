@@ -19,7 +19,7 @@ export default function Output() {
 
     return (
         <MonacoEditor
-            className={variables.ouput}
+            className={variables.output}
             options={{
                 readOnly: true,
                 lineDecorationsWidth: 0,

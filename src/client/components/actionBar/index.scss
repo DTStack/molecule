@@ -2,58 +2,22 @@
 
 $actionBar: prefix('actionBar');
 $container: BEMElement($actionBar, 'container');
-$item: BEMElement($actionBar, 'item');
-$disabled: BEMModifier($item, 'disabled');
-
-$icon-size: 20px;
 
 .#{$container} {
     color: var(--foreground);
     height: 100%;
     align-items: center;
     display: flex;
-    justify-content: flex-end;
-    margin: 0 auto;
     padding: 0;
-    width: 100%;
+    font-size: 0;
+    line-height: 0;
 
     &:empty {
         width: 0;
         height: 0;
     }
-
-    .#{$item} {
-        box-sizing: border-box;
-        cursor: pointer;
-        list-style: none;
-        margin-left: 2px;
-
-        &:hover {
-            background: var(--toolbar-hoverBackground);
-            outline-color: var(--toolbar-hoverOutline);
-        }
-
-        .codicon {
-            align-items: center;
-            border: 1px solid transparent;
-            box-sizing: border-box;
-            display: flex;
-            height: $icon-size;
-            justify-content: center;
-            padding: 1px;
-            width: $icon-size;
-        }
-
-
-        &.#{$disabled} {
-            cursor: not-allowed;
-            opacity: 0.4;
-        }
-    }
 }
 
 :export {
     container: $container;
-    item: $item;
-    disabled: $disabled;
 }

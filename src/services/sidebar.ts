@@ -1,7 +1,13 @@
 import { BaseService } from 'mo/glue';
-import { type ISidebarPane, SidebarModel } from 'mo/models/sideBar';
-import type { UniqueId } from 'mo/types';
-import { searchById } from 'mo/utils';
+import { type ISidebarPane, SidebarEvent, SidebarModel } from 'mo/models/sideBar';
+import type {
+    ArraylizeOrSingle,
+    ContextMenuGroupHandler,
+    IMenuItemProps,
+    RequiredId,
+    UniqueId,
+} from 'mo/types';
+import { arraylize, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
 export interface ISidebarService extends BaseService<SidebarModel> {
@@ -22,6 +28,12 @@ export interface ISidebarService extends BaseService<SidebarModel> {
      */
     update(pane: ISidebarPane): void;
     /**
+     * Update a toolbar item
+     * @param paneId
+     * @param toolbars
+     */
+    updateToolbar(paneId: UniqueId, toolbars: ArraylizeOrSingle<RequiredId<IMenuItemProps>>): void;
+    /**
      * Remove a pane
      * @param id
      */
@@ -35,6 +47,7 @@ export interface ISidebarService extends BaseService<SidebarModel> {
      * Reset the sidebar data
      */
     reset(): void;
+    onToolbarClick(callback: ContextMenuGroupHandler): void;
 }
 
 export class SidebarService extends BaseService<SidebarModel> implements ISidebarService {
@@ -85,6 +98,27 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
         }));
     }
 
+    public updateToolbar(
+        paneId: UniqueId,
+        toolbars: ArraylizeOrSingle<RequiredId<IMenuItemProps>>
+    ) {
+        const targetPane = this.getPane(paneId);
+        if (!targetPane) {
+            logger.error(`There is no pane found via the ${paneId} id`);
+            return;
+        }
+
+        const _toolbars = arraylize(toolbars);
+        _toolbars.forEach((toolbar) => {
+            const target = targetPane.toolbar?.find(searchById(toolbar.id));
+            if (!target) return;
+            Object.assign(target, toolbar);
+        });
+        this.setState((prev) => ({
+            panes: [...prev.panes],
+        }));
+    }
+
     public remove(id: UniqueId) {
         const { panes, current } = this.state;
         const target = this.getPane(id);
@@ -114,4 +148,7 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
     public reset() {
         this.setState(new SidebarModel());
     }
+    public onToolbarClick = (callback: ContextMenuGroupHandler) => {
+        this.subscribe(SidebarEvent.onToolbarClick, callback);
+    };
 }

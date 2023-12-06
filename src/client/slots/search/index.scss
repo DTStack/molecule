@@ -1,0 +1,148 @@
+@import '../../classNames/style.scss';
+
+$search: prefix('search');
+$actionBar: prefix('actionBar');
+
+.#{$search} {
+    font-size: 13px;
+    margin: 0 8px 5px;
+
+    &__input {
+        background: var(--input-background);
+        border: 1px solid transparent;
+        box-sizing: border-box;
+        color: var(--input-foreground);
+        font-family: inherit;
+        font-size: inherit;
+        height: 24px;
+        line-height: 15px;
+        min-height: 23px;
+        outline: none;
+        overflow: hidden;
+        padding: 4px 8px 4px 4px;
+        resize: none;
+        width: 100%;
+
+        &:focus {
+            border-color: var(--focusBorder);
+        }
+
+        // TODO: better to mock a scroll bar
+        // invisible scroll bar
+        &::-webkit-scrollbar {
+            opacity: 0;
+        }
+    }
+
+    .scrollbar-invisible {
+        position: absolute;
+        right: 0;
+    }
+
+    &__toolbar {
+        height: auto;
+        position: absolute;
+        right: 2px;
+        top: 2px;
+
+        .#{$actionBar} {
+            &__item {
+                color: var(--activityBar-foreground);
+                opacity: 0.7;
+                transition: opacity 0.3s;
+
+                &--checked {
+                    background: var(--inputOption-activeBackground);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &__input {
+        position: relative;
+    }
+
+    &__group &__input + &__input {
+        margin-top: 5px;
+    }
+
+    // validation styles
+    &__base {
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+
+        &:not(textarea) {
+            margin-top: -1px;
+            width: calc(100% - 12px);
+        }
+    }
+
+    &--info {
+        border: 1px solid var(--inputValidation-infoBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-infoBorder);
+        }
+
+        &:not(textarea) {
+            background: var(--inputValidation-infoBackground);
+        }
+    }
+
+    &--warning {
+        border: 1px solid var(--inputValidation-warningBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-warningBorder);
+        }
+
+        &:not(textarea) {
+            background: var(--inputValidation-warningBackground);
+        }
+    }
+
+    &--error {
+        border: 1px solid var(--inputValidation-errorBorder);
+
+        &:active,
+        &:focus {
+            border-color: var(--inputValidation-errorBorder);
+        }
+
+        &:not(textarea) {
+            background: var(--inputValidation-errorBackground);
+        }
+    }
+
+    &__tree {
+        margin-top: 5px;
+    }
+
+    &__treeNode--empty {
+        margin: 6px 12px 0 18px;
+    }
+
+    &__treeNode--delete {
+        text-decoration: line-through;
+    }
+
+    &__treeNode--match {
+        background-color: var(--editor-findMatchHighlightBackground);
+
+        &.#{$search}__treeNode--delete {
+            background-color: var(--diffEditor-removedTextBackground);
+        }
+    }
+
+    &__treeNode--replace {
+        background-color: var(--diffEditor-insertedTextBackground);
+    }
+}
+
+:export {
+    search: $search;
+}

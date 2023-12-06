@@ -6,6 +6,7 @@ import { LocalesExtends } from './locales';
 import { ExtendsMenuBar } from './menuBar';
 import { ExtendsNotification } from './notification';
 import { ExtendsPanel } from './panel';
+import { ExtendsSearch } from './search';
 import { ExtendsSettings } from './settings';
 import { ExtendsStatusBar } from './statusBar';
 import { ColorThemeExtension } from './themes';
@@ -21,5 +22,6 @@ export default [
     ExtendsMenuBar,
     ExtendsNotification,
     ExtendsStatusBar,
+    ExtendsSearch,
     ExtendsSettings,
 ];

@@ -1,9 +1,10 @@
+import React from 'react';
 import { classNames } from 'mo/client/classNames';
 import type { HTMLElementProps, IMenuItemProps } from 'mo/types';
-import { classify } from 'mo/utils';
+import { classify, sortByIndex } from 'mo/utils';
 
+import Action from '../action';
 import Dropdown from '../dropdown';
-import Icon from '../icon';
 import variables from './index.scss';
 
 interface IActionBarProps extends HTMLElementProps {
@@ -20,7 +21,7 @@ export default function ActionBar({
     onClick,
 }: IActionBarProps) {
     if (!data) return null;
-    const [inline, ellipsis] = classify(data, (i) => i.group === 'inline');
+    const [inline = [], ellipsis = []] = classify(data, (i) => i.group === 'inline');
     return (
         <div
             className={classNames(variables.container, className)}
@@ -28,19 +29,23 @@ export default function ActionBar({
             title={title}
             role={role}
         >
-            {inline?.map((i) => (
-                <div
-                    key={i.id}
-                    title={i.name}
-                    onClick={() => onClick?.(i)}
-                    className={classNames(variables.item, i.disabled && variables.disabled)}
-                >
-                    <Icon type={i.icon}>{i.name}</Icon>
-                </div>
+            {inline.sort(sortByIndex).map((i) => (
+                <React.Fragment key={i.id}>
+                    {i.render?.(i) || (
+                        <Action
+                            type={i.icon}
+                            title={i.name}
+                            disabled={i.disabled}
+                            onClick={() => onClick?.(i)}
+                        >
+                            {i.name}
+                        </Action>
+                    )}
+                </React.Fragment>
             ))}
-            {!!ellipsis?.length && (
-                <Dropdown data={ellipsis} trigger="click" onClick={onClick}>
-                    <Icon className={variables.item} type="ellipsis" />
+            {!!ellipsis.length && (
+                <Dropdown data={ellipsis} trigger="click" onClick={onClick} stopPropagation>
+                    <Action type="ellipsis" />
                 </Dropdown>
             )}
         </div>

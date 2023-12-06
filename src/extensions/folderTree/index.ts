@@ -15,14 +15,18 @@ export const ExtendsFolderTree: IExtension = {
       });
 
       molecule.folderTree.onUpdateFileName((file) => {
+        molecule.folderTree.update(file);
+      });
+
+      molecule.folderTree.onAfterUpdateFileName((file) => {
         const { groups = [] } = molecule.editor.getState();
         const groupIds = groups
             .filter(({ data }) => data.some(({ id }) => id === file.id))
             .map(({ id }) => id);
-        molecule.folderTree.update(file);
         groupIds?.forEach((groupId) => {
             molecule.editor.updateTab({ id: file.id, name: file.name }, groupId);
         });
+
       });
 
       molecule.folderTree.onRename((id) => {

@@ -155,6 +155,10 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Callback of the Add Button when data is none
      */
     onCreateRoot: (callback: (e: React.MouseEvent<Element, MouseEvent>) => void) => void;
+    /**
+     * Listen to after updateFileName event event
+     */
+    onAfterUpdateFileName: (callback: (file: TreeNodeModel<any>) => void) => void;
 }
 
 @injectable()
@@ -321,6 +325,9 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
             data: [...prev.data],
             editing: undefined,
         }));
+
+        // ===================== effects =====================
+        this.emit(FolderTreeEvent.onAfterUpdateFileName, data);
     }
 
     public dropTree(source: TreeNodeModel<any>, target: TreeNodeModel<any>) {
@@ -417,5 +424,9 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
 
     public onCreateRoot(callback: (e: React.MouseEvent<Element, MouseEvent>) => void): void {
         this.subscribe(FolderTreeEvent.onCreateRoot, callback);
+    };
+
+    public onAfterUpdateFileName(callback: (file: TreeNodeModel<any>) => void): void {
+        this.subscribe(FolderTreeEvent.onAfterUpdateFileName, callback);
     };
 }

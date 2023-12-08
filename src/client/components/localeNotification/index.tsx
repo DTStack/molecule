@@ -20,7 +20,7 @@ export default function LocaleNotification() {
 
     return (
         <section className={variables.container}>
-            <div style={{}}>
+            <div>
                 <b>{localize('notification.locale.title', '')}</b>
                 <p>{localize('notification.locale.description', '')}</p>
             </div>

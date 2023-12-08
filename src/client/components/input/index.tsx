@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { InputValidateInfo, ValidateStatus, ValidateStatusLiteral } from 'mo/types';
 
+import Display from '../display';
 import variables from './index.scss';
 
 export interface IBaseInputProps {
@@ -40,15 +41,16 @@ export const Input = ({ value, className, placeholder, info, onChange }: IBaseIn
     };
 
     const handleInputChange = (e: any) => {
+        const height = parseInt(variables.widgetSize, 10);
         if (textareaRef.current) {
             // base height
-            textareaRef.current.style.height = '24px';
+            textareaRef.current.style.height = variables.widgetSize;
             const currentScrollHeight = textareaRef.current.scrollHeight;
             // count the lines
-            const lines = currentScrollHeight / 24;
+            const lines = currentScrollHeight / height;
             const maxLines = 5;
             if (lines > maxLines) {
-                textareaRef.current.style.height = `${24 * maxLines}px`;
+                textareaRef.current.style.height = `${height * maxLines}px`;
             } else {
                 textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
             }
@@ -86,9 +88,9 @@ export const Input = ({ value, className, placeholder, info, onChange }: IBaseIn
                 onBlur={handleInputBlur}
                 onChange={handleInputChange}
             />
-            {info?.message && isFocus && (
+            <Display visible={Boolean(info?.message && isFocus)}>
                 <div className={classNames(variables.validation)}>{info?.message}</div>
-            )}
+            </Display>
         </div>
     );
 };

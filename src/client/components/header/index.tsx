@@ -2,6 +2,7 @@ import type { CSSProperties, PropsWithChildren } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { Direction } from 'mo/types';
 
+import Display from '../display';
 import Flex from '../flex';
 import { ScrollBar } from '../scrollBar';
 import variables from './index.scss';
@@ -37,9 +38,9 @@ export default function Header({
                     {children}
                 </ScrollBar>
             </div>
-            {!!extra && (
+            <Display visible={!!extra}>
                 <Flex className={classNames(variables.extra, extraClassName)}>{extra}</Flex>
-            )}
+            </Display>
         </Flex>
     );
 }

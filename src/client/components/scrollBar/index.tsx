@@ -9,7 +9,7 @@ import {
     useState,
 } from 'react';
 import { classNames } from 'mo/client/classNames';
-import { Direction } from 'mo/types';
+import { Direction, type DirectionLiteral } from 'mo/types';
 
 import variables from './index.scss';
 
@@ -18,7 +18,7 @@ export interface IScrollbarProps {
     style?: CSSProperties;
     trackStyle?: CSSProperties;
     className?: string;
-    direction?: Direction;
+    direction?: DirectionLiteral;
     isShowShadow?: boolean;
     onScroll?: (evt: IScrollEvent, e: MouseEvent | React.MouseEvent) => void;
     onScrollStart?: (evt: IScrollEvent, e: MouseEvent | React.MouseEvent) => void;
@@ -34,19 +34,19 @@ export interface IScrollRef {
     scrollTo: (offset: number) => void;
 }
 
-function isVertical(direction: Direction): direction is Direction.vertical {
+function isVertical(direction: DirectionLiteral): direction is Direction.vertical {
     return direction === Direction.vertical;
 }
 
 /**
  * Concat width or height with string or just get width and height
  */
-function getSizeLiteral(direction: Direction): 'width' | 'height';
+function getSizeLiteral(direction: DirectionLiteral): 'width' | 'height';
 function getSizeLiteral<T extends string>(
-    direction: Direction,
+    direction: DirectionLiteral,
     concatStr: T
 ): `${T}Width` | `${T}Height`;
-function getSizeLiteral<T extends string>(direction: Direction, concatStr?: T) {
+function getSizeLiteral<T extends string>(direction: DirectionLiteral, concatStr?: T) {
     const sizeLiteral = !isVertical(direction) ? 'width' : 'height';
     if (!concatStr) return sizeLiteral;
 
@@ -60,12 +60,12 @@ function getSizeLiteral<T extends string>(direction: Direction, concatStr?: T) {
 /**
  * Concat top or left with string or just get top and left
  */
-function getOffsetLiteral(direction: Direction): 'top' | 'left';
+function getOffsetLiteral(direction: DirectionLiteral): 'top' | 'left';
 function getOffsetLiteral<T extends string>(
-    direction: Direction,
+    direction: DirectionLiteral,
     concatStr: T
 ): `${T}Top` | `${T}Left`;
-function getOffsetLiteral<T extends string>(direction: Direction, concatStr?: T) {
+function getOffsetLiteral<T extends string>(direction: DirectionLiteral, concatStr?: T) {
     const offsetLiteral = isVertical(direction) ? 'top' : 'left';
     if (!concatStr) return offsetLiteral;
 

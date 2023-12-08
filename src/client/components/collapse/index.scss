@@ -12,6 +12,7 @@ $collapsing: BEMModifier($pane, 'collapsing');
 $active: BEMModifier($collapse, 'active');
 
 $header-size: 26px;
+$outline-size: 1px;
 
 .#{$collapse} {
     background-color: var(--sideBar-background);
@@ -25,7 +26,9 @@ $header-size: 26px;
     }
 
     .#{$pane} {
-        transition: top ease-out 0.15s, height ease-out 0.15s;
+        &.#{$collapsing} {
+            transition: top ease-out 0.15s, height ease-out 0.15s;
+        }
 
         &:first-child .#{$header} {
             border-top-color: transparent;
@@ -46,12 +49,10 @@ $header-size: 26px;
     }
 
     .#{$header} {
-        align-items: center;
         border-bottom: 1px solid transparent;
         border-top: 1px solid var(--sideBarSectionHeader-border, transparent);
         box-sizing: border-box;
         cursor: pointer;
-        display: flex;
         font-size: 11px;
         font-weight: bold;
         height: $header-size;
@@ -71,17 +72,9 @@ $header-size: 26px;
         }
     }
 
-    .#{$extra} {
-        margin: 0 0 0 auto;
-        opacity: 0;
-    }
-
     .#{$content} {
-        flex: 1;
-        height: calc(100% - $header-size);
-        outline: 1px solid transparent;
-        outline-offset: -1px;
-        padding: 0 1px;
+        height: calc(100% - $header-size - $outline-size * 2);
+        padding: $outline-size;
 
         &:focus {
             outline-color: var(--list-focusOutline);

@@ -1,0 +1,20 @@
+@import '../../classNames/style.scss';
+
+$tab: prefix('tab');
+
+.#{$tab} {
+    background: var(--tab-inactiveBackground);
+    border-right: 1px solid var(--tab-border);
+    box-sizing: border-box;
+    color: var(--tab-inactiveForeground);
+    cursor: pointer;
+    padding: 0 10px;
+    position: relative;
+    user-select: none;
+    font-size: 12px;
+    gap: 4px;
+}
+
+:export {
+    tab: $tab;
+}

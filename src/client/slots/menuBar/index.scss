@@ -3,34 +3,43 @@
 $menuBar: prefix('menuBar');
 $container: BEMElement($menuBar, 'container');
 $item: BEMElement($menuBar, 'item');
+$name: BEMElement($menuBar, 'name');
 
 .#{$container} {
     background-color: var(--titleBar-activeBackground);
-    color: var(--titleBar-inactiveForeground);
+    color: var(--titleBar-activeForeground);
     display: flex;
     align-items: center;
-    width: 100%;
     border-bottom: 1px solid var(--titleBar-border);
+    padding: 0 8px;
 
     .#{$item} {
-        font-size: 13px;
+        font-size: 12px;
         display: inline-block;
-        padding: 0 1em;
-        height: 30px;
-        line-height: 30px;
-        cursor: pointer;
+        height: 35px;
+        line-height: 35px;
         user-select: none;
 
-        &:hover {
-            background-color: var(--menu-selectionBackground);
-            color: var(--menu-selectionForeground);
+        &:hover,
+        &:focus {
+            color: var(--menubar-selectionForeground);
             outline: dashed 1px var(--menubar-selectionBorder);
             outline-offset: -1px;
         }
     }
+
+    .#{$name} {
+        padding: 0.3em 0.7em;
+        border-radius: 5px;
+    }
+}
+
+.#{$item}:hover .#{$name} {
+    background-color: var(--menubar-selectionBackground);
 }
 
 :export {
     container: $container;
     item: $item;
+    name: $name;
 }

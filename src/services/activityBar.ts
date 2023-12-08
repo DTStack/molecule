@@ -1,7 +1,7 @@
 import { BaseService } from 'mo/glue';
 import { ActivityBarEvent, ActivityBarModel, type IActivityBarItem } from 'mo/models/activityBar';
 import type { ArraylizeOrSingle, ContextMenuEventHandler, RequiredId, UniqueId } from 'mo/types';
-import { arraylize, extract, searchById, sortByIndex } from 'mo/utils';
+import { arraylize, extract, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
 export interface IActivityBarService extends BaseService<ActivityBarModel> {
@@ -79,7 +79,7 @@ export class ActivityBarService
 
         this.setState((prev) => ({
             ...prev,
-            data: [...prev.data, ...arrayData].sort(sortByIndex),
+            data: [...prev.data, ...arrayData],
         }));
     }
 
@@ -87,7 +87,10 @@ export class ActivityBarService
         const target = this.get(data.id);
         if (!target) return;
         Object.assign(target, data);
-        this.setState((prev) => ({ ...prev }));
+        this.setState((prev) => ({
+            ...prev,
+            data: [...prev.data],
+        }));
     }
 
     public remove(id: ArraylizeOrSingle<UniqueId>) {

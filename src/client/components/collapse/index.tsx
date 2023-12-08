@@ -1,18 +1,26 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { classNames } from 'mo/client/classNames';
-import { HTMLElementProps, IMenuItemProps, RenderFunctionProps, UniqueId } from 'mo/types';
+import type {
+    HTMLElementProps,
+    IItemProps,
+    IMenuItemProps,
+    RenderFunctionProps,
+    RenderProps,
+    UniqueId,
+} from 'mo/types';
 
 import ActionBar from '../actionBar';
+import Flex from '../flex';
 import Icon from '../icon';
 import { Pane, SplitPane } from '../split';
 import variables from './index.scss';
 
-export interface ICollapseItem extends HTMLElementProps {
-    id: UniqueId;
-    name: string;
+export interface ICollapseItem
+    extends HTMLElementProps,
+        RenderProps<ICollapseItem>,
+        Omit<IItemProps, 'icon'> {
     hidden?: boolean;
     toolbar?: IMenuItemProps[];
-    render?: RenderFunctionProps<ICollapseItem>;
     config?: {
         /**
          * Specify how much of the remaining space should be assigned to the item, default is 1
@@ -25,10 +33,14 @@ export interface ICollapseItem extends HTMLElementProps {
 
 export interface ICollapseProps extends HTMLElementProps {
     activePanelKeys?: UniqueId[];
+    /**
+     * Should Observer the childList of the content
+     */
+    observer?: boolean;
     data?: ICollapseItem[];
     onCollapseChange?: (keys: UniqueId[]) => void;
     onResize?: (resizes: number[]) => void;
-    onToolbarClick?: (item: IMenuItemProps, parentPanel: ICollapseItem) => void;
+    onToolbarClick?: (item: IMenuItemProps, panelId: UniqueId) => void;
 }
 
 /**
@@ -36,7 +48,7 @@ export interface ICollapseProps extends HTMLElementProps {
  */
 export const MAX_GROW_HEIGHT = 220;
 // default collapse height, only contains header
-export const HEADER_HEIGTH = 26;
+export const HEADER_HEIGHT = 26;
 
 export function Collapse({
     data = [],
@@ -45,15 +57,18 @@ export function Collapse({
     title,
     style,
     role,
+    observer,
     onCollapseChange,
     onToolbarClick,
     onResize,
 }: ICollapseProps) {
-    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(new Array(data.length));
+    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(() =>
+        Array.isArray(controlActivePanelKeys) ? controlActivePanelKeys : new Array(data.length)
+    );
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
     const [sizes, setSizes] = useState<number[]>(
-        data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGTH))
+        data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGHT))
     );
     // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
@@ -84,7 +99,7 @@ export function Collapse({
     };
 
     const handleToolbarClick = (item: IMenuItemProps, panel: ICollapseItem) => {
-        onToolbarClick?.(item, panel);
+        onToolbarClick?.(item, panel.id);
     };
 
     const renderPanels = (data: ICollapseItem, render?: RenderFunctionProps<ICollapseItem>) => {
@@ -106,12 +121,16 @@ export function Collapse({
     };
 
     // perform smoothly the task to recalculate sizes
-    const performSmoothSizes = () => {
-        setCollapsing(true);
+    const performSmoothSizes = (smooth: boolean) => {
+        if (smooth) {
+            setCollapsing(true);
+        }
         performSizes();
-        setTimeout(() => {
-            setCollapsing(false);
-        }, 300);
+        if (smooth) {
+            setTimeout(() => {
+                setCollapsing(false);
+            }, 300);
+        }
     };
 
     // perform the tasks to recalculate sizes
@@ -131,8 +150,8 @@ export function Collapse({
                 }
                 const willCollapsing = activePanelKeys.includes(pane.id);
                 if (!willCollapsing) {
-                    restHeight = restHeight - HEADER_HEIGTH;
-                    return HEADER_HEIGTH;
+                    restHeight = restHeight - HEADER_HEIGHT;
+                    return HEADER_HEIGHT;
                 }
 
                 // to get the height of content while grow is 0
@@ -141,12 +160,12 @@ export function Collapse({
                         ?.querySelector(`.${variables.content}[data-collapse-index='${index}']`)
                         ?.querySelector(`[data-content='${pane.id}']`);
                     if (!correspondDOM) {
-                        restHeight = restHeight - HEADER_HEIGTH;
-                        return HEADER_HEIGTH;
+                        restHeight = restHeight - HEADER_HEIGHT;
+                        return HEADER_HEIGHT;
                     }
                     const { height: contentHeight } = correspondDOM.getBoundingClientRect();
                     // for preventing the loss of DOM height, don't set the display to be none for DOM
-                    const height = contentHeight + HEADER_HEIGTH;
+                    const height = contentHeight + HEADER_HEIGHT;
 
                     if (height > MAX_GROW_HEIGHT) {
                         restHeight = restHeight - MAX_GROW_HEIGHT;
@@ -177,7 +196,7 @@ export function Collapse({
             onResize?.(nextSizes);
             setSizes(nextSizes);
         } else {
-            const nextSizes = data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGTH));
+            const nextSizes = data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGHT));
             onResize?.(nextSizes);
             setSizes(nextSizes);
         }
@@ -208,9 +227,7 @@ export function Collapse({
     );
 
     useLayoutEffect(() => {
-        if (!first.current) {
-            performSmoothSizes();
-        }
+        performSmoothSizes(!first.current);
 
         first.current = false;
     }, [activePanelKeys, data]);
@@ -218,6 +235,34 @@ export function Collapse({
     useLayoutEffect(() => {
         Array.isArray(controlActivePanelKeys) && setActivePanelKeys(controlActivePanelKeys);
     }, [controlActivePanelKeys]);
+
+    useEffect(() => {
+        if (observer) {
+            const mutationObserver = new MutationObserver((mutationList) => {
+                mutationList.forEach((mutation) => {
+                    switch (mutation.type) {
+                        case 'childList': {
+                            // for triggering the re-render
+                            setActivePanelKeys((prev) => [...prev]);
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                });
+            });
+            const children = document.querySelectorAll(`div[data-collapse-index]`);
+            children.forEach((child) => {
+                mutationObserver.observe(child, {
+                    childList: true,
+                    attributes: false,
+                    subtree: true,
+                });
+            });
+
+            return () => mutationObserver.disconnect();
+        }
+    }, []);
 
     return (
         <div
@@ -238,7 +283,7 @@ export function Collapse({
                 {data.map((panel, index) => {
                     const isActive = activePanelKeys.includes(panel.id);
                     return (
-                        <Pane key={panel.id} minSize={HEADER_HEIGTH}>
+                        <Pane key={panel.id} minSize={HEADER_HEIGHT}>
                             <div
                                 className={classNames(
                                     variables.item,
@@ -247,23 +292,24 @@ export function Collapse({
                                 )}
                                 data-collapse-id={panel.id}
                             >
-                                <div
+                                <Flex
                                     className={variables.header}
                                     tabIndex={0}
+                                    justifyContent="space-between"
                                     onClick={() => handleChangeCallback(panel.id, index)}
                                 >
-                                    <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
-                                    <span className={variables.title}>{panel.name}</span>
-                                    <div className={variables.extra}>
-                                        {isActive && (
-                                            <ActionBar
-                                                key={panel.id}
-                                                data={panel.toolbar || []}
-                                                onClick={(item) => handleToolbarClick(item, panel)}
-                                            />
-                                        )}
-                                    </div>
-                                </div>
+                                    <Flex>
+                                        <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
+                                        <span className={variables.title}>{panel.name}</span>
+                                    </Flex>
+                                    {isActive && (
+                                        <ActionBar
+                                            key={panel.id}
+                                            data={panel.toolbar || []}
+                                            onClick={(item) => handleToolbarClick(item, panel)}
+                                        />
+                                    )}
+                                </Flex>
                                 <div
                                     className={variables.content}
                                     tabIndex={0}

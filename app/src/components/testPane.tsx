@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { Button } from '@dtinsight/molecule/esm/client/components/button';
-import LocaleNotification from '@dtinsight/molecule/esm/client/components/notification/localeNotification';
+import LocaleNotification from '@dtinsight/molecule/esm/client/components/localeNotification';
 import { ScrollBar } from '@dtinsight/molecule/esm/client/components/scrollBar';
 import { FileTypes, type IEditorTab, type IMoleculeContext } from '@dtinsight/molecule/esm/types';
 import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
@@ -12,13 +12,14 @@ function randomId() {
 export default function TestPane({ context: molecule }: { context: IMoleculeContext }) {
     const timeout = useRef<number | undefined>();
     // ================= Activity Bar Operation Region ====================
-    const handleAddActivityBar = () => {
+    const handleAddActivityBar = (disabled = false) => {
         const id = randomId();
         molecule.activityBar.add({
             id,
             name: `ActivityBarItem-${id}`,
             icon: 'edit',
             alignment: 'top',
+            disabled,
         });
     };
     const handleAddGloablActivityBar = () => {
@@ -32,6 +33,12 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
     const handleHiddenActivityBar = () => {
         molecule.layout.setActivityBarVisibility((prev) => !prev);
+    };
+    // ====================================================================
+
+    // ================= Sidebar Operation Region ====================
+    const handleToggleLoading = () => {
+        molecule.sidebar.setLoading((p) => !p);
     };
     // ====================================================================
 
@@ -181,6 +188,10 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         );
     };
 
+    const handleToggleEditorLoading = () => {
+        molecule.editor.setLoading((p) => !p);
+    };
+
     const updateWelcome = function () {
         molecule.editor.setEntry(<div>Update Welcome Page</div>);
     };
@@ -316,6 +327,12 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
 
     // ====================================================================
 
+    const updateLocale = () => {
+        molecule.locale.setCurrentLocale(
+            molecule.locale.getCurrentLocale()?.id === 'zh-CN' ? 'en-US' : 'zh-CN'
+        );
+    };
+
     useEffect(() => {
         return () => {
             if (timeout) {
@@ -360,39 +377,103 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         <ScrollBar isShowShadow>
             <div style={{ padding: 16 }}>
                 <h2>Editor:</h2>
-                <Button onClick={newEditor}>New Editor</Button>
-                <Button onClick={updateWelcome}>Update Welcome Page</Button>
-                <Button onClick={updateOptions}>Update ReadOnly</Button>
-                <Button onClick={addAction}>Add Excute Action</Button>
-                <Button onClick={updateAction}>Update Excute Action</Button>
-                <Button onClick={openFile}>Open File</Button>
+                <Button block onClick={newEditor}>
+                    New Editor
+                </Button>
+                <Button block onClick={handleToggleEditorLoading}>
+                    Toggle Loading
+                </Button>
+                <Button block onClick={updateWelcome}>
+                    Update Welcome Page
+                </Button>
+                <Button block onClick={updateOptions}>
+                    Update ReadOnly
+                </Button>
+                <Button block onClick={addAction}>
+                    Add Excute Action
+                </Button>
+                <Button block onClick={updateAction}>
+                    Update Excute Action
+                </Button>
+                <Button block onClick={openFile}>
+                    Open File
+                </Button>
                 <h2>ActivityBar:</h2>
-                <Button onClick={handleAddActivityBar}>Add ActivityBar Item</Button>
-                <Button onClick={handleAddGloablActivityBar}>Add Global ActivityBar Item</Button>
-                <Button onClick={handleHiddenActivityBar}>Show/Hide ActivityBar</Button>
+                <Button block onClick={() => handleAddActivityBar()}>
+                    Add ActivityBar Item
+                </Button>
+                <Button block onClick={() => handleAddActivityBar(true)}>
+                    Add Disabled ActivityBar Item
+                </Button>
+                <Button block onClick={handleAddGloablActivityBar}>
+                    Add Global ActivityBar Item
+                </Button>
+                <Button block onClick={handleHiddenActivityBar}>
+                    Show/Hide ActivityBar
+                </Button>
+                <h2>Sidebar:</h2>
+                <Button block onClick={handleToggleLoading}>
+                    Toggle Loading
+                </Button>
                 <h2>StatusBar:</h2>
-                <Button onClick={addStatusBar}>Add StatusBar Item</Button>
-                <Button onClick={removeStatusBar}>Remove Last StatusBar Item</Button>
-                <Button onClick={showHideStatusBar}>Show/Hide StatusBar</Button>
+                <Button block onClick={addStatusBar}>
+                    Add StatusBar Item
+                </Button>
+                <Button block onClick={removeStatusBar}>
+                    Remove Last StatusBar Item
+                </Button>
+                <Button block onClick={showHideStatusBar}>
+                    Show/Hide StatusBar
+                </Button>
                 <h2>MenuBar:</h2>
-                <Button onClick={appendMenu}>Add MenuBar Item</Button>
-                <Button onClick={removeMenu}>Remove MenuBar Item</Button>
-                <Button onClick={updateMenu}>Update MenuBar Item</Button>
-                <Button onClick={showHideMenuBar}>Show/Hide MenuBar</Button>
+                <Button block onClick={appendMenu}>
+                    Add MenuBar Item
+                </Button>
+                <Button block onClick={removeMenu}>
+                    Remove MenuBar Item
+                </Button>
+                <Button block onClick={updateMenu}>
+                    Update MenuBar Item
+                </Button>
+                <Button block onClick={showHideMenuBar}>
+                    Show/Hide MenuBar
+                </Button>
                 <h2>Explorer:</h2>
-                <Button onClick={addExplorer}>Add Explorer Panel</Button>
+                <Button block onClick={addExplorer}>
+                    Add Explorer Panel
+                </Button>
                 <h2>FolderTree:</h2>
-                <Button onClick={addRootFolder}>Add Root Folder</Button>
+                <Button block onClick={addRootFolder}>
+                    Add Root Folder
+                </Button>
                 <h2>Panel:</h2>
-                <Button onClick={addPanel}>Add Panel</Button>
-                <Button onClick={showHidePanel}>Show/Hide Panel</Button>
+                <Button block onClick={addPanel}>
+                    Add Panel
+                </Button>
+                <Button block onClick={showHidePanel}>
+                    Show/Hide Panel
+                </Button>
                 <h2>Output:</h2>
-                <Button onClick={updateOutput}>Update Output</Button>
+                <Button block onClick={updateOutput}>
+                    Update Output
+                </Button>
                 <h2>Notification:</h2>
-                <Button onClick={addNotification}>Add Notification Item</Button>
-                <Button onClick={addLocaleNotification}>Add a locale Notification</Button>
-                <Button onClick={removeNotification}>Remove Notification Item</Button>
-                <Button onClick={toggleNotification}>Toggle Notification</Button>
+                <Button block onClick={addNotification}>
+                    Add Notification Item
+                </Button>
+                <Button block onClick={addLocaleNotification}>
+                    Add a locale Notification
+                </Button>
+                <Button block onClick={removeNotification}>
+                    Remove Notification Item
+                </Button>
+                <Button block onClick={toggleNotification}>
+                    Toggle Notification
+                </Button>
+                <h2>Locale:</h2>
+                <Button block onClick={updateLocale}>
+                    Switch locale between English and Chinese
+                </Button>
             </div>
         </ScrollBar>
     );

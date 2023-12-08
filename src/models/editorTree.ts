@@ -9,4 +9,5 @@ export enum EditorTreeEvent {
     onSplitEditorLayout = 'editorTree.splitEditorLayout',
     onToolbarClick = 'editorTree.toolbarClick',
     onContextMenu = 'editorTree.contextMenuClick',
+    onGroupContextMenu = 'editorTree.groupContextMenu',
 }

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
-import { type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
+import { FileTypes, type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
 import { TreeHelper, type TreeNodeModel } from 'mo/utils/tree';
 
 import Icon from '../icon';
@@ -107,7 +107,7 @@ export default function Tree({
         e.stopPropagation();
         const uuid = node.id.toString();
         setActiveKey(uuid);
-        if (node.fileType !== 'File') {
+        if (node.fileType !== FileTypes.File) {
             // load data
             validatorLoadingData(node);
             // expand node
@@ -175,7 +175,12 @@ export default function Tree({
             const dragNode = dragInfo.current.dragNode!;
             const dragNodeUuid = dragNode?.id?.toString();
             const isSelfNode = uuid === dragNodeUuid;
-            if (node.fileType !== 'File' && !isSelfNode && !isExpand && !canLoadData(uuid)) {
+            if (
+                node.fileType !== FileTypes.File &&
+                !isSelfNode &&
+                !isExpand &&
+                !canLoadData(uuid)
+            ) {
                 handleExpandKey(uuid, node);
             }
         },
@@ -239,7 +244,7 @@ export default function Tree({
             const isLoading = loadingKeys.includes(uuid!);
             const isActive = activeKey === uuid;
 
-            const title = renderTitle?.(item, index, item.fileType === 'File') || item.name;
+            const title = renderTitle?.(item, index, item.fileType === FileTypes.File) || item.name;
 
             const IconComponent =
                 typeof item.icon === 'string' ? <Icon type={item.icon} /> : item.icon;
@@ -257,7 +262,7 @@ export default function Tree({
                         isExpand ? variables.open : variables.close
                     )}
                     renderIcon={() =>
-                        renderIcon(IconComponent, item.fileType === 'File', isExpand, isLoading)
+                        renderIcon(IconComponent, item.fileType === FileTypes.File, isExpand, isLoading)
                     }
                     renderTitle={() => title}
                     onRightClick={(e) => handleRightClick(e, item)}

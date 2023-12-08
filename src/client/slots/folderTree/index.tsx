@@ -52,7 +52,7 @@ export default function FolderTree({
             ) : (
                 <div style={{ padding: '10px 5px' }}>
                     you have not yet opened a folder
-                    <Button onClick={onCreateRoot}>Add Folder</Button>
+                    <Button block onClick={onCreateRoot}>Add Folder</Button>
                 </div>
             )}
         </div>

@@ -1,4 +1,5 @@
 import { classNames } from 'mo/client/classNames';
+import { ScrollBar } from 'mo/client/components/scrollBar';
 import useConnector from 'mo/client/hooks/useConnector';
 import useLocale from 'mo/client/hooks/useLocale';
 import { ISearchController } from 'mo/controllers/search';
@@ -24,23 +25,32 @@ export default function Search({ onChange, onSearch, onResultClick }: ISearchCon
         onResultClick?.(node);
     };
 
+    const empty = search.value && !search.result.length;
+
     return (
-        <>
+        <section className={variables.container}>
             <Input
-                className={classNames(variables.search)}
+                value={search.value}
+                className={classNames(variables.widget)}
                 info={search.validateInfo}
                 placeholder={placeholder}
                 onChange={handleChange}
             />
-
-            <div style={{ height: '100%' }}>
-                <Tree
-                    expandKeys={search.expandKeys}
-                    data={search.result}
-                    onSelect={handleSelectFile}
-                    renderTitle={(node) => node.name}
-                />
-            </div>
-        </>
+            {empty ? (
+                <span className={variables.notFound}>
+                    {localize(builtin.constants.SEARCH_RESULT_NOT_FOUND, 'No results found.')}
+                </span>
+            ) : (
+                <ScrollBar isShowShadow>
+                    <Tree
+                        className={variables.result}
+                        expandKeys={search.expandKeys}
+                        data={search.result}
+                        onSelect={handleSelectFile}
+                        renderTitle={(node) => node.name}
+                    />
+                </ScrollBar>
+            )}
+        </section>
     );
-};
+}

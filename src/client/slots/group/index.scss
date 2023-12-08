@@ -7,9 +7,9 @@ $tab: BEMElement($group, 'tab');
 $content: BEMElement($group, 'content');
 $breadcrumb: BEMElement($group, 'breadcrumb');
 $extra: BEMElement($group, 'extra');
+$name: BEMElement($group, 'name');
 
 $active: BEMModifier($tab, 'active');
-$activeExtra: BEMModifier($extra, 'active');
 
 .#{$group} {
     height: 100%;
@@ -37,48 +37,33 @@ $activeExtra: BEMModifier($extra, 'active');
     }
 
     .#{$tab} {
-        align-items: center;
-        background: var(--tab-inactiveBackground);
-        border-right: 1px solid var(--tab-border);
-        box-sizing: border-box;
-        color: var(--tab-inactiveForeground);
-        cursor: pointer;
-        display: flex;
-        gap: 4px;
-        flex-wrap: nowrap;
         height: 100%;
         min-width: fit-content;
-        padding: 0 10px;
-        position: relative;
-        user-select: none;
-        font-size: 13px;
-
-        .#{$extra} {
-            opacity: 0;
-
-            &.#{$activeExtra} {
-                opacity: 1;
-            }
-        }
 
         &.#{$active} {
             background: var(--tab-activeBackground);
             border-bottom-color: var(--tab-activeBorder);
             color: var(--tab-activeForeground);
-
-            .#{$extra} {
-                opacity: 1;
-            }
         }
 
-        &:hover {
-            background: var(--tab-hoverBackground);
-
-            .#{$extra} {
-                opacity: 1;
-            }
-        }
     }
+
+    .#{$name} {
+        max-width: 300px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .#{$extra} {
+        opacity: 0;
+    }
+}
+
+.#{$tab}:hover .#{$extra},
+.#{$tab} .#{$extra}[data-modified='true'],
+.#{$tab}.#{$active} .#{$extra} {
+    opacity: 1;
 }
 
 :export {
@@ -86,8 +71,8 @@ $activeExtra: BEMModifier($extra, 'active');
     header: $header;
     tab: $tab;
     breadcrumb: $breadcrumb;
+    name: $name;
     content: $content;
     extra: $extra;
     active: $active;
-    activeExtra: $activeExtra;
 }

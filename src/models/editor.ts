@@ -1,8 +1,9 @@
 import type {
     IBreadcrumbItemProps,
-    IconType,
     IEditorOptions,
+    IItemProps,
     IMenuItemProps,
+    RenderProps,
     UniqueId,
 } from 'mo/types';
 import type { editor as MonacoEditor } from 'monaco-editor';
@@ -26,16 +27,14 @@ export enum EditorEvent {
     onToolbarClick = 'editor.onToolbarClick',
 }
 
-export interface IEditorTab<T> {
-    id: UniqueId;
+export interface IEditorTab<T>
+    extends RenderProps<IEditorTab<T>>,
+        Pick<IItemProps, 'id' | 'name' | 'icon'> {
     model?: MonacoEditor.ITextModel;
     value?: string;
     language?: string;
     breadcrumb?: IBreadcrumbItemProps[];
     modified?: boolean;
-    icon?: IconType;
-    name?: string;
-    render?: (tab: IEditorTab<T>) => React.ReactNode;
     data?: T;
 }
 
@@ -68,6 +67,7 @@ export interface IEditor {
      * Toolbar items
      */
     toolbar?: IMenuItemProps[];
+    loading?: boolean;
 }
 
 export class EditorModel implements IEditor {
@@ -75,6 +75,7 @@ export class EditorModel implements IEditor {
         public groups: EditorGroupModel[] = [],
         public editorOptions: IEditorOptions = {},
         public toolbar: IMenuItemProps[] = [],
+        public loading: boolean = false,
         public entry?: React.ReactNode,
         public current?: UniqueId | undefined
     ) {}

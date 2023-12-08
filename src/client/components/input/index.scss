@@ -1,35 +1,57 @@
 @import '../../classNames/style.scss';
 
-$textarea: prefix('textarea');
-$info: BEMModifier($textarea, 'info');
-$warning: BEMModifier($textarea, 'warning');
-$error: BEMModifier($textarea, 'error');
-$validating: BEMModifier($textarea, 'validating');
+$container: prefix('textarea');
+$widget: BEMElement($container, 'widget');
+$validation: BEMElement($container, 'validation');
 
-$base: BEMElement($textarea, 'base');
-$input: BEMElement($textarea, 'input');
+$info: BEMModifier($container, 'info');
+$warning: BEMModifier($container, 'warning');
+$error: BEMModifier($container, 'error');
+$validating: BEMModifier($container, 'validating');
 
-.#{$textarea} {
-    font-size: 13px;
+$widget-size: 24px;
 
-    &__input {
+/* stylelint-disable */
+$status-colors: (
+    $info: (border: var(--inputValidation-infoBorder), background: var(--inputValidation-infoBackground)),
+    $warning: (border: var(--inputValidation-warningBorder), background: var(--inputValidation-warningBackground)),
+    $error: (border: var(--inputValidation-errorBorder), background: var(--inputValidation-errorBackground)),
+    $validating: (border: var(--inputValidation-infoBorder), background: var(--inputValidation-infoBackground)),
+);
+/* stylelint-enable */
+
+@mixin status($border, $background) {
+    .#{$widget} {
+        outline: 1px solid $border;
+        outline-offset: -1px;
+    }
+
+    .#{$validation} {
+        background: $background;
+        border: 1px solid $border;
+    }
+};
+
+.#{$container} {
+    position: relative;
+    font-size: 14px;
+
+    .#{$widget} {
         background: var(--input-background);
-        border: 1px solid transparent;
+        border: none;
         box-sizing: border-box;
         color: var(--input-foreground);
         font-family: inherit;
         font-size: inherit;
-        height: 24px;
-        line-height: 15px;
-        min-height: 23px;
-        outline: none;
+        height: $widget-size;
+        min-height: $widget-size;
         overflow: hidden;
-        padding: 4px 8px 4px 4px;
+        padding: 4px;
         resize: none;
         width: 100%;
 
         &:focus {
-            border-color: var(--focusBorder);
+            outline-color: var(--focusBorder);
         }
 
         // TODO: better to mock a scroll bar
@@ -39,77 +61,30 @@ $input: BEMElement($textarea, 'input');
         }
     }
 
-    // validation styles
-    &__base {
-        padding: 5px;
+    .#{$validation} {
+        padding: 4px;
         position: absolute;
-        z-index: 1;
-
-        &:not(textarea) {
-            margin-top: -1px;
-            width: calc(100% - 28px);
-        }
+        z-index: 99;
+        top: calc($widget-size + 1px);
+        width: 100%;
+        box-sizing: border-box;
     }
 
-    &--info {
-        border: 1px solid var(--inputValidation-infoBorder);
-
-        &:active,
-        &:focus {
-            border-color: var(--inputValidation-infoBorder);
-        }
-
-        &:not(textarea) {
-            background: var(--inputValidation-infoBackground);
-        }
-    }
-
-    &--warning {
-        border: 1px solid var(--inputValidation-warningBorder);
-
-        &:active,
-        &:focus {
-            border-color: var(--inputValidation-warningBorder);
-        }
-
-        &:not(textarea) {
-            background: var(--inputValidation-warningBackground);
-        }
-    }
-
-    &--error {
-        border: 1px solid var(--inputValidation-errorBorder);
-
-        &:active,
-        &:focus {
-            border-color: var(--inputValidation-errorBorder);
-        }
-
-        &:not(textarea) {
-            background: var(--inputValidation-errorBackground);
-        }
-    }
-
-    &--validating {
-        border: 1px solid var(--inputValidation-infoBorder);
-
-        &:active,
-        &:focus {
-            border-color: var(--inputValidation-infoBorder);
-        }
-
-        &:not(textarea) {
-            background: var(--inputValidation-infoBackground);
+    @each $name, $status in $status-colors {
+        &.#{$name} {
+            @include status(map-get($status, 'border'), map-get($status, 'background'));
         }
     }
 }
 
+
 :export {
-    textarea: $textarea;
+    container: $container;
+    widget: $widget;
+    validation: $validation;
     info: $info;
     warning: $warning;
     error: $error;
     validating: $validating;
-    input: $input;
-    base: $base;
+    widgetSize: $widget-size;
 }

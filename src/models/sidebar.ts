@@ -1,21 +1,25 @@
-import type { IMenuItemProps, UniqueId } from 'mo/types';
+import type { IMenuItemProps, RenderProps, UniqueId } from 'mo/types';
 
 export enum SidebarEvent {
     onToolbarClick = 'sidebar.onToolbarClick',
 }
 
-export interface ISidebarPane {
+export interface ISidebarPane extends RenderProps<void> {
     id: UniqueId;
     title: string;
     toolbar?: IMenuItemProps[];
-    render?: () => React.ReactNode;
 }
 
 export interface ISidebar {
     current: UniqueId;
     panes: ISidebarPane[];
+    loading: boolean;
 }
 
 export class SidebarModel implements ISidebar {
-    constructor(public panes: ISidebarPane[] = [], public current: UniqueId = '') {}
+    constructor(
+        public panes: ISidebarPane[] = [],
+        public current: UniqueId = '',
+        public loading: boolean = false
+    ) {}
 }

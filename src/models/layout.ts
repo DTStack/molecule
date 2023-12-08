@@ -1,4 +1,4 @@
-import { Direction, type WithHiddenProperty } from 'mo/types';
+import { Direction, type DirectionLiteral, type WithHiddenProperty } from 'mo/types';
 
 export enum Position {
     left = 'left',
@@ -20,7 +20,7 @@ export interface ILayout {
     sidebar: WithHiddenProperty<{ position: PositionLiteral }>;
     menuBar: WithHiddenProperty<void>;
     groupSplitPos: (number | string)[];
-    editorGroupDirection: Direction;
+    editorGroupDirection: DirectionLiteral;
 }
 
 export class LayoutModel implements ILayout {

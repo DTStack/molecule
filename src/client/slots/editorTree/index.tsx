@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { classNames } from 'mo/client/classNames';
+import Dropdown from 'mo/client/components/dropdown';
 import Icon from 'mo/client/components/icon';
 import { ScrollBar } from 'mo/client/components/scrollBar';
 import useConnector from 'mo/client/hooks/useConnector';
@@ -13,9 +14,13 @@ export default function EditorTree({
     panel,
     onSelect,
     onClose,
+    onContextMenu,
     onGroupClick,
+    onGroupContextMenu,
 }: IEditorTreeController & { panel: IExplorerPanelItem }) {
     const editor = useConnector('editor');
+    const { data } = useConnector('contextMenu');
+
     const localize = useLocale();
 
     return (
@@ -25,18 +30,23 @@ export default function EditorTree({
                     return (
                         <Fragment key={group.id}>
                             {editor.groups.length !== 1 && (
-                                <div
-                                    className={variables.group}
-                                    onClick={(e) => onGroupClick?.(e, group.id)}
-                                    // onContextMenu={(e) => handleHeaderRightClick(e, group)}
-                                    key={group.id}
+                                <Dropdown
+                                    stopPropagation
+                                    trigger="contextMenu"
+                                    data={data.get('editorTreeHeader')}
+                                    alignPoint
+                                    onClick={(item) => onGroupContextMenu?.(item, group.id)}
                                 >
-                                    {localize(
-                                        'sidebar.explore.openEditor.group',
-                                        'Group',
-                                        (index + 1).toString()
-                                    )}
-                                    {/* {groupToolbar && (
+                                    <div
+                                        className={variables.group}
+                                        onClick={(e) => onGroupClick?.(e, group.id)}
+                                    >
+                                        {localize(
+                                            'sidebar.explore.openEditor.group',
+                                            'Group',
+                                            (index + 1).toString()
+                                        )}
+                                        {/* {groupToolbar && (
                                         <Toolbar
                                             data={groupToolbar}
                                             onClick={(e, item) =>
@@ -44,35 +54,47 @@ export default function EditorTree({
                                             }
                                         />
                                     )} */}
-                                </div>
+                                    </div>
+                                </Dropdown>
                             )}
                             {group.data?.map((file) => {
                                 const isActive =
                                     group.id === editor.current && file.id === group.activeTab;
                                 return (
-                                    <div
-                                        // title={file.data?.path && `${file.data?.path}/${file.name}`}
-                                        className={classNames(
-                                            variables.item,
-                                            isActive && variables.active
-                                        )}
-                                        tabIndex={0}
+                                    <Dropdown
                                         key={file.id}
-                                        onClick={() => onSelect?.(file.id, group.id)}
-                                        // onContextMenu={(e) => handleRightClick(e, group, file)}
+                                        stopPropagation
+                                        data={data.get('editorTab')}
+                                        alignPoint
+                                        trigger="contextMenu"
+                                        onClick={(item) => onContextMenu?.(item, file.id, group.id)}
                                     >
-                                        <Icon
-                                            className={variables.close}
-                                            onClick={() => onClose?.(file.id, group.id)}
-                                            type="close"
-                                        />
-                                        <Icon
-                                            className={variables.file}
-                                            type={file.data?.icon || file.icon}
-                                        />
-                                        <span className={variables.name}>{file.name}</span>
-                                        <span className={variables.path}>{file.data?.path}</span>
-                                    </div>
+                                        <div
+                                            className={classNames(
+                                                variables.item,
+                                                isActive && variables.active
+                                            )}
+                                            tabIndex={0}
+                                            onClick={() => onSelect?.(file.id, group.id)}
+                                        >
+                                            <Icon
+                                                className={variables.close}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onClose?.(file.id, group.id);
+                                                }}
+                                                type="close"
+                                            />
+                                            <Icon
+                                                className={variables.file}
+                                                type={file.data?.icon || file.icon}
+                                            />
+                                            <span className={variables.name}>{file.name}</span>
+                                            <span className={variables.path}>
+                                                {file.data?.path}
+                                            </span>
+                                        </div>
+                                    </Dropdown>
                                 );
                             })}
                         </Fragment>

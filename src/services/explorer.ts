@@ -1,9 +1,8 @@
 import { BaseService } from 'mo/glue';
 import { ExplorerEvent, ExplorerModel, IExplorerPanelItem } from 'mo/models/explorer';
 import { ArraylizeOrSingle, IMenuItemProps, UniqueId } from 'mo/types';
-import { arraylize, searchById, sortByIndex } from 'mo/utils';
+import { arraylize, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
-
 export interface IExplorerService extends BaseService<ExplorerModel> {
     /**
      * Get the specific panel
@@ -35,25 +34,10 @@ export interface IExplorerService extends BaseService<ExplorerModel> {
      */
     reset(): void;
     /**
-     * Listen to the Explorer header toolbar click event
-     * @param callback
-     */
-    onClick(callback: (e: MouseEvent, item: IMenuItemProps) => void): void;
-    /**
-     * Listen to the Explorer panel remove event
-     * @param callback
-     */
-    onRemovePanel(callback: (panel: IExplorerPanelItem) => void): void;
-    /**
-     * Listen to the FolderTree Panel collapse all folders event
-     * @param callback
-     */
-    onCollapseAllFolders(callback: () => void): void;
-    /**
      * Listen to the Explorer panel toolbar click event
      * @param callback
      */
-    onPanelToolbarClick(callback: (panel: IExplorerPanelItem, toolbarId: string) => void): void;
+    onPanelToolbarClick(callback: (toolbar: IMenuItemProps, panelId: UniqueId) => void): void;
 }
 
 export class ExplorerService extends BaseService<ExplorerModel> implements IExplorerService {
@@ -98,7 +82,7 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
 
         this.setState((prev) => ({
             ...prev,
-            data: [...prev.data, ...next].sort(sortByIndex),
+            data: [...prev.data, ...next],
         }));
     }
 
@@ -125,19 +109,11 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
     }
 
     // ===================== Subscriptions =====================
-    public onClick(callback: (e: MouseEvent, item: IMenuItemProps) => void) {
-        this.subscribe(ExplorerEvent.onClick, callback);
-    }
-
-    public onRemovePanel(callback: (panel: IExplorerPanelItem) => void) {
-        this.subscribe(ExplorerEvent.onRemovePanel, callback);
-    }
-
-    public onCollapseAllFolders(callback: () => void) {
-        this.subscribe(ExplorerEvent.onCollapseAllFolders, callback);
-    }
-
-    public onPanelToolbarClick(callback: (panel: IExplorerPanelItem, toolbarId: string) => void) {
+    public onPanelToolbarClick(callback: (toolbar: IMenuItemProps, panelId: UniqueId) => void) {
         this.subscribe(ExplorerEvent.onPanelToolbarClick, callback);
+    }
+
+    public onCollapseChange(callback: (keys: UniqueId[]) => void) {
+        this.subscribe(ExplorerEvent.onCollapseChange, callback);
     }
 }

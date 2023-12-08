@@ -1,6 +1,13 @@
 import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
-import { FileTypes, FolderTreeInsertOption, type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
+import {
+    FileTypeLiteral,
+    FileTypes,
+    type FolderTreeInsertOption,
+    type IMenuItemProps,
+    type KeyboardEventHandler,
+    type UniqueId,
+} from 'mo/types';
 import logger from 'mo/utils/logger';
 import { TreeHelper, TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
@@ -121,14 +128,17 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Listen to drop event
      * @param treeData
      */
-    onDropTree(
-        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
-    ): void;
+    onDropTree(callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void): void;
     /**
      * Listen to right click event
      * @param callback
      */
-    onRightClick(callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeData: TreeNodeModel<any>) => void): void;
+    onRightClick(
+        callback: (
+            e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+            treeData: TreeNodeModel<any>
+        ) => void
+    ): void;
     /**
      * Listen to the click event about the context menu except for built-in menus
      * @param callback
@@ -232,7 +242,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
     }
 
     public add(data: TreeNodeModel<any>, id?: UniqueId, opts?: FolderTreeInsertOption): void {
-        const isRootFolder = data.fileType === 'RootFolder';
+        const isRootFolder = data.fileType === FileTypes.RootFolder;
 
         if (isRootFolder) {
             this.addRootFolder(data);
@@ -250,7 +260,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
                 return;
             }
             targetParent.children ??= [];
-            if (!Object.hasOwn((opts || {}), 'index')) {
+            if (!Object.hasOwn(opts || {}, 'index')) {
                 targetParent.children.push(data);
             } else {
                 targetParent.children.splice(opts?.index || 0, 0, data);
@@ -263,7 +273,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
             if (target) {
                 target.children ??= [];
             }
-            if (!Object.hasOwn((opts || {}), 'index')) {
+            if (!Object.hasOwn(opts || {}, 'index')) {
                 target?.children?.push(data);
             } else {
                 target?.children?.splice(opts?.index || 0, 0, data);
@@ -341,12 +351,17 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         const treeHelper = new TreeHelper(data);
         const targetParent = treeHelper.getParent(target.id);
         const idx = targetParent?.children?.findIndex(({ id }) => id === target.id);
-        if ([FileTypes.Folder, FileTypes.RootFolder].includes(target.fileType) && idx !== 0) {
+        if (
+            ([FileTypes.Folder, FileTypes.RootFolder] as FileTypeLiteral[]).includes(
+                target.fileType
+            ) &&
+            idx !== 0
+        ) {
             this.add(source, target?.id, { gap: true });
         } else {
             this.add(source, targetParent?.id, { gap: true, index: idx });
         }
-    };
+    }
 
     public get(id: UniqueId) {
         if (!this.getState().data.length) return;
@@ -368,7 +383,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
 
     public setEditing(id: UniqueId) {
         this.setState({ editing: id });
-    };
+    }
 
     // ===================== Subscriptions =====================
     public onRename(callback: (id: UniqueId) => void) {
@@ -394,7 +409,10 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
     };
 
     public onRightClick = (
-        callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeData: TreeNodeModel<any>) => void
+        callback: (
+            e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+            treeData: TreeNodeModel<any>
+        ) => void
     ) => {
         this.subscribe(FolderTreeEvent.onRightClick, callback);
     };
@@ -424,9 +442,9 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
 
     public onCreateRoot(callback: (e: React.MouseEvent<Element, MouseEvent>) => void): void {
         this.subscribe(FolderTreeEvent.onCreateRoot, callback);
-    };
+    }
 
     public onAfterUpdateFileName(callback: (file: TreeNodeModel<any>) => void): void {
         this.subscribe(FolderTreeEvent.onAfterUpdateFileName, callback);
-    };
+    }
 }

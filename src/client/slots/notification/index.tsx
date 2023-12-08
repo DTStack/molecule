@@ -1,13 +1,13 @@
 import { createPortal } from 'react-dom';
 import { classNames } from 'mo/client/classNames';
+import Icon from 'mo/client/components/icon';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { INotificationController } from 'mo/controllers/notification';
 
-import Icon from '../icon';
-import { NotificationPane } from './notificationPanel';
+import NotificationCenter from '../notificationCenter';
 import variables from './index.scss';
 
-export function Notification({
+export default function Notification({
     onClick,
     onActionBarClick,
     onCloseNotification,
@@ -26,7 +26,7 @@ export function Notification({
                 type={renderIcon}
             />
             {createPortal(
-                <NotificationPane
+                <NotificationCenter
                     data={data}
                     visible={visible}
                     actionBar={actionBar}
@@ -38,5 +38,3 @@ export function Notification({
         </>
     );
 }
-
-export default Notification;

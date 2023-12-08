@@ -1,8 +1,10 @@
 import Dropdown from 'mo/client/components/dropdown';
+import Flex from 'mo/client/components/flex';
 import useConnector from 'mo/client/hooks/useConnector';
 import useContextMenu from 'mo/client/hooks/useContextMenu';
 import type { IStatusBarController } from 'mo/controllers/statusBar';
-import { classify } from 'mo/utils';
+import { Alignment } from 'mo/types';
+import { classify, sortByIndex } from 'mo/utils';
 
 import StatusItem from '../../components/statusItem';
 import variables from './index.scss';
@@ -13,14 +15,14 @@ export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarCon
 
     const [leftItems = [], rightItems = []] = classify(
         statusBar.data,
-        (item) => item.alignment === 'left'
+        (item) => item.alignment === Alignment.left
     );
 
     return (
         <Dropdown trigger="contextMenu" alignPoint data={data} onClick={onContextMenuClick}>
-            <div className={variables.container}>
-                <div className={variables.leftItem}>
-                    {leftItems.map((item) => (
+            <Flex className={variables.container} justifyContent="space-between">
+                <Flex className={variables.items} justifyContent="flex-start">
+                    {leftItems.sort(sortByIndex).map((item) => (
                         <StatusItem
                             key={item.id}
                             data={item}
@@ -28,18 +30,21 @@ export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarCon
                             onContextMenuClick={onContextMenuClick}
                         />
                     ))}
-                </div>
-                <div className={variables.rightItem}>
-                    {rightItems.map((item) => (
-                        <StatusItem
-                            key={item.id}
-                            data={item}
-                            onClick={(e) => onClick?.(e, item.id)}
-                            onContextMenuClick={onContextMenuClick}
-                        />
-                    ))}
-                </div>
-            </div>
+                </Flex>
+                <Flex className={variables.items} justifyContent="flex-end">
+                    {rightItems
+                        .sort(sortByIndex)
+                        .reverse()
+                        .map((item) => (
+                            <StatusItem
+                                key={item.id}
+                                data={item}
+                                onClick={(e) => onClick?.(e, item.id)}
+                                onContextMenuClick={onContextMenuClick}
+                            />
+                        ))}
+                </Flex>
+            </Flex>
         </Dropdown>
     );
 }

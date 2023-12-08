@@ -5,7 +5,7 @@ import { IMoleculeContext, KeybindingWeight } from 'mo/types';
 // TODO: migrate CommandQuickAccessProvider
 
 export class QuickAccessCommandAction extends BaseAction {
-    static readonly ID = 'editor.action.quickCommand';
+    static readonly ID = 'menu.commandPalette';
     static PREFIX = '>';
 
     constructor(private molecule: IMoleculeContext) {

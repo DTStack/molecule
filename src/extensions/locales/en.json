@@ -1,5 +1,5 @@
 {
-    "id": "en",
+    "id": "en-US",
     "name": "English",
     "source": {
         "molecule.welcome": "Welcome to Molecule",
@@ -42,10 +42,10 @@
         "sidebar.explore.openEditor.group": "Group ${i}",
         "sidebar.explore.outline": "Outline",
         "sidebar.search.title": "Search",
+        "sidebar.search.notFound": "No results found.",
         "sidebar.replace.placement": "Replace",
         "sidebar.explore.refresh": "Refresh Explorer",
         "sidebar.explore.collapseFolders": "Collapse Folders in Explorer",
-        "sidebar.explore.toggleVertical": "Toggle Vertical",
         "sidebar.explore.saveAll": "Save All",
         "sidebar.explore.actionDesc": "View and More Actions...",
         "sidebar.explore.outlineMore": "More Actions...",

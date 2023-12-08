@@ -1,4 +1,4 @@
-import Notification from 'mo/client/components/notification';
+import Notification from 'mo/client/slots/notification';
 import { BaseController } from 'mo/glue';
 import { INotificationItem, NotificationEvent } from 'mo/models/notification';
 import type { IStatusBarItem } from 'mo/models/statusBar';
@@ -26,22 +26,15 @@ export class NotificationController extends BaseController implements INotificat
         this.initView();
     }
 
-    public initView() {
+    private initView() {
         const state = this.builtin.getState();
         const { builtInNotification, NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE } = state.modules;
 
         if (builtInNotification) {
-            /* istanbul ignore next */
             const defaultNotification = {
                 ...builtInNotification,
                 actionBar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(Boolean),
-                render: () => (
-                    <Notification
-                        onClick={this.onClick}
-                        onActionBarClick={this.onActionBarClick}
-                        onCloseNotification={this.onCloseNotification}
-                    />
-                ),
+                render: () => <Notification {...this} />,
             };
             this.notification.setState({
                 ...defaultNotification,

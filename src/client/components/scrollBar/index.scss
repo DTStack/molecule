@@ -37,7 +37,6 @@ $shadowHidden: BEMModifier($shadow, 'hidden');
 
     .#{$track} {
         background-color: transparent;
-        margin: auto;
         position: sticky;
         transition: opacity 0.1s linear;
         z-index: 99;
@@ -51,14 +50,15 @@ $shadowHidden: BEMModifier($shadow, 'hidden');
 
         &.#{$trackVertical} {
             height: 100%;
-            left: 100%;
             top: 0;
+            float: right;
             width: 10px;
         }
 
         &.#{$trackHidden} {
             opacity: 0;
-            transition: opacity 0.8s linear;
+            transition-delay: 0.8s;
+            pointer-events: none;
         }
     }
 

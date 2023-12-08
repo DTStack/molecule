@@ -5,7 +5,8 @@ import { FolderTreeEvent } from 'mo/models/folderTree';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { FolderTreeService } from 'mo/services/folderTree';
-import { IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
+import type { SidebarService } from 'mo/services/sidebar';
+import { FileTypes, type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
 import type { TreeNodeModel } from 'mo/utils/tree';
 import { inject, injectable } from 'tsyringe';
 
@@ -20,23 +21,27 @@ export interface IFolderTreeController extends BaseController {
     readonly onLoadData?: (treeNode: TreeNodeModel<any>) => Promise<void>;
     readonly onExpandKeys?: (expandKeys: UniqueId[]) => void;
     readonly onTreeItemKeyDown?: KeyboardEventHandler;
-    readonly onRightClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeNode: TreeNodeModel<any>) => void;
+    readonly onRightClick?: (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        treeNode: TreeNodeModel<any>
+    ) => void;
     readonly onCreateRoot?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
 @injectable()
 export class FolderTreeController extends BaseController implements IFolderTreeController {
-
     constructor(
         @inject('builtin') private builtin: BuiltinService,
         @inject('folderTree') private folderTree: FolderTreeService,
-        @inject('explorer') private explorer: ExplorerService
+        @inject('explorer') private explorer: ExplorerService,
+        @inject('sidebar') private sidebar: SidebarService
     ) {
         super();
         this.initView();
     }
 
     private initView() {
+        const { EXPLORER_ACTIVITY_ITEM } = this.builtin.getState().constants;
         const { builtInExplorerFolderPanel } = this.builtin.getState().modules;
         this.explorer.addPanel({
             ...builtInExplorerFolderPanel,
@@ -61,9 +66,28 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
             data: [],
             expandKeys: [],
         });
+
+        const explorer = this.sidebar.get(EXPLORER_ACTIVITY_ITEM);
+        if (explorer) {
+            this.sidebar.update({
+                id: EXPLORER_ACTIVITY_ITEM,
+                toolbar: [
+                    ...(explorer.toolbar || []),
+                    {
+                        id: builtInExplorerFolderPanel.id,
+                        name: builtInExplorerFolderPanel.name,
+                        icon: 'check',
+                        sortIndex: builtInExplorerFolderPanel.sortIndex,
+                    },
+                ],
+            });
+        }
     }
 
-    public onRightClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, treeNode: TreeNodeModel<any>) => {
+    public onRightClick = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        treeNode: TreeNodeModel<any>
+    ) => {
         this.emit(FolderTreeEvent.onRightClick, e, treeNode);
     };
 
@@ -78,12 +102,19 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
     public readonly onSelectFile = (file?: TreeNodeModel<any>) => {
         this.folderTree.setActive(file?.id);
         // editing file won't emit onSelectFile
-        if (file && file.id !== this.folderTree.getState().editing && file.fileType === 'File') {
+        if (
+            file &&
+            file.id !== this.folderTree.getState().editing &&
+            file.fileType === FileTypes.File
+        ) {
             this.emit(FolderTreeEvent.onSelectFile, file);
         }
     };
 
-    public onContextMenuClick = (contextMenuItem: IMenuItemProps, treeNode?: TreeNodeModel<any>) => {
+    public onContextMenuClick = (
+        contextMenuItem: IMenuItemProps,
+        treeNode?: TreeNodeModel<any>
+    ) => {
         this.emit(FolderTreeEvent.onContextMenuClick, contextMenuItem, treeNode);
     };
 
@@ -111,7 +142,10 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
         this.emit(FolderTreeEvent.onExpandKeys, expandedKeys);
     };
 
-    public onTreeItemKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, node: TreeNodeModel<any>) => {
+    public onTreeItemKeyDown = (
+        e: React.KeyboardEvent<HTMLDivElement>,
+        node: TreeNodeModel<any>
+    ) => {
         this.emit(FolderTreeEvent.onTreeItemKeyDown, e, node);
     };
 

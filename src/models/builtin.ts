@@ -11,7 +11,6 @@ export class BuiltinModel {
         OUTLINE_PANEL_MORE_DESC: 'sidebar.explore.outlineMore',
         EXPLORER_ACTIVITY_ITEM: 'sidebar.explore.title',
         EXPLORER_ACTION_TITLE: 'sidebar.explore.actionDesc',
-        EXPLORER_TOGGLE_VERTICAL: 'sidebar.explore.toggleVertical',
         EXPLORER_TOGGLE_SAVE_ALL: 'sidebar.explore.saveAll',
         EXPLORER_TOGGLE_CLOSE_ALL_EDITORS: 'sidebar.explore.closeAllEditors',
         EXPLORER_TOGGLE_SAVE_GROUP: 'sidebar.explore.saveGroup',
@@ -42,6 +41,7 @@ export class BuiltinModel {
         NOTIFICATION_MODEL_NAME: 'Notification',
         STATUS_BAR_HIDE_ID: 'hide',
         SEARCH_ACTIVITY_ITEM: 'sidebar.search.title',
+        SEARCH_RESULT_NOT_FOUND: 'sidebar.search.notFound',
         SEARCH_TOOLBAR_REFRESH: 'search.toolbar.refresh',
         SEARCH_TOOLBAR_CLEAR_ALL: 'search.toolbar.clearAll',
         SEARCH_TOOLBAR_VIEW_AS_LIST_TREE: 'search.toolbar.listTree',
@@ -56,14 +56,13 @@ export class BuiltinModel {
         PANEL_OUTPUT: 'panel.output.title',
         MENU_APPEARANCE_ID: 'Appearance',
         MENU_FILE_OPEN: 'openFile',
-        MENU_QUICK_COMMAND: 'editor.action.quickCommand',
+        MENU_QUICK_COMMAND: 'menu.commandPalette',
         MENU_VIEW_MENUBAR: 'workbench.action.showMenuBar',
         MENU_VIEW_AUXILIARY: 'workbench.action.showAuxiliary',
         MENU_VIEW_ACTIVITYBAR: 'workbench.action.showActivityBar',
         MENU_VIEW_STATUSBAR: 'workbench.action.showStatusBar',
         MENU_VIEW_PANEL: 'workbench.action.showPanel',
         MENU_VIEW_SIBEBAR: 'workbench.action.sidebar',
-        ACTION_QUICK_COMMAND: 'editor.action.quickCommand',
         ACTION_QUICK_SELECT_ALL: 'editor.action.quickSelectAll',
         ACTION_QUICK_COPY_LINE_UP: 'editor.action.copyLinesUpAction',
         ACTION_QUICK_UNDO: 'editor.action.undo',
@@ -394,17 +393,10 @@ export class BuiltinModel {
             name: this.localize(this.constants.EDITOR_PANEL_ID, 'OPEN EDITORS'),
             toolbar: [
                 {
-                    id: this.constants.EXPLORER_TOGGLE_VERTICAL,
-                    title: this.localize(
-                        this.constants.EXPLORER_TOGGLE_VERTICAL,
-                        'Toggle Vertical'
-                    ),
-                    icon: 'editor-layout',
-                },
-                {
                     id: this.constants.EXPLORER_TOGGLE_SAVE_ALL,
                     title: this.localize(this.constants.EXPLORER_TOGGLE_SAVE_ALL, 'Save All'),
                     icon: 'save-all',
+                    group: 'inline',
                 },
                 {
                     id: this.constants.EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
@@ -413,6 +405,7 @@ export class BuiltinModel {
                         'Close All Editors'
                     ),
                     icon: 'close-all',
+                    group: 'inline',
                 },
             ],
             // groupToolbar: [
@@ -474,6 +467,16 @@ export class BuiltinModel {
             icon: 'chevron-down',
             group: 'inline',
         }),
+        builtInEditorTreeHeaderContextMenu: () => [
+            {
+                id: this.constants.EDITOR_MENU_CLOSE_SAVED,
+                name: this.localize(this.constants.EDITOR_MENU_CLOSE_SAVED, 'Close Saved'),
+            },
+            {
+                id: this.constants.EDITOR_MENU_CLOSE_ALL,
+                name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+            },
+        ],
     };
     constructor(private localize: Localize) {}
 

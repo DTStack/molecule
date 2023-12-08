@@ -9,6 +9,7 @@ body select:focus,
 body input[type='button']:focus,
 body input[type='text']:focus,
 body button:focus,
+body textarea:focus,
 body input[type='search']:focus,
 body input[type='checkbox']:focus {
     outline-width: 1px;

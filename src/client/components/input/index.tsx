@@ -2,18 +2,18 @@ import { useRef, useState } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { InputValidateInfo, ValidateStatus, ValidateStatusLiteral } from 'mo/types';
 
+import Display from '../display';
 import variables from './index.scss';
 
 export interface IBaseInputProps {
+    value?: string;
     className?: string;
     placeholder?: string;
     info?: InputValidateInfo;
     onChange?: (value: string) => void;
 }
 
-export const Input = (props: IBaseInputProps) => {
-    const { className, placeholder, info, onChange } = props;
-
+export const Input = ({ value, className, placeholder, info, onChange }: IBaseInputProps) => {
     const [isFocus, setIsFocus] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -41,15 +41,16 @@ export const Input = (props: IBaseInputProps) => {
     };
 
     const handleInputChange = (e: any) => {
+        const height = parseInt(variables.widgetSize, 10);
         if (textareaRef.current) {
             // base height
-            textareaRef.current.style.height = '24px';
+            textareaRef.current.style.height = variables.widgetSize;
             const currentScrollHeight = textareaRef.current.scrollHeight;
             // count the lines
-            const lines = currentScrollHeight / 24;
+            const lines = currentScrollHeight / height;
             const maxLines = 5;
             if (lines > maxLines) {
-                textareaRef.current.style.height = `${24 * maxLines}px`;
+                textareaRef.current.style.height = `${height * maxLines}px`;
             } else {
                 textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
             }
@@ -66,16 +67,20 @@ export const Input = (props: IBaseInputProps) => {
     };
 
     return (
-        <div className={className}>
+        <div
+            className={classNames(
+                variables.container,
+                info?.message && getInputClassName(info?.status || ValidateStatus.info),
+                className
+            )}
+        >
             <textarea
+                value={value}
                 ref={textareaRef}
                 spellCheck={false}
                 autoCorrect="off"
                 autoCapitalize="off"
-                className={classNames(
-                    variables.input,
-                    info?.message && getInputClassName(info?.status || ValidateStatus.info)
-                )}
+                className={classNames(variables.widget)}
                 placeholder={placeholder}
                 title={placeholder}
                 onKeyDown={handleInputKeyPress}
@@ -83,16 +88,9 @@ export const Input = (props: IBaseInputProps) => {
                 onBlur={handleInputBlur}
                 onChange={handleInputChange}
             />
-            {info?.message && isFocus && (
-                <div
-                    className={classNames(
-                        variables.base,
-                        getInputClassName(info?.status || ValidateStatus.info)
-                    )}
-                >
-                    {info?.message}
-                </div>
-            )}
+            <Display visible={Boolean(info?.message && isFocus)}>
+                <div className={classNames(variables.validation)}>{info?.message}</div>
+            </Display>
         </div>
     );
 };

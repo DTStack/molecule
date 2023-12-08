@@ -46,10 +46,10 @@ export type LocaleKind = {
     'sidebar.explore.openEditor.group': string;
     'sidebar.explore.outline': string;
     'sidebar.search.title': string;
+    'sidebar.search.notFound': string;
     'sidebar.replace.placement': string;
     'sidebar.explore.refresh': string;
     'sidebar.explore.collapseFolders': string;
-    'sidebar.explore.toggleVertical': string;
     'sidebar.explore.saveAll': string;
     'sidebar.explore.actionDesc': string;
     'sidebar.explore.outlineMore': string;
@@ -100,6 +100,10 @@ export type LocaleKind = {
     menubar: string;
     'menu.hideActivityBar': string;
     'menu.defaultProjectName': string;
+    'toolbar.newFile': string;
+    'toolbar.newFolder': string;
+    'toolbar.refresh': string;
+    'toolbar.collapseAll': string;
 };
 type LocaleKindLiteral = keyof LocaleKind;
 

@@ -15,11 +15,17 @@ export default function Action({
     disabled,
     type,
     children,
+    onClick,
     ...restProps
 }: PropsWithChildren<IActionProps>) {
     return (
         <div
             className={classNames(variables.action, disabled && variables.disabled, className)}
+            onClick={(e) => {
+                e.stopPropagation();
+                e.persist();
+                !disabled && onClick?.(e);
+            }}
             {...restProps}
         >
             <Icon type={type}>{children}</Icon>

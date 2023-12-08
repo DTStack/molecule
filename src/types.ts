@@ -63,6 +63,9 @@ export enum KeybindingWeight {
     ExternalExtension = 400,
 }
 
+/**
+ * The Alignment of layout
+ */
 export enum Alignment {
     top = 'top',
     bottom = 'bottom',
@@ -71,13 +74,18 @@ export enum Alignment {
 }
 export type AlignmentLiteral = keyof typeof Alignment;
 
+/**
+ * The Direction of layout
+ */
 export enum Direction {
     vertical = 'vertical',
     horizontal = 'horizontal',
 }
-
 export type DirectionLiteral = keyof typeof Direction;
 
+/**
+ * The FolderTree types
+ */
 export enum FileTypes {
     File = 'File',
     Folder = 'Folder',
@@ -297,38 +305,44 @@ export interface IExtension {
     dispose?(ctx: IMoleculeContext): void;
 }
 
-export type ContextMenuEventHandler = (item: IMenuItemProps) => void;
-export type ContextMenuEditorHandler = (
-    item: IMenuItemProps,
-    tabId: UniqueId,
-    groupId: UniqueId
-) => void;
-export type ContextMenuGroupHandler = (item: IMenuItemProps, groupId: UniqueId) => void;
+/**
+ * Extend the parameters for a function
+ */
+type ExtendParameters<T, Arguments extends any[]> = T extends (...args: infer P) => infer R
+    ? (...args: [...P, ...Arguments]) => R
+    : never;
 
+export type ContextMenuEventHandler = (item: IMenuItemProps) => void;
+export type ContextMenuEditorHandler = ExtendParameters<
+    ContextMenuEventHandler,
+    [tabId: UniqueId, groupId: UniqueId]
+>;
+export type ContextMenuGroupHandler = ExtendParameters<
+    ContextMenuEventHandler,
+    [groupId: UniqueId]
+>;
+
+export type RenderProps<T> = {
+    render?: RenderFunctionProps<T>;
+};
 export type RenderFunctionProps<T> = (item: T) => React.ReactNode;
 
 /**
  * The type definition for the Tab data construct
  */
-export interface ITabProps<T = any, P = any> {
-    id: UniqueId;
-    name?: string;
+export interface ITabProps<T = any, P = any> extends RenderProps<ITabProps<T, P>>, IItemProps {
     /**
      * Mark the tab status to be closable,
      * Default is true
      */
     closable?: boolean;
-    hidden?: boolean;
-    icon?: IconType;
     data?: T;
-    render?: (item: ITabProps<T, P>) => React.ReactNode;
 }
 
-export interface IBreadcrumbItemProps {
+export interface IBreadcrumbItemProps extends RenderProps<IBreadcrumbItemProps> {
     id: UniqueId;
     name: string;
     icon?: IconType;
-    render?: (item: IBreadcrumbItemProps) => React.ReactNode;
 }
 
 export enum DragAction {

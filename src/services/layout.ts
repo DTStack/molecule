@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { type ILayout, LayoutModel, type PositionLiteral } from 'mo/models/layout';
-import { Direction, FunctionalOrSingle } from 'mo/types';
+import type { DirectionLiteral, FunctionalOrSingle } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 import type { BuiltinService } from './builtin';
@@ -59,7 +59,7 @@ export interface ILayoutService extends BaseService<ILayout> {
     /**
      * Set the direction of editor group,default is `vertical`
      */
-    setEditorGroupDirection(direction: FunctionalOrSingle<Direction>): void;
+    setEditorGroupDirection(direction: FunctionalOrSingle<DirectionLiteral>): void;
     /**
      * Set the visibility of auxiliary bar
      *
@@ -197,7 +197,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         });
     }
 
-    public setEditorGroupDirection(direction: FunctionalOrSingle<Direction>) {
+    public setEditorGroupDirection(direction: FunctionalOrSingle<DirectionLiteral>) {
         this.setState((prev) => ({
             ...prev,
             editorGroupDirection:

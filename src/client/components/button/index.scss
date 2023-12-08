@@ -4,37 +4,37 @@ $container: prefix('btn');
 $normal: BEMModifier($container, 'normal');
 $large: BEMModifier($container, 'large');
 $disabled: BEMModifier($container, 'disabled');
-
+$block: BEMModifier($container, 'block');
 
 .#{$container} {
-    align-items: center;
     background-color: var(--button-background);
     border: 0;
     box-sizing: border-box;
     color: var(--button-foreground);
-    cursor: pointer;
-    display: flex;
-    height: 30px;
-    justify-content: center;
+    height: 26px;
+    line-height: 26px;
     margin-bottom: 8px;
     outline-offset: 2px;
-    padding: 4px 10px;
-    text-align: center;
-    width: 100%;
+    padding: 0px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
 
     &:hover {
         background-color: var(--button-hoverBackground);
         opacity: 0.9;
     }
 
-    &.#{$normal} {
-        padding: 4px 15px;
+    &.#{$block} {
+        display: block;
+        width: 100%;
     }
 
     &.#{$large} {
-        font-size: 16px;
-        height: 32px;
-        padding: 8px 15px;
+        height: 34px;
+        line-height: 34px;
+        font-size: 18px;
+        padding: 0px 14px;
     }
 
     &.#{$disabled} {
@@ -49,4 +49,5 @@ $disabled: BEMModifier($container, 'disabled');
     normal: $normal;
     large: $large;
     disabled: $disabled;
+    block: $block;
 }

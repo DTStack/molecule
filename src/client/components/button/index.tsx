@@ -7,12 +7,13 @@ type BtnSizeType = 'normal' | 'large';
 export interface IButtonProps extends Omit<React.ComponentProps<'button'>, 'ref'> {
     disabled?: boolean;
     size?: BtnSizeType;
+    block?: Boolean;
     onClick?(event: React.MouseEvent): void;
 }
 
 export const Button = forwardRef<HTMLButtonElement, React.PropsWithChildren<IButtonProps>>(
     function (props, ref) {
-        const { className, children, size = 'normal', ...custom } = props;
+        const { className, children, size = 'normal', block, ...custom } = props;
 
         return (
             <button
@@ -20,6 +21,7 @@ export const Button = forwardRef<HTMLButtonElement, React.PropsWithChildren<IBut
                 className={classNames(
                     className,
                     variables.container,
+                    block && variables.block,
                     size === 'large' ? variables.large : variables.normal,
                     props.disabled && variables.disabled
                 )}

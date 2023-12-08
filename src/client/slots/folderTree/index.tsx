@@ -50,9 +50,11 @@ export default function FolderTree({
             {entry ? (
                 <>{entry}</>
             ) : (
-                <div style={{ padding: '10px 5px' }}>
-                    you have not yet opened a folder
-                    <Button block onClick={onCreateRoot}>Add Folder</Button>
+                <div style={{ width: '90%', margin: '0 auto' }}>
+                    <p>you have not yet opened a folder</p>
+                    <Button block onClick={onCreateRoot}>
+                        Add Folder
+                    </Button>
                 </div>
             )}
         </div>
@@ -60,7 +62,10 @@ export default function FolderTree({
 
     if (!folderTree.data.length) return welcomePage;
 
-    const handleRightClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, info: TreeNodeModel<any>) => {
+    const handleRightClick = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        info: TreeNodeModel<any>
+    ) => {
         onRightClick?.(e, info);
     };
 

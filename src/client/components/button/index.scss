@@ -11,14 +11,13 @@ $block: BEMModifier($container, 'block');
     border: 0;
     box-sizing: border-box;
     color: var(--button-foreground);
-    height: 26px;
-    line-height: 26px;
-    margin-bottom: 8px;
-    outline-offset: 2px;
-    padding: 0px 10px;
+    line-height: 18px;
+    outline-offset: 1px;
+    padding: 5px;
     cursor: pointer;
     font-size: 14px;
     white-space: nowrap;
+    border-radius: 2px;
 
     &:hover {
         background-color: var(--button-hoverBackground);

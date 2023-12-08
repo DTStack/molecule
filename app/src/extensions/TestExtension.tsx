@@ -3,11 +3,17 @@ import {
     toggleNextActive,
     updateContextMenuIcon,
 } from '@dtinsight/molecule/esm/extensions/utils';
-import { FileTypes, IExtension, SearchResultItem, UniqueId } from '@dtinsight/molecule/esm/types';
-import { randomId } from '@dtinsight/molecule/esm/utils';
+import {
+    FileTypes,
+    IExtension,
+    IMenuItemProps,
+    IMoleculeContext,
+    SearchResultItem,
+    UniqueId,
+} from '@dtinsight/molecule/esm/types';
+import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
 import { cloneDeep, debounce } from 'lodash-es';
 
-import { IMenuItemProps } from '../../../esm/types';
 import TestPane from '../components/testPane';
 import { mockSearchResult } from '../mocks/searchResult';
 
@@ -21,7 +27,7 @@ enum FolderTreeContextMenu {
 export const TestExtension: IExtension = {
     id: 'TestExtension',
     name: 'TestExtension',
-    activate(molecule: any) {
+    activate(molecule: IMoleculeContext) {
         molecule.activityBar.add({
             id: 'testPane',
             name: 'testPane',
@@ -243,32 +249,25 @@ export const TestExtension: IExtension = {
         });
 
         molecule.folderTree.onCreateRoot(() => {
-            molecule.folderTree.add({
-                id: randomId(),
-                name: 'molecule',
-                fileType: FileTypes.RootFolder,
-                icon: 'folder',
-                children: [
-                    {
-                        id: randomId(),
-                        name: 'folder1',
-                        fileType: FileTypes.Folder,
-                        children: [{ id: randomId(), name: 'file1', fileType: FileTypes.File }],
-                    },
-                    {
-                        id: randomId(),
-                        name: 'folder2',
-                        fileType: FileTypes.Folder,
-                        children: [
-                            { id: randomId(), name: 'file2', fileType: FileTypes.File },
-                            { id: randomId(), name: 'file3', fileType: FileTypes.File },
-                        ],
-                    },
-                    { id: randomId(), name: 'file4', fileType: FileTypes.File },
-                    { id: randomId(), name: 'file5', fileType: FileTypes.File },
-                    { id: randomId(), name: 'file6', fileType: FileTypes.File },
-                ],
-            });
+            fetch('/api/getWorkspace')
+                .then((res) => res.json())
+                .then(
+                    ({
+                        data: { folders, files },
+                    }: {
+                        data: { folders: string[]; files: string[] };
+                    }) => {
+                        molecule.folderTree.add(
+                            new TreeNodeModel<void>('molecule', 'molecule', 'RootFolder', [
+                                ...folders.map(
+                                    (folder) =>
+                                        new TreeNodeModel<void>(folder, folder, 'Folder', [])
+                                ),
+                                ...files.map((file) => new TreeNodeModel<void>(file, file, 'File')),
+                            ])
+                        );
+                    }
+                );
         });
 
         molecule.folderTree.onRightClick((e, node) => {
@@ -359,25 +358,19 @@ export const TestExtension: IExtension = {
         molecule.folderTree.onSelectFile((file) => {
             if (file.fileType !== 'File') return;
             molecule.folderTree.setState({ editing: undefined });
-            // TODO need to update breadcrumb、language、value、icon by data
-            const tabData = {
-                id: file.id,
-                name: file.name,
-                icon: 'file',
-                value: `
-// name: ${file.name}
-// id: ${file.id}
-            `,
-                language: 'typescript',
-                breadcrumb: [
-                    { id: 'app', name: 'app' },
-                    { id: 'src', name: 'src' },
-                    { id: 'components', name: 'components' },
-                    { id: 'editor', name: file.name, icon: 'file' },
-                ],
-                // modified: !!(key % 2),
-            };
-            molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
+            fetch(`/api/getFileContent/${encodeURIComponent(file.id)}`)
+                .then((res) => res.json())
+                .then(({ data }: { data: string }) => {
+                    const tabData = {
+                        id: file.id,
+                        name: file.name,
+                        icon: file.icon || 'file',
+                        value: data,
+                        language: 'plain',
+                        breadcrumb: [{ id: file.id, name: file.name, icon: file.icon || 'file' }],
+                    };
+                    molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
+                });
         });
 
         molecule.menuBar.onSelect((menuId) => {

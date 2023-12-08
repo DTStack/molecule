@@ -5,6 +5,7 @@ $flex: prefix('flex');
 .#{$flex} {
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 :export {

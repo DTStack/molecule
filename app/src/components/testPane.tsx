@@ -182,10 +182,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             ],
             // modified: !!(key % 2),
         };
-        molecule.editor.open(
-            tabData,
-            molecule.editor.getState().groups?.at(0)?.id
-        );
+        molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
     };
 
     const handleToggleEditorLoading = () => {
@@ -341,33 +338,37 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         };
     }, []);
 
-    const eventRegister = useCallback(() => new Promise((resolve, reject) => {
-        molecule.editor.onCloseTab((tabId, groupId) => {
-            const { modified } = molecule.editor.getTabById(tabId, groupId) || {};
-            if (modified) {
-                return reject('file is modified, confirm delete!');
-            }
-            console.log(tabId, groupId, '--onCloseTab');
-        });
-        molecule.editor.onCloseAll((tabId) => {
-            console.log(tabId, '--onCloseAll');
-        });
-        molecule.editor.onCloseOther((tabId, groupId) => {
-            console.log(tabId, groupId, '--onCloseOther');
-        });
-        molecule.editor.onCloseToRight((tabId, groupId) => {
-            console.log(tabId, groupId, '--onCloseToRight');
-        });
-        molecule.editor.onCloseToLeft((tabId, groupId) => {
-            console.log(tabId, groupId, '--onCloseToLeft');
-        });
-        molecule.editor.onSplitEditorRight(() => {
-            console.log('--onSplitEditorRight');
-        });
-        molecule.folderTree.onRename(() => {
-            console.log('--onRename');
-        });
-    }), [molecule.editor]);
+    const eventRegister = useCallback(
+        () =>
+            new Promise((resolve, reject) => {
+                molecule.editor.onCloseTab((tabId, groupId) => {
+                    const { modified } = molecule.editor.getTabById(tabId, groupId) || {};
+                    if (modified) {
+                        return reject('file is modified, confirm delete!');
+                    }
+                    console.log(tabId, groupId, '--onCloseTab');
+                });
+                molecule.editor.onCloseAll((tabId) => {
+                    console.log(tabId, '--onCloseAll');
+                });
+                molecule.editor.onCloseOther((tabId, groupId) => {
+                    console.log(tabId, groupId, '--onCloseOther');
+                });
+                molecule.editor.onCloseToRight((tabId, groupId) => {
+                    console.log(tabId, groupId, '--onCloseToRight');
+                });
+                molecule.editor.onCloseToLeft((tabId, groupId) => {
+                    console.log(tabId, groupId, '--onCloseToLeft');
+                });
+                molecule.editor.onSplitEditorRight(() => {
+                    console.log('--onSplitEditorRight');
+                });
+                molecule.folderTree.onRename(() => {
+                    console.log('--onRename');
+                });
+            }),
+        [molecule.editor]
+    );
 
     useEffect(() => {
         eventRegister();
@@ -377,103 +378,125 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         <ScrollBar isShowShadow>
             <div style={{ padding: 16 }}>
                 <h2>Editor:</h2>
-                <Button block onClick={newEditor}>
-                    New Editor
-                </Button>
-                <Button block onClick={handleToggleEditorLoading}>
-                    Toggle Loading
-                </Button>
-                <Button block onClick={updateWelcome}>
-                    Update Welcome Page
-                </Button>
-                <Button block onClick={updateOptions}>
-                    Update ReadOnly
-                </Button>
-                <Button block onClick={addAction}>
-                    Add Excute Action
-                </Button>
-                <Button block onClick={updateAction}>
-                    Update Excute Action
-                </Button>
-                <Button block onClick={openFile}>
-                    Open File
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={newEditor}>
+                        New Editor
+                    </Button>
+                    <Button block onClick={handleToggleEditorLoading}>
+                        Toggle Loading
+                    </Button>
+                    <Button block onClick={updateWelcome}>
+                        Update Welcome Page
+                    </Button>
+                    <Button block onClick={updateOptions}>
+                        Update ReadOnly
+                    </Button>
+                    <Button block onClick={addAction}>
+                        Add Excute Action
+                    </Button>
+                    <Button block onClick={updateAction}>
+                        Update Excute Action
+                    </Button>
+                    <Button block onClick={openFile}>
+                        Open File
+                    </Button>
+                </div>
                 <h2>ActivityBar:</h2>
-                <Button block onClick={() => handleAddActivityBar()}>
-                    Add ActivityBar Item
-                </Button>
-                <Button block onClick={() => handleAddActivityBar(true)}>
-                    Add Disabled ActivityBar Item
-                </Button>
-                <Button block onClick={handleAddGloablActivityBar}>
-                    Add Global ActivityBar Item
-                </Button>
-                <Button block onClick={handleHiddenActivityBar}>
-                    Show/Hide ActivityBar
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={() => handleAddActivityBar()}>
+                        Add ActivityBar Item
+                    </Button>
+                    <Button block onClick={() => handleAddActivityBar(true)}>
+                        Add Disabled ActivityBar Item
+                    </Button>
+                    <Button block onClick={handleAddGloablActivityBar}>
+                        Add Global ActivityBar Item
+                    </Button>
+                    <Button block onClick={handleHiddenActivityBar}>
+                        Show/Hide ActivityBar
+                    </Button>
+                </div>
                 <h2>Sidebar:</h2>
-                <Button block onClick={handleToggleLoading}>
-                    Toggle Loading
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={handleToggleLoading}>
+                        Toggle Loading
+                    </Button>
+                </div>
                 <h2>StatusBar:</h2>
-                <Button block onClick={addStatusBar}>
-                    Add StatusBar Item
-                </Button>
-                <Button block onClick={removeStatusBar}>
-                    Remove Last StatusBar Item
-                </Button>
-                <Button block onClick={showHideStatusBar}>
-                    Show/Hide StatusBar
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={addStatusBar}>
+                        Add StatusBar Item
+                    </Button>
+                    <Button block onClick={removeStatusBar}>
+                        Remove Last StatusBar Item
+                    </Button>
+                    <Button block onClick={showHideStatusBar}>
+                        Show/Hide StatusBar
+                    </Button>
+                </div>
                 <h2>MenuBar:</h2>
-                <Button block onClick={appendMenu}>
-                    Add MenuBar Item
-                </Button>
-                <Button block onClick={removeMenu}>
-                    Remove MenuBar Item
-                </Button>
-                <Button block onClick={updateMenu}>
-                    Update MenuBar Item
-                </Button>
-                <Button block onClick={showHideMenuBar}>
-                    Show/Hide MenuBar
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={appendMenu}>
+                        Add MenuBar Item
+                    </Button>
+                    <Button block onClick={removeMenu}>
+                        Remove MenuBar Item
+                    </Button>
+                    <Button block onClick={updateMenu}>
+                        Update MenuBar Item
+                    </Button>
+                    <Button block onClick={showHideMenuBar}>
+                        Show/Hide MenuBar
+                    </Button>
+                </div>
                 <h2>Explorer:</h2>
-                <Button block onClick={addExplorer}>
-                    Add Explorer Panel
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={addExplorer}>
+                        Add Explorer Panel
+                    </Button>
+                </div>
                 <h2>FolderTree:</h2>
-                <Button block onClick={addRootFolder}>
-                    Add Root Folder
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={addRootFolder}>
+                        Add Root Folder
+                    </Button>
+                </div>
                 <h2>Panel:</h2>
-                <Button block onClick={addPanel}>
-                    Add Panel
-                </Button>
-                <Button block onClick={showHidePanel}>
-                    Show/Hide Panel
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={addPanel}>
+                        Add Panel
+                    </Button>
+                    <Button block onClick={showHidePanel}>
+                        Show/Hide Panel
+                    </Button>
+                </div>
                 <h2>Output:</h2>
-                <Button block onClick={updateOutput}>
-                    Update Output
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={updateOutput}>
+                        Update Output
+                    </Button>
+                </div>
                 <h2>Notification:</h2>
-                <Button block onClick={addNotification}>
-                    Add Notification Item
-                </Button>
-                <Button block onClick={addLocaleNotification}>
-                    Add a locale Notification
-                </Button>
-                <Button block onClick={removeNotification}>
-                    Remove Notification Item
-                </Button>
-                <Button block onClick={toggleNotification}>
-                    Toggle Notification
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={addNotification}>
+                        Add Notification Item
+                    </Button>
+                    <Button block onClick={addLocaleNotification}>
+                        Add a locale Notification
+                    </Button>
+                    <Button block onClick={removeNotification}>
+                        Remove Notification Item
+                    </Button>
+                    <Button block onClick={toggleNotification}>
+                        Toggle Notification
+                    </Button>
+                </div>
                 <h2>Locale:</h2>
-                <Button block onClick={updateLocale}>
-                    Switch locale between English and Chinese
-                </Button>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={updateLocale}>
+                        Switch locale between English and Chinese
+                    </Button>
+                </div>
             </div>
         </ScrollBar>
     );

@@ -100,6 +100,10 @@ export type LocaleKind = {
     menubar: string;
     'menu.hideActivityBar': string;
     'menu.defaultProjectName': string;
+    'toolbar.newFile': string;
+    'toolbar.newFolder': string;
+    'toolbar.refresh': string;
+    'toolbar.collapseAll': string;
 };
 type LocaleKindLiteral = keyof LocaleKind;
 

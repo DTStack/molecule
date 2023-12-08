@@ -1,4 +1,7 @@
 import { useRef } from 'react';
+import Dropdown from 'mo/client/components/dropdown';
+import useConnector from 'mo/client/hooks/useConnector';
+import { IMenuItemProps, KeyboardEventHandler  } from 'mo/types';
 import { TreeNodeModel } from 'mo/utils/tree';
 
 import variables from './index.scss';
@@ -13,13 +16,15 @@ interface ITreeNodeProps {
     draggable?: boolean;
     renderIcon: () => JSX.Element | null;
     renderTitle: () => React.ReactNode;
-    onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
+    onRightClick?: React.MouseEventHandler<HTMLDivElement>;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
     onNodeDragStart?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDragEnter?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDragOver?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDragEnd?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDrop?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
+    onTreeItemKeyDown?: KeyboardEventHandler;
+    onContextMenu?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
 }
 const INDENT = 8;
 
@@ -31,16 +36,19 @@ export default ({
     renderIcon,
     renderTitle,
     draggable,
-    onContextMenu,
+    onRightClick,
     onClick,
     onNodeDragStart,
     onNodeDragEnter,
     onNodeDragOver,
     onNodeDrop,
     onNodeDragEnd,
+    onTreeItemKeyDown,
+    onContextMenu,
 }: ITreeNodeProps) => {
     const uuid = data.id;
     const ref = useRef<HTMLDivElement>(null);
+    const { contextMenu } = useConnector('folderTree');
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -77,35 +85,55 @@ export default ({
         onNodeDragEnd?.(e, data);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        // https://medium.com/trabe/react-syntheticevent-reuse-889cd52981b6
+        e.persist();
+        e.preventDefault();
+        onTreeItemKeyDown?.(e, data);
+    };
+
+    const handleContextMenu = (item: IMenuItemProps) => {
+        onContextMenu?.(item, data);
+    };
+
     // calculate key automatically via parent path and self id
     const nodeKey = `${indent ? indent + '_' : ''}${data.id}`;
 
     return (
-        <div
-            ref={ref}
-            key={`${uuid}-${indent}`}
-            tabIndex={0}
-            data-indent={indent}
-            data-key={uuid}
-            data-id={`mo_treeNode_${nodeKey}`}
-            className={className}
-            title={name}
-            draggable={draggable}
-            onContextMenu={onContextMenu}
-            onClick={onClick}
-            onDragStart={handleDragStart}
-            onDragOver={handleDragOver}
-            onDragEnter={handleDragEnter}
-            onDragEnd={handleDragEnd}
-            onDrop={handleDrop}
+        <Dropdown
+            data={contextMenu}
+            // stopPropagation
+            trigger="contextMenu"
+            alignPoint={false}
+            onClick={handleContextMenu}
         >
-            <div className={variables.indent} style={{ width: INDENT * indent }}>
-                {new Array(indent).fill('').map((_, index) => (
-                    <div key={index} className={variables.guide} />
-                ))}
+            <div
+                ref={ref}
+                key={`${uuid}-${indent}`}
+                tabIndex={0}
+                data-indent={indent}
+                data-key={uuid}
+                data-id={`mo_treeNode_${nodeKey}`}
+                className={className}
+                title={name}
+                draggable={draggable}
+                onContextMenu={onRightClick}
+                onClick={onClick}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDragEnter={handleDragEnter}
+                onDragEnd={handleDragEnd}
+                onDrop={handleDrop}
+                onKeyDown={handleKeyDown}
+            >
+                <div className={variables.indent} style={{ width: INDENT * indent }}>
+                    {new Array(indent).fill('').map((_, index) => (
+                        <div key={index} className={variables.guide} />
+                    ))}
+                </div>
+                {renderIcon()}
+                <span className={variables.treeNodeTitle}>{renderTitle()}</span>
             </div>
-            {renderIcon()}
-            <span className={variables.treeNodeTitle}>{renderTitle()}</span>
-        </div>
+        </Dropdown>
     );
 };

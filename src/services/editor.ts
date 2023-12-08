@@ -239,16 +239,12 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
                     ...group,
                     data: data?.map?.((tabItem) => {
                         if (tabItem.id !== tab.id) return tabItem;
-                        return {
-                            ...tabItem,
-                            ...tab,
-                            modified: tabItem.value !== tab.value,
-                        };
+                        return { ...tabItem, ...tab };
                     }),
                 };
             }),
         });
-        if (exist.model && exist.model.getValue() !== tab.value) {
+        if (Object.hasOwn(tab, 'value') && exist.model && exist.model.getValue() !== tab.value) {
             exist.model.setValue(tab.value ?? '');
         }
         // ===================== effects =====================

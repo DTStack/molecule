@@ -6,12 +6,14 @@ export enum FolderTreeEvent {
     onDelete = 'folderTree.onDelete',
     onRename = 'folderTree.onRename',
     onUpdateFileName = 'folderTree.onUpdateFileName',
+    onAfterUpdateFileName = 'folderTree.onAfterUpdateFileName',
     onRightClick = 'folderTree.onRightClick',
     onContextMenuClick = 'folderTree.onContextMenuClick',
-    onCreate = 'folderTree.onCreate',
     onLoadData = 'folderTree.onLoadData',
     onDrop = 'folderTree.onDrop',
     onExpandKeys = 'folderTree.onExpandKeys',
+    onTreeItemKeyDown = 'folderTree.onTreeItemKeyDown',
+    onCreateRoot = 'folderTree.onCreateRoot',
 }
 
 export interface IFolderTree {

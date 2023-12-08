@@ -378,3 +378,19 @@ type ISearchResultData = {
     breadcrumb: string[];
 };
 export type SearchResultItem = TreeNodeModel<ISearchResultData>;
+export type MouseEventHandler<T = HTMLDivElement> = (e: React.MouseEvent<T, MouseEvent>, node: TreeNodeModel<any>) => void;
+
+export type KeyboardEventHandler<T = HTMLDivElement> = (e: React.KeyboardEvent<T>, node: TreeNodeModel<any>) => void;
+
+export type FolderTreeInsertOption = {
+    /**
+     * drag type， same level or child level，default is same level
+     * true： child level
+     * false：same level
+     */
+    gap?: boolean;
+    /**
+     * insert index
+     */
+    index?: number;
+};

@@ -5,6 +5,7 @@ import Tree from 'mo/client/components/tree';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { IFolderTreeController } from 'mo/controllers/folderTree';
 import type { IExplorerPanelItem } from 'mo/models/explorer';
+import { TreeNodeModel } from 'mo/utils/tree';
 
 import { ScrollBar } from '../../components/scrollBar';
 import variables from './index.scss';
@@ -36,6 +37,10 @@ export default function FolderTree({
     onUpdateFileName,
     onDropTree,
     onExpandKeys,
+    onTreeItemKeyDown,
+    onRightClick,
+    onContextMenuClick,
+    onCreateRoot,
 }: { panel: IExplorerPanelItem } & IFolderTreeController) {
     const folderTree = useConnector('folderTree');
     const { entry, current, data, expandKeys, loadedKeys, editing } = folderTree;
@@ -47,13 +52,17 @@ export default function FolderTree({
             ) : (
                 <div style={{ padding: '10px 5px' }}>
                     you have not yet opened a folder
-                    <Button>Add Folder</Button>
+                    <Button onClick={onCreateRoot}>Add Folder</Button>
                 </div>
             )}
         </div>
     );
 
     if (!folderTree.data.length) return welcomePage;
+
+    const handleRightClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, info: TreeNodeModel<any>) => {
+        onRightClick?.(e, info);
+    };
 
     return (
         <ScrollBar isShowShadow>
@@ -69,7 +78,8 @@ export default function FolderTree({
                     onDropTree={onDropTree}
                     onSelect={onSelectFile}
                     onTreeClick={onSelectFile}
-                    // onRightClick={handleRightClick}
+                    onContextMenu={onContextMenuClick}
+                    onRightClick={handleRightClick}
                     renderTitle={(node) => {
                         if (node.id !== editing) return node.name;
                         return (
@@ -79,6 +89,8 @@ export default function FolderTree({
                                 type="text"
                                 defaultValue={node.name}
                                 onKeyDown={(e) => {
+                                    // stop propagation, avoid conflict to onKeyDown event
+                                    e.stopPropagation();
                                     if (e.keyCode === 13 || e.keyCode === 27) {
                                         onUpdateFileName?.({
                                             ...node,
@@ -95,6 +107,7 @@ export default function FolderTree({
                     }}
                     onLoadData={onLoadData}
                     onExpand={onExpandKeys}
+                    onTreeItemKeyDown={onTreeItemKeyDown}
                 />
             </div>
         </ScrollBar>

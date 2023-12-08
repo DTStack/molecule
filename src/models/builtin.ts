@@ -19,6 +19,7 @@ export class BuiltinModel {
         NEW_FILE_COMMAND_ID: 'explorer.newFile',
         NEW_FOLDER_COMMAND_ID: 'explorer.newFolder',
         COLLAPSE_COMMAND_ID: 'explorer.collapse',
+        REFRESH_COMMAND_ID: 'explorer.toolbar.refresh',
         RENAME_COMMAND_ID: 'explorer.rename',
         REMOVE_COMMAND_ID: 'explorer.remove',
         DELETE_COMMAND_ID: 'explorer.delete',
@@ -339,6 +340,32 @@ export class BuiltinModel {
             config: {
                 grow: 2,
             },
+            toolbar: [
+                {
+                    id: this.constants.NEW_FILE_COMMAND_ID,
+                    name: this.localize('toolbar.newFile', 'New File'),
+                    group: 'inline',
+                    icon: 'new-file',
+                },
+                {
+                    id: this.constants.NEW_FOLDER_COMMAND_ID,
+                    name: this.localize('toolbar.newFolder', 'New Folder'),
+                    group: 'inline',
+                    icon: 'new-folder',
+                },
+                {
+                    id: this.constants.REFRESH_COMMAND_ID,
+                    name: this.localize('toolbar.refresh', 'Refresh'),
+                    group: 'inline',
+                    icon: 'refresh',
+                },
+                {
+                    id: this.constants.COLLAPSE_COMMAND_ID,
+                    name: this.localize('toolbar.collapseAll', 'Collapse all'),
+                    group: 'inline',
+                    icon: 'collapse-all',
+                },
+            ],
         }),
         builtInOutputPanel: () => ({
             id: this.constants.PANEL_OUTPUT,

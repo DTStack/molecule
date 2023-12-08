@@ -1,15 +1,17 @@
 import React from 'react';
 import Explorer from 'mo/client/slots/explorer';
 import { BaseController } from 'mo/glue';
+import { type IExplorerPanelItem } from 'mo/models/explorer';
 import { ActivityBarService } from 'mo/services/activityBar';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { SidebarService } from 'mo/services/sidebar';
+import { type IMenuItemProps } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IExplorerController extends BaseController {
     // onActionsContextMenuClick?: (e: React.MouseEvent, item?: IMenuItemProps) => void;
     // onCollapseChange?: (keys) => void;
-    // onToolbarClick?: (item: IActionBarItemProps, panel: IExplorerPanelItem) => void;
+    onToolbarClick?: (item: IMenuItemProps, panel: IExplorerPanelItem) => void;
     // onClick?: (event, item) => void;
 }
 
@@ -37,7 +39,7 @@ export class ExplorerController extends BaseController implements IExplorerContr
         this.sidebar.add(
             {
                 ...EXPLORER_ACTIVITY_ITEM,
-                render: () => React.createElement(Explorer),
+                render: () => React.createElement(Explorer, { ...this }),
             },
             true
         );

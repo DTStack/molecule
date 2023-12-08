@@ -2,6 +2,7 @@ import { ExtendsActions } from './actions';
 import { ExtendsActivityBar } from './activityBar';
 import { ExtendsEditor } from './editor';
 import { ExtendsEditorTree } from './editorTree';
+import { ExtendsFolderTree } from './folderTree';
 import { LocalesExtends } from './locales';
 import { ExtendsMenuBar } from './menuBar';
 import { ExtendsNotification } from './notification';
@@ -24,4 +25,5 @@ export default [
     ExtendsStatusBar,
     ExtendsSearch,
     ExtendsSettings,
+    ExtendsFolderTree,
 ];

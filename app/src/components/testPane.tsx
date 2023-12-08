@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Button } from '@dtinsight/molecule/esm/client/components/button';
 import LocaleNotification from '@dtinsight/molecule/esm/client/components/notification/localeNotification';
 import { ScrollBar } from '@dtinsight/molecule/esm/client/components/scrollBar';
-import type { IMoleculeContext } from '@dtinsight/molecule/esm/types';
+import { FileTypes, type IEditorTab, type IMoleculeContext } from '@dtinsight/molecule/esm/types';
 import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
 
 function randomId() {
@@ -123,9 +123,9 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     const addRootFolder = () => {
         const children = new Array(50)
             .fill(1)
-            .map((_, index) => new TreeNodeModel(index, `test_sql_${index}.sql`, 'File'));
+            .map((_, index) => new TreeNodeModel(index, `test_sql_${index}.sql`, FileTypes.File));
         molecule.folderTree.add(
-            new TreeNodeModel(randomId(), 'Sample SQLs', 'RootFolder', children)
+            new TreeNodeModel(randomId(), 'Sample SQLs', FileTypes.RootFolder, children)
         );
     };
     // ====================================================================
@@ -159,22 +159,24 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     const newEditor = function () {
         const key = randomId();
         const name = `editor-${key}.ts`;
+        const tabData: IEditorTab<any> = {
+            id: key,
+            name,
+            icon: 'file',
+            value: `// editor-${key}
+        // export interface Type<T> { new (...args: any[]): T; }
+        // export type GenericClassDecorator<T> = (target: T) => void;`,
+            language: 'typescript',
+            breadcrumb: [
+                { id: 'app', name: 'app' },
+                { id: 'src', name: 'src' },
+                { id: 'components', name: 'components' },
+                { id: 'editor', name, icon: 'file' },
+            ],
+            // modified: !!(key % 2),
+        };
         molecule.editor.open(
-            {
-                id: key,
-                name,
-                icon: 'file',
-                value: `// editor-${key}
-            // export interface Type<T> { new (...args: any[]): T; }
-            // export type GenericClassDecorator<T> = (target: T) => void;`,
-                language: 'typescript',
-                breadcrumb: [
-                    { id: 'app', name: 'app' },
-                    { id: 'src', name: 'src' },
-                    { id: 'components', name: 'components' },
-                    { id: 'editor', name, icon: 'file' },
-                ],
-            },
+            tabData,
             molecule.editor.getState().groups?.at(0)?.id
         );
     };
@@ -321,6 +323,38 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             }
         };
     }, []);
+
+    const eventRegister = useCallback(() => new Promise((resolve, reject) => {
+        molecule.editor.onCloseTab((tabId, groupId) => {
+            const { modified } = molecule.editor.getTabById(tabId, groupId) || {};
+            if (modified) {
+                return reject('file is modified, confirm delete!');
+            }
+            console.log(tabId, groupId, '--onCloseTab');
+        });
+        molecule.editor.onCloseAll((tabId) => {
+            console.log(tabId, '--onCloseAll');
+        });
+        molecule.editor.onCloseOther((tabId, groupId) => {
+            console.log(tabId, groupId, '--onCloseOther');
+        });
+        molecule.editor.onCloseToRight((tabId, groupId) => {
+            console.log(tabId, groupId, '--onCloseToRight');
+        });
+        molecule.editor.onCloseToLeft((tabId, groupId) => {
+            console.log(tabId, groupId, '--onCloseToLeft');
+        });
+        molecule.editor.onSplitEditorRight(() => {
+            console.log('--onSplitEditorRight');
+        });
+        molecule.folderTree.onRename(() => {
+            console.log('--onRename');
+        });
+    }), [molecule.editor]);
+
+    useEffect(() => {
+        eventRegister();
+    }, [eventRegister]);
 
     return (
         <ScrollBar isShowShadow>

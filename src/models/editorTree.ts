@@ -1,3 +1,5 @@
+import { IMenuItemProps } from 'mo/types';
+
 export enum EditorTreeEvent {
     onClose = 'editorTree.close',
     onSelect = 'editorTree.select',
@@ -10,4 +12,12 @@ export enum EditorTreeEvent {
     onToolbarClick = 'editorTree.toolbarClick',
     onContextMenu = 'editorTree.contextMenuClick',
     onGroupContextMenu = 'editorTree.groupContextMenu',
+}
+
+export interface IEditorTree {
+    toolbar: IMenuItemProps[];
+}
+
+export class EditorTreeModel implements IEditorTree {
+    constructor(public toolbar: IMenuItemProps[] = []) {}
 }

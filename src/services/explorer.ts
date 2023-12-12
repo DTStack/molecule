@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { ExplorerEvent, ExplorerModel, IExplorerPanelItem } from 'mo/models/explorer';
-import { ArraylizeOrSingle, IMenuItemProps, UniqueId } from 'mo/types';
+import { ArraylizeOrSingle, IMenuItemProps, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 export interface IExplorerService extends BaseService<ExplorerModel> {
@@ -16,7 +16,7 @@ export interface IExplorerService extends BaseService<ExplorerModel> {
     /**
      * Update the panels data
      */
-    updatePanel(data: Partial<IExplorerPanelItem>): void;
+    updatePanel(data: RequiredId<IExplorerPanelItem>): void;
     /**
      * Set expanded Panels of Explore
      */
@@ -57,11 +57,7 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
         });
     }
 
-    public updatePanel(data: Partial<IExplorerPanelItem>) {
-        if (!data.id) {
-            logger.error('Must provide id property in update data');
-            return;
-        }
+    public updatePanel(data: RequiredId<IExplorerPanelItem>) {
         const target = this.getPanel(data.id);
         if (!target) {
             logger.error(`There is no panel found in state whose id is ${data.id}`);

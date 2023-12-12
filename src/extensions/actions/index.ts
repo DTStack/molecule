@@ -37,14 +37,14 @@ export const ExtendsActions: IExtension = {
 
         function appendActionInMenu(ctor: { ID: string }) {
             const setting = molecule.activityBar.get(
-                molecule.builtin.getState().constants.ACTIVITY_BAR_GLOBAL_SETTINGS
+                molecule.builtin.getState().constants.ACTIVITYBAR_ITEM_SETTING
             );
             if (!setting) return;
             const keybinding = molecule.action.queryGlobalKeybinding(ctor.ID);
             // Add Settings into setting's menus
             setting.contextMenu?.push({
                 id: ctor.ID,
-                name: molecule.locale.localize(ctor.ID as any, ctor.ID),
+                name: molecule.locale.localize(ctor.ID, ctor.ID),
                 keybinding: keybinding
                     ? molecule.action.convertSimpleKeybindingToString(keybinding)
                     : undefined,

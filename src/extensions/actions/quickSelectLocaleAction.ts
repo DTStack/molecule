@@ -17,7 +17,7 @@ export default class QuickSelectLocaleAction extends BaseAction {
             f1: true,
             keybinding: {
                 when: undefined,
-                primary: KeyMod.CtrlCmd | KeyCode.KeyL,
+                primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyL,
             },
         });
     }

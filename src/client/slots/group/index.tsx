@@ -22,6 +22,7 @@ import variables from './index.scss';
 
 export interface IGroupProps {
     group: EditorGroupModel;
+    isActive?: boolean;
     options: EditorModel['editorOptions'];
     toolbar?: IMenuItemProps[];
     contextMenu?: IMenuItemProps[];
@@ -45,6 +46,7 @@ export interface IGroupProps {
 
 export default function Group({
     group,
+    isActive,
     options,
     toolbar,
     contextMenu,
@@ -108,6 +110,12 @@ export default function Group({
             instance.current.updateOptions(options);
         }
     }, [options]);
+
+    useEffect(() => {
+        if (isActive && instance.current) {
+            instance.current.focus();
+        }
+    }, [isActive]);
 
     return (
         <div className={variables.group}>

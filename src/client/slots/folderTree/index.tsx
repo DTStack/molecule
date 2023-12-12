@@ -3,6 +3,7 @@ import { classNames } from 'mo/client/classNames';
 import { Button } from 'mo/client/components/button';
 import Tree from 'mo/client/components/tree';
 import useConnector from 'mo/client/hooks/useConnector';
+import useLocale from 'mo/client/hooks/useLocale';
 import type { IFolderTreeController } from 'mo/controllers/folderTree';
 import type { IExplorerPanelItem } from 'mo/models/explorer';
 import { TreeNodeModel } from 'mo/utils/tree';
@@ -32,18 +33,20 @@ const Input = (
 
 export default function FolderTree({
     panel,
-    onSelectFile,
-    onLoadData,
+    onSelect,
+    onTreeClick,
     onUpdateFileName,
     onDropTree,
-    onExpandKeys,
+    onExpand,
     onTreeItemKeyDown,
     onRightClick,
     onContextMenuClick,
     onCreateRoot,
 }: { panel: IExplorerPanelItem } & IFolderTreeController) {
     const folderTree = useConnector('folderTree');
-    const { entry, current, data, expandKeys, loadedKeys, editing } = folderTree;
+    const localize = useLocale();
+    const builtin = useConnector('builtin');
+    const { entry, current, data, expandKeys, loadedKeys, loadingKeys, editing } = folderTree;
 
     const welcomePage = (
         <div data-content={panel.id}>
@@ -51,9 +54,14 @@ export default function FolderTree({
                 <>{entry}</>
             ) : (
                 <div style={{ width: '90%', margin: '0 auto' }}>
-                    <p>you have not yet opened a folder</p>
+                    <p>
+                        {localize(
+                            builtin.constants.FOLDERTREE_ITEM_EMPTY,
+                            'You have not yet opened a folder'
+                        )}
+                    </p>
                     <Button block onClick={onCreateRoot}>
-                        Add Folder
+                        {localize(builtin.constants.FOLDERTREE_ITEM_ADD_ROOT_FOLDER, 'Add Folder')}
                     </Button>
                 </div>
             )}
@@ -77,12 +85,13 @@ export default function FolderTree({
                     activeKey={current}
                     expandKeys={expandKeys}
                     loadedKeys={loadedKeys}
+                    loadingKeys={loadingKeys}
                     data={data[0]?.children || []}
                     className={classNames(variables.folderTree, editing && variables.editing)}
                     draggable={!editing}
                     onDropTree={onDropTree}
-                    onSelect={onSelectFile}
-                    onTreeClick={onSelectFile}
+                    onSelect={onSelect}
+                    onTreeClick={onTreeClick}
                     onContextMenu={onContextMenuClick}
                     onRightClick={handleRightClick}
                     renderTitle={(node) => {
@@ -110,8 +119,7 @@ export default function FolderTree({
                             />
                         );
                     }}
-                    onLoadData={onLoadData}
-                    onExpand={onExpandKeys}
+                    onExpand={onExpand}
                     onTreeItemKeyDown={onTreeItemKeyDown}
                 />
             </div>

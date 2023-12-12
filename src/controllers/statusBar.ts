@@ -1,3 +1,4 @@
+import React from 'react';
 import LineInfo from 'mo/client/components/lineInfo';
 import { BaseController } from 'mo/glue';
 import { StatusBarEvent } from 'mo/models/statusBar';
@@ -24,17 +25,17 @@ export class StatusBarController extends BaseController implements IStatusBarCon
     }
 
     private initView() {
-        const state = this.builtin.getState();
-        const { STATUS_EDITOR_INFO, CONTEXT_MENU_HIDE_STATUS_BAR } = state.modules;
-        if (STATUS_EDITOR_INFO) {
+        const { STATUSBAR_LINE_INFO, STATUSBAR_CONTEXTMENU } = this.builtin.getModules();
+        if (STATUSBAR_LINE_INFO) {
             this.statusBar.add({
-                ...STATUS_EDITOR_INFO,
-                render: LineInfo,
+                ...STATUSBAR_LINE_INFO,
+                render: (panel) => React.createElement(LineInfo, { data: panel.data }),
             });
         }
-
-        if (CONTEXT_MENU_HIDE_STATUS_BAR) {
-            this.contextMenu.add('statusBar', [CONTEXT_MENU_HIDE_STATUS_BAR]);
+        if (STATUSBAR_CONTEXTMENU) {
+            this.contextMenu.add(this.builtin.getConstants().CONTEXTMENU_ITEM_STATUS_BAR, [
+                STATUSBAR_CONTEXTMENU,
+            ]);
         }
     }
 

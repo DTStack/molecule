@@ -20,8 +20,14 @@ export enum PanelEvent {
 export interface IPanel {
     current?: UniqueId;
     data?: IPanelItem[];
+    // Global toolbar
+    toolbar?: IMenuItemProps[];
 }
 
 export class PanelModel implements IPanel {
-    constructor(public current: UniqueId | undefined = undefined, public data: IPanelItem[] = []) {}
+    constructor(
+        public current: UniqueId | undefined = undefined,
+        public data: IPanelItem[] = [],
+        public toolbars: IMenuItemProps[] = []
+    ) {}
 }

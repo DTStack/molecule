@@ -2,8 +2,7 @@ import { BaseController } from 'mo/glue';
 import { PanelEvent } from 'mo/models/panel';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { ContextMenuService } from 'mo/services/contextMenu';
-import type { LayoutService } from 'mo/services/layout';
-import type { LocaleService } from 'mo/services/locale';
+import { PanelService } from 'mo/services/panel';
 import type { ContextMenuEventHandler, IMenuItemProps, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
@@ -18,20 +17,18 @@ export interface IPanelController extends BaseController {
 export class PanelController extends BaseController implements IPanelController {
     constructor(
         @inject('builtin') private builtin: BuiltinService,
-        @inject('layout') private layout: LayoutService,
-        @inject('locale') private locale: LocaleService,
-        @inject('contextMenu') private contextMenu: ContextMenuService
+        @inject('contextMenu') private contextMenu: ContextMenuService,
+        @inject('panel') private panel: PanelService
     ) {
         super();
         this.initView();
     }
 
     private initView() {
-        this.contextMenu.add('panel', [
-            {
-                id: this.builtin.getState().constants.MENU_VIEW_PANEL,
-                name: this.locale.localize('menu.hidePanel', `Hidden Panel`),
-            },
+        const { CONTEXTMENU_ITEM_HIDE, PANEL_CLOSE, PANEL_MAXIMIZE } = this.builtin.getModules();
+        this.panel.addToolbar([PANEL_CLOSE, PANEL_MAXIMIZE].filter(Boolean));
+        this.contextMenu.add(this.builtin.getConstants().CONTEXTMENU_ITEM_PANEL, [
+            CONTEXTMENU_ITEM_HIDE,
         ]);
     }
 
@@ -46,19 +43,6 @@ export class PanelController extends BaseController implements IPanelController 
     };
 
     public readonly onToolbarClick = (item: IMenuItemProps): void => {
-        const { constants } = this.builtin.getState();
-        switch (item.id) {
-            case constants.PANEL_TOOLBOX_CLOSE: {
-                this.layout.setPanelVisibility(true);
-                break;
-            }
-            case constants.PANEL_TOOLBOX_RESIZE: {
-                this.layout.setPanelMaximized((prev) => !prev);
-                break;
-            }
-            default:
-                break;
-        }
         this.emit(PanelEvent.onToolbarClick, item);
     };
 

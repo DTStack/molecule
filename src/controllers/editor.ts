@@ -5,7 +5,12 @@ import { BuiltinService } from 'mo/services/builtin';
 import { ContextMenuService } from 'mo/services/contextMenu';
 import { EditorService } from 'mo/services/editor';
 import { LayoutService } from 'mo/services/layout';
-import type { ContextMenuEditorHandler, ContextMenuGroupHandler, IDragProps, UniqueId } from 'mo/types';
+import type {
+    ContextMenuEditorHandler,
+    ContextMenuGroupHandler,
+    IDragProps,
+    UniqueId,
+} from 'mo/types';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
@@ -21,7 +26,11 @@ export interface IEditorController extends BaseController {
     onCloseAll?: (groupId: UniqueId) => void;
     onSplitEditorRight?: (activeTabId: UniqueId, groupId: UniqueId) => void;
     onDrag?: (params: IDragProps) => void;
-    onChange?: (value: string | undefined, ev: editor.IModelContentChangedEvent, extraProps: { tabId?: UniqueId; groupId?: UniqueId }) => void;
+    onChange?: (
+        value: string | undefined,
+        ev: editor.IModelContentChangedEvent,
+        extraProps: { tabId?: UniqueId; groupId?: UniqueId }
+    ) => void;
     onCursorSelection?: (
         instance: editor.IStandaloneCodeEditor,
         ev: editor.ICursorSelectionChangedEvent
@@ -42,10 +51,16 @@ export class EditorController extends BaseController implements IEditorControlle
         this.initView();
     }
     private initView() {
-        const { builtInEditorInitialMenu, builtInEditorInitialActions } =
-            this.builtin.getState().modules;
-        this.contextMenu.add('editorTab', builtInEditorInitialMenu);
-        this.editor.addActions(builtInEditorInitialActions);
+        const { EDITOR_CONTEXTMENU, EDITOR_TOOLBAR } = this.builtin.getModules();
+        if (EDITOR_CONTEXTMENU) {
+            this.contextMenu.add(
+                this.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR,
+                EDITOR_CONTEXTMENU
+            );
+        }
+        if (EDITOR_TOOLBAR) {
+            this.editor.addActions(EDITOR_TOOLBAR);
+        }
     }
 
     public onPaneSizeChange = (size: number[]) => {
@@ -109,7 +124,10 @@ export class EditorController extends BaseController implements IEditorControlle
     };
 
     // ActionBar splitEditor Right callback
-    public onSplitEditorRight?: IEditorController['onSplitEditorRight'] = (activeTabId, groupId) => {
+    public onSplitEditorRight?: IEditorController['onSplitEditorRight'] = (
+        activeTabId,
+        groupId
+    ) => {
         this.emit(EditorEvent.OnSplitEditorRight, activeTabId, groupId);
     };
 
@@ -119,7 +137,7 @@ export class EditorController extends BaseController implements IEditorControlle
         ev: editor.IModelContentChangedEvent,
         extraProps: { tabId?: UniqueId; groupId?: UniqueId }
     ) => {
-        if (extraProps.tabId === this.builtin.getState().constants.SETTING_ID) {
+        if (extraProps.tabId === this.builtin.getState().constants.EDITOR_ITEM_SETTING) {
             this.emit(SettingsEvent.OnChange, value);
         }
 

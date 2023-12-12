@@ -24,12 +24,12 @@ export interface ISidebarService extends BaseService<SidebarModel> {
      * @param isActive Whether to activate the current pane
      */
     add(pane: ISidebarPane, isActive?: boolean): void;
+    addToolbar(paneId: UniqueId, toolbars: ArraylizeOrSingle<IMenuItemProps>): void;
     /**
      * Update a specific pane
      * @param pane
      */
     update(pane: RequiredId<ISidebarPane>): void;
-    updateToolbar(paneId: UniqueId, toolbar: RequiredId<IMenuItemProps>): void;
     /**
      * Update a toolbar item
      * @param paneId
@@ -96,6 +96,20 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
         this.setState((prev) => ({
             ...prev,
             panes: [...prev.panes, data],
+        }));
+    }
+
+    public addToolbar(paneId: UniqueId, toolbars: ArraylizeOrSingle<IMenuItemProps>) {
+        const targetPane = this.getPane(paneId);
+        if (!targetPane) {
+            logger.error(`There is no pane found via the ${paneId} id`);
+            return;
+        }
+        const _toolbars = arraylize(toolbars);
+        targetPane.toolbar ??= [];
+        targetPane.toolbar.push(..._toolbars);
+        this.setState((prev) => ({
+            panes: [...prev.panes],
         }));
     }
 

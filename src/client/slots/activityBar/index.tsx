@@ -4,7 +4,6 @@ import { ScrollBar } from 'mo/client/components/scrollBar';
 import useConnector from 'mo/client/hooks/useConnector';
 import useContextMenu from 'mo/client/hooks/useContextMenu';
 import type { IActivityBarController } from 'mo/controllers/activityBar';
-import type { IActivityBarItem } from 'mo/models/activityBar';
 import { Alignment } from 'mo/types';
 import { classify, sortByIndex } from 'mo/utils';
 
@@ -48,7 +47,7 @@ export default function ActivityBar({
                 <ScrollBar className={variables.normal}>
                     <ul>
                         {renderMenu()}
-                        {top.sort(sortByIndex).map((item: IActivityBarItem) => (
+                        {top.sort(sortByIndex).map((item) => (
                             <ActivityBarItem
                                 checked={!layout.sidebar.hidden && activityBar.selected === item.id}
                                 key={item.id}
@@ -60,7 +59,7 @@ export default function ActivityBar({
                     </ul>
                 </ScrollBar>
                 <ul>
-                    {bottom.sort(sortByIndex).map((item: IActivityBarItem) => (
+                    {bottom.sort(sortByIndex).map((item) => (
                         <ActivityBarItem
                             key={item.id}
                             data={item}

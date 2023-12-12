@@ -18,7 +18,7 @@ export const ExtendsNotification: IExtension = {
 
         molecule.notification.onActionBarClick((item) => {
             const state = molecule.builtin.getState();
-            const { NOTIFICATION_CLEAR_ALL_ID, NOTIFICATION_HIDE_ID } = state.constants;
+            const { NOTIFICATION_TOOLBAR_CLEAR_ALL: NOTIFICATION_CLEAR_ALL_ID, NOTIFICATION_TOOLBAR_HIDE: NOTIFICATION_HIDE_ID } = state.constants;
             const action = item.id;
 
             if (action === NOTIFICATION_CLEAR_ALL_ID) {

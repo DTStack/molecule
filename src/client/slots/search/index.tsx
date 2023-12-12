@@ -14,7 +14,7 @@ export default function Search({ onChange, onSearch, onResultClick }: ISearchCon
     const search = useConnector('search');
     const localize = useLocale();
 
-    const placeholder = localize(builtin.constants.SEARCH_ACTIVITY_ITEM, 'Search');
+    const placeholder = localize(builtin.constants.SIDEBAR_ITEM_SEARCH, 'Search');
 
     const handleChange = (value: string) => {
         onChange?.(value);
@@ -38,7 +38,7 @@ export default function Search({ onChange, onSearch, onResultClick }: ISearchCon
             />
             {empty ? (
                 <span className={variables.notFound}>
-                    {localize(builtin.constants.SEARCH_RESULT_NOT_FOUND, 'No results found.')}
+                    {localize(builtin.constants.SEARCH_ITEM_NOT_FOUND, 'No results found.')}
                 </span>
             ) : (
                 <ScrollBar isShowShadow>
@@ -47,6 +47,7 @@ export default function Search({ onChange, onSearch, onResultClick }: ISearchCon
                         expandKeys={search.expandKeys}
                         data={search.result}
                         onSelect={handleSelectFile}
+                        loadedKeys={[]}
                         renderTitle={(node) => node.name}
                     />
                 </ScrollBar>

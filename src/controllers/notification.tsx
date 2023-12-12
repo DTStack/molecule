@@ -27,19 +27,14 @@ export class NotificationController extends BaseController implements INotificat
     }
 
     private initView() {
-        const state = this.builtin.getState();
-        const { builtInNotification, NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE } = state.modules;
-
-        if (builtInNotification) {
-            const defaultNotification = {
-                ...builtInNotification,
-                actionBar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(Boolean),
-                render: () => <Notification {...this} />,
-            };
+        const { NOTIFICATION, NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE } =
+            this.builtin.getModules();
+        if (NOTIFICATION) {
+            this.statusBar.add({ ...NOTIFICATION, render: () => <Notification {...this} /> });
             this.notification.setState({
-                ...defaultNotification,
+                ...NOTIFICATION,
+                actionBar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(Boolean),
             });
-            this.statusBar.add(defaultNotification);
         }
     }
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { debounce } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
 import { FileTypes, type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
@@ -14,10 +14,11 @@ export interface ITreeProps {
     data?: ITreeNodeItemProps[];
     className?: string;
     draggable?: boolean;
-    expandKeys?: UniqueId[];
-    loadedKeys?: UniqueId[];
+    expandKeys: UniqueId[];
+    loadedKeys: UniqueId[];
+    loadingKeys?: UniqueId[];
     activeKey?: UniqueId;
-    onExpand?: (expandedKeys: React.Key[], node: ITreeNodeItemProps) => void;
+    onExpand?: (expanded: boolean, expandedKeys: UniqueId[], node: ITreeNodeItemProps) => void;
     onSelect?: (node: ITreeNodeItemProps) => void;
     onTreeClick?: () => void;
     renderTitle?: (
@@ -26,7 +27,6 @@ export interface ITreeProps {
         isLeaf: boolean
     ) => JSX.Element | string;
     onDropTree?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;
-    onLoadData?: (node: ITreeNodeItemProps) => Promise<void>;
     onRightClick?: (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
         node: ITreeNodeItemProps
@@ -40,21 +40,21 @@ export default function Tree({
     data = [],
     draggable = false,
     loadedKeys,
-    expandKeys: controlExpandKeys,
-    activeKey: controlActiveKey,
+    expandKeys,
+    activeKey,
+    loadingKeys = [],
     onExpand,
     onDropTree,
     onRightClick,
     renderTitle,
     onSelect,
-    onLoadData,
     onTreeClick,
     onTreeItemKeyDown,
     onContextMenu,
 }: ITreeProps) {
-    const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
-    const [activeKey, setActiveKey] = useState<string | null>(null);
-    const [loadingKeys, setLoadingKeys] = useState<string[]>([]);
+    // const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
+    // const [activeKey, setActiveKey] = useState<string | null>(null);
+    // const [loadingKeys, setLoadingKeys] = useState<string[]>([]);
     const dragOverNode = useRef<ITreeNodeItemProps>();
     const dragInfo = useRef<{
         x: number;
@@ -64,40 +64,40 @@ export default function Tree({
     }>({ x: 0, y: 0, dragNode: null, flattenTree: null });
     const wrapper = useRef<HTMLDivElement>(null);
 
-    const canLoadData = (key: string) => {
-        if (!onLoadData) return false;
-        if (loadedKeys?.includes(key)) return false;
-        return true;
-    };
+    // const canLoadData = (key: string) => {
+    //     if (!onLoadData) return false;
+    //     if (loadedKeys?.includes(key)) return false;
+    //     return true;
+    // };
 
-    const validatorLoadingData = (node: ITreeNodeItemProps) => {
-        const uuid: string = node.id.toString();
-        if (canLoadData(uuid!)) {
-            setLoadingKeys((keys) => {
-                const nextKeys = keys.concat();
-                nextKeys.push(uuid!);
-                return nextKeys;
-            });
-            onLoadData!(node).finally(() => {
-                setLoadingKeys((keys) => {
-                    const nextKeys = keys.concat();
-                    const index = nextKeys.indexOf(uuid!);
-                    nextKeys.splice(index, 1);
-                    return nextKeys;
-                });
-            });
-        }
-    };
+    // const validatorLoadingData = (node: ITreeNodeItemProps) => {
+    //     const uuid: string = node.id.toString();
+    //     if (canLoadData(uuid!)) {
+    //         setLoadingKeys((keys) => {
+    //             const nextKeys = keys.concat();
+    //             nextKeys.push(uuid!);
+    //             return nextKeys;
+    //         });
+    //         onLoadData!(node).finally(() => {
+    //             setLoadingKeys((keys) => {
+    //                 const nextKeys = keys.concat();
+    //                 const index = nextKeys.indexOf(uuid!);
+    //                 nextKeys.splice(index, 1);
+    //                 return nextKeys;
+    //             });
+    //         });
+    //     }
+    // };
 
-    const handleExpandKey = (key: string, node: ITreeNodeItemProps) => {
-        const nextExpandKeys = (controlExpandKeys || expandKeys).concat();
-        const index = nextExpandKeys.findIndex((e) => e === key);
-        if (index > -1) {
-            nextExpandKeys.splice(index, 1);
+    const handleExpandKey = (node: ITreeNodeItemProps) => {
+        let next = expandKeys.concat();
+        const nextExpand = !expandKeys.includes(node.id);
+        if (nextExpand) {
+            next.push(node.id);
         } else {
-            nextExpandKeys.push(key);
+            next = next.filter((key) => key !== node.id);
         }
-        onExpand ? onExpand(nextExpandKeys.concat(), node) : setExpandKeys(nextExpandKeys.concat());
+        onExpand?.(nextExpand, next, node);
     };
 
     const handleNodeClick = (
@@ -105,13 +105,16 @@ export default function Tree({
         e: React.MouseEvent<HTMLDivElement, MouseEvent>
     ) => {
         e.stopPropagation();
-        const uuid = node.id.toString();
-        setActiveKey(uuid);
-        if (node.fileType !== FileTypes.File) {
-            // load data
-            validatorLoadingData(node);
-            // expand node
-            handleExpandKey(uuid!, node);
+        // const uuid = node.id.toString();
+        // setActiveKey(uuid);
+        // if (node.fileType !== FileTypes.File) {
+        //     // load data
+        //     validatorLoadingData(node);
+        //     // expand node
+        //     handleExpandKey(uuid!, node);
+        // }
+        if (node.fileType === FileTypes.Folder) {
+            handleExpandKey(node);
         }
         onSelect?.(node);
     };
@@ -156,13 +159,15 @@ export default function Tree({
         };
 
         // unfolder current node
-        const uuid = node.id.toString();
-        const idx = (controlExpandKeys || expandKeys).indexOf(uuid);
-        if (idx > -1) {
-            const next = expandKeys.concat();
-            next.splice(idx, 1);
-            onExpand ? onExpand(next, node) : setExpandKeys(next);
-        }
+        // const uuid = node.id.toString();
+        // const idx = expandKeys.indexOf(uuid);
+        // if (idx > -1) {
+        //     const next = expandKeys.concat();
+        //     next.splice(idx, 1);
+        //     // onExpand?.(next, node);
+        // }
+
+        handleExpandKey(node);
 
         window.addEventListener('dragend', onWindowDragEnd);
     };
@@ -170,25 +175,20 @@ export default function Tree({
     const handleDragEnter = debounce(
         (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => {
             // expand the non-leaf node
-            const uuid = node.id.toString();
-            const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
+            // const uuid = node.id.toString();
+            const isExpand = expandKeys.includes(node.id);
             const dragNode = dragInfo.current.dragNode!;
-            const dragNodeUuid = dragNode?.id?.toString();
-            const isSelfNode = uuid === dragNodeUuid;
-            if (
-                node.fileType !== FileTypes.File &&
-                !isSelfNode &&
-                !isExpand &&
-                !canLoadData(uuid)
-            ) {
-                handleExpandKey(uuid, node);
+            const dragNodeUuid = dragNode?.id;
+            const isSelfNode = node.id === dragNodeUuid;
+            if (node.fileType !== FileTypes.File && !isSelfNode && !isExpand) {
+                handleExpandKey(node);
             }
         },
         300
     );
 
     const addOverClassViaNode = (node: ITreeNodeItemProps) => {
-        const uuid = node.id.toString();
+        const uuid = node.id;
         const parentDom = document.querySelector<HTMLDivElement>(`div[data-key="${uuid}"]`);
         let dom = parentDom;
         while (dom) {
@@ -239,9 +239,9 @@ export default function Tree({
 
     const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
         return data.map((item, index) => {
-            const uuid = item.id.toString();
-            const isExpand = (controlExpandKeys || expandKeys).includes(uuid!);
-            const isLoading = loadingKeys.includes(uuid!);
+            const uuid = item.id;
+            const isExpand = expandKeys.includes(uuid);
+            const isLoading = loadingKeys.includes(item.id);
             const isActive = activeKey === uuid;
 
             const title = renderTitle?.(item, index, item.fileType === FileTypes.File) || item.name;
@@ -262,7 +262,12 @@ export default function Tree({
                         isExpand ? variables.open : variables.close
                     )}
                     renderIcon={() =>
-                        renderIcon(IconComponent, item.fileType === FileTypes.File, isExpand, isLoading)
+                        renderIcon(
+                            IconComponent,
+                            item.fileType === FileTypes.File,
+                            isExpand,
+                            isLoading
+                        )
                     }
                     renderTitle={() => title}
                     onRightClick={(e) => handleRightClick(e, item)}
@@ -285,7 +290,7 @@ export default function Tree({
     };
 
     const handleTreeClick = () => {
-        setActiveKey(null);
+        // setActiveKey(null);
         onTreeClick?.();
     };
 
@@ -323,9 +328,9 @@ export default function Tree({
     //     }
     // }, [data]);
 
-    useEffect(() => {
-        controlActiveKey && setActiveKey(controlActiveKey.toString());
-    }, [controlActiveKey]);
+    // useEffect(() => {
+    //     controlActiveKey && setActiveKey(controlActiveKey.toString());
+    // }, [controlActiveKey]);
 
     return (
         <div

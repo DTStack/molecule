@@ -50,6 +50,7 @@ export default function Editor({
                         <Pane key={g.id} minSize="220px">
                             <Group
                                 group={g}
+                                isActive={current === g.id}
                                 contextMenu={data.get('editorTab')}
                                 toolbar={toolbar}
                                 options={options}

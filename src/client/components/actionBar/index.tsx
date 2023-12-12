@@ -1,5 +1,7 @@
 import React from 'react';
 import { classNames } from 'mo/client/classNames';
+import useConnector from 'mo/client/hooks/useConnector';
+import useLocale from 'mo/client/hooks/useLocale';
 import type { HTMLElementProps, IMenuItemProps } from 'mo/types';
 import { classify, sortByIndex } from 'mo/utils';
 
@@ -20,6 +22,8 @@ export default function ActionBar({
     role,
     onClick,
 }: IActionBarProps) {
+    const localize = useLocale();
+    const builtin = useConnector('builtin');
     if (!data) return null;
     const [inline = [], ellipsis = []] = classify(data, (i) => i.group === 'inline');
     return (
@@ -34,7 +38,7 @@ export default function ActionBar({
                     {i.render?.(i) || (
                         <Action
                             type={i.icon}
-                            title={i.name}
+                            title={i.title || i.name}
                             disabled={i.disabled}
                             onClick={() => onClick?.(i)}
                         >
@@ -45,7 +49,13 @@ export default function ActionBar({
             ))}
             {!!ellipsis.length && (
                 <Dropdown data={ellipsis} trigger="click" onClick={onClick} stopPropagation>
-                    <Action type="ellipsis" />
+                    <Action
+                        type="ellipsis"
+                        title={localize(
+                            builtin.constants.SIDEBAR_TOOLBAR_ELLIPSIS,
+                            'View and More Actions...'
+                        )}
+                    />
                 </Dropdown>
             )}
         </div>

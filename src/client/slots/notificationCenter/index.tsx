@@ -2,6 +2,7 @@ import Action from 'mo/client/components/action';
 import ActionBar from 'mo/client/components/actionBar';
 import Display from 'mo/client/components/display';
 import Flex from 'mo/client/components/flex';
+import useConnector from 'mo/client/hooks/useConnector';
 import { INotificationController } from 'mo/controllers/notification';
 import { INotification } from 'mo/models/notification';
 
@@ -16,10 +17,12 @@ export default function NotificationCenter({
     onCloseNotification,
 }: INotification<any> & Pick<INotificationController, 'onActionBarClick' | 'onCloseNotification'>) {
     const localize = useLocale();
+    const builtin = useConnector('builtin');
+
     const hasNotifications = data.length > 0;
     const title = hasNotifications
-        ? localize('notification.title', 'notifications')
-        : localize('notification.title.no', 'no new notifications');
+        ? localize(builtin.constants.STATUSBAR_ITEM_NOTIFICATION, 'Notifications')
+        : localize(builtin.constants.NOTIFICATION_ITEM_EMPTY, 'No New Notifications');
 
     return (
         <Display visible={visible}>
@@ -38,7 +41,10 @@ export default function NotificationCenter({
                         >
                             {typeof item.render === 'function' ? item.render(item) : item.value}
                             <Action
-                                title={localize('notification.clear', 'Clear Notification')}
+                                title={localize(
+                                    builtin.constants.NOTIFICATION_TOOLBAR_CLEAR,
+                                    'Clear Notification'
+                                )}
                                 onClick={() => onCloseNotification?.(item)}
                                 type="close"
                             />

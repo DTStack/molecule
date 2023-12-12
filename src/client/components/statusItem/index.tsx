@@ -25,13 +25,14 @@ export default function StatusItem({ data, onClick, onContextMenuClick }: IStatu
             stopPropagation
             onClick={onContextMenuClick}
         >
-            <div
-                className={classNames(variables.container, className)}
-                style={style}
-                title={title}
-                role={role}
-            >
-                <a className={variables.label} role="button" title={name} onClick={onClick}>
+            <div className={classNames(variables.container, className)}>
+                <a
+                    className={variables.label}
+                    role={role || 'button'}
+                    title={title || name}
+                    style={style}
+                    onClick={onClick}
+                >
                     {render ? render(data) : name}
                 </a>
             </div>

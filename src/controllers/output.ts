@@ -18,11 +18,13 @@ export class OutputController extends BaseController implements IOutputControlle
     }
 
     private initView() {
-        const { builtInOutputPanel } = this.builtin.getState().modules;
-        this.panel.add({
-            ...builtInOutputPanel,
-            render: () => createElement(Output, { ...this }),
-        });
-        this.panel.setActive(builtInOutputPanel.id);
+        const { OUTPUT } = this.builtin.getModules();
+        if (OUTPUT) {
+            this.panel.add({
+                ...OUTPUT,
+                render: () => createElement(Output, { ...this }),
+            });
+            this.panel.setActive(OUTPUT.id);
+        }
     }
 }

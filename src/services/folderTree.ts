@@ -1,13 +1,16 @@
 import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
 import {
+    ArraylizeOrSingle,
     FileTypeLiteral,
     FileTypes,
     type FolderTreeInsertOption,
     type IMenuItemProps,
     type KeyboardEventHandler,
+    type RequiredId,
     type UniqueId,
 } from 'mo/types';
+import { arraylize } from 'mo/utils';
 import logger from 'mo/utils/logger';
 import { TreeHelper, TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
@@ -32,7 +35,7 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Update specific data in folder tree
      * @param data - The `id` property is required in data
      */
-    update<T>(data: TreeNodeModel<T>): void;
+    update<T>(data: RequiredId<TreeNodeModel<T>>): void;
     /**
      * Get specific data in folder tree
      * @param id
@@ -47,10 +50,8 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Get the expandKeys in folderTree
      */
     getExpandKeys: () => UniqueId[];
-    /**
-     * Set the expandKeys for folderTree
-     */
-    setExpandKeys: (expandKeys: UniqueId[]) => void;
+    addExpandKeys: (key: ArraylizeOrSingle<UniqueId>) => void;
+    removeExpandKeys: (key: UniqueId) => void;
     /**
      * Get the loadedKeys for folderTree
      */
@@ -93,6 +94,8 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @param id itemId
      */
     setEditing: (id: UniqueId) => void;
+    addLoading: (id: UniqueId) => void;
+    removeLoading: (id: UniqueId) => void;
     /**
      * update data when drop tree
      * @param source dragNode
@@ -119,11 +122,7 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @param callback
      */
     onUpdateFileName(callback: (file: TreeNodeModel<any>) => void): void;
-    /**
-     * Listen to select a file
-     * @param callback
-     */
-    onSelectFile(callback: (file: TreeNodeModel<any>) => void): void;
+    onSelect(callback: (treeNode: TreeNodeModel<any>) => void): void;
     /**
      * Listen to drop event
      * @param treeData
@@ -147,20 +146,12 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
         callback: (contextMenuItem: IMenuItemProps, treeNode?: TreeNodeModel<any>) => void
     ): void;
     /**
-     * Callback for load folder tree data
-     * @param callback
-     */
-    onLoadData(
-        callback: (
-            treeNode: TreeNodeModel<any>,
-            callback: (treeNode: TreeNodeModel<any>) => void
-        ) => void
-    ): void;
-    /**
      * Callback for expanding tree node
      * @param callback
      */
-    onExpandKeys(callback: (expandKeys: UniqueId[]) => void): void;
+    onExpand(
+        callback: (expanded: boolean, expandKeys: UniqueId[], treeNode: TreeNodeModel<any>) => void
+    ): void;
     /**
      * Callback of the Add Button when data is none
      */
@@ -169,6 +160,7 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Listen to after updateFileName event event
      */
     onAfterUpdateFileName: (callback: (file: TreeNodeModel<any>) => void) => void;
+    onTreeClick: (callback: () => void) => void;
 }
 
 @injectable()
@@ -183,6 +175,20 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
     public reset() {
         this.setState(new FolderTreeModel());
     }
+
+    public addLoading: (id: UniqueId) => void = (id) => {
+        this.setState((prev) => ({
+            ...prev,
+            loadingKeys: [...prev.loadingKeys, id],
+        }));
+    };
+
+    public removeLoading: (id: UniqueId) => void = (id) => {
+        this.setState((prev) => ({
+            ...prev,
+            loadingKeys: prev.loadingKeys.filter((i) => i !== id),
+        }));
+    };
 
     public getParentNode<T>(id: UniqueId): TreeNodeModel<T> | undefined {
         const { data } = this.getState();
@@ -215,11 +221,20 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         return this.getState().expandKeys;
     }
 
-    public setExpandKeys(expandKeys: UniqueId[]) {
-        this.setState({
-            expandKeys,
-        });
-    }
+    public addExpandKeys: (key: ArraylizeOrSingle<UniqueId>) => void = (key) => {
+        const keys = arraylize(key);
+        this.setState((prev) => ({
+            ...prev,
+            expandKeys: [...prev.expandKeys, ...keys],
+        }));
+    };
+
+    public removeExpandKeys: (key: UniqueId) => void = (key) => {
+        this.setState((prev) => ({
+            ...prev,
+            expandKeys: prev.expandKeys.filter((i) => i !== key),
+        }));
+    };
 
     public getLoadedKeys() {
         return this.getState().loadedKeys;
@@ -308,32 +323,21 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         }));
 
         // ===================== effects =====================
-        const { expandKeys, loadedKeys } = this.getState();
-        this.setExpandKeys(expandKeys.filter((i) => i !== id));
+        const { loadedKeys } = this.getState();
+        this.removeExpandKeys(id);
         this.setLoadedKeys(loadedKeys.filter((i) => i !== id));
     }
 
-    public update(data: TreeNodeModel<any>) {
-        const { id, ...restData } = data;
-        if (!id && id !== 0) {
-            logger.error('Id is required in updating data');
-            return;
-        }
-        if (!this.getState().data.length) {
-            logger.error(`There is unable to find a tree node whose id is ${id}`);
-            return;
-        }
-        const treeHelper = new TreeHelper(this.getState().data);
-        const target = treeHelper.getNode(data.id);
+    public update(data: RequiredId<TreeNodeModel<any>>) {
+        const target = this.get(data.id);
         if (!target) {
-            logger.error(`There is unable to find a tree node whose id is ${id}`);
+            logger.error(`There is unable to find a tree node whose id is ${data.id}`);
             return;
         }
-        Object.assign(target, restData);
+        Object.assign(target, data);
         this.setState((prev) => ({
             ...prev,
             data: [...prev.data],
-            editing: undefined,
         }));
 
         // ===================== effects =====================
@@ -398,8 +402,8 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.subscribe(FolderTreeEvent.onUpdateFileName, callback);
     }
 
-    public onSelectFile(callback: (file: TreeNodeModel<any>) => void) {
-        this.subscribe(FolderTreeEvent.onSelectFile, callback);
+    public onSelect(callback: (treeNode: TreeNodeModel<any>) => void) {
+        this.subscribe(FolderTreeEvent.onSelect, callback);
     }
 
     public onDropTree = (
@@ -423,17 +427,10 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
     };
 
-    public onLoadData = (
-        callback: (
-            treeNode: TreeNodeModel<any>,
-            callback: (treeNode: TreeNodeModel<any>) => void
-        ) => void
+    public onExpand = (
+        callback: (expanded: boolean, expandKeys: UniqueId[], treeNode: TreeNodeModel<any>) => void
     ) => {
-        this.subscribe(FolderTreeEvent.onLoadData, callback);
-    };
-
-    public onExpandKeys = (callback: (expandKeys: UniqueId[]) => void) => {
-        this.subscribe(FolderTreeEvent.onExpandKeys, callback);
+        this.subscribe(FolderTreeEvent.onExpand, callback);
     };
 
     public onTreeItemKeyDown(callback: KeyboardEventHandler): void {
@@ -446,5 +443,9 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
 
     public onAfterUpdateFileName(callback: (file: TreeNodeModel<any>) => void): void {
         this.subscribe(FolderTreeEvent.onAfterUpdateFileName, callback);
+    }
+
+    public onTreeClick(callback: () => void): void {
+        this.subscribe(FolderTreeEvent.onTreeClick, callback);
     }
 }

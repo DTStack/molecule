@@ -5,14 +5,14 @@ import { IMoleculeContext, KeybindingWeight } from 'mo/types';
 // TODO: migrate CommandQuickAccessProvider
 
 export class QuickAccessCommandAction extends BaseAction {
-    static readonly ID = 'menu.commandPalette';
+    static readonly ID = 'menuBar.item.commandPalette';
     static PREFIX = '>';
 
     constructor(private molecule: IMoleculeContext) {
         super({
             id: QuickAccessCommandAction.ID,
-            label: molecule.locale.localize('menu.commandPalette', 'Command Palette'),
-            title: molecule.locale.localize('menu.commandPalette', 'Command Palette'),
+            label: molecule.locale.localize('menuBar.item.commandPalette', 'Command Palette'),
+            title: molecule.locale.localize('menuBar.item.commandPalette', 'Command Palette'),
             alias: 'Command Palette',
             f1: false,
             keybinding: {

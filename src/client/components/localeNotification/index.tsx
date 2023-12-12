@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Button } from 'mo/client/components/button';
+import useConnector from 'mo/client/hooks/useConnector';
 
 import useLocale from '../../hooks/useLocale';
 import Flex from '../flex';
@@ -8,6 +9,7 @@ import variables from './index.scss';
 export default function LocaleNotification() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const localize = useLocale();
+    const builtin = useConnector('builtin');
 
     useEffect(() => {
         // Delay execution to ensure focus on element
@@ -21,12 +23,25 @@ export default function LocaleNotification() {
     return (
         <section className={variables.container}>
             <div>
-                <b>{localize('notification.locale.title', '')}</b>
-                <p>{localize('notification.locale.description', '')}</p>
+                <b>
+                    {localize(
+                        builtin.constants.NOTIFICATION_ITEM_INTERNATIONAL,
+                        'A reload is required for the change in display language to take effect.'
+                    )}
+                </b>
+                <p>
+                    {localize(
+                        builtin.constants.NOTIFICATION_ITEM_INTERNATIONAL_DESCRIPTION,
+                        'Press the confirm button to reload and change the display language.'
+                    )}
+                </p>
             </div>
             <Flex justifyContent="flex-end">
                 <Button ref={buttonRef} style={{ width: 150 }} onClick={reload}>
-                    {localize('notification.locale.button', '')}
+                    {localize(
+                        builtin.constants.NOTIFICATION_ITEM_INTERNATIONAL_BUTTON,
+                        'Confirm Reload'
+                    )}
                 </Button>
             </Flex>
         </section>

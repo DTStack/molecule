@@ -23,11 +23,10 @@ export class MenuBarController extends BaseController implements IMenuBarControl
     }
 
     private initView() {
-        const state = this.builtin.getState();
-        const { builtInMenuBarData } = state.modules;
-        if (builtInMenuBarData) {
-            this.checkView(builtInMenuBarData);
-            this.menuBar.setMenus(builtInMenuBarData);
+        const { MENUBAR_ITEMS } = this.builtin.getModules();
+        if (MENUBAR_ITEMS) {
+            this.checkView(MENUBAR_ITEMS);
+            this.menuBar.setMenus(MENUBAR_ITEMS);
         }
     }
 
@@ -35,26 +34,26 @@ export class MenuBarController extends BaseController implements IMenuBarControl
         return hidden ? undefined : 'check';
     }
 
-    private checkView(data?: IMenuItemProps) {
+    private checkView(data?: IMenuItemProps[]) {
         if (!data) return;
         const treeHelper = new TreeHelper(data);
         const { menuBar, auxiliaryBar, activityBar, statusBar, panel, sidebar } =
             this.layout.getState();
         const {
-            MENU_VIEW_MENUBAR,
-            MENU_VIEW_AUXILIARY,
-            MENU_VIEW_ACTIVITYBAR,
-            MENU_VIEW_STATUSBAR,
-            MENU_VIEW_PANEL,
-            MENU_VIEW_SIBEBAR,
+            MENUBAR_ITEM_MENU,
+            MENUBAR_ITEM_AUXILIARY,
+            MENUBAR_ITEM_ACTIVITYBAR,
+            MENUBAR_ITEM_STATUSBAR,
+            MENUBAR_ITEM_PANEL,
+            MENUBAR_ITEM_SIDEBAR,
         } = this.builtin.getState().constants;
         const viewItems = [
-            { key: MENU_VIEW_MENUBAR, icon: this.getCheck(menuBar.hidden) },
-            { key: MENU_VIEW_AUXILIARY, icon: this.getCheck(auxiliaryBar.hidden) },
-            { key: MENU_VIEW_SIBEBAR, icon: this.getCheck(sidebar.hidden) },
-            { key: MENU_VIEW_ACTIVITYBAR, icon: this.getCheck(activityBar.hidden) },
-            { key: MENU_VIEW_STATUSBAR, icon: this.getCheck(statusBar.hidden) },
-            { key: MENU_VIEW_PANEL, icon: this.getCheck(panel.hidden) },
+            { key: MENUBAR_ITEM_MENU, icon: this.getCheck(menuBar.hidden) },
+            { key: MENUBAR_ITEM_AUXILIARY, icon: this.getCheck(auxiliaryBar.hidden) },
+            { key: MENUBAR_ITEM_SIDEBAR, icon: this.getCheck(sidebar.hidden) },
+            { key: MENUBAR_ITEM_ACTIVITYBAR, icon: this.getCheck(activityBar.hidden) },
+            { key: MENUBAR_ITEM_STATUSBAR, icon: this.getCheck(statusBar.hidden) },
+            { key: MENUBAR_ITEM_PANEL, icon: this.getCheck(panel.hidden) },
         ];
         viewItems.forEach((item) => {
             const node = treeHelper.getNode(item.key);

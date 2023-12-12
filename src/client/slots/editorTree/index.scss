@@ -3,6 +3,7 @@
 $editorTree: prefix('editorTree');
 $group: BEMElement($editorTree, 'group');
 $item: BEMElement($editorTree, 'item');
+$toolbar: BEMElement($editorTree, 'toolbar');
 $close: BEMElement($item, 'close');
 $file: BEMElement($item, 'file');
 $name: BEMElement($item, 'name');
@@ -76,8 +77,6 @@ $active: BEMModifier($item, 'active');
     }
 
     .#{$group} {
-        align-items: center;
-        display: flex;
         font-size: 11px;
         height: 22px;
         line-height: 22px;
@@ -87,23 +86,14 @@ $active: BEMModifier($item, 'active');
         &:hover {
             background-color: var(--list-hoverBackground);
 
-            // #{$toolBar} {
-            //     opacity: 1;
-            // }
+            .#{$toolbar} {
+                opacity: 1;
+            }
         }
+    }
 
-        // #{$toolBar} {
-        //     margin-left: auto;
-        //     opacity: 0;
-
-        //     .codicon {
-        //         color: var(--activityBar-inactiveForeground);
-
-        //         &:hover {
-        //             color: var(--activityBar-activeBorder);
-        //         }
-        //     }
-        // }
+    .#{$toolbar} {
+        opacity: 0;
     }
 
     .#{$close} {
@@ -115,13 +105,6 @@ $active: BEMModifier($item, 'active');
             opacity: 1;
         }
     }
-
-    // &__file[class*='codicon-'] {
-    //     flex-shrink: 0;
-    //     height: 22px;
-    //     line-height: 23px;
-    //     width: 16px;
-    // }
 }
 
 
@@ -129,6 +112,7 @@ $active: BEMModifier($item, 'active');
     editorTree: $editorTree;
     group: $group;
     item: $item;
+    toolbar: $toolbar;
     close: $close;
     file: $file;
     name: $name;

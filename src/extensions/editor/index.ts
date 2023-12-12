@@ -43,8 +43,8 @@ export const ExtendsEditor: IExtension = {
 
         molecule.editor.onToolbarClick((item, groupId) => {
             const {
-                EDITOR_MENU_SPLIT,
-                EDITOR_MENU_CLOSE_ALL,
+                EDITOR_TOOLBAR_SPLIT: EDITOR_MENU_SPLIT,
+                EDITOR_CONTEXTMENU_CLOSE_ALL: EDITOR_MENU_CLOSE_ALL,
             } = molecule.builtin.getState().constants;
             switch (item.id) {
                 case EDITOR_MENU_SPLIT: {
@@ -64,11 +64,11 @@ export const ExtendsEditor: IExtension = {
 
         molecule.editor.onContextMenu((item, tabId, groupId) => {
             const {
-                EDITOR_MENU_CLOSE,
-                EDITOR_MENU_CLOSE_OTHERS,
-                EDITOR_MENU_CLOSE_TO_RIGHT,
-                EDITOR_MENU_CLOSE_TO_LEFT,
-                EDITOR_MENU_CLOSE_ALL,
+                EDITOR_CONTEXTMENU_CLOSE: EDITOR_MENU_CLOSE,
+                EDITOR_CONTEXTMENU_CLOSE_OTHERS: EDITOR_MENU_CLOSE_OTHERS,
+                EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT: EDITOR_MENU_CLOSE_TO_RIGHT,
+                EDITOR_CONTEXTMENU_CLOSE_TO_LEFT: EDITOR_MENU_CLOSE_TO_LEFT,
+                EDITOR_CONTEXTMENU_CLOSE_ALL: EDITOR_MENU_CLOSE_ALL,
             } = molecule.builtin.getState().constants;
             switch (item.id) {
                 case EDITOR_MENU_CLOSE:
@@ -102,7 +102,7 @@ export const ExtendsEditor: IExtension = {
             if (currentTab.model === instance.getModel()) {
                 const position = instance.getPosition();
                 molecule.statusBar.update({
-                    id: molecule.builtin.getState().constants.STATUS_EDITOR_INFO_ID,
+                    id: molecule.builtin.getState().constants.STATUSBAR_ITEM_LINE_INFO,
                     data: {
                         ln: position?.lineNumber,
                         col: position?.column,

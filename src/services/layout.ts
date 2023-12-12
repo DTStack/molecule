@@ -102,7 +102,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
 
         // ===================== effects =====================
-        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_MENUBAR);
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_MENU);
     }
 
     public setPanelVisibility(visibility: FunctionalOrSingle<boolean>): void {
@@ -116,7 +116,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
 
         // ===================== effects =====================
-        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_PANEL);
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_PANEL);
     }
 
     public setSidebarVisibility(visibility: FunctionalOrSingle<boolean>): void {
@@ -130,7 +130,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
 
         // ===================== effects =====================
-        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_SIBEBAR);
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_SIDEBAR);
     }
 
     public setActivityBarVisibility(visibility: FunctionalOrSingle<boolean>): void {
@@ -146,7 +146,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
 
         // ===================== effects =====================
-        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_ACTIVITYBAR);
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_ACTIVITYBAR);
     }
 
     public setStatusBarVisibility(visibility: FunctionalOrSingle<boolean>): void {
@@ -162,7 +162,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
         }));
 
         // ===================== effects =====================
-        this.menuBar.toggleChecked(this.builtin.getState().constants.MENU_VIEW_STATUSBAR);
+        this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_STATUSBAR);
     }
 
     public setSideBarPosition(position: PositionLiteral): void {
@@ -216,7 +216,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
     }
 
     public accessSettings() {
-        const { SETTING_ID } = this.builtin.getState().constants;
+        const { EDITOR_ITEM_SETTING: SETTING_ID } = this.builtin.getState().constants;
         const settings: Record<string, any> = {
             locale: this.locale.getState().current,
             colorTheme: this.colorTheme.getState().current,

@@ -5,8 +5,8 @@ import {
     NotificationModel,
     NotificationStatus,
 } from 'mo/models/notification';
-import type { FunctionalOrSingle, RequiredId, UniqueId } from 'mo/types';
-import { arraylize, extract, randomId, searchById } from 'mo/utils';
+import type { ArraylizeOrSingle, FunctionalOrSingle, RequiredId, UniqueId } from 'mo/types';
+import { arraylize, extract, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
 export interface INotificationService extends BaseService<NotificationModel<any>> {
@@ -14,7 +14,7 @@ export interface INotificationService extends BaseService<NotificationModel<any>
      * Add new notification items
      * @param items
      */
-    add(items: INotificationItem[]): void;
+    add(item: ArraylizeOrSingle<INotificationItem>): void;
     /**
      * Remove the specific notification item by id
      * @param id
@@ -97,17 +97,15 @@ export class NotificationService
         }));
     }
 
-    public add(items: INotificationItem[]) {
-        if (items && items.length) {
-            const nextItems = items.map((item) => ({
-                ...item,
-                id: item.id === undefined ? randomId() : item.id,
-                status: NotificationStatus.WaitRead,
-            }));
-            this.setState((prev) => ({
-                data: [...prev.data, ...nextItems],
-            }));
-        }
+    public add(item: ArraylizeOrSingle<INotificationItem>) {
+        const items = arraylize(item);
+        const nextItems = items.map((item) => ({
+            ...item,
+            status: NotificationStatus.WaitRead,
+        }));
+        this.setState((prev) => ({
+            data: [...prev.data, ...nextItems],
+        }));
     }
 
     public clear() {

@@ -104,7 +104,7 @@ export default ({
             data={contextMenu}
             // stopPropagation
             trigger="contextMenu"
-            alignPoint={false}
+            alignPoint
             onClick={handleContextMenu}
         >
             <div

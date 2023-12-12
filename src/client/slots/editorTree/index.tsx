@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 import { classNames } from 'mo/client/classNames';
+import ActionBar from 'mo/client/components/actionBar';
 import Dropdown from 'mo/client/components/dropdown';
+import Flex from 'mo/client/components/flex';
 import Icon from 'mo/client/components/icon';
 import { ScrollBar } from 'mo/client/components/scrollBar';
 import useConnector from 'mo/client/hooks/useConnector';
@@ -17,9 +19,12 @@ export default function EditorTree({
     onContextMenu,
     onGroupClick,
     onGroupContextMenu,
+    onToolbarClick,
 }: IEditorTreeController & { panel: IExplorerPanelItem }) {
     const editor = useConnector('editor');
+    const editorTree = useConnector('editorTree');
     const { data } = useConnector('contextMenu');
+    const builtin = useConnector('builtin');
 
     const localize = useLocale();
 
@@ -37,24 +42,22 @@ export default function EditorTree({
                                     alignPoint
                                     onClick={(item) => onGroupContextMenu?.(item, group.id)}
                                 >
-                                    <div
+                                    <Flex
                                         className={variables.group}
                                         onClick={(e) => onGroupClick?.(e, group.id)}
+                                        justifyContent="space-between"
                                     >
                                         {localize(
-                                            'sidebar.explore.openEditor.group',
-                                            'Group',
+                                            builtin.constants.EDITORTREE_ITEM_GROUP,
+                                            'Group ${i}',
                                             (index + 1).toString()
                                         )}
-                                        {/* {groupToolbar && (
-                                        <Toolbar
-                                            data={groupToolbar}
-                                            onClick={(e, item) =>
-                                                handleToolBarClick(e, item, group)
-                                            }
+                                        <ActionBar
+                                            className={variables.toolbar}
+                                            data={editorTree.toolbar}
+                                            onClick={(item) => onToolbarClick?.(item, group.id)}
                                         />
-                                    )} */}
-                                    </div>
+                                    </Flex>
                                 </Dropdown>
                             )}
                             {group.data?.map((file) => {

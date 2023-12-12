@@ -28,20 +28,15 @@ export class SearchController extends BaseController implements ISearchControlle
     }
 
     private initView() {
-        const {
-            builtInSearchSidePane,
-            builtInSearchActivityItem,
-            builtInSearchToolBar,
-            builtInSearchContextMenu,
-        } = this.builtin.getState().modules;
-
-        this.contextMenu.add('activityBar', builtInSearchContextMenu);
-        this.sidebar.add({
-            ...builtInSearchSidePane,
-            toolbar: builtInSearchToolBar,
-            render: () => React.createElement(Search, { ...this }),
-        });
-        this.activitybar.add(builtInSearchActivityItem);
+        const { SEARCH, SEARCH_TOOLBAR } = this.builtin.getModules();
+        if (SEARCH) {
+            this.activitybar.add(SEARCH);
+            this.sidebar.add({
+                ...SEARCH,
+                toolbar: SEARCH_TOOLBAR,
+                render: () => React.createElement(Search, { ...this }),
+            });
+        }
     }
 
     public onChange = (value: string) => {

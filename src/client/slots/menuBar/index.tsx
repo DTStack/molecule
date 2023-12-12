@@ -16,7 +16,7 @@ export default function MenuBar({ onSelect }: IMenuBarController) {
         if (visibleMenu && visibleMenu !== menuId) {
             setVisibleMenu(menuId);
         }
-    };
+    };    
 
     return (
         <section className={variables.container} role="menuBar">

@@ -20,7 +20,7 @@ export default function ActivityBarItem({
     onClick,
     onContextMenuClick,
 }: IActivityBarItemProps) {
-    const { disabled, icon, className, hidden, style, role, title, render } = data;
+    const { disabled, icon, className, hidden, style, role, title, name, render } = data;
     const contextMenu = useContextMenu('activityBar', data);
 
     if (hidden) return null;
@@ -52,7 +52,7 @@ export default function ActivityBarItem({
                         )}
                         role={role}
                         style={style}
-                        title={title}
+                        title={title || name}
                     >
                         <Icon type={icon} className={variables.label}>
                             {render?.(data) || null}

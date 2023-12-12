@@ -4,8 +4,7 @@ import type { IMoleculeContext } from 'mo/types';
 
 import { Context } from '../context';
 
-// Exclude editorTree service for editorTree's state extends from editor, it doesn't have own state
-type Selector = Exclude<keyof IMoleculeContext, 'editorTree'>;
+type Selector = keyof IMoleculeContext;
 type StateType<T extends keyof IMoleculeContext> = ReturnType<IMoleculeContext[T]['getState']>;
 
 export default function useConnector<T extends Selector>(selector: T): StateType<T> {

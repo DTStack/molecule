@@ -6,7 +6,7 @@ export const ExtendsStatusBar: IExtension = {
     name: 'Extend The Default StatusBar',
     activate: function (molecule): void {
         molecule.statusBar.onContextMenu((item) => {
-            const { STATUS_BAR_HIDE_ID, STATUS_EDITOR_INFO_ID } =
+            const { STATUSBAR_CONTEXTMENU_HIDE: STATUS_BAR_HIDE_ID, STATUSBAR_ITEM_LINE_INFO: STATUS_EDITOR_INFO_ID } =
                 molecule.builtin.getState().constants;
             switch (item.id) {
                 case STATUS_BAR_HIDE_ID: {

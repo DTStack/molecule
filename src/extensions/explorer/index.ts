@@ -5,7 +5,7 @@ export const ExtendsExplorer: IExtension = {
     name: 'Extend The Default Explorer',
     activate: function (molecule): void {
         molecule.explorer.onPanelToolbarClick((toolbar, panelId) => {
-            const { EXPLORER_TOGGLE_CLOSE_ALL_EDITORS, EXPLORER_TOGGLE_SAVE_ALL, EDITOR_PANEL_ID } =
+            const { EXPLORER_TOOLBAR_CLOSE_ALL: EXPLORER_TOGGLE_CLOSE_ALL_EDITORS, EXPLORER_TOOLBAR_SAVE_ALL: EXPLORER_TOGGLE_SAVE_ALL, EXPLORER_ITEM_OPEN_EDITOR: EDITOR_PANEL_ID } =
                 molecule.builtin.getState().constants;
             if (panelId === EDITOR_PANEL_ID) {
                 switch (toolbar.id) {

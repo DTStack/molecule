@@ -1,501 +1,617 @@
-import type { Localize } from 'mo/types';
+import type { IMenuItemProps, Localize } from 'mo/types';
 
+import type { IActivityBarItem } from './activityBar';
+import { IExplorerPanelItem } from './explorer';
+import { IStatusBarItem } from './statusBar';
+
+/**
+ * Unique ID Name Rule:
+ * - Use `.` to separate words, and less than 3 parts
+ * - First work should be one of the modules
+ * - Second work should be one of the following words:
+ *    - item
+ *    - toolbar
+ *    - contextMenu
+ */
 export class BuiltinModel {
     public readonly constants = {
-        STATUS_EDITOR_INFO_ID: 'MoEditorInfo',
-        PANEL_PROBLEMS: 'panel.problems.title',
-        STATUS_PROBLEMS: 'statusbar.problems.title',
-        SAMPLE_FOLDER_PANEL_ID: 'sidebar.explore.folders',
-        EDITOR_PANEL_ID: 'sidebar.explore.openEditor',
-        OUTLINE_PANEL_ID: 'sidebar.explore.outline',
-        OUTLINE_PANEL_MORE_DESC: 'sidebar.explore.outlineMore',
-        EXPLORER_ACTIVITY_ITEM: 'sidebar.explore.title',
-        EXPLORER_ACTION_TITLE: 'sidebar.explore.actionDesc',
-        EXPLORER_TOGGLE_SAVE_ALL: 'sidebar.explore.saveAll',
-        EXPLORER_TOGGLE_CLOSE_ALL_EDITORS: 'sidebar.explore.closeAllEditors',
-        EXPLORER_TOGGLE_SAVE_GROUP: 'sidebar.explore.saveGroup',
-        EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS: 'sidebar.explore.closeGroupEditors',
-        NEW_FILE_COMMAND_ID: 'explorer.newFile',
-        NEW_FOLDER_COMMAND_ID: 'explorer.newFolder',
-        COLLAPSE_COMMAND_ID: 'explorer.collapse',
-        REFRESH_COMMAND_ID: 'explorer.toolbar.refresh',
-        RENAME_COMMAND_ID: 'explorer.rename',
-        REMOVE_COMMAND_ID: 'explorer.remove',
-        DELETE_COMMAND_ID: 'explorer.delete',
-        OPEN_TO_SIDE_COMMAND_ID: 'explorer.openToSide',
-        FIND_IN_WORKSPACE_ID: 'filesExplorer.findInWorkspace',
-        DOWNLOAD_COMMAND_ID: 'explorer.download',
-        EDITOR_MENU_CLOSE_TO_RIGHT: 'editor.closeToRight',
-        EDITOR_MENU_CLOSE_TO_LEFT: 'editor.closeToLeft',
-        EDITOR_MENU_CLOSE_ALL: 'editor.closeAll',
-        EDITOR_MENU_CLOSE_OTHERS: 'editor.closeOthers',
-        EDITOR_MENU_CLOSE_SAVED: 'editor.closeSaved',
-        EDITOR_MENU_CLOSE: 'editor.close',
-        EDITOR_MENU_SPLIT: 'editor.split',
-        SETTING_ID: 'Setting',
-        PROBLEM_MODEL_ID: 'MO_PROBLEMS',
-        PROBLEM_MODEL_NAME: 'Problems',
-        NOTIFICATION_CLEAR_ALL_ID: 'ClearAll',
-        NOTIFICATION_HIDE_ID: 'HideNotifications',
-        NOTIFICATION_MODEL_ID: 'MO_NOTIFICATION',
-        NOTIFICATION_MODEL_NAME: 'Notification',
-        STATUS_BAR_HIDE_ID: 'hide',
-        SEARCH_ACTIVITY_ITEM: 'sidebar.search.title',
-        SEARCH_RESULT_NOT_FOUND: 'sidebar.search.notFound',
+        EDITORTREE_ITEM_GROUP: 'editorTree.item.group',
+        STATUSBAR_ITEM_LINE_INFO: 'statusBar.item.lineInfo',
+        STATUSBAR_ITEM_SELECTION: 'statusBar.item.selection',
+        EXPLORER_ITEM_WORKSPACE: 'explorer.item.workspace',
+        EXPLORER_ITEM_OPEN_EDITOR: 'explorer.item.openEditor',
+        EXPLORER_ITEM_OUTLINE: 'explorer.item.outline',
+        SIDEBAR_ITEM_EXPLORER: 'sidebar.item.explorer',
+        SIDEBAR_TOOLBAR_ELLIPSIS: 'sidebar.toolbar.ellipsis',
+        EXPLORER_TOOLBAR_SAVE_ALL: 'explorer.toolbar.saveAll',
+        EXPLORER_TOOLBAR_CLOSE_ALL: 'explorer.toolbar.closeAll',
+        EXPLORER_TOOLBAR_SAVE_GROUP: 'explorer.toolbar.saveGroup',
+        EXPLORER_TOOLBAR_CLOSE_GROUP: 'explorer.toolbar.closeGroup',
+        EXPLORER_CONTEXTMENU_CREATE_FILE: 'explorer.contextMenu.createFile',
+        EXPLORER_CONTEXTMENU_CREATE_FOLDER: 'explorer.contextMenu.createFolder',
+        EXPLORER_CONTEXTMENU_ADD_TO_WORKSPACE: 'explorer.contextMenu.addToWorkspace',
+        EXPLORER_TOOLBAR_COLLAPSE: 'explorer.toolbar.collapse',
+        EXPLORER_TOOLBAR_REFRESH: 'explorer.toolbar.refresh',
+        EXPLORER_CONTEXTMENU_RENAME: 'explorer.contextMenu.rename',
+        EXPLORER_CONTEXTMENU_DELETE: 'explorer.contextMenu.delete',
+        EXPLORER_CONTEXTMENU_OPEN_TO_SIDE: 'explorer.contextMenu.openToSide',
+        EXPLORER_CONTEXTMENU_FIND_IN_WORKSPACE: 'explorer.contextMenu.findInWorkspace',
+        EXPLORER_CONTEXTMENU_DOWNLOAD: 'explorer.contextMenu.download',
+        EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT: 'editor.contextMenu.closeToRight',
+        EDITOR_CONTEXTMENU_CLOSE_TO_LEFT: 'editor.contextMenu.closeToLeft',
+        EDITOR_CONTEXTMENU_CLOSE_ALL: 'editor.contextMenu.closeAll',
+        EDITOR_CONTEXTMENU_CLOSE_OTHERS: 'editor.contextMenu.closeOthers',
+        EDITOR_CONTEXTMENU_CLOSE_SAVED: 'editor.contextMenu.closeSaved',
+        EDITOR_CONTEXTMENU_CLOSE: 'editor.contextMenu.close',
+        EDITOR_TOOLBAR_SPLIT: 'editor.toolbar.split',
+        EDITOR_ITEM_SETTING: 'editor.item.setting',
+        NOTIFICATION_TOOLBAR_CLEAR_ALL: 'notification.toolbar.clearAll',
+        NOTIFICATION_TOOLBAR_CLEAR: 'notification.toolbar.clear',
+        NOTIFICATION_TOOLBAR_HIDE: 'notification.toolbar.hide',
+        STATUSBAR_ITEM_NOTIFICATION: 'statusBar.item.notification',
+        STATUSBAR_CONTEXTMENU_HIDE: 'statusBar.contextMenu.hide',
+        PANEL_CONTEXTMENU_HIDE: 'panel.contextMenu.hide',
+        SIDEBAR_ITEM_SEARCH: 'sidebar.item.search',
+        SEARCH_ITEM_NOT_FOUND: 'search.item.notFound',
         SEARCH_TOOLBAR_REFRESH: 'search.toolbar.refresh',
         SEARCH_TOOLBAR_CLEAR_ALL: 'search.toolbar.clearAll',
-        SEARCH_TOOLBAR_VIEW_AS_LIST_TREE: 'search.toolbar.listTree',
+        SEARCH_TOOLBAR_VIEW_AS_LIST_TREE: 'search.toolbar.viewAsListTree',
+        // TODO
         SEARCH_TOOLBAR_VIEW_AS_LIST: 'search.toolbar.viewAsList',
         SEARCH_TOOLBAR_VIEW_AS_TREE: 'search.toolbar.viewAsTree',
         SEARCH_TOOLBAR_COLLAPSE_EXPAND: 'search.toolbar.collapseExpand',
-        SEARCH_TOOLBAR_COLLAPSE_ALL: 'search.toolbar.collapseAll',
-        SEARCH_TOOLBAR_EXPAND_ALL: 'search.toolbar.expandAll',
-        PANEL_TOOLBOX_CLOSE: 'panel.toolbox.closePanel',
-        PANEL_TOOLBOX_RESIZE: 'panel.toolbox.maximize',
-        PANEL_TOOLBOX_RESTORE_SIZE: 'panel.toolbox.restoreSize',
-        PANEL_OUTPUT: 'panel.output.title',
-        MENU_APPEARANCE_ID: 'Appearance',
-        MENU_FILE_OPEN: 'openFile',
-        MENU_QUICK_COMMAND: 'menu.commandPalette',
-        MENU_VIEW_MENUBAR: 'workbench.action.showMenuBar',
-        MENU_VIEW_AUXILIARY: 'workbench.action.showAuxiliary',
-        MENU_VIEW_ACTIVITYBAR: 'workbench.action.showActivityBar',
-        MENU_VIEW_STATUSBAR: 'workbench.action.showStatusBar',
-        MENU_VIEW_PANEL: 'workbench.action.showPanel',
-        MENU_VIEW_SIBEBAR: 'workbench.action.sidebar',
-        ACTION_QUICK_SELECT_ALL: 'editor.action.quickSelectAll',
-        ACTION_QUICK_COPY_LINE_UP: 'editor.action.copyLinesUpAction',
-        ACTION_QUICK_UNDO: 'editor.action.undo',
-        ACTION_QUICK_REDO: 'editor.action.redo',
-        ACTION_QUICK_CREATE_FILE: 'workbench.action.quickCreateFile',
-        ACTION_QUICK_CREATE_FOLDER: 'workbench.action.quickCreateFolder',
-        ACTION_SELECT_LOCALE: 'workbench.action.selectLocale',
-        ACTIVITY_BAR_GLOBAL_SETTINGS: 'global.menu.settings',
-        ACTIVITY_BAR_GLOBAL_ACCOUNT: 'global.menu.account',
-        CONTEXT_MENU_MENU: 'menubar',
-        CONTEXT_MENU_EXPLORER: 'sidebar.explore.title',
-        CONTEXT_MENU_HIDE: 'menu.hideActivityBar',
-        MENUBAR_MODE_HORIZONTAL: 'menuBar.mode.horizontal',
-        MENUBAR_MODE_VERTICAL: 'menuBar.mode.vertical',
-        MENUBAR_MENU_MODE_DIVIDER: 'menuBar.modeDivider',
+        // TODO
+        SEARCH_TOOLBAR_COLLAPSE: 'search.toolbar.collapse',
+        SEARCH_TOOLBAR_EXPAND: 'search.toolbar.expand',
+        PANEL_TOOLBAR_CLOSE: 'panel.toolbar.close',
+        PANEL_TOOLBAR_MAXIMIZE: 'panel.toolbar.maximize',
+        PANEL_TOOLBAR_RESTORE: 'panel.toolbar.restore',
+        PANEL_ITEM_OUTPUT: 'panel.item.output',
+        MENUBAR_ITEM_APPEARANCE: 'menuBar.item.appearance',
+        MENUBAR_ITEM_OPEN: 'menuBar.item.open',
+        MENUBAR_ITEM_COMMAND_PALETTE: 'menuBar.item.commandPalette',
+        MENUBAR_ITEM_MENU: 'menuBar.item.menuBar',
+        MENUBAR_ITEM_AUXILIARY: 'menuBar.item.auxiliary',
+        MENUBAR_ITEM_ACTIVITYBAR: 'menuBar.item.activityBar',
+        MENUBAR_ITEM_STATUSBAR: 'menuBar.item.statusBar',
+        MENUBAR_ITEM_PANEL: 'menuBar.item.panel',
+        MENUBAR_ITEM_SIDEBAR: 'menuBar.item.sidebar',
+        MENUBAR_ITEM_SELECT_ALL: 'menuBar.item.selectAll',
+        MENUBAR_ITEM_COPY_LINE_UP: 'menuBar.item.copyLineUp',
+        MENUBAR_ITEM_UNDO: 'menuBar.item.undo',
+        MENUBAR_ITEM_REDO: 'menuBar.item.redo',
+        MENUBAR_ITEM_CREATE_FILE: 'menuBar.item.createFile',
+        MENUBAR_ITEM_CREATE_FOLDER: 'menuBar.item.createFolder',
+        MENUBAR_ITEM_FILE: 'menuBar.item.file',
+        MENUBAR_ITEM_EDIT: 'menuBar.item.edit',
+        MENUBAR_ITEM_SELECTION: 'menuBar.item.selection',
+        MENUBAR_ITEM_VIEW: 'menuBar.item.view',
+        MENUBAR_ITEM_OPEN_VIEW: 'menuBar.item.openView',
+        MENUBAR_ITEM_RUN: 'menuBar.item.run',
+        MENUBAR_ITEM_RUN_TASK: 'menuBar.item.runTask',
+        MENUBAR_ITEM_HELP: 'menuBar.item.help',
+        MENUBAR_ITEM_ABOUT: 'menuBar.item.about',
+        ACTIVITYBAR_ITEM_SETTING: 'activityBar.item.setting',
+        ACTIVITYBAR_ITEM_ACCOUNT: 'activityBar.item.account',
+        ACTIVITYBAR_CONTEXTMENU_HIDE: 'activityBar.contextMenu.hide',
+        CONTEXTMENU_ITEM_ACTIVITYBAR: 'contextMenu.item.activityBar',
+        CONTEXTMENU_ITEM_EDITOR: 'contextMenu.item.editor',
+        CONTEXTMENU_ITEM_EDITOR_TREE: 'contextMenu.item.editorTree',
+        CONTEXTMENU_ITEM_PANEL: 'contextMenu.item.panel',
+        CONTEXTMENU_ITEM_STATUS_BAR: 'contextMenu.item.statusBar',
+        NOTIFICATION_ITEM_EMPTY: 'notification.item.empty',
+        NOTIFICATION_ITEM_INTERNATIONAL: 'notification.item.international',
+        NOTIFICATION_ITEM_INTERNATIONAL_DESCRIPTION: 'notification.item.internationalDescription',
+        NOTIFICATION_ITEM_INTERNATIONAL_BUTTON: 'notification.item.internationalButton',
+        EDITORTREE_TOOLBAR_SAVE_GROUP: 'editorTree.toolbar.saveGroup',
+        EDITORTREE_TOOLBAR_CLOSE_GROUP: 'editorTree.toolbar.closeGroup',
+        FOLDERTREE_ITEM_EMPTY: 'folderTree.item.empty',
+        FOLDERTREE_ITEM_ADD_ROOT_FOLDER: 'folderTree.item.addRootFolder',
     } as const;
-    readonly #modules = {
-        STATUS_EDITOR_INFO: () => ({
-            id: this.constants.STATUS_EDITOR_INFO_ID,
-            sortIndex: 2,
-            data: {
-                ln: 0,
-                col: 0,
+    public readonly modules = {
+        STATUSBAR_LINE_INFO: () =>
+            <IStatusBarItem>{
+                id: this.constants.STATUSBAR_ITEM_LINE_INFO,
+                sortIndex: 2,
+                data: {
+                    ln: 0,
+                    col: 0,
+                },
+                name: this.localize(this.constants.STATUSBAR_ITEM_LINE_INFO, 'Editor Selection'),
+                alignment: 'right',
             },
-            name: this.localize('statusBar.title', 'Editor Selection'),
-            alignment: 'right',
-            render: () => this.localize('statusBar.editorStatus.gotoLine', 'Go to Line/Column'),
-        }),
-        CONTEXT_MENU_HIDE_STATUS_BAR: () => ({
-            id: this.constants.STATUS_BAR_HIDE_ID,
-            name: this.localize('statusBar.hideStatusBar', 'Hide Status Bar'),
-        }),
-        builtInMenuBarData: () => [
-            {
-                id: 'File',
-                name: this.localize('menu.file', 'File'),
-                children: [
-                    {
-                        id: this.constants.ACTION_QUICK_CREATE_FILE,
-                        name: this.localize('menu.newFile', 'New File'),
-                    },
-                    {
-                        id: this.constants.MENU_FILE_OPEN,
-                        name: this.localize('menu.open', 'Open'),
-                    },
-                ],
+        STATUSBAR_CONTEXTMENU: () =>
+            <IMenuItemProps>{
+                id: this.constants.STATUSBAR_CONTEXTMENU_HIDE,
+                name: this.localize(this.constants.STATUSBAR_CONTEXTMENU_HIDE, 'Hide Status Bar'),
             },
-            {
-                id: 'Edit',
-                name: this.localize('menu.edit', 'Edit'),
-                children: [
-                    {
-                        id: this.constants.ACTION_QUICK_UNDO,
-                        name: this.localize('menu.undo', 'Undo'),
-                    },
-                    {
-                        id: this.constants.ACTION_QUICK_REDO,
-                        name: this.localize('menu.redo', 'Redo'),
-                    },
-                ],
-            },
-            {
-                id: 'Selection',
-                name: this.localize('menu.selection', 'Selection'),
-                children: [
-                    {
-                        id: this.constants.ACTION_QUICK_SELECT_ALL,
-                        name: this.localize('menu.selectAll', 'Select All'),
-                    },
-                    {
-                        id: this.constants.ACTION_QUICK_COPY_LINE_UP,
-                        name: this.localize('menu.copyLineUp', 'Copy Line Up'),
-                    },
-                ],
-            },
-            {
-                id: 'View',
-                name: this.localize('menu.view', 'View'),
-                children: [
-                    {
-                        id: this.constants.MENU_QUICK_COMMAND,
-                        name: this.localize('menu.commandPalette', 'Command Palette'),
-                    },
-                    {
-                        id: 'OpenView',
-                        name: this.localize('menu.openView', 'Open View'),
-                    },
-                    {
-                        id: this.constants.MENU_APPEARANCE_ID,
-                        name: this.localize('menu.appearance', 'Appearance'),
-                        children: [
-                            {
-                                id: this.constants.MENU_VIEW_MENUBAR,
-                                name: this.localize('menu.showMenuBar', 'Show Menu Bar'),
-                            },
-                            {
-                                id: this.constants.MENU_VIEW_SIBEBAR,
-                                name: this.localize('menu.showSideBar', 'Show Side Bar'),
-                            },
-                            {
-                                id: this.constants.MENU_VIEW_AUXILIARY,
-                                name: this.localize('menu.showAuxiliaryBar', 'Show Auxiliary Bar'),
-                            },
-                            {
-                                id: this.constants.MENU_VIEW_STATUSBAR,
-                                name: this.localize('menu.showStatusBar', 'Show Status Bar'),
-                            },
-                            {
-                                id: this.constants.MENU_VIEW_ACTIVITYBAR,
-                                name: this.localize('menu.showActivityBar', 'Show Activity Bar'),
-                            },
-                            {
-                                id: this.constants.MENU_VIEW_PANEL,
-                                name: this.localize('menu.showPanel', 'Show Panel'),
-                            },
-                        ],
-                    },
-                ],
-            },
-            {
-                id: 'Run',
-                name: this.localize('menu.run', 'Run'),
-                children: [
-                    {
-                        id: 'RunTask',
-                        name: this.localize('menu.runTask', 'Run Task'),
-                    },
-                ],
-            },
-            {
-                id: 'Help',
-                name: this.localize('menu.help', 'Help'),
-                children: [
-                    {
-                        id: 'About',
-                        name: this.localize('menu.about', 'About'),
-                    },
-                ],
-            },
-        ],
-        activityBarData: () => [
-            {
-                id: this.constants.ACTIVITY_BAR_GLOBAL_ACCOUNT,
-                name: this.localize('menu.account', 'Account'),
-                title: this.localize('menu.account', 'Account'),
-                icon: 'account',
-                alignment: 'bottom',
-            },
-            {
-                id: this.constants.ACTIVITY_BAR_GLOBAL_SETTINGS,
-                name: this.localize('menu.settings', 'Settings'),
-                title: this.localize('menu.settings', 'Settings'),
-                icon: 'settings-gear',
-                alignment: 'bottom',
-                contextMenu: [],
-            },
-        ],
-        contextMenuData: () => [
-            {
-                id: this.constants.CONTEXT_MENU_HIDE,
-                name: this.localize('menu.hideActivityBar', 'Hide Activity Bar'),
-            },
-        ],
-        EXPLORER_ACTIVITY_ITEM: () => ({
-            id: this.constants.EXPLORER_ACTIVITY_ITEM,
-            title: this.localize(this.constants.EXPLORER_ACTIVITY_ITEM, 'EXPLORER'),
-        }),
-        builtInExplorerActivityItem: () => ({
-            id: this.constants.EXPLORER_ACTIVITY_ITEM,
-            name: this.localize(this.constants.EXPLORER_ACTIVITY_ITEM, 'Explore'),
-            icon: 'files',
-            title: this.localize(this.constants.EXPLORER_ACTIVITY_ITEM, 'Explore'),
-            sortIndex: 1,
-            alignment: 'top',
-        }),
-        builtInSearchSidePane: () => ({
-            id: this.constants.SEARCH_ACTIVITY_ITEM,
-            title: this.localize(this.constants.SEARCH_ACTIVITY_ITEM, 'Search'),
-        }),
-        builtInSearchContextMenu: () => ({
-            id: this.constants.SEARCH_ACTIVITY_ITEM,
-            name: this.localize(this.constants.SEARCH_ACTIVITY_ITEM, 'Search'),
-        }),
-        builtInSearchActivityItem: () => ({
-            id: this.constants.SEARCH_ACTIVITY_ITEM,
-            name: this.localize(this.constants.SEARCH_ACTIVITY_ITEM, 'Search'),
-            icon: 'search',
-            title: this.localize(this.constants.SEARCH_ACTIVITY_ITEM, 'Search'),
-            sortIndex: 2,
-            alignment: 'top',
-        }),
-        builtInSearchToolBar: () => [
-            {
-                id: this.constants.SEARCH_TOOLBAR_REFRESH,
-                icon: 'refresh',
-                name: this.localize(this.constants.SEARCH_TOOLBAR_REFRESH, 'Refresh'),
-                group: 'inline',
-                sortIndex: 5,
-                disabled: true,
-            },
-            {
-                id: this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
-                icon: 'clear-all',
-                name: this.localize(
-                    this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
-                    'Clear Search Results'
-                ),
-                group: 'inline',
-                sortIndex: 6,
-                disabled: true,
-            },
-            {
-                id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
-                icon: 'list-tree',
-                name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_TREE, 'View as Tree'),
-                group: 'inline',
-                sortIndex: 7,
-                disabled: true,
-            },
-            {
-                id: this.constants.SEARCH_TOOLBAR_COLLAPSE_EXPAND,
-                icon: 'collapse-all',
-                name: this.localize(this.constants.SEARCH_TOOLBAR_COLLAPSE_ALL, 'Collapse All'),
-                group: 'inline',
-                sortIndex: 8,
-                disabled: true,
-            },
-        ],
-
-        FILE_CONTEXT_MENU: () => [
-            {
-                id: this.constants.OPEN_TO_SIDE_COMMAND_ID,
-                name: this.localize('contextmenu.openToTheSide', 'Open to the Side'),
-            },
-        ],
-        BASE_CONTEXT_MENU: () => [
-            {
-                id: this.constants.NEW_FILE_COMMAND_ID,
-                name: this.localize('contextmenu.newFile', 'New File'),
-            },
-            {
-                id: this.constants.NEW_FOLDER_COMMAND_ID,
-                name: this.localize('contextmenu.newFolder', 'New Folder'),
-            },
-        ],
-        COMMON_CONTEXT_MENU: () => [
-            {
-                id: this.constants.RENAME_COMMAND_ID,
-                name: this.localize('contextmenu.rename', 'Rename'),
-            },
-            {
-                id: this.constants.DELETE_COMMAND_ID,
-                name: this.localize('contextmenu.delete', 'Delete'),
-            },
-        ],
-        FOLDER_PANEL_CONTEXT_MENU: () => [
-            {
-                id: this.constants.NEW_FOLDER_COMMAND_ID,
-                name: this.localize('contextmenu.addFolderToSpace', 'Add Folder to Workspace...'),
-            },
-            {
-                id: this.constants.FIND_IN_WORKSPACE_ID,
-                name: this.localize('contextmenu.findInSpace', 'Find in Workspace...'),
-            },
-            {
-                id: this.constants.DOWNLOAD_COMMAND_ID,
-                name: this.localize('contextmenu.download', 'Download...'),
-            },
-        ],
-        builtInExplorerFolderPanel: () => ({
-            id: this.constants.SAMPLE_FOLDER_PANEL_ID,
-            sortIndex: 8,
-            name: this.localize('menu.defaultProjectName', 'No Open Folder'),
-            config: {
-                grow: 2,
-            },
-            toolbar: [
+        MENUBAR_ITEMS: () =>
+            <IMenuItemProps[]>[
                 {
-                    id: this.constants.NEW_FILE_COMMAND_ID,
-                    name: this.localize('toolbar.newFile', 'New File'),
-                    group: 'inline',
-                    icon: 'new-file',
+                    id: this.constants.MENUBAR_ITEM_FILE,
+                    name: this.localize(this.constants.MENUBAR_ITEM_FILE, 'File'),
+                    children: [
+                        {
+                            id: this.constants.MENUBAR_ITEM_CREATE_FILE,
+                            name: this.localize(
+                                this.constants.MENUBAR_ITEM_CREATE_FILE,
+                                'New File'
+                            ),
+                        },
+                        {
+                            id: this.constants.MENUBAR_ITEM_OPEN,
+                            name: this.localize(this.constants.MENUBAR_ITEM_OPEN, 'Open'),
+                        },
+                    ],
                 },
                 {
-                    id: this.constants.NEW_FOLDER_COMMAND_ID,
-                    name: this.localize('toolbar.newFolder', 'New Folder'),
-                    group: 'inline',
-                    icon: 'new-folder',
+                    id: this.constants.MENUBAR_ITEM_EDIT,
+                    name: this.localize(this.constants.MENUBAR_ITEM_EDIT, 'Edit'),
+                    children: [
+                        {
+                            id: this.constants.MENUBAR_ITEM_UNDO,
+                            name: this.localize(this.constants.MENUBAR_ITEM_UNDO, 'Undo'),
+                        },
+                        {
+                            id: this.constants.MENUBAR_ITEM_REDO,
+                            name: this.localize(this.constants.MENUBAR_ITEM_REDO, 'Redo'),
+                        },
+                    ],
                 },
                 {
-                    id: this.constants.REFRESH_COMMAND_ID,
-                    name: this.localize('toolbar.refresh', 'Refresh'),
-                    group: 'inline',
-                    icon: 'refresh',
+                    id: this.constants.MENUBAR_ITEM_SELECTION,
+                    name: this.localize(this.constants.MENUBAR_ITEM_SELECTION, 'Selection'),
+                    children: [
+                        {
+                            id: this.constants.MENUBAR_ITEM_SELECT_ALL,
+                            name: this.localize(
+                                this.constants.MENUBAR_ITEM_SELECT_ALL,
+                                'Select All'
+                            ),
+                        },
+                        {
+                            id: this.constants.MENUBAR_ITEM_COPY_LINE_UP,
+                            name: this.localize(
+                                this.constants.MENUBAR_ITEM_COPY_LINE_UP,
+                                'Copy Line Up'
+                            ),
+                        },
+                    ],
                 },
                 {
-                    id: this.constants.COLLAPSE_COMMAND_ID,
-                    name: this.localize('toolbar.collapseAll', 'Collapse all'),
-                    group: 'inline',
-                    icon: 'collapse-all',
+                    id: this.constants.MENUBAR_ITEM_VIEW,
+                    name: this.localize(this.constants.MENUBAR_ITEM_VIEW, 'View'),
+                    children: [
+                        {
+                            id: this.constants.MENUBAR_ITEM_COMMAND_PALETTE,
+                            name: this.localize(
+                                this.constants.MENUBAR_ITEM_COMMAND_PALETTE,
+                                'Command Palette'
+                            ),
+                        },
+                        {
+                            id: this.constants.MENUBAR_ITEM_OPEN_VIEW,
+                            name: this.localize(this.constants.MENUBAR_ITEM_OPEN_VIEW, 'Open View'),
+                        },
+                        {
+                            id: this.constants.MENUBAR_ITEM_APPEARANCE,
+                            name: this.localize(
+                                this.constants.MENUBAR_ITEM_APPEARANCE,
+                                'Appearance'
+                            ),
+                            children: [
+                                {
+                                    id: this.constants.MENUBAR_ITEM_MENU,
+                                    name: this.localize(
+                                        this.constants.MENUBAR_ITEM_MENU,
+                                        'Show Menu Bar'
+                                    ),
+                                },
+                                {
+                                    id: this.constants.MENUBAR_ITEM_SIDEBAR,
+                                    name: this.localize(
+                                        this.constants.MENUBAR_ITEM_SIDEBAR,
+                                        'Show Side Bar'
+                                    ),
+                                },
+                                {
+                                    id: this.constants.MENUBAR_ITEM_AUXILIARY,
+                                    name: this.localize(
+                                        this.constants.MENUBAR_ITEM_AUXILIARY,
+                                        'Show Auxiliary Bar'
+                                    ),
+                                },
+                                {
+                                    id: this.constants.MENUBAR_ITEM_STATUSBAR,
+                                    name: this.localize(
+                                        this.constants.MENUBAR_ITEM_STATUSBAR,
+                                        'Show Status Bar'
+                                    ),
+                                },
+                                {
+                                    id: this.constants.MENUBAR_ITEM_ACTIVITYBAR,
+                                    name: this.localize(
+                                        this.constants.MENUBAR_ITEM_ACTIVITYBAR,
+                                        'Show Activity Bar'
+                                    ),
+                                },
+                                {
+                                    id: this.constants.MENUBAR_ITEM_PANEL,
+                                    name: this.localize(
+                                        this.constants.MENUBAR_ITEM_PANEL,
+                                        'Show Panel'
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    id: this.constants.MENUBAR_ITEM_RUN,
+                    name: this.localize(this.constants.MENUBAR_ITEM_RUN, 'Run'),
+                    children: [
+                        {
+                            id: this.constants.MENUBAR_ITEM_RUN_TASK,
+                            name: this.localize(this.constants.MENUBAR_ITEM_RUN_TASK, 'Run Task'),
+                        },
+                    ],
+                },
+                {
+                    id: this.constants.MENUBAR_ITEM_HELP,
+                    name: this.localize(this.constants.MENUBAR_ITEM_HELP, 'Help'),
+                    children: [
+                        {
+                            id: this.constants.MENUBAR_ITEM_ABOUT,
+                            name: this.localize(this.constants.MENUBAR_ITEM_ABOUT, 'About'),
+                        },
+                    ],
                 },
             ],
-        }),
-        builtInOutputPanel: () => ({
-            id: this.constants.PANEL_OUTPUT,
-            name: this.localize(this.constants.PANEL_OUTPUT, 'output'),
+        ACTIVITYBAR_ITEMS: () =>
+            <IActivityBarItem[]>[
+                {
+                    id: this.constants.ACTIVITYBAR_ITEM_ACCOUNT,
+                    name: this.localize(this.constants.ACTIVITYBAR_ITEM_ACCOUNT, 'Account'),
+                    icon: 'account',
+                    alignment: 'bottom',
+                },
+                {
+                    id: this.constants.ACTIVITYBAR_ITEM_SETTING,
+                    name: this.localize(this.constants.ACTIVITYBAR_ITEM_SETTING, 'Settings'),
+                    icon: 'settings-gear',
+                    alignment: 'bottom',
+                },
+            ],
+        ACTIVITYBAR_CONTEXTMENU: () =>
+            <IMenuItemProps[]>[
+                {
+                    id: this.constants.ACTIVITYBAR_CONTEXTMENU_HIDE,
+                    name: this.localize(
+                        this.constants.ACTIVITYBAR_CONTEXTMENU_HIDE,
+                        'Hide Activity Bar'
+                    ),
+                },
+            ],
+        EXPLORER_ITEM: () =>
+            <IActivityBarItem>{
+                id: this.constants.SIDEBAR_ITEM_EXPLORER,
+                name: this.localize(this.constants.SIDEBAR_ITEM_EXPLORER, 'Explore'),
+                icon: 'files',
+                sortIndex: 1,
+                alignment: 'top',
+            },
+        SEARCH: () =>
+            <IActivityBarItem>{
+                id: this.constants.SIDEBAR_ITEM_SEARCH,
+                name: this.localize(this.constants.SIDEBAR_ITEM_SEARCH, 'Search'),
+                icon: 'search',
+                sortIndex: 2,
+                alignment: 'top',
+            },
+        SEARCH_TOOLBAR: () =>
+            <IMenuItemProps[]>[
+                {
+                    id: this.constants.SEARCH_TOOLBAR_REFRESH,
+                    icon: 'refresh',
+                    name: this.localize(this.constants.SEARCH_TOOLBAR_REFRESH, 'Refresh'),
+                    group: 'inline',
+                    sortIndex: 5,
+                    disabled: true,
+                },
+                {
+                    id: this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
+                    icon: 'clear-all',
+                    name: this.localize(
+                        this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
+                        'Clear Search Results'
+                    ),
+                    group: 'inline',
+                    sortIndex: 6,
+                    disabled: true,
+                },
+                {
+                    id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
+                    icon: 'list-tree',
+                    name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_TREE, 'View as Tree'),
+                    group: 'inline',
+                    sortIndex: 7,
+                    disabled: true,
+                },
+                {
+                    id: this.constants.SEARCH_TOOLBAR_COLLAPSE_EXPAND,
+                    icon: 'collapse-all',
+                    name: this.localize(this.constants.SEARCH_TOOLBAR_COLLAPSE, 'Collapse All'),
+                    group: 'inline',
+                    sortIndex: 8,
+                    disabled: true,
+                },
+            ],
+
+        CONTEXTMENU_OPEN_TO_SIDE: () => [
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE,
+                name: this.localize(
+                    this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE,
+                    'Open to the Side'
+                ),
+            },
+        ],
+        CONTEXTMENU_CREATE: () => [
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE,
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE, 'New File'),
+            },
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER,
+                name: this.localize(
+                    this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER,
+                    'New Folder'
+                ),
+            },
+        ],
+        CONTEXTMENU_COMMON: () => [
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_RENAME,
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_RENAME, 'Rename'),
+            },
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_DELETE,
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_DELETE, 'Delete'),
+            },
+        ],
+        CONTEXTMENU_FOLDER_PANEL: () => [
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_ADD_TO_WORKSPACE,
+                name: this.localize(
+                    this.constants.EXPLORER_CONTEXTMENU_ADD_TO_WORKSPACE,
+                    'Add Folder to Workspace...'
+                ),
+            },
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_FIND_IN_WORKSPACE,
+                name: this.localize(
+                    this.constants.EXPLORER_CONTEXTMENU_FIND_IN_WORKSPACE,
+                    'Find in Workspace...'
+                ),
+            },
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_DOWNLOAD,
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_DOWNLOAD, 'Download...'),
+            },
+        ],
+        FOLDER_TREE: () =>
+            <IExplorerPanelItem>{
+                id: this.constants.EXPLORER_ITEM_WORKSPACE,
+                sortIndex: 8,
+                name: this.localize(this.constants.EXPLORER_ITEM_WORKSPACE, 'No Open Folder'),
+                config: {
+                    grow: 2,
+                },
+                toolbar: [
+                    {
+                        id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE,
+                        name: this.localize(
+                            this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE,
+                            'New File'
+                        ),
+                        group: 'inline',
+                        icon: 'new-file',
+                    },
+                    {
+                        id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER,
+                        name: this.localize(
+                            this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER,
+                            'New Folder'
+                        ),
+                        group: 'inline',
+                        icon: 'new-folder',
+                    },
+                    {
+                        id: this.constants.EXPLORER_TOOLBAR_REFRESH,
+                        name: this.localize(this.constants.EXPLORER_TOOLBAR_REFRESH, 'Refresh'),
+                        group: 'inline',
+                        icon: 'refresh',
+                    },
+                    {
+                        id: this.constants.EXPLORER_TOOLBAR_COLLAPSE,
+                        name: this.localize(
+                            this.constants.EXPLORER_TOOLBAR_COLLAPSE,
+                            'Collapse all'
+                        ),
+                        group: 'inline',
+                        icon: 'collapse-all',
+                    },
+                ],
+            },
+        OUTPUT: () => ({
+            id: this.constants.PANEL_ITEM_OUTPUT,
+            name: this.localize(this.constants.PANEL_ITEM_OUTPUT, 'output'),
             data: '',
             sortIndex: 2,
             closable: false,
         }),
-        builtInEditorInitialActions: () => [
-            {
-                id: this.constants.EDITOR_MENU_SPLIT,
-                name: 'Split Editor Right',
-                title: this.localize('editor.actions.splitRight', 'Split Editor Right'),
-                icon: 'split-horizontal',
-                group: 'inline',
-                sortIndex: 99,
-            },
-            {
-                id: this.constants.EDITOR_MENU_CLOSE_ALL,
-                name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
-            },
-        ],
-        builtInExplorerEditorPanel: () => ({
-            id: this.constants.EDITOR_PANEL_ID,
-            sortIndex: 1,
-            name: this.localize(this.constants.EDITOR_PANEL_ID, 'OPEN EDITORS'),
-            toolbar: [
+        EDITOR_TOOLBAR: () =>
+            <IMenuItemProps[]>[
                 {
-                    id: this.constants.EXPLORER_TOGGLE_SAVE_ALL,
-                    title: this.localize(this.constants.EXPLORER_TOGGLE_SAVE_ALL, 'Save All'),
-                    icon: 'save-all',
+                    id: this.constants.EDITOR_TOOLBAR_SPLIT,
+                    name: this.localize(this.constants.EDITOR_TOOLBAR_SPLIT, 'Split Editor Right'),
+                    icon: 'split-horizontal',
                     group: 'inline',
+                    sortIndex: 99,
                 },
                 {
-                    id: this.constants.EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
-                    title: this.localize(
-                        this.constants.EXPLORER_TOGGLE_CLOSE_ALL_EDITORS,
-                        'Close All Editors'
-                    ),
-                    icon: 'close-all',
-                    group: 'inline',
+                    id: this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL,
+                    name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL, 'Close All'),
                 },
             ],
-            // groupToolbar: [
-            //     {
-            //         id: this.constants.EXPLORER_TOGGLE_SAVE_GROUP,
-            //         title: this.localize(this.constants.EXPLORER_TOGGLE_SAVE_GROUP, 'Save Group'),
-            //         icon: 'save-all',
-            //     },
-            //     {
-            //         id: this.constants.EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
-            //         title: this.localize(
-            //             this.constants.EXPLORER_TOGGLE_CLOSE_GROUP_EDITORS,
-            //             'Close Group Editors'
-            //         ),
-            //         icon: 'close-all',
-            //     },
-            // ],
-            config: {
-                grow: 0,
+        EDITOR_TREE: () =>
+            <IExplorerPanelItem>{
+                id: this.constants.EXPLORER_ITEM_OPEN_EDITOR,
+                sortIndex: 1,
+                name: this.localize(this.constants.EXPLORER_ITEM_OPEN_EDITOR, 'OPEN EDITORS'),
+                toolbar: [
+                    {
+                        id: this.constants.EXPLORER_TOOLBAR_SAVE_ALL,
+                        title: this.localize(this.constants.EXPLORER_TOOLBAR_SAVE_ALL, 'Save All'),
+                        icon: 'save-all',
+                        group: 'inline',
+                    },
+                    {
+                        id: this.constants.EXPLORER_TOOLBAR_CLOSE_ALL,
+                        title: this.localize(
+                            this.constants.EXPLORER_TOOLBAR_CLOSE_ALL,
+                            'Close All Editors'
+                        ),
+                        icon: 'close-all',
+                        group: 'inline',
+                    },
+                ],
+                config: {
+                    grow: 0,
+                },
             },
-        }),
-        builtInEditorInitialMenu: () => [
-            {
-                id: this.constants.EDITOR_MENU_CLOSE,
-                name: this.localize(this.constants.EDITOR_MENU_CLOSE, 'Close'),
+        EDITOR_CONTEXTMENU: () =>
+            <IMenuItemProps[]>[
+                {
+                    id: this.constants.EDITOR_CONTEXTMENU_CLOSE,
+                    name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE, 'Close'),
+                },
+                {
+                    id: this.constants.EDITOR_CONTEXTMENU_CLOSE_OTHERS,
+                    name: this.localize(
+                        this.constants.EDITOR_CONTEXTMENU_CLOSE_OTHERS,
+                        'Close Others'
+                    ),
+                },
+                {
+                    id: this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT,
+                    name: this.localize(
+                        this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT,
+                        'Close To Right'
+                    ),
+                },
+                {
+                    id: this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_LEFT,
+                    name: this.localize(
+                        this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_LEFT,
+                        'Close To Left'
+                    ),
+                },
+                {
+                    id: this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL,
+                    name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL, 'Close All'),
+                },
+            ],
+        NOTIFICATION: () =>
+            <IStatusBarItem>{
+                id: this.constants.STATUSBAR_ITEM_NOTIFICATION,
+                name: this.localize(this.constants.STATUSBAR_ITEM_NOTIFICATION, 'Notification'),
+                sortIndex: 1,
+                alignment: 'right',
             },
-            {
-                id: this.constants.EDITOR_MENU_CLOSE_OTHERS,
-                name: this.localize(this.constants.EDITOR_MENU_CLOSE_OTHERS, 'Close Others'),
+        NOTIFICATION_CLEAR_ALL: () =>
+            <IMenuItemProps>{
+                id: this.constants.NOTIFICATION_TOOLBAR_CLEAR_ALL,
+                title: this.localize(
+                    this.constants.NOTIFICATION_TOOLBAR_CLEAR_ALL,
+                    'Clear All Notifications'
+                ),
+                icon: 'clear-all',
+                group: 'inline',
             },
-            {
-                id: this.constants.EDITOR_MENU_CLOSE_TO_RIGHT,
-                name: this.localize(this.constants.EDITOR_MENU_CLOSE_TO_RIGHT, 'Close To Right'),
+        NOTIFICATION_HIDE: () =>
+            <IMenuItemProps>{
+                id: this.constants.NOTIFICATION_TOOLBAR_HIDE,
+                title: this.localize(
+                    this.constants.NOTIFICATION_TOOLBAR_HIDE,
+                    'Hide Notifications'
+                ),
+                icon: 'chevron-down',
+                group: 'inline',
             },
-            {
-                id: this.constants.EDITOR_MENU_CLOSE_TO_LEFT,
-                name: this.localize(this.constants.EDITOR_MENU_CLOSE_TO_LEFT, 'Close To Left'),
+        EDITOR_TREE_CONTEXTMENU: () =>
+            <IMenuItemProps[]>[
+                {
+                    id: this.constants.EDITOR_CONTEXTMENU_CLOSE_SAVED,
+                    name: this.localize(
+                        this.constants.EDITOR_CONTEXTMENU_CLOSE_SAVED,
+                        'Close Saved'
+                    ),
+                },
+                {
+                    id: this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL,
+                    name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL, 'Close All'),
+                },
+            ],
+        CONTEXTMENU_ITEM_HIDE: () =>
+            <IMenuItemProps>{
+                id: this.constants.PANEL_CONTEXTMENU_HIDE,
+                name: this.localize(this.constants.PANEL_CONTEXTMENU_HIDE, `Hidden Panel`),
             },
-            {
-                id: this.constants.EDITOR_MENU_CLOSE_ALL,
-                name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+        PANEL_CLOSE: () =>
+            <IMenuItemProps>{
+                id: this.constants.PANEL_TOOLBAR_CLOSE,
+                title: this.localize(this.constants.PANEL_TOOLBAR_CLOSE, 'Close Panel'),
+                icon: 'close',
+                group: 'inline',
+                sortIndex: 1,
             },
-        ],
-        builtInNotification: () => ({
-            id: this.constants.NOTIFICATION_MODEL_ID,
-            name: this.constants.NOTIFICATION_MODEL_NAME,
-            sortIndex: 1,
-            alignment: 'right',
-        }),
-        NOTIFICATION_CLEAR_ALL: () => ({
-            id: this.constants.NOTIFICATION_CLEAR_ALL_ID,
-            title: 'Clear All Notifications',
-            icon: 'clear-all',
-            group: 'inline',
-        }),
-        NOTIFICATION_HIDE: () => ({
-            id: this.constants.NOTIFICATION_HIDE_ID,
-            title: 'Hide Notifications',
-            icon: 'chevron-down',
-            group: 'inline',
-        }),
-        builtInEditorTreeHeaderContextMenu: () => [
-            {
-                id: this.constants.EDITOR_MENU_CLOSE_SAVED,
-                name: this.localize(this.constants.EDITOR_MENU_CLOSE_SAVED, 'Close Saved'),
+        PANEL_RESTORE: () =>
+            <IMenuItemProps>{
+                id: this.constants.PANEL_TOOLBAR_MAXIMIZE,
+                title: this.localize(this.constants.PANEL_TOOLBAR_RESTORE, 'Restore Panel Size'),
+                icon: 'chevron-down',
+                group: 'inline',
             },
-            {
-                id: this.constants.EDITOR_MENU_CLOSE_ALL,
-                name: this.localize(this.constants.EDITOR_MENU_CLOSE_ALL, 'Close All'),
+        PANEL_MAXIMIZE: () =>
+            <IMenuItemProps>{
+                id: this.constants.PANEL_TOOLBAR_MAXIMIZE,
+                title: this.localize(this.constants.PANEL_TOOLBAR_MAXIMIZE, 'Maximize Panel Size'),
+                icon: 'chevron-up',
+                group: 'inline',
             },
-        ],
+        EDITORTREE_TOOLBAR: () =>
+            <IMenuItemProps[]>[
+                {
+                    id: this.constants.EDITORTREE_TOOLBAR_SAVE_GROUP,
+                    title: this.localize(
+                        this.constants.EDITORTREE_TOOLBAR_SAVE_GROUP,
+                        'Save Group'
+                    ),
+                    group: 'inline',
+                    icon: 'save-all',
+                },
+                {
+                    id: this.constants.EDITORTREE_TOOLBAR_CLOSE_GROUP,
+                    title: this.localize(
+                        this.constants.EDITORTREE_TOOLBAR_CLOSE_GROUP,
+                        'Close Group Editors'
+                    ),
+                    group: 'inline',
+                    icon: 'close-all',
+                },
+            ],
     };
+    public disabled: string[] = [];
     constructor(private localize: Localize) {}
-
-    get modules() {
-        const modules = this.#modules;
-        const proxyObj = Object.keys(modules).reduce<{ [key in keyof typeof modules]: any }>(
-            (acc, cur) => ({
-                ...acc,
-                [cur]: () => {},
-            }),
-            {} as any
-        );
-        return new Proxy(proxyObj, {
-            get(_, p: keyof typeof modules) {
-                if (p in proxyObj) {
-                    return modules[p]();
-                }
-                return null;
-            },
-        });
-    }
 }

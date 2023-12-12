@@ -8,11 +8,11 @@ export const ExtendsMenuBar: IExtension = {
     activate: function (molecule, monaco): void {
         molecule.menuBar.onSelect((menuId) => {
             const {
-                MENU_VIEW_PANEL,
-                MENU_VIEW_MENUBAR,
-                MENU_VIEW_SIBEBAR,
-                MENU_VIEW_STATUSBAR,
-                MENU_VIEW_ACTIVITYBAR,
+                MENUBAR_ITEM_PANEL: MENU_VIEW_PANEL,
+                MENUBAR_ITEM_MENU: MENU_VIEW_MENUBAR,
+                MENUBAR_ITEM_SIDEBAR: MENU_VIEW_SIBEBAR,
+                MENUBAR_ITEM_STATUSBAR: MENU_VIEW_STATUSBAR,
+                MENUBAR_ITEM_ACTIVITYBAR: MENU_VIEW_ACTIVITYBAR,
             } = molecule.builtin.getState().constants;
 
             switch (menuId) {

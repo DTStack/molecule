@@ -28,12 +28,15 @@ export class ActivityBarController extends BaseController implements IActivityBa
     }
 
     private initView() {
-        const { activityBarData, contextMenuData } = this.builtin.getState().modules;
-        if (activityBarData) {
-            this.activityBar.add(activityBarData);
-        }
-        if (contextMenuData) {
-            this.contextMenu.add('activityBar', contextMenuData);
+        const { ACTIVITYBAR_ITEMS, ACTIVITYBAR_CONTEXTMENU } = this.builtin.getModules();
+        if (ACTIVITYBAR_ITEMS) {
+            this.activityBar.add(ACTIVITYBAR_ITEMS);
+            if (ACTIVITYBAR_CONTEXTMENU) {
+                this.contextMenu.add(
+                    this.builtin.getConstants().CONTEXTMENU_ITEM_ACTIVITYBAR,
+                    ACTIVITYBAR_CONTEXTMENU
+                );
+            }
         }
     }
 

@@ -22,7 +22,9 @@ export default function Sidebar({ onToolbarClick }: ISideBarController) {
             <div className={variables.pane}>
                 <Flex className={variables.header} justifyContent="space-between">
                     <div className={variables.title}>
-                        <h2 title={pane.title}>{pane.title}</h2>
+                        <h2 title={typeof pane.name === 'string' ? pane.name : undefined}>
+                            {pane.name}
+                        </h2>
                     </div>
                     {!!toolbar.length && (
                         <div className={variables.toolbar}>

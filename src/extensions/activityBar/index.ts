@@ -18,10 +18,10 @@ export const ExtendsActivityBar: IExtension = {
 
         molecule.activityBar.onContextMenuClick((item) => {
             const {
-                CONTEXT_MENU_HIDE,
-                EXPLORER_ACTIVITY_ITEM,
-                ACTIVITY_BAR_GLOBAL_SETTINGS,
-                ACTIVITY_BAR_GLOBAL_ACCOUNT,
+                ACTIVITYBAR_CONTEXTMENU_HIDE: CONTEXT_MENU_HIDE,
+                SIDEBAR_ITEM_EXPLORER: EXPLORER_ACTIVITY_ITEM,
+                ACTIVITYBAR_ITEM_SETTING: ACTIVITY_BAR_GLOBAL_SETTINGS,
+                ACTIVITYBAR_ITEM_ACCOUNT: ACTIVITY_BAR_GLOBAL_ACCOUNT,
             } = molecule.builtin.getState().constants;
             switch (item.id) {
                 case CONTEXT_MENU_HIDE: {

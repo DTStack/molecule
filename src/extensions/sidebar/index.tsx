@@ -6,7 +6,7 @@ export const ExtendsSidebar: IExtension = {
     name: 'Extend The Default Sidebar',
     activate: function (molecule): void {
         molecule.sidebar.onToolbarClick((item, groupId) => {
-            const { EXPLORER_ACTIVITY_ITEM, EDITOR_PANEL_ID, SAMPLE_FOLDER_PANEL_ID } =
+            const { SIDEBAR_ITEM_EXPLORER: EXPLORER_ACTIVITY_ITEM, EXPLORER_ITEM_OPEN_EDITOR: EDITOR_PANEL_ID, EXPLORER_ITEM_WORKSPACE: SAMPLE_FOLDER_PANEL_ID } =
                 molecule.builtin.getState().constants;
             if (groupId === EXPLORER_ACTIVITY_ITEM) {
                 switch (item.id) {

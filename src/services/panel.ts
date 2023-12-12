@@ -4,6 +4,7 @@ import type {
     ArraylizeOrSingle,
     ContextMenuEventHandler,
     IMenuItemProps,
+    RequiredId,
     UniqueId,
 } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
@@ -30,10 +31,15 @@ export interface IPanelService extends BaseService<PanelModel> {
      */
     add(data: ArraylizeOrSingle<IPanelItem>): void;
     /**
+     * Add new toolbar items
+     */
+    addToolbar(toolbars: IMenuItemProps[]): void;
+    /**
      * Update the specific panel
      * @param panel the id field is required
      */
     update(panel: IPanelItem): IPanelItem | undefined;
+    updateToolbar(item: RequiredId<IMenuItemProps>): void;
     /**
      * Remove the specific panel
      * @param id
@@ -94,6 +100,10 @@ export class PanelService extends BaseService<PanelModel> implements IPanelServi
         this.setState((prev) => ({ ...prev, data: [...prev.data, ...next] }));
     }
 
+    public addToolbar(toolbars: IMenuItemProps[]): void {
+        this.setState((prev) => ({ ...prev, toolbars: [...prev.toolbars, ...toolbars] }));
+    }
+
     public update(data: IPanelItem): IPanelItem | undefined {
         const panel = this.getPanel(data.id);
         if (panel) {
@@ -103,6 +113,15 @@ export class PanelService extends BaseService<PanelModel> implements IPanelServi
         } else {
             logger.error(`There is no panel found in data via the ${data.id}`);
             return undefined;
+        }
+    }
+    public updateToolbar(item: RequiredId<IMenuItemProps>): void {
+        const toolbar = this.getState().toolbars.find(searchById(item.id));
+        if (toolbar) {
+            Object.assign(toolbar, item);
+            this.setState((prev) => ({ ...prev }));
+        } else {
+            logger.error(`There is no toolbar found in data via the ${item.id}`);
         }
     }
 

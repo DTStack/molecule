@@ -4,6 +4,7 @@ import { BaseController } from 'mo/glue';
 import { EditorTreeEvent } from 'mo/models/editorTree';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { ContextMenuService } from 'mo/services/contextMenu';
+import type { EditorTreeService } from 'mo/services/editorTree';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { SidebarService } from 'mo/services/sidebar';
 import type { ContextMenuEditorHandler, ContextMenuGroupHandler, UniqueId } from 'mo/types';
@@ -31,39 +32,35 @@ export class EditorTreeController extends BaseController implements IEditorTreeC
         @inject('builtin') private builtin: BuiltinService,
         @inject('explorer') private explorer: ExplorerService,
         @inject('contextMenu') private contextMenu: ContextMenuService,
-        @inject('sidebar') private sidebar: SidebarService
+        @inject('sidebar') private sidebar: SidebarService,
+        @inject('editorTree') private editorTree: EditorTreeService
     ) {
         super();
         this.initView();
     }
 
     private initView() {
-        const { builtInExplorerEditorPanel, builtInEditorTreeHeaderContextMenu } =
-            this.builtin.getState().modules;
-        const { EXPLORER_ACTIVITY_ITEM } = this.builtin.getState().constants;
-
-        this.explorer.addPanel({
-            ...builtInExplorerEditorPanel,
-            render: (panel) => createElement(EditorTree, { panel, ...this }),
-        });
-
-        const explorer = this.sidebar.get(EXPLORER_ACTIVITY_ITEM);
-        if (explorer) {
-            this.sidebar.update({
-                id: EXPLORER_ACTIVITY_ITEM,
-                toolbar: [
-                    ...(explorer.toolbar || []),
-                    {
-                        id: builtInExplorerEditorPanel.id,
-                        name: builtInExplorerEditorPanel.name,
-                        icon: 'check',
-                        sortIndex: builtInExplorerEditorPanel.sortIndex,
-                    },
-                ],
+        const { EDITOR_TREE, EDITOR_TREE_CONTEXTMENU, EDITORTREE_TOOLBAR } =
+            this.builtin.getModules();
+        if (EDITOR_TREE) {
+            this.explorer.addPanel({
+                ...EDITOR_TREE,
+                render: (panel) => createElement(EditorTree, { panel, ...this }),
             });
+            this.sidebar.addToolbar(this.builtin.getConstants().SIDEBAR_ITEM_EXPLORER, {
+                id: EDITOR_TREE.id,
+                name: EDITOR_TREE.name,
+                icon: 'check',
+                sortIndex: EDITOR_TREE.sortIndex,
+            });
+            this.contextMenu.add(
+                this.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR_TREE,
+                EDITOR_TREE_CONTEXTMENU
+            );
         }
-
-        this.contextMenu.add('editorTreeHeader', builtInEditorTreeHeaderContextMenu);
+        if (EDITORTREE_TOOLBAR) {
+            this.editorTree.addToolbar(EDITORTREE_TOOLBAR);
+        }
     }
 
     public onContextMenu: ContextMenuEditorHandler = (menu, tabId, groupId) => {

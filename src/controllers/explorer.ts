@@ -25,16 +25,14 @@ export class ExplorerController extends BaseController implements IExplorerContr
     }
 
     private initView() {
-        const { EXPLORER_ACTIVITY_ITEM, builtInExplorerActivityItem } =
-            this.builtin.getState().modules;
-        this.activitybar.add(builtInExplorerActivityItem, true);
-        this.sidebar.add(
-            {
-                ...EXPLORER_ACTIVITY_ITEM,
-                render: () => React.createElement(Explorer, { ...this }),
-            },
-            true
-        );
+        const { EXPLORER_ITEM } = this.builtin.getModules();
+        if (EXPLORER_ITEM) {
+            this.activitybar.add(EXPLORER_ITEM, true);
+            this.sidebar.add(
+                { ...EXPLORER_ITEM, render: () => React.createElement(Explorer, { ...this }) },
+                true
+            );
+        }
     }
 
     public readonly onCollapseChange = (keys: UniqueId[]) => {

@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { ContextMenuModel } from 'mo/models/contextMenu';
-import { IMenuItemProps, RequiredId, UniqueId } from 'mo/types';
+import { FunctionalOrSingle, IMenuItemProps, RequiredId, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 
 /**
@@ -49,10 +49,13 @@ export class ContextMenuService extends BaseService<ContextMenuModel> {
      * @param key
      * @param value
      */
-    public update(key: UniqueId, value: IMenuItemProps[]) {
+    public update(key: UniqueId, value: FunctionalOrSingle<IMenuItemProps[]>) {
         this.setState((prev) => ({
             ...prev,
-            data: new Map([...prev.data, [key, value]]),
+            data:
+                typeof value === 'function'
+                    ? new Map([...prev.data, [key, value(prev.data.get(key) || [])]])
+                    : new Map([...prev.data, [key, value]]),
         }));
     }
 

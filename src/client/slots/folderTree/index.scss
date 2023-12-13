@@ -4,6 +4,9 @@ $folderTree: prefix('folderTree');
 $input: BEMElement($folderTree, 'input');
 $editing: BEMModifier($folderTree, 'editing');
 
+.#{$folderTree} {
+    padding-bottom: 22px;
+}
 
 :export {
     folderTree: $folderTree;

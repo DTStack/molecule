@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import Dropdown from 'mo/client/components/dropdown';
-import useConnector from 'mo/client/hooks/useConnector';
-import { IMenuItemProps, KeyboardEventHandler  } from 'mo/types';
+import { IMenuItemProps, KeyboardEventHandler } from 'mo/types';
 import { TreeNodeModel } from 'mo/utils/tree';
 
 import variables from './index.scss';
@@ -14,9 +13,9 @@ interface ITreeNodeProps {
     name?: string;
     className?: string;
     draggable?: boolean;
+    contextMenu?: IMenuItemProps[];
     renderIcon: () => JSX.Element | null;
     renderTitle: () => React.ReactNode;
-    onRightClick?: React.MouseEventHandler<HTMLDivElement>;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
     onNodeDragStart?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDragEnter?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
@@ -24,7 +23,8 @@ interface ITreeNodeProps {
     onNodeDragEnd?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onNodeDrop?: (e: React.DragEvent<HTMLDivElement>, node: ITreeNodeItemProps) => void;
     onTreeItemKeyDown?: KeyboardEventHandler;
-    onContextMenu?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
+    onContextMenu?: (node: ITreeNodeItemProps) => void;
+    onContextMenuClick?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
 }
 const INDENT = 8;
 
@@ -33,10 +33,10 @@ export default ({
     indent,
     className,
     name,
+    draggable,
+    contextMenu,
     renderIcon,
     renderTitle,
-    draggable,
-    onRightClick,
     onClick,
     onNodeDragStart,
     onNodeDragEnter,
@@ -45,10 +45,10 @@ export default ({
     onNodeDragEnd,
     onTreeItemKeyDown,
     onContextMenu,
+    onContextMenuClick,
 }: ITreeNodeProps) => {
     const uuid = data.id;
     const ref = useRef<HTMLDivElement>(null);
-    const { contextMenu } = useConnector('folderTree');
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -92,8 +92,10 @@ export default ({
         onTreeItemKeyDown?.(e, data);
     };
 
-    const handleContextMenu = (item: IMenuItemProps) => {
-        onContextMenu?.(item, data);
+    const handleVisibleChange = (visible: boolean) => {
+        if (visible) {
+            onContextMenu?.(data);
+        }
     };
 
     // calculate key automatically via parent path and self id
@@ -102,10 +104,11 @@ export default ({
     return (
         <Dropdown
             data={contextMenu}
-            // stopPropagation
+            stopPropagation
             trigger="contextMenu"
             alignPoint
-            onClick={handleContextMenu}
+            onClick={(item) => onContextMenuClick?.(item, data)}
+            onVisibleChange={handleVisibleChange}
         >
             <div
                 ref={ref}
@@ -117,7 +120,6 @@ export default ({
                 className={className}
                 title={name}
                 draggable={draggable}
-                onContextMenu={onRightClick}
                 onClick={onClick}
                 onDragStart={handleDragStart}
                 onDragOver={handleDragOver}

@@ -72,24 +72,6 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      */
     setEntry(entry: React.ReactNode): void;
     /**
-     * Get the context menus for file
-     */
-    getFileContextMenu: () => IMenuItemProps[];
-    /**
-     * Get the context menus for folder
-     */
-    getFolderContextMenu: () => IMenuItemProps[];
-    /**
-     * Set the context menus for file
-     * @param menus
-     */
-    setFileContextMenu: (menus: IMenuItemProps[]) => void;
-    /**
-     * Set the context menus for folder
-     * @param menus
-     */
-    setFolderContextMenu: (menus: IMenuItemProps[]) => void;
-    /**
      * Set editing FolderTree item
      * @param id itemId
      */
@@ -128,21 +110,12 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @param treeData
      */
     onDropTree(callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void): void;
-    /**
-     * Listen to right click event
-     * @param callback
-     */
-    onRightClick(
-        callback: (
-            e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-            treeData: TreeNodeModel<any>
-        ) => void
-    ): void;
+    onContextMenu(callback: (treeData: TreeNodeModel<any>) => void): void;
     /**
      * Listen to the click event about the context menu except for built-in menus
      * @param callback
      */
-    onContextMenu(
+    onContextMenuClick(
         callback: (contextMenuItem: IMenuItemProps, treeNode?: TreeNodeModel<any>) => void
     ): void;
     /**
@@ -160,7 +133,6 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Listen to after updateFileName event event
      */
     onAfterUpdateFileName: (callback: (file: TreeNodeModel<any>) => void) => void;
-    onTreeClick: (callback: () => void) => void;
 }
 
 @injectable()
@@ -195,26 +167,6 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         const helper = new TreeHelper(data);
         const parent = helper.getParent(id);
         return parent;
-    }
-
-    public getFileContextMenu() {
-        return this.getState().fileContextMenu;
-    }
-
-    public setFileContextMenu(menus: IMenuItemProps[]) {
-        this.setState({
-            fileContextMenu: menus,
-        });
-    }
-
-    public getFolderContextMenu() {
-        return this.getState().folderContextMenu;
-    }
-
-    public setFolderContextMenu(menus: IMenuItemProps[]) {
-        this.setState({
-            folderContextMenu: menus,
-        });
     }
 
     public getExpandKeys() {
@@ -412,20 +364,18 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.subscribe(FolderTreeEvent.onDrop, callback);
     };
 
-    public onRightClick = (
-        callback: (
-            e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-            treeData: TreeNodeModel<any>
-        ) => void
-    ) => {
-        this.subscribe(FolderTreeEvent.onRightClick, callback);
+    public onContextMenu = (callback: (treeData: TreeNodeModel<any>) => void) => {
+        this.subscribe(FolderTreeEvent.onContextMenu, callback);
     };
 
-    public onContextMenu = (
-        callback: (contextMenu: IMenuItemProps, treeNode?: TreeNodeModel<any>) => void
-    ) => {
+    public onContextMenuClick(
+        callback: (
+            contextMenuItem: IMenuItemProps,
+            treeNode?: TreeNodeModel<any> | undefined
+        ) => void
+    ): void {
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
-    };
+    }
 
     public onExpand = (
         callback: (expanded: boolean, expandKeys: UniqueId[], treeNode: TreeNodeModel<any>) => void
@@ -443,9 +393,5 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
 
     public onAfterUpdateFileName(callback: (file: TreeNodeModel<any>) => void): void {
         this.subscribe(FolderTreeEvent.onAfterUpdateFileName, callback);
-    }
-
-    public onTreeClick(callback: () => void): void {
-        this.subscribe(FolderTreeEvent.onTreeClick, callback);
     }
 }

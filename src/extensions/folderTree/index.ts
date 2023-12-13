@@ -1,4 +1,4 @@
-import { IExtension } from 'mo/types';
+import { FileTypes, IExtension } from 'mo/types';
 
 export const ExtendsFolderTree: IExtension = {
     id: 'ExtendsFolderTree',
@@ -39,22 +39,22 @@ export const ExtendsFolderTree: IExtension = {
             molecule.folderTree.dropTree(source, target);
         });
 
-        molecule.folderTree.onContextMenu((contextMenuItem, treeNode) => {
-            const menuId = contextMenuItem.id;
-            const {
-                EXPLORER_CONTEXTMENU_RENAME: RENAME_COMMAND_ID,
-                EXPLORER_CONTEXTMENU_DELETE: DELETE_COMMAND_ID,
-            } = molecule.builtin.getState().constants;
-            const { id } = treeNode!;
-            switch (menuId) {
-                case RENAME_COMMAND_ID: {
-                    molecule.folderTree.setEditing(id);
-                    break;
-                }
-                case DELETE_COMMAND_ID: {
-                    molecule.folderTree.remove(id);
-                    break;
-                }
+        molecule.folderTree.onContextMenu((treeNode) => {
+            if (treeNode.fileType === FileTypes.File) {
+                molecule.contextMenu.update(
+                    molecule.builtin.getConstants().CONTEXTMENU_ITEM_FOLDERTREE,
+                    (prev) => [...prev, ...molecule.builtin.getModules().CONTEXTMENU_FILE]
+                );
+            } else if (treeNode.fileType === FileTypes.Folder) {
+                molecule.contextMenu.update(
+                    molecule.builtin.getConstants().CONTEXTMENU_ITEM_FOLDERTREE,
+                    (prev) => [...prev, ...molecule.builtin.getModules().CONTEXTMENU_FOLDER]
+                );
+            } else if (treeNode.fileType === FileTypes.RootFolder) {
+                molecule.contextMenu.update(
+                    molecule.builtin.getConstants().CONTEXTMENU_ITEM_FOLDERTREE,
+                    (prev) => [...prev, ...molecule.builtin.getModules().CONTEXTMENU_FOLDER_PANEL]
+                );
             }
         });
     },

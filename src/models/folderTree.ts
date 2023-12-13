@@ -1,14 +1,13 @@
-import type { IMenuItemProps, UniqueId } from 'mo/types';
+import type { UniqueId } from 'mo/types';
 import type { TreeNodeModel } from 'mo/utils/tree';
 
 export enum FolderTreeEvent {
     onSelect = 'folderTree.onSelect',
-    onTreeClick = 'folderTree.onTreeClick',
     onDelete = 'folderTree.onDelete',
     onRename = 'folderTree.onRename',
     onUpdateFileName = 'folderTree.onUpdateFileName',
     onAfterUpdateFileName = 'folderTree.onAfterUpdateFileName',
-    onRightClick = 'folderTree.onRightClick',
+    onContextMenu = 'folderTree.onContextMenu',
     onContextMenuClick = 'folderTree.onContextMenuClick',
     onDrop = 'folderTree.onDrop',
     onExpand = 'folderTree.onExpand',
@@ -19,9 +18,6 @@ export enum FolderTreeEvent {
 export interface IFolderTree {
     data: TreeNodeModel<any>[];
     editing?: UniqueId;
-    contextMenu?: IMenuItemProps[];
-    fileContextMenu?: IMenuItemProps[];
-    folderContextMenu?: IMenuItemProps[];
     current?: UniqueId;
     expandKeys: UniqueId[];
     loadedKeys: UniqueId[];
@@ -32,9 +28,6 @@ export interface IFolderTree {
 export class FolderTreeModel implements IFolderTree {
     constructor(
         public data: TreeNodeModel<any>[] = [],
-        public contextMenu: IMenuItemProps[] = [],
-        public fileContextMenu: IMenuItemProps[] = [],
-        public folderContextMenu: IMenuItemProps[] = [],
         public expandKeys: UniqueId[] = [],
         public loadedKeys: UniqueId[] = [],
         public loadingKeys: UniqueId[] = [],

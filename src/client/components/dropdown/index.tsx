@@ -71,7 +71,7 @@ export default function Dropdown({
         onClick?.(dropdownItem);
     };
 
-    return data?.length ? (
+    return (
         <RcDropdown
             visible={visible ?? stateVisible}
             onVisibleChange={handleVisibleChange}
@@ -85,7 +85,5 @@ export default function Dropdown({
             {/* Children should support onClick and onContextMenu event */}
             {React.cloneElement(children, { ...events })}
         </RcDropdown>
-    ) : (
-        children
     );
 }

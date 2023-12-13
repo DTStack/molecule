@@ -24,12 +24,8 @@ export interface IFolderTreeController extends BaseController {
         node: TreeNodeModel<any>
     ) => void;
     readonly onTreeItemKeyDown?: KeyboardEventHandler;
-    readonly onRightClick?: (
-        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        treeNode: TreeNodeModel<any>
-    ) => void;
+    readonly onContextMenu?: (treeNode: TreeNodeModel<any>) => void;
     readonly onCreateRoot?: (e: React.MouseEvent<Element, MouseEvent>) => void;
-    readonly onTreeClick?: () => void;
 }
 
 @injectable()
@@ -47,10 +43,10 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
     private initView() {
         const {
             FOLDER_TREE,
-            CONTEXTMENU_OPEN_TO_SIDE,
-            CONTEXTMENU_COMMON,
-            CONTEXTMENU_CREATE,
-            CONTEXTMENU_FOLDER_PANEL,
+            // CONTEXTMENU_OPEN_TO_SIDE,
+            // CONTEXTMENU_COMMON,
+            // CONTEXTMENU_CREATE,
+            // CONTEXTMENU_FOLDER_PANEL,
         } = this.builtin.getModules();
         if (FOLDER_TREE) {
             this.explorer.addPanel({
@@ -66,26 +62,23 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
             });
         }
         // FIXME: migrate to contextMenu service
-        if (CONTEXTMENU_OPEN_TO_SIDE) {
-            this.folderTree.setFileContextMenu(CONTEXTMENU_OPEN_TO_SIDE);
-        }
-        if (CONTEXTMENU_CREATE) {
-            this.folderTree.setFolderContextMenu(CONTEXTMENU_CREATE);
-        }
-        this.folderTree.setState({
-            contextMenu: CONTEXTMENU_COMMON || [],
-            current: undefined,
-            folderContextMenu: CONTEXTMENU_FOLDER_PANEL || [],
-            data: [],
-            expandKeys: [],
-        });
+        // if (CONTEXTMENU_OPEN_TO_SIDE) {
+        //     this.folderTree.setFileContextMenu(CONTEXTMENU_OPEN_TO_SIDE);
+        // }
+        // if (CONTEXTMENU_CREATE) {
+        //     this.folderTree.setFolderContextMenu(CONTEXTMENU_CREATE);
+        // }
+        // this.folderTree.setState({
+        //     contextMenu: CONTEXTMENU_COMMON || [],
+        //     current: undefined,
+        //     folderContextMenu: CONTEXTMENU_FOLDER_PANEL || [],
+        //     data: [],
+        //     expandKeys: [],
+        // });
     }
 
-    public onRightClick = (
-        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        treeNode: TreeNodeModel<any>
-    ) => {
-        this.emit(FolderTreeEvent.onRightClick, e, treeNode);
+    public onContextMenu = (treeNode: TreeNodeModel<any>) => {
+        this.emit(FolderTreeEvent.onContextMenu, treeNode);
     };
 
     public readonly onDropTree = (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => {
@@ -150,9 +143,5 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
 
     public onCreateRoot = (e: React.MouseEvent<Element, MouseEvent>) => {
         this.emit(FolderTreeEvent.onCreateRoot, e);
-    };
-
-    public onTreeClick = () => {
-        this.emit(FolderTreeEvent.onTreeClick);
     };
 }

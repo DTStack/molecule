@@ -18,39 +18,36 @@ export interface ITreeProps {
     loadedKeys: UniqueId[];
     loadingKeys?: UniqueId[];
     activeKey?: UniqueId;
+    contextMenu?: IMenuItemProps[];
     onExpand?: (expanded: boolean, expandedKeys: UniqueId[], node: ITreeNodeItemProps) => void;
     onSelect?: (node: ITreeNodeItemProps) => void;
-    onTreeClick?: () => void;
     renderTitle?: (
         node: ITreeNodeItemProps,
         index: number,
         isLeaf: boolean
     ) => JSX.Element | string;
     onDropTree?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;
-    onRightClick?: (
-        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        node: ITreeNodeItemProps
-    ) => void;
+    onContextMenu?: (node: ITreeNodeItemProps) => void;
     onTreeItemKeyDown?: KeyboardEventHandler;
-    onContextMenu?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
+    onContextMenuClick?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
 }
 
 export default function Tree({
     className,
     data = [],
     draggable = false,
-    loadedKeys,
+    // loadedKeys,
     expandKeys,
     activeKey,
     loadingKeys = [],
+    contextMenu,
     onExpand,
     onDropTree,
-    onRightClick,
     renderTitle,
     onSelect,
-    onTreeClick,
     onTreeItemKeyDown,
     onContextMenu,
+    onContextMenuClick,
 }: ITreeProps) {
     // const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
     // const [activeKey, setActiveKey] = useState<string | null>(null);
@@ -132,14 +129,6 @@ export default function Tree({
             return <Icon type="loading~spin" />;
         }
         return <Icon type={isExpand ? 'chevron-down' : 'chevron-right'} />;
-    };
-
-    const handleRightClick = (
-        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        info: ITreeNodeItemProps
-    ) => {
-        e.stopPropagation();
-        onRightClick?.(e, info);
     };
 
     const onWindowDragEnd = useCallback((event: any) => {
@@ -256,6 +245,7 @@ export default function Tree({
                     data={item}
                     name={typeof title === 'string' ? title : undefined}
                     indent={indent}
+                    contextMenu={contextMenu}
                     className={classNames(
                         variables.treeNode,
                         isActive && variables.active,
@@ -270,7 +260,6 @@ export default function Tree({
                         )
                     }
                     renderTitle={() => title}
-                    onRightClick={(e) => handleRightClick(e, item)}
                     onClick={(e) => handleNodeClick(item, e)}
                     onNodeDragStart={draggable ? handleDragStart : undefined}
                     onNodeDragEnter={draggable ? handleDragEnter : undefined}
@@ -279,6 +268,7 @@ export default function Tree({
                     onNodeDrop={draggable ? handleDrop : undefined}
                     onTreeItemKeyDown={onTreeItemKeyDown}
                     onContextMenu={onContextMenu}
+                    onContextMenuClick={onContextMenuClick}
                 />
             );
 
@@ -289,55 +279,11 @@ export default function Tree({
         });
     };
 
-    const handleTreeClick = () => {
-        // setActiveKey(null);
-        onTreeClick?.();
-    };
-
-    // useLayoutEffect(() => {
-    //     const cache: {
-    //         paths: ITreeNodeItemProps[];
-    //         data: ITreeNodeItemProps;
-    //     }[] = [];
-    //     data.forEach((item) => {
-    //         cache.push({ paths: [item], data: item });
-    //     });
-
-    //     while (cache.length) {
-    //         const { paths, data } = cache.pop()!;
-    //         const editableChild = data.children?.find((child) => child.isEditable);
-    //         if (editableChild) {
-    //             const keys = paths.map((node) => {
-    //                 validatorLoadingData(node);
-    //                 return node.id.toString();
-    //             });
-    //             const nextExpandKeys = Array.from(
-    //                 new Set([...keys, ...(controlExpandKeys || expandKeys)])
-    //             );
-
-    //             onExpand ? onExpand(nextExpandKeys, data) : setExpandKeys(nextExpandKeys);
-    //             break;
-    //         } else {
-    //             const children =
-    //                 data.children?.map((child) => ({
-    //                     paths: [...paths, child],
-    //                     data: child,
-    //                 })) || [];
-    //             cache.push(...children);
-    //         }
-    //     }
-    // }, [data]);
-
-    // useEffect(() => {
-    //     controlActiveKey && setActiveKey(controlActiveKey.toString());
-    // }, [controlActiveKey]);
-
     return (
         <div
             role="tree"
             ref={wrapper}
             draggable={draggable}
-            onClick={handleTreeClick}
             className={classNames(variables.container, className)}
         >
             {renderTreeNode(data, 0)}

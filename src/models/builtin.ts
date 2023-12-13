@@ -99,6 +99,7 @@ export class BuiltinModel {
         CONTEXTMENU_ITEM_EDITOR_TREE: 'contextMenu.item.editorTree',
         CONTEXTMENU_ITEM_PANEL: 'contextMenu.item.panel',
         CONTEXTMENU_ITEM_STATUS_BAR: 'contextMenu.item.statusBar',
+        CONTEXTMENU_ITEM_FOLDERTREE: 'contextMenu.item.folderTree',
         NOTIFICATION_ITEM_EMPTY: 'notification.item.empty',
         NOTIFICATION_ITEM_INTERNATIONAL: 'notification.item.international',
         NOTIFICATION_ITEM_INTERNATIONAL_DESCRIPTION: 'notification.item.internationalDescription',
@@ -347,16 +348,7 @@ export class BuiltinModel {
                 },
             ],
 
-        CONTEXTMENU_OPEN_TO_SIDE: () => [
-            {
-                id: this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE,
-                name: this.localize(
-                    this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE,
-                    'Open to the Side'
-                ),
-            },
-        ],
-        CONTEXTMENU_CREATE: () => [
+        CONTEXTMENU_FOLDER: () => [
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE,
                 name: this.localize(this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE, 'New File'),
@@ -368,8 +360,23 @@ export class BuiltinModel {
                     'New Folder'
                 ),
             },
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_RENAME,
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_RENAME, 'Rename'),
+            },
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_DELETE,
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_DELETE, 'Delete'),
+            },
         ],
-        CONTEXTMENU_COMMON: () => [
+        CONTEXTMENU_FILE: () => [
+            {
+                id: this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE,
+                name: this.localize(
+                    this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE,
+                    'Open to the Side'
+                ),
+            },
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_RENAME,
                 name: this.localize(this.constants.EXPLORER_CONTEXTMENU_RENAME, 'Rename'),

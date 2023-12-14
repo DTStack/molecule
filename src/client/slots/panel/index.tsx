@@ -1,23 +1,21 @@
 import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
-import Dropdown from 'mo/client/components/dropdown';
 import Header from 'mo/client/components/header';
 import PanelItem from 'mo/client/components/panelItem';
+import Prevent from 'mo/client/components/prevent';
 import useConnector from 'mo/client/hooks/useConnector';
-import useContextMenu from 'mo/client/hooks/useContextMenu';
 import type { IPanelController } from 'mo/controllers/panel';
 import { searchById, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
 export default function Panel({
-    onTabChange,
+    onChange,
     onClose,
     onToolbarClick,
-    onContextMenuClick,
+    onContextMenu,
 }: IPanelController) {
     const panel = useConnector('panel');
-    const contextMenu = useContextMenu('panel');
 
     const currentPane = panel.current
         ? panel.data.filter((p) => !p.hidden).find(searchById(panel.current))
@@ -25,20 +23,15 @@ export default function Panel({
 
     return (
         <div className={variables.container}>
-            <Dropdown
-                data={contextMenu}
-                trigger="contextMenu"
-                alignPoint
-                onClick={onContextMenuClick}
-            >
+            <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY })}>
                 <Header
                     className={variables.header}
                     trackStyle={{ height: 3 }}
                     extra={
-                        <>
+                        <Prevent>
                             <ActionBar data={currentPane?.toolbar || []} onClick={onToolbarClick} />
                             <ActionBar data={panel.toolbars} onClick={onToolbarClick} />
-                        </>
+                        </Prevent>
                     }
                 >
                     {panel.data
@@ -52,13 +45,13 @@ export default function Panel({
                                     variables.item,
                                     panel.current === p.id && variables.active
                                 )}
-                                onClick={() => onTabChange?.(p.id)}
+                                onClick={() => onChange?.(p.id)}
                                 onClose={onClose}
-                                onContextMenuClick={onContextMenuClick}
+                                onContextMenu={onContextMenu}
                             />
                         ))}
                 </Header>
-            </Dropdown>
+            </Prevent>
             <div className={variables.content} tabIndex={0}>
                 {currentPane?.render?.(currentPane)}
             </div>

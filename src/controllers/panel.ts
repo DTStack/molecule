@@ -1,16 +1,16 @@
 import { BaseController } from 'mo/glue';
-import { PanelEvent } from 'mo/models/panel';
+import { IPanelItem, PanelEvent } from 'mo/models/panel';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { ContextMenuService } from 'mo/services/contextMenu';
 import { PanelService } from 'mo/services/panel';
-import type { ContextMenuEventHandler, IMenuItemProps, UniqueId } from 'mo/types';
+import type { ContextMenuWithItemHandler, IMenuItemProps, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IPanelController extends BaseController {
-    onTabChange?(key: UniqueId): void;
+    onChange?(key: UniqueId): void;
     onToolbarClick?(item: IMenuItemProps): void;
     onClose?(key: UniqueId): void;
-    onContextMenuClick?: ContextMenuEventHandler;
+    onContextMenu?: ContextMenuWithItemHandler<[item?: IPanelItem]>;
 }
 
 @injectable()
@@ -25,28 +25,26 @@ export class PanelController extends BaseController implements IPanelController 
     }
 
     private initView() {
-        const { CONTEXTMENU_ITEM_HIDE, PANEL_CLOSE, PANEL_MAXIMIZE } = this.builtin.getModules();
+        const { PANEL_CLOSE, PANEL_MAXIMIZE } = this.builtin.getModules();
         this.panel.addToolbar([PANEL_CLOSE, PANEL_MAXIMIZE].filter(Boolean));
-        this.contextMenu.add(this.builtin.getConstants().CONTEXTMENU_ITEM_PANEL, [
-            CONTEXTMENU_ITEM_HIDE,
-        ]);
     }
 
-    public readonly onTabChange = (key: UniqueId): void => {
-        this.emit(PanelEvent.onTabChange, key);
+    public readonly onChange = (key: UniqueId): void => {
+        this.emit(PanelEvent.onChange, key);
     };
 
     public readonly onClose = (key: UniqueId) => {
-        if (key) {
-            this.emit(PanelEvent.onTabClose, key);
-        }
+        this.emit(PanelEvent.onClose, key);
     };
 
     public readonly onToolbarClick = (item: IMenuItemProps): void => {
         this.emit(PanelEvent.onToolbarClick, item);
     };
 
-    public readonly onContextMenuClick = (data: IMenuItemProps) => {
-        this.emit(PanelEvent.onTabContextMenu, data);
+    public readonly onContextMenu: ContextMenuWithItemHandler<[item?: IPanelItem]> = (
+        pos,
+        item
+    ) => {
+        this.emit(PanelEvent.onContextMenu, pos, item);
     };
 }

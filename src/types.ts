@@ -45,6 +45,8 @@ export interface IItemProps {
     hidden?: boolean;
     icon?: IconType;
     sortIndex?: number;
+    // TODO: check disabled
+    disabled?: boolean;
 }
 
 export interface ISimpleKeybinding {
@@ -189,6 +191,7 @@ export interface IMenuItemProps extends TreeModel<IMenuItemProps> {
      */
     render?: (data: IMenuItemProps) => React.ReactNode;
     sortIndex?: number;
+    symbolic?: UniqueId;
 }
 
 /**
@@ -414,3 +417,11 @@ export type FolderTreeInsertOption = {
      */
     index?: number;
 };
+
+export type IPosition = {
+    x: number;
+    y: number;
+};
+
+export type ContextMenuHandler = (position: IPosition) => void;
+export type ContextMenuWithItemHandler<T extends any[]> = ExtendParameters<ContextMenuHandler, T>;

@@ -71,6 +71,7 @@ export default function Dropdown({
         onClick?.(dropdownItem);
     };
 
+    if (!data?.length) return children;
     return (
         <RcDropdown
             visible={visible ?? stateVisible}

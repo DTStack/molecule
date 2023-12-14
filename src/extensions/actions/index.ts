@@ -33,7 +33,7 @@ export const ExtendsActions: IExtension = {
         updateMenuKeybinding(QuickTogglePanelAction.ID);
         updateMenuKeybinding(QuickToggleSidebarAction.ID);
 
-        updateContextMenuKeybinding(QuickTogglePanelAction.ID, 'panel');
+        // updateContextMenuKeybinding(QuickTogglePanelAction.ID, 'panel');
 
         function appendActionInMenu(ctor: { ID: string }) {
             const setting = molecule.activityBar.get(
@@ -51,11 +51,11 @@ export const ExtendsActions: IExtension = {
             });
             molecule.activityBar.update(setting);
 
-            molecule.activityBar.onContextMenuClick((item) => {
-                if (item.id === ctor.ID) {
-                    molecule.action.execute(ctor.ID);
-                }
-            });
+            // molecule.activityBar.onContextMenuClick((item) => {
+            //     if (item.id === ctor.ID) {
+            //         molecule.action.execute(ctor.ID);
+            //     }
+            // });
         }
 
         function updateMenuKeybinding(id: UniqueId) {
@@ -68,14 +68,14 @@ export const ExtendsActions: IExtension = {
             }
         }
 
-        function updateContextMenuKeybinding(id: UniqueId, token: string) {
-            const keybinding = molecule.action.queryGlobalKeybinding(id);
-            if (keybinding) {
-                molecule.contextMenu.updateItem(token, {
-                    id,
-                    keybinding: molecule.action.convertSimpleKeybindingToString(keybinding),
-                });
-            }
-        }
+        // function updateContextMenuKeybinding(id: UniqueId, token: string) {
+        //     const keybinding = molecule.action.queryGlobalKeybinding(id);
+        //     if (keybinding) {
+        //         molecule.contextMenu.updateItem(token, {
+        //             id,
+        //             keybinding: molecule.action.convertSimpleKeybindingToString(keybinding),
+        //         });
+        //     }
+        // }
     },
 };

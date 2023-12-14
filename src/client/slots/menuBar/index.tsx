@@ -7,7 +7,7 @@ import type { UniqueId } from 'mo/types';
 
 import variables from './index.scss';
 
-export default function MenuBar({ onSelect }: IMenuBarController) {
+export default function MenuBar({ onSelect, onContextMenu }: IMenuBarController) {
     const menuBar = useConnector('menuBar');
 
     const [visibleMenu, setVisibleMenu] = useState<UniqueId | undefined>(undefined);
@@ -16,10 +16,18 @@ export default function MenuBar({ onSelect }: IMenuBarController) {
         if (visibleMenu && visibleMenu !== menuId) {
             setVisibleMenu(menuId);
         }
-    };    
+    };
 
     return (
-        <section className={variables.container} role="menuBar">
+        <section
+            className={variables.container}
+            role="menuBar"
+            onContextMenu={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onContextMenu?.({ x: e.pageX, y: e.pageY });
+            }}
+        >
             {menuBar.data.map((menu) => (
                 <Dropdown
                     trigger="click"
@@ -38,6 +46,10 @@ export default function MenuBar({ onSelect }: IMenuBarController) {
                         className={variables.item}
                         onMouseEnter={() => handleActiveDropdown(menu.id)}
                         tabIndex={-1}
+                        onContextMenu={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }}
                     >
                         {menu.render?.(menu) || (
                             <span className={variables.name}>

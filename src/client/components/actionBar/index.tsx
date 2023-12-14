@@ -7,6 +7,7 @@ import { classify, sortByIndex } from 'mo/utils';
 
 import Action from '../action';
 import Dropdown from '../dropdown';
+import Prevent from '../prevent';
 import variables from './index.scss';
 
 interface IActionBarProps extends HTMLElementProps {
@@ -27,7 +28,7 @@ export default function ActionBar({
     if (!data) return null;
     const [inline = [], ellipsis = []] = classify(data, (i) => i.group === 'inline');
     return (
-        <div
+        <Prevent
             className={classNames(variables.container, className)}
             style={style}
             title={title}
@@ -58,6 +59,6 @@ export default function ActionBar({
                     />
                 </Dropdown>
             )}
-        </div>
+        </Prevent>
     );
 }

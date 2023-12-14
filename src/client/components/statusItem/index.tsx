@@ -1,41 +1,34 @@
 import { classNames } from 'mo/client/classNames';
-import useContextMenu from 'mo/client/hooks/useContextMenu';
 import type { IStatusBarItem } from 'mo/models/statusBar';
-import type { ContextMenuEventHandler } from 'mo/types';
+import type { ContextMenuWithItemHandler } from 'mo/types';
 
-import Dropdown from '../dropdown';
+import Prevent from '../prevent';
 import variables from './index.scss';
 
 export interface IStatusItemProps {
     data: IStatusBarItem;
     onClick: React.DOMAttributes<HTMLAnchorElement>['onClick'];
-    onContextMenuClick?: ContextMenuEventHandler;
+    onContextMenu?: ContextMenuWithItemHandler<[item?: IStatusBarItem]>;
 }
 
-export default function StatusItem({ data, onClick, onContextMenuClick }: IStatusItemProps) {
+export default function StatusItem({ data, onClick, onContextMenu }: IStatusItemProps) {
     const { className, style, name, hidden, title, role, render } = data;
-    const contextMenuData = useContextMenu('statusBar', data);
 
     if (hidden) return null;
-
     return (
-        <Dropdown
-            trigger="contextMenu"
-            data={contextMenuData}
-            stopPropagation
-            onClick={onContextMenuClick}
+        <Prevent
+            className={classNames(variables.container, className)}
+            onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data)}
         >
-            <div className={classNames(variables.container, className)}>
-                <a
-                    className={variables.label}
-                    role={role || 'button'}
-                    title={title || name}
-                    style={style}
-                    onClick={onClick}
-                >
-                    {render ? render(data) : name}
-                </a>
-            </div>
-        </Dropdown>
+            <a
+                className={variables.label}
+                role={role || 'button'}
+                title={title || name}
+                style={style}
+                onClick={onClick}
+            >
+                {render ? render(data) : name}
+            </a>
+        </Prevent>
     );
 }

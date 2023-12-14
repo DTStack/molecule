@@ -1,6 +1,12 @@
 import { BaseService } from 'mo/glue';
-import { ContextMenuModel } from 'mo/models/contextMenu';
-import { FunctionalOrSingle, IMenuItemProps, RequiredId, UniqueId } from 'mo/types';
+import { ContextMenuEvent, ContextMenuModel } from 'mo/models/contextMenu';
+import {
+    ContextMenuEventHandler,
+    FunctionalOrSingle,
+    IMenuItemProps,
+    IPosition,
+    UniqueId,
+} from 'mo/types';
 import { searchById } from 'mo/utils';
 
 /**
@@ -13,57 +19,62 @@ export class ContextMenuService extends BaseService<ContextMenuModel> {
         this.state = new ContextMenuModel();
     }
 
-    /**
-     * Add contextMenu for specific item
-     */
-    public add(key: UniqueId, value: IMenuItemProps[]) {
+    public get(id: UniqueId) {
+        return this.getState().data.find(searchById(id));
+    }
+
+    public getScope<T = any>(): T {
+        return this.getState().scope;
+    }
+
+    public open(data: IMenuItemProps[], pos: IPosition, scope?: any) {
+        this.setContextMenu((prev) => [...prev, ...data]);
+        this.updatePosition(pos);
+        this.setVisible(true);
+        this.setScope(scope);
+    }
+
+    public close() {
+        this.setContextMenu([]);
+        this.setVisible(false);
+    }
+
+    public setVisible(visible: FunctionalOrSingle<boolean>) {
         this.setState((prev) => ({
             ...prev,
-            data: new Map([...prev.data, [key, value]]),
+            visible: typeof visible === 'function' ? visible(prev.visible) : visible,
         }));
     }
 
-    /**
-     * Remove contextMenu
-     */
-    public remove(key: UniqueId) {
-        this.setState((prev) => {
-            const next = new Map(prev.data);
-            next.delete(key);
-            return {
-                ...prev,
-                data: next,
-            };
+    public setContextMenu(data: FunctionalOrSingle<IMenuItemProps[]>) {
+        this.setState((prev) => ({
+            ...prev,
+            data: typeof data === 'function' ? data(prev.data) : data,
+        }));
+    }
+
+    public updatePosition(pos: IPosition) {
+        this.setState({
+            position: pos,
         });
     }
 
-    /**
-     * Get an item's contextMenu
-     */
-    public get(key: UniqueId) {
-        return this.getState().data.get(key);
+    public setScope(scope: any) {
+        this.setState({
+            scope,
+        });
     }
 
-    /**
-     *
-     * @param key
-     * @param value
-     */
-    public update(key: UniqueId, value: FunctionalOrSingle<IMenuItemProps[]>) {
-        this.setState((prev) => ({
-            ...prev,
-            data:
-                typeof value === 'function'
-                    ? new Map([...prev.data, [key, value(prev.data.get(key) || [])]])
-                    : new Map([...prev.data, [key, value]]),
-        }));
+    public reset() {
+        this.setState(new ContextMenuModel());
     }
 
-    public updateItem(key: UniqueId, menuItem: RequiredId<IMenuItemProps>) {
-        const contextMenus = this.get(key);
-        const target = contextMenus?.find(searchById(menuItem.id));
-        if (!target) return;
-        Object.assign(target, menuItem);
-        this.update(key, contextMenus || []);
+    // ===================== Subscriptions =====================
+    public onHide(callback: () => void) {
+        this.subscribe(ContextMenuEvent.onHide, callback);
+    }
+
+    public onClick(callback: ContextMenuEventHandler) {
+        this.subscribe(ContextMenuEvent.onClick, callback);
     }
 }

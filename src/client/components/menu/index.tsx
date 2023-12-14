@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { classNames } from 'mo/client/classNames';
 import type { ContextMenuEventHandler, IMenuItemProps } from 'mo/types';
 import { get, sortByIndex } from 'mo/utils';
 import RcMenu, { Divider, Item as MenuItem, SubMenu } from 'rc-menu';
@@ -24,12 +25,16 @@ export default function Menu({ data, onClick }: IMenuProps) {
             return <Divider key={menuItem.id} className={variables.divider} />;
         }
         return (
-            <MenuItem key={menuItem.id} disabled={menuItem.disabled} className={variables.item}>
+            <MenuItem
+                key={menuItem.id}
+                disabled={menuItem.disabled}
+                className={classNames(variables.item, menuItem.disabled && variables.disabled)}
+            >
                 <span className={variables.icon}>
                     <Icon type={menuItem.icon} />
                 </span>
                 <span className={variables.label}>
-                    {menuItem.render?.(menuItem) || menuItem.name}
+                    {menuItem.render?.(menuItem) || menuItem.name || menuItem.title}
                 </span>
                 {menuItem.keybinding && (
                     <span className={variables.keybinding}>{menuItem.keybinding}</span>
@@ -48,7 +53,7 @@ export default function Menu({ data, onClick }: IMenuProps) {
                     <div className={variables.item}>
                         <span className={variables.icon} />
                         <span className={variables.label}>
-                            {subMenu.render?.(subMenu) || subMenu.name}
+                            {subMenu.render?.(subMenu) || subMenu.name || subMenu.title}
                         </span>
                         <span className={variables.indicator}>
                             <Icon type={`chevron-right`} />
@@ -56,6 +61,7 @@ export default function Menu({ data, onClick }: IMenuProps) {
                     </div>
                 }
                 key={subMenu.id}
+                disabled={subMenu.disabled}
             >
                 {subMenu.children.map((child) => {
                     if (Array.isArray(child.children)) return generateSubMenu(child);
@@ -85,6 +91,10 @@ export default function Menu({ data, onClick }: IMenuProps) {
             onClick={({ keyPath, domEvent }) => {
                 domEvent.stopPropagation();
                 handleMenuClick(keyPath);
+            }}
+            onContextMenu={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
             }}
         >
             {Menu}

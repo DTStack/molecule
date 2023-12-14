@@ -6,15 +6,11 @@ import type { BuiltinService } from 'mo/services/builtin';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { FolderTreeService } from 'mo/services/folderTree';
 import type { SidebarService } from 'mo/services/sidebar';
-import { type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
+import type { ContextMenuWithItemHandler, KeyboardEventHandler, UniqueId } from 'mo/types';
 import type { TreeNodeModel } from 'mo/utils/tree';
 import { inject, injectable } from 'tsyringe';
 
 export interface IFolderTreeController extends BaseController {
-    readonly onContextMenuClick?: (
-        contextMenu: IMenuItemProps,
-        treeNode?: TreeNodeModel<any>
-    ) => void;
     readonly onUpdateFileName?: (file: TreeNodeModel<any>) => void;
     readonly onSelect?: (treeNode: TreeNodeModel<any>) => void;
     readonly onDropTree?: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void;
@@ -24,7 +20,7 @@ export interface IFolderTreeController extends BaseController {
         node: TreeNodeModel<any>
     ) => void;
     readonly onTreeItemKeyDown?: KeyboardEventHandler;
-    readonly onContextMenu?: (treeNode: TreeNodeModel<any>) => void;
+    readonly onContextMenu?: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>;
     readonly onCreateRoot?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
@@ -77,8 +73,11 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
         // });
     }
 
-    public onContextMenu = (treeNode: TreeNodeModel<any>) => {
-        this.emit(FolderTreeEvent.onContextMenu, treeNode);
+    public onContextMenu: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]> = (
+        pos,
+        treeNode
+    ) => {
+        this.emit(FolderTreeEvent.onContextMenu, pos, treeNode);
     };
 
     public readonly onDropTree = (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => {
@@ -91,22 +90,6 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
 
     public readonly onSelect = (treeNode: TreeNodeModel<any>) => {
         this.emit(FolderTreeEvent.onSelect, treeNode);
-        // this.folderTree.setActive(file?.id);
-        // // editing file won't emit onSelectFile
-        // if (
-        //     file &&
-        //     file.id !== this.folderTree.getState().editing &&
-        //     file.fileType === FileTypes.File
-        // ) {
-        //     this.emit(FolderTreeEvent.onSelect, file);
-        // }
-    };
-
-    public onContextMenuClick = (
-        contextMenuItem: IMenuItemProps,
-        treeNode?: TreeNodeModel<any>
-    ) => {
-        this.emit(FolderTreeEvent.onContextMenuClick, contextMenuItem, treeNode);
     };
 
     // public onLoadData = (treeNode: TreeNodeModel<any>) => {

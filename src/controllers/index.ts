@@ -1,5 +1,6 @@
 export * as activityBar from './activityBar';
 export * as auxiliaryBar from './auxiliaryBar';
+export * as contextMenu from './contextMenu';
 export * as editor from './editor';
 export * as editorTree from './editorTree';
 export * as explorer from './explorer';

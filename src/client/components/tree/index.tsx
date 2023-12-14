@@ -1,7 +1,13 @@
 import { useCallback, useRef } from 'react';
 import { debounce } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
-import { FileTypes, type IMenuItemProps, type KeyboardEventHandler, type UniqueId } from 'mo/types';
+import {
+    type ContextMenuWithItemHandler,
+    FileTypes,
+    type IMenuItemProps,
+    type KeyboardEventHandler,
+    type UniqueId,
+} from 'mo/types';
 import { TreeHelper, type TreeNodeModel } from 'mo/utils/tree';
 
 import Icon from '../icon';
@@ -27,9 +33,8 @@ export interface ITreeProps {
         isLeaf: boolean
     ) => JSX.Element | string;
     onDropTree?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;
-    onContextMenu?: (node: ITreeNodeItemProps) => void;
+    onContextMenu?: ContextMenuWithItemHandler<[treeNode: ITreeNodeItemProps]>;
     onTreeItemKeyDown?: KeyboardEventHandler;
-    onContextMenuClick?: (item: IMenuItemProps, node: ITreeNodeItemProps) => void;
 }
 
 export default function Tree({
@@ -40,14 +45,12 @@ export default function Tree({
     expandKeys,
     activeKey,
     loadingKeys = [],
-    contextMenu,
     onExpand,
     onDropTree,
     renderTitle,
     onSelect,
     onTreeItemKeyDown,
     onContextMenu,
-    onContextMenuClick,
 }: ITreeProps) {
     // const [expandKeys, setExpandKeys] = useState<UniqueId[]>([]);
     // const [activeKey, setActiveKey] = useState<string | null>(null);
@@ -245,7 +248,6 @@ export default function Tree({
                     data={item}
                     name={typeof title === 'string' ? title : undefined}
                     indent={indent}
-                    contextMenu={contextMenu}
                     className={classNames(
                         variables.treeNode,
                         isActive && variables.active,
@@ -268,7 +270,6 @@ export default function Tree({
                     onNodeDrop={draggable ? handleDrop : undefined}
                     onTreeItemKeyDown={onTreeItemKeyDown}
                     onContextMenu={onContextMenu}
-                    onContextMenuClick={onContextMenuClick}
                 />
             );
 

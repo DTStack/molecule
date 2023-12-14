@@ -14,7 +14,7 @@ export const ExtendsSearch: IExtension = {
             const valueEmpty = !value;
             const resultEmpty = !result?.length;
             const {
-                SIDEBAR_ITEM_SEARCH: SEARCH_ACTIVITY_ITEM,
+                SIDEBAR_ITEM_SEARCH,
                 SEARCH_TOOLBAR_REFRESH,
                 SEARCH_TOOLBAR_CLEAR_ALL,
                 SEARCH_TOOLBAR_COLLAPSE_EXPAND,
@@ -22,7 +22,7 @@ export const ExtendsSearch: IExtension = {
             } = molecule.builtin.getState().constants;
 
             // change toolbar's disabled status
-            molecule.sidebar.updateToolbar(SEARCH_ACTIVITY_ITEM, [
+            molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, [
                 {
                     id: SEARCH_TOOLBAR_REFRESH,
                     disabled: valueEmpty,
@@ -46,14 +46,14 @@ export const ExtendsSearch: IExtension = {
         // set collapse_expand and save resultIsTree
         molecule.sidebar.onToolbarClick((item: IMenuItemProps) => {
             const {
-                SIDEBAR_ITEM_SEARCH: SEARCH_ACTIVITY_ITEM,
+                SIDEBAR_ITEM_SEARCH,
                 SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
                 SEARCH_TOOLBAR_COLLAPSE_EXPAND,
             } = molecule.builtin.getState().constants;
             if (item.id === SEARCH_TOOLBAR_VIEW_AS_LIST_TREE) {
                 const { resultIsTree } = molecule.search.getState() || {};
 
-                molecule.sidebar.updateToolbar(SEARCH_ACTIVITY_ITEM, [
+                molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, [
                     {
                         id: SEARCH_TOOLBAR_COLLAPSE_EXPAND,
                         disabled: resultIsTree,

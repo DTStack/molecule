@@ -25,6 +25,7 @@
         "menuBar.item.runTask": "Run Task",
         "menuBar.item.help": "Help",
         "menuBar.item.about": "About",
+        "menuBar.contextMenu.hide": "Hide Menu Bar",
         "statusBar.item.lineInfo": "Editor Selection",
         "statusBar.item.selection": "Ln ${i},Col ${i}",
         "statusBar.contextMenu.hide": "Hide Status Bar",

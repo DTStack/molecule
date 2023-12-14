@@ -1,5 +1,6 @@
 import { ExtendsActions } from './actions';
 import { ExtendsActivityBar } from './activityBar';
+import { ExtendsContextMenu } from './contextMenu';
 import { ExtendsEditor } from './editor';
 import { ExtendsEditorTree } from './editorTree';
 import { ExtendsExplorer } from './explorer';
@@ -30,4 +31,5 @@ export default [
     ExtendsFolderTree,
     ExtendsSidebar,
     ExtendsExplorer,
+    ExtendsContextMenu,
 ];

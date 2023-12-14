@@ -1,14 +1,18 @@
 import { BaseService } from 'mo/glue';
+import type { EditorGroupModel } from 'mo/models/editor';
 import { EditorTreeEvent, EditorTreeModel, IEditorTree } from 'mo/models/editorTree';
 import type {
     ArraylizeOrSingle,
-    ContextMenuEditorHandler,
     ContextMenuGroupHandler,
+    ContextMenuWithItemHandler,
+    IEditorTab,
     IMenuItemProps,
     RequiredId,
     UniqueId,
 } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
+
+type ContextMenuType = ContextMenuWithItemHandler<[group: EditorGroupModel, tab?: IEditorTab<any>]>;
 
 export interface IEditorTreeService extends BaseService<IEditorTree> {
     addToolbar(toolbar: ArraylizeOrSingle<IMenuItemProps>): void;
@@ -25,12 +29,7 @@ export interface IEditorTreeService extends BaseService<IEditorTree> {
      */
     onSelect(callback: (tabId: UniqueId, groupId: UniqueId) => void): void;
     onGroupClick(callback: (groupId: UniqueId) => void): void;
-    /**
-     * Callback for context menu click event which isn't in buit-in menus
-     * @param callback
-     */
-    onContextMenu(callback: ContextMenuEditorHandler): void;
-    onGroupContextMenu(callback: ContextMenuGroupHandler): void;
+    onContextMenu(callback: ContextMenuType): void;
     onToolbarClick(callback: ContextMenuGroupHandler): void;
 }
 
@@ -78,12 +77,8 @@ export class EditorTreeService extends BaseService<IEditorTree> implements IEdit
         this.subscribe(EditorTreeEvent.onSelect, callback);
     }
 
-    public onContextMenu(callback: ContextMenuEditorHandler) {
+    public onContextMenu(callback: ContextMenuType) {
         this.subscribe(EditorTreeEvent.onContextMenu, callback);
-    }
-
-    public onGroupContextMenu(callback: ContextMenuGroupHandler) {
-        this.subscribe(EditorTreeEvent.onGroupContextMenu, callback);
     }
 
     public onToolbarClick(callback: ContextMenuGroupHandler): void {

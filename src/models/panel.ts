@@ -11,10 +11,10 @@ export interface IPanelItem<T = any> extends IItemProps, RenderProps<IPanelItem<
 }
 
 export enum PanelEvent {
-    onTabChange = 'panel.onTabChange',
+    onChange = 'panel.onChange',
     onToolbarClick = 'panel.onToolbarClick',
-    onTabClose = 'panel.onTabClose',
-    onTabContextMenu = 'panel.onContextMenu',
+    onClose = 'panel.onClose',
+    onContextMenu = 'panel.onContextMenu',
 }
 
 export interface IPanel {

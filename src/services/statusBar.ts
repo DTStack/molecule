@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { type IStatusBarItem, StatusBarEvent, StatusBarModel } from 'mo/models/statusBar';
-import type { ContextMenuEventHandler, RequiredId, UniqueId } from 'mo/types';
+import type { ContextMenuWithItemHandler, RequiredId, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
@@ -25,6 +25,7 @@ export interface IStatusBarService extends BaseService<StatusBarModel> {
      * @param id
      */
     get(id: UniqueId): IStatusBarItem | undefined;
+    toggleBar(id: UniqueId): void;
     /**
      * Reset the contextMenu data and the StatusBar data
      */
@@ -37,7 +38,7 @@ export interface IStatusBarService extends BaseService<StatusBarModel> {
     /**
      * Listen to the StatusBar contextMenu event
      */
-    onContextMenu: (callback: ContextMenuEventHandler) => void;
+    onContextMenu: (callback: ContextMenuWithItemHandler<[item?: IStatusBarItem]>) => void;
 }
 
 export class StatusBarService extends BaseService<StatusBarModel> implements IStatusBarService {
@@ -90,6 +91,16 @@ export class StatusBarService extends BaseService<StatusBarModel> implements ISt
         }));
     }
 
+    public toggleBar(id: UniqueId): void {
+        const target = this.get(id);
+        if (!target) {
+            logger.error(`There is no status item found whose id is ${id}`);
+            return;
+        }
+        target.hidden = !target.hidden;
+        this.setState((prev) => ({ ...prev, data: [...prev.data] }));
+    }
+
     public reset() {
         this.setState(new StatusBarModel());
     }
@@ -99,7 +110,7 @@ export class StatusBarService extends BaseService<StatusBarModel> implements ISt
         this.subscribe(StatusBarEvent.onClick, callback);
     }
 
-    public onContextMenu(callback: ContextMenuEventHandler) {
+    public onContextMenu(callback: ContextMenuWithItemHandler<[item?: IStatusBarItem]>) {
         this.subscribe(StatusBarEvent.onContextMenu, callback);
     }
 }

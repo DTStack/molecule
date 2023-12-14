@@ -1,9 +1,22 @@
-import { IMenuItemProps, UniqueId } from 'mo/types';
+import { IMenuItemProps, IPosition } from 'mo/types';
+
+export enum ContextMenuEvent {
+    onClick = 'contextMenu.onClick',
+    onHide = 'contextMenu.onHide',
+}
 
 interface IContextMenu {
-    data: Map<UniqueId, IMenuItemProps[]>;
+    data: IMenuItemProps[];
+    visible: boolean;
+    position: IPosition;
+    scope: any;
 }
 
 export class ContextMenuModel implements IContextMenu {
-    constructor(public data: Map<UniqueId, IMenuItemProps[]> = new Map()) {}
+    constructor(
+        public data: IMenuItemProps[] = [],
+        public visible: boolean = false,
+        public position: IPosition = { x: 0, y: 0 },
+        public scope: any = undefined
+    ) {}
 }

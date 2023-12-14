@@ -189,6 +189,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const notificationController = this.resolve(controller.notification.NotificationController);
         const searchController = this.resolve(controller.search.SearchController);
         const settingsController = this.resolve(controller.settings.SettingsController);
+        const contextMenuController = this.resolve(controller.contextMenu.ContextMenuController);
 
         // activate extensions
         extension.activate();
@@ -238,6 +239,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                         notification: notificationController,
                         search: searchController,
                         settings: settingsController,
+                        contextMenu: contextMenuController,
                     } as any,
                 },
             })

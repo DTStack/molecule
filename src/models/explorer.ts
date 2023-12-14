@@ -3,6 +3,7 @@ import type { HTMLElementProps, IItemProps, IMenuItemProps, RenderProps, UniqueI
 export enum ExplorerEvent {
     onPanelToolbarClick = 'explorer.onPanelToolbarClick',
     onCollapseChange = 'explorer.onCollapseChange',
+    onContextMenu = 'explorer.onContextMenu',
 }
 
 export interface IExplorerPanelItem

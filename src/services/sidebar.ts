@@ -3,6 +3,7 @@ import { type ISidebarPane, SidebarEvent, SidebarModel } from 'mo/models/sideBar
 import type {
     ArraylizeOrSingle,
     ContextMenuGroupHandler,
+    ContextMenuWithItemHandler,
     FunctionalOrSingle,
     IMenuItemProps,
     RequiredId,
@@ -52,6 +53,7 @@ export interface ISidebarService extends BaseService<SidebarModel> {
      */
     reset(): void;
     onToolbarClick(callback: ContextMenuGroupHandler): void;
+    onContextMenu(callback: ContextMenuWithItemHandler<[item: ISidebarPane]>): void;
 }
 
 export class SidebarService extends BaseService<SidebarModel> implements ISidebarService {
@@ -184,7 +186,12 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
         this.setState(new SidebarModel());
     }
 
+    // ===================== Subscriptions =====================
     public onToolbarClick = (callback: ContextMenuGroupHandler) => {
         this.subscribe(SidebarEvent.onToolbarClick, callback);
     };
+
+    public onContextMenu(callback: ContextMenuWithItemHandler<[item: ISidebarPane]>): void {
+        this.subscribe(SidebarEvent.onContextMenu, callback);
+    }
 }

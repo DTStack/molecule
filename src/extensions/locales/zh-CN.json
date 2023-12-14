@@ -25,6 +25,7 @@
         "menuBar.item.runTask": "运行任务",
         "menuBar.item.help": "帮助",
         "menuBar.item.about": "关于",
+        "menuBar.contextMenu.hide": "隐藏菜单栏",
         "statusBar.item.lineInfo": "编辑器选择",
         "sidebar.toolbar.ellipsis": "视图和更多操作...",
         "statusBar.item.selection": "行 ${i}，列 ${i}",

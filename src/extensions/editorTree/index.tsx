@@ -1,4 +1,5 @@
 import { IExtension } from 'mo/types';
+import { concatMenu } from 'mo/utils';
 
 export const ExtendsEditorTree: IExtension = {
     id: 'ExtendsEditorTree',
@@ -44,59 +45,24 @@ export const ExtendsEditorTree: IExtension = {
             }
         });
 
-        molecule.editorTree.onContextMenu((menu, tabId, groupId) => {
-            const {
-                EDITOR_CONTEXTMENU_CLOSE: EDITOR_MENU_CLOSE,
-                EDITOR_CONTEXTMENU_CLOSE_ALL: EDITOR_MENU_CLOSE_ALL,
-                EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT: EDITOR_MENU_CLOSE_TO_RIGHT,
-                EDITOR_CONTEXTMENU_CLOSE_TO_LEFT: EDITOR_MENU_CLOSE_TO_LEFT,
-                EDITOR_CONTEXTMENU_CLOSE_OTHERS: EDITOR_MENU_CLOSE_OTHERS,
-            } = molecule.builtin.getState().constants;
-
-            switch (menu.id) {
-                case EDITOR_MENU_CLOSE: {
-                    molecule.editor.closeTab(tabId, groupId);
-                    break;
-                }
-                case EDITOR_MENU_CLOSE_ALL: {
-                    molecule.editor.closeAll(groupId);
-                    break;
-                }
-                case EDITOR_MENU_CLOSE_TO_RIGHT: {
-                    molecule.editor.closeToRight(tabId, groupId);
-                    break;
-                }
-                case EDITOR_MENU_CLOSE_TO_LEFT: {
-                    molecule.editor.closeToLeft(tabId, groupId);
-                    break;
-                }
-                case EDITOR_MENU_CLOSE_OTHERS: {
-                    molecule.editor.closeOther(tabId, groupId);
-                    break;
-                }
-                default:
-                    break;
-            }
-        });
-
-        molecule.editorTree.onGroupContextMenu((menu, groupId) => {
-            const {
-                EDITOR_CONTEXTMENU_CLOSE_SAVED: EDITOR_MENU_CLOSE_SAVED,
-                EDITOR_CONTEXTMENU_CLOSE_ALL: EDITOR_MENU_CLOSE_ALL,
-            } = molecule.builtin.getState().constants;
-            switch (menu.id) {
-                case EDITOR_MENU_CLOSE_ALL: {
-                    molecule.editor.closeAll(groupId);
-                    break;
-                }
-
-                case EDITOR_MENU_CLOSE_SAVED: {
-                    molecule.editor.closeSaved(groupId);
-                    break;
-                }
-
-                default:
-                    break;
+        molecule.editorTree.onContextMenu((pos, group, tab) => {
+            const { EDITOR_TREE_CONTEXTMENU = [], EDITOR_CONTEXTMENU } =
+                molecule.builtin.getModules();
+            const toolbar = molecule.editorTree.getState().toolbar || [];
+            const contextMenu = !tab
+                ? concatMenu(toolbar, EDITOR_TREE_CONTEXTMENU)
+                : concatMenu(EDITOR_CONTEXTMENU);
+            if (contextMenu.length) {
+                molecule.contextMenu.open(
+                    contextMenu,
+                    pos,
+                    // remark current contextMenu
+                    {
+                        name: molecule.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR_TREE,
+                        group,
+                        tab,
+                    }
+                );
             }
         });
     },

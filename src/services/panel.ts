@@ -2,7 +2,7 @@ import { BaseService } from 'mo/glue';
 import { IPanelItem, PanelEvent, PanelModel } from 'mo/models/panel';
 import type {
     ArraylizeOrSingle,
-    ContextMenuEventHandler,
+    ContextMenuWithItemHandler,
     IMenuItemProps,
     RequiredId,
     UniqueId,
@@ -40,6 +40,7 @@ export interface IPanelService extends BaseService<PanelModel> {
      */
     update(panel: IPanelItem): IPanelItem | undefined;
     updateToolbar(item: RequiredId<IMenuItemProps>): void;
+    toggleBar(id: UniqueId): void;
     /**
      * Remove the specific panel
      * @param id
@@ -53,7 +54,7 @@ export interface IPanelService extends BaseService<PanelModel> {
      * Listen to the Panel tabs onChange event
      * @param callback
      */
-    onTabChange(callback: (panelId: UniqueId) => void): void;
+    onChange(callback: (panelId: UniqueId) => void): void;
     /**
      * Listen to the Panel toolbar click event
      * @param callback
@@ -63,8 +64,8 @@ export interface IPanelService extends BaseService<PanelModel> {
      * Listen to the Panel tabs close event
      * @param callback
      */
-    onTabClose(callback: (panelId: UniqueId) => void): void;
-    onTabContextMenu(callback: ContextMenuEventHandler): void;
+    onClose(callback: (panelId: UniqueId) => void): void;
+    onContextMenu(callback: ContextMenuWithItemHandler<[item?: IPanelItem]>): void;
 }
 
 export class PanelService extends BaseService<PanelModel> implements IPanelService {
@@ -115,6 +116,11 @@ export class PanelService extends BaseService<PanelModel> implements IPanelServi
             return undefined;
         }
     }
+
+    public toggleBar(id: UniqueId): void {
+        this.update({ id, hidden: !this.getPanel(id)?.hidden });
+    }
+
     public updateToolbar(item: RequiredId<IMenuItemProps>): void {
         const toolbar = this.getState().toolbars.find(searchById(item.id));
         if (toolbar) {
@@ -141,19 +147,19 @@ export class PanelService extends BaseService<PanelModel> implements IPanelServi
     }
 
     // ===================== Subscriptions =====================
-    public onTabChange(callback: (key: UniqueId) => void) {
-        this.subscribe(PanelEvent.onTabChange, callback);
+    public onChange(callback: (key: UniqueId) => void) {
+        this.subscribe(PanelEvent.onChange, callback);
     }
 
     public onToolbarClick(callback: (item: IMenuItemProps) => void) {
         this.subscribe(PanelEvent.onToolbarClick, callback);
     }
 
-    public onTabClose(callback: (key: UniqueId) => void) {
-        this.subscribe(PanelEvent.onTabClose, callback);
+    public onClose(callback: (key: UniqueId) => void) {
+        this.subscribe(PanelEvent.onClose, callback);
     }
 
-    public onTabContextMenu(callback: ContextMenuEventHandler): void {
-        this.subscribe(PanelEvent.onTabContextMenu, callback);
+    public onContextMenu(callback: ContextMenuWithItemHandler<[item?: IPanelItem]>): void {
+        this.subscribe(PanelEvent.onContextMenu, callback);
     }
 }

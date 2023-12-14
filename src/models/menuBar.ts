@@ -5,6 +5,7 @@ import type { IMenuItemProps } from 'mo/types';
  */
 export enum MenuBarEvent {
     onSelect = 'menuBar.onSelect',
+    onContextMenu = 'menuBar.onContextMenu',
 }
 
 export interface IMenuBar {

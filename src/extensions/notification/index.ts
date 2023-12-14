@@ -18,12 +18,12 @@ export const ExtendsNotification: IExtension = {
 
         molecule.notification.onActionBarClick((item) => {
             const state = molecule.builtin.getState();
-            const { NOTIFICATION_TOOLBAR_CLEAR_ALL: NOTIFICATION_CLEAR_ALL_ID, NOTIFICATION_TOOLBAR_HIDE: NOTIFICATION_HIDE_ID } = state.constants;
+            const { NOTIFICATION_TOOLBAR_CLEAR_ALL, NOTIFICATION_TOOLBAR_HIDE } = state.constants;
             const action = item.id;
 
-            if (action === NOTIFICATION_CLEAR_ALL_ID) {
+            if (action === NOTIFICATION_TOOLBAR_CLEAR_ALL) {
                 molecule.notification.clear();
-            } else if (action === NOTIFICATION_HIDE_ID) {
+            } else if (action === NOTIFICATION_TOOLBAR_HIDE) {
                 molecule.notification.setNotificationVisibility((visible) => !visible);
             }
         });

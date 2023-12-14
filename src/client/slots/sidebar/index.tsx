@@ -1,23 +1,27 @@
 import ActionBar from 'mo/client/components/actionBar';
 import Flex from 'mo/client/components/flex';
+import Prevent from 'mo/client/components/prevent';
 import Progress from 'mo/client/components/progress';
 import useConnector from 'mo/client/hooks/useConnector';
 import { ISideBarController } from 'mo/controllers/sidebar';
-import { sortByIndex } from 'mo/utils';
+import { searchById, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
-export default function Sidebar({ onToolbarClick }: ISideBarController) {
+export default function Sidebar({ onToolbarClick, onContextMenu }: ISideBarController) {
     const sidebar = useConnector('sidebar');
 
-    const pane = sidebar.panes.find((i) => i.id === sidebar.current);
+    const pane = sidebar.panes.find(searchById(sidebar.current));
 
     if (!pane) return <div className={variables.container} />;
 
     const toolbar = (pane.toolbar || []).concat().sort(sortByIndex);
 
     return (
-        <div className={variables.container}>
+        <Prevent
+            className={variables.container}
+            onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, pane)}
+        >
             {/* FIXME: support keep-alive */}
             <div className={variables.pane}>
                 <Flex className={variables.header} justifyContent="space-between">
@@ -27,19 +31,19 @@ export default function Sidebar({ onToolbarClick }: ISideBarController) {
                         </h2>
                     </div>
                     {!!toolbar.length && (
-                        <div className={variables.toolbar}>
+                        <Prevent className={variables.toolbar}>
                             <ActionBar
                                 data={toolbar}
                                 onClick={(item) => onToolbarClick?.(item, pane.id)}
                             />
-                        </div>
+                        </Prevent>
                     )}
                 </Flex>
-                <div className={variables.content}>
+                <Prevent className={variables.content}>
                     <Progress active={sidebar.loading} />
                     {pane.render?.()}
-                </div>
+                </Prevent>
             </div>
-        </div>
+        </Prevent>
     );
 }

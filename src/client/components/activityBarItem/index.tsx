@@ -1,10 +1,10 @@
 import { classNames } from 'mo/client/classNames';
-import useContextMenu from 'mo/client/hooks/useContextMenu';
 import { IActivityBarItem } from 'mo/models/activityBar';
-import type { ContextMenuEventHandler } from 'mo/types';
+import type { ContextMenuEventHandler, ContextMenuWithItemHandler } from 'mo/types';
 
 import Dropdown from '../dropdown';
 import Icon from '../icon';
+import Prevent from '../prevent';
 import variables from './index.scss';
 
 export interface IActivityBarItemProps {
@@ -12,16 +12,17 @@ export interface IActivityBarItemProps {
     data: IActivityBarItem;
     onClick?: (data: IActivityBarItem) => void;
     onContextMenuClick?: ContextMenuEventHandler;
+    onContextMenu?: ContextMenuWithItemHandler<[item: IActivityBarItem]>;
 }
 
 export default function ActivityBarItem({
     checked,
     data,
     onClick,
+    onContextMenu,
     onContextMenuClick,
 }: IActivityBarItemProps) {
     const { disabled, icon, className, hidden, style, role, title, name, render } = data;
-    const contextMenu = useContextMenu('activityBar', data);
 
     if (hidden) return null;
 
@@ -34,14 +35,7 @@ export default function ActivityBarItem({
             stopPropagation
         >
             <section>
-                <Dropdown
-                    data={contextMenu}
-                    trigger="contextMenu"
-                    onClick={onContextMenuClick}
-                    disabled={disabled}
-                    stopPropagation
-                    placement="rightTop"
-                >
+                <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data)}>
                     <li
                         onClick={() => !disabled && onClick?.(data)}
                         className={classNames(
@@ -59,7 +53,7 @@ export default function ActivityBarItem({
                         </Icon>
                         {checked ? <div className={variables.indicator} /> : null}
                     </li>
-                </Dropdown>
+                </Prevent>
             </section>
         </Dropdown>
     );

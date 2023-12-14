@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { ActivityBarEvent, ActivityBarModel, type IActivityBarItem } from 'mo/models/activityBar';
-import type { ArraylizeOrSingle, ContextMenuEventHandler, RequiredId, UniqueId } from 'mo/types';
+import type { ArraylizeOrSingle, ContextMenuWithItemHandler, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, extract, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
@@ -46,7 +46,7 @@ export interface IActivityBarService extends BaseService<ActivityBarModel> {
     /**
      * Add context menu click event listener
      */
-    onContextMenuClick(callback: ContextMenuEventHandler): void;
+    onContextMenu(callback: ContextMenuWithItemHandler<[item?: IActivityBarItem]>): void;
 }
 
 export class ActivityBarService
@@ -108,7 +108,7 @@ export class ActivityBarService
             if (target) {
                 target.hidden = typeof hidden === 'boolean' ? hidden : !target.hidden;
             } else {
-                logger.error('Toggle activity bar failed, please check your id');
+                logger.error(`Toggle activity bar failed, please check your id ${id}`);
             }
             return {
                 ...prev,
@@ -123,10 +123,10 @@ export class ActivityBarService
 
     // ===================== Subscriptions =====================
     public onClick(callback: (item: IActivityBarItem) => void) {
-        this.subscribe(ActivityBarEvent.OnClick, callback);
+        this.subscribe(ActivityBarEvent.onClick, callback);
     }
 
-    public onContextMenuClick(callback: ContextMenuEventHandler) {
-        this.subscribe(ActivityBarEvent.OnContextMenu, callback);
+    public onContextMenu(callback: ContextMenuWithItemHandler<[item?: IActivityBarItem]>) {
+        this.subscribe(ActivityBarEvent.onContextMenu, callback);
     }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { classNames } from 'mo/client/classNames';
 import type {
+    ContextMenuWithItemHandler,
     HTMLElementProps,
     IItemProps,
     IMenuItemProps,
@@ -12,6 +13,7 @@ import type {
 import ActionBar from '../actionBar';
 import Flex from '../flex';
 import Icon from '../icon';
+import Prevent from '../prevent';
 import { Pane, SplitPane } from '../split';
 import variables from './index.scss';
 
@@ -41,6 +43,7 @@ export interface ICollapseProps extends HTMLElementProps {
     onCollapseChange?: (keys: UniqueId[]) => void;
     onResize?: (resizes: number[]) => void;
     onToolbarClick?: (item: IMenuItemProps, panelId: UniqueId) => void;
+    onContextMenu?: ContextMenuWithItemHandler<[panel: ICollapseItem]>;
 }
 
 /**
@@ -61,6 +64,7 @@ export function Collapse({
     onCollapseChange,
     onToolbarClick,
     onResize,
+    onContextMenu,
 }: ICollapseProps) {
     const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(() =>
         Array.isArray(controlActivePanelKeys) ? controlActivePanelKeys : new Array(data.length)
@@ -292,24 +296,32 @@ export function Collapse({
                                 )}
                                 data-collapse-id={panel.id}
                             >
-                                <Flex
-                                    className={variables.header}
-                                    tabIndex={0}
-                                    justifyContent="space-between"
-                                    onClick={() => handleChangeCallback(panel.id, index)}
+                                <Prevent
+                                    onContextMenu={(e) =>
+                                        onContextMenu?.({ x: e.pageX, y: e.pageY }, panel)
+                                    }
                                 >
-                                    <Flex>
-                                        <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
-                                        <span className={variables.title}>{panel.name}</span>
+                                    <Flex
+                                        className={variables.header}
+                                        tabIndex={0}
+                                        justifyContent="space-between"
+                                        onClick={() => handleChangeCallback(panel.id, index)}
+                                    >
+                                        <Flex>
+                                            <Icon
+                                                type={isActive ? 'chevron-down' : 'chevron-right'}
+                                            />
+                                            <span className={variables.title}>{panel.name}</span>
+                                        </Flex>
+                                        {isActive && (
+                                            <ActionBar
+                                                key={panel.id}
+                                                data={panel.toolbar || []}
+                                                onClick={(item) => handleToolbarClick(item, panel)}
+                                            />
+                                        )}
                                     </Flex>
-                                    {isActive && (
-                                        <ActionBar
-                                            key={panel.id}
-                                            data={panel.toolbar || []}
-                                            onClick={(item) => handleToolbarClick(item, panel)}
-                                        />
-                                    )}
-                                </Flex>
+                                </Prevent>
                                 <div
                                     className={variables.content}
                                     tabIndex={0}

@@ -3,7 +3,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { throttle } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
 import Dropdown from 'mo/client/components/dropdown';
-import type { ContextMenuEventHandler, IDragProps, IMenuItemProps } from 'mo/types';
+import type { ContextMenuEventHandler, IDragProps } from 'mo/types';
 import { DragAction } from 'mo/types';
 
 import Flex from '../flex';
@@ -11,7 +11,6 @@ import variables from './index.scss';
 
 export interface ITabsProps<T> {
     className?: string;
-    contextMenu?: IMenuItemProps[];
     extra?: React.ReactNode;
     title?: React.ReactNode;
     onDragStart?: () => T;
@@ -22,7 +21,6 @@ export interface ITabsProps<T> {
 
 export default function Tabs<T>({
     className,
-    contextMenu,
     extra,
     title,
     onDragStart,
@@ -65,7 +63,7 @@ export default function Tabs<T>({
 
     return (
         <Dropdown
-            data={contextMenu}
+            data={[]}
             stopPropagation
             trigger="contextMenu"
             alignPoint

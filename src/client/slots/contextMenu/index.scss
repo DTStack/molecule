@@ -1,0 +1,23 @@
+@import '../../classNames/style.scss';
+
+$contextMenu: prefix('contextMenu');
+$root: BEMElement($contextMenu, 'root');
+
+.#{$contextMenu} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+}
+
+.#{$root} {
+    position: absolute;
+    opacity: 0;
+}
+
+:export {
+    container: $contextMenu;
+    root: $root;
+}

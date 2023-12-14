@@ -1,6 +1,7 @@
-import { IExtension } from 'mo/types';
+import { Alignment, IExtension } from 'mo/types';
+import { classify, concatMenu, sortByIndex } from 'mo/utils';
 
-import { toggleActivityBarHidden, toggleNextActive, updateContextMenuIcon } from '../utils';
+import { createContextMenu, createMenuDuplicate } from '../utils';
 
 export const ExtendsActivityBar: IExtension = {
     id: 'ExtendsActivityBar',
@@ -16,34 +17,28 @@ export const ExtendsActivityBar: IExtension = {
             }
         });
 
-        molecule.activityBar.onContextMenuClick((item) => {
-            const {
-                ACTIVITYBAR_CONTEXTMENU_HIDE: CONTEXT_MENU_HIDE,
-                SIDEBAR_ITEM_EXPLORER: EXPLORER_ACTIVITY_ITEM,
-                ACTIVITYBAR_ITEM_SETTING: ACTIVITY_BAR_GLOBAL_SETTINGS,
-                ACTIVITYBAR_ITEM_ACCOUNT: ACTIVITY_BAR_GLOBAL_ACCOUNT,
-            } = molecule.builtin.getState().constants;
-            switch (item.id) {
-                case CONTEXT_MENU_HIDE: {
-                    molecule.layout.setActivityBarVisibility(true);
-                    break;
-                }
-                case ACTIVITY_BAR_GLOBAL_SETTINGS:
-                case ACTIVITY_BAR_GLOBAL_ACCOUNT: {
-                    const nextHidden = toggleActivityBarHidden(molecule, item);
-                    updateContextMenuIcon(molecule, 'activityBar', item, nextHidden);
-                    break;
-                }
-                case EXPLORER_ACTIVITY_ITEM: {
-                    toggleNextActive(molecule, item);
-
-                    const nextHidden = toggleActivityBarHidden(molecule, item);
-                    updateContextMenuIcon(molecule, 'activityBar', item, nextHidden);
-                    break;
-                }
-                default:
-                    break;
+        molecule.activityBar.onContextMenu((pos, activityItem) => {
+            const { ACTIVITYBAR_CONTEXTMENU = [] } = molecule.builtin.getModules();
+            const activityBar = molecule.activityBar.getState().data;
+            const [top = [], bottom = []] = classify(
+                activityBar,
+                (item) => item.alignment === Alignment.top
+            );
+            let contextMenu = concatMenu(
+                createContextMenu(top.sort(sortByIndex)),
+                createContextMenu(bottom.sort(sortByIndex)),
+                ACTIVITYBAR_CONTEXTMENU
+            );
+            const target = contextMenu.find((item) => item.id === activityItem?.id);
+            if (target) {
+                contextMenu = concatMenu([createMenuDuplicate(target)], contextMenu);
             }
+            molecule.contextMenu.open(
+                contextMenu,
+                pos,
+                // remark current contextMenu
+                molecule.builtin.getConstants().CONTEXTMENU_ITEM_ACTIVITYBAR
+            );
         });
     },
 };

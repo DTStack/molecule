@@ -9,6 +9,7 @@ import { inject, injectable } from 'tsyringe';
 
 export interface IMenuBarController extends BaseController {
     onSelect: (item: IMenuItemProps) => void;
+    onContextMenu: (pos: { x: number; y: number }) => void;
 }
 
 @injectable()
@@ -65,5 +66,9 @@ export class MenuBarController extends BaseController implements IMenuBarControl
 
     public readonly onSelect = (item: IMenuItemProps) => {
         this.emit(MenuBarEvent.onSelect, item.id);
+    };
+
+    public readonly onContextMenu = (pos: { x: number; y: number }) => {
+        this.emit(MenuBarEvent.onContextMenu, pos);
     };
 }

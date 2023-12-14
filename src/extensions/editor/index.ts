@@ -64,26 +64,26 @@ export const ExtendsEditor: IExtension = {
 
         molecule.editor.onContextMenu((item, tabId, groupId) => {
             const {
-                EDITOR_CONTEXTMENU_CLOSE: EDITOR_MENU_CLOSE,
-                EDITOR_CONTEXTMENU_CLOSE_OTHERS: EDITOR_MENU_CLOSE_OTHERS,
-                EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT: EDITOR_MENU_CLOSE_TO_RIGHT,
-                EDITOR_CONTEXTMENU_CLOSE_TO_LEFT: EDITOR_MENU_CLOSE_TO_LEFT,
-                EDITOR_CONTEXTMENU_CLOSE_ALL: EDITOR_MENU_CLOSE_ALL,
+                EDITOR_CONTEXTMENU_CLOSE,
+                EDITOR_CONTEXTMENU_CLOSE_OTHERS,
+                EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT,
+                EDITOR_CONTEXTMENU_CLOSE_TO_LEFT,
+                EDITOR_CONTEXTMENU_CLOSE_ALL,
             } = molecule.builtin.getState().constants;
             switch (item.id) {
-                case EDITOR_MENU_CLOSE:
+                case EDITOR_CONTEXTMENU_CLOSE:
                     molecule.editor.emit(EditorEvent.OnCloseTab, tabId, groupId);
                     break;
-                case EDITOR_MENU_CLOSE_OTHERS:
+                case EDITOR_CONTEXTMENU_CLOSE_OTHERS:
                     molecule.editor.emit(EditorEvent.OnCloseOther, tabId, groupId);
                     break;
-                case EDITOR_MENU_CLOSE_TO_RIGHT:
+                case EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT:
                     molecule.editor.emit(EditorEvent.OnCloseToRight, tabId, groupId);
                     break;
-                case EDITOR_MENU_CLOSE_TO_LEFT:
+                case EDITOR_CONTEXTMENU_CLOSE_TO_LEFT:
                     molecule.editor.emit(EditorEvent.OnCloseToLeft, tabId, groupId);
                     break;
-                case EDITOR_MENU_CLOSE_ALL:
+                case EDITOR_CONTEXTMENU_CLOSE_ALL:
                     molecule.editor.emit(EditorEvent.OnCloseAll, groupId);
                     break;
                 default:

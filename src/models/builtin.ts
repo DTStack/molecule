@@ -91,10 +91,13 @@ export class BuiltinModel {
         MENUBAR_ITEM_RUN_TASK: 'menuBar.item.runTask',
         MENUBAR_ITEM_HELP: 'menuBar.item.help',
         MENUBAR_ITEM_ABOUT: 'menuBar.item.about',
+        MENUBAR_CONTEXTMENU_HIDE: 'menuBar.contextMenu.hide',
         ACTIVITYBAR_ITEM_SETTING: 'activityBar.item.setting',
         ACTIVITYBAR_ITEM_ACCOUNT: 'activityBar.item.account',
         ACTIVITYBAR_CONTEXTMENU_HIDE: 'activityBar.contextMenu.hide',
         CONTEXTMENU_ITEM_ACTIVITYBAR: 'contextMenu.item.activityBar',
+        CONTEXTMENU_ITEM_EXPLORER: 'contextMenu.item.explorer',
+        CONTEXTMENU_ITEM_SIDEBAR: 'contextMenu.item.sidebar',
         CONTEXTMENU_ITEM_EDITOR: 'contextMenu.item.editor',
         CONTEXTMENU_ITEM_EDITOR_TREE: 'contextMenu.item.editorTree',
         CONTEXTMENU_ITEM_PANEL: 'contextMenu.item.panel',
@@ -122,10 +125,15 @@ export class BuiltinModel {
                 alignment: 'right',
             },
         STATUSBAR_CONTEXTMENU: () =>
-            <IMenuItemProps>{
-                id: this.constants.STATUSBAR_CONTEXTMENU_HIDE,
-                name: this.localize(this.constants.STATUSBAR_CONTEXTMENU_HIDE, 'Hide Status Bar'),
-            },
+            <IMenuItemProps[]>[
+                {
+                    id: this.constants.STATUSBAR_CONTEXTMENU_HIDE,
+                    name: this.localize(
+                        this.constants.STATUSBAR_CONTEXTMENU_HIDE,
+                        'Hide Status Bar'
+                    ),
+                },
+            ],
         MENUBAR_ITEMS: () =>
             <IMenuItemProps[]>[
                 {
@@ -570,11 +578,13 @@ export class BuiltinModel {
                     name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL, 'Close All'),
                 },
             ],
-        CONTEXTMENU_ITEM_HIDE: () =>
-            <IMenuItemProps>{
-                id: this.constants.PANEL_CONTEXTMENU_HIDE,
-                name: this.localize(this.constants.PANEL_CONTEXTMENU_HIDE, `Hidden Panel`),
-            },
+        PANEL_CONTEXTMENU: () =>
+            <IMenuItemProps[]>[
+                {
+                    id: this.constants.PANEL_CONTEXTMENU_HIDE,
+                    name: this.localize(this.constants.PANEL_CONTEXTMENU_HIDE, `Hidden Panel`),
+                },
+            ],
         PANEL_CLOSE: () =>
             <IMenuItemProps>{
                 id: this.constants.PANEL_TOOLBAR_CLOSE,
@@ -601,21 +611,25 @@ export class BuiltinModel {
             <IMenuItemProps[]>[
                 {
                     id: this.constants.EDITORTREE_TOOLBAR_SAVE_GROUP,
-                    title: this.localize(
-                        this.constants.EDITORTREE_TOOLBAR_SAVE_GROUP,
-                        'Save Group'
-                    ),
+                    name: this.localize(this.constants.EDITORTREE_TOOLBAR_SAVE_GROUP, 'Save Group'),
                     group: 'inline',
                     icon: 'save-all',
                 },
                 {
                     id: this.constants.EDITORTREE_TOOLBAR_CLOSE_GROUP,
-                    title: this.localize(
+                    name: this.localize(
                         this.constants.EDITORTREE_TOOLBAR_CLOSE_GROUP,
                         'Close Group Editors'
                     ),
                     group: 'inline',
                     icon: 'close-all',
+                },
+            ],
+        MENUBAR_CONTEXTMENU: () =>
+            <IMenuItemProps[]>[
+                {
+                    id: this.constants.MENUBAR_CONTEXTMENU_HIDE,
+                    name: this.localize(this.constants.MENUBAR_CONTEXTMENU_HIDE, 'Hide Menu Bar'),
                 },
             ],
     };

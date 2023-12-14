@@ -1,17 +1,17 @@
 import { IExtension } from 'mo/types';
-import { toggleNextIcon } from 'mo/utils';
+import { concatMenu, toggleNextIcon } from 'mo/utils';
 
 export const ExtendsSidebar: IExtension = {
     id: 'ExtendsSidebar',
     name: 'Extend The Default Sidebar',
     activate: function (molecule): void {
         molecule.sidebar.onToolbarClick((item, groupId) => {
-            const { SIDEBAR_ITEM_EXPLORER: EXPLORER_ACTIVITY_ITEM, EXPLORER_ITEM_OPEN_EDITOR: EDITOR_PANEL_ID, EXPLORER_ITEM_WORKSPACE: SAMPLE_FOLDER_PANEL_ID } =
+            const { SIDEBAR_ITEM_EXPLORER, EXPLORER_ITEM_OPEN_EDITOR, EXPLORER_ITEM_WORKSPACE } =
                 molecule.builtin.getState().constants;
-            if (groupId === EXPLORER_ACTIVITY_ITEM) {
+            if (groupId === SIDEBAR_ITEM_EXPLORER) {
                 switch (item.id) {
-                    case EDITOR_PANEL_ID:
-                    case SAMPLE_FOLDER_PANEL_ID: {
+                    case EXPLORER_ITEM_OPEN_EDITOR:
+                    case EXPLORER_ITEM_WORKSPACE: {
                         // Update Toolbar's icon
                         molecule.sidebar.updateToolbar(groupId, {
                             id: item.id,
@@ -31,6 +31,29 @@ export const ExtendsSidebar: IExtension = {
                     default:
                         break;
                 }
+            }
+        });
+
+        molecule.sidebar.onContextMenu((pos, pane) => {
+            const toolbar = pane.toolbar || [];
+            const contextMenu = concatMenu(
+                [
+                    {
+                        id: pane.id,
+                        name: pane.name,
+                        disabled: true,
+                        icon: 'check',
+                    },
+                ],
+                toolbar
+            );
+            if (toolbar.length) {
+                molecule.contextMenu.open(
+                    contextMenu,
+                    pos,
+                    // remark current contextMenu
+                    { name: molecule.builtin.getConstants().CONTEXTMENU_ITEM_SIDEBAR, item: pane }
+                );
             }
         });
     },

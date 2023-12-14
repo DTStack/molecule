@@ -1,6 +1,12 @@
 import { BaseService } from 'mo/glue';
 import { ExplorerEvent, ExplorerModel, IExplorerPanelItem } from 'mo/models/explorer';
-import { ArraylizeOrSingle, IMenuItemProps, RequiredId, UniqueId } from 'mo/types';
+import {
+    ArraylizeOrSingle,
+    ContextMenuWithItemHandler,
+    IMenuItemProps,
+    RequiredId,
+    UniqueId,
+} from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 export interface IExplorerService extends BaseService<ExplorerModel> {
@@ -38,6 +44,7 @@ export interface IExplorerService extends BaseService<ExplorerModel> {
      * @param callback
      */
     onPanelToolbarClick(callback: (toolbar: IMenuItemProps, panelId: UniqueId) => void): void;
+    onContextMenu(callback: ContextMenuWithItemHandler<[panel: IExplorerPanelItem]>): void;
 }
 
 export class ExplorerService extends BaseService<ExplorerModel> implements IExplorerService {
@@ -111,5 +118,9 @@ export class ExplorerService extends BaseService<ExplorerModel> implements IExpl
 
     public onCollapseChange(callback: (keys: UniqueId[]) => void) {
         this.subscribe(ExplorerEvent.onCollapseChange, callback);
+    }
+
+    public onContextMenu(callback: ContextMenuWithItemHandler<[panel: IExplorerPanelItem]>): void {
+        this.subscribe(ExplorerEvent.onContextMenu, callback);
     }
 }

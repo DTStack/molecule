@@ -1,19 +1,24 @@
 import { IExtension } from 'mo/types';
-import { toggleNextIcon } from 'mo/utils';
+import { concatMenu, sortByIndex } from 'mo/utils';
+
+import { createContextMenu, createMenuDuplicate } from '../utils';
 
 export const ExtendsPanel: IExtension = {
     id: 'ExtendsPanel',
     name: 'Extend The Default Panel',
     activate: function (molecule): void {
-        molecule.panel.onTabChange((key) => {
+        molecule.panel.onChange((key) => {
             molecule.panel.setActive(key);
         });
 
-        molecule.panel.onTabClose((key) => {
+        molecule.panel.onClose((key) => {
             const { current, data } = molecule.panel.getState();
             molecule.panel.remove(key);
             if (current === key) {
-                const idx = data.findIndex((i) => i.id === key);
+                const idx = data
+                    .filter((i) => !i.hidden)
+                    .sort(sortByIndex)
+                    .findIndex((i) => i.id === key);
                 const nextKey = data[idx + 1]?.id ?? data[idx - 1]?.id;
                 molecule.panel.setActive(nextKey);
             }
@@ -42,30 +47,20 @@ export const ExtendsPanel: IExtension = {
             }
         });
 
-        molecule.panel.onTabContextMenu((item) => {
-            const { MENUBAR_ITEM_PANEL, PANEL_ITEM_OUTPUT } = molecule.builtin.getState().constants;
-            switch (item.id) {
-                case MENUBAR_ITEM_PANEL: {
-                    molecule.layout.setPanelVisibility(true);
-                    break;
-                }
-                case PANEL_ITEM_OUTPUT: {
-                    const panelItem = molecule.panel.getPanel(PANEL_ITEM_OUTPUT);
-                    const hidden = !panelItem?.hidden;
-                    molecule.panel.update({
-                        id: item.id,
-                        hidden,
-                    });
-                    molecule.contextMenu.updateItem('panel', {
-                        id: PANEL_ITEM_OUTPUT,
-                        icon: toggleNextIcon(item.icon, hidden),
-                    });
-                    break;
-                }
-
-                default:
-                    break;
+        molecule.panel.onContextMenu((pos, panelItem) => {
+            const { PANEL_CONTEXTMENU = [] } = molecule.builtin.getModules();
+            const data = molecule.panel.getState().data.concat().sort(sortByIndex);
+            let contextMenu = concatMenu(createContextMenu(data), PANEL_CONTEXTMENU);
+            const target = contextMenu.find((item) => item.id === panelItem?.id);
+            if (target) {
+                contextMenu = concatMenu([createMenuDuplicate(target)], contextMenu);
             }
+            molecule.contextMenu.open(
+                contextMenu,
+                pos,
+                // remark current contextMenu
+                molecule.builtin.getConstants().CONTEXTMENU_ITEM_PANEL
+            );
         });
     },
 };

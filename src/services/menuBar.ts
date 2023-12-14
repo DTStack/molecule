@@ -40,6 +40,7 @@ export interface IMenuBarService extends BaseService<MenuBarModel> {
      * @param menuId
      */
     onSelect(callback: (menuId: UniqueId) => void): void;
+    onContextMenu(callback: (pos: { x: number; y: number }) => void): void;
 }
 
 export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBarService {
@@ -164,4 +165,8 @@ export class MenuBarService extends BaseService<MenuBarModel> implements IMenuBa
     public onSelect = (callback: (menuId: UniqueId) => void) => {
         this.subscribe(MenuBarEvent.onSelect, callback);
     };
+
+    public onContextMenu(callback: (pos: { x: number; y: number }) => void): void {
+        this.subscribe(MenuBarEvent.onContextMenu, callback);
+    }
 }

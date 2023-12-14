@@ -8,31 +8,31 @@ export const ExtendsMenuBar: IExtension = {
     activate: function (molecule, monaco): void {
         molecule.menuBar.onSelect((menuId) => {
             const {
-                MENUBAR_ITEM_PANEL: MENU_VIEW_PANEL,
-                MENUBAR_ITEM_MENU: MENU_VIEW_MENUBAR,
-                MENUBAR_ITEM_SIDEBAR: MENU_VIEW_SIBEBAR,
-                MENUBAR_ITEM_STATUSBAR: MENU_VIEW_STATUSBAR,
-                MENUBAR_ITEM_ACTIVITYBAR: MENU_VIEW_ACTIVITYBAR,
+                MENUBAR_ITEM_PANEL,
+                MENUBAR_ITEM_MENU,
+                MENUBAR_ITEM_SIDEBAR,
+                MENUBAR_ITEM_STATUSBAR,
+                MENUBAR_ITEM_ACTIVITYBAR,
             } = molecule.builtin.getState().constants;
 
             switch (menuId) {
-                case MENU_VIEW_PANEL: {
+                case MENUBAR_ITEM_PANEL: {
                     molecule.layout.setPanelVisibility((prev) => !prev);
                     break;
                 }
-                case MENU_VIEW_MENUBAR: {
+                case MENUBAR_ITEM_MENU: {
                     molecule.layout.setMenuBarVisibility((prev) => !prev);
                     break;
                 }
-                case MENU_VIEW_SIBEBAR: {
+                case MENUBAR_ITEM_SIDEBAR: {
                     molecule.layout.setSidebarVisibility((prev) => !prev);
                     break;
                 }
-                case MENU_VIEW_STATUSBAR: {
+                case MENUBAR_ITEM_STATUSBAR: {
                     molecule.layout.setStatusBarVisibility((prev) => !prev);
                     break;
                 }
-                case MENU_VIEW_ACTIVITYBAR: {
+                case MENUBAR_ITEM_ACTIVITYBAR: {
                     molecule.layout.setActivityBarVisibility((prev) => !prev);
                     break;
                 }
@@ -44,6 +44,13 @@ export const ExtendsMenuBar: IExtension = {
                 default: {
                     break;
                 }
+            }
+        });
+
+        molecule.menuBar.onContextMenu((pos) => {
+            const { MENUBAR_CONTEXTMENU } = molecule.builtin.getModules();
+            if (MENUBAR_CONTEXTMENU) {
+                molecule.contextMenu.open(MENUBAR_CONTEXTMENU, pos);
             }
         });
     },

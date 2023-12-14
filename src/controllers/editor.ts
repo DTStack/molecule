@@ -53,10 +53,10 @@ export class EditorController extends BaseController implements IEditorControlle
     private initView() {
         const { EDITOR_CONTEXTMENU, EDITOR_TOOLBAR } = this.builtin.getModules();
         if (EDITOR_CONTEXTMENU) {
-            this.contextMenu.add(
-                this.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR,
-                EDITOR_CONTEXTMENU
-            );
+            // this.contextMenu.add(
+            //     this.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR,
+            //     EDITOR_CONTEXTMENU
+            // );
         }
         if (EDITOR_TOOLBAR) {
             this.editor.addActions(EDITOR_TOOLBAR);

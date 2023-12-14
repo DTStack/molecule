@@ -25,7 +25,6 @@ export default function Editor({
 }: IEditorController) {
     const editor = useConnector('editor');
     const layout = useConnector('layout');
-    const { data } = useConnector('contextMenu');
     const settings = useSettings();
 
     const { groups = [], current, entry = <Welcome />, editorOptions, toolbar, loading } = editor;
@@ -51,7 +50,6 @@ export default function Editor({
                             <Group
                                 group={g}
                                 isActive={current === g.id}
-                                contextMenu={data.get('editorTab')}
                                 toolbar={toolbar}
                                 options={options}
                                 onMount={onMount}

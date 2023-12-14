@@ -1,16 +1,17 @@
 import React from 'react';
 import Explorer from 'mo/client/slots/explorer';
 import { BaseController } from 'mo/glue';
-import { ExplorerEvent } from 'mo/models/explorer';
+import { ExplorerEvent, IExplorerPanelItem } from 'mo/models/explorer';
 import { ActivityBarService } from 'mo/services/activityBar';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { SidebarService } from 'mo/services/sidebar';
-import type { IMenuItemProps, UniqueId } from 'mo/types';
+import type { ContextMenuWithItemHandler, IMenuItemProps, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IExplorerController extends BaseController {
     onCollapseChange?: (keys: UniqueId[]) => void;
     onToolbarClick?: (item: IMenuItemProps, panelId: UniqueId) => void;
+    onContextMenu: ContextMenuWithItemHandler<[panel: IExplorerPanelItem]>;
 }
 
 @injectable()
@@ -41,5 +42,12 @@ export class ExplorerController extends BaseController implements IExplorerContr
 
     public readonly onToolbarClick = (item: IMenuItemProps, panelId: UniqueId) => {
         this.emit(ExplorerEvent.onPanelToolbarClick, item, panelId);
+    };
+
+    public readonly onContextMenu: ContextMenuWithItemHandler<[panel: IExplorerPanelItem]> = (
+        pos,
+        panel
+    ) => {
+        this.emit(ExplorerEvent.onContextMenu, pos, panel);
     };
 }

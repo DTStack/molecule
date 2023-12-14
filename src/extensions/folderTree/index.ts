@@ -39,21 +39,28 @@ export const ExtendsFolderTree: IExtension = {
             molecule.folderTree.dropTree(source, target);
         });
 
-        molecule.folderTree.onContextMenu((treeNode) => {
+        molecule.folderTree.onContextMenu((pos, treeNode) => {
+            const scope = {
+                name: molecule.builtin.getConstants().CONTEXTMENU_ITEM_FOLDERTREE,
+                item: treeNode,
+            };
             if (treeNode.fileType === FileTypes.File) {
-                molecule.contextMenu.update(
-                    molecule.builtin.getConstants().CONTEXTMENU_ITEM_FOLDERTREE,
-                    (prev) => [...prev, ...molecule.builtin.getModules().CONTEXTMENU_FILE]
+                molecule.contextMenu.open(
+                    molecule.builtin.getModules().CONTEXTMENU_FILE,
+                    pos,
+                    scope
                 );
             } else if (treeNode.fileType === FileTypes.Folder) {
-                molecule.contextMenu.update(
-                    molecule.builtin.getConstants().CONTEXTMENU_ITEM_FOLDERTREE,
-                    (prev) => [...prev, ...molecule.builtin.getModules().CONTEXTMENU_FOLDER]
+                molecule.contextMenu.open(
+                    molecule.builtin.getModules().CONTEXTMENU_FOLDER,
+                    pos,
+                    scope
                 );
             } else if (treeNode.fileType === FileTypes.RootFolder) {
-                molecule.contextMenu.update(
-                    molecule.builtin.getConstants().CONTEXTMENU_ITEM_FOLDERTREE,
-                    (prev) => [...prev, ...molecule.builtin.getModules().CONTEXTMENU_FOLDER_PANEL]
+                molecule.contextMenu.open(
+                    molecule.builtin.getModules().CONTEXTMENU_FOLDER_PANEL,
+                    pos,
+                    scope
                 );
             }
         });

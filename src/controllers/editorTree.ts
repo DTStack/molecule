@@ -1,14 +1,21 @@
 import { createElement } from 'react';
 import EditorTree from 'mo/client/slots/editorTree';
 import { BaseController } from 'mo/glue';
+import type { EditorGroupModel } from 'mo/models/editor';
 import { EditorTreeEvent } from 'mo/models/editorTree';
 import type { BuiltinService } from 'mo/services/builtin';
-import type { ContextMenuService } from 'mo/services/contextMenu';
 import type { EditorTreeService } from 'mo/services/editorTree';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { SidebarService } from 'mo/services/sidebar';
-import type { ContextMenuEditorHandler, ContextMenuGroupHandler, UniqueId } from 'mo/types';
+import type {
+    ContextMenuGroupHandler,
+    ContextMenuWithItemHandler,
+    IEditorTab,
+    UniqueId,
+} from 'mo/types';
 import { inject, injectable } from 'tsyringe';
+
+type ContextMenuType = ContextMenuWithItemHandler<[group: EditorGroupModel, tab?: IEditorTab<any>]>;
 
 export interface IEditorTreeController extends BaseController {
     readonly onClose?: (tabId: UniqueId, groupId: UniqueId) => void;
@@ -18,12 +25,11 @@ export interface IEditorTreeController extends BaseController {
         groupId: UniqueId
     ) => void;
     readonly onToolbarClick?: ContextMenuGroupHandler;
-    readonly onGroupContextMenu?: ContextMenuGroupHandler;
     /**
      * Trigger by context menu click event
      * When click the context menu from group header, it doesn't have file info
      */
-    readonly onContextMenu?: ContextMenuEditorHandler;
+    readonly onContextMenu?: ContextMenuType;
 }
 
 @injectable()
@@ -31,7 +37,6 @@ export class EditorTreeController extends BaseController implements IEditorTreeC
     constructor(
         @inject('builtin') private builtin: BuiltinService,
         @inject('explorer') private explorer: ExplorerService,
-        @inject('contextMenu') private contextMenu: ContextMenuService,
         @inject('sidebar') private sidebar: SidebarService,
         @inject('editorTree') private editorTree: EditorTreeService
     ) {
@@ -40,8 +45,7 @@ export class EditorTreeController extends BaseController implements IEditorTreeC
     }
 
     private initView() {
-        const { EDITOR_TREE, EDITOR_TREE_CONTEXTMENU, EDITORTREE_TOOLBAR } =
-            this.builtin.getModules();
+        const { EDITOR_TREE, EDITORTREE_TOOLBAR } = this.builtin.getModules();
         if (EDITOR_TREE) {
             this.explorer.addPanel({
                 ...EDITOR_TREE,
@@ -53,18 +57,14 @@ export class EditorTreeController extends BaseController implements IEditorTreeC
                 icon: 'check',
                 sortIndex: EDITOR_TREE.sortIndex,
             });
-            this.contextMenu.add(
-                this.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR_TREE,
-                EDITOR_TREE_CONTEXTMENU
-            );
-        }
-        if (EDITORTREE_TOOLBAR) {
-            this.editorTree.addToolbar(EDITORTREE_TOOLBAR);
+            if (EDITORTREE_TOOLBAR) {
+                this.editorTree.addToolbar(EDITORTREE_TOOLBAR);
+            }
         }
     }
 
-    public onContextMenu: ContextMenuEditorHandler = (menu, tabId, groupId) => {
-        this.emit(EditorTreeEvent.onContextMenu, menu, tabId, groupId);
+    public onContextMenu: ContextMenuType = (position, group, tab) => {
+        this.emit(EditorTreeEvent.onContextMenu, position, group, tab);
     };
 
     public onGroupClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, groupId: UniqueId) => {
@@ -77,10 +77,6 @@ export class EditorTreeController extends BaseController implements IEditorTreeC
 
     public onSelect = (tabId: UniqueId, groupId: UniqueId) => {
         this.emit(EditorTreeEvent.onSelect, tabId, groupId);
-    };
-
-    public onGroupContextMenu: ContextMenuGroupHandler = (menu, groupId) => {
-        this.emit(EditorTreeEvent.onGroupContextMenu, menu, groupId);
     };
 
     public onToolbarClick: ContextMenuGroupHandler = (toolbar, groupId) => {

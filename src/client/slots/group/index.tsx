@@ -25,7 +25,6 @@ export interface IGroupProps {
     isActive?: boolean;
     options: EditorModel['editorOptions'];
     toolbar?: IMenuItemProps[];
-    contextMenu?: IMenuItemProps[];
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
     onChange?: (
         value: string | undefined,
@@ -49,7 +48,6 @@ export default function Group({
     isActive,
     options,
     toolbar,
-    contextMenu,
     onSelectTab,
     onMount,
     onChange,
@@ -151,7 +149,6 @@ export default function Group({
                                 />
                             }
                             className={classNames(variables.tab, active && variables.active)}
-                            contextMenu={contextMenu}
                             onContextMenu={(item) => onContextMenu?.(item, tab.id, group.id)}
                             onClick={() => onSelectTab?.(tab.id, group.id)}
                             onDragStart={() => ({ tabId: tab.id, groupId: group.id })}

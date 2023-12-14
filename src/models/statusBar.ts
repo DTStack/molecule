@@ -26,10 +26,6 @@ export enum StatusBarEvent {
      * ContextMenu event
      */
     onContextMenu = 'statusBar.onContextMenu',
-    /**
-     * Activity bar data changed
-     */
-    DataChanged = 'statusBar.data',
 }
 
 export class StatusBarModel implements IStatusBar {

@@ -20,6 +20,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
     const Sidebar = useSlots('sidebar');
     const Panel = useSlots('panel');
     const Editor = useSlots('editor');
+    const ContextMenu = useSlots('contextMenu');
 
     const bothVisibility = !layout.sidebar.hidden && !layout.auxiliaryBar.hidden;
     const sidebarHidden = layout.sidebar.hidden;
@@ -48,6 +49,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
 
     return (
         <main className={variables.container} tabIndex={0}>
+            {ContextMenu}
             <Display visible={!layout.menuBar.hidden}>{MenuBar}</Display>
             <section className={variables.main}>
                 <Display visible={!layout.activityBar.hidden}>{ActivityBar}</Display>

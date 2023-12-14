@@ -11,8 +11,8 @@ import type {
  * The activity bar event definition
  */
 export enum ActivityBarEvent {
-    OnClick = 'activityBar.onClick',
-    OnContextMenu = 'activityBar.onContextMenu',
+    onClick = 'activityBar.onClick',
+    onContextMenu = 'activityBar.onContextMenu',
 }
 
 export type PartialAlignment = Extract<AlignmentLiteral, 'top' | 'bottom'>;
@@ -20,7 +20,6 @@ export interface IActivityBarItem
     extends HTMLElementProps,
         IItemProps,
         RenderProps<IActivityBarItem> {
-    disabled?: boolean;
     alignment?: PartialAlignment;
     contextMenu?: IMenuItemProps[];
 }

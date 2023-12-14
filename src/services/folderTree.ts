@@ -2,6 +2,7 @@ import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
 import {
     ArraylizeOrSingle,
+    ContextMenuWithItemHandler,
     FileTypeLiteral,
     FileTypes,
     type FolderTreeInsertOption,
@@ -110,13 +111,13 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @param treeData
      */
     onDropTree(callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void): void;
-    onContextMenu(callback: (treeData: TreeNodeModel<any>) => void): void;
+    onContextMenu(callback: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>): void;
     /**
      * Listen to the click event about the context menu except for built-in menus
      * @param callback
      */
     onContextMenuClick(
-        callback: (contextMenuItem: IMenuItemProps, treeNode?: TreeNodeModel<any>) => void
+        callback: (item: IMenuItemProps, treeNode: TreeNodeModel<any>) => void
     ): void;
     /**
      * Callback for expanding tree node
@@ -364,15 +365,14 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.subscribe(FolderTreeEvent.onDrop, callback);
     };
 
-    public onContextMenu = (callback: (treeData: TreeNodeModel<any>) => void) => {
+    public onContextMenu = (
+        callback: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>
+    ) => {
         this.subscribe(FolderTreeEvent.onContextMenu, callback);
     };
 
     public onContextMenuClick(
-        callback: (
-            contextMenuItem: IMenuItemProps,
-            treeNode?: TreeNodeModel<any> | undefined
-        ) => void
+        callback: (item: IMenuItemProps, treeNode: TreeNodeModel<any>) => void
     ): void {
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
     }

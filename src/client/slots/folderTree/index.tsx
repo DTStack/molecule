@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { Button } from 'mo/client/components/button';
-import Dropdown from 'mo/client/components/dropdown';
+import Prevent from 'mo/client/components/prevent';
 import Tree from 'mo/client/components/tree';
 import useConnector from 'mo/client/hooks/useConnector';
 import useLocale from 'mo/client/hooks/useLocale';
@@ -39,11 +39,9 @@ export default function FolderTree({
     onExpand,
     onTreeItemKeyDown,
     onContextMenu,
-    onContextMenuClick,
     onCreateRoot,
 }: { panel: IExplorerPanelItem } & IFolderTreeController) {
     const folderTree = useConnector('folderTree');
-    const contextMenu = useConnector('contextMenu');
     const localize = useLocale();
     const builtin = useConnector('builtin');
     const { entry, current, data, expandKeys, loadedKeys, loadingKeys, editing } = folderTree;
@@ -68,72 +66,57 @@ export default function FolderTree({
         </div>
     );
 
-    const handleVisibleChange = (visible: boolean) => {
-        if (visible) {
-            onContextMenu?.(data[0]);
-        }
-    };
-
     if (!folderTree.data.length) return welcomePage;
-    const contextMenuData = contextMenu.data.get(builtin.constants.CONTEXTMENU_ITEM_FOLDERTREE);
     return (
         <ScrollBar isShowShadow>
-            <Dropdown
-                data={contextMenuData}
-                trigger="contextMenu"
-                stopPropagation
-                alignPoint
-                onVisibleChange={handleVisibleChange}
+            <Prevent
+                data-content={panel.id}
+                style={{ height: '100%' }}
+                onClick={() => onSelect?.(data[0])}
+                onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data[0])}
             >
-                <div
-                    data-content={panel.id}
-                    style={{ height: '100%' }}
-                    onClick={() => onSelect?.(data[0])}
-                >
-                    <Tree
-                        // root folder do not render
-                        activeKey={current}
-                        expandKeys={expandKeys}
-                        loadedKeys={loadedKeys}
-                        loadingKeys={loadingKeys}
-                        contextMenu={contextMenuData}
-                        data={data[0]?.children || []}
-                        className={classNames(variables.folderTree, editing && variables.editing)}
-                        draggable={!editing}
-                        onDropTree={onDropTree}
-                        onSelect={onSelect}
-                        onContextMenuClick={onContextMenuClick}
-                        onContextMenu={onContextMenu}
-                        renderTitle={(node) => {
-                            if (node.id !== editing) return node.name;
-                            return (
-                                <Input
-                                    role="input"
-                                    className={variables.input}
-                                    type="text"
-                                    defaultValue={node.name}
-                                    onKeyDown={(e) => {
-                                        // stop propagation, avoid conflict to onKeyDown event
-                                        e.stopPropagation();
-                                        if (e.keyCode === 13 || e.keyCode === 27) {
-                                            onUpdateFileName?.({
-                                                ...node,
-                                                name: (e.target as HTMLInputElement).value,
-                                            });
-                                        }
-                                    }}
-                                    autoComplete="off"
-                                    autoFocus
-                                    // onBlur={(e)  => handleInputBlur(e, node)}
-                                    onClick={(e) => e.stopPropagation()}
-                                />
-                            );
-                        }}
-                        onExpand={onExpand}
-                        onTreeItemKeyDown={onTreeItemKeyDown}
-                    />
-                </div>
-            </Dropdown>
+                <Tree
+                    // root folder do not render
+                    activeKey={current}
+                    expandKeys={expandKeys}
+                    loadedKeys={loadedKeys}
+                    loadingKeys={loadingKeys}
+                    // contextMenu={contextMenuData}
+                    data={data[0]?.children || []}
+                    className={classNames(variables.folderTree, editing && variables.editing)}
+                    draggable={!editing}
+                    onDropTree={onDropTree}
+                    onSelect={onSelect}
+                    onContextMenu={onContextMenu}
+                    renderTitle={(node) => {
+                        if (node.id !== editing) return node.name;
+                        return (
+                            <Input
+                                role="input"
+                                className={variables.input}
+                                type="text"
+                                defaultValue={node.name}
+                                onKeyDown={(e) => {
+                                    // stop propagation, avoid conflict to onKeyDown event
+                                    e.stopPropagation();
+                                    if (e.keyCode === 13 || e.keyCode === 27) {
+                                        onUpdateFileName?.({
+                                            ...node,
+                                            name: (e.target as HTMLInputElement).value,
+                                        });
+                                    }
+                                }}
+                                autoComplete="off"
+                                autoFocus
+                                // onBlur={(e)  => handleInputBlur(e, node)}
+                                onClick={(e) => e.stopPropagation()}
+                            />
+                        );
+                    }}
+                    onExpand={onExpand}
+                    onTreeItemKeyDown={onTreeItemKeyDown}
+                />
+            </Prevent>
         </ScrollBar>
     );
 }

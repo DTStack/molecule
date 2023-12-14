@@ -1,47 +1,40 @@
 import { classNames } from 'mo/client/classNames';
-import useContextMenu from 'mo/client/hooks/useContextMenu';
 import type { IPanelItem } from 'mo/models/panel';
-import type { ContextMenuEventHandler } from 'mo/types';
+import type { ContextMenuWithItemHandler } from 'mo/types';
 
-import Dropdown from '../dropdown';
 import Icon from '../icon';
+import Prevent from '../prevent';
 
 interface IPanelItemProps {
     className?: string;
     data: IPanelItem;
     onClose?: (id: IPanelItem['id']) => void;
     onClick?: () => void;
-    onContextMenuClick?: ContextMenuEventHandler;
+    onContextMenu?: ContextMenuWithItemHandler<[item: IPanelItem]>;
 }
 
 export default function PanelItem({
     className,
-    data: p,
+    data,
     onClose,
     onClick,
-    onContextMenuClick,
+    onContextMenu,
 }: IPanelItemProps) {
-    const contextMenu = useContextMenu('panel', p);
     return (
-        <Dropdown
-            data={contextMenu}
-            stopPropagation
-            trigger="contextMenu"
-            onClick={onContextMenuClick}
-        >
-            <div key={p.id} className={classNames(className)} onClick={onClick}>
-                {!!p.icon && <Icon type={p.icon} />}
-                {p.name}
-                {!!p.closable && (
+        <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data)}>
+            <div key={data.id} className={classNames(className)} onClick={onClick}>
+                <Icon type={data.icon} />
+                {data.name}
+                {!!data.closable && (
                     <Icon
                         type="close"
                         onClick={(e) => {
                             e.stopPropagation();
-                            onClose?.(p.id);
+                            onClose?.(data.id);
                         }}
                     />
                 )}
             </div>
-        </Dropdown>
+        </Prevent>
     );
 }

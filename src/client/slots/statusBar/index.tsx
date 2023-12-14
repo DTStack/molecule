@@ -1,7 +1,6 @@
-import Dropdown from 'mo/client/components/dropdown';
 import Flex from 'mo/client/components/flex';
+import Prevent from 'mo/client/components/prevent';
 import useConnector from 'mo/client/hooks/useConnector';
-import useContextMenu from 'mo/client/hooks/useContextMenu';
 import type { IStatusBarController } from 'mo/controllers/statusBar';
 import { Alignment } from 'mo/types';
 import { classify, sortByIndex } from 'mo/utils';
@@ -9,9 +8,8 @@ import { classify, sortByIndex } from 'mo/utils';
 import StatusItem from '../../components/statusItem';
 import variables from './index.scss';
 
-export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarController) {
+export default function StatusBar({ onClick, onContextMenu }: IStatusBarController) {
     const statusBar = useConnector('statusBar');
-    const data = useContextMenu('statusBar');
 
     const [leftItems = [], rightItems = []] = classify(
         statusBar.data,
@@ -19,7 +17,7 @@ export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarCon
     );
 
     return (
-        <Dropdown trigger="contextMenu" alignPoint data={data} onClick={onContextMenuClick}>
+        <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY })}>
             <Flex className={variables.container} justifyContent="space-between">
                 <Flex className={variables.items} justifyContent="flex-start">
                     {leftItems.sort(sortByIndex).map((item) => (
@@ -27,7 +25,7 @@ export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarCon
                             key={item.id}
                             data={item}
                             onClick={(e) => onClick?.(e, item.id)}
-                            onContextMenuClick={onContextMenuClick}
+                            onContextMenu={onContextMenu}
                         />
                     ))}
                 </Flex>
@@ -40,11 +38,11 @@ export default function StatusBar({ onClick, onContextMenuClick }: IStatusBarCon
                                 key={item.id}
                                 data={item}
                                 onClick={(e) => onClick?.(e, item.id)}
-                                onContextMenuClick={onContextMenuClick}
+                                onContextMenu={onContextMenu}
                             />
                         ))}
                 </Flex>
             </Flex>
-        </Dropdown>
+        </Prevent>
     );
 }

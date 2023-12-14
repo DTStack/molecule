@@ -276,3 +276,7 @@ export function flatObject(target: Record<string, any>): Record<string, any> {
     recurse('', target);
     return flatted;
 }
+
+export function getPrevOrNext<T>(arr: T[], idx: number) {
+    return arr[idx - 1] ?? arr[idx + 1];
+}

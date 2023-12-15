@@ -8,6 +8,7 @@ export default forwardRef<HTMLDivElement, PropsWithChildren<HTMLAttributes<HTMLD
                     e.stopPropagation();
                     e.preventDefault();
                     e.persist();
+                    (e.target as HTMLDivElement).focus();
                     onContextMenu?.(e);
                 }}
                 ref={ref}

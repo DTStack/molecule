@@ -1,6 +1,10 @@
 @import '../../classNames/style.scss';
 
 $tab: prefix('tab');
+$extra: prefix('extra');
+$active: BEMModifier($tab, 'active');
+$hovering: BEMModifier($tab, 'hovering');
+$extraActive: BEMModifier($extra, 'active');
 
 .#{$tab} {
     background: var(--tab-inactiveBackground);
@@ -13,8 +17,38 @@ $tab: prefix('tab');
     user-select: none;
     font-size: 12px;
     gap: 4px;
+    height: 100%;
+    min-width: fit-content;
+
+    &.#{$active} {
+        background: var(--tab-activeBackground);
+        border-bottom-color: var(--tab-activeBorder);
+        color: var(--tab-activeForeground);
+
+        .#{$extra} {
+            opacity: 1;
+        }
+    }
+
+    &:hover {
+        .#{$extra} {
+            opacity: 1;
+        }
+    }
+}
+
+.#{$extra} {
+    opacity: 0;
+
+    &.#{$extraActive} {
+        opacity: 1;
+    }
 }
 
 :export {
     tab: $tab;
+    extra: $extra;
+    hovering: $hovering;
+    active: $active;
+    extraActive: $extraActive;
 }

@@ -3,13 +3,9 @@
 $editor: prefix("editor");
 $group: BEMElement($editor, 'group');
 $header: BEMElement($group, 'header');
-$tab: BEMElement($group, 'tab');
 $content: BEMElement($group, 'content');
 $breadcrumb: BEMElement($group, 'breadcrumb');
-$extra: BEMElement($group, 'extra');
 $name: BEMElement($group, 'name');
-
-$active: BEMModifier($tab, 'active');
 
 .#{$group} {
     height: 100%;
@@ -36,43 +32,19 @@ $active: BEMModifier($tab, 'active');
         height: calc(100% - 57px);
     }
 
-    .#{$tab} {
-        height: 100%;
-        min-width: fit-content;
-
-        &.#{$active} {
-            background: var(--tab-activeBackground);
-            border-bottom-color: var(--tab-activeBorder);
-            color: var(--tab-activeForeground);
-        }
-
-    }
-
     .#{$name} {
         max-width: 300px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-
-    .#{$extra} {
-        opacity: 0;
-    }
 }
 
-.#{$tab}:hover .#{$extra},
-.#{$tab} .#{$extra}[data-modified='true'],
-.#{$tab}.#{$active} .#{$extra} {
-    opacity: 1;
-}
 
 :export {
     group: $group;
     header: $header;
-    tab: $tab;
     breadcrumb: $breadcrumb;
     name: $name;
     content: $content;
-    extra: $extra;
-    active: $active;
 }

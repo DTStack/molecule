@@ -1,0 +1,7 @@
+h2 {
+    position: sticky;
+    top: 0;
+    background-color: var(--sideBar-background);
+    margin: 0;
+    padding: 6px 0;
+}

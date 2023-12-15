@@ -6,13 +6,15 @@ import { ContextMenuService } from 'mo/services/contextMenu';
 import { EditorService } from 'mo/services/editor';
 import { LayoutService } from 'mo/services/layout';
 import type {
-    ContextMenuEditorHandler,
     ContextMenuGroupHandler,
+    ContextMenuWithItemHandler,
     IDragProps,
     UniqueId,
 } from 'mo/types';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
+
+type EditorContextMenu = ContextMenuWithItemHandler<[tabId: UniqueId, groupId: UniqueId]>;
 
 export interface IEditorController extends BaseController {
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
@@ -20,11 +22,6 @@ export interface IEditorController extends BaseController {
     onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onCloseOther?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onCloseToRight?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onCloseToLeft?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onCloseAll?: (groupId: UniqueId) => void;
-    onSplitEditorRight?: (activeTabId: UniqueId, groupId: UniqueId) => void;
     onDrag?: (params: IDragProps) => void;
     onChange?: (
         value: string | undefined,
@@ -35,7 +32,7 @@ export interface IEditorController extends BaseController {
         instance: editor.IStandaloneCodeEditor,
         ev: editor.ICursorSelectionChangedEvent
     ) => void;
-    onContextMenu?: ContextMenuEditorHandler;
+    onContextMenu?: EditorContextMenu;
     onToolbarClick?: ContextMenuGroupHandler;
 }
 
@@ -51,13 +48,7 @@ export class EditorController extends BaseController implements IEditorControlle
         this.initView();
     }
     private initView() {
-        const { EDITOR_CONTEXTMENU, EDITOR_TOOLBAR } = this.builtin.getModules();
-        if (EDITOR_CONTEXTMENU) {
-            // this.contextMenu.add(
-            //     this.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR,
-            //     EDITOR_CONTEXTMENU
-            // );
-        }
+        const { EDITOR_TOOLBAR } = this.builtin.getModules();
         if (EDITOR_TOOLBAR) {
             this.editor.addActions(EDITOR_TOOLBAR);
         }
@@ -76,7 +67,7 @@ export class EditorController extends BaseController implements IEditorControlle
     };
 
     public onSelectTab = (tabId: UniqueId, groupId: UniqueId) => {
-        this.emit(EditorEvent.OnSelectTab, tabId, groupId);
+        this.emit(EditorEvent.onSelectTab, tabId, groupId);
     };
 
     public onFocus = (instance: editor.IStandaloneCodeEditor) => {
@@ -84,27 +75,11 @@ export class EditorController extends BaseController implements IEditorControlle
     };
 
     public onCloseTab: IEditorController['onCloseTab'] = (tabId, groupId) => {
-        this.emit(EditorEvent.OnCloseTab, tabId, groupId);
+        this.emit(EditorEvent.onCloseTab, tabId, groupId);
     };
 
     public onDrag: IEditorController['onDrag'] = (props) => {
-        this.emit(EditorEvent.OnMoveTab, props);
-    };
-
-    public onCloseOther: IEditorController['onCloseOther'] = (tabId, groupId) => {
-        this.emit(EditorEvent.OnCloseOther, tabId, groupId);
-    };
-
-    public onCloseToLeft: IEditorController['onCloseToLeft'] = (tabId, groupId) => {
-        this.emit(EditorEvent.OnCloseToLeft, tabId, groupId);
-    };
-
-    public onCloseToRight: IEditorController['onCloseToRight'] = (tabId, groupId) => {
-        this.emit(EditorEvent.OnCloseToRight, tabId, groupId);
-    };
-
-    public onCloseAll: IEditorController['onCloseAll'] = (groupId) => {
-        this.emit(EditorEvent.OnCloseAll, groupId);
+        this.emit(EditorEvent.onMoveTab, props);
     };
 
     public onCursorSelection = (
@@ -114,21 +89,13 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onCursorSelection, instance, ev);
     };
 
-    public onContextMenu?: ContextMenuEditorHandler | undefined = (item, tabId, groupId) => {
-        this.emit(EditorEvent.onContextMenu, item, tabId, groupId);
+    public onContextMenu: EditorContextMenu = (pos, tabId, groupId) => {
+        this.emit(EditorEvent.onContextMenu, pos, tabId, groupId);
     };
 
     // ActionBar callback
     public onToolbarClick?: ContextMenuGroupHandler | undefined = (item, groupId) => {
         this.emit(EditorEvent.onToolbarClick, item, groupId);
-    };
-
-    // ActionBar splitEditor Right callback
-    public onSplitEditorRight?: IEditorController['onSplitEditorRight'] = (
-        activeTabId,
-        groupId
-    ) => {
-        this.emit(EditorEvent.OnSplitEditorRight, activeTabId, groupId);
     };
 
     // Editor value onChange callback
@@ -141,6 +108,6 @@ export class EditorController extends BaseController implements IEditorControlle
             this.emit(SettingsEvent.OnChange, value);
         }
 
-        this.emit(EditorEvent.OnChangeTab, value, ev, extraProps);
+        this.emit(EditorEvent.onChangeTab, value, ev, extraProps);
     };
 }

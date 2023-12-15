@@ -1,16 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
-import Close from 'mo/client/components/close';
 import Header from 'mo/client/components/header';
 import Icon from 'mo/client/components/icon';
 import MonacoEditor from 'mo/client/components/monaco';
 import Tab from 'mo/client/components/tab';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type {
-    ContextMenuEditorHandler,
     ContextMenuGroupHandler,
+    ContextMenuWithItemHandler,
     IDragProps,
     IMenuItemProps,
     UniqueId,
@@ -20,6 +18,7 @@ import type { editor, IDisposable } from 'monaco-editor';
 
 import variables from './index.scss';
 
+type EditorContextMenu = ContextMenuWithItemHandler<[tabId: UniqueId, groupId: UniqueId]>;
 export interface IGroupProps {
     group: EditorGroupModel;
     isActive?: boolean;
@@ -37,7 +36,7 @@ export interface IGroupProps {
         instance: editor.IStandaloneCodeEditor,
         ev: editor.ICursorSelectionChangedEvent
     ) => void;
-    onContextMenu?: ContextMenuEditorHandler;
+    onContextMenu?: EditorContextMenu;
     onToolbarClick?: ContextMenuGroupHandler;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
     onDrag?: (params: IDragProps) => void;
@@ -138,18 +137,11 @@ export default function Group({
                                 </>
                             }
                             key={tab.id}
-                            extra={
-                                <Close
-                                    className={variables.extra}
-                                    modified={tab.modified}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onCloseTab?.(tab.id, group.id);
-                                    }}
-                                />
-                            }
-                            className={classNames(variables.tab, active && variables.active)}
-                            onContextMenu={(item) => onContextMenu?.(item, tab.id, group.id)}
+                            active={active}
+                            closable
+                            modified={tab.modified}
+                            onContextMenu={(pos) => onContextMenu?.(pos, tab.id, group.id)}
+                            onClose={() => onCloseTab?.(tab.id, group.id)}
                             onClick={() => onSelectTab?.(tab.id, group.id)}
                             onDragStart={() => ({ tabId: tab.id, groupId: group.id })}
                             onDrag={({ info, type, item }) =>

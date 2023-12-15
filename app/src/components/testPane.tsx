@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button } from '@dtinsight/molecule/esm/client/components/button';
 import LocaleNotification from '@dtinsight/molecule/esm/client/components/localeNotification';
 import { ScrollBar } from '@dtinsight/molecule/esm/client/components/scrollBar';
-import { FileTypes, type IEditorTab, type IMoleculeContext } from '@dtinsight/molecule/esm/types';
-import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
+import { type IEditorTab, type IMoleculeContext } from '@dtinsight/molecule/esm/types';
+
+import { getWorkspace } from '../utils';
+import './testPane.css';
 
 function randomId() {
     return Math.round(Math.random() * 1000);
@@ -22,7 +24,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             disabled,
         });
     };
-    const handleAddGloablActivityBar = () => {
+    const handleAddGlobalActivityBar = () => {
         const id = randomId();
         molecule.activityBar.add({
             id,
@@ -128,12 +130,13 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
 
     // ================= Folder Tree Operation Region ====================
     const addRootFolder = () => {
-        const children = new Array(50)
-            .fill(1)
-            .map((_, index) => new TreeNodeModel(index, `test_sql_${index}.sql`, FileTypes.File));
-        molecule.folderTree.add(
-            new TreeNodeModel(randomId(), 'Sample SQLs', FileTypes.RootFolder, children)
-        );
+        getWorkspace().then((tree) => {
+            molecule.folderTree.add(tree);
+            molecule.explorer.updatePanel({
+                id: molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
+                name: tree.name,
+            });
+        });
     };
     // ====================================================================
 
@@ -157,7 +160,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
 
     // ================= Output Operation Region ====================
     const updateOutput = () => {
-        molecule.panel.setActive(molecule.builtin.getState().constants.PANEL_OUTPUT);
+        molecule.panel.setActive(molecule.builtin.getConstants().PANEL_ITEM_OUTPUT);
         molecule.output.append('Number: ' + Math.random() * 10 + '\n');
     };
     // ====================================================================
@@ -338,45 +341,9 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         };
     }, []);
 
-    const eventRegister = useCallback(
-        () =>
-            new Promise((resolve, reject) => {
-                molecule.editor.onCloseTab((tabId, groupId) => {
-                    const { modified } = molecule.editor.getTabById(tabId, groupId) || {};
-                    if (modified) {
-                        return reject('file is modified, confirm delete!');
-                    }
-                    console.log(tabId, groupId, '--onCloseTab');
-                });
-                molecule.editor.onCloseAll((tabId) => {
-                    console.log(tabId, '--onCloseAll');
-                });
-                molecule.editor.onCloseOther((tabId, groupId) => {
-                    console.log(tabId, groupId, '--onCloseOther');
-                });
-                molecule.editor.onCloseToRight((tabId, groupId) => {
-                    console.log(tabId, groupId, '--onCloseToRight');
-                });
-                molecule.editor.onCloseToLeft((tabId, groupId) => {
-                    console.log(tabId, groupId, '--onCloseToLeft');
-                });
-                molecule.editor.onSplitEditorRight(() => {
-                    console.log('--onSplitEditorRight');
-                });
-                molecule.folderTree.onRename(() => {
-                    console.log('--onRename');
-                });
-            }),
-        [molecule.editor]
-    );
-
-    useEffect(() => {
-        eventRegister();
-    }, [eventRegister]);
-
     return (
         <ScrollBar isShowShadow>
-            <div style={{ padding: 16 }}>
+            <div style={{ padding: '0 16px' }}>
                 <h2>Editor:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
                     <Button block onClick={newEditor}>
@@ -409,7 +376,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                     <Button block onClick={() => handleAddActivityBar(true)}>
                         Add Disabled ActivityBar Item
                     </Button>
-                    <Button block onClick={handleAddGloablActivityBar}>
+                    <Button block onClick={handleAddGlobalActivityBar}>
                         Add Global ActivityBar Item
                     </Button>
                     <Button block onClick={handleHiddenActivityBar}>

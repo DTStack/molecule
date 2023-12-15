@@ -2,6 +2,7 @@ import { classNames } from 'mo/client/classNames';
 import type { IBreadcrumbItemProps, IconType } from 'mo/types';
 
 import Icon from '../icon';
+import Prevent from '../prevent';
 import variables from './index.scss';
 
 interface IBreadcrumbProps {
@@ -16,7 +17,11 @@ export default function Breadcrumb({ className, separator, routes, onClick }: IB
     const sep = separator || <Icon type="chevron-right" />;
 
     return (
-        <div className={classNames(className, variables.container)} role="breadcrumb">
+        <Prevent
+            className={classNames(className, variables.container)}
+            role="breadcrumb"
+            tabIndex={0}
+        >
             {routes.map((route, index) => {
                 const { id, icon, render, name } = route;
                 return (
@@ -33,6 +38,6 @@ export default function Breadcrumb({ className, separator, routes, onClick }: IB
                     </a>
                 );
             })}
-        </div>
+        </Prevent>
     );
 }

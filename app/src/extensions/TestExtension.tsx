@@ -11,11 +11,11 @@ import {
     SearchResultItem,
     UniqueId,
 } from '@dtinsight/molecule/esm/types';
-import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
 import { cloneDeep, debounce } from 'lodash-es';
 
 import TestPane from '../components/testPane';
 import { mockSearchResult } from '../mocks/searchResult';
+import { getFileContent, getFiles, getWorkspace } from '../utils';
 
 enum FolderTreeContextMenu {
     createFolder = 'folderTree.createFolder',
@@ -37,16 +37,20 @@ export const TestExtension: IExtension = {
         });
         molecule.sidebar.add({
             id: 'testPane',
-            title: 'testPane',
+            name: 'testPane',
             render: () => <TestPane context={molecule} />,
         });
 
-        molecule.activityBar.onContextMenuClick((item: IMenuItemProps) => {
-            if (item.id === 'testPane') {
-                toggleNextActive(molecule, item);
+        molecule.activityBar.onContextMenu(() => {
+            molecule.contextMenu.setContextMenu([
+                { id: 'testPane__activityBar__molecule', name: 'Molecule' },
+                { id: '2', type: 'divider' },
+            ]);
+        });
 
-                const nextHidden = toggleActivityBarHidden(molecule, item);
-                updateContextMenuIcon(molecule, 'activityBar', item, nextHidden);
+        molecule.contextMenu.onClick((item) => {
+            if (item.id === 'testPane__activityBar__molecule') {
+                alert('Molecule');
             }
         });
 
@@ -249,134 +253,111 @@ export const TestExtension: IExtension = {
         });
 
         molecule.folderTree.onCreateRoot(() => {
-            fetch('/api/getWorkspace')
-                .then((res) => res.json())
-                .then(
-                    ({
-                        data: { folders, files },
-                    }: {
-                        data: { folders: string[]; files: string[] };
-                    }) => {
-                        molecule.folderTree.add(
-                            new TreeNodeModel<void>('molecule', 'molecule', 'RootFolder', [
-                                ...folders.map(
-                                    (folder) =>
-                                        new TreeNodeModel<void>(folder, folder, 'Folder', [])
-                                ),
-                                ...files.map((file) => new TreeNodeModel<void>(file, file, 'File')),
-                            ])
-                        );
+            getWorkspace().then((tree) => {
+                molecule.folderTree.add(tree);
+                molecule.explorer.updatePanel({
+                    id: molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
+                    name: tree.name,
+                });
+                molecule.sidebar.updateToolbar(
+                    molecule.builtin.getConstants().SIDEBAR_ITEM_EXPLORER,
+                    {
+                        id: molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
+                        name: tree.name,
                     }
                 );
+            });
         });
 
-        molecule.folderTree.onRightClick((e, node) => {
-            // TODO custom contextMenu
-            const { COMMON_CONTEXT_MENU } = molecule.builtin.getState().modules;
-            if (node.fileType === FileTypes.File) {
-                molecule.folderTree.setState({
-                    contextMenu: [
-                        // ...fileContextMenu,
-                        ...COMMON_CONTEXT_MENU,
-                        { name: '编辑文件', id: FolderTreeContextMenu.editFile },
-                    ],
-                });
-            } else if (node.fileType === FileTypes.Folder) {
-                molecule.folderTree.setState({
-                    contextMenu: [
-                        // ...folderContextMenu,
-                        ...COMMON_CONTEXT_MENU,
-                        { name: '新建文件夹', id: FolderTreeContextMenu.createFolder },
-                        { name: '编辑文件夹', id: FolderTreeContextMenu.editFolder },
-                        { name: '新建文件', id: FolderTreeContextMenu.createFile },
-                    ],
-                });
+        molecule.folderTree.onContextMenu((_, treeNode) => {
+            if (treeNode.fileType === FileTypes.File) {
+                molecule.contextMenu.setContextMenu([
+                    { id: 'testPane', name: '打开 testPane 面板' },
+                    { id: 'testPane_divider', type: 'divider' },
+                ]);
             }
         });
 
-        molecule.folderTree.onContextMenu((contextMenuItem, treeNode) => {
-            const menuId = contextMenuItem.id;
-            const {
-                NEW_FILE_COMMAND_ID,
-                NEW_FOLDER_COMMAND_ID,
-                OPEN_TO_SIDE_COMMAND_ID,
-                RENAME_COMMAND_ID,
-                DELETE_COMMAND_ID,
-            } = molecule.builtin.getState().constants;
-            const { id } = treeNode!;
-            switch (menuId) {
-                case RENAME_COMMAND_ID: {
-                    molecule.folderTree.setEditing(id);
-                    break;
+        molecule.folderTree.onExpand((expanded, _, treeNode) => {
+            if (expanded) {
+                molecule.folderTree.addExpandKeys(treeNode.id);
+                if (!treeNode.children?.length) {
+                    molecule.folderTree.addLoading(treeNode.id);
+                    getFiles(treeNode.id as string)
+                        .then(([folder, files]) => {
+                            molecule.folderTree.update({
+                                id: treeNode.id,
+                                children: [...folder, ...files],
+                            });
+                        })
+                        .catch((err) => {
+                            molecule.notification.setNotificationVisibility(true);
+                            molecule.notification.add({
+                                id: `getFiles${treeNode.id}`,
+                                value: err.message,
+                            });
+                        })
+                        .finally(() => {
+                            molecule.folderTree.removeLoading(treeNode.id);
+                        });
                 }
-                case DELETE_COMMAND_ID: {
-                    molecule.folderTree.remove(id);
-                    break;
-                }
-                case NEW_FILE_COMMAND_ID: {
-                    console.log(`test newFile node ${id}`);
-                    // const { id } = treeNode!;
-                    // this.createTreeNode(FileTypes.File, id);
-                    break;
-                }
-                case NEW_FOLDER_COMMAND_ID: {
-                    console.log(`test newFolder node ${id}`);
-                    // const { id } = treeNode!;
-                    // this.createTreeNode(FileTypes.Folder, id);
-                    break;
-                }
-                case OPEN_TO_SIDE_COMMAND_ID: {
-                    console.log(`test OPEN_TO_SIDE_COMMAND_ID node ${id}`);
-                    // this.onSelectFile(treeNode!);
-                    break;
-                }
-                case FolderTreeContextMenu.createFile: {
-                    console.log(`test newFile node ${id}`);
-                    break;
-                }
-                case FolderTreeContextMenu.createFolder: {
-                    console.log(`test newFolder node ${id}`);
-                    break;
-                }
-                case FolderTreeContextMenu.editFile: {
-                    console.log(`test editFile node ${id}`);
-                    break;
-                }
-                case FolderTreeContextMenu.editFolder: {
-                    console.log(`test editFolder node ${id}`);
-                    break;
-                }
+            } else {
+                molecule.folderTree.removeExpandKeys(treeNode.id);
             }
         });
 
-        molecule.folderTree.onLoadData(async (treeNode, cb) => {
-            try {
-                cb((treeNode.children || []) as any);
-            } catch (err) {}
+        molecule.folderTree.onSelect((treeNode) => {
+            if (treeNode.fileType === 'File') {
+                openFile(treeNode);
+            }
         });
 
-        molecule.folderTree.onSelectFile((file) => {
-            if (file.fileType !== 'File') return;
-            molecule.folderTree.setState({ editing: undefined });
-            fetch(`/api/getFileContent/${encodeURIComponent(file.id)}`)
-                .then((res) => res.json())
-                .then(({ data }: { data: string }) => {
-                    const tabData = {
-                        id: file.id,
-                        name: file.name,
-                        icon: file.icon || 'file',
-                        value: data,
-                        language: 'plain',
-                        breadcrumb: [{ id: file.id, name: file.name, icon: file.icon || 'file' }],
-                    };
-                    molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
-                });
+        molecule.folderTree.onContextMenuClick((item, treeNode) => {
+            const { EXPLORER_CONTEXTMENU_OPEN_TO_SIDE } = molecule.builtin.getConstants();
+            switch (item.id) {
+                case EXPLORER_CONTEXTMENU_OPEN_TO_SIDE: {
+                    openFile(treeNode);
+                    break;
+                }
+
+                default:
+                    break;
+            }
         });
 
         molecule.menuBar.onSelect((menuId) => {
-            if (menuId === 'About') {
+            if (menuId === molecule.builtin.getConstants().MENUBAR_ITEM_ABOUT) {
                 window.open('https://github.com/DTStack/molecule', '_blank');
             }
         });
+
+        function openFile(treeNode: any) {
+            molecule.editor.setLoading(true);
+            getFileContent(treeNode.id as string)
+                .then((data) => {
+                    const tabData = {
+                        id: treeNode.id,
+                        name: treeNode.name,
+                        icon: treeNode.icon || 'file',
+                        value: data,
+                        language: 'plain',
+                        breadcrumb: (treeNode.id as string)
+                            .split('/')
+                            .filter(Boolean)
+                            .map((i) => ({ id: i, name: i })),
+                    };
+                    molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
+                })
+                .catch((err) => {
+                    molecule.notification.setNotificationVisibility(true);
+                    molecule.notification.add({
+                        id: `getFileContent_${treeNode.id}`,
+                        value: err.message,
+                    });
+                })
+                .finally(() => {
+                    molecule.editor.setLoading(false);
+                });
+        }
     },
 };

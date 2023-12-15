@@ -2,7 +2,7 @@ import { EditorEvent, EditorGroupModel } from 'mo/models/editor';
 import { EditorTreeEvent } from 'mo/models/editorTree';
 import { FolderTreeEvent } from 'mo/models/folderTree';
 import { ISidebarPane, SidebarEvent } from 'mo/models/sideBar';
-import { Alignment, IEditorTab, IExtension, IMenuItemProps } from 'mo/types';
+import { Alignment, IEditorTab, IExtension, IMenuItemProps, UniqueId } from 'mo/types';
 import { getPrevOrNext, searchById, sortByIndex } from 'mo/utils';
 import { TreeNodeModel } from 'mo/utils/tree';
 
@@ -21,6 +21,7 @@ export const ExtendsContextMenu: IExtension = {
                 STATUSBAR_CONTEXTMENU_HIDE,
                 PANEL_CONTEXTMENU_HIDE,
             } = molecule.builtin.getConstants();
+            console.log(item);
 
             const scope = molecule.contextMenu.getScope();
             switch (item.id) {
@@ -57,6 +58,8 @@ export const ExtendsContextMenu: IExtension = {
                         explorerContextMenuClick(item);
                     } else if (isFolderTree(scope)) {
                         folderTreeContextMenuClick(item, scope.item);
+                    } else if (isEditor(scope)) {
+                        editorContextMenuClick(item, scope.item.tabId, scope.item.groupId);
                     }
                 }
             }
@@ -164,28 +167,28 @@ export const ExtendsContextMenu: IExtension = {
                 case EDITOR_CONTEXTMENU_CLOSE: {
                     // Redirect to editor's onClose event
                     if (tab) {
-                        molecule.editor.emit(EditorEvent.OnCloseTab, tab.id, group.id);
+                        molecule.editor.emit(EditorEvent.onCloseTab, tab.id, group.id);
                     }
                     break;
                 }
                 case EDITOR_CONTEXTMENU_CLOSE_OTHERS:
                     if (tab) {
-                        molecule.editor.emit(EditorEvent.OnCloseOther, tab.id, group.id);
+                        molecule.editor.emit(EditorEvent.onCloseOther, tab.id, group.id);
                     }
                     break;
                 case EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT:
                     if (tab) {
-                        molecule.editor.emit(EditorEvent.OnCloseToRight, tab.id, group.id);
+                        molecule.editor.emit(EditorEvent.onCloseToRight, tab.id, group.id);
                     }
                     break;
                 case EDITOR_CONTEXTMENU_CLOSE_TO_LEFT:
                     if (tab) {
-                        molecule.editor.emit(EditorEvent.OnCloseToLeft, tab.id, group.id);
+                        molecule.editor.emit(EditorEvent.onCloseToLeft, tab.id, group.id);
                     }
                     break;
                 case EDITOR_CONTEXTMENU_CLOSE_ALL:
                     if (tab) {
-                        molecule.editor.emit(EditorEvent.OnCloseAll, group.id);
+                        molecule.editor.emit(EditorEvent.onCloseAll, group.id);
                     }
                     break;
                 default:
@@ -233,6 +236,19 @@ export const ExtendsContextMenu: IExtension = {
 
         function folderTreeContextMenuClick(item: IMenuItemProps, treeNode: TreeNodeModel<any>) {
             molecule.folderTree.emit(FolderTreeEvent.onContextMenuClick, item, treeNode);
+        }
+
+        function isEditor(
+            scope: any
+        ): scope is { name: string; item: { tabId: UniqueId; groupId: UniqueId } } {
+            return (
+                typeof scope === 'object' &&
+                scope.name === molecule.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR
+            );
+        }
+
+        function editorContextMenuClick(item: IMenuItemProps, tabId: UniqueId, groupId: UniqueId) {
+            molecule.editor.emit(EditorEvent.onContextMenuClick, item, tabId, groupId);
         }
     },
 };

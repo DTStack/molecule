@@ -9,21 +9,21 @@ import type {
 import type { editor as MonacoEditor } from 'monaco-editor';
 
 export enum EditorEvent {
-    // edit Editor event
-    OnChangeTab = 'editor.changeTab',
-    OnCloseTab = 'editor.closeTab',
-    OnCloseAll = 'editor.closeAll',
-    OnCloseOther = 'editor.closeOther',
-    OnCloseToLeft = 'editor.closeToLeft',
-    OnCloseToRight = 'editor.closeToRight',
-    OnMoveTab = 'editor.moveTab',
+    onChangeTab = 'editor.onChangeTab',
+    onCloseTab = 'editor.onCloseTab',
+    onCloseAll = 'editor.onCloseAll',
+    onCloseOther = 'editor.onCloseOther',
+    onCloseToLeft = 'editor.onCloseToLeft',
+    onCloseToRight = 'editor.onCloseToRight',
+    onMoveTab = 'editor.onMoveTab',
     OpenTab = 'editor.openTab',
-    OnSelectTab = 'editor.selectTab',
-    OnUpdateTab = 'editor.updateTab',
-    OnSplitEditorRight = 'editor.splitEditorRight',
+    onSelectTab = 'editor.onSelectTab',
+    onUpdateTab = 'editor.onUpdateTab',
+    onSplitEditorRight = 'editor.onSplitEditorRight',
     onFocus = 'editor.onFocus',
     onCursorSelection = 'editor.onCursorSelection',
     onContextMenu = 'editor.onContextMenu',
+    onContextMenuClick = 'editor.onContextMenuClick',
     onToolbarClick = 'editor.onToolbarClick',
 }
 

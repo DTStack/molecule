@@ -2,8 +2,8 @@ import { cloneDeepWith } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { EditorEvent, EditorGroupModel, EditorModel, type IEditorTab } from 'mo/models/editor';
 import type {
-    ContextMenuEditorHandler,
     ContextMenuGroupHandler,
+    ContextMenuWithItemHandler,
     FunctionalOrSingle,
     IDragProps,
     IEditorOptions,
@@ -14,6 +14,8 @@ import type {
 import { randomId, searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 import { injectable } from 'tsyringe';
+
+type EditorContextMenu = ContextMenuWithItemHandler<[tabId: UniqueId, groupId: UniqueId]>;
 
 export interface IEditorService extends BaseService<EditorModel> {
     /**
@@ -110,7 +112,7 @@ export interface IEditorService extends BaseService<EditorModel> {
             ev: editor.ICursorSelectionChangedEvent
         ) => void
     ): void;
-    onContextMenu(callback: ContextMenuEditorHandler): void;
+    onContextMenu(callback: EditorContextMenu): void;
     onToolbarClick(callback: ContextMenuGroupHandler): void;
     /**
      * Listen to the Editor tab changed event
@@ -166,6 +168,9 @@ export interface IEditorService extends BaseService<EditorModel> {
             ev: editor.IModelContentChangedEvent,
             extraProps: { tabId: UniqueId; groupId: UniqueId }
         ) => void
+    ): void;
+    onContextMenuClick(
+        callback: (item: IMenuItemProps, tabId: UniqueId, groupId: UniqueId) => void
     ): void;
 }
 
@@ -262,7 +267,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
             exist.model.setValue(tab.value ?? '');
         }
         // ===================== effects =====================
-        this.emit(EditorEvent.OnUpdateTab, exist);
+        this.emit(EditorEvent.onUpdateTab, exist);
     }
 
     private disposeModels(tabs: IEditorTab<any>[]) {
@@ -548,10 +553,10 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     }
 
     public onSelectTab(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnSelectTab, callback);
+        this.subscribe(EditorEvent.onSelectTab, callback);
     }
 
-    public onContextMenu(callback: ContextMenuEditorHandler) {
+    public onContextMenu(callback: EditorContextMenu) {
         this.subscribe(EditorEvent.onContextMenu, callback);
     }
 
@@ -560,7 +565,7 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
     }
 
     public onUpdateTab<T>(callback: (tab: IEditorTab<T>, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnUpdateTab, callback);
+        this.subscribe(EditorEvent.onUpdateTab, callback);
     }
 
     public onOpenTab<T>(callback: (tab: IEditorTab<T>) => void): void {
@@ -574,34 +579,40 @@ export class EditorService extends BaseService<EditorModel> implements IEditorSe
             extraProps: { tabId: UniqueId; groupId: UniqueId }
         ) => void
     ): void {
-        this.subscribe(EditorEvent.OnChangeTab, callback);
+        this.subscribe(EditorEvent.onChangeTab, callback);
     }
 
     public onMoveTab(callback: (params: IDragProps) => void) {
-        this.subscribe(EditorEvent.OnMoveTab, callback);
+        this.subscribe(EditorEvent.onMoveTab, callback);
     }
 
     public onCloseAll(callback: (groupId?: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseAll, callback);
+        this.subscribe(EditorEvent.onCloseAll, callback);
     }
 
     public onCloseTab(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseTab, callback);
+        this.subscribe(EditorEvent.onCloseTab, callback);
     }
 
     public onCloseOther(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseOther, callback);
+        this.subscribe(EditorEvent.onCloseOther, callback);
     }
 
     public onCloseToLeft(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseToLeft, callback);
+        this.subscribe(EditorEvent.onCloseToLeft, callback);
     }
 
     public onCloseToRight(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
-        this.subscribe(EditorEvent.OnCloseToRight, callback);
+        this.subscribe(EditorEvent.onCloseToRight, callback);
     }
 
     public onSplitEditorRight(callback: (activeTabId: UniqueId, groupId: UniqueId) => void): void {
-        this.subscribe(EditorEvent.OnSplitEditorRight, callback);
+        this.subscribe(EditorEvent.onSplitEditorRight, callback);
+    }
+
+    public onContextMenuClick(
+        callback: (item: IMenuItemProps, tabId: UniqueId, groupId: UniqueId) => void
+    ): void {
+        this.subscribe(EditorEvent.onContextMenuClick, callback);
     }
 }

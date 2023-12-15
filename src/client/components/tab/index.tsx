@@ -2,30 +2,37 @@ import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { throttle } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
-import Dropdown from 'mo/client/components/dropdown';
-import type { ContextMenuEventHandler, IDragProps } from 'mo/types';
+import type { ContextMenuWithItemHandler, IDragProps } from 'mo/types';
 import { DragAction } from 'mo/types';
 
+import Close from '../close';
 import Flex from '../flex';
+import Prevent from '../prevent';
 import variables from './index.scss';
 
 export interface ITabsProps<T> {
     className?: string;
-    extra?: React.ReactNode;
     title?: React.ReactNode;
+    active?: boolean;
+    closable?: boolean;
+    modified?: boolean;
     onDragStart?: () => T;
     onDrag?: (props: Pick<IDragProps, 'info' | 'type'> & { item: T }) => void;
-    onContextMenu?: ContextMenuEventHandler;
+    onContextMenu?: ContextMenuWithItemHandler<[]>;
     onClick?: () => void;
+    onClose?: () => void;
 }
 
 export default function Tabs<T>({
     className,
-    extra,
     title,
+    active,
+    closable,
+    modified,
     onDragStart,
     onContextMenu,
     onClick,
+    onClose,
     onDrag,
 }: ITabsProps<T>) {
     const ref = useRef<HTMLDivElement>(null);
@@ -62,17 +69,25 @@ export default function Tabs<T>({
     drag(drop(ref));
 
     return (
-        <Dropdown
-            data={[]}
-            stopPropagation
-            trigger="contextMenu"
-            alignPoint
-            onClick={onContextMenu}
-        >
-            <Flex ref={ref} className={classNames(variables.tab, className)} onClick={onClick}>
+        <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY })} tabIndex={0}>
+            <Flex
+                ref={ref}
+                className={classNames(variables.tab, active && variables.active, className)}
+                onClick={onClick}
+            >
                 {title}
-                {extra}
+                <section className={classNames(variables.extra, modified && variables.extraActive)}>
+                    {closable && (
+                        <Close
+                            modified={modified}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onClose?.();
+                            }}
+                        />
+                    )}
+                </section>
             </Flex>
-        </Dropdown>
+        </Prevent>
     );
 }

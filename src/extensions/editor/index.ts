@@ -50,11 +50,11 @@ export const ExtendsEditor: IExtension = {
                 case EDITOR_MENU_SPLIT: {
                     const group = molecule.editor.getGroupById(groupId);
                     if (!group || !group.activeTab) return;
-                    molecule.editor.emit(EditorEvent.OnSplitEditorRight, group.activeTab, group.id);
+                    molecule.editor.emit(EditorEvent.onSplitEditorRight, group.activeTab, group.id);
                     break;
                 }
                 case EDITOR_MENU_CLOSE_ALL: {
-                    molecule.editor.emit(EditorEvent.OnCloseAll, groupId);
+                    molecule.editor.emit(EditorEvent.onCloseAll, groupId);
                     break;
                 }
                 default:
@@ -62,30 +62,42 @@ export const ExtendsEditor: IExtension = {
             }
         });
 
-        molecule.editor.onContextMenu((item, tabId, groupId) => {
+        molecule.editor.onContextMenu((pos, tabId, groupId) => {
+            molecule.contextMenu.open(molecule.builtin.getModules().EDITOR_CONTEXTMENU, pos, {
+                name: molecule.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR,
+                item: { tabId, groupId },
+            });
+        });
+
+        molecule.editor.onContextMenuClick((item, tabId, groupId) => {
             const {
                 EDITOR_CONTEXTMENU_CLOSE,
-                EDITOR_CONTEXTMENU_CLOSE_OTHERS,
-                EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT,
-                EDITOR_CONTEXTMENU_CLOSE_TO_LEFT,
                 EDITOR_CONTEXTMENU_CLOSE_ALL,
-            } = molecule.builtin.getState().constants;
+                EDITOR_CONTEXTMENU_CLOSE_OTHERS,
+                EDITOR_CONTEXTMENU_CLOSE_TO_LEFT,
+                EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT,
+            } = molecule.builtin.getConstants();
             switch (item.id) {
-                case EDITOR_CONTEXTMENU_CLOSE:
-                    molecule.editor.emit(EditorEvent.OnCloseTab, tabId, groupId);
+                case EDITOR_CONTEXTMENU_CLOSE: {
+                    molecule.editor.emit(EditorEvent.onCloseTab, tabId, groupId);
                     break;
-                case EDITOR_CONTEXTMENU_CLOSE_OTHERS:
-                    molecule.editor.emit(EditorEvent.OnCloseOther, tabId, groupId);
+                }
+                case EDITOR_CONTEXTMENU_CLOSE_OTHERS: {
+                    molecule.editor.emit(EditorEvent.onCloseOther, tabId, groupId);
                     break;
-                case EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT:
-                    molecule.editor.emit(EditorEvent.OnCloseToRight, tabId, groupId);
+                }
+                case EDITOR_CONTEXTMENU_CLOSE_TO_LEFT: {
+                    molecule.editor.emit(EditorEvent.onCloseToLeft, tabId, groupId);
                     break;
-                case EDITOR_CONTEXTMENU_CLOSE_TO_LEFT:
-                    molecule.editor.emit(EditorEvent.OnCloseToLeft, tabId, groupId);
+                }
+                case EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT: {
+                    molecule.editor.emit(EditorEvent.onCloseToRight, tabId, groupId);
                     break;
-                case EDITOR_CONTEXTMENU_CLOSE_ALL:
-                    molecule.editor.emit(EditorEvent.OnCloseAll, groupId);
+                }
+                case EDITOR_CONTEXTMENU_CLOSE_ALL: {
+                    molecule.editor.emit(EditorEvent.onCloseAll, groupId);
                     break;
+                }
                 default:
                     break;
             }

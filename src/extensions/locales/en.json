@@ -32,6 +32,7 @@
         "sidebar.toolbar.ellipsis": "View and More Actions...",
         "activityBar.item.account": "Account",
         "activityBar.item.setting": "Settings",
+        "activityBar.item.colorTheme": "Color Theme",
         "activityBar.contextMenu.hide": "Hide Activity Bar",
         "sidebar.item.explorer": "Explorer",
         "sidebar.item.search": "Search",

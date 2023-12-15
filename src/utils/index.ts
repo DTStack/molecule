@@ -280,3 +280,17 @@ export function flatObject(target: Record<string, any>): Record<string, any> {
 export function getPrevOrNext<T>(arr: T[], idx: number) {
     return arr[idx - 1] ?? arr[idx + 1];
 }
+
+export function isElementInParentView(ele: HTMLElement, parent: HTMLElement) {
+    const elRect = ele.getBoundingClientRect();
+    const parentRect = parent.getBoundingClientRect();
+    const left = elRect.left >= parentRect.left;
+    const right = elRect.left + elRect.width <= parentRect.left + parentRect.width;
+    const overlay = left && right;
+    let isWhichSide: 'right' | 'left' | undefined;
+    if (!overlay) {
+        if (!left) isWhichSide = 'left';
+        else isWhichSide = 'right';
+    }
+    return [overlay, isWhichSide] as const;
+}

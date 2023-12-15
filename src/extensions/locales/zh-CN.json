@@ -32,6 +32,7 @@
         "statusBar.contextMenu.hide": "隐藏状态栏",
         "activityBar.item.account": "账号",
         "activityBar.item.setting": "设置",
+        "activityBar.item.colorTheme": "颜色主题",
         "activityBar.contextMenu.hide": "隐藏活动栏",
         "sidebar.item.explorer": "浏览",
         "sidebar.item.search": "搜索",

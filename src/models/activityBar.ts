@@ -13,6 +13,7 @@ import type {
 export enum ActivityBarEvent {
     onClick = 'activityBar.onClick',
     onContextMenu = 'activityBar.onContextMenu',
+    onContextMenuClick = 'activityBar.onContextMenuClick',
 }
 
 export type PartialAlignment = Extract<AlignmentLiteral, 'top' | 'bottom'>;

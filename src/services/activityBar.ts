@@ -1,6 +1,12 @@
 import { BaseService } from 'mo/glue';
 import { ActivityBarEvent, ActivityBarModel, type IActivityBarItem } from 'mo/models/activityBar';
-import type { ArraylizeOrSingle, ContextMenuWithItemHandler, RequiredId, UniqueId } from 'mo/types';
+import type {
+    ArraylizeOrSingle,
+    ContextMenuEventHandler,
+    ContextMenuWithItemHandler,
+    RequiredId,
+    UniqueId,
+} from 'mo/types';
 import { arraylize, extract, searchById } from 'mo/utils';
 import logger from 'mo/utils/logger';
 
@@ -47,6 +53,7 @@ export interface IActivityBarService extends BaseService<ActivityBarModel> {
      * Add context menu click event listener
      */
     onContextMenu(callback: ContextMenuWithItemHandler<[item?: IActivityBarItem]>): void;
+    onContextMenuClick?: (callback: ContextMenuEventHandler) => void;
 }
 
 export class ActivityBarService
@@ -128,5 +135,9 @@ export class ActivityBarService
 
     public onContextMenu(callback: ContextMenuWithItemHandler<[item?: IActivityBarItem]>) {
         this.subscribe(ActivityBarEvent.onContextMenu, callback);
+    }
+
+    public onContextMenuClick(callback: ContextMenuEventHandler) {
+        this.subscribe(ActivityBarEvent.onContextMenuClick, callback);
     }
 }

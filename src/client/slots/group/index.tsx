@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
+import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
 import Header from 'mo/client/components/header';
 import Icon from 'mo/client/components/icon';
 import MonacoEditor from 'mo/client/components/monaco';
+import { IScrollRef } from 'mo/client/components/scrollBar';
 import Tab from 'mo/client/components/tab';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type {
@@ -59,6 +61,7 @@ export default function Group({
 }: IGroupProps) {
     const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
     const disposesRef = useRef<IDisposable[]>([]);
+    const ref = useRef<IScrollRef>(null);
 
     const tab = group.activeTab ? group.data.find?.(searchById(group.activeTab)) : undefined;
 
@@ -117,7 +120,12 @@ export default function Group({
     return (
         <div className={variables.group}>
             <Header
+                scrollIntoViewDeps={{
+                    dep: group.activeTab,
+                    activeClassName: variables.active,
+                }}
                 className={variables.header}
+                ref={ref}
                 trackStyle={{ height: 3 }}
                 extra={
                     <ActionBar
@@ -136,6 +144,7 @@ export default function Group({
                                     <span className={variables.name}>{tab.name}</span>
                                 </>
                             }
+                            className={classNames(active && variables.active)}
                             key={tab.id}
                             active={active}
                             closable

@@ -227,7 +227,7 @@ export class LayoutService extends BaseService<ILayout> implements ILayoutServic
             this.editor.open(
                 {
                     id: SETTING_ID,
-                    name: 'Settings',
+                    name: this.locale.localize('activityBar.item.setting', 'Settings'),
                     icon: 'file',
                     value: JSON.stringify(settings, null, 4),
                     language: 'json',

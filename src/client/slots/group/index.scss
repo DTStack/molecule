@@ -7,6 +7,9 @@ $content: BEMElement($group, 'content');
 $breadcrumb: BEMElement($group, 'breadcrumb');
 $name: BEMElement($group, 'name');
 
+// Used for autoScroll to active one
+$active: BEMModifier($editor, 'active');
+
 .#{$group} {
     height: 100%;
     position: relative;
@@ -43,6 +46,7 @@ $name: BEMElement($group, 'name');
 
 :export {
     group: $group;
+    active: $active;
     header: $header;
     breadcrumb: $breadcrumb;
     name: $name;

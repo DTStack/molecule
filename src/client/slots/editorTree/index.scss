@@ -18,14 +18,15 @@ $active: BEMModifier($item, 'active');
     .#{$item} {
         // keep same with tree node
         align-items: center;
-        border: 1px solid transparent;
+        // border: 1px solid transparent;
+        outline: 1px solid transparent;
+        outline-offset: -1px;
         cursor: pointer;
         display: flex;
         height: 22px;
         line-height: 22px;
         list-style: none;
         margin: 0;
-        outline: 0;
         padding-left: 16px;
         user-select: none;
         white-space: nowrap;
@@ -52,7 +53,7 @@ $active: BEMModifier($item, 'active');
 
         &:focus {
             background: var(--list-activeSelectionBackground);
-            border-color: var(--list-focusOutline);
+            outline-color: var(--list-focusOutline);
             color: #fff;
         }
 

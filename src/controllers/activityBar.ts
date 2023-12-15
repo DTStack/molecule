@@ -13,6 +13,7 @@ export interface IActivityBarController extends BaseController {
     onClick?: (item: IActivityBarItem) => void;
     onContextMenu?: ContextMenuWithItemHandler<[item?: IActivityBarItem]>;
     onMenuClick?: ContextMenuEventHandler;
+    onContextMenuClick?: ContextMenuEventHandler;
 }
 
 @injectable()
@@ -45,5 +46,9 @@ export class ActivityBarController extends BaseController implements IActivityBa
 
     public readonly onMenuClick: ContextMenuEventHandler = (item) => {
         this.emit(MenuBarEvent.onSelect, item.id);
+    };
+
+    public readonly onContextMenuClick: ContextMenuEventHandler = (item) => {
+        this.emit(ActivityBarEvent.onContextMenuClick, item);
     };
 }

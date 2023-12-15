@@ -40,9 +40,11 @@ export const ExtendsActions: IExtension = {
                 molecule.builtin.getState().constants.ACTIVITYBAR_ITEM_SETTING
             );
             if (!setting) return;
+
             const keybinding = molecule.action.queryGlobalKeybinding(ctor.ID);
             // Add Settings into setting's menus
-            setting.contextMenu?.push({
+            setting.contextMenu ??= [];
+            setting.contextMenu.push({
                 id: ctor.ID,
                 name: molecule.locale.localize(ctor.ID, ctor.ID),
                 keybinding: keybinding
@@ -51,11 +53,13 @@ export const ExtendsActions: IExtension = {
             });
             molecule.activityBar.update(setting);
 
-            // molecule.activityBar.onContextMenuClick((item) => {
-            //     if (item.id === ctor.ID) {
-            //         molecule.action.execute(ctor.ID);
-            //     }
-            // });
+            molecule.activityBar.onContextMenuClick((item) => {
+                console.log('item:', item);
+
+                if (item.id === ctor.ID) {
+                    molecule.action.execute(ctor.ID);
+                }
+            });
         }
 
         function updateMenuKeybinding(id: UniqueId) {

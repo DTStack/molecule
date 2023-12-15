@@ -12,6 +12,7 @@ export default function ActivityBar({
     onClick,
     onContextMenu,
     onMenuClick,
+    onContextMenuClick,
 }: IActivityBarController) {
     const activityBar = useConnector('activityBar');
     const layout = useConnector('layout');
@@ -60,7 +61,12 @@ export default function ActivityBar({
             </ScrollBar>
             <ul>
                 {bottom.sort(sortByIndex).map((item) => (
-                    <ActivityBarItem key={item.id} data={item} onContextMenu={onContextMenu} />
+                    <ActivityBarItem
+                        key={item.id}
+                        data={item}
+                        onContextMenu={onContextMenu}
+                        onContextMenuClick={onContextMenuClick}
+                    />
                 ))}
             </ul>
         </Prevent>

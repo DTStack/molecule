@@ -12,13 +12,13 @@ import {
 import { type IMoleculeContext, KeybindingWeight } from 'mo/types';
 
 export default class QuickSelectThemeAction extends BaseAction {
-    static readonly ID = 'menu.colorTheme';
+    static readonly ID = 'activityBar.item.colorTheme';
 
     constructor(private ctx: IMoleculeContext) {
         super({
             id: QuickSelectThemeAction.ID,
-            label: localize('selectTheme.label', 'Color Theme'),
-            title: localize('selectTheme.label', 'Color Theme'),
+            label: ctx.locale.localize('activityBar.item.colorTheme', 'Color Theme'),
+            title: ctx.locale.localize('activityBar.item.colorTheme', 'Color Theme'),
             alias: 'Color Theme',
             precondition: undefined,
             f1: true,

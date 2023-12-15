@@ -51,8 +51,8 @@ export default function FolderTree({
             {entry ? (
                 <>{entry}</>
             ) : (
-                <div style={{ width: '90%', margin: '0 auto' }}>
-                    <p style={{ fontSize: 12 }}>
+                <div style={{ width: '90%', margin: '0 auto', padding: '16px 0' }}>
+                    <p style={{ fontSize: 12, margin: '0 0 16px 0' }}>
                         {localize(
                             builtin.constants.FOLDERTREE_ITEM_EMPTY,
                             'You have not yet opened a folder'

@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { Direction, type DirectionLiteral } from 'mo/types';
+import { isElementInParentView } from 'mo/utils';
 
 import variables from './index.scss';
 
@@ -20,6 +21,15 @@ export interface IScrollbarProps {
     className?: string;
     direction?: DirectionLiteral;
     isShowShadow?: boolean;
+    /**
+     * Scroll into active element into View
+     *
+     * Should specify what value changed will trigger scrollIntoView and how to find active element
+     */
+    scrollIntoViewDeps?: {
+        dep: any;
+        activeClassName: string;
+    };
     onScroll?: (evt: IScrollEvent, e: MouseEvent | React.MouseEvent) => void;
     onScrollStart?: (evt: IScrollEvent, e: MouseEvent | React.MouseEvent) => void;
     onScrollEnd?: (evt: IScrollEvent, e: MouseEvent | React.MouseEvent) => void;
@@ -82,6 +92,7 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
         style,
         trackStyle,
         className,
+        scrollIntoViewDeps,
         isShowShadow = false,
         inactiveHidden = true,
         direction = Direction.vertical,
@@ -150,6 +161,8 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
 
     useImperativeHandle(ref, () => ({
         scrollTo: (offset: number) => {
+            console.log(offset);
+
             if (!isSupportScroll()) return;
 
             if (typeof offset === 'number') {
@@ -245,6 +258,35 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
             wrapper.current?.removeEventListener('wheel', handleWheelListener);
         };
     }, []);
+
+    // Support scroll active element into view
+    useEffect(() => {
+        if (scrollIntoViewDeps?.activeClassName) {
+            const raf = window.requestAnimationFrame(() => {
+                const parent = wrapper.current;
+                if (!parent) return;
+                const active = parent.querySelector<HTMLDivElement>(
+                    `.${scrollIntoViewDeps.activeClassName}`
+                );
+                if (!active) return;
+                const [inView, isWhichSide] = isElementInParentView(active, parent);
+
+                if (!inView) {
+                    contentScrollTo(
+                        isWhichSide === 'left'
+                            ? active.offsetLeft
+                            : active.offsetLeft -
+                                  (parent.getBoundingClientRect().width -
+                                      active.getBoundingClientRect().width)
+                    );
+                }
+            });
+
+            return () => {
+                window.cancelAnimationFrame(raf);
+            };
+        }
+    }, [scrollIntoViewDeps?.dep]);
 
     const isSupportScroll = () => {
         return getContentScrollSize() > getWrapperClientSize();

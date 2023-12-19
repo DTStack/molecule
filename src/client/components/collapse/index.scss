@@ -36,7 +36,6 @@ $header-size: 26px;
 
     .#{$item} {
         height: 100%;
-        line-height: 22px;
         overflow: hidden;
         width: 100%;
 
@@ -55,10 +54,9 @@ $header-size: 26px;
         font-size: 12px;
         font-weight: bold;
         height: $header-size;
-        outline: 1px solid transparent;
-        outline-offset: -1px;
         padding: 1px 2px;
         user-select: none;
+        line-height: 22px;
 
         .#{$title} {
             overflow: hidden;

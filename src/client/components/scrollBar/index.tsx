@@ -161,8 +161,6 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
 
     useImperativeHandle(ref, () => ({
         scrollTo: (offset: number) => {
-            console.log(offset);
-
             if (!isSupportScroll()) return;
 
             if (typeof offset === 'number') {
@@ -272,13 +270,31 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
                 const [inView, isWhichSide] = isElementInParentView(active, parent);
 
                 if (!inView) {
-                    contentScrollTo(
-                        isWhichSide === 'left'
-                            ? active.offsetLeft
-                            : active.offsetLeft -
-                                  (parent.getBoundingClientRect().width -
-                                      active.getBoundingClientRect().width)
-                    );
+                    const offset = (() => {
+                        switch (isWhichSide) {
+                            case 'left':
+                                return active.offsetLeft;
+                            case 'right':
+                                return (
+                                    active.offsetLeft -
+                                    (parent.getBoundingClientRect().width -
+                                        active.getBoundingClientRect().width)
+                                );
+                            case 'top':
+                                return active.offsetTop;
+                            case 'bottom':
+                                return (
+                                    active.offsetTop -
+                                    (parent.getBoundingClientRect().height -
+                                        active.getBoundingClientRect().height)
+                                );
+                            default:
+                                return null;
+                        }
+                    })();
+                    if (offset !== null) {
+                        contentScrollTo(offset);
+                    }
                 }
             });
 

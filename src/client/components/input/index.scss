@@ -9,7 +9,10 @@ $warning: BEMModifier($container, 'warning');
 $error: BEMModifier($container, 'error');
 $validating: BEMModifier($container, 'validating');
 
+$small: BEMModifier($container,'small');
+
 $widget-size: 24px;
+$small-widget-size: 20px;
 
 /* stylelint-disable */
 $status-colors: (
@@ -35,6 +38,22 @@ $status-colors: (
 .#{$container} {
     position: relative;
     font-size: 14px;
+    line-height: 0;
+
+    &.#{$small} {
+        font-size: 13px;
+
+        .#{$widget} {
+            padding: 2px 0 2px 1px;
+            height: $small-widget-size;
+            min-height: $small-widget-size;
+            line-height: calc($small-widget-size - 4px);
+        }
+
+        .#{$validation} {
+            top: calc($small-widget-size - 1px);
+        }
+    }
 
     .#{$widget} {
         background: var(--input-background);
@@ -50,10 +69,6 @@ $status-colors: (
         resize: none;
         width: 100%;
 
-        &:focus {
-            outline-color: var(--focusBorder);
-        }
-
         // TODO: better to mock a scroll bar
         // invisible scroll bar
         &::-webkit-scrollbar {
@@ -61,13 +76,19 @@ $status-colors: (
         }
     }
 
+    .#{$widget}:focus ~ .#{$validation}{
+        display: block;
+    }
+
     .#{$validation} {
         padding: 4px;
         position: absolute;
         z-index: 99;
-        top: calc($widget-size + 1px);
+        top: calc($widget-size - 1px);
         width: 100%;
         box-sizing: border-box;
+        display: none;
+        line-height: 1.15;
     }
 
     @each $name, $status in $status-colors {
@@ -80,6 +101,7 @@ $status-colors: (
 
 :export {
     container: $container;
+    small: $small;
     widget: $widget;
     validation: $validation;
     info: $info;
@@ -87,4 +109,5 @@ $status-colors: (
     error: $error;
     validating: $validating;
     widgetSize: $widget-size;
+    smallWidgetSize: $small-widget-size;
 }

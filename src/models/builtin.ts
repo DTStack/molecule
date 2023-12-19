@@ -336,26 +336,42 @@ export class BuiltinModel {
                     ),
                     group: 'inline',
                     sortIndex: 6,
-                    disabled: true,
-                },
-                {
-                    id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
-                    icon: 'list-tree',
-                    name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_TREE, 'View as Tree'),
-                    group: 'inline',
-                    sortIndex: 7,
-                    disabled: true,
-                },
-                {
-                    id: this.constants.SEARCH_TOOLBAR_COLLAPSE_EXPAND,
-                    icon: 'collapse-all',
-                    name: this.localize(this.constants.SEARCH_TOOLBAR_COLLAPSE, 'Collapse All'),
-                    group: 'inline',
-                    sortIndex: 8,
-                    disabled: true,
                 },
             ],
-
+        SEARCH_TOOLBAR_COLLAPSE: () =>
+            <IMenuItemProps>{
+                id: this.constants.SEARCH_TOOLBAR_COLLAPSE_EXPAND,
+                icon: 'collapse-all',
+                name: this.localize(this.constants.SEARCH_TOOLBAR_COLLAPSE, 'Collapse All'),
+                group: 'inline',
+                sortIndex: 8,
+                disabled: true,
+            },
+        SEARCH_TOOLBAR_EXPAND: () =>
+            <IMenuItemProps>{
+                id: this.constants.SEARCH_TOOLBAR_COLLAPSE_EXPAND,
+                icon: 'expand-all',
+                name: this.localize(this.constants.SEARCH_TOOLBAR_EXPAND, 'Expand All'),
+                group: 'inline',
+                sortIndex: 8,
+            },
+        SEARCH_TOOLBAR_VIEW_AS_LIST: () =>
+            <IMenuItemProps>{
+                id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
+                icon: 'list-flat',
+                name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST, 'View as List'),
+                group: 'inline',
+                sortIndex: 7,
+            },
+        SEARCH_TOOLBAR_VIEW_AS_TREE: () =>
+            <IMenuItemProps>{
+                id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
+                icon: 'list-tree',
+                name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_TREE, 'View as Tree'),
+                group: 'inline',
+                sortIndex: 7,
+                disabled: true,
+            },
         CONTEXTMENU_FOLDER: () => [
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE,

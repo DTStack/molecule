@@ -9,6 +9,7 @@ import useConnector from 'mo/client/hooks/useConnector';
 import useLocale from 'mo/client/hooks/useLocale';
 import type { IEditorTreeController } from 'mo/controllers/editorTree';
 import type { IExplorerPanelItem } from 'mo/models/explorer';
+import { searchById } from 'mo/utils';
 
 import variables from './index.scss';
 
@@ -27,7 +28,13 @@ export default function EditorTree({
     const localize = useLocale();
 
     return (
-        <ScrollBar isShowShadow>
+        <ScrollBar
+            isShowShadow
+            scrollIntoViewDeps={{
+                dep: editor.current && editor.groups.find(searchById(editor.current))?.activeTab,
+                activeClassName: variables.active,
+            }}
+        >
             <Prevent className={variables.editorTree} data-content={panel.id}>
                 {editor.groups.map((group, index) => {
                     return (

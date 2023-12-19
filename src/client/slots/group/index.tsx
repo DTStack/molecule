@@ -23,7 +23,6 @@ import variables from './index.scss';
 type EditorContextMenu = ContextMenuWithItemHandler<[tabId: UniqueId, groupId: UniqueId]>;
 export interface IGroupProps {
     group: EditorGroupModel;
-    isActive?: boolean;
     options: EditorModel['editorOptions'];
     toolbar?: IMenuItemProps[];
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
@@ -46,7 +45,6 @@ export interface IGroupProps {
 
 export default function Group({
     group,
-    isActive,
     options,
     toolbar,
     onSelectTab,
@@ -110,12 +108,6 @@ export default function Group({
             instance.current.updateOptions(options);
         }
     }, [options]);
-
-    useEffect(() => {
-        if (isActive && instance.current) {
-            instance.current.focus();
-        }
-    }, [isActive]);
 
     return (
         <div className={variables.group}>

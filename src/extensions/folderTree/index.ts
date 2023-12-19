@@ -1,42 +1,85 @@
+import { FolderTreeEvent } from 'mo/models/folderTree';
 import { FileTypes, IExtension } from 'mo/types';
+
+import Drag from './drag';
 
 export const ExtendsFolderTree: IExtension = {
     id: 'ExtendsFolderTree',
     name: 'Extend The Default Folder Tree',
     activate: function (molecule): void {
         molecule.folderTree.onSelect((treeNode) => {
-            molecule.folderTree.setState({ editing: undefined });
-            molecule.folderTree.setActive(treeNode.id);
+            if (treeNode.fileType === FileTypes.File) {
+                molecule.folderTree.setState({ editing: undefined });
+                molecule.folderTree.setActive(treeNode.id);
+            } else {
+                molecule.folderTree.toggleExpanded(treeNode.id);
+
+                if (!Array.isArray(treeNode.children)) {
+                    molecule.folderTree.emit(FolderTreeEvent.onLoad, treeNode.id);
+                }
+            }
         });
 
-        molecule.folderTree.onTreeItemKeyDown((e, node) => {
-            molecule.folderTree.setEditing(node.id);
+        molecule.folderTree.onKeyDown((e, treeNode) => {
+            if (e.key === 'Enter') {
+                if (molecule.folderTree.getState().editing === treeNode.id) {
+                    molecule.folderTree.emit(FolderTreeEvent.onRename, e.target, treeNode);
+                }
+            }
+
+            if (e.key === 'Escape') {
+                if (molecule.folderTree.getState().editing) {
+                    molecule.folderTree.setEditing(undefined);
+                }
+            }
         });
 
-        molecule.folderTree.onUpdateFileName((file) => {
-            molecule.folderTree.update(file);
+        molecule.folderTree.onBlur((e, treeNode) => {
+            if (molecule.folderTree.getState().editing === treeNode.id) {
+                // If already validate failed, then do NOT emit rename event.
+                if (molecule.folderTree.getState().validateInfo?.status === 'error') {
+                    molecule.folderTree.setEditing(undefined);
+                } else {
+                    molecule.folderTree.emit(FolderTreeEvent.onRename, e.target, treeNode);
+                }
+            }
         });
 
-        molecule.folderTree.onAfterUpdateFileName((file) => {
-            const { groups = [] } = molecule.editor.getState();
-            const groupIds = groups
-                .filter(({ data }) => data.some(({ id }) => id === file.id))
-                .map(({ id }) => id);
-            groupIds?.forEach((groupId) => {
-                molecule.editor.updateTab({ id: file.id, name: file.name }, groupId);
-            });
-        });
-
-        molecule.folderTree.onRename((id) => {
-            molecule.folderTree.setEditing(id);
+        molecule.folderTree.onRename((ele, treeNode) => {
+            molecule.folderTree.setEditing(undefined);
+            const nextValue = ele.value;
+            molecule.folderTree.update({ id: treeNode.id, name: nextValue });
         });
 
         molecule.folderTree.onRemove((id) => {
             molecule.folderTree.remove(id);
         });
 
-        molecule.folderTree.onDropTree((source, target) => {
-            molecule.folderTree.dropTree(source, target);
+        const drag = new Drag(molecule);
+        molecule.folderTree.onDragStart(() => {
+            drag.start();
+        });
+
+        molecule.folderTree.onDragOver((source, target) => {
+            drag.createEffect(() => {
+                drag.makeup(source, target);
+                drag.debounce(() => {
+                    if (
+                        target.fileType === FileTypes.Folder &&
+                        !molecule.folderTree.getState().expandedKeys.includes(target.id)
+                    ) {
+                        molecule.folderTree.emit(FolderTreeEvent.onSelect, target);
+                    }
+                }, 2000);
+            }, target);
+        });
+
+        molecule.folderTree.onDrop(() => {
+            drag.end();
+        });
+
+        molecule.folderTree.onDragEnd(() => {
+            drag.end();
         });
 
         molecule.folderTree.onContextMenu((pos, treeNode) => {
@@ -62,6 +105,21 @@ export const ExtendsFolderTree: IExtension = {
                     pos,
                     scope
                 );
+            }
+        });
+
+        molecule.folderTree.onContextMenuClick((item, treeNode) => {
+            const { EXPLORER_CONTEXTMENU_RENAME } = molecule.builtin.getConstants();
+            switch (item.id) {
+                case EXPLORER_CONTEXTMENU_RENAME: {
+                    molecule.folderTree.setActive(treeNode.id);
+                    molecule.folderTree.setEditing(treeNode.id);
+                    molecule.folderTree.setValidateInfo('');
+                    break;
+                }
+
+                default:
+                    break;
             }
         });
     },

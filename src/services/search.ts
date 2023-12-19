@@ -27,10 +27,7 @@ export interface ISearchService extends BaseService<SearchModel> {
      * Set result tree expand keys
      */
     setExpandKeys: (expandKeys: UniqueId[]) => void;
-    /**
-     * Set result tree folder's expand key
-     */
-    onResultFolderClick: (expandKey: UniqueId) => void;
+    toggleExpandedKey: (expandedKey: UniqueId) => void;
     /**
      * Reset the search input and result data
      */
@@ -43,10 +40,11 @@ export interface ISearchService extends BaseService<SearchModel> {
      * Listen to the event about going to search result via values
      */
     onSearch(callback: (value: string) => void): void;
-    /**
-     * Listen to the click event in result data
-     */
-    onResultClick(callback: (item: SearchResultItem) => void): void;
+    onSelect(callback: (treeNode: SearchResultItem) => void): void;
+    // /**
+    //  * Listen to the click event in result data
+    //  */
+    // onResultClick(callback: (item: SearchResultItem) => void): void;
 }
 
 @injectable()
@@ -88,21 +86,20 @@ export class SearchService extends BaseService<SearchModel> implements ISearchSe
         });
     }
 
-    public onResultFolderClick(folderId: UniqueId) {
-        const expandKeys = this.getState().expandKeys;
-        const index = expandKeys.indexOf(folderId);
-        if (index > -1) {
-            expandKeys.splice(index, 1);
-        } else {
-            expandKeys.push(folderId);
-        }
-        this.setExpandKeys(expandKeys);
+    public toggleExpandedKey(expandedKey: UniqueId) {
+        this.setState((prev) => ({
+            ...prev,
+            expandKeys: prev.expandKeys.includes(expandedKey)
+                ? prev.expandKeys.filter((key) => key !== expandedKey)
+                : [...prev.expandKeys, expandedKey],
+        }));
     }
 
     public reset() {
         this.setState(new SearchModel());
     }
 
+    // ===================== Subscriptions =====================
     public onChange(callback: (value: string) => void): void {
         this.subscribe(SearchEvent.onChange, callback);
     }
@@ -111,7 +108,7 @@ export class SearchService extends BaseService<SearchModel> implements ISearchSe
         this.subscribe(SearchEvent.onSearch, callback);
     }
 
-    public onResultClick(callback: (item: SearchResultItem) => void): void {
-        this.subscribe(SearchEvent.onResultClick, callback);
+    public onSelect(callback: (treeNode: SearchResultItem) => void): void {
+        this.subscribe(SearchEvent.onSelect, callback);
     }
 }

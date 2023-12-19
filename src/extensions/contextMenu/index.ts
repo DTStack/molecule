@@ -21,8 +21,6 @@ export const ExtendsContextMenu: IExtension = {
                 STATUSBAR_CONTEXTMENU_HIDE,
                 PANEL_CONTEXTMENU_HIDE,
             } = molecule.builtin.getConstants();
-            console.log(item);
-
             const scope = molecule.contextMenu.getScope();
             switch (item.id) {
                 case MENUBAR_CONTEXTMENU_HIDE: {

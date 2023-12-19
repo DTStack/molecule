@@ -286,11 +286,15 @@ export function isElementInParentView(ele: HTMLElement, parent: HTMLElement) {
     const parentRect = parent.getBoundingClientRect();
     const left = elRect.left >= parentRect.left;
     const right = elRect.left + elRect.width <= parentRect.left + parentRect.width;
-    const overlay = left && right;
-    let isWhichSide: 'right' | 'left' | undefined;
+    const top = elRect.top >= parentRect.top;
+    const bottom = elRect.top + elRect.height <= parentRect.top + parentRect.height;
+    const overlay = left && right && top && bottom;
+    let isWhichSide: 'right' | 'left' | 'top' | 'bottom' | undefined;
     if (!overlay) {
         if (!left) isWhichSide = 'left';
-        else isWhichSide = 'right';
+        else if (!right) isWhichSide = 'right';
+        else if (!top) isWhichSide = 'top';
+        else if (!bottom) isWhichSide = 'bottom';
     }
     return [overlay, isWhichSide] as const;
 }

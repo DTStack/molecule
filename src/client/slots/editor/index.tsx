@@ -49,7 +49,6 @@ export default function Editor({
                         <Pane key={g.id} minSize="220px">
                             <Group
                                 group={g}
-                                isActive={current === g.id}
                                 toolbar={toolbar}
                                 options={options}
                                 onMount={onMount}

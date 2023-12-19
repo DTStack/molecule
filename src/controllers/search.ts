@@ -12,7 +12,7 @@ import { inject, injectable } from 'tsyringe';
 export interface ISearchController extends BaseController {
     onChange?: (value: string) => void;
     onSearch?: (value: string) => void;
-    onResultClick?: (item: SearchResultItem) => void;
+    onSelect?: (treeNode: SearchResultItem) => void;
 }
 
 @injectable()
@@ -28,12 +28,13 @@ export class SearchController extends BaseController implements ISearchControlle
     }
 
     private initView() {
-        const { SEARCH, SEARCH_TOOLBAR } = this.builtin.getModules();
+        const { SEARCH, SEARCH_TOOLBAR, SEARCH_TOOLBAR_COLLAPSE, SEARCH_TOOLBAR_VIEW_AS_TREE } =
+            this.builtin.getModules();
         if (SEARCH) {
             this.activitybar.add(SEARCH);
             this.sidebar.add({
                 ...SEARCH,
-                toolbar: SEARCH_TOOLBAR,
+                toolbar: [...SEARCH_TOOLBAR, SEARCH_TOOLBAR_VIEW_AS_TREE, SEARCH_TOOLBAR_COLLAPSE],
                 render: () => React.createElement(Search, { ...this }),
             });
         }
@@ -47,7 +48,7 @@ export class SearchController extends BaseController implements ISearchControlle
         this.emit(SearchEvent.onSearch, value);
     };
 
-    public onResultClick = (item: SearchResultItem) => {
-        this.emit(SearchEvent.onResultClick, item);
+    public onSelect = (treeNode: SearchResultItem) => {
+        this.emit(SearchEvent.onSelect, treeNode);
     };
 }

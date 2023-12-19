@@ -54,8 +54,6 @@ export const ExtendsActions: IExtension = {
             molecule.activityBar.update(setting);
 
             molecule.activityBar.onContextMenuClick((item) => {
-                console.log('item:', item);
-
                 if (item.id === ctor.ID) {
                     molecule.action.execute(ctor.ID);
                 }
@@ -71,15 +69,5 @@ export const ExtendsActions: IExtension = {
                 });
             }
         }
-
-        // function updateContextMenuKeybinding(id: UniqueId, token: string) {
-        //     const keybinding = molecule.action.queryGlobalKeybinding(id);
-        //     if (keybinding) {
-        //         molecule.contextMenu.updateItem(token, {
-        //             id,
-        //             keybinding: molecule.action.convertSimpleKeybindingToString(keybinding),
-        //         });
-        //     }
-        // }
     },
 };

@@ -2,14 +2,10 @@
 
 $container: prefix('tree');
 $treeNode: BEMElement($container, 'treenode');
-$treeNodeTitle: BEMElement($treeNode, 'title');
 $indent: BEMElement($container, 'indent');
 $guide: BEMElement($indent, 'guide');
 
-
 $active: BEMModifier($treeNode, 'active');
-$open: BEMModifier($treeNode, 'open');
-$close: BEMModifier($treeNode, 'close');
 
 $treenode-height: 22px;
 
@@ -21,33 +17,20 @@ $treenode-height: 22px;
         cursor: pointer;
         display: flex;
         height: $treenode-height;
-        line-height: $treenode-height;
-        outline: 1px solid transparent;
-        outline-offset: -1px;
         padding-left: 10px;
         user-select: none;
 
-        &:not(.#{$active}):hover {
+        &:hover {
             background-color: var(--list-hoverBackground);
+        }
+
+        &.#{$active} {
+            background-color: var(--list-inactiveSelectionBackground);
         }
 
         &:focus {
             background-color: var(--list-activeSelectionBackground);
             color: #fff;
-            outline-color: var(--list-focusOutline);
-        }
-
-        .#{$treeNodeTitle} {
-            overflow: hidden;
-            padding-left: 5px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 100%;
-        }
-
-        &.#{$active},
-        &.drag-over {
-            background-color: var(--list-inactiveSelectionBackground);
         }
     }
 
@@ -70,10 +53,7 @@ $treenode-height: 22px;
 :export {
     container: $container;
     treeNode: $treeNode;
-    treeNodeTitle: $treeNodeTitle;
     indent: $indent;
     guide: $guide;
     active: $active;
-    open: $open;
-    close: $close;
 }

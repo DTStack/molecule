@@ -1,3 +1,4 @@
+import type React from 'react';
 import type { editor, KeyCode } from 'monaco-editor';
 
 import type { IColorTheme } from './models/colorTheme';
@@ -19,11 +20,11 @@ import type { MonacoService } from './services/monaco';
 import type { NotificationService } from './services/notification';
 import type { OutputService } from './services/output';
 import type { PanelService } from './services/panel';
-import { SearchService } from './services/search';
+import type { SearchService } from './services/search';
 import type { SettingsService } from './services/setting';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
-import { TreeNodeModel } from './utils/tree';
+import type { TreeNodeModel } from './utils/tree';
 import type { BaseController } from './glue';
 
 export type { IEditorTab } from './models/editor';
@@ -311,7 +312,7 @@ export interface IExtension {
 /**
  * Extend the parameters for a function
  */
-type ExtendParameters<T, Arguments extends any[]> = T extends (...args: infer P) => infer R
+export type ExtendParameters<T, Arguments extends any[]> = T extends (...args: infer P) => infer R
     ? (...args: [...P, ...Arguments]) => R
     : never;
 
@@ -395,15 +396,15 @@ type ISearchResultData = {
     breadcrumb: string[];
 };
 export type SearchResultItem = TreeNodeModel<ISearchResultData>;
-export type MouseEventHandler<T = HTMLDivElement> = (
-    e: React.MouseEvent<T, MouseEvent>,
-    node: TreeNodeModel<any>
-) => void;
+export type KeyboardEventHandler<T> = ExtendParameters<
+    React.KeyboardEventHandler<T>,
+    [treeNode: TreeNodeModel<any>]
+>;
 
-export type KeyboardEventHandler<T = HTMLDivElement> = (
-    e: React.KeyboardEvent<T>,
-    node: TreeNodeModel<any>
-) => void;
+export type FocusEventHandler<T> = ExtendParameters<
+    React.FocusEventHandler<T>,
+    [treeNode: TreeNodeModel<any>]
+>;
 
 export type FolderTreeInsertOption = {
     /**

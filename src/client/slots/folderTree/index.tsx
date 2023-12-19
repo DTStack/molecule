@@ -1,6 +1,5 @@
-import { useLayoutEffect, useRef } from 'react';
-import { classNames } from 'mo/client/classNames';
 import { Button } from 'mo/client/components/button';
+import { Input } from 'mo/client/components/input';
 import Prevent from 'mo/client/components/prevent';
 import Tree from 'mo/client/components/tree';
 import useConnector from 'mo/client/hooks/useConnector';
@@ -11,40 +10,22 @@ import type { IExplorerPanelItem } from 'mo/models/explorer';
 import { ScrollBar } from '../../components/scrollBar';
 import variables from './index.scss';
 
-/**
- * A simple wrapper Input, achieve autoFucus & auto select file name
- */
-const Input = (
-    // same as raw input
-    props: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-) => {
-    const inputRef = useRef<HTMLInputElement>(null);
-    useLayoutEffect(() => {
-        if (inputRef.current) {
-            const ext = ((props.defaultValue || '') as string).lastIndexOf('.');
-            inputRef.current.selectionStart = 0;
-            inputRef.current.selectionEnd =
-                // if period at position of 0, then this period means hidden file
-                ext > 0 ? ext : ((props.defaultValue || '') as string).length;
-        }
-    }, []);
-    return <input {...props} ref={inputRef} />;
-};
-
 export default function FolderTree({
     panel,
     onSelect,
-    onUpdateFileName,
-    onDropTree,
-    onExpand,
-    onTreeItemKeyDown,
+    onKeyDown,
+    onBlur,
     onContextMenu,
     onCreateRoot,
+    onDragStart,
+    onDragOver,
+    onDragEnd,
+    onDrop,
 }: { panel: IExplorerPanelItem } & IFolderTreeController) {
     const folderTree = useConnector('folderTree');
     const localize = useLocale();
     const builtin = useConnector('builtin');
-    const { entry, current, data, expandKeys, loadedKeys, loadingKeys, editing } = folderTree;
+    const { entry, current, data, loadingKeys, expandedKeys, editing } = folderTree;
 
     const welcomePage = (
         <div data-content={panel.id}>
@@ -76,45 +57,35 @@ export default function FolderTree({
                 onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data[0])}
             >
                 <Tree
-                    // root folder do not render
                     activeKey={current}
-                    expandKeys={expandKeys}
-                    loadedKeys={loadedKeys}
+                    expandedKeys={expandedKeys}
                     loadingKeys={loadingKeys}
-                    // contextMenu={contextMenuData}
                     data={data[0]?.children || []}
-                    className={classNames(variables.folderTree, editing && variables.editing)}
+                    className={variables.folderTree}
                     draggable={!editing}
-                    onDropTree={onDropTree}
                     onSelect={onSelect}
                     onContextMenu={onContextMenu}
+                    onKeyDown={onKeyDown}
+                    onDragStart={onDragStart}
+                    onDragOver={onDragOver}
+                    onDragEnd={onDragEnd}
+                    onDrop={onDrop}
                     renderTitle={(node) => {
-                        if (node.id !== editing) return node.name;
+                        if (node.id !== editing)
+                            return <div className={variables.treeNode}>{node.name}</div>;
                         return (
                             <Input
-                                role="input"
-                                className={variables.input}
-                                type="text"
                                 defaultValue={node.name}
-                                onKeyDown={(e) => {
-                                    // stop propagation, avoid conflict to onKeyDown event
-                                    e.stopPropagation();
-                                    if (e.keyCode === 13 || e.keyCode === 27) {
-                                        onUpdateFileName?.({
-                                            ...node,
-                                            name: (e.target as HTMLInputElement).value,
-                                        });
-                                    }
-                                }}
-                                autoComplete="off"
+                                className={variables.input}
+                                info={folderTree.validateInfo}
                                 autoFocus
-                                // onBlur={(e)  => handleInputBlur(e, node)}
+                                size="small"
+                                onBlur={(e) => onBlur?.(e, node)}
                                 onClick={(e) => e.stopPropagation()}
+                                onKeyDown={(e) => onKeyDown?.(e, node)}
                             />
                         );
                     }}
-                    onExpand={onExpand}
-                    onTreeItemKeyDown={onTreeItemKeyDown}
                 />
             </Prevent>
         </ScrollBar>

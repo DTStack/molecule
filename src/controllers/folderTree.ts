@@ -6,22 +6,25 @@ import type { BuiltinService } from 'mo/services/builtin';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { FolderTreeService } from 'mo/services/folderTree';
 import type { SidebarService } from 'mo/services/sidebar';
-import type { ContextMenuWithItemHandler, KeyboardEventHandler, UniqueId } from 'mo/types';
+import type {
+    ContextMenuWithItemHandler,
+    FocusEventHandler,
+    KeyboardEventHandler,
+    UniqueId,
+} from 'mo/types';
 import type { TreeNodeModel } from 'mo/utils/tree';
 import { inject, injectable } from 'tsyringe';
 
 export interface IFolderTreeController extends BaseController {
-    readonly onUpdateFileName?: (file: TreeNodeModel<any>) => void;
     readonly onSelect?: (treeNode: TreeNodeModel<any>) => void;
-    readonly onDropTree?: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void;
-    readonly onExpand?: (
-        expanded: boolean,
-        expandKeys: UniqueId[],
-        node: TreeNodeModel<any>
-    ) => void;
-    readonly onTreeItemKeyDown?: KeyboardEventHandler;
+    readonly onKeyDown?: KeyboardEventHandler<HTMLElement>;
     readonly onContextMenu?: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>;
     readonly onCreateRoot?: (e: React.MouseEvent<Element, MouseEvent>) => void;
+    readonly onBlur?: FocusEventHandler<HTMLElement>;
+    readonly onDragStart?: (source: TreeNodeModel<any>) => void;
+    readonly onDragOver?: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void;
+    readonly onDragEnd?: (source: TreeNodeModel<any>) => void;
+    readonly onDrop?: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void;
 }
 
 @injectable()
@@ -37,13 +40,7 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
     }
 
     private initView() {
-        const {
-            FOLDER_TREE,
-            // CONTEXTMENU_OPEN_TO_SIDE,
-            // CONTEXTMENU_COMMON,
-            // CONTEXTMENU_CREATE,
-            // CONTEXTMENU_FOLDER_PANEL,
-        } = this.builtin.getModules();
+        const { FOLDER_TREE } = this.builtin.getModules();
         if (FOLDER_TREE) {
             this.explorer.addPanel({
                 ...FOLDER_TREE,
@@ -57,20 +54,6 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
                 sortIndex: FOLDER_TREE.sortIndex,
             });
         }
-        // FIXME: migrate to contextMenu service
-        // if (CONTEXTMENU_OPEN_TO_SIDE) {
-        //     this.folderTree.setFileContextMenu(CONTEXTMENU_OPEN_TO_SIDE);
-        // }
-        // if (CONTEXTMENU_CREATE) {
-        //     this.folderTree.setFolderContextMenu(CONTEXTMENU_CREATE);
-        // }
-        // this.folderTree.setState({
-        //     contextMenu: CONTEXTMENU_COMMON || [],
-        //     current: undefined,
-        //     folderContextMenu: CONTEXTMENU_FOLDER_PANEL || [],
-        //     data: [],
-        //     expandKeys: [],
-        // });
     }
 
     public onContextMenu: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]> = (
@@ -80,51 +63,39 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
         this.emit(FolderTreeEvent.onContextMenu, pos, treeNode);
     };
 
-    public readonly onDropTree = (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => {
-        this.emit(FolderTreeEvent.onDrop, source, target);
-    };
-
-    public onUpdateFileName = (file: TreeNodeModel<any>) => {
-        this.emit(FolderTreeEvent.onUpdateFileName, file);
-    };
-
     public readonly onSelect = (treeNode: TreeNodeModel<any>) => {
         this.emit(FolderTreeEvent.onSelect, treeNode);
     };
-
-    // public onLoadData = (treeNode: TreeNodeModel<any>) => {
-    // this.emit(FolderTreeEvent.onLoadData, treeNode);
-    // const count = this.count(FolderTreeEvent.onLoadData);
-    // if (count) {
-    //     // define current treeNode to be loaded
-    //     this.folderTree.setLoadedKeys([
-    //         ...this.folderTree.getLoadedKeys(),
-    //         treeNode.id.toString(),
-    //     ]);
-    //     return new Promise<void>((resolve) => {
-    //         const callback = (node: TreeNodeModel<any>) => {
-    //             this.folderTree.update(node);
-    //             resolve();
-    //         };
-    //         this.emit(FolderTreeEvent.onLoadData, treeNode, callback);
-    //     });
-    // } else {
-    //     return Promise.resolve();
-    // }
-    // };
 
     public onExpand = (expanded: boolean, expandedKeys: UniqueId[], node: TreeNodeModel<any>) => {
         this.emit(FolderTreeEvent.onExpand, expanded, expandedKeys, node);
     };
 
-    public onTreeItemKeyDown = (
-        e: React.KeyboardEvent<HTMLDivElement>,
-        node: TreeNodeModel<any>
-    ) => {
-        this.emit(FolderTreeEvent.onTreeItemKeyDown, e, node);
+    public onKeyDown: KeyboardEventHandler<HTMLElement> = (e, node) => {
+        this.emit(FolderTreeEvent.onKeyDown, e, node);
     };
 
     public onCreateRoot = (e: React.MouseEvent<Element, MouseEvent>) => {
         this.emit(FolderTreeEvent.onCreateRoot, e);
+    };
+
+    public onBlur: FocusEventHandler<HTMLElement> = (e, treeNode) => {
+        this.emit(FolderTreeEvent.onBlur, e, treeNode);
+    };
+
+    public onDragStart = (source: TreeNodeModel<any>) => {
+        this.emit(FolderTreeEvent.onDragStart, source);
+    };
+
+    public onDragOver = (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => {
+        this.emit(FolderTreeEvent.onDragOver, source, target);
+    };
+
+    public onDragEnd = (source: TreeNodeModel<any>) => {
+        this.emit(FolderTreeEvent.onDragEnd, source);
+    };
+
+    public onDrop = (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => {
+        this.emit(FolderTreeEvent.onDrop, source, target);
     };
 }

@@ -1,17 +1,16 @@
 import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
 import {
-    ArraylizeOrSingle,
     ContextMenuWithItemHandler,
-    FileTypeLiteral,
     FileTypes,
+    FocusEventHandler,
     type FolderTreeInsertOption,
     type IMenuItemProps,
+    InputValidateInfo,
     type KeyboardEventHandler,
     type RequiredId,
     type UniqueId,
 } from 'mo/types';
-import { arraylize } from 'mo/utils';
 import logger from 'mo/utils/logger';
 import { TreeHelper, TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
@@ -47,20 +46,7 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * @param id
      */
     getParentNode<T>(id: UniqueId): TreeNodeModel<T> | undefined;
-    /**
-     * Get the expandKeys in folderTree
-     */
-    getExpandKeys: () => UniqueId[];
-    addExpandKeys: (key: ArraylizeOrSingle<UniqueId>) => void;
-    removeExpandKeys: (key: UniqueId) => void;
-    /**
-     * Get the loadedKeys for folderTree
-     */
-    getLoadedKeys: () => UniqueId[];
-    /**
-     * Set the loadedKeys for folderTree
-     */
-    setLoadedKeys: (loadedKeys: UniqueId[]) => void;
+    setValidateInfo: (message: string | InputValidateInfo) => void;
     /**
      * Active specific node,
      * or unactive any node in folder tree
@@ -76,41 +62,35 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Set editing FolderTree item
      * @param id itemId
      */
-    setEditing: (id: UniqueId) => void;
+    setEditing: (id?: UniqueId) => void;
     addLoading: (id: UniqueId) => void;
     removeLoading: (id: UniqueId) => void;
+    addExpanded: (id: UniqueId) => void;
+    removeExpanded: (id: UniqueId) => void;
+    toggleExpanded: (id: UniqueId) => void;
     /**
      * update data when drop tree
      * @param source dragNode
      * @param target dropNode
      */
-    dropTree: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void;
+    drop: (sourceId: UniqueId, targetId: UniqueId) => void;
     /**
      * Listen to event about onKeyDown file item
      * @params callback
      */
-    onTreeItemKeyDown(callback: KeyboardEventHandler): void;
+    onKeyDown(callback: KeyboardEventHandler<HTMLElement>): void;
     /**
      * Listen to event about clicking rename button
      * @param callback
      */
-    onRename(callback: (id: UniqueId) => void): void;
+    onRename(callback: (ele: HTMLTextAreaElement, treeNode: TreeNodeModel<any>) => void): void;
     /**
      * Listen to remove a node
      * @param callback
      */
     onRemove(callback: (id: UniqueId) => void): void;
-    /**
-     * Listen to update file or folder name
-     * @param callback
-     */
-    onUpdateFileName(callback: (file: TreeNodeModel<any>) => void): void;
     onSelect(callback: (treeNode: TreeNodeModel<any>) => void): void;
-    /**
-     * Listen to drop event
-     * @param treeData
-     */
-    onDropTree(callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void): void;
+
     onContextMenu(callback: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>): void;
     /**
      * Listen to the click event about the context menu except for built-in menus
@@ -130,10 +110,19 @@ export interface IFolderTreeService extends BaseService<FolderTreeModel> {
      * Callback of the Add Button when data is none
      */
     onCreateRoot: (callback: (e: React.MouseEvent<Element, MouseEvent>) => void) => void;
+    onUpdate: <T>(callback: (data: RequiredId<TreeNodeModel<T>>) => void) => void;
+    onBlur: (callback: FocusEventHandler<HTMLElement>) => void;
+    onLoad: (callback: (id: UniqueId) => void) => void;
+    onDragStart: (callback: (source: TreeNodeModel<any>) => void) => void;
+    onDragOver: (
+        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
+    ) => void;
+    onDragEnd: (callback: (source: TreeNodeModel<any>) => void) => void;
     /**
-     * Listen to after updateFileName event event
+     * Listen to drop event
+     * @param treeData
      */
-    onAfterUpdateFileName: (callback: (file: TreeNodeModel<any>) => void) => void;
+    onDrop(callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void): void;
 }
 
 @injectable()
@@ -168,35 +157,6 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         const helper = new TreeHelper(data);
         const parent = helper.getParent(id);
         return parent;
-    }
-
-    public getExpandKeys() {
-        return this.getState().expandKeys;
-    }
-
-    public addExpandKeys: (key: ArraylizeOrSingle<UniqueId>) => void = (key) => {
-        const keys = arraylize(key);
-        this.setState((prev) => ({
-            ...prev,
-            expandKeys: [...prev.expandKeys, ...keys],
-        }));
-    };
-
-    public removeExpandKeys: (key: UniqueId) => void = (key) => {
-        this.setState((prev) => ({
-            ...prev,
-            expandKeys: prev.expandKeys.filter((i) => i !== key),
-        }));
-    };
-
-    public getLoadedKeys() {
-        return this.getState().loadedKeys;
-    }
-
-    public setLoadedKeys(loadedKeys: UniqueId[]) {
-        this.setState({
-            loadedKeys,
-        });
     }
 
     private addRootFolder(data: TreeNodeModel<any>) {
@@ -274,11 +234,6 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
             ...prev,
             data: [...prev.data],
         }));
-
-        // ===================== effects =====================
-        const { loadedKeys } = this.getState();
-        this.removeExpandKeys(id);
-        this.setLoadedKeys(loadedKeys.filter((i) => i !== id));
     }
 
     public update(data: RequiredId<TreeNodeModel<any>>) {
@@ -294,30 +249,21 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         }));
 
         // ===================== effects =====================
-        this.emit(FolderTreeEvent.onAfterUpdateFileName, data);
+        this.emit(FolderTreeEvent.onUpdate, data);
     }
 
-    public dropTree(source: TreeNodeModel<any>, target: TreeNodeModel<any>) {
-        const { data = [] } = this.getState();
+    public drop(sourceId: UniqueId, targetId: UniqueId) {
+        const source = this.get(sourceId);
+        if (!source) return;
+        const target = this.get(targetId);
+        if (!target || target.fileType === FileTypes.File) return;
         /**
          * 1. Remove source node.
          * 2. Create new source node, before target.
          * Required first remove node, and then add node.
          */
-        this.remove(source.id);
-        const treeHelper = new TreeHelper(data);
-        const targetParent = treeHelper.getParent(target.id);
-        const idx = targetParent?.children?.findIndex(({ id }) => id === target.id);
-        if (
-            ([FileTypes.Folder, FileTypes.RootFolder] as FileTypeLiteral[]).includes(
-                target.fileType
-            ) &&
-            idx !== 0
-        ) {
-            this.add(source, target?.id, { gap: true });
-        } else {
-            this.add(source, targetParent?.id, { gap: true, index: idx });
-        }
+        this.remove(sourceId);
+        this.add(source, target?.id, { gap: true });
     }
 
     public get(id: UniqueId) {
@@ -332,18 +278,44 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         });
     }
 
+    public addExpanded(id: UniqueId) {
+        this.setState((prev) => ({
+            expandedKeys: [...prev.expandedKeys, id],
+        }));
+    }
+
+    public removeExpanded(id: UniqueId) {
+        this.setState((prev) => ({
+            expandedKeys: prev.expandedKeys.filter((i) => i !== id),
+        }));
+    }
+
+    public toggleExpanded(id: UniqueId) {
+        if (this.getState().expandedKeys.includes(id)) {
+            this.removeExpanded(id);
+        } else {
+            this.addExpanded(id);
+        }
+    }
+
+    public setValidateInfo(message?: string | InputValidateInfo) {
+        this.setState({
+            validateInfo: typeof message === 'string' ? { status: 'info', message } : message,
+        });
+    }
+
     public setEntry(entry: React.ReactNode) {
         this.setState({
             entry,
         });
     }
 
-    public setEditing(id: UniqueId) {
+    public setEditing(id?: UniqueId) {
         this.setState({ editing: id });
     }
 
     // ===================== Subscriptions =====================
-    public onRename(callback: (id: UniqueId) => void) {
+    public onRename(callback: (ele: HTMLTextAreaElement, treeNode: TreeNodeModel<any>) => void) {
         this.subscribe(FolderTreeEvent.onRename, callback);
     }
 
@@ -351,19 +323,9 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.subscribe(FolderTreeEvent.onDelete, callback);
     }
 
-    public onUpdateFileName(callback: (file: TreeNodeModel<any>) => void) {
-        this.subscribe(FolderTreeEvent.onUpdateFileName, callback);
-    }
-
     public onSelect(callback: (treeNode: TreeNodeModel<any>) => void) {
         this.subscribe(FolderTreeEvent.onSelect, callback);
     }
-
-    public onDropTree = (
-        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
-    ) => {
-        this.subscribe(FolderTreeEvent.onDrop, callback);
-    };
 
     public onContextMenu = (
         callback: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>
@@ -383,15 +345,43 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.subscribe(FolderTreeEvent.onExpand, callback);
     };
 
-    public onTreeItemKeyDown(callback: KeyboardEventHandler): void {
-        this.subscribe(FolderTreeEvent.onTreeItemKeyDown, callback);
+    public onKeyDown(callback: KeyboardEventHandler<HTMLElement>): void {
+        this.subscribe(FolderTreeEvent.onKeyDown, callback);
     }
 
     public onCreateRoot(callback: (e: React.MouseEvent<Element, MouseEvent>) => void): void {
         this.subscribe(FolderTreeEvent.onCreateRoot, callback);
     }
 
-    public onAfterUpdateFileName(callback: (file: TreeNodeModel<any>) => void): void {
-        this.subscribe(FolderTreeEvent.onAfterUpdateFileName, callback);
+    public onUpdate<T>(callback: (data: RequiredId<TreeNodeModel<T>>) => void): void {
+        this.subscribe(FolderTreeEvent.onUpdate, callback);
     }
+
+    public onBlur(callback: FocusEventHandler<HTMLElement>): void {
+        this.subscribe(FolderTreeEvent.onBlur, callback);
+    }
+
+    public onLoad(callback: (id: UniqueId) => void): void {
+        this.subscribe(FolderTreeEvent.onLoad, callback);
+    }
+
+    public onDragStart(callback: (source: TreeNodeModel<any>) => void): void {
+        this.subscribe(FolderTreeEvent.onDragStart, callback);
+    }
+
+    public onDragOver = (
+        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
+    ) => {
+        this.subscribe(FolderTreeEvent.onDragOver, callback);
+    };
+
+    public onDragEnd(callback: (source: TreeNodeModel<any>) => void): void {
+        this.subscribe(FolderTreeEvent.onDragEnd, callback);
+    }
+
+    public onDrop = (
+        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
+    ) => {
+        this.subscribe(FolderTreeEvent.onDrop, callback);
+    };
 }

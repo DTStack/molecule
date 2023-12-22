@@ -21,6 +21,6 @@ export default class QuickTogglePanelAction extends BaseAction {
         });
     }
     run() {
-        this.molecule.layout.setPanelVisibility((prev) => !prev);
+        this.molecule.layout.setPanel((prev) => !prev);
     }
 }

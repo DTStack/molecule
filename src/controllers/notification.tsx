@@ -33,7 +33,7 @@ export class NotificationController extends BaseController implements INotificat
             this.statusBar.add({ ...NOTIFICATION, render: () => <Notification {...this} /> });
             this.notification.setState({
                 ...NOTIFICATION,
-                actionBar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(Boolean),
+                toolbar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(Boolean),
             });
         }
     }

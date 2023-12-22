@@ -1,6 +1,5 @@
-import type { IMenuItemProps, Localize } from 'mo/types';
+import type { IActivityBarItem, IMenuItemProps, Localize } from 'mo/types';
 
-import type { IActivityBarItem } from './activityBar';
 import { IExplorerPanelItem } from './explorer';
 import { IStatusBarItem } from './statusBar';
 

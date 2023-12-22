@@ -37,7 +37,7 @@ export const ExtendsExplorer: IExtension = {
         });
 
         molecule.explorer.onCollapseChange((keys) => {
-            molecule.explorer.setExpandedPanels(keys);
+            molecule.explorer.setActive(keys);
         });
 
         molecule.explorer.onContextMenu((pos, panel) => {

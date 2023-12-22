@@ -1,9 +1,7 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { throttle } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
-import type { ContextMenuWithItemHandler, IDragProps } from 'mo/types';
-import { DragAction } from 'mo/types';
+import type { ContextMenuWithItemHandler } from 'mo/types';
 
 import Close from '../close';
 import Flex from '../flex';
@@ -16,11 +14,13 @@ export interface ITabsProps<T> {
     active?: boolean;
     closable?: boolean;
     modified?: boolean;
-    onDragStart?: () => T;
-    onDrag?: (props: Pick<IDragProps, 'info' | 'type'> & { item: T }) => void;
     onContextMenu?: ContextMenuWithItemHandler<[]>;
     onClick?: () => void;
     onClose?: () => void;
+    onDragStart?: () => T;
+    onDragEnd?: (source: T) => void;
+    onDragOver?: (source: T) => void;
+    onDrop?: (source: T) => void;
 }
 
 export default function Tabs<T>({
@@ -29,41 +29,50 @@ export default function Tabs<T>({
     active,
     closable,
     modified,
-    onDragStart,
     onContextMenu,
     onClick,
     onClose,
-    onDrag,
+    onDragStart,
+    onDragEnd,
+    onDragOver,
+    onDrop,
 }: ITabsProps<T>) {
     const ref = useRef<HTMLDivElement>(null);
 
     const [, drag] = useDrag({
-        collect: (monitor) => ({ isDragging: monitor?.isDragging?.() }),
         type: 'DND_NODE',
         item: onDragStart?.(),
+        end(item) {
+            onDragEnd?.(item);
+        },
     });
 
-    const actionHoc = (type: DragAction) =>
-        throttle((item, monitor) => {
-            const component = ref.current;
-            if (!component) return;
-            const hoverBoundingRect = component.getBoundingClientRect();
-            const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
-            const clientOffset = monitor?.getClientOffset?.();
-            if (!clientOffset) return;
-            const hoverClientX =
-                (clientOffset as { x: number; y: number }).x - hoverBoundingRect.left;
+    // const actionHoc = (type: DragAction) =>
+    //     throttle((item, monitor) => {
+    //         const component = ref.current;
+    //         if (!component) return;
+    //         const hoverBoundingRect = component.getBoundingClientRect();
+    //         const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
+    //         const clientOffset = monitor?.getClientOffset?.();
+    //         if (!clientOffset) return;
+    //         const hoverClientX =
+    //             (clientOffset as { x: number; y: number }).x - hoverBoundingRect.left;
 
-            const info: IDragProps['info'] = {
-                hoverMiddleX,
-                hoverClientX,
-            };
-            onDrag?.({ item, info, type });
-        }, 500);
+    //         const info: IDragProps['info'] = {
+    //             hoverMiddleX,
+    //             hoverClientX,
+    //         };
+    //         onDrag?.({ item, info, type });
+    //     }, 500);
 
     const [, drop] = useDrop({
         accept: 'DND_NODE',
-        hover: actionHoc(DragAction.hover),
+        hover(item: T) {
+            onDragOver?.(item);
+        },
+        drop(item) {
+            onDrop?.(item);
+        },
     });
 
     drag(drop(ref));

@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom';
 import { classNames } from 'mo/client/classNames';
+import Display from 'mo/client/components/display';
 import Icon from 'mo/client/components/icon';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { INotificationController } from 'mo/controllers/notification';
@@ -13,26 +14,24 @@ export default function Notification({
     onCloseNotification,
 }: Pick<INotificationController, 'onClick' | 'onActionBarClick' | 'onCloseNotification'>) {
     const notification = useConnector('notification');
+    const layout = useConnector('layout');
 
-    const { data, actionBar, visible } = notification;
+    const { data, toolbar } = notification;
     const hasNotifications = data.length > 0;
     const renderIcon = hasNotifications ? 'bell-dot' : 'bell';
 
     return (
         <>
-            <Icon
-                className={classNames(variables.bell, visible && variables.activeBell)}
-                onClick={onClick}
-                type={renderIcon}
-            />
+            <Icon className={classNames(variables.bell)} onClick={onClick} type={renderIcon} />
             {createPortal(
-                <NotificationCenter
-                    data={data}
-                    visible={visible}
-                    actionBar={actionBar}
-                    onActionBarClick={onActionBarClick}
-                    onCloseNotification={onCloseNotification}
-                />,
+                <Display visible={!layout.notification.hidden}>
+                    <NotificationCenter
+                        data={data}
+                        toolbar={toolbar}
+                        onActionBarClick={onActionBarClick}
+                        onCloseNotification={onCloseNotification}
+                    />
+                </Display>,
                 document.body
             )}
         </>

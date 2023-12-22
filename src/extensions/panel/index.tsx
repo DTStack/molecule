@@ -8,7 +8,7 @@ export const ExtendsPanel: IExtension = {
     name: 'Extend The Default Panel',
     activate: function (molecule): void {
         molecule.panel.onChange((key) => {
-            molecule.panel.setActive(key);
+            molecule.panel.setCurrent(key);
         });
 
         molecule.panel.onClose((key) => {
@@ -20,7 +20,7 @@ export const ExtendsPanel: IExtension = {
                     .sort(sortByIndex)
                     .findIndex((i) => i.id === key);
                 const nextKey = data[idx + 1]?.id ?? data[idx - 1]?.id;
-                molecule.panel.setActive(nextKey);
+                molecule.panel.setCurrent(nextKey);
             }
         });
 
@@ -29,7 +29,7 @@ export const ExtendsPanel: IExtension = {
                 molecule.builtin.getState().constants;
             switch (item.id) {
                 case PANEL_TOOLBAR_CLOSE: {
-                    molecule.layout.setPanelVisibility(true);
+                    molecule.layout.setPanel(false);
                     break;
                 }
                 case PANEL_TOOLBAR_MAXIMIZE: {

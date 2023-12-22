@@ -8,12 +8,12 @@ export const ExtendsActivityBar: IExtension = {
     name: 'Extend The Default ActivityBar',
     activate: function (molecule): void {
         molecule.activityBar.onClick((item) => {
-            if (item.id === molecule.activityBar.getState().selected) {
-                molecule.layout.setSidebarVisibility((prev) => !prev);
+            if (item.id === molecule.activityBar.getCurrent()) {
+                molecule.layout.setSidebar((prev) => !prev);
             } else {
-                molecule.layout.setSidebarVisibility(false);
-                molecule.activityBar.setActive(item.id);
-                molecule.sidebar.setActive(item.id);
+                molecule.layout.setSidebar(true);
+                molecule.activityBar.setCurrent(item.id);
+                molecule.sidebar.setCurrent(item.id);
             }
         });
 

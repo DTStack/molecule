@@ -5,15 +5,11 @@ export enum SettingsEvent {
     /**
      * The settings content changed
      */
-    OnChange = 'settings.onchange',
+    OnChange = 'settings.onChange',
 }
 
 export type ISettings = Record<string, any>;
 
-interface ISetting {
-    data: ISettings;
-}
-
-export class SettingModel implements ISetting {
+export class SettingModel {
     constructor(public data: ISettings = {}) {}
 }

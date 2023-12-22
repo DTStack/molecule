@@ -113,12 +113,13 @@ export function Collapse({
         return null;
     };
 
-    const handleChangeCallback = (key: UniqueId, index: number) => {
+    const handleChangeCallback = (key: UniqueId) => {
         const currentKeys = [...activePanelKeys];
-        if (!isUndefined(currentKeys[index])) {
-            delete currentKeys[index];
+        if (currentKeys.includes(key)) {
+            const idx = currentKeys.indexOf(key);
+            currentKeys.splice(idx, 1);
         } else {
-            currentKeys[index] = key;
+            currentKeys.push(key);
         }
         onCollapseChange?.(currentKeys);
         setActivePanelKeys(currentKeys.concat());
@@ -305,7 +306,7 @@ export function Collapse({
                                         className={variables.header}
                                         tabIndex={0}
                                         justifyContent="space-between"
-                                        onClick={() => handleChangeCallback(panel.id, index)}
+                                        onClick={() => handleChangeCallback(panel.id)}
                                     >
                                         <Flex>
                                             <Icon

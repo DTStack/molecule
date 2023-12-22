@@ -12,11 +12,7 @@ export interface IExplorerPanelItem
         Omit<IItemProps, 'icon'> {
     toolbar?: IMenuItemProps[];
 }
-export interface IExplorer {
-    data: IExplorerPanelItem[];
-    activePanelKeys?: UniqueId[];
-}
 
-export class ExplorerModel implements IExplorer {
-    constructor(public data: IExplorerPanelItem[] = [], public activePanelKeys: UniqueId[] = []) {}
+export class ExplorerModel {
+    constructor(public data: IExplorerPanelItem[] = [], public active: UniqueId[] = []) {}
 }

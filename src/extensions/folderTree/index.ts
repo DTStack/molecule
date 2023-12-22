@@ -10,7 +10,7 @@ export const ExtendsFolderTree: IExtension = {
         molecule.folderTree.onSelect((treeNode) => {
             if (treeNode.fileType === FileTypes.File) {
                 molecule.folderTree.setState({ editing: undefined });
-                molecule.folderTree.setActive(treeNode.id);
+                molecule.folderTree.setCurrent(treeNode.id);
             } else {
                 molecule.folderTree.toggleExpanded(treeNode.id);
 
@@ -109,12 +109,18 @@ export const ExtendsFolderTree: IExtension = {
         });
 
         molecule.folderTree.onContextMenuClick((item, treeNode) => {
-            const { EXPLORER_CONTEXTMENU_RENAME } = molecule.builtin.getConstants();
+            const { EXPLORER_CONTEXTMENU_RENAME, EXPLORER_CONTEXTMENU_DELETE } =
+                molecule.builtin.getConstants();
             switch (item.id) {
                 case EXPLORER_CONTEXTMENU_RENAME: {
-                    molecule.folderTree.setActive(treeNode.id);
+                    molecule.folderTree.setCurrent(treeNode.id);
                     molecule.folderTree.setEditing(treeNode.id);
                     molecule.folderTree.setValidateInfo('');
+                    break;
+                }
+
+                case EXPLORER_CONTEXTMENU_DELETE: {
+                    molecule.folderTree.emit(FolderTreeEvent.onDelete, treeNode.id);
                     break;
                 }
 

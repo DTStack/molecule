@@ -40,9 +40,10 @@ export default function Search({ onChange, onSearch, onSelect }: ISearchControll
                 <ScrollBar isShowShadow>
                     <Tree
                         className={variables.result}
-                        expandedKeys={search.expandKeys}
+                        expandedKeys={search.expandedKeys}
                         data={search.result}
                         onSelect={onSelect}
+                        draggable={false}
                         renderTitle={(node) => node.name}
                     />
                 </ScrollBar>

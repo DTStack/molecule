@@ -42,7 +42,7 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
     private initView() {
         const { FOLDER_TREE } = this.builtin.getModules();
         if (FOLDER_TREE) {
-            this.explorer.addPanel({
+            this.explorer.add({
                 ...FOLDER_TREE,
                 render: (panel) => createElement(FolderTree, { panel, ...this }),
             });

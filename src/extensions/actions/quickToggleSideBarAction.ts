@@ -22,6 +22,6 @@ export default class QuickToggleSidebarAction extends BaseAction {
         });
     }
     run() {
-        this.molecule.layout.setSidebarVisibility((prev) => !prev);
+        this.molecule.layout.setSidebar((prev) => !prev);
     }
 }

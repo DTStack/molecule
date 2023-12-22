@@ -1,5 +1,4 @@
-import type { IColorTheme } from 'mo/models/colorTheme';
-import { IContributeType, type IExtension } from 'mo/types';
+import { IColorTheme, IContributeType, type IExtension } from 'mo/types';
 
 import darkDefault from './dark_defaults.json';
 import hcDefault from './hc_black_defaults.json';
@@ -16,6 +15,6 @@ export const ColorThemeExtension: IExtension = {
     id: 'ExtendsThemes',
     name: 'Extends themes',
     activate(molecule) {
-        molecule.colorTheme.setTheme(darkDefault.id);
+        molecule.colorTheme.setCurrent(darkDefault.id);
     },
 };

@@ -6,12 +6,15 @@ import { omitBy } from 'lodash-es';
 import { prefix } from 'mo/client/classNames';
 import { DefaultColor } from 'mo/const/theme';
 import { BaseService } from 'mo/glue';
-import { ColorThemeEvent, ColorThemeModel, type IColorTheme } from 'mo/models/colorTheme';
+import { ColorThemeEvent, ColorThemeModel } from 'mo/models/colorTheme';
 import {
     type ArraylizeOrSingle,
     type BuiltinTheme,
     ColorScheme,
     type ColorSchemeLiteral,
+    type IColorTheme,
+    type Predict,
+    type RequiredId,
     type UniqueId,
 } from 'mo/types';
 import {
@@ -22,59 +25,9 @@ import {
     convertToToken,
     searchById,
 } from 'mo/utils';
-import logger from 'mo/utils/logger';
 import { editor } from 'monaco-editor';
 
-export interface IColorThemeService extends BaseService<ColorThemeModel> {
-    /**
-     * Add themes into `colorThemes`
-     *
-     * This will update the duplicated themes found in `colorThemes`
-     * @param themes
-     */
-    addThemes(themes: ArraylizeOrSingle<IColorTheme>): void;
-    /**
-     * Set the current Color Theme via id,
-     * Please ensure the theme could be found in `colorThemes`
-     * @param id The `id` is required
-     */
-    setTheme(id: UniqueId): void;
-    /**
-     * Update specific theme,
-     * @param theme The `id` is required in theme
-     */
-    updateTheme(theme: IColorTheme): void;
-    /**
-     * Get all themes in `colorThemes`
-     */
-    getThemes(): IColorTheme[];
-    /**
-     * Get specific theme via id
-     * @param id
-     */
-    getThemeById(id: UniqueId): IColorTheme | undefined;
-    /**
-     * Get the current Color Theme
-     */
-    getColorTheme(): IColorTheme | undefined;
-    /**
-     * Reset theme
-     */
-    reset(): void;
-    /**
-     * Get the mode('dark' or 'light') of the current Color Theme
-     */
-    getColorThemeMode(): ColorScheme;
-    /**
-     * Listen to the theme changed event
-     * @param callback
-     */
-    onChange(
-        callback: (prev: IColorTheme, next: IColorTheme, themeMode: ColorSchemeLiteral) => void
-    ): void;
-}
-
-export class ColorThemeService extends BaseService<ColorThemeModel> implements IColorThemeService {
+export class ColorThemeService extends BaseService<ColorThemeModel> {
     static DEFAULT_THEME_CLASS_NAME = prefix('customize-theme');
 
     protected state: ColorThemeModel;
@@ -99,10 +52,10 @@ export class ColorThemeService extends BaseService<ColorThemeModel> implements I
         }
     }
 
-    private applyColorTheme() {
-        const current = this.getColorTheme();
-        if (!current) return;
-        const styleSheetContent = convertToCSSVars(current.colors || {});
+    private applyColorTheme(id: UniqueId) {
+        const theme = this.get(id);
+        if (!theme) return;
+        const styleSheetContent = convertToCSSVars(theme.colors || {});
         window.requestAnimationFrame(() => {
             const styleEle = document.querySelector<HTMLStyleElement>(
                 `.${ColorThemeService.DEFAULT_THEME_CLASS_NAME}`
@@ -119,71 +72,66 @@ export class ColorThemeService extends BaseService<ColorThemeModel> implements I
         });
         editor.defineTheme(ColorThemeService.DEFAULT_THEME_CLASS_NAME, {
             inherit: true,
-            base: current.uiTheme || 'vs-dark',
-            colors: colorsToString(current.colors || {}),
-            rules: convertToToken(current.tokenColors) || [],
+            base: theme.uiTheme || 'vs-dark',
+            colors: colorsToString(theme.colors || {}),
+            rules: convertToToken(theme.tokenColors) || [],
         });
         editor.setTheme(ColorThemeService.DEFAULT_THEME_CLASS_NAME);
     }
 
-    public addThemes(themes: ArraylizeOrSingle<IColorTheme>): void {
-        const next = arraylize(themes);
-        next.forEach((theme) => {
-            const target = this.getThemeById(theme.id);
+    public add(themes: ArraylizeOrSingle<IColorTheme>): void {
+        this.dispatch((draft) => {
+            arraylize(themes).forEach((theme) => {
+                const next = { ...theme };
+                next.colors = Object.assign({}, this.getDefaultTheme(theme.uiTheme), theme.colors);
+                draft.data.push(next);
+            });
+        });
+    }
+
+    public update(theme: RequiredId<IColorTheme>): void;
+    public update(id: UniqueId, predict: Predict<IColorTheme>): void;
+    public update(item: UniqueId | RequiredId<IColorTheme>, predict?: Predict<IColorTheme>) {
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(typeof item === 'object' ? item.id : item));
             if (target) {
-                logger.warn(
-                    `There has ${theme.name} already in theme, it'll update this theme otherwise please don't add the duplicated theme`
-                );
-                this.updateTheme(theme);
-            } else {
-                // Inject default theme colors into theme
-                theme.colors = { ...this.getDefaultTheme(theme.uiTheme), ...theme.colors };
-                this.setState((prev) => ({
-                    ...prev,
-                    themes: [...prev.themes, theme],
-                }));
+                Object.assign(target, typeof item === 'object' ? item : predict?.(target));
+                // If current theme be updated, then reload it
+                if (target.id === this.getState().current) {
+                    this.applyColorTheme(target.id);
+                }
             }
         });
-    }
-
-    public updateTheme(theme: IColorTheme) {
-        if (!theme.id) {
-            logger.error("Update the theme failed!  The 'id' is required in the theme data.");
-        }
-        const target = this.getThemeById(theme.id);
-        if (!target) {
-            logger.error(`Update the theme failed! There is no theme found via '${theme.id}'`);
-            return;
-        }
-        // Inject default theme colors into theme
-        theme.colors = { ...this.getDefaultTheme(theme.uiTheme), ...theme.colors };
-        Object.assign(target, theme);
-        // If current theme be updated, then reload it
-        this.setState((prev) => ({ ...prev }));
-        if (theme.id === this.getState().current) {
-            this.applyColorTheme();
+        if (this.getCurrent() === (typeof item === 'object' ? item.id : item)) {
+            this.applyColorTheme(this.getCurrent());
         }
     }
 
-    public getThemeById(id: UniqueId): IColorTheme | undefined {
-        return this.getState().themes.find(searchById(id));
+    public get(id: UniqueId) {
+        return this.getState().data.find(searchById(id));
     }
 
-    public getColorTheme() {
-        const { themes, current } = this.getState();
-        if (!current) return undefined;
-        return themes.find(searchById(current));
+    public getCurrent() {
+        return this.getState().current;
     }
 
-    public setTheme(id: UniqueId) {
-        this.setState({
-            current: id,
+    public getAll() {
+        return this.getState().data;
+    }
+
+    public getCurrentTheme() {
+        return this.get(this.getCurrent());
+    }
+
+    public setCurrent(id: UniqueId) {
+        this.dispatch((draft) => {
+            draft.current = id;
         });
-        this.applyColorTheme();
+        this.applyColorTheme(id);
     }
 
     public getColorThemeMode() {
-        const theme = this.getColorTheme();
+        const theme = this.getCurrentTheme();
         if (!theme) return ColorScheme.DARK;
         const { colors, type } = theme;
 
@@ -202,10 +150,6 @@ export class ColorThemeService extends BaseService<ColorThemeModel> implements I
 
         // Default dark
         return ColorScheme.DARK;
-    }
-
-    public getThemes() {
-        return this.getState().themes;
     }
 
     public reset() {

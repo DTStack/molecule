@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import type { EditorGroupModel } from 'mo/models/editor';
-import { EditorTreeEvent, EditorTreeModel, IEditorTree } from 'mo/models/editorTree';
+import { EditorTreeEvent, EditorTreeModel } from 'mo/models/editorTree';
 import type {
     ArraylizeOrSingle,
     ContextMenuGroupHandler,
@@ -14,27 +14,8 @@ import { arraylize, searchById } from 'mo/utils';
 
 type ContextMenuType = ContextMenuWithItemHandler<[group: EditorGroupModel, tab?: IEditorTab<any>]>;
 
-export interface IEditorTreeService extends BaseService<IEditorTree> {
-    addToolbar(toolbar: ArraylizeOrSingle<IMenuItemProps>): void;
-    updateToolbar(toolbar: RequiredId<IMenuItemProps>): void;
-    getToolbar(id: UniqueId): IMenuItemProps | undefined;
-    removeToolbar(id: UniqueId): void;
-    /**
-     * Callback for close tab in this group
-     */
-    onClose(callback: (tabId: UniqueId, groupId: UniqueId) => void): void;
-    /**
-     * Callback for select tab in this group
-     * @param callback
-     */
-    onSelect(callback: (tabId: UniqueId, groupId: UniqueId) => void): void;
-    onGroupClick(callback: (groupId: UniqueId) => void): void;
-    onContextMenu(callback: ContextMenuType): void;
-    onToolbarClick(callback: ContextMenuGroupHandler): void;
-}
-
-export class EditorTreeService extends BaseService<IEditorTree> implements IEditorTreeService {
-    protected state: IEditorTree;
+export class EditorTreeService extends BaseService<EditorTreeModel> {
+    protected state: EditorTreeModel;
 
     constructor() {
         super('editorTree');
@@ -46,22 +27,25 @@ export class EditorTreeService extends BaseService<IEditorTree> implements IEdit
     }
 
     public addToolbar(toolbar: ArraylizeOrSingle<IMenuItemProps>) {
-        const toolbars = arraylize(toolbar);
-        this.setState((prev) => ({ ...prev, toolbar: [...prev.toolbar, ...toolbars] }));
+        this.dispatch((draft) => {
+            draft.toolbar.push(...arraylize(toolbar));
+        });
     }
 
     public updateToolbar(toolbar: RequiredId<IMenuItemProps>) {
-        this.setState((prev) => {
-            const target = this.getToolbar(toolbar.id);
+        this.dispatch((draft) => {
+            const target = draft.toolbar.find(searchById(toolbar.id));
             if (target) {
                 Object.assign(target, toolbar);
             }
-            return { ...prev };
         });
     }
 
     public removeToolbar(id: UniqueId): void {
-        this.setState((prev) => ({ ...prev, toolbar: prev.toolbar.filter((t) => t.id !== id) }));
+        this.dispatch((draft) => {
+            const idx = draft.toolbar.findIndex(searchById(id));
+            if (idx !== -1) draft.toolbar.splice(idx, 1);
+        });
     }
 
     // ===================== Subscriptions =====================

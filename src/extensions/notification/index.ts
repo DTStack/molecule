@@ -5,7 +5,7 @@ export const ExtendsNotification: IExtension = {
     name: 'Extend The Default Notification',
     activate: function (molecule): void {
         molecule.notification.onClick(() => {
-            molecule.notification.setNotificationVisibility((visible) => !visible);
+            molecule.layout.setNotification((visible) => !visible);
         });
 
         molecule.notification.onCloseNotification((item) => {
@@ -13,7 +13,7 @@ export const ExtendsNotification: IExtension = {
         });
 
         molecule.notification.toggleNotifications(() => {
-            molecule.notification.setNotificationVisibility((visible) => !visible);
+            molecule.layout.setNotification((visible) => !visible);
         });
 
         molecule.notification.onActionBarClick((item) => {
@@ -24,7 +24,7 @@ export const ExtendsNotification: IExtension = {
             if (action === NOTIFICATION_TOOLBAR_CLEAR_ALL) {
                 molecule.notification.clear();
             } else if (action === NOTIFICATION_TOOLBAR_HIDE) {
-                molecule.notification.setNotificationVisibility((visible) => !visible);
+                molecule.layout.setNotification((visible) => !visible);
             }
         });
     },

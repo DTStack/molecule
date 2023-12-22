@@ -19,17 +19,7 @@ export enum FolderTreeEvent {
     onDragEnd = 'folderTree.onDragEnd',
 }
 
-export interface IFolderTree {
-    data: TreeNodeModel<any>[];
-    editing?: UniqueId;
-    current?: UniqueId;
-    expandedKeys?: UniqueId[];
-    loadingKeys: UniqueId[];
-    entry?: React.ReactNode;
-    validateInfo?: InputValidateInfo;
-}
-
-export class FolderTreeModel implements IFolderTree {
+export class FolderTreeModel {
     constructor(
         public data: TreeNodeModel<any>[] = [],
         public loadingKeys: UniqueId[] = [],

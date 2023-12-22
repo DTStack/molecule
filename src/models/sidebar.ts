@@ -9,16 +9,10 @@ export interface ISidebarPane extends RenderProps<void>, IItemProps {
     toolbar?: IMenuItemProps[];
 }
 
-export interface ISidebar {
-    current: UniqueId;
-    panes: ISidebarPane[];
-    loading: boolean;
-}
-
-export class SidebarModel implements ISidebar {
+export class SidebarModel {
     constructor(
-        public panes: ISidebarPane[] = [],
-        public current: UniqueId = '',
-        public loading: boolean = false
+        public data: ISidebarPane[] = [],
+        public loading: boolean = false,
+        public current?: UniqueId
     ) {}
 }

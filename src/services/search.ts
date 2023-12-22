@@ -1,98 +1,76 @@
 import { BaseService } from 'mo/glue';
-import { ISearchProps, SearchEvent, SearchModel } from 'mo/models/search';
-import type { SearchResultItem, UniqueId } from 'mo/types';
-import { inject, injectable } from 'tsyringe';
-
-import { BuiltinService } from './builtin';
-
-export interface ISearchService extends BaseService<SearchModel> {
-    /**
-     * Set information about validate
-     * @param message - If provided a string, molecule will set it status as `info`
-     */
-    setValidateInfo: (message: string | ISearchProps['validateInfo']) => void;
-    /**
-     * Set value for search input
-     */
-    setValue: (value?: string) => void;
-    /**
-     * Set status for result is tree
-     */
-    setResultIsTree: (isTree: boolean) => void;
-    /**
-     * Set result data for search
-     */
-    setResult: (resultData?: SearchResultItem[]) => void;
-    /**
-     * Set result tree expand keys
-     */
-    setExpandKeys: (expandKeys: UniqueId[]) => void;
-    toggleExpandedKey: (expandedKey: UniqueId) => void;
-    /**
-     * Reset the search input and result data
-     */
-    reset(): void;
-    /**
-     * Listen to the event about the search value
-     */
-    onChange(callback: (value: string) => void): void;
-    /**
-     * Listen to the event about going to search result via values
-     */
-    onSearch(callback: (value: string) => void): void;
-    onSelect(callback: (treeNode: SearchResultItem) => void): void;
-    // /**
-    //  * Listen to the click event in result data
-    //  */
-    // onResultClick(callback: (item: SearchResultItem) => void): void;
-}
+import { SearchEvent, SearchModel } from 'mo/models/search';
+import type { InputValidateInfo, SearchResultItem, UniqueId } from 'mo/types';
+import { injectable } from 'tsyringe';
 
 @injectable()
-export class SearchService extends BaseService<SearchModel> implements ISearchService {
+export class SearchService extends BaseService<SearchModel> {
     protected state: SearchModel;
 
-    constructor(@inject('builtin') private builtin: BuiltinService) {
+    constructor() {
         super('search');
         this.state = new SearchModel();
     }
 
-    public setValidateInfo(message: string | ISearchProps['validateInfo']) {
-        this.setState({
-            validateInfo: typeof message === 'string' ? { status: 'info', message } : message,
+    public getValue() {
+        return this.getState().value;
+    }
+
+    public getExpandedKeys() {
+        return this.getState().expandedKeys;
+    }
+
+    public setValue(value: string) {
+        this.dispatch((draft) => {
+            draft.value = value;
         });
     }
 
-    public setValue(value?: string) {
-        this.setState({
-            value,
+    public setValidateInfo(message: string | InputValidateInfo) {
+        this.dispatch((draft) => {
+            draft.validateInfo =
+                typeof message === 'string' ? { status: 'info', message } : message;
         });
     }
 
     public setResultIsTree(resultIsTree: boolean) {
-        this.setState({
-            resultIsTree,
+        this.dispatch((draft) => {
+            draft.resultIsTree = resultIsTree;
         });
     }
 
     public setResult(resultData?: SearchResultItem[]) {
-        this.setState({
-            result: resultData || [],
+        this.dispatch((draft) => {
+            draft.result = resultData || [];
         });
     }
 
-    public setExpandKeys(expandKeys: UniqueId[]) {
-        this.setState({
-            expandKeys,
+    public setExpandedKeys(expandedKeys: UniqueId[]) {
+        this.dispatch((draft) => {
+            draft.expandedKeys = expandedKeys;
+        });
+    }
+
+    public addExpandedKeys(expandedKeys: UniqueId[]) {
+        this.dispatch((draft) => {
+            draft.expandedKeys.push(...expandedKeys);
+        });
+    }
+
+    public removeExpandedKeys(expandedKey: UniqueId) {
+        this.dispatch((draft) => {
+            const idx = draft.expandedKeys.indexOf(expandedKey);
+            if (idx === -1) return;
+            draft.expandedKeys.splice(idx, 1);
         });
     }
 
     public toggleExpandedKey(expandedKey: UniqueId) {
-        this.setState((prev) => ({
-            ...prev,
-            expandKeys: prev.expandKeys.includes(expandedKey)
-                ? prev.expandKeys.filter((key) => key !== expandedKey)
-                : [...prev.expandKeys, expandedKey],
-        }));
+        if (this.getExpandedKeys().includes(expandedKey)) {
+            this.removeExpandedKeys(expandedKey);
+        } else {
+            this.addExpandedKeys([expandedKey]);
+        }
     }
 
     public reset() {

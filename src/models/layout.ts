@@ -1,39 +1,26 @@
-import { Direction, type DirectionLiteral, type WithHiddenProperty } from 'mo/types';
-
-export enum Position {
-    left = 'left',
-    right = 'right',
-}
-export type PositionLiteral = keyof typeof Position;
+import { Direction, DirectionLiteral, type WithHiddenProperty } from 'mo/types';
 
 export enum LayoutEvents {
     OnWorkbenchDidMount = 'workbench.didMount',
 }
 
-export interface ILayout {
-    splitPanePos: (number | string)[];
-    horizontalSplitPanePos: (number | string)[];
-    activityBar: WithHiddenProperty<void>;
-    auxiliaryBar: WithHiddenProperty<void>;
-    panel: WithHiddenProperty<{ panelMaximized: boolean }>;
-    statusBar: WithHiddenProperty<void>;
-    sidebar: WithHiddenProperty<{ position: PositionLiteral }>;
-    menuBar: WithHiddenProperty<void>;
-    groupSplitPos: (number | string)[];
-    editorGroupDirection: DirectionLiteral;
-}
+type PosType = string | number;
 
-export class LayoutModel implements ILayout {
+export class LayoutModel {
     constructor(
-        public splitPanePos: (number | string)[] = [300, 'auto', 300],
-        public horizontalSplitPanePos = ['auto', '230px'],
-        public groupSplitPos = [],
-        public activityBar = { hidden: false },
-        public auxiliaryBar = { hidden: true },
-        public panel = { hidden: false, panelMaximized: false },
-        public statusBar = { hidden: false },
-        public sidebar = { hidden: false, position: Position.left },
-        public menuBar = { hidden: false },
-        public editorGroupDirection = Direction.vertical
+        public splitPanePos: PosType[] = [300, 'auto', 300],
+        public horizontalSplitPanePos: PosType[] = ['auto', '230px'],
+        public groupSplitPos: PosType[] = [],
+        public activityBar: WithHiddenProperty<void> = { hidden: false },
+        public auxiliaryBar: WithHiddenProperty<void> = { hidden: true },
+        public panel: WithHiddenProperty<{ panelMaximized: boolean }> = {
+            hidden: false,
+            panelMaximized: false,
+        },
+        public statusBar: WithHiddenProperty<void> = { hidden: false },
+        public sidebar: WithHiddenProperty<void> = { hidden: false },
+        public menuBar: WithHiddenProperty<void> = { hidden: false },
+        public notification: WithHiddenProperty<void> = { hidden: true },
+        public editorDirection: DirectionLiteral = Direction.vertical
     ) {}
 }

@@ -1,3 +1,4 @@
+import { immerable } from 'immer';
 import { FileTypeLiteral, type TreeModel, type UniqueId } from 'mo/types';
 
 interface TreeModelNode<T extends TreeModel<T>> {
@@ -39,6 +40,7 @@ export class TreeHelper<T extends TreeModel<any>> {
 }
 
 export class TreeNodeModel<T> {
+    [immerable] = true;
     constructor(
         /**
          * The unique id in tree node

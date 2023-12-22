@@ -29,10 +29,11 @@ export class ExplorerController extends BaseController implements IExplorerContr
         const { EXPLORER_ITEM } = this.builtin.getModules();
         if (EXPLORER_ITEM) {
             this.activitybar.add(EXPLORER_ITEM, true);
-            this.sidebar.add(
-                { ...EXPLORER_ITEM, render: () => React.createElement(Explorer, { ...this }) },
-                true
-            );
+            this.sidebar.add({
+                ...EXPLORER_ITEM,
+                render: () => React.createElement(Explorer, { ...this }),
+            });
+            this.sidebar.setCurrent(EXPLORER_ITEM.id);
         }
     }
 

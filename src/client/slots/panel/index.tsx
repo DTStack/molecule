@@ -30,7 +30,7 @@ export default function Panel({
                     extra={
                         <Prevent>
                             <ActionBar data={currentPane?.toolbar || []} onClick={onToolbarClick} />
-                            <ActionBar data={panel.toolbars} onClick={onToolbarClick} />
+                            <ActionBar data={panel.toolbar} onClick={onToolbarClick} />
                         </Prevent>
                     }
                 >

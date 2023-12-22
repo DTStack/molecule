@@ -8,9 +8,6 @@ export enum MenuBarEvent {
     onContextMenu = 'menuBar.onContextMenu',
 }
 
-export interface IMenuBar {
-    data: IMenuItemProps[];
-}
-export class MenuBarModel implements IMenuBar {
+export class MenuBarModel {
     constructor(public data: IMenuItemProps[] = []) {}
 }

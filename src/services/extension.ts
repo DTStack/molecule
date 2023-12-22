@@ -1,14 +1,14 @@
 import { BaseService } from 'mo/glue';
 import { ExtensionModel } from 'mo/models/extension';
-import type { ILocale } from 'mo/models/locale';
 import {
+    ArraylizeOrSingle,
     type IContribute,
     IContributeType,
     type IExtension,
     type IMoleculeContext,
     type UniqueId,
 } from 'mo/types';
-import { searchById } from 'mo/utils';
+import { arraylize, searchById } from 'mo/utils';
 import { inject, injectable } from 'tsyringe';
 
 import type { ActionService } from './action';
@@ -33,56 +33,8 @@ import type { SettingsService } from './setting';
 import type { SidebarService } from './sidebar';
 import type { StatusBarService } from './statusBar';
 
-export interface IExtensionService {
-    /**
-     * Add the extensions to ExtensionService
-     * @param extensions The Extensions wait to added
-     */
-    add(extensions: IExtension[]): void;
-    /**
-     * Get an extension by the ID
-     * @param id The extension ID
-     */
-    getExtension(id: UniqueId): IExtension | undefined;
-    /**
-     * Get All extensions
-     * @return Extension Array
-     */
-    getAllExtensions(): IExtension[];
-    /**
-     * Dispose the specific extension, and remove it from the ExtensionService
-     * @param extensionId The extension id is required
-     */
-    dispose(extensionId: UniqueId): void;
-    /**
-     * Dispose all extensions, and reset the ExtensionService
-     */
-    disposeAll(): void;
-    /**
-     * Disable to activate some extensions, make use of it to filter some
-     * extensions no need to activate. You need register the inactive event before the MoleculeProvider declaration.
-     * @example
-     * ```ts
-     *  molecule.extension.inactive((extension: IExtension) => {
-     *      if (/^(idA|idB)$/.test(extension.id)) {
-     *          return true;
-     *      }
-     *  });
-     *  <MoleculeProvider extensions={[]}></MoleculeProvider>
-     * ```
-     * @param predicate The predicate function
-     */
-    inactive(predicate: (extension: IExtension) => boolean): void;
-    load(): void;
-    activate(): void;
-    /**
-     * Reset the extensions to `[]`
-     */
-    reset(): void;
-}
-
 @injectable()
-export class ExtensionService extends BaseService<ExtensionModel> implements IExtensionService {
+export class ExtensionService extends BaseService<ExtensionModel> {
     protected state: ExtensionModel;
     private _predicate: (extension: IExtension) => boolean = () => true;
     constructor(
@@ -145,34 +97,26 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
         );
     }
 
-    public getExtension(id: UniqueId): IExtension | undefined {
-        return this.getState().data.find(searchById(id));
+    public get(id: UniqueId) {
+        return this.getAll().find(searchById(id));
     }
 
-    public reset(): void {
-        this.setState(new ExtensionModel());
-    }
-
-    public getAllExtensions(): IExtension[] {
-        return this.getState().data.concat();
+    public getAll(): IExtension[] {
+        return this.getState().data;
     }
 
     public inactive(predicate: (extension: IExtension) => boolean): void {
         this._predicate = predicate;
     }
 
-    public add(extensions: IExtension[]): void {
-        if (!Array.isArray(extensions)) return;
-
-        // Adding extensions into state
-        this.setState((prev) => ({
-            ...prev,
-            data: [...prev.data, ...extensions],
-        }));
+    public add(extensions: ArraylizeOrSingle<IExtension>): void {
+        this.dispatch((draft) => {
+            draft.data.push(...arraylize(extensions));
+        });
     }
 
     public load() {
-        const extensions = this.getAllExtensions();
+        const extensions = this.getAll();
         if (!Array.isArray(extensions)) return;
 
         extensions.filter(this._predicate).forEach((extension) => {
@@ -185,7 +129,7 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
     }
 
     public activate() {
-        const extensions = this.getAllExtensions();
+        const extensions = this.getAll();
         if (!Array.isArray(extensions)) return;
 
         const ctx = this.getContext();
@@ -202,13 +146,13 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
                 case IContributeType.Themes: {
                     const themes = contributes[type];
                     if (!Array.isArray(themes)) return;
-                    this.colorTheme.addThemes(themes);
+                    this.colorTheme.add(themes);
                     break;
                 }
                 case IContributeType.Languages: {
-                    const locales: ILocale[] | undefined = contributes[type];
+                    const locales = contributes[type];
                     if (!Array.isArray(locales)) return;
-                    this.locale.addLocales(locales);
+                    this.locale.add(locales);
                     break;
                 }
                 case IContributeType.Commands: {
@@ -217,28 +161,35 @@ export class ExtensionService extends BaseService<ExtensionModel> implements IEx
                     commands.forEach((command) => this.action.registerAction(command));
                     break;
                 }
+                default:
+                    break;
             }
         });
     }
 
     public dispose(extensionId: UniqueId): void {
         const ctx = this.getContext();
-        const extension = this.getExtension(extensionId);
+        const extension = this.get(extensionId);
         if (extension) {
             extension.dispose?.(ctx);
-            this.setState((prev) => ({
-                ...prev,
-                data: prev.data.filter((ext) => ext !== extension),
-            }));
+            this.dispatch((draft) => {
+                const idx = draft.data.findIndex(searchById(extensionId));
+                if (idx === -1) return;
+                draft.data.splice(idx, 1);
+            });
         }
     }
 
     public disposeAll() {
-        const extensions = this.getAllExtensions();
+        const extensions = this.getAll();
         extensions.forEach((ext) => {
             const ctx = this.getContext();
             ext.dispose?.(ctx);
         });
         this.reset();
+    }
+
+    public reset(): void {
+        this.setState(new ExtensionModel());
     }
 }

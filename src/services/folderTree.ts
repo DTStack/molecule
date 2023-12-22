@@ -1,132 +1,23 @@
+import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
 import {
     ContextMenuWithItemHandler,
     FileTypes,
     FocusEventHandler,
-    type FolderTreeInsertOption,
     type IMenuItemProps,
     InputValidateInfo,
     type KeyboardEventHandler,
+    Predict,
     type RequiredId,
     type UniqueId,
 } from 'mo/types';
-import logger from 'mo/utils/logger';
+import { searchById } from 'mo/utils';
 import { TreeHelper, TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
 
-export interface IFolderTreeService extends BaseService<FolderTreeModel> {
-    /**
-     * Reset the FolderTreeService state
-     */
-    reset(): void;
-    /**
-     * Add data into folder tree
-     * @param data
-     * @param id - Except adding a root folder, the id is required
-     */
-    add(data: TreeNodeModel<any>, id?: UniqueId): void;
-    /**
-     * Remove specific data in folder tree
-     * @param id
-     */
-    remove(id: UniqueId): void;
-    /**
-     * Update specific data in folder tree
-     * @param data - The `id` property is required in data
-     */
-    update<T>(data: RequiredId<TreeNodeModel<T>>): void;
-    /**
-     * Get specific data in folder tree
-     * @param id
-     */
-    get<T>(id: UniqueId): TreeNodeModel<T> | undefined;
-    /**
-     * get the current treeNode's parentNode
-     * @param id
-     */
-    getParentNode<T>(id: UniqueId): TreeNodeModel<T> | undefined;
-    setValidateInfo: (message: string | InputValidateInfo) => void;
-    /**
-     * Active specific node,
-     * or unactive any node in folder tree
-     * @param id
-     */
-    setActive(id?: UniqueId): void;
-    /**
-     * Set a entry page for folder tree
-     * @param entry
-     */
-    setEntry(entry: React.ReactNode): void;
-    /**
-     * Set editing FolderTree item
-     * @param id itemId
-     */
-    setEditing: (id?: UniqueId) => void;
-    addLoading: (id: UniqueId) => void;
-    removeLoading: (id: UniqueId) => void;
-    addExpanded: (id: UniqueId) => void;
-    removeExpanded: (id: UniqueId) => void;
-    toggleExpanded: (id: UniqueId) => void;
-    /**
-     * update data when drop tree
-     * @param source dragNode
-     * @param target dropNode
-     */
-    drop: (sourceId: UniqueId, targetId: UniqueId) => void;
-    /**
-     * Listen to event about onKeyDown file item
-     * @params callback
-     */
-    onKeyDown(callback: KeyboardEventHandler<HTMLElement>): void;
-    /**
-     * Listen to event about clicking rename button
-     * @param callback
-     */
-    onRename(callback: (ele: HTMLTextAreaElement, treeNode: TreeNodeModel<any>) => void): void;
-    /**
-     * Listen to remove a node
-     * @param callback
-     */
-    onRemove(callback: (id: UniqueId) => void): void;
-    onSelect(callback: (treeNode: TreeNodeModel<any>) => void): void;
-
-    onContextMenu(callback: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>): void;
-    /**
-     * Listen to the click event about the context menu except for built-in menus
-     * @param callback
-     */
-    onContextMenuClick(
-        callback: (item: IMenuItemProps, treeNode: TreeNodeModel<any>) => void
-    ): void;
-    /**
-     * Callback for expanding tree node
-     * @param callback
-     */
-    onExpand(
-        callback: (expanded: boolean, expandKeys: UniqueId[], treeNode: TreeNodeModel<any>) => void
-    ): void;
-    /**
-     * Callback of the Add Button when data is none
-     */
-    onCreateRoot: (callback: (e: React.MouseEvent<Element, MouseEvent>) => void) => void;
-    onUpdate: <T>(callback: (data: RequiredId<TreeNodeModel<T>>) => void) => void;
-    onBlur: (callback: FocusEventHandler<HTMLElement>) => void;
-    onLoad: (callback: (id: UniqueId) => void) => void;
-    onDragStart: (callback: (source: TreeNodeModel<any>) => void) => void;
-    onDragOver: (
-        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
-    ) => void;
-    onDragEnd: (callback: (source: TreeNodeModel<any>) => void) => void;
-    /**
-     * Listen to drop event
-     * @param treeData
-     */
-    onDrop(callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void): void;
-}
-
 @injectable()
-export class FolderTreeService extends BaseService<FolderTreeModel> implements IFolderTreeService {
+export class FolderTreeService extends BaseService<FolderTreeModel> {
     protected state: FolderTreeModel;
 
     constructor() {
@@ -134,136 +25,18 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         this.state = new FolderTreeModel();
     }
 
-    public reset() {
-        this.setState(new FolderTreeModel());
-    }
-
-    public addLoading: (id: UniqueId) => void = (id) => {
-        this.setState((prev) => ({
-            ...prev,
-            loadingKeys: [...prev.loadingKeys, id],
-        }));
-    };
-
-    public removeLoading: (id: UniqueId) => void = (id) => {
-        this.setState((prev) => ({
-            ...prev,
-            loadingKeys: prev.loadingKeys.filter((i) => i !== id),
-        }));
-    };
-
-    public getParentNode<T>(id: UniqueId): TreeNodeModel<T> | undefined {
-        const { data } = this.getState();
-        const helper = new TreeHelper(data);
-        const parent = helper.getParent(id);
-        return parent;
-    }
-
-    private addRootFolder(data: TreeNodeModel<any>) {
-        if (this.getState().data?.length) {
-            // if root folder exists, then do nothing
-            return;
-        }
-        this.setState({
-            data: [data],
+    public addLoading(id: UniqueId) {
+        this.dispatch((draft) => {
+            draft.loadingKeys.push(id);
         });
     }
 
-    public add(data: TreeNodeModel<any>, id?: UniqueId, opts?: FolderTreeInsertOption): void {
-        const isRootFolder = data.fileType === FileTypes.RootFolder;
-
-        if (isRootFolder) {
-            this.addRootFolder(data);
-            return;
-        }
-        if (!id && id !== 0) throw new Error('File node or folder node both need id');
-
-        const treeHelper = new TreeHelper(this.getState().data);
-        const target = treeHelper.getNode(id);
-        if (!opts?.gap) {
-            // same level
-            const targetParent = treeHelper.getParent(id);
-            if (!targetParent) {
-                logger.error('Please check id again, there is not folder tree');
-                return;
-            }
-            targetParent.children ??= [];
-            if (!Object.hasOwn(opts || {}, 'index')) {
-                targetParent.children.push(data);
-            } else {
-                targetParent.children.splice(opts?.index || 0, 0, data);
-            }
-        } else {
-            // child level
-            if (target?.fileType === FileTypes.File) {
-                throw new Error('File node can not use Folder');
-            }
-            if (target) {
-                target.children ??= [];
-            }
-            if (!Object.hasOwn(opts || {}, 'index')) {
-                target?.children?.push(data);
-            } else {
-                target?.children?.splice(opts?.index || 0, 0, data);
-            }
-        }
-        this.setState((prev) => ({
-            ...prev,
-            data: [...prev.data],
-        }));
-    }
-
-    public remove(id: UniqueId) {
-        if (!this.getState().data.length) {
-            logger.error(`There is unable to find a tree node whose id is ${id}`);
-            return;
-        }
-        const treeHelper = new TreeHelper(this.getState().data);
-        const parent = treeHelper.getParent(id);
-        const node = treeHelper.getNode(id);
-        if (!node) {
-            logger.error(`There is unable to find a tree node whose id is ${id}`);
-            return;
-        }
-        if (!parent) {
-            logger.error("You Can't remove a root folder");
-            return;
-        }
-        parent.children = parent.children?.filter((i) => i !== node) || [];
-        this.setState((prev) => ({
-            ...prev,
-            data: [...prev.data],
-        }));
-    }
-
-    public update(data: RequiredId<TreeNodeModel<any>>) {
-        const target = this.get(data.id);
-        if (!target) {
-            logger.error(`There is unable to find a tree node whose id is ${data.id}`);
-            return;
-        }
-        Object.assign(target, data);
-        this.setState((prev) => ({
-            ...prev,
-            data: [...prev.data],
-        }));
-
-        // ===================== effects =====================
-        this.emit(FolderTreeEvent.onUpdate, data);
-    }
-
-    public drop(sourceId: UniqueId, targetId: UniqueId) {
-        const source = this.get(sourceId);
-        if (!source) return;
-        const target = this.get(targetId);
-        if (!target || target.fileType === FileTypes.File) return;
-        /**
-         * 1. Remove source node.
-         * 2. Create new source node, before target.
-         * Required first remove node, and then add node.
-         */
-        this.remove(sourceId);
-        this.add(source, target?.id, { gap: true });
+    public removeLoading(id: UniqueId) {
+        this.dispatch((draft) => {
+            const idx = draft.loadingKeys.indexOf(id);
+            if (idx === -1) return;
+            draft.loadingKeys.splice(idx, 1);
+        });
     }
 
     public get(id: UniqueId) {
@@ -272,26 +45,104 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
         return treeHelper.getNode(id);
     }
 
-    public setActive(id?: UniqueId) {
-        this.setState({
-            current: id,
+    public getParentNode<T>(id: UniqueId): TreeNodeModel<T> | undefined {
+        if (!this.getState().data.length) return;
+        const treeHelper = new TreeHelper(this.getState().data);
+        return treeHelper.getParent(id);
+    }
+
+    private addRootFolder(data: TreeNodeModel<any>) {
+        this.dispatch((draft) => {
+            if (draft.data?.length) return;
+            draft.data = [data];
         });
     }
 
+    public add(data: TreeNodeModel<any>, id?: UniqueId): void {
+        const isRootFolder = data.fileType === FileTypes.RootFolder;
+
+        if (isRootFolder) {
+            this.addRootFolder(data);
+            return;
+        }
+        if (isUndefined(id)) throw new Error('File node or folder node both need id');
+        this.dispatch((draft) => {
+            const treeHelper = new TreeHelper(draft.data);
+            const target = treeHelper.getNode(id);
+            if (!target) return;
+            target.children ??= [];
+            target.children.push(data);
+        });
+    }
+
+    public remove(id: UniqueId) {
+        this.dispatch((draft) => {
+            const treeHelper = new TreeHelper(draft.data);
+            const parent = treeHelper.getParent(id);
+            const idx = parent?.children?.findIndex(searchById(id));
+            if (idx === undefined || idx === -1) return;
+            parent?.children?.splice(idx, 1);
+        });
+    }
+
+    public update<T>(id: UniqueId, predict: Predict<TreeNodeModel<T>>): void;
+    public update<T>(data: RequiredId<TreeNodeModel<T>>): void;
+    public update<T>(
+        item: UniqueId | RequiredId<TreeNodeModel<any>>,
+        predict?: Predict<TreeNodeModel<T>>
+    ) {
+        this.dispatch((draft) => {
+            const treeHelper = new TreeHelper(draft.data);
+            const node = treeHelper.getNode(typeof item === 'object' ? item.id : item);
+            if (!node) return;
+            Object.assign(node, typeof item === 'object' ? item : predict?.(node));
+        });
+
+        // ===================== effects =====================
+        this.emit(FolderTreeEvent.onUpdate, this.get(typeof item === 'object' ? item.id : item));
+    }
+
+    public drop(sourceId: UniqueId, targetId: UniqueId) {
+        const source = this.get(sourceId);
+        if (!source) return;
+        const target = this.get(targetId);
+        // ONLY Support drop source node into a folder.
+        if (!target || target.fileType === FileTypes.File) return;
+        /**
+         * 1. Remove source node.
+         * 2. Create new source node, before target.
+         * Required first remove node, and then add node.
+         */
+        this.remove(sourceId);
+        this.add(source, target.id);
+    }
+
+    public setCurrent(id?: UniqueId) {
+        this.dispatch((draft) => {
+            draft.current = id;
+        });
+    }
+
+    public getExpanded() {
+        return this.getState().expandedKeys;
+    }
+
     public addExpanded(id: UniqueId) {
-        this.setState((prev) => ({
-            expandedKeys: [...prev.expandedKeys, id],
-        }));
+        this.dispatch((draft) => {
+            draft.expandedKeys.push(id);
+        });
     }
 
     public removeExpanded(id: UniqueId) {
-        this.setState((prev) => ({
-            expandedKeys: prev.expandedKeys.filter((i) => i !== id),
-        }));
+        this.dispatch((draft) => {
+            const idx = draft.expandedKeys.indexOf(id);
+            if (idx === -1) return;
+            draft.expandedKeys.splice(idx, 1);
+        });
     }
 
     public toggleExpanded(id: UniqueId) {
-        if (this.getState().expandedKeys.includes(id)) {
+        if (this.getExpanded().includes(id)) {
             this.removeExpanded(id);
         } else {
             this.addExpanded(id);
@@ -299,19 +150,26 @@ export class FolderTreeService extends BaseService<FolderTreeModel> implements I
     }
 
     public setValidateInfo(message?: string | InputValidateInfo) {
-        this.setState({
-            validateInfo: typeof message === 'string' ? { status: 'info', message } : message,
+        this.dispatch((draft) => {
+            draft.validateInfo =
+                typeof message === 'string' ? { status: 'info', message } : message;
         });
     }
 
     public setEntry(entry: React.ReactNode) {
-        this.setState({
-            entry,
+        this.dispatch((draft) => {
+            draft.entry = entry;
         });
     }
 
     public setEditing(id?: UniqueId) {
-        this.setState({ editing: id });
+        this.dispatch((draft) => {
+            draft.editing = id;
+        });
+    }
+
+    public reset() {
+        this.setState(new FolderTreeModel());
     }
 
     // ===================== Subscriptions =====================

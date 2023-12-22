@@ -1,164 +1,75 @@
-import { intersection } from 'lodash-es';
+import { isUndefined } from 'lodash-es';
 import { APP_PREFIX } from 'mo/const';
 import { BaseService } from 'mo/glue';
-import { type ILocale, type ILocaleModel, LocaleModel, LocalizationEvent } from 'mo/models/locale';
-import type { Localize, UniqueId } from 'mo/types';
-import { searchById } from 'mo/utils';
-import logger from 'mo/utils/logger';
+import { type ILocale, LocaleModel, LocalizationEvent } from 'mo/models/locale';
+import type { ArraylizeOrSingle, Localize, UniqueId } from 'mo/types';
+import { arraylize, getPrevOrNext, searchById } from 'mo/utils';
 import { setValue } from 'mo/utils/storage';
 
-export interface ILocaleService {
-    /**
-     * Set the current locale language by id
-     * @param id
-     */
-    setCurrentLocale(id: UniqueId): boolean;
-    /**
-     * Get the current locale language
-     */
-    getCurrentLocale(): ILocale | undefined;
-    /**
-     * Get All locale languages
-     */
-    getLocales(): ILocale[];
-    /**
-     * Get a locale language by the id
-     * @param id
-     */
-    getLocale(id: UniqueId): ILocale | undefined;
-    /**
-     * Add multiple local languages
-     * @param locales
-     */
-    addLocales(locales: ILocale[]): void;
-    /**
-     * Remove a locale language by the id
-     * @param id
-     */
-    removeLocale(id: UniqueId): ILocale | undefined;
-    /**
-     * Returns the international text located by source key，or the default value if it is not find
-     * For examples:
-     * ```ts
-     * localize('id','default value'); // hello ${i}, ${i}
-     * localize('id','default value', 'world'); // hello world, ${i}
-     * localize('id','default value', 'world', 'molecule'); // hello world, molecule
-     * ```
-     * @param sourceKey The key value located in the source international text
-     * @param defaultValue The default value to be used when not find the international text
-     * @param args If provided, it will used as the values to be replaced in the international text
-     * @returns
-     */
-    localize: Localize;
-    /**
-     * Listen to the local language changed event
-     * @param callback
-     */
-    onChange(callback: (prev: ILocale, next: ILocale) => void): void;
-    /**
-     * Reset the LocaleService to the initial state
-     */
-    reset(): void;
-}
-
-export const DEFAULT_LOCALE_ID = `${APP_PREFIX}.defaultLocaleId`;
-
-export class LocaleService extends BaseService<ILocaleModel> implements ILocaleService {
+export class LocaleService extends BaseService<LocaleModel> {
     public static STORE_KEY = `${APP_PREFIX}.localeId`;
     private static LOCALIZE_REPLACED_WORD = '${i}';
-    protected state: ILocaleModel;
+    protected state: LocaleModel;
 
     constructor() {
         super('locale');
         this.state = new LocaleModel();
     }
 
-    private getNextOrLastLocales(locale: ILocale) {
-        const { locales } = this.state;
-        const idx = locales.indexOf(locale);
-        if (locales.length <= 1) {
-            return undefined;
-        }
-        const next = locales[idx + 1] || locales[idx - 1];
-        return next;
+    // private getNextOrLastLocales(locale: ILocale) {
+    //     const { locales } = this.state;
+    //     const idx = locales.indexOf(locale);
+    //     if (locales.length <= 1) {
+    //         return undefined;
+    //     }
+    //     const next = locales[idx + 1] || locales[idx - 1];
+    //     return next;
+    // }
+
+    public getAll() {
+        return this.getState().data;
     }
 
-    public reset(): void {
-        this.state = new LocaleModel();
+    public get(id?: UniqueId) {
+        if (isUndefined(id)) return;
+        return this.getState().data.find(searchById(id));
     }
 
-    public getLocales() {
-        return this.state.locales;
+    public getCurrent() {
+        return this.getState().current;
     }
 
     public getCurrentLocale(): ILocale | undefined {
-        const { current } = this.state;
-        if (current === undefined) {
-            return undefined;
-        }
-        return this.getLocale(current);
+        return this.get(this.getCurrent());
     }
 
-    public getLocale(id: UniqueId): ILocale | undefined {
-        if (id === undefined) return undefined;
-        const { locales } = this.state;
-        return locales.find(searchById(id));
-    }
-
-    public removeLocale(id: UniqueId): ILocale | undefined {
-        const { locales, current } = this.getState();
-        const locale = this.getLocale(id);
-        if (locale) {
-            if (locales.length === 1) {
-                logger.warn(
-                    "You're removing the only locale, ensure that's really what you want to do"
-                );
-            }
-            const nextCurrent = current === id ? this.getNextOrLastLocales(locale)?.id : current;
-            const nextLocales = locales.filter((l) => l.id !== id);
-            this.setCurrentLocale(nextCurrent);
-            this.setState({
-                locales: nextLocales,
-            });
-            return locale;
-        }
-        return undefined;
-    }
-
-    public setCurrentLocale(id?: UniqueId): boolean {
-        const { current } = this.state;
-        if (current === id) return true;
-        if (current && id && current !== id) {
-            this.emit(LocalizationEvent.OnChange, current, id);
-        }
-        this.setState({
-            current: id,
+    public removeLocale(id: UniqueId) {
+        this.dispatch((draft) => {
+            const idx = draft.data.findIndex(searchById(id));
+            if (idx === -1) return;
+            const next = getPrevOrNext(draft.data, idx)?.id;
+            // the following condition works ONLY on there is one locale and prepared to remove it.
+            // And that's invalid. Should at least keep one locale.
+            if (isUndefined(next)) return;
+            draft.data.splice(idx, 1);
+            draft.current = next;
         });
-        if (id) {
-            setValue(LocaleService.STORE_KEY, id.toString());
-        }
-        return true;
     }
 
-    public addLocales(locales: ILocale[]): void {
-        if (Array.isArray(locales)) {
-            const duplicate = intersection(
-                locales.map((l) => l.id),
-                this.getLocales().map((l) => l.id)
-            );
-            if (duplicate.length) {
-                logger.error(`Duplicated locales for [${duplicate.join(',')}].`);
-                return;
-            }
-            this.setState((pre) => ({
-                ...pre,
-                locales: [...pre.locales, ...locales],
-            }));
-        }
+    public setCurrent(id: UniqueId) {
+        const prev = this.getCurrent();
+        this.dispatch((draft) => {
+            draft.current = id;
+        });
+        setValue(LocaleService.STORE_KEY, id.toString());
+        // ===================== effects =====================
+        this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
     }
 
-    public onChange(callback: (prev: ILocale, next: ILocale) => void): void {
-        this.subscribe(LocalizationEvent.OnChange, callback);
+    public add(locale: ArraylizeOrSingle<ILocale>): void {
+        this.dispatch((draft) => {
+            draft.data.push(...arraylize(locale));
+        });
     }
 
     public localize: Localize = (sourceKey, defaultValue = '', ...args) => {
@@ -172,4 +83,13 @@ export class LocaleService extends BaseService<ILocaleModel> implements ILocaleS
         }
         return result || defaultValue;
     };
+
+    public reset(): void {
+        this.state = new LocaleModel();
+    }
+
+    // ===================== Subscriptions =====================
+    public onChange(callback: (prev: UniqueId, next: UniqueId) => void): void {
+        this.subscribe(LocalizationEvent.onChange, callback);
+    }
 }

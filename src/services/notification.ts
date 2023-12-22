@@ -5,111 +5,56 @@ import {
     NotificationModel,
     NotificationStatus,
 } from 'mo/models/notification';
-import type { ArraylizeOrSingle, FunctionalOrSingle, RequiredId, UniqueId } from 'mo/types';
-import { arraylize, extract, searchById } from 'mo/utils';
-import logger from 'mo/utils/logger';
+import type { ArraylizeOrSingle, Predict, RequiredId, UniqueId } from 'mo/types';
+import { arraylize, searchById } from 'mo/utils';
 
-export interface INotificationService extends BaseService<NotificationModel<any>> {
-    /**
-     * Add new notification items
-     * @param items
-     */
-    add(item: ArraylizeOrSingle<INotificationItem>): void;
-    /**
-     * Remove the specific notification item by id
-     * @param id
-     */
-    remove(id: UniqueId): void;
-    /**
-     * Update the specific notification item by id
-     * @param item notification item, the id field is required
-     */
-    update(item: RequiredId<INotificationItem>): void;
-    /**
-     * Get the specific notification item by id
-     */
-    get(id: UniqueId): INotificationItem | undefined;
-    /**
-     * Toggle the visibility of the notification, returns the status of notification's `visible`
-     */
-    setNotificationVisibility(visibility: FunctionalOrSingle<boolean>): void;
-    /**
-     * Clear the notifications
-     */
-    clear(): void;
-    /**
-     * Reset notifications, this will clear the pending notifications
-     */
-    reset(): void;
-}
-
-export class NotificationService
-    extends BaseService<NotificationModel<any>>
-    implements INotificationService
-{
-    protected state: NotificationModel<any>;
+export class NotificationService extends BaseService<NotificationModel> {
+    protected state: NotificationModel;
 
     constructor() {
         super('notification');
         this.state = new NotificationModel();
     }
 
-    public setNotificationVisibility(visibility: FunctionalOrSingle<boolean>) {
-        this.setState((prev) => ({
-            ...prev,
-            visible: typeof visibility === 'function' ? visibility(prev.visible) : visibility,
-        }));
-    }
-
     public get(id: UniqueId) {
         return this.getState().data.find(searchById(id));
     }
 
-    public update(item: RequiredId<INotificationItem>) {
-        const target = this.get(item.id);
-        if (!target) {
-            logger.error('There is no notification be found, please check the id');
-            return;
-        }
-        Object.assign(target, item);
-        this.setState((prev) => ({ ...prev }));
+    public update(id: UniqueId, predict: Predict<INotificationItem>): void;
+    public update(data: RequiredId<INotificationItem>): void;
+    public update(
+        item: UniqueId | RequiredId<INotificationItem>,
+        predict?: Predict<INotificationItem>
+    ) {
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(typeof item === 'object' ? item.id : item));
+            if (!target) return;
+            Object.assign(target, typeof item === 'object' ? item : predict?.(target));
+        });
     }
 
     public remove(id: UniqueId) {
-        const { data = [] } = this.state;
-        if (!data.length) {
-            logger.error(
-                "You can't remove notification because there is no notifications in data."
-            );
-            return;
-        }
-
-        const target = this.get(id);
-        if (!target) {
-            logger.error('There is no notification be found, please check the id');
-            return;
-        }
-
-        const arrayId = arraylize(id);
-        this.setState((prev) => ({
-            ...prev,
-            data: extract(prev.data, arrayId),
-        }));
+        this.dispatch((draft) => {
+            const idx = draft.data.findIndex(searchById(id));
+            if (idx === -1) return;
+            draft.data.splice(idx, 1);
+        });
     }
 
     public add(item: ArraylizeOrSingle<INotificationItem>) {
-        const items = arraylize(item);
-        const nextItems = items.map((item) => ({
-            ...item,
-            status: NotificationStatus.WaitRead,
-        }));
-        this.setState((prev) => ({
-            data: [...prev.data, ...nextItems],
-        }));
+        this.dispatch((draft) => {
+            const nextItems = arraylize(item).map((item) => ({
+                ...item,
+                status: NotificationStatus.WaitRead,
+            }));
+            draft.data.push(...nextItems);
+        });
     }
 
     public clear() {
-        this.setState((prev) => ({ ...prev, data: [] }));
+        this.dispatch((draft) => {
+            draft.data.length = 0;
+        });
     }
 
     public reset() {

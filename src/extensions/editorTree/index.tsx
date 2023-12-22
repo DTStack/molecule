@@ -6,7 +6,7 @@ export const ExtendsEditorTree: IExtension = {
     name: 'Extend The Default Editor Tree',
     activate: function (molecule): void {
         molecule.editorTree.onSelect((tabId, groupId) => {
-            molecule.editor.setActive(tabId, groupId);
+            molecule.editor.setCurrent(tabId, groupId);
         });
 
         molecule.editorTree.onClose((tabId, groupId) => {
@@ -14,9 +14,9 @@ export const ExtendsEditorTree: IExtension = {
         });
 
         molecule.editorTree.onGroupClick((groupId) => {
-            const firstTab = molecule.editor.getGroupById(groupId)?.data.at(0);
+            const firstTab = molecule.editor.getGroup(groupId)?.data.at(0);
             if (firstTab) {
-                molecule.editor.setActive(firstTab.id, groupId);
+                molecule.editor.setCurrent(firstTab.id, groupId);
             }
         });
 
@@ -31,7 +31,7 @@ export const ExtendsEditorTree: IExtension = {
                 }
                 case EDITORTREE_TOOLBAR_SAVE_GROUP: {
                     const unsaved =
-                        molecule.editor.getGroupById(groupId)?.data?.filter((i) => i.modified) ||
+                        molecule.editor.getGroup(groupId)?.data?.filter((i) => i.modified) ||
                         [];
                     molecule.editor.saveTabs(
                         unsaved.map((tab) => tab.id),

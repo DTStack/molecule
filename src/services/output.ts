@@ -1,11 +1,7 @@
 import { BaseService } from 'mo/glue';
 import { OutputModel } from 'mo/models/output';
 
-export interface IOutputService extends BaseService<OutputModel> {
-    append: (value: string) => void;
-}
-
-export class OutputService extends BaseService<OutputModel> implements IOutputService {
+export class OutputService extends BaseService<OutputModel> {
     protected state: OutputModel;
     constructor() {
         super('output');
@@ -13,9 +9,8 @@ export class OutputService extends BaseService<OutputModel> implements IOutputSe
     }
 
     public append = (value: string) => {
-        this.setState((prev) => ({
-            ...prev,
-            value: prev.value + value,
-        }));
+        this.dispatch((draft) => {
+            draft.value += value;
+        });
     };
 }

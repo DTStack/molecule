@@ -4,107 +4,84 @@ import {
     ArraylizeOrSingle,
     ContextMenuWithItemHandler,
     IMenuItemProps,
+    Predict,
     RequiredId,
     UniqueId,
 } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
-import logger from 'mo/utils/logger';
-export interface IExplorerService extends BaseService<ExplorerModel> {
-    /**
-     * Get the specific panel
-     * @param id
-     */
-    getPanel(id: UniqueId): IExplorerPanelItem | undefined;
-    /**
-     * Add a new panel
-     */
-    addPanel(panel: ArraylizeOrSingle<IExplorerPanelItem>): void;
-    /**
-     * Update the panels data
-     */
-    updatePanel(data: RequiredId<IExplorerPanelItem>): void;
-    /**
-     * Set expanded Panels of Explore
-     */
-    setExpandedPanels(activePanelKeys: UniqueId[]): void;
-    /**
-     * Remove a panel via id
-     */
-    removePanel(id: UniqueId): void;
-    /**
-     * Toggle panel hidden
-     */
-    togglePanel(id: UniqueId, hidden?: boolean): void;
-    /**
-     * Reset the ExplorerService state, it's mainly for customizing the Explorer
-     */
-    reset(): void;
-    /**
-     * Listen to the Explorer panel toolbar click event
-     * @param callback
-     */
-    onPanelToolbarClick(callback: (toolbar: IMenuItemProps, panelId: UniqueId) => void): void;
-    onContextMenu(callback: ContextMenuWithItemHandler<[panel: IExplorerPanelItem]>): void;
-}
 
-export class ExplorerService extends BaseService<ExplorerModel> implements IExplorerService {
+export class ExplorerService extends BaseService<ExplorerModel> {
     protected state: ExplorerModel;
     constructor() {
         super('explorer');
         this.state = new ExplorerModel();
     }
 
-    public getPanel(id: UniqueId) {
-        return this.getState().data.find(searchById(id));
+    public get(id: UniqueId) {
+        return this.getAll().find(searchById(id));
     }
 
-    public setExpandedPanels(activePanelKeys: UniqueId[]) {
-        this.setState({
-            activePanelKeys,
+    public getAll() {
+        return this.getState().data;
+    }
+
+    public getActive() {
+        return this.getState().active;
+    }
+
+    public setActive(active: UniqueId[]) {
+        this.dispatch((draft) => {
+            draft.active = active;
         });
     }
 
-    public updatePanel(data: RequiredId<IExplorerPanelItem>) {
-        const target = this.getPanel(data.id);
-        if (!target) {
-            logger.error(`There is no panel found in state whose id is ${data.id}`);
-            return;
-        }
-        Object.assign(target, data);
-        this.setState((prev) => ({
-            ...prev,
-            data: prev.data,
-        }));
-    }
-
-    public addPanel(data: ArraylizeOrSingle<IExplorerPanelItem>) {
-        const next = arraylize(data).filter((item) => {
-            const panel = this.getPanel(item.id);
-            return !panel;
+    public toggleActive(panelId: UniqueId) {
+        this.dispatch((draft) => {
+            const idx = draft.active.findIndex((id) => id === panelId);
+            if (idx === -1) draft.active.push(panelId);
+            else draft.active.splice(idx, 1);
         });
-
-        this.setState((prev) => ({
-            ...prev,
-            data: [...prev.data, ...next],
-        }));
     }
 
-    public removePanel(id: UniqueId) {
-        const panel = this.getPanel(id);
-        if (panel) {
-            this.setState((prev) => ({
-                ...prev,
-                data: prev.data.filter((i) => i !== panel),
-            }));
+    public update(id: UniqueId, predict: Predict<IExplorerPanelItem>): void;
+    public update(data: RequiredId<IExplorerPanelItem>): void;
+    public update(
+        item: UniqueId | RequiredId<IExplorerPanelItem>,
+        predict?: Predict<IExplorerPanelItem>
+    ) {
+        if (typeof item === 'object') {
+            this.dispatch((draft) => {
+                const target = draft.data.find(searchById(item.id));
+                if (!target) return;
+                Object.assign(target, item);
+            });
+        } else {
+            this.dispatch((draft) => {
+                const target = draft.data.find(searchById(item));
+                if (!target) return;
+                Object.assign(target, predict?.(target));
+            });
         }
     }
 
-    // update panel hidden
+    public add(data: ArraylizeOrSingle<IExplorerPanelItem>) {
+        this.dispatch((draft) => {
+            draft.data.push(...arraylize(data));
+        });
+    }
+
+    public remove(id: UniqueId) {
+        this.dispatch((draft) => {
+            const idx = draft.data.findIndex(searchById(id));
+            if (idx === -1) return;
+            draft.data.splice(idx, 1);
+        });
+    }
+
     public togglePanel(id: UniqueId, hidden?: boolean) {
-        const panel = this.getPanel(id);
-        if (!panel) return;
-        panel.hidden = typeof hidden === 'boolean' ? hidden : !panel.hidden;
-        this.setState((prev) => ({ ...prev }));
+        this.update(id, (prev) => ({
+            hidden: typeof hidden === 'boolean' ? hidden : !prev.hidden,
+        }));
     }
 
     public reset() {

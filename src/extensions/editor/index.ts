@@ -25,21 +25,23 @@ export const ExtendsEditor: IExtension = {
             molecule.editor.closeToRight(tabId, groupId);
         });
 
-        molecule.editor.onMoveTab((props) => {
-            molecule.editor.moveTab(props);
+        molecule.editor.onDrag((dragInfo) => {
+            molecule.editor.moveTab(dragInfo);
         });
 
         molecule.editor.onChangeTab((value, ev, { tabId, groupId }) => {
-            const tab = molecule.editor.getTabById(tabId, groupId);
+            const tab = molecule.editor.getTab(tabId, groupId);
             if (!tab) return;
             molecule.editor.updateTab({ ...tab, value, modified: true }, groupId);
         });
 
         molecule.editor.onSplitEditorRight((activeTabId, groupId) => {
-            molecule.editor.cloneTab(activeTabId, groupId);
+            const tab = molecule.editor.getTab(activeTabId, groupId);
+            if (!tab) return;
+            molecule.editor.open(tab);
         });
 
-        molecule.editor.onSelectTab((tabId, groupId) => molecule.editor.setActive(tabId, groupId));
+        molecule.editor.onSelectTab((tabId, groupId) => molecule.editor.setCurrent(tabId, groupId));
 
         molecule.editor.onToolbarClick((item, groupId) => {
             const {
@@ -48,7 +50,7 @@ export const ExtendsEditor: IExtension = {
             } = molecule.builtin.getState().constants;
             switch (item.id) {
                 case EDITOR_MENU_SPLIT: {
-                    const group = molecule.editor.getGroupById(groupId);
+                    const group = molecule.editor.getGroup(groupId);
                     if (!group || !group.activeTab) return;
                     molecule.editor.emit(EditorEvent.onSplitEditorRight, group.activeTab, group.id);
                     break;
@@ -109,7 +111,7 @@ export const ExtendsEditor: IExtension = {
          * @param {editor.IStandaloneCodeEditor} instance - The code editor instance.
          */
         function updateCursorPosition(instance: editor.IStandaloneCodeEditor) {
-            const currentTab = molecule.editor.getCurrent();
+            const currentTab = molecule.editor.getCurrentTab();
             if (!currentTab?.model) return;
             if (currentTab.model === instance.getModel()) {
                 const position = instance.getPosition();

@@ -1,5 +1,5 @@
 import { BaseController } from 'mo/glue';
-import type { ILayoutService } from 'mo/services/layout';
+import type { LayoutService } from 'mo/services/layout';
 import { inject, injectable } from 'tsyringe';
 
 export interface ILayoutController {
@@ -9,7 +9,7 @@ export interface ILayoutController {
 
 @injectable()
 export class LayoutController extends BaseController implements ILayoutController {
-    constructor(@inject('layout') private layout: ILayoutService) {
+    constructor(@inject('layout') private layout: LayoutService) {
         super();
     }
 

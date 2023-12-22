@@ -24,6 +24,9 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             disabled,
         });
     };
+    const handleTest = () => {
+        molecule.activityBar.remove('testPane');
+    };
     const handleAddGlobalActivityBar = () => {
         const id = randomId();
         molecule.activityBar.add({
@@ -34,7 +37,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         });
     };
     const handleHiddenActivityBar = () => {
-        molecule.layout.setActivityBarVisibility((prev) => !prev);
+        molecule.layout.setActivityBar((prev) => !prev);
     };
     // ====================================================================
 
@@ -61,15 +64,15 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         }
     };
     const showHideStatusBar = () => {
-        molecule.layout.setStatusBarVisibility((prev) => !prev);
+        molecule.layout.setStatusBar((prev) => !prev);
     };
     // ====================================================================
 
     // ================= Menu Operation Region ====================
     const appendMenu = function () {
-        if (molecule.menuBar.getMenuById('testPane')) {
+        if (molecule.menuBar.get('testPane')) {
             const id = randomId();
-            molecule.menuBar.append(
+            molecule.menuBar.add(
                 {
                     id,
                     name: `MenuBarItem-${id}`,
@@ -84,7 +87,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         }
     };
     const removeMenu = function () {
-        const parent = molecule.menuBar.getMenuById('testPane');
+        const parent = molecule.menuBar.get('testPane');
         if (!parent) return;
         if (parent.children?.length) {
             molecule.menuBar.remove(parent.children.at(-1)!.id);
@@ -93,7 +96,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         }
     };
     const updateMenu = function () {
-        const parent = molecule.menuBar.getMenuById('testPane');
+        const parent = molecule.menuBar.get('testPane');
         if (!parent) return;
         if (!parent.children?.length) return;
         const last = parent.children.at(-1)!;
@@ -104,7 +107,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
 
     const showHideMenuBar = () => {
-        molecule.layout.setMenuBarVisibility((prev) => !prev);
+        molecule.layout.setMenuBar((prev) => !prev);
     };
     // ====================================================================
 
@@ -124,7 +127,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 ],
             },
         ];
-        molecule.explorer.addPanel(panels);
+        molecule.explorer.add(panels);
     };
     // ====================================================================
 
@@ -132,7 +135,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     const addRootFolder = () => {
         getWorkspace().then((tree) => {
             molecule.folderTree.add(tree);
-            molecule.explorer.updatePanel({
+            molecule.explorer.update({
                 id: molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
                 name: tree.name,
             });
@@ -154,13 +157,13 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
 
     const showHidePanel = () => {
-        molecule.layout.setPanelVisibility((prev) => !prev);
+        molecule.layout.setPanel((prev) => !prev);
     };
     // ====================================================================
 
     // ================= Output Operation Region ====================
     const updateOutput = () => {
-        molecule.panel.setActive(molecule.builtin.getConstants().PANEL_ITEM_OUTPUT);
+        molecule.panel.setCurrent(molecule.builtin.getConstants().PANEL_ITEM_OUTPUT);
         molecule.output.append('Number: ' + Math.random() * 10 + '\n');
     };
     // ====================================================================
@@ -197,14 +200,14 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
 
     const updateOptions = function () {
-        molecule.editor.updateEditorOptions({
-            readOnly: !molecule.editor.getState().editorOptions.readOnly,
+        molecule.editor.updateOptions({
+            readOnly: !molecule.editor.getState().options.readOnly,
         });
     };
 
     const addAction = function () {
-        if (!molecule.editor.getAction('testPane.excute')) {
-            molecule.editor.addActions([
+        if (!molecule.editor.getToolbar('testPane.excute')) {
+            molecule.editor.addToolbars([
                 {
                     id: 'testPane.excute',
                     icon: 'play',
@@ -216,15 +219,15 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
 
     const updateAction = function () {
-        if (molecule.editor.getAction('testPane.excute')) {
-            molecule.editor.updateAction({
+        if (molecule.editor.getToolbar('testPane.excute')) {
+            molecule.editor.updateToolbar({
                 id: 'testPane.excute',
                 icon: 'loading~spin',
                 disabled: true,
             });
 
             timeout.current = window.setTimeout(() => {
-                molecule.editor.updateAction({
+                molecule.editor.updateToolbar({
                     id: 'testPane.excute',
                     icon: 'play',
                     disabled: false,
@@ -284,11 +287,14 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         input.click();
     };
 
+    const toggleDirection = () => {
+        molecule.layout.updateEditorDirection((prev) =>
+            prev === 'vertical' ? 'horizontal' : 'vertical'
+        );
+    };
+
     const addNotification = function () {
-        const { visible } = molecule.notification.getState();
-        if (!visible) {
-            toggleNotification();
-        }
+        molecule.layout.setNotification(true);
         molecule.notification.add([
             {
                 id: randomId(),
@@ -305,32 +311,48 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 render: () => <LocaleNotification />,
             },
         ]);
-        if (!molecule.notification.getState().visible) {
-            toggleNotification();
-        }
+        molecule.layout.setNotification(true);
     };
 
     const removeNotification = function () {
-        const { data = [], visible } = molecule.notification.getState();
+        const { data = [] } = molecule.notification.getState();
         const lastItemId = data[data.length - 1]?.id;
-        if (!visible) {
-            toggleNotification();
-        }
+        molecule.layout.setNotification(false);
         if (lastItemId) {
             molecule.notification.remove(lastItemId);
         }
     };
 
     const toggleNotification = function () {
-        molecule.notification.setNotificationVisibility((visible) => !visible);
+        molecule.layout.setNotification((visible) => !visible);
     };
 
     // ====================================================================
 
     const updateLocale = () => {
-        molecule.locale.setCurrentLocale(
+        molecule.locale.setCurrent(
             molecule.locale.getCurrentLocale()?.id === 'zh-CN' ? 'en-US' : 'zh-CN'
         );
+    };
+
+    const handleAddEditorTreeToolbar = () => {
+        molecule.editorTree.addToolbar({
+            id: 'test',
+            name: 'test',
+            icon: 'debug',
+            group: 'inline',
+        });
+    };
+
+    const handleUpdateEditorTreeToolbar = () => {
+        molecule.editorTree.updateToolbar({
+            id: 'test',
+            disabled: true,
+        });
+    };
+
+    const handleRemoveEditorTreeToolbar = () => {
+        molecule.editorTree.removeToolbar('test');
     };
 
     useEffect(() => {
@@ -367,11 +389,29 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                     <Button block onClick={openFile}>
                         Open File
                     </Button>
+                    <Button block onClick={toggleDirection}>
+                        Toggle Direction
+                    </Button>
+                </div>
+                <h2>Editor Tree:</h2>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={handleAddEditorTreeToolbar}>
+                        Add Toolbar
+                    </Button>
+                    <Button block onClick={handleUpdateEditorTreeToolbar}>
+                        Update Toolbar
+                    </Button>
+                    <Button block onClick={handleRemoveEditorTreeToolbar}>
+                        Remove Toolbar
+                    </Button>
                 </div>
                 <h2>ActivityBar:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
                     <Button block onClick={() => handleAddActivityBar()}>
                         Add ActivityBar Item
+                    </Button>
+                    <Button block onClick={() => handleTest()}>
+                        test
                     </Button>
                     <Button block onClick={() => handleAddActivityBar(true)}>
                         Add Disabled ActivityBar Item

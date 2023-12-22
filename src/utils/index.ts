@@ -1,9 +1,9 @@
 import { Children, cloneElement, isValidElement } from 'react';
 import { merge, omitBy } from 'lodash-es';
-import type { IColorTheme } from 'mo/models/colorTheme';
 import {
     type ArraylizeOrSingle,
     ColorScheme,
+    type IColorTheme,
     type IconType,
     type IMenuItemProps,
     type RecordWithId,
@@ -11,7 +11,7 @@ import {
 } from 'mo/types';
 import type { editor } from 'monaco-editor';
 
-export function searchById<T extends RecordWithId<Record<string, any>>>(id: UniqueId) {
+export function searchById<T extends RecordWithId<Record<string, any>>>(id?: UniqueId) {
     return (item: T) => item.id === id;
 }
 

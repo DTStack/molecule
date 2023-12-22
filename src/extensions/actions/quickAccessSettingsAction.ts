@@ -22,6 +22,6 @@ export class QuickAccessSettingsAction extends BaseAction {
     }
 
     run() {
-        this.molecule.layout.accessSettings();
+        this.molecule.settings.access();
     }
 }

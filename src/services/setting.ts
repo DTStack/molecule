@@ -1,36 +1,21 @@
 import { BaseService } from 'mo/glue';
-import { ISettings, SettingModel, SettingsEvent } from 'mo/models/setting';
+import { SettingModel, SettingsEvent } from 'mo/models/setting';
+import { inject, injectable } from 'tsyringe';
 
-export interface ISettingsService {
-    /**
-     * Check if the settings has the key
-     */
-    has(name: string): boolean;
-    /**
-     * Get value from settings
-     */
-    get<T = any>(name: string): T;
-    /**
-     * Get all settings
-     */
-    getAll(): ISettings;
-    /**
-     * Update value in settings
-     */
-    update(next: Record<string, any>): void;
-    /**
-     * Remove settings
-     */
-    remove(name: string): void;
-    /**
-     * Listen to settings change
-     */
-    onChange(callback: (value: string) => void): void;
-}
+import type { BuiltinService } from './builtin';
+import type { ColorThemeService } from './colorTheme';
+import type { EditorService } from './editor';
+import type { LocaleService } from './locale';
 
-export class SettingsService extends BaseService<SettingModel> implements ISettingsService {
+@injectable()
+export class SettingsService extends BaseService<SettingModel> {
     protected state: SettingModel;
-    constructor() {
+    constructor(
+        @inject('builtin') private builtin: BuiltinService,
+        @inject('locale') private locale: LocaleService,
+        @inject('colorTheme') private colorTheme: ColorThemeService,
+        @inject('editor') private editor: EditorService
+    ) {
         super('setting');
         this.state = new SettingModel();
     }
@@ -48,16 +33,40 @@ export class SettingsService extends BaseService<SettingModel> implements ISetti
     }
 
     public update(next: Record<string, any>): void {
-        this.setState((prev) => ({ ...prev, data: { ...prev.data, ...next } }));
+        this.dispatch((draft) => {
+            Object.assign(draft.data, next);
+        });
     }
 
     public remove(name: string): void {
-        if (this.has(name)) {
-            this.setState((prev) => {
-                const next = { ...prev };
-                Reflect.deleteProperty(next.data, name);
-                return next;
-            });
+        this.dispatch((draft) => {
+            if (Object.hasOwn(draft.data, name)) {
+                delete draft.data[name];
+            }
+        });
+    }
+
+    public access() {
+        const { EDITOR_ITEM_SETTING: SETTING_ID } = this.builtin.getState().constants;
+        const settings: Record<string, any> = {
+            locale: this.locale.getState().current,
+            colorTheme: this.colorTheme.getState().current,
+            ...this.getAll(),
+        };
+        const { current } = this.editor.getState();
+        if (!current || !this.editor.getTab(SETTING_ID, current)) {
+            this.editor.open(
+                {
+                    id: SETTING_ID,
+                    name: this.locale.localize('activityBar.item.setting', 'Settings'),
+                    icon: 'file',
+                    value: JSON.stringify(settings, null, 4),
+                    language: 'json',
+                },
+                current
+            );
+        } else {
+            this.editor.setCurrent(SETTING_ID, current);
         }
     }
 

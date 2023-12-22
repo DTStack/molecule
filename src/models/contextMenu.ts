@@ -5,14 +5,7 @@ export enum ContextMenuEvent {
     onHide = 'contextMenu.onHide',
 }
 
-interface IContextMenu {
-    data: IMenuItemProps[];
-    visible: boolean;
-    position: IPosition;
-    scope: any;
-}
-
-export class ContextMenuModel implements IContextMenu {
+export class ContextMenuModel {
     constructor(
         public data: IMenuItemProps[] = [],
         public visible: boolean = false,

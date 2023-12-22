@@ -1,5 +1,4 @@
 import { BaseAction } from 'mo/glue/baseAction';
-import type { IColorTheme } from 'mo/models/colorTheme';
 import {
     IQuickInputService,
     KeyChord,
@@ -9,7 +8,7 @@ import {
     type QuickPickInput,
     type ServicesAccessor,
 } from 'mo/monaco';
-import { type IMoleculeContext, KeybindingWeight } from 'mo/types';
+import { type IColorTheme, type IMoleculeContext, KeybindingWeight } from 'mo/types';
 
 export default class QuickSelectThemeAction extends BaseAction {
     static readonly ID = 'activityBar.item.colorTheme';
@@ -32,8 +31,8 @@ export default class QuickSelectThemeAction extends BaseAction {
 
     run(accessor: ServicesAccessor): Promise<void> {
         const quickInputService = accessor.get(IQuickInputService);
-        const themes = this.ctx.colorTheme.getThemes();
-        const currentTheme = this.ctx.colorTheme.getColorTheme();
+        const themes = this.ctx.colorTheme.getAll();
+        const currentTheme = this.ctx.colorTheme.getCurrentTheme();
 
         const picks = [...toEntries(themes)];
 
@@ -47,7 +46,7 @@ export default class QuickSelectThemeAction extends BaseAction {
                 () => {
                     selectThemeTimeout = undefined;
                     const themeId = theme && theme.id !== undefined ? theme.id : currentTheme?.id;
-                    themeId && this.ctx.colorTheme.setTheme(themeId);
+                    themeId && this.ctx.colorTheme.setCurrent(themeId);
                 },
                 applyTheme ? 0 : 200
             );

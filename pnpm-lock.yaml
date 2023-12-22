@@ -10,6 +10,7 @@ importers:
       '@types/node': ^20.4.7
       '@types/react': ^18.2.18
       '@types/react-dom': ^18.2.7
+      '@types/use-sync-external-store': ^0.0.6
       '@types/yargs': ^17.0.24
       '@vitejs/plugin-react': ^4.0.4
       '@vscode/codicons': ^0.0.33
@@ -18,6 +19,7 @@ importers:
       concurrently: ^8.2.1
       esbuild: ^0.18.17
       glob: ^10.3.3
+      immer: ^10.0.3
       ko-lint-config: ^2.2.21
       lodash-es: ^4.17.21
       monaco-editor: ^0.31.0
@@ -36,6 +38,7 @@ importers:
       tsc-alias: ^1.8.7
       tsyringe: ^4.8.0
       typescript: 4.7.4
+      use-sync-external-store: ^1.2.0
       vite: ^4.4.9
       vite-plugin-mock-dev-server: ^1.4.0
       vite-plugin-monaco-editor: ^1.1.0
@@ -43,6 +46,7 @@ importers:
     dependencies:
       '@dtinsight/dt-utils': 1.1.2
       '@vscode/codicons': 0.0.33
+      immer: registry.npmmirror.com/immer/10.0.3
       lodash-es: 4.17.21
       monaco-editor: 0.31.1
       normalize.css: 8.0.1
@@ -54,12 +58,14 @@ importers:
       reflect-metadata: 0.1.13
       tapable: 2.2.1
       tsyringe: 4.8.0
+      use-sync-external-store: registry.npmmirror.com/use-sync-external-store/1.2.0_react@18.2.0
     devDependencies:
       '@dtinsight/molecule': 'link:'
       '@types/lodash-es': 4.17.8
       '@types/node': 20.4.7
       '@types/react': 18.2.18
       '@types/react-dom': 18.2.7
+      '@types/use-sync-external-store': registry.npmmirror.com/@types/use-sync-external-store/0.0.6
       '@types/yargs': 17.0.24
       '@vitejs/plugin-react': 4.0.4_vite@4.4.9
       chalk: 4.1.2
@@ -2429,10 +2435,6 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /immutable/4.3.2:
-    resolution: {integrity: sha512-oGXzbEDem9OOpDWZu88jGiYCvIsLHMvGw+8OXlpsvTFvIQplQbjg1B1cvKg8f7Hoch6+NGjpPsH1Fr+Mc2D1aA==}
-    dev: true
-
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -3713,7 +3715,7 @@ packages:
     hasBin: true
     dependencies:
       chokidar: 3.5.3
-      immutable: 4.3.2
+      immutable: registry.npmmirror.com/immutable/4.3.2
       source-map-js: 1.0.2
     dev: true
 
@@ -5050,6 +5052,12 @@ packages:
     version: 2.2.7
     dev: false
 
+  registry.npmmirror.com/@types/use-sync-external-store/0.0.6:
+    resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.6.tgz}
+    name: '@types/use-sync-external-store'
+    version: 0.0.6
+    dev: true
+
   registry.npmmirror.com/@xobotyi/scrollbar-width/1.9.5:
     resolution: {integrity: sha512-N8tkAACJx2ww8vFMneJmaAgmjAG1tnVBZJRLRcx061tmsLRZHSEZSLuGWnwPtunsSLvSqXQ2wfp7Mgqg1I+2dQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@xobotyi/scrollbar-width/-/scrollbar-width-1.9.5.tgz}
     name: '@xobotyi/scrollbar-width'
@@ -5511,6 +5519,18 @@ packages:
     name: ignore
     version: 5.2.4
     engines: {node: '>= 4'}
+    dev: true
+
+  registry.npmmirror.com/immer/10.0.3:
+    resolution: {integrity: sha512-pwupu3eWfouuaowscykeckFmVTpqbzW+rXFCX8rQLkZzM9ftBmU/++Ra+o+L27mz03zJTlyV4UUr+fdKNffo4A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/immer/-/immer-10.0.3.tgz}
+    name: immer
+    version: 10.0.3
+    dev: false
+
+  registry.npmmirror.com/immutable/4.3.2:
+    resolution: {integrity: sha512-oGXzbEDem9OOpDWZu88jGiYCvIsLHMvGw+8OXlpsvTFvIQplQbjg1B1cvKg8f7Hoch6+NGjpPsH1Fr+Mc2D1aA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/immutable/-/immutable-4.3.2.tgz}
+    name: immutable
+    version: 4.3.2
     dev: true
 
   registry.npmmirror.com/inflation/2.1.0:
@@ -6057,6 +6077,17 @@ packages:
     version: 1.0.0
     engines: {node: '>= 0.8'}
     dev: true
+
+  registry.npmmirror.com/use-sync-external-store/1.2.0_react@18.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz}
+    id: registry.npmmirror.com/use-sync-external-store/1.2.0
+    name: use-sync-external-store
+    version: 1.2.0
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   registry.npmmirror.com/vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vary/-/vary-1.1.2.tgz}

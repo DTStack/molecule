@@ -17,23 +17,23 @@ export const ExtendsMenuBar: IExtension = {
 
             switch (menuId) {
                 case MENUBAR_ITEM_PANEL: {
-                    molecule.layout.setPanelVisibility((prev) => !prev);
+                    molecule.layout.setPanel((prev) => !prev);
                     break;
                 }
                 case MENUBAR_ITEM_MENU: {
-                    molecule.layout.setMenuBarVisibility((prev) => !prev);
+                    molecule.layout.setMenuBar((prev) => !prev);
                     break;
                 }
                 case MENUBAR_ITEM_SIDEBAR: {
-                    molecule.layout.setSidebarVisibility((prev) => !prev);
+                    molecule.layout.setSidebar((prev) => !prev);
                     break;
                 }
                 case MENUBAR_ITEM_STATUSBAR: {
-                    molecule.layout.setStatusBarVisibility((prev) => !prev);
+                    molecule.layout.setStatusBar((prev) => !prev);
                     break;
                 }
                 case MENUBAR_ITEM_ACTIVITYBAR: {
-                    molecule.layout.setActivityBarVisibility((prev) => !prev);
+                    molecule.layout.setActivityBar((prev) => !prev);
                     break;
                 }
                 case QuickAccessCommandAction.ID: {

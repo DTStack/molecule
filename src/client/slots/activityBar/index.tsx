@@ -32,6 +32,7 @@ export default function ActivityBar({
                         id: 'menu',
                         name: 'menu',
                         icon: 'menu',
+                        alignment: Alignment.bottom,
                         contextMenu: menuBar.data,
                     }}
                     onContextMenuClick={onMenuClick}
@@ -50,7 +51,7 @@ export default function ActivityBar({
                     {renderMenu()}
                     {top.sort(sortByIndex).map((item) => (
                         <ActivityBarItem
-                            checked={!layout.sidebar.hidden && activityBar.selected === item.id}
+                            checked={!layout.sidebar.hidden && activityBar.current === item.id}
                             key={item.id}
                             data={item}
                             onClick={onClick}

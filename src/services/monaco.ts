@@ -32,23 +32,8 @@ type IStandaloneEditorConstructionOptions = MonacoEditor.IEditorOptions &
 
 type IEditorOverrideServices = MonacoEditor.IEditorOverrideServices;
 
-export interface IMonacoService {
-    readonly services: ServiceCollection;
-    readonly commandService: ICommandService;
-    readonly container: HTMLElement | null;
-    create(
-        domElement: HTMLElement,
-        options?: IStandaloneEditorConstructionOptions,
-        overrides?: IEditorOverrideServices
-    ): MonacoEditor.IStandaloneCodeEditor;
-    /**
-     * Initial the Workspace, like Services and editor config.
-     */
-    initWorkspace(container: HTMLElement): void;
-}
-
 @injectable()
-export class MonacoService implements IMonacoService {
+export class MonacoService {
     private _services: ServiceCollection;
     private simpleEditorModelResolverService: SimpleEditorModelResolverService | null = null;
     private _container!: HTMLElement | null;

@@ -1,6 +1,10 @@
 import { classNames } from 'mo/client/classNames';
-import { IActivityBarItem } from 'mo/models/activityBar';
-import type { ContextMenuEventHandler, ContextMenuWithItemHandler } from 'mo/types';
+import {
+    Alignment,
+    ContextMenuEventHandler,
+    ContextMenuWithItemHandler,
+    IActivityBarItem,
+} from 'mo/types';
 
 import Dropdown from '../dropdown';
 import Icon from '../icon';
@@ -28,7 +32,7 @@ export default function ActivityBarItem({
 
     return (
         <Dropdown
-            data={data.contextMenu}
+            data={data.alignment === Alignment.top ? [] : data.contextMenu}
             placement="rightTop"
             onClick={onContextMenuClick}
             disabled={disabled}

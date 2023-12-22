@@ -24,7 +24,7 @@ export default class QuickSelectLocaleAction extends BaseAction {
 
     run(accessor: ServicesAccessor): Promise<void> {
         const quickInputService = accessor.get(IQuickInputService);
-        const data = this.molecule.locale.getLocales();
+        const data = this.molecule.locale.getAll();
         const current = this.molecule.locale.getCurrentLocale();
 
         const picks = [...toEntries(data)];
@@ -38,7 +38,7 @@ export default class QuickSelectLocaleAction extends BaseAction {
                 () => {
                     timer = undefined;
                     if (locale && locale.id) {
-                        this.molecule.locale.setCurrentLocale(locale.id);
+                        this.molecule.locale.setCurrent(locale.id);
                     }
                 },
                 apply ? 0 : 200
@@ -70,7 +70,7 @@ export default class QuickSelectLocaleAction extends BaseAction {
             });
 
             quickPick.onDidChangeActive((locales) =>
-                this.molecule.locale.setCurrentLocale(locales[0].id)
+                this.molecule.locale.setCurrent(locales[0].id)
             );
             quickPick.onDidHide(() => {
                 if (!isCompleted) {

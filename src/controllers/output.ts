@@ -24,7 +24,7 @@ export class OutputController extends BaseController implements IOutputControlle
                 ...OUTPUT,
                 render: () => createElement(Output, { ...this }),
             });
-            this.panel.setActive(OUTPUT.id);
+            this.panel.setCurrent(OUTPUT.id);
         }
     }
 }

@@ -6,20 +6,12 @@ export enum SearchEvent {
     onSelect = 'search.onSelect',
 }
 
-export interface ISearchProps {
-    value?: string;
-    resultIsTree?: boolean;
-    result: SearchResultItem[];
-    expandKeys: UniqueId[];
-    validateInfo?: InputValidateInfo;
-}
-
-export class SearchModel implements ISearchProps {
+export class SearchModel {
     constructor(
         public value: string = '',
         public resultIsTree: boolean = false,
         public result: SearchResultItem[] = [],
-        public expandKeys: UniqueId[] = [],
+        public expandedKeys: UniqueId[] = [],
         public validateInfo: InputValidateInfo = {
             status: 'info',
             message: '',

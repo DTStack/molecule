@@ -23,9 +23,9 @@ export const ExtendsSidebar: IExtension = {
                         });
 
                         // Update Explorer's visibility
-                        molecule.explorer.updatePanel({
+                        molecule.explorer.update({
                             id: item.id,
-                            hidden: !molecule.explorer.getPanel(item.id)?.hidden,
+                            hidden: !molecule.explorer.get(item.id)?.hidden,
                         });
                         break;
                     }
@@ -57,10 +57,8 @@ export const ExtendsSidebar: IExtension = {
                             SEARCH_TOOLBAR_COLLAPSE,
                         } = molecule.builtin.getModules();
                         if (molecule.search.getState().resultIsTree) {
-                            molecule.sidebar.updateToolbar(groupId, [
-                                SEARCH_TOOLBAR_VIEW_AS_TREE,
-                                SEARCH_TOOLBAR_COLLAPSE,
-                            ]);
+                            molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_VIEW_AS_TREE);
+                            molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_COLLAPSE);
                         } else {
                             molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_VIEW_AS_LIST);
                             molecule.search.emit(SearchEvent.onSearch, value);
@@ -70,16 +68,16 @@ export const ExtendsSidebar: IExtension = {
                     case SEARCH_TOOLBAR_COLLAPSE_EXPAND: {
                         const { SEARCH_TOOLBAR_COLLAPSE, SEARCH_TOOLBAR_EXPAND } =
                             molecule.builtin.getModules();
-                        const { expandKeys, result } = molecule.search.getState();
-                        if (expandKeys.length) {
-                            molecule.sidebar.updateToolbar(groupId, [SEARCH_TOOLBAR_COLLAPSE]);
-                            molecule.search.setExpandKeys([]);
+                        const { expandedKeys, result } = molecule.search.getState();
+                        if (expandedKeys.length) {
+                            molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_COLLAPSE);
+                            molecule.search.setExpandedKeys([]);
                         } else {
-                            molecule.sidebar.updateToolbar(groupId, [SEARCH_TOOLBAR_EXPAND]);
+                            molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_EXPAND);
                             const next = result
                                 .filter((i) => i.fileType === FileTypes.Folder)
                                 .map((i) => i.id);
-                            molecule.search.setExpandKeys(next);
+                            molecule.search.setExpandedKeys(next);
                         }
                         break;
                     }

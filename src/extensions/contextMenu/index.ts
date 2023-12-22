@@ -24,19 +24,19 @@ export const ExtendsContextMenu: IExtension = {
             const scope = molecule.contextMenu.getScope();
             switch (item.id) {
                 case MENUBAR_CONTEXTMENU_HIDE: {
-                    molecule.layout.setMenuBarVisibility(true);
+                    molecule.layout.setMenuBar(false);
                     break;
                 }
                 case ACTIVITYBAR_CONTEXTMENU_HIDE: {
-                    molecule.layout.setActivityBarVisibility(true);
+                    molecule.layout.setActivityBar(false);
                     break;
                 }
                 case STATUSBAR_CONTEXTMENU_HIDE: {
-                    molecule.layout.setStatusBarVisibility(true);
+                    molecule.layout.setStatusBar(false);
                     break;
                 }
                 case PANEL_CONTEXTMENU_HIDE: {
-                    molecule.layout.setPanelVisibility(true);
+                    molecule.layout.setPanel(false);
                     break;
                 }
                 default: {
@@ -80,17 +80,17 @@ export const ExtendsContextMenu: IExtension = {
             molecule.activityBar.toggleBar(item.id);
             if (target.alignment === Alignment.bottom) return;
             if (!target.hidden) {
-                molecule.sidebar.setActive(item.id);
-                molecule.activityBar.setActive(item.id);
-            } else if (molecule.activityBar.getState().selected === item.id) {
+                molecule.sidebar.setCurrent(item.id);
+                molecule.activityBar.setCurrent(item.id);
+            } else if (molecule.activityBar.getState().current === item.id) {
                 const list = molecule.activityBar
                     .getState()
                     .data.filter((i) => !i.hidden && i.alignment === Alignment.top)
                     .sort(sortByIndex);
                 const idx = list.findIndex(searchById(item.id));
                 const next = getPrevOrNext(list, idx)?.id;
-                molecule.sidebar.setActive(next);
-                molecule.activityBar.setActive(next);
+                molecule.sidebar.setCurrent(next);
+                molecule.activityBar.setCurrent(next);
             }
         }
 
@@ -104,7 +104,7 @@ export const ExtendsContextMenu: IExtension = {
         function statusBarContextMenuClick(item: IMenuItemProps) {
             const target = molecule.statusBar.get(item.id);
             if (target) {
-                molecule.statusBar.toggleBar(item.id);
+                molecule.statusBar.toggle(item.id);
             }
         }
 
@@ -116,11 +116,11 @@ export const ExtendsContextMenu: IExtension = {
         }
 
         function panelContextMenuClick(item: IMenuItemProps) {
-            const target = molecule.panel.getPanel(item.id);
+            const target = molecule.panel.get(item.id);
             if (!target) return;
-            molecule.panel.toggleBar(item.id);
+            molecule.panel.toggle(item.id);
             if (!target.hidden) {
-                molecule.panel.setActive(item.id);
+                molecule.panel.setCurrent(item.id);
             } else if (molecule.panel.getState().current === item.id) {
                 const list = molecule.panel
                     .getState()
@@ -128,7 +128,7 @@ export const ExtendsContextMenu: IExtension = {
                     .sort(sortByIndex);
                 const idx = list.findIndex(searchById(item.id));
                 const next = getPrevOrNext(list, idx)?.id;
-                molecule.panel.setActive(next);
+                molecule.panel.setCurrent(next);
             }
         }
 

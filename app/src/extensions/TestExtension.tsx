@@ -23,7 +23,7 @@ export const TestExtension: IExtension = {
         });
 
         molecule.activityBar.onContextMenu(() => {
-            molecule.contextMenu.setContextMenu([
+            molecule.contextMenu.add([
                 { id: 'testPane__activityBar__molecule', name: 'Molecule' },
                 { id: '2', type: 'divider' },
             ]);
@@ -72,7 +72,7 @@ export const TestExtension: IExtension = {
                                     ])
                             )
                         );
-                        molecule.search.setExpandKeys(data.map((i) => i.fileName));
+                        molecule.search.setExpandedKeys(data.map((i) => i.fileName));
                     })
                     .finally(() => {
                         molecule.sidebar.setLoading(false);
@@ -83,7 +83,7 @@ export const TestExtension: IExtension = {
         molecule.folderTree.onCreateRoot(() => {
             getWorkspace().then((tree) => {
                 molecule.folderTree.add(tree);
-                molecule.explorer.updatePanel({
+                molecule.explorer.update({
                     id: molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
                     name: tree.name,
                 });
@@ -99,7 +99,7 @@ export const TestExtension: IExtension = {
 
         molecule.folderTree.onContextMenu((_, treeNode) => {
             if (treeNode.fileType === FileTypes.File) {
-                molecule.contextMenu.setContextMenu([
+                molecule.contextMenu.add([
                     { id: 'testPane', name: '打开 testPane 面板' },
                     { id: 'testPane_divider', type: 'divider' },
                 ]);
@@ -116,7 +116,7 @@ export const TestExtension: IExtension = {
                     });
                 })
                 .catch((err) => {
-                    molecule.notification.setNotificationVisibility(true);
+                    molecule.layout.setNotification(true);
                     molecule.notification.add({
                         id: `getFiles${id}`,
                         value: err.message,
@@ -139,7 +139,7 @@ export const TestExtension: IExtension = {
             molecule.editor.setLoading(true);
             const { groups } = molecule.editor.getState();
             groups.forEach((group) => {
-                const tab = molecule.editor.getTabById(treeNode.id, group.id);
+                const tab = molecule.editor.getTab(treeNode.id, group.id);
                 if (tab) {
                     molecule.editor.updateTab(
                         {
@@ -200,7 +200,7 @@ export const TestExtension: IExtension = {
                     molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
                 })
                 .catch((err) => {
-                    molecule.notification.setNotificationVisibility(true);
+                    molecule.layout.setNotification(true);
                     molecule.notification.add({
                         id: `getFileContent_${treeNode.id}`,
                         value: err.message,

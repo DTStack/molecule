@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { type ISidebarPane, SidebarEvent, SidebarModel } from 'mo/models/sideBar';
 import type {
@@ -6,57 +7,13 @@ import type {
     ContextMenuWithItemHandler,
     FunctionalOrSingle,
     IMenuItemProps,
+    Predict,
     RequiredId,
     UniqueId,
 } from 'mo/types';
-import { arraylize, searchById } from 'mo/utils';
-import logger from 'mo/utils/logger';
+import { arraylize, getPrevOrNext, searchById } from 'mo/utils';
 
-export interface ISidebarService extends BaseService<SidebarModel> {
-    /**
-     * Get a specific pane via id
-     * @param id
-     */
-    get(id: UniqueId): ISidebarPane | undefined;
-    getToolbar(paneId: UniqueId, toolbarId: UniqueId): IMenuItemProps | undefined;
-    /**
-     * Add a new Sidebar pane
-     * @param pane
-     * @param isActive Whether to activate the current pane
-     */
-    add(pane: ISidebarPane, isActive?: boolean): void;
-    addToolbar(paneId: UniqueId, toolbars: ArraylizeOrSingle<IMenuItemProps>): void;
-    /**
-     * Update a specific pane
-     * @param pane
-     */
-    update(pane: RequiredId<ISidebarPane>): void;
-    /**
-     * Update a toolbar item
-     * @param paneId
-     * @param toolbars
-     */
-    updateToolbar(paneId: UniqueId, toolbars: ArraylizeOrSingle<RequiredId<IMenuItemProps>>): void;
-    /**
-     * Remove a pane
-     * @param id
-     */
-    remove(id: UniqueId): void;
-    /**
-     * Set the specific pane as active
-     * @param id
-     */
-    setActive(id?: UniqueId): void;
-    setLoading(loading: FunctionalOrSingle<boolean>): void;
-    /**
-     * Reset the sidebar data
-     */
-    reset(): void;
-    onToolbarClick(callback: ContextMenuGroupHandler): void;
-    onContextMenu(callback: ContextMenuWithItemHandler<[item: ISidebarPane]>): void;
-}
-
-export class SidebarService extends BaseService<SidebarModel> implements ISidebarService {
+export class SidebarService extends BaseService<SidebarModel> {
     protected state: SidebarModel;
 
     constructor() {
@@ -64,122 +21,93 @@ export class SidebarService extends BaseService<SidebarModel> implements ISideba
         this.state = new SidebarModel();
     }
 
-    private getPane(id: UniqueId) {
-        const { panes } = this.state;
-        const target = panes.find(searchById(id));
-        return target;
+    public get(id?: UniqueId) {
+        if (isUndefined(id)) return;
+        return this.getAll().find(searchById(id));
     }
 
-    public get(id: UniqueId) {
-        return this.getPane(id);
+    public getAll() {
+        return this.getState().data;
     }
 
-    public getToolbar(paneId: UniqueId, toolbar: UniqueId) {
-        const pane = this.getPane(paneId);
-        if (!pane) {
-            logger.error(`There is no pane found via the ${paneId} id`);
-            return;
-        }
-        const target = pane.toolbar?.find(searchById(toolbar));
-        return target;
+    public getCurrent() {
+        return this.getState().current;
     }
 
-    public add(data: ISidebarPane, isActive = false) {
-        const pane = this.getPane(data.id);
-        if (pane) {
-            logger.error(
-                `There already has a pane which id is ${data.id}, if you want to modify it, please use the update method`
-            );
-            return;
-        }
-        if (isActive) {
-            this.setActive(data.id);
-        }
-        this.setState((prev) => ({
-            ...prev,
-            panes: [...prev.panes, data],
-        }));
+    public getCurrentPane() {
+        return this.get(this.getCurrent());
+    }
+
+    public getToolbar(paneId: UniqueId, toolbarId: UniqueId) {
+        return this.get(paneId)?.toolbar?.find(searchById(toolbarId));
+    }
+
+    public add(data: ArraylizeOrSingle<ISidebarPane>) {
+        this.dispatch((draft) => {
+            draft.data.push(...arraylize(data));
+        });
     }
 
     public addToolbar(paneId: UniqueId, toolbars: ArraylizeOrSingle<IMenuItemProps>) {
-        const targetPane = this.getPane(paneId);
-        if (!targetPane) {
-            logger.error(`There is no pane found via the ${paneId} id`);
-            return;
-        }
-        const _toolbars = arraylize(toolbars);
-        targetPane.toolbar ??= [];
-        targetPane.toolbar.push(..._toolbars);
-        this.setState((prev) => ({
-            panes: [...prev.panes],
-        }));
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(paneId));
+            if (!target) return;
+            target.toolbar ??= [];
+            target.toolbar.push(...arraylize(toolbars));
+        });
     }
 
-    public update(pane: RequiredId<ISidebarPane>) {
-        const targetPane = this.getPane(pane.id);
-        if (!targetPane) {
-            logger.error(`There is no pane found via the ${pane.id} id`);
-            return;
-        }
-
-        Object.assign(targetPane, pane);
-        this.setState((prev) => ({
-            panes: [...prev.panes],
-        }));
+    public update(id: UniqueId, predict: Predict<ISidebarPane>): void;
+    public update(data: RequiredId<ISidebarPane>): void;
+    public update(item: UniqueId | RequiredId<ISidebarPane>, predict?: Predict<ISidebarPane>) {
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(typeof item === 'object' ? item.id : item));
+            if (!target) return;
+            Object.assign(target, typeof item === 'object' ? item : predict?.(target));
+        });
     }
 
+    public updateToolbar(paneId: UniqueId, id: UniqueId, predict: Predict<IMenuItemProps>): void;
+    public updateToolbar(paneId: UniqueId, data: RequiredId<IMenuItemProps>): void;
     public updateToolbar(
         paneId: UniqueId,
-        toolbars: ArraylizeOrSingle<RequiredId<IMenuItemProps>>
+        item: UniqueId | RequiredId<IMenuItemProps>,
+        predict?: Predict<IMenuItemProps>
     ) {
-        const targetPane = this.getPane(paneId);
-        if (!targetPane) {
-            logger.error(`There is no pane found via the ${paneId} id`);
-            return;
-        }
-
-        const _toolbars = arraylize(toolbars);
-        _toolbars.forEach((toolbar) => {
-            const target = targetPane.toolbar?.find(searchById(toolbar.id));
-            if (!target) return;
-            Object.assign(target, toolbar);
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(paneId));
+            const targetToolbar = target?.toolbar?.find(
+                searchById(typeof item === 'object' ? item.id : item)
+            );
+            if (!targetToolbar) return;
+            Object.assign(
+                targetToolbar,
+                typeof item === 'object' ? item : predict?.(targetToolbar)
+            );
         });
-        this.setState((prev) => ({
-            panes: [...prev.panes],
-        }));
     }
 
     public remove(id: UniqueId) {
-        const { panes, current } = this.state;
-        const target = this.getPane(id);
-        if (!target) {
-            logger.error(`There is no pane found via the ${id} id`);
-            return;
-        }
-
-        const index = panes.indexOf(target);
-        // If the pane is the current pane, the active next or prev pane
-        if (id === current) {
-            const nextCurrent = panes[index + 1]?.id || panes[index - 1]?.id || '';
-            this.setActive(nextCurrent);
-        }
-
-        this.setState((prev) => ({
-            panes: prev.panes.filter((item) => item !== target),
-        }));
+        this.dispatch((draft) => {
+            const idx = draft.data.findIndex(searchById(id));
+            if (idx === -1) return;
+            if (draft.current === id) {
+                draft.current = getPrevOrNext(draft.data, idx)?.id;
+            }
+            draft.data.splice(idx, 1);
+        });
     }
 
-    public setActive(id?: UniqueId) {
-        this.setState({
-            current: id,
+    public setCurrent(id?: UniqueId) {
+        this.dispatch((draft) => {
+            draft.current = id;
         });
     }
 
     public setLoading(loading: FunctionalOrSingle<boolean>): void {
-        this.setState((prev) => ({
-            ...prev,
-            loading: typeof loading === 'function' ? loading(prev.loading) : loading,
-        }));
+        this.dispatch((draft) => {
+            draft.loading = typeof loading === 'function' ? loading(draft.loading) : loading;
+        });
     }
 
     public reset() {

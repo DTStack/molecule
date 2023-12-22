@@ -1,8 +1,7 @@
 import type React from 'react';
 import type { editor, KeyCode } from 'monaco-editor';
 
-import type { IColorTheme } from './models/colorTheme';
-import type { ILocale, LocaleKind } from './models/locale';
+import type { ILocale } from './models/locale';
 import type { ActionService } from './services/action';
 import type { ActivityBarService } from './services/activityBar';
 import type { AuxiliaryBarService } from './services/auxiliaryBar';
@@ -26,8 +25,6 @@ import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { TreeNodeModel } from './utils/tree';
 import type { BaseController } from './glue';
-
-export type { IEditorTab } from './models/editor';
 
 export type RequiredId<T extends { id: UniqueId }> = Partial<T> & Required<Pick<T, 'id'>>;
 
@@ -155,11 +152,7 @@ export type WithHiddenProperty<T extends object | void> = T extends void
  * @param args If provided, it will used as the values to be replaced in the international text
  * @returns
  */
-export type Localize = (
-    sourceKey: keyof LocaleKind,
-    defaultValue: string,
-    ...args: any[]
-) => string;
+export type Localize = (sourceKey: string, defaultValue: string, ...args: any[]) => string;
 
 // https://code.visualstudio.com/api/references/icons-in-labels#icon-listing
 export type IconType = string | JSX.Element;
@@ -426,3 +419,63 @@ export type IPosition = {
 
 export type ContextMenuHandler = (position: IPosition) => void;
 export type ContextMenuWithItemHandler<T extends any[]> = ExtendParameters<ContextMenuHandler, T>;
+
+export type Predict<T> = (data: T) => Partial<T>;
+
+// ========== ActivityBar Types ==========
+export interface ITopActivityBarItem
+    extends HTMLElementProps,
+        IItemProps,
+        RenderProps<IActivityBarItem> {
+    alignment: 'top';
+}
+
+export interface IBottomActivityBarItem
+    extends HTMLElementProps,
+        IItemProps,
+        RenderProps<IActivityBarItem> {
+    alignment: 'bottom';
+    contextMenu?: IMenuItemProps[];
+}
+
+export type IActivityBarItem = ITopActivityBarItem | IBottomActivityBarItem;
+
+// ========== Color Themes ==========
+export interface TokenColor {
+    name?: string;
+    scope?: string | string[];
+    settings?: Record<string, string>;
+}
+
+export interface IColorTheme {
+    /**
+     * The id of component, theme will be applied by this ID
+     */
+    id: UniqueId;
+    label: string;
+    name?: string;
+    uiTheme?: BuiltinTheme;
+    description?: string;
+    type?: ColorScheme;
+    colors?: Record<string, string | null>;
+    tokenColors?: TokenColor[];
+    /**
+     * The semanticTokenColors mappings as well as
+     * the semanticHighlighting setting
+     * allow to enhance the highlighting in the editor
+     * More info visit: https://code.visualstudio.com/api/language-extensions/semantic-highlight-guide
+     */
+    semanticHighlighting?: boolean;
+}
+// ========== Editor ==========
+
+export interface IEditorTab<T>
+    extends RenderProps<IEditorTab<T>>,
+        Pick<IItemProps, 'id' | 'name' | 'icon'> {
+    model?: editor.ITextModel;
+    value?: string;
+    language?: string;
+    breadcrumb?: IBreadcrumbItemProps[];
+    modified?: boolean;
+    data?: T;
+}

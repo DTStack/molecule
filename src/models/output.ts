@@ -1,7 +1,3 @@
-interface IOutput {
-    value: string;
-}
-
-export class OutputModel implements IOutput {
+export class OutputModel {
     constructor(public value: string = '') {}
 }

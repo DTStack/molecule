@@ -22,24 +22,22 @@ export const ExtendsSearch: IExtension = {
             } = molecule.builtin.getState().constants;
 
             // change toolbar's disabled status
-            molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, [
-                {
-                    id: SEARCH_TOOLBAR_REFRESH,
-                    disabled: valueEmpty,
-                },
-                {
-                    id: SEARCH_TOOLBAR_CLEAR_ALL,
-                    disabled: valueEmpty,
-                },
-                {
-                    id: SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
-                    disabled: resultEmpty,
-                },
-                {
-                    id: SEARCH_TOOLBAR_COLLAPSE_EXPAND,
-                    disabled: resultEmpty || !resultIsTree,
-                },
-            ]);
+            molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, {
+                id: SEARCH_TOOLBAR_REFRESH,
+                disabled: valueEmpty,
+            });
+            molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, {
+                id: SEARCH_TOOLBAR_CLEAR_ALL,
+                disabled: valueEmpty,
+            });
+            molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, {
+                id: SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
+                disabled: resultEmpty,
+            });
+            molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, {
+                id: SEARCH_TOOLBAR_COLLAPSE_EXPAND,
+                disabled: resultEmpty || !resultIsTree,
+            });
         }, 400);
         molecule.search.onSearch(debounceSearch);
 
@@ -53,12 +51,10 @@ export const ExtendsSearch: IExtension = {
             if (item.id === SEARCH_TOOLBAR_VIEW_AS_LIST_TREE) {
                 const { resultIsTree } = molecule.search.getState() || {};
 
-                molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, [
-                    {
-                        id: SEARCH_TOOLBAR_COLLAPSE_EXPAND,
-                        disabled: resultIsTree,
-                    },
-                ]);
+                molecule.sidebar.updateToolbar(SIDEBAR_ITEM_SEARCH, {
+                    id: SEARCH_TOOLBAR_COLLAPSE_EXPAND,
+                    disabled: resultIsTree,
+                });
                 molecule.search.setResultIsTree(!resultIsTree);
             }
         });

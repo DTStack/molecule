@@ -1,8 +1,6 @@
 @import '../../classNames/style.scss';
 
-$btn: prefix('btn');
 $bell: prefix('bell');
-$activeBell: BEMModifier($bell, 'active');
 
 .#{$bell} {
     height: 100%;
@@ -11,22 +9,8 @@ $activeBell: BEMModifier($bell, 'active');
     &::before {
         vertical-align: sub;
     }
-
-    &.#{$activeBell} {
-        &::after {
-            border: 5px solid;
-            border-color: transparent transparent var(--statusBar-background);
-            content: '';
-            height: 0;
-            left: 2px;
-            position: absolute;
-            top: -10px;
-            width: 0;
-        }
-    }
 }
 
 :export {
     bell: $bell;
-    activeBell: $activeBell;
 }

@@ -7,11 +7,8 @@ export enum LocalizationEvent {
     /**
      * The Localization changed
      */
-    OnChange = 'localization.onchange',
+    onChange = 'localization.onChange',
 }
-
-export type LocaleKind = any;
-type LocaleKindLiteral = keyof LocaleKind;
 
 export interface ILocale {
     id: UniqueId;
@@ -21,14 +18,9 @@ export interface ILocale {
      * Whether inherit an exist locale, if it's exist, merge the parent locale
      */
     inherit?: UniqueId;
-    source: Record<LocaleKindLiteral, string>;
+    source: Record<string, string>;
 }
 
-export interface ILocaleModel {
-    locales: ILocale[];
-    current?: UniqueId;
-}
-
-export class LocaleModel implements ILocaleModel {
-    constructor(public locales = [], public current = undefined) {}
+export class LocaleModel {
+    constructor(public data: ILocale[] = [], public current?: UniqueId) {}
 }

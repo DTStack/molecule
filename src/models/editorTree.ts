@@ -8,10 +8,6 @@ export enum EditorTreeEvent {
     onContextMenu = 'editorTree.onContextMenu',
 }
 
-export interface IEditorTree {
-    toolbar: IMenuItemProps[];
-}
-
-export class EditorTreeModel implements IEditorTree {
+export class EditorTreeModel {
     constructor(public toolbar: IMenuItemProps[] = []) {}
 }

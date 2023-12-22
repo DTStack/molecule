@@ -1,65 +1,17 @@
 import { BaseService } from 'mo/glue';
-import { ActivityBarEvent, ActivityBarModel, type IActivityBarItem } from 'mo/models/activityBar';
+import { ActivityBarEvent, ActivityBarModel } from 'mo/models/activityBar';
 import type {
     ArraylizeOrSingle,
     ContextMenuEventHandler,
     ContextMenuWithItemHandler,
+    IActivityBarItem,
+    Predict,
     RequiredId,
     UniqueId,
 } from 'mo/types';
-import { arraylize, extract, searchById } from 'mo/utils';
-import logger from 'mo/utils/logger';
+import { arraylize, searchById } from 'mo/utils';
 
-export interface IActivityBarService extends BaseService<ActivityBarModel> {
-    /**
-     * Reset the activityBar state data,
-     * if you want to whole customize the activityBar, you can reset it first,
-     * and then using the activityBar.add() method to fill the data you need.
-     */
-    reset(): void;
-    /**
-     * Add IActivityBarItem data
-     * @param isActive If provide, Activity Bar will set data active automatically. Only works in one data
-     */
-    add(data: ArraylizeOrSingle<IActivityBarItem>, isActive?: boolean): void;
-    /**
-     * Get the specific activity bar by id
-     */
-    get(id: UniqueId): IActivityBarItem | undefined;
-    /**
-     * Update the specific activity bar by id
-     */
-    update(data: RequiredId<IActivityBarItem>): void;
-    /**
-     * Set active bar
-     */
-    setActive(id?: UniqueId): void;
-    /**
-     * Remove the specific activity bar by id
-     * @param id
-     */
-    remove(id: ArraylizeOrSingle<UniqueId>): void;
-    /**
-     * Toggle the specific activity bar between show or hide
-     * @param id activity bar id
-     */
-    toggleBar(id: UniqueId, hidden?: boolean): void;
-    /**
-     * Add click event listener
-     * @param callback
-     */
-    onClick(callback: (item: IActivityBarItem) => void): void;
-    /**
-     * Add context menu click event listener
-     */
-    onContextMenu(callback: ContextMenuWithItemHandler<[item?: IActivityBarItem]>): void;
-    onContextMenuClick?: (callback: ContextMenuEventHandler) => void;
-}
-
-export class ActivityBarService
-    extends BaseService<ActivityBarModel>
-    implements IActivityBarService
-{
+export class ActivityBarService extends BaseService<ActivityBarModel> {
     protected state: ActivityBarModel;
 
     constructor() {
@@ -67,60 +19,60 @@ export class ActivityBarService
         this.state = new ActivityBarModel();
     }
 
-    public setActive(id?: UniqueId) {
-        this.setState({
-            selected: id,
+    public setCurrent(id?: UniqueId) {
+        this.dispatch((draft) => {
+            draft.current = id;
         });
     }
 
-    public get(id: UniqueId) {
-        return this.getState().data.find(searchById(id));
+    public get<T extends IActivityBarItem>(id: UniqueId) {
+        return this.getState().data.find(searchById(id)) as T | undefined;
+    }
+
+    public getCurrent() {
+        return this.getState().current;
     }
 
     public add(data: ArraylizeOrSingle<IActivityBarItem>, isActive = false) {
         if (!Array.isArray(data) && isActive) {
-            this.setActive(data.id);
+            this.setCurrent(data.id);
         }
-
-        const arrayData = arraylize(data);
-
-        this.setState((prev) => ({
-            ...prev,
-            data: [...prev.data, ...arrayData],
-        }));
+        this.dispatch((draft) => {
+            const arrayData = arraylize(data);
+            draft.data.push(...arrayData);
+        });
     }
 
-    public update(data: RequiredId<IActivityBarItem>) {
-        const target = this.get(data.id);
-        if (!target) return;
-        Object.assign(target, data);
-        this.setState((prev) => ({
-            ...prev,
-            data: [...prev.data],
-        }));
+    public update<T extends IActivityBarItem>(data: RequiredId<T>): void;
+    public update<T extends IActivityBarItem>(id: UniqueId, predict: Predict<T>): void;
+    public update<T extends IActivityBarItem>(
+        item: RequiredId<T> | UniqueId,
+        predict?: Predict<T>
+    ) {
+        const isUpdateData = typeof item === 'object';
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(isUpdateData ? item.id : item));
+            if (target) {
+                Object.assign(target, isUpdateData ? item : predict?.(target as T) || {});
+            }
+        });
     }
 
     public remove(id: ArraylizeOrSingle<UniqueId>) {
-        const arrayId = arraylize(id);
-        this.setState((prev) => ({
-            ...prev,
-            data: extract(prev.data, arrayId),
-        }));
+        this.dispatch((draft) => {
+            arraylize(id).forEach((item) => {
+                const idx = draft.data.findIndex(searchById(item));
+                draft.data.splice(idx, 1);
+            });
+        });
     }
 
     public toggleBar(id: UniqueId, hidden?: boolean) {
-        this.setState((prev) => {
-            const next = [...prev.data];
-            const target = next.find((i) => i.id === id);
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(id));
             if (target) {
                 target.hidden = typeof hidden === 'boolean' ? hidden : !target.hidden;
-            } else {
-                logger.error(`Toggle activity bar failed, please check your id ${id}`);
             }
-            return {
-                ...prev,
-                data: next,
-            };
         });
     }
 

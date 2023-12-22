@@ -2,10 +2,10 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Container from 'mo/client/container';
 import { APP_PREFIX } from 'mo/const';
-import * as controller from 'mo/controllers';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
 import type { IExtension } from 'mo/types';
+import { getControllers } from 'mo/utils/context';
 import { getValue } from 'mo/utils/storage';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
@@ -88,60 +88,9 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         return storedLocale || defaultLocale || this._config.defaultLocale;
     }
 
-    constructor(config: IConfigProps) {
-        super();
-        this._config.defaultLocale = this.localeInit(config.defaultLocale);
-        this._config.extensions.push(...defaultExtensions);
-
-        if (Array.isArray(config.extensions)) {
-            this._config.extensions.unshift(...config.extensions);
-        }
-
-        // ===================== Registers =====================
-        this.register('locale', LocaleService);
-        this.register('builtin', BuiltinService);
-        this.register('contextMenu', ContextMenuService);
-        this.register('extension', ExtensionService);
-        this.register('auxiliaryBar', AuxiliaryBarService);
-        this.register('layout', LayoutService);
-        this.register('statusBar', StatusBarService);
-        this.register('menuBar', MenuBarService);
-        this.register('activityBar', ActivityBarService);
-        this.register('sidebar', SidebarService);
-        this.register('explorer', ExplorerService);
-        this.register('folderTree', FolderTreeService);
-        this.register('panel', PanelService);
-        this.register('output', OutputService);
-        this.register('editor', EditorService);
-        this.register('colorTheme', ColorThemeService);
-        this.register('action', ActionService);
-        this.register('monaco', MonacoService);
-        this.register('editorTree', EditorTreeService);
-        this.register('notification', NotificationService);
-        this.register('search', SearchService);
-        this.register('settings', SettingsService);
-        // =====================================================
-    }
-
-    // private initialLocaleService = (languagesExts: IExtension[]) => {
-    // const locales = languagesExts.reduce((pre, cur) => {
-    //     const languages = cur.contributes?.languages || [];
-    //     return pre.concat(languages);
-    // }, [] as ILocale[]);
-    // molecule.i18n.initialize(
-    //     locales,
-    //     localStorage.getItem(STORE_KEY) || this._config.defaultLocale
-    // );
-    // };
-
-    public getConfig: () => IConfigProps = () => {
-        return Object.assign({}, this._config);
-    };
-
-    public render = (container?: HTMLElement | null) => {
-        if (!container) return null;
+    private getServices() {
         const locale = this.resolve<LocaleService>('locale');
-        locale.setCurrentLocale(this._config.defaultLocale);
+        locale.setCurrent(this._config.defaultLocale);
         const builtin = this.resolve<BuiltinService>('builtin');
         this.emit(InstanceHookKind.beforeInit);
 
@@ -170,29 +119,86 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         // extensions should resolved after all other services
         const extension = this.resolve<ExtensionService>('extension');
 
-        monaco.initWorkspace(container);
-        extension.add(this._config.extensions);
-        // load contributes
-        extension.load();
+        return {
+            locale,
+            builtin,
+            contextMenu,
+            auxiliaryBar,
+            layout,
+            statusBar,
+            menuBar,
+            activityBar,
+            sidebar,
+            explorer,
+            folderTree,
+            panel,
+            output,
+            editor,
+            colorTheme,
+            action,
+            editorTree,
+            notification,
+            search,
+            settings,
+            monaco,
+            extension,
+        };
+    }
 
-        const layoutController = this.resolve(controller.layout.LayoutController);
-        const statusBarController = this.resolve(controller.statusBar.StatusBarController);
-        const menuBarController = this.resolve(controller.menuBar.MenuBarController);
-        const activityBarController = this.resolve(controller.activityBar.ActivityBarController);
-        const sidebarController = this.resolve(controller.sidebar.SidebarController);
-        const explorerController = this.resolve(controller.explorer.ExplorerController);
-        const folderTreeController = this.resolve(controller.folderTree.FolderTreeController);
-        const panelController = this.resolve(controller.panel.PanelController);
-        const outputController = this.resolve(controller.output.OutputController);
-        const editorController = this.resolve(controller.editor.EditorController);
-        const editorTreeController = this.resolve(controller.editorTree.EditorTreeController);
-        const notificationController = this.resolve(controller.notification.NotificationController);
-        const searchController = this.resolve(controller.search.SearchController);
-        const settingsController = this.resolve(controller.settings.SettingsController);
-        const contextMenuController = this.resolve(controller.contextMenu.ContextMenuController);
+    constructor(config: IConfigProps) {
+        super();
+        this._config.defaultLocale = this.localeInit(config.defaultLocale);
+        this._config.extensions.push(...defaultExtensions);
+
+        if (Array.isArray(config.extensions)) {
+            this._config.extensions.unshift(...config.extensions);
+        }
+
+        // ===================== Registers =====================
+        this.register('action', ActionService);
+        this.register('activityBar', ActivityBarService);
+        this.register('auxiliaryBar', AuxiliaryBarService);
+        this.register('builtin', BuiltinService);
+        this.register('colorTheme', ColorThemeService);
+        this.register('contextMenu', ContextMenuService);
+        this.register('editor', EditorService);
+        this.register('editorTree', EditorTreeService);
+        this.register('explorer', ExplorerService);
+        this.register('extension', ExtensionService);
+        this.register('folderTree', FolderTreeService);
+        this.register('layout', LayoutService);
+        this.register('locale', LocaleService);
+        this.register('menuBar', MenuBarService);
+        this.register('monaco', MonacoService);
+        this.register('notification', NotificationService);
+        this.register('output', OutputService);
+        this.register('panel', PanelService);
+        this.register('search', SearchService);
+        this.register('settings', SettingsService);
+        this.register('sidebar', SidebarService);
+        this.register('statusBar', StatusBarService);
+        // =====================================================
+    }
+
+    public getConfig: () => IConfigProps = () => {
+        return Object.assign({}, this._config);
+    };
+
+    public render = (container?: HTMLElement | null) => {
+        if (!container) return null;
+        const services = this.getServices();
+
+        services.monaco.initWorkspace(container);
+        services.extension.add(this._config.extensions);
+        // load contributes
+        services.extension.load();
+
+        const controllers = getControllers.call({
+            resolve: this.resolve.bind(this),
+        });
 
         // activate extensions
-        extension.activate();
+        services.extension.activate();
 
         const root = this.createRootElement();
 
@@ -200,47 +206,10 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.root.render(
             React.createElement(Container, {
                 value: {
-                    molecule: {
-                        contextMenu,
-                        auxiliaryBar,
-                        layout,
-                        statusBar,
-                        locale,
-                        builtin,
-                        menuBar,
-                        activityBar,
-                        sidebar,
-                        explorer,
-                        folderTree,
-                        panel,
-                        output,
-                        editor,
-                        colorTheme,
-                        action,
-                        editorTree,
-                        notification,
-                        search,
-                        settings,
-                    },
-                    monaco,
-                    localize: locale.localize,
-                    controllers: {
-                        layout: layoutController,
-                        statusBar: statusBarController,
-                        menuBar: menuBarController,
-                        activityBar: activityBarController,
-                        sidebar: sidebarController,
-                        explorer: explorerController,
-                        folderTree: folderTreeController,
-                        panel: panelController,
-                        output: outputController,
-                        editor: editorController,
-                        editorTree: editorTreeController,
-                        notification: notificationController,
-                        search: searchController,
-                        settings: settingsController,
-                        contextMenu: contextMenuController,
-                    } as any,
+                    molecule: services,
+                    monaco: services.monaco,
+                    localize: services.locale.localize,
+                    controllers: controllers as any,
                 },
             })
         );

@@ -11,7 +11,7 @@ import variables from './index.scss';
 export default function Sidebar({ onToolbarClick, onContextMenu }: ISideBarController) {
     const sidebar = useConnector('sidebar');
 
-    const pane = sidebar.panes.find(searchById(sidebar.current));
+    const pane = sidebar.data.find(searchById(sidebar.current));
 
     if (!pane) return <div className={variables.container} />;
 

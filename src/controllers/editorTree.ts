@@ -47,7 +47,7 @@ export class EditorTreeController extends BaseController implements IEditorTreeC
     private initView() {
         const { EDITOR_TREE, EDITORTREE_TOOLBAR } = this.builtin.getModules();
         if (EDITOR_TREE) {
-            this.explorer.addPanel({
+            this.explorer.add({
                 ...EDITOR_TREE,
                 render: (panel) => createElement(EditorTree, { panel, ...this }),
             });

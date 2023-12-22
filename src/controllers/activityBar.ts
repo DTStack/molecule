@@ -1,9 +1,13 @@
 import { BaseController } from 'mo/glue';
-import { ActivityBarEvent, type IActivityBarItem } from 'mo/models/activityBar';
+import { ActivityBarEvent } from 'mo/models/activityBar';
 import { MenuBarEvent } from 'mo/models/menuBar';
 import type { ActivityBarService } from 'mo/services/activityBar';
 import type { BuiltinService } from 'mo/services/builtin';
-import type { ContextMenuEventHandler, ContextMenuWithItemHandler } from 'mo/types';
+import type {
+    ContextMenuEventHandler,
+    ContextMenuWithItemHandler,
+    IActivityBarItem,
+} from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IActivityBarController extends BaseController {

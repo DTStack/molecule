@@ -10,10 +10,6 @@ export interface IStatusBarItem<T = any>
     data?: T;
 }
 
-export interface IStatusBar {
-    data: IStatusBarItem[];
-}
-
 /**
  * The activity bar event definition
  */
@@ -28,6 +24,6 @@ export enum StatusBarEvent {
     onContextMenu = 'statusBar.onContextMenu',
 }
 
-export class StatusBarModel implements IStatusBar {
+export class StatusBarModel {
     constructor(public data: IStatusBarItem[] = []) {}
 }

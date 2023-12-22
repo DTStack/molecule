@@ -22,7 +22,7 @@ export const LocalesExtends: IExtension = {
                     },
                 },
             ]);
-            molecule.notification.setNotificationVisibility(true);
+            molecule.layout.setNotification(true);
         });
     },
 };

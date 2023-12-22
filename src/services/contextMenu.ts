@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { ContextMenuEvent, ContextMenuModel } from 'mo/models/contextMenu';
-import {
+import type {
     ContextMenuEventHandler,
     FunctionalOrSingle,
     IMenuItemProps,
@@ -23,45 +23,54 @@ export class ContextMenuService extends BaseService<ContextMenuModel> {
         return this.getState().data.find(searchById(id));
     }
 
+    public getAll() {
+        return this.getState().data;
+    }
+
     public getScope<T = any>(): T {
         return this.getState().scope;
     }
 
     public open(data: IMenuItemProps[], pos: IPosition, scope?: any) {
-        this.setContextMenu((prev) => [...prev, ...data]);
+        this.add(data);
         this.updatePosition(pos);
         this.setVisible(true);
         this.setScope(scope);
     }
 
     public close() {
-        this.setContextMenu([]);
+        this.clear();
         this.setVisible(false);
+        this.setScope();
     }
 
     public setVisible(visible: FunctionalOrSingle<boolean>) {
-        this.setState((prev) => ({
-            ...prev,
-            visible: typeof visible === 'function' ? visible(prev.visible) : visible,
-        }));
-    }
-
-    public setContextMenu(data: FunctionalOrSingle<IMenuItemProps[]>) {
-        this.setState((prev) => ({
-            ...prev,
-            data: typeof data === 'function' ? data(prev.data) : data,
-        }));
-    }
-
-    public updatePosition(pos: IPosition) {
-        this.setState({
-            position: pos,
+        this.dispatch((draft) => {
+            draft.visible = typeof visible === 'function' ? visible(draft.visible) : visible;
         });
     }
 
-    public setScope(scope: any) {
-        this.setState({
-            scope,
+    public add(data: IMenuItemProps[]) {
+        this.dispatch((draft) => {
+            draft.data.push(...data);
+        });
+    }
+
+    public clear() {
+        this.dispatch((draft) => {
+            draft.data.length = 0;
+        });
+    }
+
+    public updatePosition(pos: IPosition) {
+        this.dispatch((draft) => {
+            draft.position = pos;
+        });
+    }
+
+    public setScope(scope?: any) {
+        this.dispatch((draft) => {
+            draft.scope = scope;
         });
     }
 

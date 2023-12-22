@@ -1,4 +1,4 @@
-import { IContributeType, type IExtension, UniqueId } from 'mo/types';
+import { IBottomActivityBarItem, IContributeType, type IExtension, UniqueId } from 'mo/types';
 
 import { QuickAccessCommandAction } from './quickAccessCommandAction';
 import { QuickAccessSettingsAction } from './quickAccessSettingsAction';
@@ -24,9 +24,9 @@ export const ExtendsActions: IExtension = {
     },
     activate: function (molecule): void {
         // append actions into settings' menu
-        appendActionInMenu(QuickAccessCommandAction);
-        appendActionInMenu(QuickAccessSettingsAction);
-        appendActionInMenu(QuickSelectThemeAction);
+        appendActionToMenu(QuickAccessCommandAction);
+        appendActionToMenu(QuickAccessSettingsAction);
+        appendActionToMenu(QuickSelectThemeAction);
 
         // update menu's keybinding
         updateMenuKeybinding(QuickAccessCommandAction.ID);
@@ -35,23 +35,25 @@ export const ExtendsActions: IExtension = {
 
         // updateContextMenuKeybinding(QuickTogglePanelAction.ID, 'panel');
 
-        function appendActionInMenu(ctor: { ID: string }) {
-            const setting = molecule.activityBar.get(
-                molecule.builtin.getState().constants.ACTIVITYBAR_ITEM_SETTING
-            );
-            if (!setting) return;
-
+        function appendActionToMenu(ctor: { ID: string }) {
             const keybinding = molecule.action.queryGlobalKeybinding(ctor.ID);
             // Add Settings into setting's menus
-            setting.contextMenu ??= [];
-            setting.contextMenu.push({
-                id: ctor.ID,
-                name: molecule.locale.localize(ctor.ID, ctor.ID),
-                keybinding: keybinding
-                    ? molecule.action.convertSimpleKeybindingToString(keybinding)
-                    : undefined,
-            });
-            molecule.activityBar.update(setting);
+            molecule.activityBar.update<IBottomActivityBarItem>(
+                molecule.builtin.getState().constants.ACTIVITYBAR_ITEM_SETTING,
+                (prev) => ({
+                    id: prev.id,
+                    contextMenu: [
+                        ...(prev.contextMenu || []),
+                        {
+                            id: ctor.ID,
+                            name: molecule.locale.localize(ctor.ID, ctor.ID),
+                            keybinding: keybinding
+                                ? molecule.action.convertSimpleKeybindingToString(keybinding)
+                                : undefined,
+                        },
+                    ],
+                })
+            );
 
             molecule.activityBar.onContextMenuClick((item) => {
                 if (item.id === ctor.ID) {

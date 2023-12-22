@@ -1,3 +1,4 @@
+import { Draft, produce } from 'immer';
 import { cloneDeepWith } from 'lodash-es';
 
 import GlobalEvent from './event';
@@ -40,6 +41,17 @@ export default abstract class BaseService<S = any> extends GlobalEvent implement
         super();
     }
 
+    public dispatch(recipe: (draft: Draft<S>) => void, didRender?: () => void) {
+        const base = { ...this.state };
+        const next = produce(base, recipe);
+
+        if (next !== base) {
+            this.render(next);
+            this.state = next;
+            didRender?.();
+        }
+    }
+
     /**
      * Set the state values, and notify the view component to re render
      * @param values update target state values
@@ -62,8 +74,9 @@ export default abstract class BaseService<S = any> extends GlobalEvent implement
             }
         });
         this.render(nextState);
-        callback?.(this.state, nextState);
+        const prev = this.state;
         this.state = nextState;
+        callback?.(prev, this.state);
     }
 
     private _renderRecord: { prev?: S; next?: S } = {};

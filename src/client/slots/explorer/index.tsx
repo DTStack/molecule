@@ -12,11 +12,12 @@ export default function Explorer({
     const data = explorer.data.concat().sort(sortByIndex);
 
     if (!data.length) return null;
+    
     return (
         <Collapse
             data={data}
             observer
-            activePanelKeys={explorer.activePanelKeys}
+            activePanelKeys={explorer.active}
             onCollapseChange={onCollapseChange}
             onToolbarClick={onToolbarClick}
             onContextMenu={onContextMenu}

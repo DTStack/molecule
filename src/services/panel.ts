@@ -4,71 +4,13 @@ import type {
     ArraylizeOrSingle,
     ContextMenuWithItemHandler,
     IMenuItemProps,
+    Predict,
     RequiredId,
     UniqueId,
 } from 'mo/types';
-import { arraylize, searchById } from 'mo/utils';
-import logger from 'mo/utils/logger';
+import { arraylize, getPrevOrNext, searchById } from 'mo/utils';
 
-export interface IPanelService extends BaseService<PanelModel> {
-    /**
-     * Set the current active panel
-     */
-    setActive(id: UniqueId | undefined): void;
-    /**
-     * Open a new or existing panel item as the active in Panel view
-     * @param panel
-     */
-    open(panel: IPanelItem): void;
-    /**
-     * Get the specific panel
-     * @param id
-     */
-    getPanel(id: UniqueId): IPanelItem | undefined;
-    /**
-     * Add new Panel items
-     * @param data
-     */
-    add(data: ArraylizeOrSingle<IPanelItem>): void;
-    /**
-     * Add new toolbar items
-     */
-    addToolbar(toolbars: IMenuItemProps[]): void;
-    /**
-     * Update the specific panel
-     * @param panel the id field is required
-     */
-    update(panel: IPanelItem): IPanelItem | undefined;
-    updateToolbar(item: RequiredId<IMenuItemProps>): void;
-    toggleBar(id: UniqueId): void;
-    /**
-     * Remove the specific panel
-     * @param id
-     */
-    remove(id: UniqueId): IPanelItem | undefined;
-    /**
-     * Reset data in state
-     */
-    reset(): void;
-    /**
-     * Listen to the Panel tabs onChange event
-     * @param callback
-     */
-    onChange(callback: (panelId: UniqueId) => void): void;
-    /**
-     * Listen to the Panel toolbar click event
-     * @param callback
-     */
-    onToolbarClick(callback: (item: IMenuItemProps) => void): void;
-    /**
-     * Listen to the Panel tabs close event
-     * @param callback
-     */
-    onClose(callback: (panelId: UniqueId) => void): void;
-    onContextMenu(callback: ContextMenuWithItemHandler<[item?: IPanelItem]>): void;
-}
-
-export class PanelService extends BaseService<PanelModel> implements IPanelService {
+export class PanelService extends BaseService<PanelModel> {
     protected state: PanelModel;
 
     constructor() {
@@ -76,70 +18,88 @@ export class PanelService extends BaseService<PanelModel> implements IPanelServi
         this.state = new PanelModel();
     }
 
-    public setActive(id: UniqueId | undefined): void {
-        this.setState({
-            current: id,
+    public get(id: UniqueId) {
+        return this.getAll().find(searchById(id));
+    }
+
+    public getAll() {
+        return this.getState().data;
+    }
+
+    public getToolbar(id: UniqueId) {
+        return this.getState().toolbar.find(searchById(id));
+    }
+
+    public getPanelToolbar(panelId: UniqueId, toolbarId: UniqueId) {
+        return this.get(panelId)?.toolbar?.find(searchById(toolbarId));
+    }
+
+    public add(data: ArraylizeOrSingle<IPanelItem>) {
+        this.dispatch((draft) => {
+            draft.data.push(...arraylize(data));
+        });
+    }
+
+    public update(id: UniqueId, predict: Predict<IPanelItem>): void;
+    public update(data: RequiredId<IPanelItem>): void;
+    public update(item: UniqueId | RequiredId<IPanelItem>, predict?: Predict<IPanelItem>) {
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(typeof item === 'object' ? item.id : item));
+            if (!target) return;
+            Object.assign(target, typeof item === 'object' ? item : predict?.(target));
+        });
+    }
+
+    public remove(id: UniqueId) {
+        this.dispatch((draft) => {
+            const idx = draft.data.findIndex(searchById(id));
+            if (idx === -1) return;
+            if (draft.current === id) {
+                draft.current = getPrevOrNext(draft.data, idx)?.id;
+            }
+            draft.data.splice(idx, 1);
+        });
+    }
+
+    public setCurrent(id?: UniqueId): void {
+        this.dispatch((draft) => {
+            draft.current = id;
         });
     }
 
     public open(data: IPanelItem<any>): void {
-        const panel = this.getPanel(data.id);
+        const panel = this.get(data.id);
         if (panel) {
-            this.setActive(panel.id);
+            this.setCurrent(panel.id);
         } else {
             this.add(data);
-            this.setActive(data.id);
+            this.setCurrent(data.id);
         }
     }
 
-    public getPanel(id: UniqueId): IPanelItem<any> | undefined {
-        return this.getState().data.find(searchById(id));
+    public addToolbar(toolbar: ArraylizeOrSingle<IMenuItemProps>): void {
+        this.dispatch((draft) => {
+            draft.toolbar.push(...arraylize(toolbar));
+        });
     }
 
-    public add(data: ArraylizeOrSingle<IPanelItem>) {
-        const next = arraylize(data);
-        this.setState((prev) => ({ ...prev, data: [...prev.data, ...next] }));
+    public updateToolbar(id: UniqueId, predict: Predict<IMenuItemProps>): void;
+    public updateToolbar(data: RequiredId<IMenuItemProps>): void;
+    public updateToolbar(
+        item: UniqueId | RequiredId<IMenuItemProps>,
+        predict?: Predict<IMenuItemProps>
+    ): void {
+        this.dispatch((draft) => {
+            const target = draft.toolbar.find(
+                searchById(typeof item === 'object' ? item.id : item)
+            );
+            if (!target) return;
+            Object.assign(target, typeof item === 'object' ? item : predict?.(target));
+        });
     }
 
-    public addToolbar(toolbars: IMenuItemProps[]): void {
-        this.setState((prev) => ({ ...prev, toolbars: [...prev.toolbars, ...toolbars] }));
-    }
-
-    public update(data: IPanelItem): IPanelItem | undefined {
-        const panel = this.getPanel(data.id);
-        if (panel) {
-            Object.assign(panel, data);
-            this.setState((prev) => ({ ...prev }));
-            return panel;
-        } else {
-            logger.error(`There is no panel found in data via the ${data.id}`);
-            return undefined;
-        }
-    }
-
-    public toggleBar(id: UniqueId): void {
-        this.update({ id, hidden: !this.getPanel(id)?.hidden });
-    }
-
-    public updateToolbar(item: RequiredId<IMenuItemProps>): void {
-        const toolbar = this.getState().toolbars.find(searchById(item.id));
-        if (toolbar) {
-            Object.assign(toolbar, item);
-            this.setState((prev) => ({ ...prev }));
-        } else {
-            logger.error(`There is no toolbar found in data via the ${item.id}`);
-        }
-    }
-
-    public remove(id: UniqueId): IPanelItem | undefined {
-        const panel = this.getPanel(id);
-        if (panel) {
-            this.setState((prev) => ({ ...prev, data: prev.data.filter((i) => i !== panel) }));
-            return panel;
-        } else {
-            logger.error(`There is no panel found in data via the ${id}`);
-            return undefined;
-        }
+    public toggle(id: UniqueId): void {
+        this.update(id, (prev) => ({ hidden: !prev.hidden }));
     }
 
     public reset(): void {

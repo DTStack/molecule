@@ -1,5 +1,6 @@
 import { EditorEvent } from 'mo/models/editor';
-import type { IExtension } from 'mo/types';
+import type { IExtension, UniqueId } from 'mo/types';
+import { throttleByArgs } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 
 export const ExtendsEditor: IExtension = {
@@ -25,8 +26,18 @@ export const ExtendsEditor: IExtension = {
             molecule.editor.closeToRight(tabId, groupId);
         });
 
-        molecule.editor.onDrag((dragInfo) => {
-            molecule.editor.moveTab(dragInfo);
+        molecule.editor.onDragStart((tabId, groupId) => {
+            molecule.editor.setCurrent(tabId, groupId);
+        });
+
+        molecule.editor.onDragOver(
+            throttleByArgs((_, to: { tabId: UniqueId; groupId: UniqueId }) => {
+                molecule.editor.setCurrent(to.tabId, to.groupId);
+            }, 2000)
+        );
+
+        molecule.editor.onDrop((from, to) => {
+            molecule.editor.moveTab(from, to);
         });
 
         molecule.editor.onChangeTab((value, ev, { tabId, groupId }) => {

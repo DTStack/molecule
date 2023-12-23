@@ -342,26 +342,6 @@ export interface IBreadcrumbItemProps extends RenderProps<IBreadcrumbItemProps> 
     icon?: IconType;
 }
 
-export enum DragAction {
-    /** dragOver */
-    hover = 'hover',
-    /** drop */
-    drop = 'drop',
-}
-
-export type IDragProps = {
-    type: DragAction;
-    from: {
-        groupId: UniqueId;
-        tabId: UniqueId;
-    };
-    to: {
-        groupId: UniqueId;
-        tabId: UniqueId;
-    };
-    info: Record<string, any>;
-};
-
 export type IEditorOptions = editor.IEditorOptions;
 
 /**
@@ -398,19 +378,6 @@ export type FocusEventHandler<T> = ExtendParameters<
     React.FocusEventHandler<T>,
     [treeNode: TreeNodeModel<any>]
 >;
-
-export type FolderTreeInsertOption = {
-    /**
-     * drag type， same level or child level，default is same level
-     * true： child level
-     * false：same level
-     */
-    gap?: boolean;
-    /**
-     * insert index
-     */
-    index?: number;
-};
 
 export type IPosition = {
     x: number;
@@ -479,3 +446,5 @@ export interface IEditorTab<T>
     modified?: boolean;
     data?: T;
 }
+
+export type TabGroup = { tabId: UniqueId; groupId: UniqueId };

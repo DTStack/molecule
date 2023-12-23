@@ -20,6 +20,10 @@ $extraActive: BEMModifier($extra, 'active');
     height: 100%;
     min-width: fit-content;
 
+    &.#{$hovering} {
+        background: var(--editorGroup-dropBackground);
+    }
+
     &.#{$active} {
         background: var(--tab-activeBackground);
         border-bottom-color: var(--tab-activeBorder);

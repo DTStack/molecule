@@ -2,15 +2,9 @@ import { BaseController } from 'mo/glue';
 import { EditorEvent } from 'mo/models/editor';
 import { SettingsEvent } from 'mo/models/setting';
 import { BuiltinService } from 'mo/services/builtin';
-import { ContextMenuService } from 'mo/services/contextMenu';
 import { EditorService } from 'mo/services/editor';
 import { LayoutService } from 'mo/services/layout';
-import type {
-    ContextMenuGroupHandler,
-    ContextMenuWithItemHandler,
-    IDragProps,
-    UniqueId,
-} from 'mo/types';
+import type { ContextMenuGroupHandler, ContextMenuWithItemHandler, UniqueId } from 'mo/types';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
@@ -22,7 +16,16 @@ export interface IEditorController extends BaseController {
     onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onDrag?: (params: IDragProps) => void;
+    onDragStart?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDragOver?: (
+        from: { tabId: UniqueId; groupId: UniqueId },
+        to: { tabId: UniqueId; groupId: UniqueId }
+    ) => void;
+    onDragEnd?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDrop?: (
+        from: { tabId: UniqueId; groupId: UniqueId },
+        to: { tabId: UniqueId; groupId: UniqueId }
+    ) => void;
     onChange?: (
         value: string | undefined,
         ev: editor.IModelContentChangedEvent,
@@ -41,7 +44,6 @@ export class EditorController extends BaseController implements IEditorControlle
     constructor(
         @inject('layout') private layout: LayoutService,
         @inject('editor') private editor: EditorService,
-        @inject('contextMenu') private contextMenu: ContextMenuService,
         @inject('builtin') private builtin: BuiltinService
     ) {
         super();
@@ -50,7 +52,7 @@ export class EditorController extends BaseController implements IEditorControlle
     private initView() {
         const { EDITOR_TOOLBAR } = this.builtin.getModules();
         if (EDITOR_TOOLBAR) {
-            this.editor.addActions(EDITOR_TOOLBAR);
+            this.editor.addToolbars(EDITOR_TOOLBAR);
         }
     }
 
@@ -59,11 +61,13 @@ export class EditorController extends BaseController implements IEditorControlle
     };
 
     public onMount = (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => {
-        const tab = this.editor.getTabById(tabId, groupId);
-        if (tab) {
-            tab.model = model;
-            this.editor.updateTab(tab, groupId);
-        }
+        this.editor.updateTab(
+            {
+                id: tabId,
+                model,
+            },
+            groupId
+        );
     };
 
     public onSelectTab = (tabId: UniqueId, groupId: UniqueId) => {
@@ -78,8 +82,30 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onCloseTab, tabId, groupId);
     };
 
-    public onDrag: IEditorController['onDrag'] = (props) => {
-        this.emit(EditorEvent.onMoveTab, props);
+    // public onDrag: IEditorController['onDrag'] = (props) => {
+    //     this.emit(EditorEvent.onDrag, props);
+    // };
+
+    public onDragStart: (tabId: UniqueId, groupId: UniqueId) => void = (tabId, groupId) => {
+        this.emit(EditorEvent.onDragStart, tabId, groupId);
+    };
+
+    public onDragEnd: (tabId: UniqueId, groupId: UniqueId) => void = (tabId, groupId) => {
+        this.emit(EditorEvent.onDragEnd, tabId, groupId);
+    };
+
+    public onDragOver: (
+        from: { tabId: UniqueId; groupId: UniqueId },
+        to: { tabId: UniqueId; groupId: UniqueId }
+    ) => void = (from, to) => {
+        this.emit(EditorEvent.onDragOver, from, to);
+    };
+
+    public onDrop: (
+        from: { tabId: UniqueId; groupId: UniqueId },
+        to: { tabId: UniqueId; groupId: UniqueId }
+    ) => void = (from, to) => {
+        this.emit(EditorEvent.onDrop, from, to);
     };
 
     public onCursorSelection = (

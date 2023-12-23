@@ -1,12 +1,4 @@
-import type {
-    IBreadcrumbItemProps,
-    IEditorOptions,
-    IItemProps,
-    IMenuItemProps,
-    RenderProps,
-    UniqueId,
-} from 'mo/types';
-import type { editor as MonacoEditor } from 'monaco-editor';
+import type { IEditorOptions, IEditorTab, IMenuItemProps, UniqueId } from 'mo/types';
 
 export enum EditorEvent {
     onChangeTab = 'editor.onChangeTab',
@@ -15,7 +7,10 @@ export enum EditorEvent {
     onCloseOther = 'editor.onCloseOther',
     onCloseToLeft = 'editor.onCloseToLeft',
     onCloseToRight = 'editor.onCloseToRight',
-    onMoveTab = 'editor.onMoveTab',
+    onDragStart = 'editor.onDragStart',
+    onDragOver = 'editor.onDragOver',
+    onDragEnd = 'editor.onDragEnd',
+    onDrop = 'editor.onDrop',
     OpenTab = 'editor.openTab',
     onSelectTab = 'editor.onSelectTab',
     onUpdateTab = 'editor.onUpdateTab',
@@ -27,17 +22,6 @@ export enum EditorEvent {
     onToolbarClick = 'editor.onToolbarClick',
 }
 
-export interface IEditorTab<T>
-    extends RenderProps<IEditorTab<T>>,
-        Pick<IItemProps, 'id' | 'name' | 'icon'> {
-    model?: MonacoEditor.ITextModel;
-    value?: string;
-    language?: string;
-    breadcrumb?: IBreadcrumbItemProps[];
-    modified?: boolean;
-    data?: T;
-}
-
 export class EditorGroupModel<T = any> {
     constructor(
         public id: UniqueId,
@@ -46,34 +30,10 @@ export class EditorGroupModel<T = any> {
     ) {}
 }
 
-export interface IEditor {
-    /**
-     * Current editor group's id
-     */
-    current?: UniqueId;
-    /**
-     * Editor Groups
-     */
-    groups?: EditorGroupModel[];
-    /**
-     * The welcome page of editor bench
-     */
-    entry?: React.ReactNode;
-    /**
-     * Built-in editor options, there is main apply it to monaco-editor
-     */
-    editorOptions?: IEditorOptions;
-    /**
-     * Toolbar items
-     */
-    toolbar?: IMenuItemProps[];
-    loading?: boolean;
-}
-
-export class EditorModel implements IEditor {
+export class EditorModel {
     constructor(
         public groups: EditorGroupModel[] = [],
-        public editorOptions: IEditorOptions = {},
+        public options: IEditorOptions = {},
         public toolbar: IMenuItemProps[] = [],
         public loading: boolean = false,
         public entry?: React.ReactNode,

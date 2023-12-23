@@ -11,7 +11,6 @@ import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type {
     ContextMenuGroupHandler,
     ContextMenuWithItemHandler,
-    IDragProps,
     IMenuItemProps,
     UniqueId,
 } from 'mo/types';
@@ -23,7 +22,7 @@ import variables from './index.scss';
 type EditorContextMenu = ContextMenuWithItemHandler<[tabId: UniqueId, groupId: UniqueId]>;
 export interface IGroupProps {
     group: EditorGroupModel;
-    options: EditorModel['editorOptions'];
+    options: EditorModel['options'];
     toolbar?: IMenuItemProps[];
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
     onChange?: (
@@ -40,7 +39,16 @@ export interface IGroupProps {
     onContextMenu?: EditorContextMenu;
     onToolbarClick?: ContextMenuGroupHandler;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onDrag?: (params: IDragProps) => void;
+    onDragStart?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDragOver?: (
+        from: { tabId: UniqueId; groupId: UniqueId },
+        to: { tabId: UniqueId; groupId: UniqueId }
+    ) => void;
+    onDragEnd?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDrop?: (
+        from: { tabId: UniqueId; groupId: UniqueId },
+        to: { tabId: UniqueId; groupId: UniqueId }
+    ) => void;
 }
 
 export default function Group({
@@ -55,7 +63,10 @@ export default function Group({
     onContextMenu,
     onToolbarClick,
     onCloseTab,
-    onDrag,
+    onDragStart,
+    onDragOver,
+    onDragEnd,
+    onDrop,
 }: IGroupProps) {
     const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
     const disposesRef = useRef<IDisposable[]>([]);
@@ -144,14 +155,16 @@ export default function Group({
                             onContextMenu={(pos) => onContextMenu?.(pos, tab.id, group.id)}
                             onClose={() => onCloseTab?.(tab.id, group.id)}
                             onClick={() => onSelectTab?.(tab.id, group.id)}
-                            onDragStart={() => ({ tabId: tab.id, groupId: group.id })}
-                            onDrag={({ info, type, item }) =>
-                                onDrag?.({
-                                    info,
-                                    type,
-                                    from: item,
-                                    to: { tabId: tab.id, groupId: group.id },
-                                })
+                            onDragStart={() => {
+                                onDragStart?.(tab.id, group.id);
+                                return { tabId: tab.id, groupId: group.id };
+                            }}
+                            onDragOver={(source) =>
+                                onDragOver?.(source, { tabId: tab.id, groupId: group.id })
+                            }
+                            onDragEnd={(source) => onDragEnd?.(source.tabId, source.groupId)}
+                            onDrop={(source) =>
+                                onDrop?.(source, { tabId: tab.id, groupId: group.id })
                             }
                         />
                     );

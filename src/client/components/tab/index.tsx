@@ -17,7 +17,7 @@ export interface ITabsProps<T> {
     onContextMenu?: ContextMenuWithItemHandler<[]>;
     onClick?: () => void;
     onClose?: () => void;
-    onDragStart?: () => T;
+    onDragStart: () => T;
     onDragEnd?: (source: T) => void;
     onDragOver?: (source: T) => void;
     onDrop?: (source: T) => void;
@@ -41,7 +41,7 @@ export default function Tabs<T>({
 
     const [, drag] = useDrag({
         type: 'DND_NODE',
-        item: onDragStart?.(),
+        item: () => onDragStart(),
         end(item) {
             onDragEnd?.(item);
         },
@@ -65,13 +65,18 @@ export default function Tabs<T>({
     //         onDrag?.({ item, info, type });
     //     }, 500);
 
-    const [, drop] = useDrop({
+    const [{ isOver }, drop] = useDrop({
         accept: 'DND_NODE',
-        hover(item: T) {
-            onDragOver?.(item);
+        collect: (monitor) => {
+            return {
+                isOver: !!monitor.isOver(),
+            };
         },
-        drop(item) {
-            onDrop?.(item);
+        hover(_, monitor) {
+            onDragOver?.(monitor.getItem());
+        },
+        drop(_, monitor) {
+            onDrop?.(monitor.getItem());
         },
     });
 
@@ -81,7 +86,12 @@ export default function Tabs<T>({
         <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY })} tabIndex={0}>
             <Flex
                 ref={ref}
-                className={classNames(variables.tab, active && variables.active, className)}
+                className={classNames(
+                    variables.tab,
+                    active && variables.active,
+                    isOver && variables.hovering,
+                    className
+                )}
                 onClick={onClick}
             >
                 {title}

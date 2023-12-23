@@ -1,5 +1,5 @@
 import { Children, cloneElement, isValidElement } from 'react';
-import { merge, omitBy } from 'lodash-es';
+import { isEqual, merge, omitBy } from 'lodash-es';
 import {
     type ArraylizeOrSingle,
     ColorScheme,
@@ -297,4 +297,35 @@ export function isElementInParentView(ele: HTMLElement, parent: HTMLElement) {
         else if (!bottom) isWhichSide = 'bottom';
     }
     return [overlay, isWhichSide] as const;
+}
+
+/**
+ * Throttles the execution of a function based on the arguments passed.
+ *
+ * @template T - The type of the function.
+ * @param {T} fn - The function to be throttled.
+ * @param {number} wait - The time in milliseconds to wait before executing the function again.
+ * @returns {(...args: Parameters<T>) => void} - The throttled function.
+ */
+export function throttleByArgs<T extends(...args: any[]) => any>(
+    fn: T,
+    wait: number
+): (...args: Parameters<T>) => void {
+    let startTime = 0;
+    let previous = 0;
+    let prevArgs: any[];
+    return function (this: any, ...args: Parameters<T>) {
+        const now = window.performance.now();
+        const first = now - previous > 100 || isEqual(args, prevArgs);
+        if (first) {
+            startTime = now;
+            previous = now;
+            prevArgs = args;
+        } else {
+            previous = now;
+            if (now - startTime > wait) {
+                fn.apply(this, args);
+            }
+        }
+    };
 }

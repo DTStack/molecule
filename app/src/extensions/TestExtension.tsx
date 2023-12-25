@@ -1,4 +1,9 @@
-import { FileTypes, IExtension, IMoleculeContext } from '@dtinsight/molecule/esm/types';
+import {
+    FileTypes,
+    IContributeType,
+    IExtension,
+    IMoleculeContext,
+} from '@dtinsight/molecule/esm/types';
 import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
 import { debounce } from 'lodash-es';
 
@@ -8,6 +13,11 @@ import { getFileContent, getFiles, getWorkspace, searchFileContents } from '../u
 export const TestExtension: IExtension = {
     id: 'TestExtension',
     name: 'TestExtension',
+    contributes: {
+        [IContributeType.Modules]: {
+            menuBar: import('../components/menuBar'),
+        },
+    },
     activate(molecule: IMoleculeContext) {
         molecule.activityBar.add({
             id: 'testPane',

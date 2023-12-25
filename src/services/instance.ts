@@ -5,7 +5,6 @@ import { APP_PREFIX } from 'mo/const';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
 import type { IExtension } from 'mo/types';
-import { getControllers } from 'mo/utils/context';
 import { getValue } from 'mo/utils/storage';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
@@ -24,6 +23,7 @@ import { FolderTreeService } from './folderTree';
 import { LayoutService } from './layout';
 import { LocaleService } from './locale';
 import { MenuBarService } from './menuBar';
+import { ModuleService } from './module';
 import { MonacoService } from './monaco';
 import { NotificationService } from './notification';
 import { OutputService } from './output';
@@ -95,6 +95,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.emit(InstanceHookKind.beforeInit);
 
         this.emit(InstanceHookKind.beforeLoad);
+        const module = this.resolve<ModuleService>('module');
         const monaco = this.resolve<MonacoService>('monaco');
         const contextMenu = this.resolve<ContextMenuService>('contextMenu');
         const auxiliaryBar = this.resolve<AuxiliaryBarService>('auxiliaryBar');
@@ -113,7 +114,6 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         const notification = this.resolve<NotificationService>('notification');
         const search = this.resolve<SearchService>('search');
         const settings = this.resolve<SettingsService>('settings');
-
         const action = this.resolve<ActionService>('action');
 
         // extensions should resolved after all other services
@@ -141,6 +141,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
             search,
             settings,
             monaco,
+            module,
             extension,
         };
     }
@@ -169,6 +170,7 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         this.register('layout', LayoutService);
         this.register('locale', LocaleService);
         this.register('menuBar', MenuBarService);
+        this.register('module', ModuleService);
         this.register('monaco', MonacoService);
         this.register('notification', NotificationService);
         this.register('output', OutputService);
@@ -187,15 +189,18 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
     public render = (container?: HTMLElement | null) => {
         if (!container) return null;
         const services = this.getServices();
+        const controllers = Array.from(services.module.controllers).reduce<Record<string, any>>(
+            (acc, [key, value]) => {
+                acc[key] = this.resolve(value);
+                return acc;
+            },
+            {}
+        );
 
         services.monaco.initWorkspace(container);
         services.extension.add(this._config.extensions);
         // load contributes
         services.extension.load();
-
-        const controllers = getControllers.call({
-            resolve: this.resolve.bind(this),
-        });
 
         // activate extensions
         services.extension.activate();
@@ -209,7 +214,8 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
                     molecule: services,
                     monaco: services.monaco,
                     localize: services.locale.localize,
-                    controllers: controllers as any,
+                    modules: services.module.modules,
+                    controllers,
                 },
             })
         );

@@ -1,8 +1,8 @@
 import Display from 'mo/client/components/display';
 import { Pane, SplitPane } from 'mo/client/components/split';
+import useDynamic from 'mo/client/hooks/useDynamic';
 
 import useConnector from '../../hooks/useConnector';
-import useSlots from '../../hooks/useSlots';
 import 'normalize.css';
 import '../../classNames/common.css';
 import variables from './index.scss';
@@ -14,13 +14,13 @@ export interface IWorkbenchProps {
 
 export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchProps) {
     const layout = useConnector('layout');
-    const StatusBar = useSlots('statusBar');
-    const MenuBar = useSlots('menuBar');
-    const ActivityBar = useSlots('activityBar');
-    const Sidebar = useSlots('sidebar');
-    const Panel = useSlots('panel');
-    const Editor = useSlots('editor');
-    const ContextMenu = useSlots('contextMenu');
+    const StatusBar = useDynamic('statusBar');
+    const MenuBar = useDynamic('menuBar');
+    const ActivityBar = useDynamic('activityBar');
+    const Sidebar = useDynamic('sidebar');
+    const Panel = useDynamic('panel');
+    const Editor = useDynamic('editor');
+    const ContextMenu = useDynamic('contextMenu');
 
     const bothVisibility = !layout.sidebar.hidden && !layout.auxiliaryBar.hidden;
     const sidebarHidden = layout.sidebar.hidden;

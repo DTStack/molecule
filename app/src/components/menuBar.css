@@ -1,0 +1,18 @@
+.app_menuBar {
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 4px 0;
+    border-radius: 5px;
+    border: 1px solid var(--panel-border);
+    width: calc(100% - 40px);
+    max-width: 300px;
+    user-select: none;
+}
+.app_menuBar:hover {
+    color: var(--menu-selectionForeground);
+    background-color: var(--menubar-selectionBackground);
+}

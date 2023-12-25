@@ -1,10 +1,10 @@
 import type { IContext } from 'mo/types';
 
-import useSlots from './hooks/useSlots';
+import useDynamic from './hooks/useDynamic';
 import { Context } from './context';
 
 function Outlet() {
-    const Workbench = useSlots('layout', import('./slots/workbench'));
+    const Workbench = useDynamic('layout');
     return <>{Workbench}</>;
 }
 

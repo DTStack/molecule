@@ -1,5 +1,5 @@
 import React from 'react';
-import Search from 'mo/client/slots/search';
+import ViewSuspense from 'mo/client/components/viewSuspense';
 import { BaseController } from 'mo/glue';
 import { SearchEvent } from 'mo/models/search';
 import { ActivityBarService } from 'mo/services/activityBar';
@@ -35,7 +35,7 @@ export class SearchController extends BaseController implements ISearchControlle
             this.sidebar.add({
                 ...SEARCH,
                 toolbar: [...SEARCH_TOOLBAR, SEARCH_TOOLBAR_VIEW_AS_TREE, SEARCH_TOOLBAR_COLLAPSE],
-                render: () => React.createElement(Search, { ...this }),
+                render: () => React.createElement(ViewSuspense, { key: 'search', token: 'search' }),
             });
         }
     }

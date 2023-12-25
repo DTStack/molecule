@@ -1,5 +1,5 @@
 import React from 'react';
-import Explorer from 'mo/client/slots/explorer';
+import ViewSuspense from 'mo/client/components/viewSuspense';
 import { BaseController } from 'mo/glue';
 import { ExplorerEvent, IExplorerPanelItem } from 'mo/models/explorer';
 import { ActivityBarService } from 'mo/services/activityBar';
@@ -31,7 +31,8 @@ export class ExplorerController extends BaseController implements IExplorerContr
             this.activitybar.add(EXPLORER_ITEM, true);
             this.sidebar.add({
                 ...EXPLORER_ITEM,
-                render: () => React.createElement(Explorer, { ...this }),
+                render: () =>
+                    React.createElement(ViewSuspense, { key: 'explorer', token: 'explorer' }),
             });
             this.sidebar.setCurrent(EXPLORER_ITEM.id);
         }

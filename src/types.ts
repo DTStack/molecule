@@ -24,7 +24,6 @@ import type { SettingsService } from './services/setting';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { TreeNodeModel } from './utils/tree';
-import type { BaseController } from './glue';
 
 export type RequiredId<T extends { id: UniqueId }> = Partial<T> & Required<Pick<T, 'id'>>;
 
@@ -126,9 +125,13 @@ export interface IContext {
         settings: SettingsService;
     };
     monaco: MonacoService;
-    controllers: { [key in keyof IContext['molecule']]: BaseController };
+    controllers: Record<string, any>;
+    modules: Map<string, Factory>;
     localize: Localize;
 }
+
+export type Factory = ReturnType<Parameters<typeof React.lazy>[0]>;
+
 export type IMoleculeContext = IContext['molecule'];
 
 export type Functional<T> = (prev: T) => T;
@@ -207,6 +210,7 @@ export enum IContributeType {
     Grammar = 'grammars',
     Themes = 'themes',
     IconTheme = 'iconThemes',
+    Modules = 'modules',
 }
 
 /**
@@ -226,6 +230,7 @@ export interface IContribute {
     // [IContributeType.Configuration]?: any;
     // [IContributeType.Grammar]?: any;
     [IContributeType.Themes]?: IColorTheme[];
+    [IContributeType.Modules]?: Record<string, Factory>;
     // [IContributeType.IconTheme]?: IIconTheme[];
 }
 

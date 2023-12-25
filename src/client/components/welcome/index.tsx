@@ -1,5 +1,3 @@
-import useGetKeys from 'mo/client/hooks/useGetKeys';
-
 import variables from './index.scss';
 
 function Logo({ className }: { className: string }) {
@@ -19,24 +17,10 @@ function Logo({ className }: { className: string }) {
 }
 
 export default function Welcome() {
-    const keys = useGetKeys();
-
     return (
         <div className={variables.container}>
             <Logo className={variables.logo} />
             <h1 className={variables.title}>Molecule</h1>
-            <div className={variables.keybindings}>
-                <ul>
-                    {keys.map((item) => {
-                        return (
-                            <li className={variables.keys} key={item.id}>
-                                <span>{item.name}</span>
-                                <span>{item.keybindings.split('').join(' ')}</span>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
         </div>
     );
 }

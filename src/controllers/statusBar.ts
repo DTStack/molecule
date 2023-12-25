@@ -3,7 +3,6 @@ import LineInfo from 'mo/client/components/lineInfo';
 import { BaseController } from 'mo/glue';
 import { IStatusBarItem, StatusBarEvent } from 'mo/models/statusBar';
 import type { BuiltinService } from 'mo/services/builtin';
-import { ContextMenuService } from 'mo/services/contextMenu';
 import type { StatusBarService } from 'mo/services/statusBar';
 import type { ContextMenuWithItemHandler, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
@@ -17,8 +16,7 @@ export interface IStatusBarController extends BaseController {
 export class StatusBarController extends BaseController implements IStatusBarController {
     constructor(
         @inject('statusBar') private statusBar: StatusBarService,
-        @inject('builtin') private builtin: BuiltinService,
-        @inject('contextMenu') private contextMenu: ContextMenuService
+        @inject('builtin') private builtin: BuiltinService
     ) {
         super();
         this.initView();

@@ -24,6 +24,7 @@ import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
+import { ModuleService } from './module';
 import type { MonacoService } from './monaco';
 import type { NotificationService } from './notification';
 import type { OutputService } from './output';
@@ -58,7 +59,8 @@ export class ExtensionService extends BaseService<ExtensionModel> {
         @inject('notification') private notification: NotificationService,
         @inject('search') private search: SearchService,
         @inject('settings') private settings: SettingsService,
-        @inject('monaco') private monaco: MonacoService
+        @inject('monaco') private monaco: MonacoService,
+        @inject('module') private module: ModuleService
     ) {
         super('extension');
         this.state = new ExtensionModel();
@@ -159,6 +161,14 @@ export class ExtensionService extends BaseService<ExtensionModel> {
                     const commands = contributes[type];
                     if (!Array.isArray(commands)) return;
                     commands.forEach((command) => this.action.registerAction(command));
+                    break;
+                }
+                case IContributeType.Modules: {
+                    const modules = contributes[type];
+                    if (!modules) return;
+                    Object.keys(modules).forEach((key) => {
+                        this.module.update(key, modules[key]);
+                    });
                     break;
                 }
                 default:

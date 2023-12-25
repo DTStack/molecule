@@ -16,16 +16,6 @@ export class LocaleService extends BaseService<LocaleModel> {
         this.state = new LocaleModel();
     }
 
-    // private getNextOrLastLocales(locale: ILocale) {
-    //     const { locales } = this.state;
-    //     const idx = locales.indexOf(locale);
-    //     if (locales.length <= 1) {
-    //         return undefined;
-    //     }
-    //     const next = locales[idx + 1] || locales[idx - 1];
-    //     return next;
-    // }
-
     public getAll() {
         return this.getState().data;
     }
@@ -63,7 +53,8 @@ export class LocaleService extends BaseService<LocaleModel> {
         });
         setValue(LocaleService.STORE_KEY, id.toString());
         // ===================== effects =====================
-        this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
+        prev !== this.getCurrent() &&
+            this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
     }
 
     public add(locale: ArraylizeOrSingle<ILocale>): void {

@@ -69,9 +69,6 @@ export default class QuickSelectLocaleAction extends BaseAction {
                 resolve();
             });
 
-            quickPick.onDidChangeActive((locales) =>
-                this.molecule.locale.setCurrent(locales[0].id)
-            );
             quickPick.onDidHide(() => {
                 if (!isCompleted) {
                     onSelect(current, true);

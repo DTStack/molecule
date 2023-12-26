@@ -229,5 +229,9 @@ export const ExtendsTestPane: IExtension = {
 
             molecule.layout.setAuxiliaryBar(!tab);
         });
+
+        molecule.editor.onEditorInstanceMount((editorInstance) => {
+            console.log('editorInstance:', editorInstance);
+        });
     },
 };

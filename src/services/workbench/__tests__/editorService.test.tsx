@@ -9,6 +9,16 @@ import { editor as MonacoEditor } from 'mo/monaco';
 import { cloneDeep } from 'lodash';
 import { act } from 'react-dom/test-utils';
 
+jest.mock('mo/monaco', () => {
+    const original = jest.requireActual('mo/monaco');
+    return {
+        ...original,
+        editor: {
+            getModel: jest.fn(),
+        },
+    };
+});
+
 describe('Test EditorService', () => {
     let mockTab: IEditorTab;
 
@@ -132,7 +142,7 @@ describe('Test EditorService', () => {
         expect(editor.editorInstance).toBeUndefined();
     });
 
-    test('Update the tab', () => {
+    test('Update the tab without model', () => {
         const editor = new EditorService();
         editor.open(mockTab);
         expect(editor.getState().current?.activeTab).toBe(mockTab.id);
@@ -198,14 +208,9 @@ describe('Test EditorService', () => {
         expect(groups?.length).toBe(1);
 
         const setValFn = jest.fn();
-        const getValFn = jest.fn(() => '');
-        groups![0].editorInstance = {
-            getModel: () => ({
-                getValue: getValFn,
-                setValue: setValFn,
-            }),
-        };
-
+        (MonacoEditor.getModel as jest.Mock).mockImplementation(() => ({
+            setValue: setValFn,
+        }));
         act(() => {
             editor.updateTab({
                 id: mockTab.id,
@@ -217,6 +222,20 @@ describe('Test EditorService', () => {
 
         expect(setValFn).toBeCalled();
         expect(setValFn.mock.calls[0][0]).toBe('test');
+
+        // Update editor text even not current tab
+        editor.setActive(1, 1);
+        act(() => {
+            editor.updateTab({
+                id: mockTab.id,
+                data: {
+                    value: 'test2',
+                },
+            });
+        });
+
+        expect(setValFn).toBeCalledTimes(2);
+        expect(setValFn.mock.calls[1][0]).toBe('test2');
     });
 
     test('Should prevent update editor text if current tab with renderPane', () => {
@@ -612,6 +631,15 @@ describe('Test EditorService', () => {
             const expected = [1, { id: 1 }];
             editor.emit(EditorEvent.onActionsClick, ...expected);
             expect(testFn.mock.calls[0]).toEqual(expected);
+        });
+    });
+
+    test('Listen to the editorInstance mount', () => {
+        const editor = new EditorService();
+        expectFnCalled((testFn) => {
+            editor.onEditorInstanceMount(testFn);
+            editor.emit(EditorEvent.onEditorInstanceMount, {});
+            expect(testFn.mock.calls[0][0]).toEqual({});
         });
     });
 });

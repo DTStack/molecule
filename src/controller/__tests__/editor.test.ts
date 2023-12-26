@@ -9,6 +9,16 @@ const editorService = container.resolve(EditorService);
 const statusBarService = container.resolve(StatusBarService);
 const builtinService = container.resolve(BuiltinService);
 
+jest.mock('mo/monaco', () => {
+    const original = jest.requireActual('mo/monaco');
+    return {
+        ...original,
+        editor: {
+            getModel: jest.fn(),
+        },
+    };
+});
+
 describe('The ediotr controller', () => {
     test('The initEditorEvents method', () => {
         const editorInstance = {} as MonacoEditor.IStandaloneCodeEditor;

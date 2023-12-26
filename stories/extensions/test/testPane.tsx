@@ -238,6 +238,19 @@ export type GenericClassDecorator<T> = (target: T) => void;`,
             }
         };
 
+        const updateEditor = function () {
+            // get first inactive tab
+            const state = molecule.editor.getState();
+            const firstInactiveTab = state.current?.data?.find(
+                (tab) => tab.id !== state.current?.activeTab
+            );
+            if (firstInactiveTab) {
+                firstInactiveTab.data.value +=
+                    '\nconst firstInactiveTab = "test";\n';
+                molecule.editor.updateTab(firstInactiveTab, state.current?.id);
+            }
+        };
+
         const newPane = function () {
             const key = shortRandomId();
             const name = `pane-${key}.ts`;
@@ -481,6 +494,9 @@ PARTITIONED BY (DE STRING) LIFECYCLE 1000;
                     <div style={{ marginBottom: 50 }}>
                         <h2>Simple examples:</h2>
                         <Button onClick={newEditor}>New Editor</Button>
+                        <Button onClick={updateEditor}>
+                            Update Inactive Editor{`'`}s value
+                        </Button>
                         <Button onClick={toggleEditorStatus}>
                             Toggle Editor status
                         </Button>

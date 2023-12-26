@@ -199,6 +199,8 @@ export class EditorController extends Controller implements IEditorController {
             tab?.data?.value!,
             tab?.data?.language!
         );
+
+        this.onEditorInstanceMount(editorInstance);
     };
 
     public onClickActions = (action: IEditorActionsProps) => {
@@ -373,5 +375,11 @@ export class EditorController extends Controller implements IEditorController {
                 );
             }
         }
+    }
+
+    public onEditorInstanceMount(
+        editorInstance: MonacoEditor.IStandaloneCodeEditor
+    ) {
+        this.emit(EditorEvent.onEditorInstanceMount, editorInstance);
     }
 }

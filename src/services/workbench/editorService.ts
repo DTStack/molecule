@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
-import { cloneDeep, isString } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { Component } from 'mo/react';
 import {
     EditorModel,
@@ -205,6 +205,12 @@ export interface IEditorService extends Component<IEditor> {
      * @param tabId
      */
     getGroupIdByTab(tabId: UniqueId): UniqueId | null;
+    /**
+     * Listen to the editor instance mount event
+     */
+    onEditorInstanceMount(
+        callback: (editorInstance: MonacoEditor.IStandaloneCodeEditor) => void
+    ): void;
 }
 @singleton()
 export class EditorService
@@ -325,10 +331,14 @@ export class EditorService
                     updatedTab = Object.assign(tabData, tab);
                 }
                 if (group.activeTab === tab.id) {
-                    isString(editorValue) &&
-                        !tabData?.renderPane &&
-                        this.setGroupEditorValue(group, editorValue);
                     updatedTab = Object.assign(group.tab, tab);
+                }
+                // Update model's value
+                const model = MonacoEditor.getModel(
+                    Uri.parse(tab.id.toString())
+                );
+                if (model) {
+                    model.setValue(editorValue || '');
                 }
                 this.updateGroup(groupId, group);
 
@@ -345,10 +355,15 @@ export class EditorService
                 }
 
                 if (group.activeTab === tab.id) {
-                    isString(editorValue) &&
-                        !tabData?.renderPane &&
-                        this.setGroupEditorValue(group, editorValue);
                     updatedTab = Object.assign(group.tab, tab);
+                }
+
+                // Update model's value
+                const model = MonacoEditor.getModel(
+                    Uri.parse(tab.id.toString())
+                );
+                if (model) {
+                    model.setValue(editorValue || '');
                 }
             });
 
@@ -776,5 +791,11 @@ export class EditorService
         callback: (menuId: UniqueId, currentGroup: IEditorGroup) => void
     ) {
         this.subscribe(EditorEvent.onActionsClick, callback);
+    }
+
+    public onEditorInstanceMount(
+        callback: (editorInstance: MonacoEditor.IStandaloneCodeEditor) => void
+    ) {
+        this.subscribe(EditorEvent.onEditorInstanceMount, callback);
     }
 }

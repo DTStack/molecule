@@ -2,7 +2,7 @@ import { isUndefined } from 'lodash-es';
 import { APP_PREFIX } from 'mo/const';
 import { BaseService } from 'mo/glue';
 import { type ILocale, LocaleModel, LocalizationEvent } from 'mo/models/locale';
-import type { ArraylizeOrSingle, Localize, UniqueId } from 'mo/types';
+import type { Arraylize, Localize, UniqueId } from 'mo/types';
 import { arraylize, getPrevOrNext, searchById } from 'mo/utils';
 import { setValue } from 'mo/utils/storage';
 
@@ -57,7 +57,7 @@ export class LocaleService extends BaseService<LocaleModel> {
             this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
     }
 
-    public add(locale: ArraylizeOrSingle<ILocale>): void {
+    public add(locale: Arraylize<ILocale>): void {
         this.dispatch((draft) => {
             draft.data.push(...arraylize(locale));
         });

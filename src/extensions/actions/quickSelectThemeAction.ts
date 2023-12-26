@@ -94,6 +94,7 @@ function toEntries(themes: Array<IColorTheme>, label?: string): QuickPickInput<I
         id: theme.id,
         label: theme.label,
         description: theme.description,
+        uiTheme: theme.uiTheme,
     });
     const sorter = (t1: IColorTheme, t2: IColorTheme) => t1.label?.localeCompare(t2.label);
     const entries: QuickPickInput<IColorTheme>[] = themes.map(toEntry).sort(sorter);

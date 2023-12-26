@@ -4,11 +4,11 @@ import { SettingsEvent } from 'mo/models/setting';
 import { BuiltinService } from 'mo/services/builtin';
 import { EditorService } from 'mo/services/editor';
 import { LayoutService } from 'mo/services/layout';
-import type { ContextMenuGroupHandler, ContextMenuWithItemHandler, UniqueId } from 'mo/types';
+import type { ContextMenuHandler, GroupMenuHandler, TabGroup, UniqueId } from 'mo/types';
 import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
-type EditorContextMenu = ContextMenuWithItemHandler<[tabId: UniqueId, groupId: UniqueId]>;
+type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]>;
 
 export interface IEditorController extends BaseController {
     onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
@@ -17,15 +17,9 @@ export interface IEditorController extends BaseController {
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
     onDragStart?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onDragOver?: (
-        from: { tabId: UniqueId; groupId: UniqueId },
-        to: { tabId: UniqueId; groupId: UniqueId }
-    ) => void;
+    onDragOver?: (from: TabGroup, to: TabGroup) => void;
     onDragEnd?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onDrop?: (
-        from: { tabId: UniqueId; groupId: UniqueId },
-        to: { tabId: UniqueId; groupId: UniqueId }
-    ) => void;
+    onDrop?: (from: TabGroup, to: TabGroup) => void;
     onChange?: (
         value: string | undefined,
         ev: editor.IModelContentChangedEvent,
@@ -36,7 +30,7 @@ export interface IEditorController extends BaseController {
         ev: editor.ICursorSelectionChangedEvent
     ) => void;
     onContextMenu?: EditorContextMenu;
-    onToolbarClick?: ContextMenuGroupHandler;
+    onToolbarClick?: GroupMenuHandler;
 }
 
 @injectable()
@@ -82,10 +76,6 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onCloseTab, tabId, groupId);
     };
 
-    // public onDrag: IEditorController['onDrag'] = (props) => {
-    //     this.emit(EditorEvent.onDrag, props);
-    // };
-
     public onDragStart: (tabId: UniqueId, groupId: UniqueId) => void = (tabId, groupId) => {
         this.emit(EditorEvent.onDragStart, tabId, groupId);
     };
@@ -94,17 +84,11 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onDragEnd, tabId, groupId);
     };
 
-    public onDragOver: (
-        from: { tabId: UniqueId; groupId: UniqueId },
-        to: { tabId: UniqueId; groupId: UniqueId }
-    ) => void = (from, to) => {
+    public onDragOver: (from: TabGroup, to: TabGroup) => void = (from, to) => {
         this.emit(EditorEvent.onDragOver, from, to);
     };
 
-    public onDrop: (
-        from: { tabId: UniqueId; groupId: UniqueId },
-        to: { tabId: UniqueId; groupId: UniqueId }
-    ) => void = (from, to) => {
+    public onDrop: (from: TabGroup, to: TabGroup) => void = (from, to) => {
         this.emit(EditorEvent.onDrop, from, to);
     };
 
@@ -120,7 +104,7 @@ export class EditorController extends BaseController implements IEditorControlle
     };
 
     // ActionBar callback
-    public onToolbarClick?: ContextMenuGroupHandler | undefined = (item, groupId) => {
+    public onToolbarClick?: GroupMenuHandler | undefined = (item, groupId) => {
         this.emit(EditorEvent.onToolbarClick, item, groupId);
     };
 

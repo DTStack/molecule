@@ -1,4 +1,4 @@
-import type { IMenuItemProps, RenderProps, UniqueId } from 'mo/types';
+import type { IMenuItemProps, Render, UniqueId } from 'mo/types';
 
 /**
  * The notification event definition
@@ -15,7 +15,7 @@ export enum NotificationStatus {
     WaitRead = 2,
 }
 
-export interface INotificationItem<T = any> extends RenderProps<INotificationItem> {
+export interface INotificationItem<T = any> extends Render<INotificationItem> {
     id: UniqueId;
     value: T;
     status?: NotificationStatus;

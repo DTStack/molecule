@@ -2,9 +2,9 @@ import { BaseService } from 'mo/glue';
 import type { EditorGroupModel } from 'mo/models/editor';
 import { EditorTreeEvent, EditorTreeModel } from 'mo/models/editorTree';
 import type {
-    ArraylizeOrSingle,
-    ContextMenuGroupHandler,
-    ContextMenuWithItemHandler,
+    Arraylize,
+    GroupMenuHandler,
+    ContextMenuHandler,
     IEditorTab,
     IMenuItemProps,
     RequiredId,
@@ -12,7 +12,7 @@ import type {
 } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
 
-type ContextMenuType = ContextMenuWithItemHandler<[group: EditorGroupModel, tab?: IEditorTab<any>]>;
+type ContextMenuType = ContextMenuHandler<[group: EditorGroupModel, tab?: IEditorTab<any>]>;
 
 export class EditorTreeService extends BaseService<EditorTreeModel> {
     protected state: EditorTreeModel;
@@ -26,7 +26,7 @@ export class EditorTreeService extends BaseService<EditorTreeModel> {
         return this.state.toolbar.find(searchById(id));
     }
 
-    public addToolbar(toolbar: ArraylizeOrSingle<IMenuItemProps>) {
+    public addToolbar(toolbar: Arraylize<IMenuItemProps>) {
         this.dispatch((draft) => {
             draft.toolbar.push(...arraylize(toolbar));
         });
@@ -65,7 +65,7 @@ export class EditorTreeService extends BaseService<EditorTreeModel> {
         this.subscribe(EditorTreeEvent.onContextMenu, callback);
     }
 
-    public onToolbarClick(callback: ContextMenuGroupHandler): void {
+    public onToolbarClick(callback: GroupMenuHandler): void {
         this.subscribe(EditorTreeEvent.onToolbarClick, callback);
     }
 }

@@ -3,7 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { classNames } from 'mo/client/classNames';
 import {
-    type ContextMenuWithItemHandler,
+    type ContextMenuHandler,
     FileTypes,
     type IMenuItemProps,
     KeyboardEventHandler,
@@ -31,7 +31,7 @@ export interface ITreeProps {
         index: number,
         isLeaf: boolean
     ) => JSX.Element | string;
-    onContextMenu?: ContextMenuWithItemHandler<[treeNode: ITreeNodeItemProps]>;
+    onContextMenu?: ContextMenuHandler<[treeNode: ITreeNodeItemProps]>;
     onKeyDown?: KeyboardEventHandler<HTMLElement>;
     onDragStart?(source: ITreeNodeItemProps): void;
     onDragOver?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;

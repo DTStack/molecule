@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { LayoutModel } from 'mo/models/layout';
-import type { DirectionLiteral, FunctionalOrSingle } from 'mo/types';
+import type { DirectionLiteral, Variant } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 import type { BuiltinService } from './builtin';
@@ -21,7 +21,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         return this.getState().menuBar;
     }
 
-    public setMenuBar(visibility: FunctionalOrSingle<boolean>) {
+    public setMenuBar(visibility: Variant<boolean>) {
         this.dispatch(
             (draft) => {
                 draft.menuBar.hidden =
@@ -36,7 +36,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         );
     }
 
-    public setPanel(visibility: FunctionalOrSingle<boolean>): void {
+    public setPanel(visibility: Variant<boolean>): void {
         this.dispatch(
             (draft) => {
                 draft.panel.hidden =
@@ -51,7 +51,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         );
     }
 
-    public setSidebar(visibility: FunctionalOrSingle<boolean>): void {
+    public setSidebar(visibility: Variant<boolean>): void {
         this.dispatch(
             (draft) => {
                 draft.sidebar.hidden =
@@ -66,7 +66,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         );
     }
 
-    public setActivityBar(visibility: FunctionalOrSingle<boolean>): void {
+    public setActivityBar(visibility: Variant<boolean>): void {
         this.dispatch(
             (draft) => {
                 draft.activityBar.hidden =
@@ -83,7 +83,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         );
     }
 
-    public setStatusBar(visibility: FunctionalOrSingle<boolean>): void {
+    public setStatusBar(visibility: Variant<boolean>): void {
         this.dispatch(
             (draft) => {
                 draft.statusBar.hidden =
@@ -100,7 +100,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         );
     }
 
-    public setNotification(visibility: FunctionalOrSingle<boolean>): void {
+    public setNotification(visibility: Variant<boolean>): void {
         this.dispatch((draft) => {
             draft.notification.hidden =
                 typeof visibility === 'function'
@@ -109,7 +109,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         });
     }
 
-    public setPanelMaximized(maximized: FunctionalOrSingle<boolean>) {
+    public setPanelMaximized(maximized: Variant<boolean>) {
         this.dispatch((draft) => {
             draft.panel.panelMaximized =
                 typeof maximized === 'function' ? maximized(draft.panel.panelMaximized) : maximized;
@@ -134,7 +134,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         });
     }
 
-    public setAuxiliaryBar(visibility: FunctionalOrSingle<boolean>) {
+    public setAuxiliaryBar(visibility: Variant<boolean>) {
         this.dispatch((draft) => {
             draft.auxiliaryBar.hidden =
                 typeof visibility === 'function'
@@ -143,7 +143,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         });
     }
 
-    public updateEditorDirection(direction: FunctionalOrSingle<DirectionLiteral>) {
+    public updateEditorDirection(direction: Variant<DirectionLiteral>) {
         this.dispatch((draft) => {
             draft.editorDirection =
                 typeof direction === 'function' ? direction(draft.editorDirection) : direction;

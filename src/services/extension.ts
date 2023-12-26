@@ -1,7 +1,7 @@
 import { BaseService } from 'mo/glue';
 import { ExtensionModel } from 'mo/models/extension';
 import {
-    ArraylizeOrSingle,
+    Arraylize,
     type IContribute,
     IContributeType,
     type IExtension,
@@ -111,7 +111,7 @@ export class ExtensionService extends BaseService<ExtensionModel> {
         this._predicate = predicate;
     }
 
-    public add(extensions: ArraylizeOrSingle<IExtension>): void {
+    public add(extensions: Arraylize<IExtension>): void {
         this.dispatch((draft) => {
             draft.data.push(...arraylize(extensions));
         });

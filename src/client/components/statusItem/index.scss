@@ -4,6 +4,9 @@ $statusBar: prefix('statusBar');
 $container: BEMElement($statusBar, 'item');
 $label: BEMElement($statusBar, 'label');
 
+$disabled: BEMModifier($statusBar, 'disabled');
+
+
 .#{$container} {
     height: 100%;
     user-select: none;
@@ -23,20 +26,25 @@ $label: BEMElement($statusBar, 'label');
         line-height: 22px;
     }
 
-    &:hover {
+    &:not(.#{$disabled}):hover {
         background-color: var(--statusBarItem-hoverBackground);
     }
 
-    &:active {
+    &:not(.#{$disabled}):active {
         background-color: var(--statusBarItem-activeBackground);
     }
 
     .codicon {
         font-size: 14px;
     }
+
+    &.#{$disabled} {
+        color: var(--disabledForeground);
+    }
 }
 
 :export {
     container: $container;
     label: $label;
+    disabled: $disabled;
 }

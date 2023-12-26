@@ -502,13 +502,13 @@ export class BuiltinModel {
                 toolbar: [
                     {
                         id: this.constants.EXPLORER_TOOLBAR_SAVE_ALL,
-                        title: this.localize(this.constants.EXPLORER_TOOLBAR_SAVE_ALL, 'Save All'),
+                        name: this.localize(this.constants.EXPLORER_TOOLBAR_SAVE_ALL, 'Save All'),
                         icon: 'save-all',
                         group: 'inline',
                     },
                     {
                         id: this.constants.EXPLORER_TOOLBAR_CLOSE_ALL,
-                        title: this.localize(
+                        name: this.localize(
                             this.constants.EXPLORER_TOOLBAR_CLOSE_ALL,
                             'Close All Editors'
                         ),

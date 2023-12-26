@@ -1,8 +1,8 @@
 import { BaseService } from 'mo/glue';
 import { ExplorerEvent, ExplorerModel, IExplorerPanelItem } from 'mo/models/explorer';
 import {
-    ArraylizeOrSingle,
-    ContextMenuWithItemHandler,
+    Arraylize,
+    ContextMenuHandler,
     IMenuItemProps,
     Predict,
     RequiredId,
@@ -64,7 +64,7 @@ export class ExplorerService extends BaseService<ExplorerModel> {
         }
     }
 
-    public add(data: ArraylizeOrSingle<IExplorerPanelItem>) {
+    public add(data: Arraylize<IExplorerPanelItem>) {
         this.dispatch((draft) => {
             draft.data.push(...arraylize(data));
         });
@@ -97,7 +97,7 @@ export class ExplorerService extends BaseService<ExplorerModel> {
         this.subscribe(ExplorerEvent.onCollapseChange, callback);
     }
 
-    public onContextMenu(callback: ContextMenuWithItemHandler<[panel: IExplorerPanelItem]>): void {
+    public onContextMenu(callback: ContextMenuHandler<[panel: IExplorerPanelItem]>): void {
         this.subscribe(ExplorerEvent.onContextMenu, callback);
     }
 }

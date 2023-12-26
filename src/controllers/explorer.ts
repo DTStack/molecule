@@ -5,13 +5,13 @@ import { ExplorerEvent, IExplorerPanelItem } from 'mo/models/explorer';
 import { ActivityBarService } from 'mo/services/activityBar';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { SidebarService } from 'mo/services/sidebar';
-import type { ContextMenuWithItemHandler, IMenuItemProps, UniqueId } from 'mo/types';
+import type { ContextMenuHandler, IMenuItemProps, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IExplorerController extends BaseController {
     onCollapseChange?: (keys: UniqueId[]) => void;
     onToolbarClick?: (item: IMenuItemProps, panelId: UniqueId) => void;
-    onContextMenu: ContextMenuWithItemHandler<[panel: IExplorerPanelItem]>;
+    onContextMenu: ContextMenuHandler<[panel: IExplorerPanelItem]>;
 }
 
 @injectable()
@@ -46,7 +46,7 @@ export class ExplorerController extends BaseController implements IExplorerContr
         this.emit(ExplorerEvent.onPanelToolbarClick, item, panelId);
     };
 
-    public readonly onContextMenu: ContextMenuWithItemHandler<[panel: IExplorerPanelItem]> = (
+    public readonly onContextMenu: ContextMenuHandler<[panel: IExplorerPanelItem]> = (
         pos,
         panel
     ) => {

@@ -1,5 +1,5 @@
 import { EditorEvent } from 'mo/models/editor';
-import type { IExtension, UniqueId } from 'mo/types';
+import type { IExtension, TabGroup } from 'mo/types';
 import { throttleByArgs } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 
@@ -31,7 +31,7 @@ export const ExtendsEditor: IExtension = {
         });
 
         molecule.editor.onDragOver(
-            throttleByArgs((_, to: { tabId: UniqueId; groupId: UniqueId }) => {
+            throttleByArgs((_, to: TabGroup) => {
                 molecule.editor.setCurrent(to.tabId, to.groupId);
             }, 2000)
         );

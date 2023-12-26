@@ -1,8 +1,8 @@
 import { BaseService } from 'mo/glue';
 import { IPanelItem, PanelEvent, PanelModel } from 'mo/models/panel';
 import type {
-    ArraylizeOrSingle,
-    ContextMenuWithItemHandler,
+    Arraylize,
+    ContextMenuHandler,
     IMenuItemProps,
     Predict,
     RequiredId,
@@ -34,7 +34,7 @@ export class PanelService extends BaseService<PanelModel> {
         return this.get(panelId)?.toolbar?.find(searchById(toolbarId));
     }
 
-    public add(data: ArraylizeOrSingle<IPanelItem>) {
+    public add(data: Arraylize<IPanelItem>) {
         this.dispatch((draft) => {
             draft.data.push(...arraylize(data));
         });
@@ -77,7 +77,7 @@ export class PanelService extends BaseService<PanelModel> {
         }
     }
 
-    public addToolbar(toolbar: ArraylizeOrSingle<IMenuItemProps>): void {
+    public addToolbar(toolbar: Arraylize<IMenuItemProps>): void {
         this.dispatch((draft) => {
             draft.toolbar.push(...arraylize(toolbar));
         });
@@ -119,7 +119,7 @@ export class PanelService extends BaseService<PanelModel> {
         this.subscribe(PanelEvent.onClose, callback);
     }
 
-    public onContextMenu(callback: ContextMenuWithItemHandler<[item?: IPanelItem]>): void {
+    public onContextMenu(callback: ContextMenuHandler<[item?: IPanelItem]>): void {
         this.subscribe(PanelEvent.onContextMenu, callback);
     }
 }

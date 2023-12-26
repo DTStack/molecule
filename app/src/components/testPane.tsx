@@ -55,6 +55,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             name: 'StatusBarItem-' + id,
             sortIndex: 2,
             alignment: 'right',
+            disabled: true,
         });
     };
     const removeStatusBar = () => {
@@ -151,6 +152,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             id: panelId,
             name: panelId,
             closable: true,
+            disabled: true,
             sortIndex: 3,
             render: () => <div style={{ padding: 20 }}>Test {panelId}</div>,
         });

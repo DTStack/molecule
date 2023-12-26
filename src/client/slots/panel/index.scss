@@ -5,6 +5,7 @@ $header: BEMElement($panel, 'header');
 $content: BEMElement($panel, 'content');
 $item: BEMElement($panel, 'item');
 
+$disabled: BEMModifier($panel, 'disabled');
 $active: BEMModifier($item, 'active');
 
 $header-size: 35px;
@@ -35,16 +36,20 @@ $header-size: 35px;
         white-space: nowrap;
         cursor: pointer;
 
-        & > .codicon-close {
+        &>.codicon-close {
             opacity: 0;
         }
 
-        &:hover {
+        &:not(.#{$disabled}):hover {
             color: var(--panelTitle-activeForeground);
 
-            & > .codicon-close {
+            &>.codicon-close {
                 opacity: 1;
             }
+        }
+
+        &.#{$disabled} {
+            color: var(--disabledForeground);
         }
 
         &.#{$active} {
@@ -61,7 +66,7 @@ $header-size: 35px;
                 width: 100%;
             }
 
-            & > .codicon-close {
+            &>.codicon-close {
                 opacity: 1;
             }
         }
@@ -85,4 +90,5 @@ $header-size: 35px;
     content: $content;
     item: $item;
     active: $active;
+    disabled: $disabled;
 }

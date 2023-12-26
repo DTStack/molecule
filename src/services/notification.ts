@@ -5,7 +5,7 @@ import {
     NotificationModel,
     NotificationStatus,
 } from 'mo/models/notification';
-import type { ArraylizeOrSingle, Predict, RequiredId, UniqueId } from 'mo/types';
+import type { Arraylize, Predict, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
 
 export class NotificationService extends BaseService<NotificationModel> {
@@ -41,7 +41,7 @@ export class NotificationService extends BaseService<NotificationModel> {
         });
     }
 
-    public add(item: ArraylizeOrSingle<INotificationItem>) {
+    public add(item: Arraylize<INotificationItem>) {
         this.dispatch((draft) => {
             const nextItems = arraylize(item).map((item) => ({
                 ...item,

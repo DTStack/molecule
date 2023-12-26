@@ -1,8 +1,8 @@
 import { BaseService } from 'mo/glue';
 import { type IStatusBarItem, StatusBarEvent, StatusBarModel } from 'mo/models/statusBar';
 import type {
-    ArraylizeOrSingle,
-    ContextMenuWithItemHandler,
+    Arraylize,
+    ContextMenuHandler,
     Predict,
     RequiredId,
     UniqueId,
@@ -25,7 +25,7 @@ export class StatusBarService extends BaseService<StatusBarModel> {
         return this.getState().data;
     }
 
-    public add(item: ArraylizeOrSingle<IStatusBarItem>) {
+    public add(item: Arraylize<IStatusBarItem>) {
         this.dispatch((draft) => {
             draft.data.push(...arraylize(item));
         });
@@ -62,7 +62,7 @@ export class StatusBarService extends BaseService<StatusBarModel> {
         this.subscribe(StatusBarEvent.onClick, callback);
     }
 
-    public onContextMenu(callback: ContextMenuWithItemHandler<[item?: IStatusBarItem]>) {
+    public onContextMenu(callback: ContextMenuHandler<[item?: IStatusBarItem]>) {
         this.subscribe(StatusBarEvent.onContextMenu, callback);
     }
 }

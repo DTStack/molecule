@@ -8,14 +8,14 @@ import type { EditorTreeService } from 'mo/services/editorTree';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { SidebarService } from 'mo/services/sidebar';
 import type {
-    ContextMenuGroupHandler,
-    ContextMenuWithItemHandler,
+    GroupMenuHandler,
+    ContextMenuHandler,
     IEditorTab,
     UniqueId,
 } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
-type ContextMenuType = ContextMenuWithItemHandler<[group: EditorGroupModel, tab?: IEditorTab<any>]>;
+type ContextMenuType = ContextMenuHandler<[group: EditorGroupModel, tab?: IEditorTab<any>]>;
 
 export interface IEditorTreeController extends BaseController {
     readonly onClose?: (tabId: UniqueId, groupId: UniqueId) => void;
@@ -24,7 +24,7 @@ export interface IEditorTreeController extends BaseController {
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
         groupId: UniqueId
     ) => void;
-    readonly onToolbarClick?: ContextMenuGroupHandler;
+    readonly onToolbarClick?: GroupMenuHandler;
     /**
      * Trigger by context menu click event
      * When click the context menu from group header, it doesn't have file info
@@ -79,7 +79,7 @@ export class EditorTreeController extends BaseController implements IEditorTreeC
         this.emit(EditorTreeEvent.onSelect, tabId, groupId);
     };
 
-    public onToolbarClick: ContextMenuGroupHandler = (toolbar, groupId) => {
+    public onToolbarClick: GroupMenuHandler = (toolbar, groupId) => {
         this.emit(EditorTreeEvent.onToolbarClick, toolbar, groupId);
     };
 }

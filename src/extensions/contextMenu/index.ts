@@ -2,7 +2,14 @@ import { EditorEvent, EditorGroupModel } from 'mo/models/editor';
 import { EditorTreeEvent } from 'mo/models/editorTree';
 import { FolderTreeEvent } from 'mo/models/folderTree';
 import { ISidebarPane, SidebarEvent } from 'mo/models/sideBar';
-import { Alignment, IEditorTab, IExtension, IMenuItemProps, UniqueId } from 'mo/types';
+import {
+    Alignment,
+    type IEditorTab,
+    type IExtension,
+    type IMenuItemProps,
+    type TabGroup,
+    type UniqueId,
+} from 'mo/types';
 import { getPrevOrNext, searchById, sortByIndex } from 'mo/utils';
 import { TreeNodeModel } from 'mo/utils/tree';
 
@@ -236,9 +243,7 @@ export const ExtendsContextMenu: IExtension = {
             molecule.folderTree.emit(FolderTreeEvent.onContextMenuClick, item, treeNode);
         }
 
-        function isEditor(
-            scope: any
-        ): scope is { name: string; item: { tabId: UniqueId; groupId: UniqueId } } {
+        function isEditor(scope: any): scope is { name: string; item: TabGroup } {
             return (
                 typeof scope === 'object' &&
                 scope.name === molecule.builtin.getConstants().CONTEXTMENU_ITEM_EDITOR

@@ -1,13 +1,12 @@
 import { Children, cloneElement, isValidElement } from 'react';
 import { isEqual, merge, omitBy } from 'lodash-es';
-import {
-    type ArraylizeOrSingle,
-    ColorScheme,
-    type IColorTheme,
-    type IconType,
-    type IMenuItemProps,
-    type RecordWithId,
-    type UniqueId,
+import type {
+    Arraylize,
+    IColorTheme,
+    IconType,
+    IMenuItemProps,
+    RecordWithId,
+    UniqueId,
 } from 'mo/types';
 import type { editor } from 'monaco-editor';
 
@@ -42,7 +41,7 @@ export function cloneReactChildren<P>(children: React.ReactNode, props: P): Reac
 /**
  * Make an object to be obejct array
  */
-export function arraylize<T>(data: ArraylizeOrSingle<T>) {
+export function arraylize<T>(data: Arraylize<T>) {
     return Array.isArray(data) ? data : [data];
 }
 
@@ -73,7 +72,7 @@ export function classifyBy<T>(arr: T[], predicate: (value: T, index: number) => 
 }
 
 export function get<T extends RecordWithId<{ children?: T[] }>>(
-    obj: ArraylizeOrSingle<T>,
+    obj: Arraylize<T>,
     keyPath: string[]
 ) {
     let root = { children: arraylize(obj) } as T;
@@ -113,45 +112,6 @@ export function concatMenu(...args: IMenuItemProps[][]) {
     return nonEmptyArgs.reduce((acc, cur) => {
         return acc.concat({ id: randomId(), type: 'divider' }, cur);
     });
-}
-
-/**
- * Determine if a color is light or dark.
- * @param color HEX or RGB
- */
-export function colorLightOrDark(color: string) {
-    // Variables for red, green, blue values
-    let r: number;
-    let g: number;
-    let b: number;
-
-    // Check the format of the color, HEX or RGB?
-    if (color.match(/^rgb/)) {
-        // If RGB --> store the red, green, blue values in separate variables
-        const matchArray =
-            color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/) || [];
-        r = +matchArray[1];
-        g = +matchArray[2];
-        b = +matchArray[3];
-    } else {
-        // If hex --> Convert it to RGB
-        let rgbNum = +('0x' + color.slice(1, 7));
-        if (color.length < 5) {
-            rgbNum = +('0x' + color.slice(1).replace(/./g, '$&$&').slice(0, 6));
-        }
-        r = rgbNum >> 16;
-        g = (rgbNum >> 8) & 255;
-        b = rgbNum & 255;
-    }
-
-    // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
-    const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
-
-    // Using the HSP value, determine whether the color is light or dark
-    if (hsp > 127.5) {
-        return ColorScheme.LIGHT;
-    }
-    return ColorScheme.DARK;
 }
 
 /**
@@ -206,17 +166,6 @@ export function convertToToken(token?: IColorTheme['tokenColors']) {
 
 export function colorsToString(colors: Record<string, string | null>) {
     return omitBy(colors, (value) => !value) as Record<string, string>;
-}
-
-/**
- * Clone a menu item
- */
-export function cloneMenuItem(item: IMenuItemProps): IMenuItemProps {
-    return {
-        ...item,
-        id: `${item.id}$clone`,
-        clone: item.id,
-    };
 }
 
 /**

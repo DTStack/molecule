@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { ContextMenuWithItemHandler } from 'mo/types';
+import { ContextMenuHandler } from 'mo/types';
 import { TreeNodeModel } from 'mo/utils/tree';
 
 import Prevent from '../prevent';
@@ -17,7 +17,7 @@ interface ITreeNodeProps {
     renderTitle: () => React.ReactNode;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
     onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
-    onContextMenu?: ContextMenuWithItemHandler<[treeNode: ITreeNodeItemProps]>;
+    onContextMenu?: ContextMenuHandler<[treeNode: ITreeNodeItemProps]>;
     onDragStart?: (source: ITreeNodeItemProps) => void;
     onDragOver?: (source: ITreeNodeItemProps, target: ITreeNodeItemProps) => void;
     onDragEnd?: (data: ITreeNodeItemProps) => void;

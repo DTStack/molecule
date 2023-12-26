@@ -1,4 +1,4 @@
-import type { IItemProps, IMenuItemProps, RenderProps, UniqueId } from 'mo/types';
+import type { IMenuItemProps, IterableItem, Render, UniqueId } from 'mo/types';
 
 export enum PanelEvent {
     onChange = 'panel.onChange',
@@ -7,7 +7,7 @@ export enum PanelEvent {
     onContextMenu = 'panel.onContextMenu',
 }
 
-export interface IPanelItem<T = any> extends IItemProps, RenderProps<IPanelItem<T>> {
+export interface IPanelItem<T = any> extends IterableItem, Render<IPanelItem<T>> {
     /**
      * Mark the tab status to be closable,
      * Default is true

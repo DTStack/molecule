@@ -35,6 +35,11 @@ export const TestExtension: IExtension = {
         molecule.activityBar.onContextMenu(() => {
             molecule.contextMenu.add([
                 { id: 'testPane__activityBar__molecule', name: 'Molecule' },
+                {
+                    id: 'testPane__activityBar__molecule--disabled',
+                    name: 'disabled',
+                    disabled: true,
+                },
                 { id: '2', type: 'divider' },
             ]);
         });

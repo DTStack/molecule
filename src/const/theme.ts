@@ -670,7 +670,7 @@ export class DefaultColor {
         return hex;
     }
 
-    public getDefualtColor(uiTheme: keyof ColorMap) {
+    public getDefaultColor(uiTheme: keyof ColorMap) {
         const tmp: Record<string, string | null> = {};
 
         this.colors.forEach((value, key) => {

@@ -1,8 +1,8 @@
 import { classNames } from 'mo/client/classNames';
 import {
     Alignment,
-    ContextMenuEventHandler,
-    ContextMenuWithItemHandler,
+    MenuHandler,
+    ContextMenuHandler,
     IActivityBarItem,
 } from 'mo/types';
 
@@ -15,8 +15,8 @@ export interface IActivityBarItemProps {
     checked?: boolean;
     data: IActivityBarItem;
     onClick?: (data: IActivityBarItem) => void;
-    onContextMenuClick?: ContextMenuEventHandler;
-    onContextMenu?: ContextMenuWithItemHandler<[item: IActivityBarItem]>;
+    onContextMenuClick?: MenuHandler;
+    onContextMenu?: ContextMenuHandler<[item: IActivityBarItem]>;
 }
 
 export default function ActivityBarItem({

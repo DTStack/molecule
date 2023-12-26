@@ -4,8 +4,8 @@ import { MenuBarEvent } from 'mo/models/menuBar';
 import type { ActivityBarService } from 'mo/services/activityBar';
 import type { BuiltinService } from 'mo/services/builtin';
 import type {
-    ContextMenuEventHandler,
-    ContextMenuWithItemHandler,
+    MenuHandler,
+    ContextMenuHandler,
     IActivityBarItem,
 } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
@@ -15,9 +15,9 @@ export interface IActivityBarController extends BaseController {
      * Called when activity bar item is clicked
      */
     onClick?: (item: IActivityBarItem) => void;
-    onContextMenu?: ContextMenuWithItemHandler<[item?: IActivityBarItem]>;
-    onMenuClick?: ContextMenuEventHandler;
-    onContextMenuClick?: ContextMenuEventHandler;
+    onContextMenu?: ContextMenuHandler<[item?: IActivityBarItem]>;
+    onMenuClick?: MenuHandler;
+    onContextMenuClick?: MenuHandler;
 }
 
 @injectable()
@@ -41,18 +41,18 @@ export class ActivityBarController extends BaseController implements IActivityBa
         this.emit(ActivityBarEvent.onClick, item);
     };
 
-    public readonly onContextMenu: ContextMenuWithItemHandler<[item?: IActivityBarItem]> = (
+    public readonly onContextMenu: ContextMenuHandler<[item?: IActivityBarItem]> = (
         pos,
         item
     ) => {
         this.emit(ActivityBarEvent.onContextMenu, pos, item);
     };
 
-    public readonly onMenuClick: ContextMenuEventHandler = (item) => {
+    public readonly onMenuClick: MenuHandler = (item) => {
         this.emit(MenuBarEvent.onSelect, item.id);
     };
 
-    public readonly onContextMenuClick: ContextMenuEventHandler = (item) => {
+    public readonly onContextMenuClick: MenuHandler = (item) => {
         this.emit(ActivityBarEvent.onContextMenuClick, item);
     };
 }

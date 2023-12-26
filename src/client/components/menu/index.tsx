@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { classNames } from 'mo/client/classNames';
-import type { ContextMenuEventHandler, IMenuItemProps } from 'mo/types';
+import type { MenuHandler, IMenuItemProps } from 'mo/types';
 import { get, sortByIndex } from 'mo/utils';
 import RcMenu, { Divider, Item as MenuItem, SubMenu } from 'rc-menu';
 
@@ -9,7 +9,7 @@ import variables from './index.scss';
 
 interface IMenuProps {
     data?: IMenuItemProps[];
-    onClick?: ContextMenuEventHandler;
+    onClick?: MenuHandler;
 }
 
 export default function Menu({ data, onClick }: IMenuProps) {

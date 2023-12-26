@@ -3,14 +3,14 @@ import { IPanelItem, PanelEvent } from 'mo/models/panel';
 import type { BuiltinService } from 'mo/services/builtin';
 import type { ContextMenuService } from 'mo/services/contextMenu';
 import { PanelService } from 'mo/services/panel';
-import type { ContextMenuWithItemHandler, IMenuItemProps, UniqueId } from 'mo/types';
+import type { ContextMenuHandler, IMenuItemProps, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IPanelController extends BaseController {
     onChange?(key: UniqueId): void;
     onToolbarClick?(item: IMenuItemProps): void;
     onClose?(key: UniqueId): void;
-    onContextMenu?: ContextMenuWithItemHandler<[item?: IPanelItem]>;
+    onContextMenu?: ContextMenuHandler<[item?: IPanelItem]>;
 }
 
 @injectable()
@@ -41,7 +41,7 @@ export class PanelController extends BaseController implements IPanelController 
         this.emit(PanelEvent.onToolbarClick, item);
     };
 
-    public readonly onContextMenu: ContextMenuWithItemHandler<[item?: IPanelItem]> = (
+    public readonly onContextMenu: ContextMenuHandler<[item?: IPanelItem]> = (
         pos,
         item
     ) => {

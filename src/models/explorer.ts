@@ -1,4 +1,10 @@
-import type { HTMLElementProps, IItemProps, IMenuItemProps, RenderProps, UniqueId } from 'mo/types';
+import type {
+    HTMLElementProps,
+    IMenuItemProps,
+    IterableItem,
+    Render,
+    UniqueId,
+} from 'mo/types';
 
 export enum ExplorerEvent {
     onPanelToolbarClick = 'explorer.onPanelToolbarClick',
@@ -8,8 +14,8 @@ export enum ExplorerEvent {
 
 export interface IExplorerPanelItem
     extends HTMLElementProps,
-        RenderProps<IExplorerPanelItem>,
-        Omit<IItemProps, 'icon'> {
+        Render<IExplorerPanelItem>,
+        Omit<IterableItem, 'icon' | 'disabled'> {
     toolbar?: IMenuItemProps[];
 }
 

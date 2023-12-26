@@ -1,8 +1,8 @@
 import { BaseService } from 'mo/glue';
 import { ContextMenuEvent, ContextMenuModel } from 'mo/models/contextMenu';
 import type {
-    ContextMenuEventHandler,
-    FunctionalOrSingle,
+    MenuHandler,
+    Variant,
     IMenuItemProps,
     IPosition,
     UniqueId,
@@ -44,7 +44,7 @@ export class ContextMenuService extends BaseService<ContextMenuModel> {
         this.setScope();
     }
 
-    public setVisible(visible: FunctionalOrSingle<boolean>) {
+    public setVisible(visible: Variant<boolean>) {
         this.dispatch((draft) => {
             draft.visible = typeof visible === 'function' ? visible(draft.visible) : visible;
         });
@@ -83,7 +83,7 @@ export class ContextMenuService extends BaseService<ContextMenuModel> {
         this.subscribe(ContextMenuEvent.onHide, callback);
     }
 
-    public onClick(callback: ContextMenuEventHandler) {
+    public onClick(callback: MenuHandler) {
         this.subscribe(ContextMenuEvent.onClick, callback);
     }
 }

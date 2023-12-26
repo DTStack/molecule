@@ -2,10 +2,10 @@ import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { type ISidebarPane, SidebarEvent, SidebarModel } from 'mo/models/sideBar';
 import type {
-    ArraylizeOrSingle,
-    ContextMenuGroupHandler,
-    ContextMenuWithItemHandler,
-    FunctionalOrSingle,
+    Arraylize,
+    GroupMenuHandler,
+    ContextMenuHandler,
+    Variant,
     IMenuItemProps,
     Predict,
     RequiredId,
@@ -42,13 +42,13 @@ export class SidebarService extends BaseService<SidebarModel> {
         return this.get(paneId)?.toolbar?.find(searchById(toolbarId));
     }
 
-    public add(data: ArraylizeOrSingle<ISidebarPane>) {
+    public add(data: Arraylize<ISidebarPane>) {
         this.dispatch((draft) => {
             draft.data.push(...arraylize(data));
         });
     }
 
-    public addToolbar(paneId: UniqueId, toolbars: ArraylizeOrSingle<IMenuItemProps>) {
+    public addToolbar(paneId: UniqueId, toolbars: Arraylize<IMenuItemProps>) {
         this.dispatch((draft) => {
             const target = draft.data.find(searchById(paneId));
             if (!target) return;
@@ -104,7 +104,7 @@ export class SidebarService extends BaseService<SidebarModel> {
         });
     }
 
-    public setLoading(loading: FunctionalOrSingle<boolean>): void {
+    public setLoading(loading: Variant<boolean>): void {
         this.dispatch((draft) => {
             draft.loading = typeof loading === 'function' ? loading(draft.loading) : loading;
         });
@@ -115,11 +115,11 @@ export class SidebarService extends BaseService<SidebarModel> {
     }
 
     // ===================== Subscriptions =====================
-    public onToolbarClick = (callback: ContextMenuGroupHandler) => {
+    public onToolbarClick = (callback: GroupMenuHandler) => {
         this.subscribe(SidebarEvent.onToolbarClick, callback);
     };
 
-    public onContextMenu(callback: ContextMenuWithItemHandler<[item: ISidebarPane]>): void {
+    public onContextMenu(callback: ContextMenuHandler<[item: ISidebarPane]>): void {
         this.subscribe(SidebarEvent.onContextMenu, callback);
     }
 }

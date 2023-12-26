@@ -7,7 +7,7 @@ import type { ExplorerService } from 'mo/services/explorer';
 import type { FolderTreeService } from 'mo/services/folderTree';
 import type { SidebarService } from 'mo/services/sidebar';
 import type {
-    ContextMenuWithItemHandler,
+    ContextMenuHandler,
     FocusEventHandler,
     KeyboardEventHandler,
     UniqueId,
@@ -18,7 +18,7 @@ import { inject, injectable } from 'tsyringe';
 export interface IFolderTreeController extends BaseController {
     readonly onSelect?: (treeNode: TreeNodeModel<any>) => void;
     readonly onKeyDown?: KeyboardEventHandler<HTMLElement>;
-    readonly onContextMenu?: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>;
+    readonly onContextMenu?: ContextMenuHandler<[treeNode: TreeNodeModel<any>]>;
     readonly onCreateRoot?: (e: React.MouseEvent<Element, MouseEvent>) => void;
     readonly onBlur?: FocusEventHandler<HTMLElement>;
     readonly onDragStart?: (source: TreeNodeModel<any>) => void;
@@ -56,7 +56,7 @@ export class FolderTreeController extends BaseController implements IFolderTreeC
         }
     }
 
-    public onContextMenu: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]> = (
+    public onContextMenu: ContextMenuHandler<[treeNode: TreeNodeModel<any>]> = (
         pos,
         treeNode
     ) => {

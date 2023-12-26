@@ -1,11 +1,11 @@
-import type { IItemProps, IMenuItemProps, RenderProps, UniqueId } from 'mo/types';
+import type { IMenuItemProps, IterableItem, Render, UniqueId } from 'mo/types';
 
 export enum SidebarEvent {
     onToolbarClick = 'sidebar.onToolbarClick',
     onContextMenu = 'sidebar.onContextMenu',
 }
 
-export interface ISidebarPane extends RenderProps<void>, IItemProps {
+export interface ISidebarPane extends Render<void>, Omit<IterableItem, 'disabled'> {
     toolbar?: IMenuItemProps[];
 }
 

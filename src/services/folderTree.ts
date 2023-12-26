@@ -2,7 +2,7 @@ import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { FolderTreeEvent, FolderTreeModel } from 'mo/models/folderTree';
 import {
-    ContextMenuWithItemHandler,
+    ContextMenuHandler,
     FileTypes,
     FocusEventHandler,
     type IMenuItemProps,
@@ -186,7 +186,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
     }
 
     public onContextMenu = (
-        callback: ContextMenuWithItemHandler<[treeNode: TreeNodeModel<any>]>
+        callback: ContextMenuHandler<[treeNode: TreeNodeModel<any>]>
     ) => {
         this.subscribe(FolderTreeEvent.onContextMenu, callback);
     };

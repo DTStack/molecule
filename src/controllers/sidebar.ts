@@ -1,10 +1,10 @@
 import { BaseController } from 'mo/glue';
 import { ISidebarPane, SidebarEvent } from 'mo/models/sideBar';
-import type { ContextMenuGroupHandler, ContextMenuWithItemHandler } from 'mo/types';
+import type { GroupMenuHandler, ContextMenuHandler } from 'mo/types';
 
 export interface ISideBarController extends BaseController {
-    readonly onToolbarClick: ContextMenuGroupHandler;
-    readonly onContextMenu: ContextMenuWithItemHandler<[item: ISidebarPane]>;
+    readonly onToolbarClick: GroupMenuHandler;
+    readonly onContextMenu: ContextMenuHandler<[item: ISidebarPane]>;
 }
 
 export class SidebarController extends BaseController implements ISideBarController {
@@ -12,11 +12,11 @@ export class SidebarController extends BaseController implements ISideBarControl
         super();
     }
 
-    public onToolbarClick: ContextMenuGroupHandler = (item, groupId) => {
+    public onToolbarClick: GroupMenuHandler = (item, groupId) => {
         this.emit(SidebarEvent.onToolbarClick, item, groupId);
     };
 
-    public onContextMenu: ContextMenuWithItemHandler<[item: ISidebarPane]> = (pos, item) => {
+    public onContextMenu: ContextMenuHandler<[item: ISidebarPane]> = (pos, item) => {
         this.emit(SidebarEvent.onContextMenu, pos, item);
     };
 }

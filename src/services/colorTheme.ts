@@ -7,24 +7,8 @@ import { prefix } from 'mo/client/classNames';
 import { DefaultColor } from 'mo/const/theme';
 import { BaseService } from 'mo/glue';
 import { ColorThemeEvent, ColorThemeModel } from 'mo/models/colorTheme';
-import {
-    type ArraylizeOrSingle,
-    type BuiltinTheme,
-    ColorScheme,
-    type ColorSchemeLiteral,
-    type IColorTheme,
-    type Predict,
-    type RequiredId,
-    type UniqueId,
-} from 'mo/types';
-import {
-    arraylize,
-    colorLightOrDark,
-    colorsToString,
-    convertToCSSVars,
-    convertToToken,
-    searchById,
-} from 'mo/utils';
+import type { Arraylize, IColorTheme, Predict, RequiredId, UniqueId } from 'mo/types';
+import { arraylize, colorsToString, convertToCSSVars, convertToToken, searchById } from 'mo/utils';
 import { editor } from 'monaco-editor';
 
 export class ColorThemeService extends BaseService<ColorThemeModel> {
@@ -37,17 +21,18 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
         this.state = new ColorThemeModel();
     }
 
-    private getDefaultTheme(uiTheme?: BuiltinTheme) {
+    private getDefaultTheme(uiTheme: editor.BuiltinTheme) {
         const colors = new DefaultColor();
         switch (uiTheme) {
-            case 'vs-dark': {
-                return omitBy({ ...colors.getDefualtColor('dark') }, (value) => !value);
+            case 'hc-black': {
+                return omitBy({ ...colors.getDefaultColor('hcDark') }, (value) => !value);
             }
             case 'vs': {
-                return omitBy({ ...colors.getDefualtColor('light') }, (value) => !value);
+                return omitBy({ ...colors.getDefaultColor('light') }, (value) => !value);
             }
+            case 'vs-dark':
             default: {
-                return omitBy({ ...colors.getDefualtColor('hcDark') }, (value) => !value);
+                return omitBy({ ...colors.getDefaultColor('dark') }, (value) => !value);
             }
         }
     }
@@ -79,7 +64,7 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
         editor.setTheme(ColorThemeService.DEFAULT_THEME_CLASS_NAME);
     }
 
-    public add(themes: ArraylizeOrSingle<IColorTheme>): void {
+    public add(themes: Arraylize<IColorTheme>): void {
         this.dispatch((draft) => {
             arraylize(themes).forEach((theme) => {
                 const next = { ...theme };
@@ -130,26 +115,8 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
         this.applyColorTheme(id);
     }
 
-    public getColorThemeMode() {
-        const theme = this.getCurrentTheme();
-        if (!theme) return ColorScheme.DARK;
-        const { colors, type } = theme;
-
-        // Try to get ColorScheme from type
-        if (type === ColorScheme.DARK || type === ColorScheme.HIGH_CONTRAST) {
-            return ColorScheme.DARK;
-        } else if (type === ColorScheme.LIGHT) {
-            return ColorScheme.LIGHT;
-        }
-
-        // Try to get ColorScheme from background color
-        const background = colors?.['editor.background'] || colors?.['tab.activeBackground'];
-        if (background) {
-            return colorLightOrDark(background);
-        }
-
-        // Default dark
-        return ColorScheme.DARK;
+    public getColorThemeMode(): editor.BuiltinTheme {
+        return this.getCurrentTheme()?.uiTheme || 'vs-dark';
     }
 
     public reset() {
@@ -158,7 +125,7 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
 
     // ===================== Subscriptions =====================
     public onChange(
-        callback: (prev: IColorTheme, next: IColorTheme, themeMode: ColorSchemeLiteral) => void
+        callback: (prev: IColorTheme, next: IColorTheme, themeMode: editor.BuiltinTheme) => void
     ): void {
         this.subscribe(ColorThemeEvent.onChange, callback);
     }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { ContextMenuEventHandler, IMenuItemProps, UniqueId } from 'mo/types';
+import type { MenuHandler, IMenuItemProps, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 import RcDropdown from 'rc-dropdown';
 import type { DropdownProps } from 'rc-dropdown/es/Dropdown';
@@ -21,7 +21,7 @@ interface IDropdownProps extends Pick<DropdownProps, 'children' | 'visible' | 'o
     disabled?: boolean;
     alignPoint?: boolean;
     stopPropagation?: boolean;
-    onClick?: ContextMenuEventHandler;
+    onClick?: MenuHandler;
     placement?: keyof typeof placements;
 }
 

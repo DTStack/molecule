@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { classNames } from 'mo/client/classNames';
-import type { ContextMenuWithItemHandler } from 'mo/types';
+import type { ContextMenuHandler } from 'mo/types';
 
 import Close from '../close';
 import Flex from '../flex';
@@ -14,7 +14,7 @@ export interface ITabsProps<T> {
     active?: boolean;
     closable?: boolean;
     modified?: boolean;
-    onContextMenu?: ContextMenuWithItemHandler<[]>;
+    onContextMenu?: ContextMenuHandler<[]>;
     onClick?: () => void;
     onClose?: () => void;
     onDragStart: () => T;

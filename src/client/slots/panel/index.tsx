@@ -43,7 +43,8 @@ export default function Panel({
                                 data={p}
                                 className={classNames(
                                     variables.item,
-                                    panel.current === p.id && variables.active
+                                    panel.current === p.id && variables.active,
+                                    p.disabled && variables.disabled
                                 )}
                                 onClick={() => onChange?.(p.id)}
                                 onClose={onClose}

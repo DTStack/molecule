@@ -1,4 +1,4 @@
-import { Direction, DirectionLiteral, type WithHiddenProperty } from 'mo/types';
+import { Direction, DirectionLiteral, type WithHidden } from 'mo/types';
 
 export enum LayoutEvents {
     OnWorkbenchDidMount = 'workbench.didMount',
@@ -11,16 +11,16 @@ export class LayoutModel {
         public splitPanePos: PosType[] = [300, 'auto', 300],
         public horizontalSplitPanePos: PosType[] = ['auto', '230px'],
         public groupSplitPos: PosType[] = [],
-        public activityBar: WithHiddenProperty<void> = { hidden: false },
-        public auxiliaryBar: WithHiddenProperty<void> = { hidden: true },
-        public panel: WithHiddenProperty<{ panelMaximized: boolean }> = {
+        public activityBar: WithHidden<void> = { hidden: false },
+        public auxiliaryBar: WithHidden<void> = { hidden: true },
+        public panel: WithHidden<{ panelMaximized: boolean }> = {
             hidden: false,
             panelMaximized: false,
         },
-        public statusBar: WithHiddenProperty<void> = { hidden: false },
-        public sidebar: WithHiddenProperty<void> = { hidden: false },
-        public menuBar: WithHiddenProperty<void> = { hidden: false },
-        public notification: WithHiddenProperty<void> = { hidden: true },
+        public statusBar: WithHidden<void> = { hidden: false },
+        public sidebar: WithHidden<void> = { hidden: false },
+        public menuBar: WithHidden<void> = { hidden: false },
+        public notification: WithHidden<void> = { hidden: true },
         public editorDirection: DirectionLiteral = Direction.vertical
     ) {}
 }

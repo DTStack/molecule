@@ -1,4 +1,4 @@
-import type { IItemProps, IMenuItemProps } from 'mo/types';
+import type { IMenuItemProps, IterableItem } from 'mo/types';
 
 export function createMenuDuplicate(item: IMenuItemProps): IMenuItemProps {
     return {
@@ -10,7 +10,7 @@ export function createMenuDuplicate(item: IMenuItemProps): IMenuItemProps {
     };
 }
 
-export function createContextMenu(items: IItemProps[]): IMenuItemProps[] {
+export function createContextMenu(items: IterableItem[]): IMenuItemProps[] {
     return items.map((item) => ({
         id: item.id,
         name: item.name,

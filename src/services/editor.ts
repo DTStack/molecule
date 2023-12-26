@@ -2,21 +2,21 @@ import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { EditorEvent, EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type {
-    ContextMenuGroupHandler,
-    ContextMenuWithItemHandler,
-    FunctionalOrSingle,
+    ContextMenuHandler,
+    GroupMenuHandler,
     IEditorOptions,
     IEditorTab,
     IMenuItemProps,
     RequiredId,
     TabGroup,
     UniqueId,
+    Variant,
 } from 'mo/types';
 import { getPrevOrNext, randomId, searchById } from 'mo/utils';
 import type { editor } from 'monaco-editor';
 import { injectable } from 'tsyringe';
 
-type EditorContextMenu = ContextMenuWithItemHandler<[tabId: UniqueId, groupId: UniqueId]>;
+type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]>;
 
 @injectable()
 export class EditorService extends BaseService<EditorModel> {
@@ -265,7 +265,7 @@ export class EditorService extends BaseService<EditorModel> {
             Object.assign(target, group);
         });
     }
-    public setLoading(loading: FunctionalOrSingle<boolean>): void {
+    public setLoading(loading: Variant<boolean>): void {
         this.dispatch((draft) => {
             draft.loading = typeof loading === 'function' ? loading(draft.loading) : loading;
         });
@@ -331,7 +331,7 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onContextMenu, callback);
     }
 
-    public onToolbarClick(callback: ContextMenuGroupHandler) {
+    public onToolbarClick(callback: GroupMenuHandler) {
         this.subscribe(EditorEvent.onToolbarClick, callback);
     }
 
@@ -347,7 +347,7 @@ export class EditorService extends BaseService<EditorModel> {
         callback: (
             value: string,
             ev: editor.IModelContentChangedEvent,
-            extraProps: { tabId: UniqueId; groupId: UniqueId }
+            extraProps: TabGroup
         ) => void
     ): void {
         this.subscribe(EditorEvent.onChangeTab, callback);
@@ -357,12 +357,7 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onDragStart, callback);
     }
 
-    public onDragOver(
-        callback: (
-            from: { tabId: UniqueId; groupId: UniqueId },
-            to: { tabId: UniqueId; groupId: UniqueId }
-        ) => void
-    ) {
+    public onDragOver(callback: (from: TabGroup, to: TabGroup) => void) {
         this.subscribe(EditorEvent.onDragOver, callback);
     }
 
@@ -370,12 +365,7 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onDragEnd, callback);
     }
 
-    public onDrop(
-        callback: (
-            from: { tabId: UniqueId; groupId: UniqueId },
-            to: { tabId: UniqueId; groupId: UniqueId }
-        ) => void
-    ) {
+    public onDrop(callback: (from: TabGroup, to: TabGroup) => void) {
         this.subscribe(EditorEvent.onDrop, callback);
     }
 

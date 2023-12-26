@@ -1,12 +1,12 @@
 import { BaseController } from 'mo/glue';
 import { ContextMenuEvent } from 'mo/models/contextMenu';
 import { ContextMenuService } from 'mo/services/contextMenu';
-import type { ContextMenuEventHandler } from 'mo/types';
+import type { MenuHandler } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 export interface IContextMenuController extends BaseController {
     readonly onHide?: () => void;
-    readonly onClick?: ContextMenuEventHandler;
+    readonly onClick?: MenuHandler;
 }
 
 @injectable()
@@ -15,7 +15,7 @@ export class ContextMenuController extends BaseController implements IContextMen
         super();
     }
 
-    public onClick?: ContextMenuEventHandler = (item) => {
+    public onClick?: MenuHandler = (item) => {
         if (typeof item.symbolic !== 'undefined') {
             const symbolic = this.contextMenu.get(item.symbolic);
             if (symbolic) {

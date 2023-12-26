@@ -1,11 +1,11 @@
-import type { AlignmentLiteral, HTMLElementProps, IItemProps, RenderProps } from 'mo/types';
+import type { AlignmentLiteral, HTMLElementProps, IterableItem, Render } from 'mo/types';
 
 export type PartialAlignment = Extract<AlignmentLiteral, 'left' | 'right'>;
 
 export interface IStatusBarItem<T = any>
     extends HTMLElementProps,
-        IItemProps,
-        RenderProps<IStatusBarItem> {
+        IterableItem,
+        Render<IStatusBarItem> {
     alignment: PartialAlignment;
     data?: T;
 }

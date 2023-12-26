@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { classNames } from 'mo/client/classNames';
 import type {
-    ContextMenuWithItemHandler,
+    ContextMenuHandler,
     HTMLElementProps,
-    IItemProps,
     IMenuItemProps,
-    RenderFunctionProps,
-    RenderProps,
+    IterableItem,
+    RenderFunction,
+    Render,
     UniqueId,
 } from 'mo/types';
 
@@ -19,9 +19,8 @@ import variables from './index.scss';
 
 export interface ICollapseItem
     extends HTMLElementProps,
-        RenderProps<ICollapseItem>,
-        Omit<IItemProps, 'icon'> {
-    hidden?: boolean;
+        Render<ICollapseItem>,
+        Omit<IterableItem, 'icon' | 'disabled'> {
     toolbar?: IMenuItemProps[];
     config?: {
         /**
@@ -43,7 +42,7 @@ export interface ICollapseProps extends HTMLElementProps {
     onCollapseChange?: (keys: UniqueId[]) => void;
     onResize?: (resizes: number[]) => void;
     onToolbarClick?: (item: IMenuItemProps, panelId: UniqueId) => void;
-    onContextMenu?: ContextMenuWithItemHandler<[panel: ICollapseItem]>;
+    onContextMenu?: ContextMenuHandler<[panel: ICollapseItem]>;
 }
 
 /**
@@ -106,7 +105,7 @@ export function Collapse({
         onToolbarClick?.(item, panel.id);
     };
 
-    const renderPanels = (data: ICollapseItem, render?: RenderFunctionProps<ICollapseItem>) => {
+    const renderPanels = (data: ICollapseItem, render?: RenderFunction<ICollapseItem>) => {
         if (render) {
             return render(data);
         }

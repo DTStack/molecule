@@ -1,9 +1,9 @@
 import { BaseService } from 'mo/glue';
 import { ActivityBarEvent, ActivityBarModel } from 'mo/models/activityBar';
 import type {
-    ArraylizeOrSingle,
-    ContextMenuEventHandler,
-    ContextMenuWithItemHandler,
+    Arraylize,
+    MenuHandler,
+    ContextMenuHandler,
     IActivityBarItem,
     Predict,
     RequiredId,
@@ -33,7 +33,7 @@ export class ActivityBarService extends BaseService<ActivityBarModel> {
         return this.getState().current;
     }
 
-    public add(data: ArraylizeOrSingle<IActivityBarItem>, isActive = false) {
+    public add(data: Arraylize<IActivityBarItem>, isActive = false) {
         if (!Array.isArray(data) && isActive) {
             this.setCurrent(data.id);
         }
@@ -58,7 +58,7 @@ export class ActivityBarService extends BaseService<ActivityBarModel> {
         });
     }
 
-    public remove(id: ArraylizeOrSingle<UniqueId>) {
+    public remove(id: Arraylize<UniqueId>) {
         this.dispatch((draft) => {
             arraylize(id).forEach((item) => {
                 const idx = draft.data.findIndex(searchById(item));
@@ -85,11 +85,11 @@ export class ActivityBarService extends BaseService<ActivityBarModel> {
         this.subscribe(ActivityBarEvent.onClick, callback);
     }
 
-    public onContextMenu(callback: ContextMenuWithItemHandler<[item?: IActivityBarItem]>) {
+    public onContextMenu(callback: ContextMenuHandler<[item?: IActivityBarItem]>) {
         this.subscribe(ActivityBarEvent.onContextMenu, callback);
     }
 
-    public onContextMenuClick(callback: ContextMenuEventHandler) {
+    public onContextMenuClick(callback: MenuHandler) {
         this.subscribe(ActivityBarEvent.onContextMenuClick, callback);
     }
 }

@@ -9,9 +9,10 @@ import { IScrollRef } from 'mo/client/components/scrollBar';
 import Tab from 'mo/client/components/tab';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type {
-    ContextMenuGroupHandler,
-    ContextMenuWithItemHandler,
+    ContextMenuHandler,
+    GroupMenuHandler,
     IMenuItemProps,
+    TabGroup,
     UniqueId,
 } from 'mo/types';
 import { searchById } from 'mo/utils';
@@ -19,7 +20,7 @@ import type { editor, IDisposable } from 'monaco-editor';
 
 import variables from './index.scss';
 
-type EditorContextMenu = ContextMenuWithItemHandler<[tabId: UniqueId, groupId: UniqueId]>;
+type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]>;
 export interface IGroupProps {
     group: EditorGroupModel;
     options: EditorModel['options'];
@@ -37,18 +38,12 @@ export interface IGroupProps {
         ev: editor.ICursorSelectionChangedEvent
     ) => void;
     onContextMenu?: EditorContextMenu;
-    onToolbarClick?: ContextMenuGroupHandler;
+    onToolbarClick?: GroupMenuHandler;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
     onDragStart?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onDragOver?: (
-        from: { tabId: UniqueId; groupId: UniqueId },
-        to: { tabId: UniqueId; groupId: UniqueId }
-    ) => void;
+    onDragOver?: (from: TabGroup, to: TabGroup) => void;
     onDragEnd?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onDrop?: (
-        from: { tabId: UniqueId; groupId: UniqueId },
-        to: { tabId: UniqueId; groupId: UniqueId }
-    ) => void;
+    onDrop?: (from: TabGroup, to: TabGroup) => void;
 }
 
 export default function Group({

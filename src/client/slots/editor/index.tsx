@@ -13,14 +13,12 @@ import variables from './index.scss';
 
 export default function Editor({
     onMount,
+    onModelMount,
     onSelectTab,
     onPaneSizeChange,
-    onFocus,
     onContextMenu,
-    onCursorSelection,
     onToolbarClick,
     onCloseTab,
-    onChange,
     onDragStart,
     onDragEnd,
     onDragOver,
@@ -62,13 +60,11 @@ export default function Editor({
                                 toolbar={toolbar}
                                 options={options}
                                 onMount={onMount}
+                                onModelMount={onModelMount}
                                 onSelectTab={onSelectTab}
-                                onFocus={onFocus}
-                                onCursorSelection={onCursorSelection}
                                 onContextMenu={onContextMenu}
                                 onToolbarClick={onToolbarClick}
                                 onCloseTab={onCloseTab}
-                                onChange={onChange}
                                 onDragStart={onDragStart}
                                 onDragOver={onDragOver}
                                 onDragEnd={onDragEnd}

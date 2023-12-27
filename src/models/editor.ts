@@ -1,7 +1,8 @@
 import type { IEditorOptions, IEditorTab, IMenuItemProps, UniqueId } from 'mo/types';
+import { editor } from 'monaco-editor';
 
 export enum EditorEvent {
-    onChangeTab = 'editor.onChangeTab',
+    onChange = 'editor.onChange',
     onCloseTab = 'editor.onCloseTab',
     onCloseAll = 'editor.onCloseAll',
     onCloseOther = 'editor.onCloseOther',
@@ -20,13 +21,16 @@ export enum EditorEvent {
     onContextMenu = 'editor.onContextMenu',
     onContextMenuClick = 'editor.onContextMenuClick',
     onToolbarClick = 'editor.onToolbarClick',
+    onMount = 'editor.onMount',
+    onModelMount = 'editor.onModelMount',
 }
 
 export class EditorGroupModel<T = any> {
     constructor(
         public id: UniqueId,
         public data: IEditorTab<T>[] = [],
-        public activeTab?: UniqueId
+        public activeTab?: UniqueId,
+        public editorInstance?: editor.IStandaloneCodeEditor
     ) {}
 }
 

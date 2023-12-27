@@ -30,8 +30,8 @@ export default function Output() {
                 automaticLayout: true,
                 scrollBeyondLastLine: false,
                 contextmenu: false,
-                value: output.value,
             }}
+            value={output.value}
             onMount={(editor) => (instance.current = editor)}
         />
     );

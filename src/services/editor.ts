@@ -343,14 +343,13 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.OpenTab, callback);
     }
 
-    public onChangeTab(
+    public onChange(
         callback: (
-            value: string,
-            ev: editor.IModelContentChangedEvent,
-            extraProps: TabGroup
+            item: TabGroup & { value: string | undefined },
+            ev: editor.IModelContentChangedEvent
         ) => void
     ): void {
-        this.subscribe(EditorEvent.onChangeTab, callback);
+        this.subscribe(EditorEvent.onChange, callback);
     }
 
     public onDragStart(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
@@ -397,5 +396,17 @@ export class EditorService extends BaseService<EditorModel> {
         callback: (item: IMenuItemProps, tabId: UniqueId, groupId: UniqueId) => void
     ): void {
         this.subscribe(EditorEvent.onContextMenuClick, callback);
+    }
+
+    public onMount(
+        callback: (groupId: UniqueId, editorInstance: editor.IStandaloneCodeEditor) => void
+    ) {
+        this.subscribe(EditorEvent.onMount, callback);
+    }
+
+    public onModelMount(
+        callback: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void
+    ) {
+        this.subscribe(EditorEvent.onModelMount, callback);
     }
 }

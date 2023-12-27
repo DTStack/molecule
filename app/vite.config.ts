@@ -9,7 +9,7 @@ export default defineConfig({
             jsxRuntime: 'automatic',
         }),
         monacoEditorPlugin({
-            forceBuildCDN: true,
+            forceBuildCDN: false,
         }),
         mockDevServerPlugin({
             include: 'app/mock/**/*.mock.{ts,js,cjs,mjs,json,json5}',

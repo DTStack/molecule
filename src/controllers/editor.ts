@@ -11,7 +11,8 @@ import { inject, injectable } from 'tsyringe';
 type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]>;
 
 export interface IEditorController extends BaseController {
-    onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
+    onMount?: (groupId: UniqueId, editorInstance: editor.IStandaloneCodeEditor) => void;
+    onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
     onPaneSizeChange?: (size: number[]) => void;
     onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
@@ -21,9 +22,8 @@ export interface IEditorController extends BaseController {
     onDragEnd?: (tabId: UniqueId, groupId: UniqueId) => void;
     onDrop?: (from: TabGroup, to: TabGroup) => void;
     onChange?: (
-        value: string | undefined,
-        ev: editor.IModelContentChangedEvent,
-        extraProps: { tabId?: UniqueId; groupId?: UniqueId }
+        item: TabGroup & { value: string | undefined },
+        ev: editor.IModelContentChangedEvent
     ) => void;
     onCursorSelection?: (
         instance: editor.IStandaloneCodeEditor,
@@ -54,7 +54,40 @@ export class EditorController extends BaseController implements IEditorControlle
         this.layout.setGroupSplitSize(size);
     };
 
-    public onMount = (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => {
+    public onMount = (groupId: UniqueId, editorInstance: editor.IStandaloneCodeEditor) => {
+        // Emit onChangeTab event handler
+        editorInstance.onDidChangeModelContent((ev) => {
+            const model = editorInstance.getModel();
+            if (!model) return;
+            const tab = this.editor.getGroup(groupId)?.data.find((tab) => tab.model === model);
+            if (!tab) return;
+            this.onChange({ value: model.getValue(), tabId: tab.id, groupId }, ev);
+        });
+
+        // Emit onFocus event handler
+        editorInstance.onDidFocusEditorText(() => {
+            this.onFocus(editorInstance);
+        });
+
+        // Emit onCursorSelection event handler
+        editorInstance.onDidChangeCursorSelection((ev) => {
+            this.onCursorSelection(editorInstance, ev);
+        });
+
+        this.editor.updateGroup({
+            id: groupId,
+            editorInstance,
+        });
+
+        // [NOTE]: NOT put updateGroup into onMount's callback as we don't want it could be stopped by user
+        this.emit(EditorEvent.onMount, groupId, editorInstance);
+    };
+
+    public onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void = (
+        tabId,
+        groupId,
+        model
+    ) => {
         this.editor.updateTab(
             {
                 id: tabId,
@@ -62,6 +95,8 @@ export class EditorController extends BaseController implements IEditorControlle
             },
             groupId
         );
+        // [NOTE]: We don't want it to be stopped by user
+        this.emit(EditorEvent.onModelMount, tabId, groupId, model);
     };
 
     public onSelectTab = (tabId: UniqueId, groupId: UniqueId) => {
@@ -110,14 +145,13 @@ export class EditorController extends BaseController implements IEditorControlle
 
     // Editor value onChange callback
     public onChange = (
-        value: string | undefined,
-        ev: editor.IModelContentChangedEvent,
-        extraProps: { tabId?: UniqueId; groupId?: UniqueId }
+        item: TabGroup & { value: string | undefined },
+        ev: editor.IModelContentChangedEvent
     ) => {
-        if (extraProps.tabId === this.builtin.getState().constants.EDITOR_ITEM_SETTING) {
-            this.emit(SettingsEvent.OnChange, value);
+        if (item.tabId === this.builtin.getState().constants.EDITOR_ITEM_SETTING) {
+            this.emit(SettingsEvent.OnChange, item.value);
         }
 
-        this.emit(EditorEvent.onChangeTab, value, ev, extraProps);
+        this.emit(EditorEvent.onChange, item, ev);
     };
 }

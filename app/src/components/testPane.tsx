@@ -24,9 +24,6 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             disabled,
         });
     };
-    const handleTest = () => {
-        molecule.activityBar.remove('testPane');
-    };
     const handleAddGlobalActivityBar = () => {
         const id = randomId();
         molecule.activityBar.add({
@@ -188,7 +185,26 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 { id: 'components', name: 'components' },
                 { id: 'editor', name, icon: 'file' },
             ],
-            // modified: !!(key % 2),
+        };
+        molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
+    };
+
+    const newCustomEditor = function () {
+        const key = randomId();
+        const name = `editor-${key}.ts`;
+        const tabData: IEditorTab<any> = {
+            id: key,
+            name,
+            icon: 'file',
+            value: `This is Custom Editor`,
+            language: 'typescript',
+            breadcrumb: [
+                { id: 'app', name: 'app' },
+                { id: 'src', name: 'src' },
+                { id: 'components', name: 'components' },
+                { id: 'editor', name, icon: 'file' },
+            ],
+            render: ({ value }) => <pre>{JSON.stringify(value, null, 2)}</pre>,
         };
         molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
     };
@@ -373,6 +389,9 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                     <Button block onClick={newEditor}>
                         New Editor
                     </Button>
+                    <Button block onClick={newCustomEditor}>
+                        New Custom Editor
+                    </Button>
                     <Button block onClick={handleToggleEditorLoading}>
                         Toggle Loading
                     </Button>
@@ -411,9 +430,6 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <div style={{ gap: 5, display: 'grid' }}>
                     <Button block onClick={() => handleAddActivityBar()}>
                         Add ActivityBar Item
-                    </Button>
-                    <Button block onClick={() => handleTest()}>
-                        test
                     </Button>
                     <Button block onClick={() => handleAddActivityBar(true)}>
                         Add Disabled ActivityBar Item

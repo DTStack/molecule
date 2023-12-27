@@ -1,12 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
 import Header from 'mo/client/components/header';
 import Icon from 'mo/client/components/icon';
+import KeepAlive from 'mo/client/components/keepAlive';
 import MonacoEditor from 'mo/client/components/monaco';
 import { IScrollRef } from 'mo/client/components/scrollBar';
 import Tab from 'mo/client/components/tab';
+import { Context } from 'mo/client/context';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type {
     ContextMenuHandler,
@@ -16,7 +18,7 @@ import type {
     UniqueId,
 } from 'mo/types';
 import { searchById } from 'mo/utils';
-import type { editor, IDisposable } from 'monaco-editor';
+import type { editor } from 'monaco-editor';
 
 import variables from './index.scss';
 
@@ -25,11 +27,11 @@ export interface IGroupProps {
     group: EditorGroupModel;
     options: EditorModel['options'];
     toolbar?: IMenuItemProps[];
-    onMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
+    onMount?: (groupId: UniqueId, editorInstance: editor.IStandaloneCodeEditor) => void;
+    onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
     onChange?: (
-        value: string | undefined,
-        ev: editor.IModelContentChangedEvent,
-        extraProps: { tabId?: UniqueId; groupId?: UniqueId }
+        item: TabGroup & { value: string | undefined },
+        ev: editor.IModelContentChangedEvent
     ) => void;
     onSelectTab?: (tabId: UniqueId, groupId: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
@@ -52,9 +54,7 @@ export default function Group({
     toolbar,
     onSelectTab,
     onMount,
-    onChange,
-    onFocus,
-    onCursorSelection,
+    onModelMount,
     onContextMenu,
     onToolbarClick,
     onCloseTab,
@@ -63,57 +63,40 @@ export default function Group({
     onDragEnd,
     onDrop,
 }: IGroupProps) {
-    const instance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
-    const disposesRef = useRef<IDisposable[]>([]);
+    const context = useContext(Context);
     const ref = useRef<IScrollRef>(null);
+    const viewState = useRef(new WeakMap());
 
     const tab = group.activeTab ? group.data.find?.(searchById(group.activeTab)) : undefined;
 
     const handleMount = (editor: editor.IStandaloneCodeEditor) => {
-        instance.current = editor;
-        if (instance.current) {
-            while (disposesRef?.current?.length) {
-                disposesRef.current.pop()?.dispose();
+        onMount?.(group.id, editor);
+
+        editor.onDidChangeModel(() => {
+            const model = editor.getModel();
+            if (model) {
+                const state = viewState.current.get(model);
+                if (state) {
+                    editor.restoreViewState(state);
+                    editor.focus();
+                }
             }
-        }
+        });
 
-        const disposes: IDisposable[] = [];
-
-        disposes.push(
-            instance.current.onDidChangeModelContent((ev) => {
-                onChange?.(instance.current?.getModel()?.getValue(), ev, {
-                    tabId: tab?.id,
-                    groupId: group?.id,
-                });
-            })
-        );
-
-        disposes.push(
-            instance.current.onDidFocusEditorText(() => {
-                onFocus?.(instance.current!);
-            })
-        );
-
-        disposes.push(
-            instance.current.onDidChangeCursorSelection((ev) => {
-                onCursorSelection?.(instance.current!, ev);
-            })
-        );
-        disposesRef.current = disposes;
-
-        if (!tab) return;
-        if (tab.model) {
-            instance.current.setModel(tab.model);
-        } else {
-            onMount?.(tab.id, group.id, instance.current.getModel()!);
-        }
+        editor.onDidBlurEditorText(() => {
+            const model = editor.getModel();
+            if (model) {
+                viewState.current.set(model, editor.saveViewState());
+            }
+        });
     };
 
-    useEffect(() => {
-        if (instance.current) {
-            instance.current.updateOptions(options);
+    const handleModelMount = (model: editor.ITextModel) => {
+        if (!tab) return;
+        if (!tab.model) {
+            onModelMount?.(tab.id, group.id, model);
         }
-    }, [options]);
+    };
 
     return (
         <div className={variables.group}>
@@ -167,20 +150,23 @@ export default function Group({
             </Header>
             <Breadcrumb className={variables.breadcrumb} routes={tab?.breadcrumb || []} />
             <div className={variables.content}>
-                {tab?.render ? (
-                    tab?.render?.(tab)
-                ) : (
-                    <MonacoEditor
-                        options={{
-                            ...options,
-                            automaticLayout: true,
-                            value: tab?.value,
-                            language: tab?.language,
-                        }}
-                        key={tab?.id}
-                        onMount={handleMount}
-                    />
-                )}
+                {tab?.render?.(tab)}
+                <KeepAlive active={!tab?.render}>
+                    {/* The KeepAlive component will block the context transfer between child components and the current component */}
+                    <Context.Provider value={context}>
+                        <MonacoEditor
+                            options={{
+                                ...options,
+                                automaticLayout: true,
+                            }}
+                            model={tab?.model}
+                            value={tab?.value}
+                            language={tab?.language}
+                            onMount={handleMount}
+                            onModelMount={handleModelMount}
+                        />
+                    </Context.Provider>
+                </KeepAlive>
             </div>
         </div>
     );

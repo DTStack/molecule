@@ -27,9 +27,6 @@ import {
 import type { editor as MonacoEditor } from 'monaco-editor';
 import { injectable } from 'tsyringe';
 
-type IStandaloneEditorConstructionOptions = MonacoEditor.IEditorOptions &
-    MonacoEditor.IGlobalEditorOptions;
-
 type IEditorOverrideServices = MonacoEditor.IEditorOverrideServices;
 
 @injectable()
@@ -73,7 +70,7 @@ export class MonacoService {
 
     public create(
         domElement: HTMLElement,
-        options?: IStandaloneEditorConstructionOptions,
+        options?: MonacoEditor.IStandaloneEditorConstructionOptions,
         overrides?: IEditorOverrideServices
     ): MonacoEditor.IStandaloneCodeEditor {
         const services = this.services;

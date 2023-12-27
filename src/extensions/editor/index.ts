@@ -40,7 +40,7 @@ export const ExtendsEditor: IExtension = {
             molecule.editor.moveTab(from, to);
         });
 
-        molecule.editor.onChangeTab((value, ev, { tabId, groupId }) => {
+        molecule.editor.onChange(({ value, tabId, groupId }) => {
             const tab = molecule.editor.getTab(tabId, groupId);
             if (!tab) return;
             molecule.editor.updateTab({ ...tab, value, modified: true }, groupId);

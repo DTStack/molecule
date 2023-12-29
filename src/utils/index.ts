@@ -1,13 +1,6 @@
 import { Children, cloneElement, isValidElement } from 'react';
 import { isEqual, merge, omitBy } from 'lodash-es';
-import type {
-    Arraylize,
-    IColorTheme,
-    IconType,
-    IMenuItemProps,
-    RecordWithId,
-    UniqueId,
-} from 'mo/types';
+import type { Arraylize, IColorTheme, IconType, IMenuItemProps, RecordWithId, UniqueId } from 'mo/types';
 import type { editor } from 'monaco-editor';
 
 export function searchById<T extends RecordWithId<Record<string, any>>>(id?: UniqueId) {
@@ -46,13 +39,6 @@ export function arraylize<T>(data: Arraylize<T>) {
 }
 
 /**
- * Extract ids from arr
- */
-export function extract<T extends { id: UniqueId }>(arr: T[], ids: UniqueId[]) {
-    return arr.filter((i) => !ids.includes(i.id));
-}
-
-/**
  * Classify arr into two parts
  */
 export function classify<T>(arr: T[], predicate: (value: T, index: number) => boolean) {
@@ -71,10 +57,7 @@ export function classifyBy<T>(arr: T[], predicate: (value: T, index: number) => 
     }, []);
 }
 
-export function get<T extends RecordWithId<{ children?: T[] }>>(
-    obj: Arraylize<T>,
-    keyPath: string[]
-) {
+export function get<T extends RecordWithId<{ children?: T[] }>>(obj: Arraylize<T>, keyPath: string[]) {
     let root = { children: arraylize(obj) } as T;
     const stack = [...keyPath];
     while (stack.length) {
@@ -256,10 +239,7 @@ export function isElementInParentView(ele: HTMLElement, parent: HTMLElement) {
  * @param {number} wait - The time in milliseconds to wait before executing the function again.
  * @returns {(...args: Parameters<T>) => void} - The throttled function.
  */
-export function throttleByArgs<T extends(...args: any[]) => any>(
-    fn: T,
-    wait: number
-): (...args: Parameters<T>) => void {
+export function throttleByArgs<T extends (...args: any[]) => any>(fn: T, wait: number): (...args: Parameters<T>) => void {
     let startTime = 0;
     let previous = 0;
     let prevArgs: any[];

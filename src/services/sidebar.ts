@@ -3,13 +3,13 @@ import { BaseService } from 'mo/glue';
 import { type ISidebarPane, SidebarEvent, SidebarModel } from 'mo/models/sideBar';
 import type {
     Arraylize,
-    GroupMenuHandler,
     ContextMenuHandler,
-    Variant,
+    GroupMenuHandler,
     IMenuItemProps,
     Predict,
     RequiredId,
     UniqueId,
+    Variant,
 } from 'mo/types';
 import { arraylize, getPrevOrNext, searchById } from 'mo/utils';
 

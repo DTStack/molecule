@@ -58,7 +58,7 @@ enum InstanceHookKind {
     beforeLoad = 'before.load',
 }
 
-export default class InstanceService extends GlobalEvent implements IInstanceServiceProps {
+export class InstanceService extends GlobalEvent implements IInstanceServiceProps {
     private root: ReturnType<typeof createRoot> | undefined;
     private _config: Required<IConfigProps> = {
         extensions: [],
@@ -194,13 +194,10 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
         // load contributes
         services.extension.load();
 
-        const controllers = Array.from(services.module.controllers).reduce<Record<string, any>>(
-            (acc, [key, value]) => {
-                acc[key] = this.resolve(value);
-                return acc;
-            },
-            {}
-        );
+        const controllers = Array.from(services.module.controllers).reduce<Record<string, any>>((acc, [key, value]) => {
+            acc[key] = this.resolve(value);
+            return acc;
+        }, {});
 
         // activate extensions
         services.extension.activate();

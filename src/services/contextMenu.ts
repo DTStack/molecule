@@ -1,11 +1,11 @@
 import { BaseService } from 'mo/glue';
 import { ContextMenuEvent, ContextMenuModel } from 'mo/models/contextMenu';
 import type {
-    MenuHandler,
-    Variant,
     IMenuItemProps,
     IPosition,
+    MenuHandler,
     UniqueId,
+    Variant,
 } from 'mo/types';
 import { searchById } from 'mo/utils';
 

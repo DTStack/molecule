@@ -3,8 +3,8 @@ import type { EditorGroupModel } from 'mo/models/editor';
 import { EditorTreeEvent, EditorTreeModel } from 'mo/models/editorTree';
 import type {
     Arraylize,
-    GroupMenuHandler,
     ContextMenuHandler,
+    GroupMenuHandler,
     IEditorTab,
     IMenuItemProps,
     RequiredId,

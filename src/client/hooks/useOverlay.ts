@@ -7,7 +7,7 @@ const PLACEMENTS = {
     bottomLeft: 'translate(-100%, 0px)',
     bottomRight: '',
 };
-export default function useOverlayEffect(
+export default function useOverlay(
     effect: () => void,
     deps?: React.DependencyList | undefined
 ) {

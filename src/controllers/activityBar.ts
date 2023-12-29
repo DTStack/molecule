@@ -4,9 +4,9 @@ import { MenuBarEvent } from 'mo/models/menuBar';
 import type { ActivityBarService } from 'mo/services/activityBar';
 import type { BuiltinService } from 'mo/services/builtin';
 import type {
-    MenuHandler,
     ContextMenuHandler,
     IActivityBarItem,
+    MenuHandler,
 } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 

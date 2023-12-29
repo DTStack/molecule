@@ -6,7 +6,6 @@ $vertical: BEMModifier(variables.$split, 'vertical');
 $horizontal: BEMModifier(variables.$split, 'horizontal');
 
 .#{variables.$split} {
-    // flex: 1;
     height: 100%;
     position: relative;
     width: 100%;
@@ -25,7 +24,6 @@ $horizontal: BEMModifier(variables.$split, 'horizontal');
         }
     }
 }
-
 
 :export {
     container: variables.$split;

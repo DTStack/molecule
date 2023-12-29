@@ -1,8 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Button } from '@dtinsight/molecule/esm/client/components/button';
-import LocaleNotification from '@dtinsight/molecule/esm/client/components/localeNotification';
-import { ScrollBar } from '@dtinsight/molecule/esm/client/components/scrollBar';
-import { type IEditorTab, type IMoleculeContext } from '@dtinsight/molecule/esm/types';
+import { components, type IEditorTab, type IMoleculeContext } from '@dtinsight/molecule';
 
 import { getWorkspace } from '../utils';
 import './testPane.css';
@@ -78,10 +75,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 'testPane'
             );
         } else {
-            molecule.menuBar.setMenus([
-                ...molecule.menuBar.getState().data,
-                { id: 'testPane', name: 'testPane' },
-            ]);
+            molecule.menuBar.setMenus([...molecule.menuBar.getState().data, { id: 'testPane', name: 'testPane' }]);
         }
     };
     const removeMenu = function () {
@@ -306,9 +300,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
 
     const toggleDirection = () => {
-        molecule.layout.updateEditorDirection((prev) =>
-            prev === 'vertical' ? 'horizontal' : 'vertical'
-        );
+        molecule.layout.updateEditorDirection((prev) => (prev === 'vertical' ? 'horizontal' : 'vertical'));
     };
 
     const addNotification = function () {
@@ -326,7 +318,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             {
                 id: 'locale',
                 value: 'test',
-                render: () => <LocaleNotification />,
+                render: () => <components.localeNotification.default />,
             },
         ]);
         molecule.layout.setNotification(true);
@@ -348,9 +340,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     // ====================================================================
 
     const updateLocale = () => {
-        molecule.locale.setCurrent(
-            molecule.locale.getCurrentLocale()?.id === 'zh-CN' ? 'en-US' : 'zh-CN'
-        );
+        molecule.locale.setCurrent(molecule.locale.getCurrentLocale()?.id === 'zh-CN' ? 'en-US' : 'zh-CN');
     };
 
     const handleAddEditorTreeToolbar = () => {
@@ -396,153 +386,153 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     }, []);
 
     return (
-        <ScrollBar isShowShadow>
+        <components.scrollBar.ScrollBar isShowShadow>
             <div style={{ padding: '0 16px' }}>
                 <h2>Editor:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={newEditor}>
+                    <components.button.Button block onClick={newEditor}>
                         New Editor
-                    </Button>
-                    <Button block onClick={newCustomEditor}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={newCustomEditor}>
                         New Custom Editor
-                    </Button>
-                    <Button block onClick={handleToggleEditorLoading}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={handleToggleEditorLoading}>
                         Toggle Loading
-                    </Button>
-                    <Button block onClick={updateWelcome}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={updateWelcome}>
                         Update Welcome Page
-                    </Button>
-                    <Button block onClick={updateOptions}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={updateOptions}>
                         Update ReadOnly
-                    </Button>
-                    <Button block onClick={addAction}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={addAction}>
                         Add Excute Action
-                    </Button>
-                    <Button block onClick={updateAction}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={updateAction}>
                         Update Excute Action
-                    </Button>
-                    <Button block onClick={openFile}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={openFile}>
                         Open File
-                    </Button>
-                    <Button block onClick={toggleDirection}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={toggleDirection}>
                         Toggle Direction
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>Auxiliary</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={addAuxiliary}>
+                    <components.button.Button block onClick={addAuxiliary}>
                         addAuxiliary
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>Editor Tree:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={handleAddEditorTreeToolbar}>
+                    <components.button.Button block onClick={handleAddEditorTreeToolbar}>
                         Add Toolbar
-                    </Button>
-                    <Button block onClick={handleUpdateEditorTreeToolbar}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={handleUpdateEditorTreeToolbar}>
                         Update Toolbar
-                    </Button>
-                    <Button block onClick={handleRemoveEditorTreeToolbar}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={handleRemoveEditorTreeToolbar}>
                         Remove Toolbar
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>ActivityBar:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={() => handleAddActivityBar()}>
+                    <components.button.Button block onClick={() => handleAddActivityBar()}>
                         Add ActivityBar Item
-                    </Button>
-                    <Button block onClick={() => handleAddActivityBar(true)}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={() => handleAddActivityBar(true)}>
                         Add Disabled ActivityBar Item
-                    </Button>
-                    <Button block onClick={handleAddGlobalActivityBar}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={handleAddGlobalActivityBar}>
                         Add Global ActivityBar Item
-                    </Button>
-                    <Button block onClick={handleHiddenActivityBar}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={handleHiddenActivityBar}>
                         Show/Hide ActivityBar
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>Sidebar:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={handleToggleLoading}>
+                    <components.button.Button block onClick={handleToggleLoading}>
                         Toggle Loading
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>StatusBar:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={addStatusBar}>
+                    <components.button.Button block onClick={addStatusBar}>
                         Add StatusBar Item
-                    </Button>
-                    <Button block onClick={removeStatusBar}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={removeStatusBar}>
                         Remove Last StatusBar Item
-                    </Button>
-                    <Button block onClick={showHideStatusBar}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={showHideStatusBar}>
                         Show/Hide StatusBar
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>MenuBar:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={appendMenu}>
+                    <components.button.Button block onClick={appendMenu}>
                         Add MenuBar Item
-                    </Button>
-                    <Button block onClick={removeMenu}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={removeMenu}>
                         Remove MenuBar Item
-                    </Button>
-                    <Button block onClick={updateMenu}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={updateMenu}>
                         Update MenuBar Item
-                    </Button>
-                    <Button block onClick={showHideMenuBar}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={showHideMenuBar}>
                         Show/Hide MenuBar
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>Explorer:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={addExplorer}>
+                    <components.button.Button block onClick={addExplorer}>
                         Add Explorer Panel
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>FolderTree:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={addRootFolder}>
+                    <components.button.Button block onClick={addRootFolder}>
                         Add Root Folder
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>Panel:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={addPanel}>
+                    <components.button.Button block onClick={addPanel}>
                         Add Panel
-                    </Button>
-                    <Button block onClick={showHidePanel}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={showHidePanel}>
                         Show/Hide Panel
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>Output:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={updateOutput}>
+                    <components.button.Button block onClick={updateOutput}>
                         Update Output
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>Notification:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={addNotification}>
+                    <components.button.Button block onClick={addNotification}>
                         Add Notification Item
-                    </Button>
-                    <Button block onClick={addLocaleNotification}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={addLocaleNotification}>
                         Add a locale Notification
-                    </Button>
-                    <Button block onClick={removeNotification}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={removeNotification}>
                         Remove Notification Item
-                    </Button>
-                    <Button block onClick={toggleNotification}>
+                    </components.button.Button>
+                    <components.button.Button block onClick={toggleNotification}>
                         Toggle Notification
-                    </Button>
+                    </components.button.Button>
                 </div>
                 <h2>Locale:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
-                    <Button block onClick={updateLocale}>
+                    <components.button.Button block onClick={updateLocale}>
                         Switch locale between English and Chinese
-                    </Button>
+                    </components.button.Button>
                 </div>
             </div>
-        </ScrollBar>
+        </components.scrollBar.ScrollBar>
     );
 }

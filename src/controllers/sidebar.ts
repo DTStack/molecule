@@ -1,6 +1,6 @@
 import { BaseController } from 'mo/glue';
 import { ISidebarPane, SidebarEvent } from 'mo/models/sideBar';
-import type { GroupMenuHandler, ContextMenuHandler } from 'mo/types';
+import type { ContextMenuHandler,GroupMenuHandler } from 'mo/types';
 
 export interface ISideBarController extends BaseController {
     readonly onToolbarClick: GroupMenuHandler;

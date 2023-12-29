@@ -11,9 +11,7 @@
         "dev": "./bin/m.cjs dev",
         "web": "vite serve app/ -c app/vite.config.ts",
         "lint": "npx eslint './src/**/*.ts' './src/**/*.tsx'",
-        "lint-fix": "npx eslint './src/**/*.ts' './src/**/*.tsx' --fix",
-        "lint-css": "npx stylelint './src/**/*.scss' './src/**/*.css'",
-        "lint-css-fix": "npx stylelint './src/**/*.scss' './src/**/*.css' --fix"
+        "prettier": "npx prettier --write src/"
     },
     "keywords": [
         "react.js",

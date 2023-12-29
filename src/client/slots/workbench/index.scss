@@ -35,19 +35,15 @@ $main: prefix('mainBench');
         width: 100%;
 
         .monaco-scrollable-element {
-
-            /* stylelint-disable-next-line*/
-            &>.scrollbar>.slider {
+            & > .scrollbar > .slider {
                 background: var(--scrollbarSlider-activeBackground);
 
-                /* stylelint-disable-next-line*/
                 &:hover {
                     background: var(--scrollbarSlider-hoverBackground);
                 }
             }
         }
     }
-
 }
 
 :export {

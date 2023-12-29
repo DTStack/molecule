@@ -1,10 +1,4 @@
-import {
-    FileTypes,
-    IContributeType,
-    IExtension,
-    IMoleculeContext,
-} from '@dtinsight/molecule/esm/types';
-import { TreeNodeModel } from '@dtinsight/molecule/esm/utils/tree';
+import { FileTypes, IContributeType, IExtension, IMoleculeContext, tree } from '@dtinsight/molecule';
 import { debounce } from 'lodash-es';
 
 import TestPane from '../components/testPane';
@@ -75,18 +69,7 @@ export const TestExtension: IExtension = {
                 molecule.sidebar.setLoading(true);
                 searchFileContents(value)
                     .then((data) => {
-                        molecule.search.setResult(
-                            data.map(
-                                (item) =>
-                                    new TreeNodeModel(item.fileName, item.fileName, 'Folder', [
-                                        new TreeNodeModel(
-                                            `${item.fileName}__${item.context}`,
-                                            item.context,
-                                            'File'
-                                        ),
-                                    ])
-                            )
-                        );
+                        molecule.search.setResult(data.map((item) => new tree.TreeNodeModel(item.fileName, item.fileName, 'Folder', [new tree.TreeNodeModel(`${item.fileName}__${item.context}`, item.context, 'File')])));
                         molecule.search.setExpandedKeys(data.map((i) => i.fileName));
                     })
                     .finally(() => {
@@ -102,13 +85,10 @@ export const TestExtension: IExtension = {
                     id: molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
                     name: tree.name,
                 });
-                molecule.sidebar.updateToolbar(
-                    molecule.builtin.getConstants().SIDEBAR_ITEM_EXPLORER,
-                    {
-                        id: molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
-                        name: tree.name,
-                    }
-                );
+                molecule.sidebar.updateToolbar(molecule.builtin.getConstants().SIDEBAR_ITEM_EXPLORER, {
+                    id: molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
+                    name: tree.name,
+                });
             });
         });
 

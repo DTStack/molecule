@@ -1,0 +1,16 @@
+export * as activityBar from './activityBar';
+export * as auxiliaryBar from './auxiliaryBar';
+export * as contextMenu from './contextMenu';
+export * as editor from './editor';
+export * as editorTree from './editorTree';
+export * as explorer from './explorer';
+export * as folderTree from './folderTree';
+export * as group from './group';
+export * as menuBar from './menuBar';
+export * as notification from './notification';
+export * as notificationCenter from './notificationCenter';
+export * as panel from './panel';
+export * as search from './search';
+export * as sidebar from './sidebar';
+export * as statusBar from './statusBar';
+export * as workbench from './workbench';

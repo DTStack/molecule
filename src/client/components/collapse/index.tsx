@@ -5,8 +5,8 @@ import type {
     HTMLElementProps,
     IMenuItemProps,
     IterableItem,
-    RenderFunction,
     Render,
+    RenderFunction,
     UniqueId,
 } from 'mo/types';
 

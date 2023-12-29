@@ -9,19 +9,18 @@ $warning: BEMModifier($container, 'warning');
 $error: BEMModifier($container, 'error');
 $validating: BEMModifier($container, 'validating');
 
-$small: BEMModifier($container,'small');
+$small: BEMModifier($container, 'small');
 
 $widget-size: 26px;
 $small-widget-size: 20px;
 
-/* stylelint-disable */
+/* prettier-ignore */
 $status-colors: (
     $info: (border: var(--inputValidation-infoBorder), background: var(--inputValidation-infoBackground)),
     $warning: (border: var(--inputValidation-warningBorder), background: var(--inputValidation-warningBackground)),
     $error: (border: var(--inputValidation-errorBorder), background: var(--inputValidation-errorBackground)),
     $validating: (border: var(--inputValidation-infoBorder), background: var(--inputValidation-infoBackground)),
 );
-/* stylelint-enable */
 
 @mixin status($border, $background) {
     .#{$widget} {
@@ -33,7 +32,7 @@ $status-colors: (
         background: $background;
         border: 1px solid $border;
     }
-};
+}
 
 .#{$container} {
     position: relative;
@@ -76,7 +75,7 @@ $status-colors: (
         }
     }
 
-    .#{$widget}:focus ~ .#{$validation}{
+    .#{$widget}:focus ~ .#{$validation} {
         display: block;
     }
 
@@ -97,7 +96,6 @@ $status-colors: (
         }
     }
 }
-
 
 :export {
     container: $container;

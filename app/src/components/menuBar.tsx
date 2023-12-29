@@ -1,12 +1,11 @@
-import Icon from '@dtinsight/molecule/esm/client/components/icon';
-import MoleculeMenuBar from '@dtinsight/molecule/esm/client/slots/menuBar';
+import { components, slots } from '@dtinsight/molecule';
 
 import './menuBar.css';
 
 export default function MenuBar(props: any) {
     return (
         <div className="app_menuBar__container">
-            <MoleculeMenuBar {...props} />
+            <slots.menuBar.default {...props} />
             <div
                 style={{
                     flex: 1,
@@ -16,7 +15,7 @@ export default function MenuBar(props: any) {
                 }}
             >
                 <div className="app_menuBar">
-                    <Icon type="debug" />
+                    <components.icon.default type="debug" />
                     <div style={{ color: 'var(--titleBar-activeForeground)' }}>Molecule</div>
                 </div>
             </div>

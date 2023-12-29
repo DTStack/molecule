@@ -9,9 +9,12 @@
     ],
     "scripts": {
         "dev": "./bin/m.cjs dev",
+        "build": "./bin/m.cjs build",
         "web": "vite serve app/ -c app/vite.config.ts",
         "lint": "npx eslint './src/**/*.ts' './src/**/*.tsx'",
-        "prettier": "npx prettier --write src/"
+        "prettier": "npx prettier --write src/",
+        "prepublishOnly": "npm run build",
+        "release": "bumpp --commit --push --tag && npm publish"
     },
     "keywords": [
         "react.js",
@@ -38,6 +41,7 @@
         "@types/use-sync-external-store": "^0.0.6",
         "@types/yargs": "^17.0.24",
         "@vitejs/plugin-react": "^4.0.4",
+        "bumpp": "^9.2.1",
         "chalk": "4.x",
         "chokidar": "^3.5.3",
         "concurrently": "^8.2.1",

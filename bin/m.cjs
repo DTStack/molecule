@@ -40,10 +40,23 @@ yargs(hideBin(process.argv))
         const jsonfiles = await glob(jsonFilePath);
         const cssfiles = await glob(cssFilePath);
 
-        transform([...tsfiles, ...tsxfiles]);
-        transformTyping();
-        transformStyle(scssfiles);
-        copyFile([...jsonfiles, ...cssfiles]);
+        transform([...tsfiles, ...tsxfiles], true);
+        transformTyping(true);
+        transformStyle(scssfiles, true);
+        copyFile([...jsonfiles, ...cssfiles], true);
+    })
+    .command('build', false, async () => {
+        rimrafSync(dist);
+        const tsfiles = await glob(tsFilePath);
+        const tsxfiles = await glob(tsxFilePath);
+
+        const scssfiles = await glob(scssFilePath);
+
+        const jsonfiles = await glob(jsonFilePath);
+        const cssfiles = await glob(cssFilePath);
+
+        await Promise.all([transform([...tsfiles, ...tsxfiles]), transformTyping(), transformStyle(scssfiles), copyFile([...jsonfiles, ...cssfiles])]);
+        process.exit(0);
     })
     .parse();
 
@@ -58,7 +71,6 @@ let typingCtx;
 
 process.on('exit', () => {
     typingCtx?.kill();
-    typingCtx?.disconnect();
     transformCtx?.cancel();
     transformCtx?.dispose();
 });
@@ -68,7 +80,7 @@ process.on('exit', () => {
  * @param {string[]} entryPoints
  * @returns
  */
-async function transform(entryPoints) {
+async function transform(entryPoints, watch = false) {
     log(`Starting ${blue('transform')}...`);
     transformCtx = await esbuild.context({
         entryPoints,
@@ -92,15 +104,26 @@ async function transform(entryPoints) {
             },
         ],
     });
-    await transformCtx.watch();
-    log(`Finishing ${blue('transform')}`);
-    log(`Starting ${yellow('watching tsx Files change')}...`);
+    if (watch) {
+        await transformCtx.watch();
+        log(`Finishing ${blue('transform')}`);
+        log(`Starting ${yellow('watching tsx Files change')}...`);
+    } else {
+        await transformCtx.rebuild();
+        log(`Finishing ${blue('transform')}`);
+    }
 }
 
-async function transformTyping() {
-    typingCtx = spawn('tsc && (concurrently "tsc -w" "tsc-alias -w")', {
-        stdio: 'inherit',
-        shell: true,
+function transformTyping(watch = false) {
+    return new Promise((resolve) => {
+        const command = watch ? 'tsc && (concurrently "tsc -w" "tsc-alias -w")' : 'tsc && tsc-alias';
+        typingCtx = spawn(command, {
+            stdio: 'inherit',
+            shell: true,
+        });
+        typingCtx.on('close', () => {
+            resolve();
+        });
     });
 }
 
@@ -108,21 +131,23 @@ async function transformTyping() {
  *
  * @param {string[]} entrys
  */
-async function transformStyle(entrys) {
+async function transformStyle(entrys, watch = false) {
     log(`Starting ${green('transform styles')}...`);
     await Promise.all(entrys.map((entry) => _transform(entry)));
     log(`Finishing ${green('transform styles')}`);
-    log(`Starting ${yellow('watching style Files change')}...`);
-    chokidar.watch(entrys).on('change', (path) => {
-        log(`Starting ${green('transform styles', path)}...`);
-        _transform(path)
-            .then(() => {
-                log(`Finishing ${green('transform styles')}`);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    });
+    if (watch) {
+        log(`Starting ${yellow('watching style Files change')}...`);
+        chokidar.watch(entrys).on('change', (path) => {
+            log(`Starting ${green('transform styles', path)}...`);
+            _transform(path)
+                .then(() => {
+                    log(`Finishing ${green('transform styles')}`);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    }
 
     /**
      *
@@ -142,18 +167,16 @@ async function transformStyle(entrys) {
             const exportModules = res.css.match(regex)[0];
             fs.writeFileSync(
                 path.join(dirname, styleVariablesFileName),
-                exportModules
-                    .replace(':export', 'export default')
-                    .replace(/: .*;/gm, (substring) => {
-                        const stringLiteral = /(?<="|')\S+(?="|')/g;
-                        if (!stringLiteral.test(substring)) {
-                            const startIdx = substring.indexOf(':');
-                            const endIdx = substring.indexOf(';');
-                            return `:"${substring.substring(startIdx + 1, endIdx).trim()}",`;
-                        } else {
-                            return substring.replace(';', ',');
-                        }
-                    })
+                exportModules.replace(':export', 'export default').replace(/: .*;/gm, (substring) => {
+                    const stringLiteral = /(?<="|')\S+(?="|')/g;
+                    if (!stringLiteral.test(substring)) {
+                        const startIdx = substring.indexOf(':');
+                        const endIdx = substring.indexOf(';');
+                        return `:"${substring.substring(startIdx + 1, endIdx).trim()}",`;
+                    } else {
+                        return substring.replace(';', ',');
+                    }
+                })
             );
         }
     }
@@ -163,16 +186,18 @@ async function transformStyle(entrys) {
  *
  * @param {string[]} entrys
  */
-async function copyFile(entrys) {
+async function copyFile(entrys, watch = false) {
     log(`Starting ${red('copy files')}...`);
     entrys.map((entry) => _copyFile(entry));
     log(`Finishing ${red('copy files')}`);
 
-    chokidar.watch(entrys).on('change', (path) => {
-        log(`Starting ${red('copy files')}...`);
-        _copyFile(path);
-        log(`Finishing ${red('copy files')}`);
-    });
+    if (watch) {
+        chokidar.watch(entrys).on('change', (path) => {
+            log(`Starting ${red('copy files')}...`);
+            _copyFile(path);
+            log(`Finishing ${red('copy files')}`);
+        });
+    }
 
     /**
      *
@@ -199,9 +224,7 @@ function alias(source, filePath) {
     const regex = /(?<=from).*(?=;)/gm;
     target = target.replace(regex, (substring) => {
         if (/mo\//.test(substring)) {
-            const absolutePath = substring
-                .match(/(?<="|')\S+(?="|')/gm)[0]
-                .replace(/mo\//, `${src}/`);
+            const absolutePath = substring.match(/(?<="|')\S+(?="|')/gm)[0].replace(/mo\//, `${src}/`);
             const relative = path.relative(path.dirname(filePath), absolutePath);
             return `"${relative}"`;
         } else {
@@ -221,10 +244,7 @@ function sassLoader(source) {
     target = target.replace(regex, (substring) => {
         const matcher = substring.match(/'(.*')/);
         const isVariables = substring.includes('from');
-        return [
-            `import ${matcher[0].replace(/.scss/, '.css')}`,
-            isVariables && `${substring.substring(0, matcher.index)} './${styleVariablesFileName}'`,
-        ].join('\n');
+        return [`import ${matcher[0].replace(/.scss/, '.css')}`, isVariables && `${substring.substring(0, matcher.index)} './${styleVariablesFileName}'`].join('\n');
     });
     return target;
 }
@@ -235,9 +255,6 @@ function sassLoader(source) {
  */
 function log(text) {
     const date = new Date();
-    const current = `${date.getHours().toString().padStart(2, '0')}:${date
-        .getMinutes()
-        .toString()
-        .padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+    const current = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
     console.log(`[${gray(current)}] ${text}`);
 }

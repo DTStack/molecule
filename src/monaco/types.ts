@@ -66,6 +66,7 @@ export interface ServicesAccessor {
     get<T>(id: ServiceIdentifier<T>): T;
     has(id: ServiceIdentifier<any>): boolean;
     set(id: ServiceIdentifier, service: any): void;
+    dispose(): void;
 }
 
 export interface IQuickPickItem {

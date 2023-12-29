@@ -200,6 +200,16 @@ export class EditorService extends BaseService<EditorModel> {
         });
     }
 
+    public removeGroup(groupId: UniqueId) {
+        this.dispatch((draft) => {
+            const groupIdx = draft.groups.findIndex(searchById(groupId));
+            if (groupIdx === -1) return;
+            this.disposeModels(draft.groups[groupIdx].data, draft.groups);
+            draft.current = getPrevOrNext(draft.groups, groupIdx)?.id;
+            draft.groups.splice(groupIdx, 1);
+        });
+    }
+
     public closeAll(groupId?: UniqueId) {
         if (isUndefined(groupId)) {
             const groups = this.getGroups();
@@ -211,10 +221,7 @@ export class EditorService extends BaseService<EditorModel> {
                 draft.current = undefined;
             });
         } else {
-            const tabs = this.getTabs(groupId);
-            tabs.forEach((tab) => {
-                this.closeTab(tab.id, groupId!);
-            });
+            this.removeGroup(groupId);
         }
     }
 
@@ -301,12 +308,12 @@ export class EditorService extends BaseService<EditorModel> {
                 this.setCurrentGroup(last.id);
             }
         } else {
-            this.addTab(tab, groupId!);
-            this.setCurrent(tab.id, groupId!);
+            this.addTab(tab, groupId as UniqueId);
+            this.setCurrent(tab.id, groupId as UniqueId);
         }
 
         // ===================== effects =====================
-        this.emit(EditorEvent.OpenTab, tab);
+        this.emit(EditorEvent.onOpenTab, tab);
     }
 
     // ===================== Subscriptions =====================
@@ -340,7 +347,7 @@ export class EditorService extends BaseService<EditorModel> {
     }
 
     public onOpenTab<T>(callback: (tab: IEditorTab<T>) => void): void {
-        this.subscribe(EditorEvent.OpenTab, callback);
+        this.subscribe(EditorEvent.onOpenTab, callback);
     }
 
     public onChange(

@@ -9,7 +9,7 @@ export const ExtendsFolderTree: IExtension = {
     activate: function (molecule): void {
         molecule.folderTree.onSelect((treeNode) => {
             if (treeNode.fileType === FileTypes.File) {
-                molecule.folderTree.setState({ editing: undefined });
+                molecule.folderTree.setEditing();
                 molecule.folderTree.setCurrent(treeNode.id);
             } else {
                 molecule.folderTree.toggleExpanded(treeNode.id);

@@ -81,7 +81,7 @@ export function SplitPane({
     const axis = useRef<IAxis>({ x: 0, y: 0 });
     const wrapper = useRef<HTMLDivElement>(null);
     const [wrapperRect, setWrapperRect] = useState<Partial<DOMRect>>({});
-    const [draging, setDrag] = useState(false);
+    const [dragging, setDrag] = useState(false);
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
@@ -183,7 +183,7 @@ export function SplitPane({
 
             return res;
         },
-        [...propSizes, children.length, wrapSize, ...allowResize]
+        [propSizes, children.length, wrapSize, allowResize]
     );
 
     // Gets dragging axis position
@@ -196,7 +196,7 @@ export function SplitPane({
                 [0]
             );
         },
-        [...sizes]
+        [sizes]
     );
 
     const onDragStart = useCallback(function (e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -244,7 +244,7 @@ export function SplitPane({
         <div
             className={classNames(
                 variables.container,
-                draging && variables.dragging,
+                dragging && variables.dragging,
                 split === 'vertical' && variables.vertical,
                 split === 'horizontal' && variables.horizontal,
                 className

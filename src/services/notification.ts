@@ -5,7 +5,7 @@ import {
     NotificationModel,
     NotificationStatus,
 } from 'mo/models/notification';
-import type { Arraylize, Predict, RequiredId, UniqueId } from 'mo/types';
+import type { Arraylize, IMenuItemProps, Predict, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
 
 export class NotificationService extends BaseService<NotificationModel> {
@@ -48,6 +48,12 @@ export class NotificationService extends BaseService<NotificationModel> {
                 status: NotificationStatus.WaitRead,
             }));
             draft.data.push(...nextItems);
+        });
+    }
+
+    public addToolbar(item: Arraylize<IMenuItemProps>) {
+        this.dispatch((draft) => {
+            draft.toolbar.push(...arraylize(item));
         });
     }
 

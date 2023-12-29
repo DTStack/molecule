@@ -189,6 +189,11 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
     public render = (container?: HTMLElement | null) => {
         if (!container) return null;
         const services = this.getServices();
+        services.monaco.initWorkspace(container);
+        services.extension.add(this._config.extensions);
+        // load contributes
+        services.extension.load();
+
         const controllers = Array.from(services.module.controllers).reduce<Record<string, any>>(
             (acc, [key, value]) => {
                 acc[key] = this.resolve(value);
@@ -196,11 +201,6 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
             },
             {}
         );
-
-        services.monaco.initWorkspace(container);
-        services.extension.add(this._config.extensions);
-        // load contributes
-        services.extension.load();
 
         // activate extensions
         services.extension.activate();
@@ -233,5 +233,6 @@ export default class InstanceService extends GlobalEvent implements IInstanceSer
 
     public dispose() {
         this.childContainer.clearInstances();
+        this.resolve<MonacoService>('monaco').dispose();
     }
 }

@@ -12,7 +12,7 @@ export enum EditorEvent {
     onDragOver = 'editor.onDragOver',
     onDragEnd = 'editor.onDragEnd',
     onDrop = 'editor.onDrop',
-    OpenTab = 'editor.openTab',
+    onOpenTab = 'editor.onOpenTab',
     onSelectTab = 'editor.onSelectTab',
     onUpdateTab = 'editor.onUpdateTab',
     onSplitEditorRight = 'editor.onSplitEditorRight',

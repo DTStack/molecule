@@ -1,9 +1,10 @@
-import Notification from 'mo/client/slots/notification';
+import React from 'react';
+import ViewSuspense from 'mo/client/components/viewSuspense';
 import { BaseController } from 'mo/glue';
-import { INotificationItem, NotificationEvent } from 'mo/models/notification';
+import { type INotificationItem, NotificationEvent } from 'mo/models/notification';
 import type { IStatusBarItem } from 'mo/models/statusBar';
 import type { BuiltinService } from 'mo/services/builtin';
-import { NotificationService } from 'mo/services/notification';
+import type { NotificationService } from 'mo/services/notification';
 import type { StatusBarService } from 'mo/services/statusBar';
 import type { IMenuItemProps } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
@@ -30,11 +31,17 @@ export class NotificationController extends BaseController implements INotificat
         const { NOTIFICATION, NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE } =
             this.builtin.getModules();
         if (NOTIFICATION) {
-            this.statusBar.add({ ...NOTIFICATION, render: () => <Notification {...this} /> });
-            this.notification.setState({
+            this.statusBar.add({
                 ...NOTIFICATION,
-                toolbar: [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(Boolean),
+                render: () =>
+                    React.createElement(ViewSuspense, {
+                        key: 'notification',
+                        token: 'notification',
+                    }),
             });
+            this.notification.addToolbar(
+                [NOTIFICATION_CLEAR_ALL, NOTIFICATION_HIDE].filter(Boolean)
+            );
         }
     }
 

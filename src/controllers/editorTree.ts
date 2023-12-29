@@ -7,12 +7,7 @@ import type { BuiltinService } from 'mo/services/builtin';
 import type { EditorTreeService } from 'mo/services/editorTree';
 import type { ExplorerService } from 'mo/services/explorer';
 import type { SidebarService } from 'mo/services/sidebar';
-import type {
-    GroupMenuHandler,
-    ContextMenuHandler,
-    IEditorTab,
-    UniqueId,
-} from 'mo/types';
+import type { ContextMenuHandler, GroupMenuHandler, IEditorTab, UniqueId } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 type ContextMenuType = ContextMenuHandler<[group: EditorGroupModel, tab?: IEditorTab<any>]>;

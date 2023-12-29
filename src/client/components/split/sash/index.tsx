@@ -1,6 +1,7 @@
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import { classNames } from 'mo/client/classNames';
 
+import Prevent from '../../prevent';
 import variables from './index.scss';
 
 export interface ISashProps {
@@ -24,7 +25,7 @@ export function Sash({
 }: ISashProps) {
     const timeout = useRef<number>();
     const [active, setActive] = useState(false);
-    const [draging, setDrag] = useState(false);
+    const [dragging, setDrag] = useState(false);
 
     useEffect(function () {
         return function () {
@@ -33,12 +34,12 @@ export function Sash({
     }, []);
 
     return (
-        <div
+        <Prevent
             role="Resizer"
             style={style}
             className={classNames(
                 variables.container,
-                (draging || active) && variables.hover,
+                (dragging || active) && variables.hover,
                 disabled && variables.disabled,
                 split === 'vertical' ? variables.vertical : variables.horizontal,
                 className

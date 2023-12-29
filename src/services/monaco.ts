@@ -108,8 +108,12 @@ export class MonacoService {
         return standaloneEditor;
     }
 
+    // When Application will unmount, call it
+    public dispose() {}
+
     private createStandaloneServices(): ServiceCollection {
         const services = new DynamicStandaloneServices(this.container);
+
         const instantiationService = services.get<any>(IInstantiationService);
 
         if (!services.has(IOpenerService)) {
@@ -131,6 +135,9 @@ export class MonacoService {
         // Override quickPickService
         services.set(IQuickInputService, quickInputService);
 
+        // Override dispose for prevent disposed by instance
+        this.dispose = services.dispose;
+        services.dispose = () => {};
         return services;
     }
 }

@@ -24,7 +24,7 @@ import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
-import { ModuleService } from './module';
+import type { ModuleService } from './module';
 import type { MonacoService } from './monaco';
 import type { NotificationService } from './notification';
 import type { OutputService } from './output';

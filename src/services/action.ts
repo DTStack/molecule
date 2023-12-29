@@ -150,7 +150,9 @@ export class ActionService extends BaseService<ActionModel> {
             });
         }
 
-        this.setState((prev) => ({ ...prev, actions: [...prev.actions, disposables] }));
+        this.dispatch((draft) => {
+            draft.actions.push(disposables);
+        });
     }
 
     public queryGlobalKeybinding(id: UniqueId) {

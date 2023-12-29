@@ -1,7 +1,7 @@
 import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { MenuBarEvent, MenuBarModel } from 'mo/models/menuBar';
-import type { PositionHandler, IMenuItemProps, Predict, RequiredId, UniqueId } from 'mo/types';
+import type { IMenuItemProps, PositionHandler, Predict, RequiredId, UniqueId } from 'mo/types';
 import { searchById, toggleNextIcon } from 'mo/utils';
 import { TreeHelper } from 'mo/utils/tree';
 export class MenuBarService extends BaseService<MenuBarModel> {

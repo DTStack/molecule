@@ -19,13 +19,6 @@ $name: BEMElement($menuBar, 'name');
         height: 35px;
         line-height: 35px;
         user-select: none;
-
-        &:hover,
-        &:focus {
-            color: var(--menubar-selectionForeground);
-            outline: dashed 1px var(--menubar-selectionBorder);
-            outline-offset: -1px;
-        }
     }
 
     .#{$name} {
@@ -36,7 +29,10 @@ $name: BEMElement($menuBar, 'name');
 
 .#{$item}:hover .#{$name} {
     background-color: var(--menubar-selectionBackground);
+    outline: 1px dashed var(--menubar-selectionBorder);
+    outline-offset: -1px;
 }
+
 
 :export {
     container: $container;

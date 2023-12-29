@@ -1,97 +1,57 @@
-import React from 'react';
+import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
-import {
-    AuxiliaryEventKind,
-    AuxiliaryModel,
-    type IAuxiliaryBar,
-    type IAuxiliaryBarMode,
-    type IAuxiliaryData,
-} from 'mo/models/auxiliaryBar';
-import type { UniqueId } from 'mo/types';
+import { AuxiliaryEventKind, AuxiliaryModel, type IAuxiliaryData } from 'mo/models/auxiliaryBar';
+import type { Arraylize, UniqueId } from 'mo/types';
+import { arraylize, searchById } from 'mo/utils';
 
-export interface IAuxiliaryBarService extends BaseService<IAuxiliaryBar> {
-    /**
-     * Get the current tab
-     */
-    getCurrentTab(): IAuxiliaryData | undefined;
-    addAuxiliaryBar(tabs: IAuxiliaryData[] | IAuxiliaryData): void;
-    /**
-     * Set the active one on data
-     */
-    setActive(current: UniqueId | undefined): void;
-    /**
-     * Set the mode of auxiliary bar
-     */
-    setMode: (
-        mode: IAuxiliaryBarMode | ((preState: IAuxiliaryBarMode) => IAuxiliaryBarMode)
-    ) => void;
-    /**
-     * Set the children of auxiliary bar
-     */
-    setChildren: (children: React.ReactNode) => void;
-    /**
-     * Called when auxiliary tab title clicked
-     */
-    onTabClick: (callback: (key: UniqueId) => void) => void;
-    /**
-     * Reset all states
-     */
-    reset: () => void;
-}
-
-export class AuxiliaryBarService
-    extends BaseService<IAuxiliaryBar>
-    implements IAuxiliaryBarService
-{
-    public state: IAuxiliaryBar;
+export class AuxiliaryBarService extends BaseService<AuxiliaryModel> {
+    public state: AuxiliaryModel;
 
     constructor() {
         super('auxiliaryBar');
         this.state = new AuxiliaryModel();
     }
 
-    getCurrentTab = () => {
-        const { current, data } = this.getState();
-        const tab = data?.find((item) => item.key === current);
-        return tab;
-    };
+    get(id: UniqueId | undefined) {
+        if (isUndefined(id)) return;
+        return this.getState().data.find(searchById(id));
+    }
 
-    addAuxiliaryBar = (tabs: IAuxiliaryData | IAuxiliaryData[]) => {
-        const next = Array.isArray(tabs) ? tabs : [tabs];
-        this.setState({
-            data: this.state.data.concat(next),
+    getCurrent() {
+        return this.getState().current;
+    }
+
+    getCurrentBar() {
+        return this.get(this.getCurrent());
+    }
+
+    setCurrent(id?: UniqueId) {
+        this.dispatch((draft) => {
+            draft.current = id;
         });
-    };
+    }
 
-    setActive = (current: UniqueId | undefined) => {
-        this.setState({ current });
-    };
-
-    setChildren = (children: React.ReactNode) => {
-        this.setState({
-            children,
-        });
-    };
-
-    setMode = (mode: IAuxiliaryBarMode | ((preState: IAuxiliaryBarMode) => IAuxiliaryBarMode)) => {
-        if (typeof mode === 'string') {
-            this.setState({
-                mode,
-            });
-            return;
+    toggle(id: UniqueId) {
+        const current = this.getCurrent();
+        if (current === id) {
+            this.setCurrent();
+        } else {
+            this.setCurrent(id);
         }
+    }
 
-        this.setState((prev) => {
-            return { mode: mode(prev.mode) };
+    add(item: Arraylize<IAuxiliaryData>) {
+        this.dispatch((draft) => {
+            draft.data.push(...arraylize(item));
         });
-    };
+    }
 
-    reset = () => {
+    reset() {
         this.setState(new AuxiliaryModel());
-    };
+    }
 
-    // ====== The belows for subscribe activity bar events ======
-    public onTabClick(callback: (key: UniqueId) => void) {
+    // ===================== Subscriptions =====================
+    public onTabClick(callback: (id: UniqueId) => void) {
         this.subscribe(AuxiliaryEventKind.onTabClick, callback);
     }
 }

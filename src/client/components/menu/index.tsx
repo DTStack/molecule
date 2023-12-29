@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { classNames } from 'mo/client/classNames';
-import type { MenuHandler, IMenuItemProps } from 'mo/types';
+import { APP_PREFIX } from 'mo/const';
+import type { IMenuItemProps, MenuHandler } from 'mo/types';
 import { get, sortByIndex } from 'mo/utils';
 import RcMenu, { Divider, Item as MenuItem, SubMenu } from 'rc-menu';
 
@@ -88,6 +89,9 @@ export default function Menu({ data, onClick }: IMenuProps) {
             className={variables.container}
             selectable={false}
             triggerSubMenuAction="hover"
+            getPopupContainer={() =>
+                document.querySelector<HTMLElement>(`.${APP_PREFIX}`) || document.body
+            }
             onClick={({ keyPath, domEvent }) => {
                 domEvent.stopPropagation();
                 handleMenuClick(keyPath);

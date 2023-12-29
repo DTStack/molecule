@@ -11,7 +11,7 @@ $validating: BEMModifier($container, 'validating');
 
 $small: BEMModifier($container,'small');
 
-$widget-size: 24px;
+$widget-size: 26px;
 $small-widget-size: 20px;
 
 /* stylelint-disable */
@@ -57,7 +57,7 @@ $status-colors: (
 
     .#{$widget} {
         background: var(--input-background);
-        border: none;
+        border: 1px solid var(--input-border, transparent);
         box-sizing: border-box;
         color: var(--input-foreground);
         font-family: inherit;

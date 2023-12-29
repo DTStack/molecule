@@ -8,7 +8,7 @@ $block: BEMModifier($container, 'block');
 
 .#{$container} {
     background-color: var(--button-background);
-    border: 0;
+    border: 1px solid var(--contrastBorder);
     box-sizing: border-box;
     color: var(--button-foreground);
     line-height: 18px;

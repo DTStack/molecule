@@ -5,7 +5,7 @@ import './menuBar.css';
 
 export default function MenuBar(props: any) {
     return (
-        <div style={{ display: 'flex', backgroundColor: 'var(--titleBar-activeBackground)' }}>
+        <div className="app_menuBar__container">
             <MoleculeMenuBar {...props} />
             <div
                 style={{

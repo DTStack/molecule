@@ -13,7 +13,8 @@ $disabled: BEMModifier($action, 'disabled');
 
     &:not(.#{$disabled}):hover {
         background: var(--toolbar-hoverBackground);
-        outline-color: var(--toolbar-hoverOutline);
+        outline: 1px dashed var(--toolbar-hoverOutline);
+        outline-offset: -1px;
     }
 
 

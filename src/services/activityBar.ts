@@ -2,9 +2,9 @@ import { BaseService } from 'mo/glue';
 import { ActivityBarEvent, ActivityBarModel } from 'mo/models/activityBar';
 import type {
     Arraylize,
-    MenuHandler,
     ContextMenuHandler,
     IActivityBarItem,
+    MenuHandler,
     Predict,
     RequiredId,
     UniqueId,

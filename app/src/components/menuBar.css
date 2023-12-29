@@ -16,3 +16,13 @@
     color: var(--menu-selectionForeground);
     background-color: var(--menubar-selectionBackground);
 }
+
+.app_menuBar__container {
+    display: flex;
+    background-color: var(--titleBar-activeBackground);
+    border-bottom: 1px solid var(--titleBar-border);
+}
+
+.app_menuBar__container .mo-menuBar__container {
+    border-bottom: none;
+}

@@ -2,14 +2,55 @@
 
 $auxiliaryBar: prefix('auxiliaryBar');
 $container: #{$auxiliaryBar}__container;
+$content: BEMElement($container, 'content');
+$tabs: BEMElement($container, 'tabs');
+$item: BEMElement($container, 'item');
+
+$active: BEMModifier($item, 'active');
 
 
 .#{$container} {
     height: 100%;
-    user-select: text;
     width: 100%;
+    background-color: var(--activityBar-background);
+    border-left: 1px solid var(--activityBar-border);
+    display: flex;
+
+    .#{$content} {
+        flex: 1;
+        background-color: var(--sideBar-background);
+    }
+
+    .#{$tabs} {
+        margin: 0;
+        padding: 0;
+        background: var(--activityBar-background);
+        border-left: 1px solid var(--activityBar-border);
+    }
+
+    .#{$item} {
+        color: var(--activityBar-inactiveForeground);
+        cursor: pointer;
+        padding: 4px;
+        margin: 4px;
+        display: flex;
+        border-radius: 4px;
+
+        .codicon {
+            font-size: 18px;
+        }
+
+        &:hover,
+        &.#{$active} {
+            background-color: var(--menubar-selectionBackground);
+        }
+    }
 }
 
 :export {
     container: $container;
+    content: $content;
+    tabs: $tabs;
+    item: $item;
+    active: $active;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { MenuHandler, IMenuItemProps, UniqueId } from 'mo/types';
+import type { IMenuItemProps, MenuHandler, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 import RcDropdown from 'rc-dropdown';
 import type { DropdownProps } from 'rc-dropdown/es/Dropdown';
@@ -15,7 +15,11 @@ type ActionType = Exclude<DropdownProps['trigger'], Array<any> | 'focus'>;
  */
 type DropdownData = IMenuItemProps & { clone?: UniqueId };
 
-interface IDropdownProps extends Pick<DropdownProps, 'children' | 'visible' | 'onVisibleChange'> {
+interface IDropdownProps
+    extends Pick<
+        DropdownProps,
+        'children' | 'visible' | 'onVisibleChange' | 'getPopupContainer' | 'overlayClassName'
+    > {
     trigger?: ActionType;
     data?: DropdownData[];
     disabled?: boolean;
@@ -29,11 +33,13 @@ export default function Dropdown({
     children,
     data,
     alignPoint,
+    overlayClassName,
     disabled,
     visible,
     stopPropagation,
     placement,
     trigger = 'click',
+    getPopupContainer,
     onVisibleChange,
     onClick,
 }: IDropdownProps) {
@@ -82,6 +88,8 @@ export default function Dropdown({
             alignPoint={alignPoint}
             placement={placement as any}
             placements={placements}
+            getPopupContainer={getPopupContainer}
+            overlayClassName={overlayClassName}
         >
             {/* Children should support onClick and onContextMenu event */}
             {React.cloneElement(children, { ...events })}

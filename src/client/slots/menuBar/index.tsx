@@ -45,14 +45,13 @@ export default function MenuBar({ onSelect, onContextMenu }: IMenuBarController)
                     <span
                         className={variables.item}
                         onMouseEnter={() => handleActiveDropdown(menu.id)}
-                        tabIndex={-1}
                         onContextMenu={(e) => {
                             e.stopPropagation();
                             e.preventDefault();
                         }}
                     >
                         {menu.render?.(menu) || (
-                            <span className={variables.name}>
+                            <span className={variables.name} tabIndex={0}>
                                 {menu.name || <Icon type={menu.icon} /> || ''}
                             </span>
                         )}

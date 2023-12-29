@@ -105,6 +105,13 @@ $disabled: BEMModifier($item, 'disabled');
         outline: none;
         outline-offset: 0;
     }
+
+    &.rc-menu-submenu-active .#{$item}:not(.#{$disabled}) {
+        background-color: var(--menu-selectionBackground);
+        color: var(--menu-selectionForeground);
+        outline: solid 1px var(--menu-selectionBorder);
+        outline-offset: -1px;
+    }
 }
 
 .rc-menu-submenu-popup {

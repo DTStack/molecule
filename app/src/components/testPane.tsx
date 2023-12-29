@@ -373,6 +373,20 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         molecule.editorTree.removeToolbar('test');
     };
 
+    const addAuxiliary = () => {
+        const id = randomId();
+        molecule.layout.setAuxiliaryBar(true);
+        molecule.auxiliaryBar.add({
+            id,
+            name: `Auxiliary-${id}`,
+            icon: 'debug',
+            render() {
+                return <pre style={{ margin: 0 }}>{`Auxiliary-${id}`}</pre>;
+            },
+        });
+        molecule.auxiliaryBar.setCurrent(id);
+    };
+
     useEffect(() => {
         return () => {
             if (timeout) {
@@ -412,6 +426,12 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                     </Button>
                     <Button block onClick={toggleDirection}>
                         Toggle Direction
+                    </Button>
+                </div>
+                <h2>Auxiliary</h2>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <Button block onClick={addAuxiliary}>
+                        addAuxiliary
                     </Button>
                 </div>
                 <h2>Editor Tree:</h2>

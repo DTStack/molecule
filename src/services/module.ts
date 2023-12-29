@@ -29,6 +29,7 @@ export class ModuleService {
 
         this.controllers = new Map<string, BaseControllerCtor>([
             ['activityBar', controller.activityBar.ActivityBarController],
+            ['auxiliaryBar', controller.auxiliaryBar.AuxiliaryController],
             ['contextMenu', controller.contextMenu.ContextMenuController],
             ['editor', controller.editor.EditorController],
             ['explorer', controller.explorer.ExplorerController],

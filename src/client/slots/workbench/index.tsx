@@ -74,9 +74,6 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                         </Pane>
                         <Display visible={!layout.panel.hidden}>{Panel}</Display>
                     </SplitPane>
-                    <Pane minSize={100} maxSize="80%">
-                        <section>auxiliaryBar</section>
-                    </Pane>
                 </SplitPane>
             </section>
             <Display visible={!layout.statusBar.hidden}>{StatusBar}</Display>

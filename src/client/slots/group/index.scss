@@ -1,11 +1,10 @@
-@import "../../classNames/style.scss";
+@import '../../classNames/style.scss';
 
-$editor: prefix("editor");
+$editor: prefix('editor');
 $group: BEMElement($editor, 'group');
 $header: BEMElement($group, 'header');
 $content: BEMElement($group, 'content');
 $breadcrumb: BEMElement($group, 'breadcrumb');
-$name: BEMElement($group, 'name');
 
 // Used for autoScroll to active one
 $active: BEMModifier($editor, 'active');
@@ -34,21 +33,12 @@ $active: BEMModifier($editor, 'active');
     .#{$content} {
         height: calc(100% - 57px);
     }
-
-    .#{$name} {
-        max-width: 300px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
 }
-
 
 :export {
     group: $group;
     active: $active;
     header: $header;
     breadcrumb: $breadcrumb;
-    name: $name;
     content: $content;
 }

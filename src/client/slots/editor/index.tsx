@@ -21,6 +21,8 @@ export default function Editor({
     onCloseTab,
     onDragStart,
     onDragEnd,
+    onDragEnter,
+    onDragLeave,
     onDragOver,
     onDrop,
 }: IEditorController) {
@@ -28,14 +30,7 @@ export default function Editor({
     const layout = useConnector('layout');
     const settings = useSettings();
 
-    const {
-        groups = [],
-        current,
-        entry = <Welcome />,
-        options: editorOptions,
-        toolbar,
-        loading,
-    } = editor;
+    const { groups = [], current, entry = <Welcome />, options: editorOptions, toolbar, loading } = editor;
 
     const options = useMemo(
         () => ({
@@ -48,11 +43,7 @@ export default function Editor({
     const renderGroups = () => {
         return (
             <DndProvider backend={HTML5Backend} context={window}>
-                <SplitPane
-                    sizes={layout.groupSplitPos}
-                    split={layout.editorDirection}
-                    onChange={onPaneSizeChange}
-                >
+                <SplitPane sizes={layout.groupSplitPos} split={layout.editorDirection} onChange={onPaneSizeChange}>
                     {groups.map((g) => (
                         <Pane key={g.id} minSize="220px">
                             <Group
@@ -66,8 +57,10 @@ export default function Editor({
                                 onToolbarClick={onToolbarClick}
                                 onCloseTab={onCloseTab}
                                 onDragStart={onDragStart}
-                                onDragOver={onDragOver}
                                 onDragEnd={onDragEnd}
+                                onDragEnter={onDragEnter}
+                                onDragLeave={onDragLeave}
+                                onDragOver={onDragOver}
                                 onDrop={onDrop}
                             />
                         </Pane>

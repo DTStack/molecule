@@ -1,9 +1,10 @@
 @import '../../classNames/style.scss';
 
 $tab: prefix('tab');
-$extra: prefix('extra');
+$extra: BEMElement($tab, 'extra');
+$name: BEMElement($tab, 'name');
 $active: BEMModifier($tab, 'active');
-$hovering: BEMModifier($tab, 'hovering');
+$dragging: BEMModifier($tab, 'dragging');
 $extraActive: BEMModifier($extra, 'active');
 
 .#{$tab} {
@@ -20,8 +21,13 @@ $extraActive: BEMModifier($extra, 'active');
     height: 100%;
     min-width: fit-content;
 
-    &.#{$hovering} {
-        background: var(--editorGroup-dropBackground);
+    &.#{$dragging} {
+        background-color: var(--editorGroup-dropBackground) !important;
+        outline: none !important;
+
+        > * {
+            pointer-events: none;
+        }
     }
 
     &.#{$active} {
@@ -39,6 +45,13 @@ $extraActive: BEMModifier($extra, 'active');
             opacity: 1;
         }
     }
+
+    .#{$name} {
+        max-width: 300px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 }
 
 .#{$extra} {
@@ -52,7 +65,8 @@ $extraActive: BEMModifier($extra, 'active');
 :export {
     tab: $tab;
     extra: $extra;
-    hovering: $hovering;
+    name: $name;
     active: $active;
+    dragging: $dragging;
     extraActive: $extraActive;
 }

@@ -1,6 +1,5 @@
 import { EditorEvent } from 'mo/models/editor';
-import type { IExtension, TabGroup } from 'mo/types';
-import { throttleByArgs } from 'mo/utils';
+import type { IExtension } from 'mo/types';
 import type { editor } from 'monaco-editor';
 
 export const ExtendsEditor: IExtension = {
@@ -11,7 +10,7 @@ export const ExtendsEditor: IExtension = {
         molecule.editor.onCursorSelection(updateCursorPosition);
 
         molecule.editor.onCloseAll((groupId) => {
-            molecule.editor.closeAll(groupId!);
+            molecule.editor.closeAll(groupId);
         });
         molecule.editor.onCloseOther((tabId, groupId) => {
             molecule.editor.closeOther(tabId, groupId);
@@ -30,14 +29,23 @@ export const ExtendsEditor: IExtension = {
             molecule.editor.setCurrent(tabId, groupId);
         });
 
-        molecule.editor.onDragOver(
-            throttleByArgs((_, to: TabGroup) => {
+        let settimeout = 0;
+        molecule.editor.onDragEnter((_, to) => {
+            window.clearTimeout(settimeout);
+            settimeout = window.setTimeout(() => {
                 molecule.editor.setCurrent(to.tabId, to.groupId);
-            }, 2000)
-        );
+            }, 2000);
+        });
+
+        molecule.editor.onDragLeave(() => {
+            window.clearTimeout(settimeout);
+        });
 
         molecule.editor.onDrop((from, to) => {
+            console.log('drop');
+
             molecule.editor.moveTab(from, to);
+            window.clearTimeout(settimeout);
         });
 
         molecule.editor.onChange(({ value, tabId, groupId }) => {
@@ -55,10 +63,8 @@ export const ExtendsEditor: IExtension = {
         molecule.editor.onSelectTab((tabId, groupId) => molecule.editor.setCurrent(tabId, groupId));
 
         molecule.editor.onToolbarClick((item, groupId) => {
-            const {
-                EDITOR_TOOLBAR_SPLIT: EDITOR_MENU_SPLIT,
-                EDITOR_CONTEXTMENU_CLOSE_ALL: EDITOR_MENU_CLOSE_ALL,
-            } = molecule.builtin.getState().constants;
+            const { EDITOR_TOOLBAR_SPLIT: EDITOR_MENU_SPLIT, EDITOR_CONTEXTMENU_CLOSE_ALL: EDITOR_MENU_CLOSE_ALL } =
+                molecule.builtin.getState().constants;
             switch (item.id) {
                 case EDITOR_MENU_SPLIT: {
                     const group = molecule.editor.getGroup(groupId);

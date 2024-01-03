@@ -18,17 +18,13 @@ export interface IEditorController extends BaseController {
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
     onCloseTab?: (tabId: UniqueId, groupId: UniqueId) => void;
     onDragStart?: (tabId: UniqueId, groupId: UniqueId) => void;
-    onDragOver?: (from: TabGroup, to: TabGroup) => void;
     onDragEnd?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDragEnter?: (from: TabGroup, to: TabGroup) => void;
+    onDragLeave?: (from: TabGroup, to: TabGroup) => void;
+    onDragOver?: (from: TabGroup, to: TabGroup) => void;
     onDrop?: (from: TabGroup, to: TabGroup) => void;
-    onChange?: (
-        item: TabGroup & { value: string | undefined },
-        ev: editor.IModelContentChangedEvent
-    ) => void;
-    onCursorSelection?: (
-        instance: editor.IStandaloneCodeEditor,
-        ev: editor.ICursorSelectionChangedEvent
-    ) => void;
+    onChange?: (item: TabGroup & { value: string | undefined }, ev: editor.IModelContentChangedEvent) => void;
+    onCursorSelection?: (instance: editor.IStandaloneCodeEditor, ev: editor.ICursorSelectionChangedEvent) => void;
     onContextMenu?: EditorContextMenu;
     onToolbarClick?: GroupMenuHandler;
 }
@@ -83,11 +79,7 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onMount, groupId, editorInstance);
     };
 
-    public onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void = (
-        tabId,
-        groupId,
-        model
-    ) => {
+    public onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void = (tabId, groupId, model) => {
         this.editor.updateTab(
             {
                 id: tabId,
@@ -119,6 +111,14 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onDragEnd, tabId, groupId);
     };
 
+    public onDragEnter: (from: TabGroup, to: TabGroup) => void = (from, to) => {
+        this.emit(EditorEvent.onDragEnter, from, to);
+    };
+
+    public onDragLeave: (from: TabGroup, to: TabGroup) => void = (from, to) => {
+        this.emit(EditorEvent.onDragLeave, from, to);
+    };
+
     public onDragOver: (from: TabGroup, to: TabGroup) => void = (from, to) => {
         this.emit(EditorEvent.onDragOver, from, to);
     };
@@ -127,10 +127,7 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onDrop, from, to);
     };
 
-    public onCursorSelection = (
-        instance: editor.IStandaloneCodeEditor,
-        ev: editor.ICursorSelectionChangedEvent
-    ) => {
+    public onCursorSelection = (instance: editor.IStandaloneCodeEditor, ev: editor.ICursorSelectionChangedEvent) => {
         this.emit(EditorEvent.onCursorSelection, instance, ev);
     };
 
@@ -144,10 +141,7 @@ export class EditorController extends BaseController implements IEditorControlle
     };
 
     // Editor value onChange callback
-    public onChange = (
-        item: TabGroup & { value: string | undefined },
-        ev: editor.IModelContentChangedEvent
-    ) => {
+    public onChange = (item: TabGroup & { value: string | undefined }, ev: editor.IModelContentChangedEvent) => {
         if (item.tabId === this.builtin.getState().constants.EDITOR_ITEM_SETTING) {
             this.emit(SettingsEvent.OnChange, item.value);
         }

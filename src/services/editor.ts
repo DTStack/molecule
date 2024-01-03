@@ -97,11 +97,7 @@ export class EditorService extends BaseService<EditorModel> {
             if (!target) return;
             Object.assign(target, tab);
 
-            if (
-                Object.hasOwn(tab, 'value') &&
-                target.model &&
-                target.model.getValue() !== tab.value
-            ) {
+            if (Object.hasOwn(tab, 'value') && target.model && target.model.getValue() !== tab.value) {
                 target.model.setValue(tab.value ?? '');
             }
 
@@ -237,9 +233,16 @@ export class EditorService extends BaseService<EditorModel> {
             if (from.groupId !== to.groupId && source.activeTab === from.tabId) {
                 source.activeTab = getPrevOrNext(source.data, sourceTabIndex)?.id;
             }
-            // insert the tab into target group
+            // Remove source tab
             const tab = source.data.splice(sourceTabIndex, 1);
-            target.data.splice(targetTabIndex, 0, tab[0]);
+            // Insert source tab into target while there is no same tab in target
+            const existInTarget = target.data.findIndex(searchById(from.tabId));
+            if (existInTarget === -1) {
+                target.data.splice(targetTabIndex, 0, tab[0]);
+            } else {
+                // Adjust the order
+                target.data.splice(targetTabIndex, 0, target.data.splice(existInTarget, 1)[0]);
+            }
             // active current tab
             target.activeTab = from.tabId;
             // Remove empty group
@@ -321,12 +324,7 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onFocus, callback);
     }
 
-    public onCursorSelection(
-        callback: (
-            instance: editor.IStandaloneCodeEditor,
-            ev: editor.ICursorSelectionChangedEvent
-        ) => void
-    ) {
+    public onCursorSelection(callback: (instance: editor.IStandaloneCodeEditor, ev: editor.ICursorSelectionChangedEvent) => void) {
         this.subscribe(EditorEvent.onCursorSelection, callback);
     }
 
@@ -350,12 +348,7 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onOpenTab, callback);
     }
 
-    public onChange(
-        callback: (
-            item: TabGroup & { value: string | undefined },
-            ev: editor.IModelContentChangedEvent
-        ) => void
-    ): void {
+    public onChange(callback: (item: TabGroup & { value: string | undefined }, ev: editor.IModelContentChangedEvent) => void): void {
         this.subscribe(EditorEvent.onChange, callback);
     }
 
@@ -363,12 +356,20 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onDragStart, callback);
     }
 
-    public onDragOver(callback: (from: TabGroup, to: TabGroup) => void) {
-        this.subscribe(EditorEvent.onDragOver, callback);
-    }
-
     public onDragEnd(callback: (tabId: UniqueId, groupId: UniqueId) => void) {
         this.subscribe(EditorEvent.onDragEnd, callback);
+    }
+
+    public onDragEnter(callback: (from: TabGroup, to: TabGroup) => void) {
+        this.subscribe(EditorEvent.onDragEnter, callback);
+    }
+
+    public onDragLeave(callback: (from: TabGroup, to: TabGroup) => void) {
+        this.subscribe(EditorEvent.onDragLeave, callback);
+    }
+
+    public onDragOver(callback: (from: TabGroup, to: TabGroup) => void) {
+        this.subscribe(EditorEvent.onDragOver, callback);
     }
 
     public onDrop(callback: (from: TabGroup, to: TabGroup) => void) {
@@ -399,21 +400,15 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onSplitEditorRight, callback);
     }
 
-    public onContextMenuClick(
-        callback: (item: IMenuItemProps, tabId: UniqueId, groupId: UniqueId) => void
-    ): void {
+    public onContextMenuClick(callback: (item: IMenuItemProps, tabId: UniqueId, groupId: UniqueId) => void): void {
         this.subscribe(EditorEvent.onContextMenuClick, callback);
     }
 
-    public onMount(
-        callback: (groupId: UniqueId, editorInstance: editor.IStandaloneCodeEditor) => void
-    ) {
+    public onMount(callback: (groupId: UniqueId, editorInstance: editor.IStandaloneCodeEditor) => void) {
         this.subscribe(EditorEvent.onMount, callback);
     }
 
-    public onModelMount(
-        callback: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void
-    ) {
+    public onModelMount(callback: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void) {
         this.subscribe(EditorEvent.onModelMount, callback);
     }
 }

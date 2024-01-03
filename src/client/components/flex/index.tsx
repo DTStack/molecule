@@ -6,22 +6,13 @@ import variables from './index.scss';
 
 interface IFlexProps
     extends HTMLElementProps,
-        Pick<HTMLAttributes<HTMLDivElement>, 'tabIndex' | 'onClick' | 'onContextMenu'> {
+        Pick<HTMLAttributes<HTMLDivElement>, 'tabIndex' | 'onClick' | 'onContextMenu' | 'onDragEnter' | 'onDragLeave'> {
     alignItems?: CSSProperties['alignItems'];
     justifyContent?: CSSProperties['justifyContent'];
 }
 
 export default forwardRef<HTMLElement, PropsWithChildren<IFlexProps>>(function Flex(
-    {
-        alignItems = 'center',
-        justifyContent = 'center',
-        children,
-        title,
-        className,
-        role,
-        style,
-        ...rest
-    },
+    { alignItems = 'center', justifyContent = 'center', children, title, className, role, style, ...rest },
     ref
 ) {
     return (

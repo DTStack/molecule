@@ -1,110 +1,105 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { classNames } from 'mo/client/classNames';
-import type { ContextMenuHandler } from 'mo/types';
+import type { ContextMenuHandler, IEditorTab, TabGroup, UniqueId } from 'mo/types';
 
 import Close from '../close';
 import Flex from '../flex';
+import Icon from '../icon';
 import Prevent from '../prevent';
 import variables from './index.scss';
 
-export interface ITabsProps<T> {
+export interface ITabsProps {
+    data: IEditorTab<any>;
+    groupId: UniqueId;
     className?: string;
-    title?: React.ReactNode;
     active?: boolean;
-    closable?: boolean;
-    modified?: boolean;
-    onContextMenu?: ContextMenuHandler<[]>;
-    onClick?: () => void;
-    onClose?: () => void;
-    onDragStart: () => T;
-    onDragEnd?: (source: T) => void;
-    onDragOver?: (source: T) => void;
-    onDrop?: (source: T) => void;
+    onContextMenu?: ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]>;
+    onClick?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onClose?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDragStart?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDragEnd?: (tabId: UniqueId, groupId: UniqueId) => void;
+    onDragEnter?: (from: TabGroup, to: TabGroup) => void;
+    onDragLeave?: (from: TabGroup, to: TabGroup) => void;
+    onDragOver?: (from: TabGroup, to: TabGroup) => void;
+    onDrop?: (from: TabGroup, to: TabGroup) => void;
 }
 
-export default function Tabs<T>({
+export default function Tabs({
+    data,
+    groupId,
     className,
-    title,
     active,
-    closable,
-    modified,
     onContextMenu,
     onClick,
     onClose,
     onDragStart,
     onDragEnd,
+    onDragEnter,
+    onDragLeave,
     onDragOver,
     onDrop,
-}: ITabsProps<T>) {
+}: ITabsProps) {
     const ref = useRef<HTMLDivElement>(null);
 
-    const [, drag] = useDrag({
+    const [{ isDragging }, drag] = useDrag({
         type: 'DND_NODE',
-        item: () => onDragStart(),
+        collect(monitor) {
+            return {
+                isDragging: monitor.isDragging(),
+            };
+        },
+        item: () => {
+            onDragStart?.(data.id, groupId);
+            return { tabId: data.id, groupId };
+        },
         end(item) {
-            onDragEnd?.(item);
+            onDragEnd?.(item.tabId, item.groupId);
         },
     });
 
-    // const actionHoc = (type: DragAction) =>
-    //     throttle((item, monitor) => {
-    //         const component = ref.current;
-    //         if (!component) return;
-    //         const hoverBoundingRect = component.getBoundingClientRect();
-    //         const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
-    //         const clientOffset = monitor?.getClientOffset?.();
-    //         if (!clientOffset) return;
-    //         const hoverClientX =
-    //             (clientOffset as { x: number; y: number }).x - hoverBoundingRect.left;
-
-    //         const info: IDragProps['info'] = {
-    //             hoverMiddleX,
-    //             hoverClientX,
-    //         };
-    //         onDrag?.({ item, info, type });
-    //     }, 500);
-
-    const [{ isOver }, drop] = useDrop({
+    const [{ item, isOver }, drop] = useDrop<TabGroup, any, any>({
         accept: 'DND_NODE',
         collect: (monitor) => {
             return {
-                isOver: !!monitor.isOver(),
+                isOver: monitor.isOver(),
+                item: monitor.getItem(),
             };
         },
+        canDrop(item) {
+            return item.tabId !== data.id || item.groupId !== groupId;
+        },
         hover(_, monitor) {
-            onDragOver?.(monitor.getItem());
+            onDragOver?.(monitor.getItem(), { tabId: data.id, groupId });
         },
         drop(_, monitor) {
-            onDrop?.(monitor.getItem());
+            onDrop?.(monitor.getItem(), { tabId: data.id, groupId });
         },
     });
 
     drag(drop(ref));
 
     return (
-        <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY })} tabIndex={0}>
-            <Flex
-                ref={ref}
-                className={classNames(
-                    variables.tab,
-                    active && variables.active,
-                    isOver && variables.hovering,
-                    className
-                )}
-                onClick={onClick}
-            >
-                {title}
-                <section className={classNames(variables.extra, modified && variables.extraActive)}>
-                    {closable && (
-                        <Close
-                            modified={modified}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onClose?.();
-                            }}
-                        />
-                    )}
+        <Prevent
+            ref={ref}
+            className={classNames(variables.tab, active && variables.active, (isDragging || isOver) && variables.dragging, className)}
+            onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data.id, groupId)}
+            tabIndex={0}
+            onClick={() => onClick?.(data.id, groupId)}
+            onDragEnter={(e) => e.currentTarget === e.target && onDragEnter?.(item, { tabId: data.id, groupId })}
+            onDragLeave={(e) => e.currentTarget === e.target && onDragLeave?.(item, { tabId: data.id, groupId })}
+        >
+            <Flex style={{ height: '100%' }}>
+                <Icon type={data.icon} />
+                <span className={variables.name}>{data.name}</span>
+                <section className={classNames(variables.extra, data.modified && variables.extraActive)}>
+                    <Close
+                        modified={data.modified}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClose?.(data.id, groupId);
+                        }}
+                    />
                 </section>
             </Flex>
         </Prevent>

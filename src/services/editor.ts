@@ -126,96 +126,85 @@ export class EditorService extends BaseService<EditorModel> {
         });
     }
 
-    private countTab(tabId: UniqueId) {
-        return this.getGroups().reduce((acc, cur) => {
-            return acc + cur.data.filter((i) => i.id === tabId).length;
-        }, 0);
-    }
-
-    private disposeModels(tabs: IEditorTab<any>[], groups: EditorGroupModel[]) {
-        // Can't disposed model directly as model maybe shared by different group's tab
-        if (!groups.length) {
-            tabs.forEach((tab) => tab.model?.dispose());
-        } else {
-            tabs.forEach((tab) => {
-                if (this.countTab(tab.id) === 1) tab.model?.dispose();
+    private _close(tabs: { tabId: UniqueId; groupId: UniqueId }[]) {
+        this.dispatch((draft) => {
+            const closed: IEditorTab<any>[] = [];
+            // Remove tabs from state
+            tabs.forEach(({ tabId, groupId }) => {
+                const groupIdx = draft.groups.findIndex(searchById(groupId));
+                const group = draft.groups[groupIdx];
+                const idx = group.data.findIndex(searchById(tabId));
+                if (idx === -1) return;
+                const [tab] = group.data.splice(idx, 1);
+                closed.push(tab);
+                if (group.activeTab === tab.id) {
+                    group.activeTab = getPrevOrNext(group.data, idx)?.id;
+                }
             });
-        }
+            // Check if group is empty
+            tabs.forEach(({ groupId }) => {
+                const idx = draft.groups.findIndex(searchById(groupId));
+                if (idx === -1 || draft.groups[idx].data.length) return;
+                const [group] = draft.groups.splice(idx, 1);
+                group.editorInstance?.dispose();
+                if (draft.current === group.id) {
+                    draft.current = getPrevOrNext(draft.groups, idx)?.id;
+                }
+            });
+            // Dispose models
+            closed.forEach((tab) => {
+                // Can't disposed model directly as model maybe shared by different group's tab
+                if (!tab.model || draft.groups.find((group) => group.data.find((i) => i.model === tab.model))) return;
+                tab.model.dispose();
+            });
+            // Call onClose
+            this.emit(EditorEvent.onClose, closed);
+        });
     }
 
     public closeTab(tabId: UniqueId, groupId: UniqueId) {
-        this.dispatch((draft) => {
-            const groupIdx = draft.groups.findIndex(searchById(groupId));
-            const group = draft.groups[groupIdx];
-            const idx = group.data.findIndex(searchById(tabId));
-            if (idx === -1) return;
-            const tab = group.data.splice(idx, 1);
-            this.disposeModels(tab, draft.groups);
-            if (group.activeTab === tab[0].id) {
-                group.activeTab = getPrevOrNext(group.data, idx)?.id;
-            }
-
-            if (group.data.length === 0) {
-                draft.groups.splice(groupIdx, 1);
-                if (draft.current === group.id) {
-                    draft.current = getPrevOrNext(draft.groups, groupIdx)?.id;
-                }
-            }
-        });
+        this._close([{ tabId, groupId }]);
     }
 
     public closeOther(tabId: UniqueId, groupId: UniqueId): void {
         const tabs = this.getTabs(groupId);
         const others = tabs.filter((i) => i.id !== tabId);
-        others.forEach((tab) => {
-            this.closeTab(tab.id, groupId);
-        });
+        this._close(others.map((tab) => ({ tabId: tab.id, groupId })));
     }
 
     public closeToRight(tabId: UniqueId, groupId: UniqueId) {
         const tabs = this.getTabs(groupId);
         const right = tabs.slice(tabs.findIndex(searchById(tabId)) + 1);
-        right.forEach((tab) => {
-            this.closeTab(tab.id, groupId);
-        });
+        this._close(right.map((tab) => ({ tabId: tab.id, groupId })));
     }
 
     public closeToLeft(tabId: UniqueId, groupId: UniqueId) {
         const tabs = this.getTabs(groupId);
         const left = tabs.slice(0, tabs.findIndex(searchById(tabId)));
-        left.forEach((tab) => {
-            this.closeTab(tab.id, groupId);
-        });
+        this._close(left.map((tab) => ({ tabId: tab.id, groupId })));
     }
 
     public closeSaved(groupId: UniqueId) {
         const tabs = this.getTabs(groupId);
         const saved = tabs.filter((i) => !i.modified);
-        saved.forEach((tab) => {
-            this.closeTab(tab.id, groupId);
-        });
+        this._close(saved.map((tab) => ({ tabId: tab.id, groupId })));
     }
 
     public removeGroup(groupId: UniqueId) {
-        this.dispatch((draft) => {
-            const groupIdx = draft.groups.findIndex(searchById(groupId));
-            if (groupIdx === -1) return;
-            this.disposeModels(draft.groups[groupIdx].data, draft.groups);
-            draft.current = getPrevOrNext(draft.groups, groupIdx)?.id;
-            draft.groups.splice(groupIdx, 1);
-        });
+        const group = this.getGroup(groupId);
+        if (!group) return;
+        this._close(group.data.map((i) => ({ tabId: i.id, groupId })));
     }
 
     public closeAll(groupId?: UniqueId) {
         if (isUndefined(groupId)) {
             const groups = this.getGroups();
-            groups.forEach((group) => {
-                this.disposeModels(group.data, groups);
-            });
-            this.dispatch((draft) => {
-                draft.groups.length = 0;
-                draft.current = undefined;
-            });
+            this._close(
+                groups.reduce<{ tabId: UniqueId; groupId: UniqueId }[]>((acc, cur) => {
+                    acc.push(...cur.data.map((i) => ({ tabId: i.id, groupId: cur.id })));
+                    return acc;
+                }, [])
+            );
         } else {
             this.removeGroup(groupId);
         }
@@ -378,6 +367,10 @@ export class EditorService extends BaseService<EditorModel> {
 
     public onDrop(callback: (from: TabGroup, to: TabGroup) => void) {
         this.subscribe(EditorEvent.onDrop, callback);
+    }
+
+    public onClose<T = any>(callback: (tabs: IEditorTab<T>[]) => void) {
+        this.subscribe(EditorEvent.onClose, callback);
     }
 
     public onCloseAll(callback: (groupId?: UniqueId) => void) {

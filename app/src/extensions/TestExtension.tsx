@@ -193,6 +193,14 @@ export const TestExtension: IExtension = {
             molecule.action.execute(QuickAccessCommandAction.ID);
         });
 
+        molecule.editor.onClose((tabs) => {
+            molecule.layout.setNotification(true);
+            molecule.notification.add({
+                id: `close_tab_${new Date().valueOf()}`,
+                value: `关闭了 ${tabs.length} 个 tab`,
+            });
+        });
+
         function openFile(treeNode: any) {
             molecule.editor.setLoading(true);
             getFileContent(treeNode.id as string)

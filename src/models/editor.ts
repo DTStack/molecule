@@ -3,6 +3,7 @@ import { editor } from 'monaco-editor';
 
 export enum EditorEvent {
     onChange = 'editor.onChange',
+    onClose = 'editor.onClose',
     onCloseTab = 'editor.onCloseTab',
     onCloseAll = 'editor.onCloseAll',
     onCloseOther = 'editor.onCloseOther',

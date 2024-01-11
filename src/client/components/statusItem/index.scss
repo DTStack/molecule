@@ -18,12 +18,15 @@ $disabled: BEMModifier($statusBar, 'disabled');
         display: flex;
         height: 100%;
         outline-width: 0;
-        padding: 0 5px;
         text-overflow: ellipsis;
         white-space: pre;
         overflow: hidden;
         margin: 0 3px;
         line-height: 22px;
+
+        &:not(:empty){
+            padding: 0 5px;
+        }
     }
 
     &:not(.#{$disabled}):hover {

@@ -14,9 +14,19 @@ export default function useDynamic(token: string) {
         return new Promise<JSX.Element>((resolve) => {
             const Entry = lazy(() => Comp);
             const controller = controllers[token];
+
+            // Each controller extends GlobalEvent
+            const entryProps = {
+                ...pickBy(controller, isFunction),
+                emit: controller.emit,
+                subscribe: controller.subscribe,
+                unsubscribe: controller.unsubscribe,
+                count: controller.count,
+            };
+
             resolve(
                 <Suspense fallback={<div>loading</div>}>
-                    <Entry {...pickBy(controller, isFunction)} />
+                    <Entry {...entryProps} />
                 </Suspense>
             );
         });

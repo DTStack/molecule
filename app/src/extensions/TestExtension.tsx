@@ -1,4 +1,5 @@
 import { FileTypes, IContributeType, IExtension, IMoleculeContext, tree } from '@dtinsight/molecule';
+import { QuickAccessCommandAction } from '@dtinsight/molecule/esm/extensions/actions/QuickAccessCommandAction';
 import { debounce } from 'lodash-es';
 
 import TestPane from '../components/testPane';
@@ -186,6 +187,10 @@ export const TestExtension: IExtension = {
             if (menuId === molecule.builtin.getConstants().MENUBAR_ITEM_ABOUT) {
                 window.open('https://github.com/DTStack/molecule', '_blank');
             }
+        });
+
+        molecule.menuBar.subscribe('APP_DEBUG_ICON', () => {
+            molecule.action.execute(QuickAccessCommandAction.ID);
         });
 
         function openFile(treeNode: any) {

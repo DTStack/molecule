@@ -1,14 +1,13 @@
-import ActionBar from 'mo/client/components/actionBar';
-import Flex from 'mo/client/components/flex';
-import Prevent from 'mo/client/components/prevent';
-import Progress from 'mo/client/components/progress';
+import { ActionBar, Flex, Prevent, Progress } from 'mo/client/components';
 import useConnector from 'mo/client/hooks/useConnector';
-import { ISideBarController } from 'mo/controllers/sidebar';
+import type { ISideBarController } from 'mo/controllers/sidebar';
 import { searchById, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
-export default function Sidebar({ onToolbarClick, onContextMenu }: ISideBarController) {
+export type ISidebarProps = ISideBarController;
+
+export default function Sidebar({ onToolbarClick, onContextMenu }: ISidebarProps) {
     const sidebar = useConnector('sidebar');
 
     const pane = sidebar.data.find(searchById(sidebar.current));
@@ -26,16 +25,11 @@ export default function Sidebar({ onToolbarClick, onContextMenu }: ISideBarContr
             <div className={variables.pane}>
                 <Flex className={variables.header} justifyContent="space-between">
                     <div className={variables.title}>
-                        <h2 title={typeof pane.name === 'string' ? pane.name : undefined}>
-                            {pane.name}
-                        </h2>
+                        <h2 title={typeof pane.name === 'string' ? pane.name : undefined}>{pane.name}</h2>
                     </div>
                     {!!toolbar.length && (
                         <Prevent className={variables.toolbar}>
-                            <ActionBar
-                                data={toolbar}
-                                onClick={(item) => onToolbarClick?.(item, pane.id)}
-                            />
+                            <ActionBar data={toolbar} onClick={(item) => onToolbarClick?.(item, pane.id)} />
                         </Prevent>
                     )}
                 </Flex>

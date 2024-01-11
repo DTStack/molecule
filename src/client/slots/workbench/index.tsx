@@ -1,15 +1,13 @@
 import { Display, Split } from 'mo/client/components';
 import useDynamic from 'mo/client/hooks/useDynamic';
+import type { ILayoutController } from 'mo/controllers/layout';
 
 import useConnector from '../../hooks/useConnector';
 import 'normalize.css';
 import '../../classNames/common.css';
 import variables from './index.scss';
 
-export interface IWorkbenchProps {
-    onSideChange?: (pos: number[]) => void;
-    onEditorChange?: (pos: number[]) => void;
-}
+export type IWorkbenchProps = ILayoutController;
 
 export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchProps) {
     const layout = useConnector('layout');

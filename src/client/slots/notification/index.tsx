@@ -8,11 +8,9 @@ import type { INotificationController } from 'mo/controllers/notification';
 import NotificationCenter from '../notificationCenter';
 import variables from './index.scss';
 
-export default function Notification({
-    onClick,
-    onActionBarClick,
-    onCloseNotification,
-}: Pick<INotificationController, 'onClick' | 'onActionBarClick' | 'onCloseNotification'>) {
+export type INotificationProps = INotificationController;
+
+export default function Notification({ onClick, onActionBarClick, onCloseNotification }: INotificationProps) {
     const notification = useConnector('notification');
     const layout = useConnector('layout');
 

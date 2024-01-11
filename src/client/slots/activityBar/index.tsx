@@ -6,12 +6,9 @@ import { classify, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
-export default function ActivityBar({
-    onClick,
-    onContextMenu,
-    onMenuClick,
-    onContextMenuClick,
-}: IActivityBarController) {
+export type IActivityBarProps = IActivityBarController;
+
+export default function ActivityBar({ onClick, onContextMenu, onMenuClick, onContextMenuClick }: IActivityBarProps) {
     const activityBar = useConnector('activityBar');
     const layout = useConnector('layout');
     const menuBar = useConnector('menuBar');

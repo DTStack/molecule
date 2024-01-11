@@ -9,6 +9,8 @@ import { searchById } from 'mo/utils';
 
 import variables from './index.scss';
 
+export type IEditorTreeProps = IEditorTreeController & { panel: IExplorerPanelItem };
+
 export default function EditorTree({
     panel,
     onSelect,
@@ -16,7 +18,7 @@ export default function EditorTree({
     onContextMenu,
     onGroupClick,
     onToolbarClick,
-}: IEditorTreeController & { panel: IExplorerPanelItem }) {
+}: IEditorTreeProps) {
     const editor = useConnector('editor');
     const editorTree = useConnector('editorTree');
     const builtin = useConnector('builtin');

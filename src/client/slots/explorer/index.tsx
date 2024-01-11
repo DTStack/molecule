@@ -3,7 +3,9 @@ import useConnector from 'mo/client/hooks/useConnector';
 import type { IExplorerController } from 'mo/controllers/explorer';
 import { sortByIndex } from 'mo/utils';
 
-export default function Explorer({ onToolbarClick, onCollapseChange, onContextMenu }: IExplorerController) {
+export type IExplorerProps = IExplorerController;
+
+export default function Explorer({ onToolbarClick, onCollapseChange, onContextMenu }: IExplorerProps) {
     const explorer = useConnector('explorer');
     const data = explorer.data.concat().sort(sortByIndex);
 

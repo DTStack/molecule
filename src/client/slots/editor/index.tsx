@@ -9,6 +9,8 @@ import type { IEditorController } from 'mo/controllers/editor';
 import Group from '../group';
 import variables from './index.scss';
 
+export type IEditorProps = IEditorController;
+
 export default function Editor({
     onMount,
     onModelMount,
@@ -23,7 +25,7 @@ export default function Editor({
     onDragLeave,
     onDragOver,
     onDrop,
-}: IEditorController) {
+}: IEditorProps) {
     const editor = useConnector('editor');
     const layout = useConnector('layout');
     const settings = useSettings();

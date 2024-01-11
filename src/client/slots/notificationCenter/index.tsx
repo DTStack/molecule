@@ -2,18 +2,21 @@ import Action from 'mo/client/components/action';
 import ActionBar from 'mo/client/components/actionBar';
 import Flex from 'mo/client/components/flex';
 import useConnector from 'mo/client/hooks/useConnector';
-import { INotificationController } from 'mo/controllers/notification';
+import type { INotificationController } from 'mo/controllers/notification';
 import type { NotificationModel } from 'mo/models/notification';
 
 import useLocale from '../../hooks/useLocale';
 import variables from './index.scss';
+
+export type INotificationCenterProps = NotificationModel &
+    Pick<INotificationController, 'onActionBarClick' | 'onCloseNotification'>;
 
 export default function NotificationCenter({
     data = [],
     toolbar = [],
     onActionBarClick,
     onCloseNotification,
-}: NotificationModel & Pick<INotificationController, 'onActionBarClick' | 'onCloseNotification'>) {
+}: INotificationCenterProps) {
     const localize = useLocale();
     const builtin = useConnector('builtin');
 
@@ -38,10 +41,7 @@ export default function NotificationCenter({
                     >
                         {typeof item.render === 'function' ? item.render(item) : item.value}
                         <Action
-                            title={localize(
-                                builtin.constants.NOTIFICATION_TOOLBAR_CLEAR,
-                                'Clear Notification'
-                            )}
+                            title={localize(builtin.constants.NOTIFICATION_TOOLBAR_CLEAR, 'Clear Notification')}
                             onClick={() => onCloseNotification?.(item)}
                             type="close"
                         />

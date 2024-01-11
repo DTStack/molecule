@@ -2,11 +2,11 @@ import { components, slots } from '@dtinsight/molecule';
 
 import './menuBar.css';
 
-export default function MenuBar(props: any) {
+export default function MenuBar(props: slots.IMenuBarProps) {
     return (
         <div className="app_menuBar__container">
-            <slots.menuBar.default {...props} />
-            <div
+            <slots.MenuBar {...(props as any)} />
+            <components.Prevent
                 style={{
                     flex: 1,
                     display: 'flex',
@@ -14,11 +14,11 @@ export default function MenuBar(props: any) {
                     justifyContent: 'center',
                 }}
             >
-                <div className="app_menuBar">
+                <div className="app_menuBar" onClick={() => props.emit('APP_DEBUG_ICON')}>
                     <components.Icon type="debug" />
                     <div style={{ color: 'var(--titleBar-activeForeground)' }}>Molecule</div>
                 </div>
-            </div>
+            </components.Prevent>
         </div>
     );
 }

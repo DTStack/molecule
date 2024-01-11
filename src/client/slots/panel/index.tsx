@@ -9,17 +9,12 @@ import { searchById, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
-export default function Panel({
-    onChange,
-    onClose,
-    onToolbarClick,
-    onContextMenu,
-}: IPanelController) {
+export type IPanelProps = IPanelController;
+
+export default function Panel({ onChange, onClose, onToolbarClick, onContextMenu }: IPanelProps) {
     const panel = useConnector('panel');
 
-    const currentPane = panel.current
-        ? panel.data.filter((p) => !p.hidden).find(searchById(panel.current))
-        : undefined;
+    const currentPane = panel.current ? panel.data.filter((p) => !p.hidden).find(searchById(panel.current)) : undefined;
 
     return (
         <div className={variables.container}>

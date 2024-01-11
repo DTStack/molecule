@@ -6,7 +6,9 @@ import { searchById, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
-export default function AuxiliaryBar({ onClick }: IAuxiliaryController) {
+export type IAuxiliaryBarProps = IAuxiliaryController;
+
+export default function AuxiliaryBar({ onClick }: IAuxiliaryBarProps) {
     const auxiliaryBar = useConnector('auxiliaryBar');
     if (!auxiliaryBar.data.length) return null;
 
@@ -19,10 +21,7 @@ export default function AuxiliaryBar({ onClick }: IAuxiliaryController) {
                 {valid.map(({ id, name, icon }) => (
                     <div
                         key={id}
-                        className={classNames(
-                            variables.item,
-                            auxiliaryBar.current === id && variables.active
-                        )}
+                        className={classNames(variables.item, auxiliaryBar.current === id && variables.active)}
                         onClick={() => onClick?.(id)}
                     >
                         <Icon type={icon} title={name}>

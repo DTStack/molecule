@@ -1,20 +1,17 @@
-import Flex from 'mo/client/components/flex';
-import Prevent from 'mo/client/components/prevent';
+import { Flex, Prevent, StatusItem } from 'mo/client/components';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { IStatusBarController } from 'mo/controllers/statusBar';
 import { Alignment } from 'mo/types';
 import { classify, sortByIndex } from 'mo/utils';
 
-import StatusItem from '../../components/statusItem';
 import variables from './index.scss';
 
-export default function StatusBar({ onClick, onContextMenu }: IStatusBarController) {
+export type IStatusBarProps = IStatusBarController;
+
+export default function StatusBar({ onClick, onContextMenu }: IStatusBarProps) {
     const statusBar = useConnector('statusBar');
 
-    const [leftItems = [], rightItems = []] = classify(
-        statusBar.data,
-        (item) => item.alignment === Alignment.left
-    );
+    const [leftItems = [], rightItems = []] = classify(statusBar.data, (item) => item.alignment === Alignment.left);
 
     return (
         <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY })}>

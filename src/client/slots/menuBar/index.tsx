@@ -7,7 +7,9 @@ import type { UniqueId } from 'mo/types';
 
 import variables from './index.scss';
 
-export default function MenuBar({ onSelect, onContextMenu }: IMenuBarController) {
+export type IMenuBarProps = IMenuBarController;
+
+export default function MenuBar({ onSelect, onContextMenu }: IMenuBarProps) {
     const menuBar = useConnector('menuBar');
 
     const [visibleMenu, setVisibleMenu] = useState<UniqueId | undefined>(undefined);

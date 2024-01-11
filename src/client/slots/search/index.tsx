@@ -1,13 +1,14 @@
 import { classNames } from 'mo/client/classNames';
-import { Input, ScrollBar } from 'mo/client/components';
+import { Input, ScrollBar, Tree } from 'mo/client/components';
 import useConnector from 'mo/client/hooks/useConnector';
 import useLocale from 'mo/client/hooks/useLocale';
 import { ISearchController } from 'mo/controllers/search';
 
-import Tree from '../../components/tree';
 import variables from './index.scss';
 
-export default function Search({ onChange, onSearch, onSelect }: ISearchController) {
+export type ISearchProps = ISearchController;
+
+export default function Search({ onChange, onSearch, onSelect }: ISearchProps) {
     const builtin = useConnector('builtin');
     const search = useConnector('search');
     const localize = useLocale();

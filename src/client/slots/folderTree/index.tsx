@@ -6,6 +6,8 @@ import type { IExplorerPanelItem } from 'mo/models/explorer';
 
 import variables from './index.scss';
 
+export type IFolderTreeProps = IFolderTreeController & { panel: IExplorerPanelItem };
+
 export default function FolderTree({
     panel,
     onSelect,
@@ -17,7 +19,7 @@ export default function FolderTree({
     onDragOver,
     onDragEnd,
     onDrop,
-}: { panel: IExplorerPanelItem } & IFolderTreeController) {
+}: IFolderTreeProps) {
     const folderTree = useConnector('folderTree');
     const localize = useLocale();
     const builtin = useConnector('builtin');

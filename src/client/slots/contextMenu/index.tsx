@@ -1,14 +1,15 @@
 import { createPortal } from 'react-dom';
 import useKeyPress from 'react-use/lib/useKeyPress';
-import Prevent from 'mo/client/components/prevent';
+import { Menu, Prevent } from 'mo/client/components';
 import useOverlay from 'mo/client/hooks/useOverlay';
-import { IContextMenuController } from 'mo/controllers/contextMenu';
+import type { IContextMenuController } from 'mo/controllers/contextMenu';
 
-import Menu from '../../components/menu';
 import useConnector from '../../hooks/useConnector';
 import variables from './index.scss';
 
-export default function ContextMenu({ onClick, onHide }: IContextMenuController) {
+export type IContextMenuProps = IContextMenuController;
+
+export default function ContextMenu({ onClick, onHide }: IContextMenuProps) {
     const contextMenu = useConnector('contextMenu');
     const [isPressed] = useKeyPress('Escape');
 
@@ -22,11 +23,7 @@ export default function ContextMenu({ onClick, onHide }: IContextMenuController)
     }
 
     return createPortal(
-        <Prevent
-            className={variables.container}
-            onClick={() => onHide?.()}
-            onContextMenu={() => onHide?.()}
-        >
+        <Prevent className={variables.container} onClick={() => onHide?.()} onContextMenu={() => onHide?.()}>
             <Prevent
                 ref={ref}
                 className={variables.root}

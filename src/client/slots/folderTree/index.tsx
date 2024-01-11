@@ -66,7 +66,7 @@ export default function FolderTree({
                     onDragEnd={onDragEnd}
                     onDrop={onDrop}
                     renderTitle={(node) => {
-                        if (node.id !== editing) return <div className={variables.treeNode}>{node.name}</div>;
+                        if (node.id !== editing) return node.name;
                         return (
                             <Input
                                 defaultValue={node.name}

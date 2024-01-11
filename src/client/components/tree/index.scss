@@ -2,6 +2,7 @@
 
 $container: prefix('tree');
 $treeNode: BEMElement($container, 'treenode');
+$title: BEMElement($container, 'title');
 $indent: BEMElement($container, 'indent');
 $guide: BEMElement($indent, 'guide');
 
@@ -16,6 +17,7 @@ $treenode-height: 22px;
         align-items: center;
         cursor: pointer;
         display: flex;
+        gap: 6px;
         height: $treenode-height;
         padding-left: 10px;
         user-select: none;
@@ -48,14 +50,20 @@ $treenode-height: 22px;
             margin-left: 7px;
         }
     }
+
+    .#{$title} {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
-
-
 
 :export {
     container: $container;
     treeNode: $treeNode;
     indent: $indent;
+    title: $title;
     guide: $guide;
     active: $active;
 }

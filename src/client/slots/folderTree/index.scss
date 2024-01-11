@@ -1,28 +1,17 @@
 @import '../../classNames/style.scss';
 
 $folderTree: prefix('folderTree');
-$treeNode: BEMElement($folderTree, 'treeNode');
 $input: BEMElement($folderTree, 'input');
 
 .#{$folderTree} {
     padding-bottom: 22px;
 
-    .#{$treeNode} {
-        width: 100%;
-        padding-left: 5px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
     .#{$input} {
         width: 100%;
-        margin-left: 5px;
     }
 }
 
 :export {
     folderTree: $folderTree;
-    treeNode: $treeNode;
     input: $input;
 }

@@ -96,7 +96,7 @@ export default ({
                 ))}
             </div>
             {renderIcon()}
-            {title}
+            <div className={variables.title}>{title}</div>
         </Prevent>
     );
 };

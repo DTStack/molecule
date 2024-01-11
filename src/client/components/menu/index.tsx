@@ -8,7 +8,7 @@ import RcMenu, { Divider, Item as MenuItem, SubMenu } from 'rc-menu';
 import Icon from '../icon';
 import variables from './index.scss';
 
-interface IMenuProps {
+export interface IMenuProps {
     data?: IMenuItemProps[];
     onClick?: MenuHandler;
 }
@@ -37,9 +37,7 @@ export default function Menu({ data, onClick }: IMenuProps) {
                 <span className={variables.label}>
                     {menuItem.render?.(menuItem) || menuItem.name || menuItem.title}
                 </span>
-                {menuItem.keybinding && (
-                    <span className={variables.keybinding}>{menuItem.keybinding}</span>
-                )}
+                {menuItem.keybinding && <span className={variables.keybinding}>{menuItem.keybinding}</span>}
             </MenuItem>
         );
     }
@@ -89,9 +87,7 @@ export default function Menu({ data, onClick }: IMenuProps) {
             className={variables.container}
             selectable={false}
             triggerSubMenuAction="hover"
-            getPopupContainer={() =>
-                document.querySelector<HTMLElement>(`.${APP_PREFIX}`) || document.body
-            }
+            getPopupContainer={() => document.querySelector<HTMLElement>(`.${APP_PREFIX}`) || document.body}
             onClick={({ keyPath, domEvent }) => {
                 domEvent.stopPropagation();
                 handleMenuClick(keyPath);

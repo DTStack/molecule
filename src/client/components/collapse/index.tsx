@@ -14,7 +14,7 @@ import ActionBar from '../actionBar';
 import Flex from '../flex';
 import Icon from '../icon';
 import Prevent from '../prevent';
-import { Pane, SplitPane } from '../split';
+import Split from '../split';
 import variables from './index.scss';
 
 export interface ICollapseItem
@@ -52,7 +52,7 @@ export const MAX_GROW_HEIGHT = 220;
 // default collapse height, only contains header
 export const HEADER_HEIGHT = 26;
 
-export function Collapse({
+export default function Collapse({
     data = [],
     activePanelKeys: controlActivePanelKeys,
     className,
@@ -70,9 +70,7 @@ export function Collapse({
     );
     const [collapsing, setCollapsing] = useState(false);
     const wrapper = useRef<HTMLDivElement>(null);
-    const [sizes, setSizes] = useState<number[]>(
-        data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGHT))
-    );
+    const [sizes, setSizes] = useState<number[]>(data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGHT)));
     // cache the adjusted size for restoring the adjusted size in next uncollapsing
     const adjustedSize = useRef<number[]>([]);
     const first = useRef(true);
@@ -276,7 +274,7 @@ export function Collapse({
             style={style}
             role={role}
         >
-            <SplitPane
+            <Split
                 sizes={sizes}
                 onChange={handleSplitChange}
                 split="horizontal"
@@ -287,20 +285,12 @@ export function Collapse({
                 {data.map((panel, index) => {
                     const isActive = activePanelKeys.includes(panel.id);
                     return (
-                        <Pane key={panel.id} minSize={HEADER_HEIGHT}>
+                        <Split.Pane key={panel.id} minSize={HEADER_HEIGHT}>
                             <div
-                                className={classNames(
-                                    variables.item,
-                                    panel.className,
-                                    isActive && variables.active
-                                )}
+                                className={classNames(variables.item, panel.className, isActive && variables.active)}
                                 data-collapse-id={panel.id}
                             >
-                                <Prevent
-                                    onContextMenu={(e) =>
-                                        onContextMenu?.({ x: e.pageX, y: e.pageY }, panel)
-                                    }
-                                >
+                                <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, panel)}>
                                     <Flex
                                         className={variables.header}
                                         tabIndex={0}
@@ -308,9 +298,7 @@ export function Collapse({
                                         onClick={() => handleChangeCallback(panel.id)}
                                     >
                                         <Flex>
-                                            <Icon
-                                                type={isActive ? 'chevron-down' : 'chevron-right'}
-                                            />
+                                            <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
                                             <span className={variables.title}>{panel.name}</span>
                                         </Flex>
                                         {isActive && (
@@ -322,18 +310,14 @@ export function Collapse({
                                         )}
                                     </Flex>
                                 </Prevent>
-                                <div
-                                    className={variables.content}
-                                    tabIndex={0}
-                                    data-collapse-index={index}
-                                >
+                                <div className={variables.content} tabIndex={0} data-collapse-index={index}>
                                     {renderPanels(panel, panel.render)}
                                 </div>
                             </div>
-                        </Pane>
+                        </Split.Pane>
                     );
                 })}
-            </SplitPane>
+            </Split>
         </div>
     );
 }

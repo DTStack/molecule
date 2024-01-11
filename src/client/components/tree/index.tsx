@@ -2,13 +2,7 @@ import { useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { classNames } from 'mo/client/classNames';
-import {
-    type ContextMenuHandler,
-    FileTypes,
-    type IMenuItemProps,
-    KeyboardEventHandler,
-    type UniqueId,
-} from 'mo/types';
+import { type ContextMenuHandler, FileTypes, type IMenuItemProps, KeyboardEventHandler, type UniqueId } from 'mo/types';
 import { type TreeNodeModel } from 'mo/utils/tree';
 
 import Icon from '../icon';
@@ -26,11 +20,7 @@ export interface ITreeProps {
     activeKey?: UniqueId;
     contextMenu?: IMenuItemProps[];
     onSelect?: (node: ITreeNodeItemProps) => void;
-    renderTitle?: (
-        node: ITreeNodeItemProps,
-        index: number,
-        isLeaf: boolean
-    ) => JSX.Element | string;
+    renderTitle?: (node: ITreeNodeItemProps, index: number, isLeaf: boolean) => JSX.Element | string;
     onContextMenu?: ContextMenuHandler<[treeNode: ITreeNodeItemProps]>;
     onKeyDown?: KeyboardEventHandler<HTMLElement>;
     onDragStart?(source: ITreeNodeItemProps): void;
@@ -57,20 +47,12 @@ export default function Tree({
 }: ITreeProps) {
     const wrapper = useRef<HTMLDivElement>(null);
 
-    const handleNodeClick = (
-        node: ITreeNodeItemProps,
-        e: React.MouseEvent<HTMLDivElement, MouseEvent>
-    ) => {
+    const handleNodeClick = (node: ITreeNodeItemProps, e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
         onSelect?.(node);
     };
 
-    const renderIcon = (
-        icon: JSX.Element | undefined,
-        isLeaf: boolean,
-        isExpand: boolean,
-        isLoading: boolean
-    ) => {
+    const renderIcon = (icon: JSX.Element | undefined, isLeaf: boolean, isExpand: boolean, isLoading: boolean) => {
         if (isLeaf) {
             return icon || null;
         }
@@ -87,8 +69,7 @@ export default function Tree({
             const isLoading = loadingKeys.includes(item.id);
             const isActive = activeKey === uuid;
 
-            const IconComponent =
-                typeof item.icon === 'string' ? <Icon type={item.icon} /> : item.icon;
+            const IconComponent = typeof item.icon === 'string' ? <Icon type={item.icon} /> : item.icon;
 
             const currentNode = (
                 <TreeNode
@@ -97,17 +78,8 @@ export default function Tree({
                     data={item}
                     indent={indent}
                     className={classNames(variables.treeNode, isActive && variables.active)}
-                    renderIcon={() =>
-                        renderIcon(
-                            IconComponent,
-                            item.fileType === FileTypes.File,
-                            isExpand,
-                            isLoading
-                        )
-                    }
-                    renderTitle={() =>
-                        renderTitle?.(item, index, item.fileType === FileTypes.File) || item.name
-                    }
+                    renderIcon={() => renderIcon(IconComponent, item.fileType === FileTypes.File, isExpand, isLoading)}
+                    renderTitle={() => renderTitle?.(item, index, item.fileType === FileTypes.File) || item.name}
                     onClick={(e) => handleNodeClick(item, e)}
                     onKeyDown={(e) => onKeyDown?.(e, item)}
                     onContextMenu={onContextMenu}
@@ -118,8 +90,7 @@ export default function Tree({
                 />
             );
 
-            const childrenNode: any =
-                isExpand && !isLoading && renderTreeNode(item.children || [], indent + 1);
+            const childrenNode: any = isExpand && !isLoading && renderTreeNode(item.children || [], indent + 1);
 
             return [currentNode, childrenNode];
         });

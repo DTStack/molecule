@@ -1,5 +1,4 @@
-import Display from 'mo/client/components/display';
-import { Pane, SplitPane } from 'mo/client/components/split';
+import { Display, Split } from 'mo/client/components';
 import useDynamic from 'mo/client/hooks/useDynamic';
 
 import useConnector from '../../hooks/useConnector';
@@ -30,8 +29,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
 
     const getContentSize = () => {
         if (bothVisibility) return layout.splitPanePos;
-        if (sidebarHidden)
-            return auxiliaryBarHidden ? [0, '100%', 0] : [0, 'auto', layout.splitPanePos[2]];
+        if (sidebarHidden) return auxiliaryBarHidden ? [0, '100%', 0] : [0, 'auto', layout.splitPanePos[2]];
         return [layout.splitPanePos[0], 'auto', 0];
     };
 
@@ -53,28 +51,28 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
             <Display visible={!layout.menuBar.hidden}>{MenuBar}</Display>
             <section className={variables.main}>
                 <Display visible={!layout.activityBar.hidden}>{ActivityBar}</Display>
-                <SplitPane
+                <Split
                     sizes={getContentSize()}
                     split="vertical"
                     showSashes={getContentSashes()}
                     onChange={onSideChange}
                 >
-                    <Pane minSize={170} maxSize="80%">
+                    <Split.Pane minSize={170} maxSize="80%">
                         <Display visible={!layout.sidebar.hidden}>{Sidebar}</Display>
-                    </Pane>
-                    <SplitPane
+                    </Split.Pane>
+                    <Split
                         sizes={getSizes()}
                         showSashes={!layout.panel.hidden && !layout.panel.panelMaximized}
                         allowResize={[true, false]}
                         split="horizontal"
                         onChange={onEditorChange}
                     >
-                        <Pane minSize="10%" maxSize="80%">
+                        <Split.Pane minSize="10%" maxSize="80%">
                             {Editor}
-                        </Pane>
+                        </Split.Pane>
                         <Display visible={!layout.panel.hidden}>{Panel}</Display>
-                    </SplitPane>
-                </SplitPane>
+                    </Split>
+                </Split>
             </section>
             <Display visible={!layout.statusBar.hidden}>{StatusBar}</Display>
         </main>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Action from '../action';
 
-interface ICloseProps {
+export interface ICloseProps {
     className?: string;
     modified?: boolean;
     onClick?: (e: React.MouseEvent) => void;

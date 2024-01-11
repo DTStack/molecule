@@ -4,10 +4,10 @@ import { Direction } from 'mo/types';
 
 import Display from '../display';
 import Flex from '../flex';
-import { type IScrollbarProps, IScrollRef, ScrollBar } from '../scrollBar';
+import ScrollBar, { type IScrollbarProps, type IScrollRef } from '../scrollBar';
 import variables from './index.scss';
 
-interface IHeaderProps {
+export interface IHeaderProps {
     extra?: React.ReactNode;
     className?: string;
     contentClassName?: string;
@@ -33,11 +33,7 @@ export default forwardRef<IScrollRef, PropsWithChildren<IHeaderProps>>(function 
     ref
 ) {
     return (
-        <Flex
-            className={classNames(variables.header, className)}
-            onClick={onClick}
-            onContextMenu={onContextMenu}
-        >
+        <Flex className={classNames(variables.header, className)} onClick={onClick} onContextMenu={onContextMenu}>
             <div className={classNames(variables.content, contentClassName)}>
                 <ScrollBar
                     scrollIntoViewDeps={scrollIntoViewDeps}

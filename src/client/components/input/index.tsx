@@ -5,7 +5,7 @@ import { InputValidateInfo, ValidateStatus, ValidateStatusLiteral } from 'mo/typ
 import Display from '../display';
 import variables from './index.scss';
 
-export interface IBaseInputProps {
+export interface IInputProps {
     value?: string;
     className?: string;
     placeholder?: string;
@@ -21,7 +21,7 @@ export interface IBaseInputProps {
     onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
 }
 
-export const Input = ({
+export default function Input({
     defaultValue,
     size,
     value,
@@ -35,7 +35,7 @@ export const Input = ({
     onBlur,
     onClick,
     onKeyDown,
-}: IBaseInputProps) => {
+}: IInputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const getInputClassName = (status: ValidateStatusLiteral) => {
@@ -133,4 +133,4 @@ export const Input = ({
             </Display>
         </div>
     );
-};
+}

@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import Progress from 'mo/client/components/progress';
-import { Pane, SplitPane } from 'mo/client/components/split';
-import Welcome from 'mo/client/components/welcome';
+import { Progress, Split, Welcome } from 'mo/client/components';
 import useConnector from 'mo/client/hooks/useConnector';
 import useSettings from 'mo/client/hooks/useSettings';
 import type { IEditorController } from 'mo/controllers/editor';
@@ -43,9 +41,9 @@ export default function Editor({
     const renderGroups = () => {
         return (
             <DndProvider backend={HTML5Backend} context={window}>
-                <SplitPane sizes={layout.groupSplitPos} split={layout.editorDirection} onChange={onPaneSizeChange}>
+                <Split sizes={layout.groupSplitPos} split={layout.editorDirection} onChange={onPaneSizeChange}>
                     {groups.map((g) => (
-                        <Pane key={g.id} minSize="220px">
+                        <Split.Pane key={g.id} minSize="220px">
                             <Group
                                 group={g}
                                 toolbar={toolbar}
@@ -63,9 +61,9 @@ export default function Editor({
                                 onDragOver={onDragOver}
                                 onDrop={onDrop}
                             />
-                        </Pane>
+                        </Split.Pane>
                     ))}
-                </SplitPane>
+                </Split>
             </DndProvider>
         );
     };

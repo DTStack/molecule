@@ -82,7 +82,12 @@ export default function Tabs({
     return (
         <Prevent
             ref={ref}
-            className={classNames(variables.tab, active && variables.active, (isDragging || isOver) && variables.dragging, className)}
+            className={classNames(
+                variables.tab,
+                active && variables.active,
+                (isDragging || isOver) && variables.dragging,
+                className
+            )}
             onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data.id, groupId)}
             tabIndex={0}
             onClick={() => onClick?.(data.id, groupId)}

@@ -2,7 +2,7 @@ import { type CSSProperties, useEffect, useRef } from 'react';
 import useMonaco from 'mo/client/hooks/useMonaco';
 import { editor } from 'monaco-editor';
 
-interface IEditorProps {
+export interface IEditorProps {
     className?: string;
     style?: CSSProperties;
     /**

@@ -5,7 +5,7 @@ import type { ContextMenuHandler } from 'mo/types';
 import Icon from '../icon';
 import Prevent from '../prevent';
 
-interface IPanelItemProps {
+export interface IPanelItemProps {
     className?: string;
     data: IPanelItem;
     onClose?: (id: IPanelItem['id']) => void;
@@ -13,19 +13,9 @@ interface IPanelItemProps {
     onContextMenu?: ContextMenuHandler<[item: IPanelItem]>;
 }
 
-export default function PanelItem({
-    className,
-    data,
-    onClose,
-    onClick,
-    onContextMenu,
-}: IPanelItemProps) {
+export default function PanelItem({ className, data, onClose, onClick, onContextMenu }: IPanelItemProps) {
     return (
-        <Prevent
-            onContextMenu={(e) =>
-                !data.disabled && onContextMenu?.({ x: e.pageX, y: e.pageY }, data)
-            }
-        >
+        <Prevent onContextMenu={(e) => !data.disabled && onContextMenu?.({ x: e.pageX, y: e.pageY }, data)}>
             <div className={classNames(className)} onClick={() => !data.disabled && onClick?.()}>
                 <Icon type={data.icon} />
                 {data.name}

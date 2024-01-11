@@ -1,10 +1,9 @@
 import { classNames } from 'mo/client/classNames';
-import { ScrollBar } from 'mo/client/components/scrollBar';
+import { Input, ScrollBar } from 'mo/client/components';
 import useConnector from 'mo/client/hooks/useConnector';
 import useLocale from 'mo/client/hooks/useLocale';
 import { ISearchController } from 'mo/controllers/search';
 
-import { Input } from '../../components/input';
 import Tree from '../../components/tree';
 import variables from './index.scss';
 

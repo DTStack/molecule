@@ -52,17 +52,12 @@ function isVertical(direction: DirectionLiteral): direction is Direction.vertica
  * Concat width or height with string or just get width and height
  */
 function getSizeLiteral(direction: DirectionLiteral): 'width' | 'height';
-function getSizeLiteral<T extends string>(
-    direction: DirectionLiteral,
-    concatStr: T
-): `${T}Width` | `${T}Height`;
+function getSizeLiteral<T extends string>(direction: DirectionLiteral, concatStr: T): `${T}Width` | `${T}Height`;
 function getSizeLiteral<T extends string>(direction: DirectionLiteral, concatStr?: T) {
     const sizeLiteral = !isVertical(direction) ? 'width' : 'height';
     if (!concatStr) return sizeLiteral;
 
-    const upperCase = `${sizeLiteral.substring(0, 1).toUpperCase()}${sizeLiteral.substring(1)}` as
-        | 'Width'
-        | 'Height';
+    const upperCase = `${sizeLiteral.substring(0, 1).toUpperCase()}${sizeLiteral.substring(1)}` as 'Width' | 'Height';
 
     return `${concatStr}${upperCase}`;
 }
@@ -71,22 +66,17 @@ function getSizeLiteral<T extends string>(direction: DirectionLiteral, concatStr
  * Concat top or left with string or just get top and left
  */
 function getOffsetLiteral(direction: DirectionLiteral): 'top' | 'left';
-function getOffsetLiteral<T extends string>(
-    direction: DirectionLiteral,
-    concatStr: T
-): `${T}Top` | `${T}Left`;
+function getOffsetLiteral<T extends string>(direction: DirectionLiteral, concatStr: T): `${T}Top` | `${T}Left`;
 function getOffsetLiteral<T extends string>(direction: DirectionLiteral, concatStr?: T) {
     const offsetLiteral = isVertical(direction) ? 'top' : 'left';
     if (!concatStr) return offsetLiteral;
 
-    const upperCase = `${offsetLiteral.substring(0, 1).toUpperCase()}${offsetLiteral.substring(
-        1
-    )}` as 'Top' | 'Left';
+    const upperCase = `${offsetLiteral.substring(0, 1).toUpperCase()}${offsetLiteral.substring(1)}` as 'Top' | 'Left';
 
     return `${concatStr}${upperCase}`;
 }
 
-export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollbarProps>>(function (
+export default forwardRef<IScrollRef, React.PropsWithChildren<IScrollbarProps>>(function (
     {
         children,
         style,
@@ -242,8 +232,7 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
             const threshold = 5 * factor;
 
             const thumbOffset =
-                (scrollOffset / this[isVertical(direction) ? 'scrollHeight' : 'scrollWidth']) *
-                getTrackSize();
+                (scrollOffset / this[isVertical(direction) ? 'scrollHeight' : 'scrollWidth']) * getTrackSize();
 
             thumbScrollTo(thumbOffset);
             contentScrollTo(scrollOffset + threshold);
@@ -263,9 +252,7 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
             const raf = window.requestAnimationFrame(() => {
                 const parent = wrapper.current;
                 if (!parent) return;
-                const active = parent.querySelector<HTMLDivElement>(
-                    `.${scrollIntoViewDeps.activeClassName}`
-                );
+                const active = parent.querySelector<HTMLDivElement>(`.${scrollIntoViewDeps.activeClassName}`);
                 if (!active) return;
                 const [inView, isWhichSide] = isElementInParentView(active, parent);
 
@@ -277,16 +264,14 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
                             case 'right':
                                 return (
                                     active.offsetLeft -
-                                    (parent.getBoundingClientRect().width -
-                                        active.getBoundingClientRect().width)
+                                    (parent.getBoundingClientRect().width - active.getBoundingClientRect().width)
                                 );
                             case 'top':
                                 return active.offsetTop;
                             case 'bottom':
                                 return (
                                     active.offsetTop -
-                                    (parent.getBoundingClientRect().height -
-                                        active.getBoundingClientRect().height)
+                                    (parent.getBoundingClientRect().height - active.getBoundingClientRect().height)
                                 );
                             default:
                                 return null;
@@ -350,8 +335,7 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
         const halfThumbSize = thumbSize / 2;
         const contentSize = getContentScrollSize();
 
-        const thumbOffset =
-            e[isVertical(direction) ? 'clientY' : 'clientX'] - (isVertical(direction) ? y : x);
+        const thumbOffset = e[isVertical(direction) ? 'clientY' : 'clientX'] - (isVertical(direction) ? y : x);
 
         const thumbCenterOffset = thumbOffset - halfThumbSize;
         const rate = thumbCenterOffset / (isVertical(direction) ? height : width);
@@ -460,11 +444,7 @@ export const ScrollBar = forwardRef<IScrollRef, React.PropsWithChildren<IScrollb
             onMouseEnter={() => setMouseOver(true)}
             onMouseLeave={() => setMouseOver(false)}
         >
-            {isShowShadow && (
-                <div
-                    className={classNames(variables.shadow, isOffsetZero && variables.shadowHidden)}
-                />
-            )}
+            {isShowShadow && <div className={classNames(variables.shadow, isOffsetZero && variables.shadowHidden)} />}
             <div
                 className={classNames(
                     variables.container,

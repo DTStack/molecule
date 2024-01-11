@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Button } from 'mo/client/components/button';
+import Button from 'mo/client/components/button';
 import useConnector from 'mo/client/hooks/useConnector';
 
 import useLocale from '../../hooks/useLocale';
@@ -38,10 +38,7 @@ export default function LocaleNotification() {
             </div>
             <Flex justifyContent="flex-end">
                 <Button ref={buttonRef} style={{ width: 150 }} onClick={reload}>
-                    {localize(
-                        builtin.constants.NOTIFICATION_ITEM_INTERNATIONAL_BUTTON,
-                        'Confirm Reload'
-                    )}
+                    {localize(builtin.constants.NOTIFICATION_ITEM_INTERNATIONAL_BUTTON, 'Confirm Reload')}
                 </Button>
             </Flex>
         </section>

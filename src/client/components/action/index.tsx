@@ -5,7 +5,7 @@ import type { HTMLElementProps, IconType } from 'mo/types';
 import Icon from '../icon';
 import variables from './index.scss';
 
-interface IActionProps extends HTMLElementProps, Omit<ComponentProps<'div'>, 'role'> {
+export interface IActionProps extends HTMLElementProps, Omit<ComponentProps<'div'>, 'role'> {
     type?: IconType;
     disabled?: boolean;
 }

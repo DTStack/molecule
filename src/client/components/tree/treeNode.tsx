@@ -8,7 +8,7 @@ import variables from './index.scss';
 
 type ITreeNodeItemProps = TreeNodeModel<any>;
 
-interface ITreeNodeProps {
+export interface ITreeNodeProps {
     data: ITreeNodeItemProps;
     indent: number;
     className?: string;

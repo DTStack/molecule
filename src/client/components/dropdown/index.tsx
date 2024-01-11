@@ -8,18 +8,15 @@ import Menu from '../menu';
 import placements from './placements';
 import './index.scss';
 
-type ActionType = Exclude<DropdownProps['trigger'], Array<any> | 'focus'>;
+export type ActionType = Exclude<DropdownProps['trigger'], Array<any> | 'focus'>;
 
 /**
  * If a dropdown item has a clone property, it will trigger corresponding click event
  */
-type DropdownData = IMenuItemProps & { clone?: UniqueId };
+export type DropdownData = IMenuItemProps & { clone?: UniqueId };
 
-interface IDropdownProps
-    extends Pick<
-        DropdownProps,
-        'children' | 'visible' | 'onVisibleChange' | 'getPopupContainer' | 'overlayClassName'
-    > {
+export interface IDropdownProps
+    extends Pick<DropdownProps, 'children' | 'visible' | 'onVisibleChange' | 'getPopupContainer' | 'overlayClassName'> {
     trigger?: ActionType;
     data?: DropdownData[];
     disabled?: boolean;

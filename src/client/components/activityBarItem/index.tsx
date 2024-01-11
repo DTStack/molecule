@@ -1,10 +1,5 @@
 import { classNames } from 'mo/client/classNames';
-import {
-    Alignment,
-    ContextMenuHandler,
-    IActivityBarItem,
-    MenuHandler,
-} from 'mo/types';
+import { Alignment, ContextMenuHandler, IActivityBarItem, MenuHandler } from 'mo/types';
 
 import Dropdown from '../dropdown';
 import Icon from '../icon';

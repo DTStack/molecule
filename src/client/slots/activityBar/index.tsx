@@ -1,6 +1,4 @@
-import ActivityBarItem from 'mo/client/components/activityBarItem';
-import Prevent from 'mo/client/components/prevent';
-import { ScrollBar } from 'mo/client/components/scrollBar';
+import { ActivityBarItem, Prevent, ScrollBar } from 'mo/client/components';
 import useConnector from 'mo/client/hooks/useConnector';
 import type { IActivityBarController } from 'mo/controllers/activityBar';
 import { Alignment } from 'mo/types';
@@ -18,10 +16,7 @@ export default function ActivityBar({
     const layout = useConnector('layout');
     const menuBar = useConnector('menuBar');
 
-    const [top = [], bottom = []] = classify(
-        activityBar.data,
-        (item) => item.alignment === Alignment.top
-    );
+    const [top = [], bottom = []] = classify(activityBar.data, (item) => item.alignment === Alignment.top);
 
     const renderMenu = () => {
         if (layout.menuBar.hidden) {
@@ -42,10 +37,7 @@ export default function ActivityBar({
     };
 
     return (
-        <Prevent
-            className={variables.container}
-            onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY })}
-        >
+        <Prevent className={variables.container} onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY })}>
             <ScrollBar className={variables.normal}>
                 <ul>
                     {renderMenu()}

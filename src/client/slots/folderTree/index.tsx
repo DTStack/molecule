@@ -1,13 +1,9 @@
-import { Button } from 'mo/client/components/button';
-import { Input } from 'mo/client/components/input';
-import Prevent from 'mo/client/components/prevent';
-import Tree from 'mo/client/components/tree';
+import { Button, Input, Prevent, ScrollBar, Tree } from 'mo/client/components';
 import useConnector from 'mo/client/hooks/useConnector';
 import useLocale from 'mo/client/hooks/useLocale';
 import type { IFolderTreeController } from 'mo/controllers/folderTree';
 import type { IExplorerPanelItem } from 'mo/models/explorer';
 
-import { ScrollBar } from '../../components/scrollBar';
 import variables from './index.scss';
 
 export default function FolderTree({
@@ -34,10 +30,7 @@ export default function FolderTree({
             ) : (
                 <div style={{ width: '90%', margin: '0 auto', padding: '16px 0' }}>
                     <p style={{ fontSize: 12, margin: '0 0 16px 0' }}>
-                        {localize(
-                            builtin.constants.FOLDERTREE_ITEM_EMPTY,
-                            'You have not yet opened a folder'
-                        )}
+                        {localize(builtin.constants.FOLDERTREE_ITEM_EMPTY, 'You have not yet opened a folder')}
                     </p>
                     <Button block onClick={onCreateRoot}>
                         {localize(builtin.constants.FOLDERTREE_ITEM_ADD_ROOT_FOLDER, 'Add Folder')}
@@ -71,8 +64,7 @@ export default function FolderTree({
                     onDragEnd={onDragEnd}
                     onDrop={onDrop}
                     renderTitle={(node) => {
-                        if (node.id !== editing)
-                            return <div className={variables.treeNode}>{node.name}</div>;
+                        if (node.id !== editing) return <div className={variables.treeNode}>{node.name}</div>;
                         return (
                             <Input
                                 defaultValue={node.name}

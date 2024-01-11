@@ -5,7 +5,7 @@ import Icon from '../icon';
 import Prevent from '../prevent';
 import variables from './index.scss';
 
-interface IBreadcrumbProps {
+export interface IBreadcrumbProps {
     routes: IBreadcrumbItemProps[];
     className?: string;
     separator?: IconType;
@@ -17,11 +17,7 @@ export default function Breadcrumb({ className, separator, routes, onClick }: IB
     const sep = separator || <Icon type="chevron-right" />;
 
     return (
-        <Prevent
-            className={classNames(className, variables.container)}
-            role="breadcrumb"
-            tabIndex={0}
-        >
+        <Prevent className={classNames(className, variables.container)} role="breadcrumb" tabIndex={0}>
             {routes.map((route, index) => {
                 const { id, icon, render, name } = route;
                 return (

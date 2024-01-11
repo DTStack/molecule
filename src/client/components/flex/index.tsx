@@ -4,7 +4,7 @@ import type { HTMLElementProps } from 'mo/types';
 
 import variables from './index.scss';
 
-interface IFlexProps
+export interface IFlexProps
     extends HTMLElementProps,
         Pick<HTMLAttributes<HTMLDivElement>, 'tabIndex' | 'onClick' | 'onContextMenu' | 'onDragEnter' | 'onDragLeave'> {
     alignItems?: CSSProperties['alignItems'];

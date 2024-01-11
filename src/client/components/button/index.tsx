@@ -11,24 +11,22 @@ export interface IButtonProps extends Omit<React.ComponentProps<'button'>, 'ref'
     onClick?(event: React.MouseEvent): void;
 }
 
-export const Button = forwardRef<HTMLButtonElement, React.PropsWithChildren<IButtonProps>>(
-    function (props, ref) {
-        const { className, children, size = 'normal', block, ...custom } = props;
+export default forwardRef<HTMLButtonElement, React.PropsWithChildren<IButtonProps>>(function Button(props, ref) {
+    const { className, children, size = 'normal', block, ...custom } = props;
 
-        return (
-            <button
-                ref={ref}
-                className={classNames(
-                    className,
-                    variables.container,
-                    block && variables.block,
-                    size === 'large' ? variables.large : variables.normal,
-                    props.disabled && variables.disabled
-                )}
-                {...custom}
-            >
-                {children}
-            </button>
-        );
-    }
-);
+    return (
+        <button
+            ref={ref}
+            className={classNames(
+                className,
+                variables.container,
+                block && variables.block,
+                size === 'large' ? variables.large : variables.normal,
+                props.disabled && variables.disabled
+            )}
+            {...custom}
+        >
+            {children}
+        </button>
+    );
+});

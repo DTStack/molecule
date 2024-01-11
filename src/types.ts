@@ -48,9 +48,7 @@ export type Arraylize<T> = T[] | T;
  * If `T` is `void`, it will only have the `hidden` property.
  * Otherwise, it will have all properties of `T` and the `hidden` property.
  */
-export type WithHidden<T extends object | void> = T extends void
-    ? { hidden: boolean }
-    : T & { hidden: boolean };
+export type WithHidden<T extends object | void> = T extends void ? { hidden: boolean } : T & { hidden: boolean };
 
 /**
  * @refer: https://code.visualstudio.com/api/references/icons-in-labels#icon-listing
@@ -223,7 +221,7 @@ export interface IContext {
     };
     monaco: MonacoService;
     controllers: Record<string, any>;
-    modules: Map<string, Factory>;
+    modules: Map<string, Factory | null>;
     localize: Localize;
 }
 
@@ -255,10 +253,7 @@ export type Localize = (sourceKey: string, defaultValue: string, ...args: any[])
 /**
  * Represents the properties of a menu item.
  */
-export interface IMenuItemProps
-    extends Render<IMenuItemProps>,
-        IterableItem,
-        TreeModel<IMenuItemProps> {
+export interface IMenuItemProps extends Render<IMenuItemProps>, IterableItem, TreeModel<IMenuItemProps> {
     /**
      * The type of the menu item.
      */
@@ -325,7 +320,7 @@ export interface IContribute {
     /**
      * Optional contribution for modules.
      */
-    [IContributeType.Modules]?: Record<string, Factory>;
+    [IContributeType.Modules]?: Record<string, Factory | null>;
     // [IContributeType.IconTheme]?: IIconTheme[];
 }
 
@@ -476,19 +471,13 @@ export type SearchResultItem = TreeNodeModel<{
  * Represents a keyboard event handler with extended parameters.
  * @template T - The type of the event target.
  */
-export type KeyboardEventHandler<T> = ExtendParameters<
-    React.KeyboardEventHandler<T>,
-    [treeNode: TreeNodeModel<any>]
->;
+export type KeyboardEventHandler<T> = ExtendParameters<React.KeyboardEventHandler<T>, [treeNode: TreeNodeModel<any>]>;
 
 /**
  * Represents a focus event handler with extended parameters.
  * @template T The type of the event target.
  */
-export type FocusEventHandler<T> = ExtendParameters<
-    React.FocusEventHandler<T>,
-    [treeNode: TreeNodeModel<any>]
->;
+export type FocusEventHandler<T> = ExtendParameters<React.FocusEventHandler<T>, [treeNode: TreeNodeModel<any>]>;
 
 export type IPosition = {
     x: number;
@@ -518,20 +507,14 @@ export type Predict<T> = (data: T) => Partial<T>;
 /**
  * Represents the top activity bar item.
  */
-export interface ITopActivityBarItem
-    extends HTMLElementProps,
-        IterableItem,
-        Render<IActivityBarItem> {
+export interface ITopActivityBarItem extends HTMLElementProps, IterableItem, Render<IActivityBarItem> {
     alignment: 'top';
 }
 
 /**
  * Represents a bottom activity bar item.
  */
-export interface IBottomActivityBarItem
-    extends HTMLElementProps,
-        IterableItem,
-        Render<IActivityBarItem> {
+export interface IBottomActivityBarItem extends HTMLElementProps, IterableItem, Render<IActivityBarItem> {
     /**
      * The alignment of the activity bar item.
      */
@@ -608,9 +591,7 @@ export type IColorTheme = {
  * Represents an editor tab.
  * @template T - The type of data associated with the tab.
  */
-export interface IEditorTab<T>
-    extends Render<IEditorTab<T>>,
-        Pick<IterableItem, 'id' | 'name' | 'icon'> {
+export interface IEditorTab<T> extends Render<IEditorTab<T>>, Pick<IterableItem, 'id' | 'name' | 'icon'> {
     model?: editor.ITextModel;
     value?: string;
     language?: string;

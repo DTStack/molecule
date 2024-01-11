@@ -9,8 +9,10 @@ export default function useDynamic(token: string) {
 
     function lazyRequire() {
         if (!modules.has(token)) return Promise.resolve(null);
+        const Comp = modules.get(token);
+        if (Comp === null || Comp === undefined) return Promise.resolve(null);
         return new Promise<JSX.Element>((resolve) => {
-            const Entry = lazy(() => modules.get(token)!);
+            const Entry = lazy(() => Comp);
             const controller = controllers[token];
             resolve(
                 <Suspense fallback={<div>loading</div>}>

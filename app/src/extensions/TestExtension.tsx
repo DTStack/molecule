@@ -69,7 +69,18 @@ export const TestExtension: IExtension = {
                 molecule.sidebar.setLoading(true);
                 searchFileContents(value)
                     .then((data) => {
-                        molecule.search.setResult(data.map((item) => new tree.TreeNodeModel(item.fileName, item.fileName, 'Folder', [new tree.TreeNodeModel(`${item.fileName}__${item.context}`, item.context, 'File')])));
+                        molecule.search.setResult(
+                            data.map(
+                                (item) =>
+                                    new tree.TreeNodeModel(item.fileName, item.fileName, 'Folder', [
+                                        new tree.TreeNodeModel(
+                                            `${item.fileName}__${item.context}`,
+                                            item.context,
+                                            'File'
+                                        ),
+                                    ])
+                            )
+                        );
                         molecule.search.setExpandedKeys(data.map((i) => i.fileName));
                     })
                     .finally(() => {

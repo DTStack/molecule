@@ -7,7 +7,7 @@ interface BaseControllerCtor {
 }
 
 export class ModuleService {
-    public modules = new Map<string, Factory>();
+    public modules = new Map<string, Factory | null>();
     public controllers = new Map<string, BaseControllerCtor>();
     constructor() {
         this.modules = new Map<string, Factory>([
@@ -47,7 +47,7 @@ export class ModuleService {
         ]);
     }
 
-    public update(key: string, token: Factory) {
+    public update(key: string, token: Factory | null) {
         this.modules.set(key, token);
     }
 }

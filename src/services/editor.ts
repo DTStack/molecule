@@ -35,17 +35,17 @@ export class EditorService extends BaseService<EditorModel> {
         return this.getState().current;
     }
 
-    public getGroups() {
-        return this.getState().groups;
+    public getGroups<T = any>() {
+        return this.getState().groups as EditorGroupModel<T>[];
     }
 
     public getToolbar(toolbarId: UniqueId) {
-        return this.getToolbars().find(searchById(toolbarId)) || [];
+        return this.getToolbars().find(searchById(toolbarId));
     }
 
     public getGroup<T = any>(groupId?: UniqueId) {
         if (isUndefined(groupId)) return;
-        return this.getGroups().find(searchById(groupId)) as EditorGroupModel<T>;
+        return this.getGroups<T>().find(searchById(groupId));
     }
 
     public getCurrentGroup<T = any>() {
@@ -60,13 +60,13 @@ export class EditorService extends BaseService<EditorModel> {
         return this.getTabs<T>(this.getCurrent());
     }
 
-    public getTab(tabId?: UniqueId, groupId?: UniqueId) {
+    public getTab<T = any>(tabId?: UniqueId, groupId?: UniqueId) {
         if (isUndefined(groupId) || isUndefined(tabId)) return;
-        return this.getTabs(groupId).find(searchById(tabId));
+        return this.getTabs<T>(groupId).find(searchById(tabId));
     }
 
-    public getCurrentTab() {
-        return this.getTab(this.getCurrentGroup()?.activeTab, this.getCurrent());
+    public getCurrentTab<T = any>() {
+        return this.getTab<T>(this.getCurrentGroup()?.activeTab, this.getCurrent());
     }
 
     public getOptions() {
@@ -324,7 +324,9 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onFocus, callback);
     }
 
-    public onCursorSelection(callback: (instance: editor.IStandaloneCodeEditor, ev: editor.ICursorSelectionChangedEvent) => void) {
+    public onCursorSelection(
+        callback: (instance: editor.IStandaloneCodeEditor, ev: editor.ICursorSelectionChangedEvent) => void
+    ) {
         this.subscribe(EditorEvent.onCursorSelection, callback);
     }
 
@@ -348,7 +350,9 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onOpenTab, callback);
     }
 
-    public onChange(callback: (item: TabGroup & { value: string | undefined }, ev: editor.IModelContentChangedEvent) => void): void {
+    public onChange(
+        callback: (item: TabGroup & { value: string | undefined }, ev: editor.IModelContentChangedEvent) => void
+    ): void {
         this.subscribe(EditorEvent.onChange, callback);
     }
 

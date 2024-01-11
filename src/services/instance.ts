@@ -229,7 +229,8 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     };
 
     public dispose() {
-        this.childContainer.clearInstances();
+        this.resolve<ExtensionService>('extension').disposeAll();
         this.resolve<MonacoService>('monaco').dispose();
+        this.childContainer.clearInstances();
     }
 }

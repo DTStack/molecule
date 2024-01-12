@@ -42,8 +42,6 @@ export const ExtendsEditor: IExtension = {
         });
 
         molecule.editor.onDrop((from, to) => {
-            console.log('drop');
-
             molecule.editor.moveTab(from, to);
             window.clearTimeout(settimeout);
         });

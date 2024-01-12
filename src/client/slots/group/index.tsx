@@ -1,12 +1,10 @@
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
 import Header from 'mo/client/components/header';
-import KeepAlive from 'mo/client/components/keepAlive';
 import MonacoEditor from 'mo/client/components/monaco';
 import Tab from 'mo/client/components/tab';
-import { Context } from 'mo/client/context';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type { ContextMenuHandler, GroupMenuHandler, IMenuItemProps, TabGroup, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
@@ -53,7 +51,6 @@ export default function Group({
     onDragOver,
     onDrop,
 }: IGroupProps) {
-    const context = useContext(Context);
     const viewState = useRef(new WeakMap());
     const tab = group.data.find(searchById(group.activeTab));
 
@@ -85,6 +82,8 @@ export default function Group({
             onModelMount?.(tab.id, group.id, model);
         }
     };
+
+    if (!tab) return null;
 
     return (
         <div className={variables.group}>
@@ -121,23 +120,22 @@ export default function Group({
             </Header>
             <Breadcrumb className={variables.breadcrumb} routes={tab?.breadcrumb || []} />
             <div className={variables.content}>
-                {tab?.render?.(tab)}
-                <KeepAlive active={!tab?.render}>
-                    {/* The KeepAlive component will block the context transfer between child components and the current component */}
-                    <Context.Provider value={context}>
-                        <MonacoEditor
-                            options={{
-                                ...options,
-                                automaticLayout: true,
-                            }}
-                            model={tab?.model}
-                            value={tab?.value}
-                            language={tab?.language}
-                            onMount={handleMount}
-                            onModelMount={handleModelMount}
-                        />
-                    </Context.Provider>
-                </KeepAlive>
+                {tab.render ? (
+                    tab.render?.(tab)
+                ) : (
+                    <MonacoEditor
+                        options={{
+                            ...options,
+                            automaticLayout: true,
+                        }}
+                        instance={group.editorInstance}
+                        model={tab?.model}
+                        value={tab?.value}
+                        language={tab?.language}
+                        onMount={handleMount}
+                        onModelMount={handleModelMount}
+                    />
+                )}
             </div>
         </div>
     );

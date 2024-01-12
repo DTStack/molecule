@@ -12,7 +12,6 @@ export { default as Flex, type IFlexProps } from './flex';
 export { default as Header, type IHeaderProps } from './header';
 export { default as Icon, type IIconProps } from './icon';
 export { default as Input, type IInputProps } from './input';
-export { default as KeepAlive } from './keepAlive';
 export { default as LineInfo, type ILineInfoProps } from './lineInfo';
 export { default as LocaleNotification } from './localeNotification';
 export { default as Menu, type IMenuProps } from './menu';

@@ -5,6 +5,7 @@ import { editor } from 'monaco-editor';
 export interface IEditorProps {
     className?: string;
     style?: CSSProperties;
+    instance?: editor.IStandaloneCodeEditor;
     /**
      * The option of monaco editor
      */
@@ -23,6 +24,7 @@ export interface IEditorProps {
 export default function MonacoEditor({
     className,
     style,
+    instance,
     options = {},
     model,
     language,
@@ -31,28 +33,39 @@ export default function MonacoEditor({
     onMount,
     onModelMount,
 }: IEditorProps) {
-    const dom = useRef<HTMLDivElement>(null);
-    const monacoInstance = useRef<editor.IStandaloneCodeEditor | undefined>(undefined);
-
+    const parent = useRef<HTMLDivElement>(null);
     const monaco = useMonaco();
 
+    function createDom() {
+        const dom = document.createElement('div');
+        dom.style.setProperty('position', 'relative');
+        dom.style.setProperty('width', '100%');
+        dom.style.setProperty('height', '100%');
+        return dom;
+    }
+
     useEffect(() => {
-        if (!monacoInstance.current) {
-            monacoInstance.current = monaco.create(
-                dom.current!,
-                { ...options, model: null, language, value },
-                override
-            );
-            onMount?.(monacoInstance.current);
+        if (!parent.current) return;
+        const container = instance?.getContainerDomNode();
+        if (container) {
+            // performance
+            if (parent.current.firstChild === container) return;
+            parent.current.innerHTML = '';
+            parent.current.appendChild(container);
+        } else {
+            const domElement = createDom();
+            const editorInstance = monaco.create(domElement, { ...options, model: null, language, value }, override);
+            onMount?.(editorInstance);
         }
-
-        return () => {
-            monacoInstance.current?.dispose();
-        };
-    }, []);
+    }, [instance]);
 
     useEffect(() => {
-        const instance = monacoInstance.current;
+        if (instance) {
+            instance.updateOptions(options);
+        }
+    }, [options]);
+
+    useEffect(() => {
         if (instance) {
             if (!model || model.isDisposed()) {
                 const model = editor.createModel(value || '', language);
@@ -64,24 +77,17 @@ export default function MonacoEditor({
                 instance.setModel(model);
             }
         }
-    }, [model]);
-
-    useEffect(() => {
-        if (monacoInstance.current) {
-            monacoInstance.current.updateOptions(options);
-        }
-    }, [options]);
+    }, [model, instance]);
 
     return (
         <div
+            ref={parent}
+            className={className}
             style={{
-                position: 'relative',
                 height: '100%',
                 width: '100%',
                 ...style,
             }}
-            className={className}
-            ref={dom}
         />
     );
 }

@@ -135,7 +135,14 @@ export const TestExtension: IExtension = {
         });
 
         molecule.folderTree.onSelect((treeNode) => {
-            if (treeNode.fileType === 'File') {
+            const group = molecule.editor.getGroups().find((group) => {
+                const tab = molecule.editor.getTab(treeNode.id, group.id);
+                return !!tab;
+            });
+            if (group) {
+                const tab = molecule.editor.getTab(treeNode.id, group.id)!;
+                molecule.editor.setCurrent(tab.id, group.id);
+            } else if (treeNode.fileType === 'File') {
                 openFile(treeNode);
             }
         });

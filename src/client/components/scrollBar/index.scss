@@ -1,8 +1,8 @@
 @import '../../classNames/style.scss';
 
 $scrollBar: prefix('scrollBar');
-$wrapper: BEMElement($scrollBar, 'wrapper');
 $container: BEMElement($scrollBar, 'container');
+$viewport: BEMElement($scrollBar, 'viewport');
 $shadow: BEMElement($scrollBar, 'shadow');
 $track: BEMElement($scrollBar, 'track');
 $thumb: BEMElement($scrollBar, 'thumb');
@@ -11,96 +11,80 @@ $horizontal: BEMModifier($container, 'horizontal');
 $vertical: BEMModifier($container, 'vertical');
 
 $trackHidden: BEMModifier($track, 'hidden');
-$trackVertical: BEMModifier($track, 'vertical');
-$trackHorizontal: BEMModifier($track, 'horizontal');
 
-$shadowHidden: BEMModifier($shadow, 'hidden');
-
-.#{$wrapper} {
+.#{$container} {
     height: 100%;
     overflow: hidden;
     position: relative;
     width: 100%;
+}
 
-    .#{$container} {
-        position: absolute;
+.#{$viewport} {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    scrollbar-width: none;
 
-        &.#{$horizontal} {
-            display: flex;
-            height: 100%;
-        }
-
-        &.#{$vertical} {
-            width: 100%;
-        }
-    }
-
-    .#{$track} {
-        background-color: transparent;
-        position: sticky;
-        transition: opacity 0.1s linear;
-        z-index: 99;
-
-        &.#{$trackHorizontal} {
-            height: 10px;
-            left: 0;
-            top: 100%;
-            width: 100%;
-        }
-
-        &.#{$trackVertical} {
-            height: 100%;
-            top: 0;
-            float: right;
-            width: 10px;
-        }
-
-        &.#{$trackHidden} {
-            opacity: 0;
-            transition-delay: 0.8s;
-            pointer-events: none;
-        }
-    }
-
-    .#{$thumb} {
-        background-color: var(--scrollbarSlider-background);
-        height: 100%;
-        position: absolute;
-        width: 100%;
-
-        &:hover {
-            background-color: var(--scrollbarSlider-hoverBackground);
-        }
-
-        &:active {
-            background-color: var(--scrollbarSlider-activeBackground);
-        }
-    }
-
-    .#{$shadow} {
-        box-shadow: var(--widget-shadow) 0 6px 6px -6px inset;
-        height: 3px;
-        position: sticky;
-        top: 0;
-        width: 100%;
-
-        &.#{$shadowHidden} {
-            display: none;
-        }
+    &::-webkit-scrollbar {
+        display: none;
     }
 }
 
+.#{$track} {
+    position: absolute;
+    background-color: transparent;
+    z-index: 99;
+    user-select: none;
+    opacity: 1;
+    transition: opacity 0.1s linear;
+
+    &.#{$vertical} {
+        width: 10px;
+        top: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    &.#{$horizontal} {
+        height: 10px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    &.#{$trackHidden} {
+        pointer-events: none;
+        opacity: 0;
+        transition-delay: 0.8s;
+    }
+}
+
+.#{$thumb} {
+    background-color: var(--scrollbarSlider-background);
+    height: var(--radix-thumb-vertical, 100%);
+    position: absolute;
+    width: var(--radix-thumb-horizontal, 100%);
+
+    &:hover {
+        background-color: var(--scrollbarSlider-hoverBackground);
+    }
+}
+
+.#{$shadow} {
+    box-shadow: var(--widget-shadow) 0 6px 6px -6px inset;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
 
 :export {
-    wrapper: $wrapper;
     container: $container;
+    viewport: $viewport;
     shadow: $shadow;
     track: $track;
     thumb: $thumb;
     horizontal: $horizontal;
     vertical: $vertical;
     trackHidden: $trackHidden;
-    trackVertical: $trackVertical;
-    trackHorizontal: $trackHorizontal;
-    shadowHidden: $shadowHidden;
 }

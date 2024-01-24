@@ -30,11 +30,15 @@ $treenode-height: 22px;
 
         &.#{$active} {
             background-color: var(--list-inactiveSelectionBackground);
+            outline: 1px dotted var(--contrastActiveBorder);
+            outline-offset: -1px;
         }
 
         &:focus {
             background-color: var(--list-activeSelectionBackground);
             color: #fff;
+            outline: 1px solid var(--focusBorder);
+            outline-offset: -1px;
         }
     }
 

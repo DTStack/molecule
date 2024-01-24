@@ -51,26 +51,26 @@ export default function ScrollBar({
     const [hovered, setHovered] = useState(false);
     const [slideRef, onSlide, onSlideStart] = useSlide();
 
-    // ======================== Get Basic Params ========================
-    const widthOrHeight = useMemo(() => (direction === 'vertical' ? 'height' : 'width'), [direction]);
-    const topOrLeft = useMemo(() => (direction === 'vertical' ? 'top' : 'left'), [direction]);
-    const xOrY = useMemo(() => (direction === 'vertical' ? 'y' : 'x'), [direction]);
-    const supportScroll =
-        viewport.current?.[`scroll${upperFirst(widthOrHeight) as 'Width' | 'Height'}`] !==
-        viewport.current?.[`client${upperFirst(widthOrHeight) as 'Width' | 'Height'}`];
-
     // ======================== Calculate ratio ========================
     const getRatio = () => {
         if (!viewport.current) return 0;
         const viewportSize = viewport.current.getBoundingClientRect()[widthOrHeight];
         const contentSize = viewport.current.firstElementChild?.getBoundingClientRect()[widthOrHeight] || 0;
-        return viewportSize / contentSize;
+        const ratio = viewportSize / contentSize;
+        return isNaN(ratio) ? 0 : ratio;
     };
+
+    // ======================== Get Basic Params ========================
+    const widthOrHeight = useMemo(() => (direction === 'vertical' ? 'height' : 'width'), [direction]);
+    const topOrLeft = useMemo(() => (direction === 'vertical' ? 'top' : 'left'), [direction]);
+    const xOrY = useMemo(() => (direction === 'vertical' ? 'y' : 'x'), [direction]);
+    const supportScroll = getRatio() !== 1;
 
     // ======================== Get basic size or offset ========================
     const getThumbSize = () => {
         return getRatio() * rect[widthOrHeight];
     };
+
     const getTranslate = () => {
         if (!viewport.current || !track.current) return '0px, 0px';
         const rect = track.current.getBoundingClientRect();

@@ -48,16 +48,12 @@ export class LocaleService extends BaseService<LocaleModel> {
 
     public setCurrent(id: UniqueId) {
         const prev = this.getCurrent();
-        this.dispatch(
-            (draft) => {
-                draft.current = id;
-            },
-            () => {
-                // ===================== effects =====================
-                this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
-                setValue(LocaleService.STORE_KEY, id.toString());
-            }
-        );
+        this.dispatch((draft) => {
+            draft.current = id;
+        });
+        // ===================== effects =====================
+        this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
+        setValue(LocaleService.STORE_KEY, id.toString());
     }
 
     public add(locale: Arraylize<ILocale>): void {

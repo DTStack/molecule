@@ -3,10 +3,7 @@ import { AsyncSeriesBailHook, type UnsetAdditionalOptions } from 'tapable';
 type IEventContext = [any];
 
 export default class EventEmitter {
-    private _events = new Map<
-        string,
-        AsyncSeriesBailHook<IEventContext, unknown, UnsetAdditionalOptions>
-    >();
+    private _events = new Map<string, AsyncSeriesBailHook<IEventContext, unknown, UnsetAdditionalOptions>>();
 
     private _eventHash = new WeakMap<Function, Function>();
 
@@ -29,6 +26,11 @@ export default class EventEmitter {
 
     public unsubscribe(name: string, listener?: Function) {
         this.dismissEvent(name, listener);
+    }
+
+    public reset() {
+        this._events.clear();
+        this._eventHash = new WeakMap<Function, Function>();
     }
 
     private dismissEvent(name: string, listener?: Function) {

@@ -37,4 +37,12 @@ export default abstract class GlobalEvent {
     public unsubscribe(name: string, listener?: Function) {
         EventBus.unsubscribe(name, listener);
     }
+
+    
+    /**
+     * Resets the event bus.
+     */
+    public reset() {
+        EventBus.reset();
+    }
 }

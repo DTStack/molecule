@@ -127,6 +127,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                         title: 'remove this panel',
                     },
                 ],
+                sortIndex: 10,
             },
         ];
         molecule.explorer.add(panels);

@@ -94,7 +94,7 @@ export default function Tabs({
             onDragEnter={(e) => e.currentTarget === e.target && onDragEnter?.(item, { tabId: data.id, groupId })}
             onDragLeave={(e) => e.currentTarget === e.target && onDragLeave?.(item, { tabId: data.id, groupId })}
         >
-            <Flex style={{ height: '100%' }}>
+            <Flex style={{ height: '100%', gap: 4 }}>
                 <Icon type={data.icon} />
                 <span className={variables.name}>{data.name}</span>
                 <section className={classNames(variables.extra, data.modified && variables.extraActive)}>

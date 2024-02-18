@@ -1,6 +1,7 @@
 @import '../../classNames/style.scss';
 
-$bell: prefix('bell');
+$notification: prefix('notification');
+$bell: BEMElement($notification, 'bell');
 
 .#{$bell} {
     height: 100%;

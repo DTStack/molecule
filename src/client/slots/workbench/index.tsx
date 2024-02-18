@@ -1,6 +1,7 @@
 import { Display, Split } from 'mo/client/components';
 import useDynamic from 'mo/client/hooks/useDynamic';
 import type { ILayoutController } from 'mo/controllers/layout';
+import { Toaster } from 'sonner';
 
 import useConnector from '../../hooks/useConnector';
 import 'normalize.css';
@@ -73,6 +74,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                 </Split>
             </section>
             <Display visible={!layout.statusBar.hidden}>{StatusBar}</Display>
+            <Toaster className={variables.toaster} expand hotkey={[]} />
         </main>
     );
 }

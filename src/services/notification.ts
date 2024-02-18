@@ -1,10 +1,5 @@
 import { BaseService } from 'mo/glue';
-import {
-    INotificationItem,
-    NotificationEvent,
-    NotificationModel,
-    NotificationStatus,
-} from 'mo/models/notification';
+import { INotificationItem, NotificationEvent, NotificationModel, NotificationStatus } from 'mo/models/notification';
 import type { Arraylize, IMenuItemProps, Predict, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
 
@@ -22,10 +17,7 @@ export class NotificationService extends BaseService<NotificationModel> {
 
     public update(id: UniqueId, predict: Predict<INotificationItem>): void;
     public update(data: RequiredId<INotificationItem>): void;
-    public update(
-        item: UniqueId | RequiredId<INotificationItem>,
-        predict?: Predict<INotificationItem>
-    ) {
+    public update(item: UniqueId | RequiredId<INotificationItem>, predict?: Predict<INotificationItem>) {
         this.dispatch((draft) => {
             const target = draft.data.find(searchById(typeof item === 'object' ? item.id : item));
             if (!target) return;
@@ -38,6 +30,28 @@ export class NotificationService extends BaseService<NotificationModel> {
             const idx = draft.data.findIndex(searchById(id));
             if (idx === -1) return;
             draft.data.splice(idx, 1);
+        });
+        this.close(id);
+    }
+
+    public open(items: INotificationItem) {
+        this.add(items);
+        this.dispatch((draft) => {
+            draft.toasts.push(items.id);
+        });
+    }
+
+    public close(id: UniqueId) {
+        this.dispatch((draft) => {
+            const idx = draft.toasts.indexOf(id);
+            if (idx === -1) return;
+            draft.toasts.splice(idx, 1);
+        });
+    }
+
+    public closeAll() {
+        this.dispatch((draft) => {
+            draft.toasts.length = 0;
         });
     }
 
@@ -68,17 +82,20 @@ export class NotificationService extends BaseService<NotificationModel> {
     }
 
     // ===================== Subscriptions =====================
-
     public onCloseNotification(callback: (item: INotificationItem) => void) {
         this.subscribe(NotificationEvent.onCloseNotification, callback);
     }
 
-    public toggleNotifications(callback: () => void) {
-        this.subscribe(NotificationEvent.toggleNotifications, callback);
-    }
-
     public onClick = (callback: () => void) => {
         this.subscribe(NotificationEvent.onClick, callback);
+    };
+
+    public onClickItem = (callback: (item: INotificationItem) => void) => {
+        this.subscribe(NotificationEvent.onClickItem, callback);
+    };
+
+    public onKeyPress = (callback: (e: KeyboardEvent) => void) => {
+        this.subscribe(NotificationEvent.onKeyPress, callback);
     };
 
     public onActionBarClick = (callback: (item: INotificationItem) => void) => {

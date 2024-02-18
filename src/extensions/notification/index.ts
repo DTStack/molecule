@@ -5,15 +5,29 @@ export const ExtendsNotification: IExtension = {
     name: 'Extend The Default Notification',
     activate: function (molecule): void {
         molecule.notification.onClick(() => {
+            molecule.notification.closeAll();
             molecule.layout.setNotification((visible) => !visible);
+        });
+
+        molecule.notification.onClickItem(() => {
+            molecule.notification.closeAll();
+            molecule.layout.setNotification(true);
+        });
+
+        molecule.notification.onKeyPress((e) => {
+            if (e.key === 'Escape') {
+                if (molecule.notification.getState().toasts.length) {
+                    molecule.notification.closeAll();
+                }
+
+                if (!molecule.layout.getState().notification.hidden) {
+                    molecule.layout.setNotification((visible) => !visible);
+                }
+            }
         });
 
         molecule.notification.onCloseNotification((item) => {
             molecule.notification.remove(item.id);
-        });
-
-        molecule.notification.toggleNotifications(() => {
-            molecule.layout.setNotification((visible) => !visible);
         });
 
         molecule.notification.onActionBarClick((item) => {

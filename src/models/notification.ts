@@ -5,9 +5,10 @@ import type { IMenuItemProps, Render, UniqueId } from 'mo/types';
  */
 export enum NotificationEvent {
     onClick = 'notification.onClick',
+    onClickItem = 'notification.onClickItem',
+    onKeyPress = 'notification.onKeyPress',
     onActionBarClick = 'notification.onContextMenu',
     onCloseNotification = 'notification.onCloseNotification',
-    toggleNotifications = 'notification.toggleNotifications',
 }
 
 export enum NotificationStatus {
@@ -24,6 +25,7 @@ export interface INotificationItem<T = any> extends Render<INotificationItem> {
 export class NotificationModel {
     constructor(
         public data: INotificationItem<any>[] = [],
-        public toolbar: IMenuItemProps[] = []
+        public toolbar: IMenuItemProps[] = [],
+        public toasts: UniqueId[] = []
     ) {}
 }

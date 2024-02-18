@@ -2,6 +2,7 @@
 
 $container: $prefix;
 $main: prefix('mainBench');
+$toaster: prefix('toaster');
 
 .#{$prefix} {
     background-color: var(--workbenchBackground);
@@ -46,7 +47,32 @@ $main: prefix('mainBench');
     }
 }
 
+.#{$toaster}[data-sonner-toaster] {
+    width: 450px;
+    cursor: pointer;
+    box-shadow: var(--widget-shadow) 0px 0px 8px 2px;
+    color: var(--notifications-foreground);
+
+    [data-sonner-toast] {
+        border: 1px solid var(--widget-border);
+        border-radius: 5px;
+    }
+
+    &[data-x-position='right'] {
+        right: 16px;
+    }
+
+    &[data-y-position='bottom'] {
+        bottom: 40px;
+    }
+
+    [tabindex='0']:focus {
+        outline: none;
+    }
+}
+
 :export {
     container: $container;
     main: $main;
+    toaster: $toaster;
 }

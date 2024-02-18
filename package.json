@@ -72,6 +72,7 @@
         "react-dnd-html5-backend": "^16.0.1",
         "react-use": "^17.4.2",
         "reflect-metadata": "^0.1.13",
+        "sonner": "^1.4.0",
         "tapable": "^2.2.1",
         "tsyringe": "^4.8.0",
         "use-sync-external-store": "^1.2.0"

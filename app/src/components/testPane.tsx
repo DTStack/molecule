@@ -315,24 +315,18 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
     };
 
     const addNotification = function () {
-        molecule.layout.setNotification(true);
-        molecule.notification.add([
-            {
-                id: randomId(),
-                value: 'Test Notification!',
-            },
-        ]);
+        molecule.notification.open({
+            id: randomId(),
+            value: 'Test Notification!',
+        });
     };
 
     const addLocaleNotification = function () {
-        molecule.notification.add([
-            {
-                id: 'locale',
-                value: 'test',
-                render: () => <components.LocaleNotification />,
-            },
-        ]);
-        molecule.layout.setNotification(true);
+        molecule.notification.open({
+            id: 'locale',
+            value: 'test',
+            render: () => <components.LocaleNotification />,
+        });
     };
 
     const removeNotification = function () {

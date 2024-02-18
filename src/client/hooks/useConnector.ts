@@ -7,7 +7,7 @@ import { Context } from '../context';
 type Selector = keyof IMoleculeContext;
 type StateType<T extends keyof IMoleculeContext> = ReturnType<IMoleculeContext[T]['getState']>;
 
-export default function useConnector<T extends Selector>(selector: T) {
+export default function useConnector<T extends Selector>(selector: T): StateType<T> {
     const { molecule } = useContext(Context);
     const target = useMemo(() => molecule[selector], [molecule]);
     const subscribe = useMemo(() => {

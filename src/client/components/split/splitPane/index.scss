@@ -1,27 +1,14 @@
-@use '../index.scss' as variables;
 @import '../../../classNames/style.scss';
 
-$dragging: BEMModifier(variables.$split, 'dragging');
-$vertical: BEMModifier(variables.$split, 'vertical');
-$horizontal: BEMModifier(variables.$split, 'horizontal');
+$split: prefix('split');
 
-.#{variables.$split} {
+.#{$split} {
     height: 100%;
     position: relative;
     width: 100%;
     overflow: hidden;
-
-    .#{$dragging} {
-        .#{variables.$pane} {
-            user-select: none;
-            pointer-events: none;
-        }
-    }
 }
 
 :export {
-    container: variables.$split;
-    dragging: $dragging;
-    vertical: $vertical;
-    horizontal: $horizontal;
+    container: $split;
 }

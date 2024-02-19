@@ -157,12 +157,7 @@ export const SplitPane = forwardRef<HTMLDivElement, ISplitProps>(function (
     });
 
     return (
-        <div
-            className={classNames(variables.container, resizing() && variables.dragging, variables[split], className)}
-            ref={forwarded}
-            title={title}
-            style={style}
-        >
+        <div className={classNames(variables.container, className)} ref={forwarded} title={title} style={style}>
             {Boolean(sizes.length) &&
                 children.map((childNode, idx) => {
                     const sPosValue = sashPosSizes[idx] ?? 0;

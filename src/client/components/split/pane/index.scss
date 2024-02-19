@@ -1,6 +1,5 @@
-@use '../index.scss' as variables;
-
-$container: variables.$pane;
+@import '../../../classNames/style.scss';
+$container: prefix('pane');
 
 .#{$container} {
     height: 100%;

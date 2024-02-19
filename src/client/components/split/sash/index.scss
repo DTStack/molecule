@@ -1,7 +1,7 @@
-@use '../index.scss' as split;
 @import '../../../classNames/style.scss';
 
-$container: split.$sash;
+$container: prefix('sash');
+
 $hover: BEMModifier($container, 'hover');
 $disabled: BEMModifier($container, 'disabled');
 $vertical: BEMModifier($container, 'vertical');

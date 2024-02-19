@@ -1,5 +1,5 @@
 import { ActivityBarItem, Prevent, ScrollBar } from 'mo/client/components';
-import useConnector from 'mo/client/hooks/useConnector';
+import { useConnector } from 'mo/client/hooks';
 import type { IActivityBarController } from 'mo/controllers/activityBar';
 import { Alignment } from 'mo/types';
 import { classify, sortByIndex } from 'mo/utils';

@@ -1,5 +1,4 @@
-import useConnector from '../../hooks/useConnector';
-import useLocale from '../../hooks/useLocale';
+import { useConnector, useLocale } from 'mo/client/hooks';
 
 export interface ILineInfoProps {
     data: {

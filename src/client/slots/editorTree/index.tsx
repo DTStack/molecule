@@ -2,8 +2,7 @@ import { Fragment } from 'react';
 import useMeasure from 'react-use/esm/useMeasure';
 import { classNames } from 'mo/client/classNames';
 import { ActionBar, Close, Flex, Icon, Prevent, ScrollBar } from 'mo/client/components';
-import useConnector from 'mo/client/hooks/useConnector';
-import useLocale from 'mo/client/hooks/useLocale';
+import { useConnector, useLocale } from 'mo/client/hooks';
 import type { IEditorTreeController } from 'mo/controllers/editorTree';
 import { searchById } from 'mo/utils';
 

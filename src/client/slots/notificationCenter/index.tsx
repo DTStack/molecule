@@ -1,11 +1,8 @@
-import ActionBar from 'mo/client/components/actionBar';
-import Flex from 'mo/client/components/flex';
-import NotificationItem from 'mo/client/components/notificationItem';
-import useConnector from 'mo/client/hooks/useConnector';
+import { ActionBar, Flex, NotificationItem } from 'mo/client/components';
+import { useConnector, useLocale } from 'mo/client/hooks';
 import type { INotificationController } from 'mo/controllers/notification';
 import type { NotificationModel } from 'mo/models/notification';
 
-import useLocale from '../../hooks/useLocale';
 import variables from './index.scss';
 
 export type INotificationCenterProps = Pick<NotificationModel, 'data' | 'toolbar'> &

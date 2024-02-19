@@ -1,6 +1,6 @@
 import { classNames } from 'mo/client/classNames';
 import Icon from 'mo/client/components/icon';
-import useConnector from 'mo/client/hooks/useConnector';
+import { useConnector } from 'mo/client/hooks';
 import type { IAuxiliaryController } from 'mo/controllers/auxiliaryBar';
 import { searchById, sortByIndex } from 'mo/utils';
 

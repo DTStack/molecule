@@ -1,11 +1,8 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { classNames } from 'mo/client/classNames';
-import Display from 'mo/client/components/display';
-import Icon from 'mo/client/components/icon';
-import NotificationItem from 'mo/client/components/notificationItem';
-import useConnector from 'mo/client/hooks/useConnector';
-import useListener from 'mo/client/hooks/useListener';
+import { Display, Icon, NotificationItem } from 'mo/client/components';
+import { useConnector, useListener } from 'mo/client/hooks';
 import type { INotificationController } from 'mo/controllers/notification';
 import { searchById } from 'mo/utils';
 import { toast } from 'sonner';

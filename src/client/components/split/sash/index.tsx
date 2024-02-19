@@ -1,6 +1,6 @@
 import { type CSSProperties, forwardRef } from 'react';
 import { classNames } from 'mo/client/classNames';
-import useHover from 'mo/client/hooks/useHover';
+import { useHover } from 'mo/client/hooks';
 
 import Prevent from '../../prevent';
 import variables from './index.scss';

@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import Dropdown from 'mo/client/components/dropdown';
-import Icon from 'mo/client/components/icon';
-import useConnector from 'mo/client/hooks/useConnector';
+import { Dropdown, Icon } from 'mo/client/components';
+import { useConnector } from 'mo/client/hooks';
 import type { IMenuBarController } from 'mo/controllers/menuBar';
 import type { UniqueId } from 'mo/types';
 

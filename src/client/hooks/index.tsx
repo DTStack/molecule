@@ -1,6 +1,14 @@
+export { default as useAutoPos } from './useAutoPos';
+export { default as useBatchRef } from './useBatchRef';
 export { default as useConnector } from './useConnector';
+export { default as useDeepState } from './useDeepState';
 export { default as useDynamic } from './useDynamic';
+export { default as useEditorPos } from './useEditorPos';
+export { default as useHover } from './useHover';
+export { default as useListener } from './useListener';
 export { default as useLocale } from './useLocale';
 export { default as useMonaco } from './useMonaco';
 export { default as useOverlay } from './useOverlay';
+export { default as useResize } from './useResize';
 export { default as useSettings } from './useSettings';
+export { default as useSlide } from './useSlide';

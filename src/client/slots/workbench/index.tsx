@@ -1,10 +1,8 @@
 import { Display, Split } from 'mo/client/components';
-import useAutoPos from 'mo/client/hooks/useAutoPos';
-import useDynamic from 'mo/client/hooks/useDynamic';
+import { useAutoPos, useConnector, useDynamic } from 'mo/client/hooks';
 import type { ILayoutController } from 'mo/controllers/layout';
 import { Toaster } from 'sonner';
 
-import useConnector from '../../hooks/useConnector';
 import 'normalize.css';
 import '../../classNames/common.css';
 import variables from './index.scss';

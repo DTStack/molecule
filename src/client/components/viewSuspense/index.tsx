@@ -1,4 +1,4 @@
-import useDynamic from 'mo/client/hooks/useDynamic';
+import { useDynamic } from 'mo/client/hooks';
 
 export interface IViewSuspenseProps {
     token: string;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { classNames } from 'mo/client/classNames';
-import useConnector from 'mo/client/hooks/useConnector';
-import useLocale from 'mo/client/hooks/useLocale';
+import { useConnector, useLocale } from 'mo/client/hooks';
 import type { HTMLElementProps, IMenuItemProps } from 'mo/types';
 import { classify, sortByIndex } from 'mo/utils';
 

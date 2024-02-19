@@ -3,7 +3,7 @@ import useMeasure from 'react-use/esm/useMeasure';
 import useScroll from 'react-use/esm/useScroll';
 import { upperFirst } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
-import useSlide from 'mo/client/hooks/useSlide';
+import { useSlide } from 'mo/client/hooks';
 import type { DirectionLiteral } from 'mo/types';
 import { isElementInParentView } from 'mo/utils';
 

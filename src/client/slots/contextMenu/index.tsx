@@ -1,10 +1,9 @@
 import { createPortal } from 'react-dom';
 import useKeyPress from 'react-use/lib/useKeyPress';
 import { Menu, Prevent } from 'mo/client/components';
-import useOverlay from 'mo/client/hooks/useOverlay';
+import { useConnector, useOverlay } from 'mo/client/hooks';
 import type { IContextMenuController } from 'mo/controllers/contextMenu';
 
-import useConnector from '../../hooks/useConnector';
 import variables from './index.scss';
 
 export type IContextMenuProps = IContextMenuController;

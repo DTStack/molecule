@@ -1,5 +1,5 @@
 import { Collapse } from 'mo/client/components';
-import useConnector from 'mo/client/hooks/useConnector';
+import { useConnector } from 'mo/client/hooks';
 import type { IExplorerController } from 'mo/controllers/explorer';
 import { sortByIndex } from 'mo/utils';
 

@@ -1,9 +1,6 @@
 import { classNames } from 'mo/client/classNames';
-import ActionBar from 'mo/client/components/actionBar';
-import Header from 'mo/client/components/header';
-import PanelItem from 'mo/client/components/panelItem';
-import Prevent from 'mo/client/components/prevent';
-import useConnector from 'mo/client/hooks/useConnector';
+import { ActionBar, Header, PanelItem, Prevent } from 'mo/client/components';
+import { useConnector } from 'mo/client/hooks';
 import type { IPanelController } from 'mo/controllers/panel';
 import { searchById, sortByIndex } from 'mo/utils';
 

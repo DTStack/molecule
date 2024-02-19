@@ -2,9 +2,7 @@ import { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Progress, Split, Welcome } from 'mo/client/components';
-import useConnector from 'mo/client/hooks/useConnector';
-import useEditorPos from 'mo/client/hooks/useEditorPos';
-import useSettings from 'mo/client/hooks/useSettings';
+import { useConnector, useEditorPos, useSettings } from 'mo/client/hooks';
 import type { IEditorController } from 'mo/controllers/editor';
 
 import Group from '../group';

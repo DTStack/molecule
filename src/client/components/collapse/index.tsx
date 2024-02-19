@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import useLatest from 'react-use/esm/useLatest';
 import useMeasure from 'react-use/esm/useMeasure';
 import { classNames } from 'mo/client/classNames';
-import useBatchRef from 'mo/client/hooks/useBatchRef';
+import { useBatchRef } from 'mo/client/hooks';
 import type { ContextMenuHandler, HTMLElementProps, IMenuItemProps, IterableItem, Render, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 

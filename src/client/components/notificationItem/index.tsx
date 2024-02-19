@@ -5,7 +5,7 @@ import Action from '../action';
 import Flex from '../flex';
 import variables from './index.scss';
 
-interface INotificationItemProps {
+export interface INotificationItemProps {
     data: INotificationItem;
     onClose: (data: INotificationItem) => void;
     onClick?: (data: INotificationItem) => void;

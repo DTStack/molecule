@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
-import Button from 'mo/client/components/button';
-import useConnector from 'mo/client/hooks/useConnector';
+import { useConnector, useLocale } from 'mo/client/hooks';
 
-import useLocale from '../../hooks/useLocale';
+import Button from '../button';
 import Flex from '../flex';
 import variables from './index.scss';
 

@@ -1,7 +1,6 @@
 import React, { type CSSProperties, forwardRef, type ReactNode, useEffect, useMemo, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
-import useDeepState from 'mo/client/hooks/useDeepState';
-import useResize from 'mo/client/hooks/useResize';
+import { useDeepState, useResize } from 'mo/client/hooks';
 import { cloneReactChildren } from 'mo/utils';
 
 import { type IPaneConfigs, Pane } from '../pane';

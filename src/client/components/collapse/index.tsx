@@ -1,19 +1,17 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import useLatest from 'react-use/esm/useLatest';
+import useMeasure from 'react-use/esm/useMeasure';
 import { classNames } from 'mo/client/classNames';
-import type {
-    ContextMenuHandler,
-    HTMLElementProps,
-    IMenuItemProps,
-    IterableItem,
-    Render,
-    RenderFunction,
-    UniqueId,
-} from 'mo/types';
+import useBatchRef from 'mo/client/hooks/useBatchRef';
+import type { ContextMenuHandler, HTMLElementProps, IMenuItemProps, IterableItem, Render, UniqueId } from 'mo/types';
+import { searchById } from 'mo/utils';
 
 import ActionBar from '../actionBar';
+import Display from '../display';
 import Flex from '../flex';
 import Icon from '../icon';
 import Prevent from '../prevent';
+import Progress from '../progress';
 import Split from '../split';
 import variables from './index.scss';
 
@@ -34,81 +32,111 @@ export interface ICollapseItem
 
 export interface ICollapseProps extends HTMLElementProps {
     activePanelKeys?: UniqueId[];
-    /**
-     * Should Observer the childList of the content
-     */
-    observer?: boolean;
     data?: ICollapseItem[];
     onCollapseChange?: (keys: UniqueId[]) => void;
-    onResize?: (resizes: number[]) => void;
     onToolbarClick?: (item: IMenuItemProps, panelId: UniqueId) => void;
     onContextMenu?: ContextMenuHandler<[panel: ICollapseItem]>;
 }
 
-/**
- * It's the max height for the item which set the grow to 0
- */
-export const MAX_GROW_HEIGHT = 220;
 // default collapse height, only contains header
-export const HEADER_HEIGHT = 26;
+export const HEADER_HEIGHT = parseInt(variables.headerSize, 10);
 
 export default function Collapse({
     data = [],
-    activePanelKeys: controlActivePanelKeys,
+    activePanelKeys = [],
     className,
     title,
     style,
     role,
-    observer,
     onCollapseChange,
     onToolbarClick,
-    onResize,
     onContextMenu,
 }: ICollapseProps) {
-    const [activePanelKeys, setActivePanelKeys] = useState<UniqueId[]>(() =>
-        Array.isArray(controlActivePanelKeys) ? controlActivePanelKeys : new Array(data.length)
-    );
-    const [collapsing, setCollapsing] = useState(false);
-    const wrapper = useRef<HTMLDivElement>(null);
-    const [sizes, setSizes] = useState<number[]>(data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGHT)));
-    // cache the adjusted size for restoring the adjusted size in next uncollapsing
-    const adjustedSize = useRef<number[]>([]);
-    const first = useRef(true);
+    const contentRefs = useBatchRef<HTMLDivElement>();
+    const [ref, rect] = useMeasure<HTMLDivElement>();
+    const [sizes, setSizes] = useState<number[]>(new Array(data.length).fill(HEADER_HEIGHT));
+    const timeout = useRef(0);
+    const activeKeysRef = useLatest(activePanelKeys);
 
-    const isUndefined = (key: UniqueId): boolean => {
-        return key === undefined;
-    };
+    const mutationObserver = useRef<MutationObserver | undefined>();
+    useEffect(() => {
+        mutationObserver.current = new MutationObserver((mutationList) => {
+            mutationList.forEach((mutation) => {
+                setHeightWithEle(mutation.target as HTMLDivElement);
+            });
+        });
 
-    // compare two sizes to find the change one
-    const compareTheSizes = (sizes: number[], otherSizes: number[]) => {
-        for (let index = 0; index < sizes.length; index++) {
-            if (sizes[index] !== otherSizes[index]) {
-                return index + 1;
+        return () => {
+            mutationObserver.current?.disconnect();
+            window.clearTimeout(timeout.current);
+        };
+    }, []);
+
+    const watchEle = (id: UniqueId) => {
+        timeout.current = window.setTimeout(() => {
+            // To keep height same as the pane which grow is 0
+            const ele = contentRefs.current[id]?.firstElementChild as HTMLElement;
+            if (ele) {
+                mutationObserver.current?.observe(ele, {
+                    childList: false,
+                    attributes: true,
+                    subtree: false,
+                    attributeFilter: ['style'],
+                });
+                setHeightWithEle(ele);
             }
-        }
-        return -1;
+        }, 0);
     };
 
-    const handleSplitChange = (nextSizes: number[]) => {
-        const index = compareTheSizes(sizes, nextSizes);
-        if (index === -1) {
-            return;
-        }
-        adjustedSize.current[index] = nextSizes[index];
-        onResize?.(nextSizes);
-        setSizes(nextSizes);
+    const performSizes = () => {
+        const next = new Array(data.length).fill(HEADER_HEIGHT);
+        const unExpanded = data.filter((item) => !activePanelKeys.includes(item.id));
+        let total = rect.height - unExpanded.length * HEADER_HEIGHT;
+        let pieces = 0;
+        const tmpGrow: number[] = [];
+        activePanelKeys.forEach((key) => {
+            const idx = data.findIndex(searchById(key));
+            const item = data[idx];
+            const grow = item.config?.grow;
+            if (grow === 0) {
+                const ele = contentRefs.current[item.id]?.firstElementChild as HTMLElement;
+                const height = (ele?.getBoundingClientRect().height ?? 0) + HEADER_HEIGHT;
+                next[idx] = height;
+                total -= height;
+                watchEle(item.id);
+            } else {
+                pieces += grow ?? 1;
+                tmpGrow.push(idx);
+            }
+        });
+        const per = total / pieces;
+        tmpGrow.forEach((idx) => {
+            const item = data[idx];
+            const grow = item.config?.grow ?? 1;
+            next[idx] = per * grow;
+        });
+        setSizes(next);
     };
 
-    const handleToolbarClick = (item: IMenuItemProps, panel: ICollapseItem) => {
-        onToolbarClick?.(item, panel.id);
-    };
+    useEffect(() => {
+        performSizes();
+    }, [activePanelKeys, rect.height]);
 
-    const renderPanels = (data: ICollapseItem, render?: RenderFunction<ICollapseItem>) => {
-        if (render) {
-            return render(data);
+    function setHeightWithEle(ele: HTMLElement) {
+        if (ele) {
+            const parent = ele.parentElement as HTMLDivElement;
+            const idx = data.findIndex((i) => i.id === parent.dataset.contentKey);
+            const height = ele.getBoundingClientRect().height;
+            setSizes((prev) => {
+                const diff = height + HEADER_HEIGHT - prev[idx];
+                prev[idx] = height + HEADER_HEIGHT;
+                const nextExpand = data.findIndex((i, index) => activeKeysRef.current.includes(i.id) && index > idx);
+                if (nextExpand === -1) return [...prev];
+                prev[nextExpand] -= diff;
+                return [...prev];
+            });
         }
-        return null;
-    };
+    }
 
     const handleChangeCallback = (key: UniqueId) => {
         const currentKeys = [...activePanelKeys];
@@ -119,177 +147,28 @@ export default function Collapse({
             currentKeys.push(key);
         }
         onCollapseChange?.(currentKeys);
-        setActivePanelKeys(currentKeys.concat());
     };
 
-    // perform smoothly the task to recalculate sizes
-    const performSmoothSizes = (smooth: boolean) => {
-        if (smooth) {
-            setCollapsing(true);
-        }
-        performSizes();
-        if (smooth) {
-            setTimeout(() => {
-                setCollapsing(false);
-            }, 300);
-        }
-    };
-
-    // perform the tasks to recalculate sizes
-    const performSizes = () => {
-        const activeLength = activePanelKeys.filter((v) => !isUndefined(v)).length;
-        if (activeLength) {
-            const { height } = wrapper.current!.getBoundingClientRect();
-            let restHeight = height;
-            let count = 0;
-            // don't care of what the previous sizes are, the next sizes only contains:
-            // 1. directly assignment for the next size is collapsing
-            // 2. recalculate for the next size is uncollapsing
-            const wipSizes = data.map((pane, index) => {
-                const isHidden = pane.hidden;
-                if (isHidden) {
-                    return 0;
-                }
-                const willCollapsing = activePanelKeys.includes(pane.id);
-                if (!willCollapsing) {
-                    restHeight = restHeight - HEADER_HEIGHT;
-                    return HEADER_HEIGHT;
-                }
-
-                // to get the height of content while grow is 0
-                if (pane.config?.grow === 0) {
-                    const correspondDOM = wrapper.current
-                        ?.querySelector(`.${variables.content}[data-collapse-index='${index}']`)
-                        ?.querySelector(`[data-content='${pane.id}']`);
-                    if (!correspondDOM) {
-                        restHeight = restHeight - HEADER_HEIGHT;
-                        return HEADER_HEIGHT;
-                    }
-                    const { height: contentHeight } = correspondDOM.getBoundingClientRect();
-                    // for preventing the loss of DOM height, don't set the display to be none for DOM
-                    const height = contentHeight + HEADER_HEIGHT;
-
-                    if (height > MAX_GROW_HEIGHT) {
-                        restHeight = restHeight - MAX_GROW_HEIGHT;
-                        return MAX_GROW_HEIGHT;
-                    }
-                    restHeight = restHeight - height;
-                    return height;
-                }
-
-                // there is a cached size
-                if (typeof adjustedSize.current[index] !== 'undefined') {
-                    restHeight = restHeight - adjustedSize.current[index];
-                    return adjustedSize.current[index];
-                }
-
-                // count the sum of grow that isn't 0, for how many parts the remaing part should be divided into
-                count = count + (pane.config?.grow || 1);
-                // auto is a placeholder for calculation in next process
-                return 'auto';
-            });
-
-            // count the average size for each auto
-            const averageHeight = restHeight / count;
-            const nextSizes = wipSizes.map((size, index) =>
-                size === 'auto' ? averageHeight * (data[index].config?.grow || 1) : size
-            );
-
-            onResize?.(nextSizes);
-            setSizes(nextSizes);
-        } else {
-            const nextSizes = data.map((pane) => (pane.hidden ? 0 : HEADER_HEIGHT));
-            onResize?.(nextSizes);
-            setSizes(nextSizes);
-        }
-    };
-
-    const { nextSashes, allowResize } = useMemo(
-        function () {
-            const nextSashes: boolean[] = [];
-            for (let i = 1; i < activePanelKeys.length; i++) {
-                const prevPaneActive = !isUndefined(activePanelKeys[i - 1]);
-                const prePaneAutoHeight: boolean = data[i - 1]?.config?.grow !== 0;
-                const curPaneActive = !isUndefined(activePanelKeys[i]);
-                const showSash = prevPaneActive && prePaneAutoHeight && curPaneActive;
-
-                nextSashes.push(showSash);
-            }
-            return {
-                nextSashes,
-                allowResize: data.map((pane, index) => {
-                    if (pane?.config?.grow === 0) {
-                        return false;
-                    }
-                    return !isUndefined(activePanelKeys[index]);
-                }),
-            };
-        },
-        [activePanelKeys, data]
-    );
-
-    useLayoutEffect(() => {
-        performSmoothSizes(!first.current);
-
-        first.current = false;
-    }, [activePanelKeys, data]);
-
-    useLayoutEffect(() => {
-        Array.isArray(controlActivePanelKeys) && setActivePanelKeys(controlActivePanelKeys);
-    }, [controlActivePanelKeys]);
-
-    useEffect(() => {
-        if (observer) {
-            const mutationObserver = new MutationObserver((mutationList) => {
-                mutationList.forEach((mutation) => {
-                    switch (mutation.type) {
-                        case 'childList': {
-                            // for triggering the re-render
-                            setActivePanelKeys((prev) => [...prev]);
-                            break;
-                        }
-                        default:
-                            break;
-                    }
-                });
-            });
-            const children = document.querySelectorAll(`div[data-collapse-index]`);
-            children.forEach((child) => {
-                mutationObserver.observe(child, {
-                    childList: true,
-                    attributes: false,
-                    subtree: true,
-                });
-            });
-
-            return () => mutationObserver.disconnect();
-        }
-    }, []);
+    const loading = rect.height === 0 || sizes.every((size) => size === 0);
 
     return (
-        <div
-            ref={wrapper}
-            className={classNames(variables.collapse, className)}
-            title={title}
-            style={style}
-            role={role}
-        >
-            <Split
-                sizes={sizes}
-                onChange={handleSplitChange}
-                split="horizontal"
-                allowResize={allowResize}
-                showSashes={nextSashes}
-                paneClassName={classNames(variables.pane, collapsing && variables.collapsing)}
-            >
+        <div ref={ref} className={classNames(variables.collapse, className)} title={title} style={style} role={role}>
+            <Progress active={loading} />
+            <Split sizes={sizes} split="horizontal" paneClassName={classNames(variables.pane)} onChange={setSizes}>
                 {data.map((panel, index) => {
                     const isActive = activePanelKeys.includes(panel.id);
+                    const prevExpand = activePanelKeys.includes(data[index - 1]?.id);
+                    const bothExpand = isActive && prevExpand;
+                    const noneGrow = panel.config?.grow !== 0 && data[index - 1]?.config?.grow !== 0;
                     return (
-                        <Split.Pane key={panel.id} minSize={HEADER_HEIGHT}>
-                            <div
-                                className={classNames(variables.item, panel.className, isActive && variables.active)}
-                                data-collapse-id={panel.id}
-                            >
+                        <Split.Pane
+                            key={panel.id}
+                            minSize={HEADER_HEIGHT}
+                            maxSize={isActive ? Infinity : HEADER_HEIGHT}
+                            resizable={bothExpand && noneGrow}
+                            hidden={panel.hidden}
+                        >
+                            <div className={classNames(variables.item, panel.className, isActive && variables.active)}>
                                 <Prevent onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, panel)}>
                                     <Flex
                                         className={variables.header}
@@ -303,16 +182,24 @@ export default function Collapse({
                                         </Flex>
                                         {isActive && (
                                             <ActionBar
+                                                className={variables.extra}
                                                 key={panel.id}
                                                 data={panel.toolbar || []}
-                                                onClick={(item) => handleToolbarClick(item, panel)}
+                                                onClick={(item) => onToolbarClick?.(item, panel.id)}
                                             />
                                         )}
                                     </Flex>
                                 </Prevent>
-                                <div className={variables.content} tabIndex={0} data-collapse-index={index}>
-                                    {renderPanels(panel, panel.render)}
-                                </div>
+                                <Display visible={isActive} delay={Number(variables.transitionDelay)}>
+                                    <div
+                                        className={variables.content}
+                                        tabIndex={0}
+                                        ref={contentRefs(panel.id)}
+                                        data-content-key={panel.id}
+                                    >
+                                        {panel.render?.(panel)}
+                                    </div>
+                                </Display>
                             </div>
                         </Split.Pane>
                     );

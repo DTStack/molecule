@@ -26,6 +26,12 @@ import type { StatusBarService } from './services/statusBar';
 import type { TreeNodeModel } from './utils/tree';
 
 /**
+ * Represents the type of a position.
+ * It can be either 'auto' or a number.
+ */
+export type PosType = 'auto' | number;
+
+/**
  * Represents a functional type that takes a value of type T and returns a value of type T.
  * @template T The type of the value.
  */

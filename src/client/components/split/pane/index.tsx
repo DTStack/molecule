@@ -7,24 +7,15 @@ import variables from './index.scss';
 interface IPaneProps extends HTMLElementProps {}
 
 export interface IPaneConfigs {
-    maxSize?: number | string;
-    minSize?: number | string;
+    maxSize?: number;
+    minSize?: number;
+    resizable?: boolean;
+    hidden?: boolean;
 }
 
-export function Pane({
-    children,
-    style,
-    className,
-    role,
-    title,
-}: PropsWithChildren<IPaneProps & IPaneConfigs>) {
+export function Pane({ children, style, className, role, title }: PropsWithChildren<IPaneProps & IPaneConfigs>) {
     return (
-        <div
-            role={role}
-            title={title}
-            className={classNames(variables.pane, className)}
-            style={style}
-        >
+        <div role={role} title={title} className={classNames(variables.pane, className)} style={style}>
             {children}
         </div>
     );

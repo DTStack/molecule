@@ -1,16 +1,14 @@
-import { Direction, DirectionLiteral, type WithHidden } from 'mo/types';
+import { Direction, DirectionLiteral, type PosType, type WithHidden } from 'mo/types';
 
 export enum LayoutEvents {
     OnWorkbenchDidMount = 'workbench.didMount',
 }
 
-type PosType = string | number;
-
 export class LayoutModel {
     constructor(
-        public splitPanePos: PosType[] = [300, 'auto', 300],
-        public horizontalSplitPanePos: PosType[] = ['auto', '230px'],
-        public groupSplitPos: PosType[] = [],
+        public splitPanePos: PosType[] = [300, 'auto'],
+        public horizontalSplitPanePos: PosType[] = ['auto', 230],
+        public groupSplitPos: number[] = [],
         public activityBar: WithHidden<void> = { hidden: false },
         public auxiliaryBar: WithHidden<void> = { hidden: true },
         public panel: WithHidden<{ panelMaximized: boolean }> = {

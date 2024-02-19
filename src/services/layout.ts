@@ -1,6 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { LayoutModel } from 'mo/models/layout';
-import type { DirectionLiteral, Variant } from 'mo/types';
+import type { DirectionLiteral, PosType, Variant } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
 import type { BuiltinService } from './builtin';
@@ -25,9 +25,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         this.dispatch(
             (draft) => {
                 draft.menuBar.hidden =
-                    typeof visibility === 'function'
-                        ? !visibility(!draft.menuBar.hidden)
-                        : !visibility;
+                    typeof visibility === 'function' ? !visibility(!draft.menuBar.hidden) : !visibility;
             },
             () => {
                 // ===================== effects =====================
@@ -39,10 +37,7 @@ export class LayoutService extends BaseService<LayoutModel> {
     public setPanel(visibility: Variant<boolean>): void {
         this.dispatch(
             (draft) => {
-                draft.panel.hidden =
-                    typeof visibility === 'function'
-                        ? !visibility(!draft.panel.hidden)
-                        : !visibility;
+                draft.panel.hidden = typeof visibility === 'function' ? !visibility(!draft.panel.hidden) : !visibility;
             },
             () => {
                 // ===================== effects =====================
@@ -55,9 +50,7 @@ export class LayoutService extends BaseService<LayoutModel> {
         this.dispatch(
             (draft) => {
                 draft.sidebar.hidden =
-                    typeof visibility === 'function'
-                        ? !visibility(!draft.sidebar.hidden)
-                        : !visibility;
+                    typeof visibility === 'function' ? !visibility(!draft.sidebar.hidden) : !visibility;
             },
             () => {
                 // ===================== effects =====================
@@ -70,15 +63,11 @@ export class LayoutService extends BaseService<LayoutModel> {
         this.dispatch(
             (draft) => {
                 draft.activityBar.hidden =
-                    typeof visibility === 'function'
-                        ? !visibility(!draft.activityBar.hidden)
-                        : !visibility;
+                    typeof visibility === 'function' ? !visibility(!draft.activityBar.hidden) : !visibility;
             },
             () => {
                 // ===================== effects =====================
-                this.menuBar.toggleChecked(
-                    this.builtin.getState().constants.MENUBAR_ITEM_ACTIVITYBAR
-                );
+                this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_ACTIVITYBAR);
             }
         );
     }
@@ -87,15 +76,11 @@ export class LayoutService extends BaseService<LayoutModel> {
         this.dispatch(
             (draft) => {
                 draft.statusBar.hidden =
-                    typeof visibility === 'function'
-                        ? !visibility(!draft.statusBar.hidden)
-                        : !visibility;
+                    typeof visibility === 'function' ? !visibility(!draft.statusBar.hidden) : !visibility;
             },
             () => {
                 // ===================== effects =====================
-                this.menuBar.toggleChecked(
-                    this.builtin.getState().constants.MENUBAR_ITEM_STATUSBAR
-                );
+                this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_STATUSBAR);
             }
         );
     }
@@ -103,9 +88,7 @@ export class LayoutService extends BaseService<LayoutModel> {
     public setNotification(visibility: Variant<boolean>): void {
         this.dispatch((draft) => {
             draft.notification.hidden =
-                typeof visibility === 'function'
-                    ? !visibility(!draft.notification.hidden)
-                    : !visibility;
+                typeof visibility === 'function' ? !visibility(!draft.notification.hidden) : !visibility;
         });
     }
 
@@ -116,19 +99,19 @@ export class LayoutService extends BaseService<LayoutModel> {
         });
     }
 
-    public setPaneSize(splitPanePos: (number | string)[]): void {
+    public setPaneSize(splitPanePos: PosType[]): void {
         this.dispatch((draft) => {
             draft.splitPanePos = splitPanePos;
         });
     }
 
-    public setHorizontalPaneSize(horizontalSplitPanePos: (number | string)[]): void {
+    public setHorizontalPaneSize(horizontalSplitPanePos: PosType[]): void {
         this.dispatch((draft) => {
             draft.horizontalSplitPanePos = horizontalSplitPanePos;
         });
     }
 
-    public setGroupSplitSize(groupSplitPos: (string | number)[]): void {
+    public setGroupSplitSize(groupSplitPos: number[]): void {
         this.dispatch((draft) => {
             draft.groupSplitPos = groupSplitPos;
         });
@@ -137,16 +120,13 @@ export class LayoutService extends BaseService<LayoutModel> {
     public setAuxiliaryBar(visibility: Variant<boolean>) {
         this.dispatch((draft) => {
             draft.auxiliaryBar.hidden =
-                typeof visibility === 'function'
-                    ? !visibility(!draft.auxiliaryBar.hidden)
-                    : !visibility;
+                typeof visibility === 'function' ? !visibility(!draft.auxiliaryBar.hidden) : !visibility;
         });
     }
 
     public updateEditorDirection(direction: Variant<DirectionLiteral>) {
         this.dispatch((draft) => {
-            draft.editorDirection =
-                typeof direction === 'function' ? direction(draft.editorDirection) : direction;
+            draft.editorDirection = typeof direction === 'function' ? direction(draft.editorDirection) : direction;
         });
     }
 

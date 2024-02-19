@@ -1,4 +1,5 @@
 import { Display, Split } from 'mo/client/components';
+import useAutoPos from 'mo/client/hooks/useAutoPos';
 import useDynamic from 'mo/client/hooks/useDynamic';
 import type { ILayoutController } from 'mo/controllers/layout';
 import { Toaster } from 'sonner';
@@ -20,29 +21,11 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
     const Editor = useDynamic('editor');
     const ContextMenu = useDynamic('contextMenu');
 
-    const bothVisibility = !layout.sidebar.hidden && !layout.auxiliaryBar.hidden;
-    const sidebarHidden = layout.sidebar.hidden;
-    const auxiliaryBarHidden = layout.auxiliaryBar.hidden;
-    const panelHidden = layout.panel.hidden;
-    const panelMaximized = layout.panel.panelMaximized;
-
-    const getContentSize = () => {
-        if (bothVisibility) return layout.splitPanePos;
-        if (sidebarHidden) return auxiliaryBarHidden ? [0, '100%', 0] : [0, 'auto', layout.splitPanePos[2]];
-        return [layout.splitPanePos[0], 'auto', 0];
-    };
-
-    const getContentSashes = () => {
-        if (bothVisibility) return true;
-        if (sidebarHidden) return auxiliaryBarHidden ? false : [false, true];
-        return [true, false];
-    };
-
-    const getSizes = () => {
-        if (panelHidden) return ['100%', 0];
-        if (panelMaximized) return [0, '100%'];
-        return layout.horizontalSplitPanePos;
-    };
+    const [sideRef, sidePos, sideChange] = useAutoPos<HTMLDivElement>(layout.splitPanePos);
+    const [editorRef, editorPos, editorChange] = useAutoPos<HTMLDivElement>(
+        layout.horizontalSplitPanePos,
+        'horizontal'
+    );
 
     return (
         <main className={variables.container} tabIndex={0}>
@@ -50,27 +33,23 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
             <Display visible={!layout.menuBar.hidden}>{MenuBar}</Display>
             <section className={variables.main}>
                 <Display visible={!layout.activityBar.hidden}>{ActivityBar}</Display>
-                <Split
-                    sizes={getContentSize()}
-                    split="vertical"
-                    showSashes={getContentSashes()}
-                    onChange={onSideChange}
-                >
-                    <Split.Pane minSize={170} maxSize="80%">
-                        <Display visible={!layout.sidebar.hidden}>{Sidebar}</Display>
+                <Split ref={sideRef} sizes={sidePos} split="vertical" onChange={sideChange(onSideChange)}>
+                    <Split.Pane minSize={170} maxSize={800} hidden={layout.sidebar.hidden}>
+                        {Sidebar}
                     </Split.Pane>
-                    <Split
-                        sizes={getSizes()}
-                        showSashes={!layout.panel.hidden && !layout.panel.panelMaximized}
-                        allowResize={[true, false]}
-                        split="horizontal"
-                        onChange={onEditorChange}
-                    >
-                        <Split.Pane minSize="10%" maxSize="80%">
-                            {Editor}
-                        </Split.Pane>
-                        <Display visible={!layout.panel.hidden}>{Panel}</Display>
-                    </Split>
+                    <Split.Pane>
+                        <Split
+                            ref={editorRef}
+                            sizes={editorPos}
+                            split="horizontal"
+                            onChange={editorChange(onEditorChange)}
+                        >
+                            <Split.Pane minSize={150} maxSize={600}>
+                                {Editor}
+                            </Split.Pane>
+                            <Split.Pane hidden={layout.panel.hidden}>{Panel}</Split.Pane>
+                        </Split>
+                    </Split.Pane>
                 </Split>
             </section>
             <Display visible={!layout.statusBar.hidden}>{StatusBar}</Display>

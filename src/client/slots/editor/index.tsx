@@ -3,6 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Progress, Split, Welcome } from 'mo/client/components';
 import useConnector from 'mo/client/hooks/useConnector';
+import useEditorPos from 'mo/client/hooks/useEditorPos';
 import useSettings from 'mo/client/hooks/useSettings';
 import type { IEditorController } from 'mo/controllers/editor';
 
@@ -40,12 +41,16 @@ export default function Editor({
         [editorOptions, settings.editor]
     );
 
+    const [ref, sizes, useRectResize] = useEditorPos(layout.groupSplitPos, groups.length, layout.editorDirection);
+
+    useRectResize((data) => onPaneSizeChange?.(data));
+
     const renderGroups = () => {
         return (
             <DndProvider backend={HTML5Backend} context={window}>
-                <Split sizes={layout.groupSplitPos} split={layout.editorDirection} onChange={onPaneSizeChange}>
+                <Split ref={ref} sizes={sizes} split={layout.editorDirection} onChange={onPaneSizeChange}>
                     {groups.map((g) => (
-                        <Split.Pane key={g.id} minSize="220px">
+                        <Split.Pane key={g.id} minSize={220}>
                             <Group
                                 group={g}
                                 toolbar={toolbar}

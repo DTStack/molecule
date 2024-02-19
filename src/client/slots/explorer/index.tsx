@@ -14,7 +14,6 @@ export default function Explorer({ onToolbarClick, onCollapseChange, onContextMe
     return (
         <Collapse
             data={data}
-            observer
             activePanelKeys={explorer.active}
             onCollapseChange={onCollapseChange}
             onToolbarClick={onToolbarClick}

@@ -9,18 +9,12 @@ $horizontal: BEMModifier(variables.$split, 'horizontal');
     height: 100%;
     position: relative;
     width: 100%;
+    overflow: hidden;
 
     .#{$dragging} {
         .#{variables.$pane} {
             user-select: none;
-        }
-
-        .#{$vertical} {
-            cursor: col-resize;
-        }
-
-        .#{$horizontal} {
-            cursor: row-resize;
+            pointer-events: none;
         }
     }
 }

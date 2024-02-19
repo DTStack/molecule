@@ -79,7 +79,11 @@ export class EditorController extends BaseController implements IEditorControlle
         this.emit(EditorEvent.onMount, groupId, editorInstance);
     };
 
-    public onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void = (tabId, groupId, model) => {
+    public onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void = (
+        tabId,
+        groupId,
+        model
+    ) => {
         this.editor.updateTab(
             {
                 id: tabId,

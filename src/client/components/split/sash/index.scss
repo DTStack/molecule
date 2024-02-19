@@ -24,11 +24,11 @@ $horizontal: BEMModifier($container, 'horizontal');
     }
 
     &.#{$vertical} {
-        cursor: col-resize;
+        cursor: ew-resize;
     }
 
     &.#{$horizontal} {
-        cursor: row-resize;
+        cursor: n-resize;
     }
 }
 

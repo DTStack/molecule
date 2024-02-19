@@ -8,26 +8,15 @@ $title: BEMElement($collapse, 'title');
 $content: BEMElement($collapse, 'content');
 $extra: BEMElement($collapse, 'extra');
 
-$collapsing: BEMModifier($pane, 'collapsing');
-$active: BEMModifier($collapse, 'active');
-
-$header-size: 26px;
+$headerSize: 26px;
+$transitionDelay: 150;
 
 .#{$collapse} {
-    background-color: var(--sideBar-background);
-    color: var(--sideBar-foreground);
     height: 100%;
-
-    &:focus-within {
-        .#{$extra} {
-            opacity: 1;
-        }
-    }
+    overflow: hidden;
 
     .#{$pane} {
-        &.#{$collapsing} {
-            transition: top ease-out 0.15s, height ease-out 0.15s;
-        }
+        transition: top ease-out #{$transitionDelay}ms, height ease-out #{$transitionDelay}ms;
 
         &:first-child .#{$header} {
             border-top-color: transparent;
@@ -39,7 +28,8 @@ $header-size: 26px;
         overflow: hidden;
         width: 100%;
 
-        &:hover {
+        &:hover,
+        &:focus-within {
             .#{$extra} {
                 opacity: 1;
             }
@@ -53,7 +43,7 @@ $header-size: 26px;
         cursor: pointer;
         font-size: 12px;
         font-weight: bold;
-        height: $header-size;
+        height: $headerSize;
         padding: 1px 2px;
         user-select: none;
         line-height: 22px;
@@ -67,7 +57,7 @@ $header-size: 26px;
     }
 
     .#{$content} {
-        height: calc(100% - $header-size);
+        height: calc(100% - $headerSize);
         position: relative;
 
         &::before {
@@ -93,6 +83,10 @@ $header-size: 26px;
             }
         }
     }
+
+    .#{$extra} {
+        opacity: 0;
+    }
 }
 
 :export {
@@ -103,6 +97,7 @@ $header-size: 26px;
     title: $title;
     content: $content;
     extra: $extra;
-    collapsing: $collapsing;
-    active: $active;
+
+    headerSize: $headerSize;
+    transitionDelay: $transitionDelay;
 }

@@ -1,4 +1,4 @@
-@import "../../classNames/style.scss";
+@import '../../classNames/style.scss';
 
 $editorTree: prefix('editorTree');
 $group: BEMElement($editorTree, 'group');
@@ -11,14 +11,13 @@ $path: BEMElement($item, 'path');
 
 $active: BEMModifier($item, 'active');
 
-
 .#{$editorTree} {
     font-size: 13px;
+    max-height: 220px;
 
     .#{$item} {
         // keep same with tree node
         align-items: center;
-        // border: 1px solid transparent;
         outline: 1px solid transparent;
         outline-offset: -1px;
         cursor: pointer;
@@ -32,7 +31,6 @@ $active: BEMModifier($item, 'active');
         white-space: nowrap;
 
         &.#{$active} {
-            // 这里的 inactive 是相对于 focus 的 active 来说的，是相对的 inactive
             background-color: var(--list-inactiveSelectionBackground);
 
             .#{$close} {
@@ -98,16 +96,10 @@ $active: BEMModifier($item, 'active');
     }
 
     .#{$close} {
-        color: var(--icon-foreground);
         margin-right: 2px;
         opacity: 0;
-
-        &:hover {
-            opacity: 1;
-        }
     }
 }
-
 
 :export {
     editorTree: $editorTree;

@@ -1,5 +1,7 @@
-import React, { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { type CSSProperties, forwardRef, type ReactNode, useEffect, useMemo, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
+import useDeepState from 'mo/client/hooks/useDeepState';
+import useResize from 'mo/client/hooks/useResize';
 import { cloneReactChildren } from 'mo/utils';
 
 import { type IPaneConfigs, Pane } from '../pane';
@@ -12,298 +14,211 @@ interface IAxis {
 }
 
 export interface ISplitProps {
-    children: React.JSX.Element[];
+    children: JSX.Element[];
     title?: string;
     style?: React.CSSProperties;
     /**
-     * Should allowed to resized
-     *
-     * default is true
-     */
-    allowResize?: boolean | boolean[];
-    /**
-     * Should show the sashes
-     *
-     * default is true
-     */
-    showSashes?: boolean | boolean[];
-    /**
-     * How to split the space
-     *
      * default is vertical
      */
     split?: 'vertical' | 'horizontal';
-    /**
-     * Only support controlled mode, so it's required
-     */
-    sizes: (string | number)[];
-    onChange?: (sizes: number[]) => void;
+    sizes: number[];
     className?: string;
     sashClassName?: string;
     paneClassName?: string;
     /**
      * Specify the size fo resizer
      *
-     * defualt size is 4px
+     * default size is 4px
      */
     resizerSize?: number;
+    onChange?: (sizes: number[]) => void;
 }
 
-/**
- * Convert size to absolute number or Infinity
- */
-const assertsSize = function (
-    size: string | number | undefined,
-    sum: number,
-    defaultValue = Infinity
+export const SplitPane = forwardRef<HTMLDivElement, ISplitProps>(function (
+    {
+        sizes: propSizes,
+        title,
+        style,
+        children,
+        split = 'vertical',
+        className,
+        sashClassName,
+        paneClassName,
+        resizerSize = 4,
+        onChange,
+    },
+    forwarded
 ) {
-    if (typeof size === 'undefined') return defaultValue;
-    if (typeof size === 'number') return size;
-    if (size.endsWith('%')) return sum * (+size.replace('%', '') / 100);
-    if (size.endsWith('px')) return +size.replace('px', '');
-    return defaultValue;
-};
+    // ======================== Basic params ========================
+    const sizeName = split === 'vertical' ? 'width' : 'height';
+    const sPos = split === 'vertical' ? 'left' : 'top';
+    const sAxis = split === 'vertical' ? 'x' : 'y';
+    const [ref, resizing, resizeListener] = useResize<HTMLDivElement>();
 
-export function SplitPane({
-    sizes: propSizes,
-    title,
-    style,
-    children,
-    allowResize: propAllowResize = true,
-    showSashes = true,
-    split = 'vertical',
-    className,
-    sashClassName,
-    paneClassName,
-    resizerSize = 4,
-    onChange,
-}: ISplitProps) {
-    const axis = useRef<IAxis>({ x: 0, y: 0 });
-    const wrapper = useRef<HTMLDivElement>(null);
-    const [wrapperRect, setWrapperRect] = useState<Partial<DOMRect>>({});
-    const [dragging, setDrag] = useState(false);
+    // ======================== Extract config from Pane ========================
+    const [limitSizes, setLimitSizes] = useDeepState<[number, number][]>([]);
+    const [resizable, setResizable] = useDeepState<boolean[]>([]);
+    const [hidden, setHidden] = useDeepState<boolean[]>([]);
 
     useEffect(() => {
-        const resizeObserver = new ResizeObserver(() => {
-            if (wrapper.current) {
-                setWrapperRect(wrapper.current.getBoundingClientRect());
+        const nextLimit: [number, number][] = [];
+        const nextResizable: boolean[] = [];
+        const nextHidden: boolean[] = [];
+        for (let index = 0; index < children.length; index++) {
+            const child = children[index];
+            if (child.type === Pane) {
+                const { minSize, maxSize, resizable: paneResizable, hidden } = child.props as IPaneConfigs;
+                nextLimit.push([minSize ?? 0, maxSize ?? Number.MAX_SAFE_INTEGER]);
+                nextResizable.push(paneResizable ?? true);
+                nextHidden.push(hidden ?? false);
+            } else {
+                nextLimit.push([0, Number.MAX_SAFE_INTEGER]);
+                nextResizable.push(true);
+                nextHidden.push(false);
+            }
+        }
+        setLimitSizes(nextLimit);
+        setResizable(nextResizable);
+        setHidden(nextHidden);
+    }, [children]);
+
+    // ======================== (Re)calculate sizes ========================
+    const sizes = useMemo<number[]>(() => {
+        const validSizes: number[] = [...propSizes];
+        // 1. Check hidden pane
+        hidden.forEach((hidden, index) => {
+            if (hidden) {
+                if (validSizes[index + 1] !== undefined) {
+                    validSizes[index + 1] += validSizes[index];
+                } else if (validSizes[index - 1] !== undefined) {
+                    validSizes[index - 1] += validSizes[index];
+                }
+                validSizes[index] = 0;
             }
         });
-        if (wrapper.current) {
-            resizeObserver.observe(wrapper.current);
-        }
-        return () => {
-            resizeObserver.disconnect();
-        };
-    }, []);
 
-    // Get some size infos via split
-    const { sizeName, sPos, sAxis } = useMemo(
-        function () {
-            return {
-                sizeName: split === 'vertical' ? 'width' : 'height',
-                sPos: split === 'vertical' ? 'left' : 'top',
-                sAxis: split === 'vertical' ? 'x' : 'y',
-            } as const;
-        },
-        [split]
-    );
+        // 2. Check NaN and negative number
+        return validSizes.map((size) => {
+            if (Number.isNaN(size)) return 0;
+            if (size < 0) return 0;
+            return size;
+        });
+    }, [propSizes, hidden]);
 
-    const wrapSize: number = wrapperRect[sizeName] ?? 0;
+    // ======================== (Re)calculate sash's position ========================
+    const sashPosSizes = useMemo(() => {
+        return sizes.reduce((a, b) => [...a, a[a.length - 1] + b], [0]);
+    }, [sizes]);
 
-    // Get limit sizes via children
-    const paneLimitSizes = useMemo(
-        function () {
-            return children.map((childNode) => {
-                const limits = [0, Infinity];
-                if (childNode.type === Pane) {
-                    const { minSize, maxSize } = childNode.props as IPaneConfigs;
-                    limits[0] = assertsSize(minSize, wrapSize, 0);
-                    limits[1] = assertsSize(maxSize, wrapSize);
-                }
-                return limits;
-            });
-        },
-        [children, wrapSize]
-    );
+    // ======================== Resize handler ========================
+    const axis = useRef<IAxis>({ x: 0, y: 0 });
+    const tmpSize = useRef<number[]>([]);
+    // Record the maximum distance range of current sash can move left and right
+    const sizeRange = useRef<[number, number]>([0, 0]);
 
-    // perform the task for recalculating resizable
-    const allowResize = useMemo(() => {
-        if (typeof propAllowResize === 'boolean') {
-            return new Array(children.length).fill(propAllowResize);
-        }
-        return children.map((_, index) => propAllowResize[index] ?? true);
-    }, [children.length, propAllowResize]);
-
-    /**
-     * SplitPane allows sizes in string and number, but the state sizes only support number,
-     * so convert string and number to number in here
-     * ```ts
-     * 'auto' -> divide the remaining space equally
-     * 'xxxpx' -> xxx
-     * 'xxx%' -> wrapper.size * xxx/100
-     * xxx -> xxx
-     * ```
-     */
-    const sizes = useMemo(
-        function () {
-            let count = 0;
-            let curSum = 0;
-            let allowResizeSum = 0;
-            const res = children.map((_, index) => {
-                const size = assertsSize(propSizes[index], wrapSize);
-                if (size === Infinity) {
-                    count++;
-                } else {
-                    curSum += size;
-                    if (allowResize[index]) allowResizeSum += size;
-                }
-                return size;
-            });
-
-            const allowResizePanes: number = allowResize.filter((item) => item === true).length;
-
-            if (allowResizePanes === 0) return res;
-
-            // resize or illegal size input,recalculate pane sizes
-            if (curSum > wrapSize || (!count && curSum < wrapSize)) {
-                const gap = (curSum - wrapSize) / allowResizeSum;
-                return res.map((size, index) => {
-                    if (size === Infinity) return 0;
-                    return allowResize[index] ? size - size * gap : size;
-                });
-            }
-
-            if (count > 0) {
-                const average = (wrapSize - curSum) / count;
-                return res.map((size) => {
-                    return size === Infinity ? average : size;
-                });
-            }
-
-            return res;
-        },
-        [propSizes, children.length, wrapSize, allowResize]
-    );
-
-    // Gets dragging axis position
-    const sashPosSizes = useMemo(
-        function () {
-            return sizes.reduce(
-                function (a, b) {
-                    return [...a, a[a.length - 1] + b];
-                },
-                [0]
-            );
-        },
-        [sizes]
-    );
-
-    const onDragStart = useCallback(function (e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    resizeListener.onResizeStart((e, i) => {
+        // Record start position
         axis.current = {
             x: e.pageX ?? e.screenX,
             y: e.pageY ?? e.screenY,
         };
-        setDrag(true);
-    }, []);
+        tmpSize.current = sizes;
 
-    const onDragging = useCallback(
-        function (e: React.MouseEvent<HTMLDivElement, MouseEvent>, i: number) {
-            const curAxis = {
-                x: e.pageX ?? e.screenX,
-                y: e.pageY ?? e.screenY,
-            };
-            let distanceX = curAxis[sAxis] - axis.current[sAxis];
+        const leftPaneSize = tmpSize.current[i];
+        const rightPaneSize = tmpSize.current[i + 1];
+        const [leftMinSize, leftMaxSize] = limitSizes[i];
+        const [rightMinSize, rightMaxSize] = limitSizes[i + 1];
+        sizeRange.current = [
+            -Math.min(leftPaneSize - leftMinSize, rightMaxSize - rightPaneSize),
+            Math.min(rightPaneSize - rightMinSize, leftMaxSize - leftPaneSize),
+        ];
+    });
 
-            const leftBorder = -Math.min(
-                sizes[i] - paneLimitSizes[i][0],
-                paneLimitSizes[i + 1][1] - sizes[i + 1]
-            );
-            const rightBorder = Math.min(
-                sizes[i + 1] - paneLimitSizes[i + 1][0],
-                paneLimitSizes[i][1] - sizes[i]
-            );
+    resizeListener.onResize((e, i) => {
+        const curAxis = {
+            x: e.pageX ?? e.screenX,
+            y: e.pageY ?? e.screenY,
+        };
+        let distanceX = curAxis[sAxis] - axis.current[sAxis];
 
-            if (distanceX < leftBorder) {
-                distanceX = leftBorder;
-            }
-            if (distanceX > rightBorder) {
-                distanceX = rightBorder;
-            }
+        const [left, right] = sizeRange.current;
 
-            const nextSizes = [...sizes];
-            nextSizes[i] += distanceX;
-            nextSizes[i + 1] -= distanceX;
+        if (distanceX < left) {
+            distanceX = left;
+        }
+        if (distanceX > right) {
+            distanceX = right;
+        }
 
-            onChange?.(nextSizes);
-        },
-        [paneLimitSizes, onChange, sizes]
-    );
+        const nextSizes = [...tmpSize.current];
+        nextSizes[i] += distanceX;
+        nextSizes[i + 1] -= distanceX;
+
+        onChange?.(nextSizes);
+    });
 
     return (
         <div
-            className={classNames(
-                variables.container,
-                dragging && variables.dragging,
-                split === 'vertical' && variables.vertical,
-                split === 'horizontal' && variables.horizontal,
-                className
-            )}
-            ref={wrapper}
+            className={classNames(variables.container, resizing() && variables.dragging, variables[split], className)}
+            ref={forwarded}
             title={title}
             style={style}
         >
-            {children.map((childNode, idx) => {
-                const paneStyle = {
-                    [sizeName]: sizes[idx],
-                    [sPos]: sashPosSizes[idx],
-                };
+            {Boolean(sizes.length) &&
+                children.map((childNode, idx) => {
+                    const sPosValue = sashPosSizes[idx] ?? 0;
+                    const paneStyle: CSSProperties = {
+                        [sizeName]: sizes[idx],
+                        [sPos]: sPosValue,
+                    };
 
-                let sashChild: ReactNode = null;
-                if (idx > 0) {
-                    const disabled = Array.isArray(showSashes)
-                        ? showSashes[idx - 1] === false
-                        : showSashes === false;
-                    sashChild = (
-                        <Sash
-                            className={classNames(sashClassName)}
-                            disabled={disabled}
-                            split={split}
-                            style={{
-                                [sizeName]: resizerSize,
-                                [sPos]: sashPosSizes[idx] - resizerSize / 2,
-                            }}
-                            onDragStart={onDragStart}
-                            onDragging={(e) => onDragging(e, idx - 1)}
-                            onDragEnd={() => {
-                                setDrag(false);
-                            }}
-                        />
-                    );
-                }
+                    if (hidden[idx]) return <React.Fragment key={idx} />;
+                    if (resizing()) {
+                        paneStyle.pointerEvents = 'none';
+                        paneStyle.transition = 'none';
+                    }
 
-                if (childNode.type === Pane) {
-                    const { className = '', style = {} } = childNode.props;
+                    let sashChild: ReactNode = null;
+                    if (idx > 0 && !hidden[idx - 1]) {
+                        const disabled = !resizable[idx];
+
+                        sashChild = (
+                            <Sash
+                                ref={ref(idx - 1)}
+                                className={classNames(sashClassName)}
+                                disabled={disabled}
+                                dragging={resizing(idx - 1)}
+                                split={split}
+                                style={{
+                                    [sizeName]: resizerSize,
+                                    [sPos]: sPosValue - resizerSize / 2,
+                                }}
+                            />
+                        );
+                    }
+
+                    if (childNode.type === Pane) {
+                        const { className = '', style = {} } = childNode.props;
+                        return (
+                            <React.Fragment key={idx}>
+                                {sashChild}
+                                {cloneReactChildren(childNode, {
+                                    className: classNames(paneClassName, className),
+                                    style: { ...style, ...paneStyle },
+                                })}
+                            </React.Fragment>
+                        );
+                    }
+
                     return (
                         <React.Fragment key={idx}>
                             {sashChild}
-                            {cloneReactChildren(childNode, {
-                                className: classNames(paneClassName, className),
-                                style: { ...style, ...paneStyle },
-                            })}
+                            <Pane className={paneClassName} style={paneStyle}>
+                                {childNode}
+                            </Pane>
                         </React.Fragment>
                     );
-                }
-
-                return (
-                    <React.Fragment key={idx}>
-                        {sashChild}
-                        <Pane className={paneClassName} style={paneStyle}>
-                            {childNode}
-                        </Pane>
-                    </React.Fragment>
-                );
-            })}
+                })}
         </div>
     );
-}
+});

@@ -6,7 +6,6 @@ $label: BEMElement($statusBar, 'label');
 
 $disabled: BEMModifier($statusBar, 'disabled');
 
-
 .#{$container} {
     height: 100%;
     user-select: none;
@@ -21,11 +20,11 @@ $disabled: BEMModifier($statusBar, 'disabled');
         text-overflow: ellipsis;
         white-space: pre;
         overflow: hidden;
-        margin: 0 3px;
         line-height: 22px;
 
-        &:not(:empty){
+        &:not(:empty) {
             padding: 0 5px;
+            margin: 0 3px;
         }
     }
 

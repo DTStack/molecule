@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useMeasure from 'react-use/esm/useMeasure';
-import { PosType } from 'mo/types';
+import type { PosType } from 'mo/types';
 
 export default function useAutoPos<E extends HTMLElement>(
     pos: PosType[],

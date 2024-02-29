@@ -21,7 +21,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
 
     const [sideRef, sidePos, sideChange] = useAutoPos<HTMLDivElement>(layout.splitPanePos);
     const [editorRef, editorPos, editorChange] = useAutoPos<HTMLDivElement>(
-        layout.horizontalSplitPanePos,
+        layout.panel.panelMaximized ? [0, 'auto'] : layout.horizontalSplitPanePos,
         'horizontal'
     );
 

@@ -31,6 +31,7 @@ export default function Output() {
                 scrollBeyondLastLine: false,
                 contextmenu: false,
             }}
+            instance={instance.current}
             value={output.value}
             onMount={(editor) => (instance.current = editor)}
         />

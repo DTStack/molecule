@@ -25,7 +25,7 @@ export default function useDynamic(token: string) {
             };
 
             resolve(
-                <Suspense fallback={<div>loading</div>}>
+                <Suspense fallback={<div style={{ background: 'var(--workbenchBackground)' }}>loading</div>}>
                     <Entry {...entryProps} />
                 </Suspense>
             );

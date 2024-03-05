@@ -89,14 +89,15 @@ export default function Collapse({
     };
 
     const performSizes = () => {
-        const next = new Array(data.length).fill(HEADER_HEIGHT);
-        const unExpanded = data.filter((item) => !activePanelKeys.includes(item.id));
+        const next = data.map((i) => (i.hidden ? 0 : HEADER_HEIGHT));
+        const unExpanded = data.filter((item) => !activePanelKeys.includes(item.id) && !item.hidden);
         let total = rect.height - unExpanded.length * HEADER_HEIGHT;
         let pieces = 0;
         const tmpGrow: number[] = [];
         activePanelKeys.forEach((key) => {
             const idx = data.findIndex(searchById(key));
             const item = data[idx];
+            if (item.hidden) return;
             const grow = item.config?.grow;
             if (grow === 0) {
                 const ele = contentRefs.current[item.id]?.firstElementChild as HTMLElement;
@@ -120,7 +121,7 @@ export default function Collapse({
 
     useEffect(() => {
         performSizes();
-    }, [activePanelKeys, rect.height]);
+    }, [data, activePanelKeys, rect.height]);
 
     function setHeightWithEle(ele: HTMLElement) {
         if (ele) {

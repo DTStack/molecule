@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { classNames } from 'mo/client/classNames';
 import { Dropdown, Icon } from 'mo/client/components';
 import { useConnector } from 'mo/client/hooks';
 import type { IMenuBarController } from 'mo/controllers/menuBar';
@@ -44,8 +45,14 @@ export default function MenuBar({ onSelect, onContextMenu }: IMenuBarProps) {
                     }}
                 >
                     <span
-                        className={variables.item}
-                        onMouseEnter={() => handleActiveDropdown(menu.id)}
+                        className={classNames(variables.item, visibleMenu === menu.id && variables.active)}
+                        onMouseEnter={(e) => {
+                            const name = (e.currentTarget as HTMLSpanElement).querySelector<HTMLSpanElement>(
+                                `.${variables.name}`
+                            );
+                            name?.focus();
+                            handleActiveDropdown(menu.id);
+                        }}
                         onContextMenu={(e) => {
                             e.stopPropagation();
                             e.preventDefault();

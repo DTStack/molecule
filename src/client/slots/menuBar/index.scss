@@ -5,6 +5,8 @@ $container: BEMElement($menuBar, 'container');
 $item: BEMElement($menuBar, 'item');
 $name: BEMElement($menuBar, 'name');
 
+$active: BEMModifier($item, 'active');
+
 .#{$container} {
     background-color: var(--titleBar-activeBackground);
     color: var(--titleBar-activeForeground);
@@ -27,15 +29,16 @@ $name: BEMElement($menuBar, 'name');
     }
 }
 
+.#{$active} .#{$name},
 .#{$item}:hover .#{$name} {
     background-color: var(--menubar-selectionBackground);
     outline: 1px dashed var(--menubar-selectionBorder);
     outline-offset: -1px;
 }
 
-
 :export {
     container: $container;
     item: $item;
     name: $name;
+    active: $active;
 }

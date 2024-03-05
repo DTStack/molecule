@@ -1,6 +1,7 @@
 import { classNames } from 'mo/client/classNames';
 import type { IStatusBarItem } from 'mo/models/statusBar';
 import type { ContextMenuHandler } from 'mo/types';
+import { getNameForTitle } from 'mo/utils';
 
 import Prevent from '../prevent';
 import variables from './index.scss';
@@ -23,7 +24,7 @@ export default function StatusItem({ data, onClick, onContextMenu }: IStatusItem
             <a
                 className={variables.label}
                 role={role || 'button'}
-                title={title || name}
+                title={title || getNameForTitle(name)}
                 style={style}
                 onClick={(e) => !disabled && onClick?.(e)}
             >

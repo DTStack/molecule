@@ -1,6 +1,6 @@
 import { Children, cloneElement, isValidElement } from 'react';
 import { merge, omitBy } from 'lodash-es';
-import type { Arraylize, IColorTheme, IconType, IMenuItemProps, RecordWithId, UniqueId } from 'mo/types';
+import type { Arraylize, IColorTheme, IconType, IMenuItemProps, IterableItem, RecordWithId, UniqueId } from 'mo/types';
 import type { editor } from 'monaco-editor';
 
 export function searchById<T extends RecordWithId<Record<string, any>>>(id?: UniqueId) {
@@ -229,4 +229,8 @@ export function isElementInParentView(ele: HTMLElement, parent: HTMLElement) {
         else if (!bottom) isWhichSide = 'bottom';
     }
     return [overlay, isWhichSide] as const;
+}
+
+export function getNameForTitle(name: IterableItem['name']) {
+    return typeof name === 'string' ? name : undefined;
 }

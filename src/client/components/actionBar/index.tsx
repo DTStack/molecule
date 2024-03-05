@@ -2,7 +2,7 @@ import React from 'react';
 import { classNames } from 'mo/client/classNames';
 import { useConnector, useLocale } from 'mo/client/hooks';
 import type { HTMLElementProps, IMenuItemProps } from 'mo/types';
-import { classify, sortByIndex } from 'mo/utils';
+import { classify, getNameForTitle, sortByIndex } from 'mo/utils';
 
 import Action from '../action';
 import Dropdown from '../dropdown';
@@ -26,7 +26,7 @@ export default function ActionBar({ data, style, className, title, role, onClick
                     {i.render?.(i) || (
                         <Action
                             type={i.icon}
-                            title={i.title || i.name}
+                            title={i.title || getNameForTitle(i.name)}
                             disabled={i.disabled}
                             onClick={() => onClick?.(i)}
                         >

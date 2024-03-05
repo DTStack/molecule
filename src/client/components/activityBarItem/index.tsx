@@ -1,5 +1,6 @@
 import { classNames } from 'mo/client/classNames';
 import { Alignment, ContextMenuHandler, IActivityBarItem, MenuHandler } from 'mo/types';
+import { getNameForTitle } from 'mo/utils';
 
 import Dropdown from '../dropdown';
 import Icon from '../icon';
@@ -45,7 +46,7 @@ export default function ActivityBarItem({
                         )}
                         role={role}
                         style={style}
-                        title={title || name}
+                        title={title || getNameForTitle(name)}
                     >
                         <Icon type={icon} className={variables.label}>
                             {render?.(data) || null}

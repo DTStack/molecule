@@ -113,7 +113,7 @@ export type IterableItem = RecordWithId<
         /**
          * The name of the item.
          */
-        name?: string;
+        name?: React.ReactNode;
         /**
          * The icon type of the item.
          */

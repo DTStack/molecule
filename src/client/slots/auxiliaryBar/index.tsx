@@ -2,7 +2,7 @@ import { classNames } from 'mo/client/classNames';
 import Icon from 'mo/client/components/icon';
 import { useConnector } from 'mo/client/hooks';
 import type { IAuxiliaryController } from 'mo/controllers/auxiliaryBar';
-import { searchById, sortByIndex } from 'mo/utils';
+import { getNameForTitle, searchById, sortByIndex } from 'mo/utils';
 
 import variables from './index.scss';
 
@@ -24,7 +24,7 @@ export default function AuxiliaryBar({ onClick }: IAuxiliaryBarProps) {
                         className={classNames(variables.item, auxiliaryBar.current === id && variables.active)}
                         onClick={() => onClick?.(id)}
                     >
-                        <Icon type={icon} title={name}>
+                        <Icon type={icon} title={getNameForTitle(name)}>
                             {name}
                         </Icon>
                     </div>

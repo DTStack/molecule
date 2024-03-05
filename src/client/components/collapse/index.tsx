@@ -4,7 +4,7 @@ import useMeasure from 'react-use/esm/useMeasure';
 import { classNames } from 'mo/client/classNames';
 import { useBatchRef } from 'mo/client/hooks';
 import type { ContextMenuHandler, HTMLElementProps, IMenuItemProps, IterableItem, Render, UniqueId } from 'mo/types';
-import { searchById } from 'mo/utils';
+import { getNameForTitle, searchById } from 'mo/utils';
 
 import ActionBar from '../actionBar';
 import Display from '../display';
@@ -177,7 +177,7 @@ export default function Collapse({
                                         justifyContent="space-between"
                                         onClick={() => handleChangeCallback(panel.id)}
                                     >
-                                        <Flex>
+                                        <Flex title={panel.title || getNameForTitle(panel.name)}>
                                             <Icon type={isActive ? 'chevron-down' : 'chevron-right'} />
                                             <span className={variables.title}>{panel.name}</span>
                                         </Flex>

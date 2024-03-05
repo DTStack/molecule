@@ -46,16 +46,11 @@ export default class QuickSelectLocaleAction extends BaseAction {
         };
 
         return new Promise((resolve) => {
-            let isCompleted = false;
-
             const autoFocusIndex = picks.findIndex((p) => p.id === current?.id);
             const quickPick = quickInputService.createQuickPick<ILocale>();
             quickPick.items = picks;
 
-            quickPick.placeholder = localize(
-                'locale.select',
-                'Select Display Language (Up/Down Keys to Preview)'
-            );
+            quickPick.placeholder = localize('locale.select', 'Select Display Language (Up/Down Keys to Preview)');
 
             quickPick.activeItems = [picks[autoFocusIndex] as ILocale];
             quickPick.canSelectMany = false;
@@ -64,16 +59,8 @@ export default class QuickSelectLocaleAction extends BaseAction {
                 if (item) {
                     onSelect(item, true);
                 }
-                isCompleted = true;
                 quickPick.hide();
                 resolve();
-            });
-
-            quickPick.onDidHide(() => {
-                if (!isCompleted) {
-                    onSelect(current, true);
-                    resolve();
-                }
             });
 
             quickPick.show();

@@ -1,6 +1,7 @@
 import { lazy, Suspense, useContext, useEffect, useState } from 'react';
 import { isFunction, pickBy } from 'lodash-es';
 
+import { Progress } from '../components';
 import { Context } from '../context';
 
 export default function useDynamic(token: string) {
@@ -25,7 +26,7 @@ export default function useDynamic(token: string) {
             };
 
             resolve(
-                <Suspense fallback={<div style={{ background: 'var(--workbenchBackground)' }}>loading</div>}>
+                <Suspense fallback={<Progress active />}>
                     <Entry {...entryProps} />
                 </Suspense>
             );

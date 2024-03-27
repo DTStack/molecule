@@ -76,6 +76,7 @@
         "sidebar.toolbar.ellipsis": "View and More Actions...",
         "statusBar.contextMenu.hide": "Hide Status Bar",
         "statusBar.item.lineInfo": "Editor Selection",
-        "statusBar.item.selection": "Ln ${i},Col ${i}"
+        "statusBar.item.selection": "Ln ${i},Col ${i}",
+        "cannotRunGotoLine": "Open a text editor first to go to a line."
     }
 }

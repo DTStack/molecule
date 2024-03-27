@@ -1,12 +1,5 @@
 import { BaseAction } from 'mo/glue/baseAction';
-import {
-    IQuickInputService,
-    KeyChord,
-    KeyCode,
-    KeyMod,
-    localize,
-    type ServicesAccessor,
-} from 'mo/monaco';
+import { IQuickInputService, KeyChord, KeyCode, KeyMod, localize, type ServicesAccessor } from 'mo/monaco';
 import { type IMoleculeContext, KeybindingWeight } from 'mo/types';
 
 export default class QuickJumpToLineAction extends BaseAction {
@@ -30,6 +23,6 @@ export default class QuickJumpToLineAction extends BaseAction {
     }
 
     run(accessor: ServicesAccessor) {
-        accessor.get(IQuickInputService).quickAccess.show(">");
+        accessor.get(IQuickInputService).quickAccess.show(QuickJumpToLineAction.PREFIX);
     }
 }

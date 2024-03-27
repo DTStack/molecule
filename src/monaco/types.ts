@@ -4,12 +4,16 @@ import type { UniqueId } from 'mo/types';
 import type { editor, IDisposable } from 'monaco-editor';
 import { Color as MonacoColor } from 'monaco-editor/esm/vs/base/common/color';
 import { KeyChord as MonacoKeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes';
-import { DisposableStore as MonacoDisposableStore } from 'monaco-editor/esm/vs/base/common/lifecycle';
+import {
+    Disposable as MonacoDisposable,
+    DisposableStore as MonacoDisposableStore,
+} from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { ICodeEditorService as MonacoICodeEditorService } from 'monaco-editor/esm/vs/editor/browser/services/codeEditorService';
 import { OpenerService as MonacoOpenerService } from 'monaco-editor/esm/vs/editor/browser/services/openerService';
 import { IModelService as MonacoIModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
 import { IModeService as MonacoIModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
 import { ITextModelService as MonacoITextModelService } from 'monaco-editor/esm/vs/editor/common/services/resolverService';
+import { AbstractGotoLineQuickAccessProvider as MonacoAbstractGotoLineQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/gotoLineQuickAccess';
 import {
     SimpleEditorModelResolverService as MonacoSimpleEditorModelResolverService,
     SimpleLayoutService as MonacoSimpleLayoutService,
@@ -45,7 +49,50 @@ import { ILayoutService as MonacoILayoutService } from 'monaco-editor/esm/vs/pla
 import { INotificationService as MonacoINotificationService } from 'monaco-editor/esm/vs/platform/notification/common/notification';
 import { IOpenerService as MonacoIOpenerService } from 'monaco-editor/esm/vs/platform/opener/common/opener';
 import { QuickInputService as MonacoQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/browser/quickInput';
+import {
+    Extensions as MonacoExtensions,
+    IQuickAccessRegistry,
+} from 'monaco-editor/esm/vs/platform/quickinput/common/quickAccess';
 import { IQuickInputService as MonacoIQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
+import { Registry as MonacoRegistry } from 'monaco-editor/esm/vs/platform/registry/common/platform';
+
+export const AbstractGotoLineQuickAccessProvider = MonacoAbstractGotoLineQuickAccessProvider;
+
+export interface Disposable extends IDisposable {
+    None: IDisposable;
+}
+export const Disposable: Disposable = MonacoDisposable;
+
+// TODO
+type IQuickAccessProviderDescriptor = any;
+
+export interface IQuickAccessRegistry {
+    providers: any[];
+    /**
+     * Registers a quick access provider to the platform.
+     */
+    registerQuickAccessProvider(provider: IQuickAccessProviderDescriptor): IDisposable;
+
+    /**
+     * Get all registered quick access providers.
+     */
+    getQuickAccessProviders(): IQuickAccessProviderDescriptor[];
+
+    /**
+     * Get a specific quick access provider for a given prefix.
+     */
+    getQuickAccessProvider(prefix: string): IQuickAccessProviderDescriptor | undefined;
+}
+
+export type Extensions = {
+    Quickaccess: 'workbench.contributions.quickaccess';
+};
+export const Extensions: Extensions = MonacoExtensions;
+
+export interface Registry {
+    as<T>(id: string): T;
+}
+export const Registry: Registry = MonacoRegistry;
 
 /**
  * An event with zero or one parameters that can be subscribed to. The event is a function itself.
@@ -230,18 +277,15 @@ interface SimpleEditorModelResolverService {
     new (modelService: IModelService): SimpleEditorModelResolverService & IDisposable;
     setEditor(editor: editor.IStandaloneCodeEditor): void;
 }
-const SimpleEditorModelResolverService: SimpleEditorModelResolverService =
-    MonacoSimpleEditorModelResolverService;
+const SimpleEditorModelResolverService: SimpleEditorModelResolverService = MonacoSimpleEditorModelResolverService;
 
 interface SimpleLayoutService {
     dimension: any;
     container: any;
     focus(): void;
 }
-const SimpleLayoutService: new (
-    _codeEditorService: ICodeEditorService,
-    _container: any
-) => SimpleLayoutService = MonacoSimpleLayoutService;
+const SimpleLayoutService: new (_codeEditorService: ICodeEditorService, _container: any) => SimpleLayoutService =
+    MonacoSimpleLayoutService;
 
 const Color: Color = MonacoColor;
 

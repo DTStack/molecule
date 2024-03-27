@@ -17,6 +17,8 @@ import 'monaco-editor/esm/vs/editor/standalone/browser/quickAccess/standaloneGot
 import 'monaco-editor/esm/vs/editor/standalone/browser/quickAccess/standaloneCommandsQuickAccess';
 import 'monaco-editor/esm/vs/editor/standalone/browser/referenceSearch/standaloneReferenceSearch';
 import 'monaco-editor/esm/vs/editor/standalone/browser/toggleHighContrast/toggleHighContrast';
+// For override the original monaco-editor's config
+import './override';
 
 export * from './types';
 export * from 'monaco-editor/esm/vs/editor/editor.api.js';

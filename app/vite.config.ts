@@ -10,6 +10,7 @@ export default defineConfig({
         }),
         monacoEditorPlugin({
             forceBuildCDN: false,
+            languageWorkers: ['editorWorkerService', 'json', 'css', 'html', 'typescript'],
         }),
         mockDevServerPlugin({
             include: 'app/mock/**/*.mock.{ts,js,cjs,mjs,json,json5}',

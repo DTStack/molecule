@@ -217,7 +217,15 @@ export const TestExtension: IExtension = {
                         name: treeNode.name,
                         icon: treeNode.icon || 'file',
                         value: data,
-                        language: 'plain',
+                        language: (() => {
+                            const name = treeNode.name;
+                            if (typeof name !== 'string') return 'plain';
+                            if (name.endsWith('.js') || name.endsWith('.ts')) return 'typescript';
+                            if (name.endsWith('.json')) return 'json';
+                            if (name.endsWith('.scss')) return 'css';
+                            if (name.endsWith('.html')) return 'html';
+                            return 'plain';
+                        })(),
                         breadcrumb: (treeNode.id as string)
                             .split('/')
                             .filter(Boolean)

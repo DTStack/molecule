@@ -1,11 +1,11 @@
 import { BaseController } from 'mo/glue';
 import { EditorEvent } from 'mo/models/editor';
 import { SettingsEvent } from 'mo/models/setting';
+import type { editor } from 'mo/monaco';
 import { BuiltinService } from 'mo/services/builtin';
 import { EditorService } from 'mo/services/editor';
 import { LayoutService } from 'mo/services/layout';
 import type { ContextMenuHandler, GroupMenuHandler, TabGroup, UniqueId } from 'mo/types';
-import type { editor } from 'monaco-editor';
 import { inject, injectable } from 'tsyringe';
 
 type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]>;

@@ -1,5 +1,5 @@
+import type { editor } from 'mo/monaco';
 import type { IEditorOptions, IEditorTab, IMenuItemProps, UniqueId } from 'mo/types';
-import { editor } from 'monaco-editor';
 
 export enum EditorEvent {
     onChange = 'editor.onChange',

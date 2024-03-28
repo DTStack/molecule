@@ -1,5 +1,4 @@
 import type React from 'react';
-import type { editor, KeyCode } from 'monaco-editor';
 
 import type { ILocale } from './models/locale';
 import type { ActionService } from './services/action';
@@ -24,6 +23,7 @@ import type { SettingsService } from './services/setting';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { TreeNodeModel } from './utils/tree';
+import type { editor, KeyCode } from './monaco';
 
 /**
  * Represents the type of a position.

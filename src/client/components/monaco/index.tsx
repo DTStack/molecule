@@ -1,6 +1,6 @@
 import { type CSSProperties, useEffect, useRef } from 'react';
 import useMonaco from 'mo/client/hooks/useMonaco';
-import { editor } from 'monaco-editor';
+import { editor } from 'mo/monaco';
 
 export interface IEditorProps {
     className?: string;

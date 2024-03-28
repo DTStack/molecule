@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useConnector } from 'mo/client/hooks';
-import { editor } from 'monaco-editor';
+import type { editor } from 'mo/monaco';
 
 import MonacoEditor from '../monaco';
 import variables from './index.scss';

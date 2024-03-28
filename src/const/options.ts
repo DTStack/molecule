@@ -1,4 +1,4 @@
-import type { editor } from 'monaco-editor';
+import type { editor } from 'mo/monaco';
 
 export default {
     fontSize: 12,

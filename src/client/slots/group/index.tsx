@@ -6,9 +6,9 @@ import Header from 'mo/client/components/header';
 import MonacoEditor from 'mo/client/components/monaco';
 import Tab from 'mo/client/components/tab';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
+import type { editor } from 'mo/monaco';
 import type { ContextMenuHandler, GroupMenuHandler, IMenuItemProps, TabGroup, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
-import type { editor } from 'monaco-editor';
 
 import variables from './index.scss';
 

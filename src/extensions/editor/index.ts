@@ -1,6 +1,6 @@
 import { EditorEvent } from 'mo/models/editor';
+import type { editor } from 'mo/monaco';
 import type { IExtension } from 'mo/types';
-import type { editor } from 'monaco-editor';
 
 export const ExtendsEditor: IExtension = {
     id: 'ExtendsEditor',

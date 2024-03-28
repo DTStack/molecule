@@ -1,6 +1,7 @@
 import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
 import { EditorEvent, EditorGroupModel, EditorModel } from 'mo/models/editor';
+import type { editor } from 'mo/monaco';
 import type {
     ContextMenuHandler,
     GroupMenuHandler,
@@ -13,7 +14,6 @@ import type {
     Variant,
 } from 'mo/types';
 import { getPrevOrNext, randomId, searchById } from 'mo/utils';
-import type { editor } from 'monaco-editor';
 import { injectable } from 'tsyringe';
 
 type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]>;

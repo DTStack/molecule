@@ -1,4 +1,4 @@
-import { KeyCode } from 'monaco-editor';
+import { KeyCode } from 'mo/monaco';
 
 export const KeyCodeString: Partial<{ [key in KeyCode]: string }> = {
     [KeyCode.Unknown]: '',

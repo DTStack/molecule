@@ -1,8 +1,7 @@
 import { BaseAction } from 'mo/glue/baseAction';
 import { ILocale } from 'mo/models/locale';
-import { CATEGORIES, IQuickInputService, localize, QuickPickInput, ServicesAccessor } from 'mo/monaco';
+import { CATEGORIES, IQuickInputService, KeyCode, KeyMod, localize, QuickPickInput, ServicesAccessor } from 'mo/monaco';
 import { IMoleculeContext } from 'mo/types';
-import { KeyCode, KeyMod } from 'monaco-editor';
 
 export default class QuickSelectLocaleAction extends BaseAction {
     static readonly ID = 'workbench.action.selectLocale';

@@ -7,9 +7,9 @@ import { prefix } from 'mo/client/classNames';
 import { DefaultColor } from 'mo/const/theme';
 import { BaseService } from 'mo/glue';
 import { ColorThemeEvent, ColorThemeModel } from 'mo/models/colorTheme';
+import { editor } from 'mo/monaco';
 import type { Arraylize, IColorTheme, Predict, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, colorsToString, convertToCSSVars, convertToToken, searchById } from 'mo/utils';
-import { editor } from 'monaco-editor';
 
 export class ColorThemeService extends BaseService<ColorThemeModel> {
     static DEFAULT_THEME_CLASS_NAME = prefix('customize-theme');
@@ -42,9 +42,7 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
         if (!theme) return;
         const styleSheetContent = convertToCSSVars(theme.colors || {});
         window.requestAnimationFrame(() => {
-            const styleEle = document.querySelector<HTMLStyleElement>(
-                `.${ColorThemeService.DEFAULT_THEME_CLASS_NAME}`
-            );
+            const styleEle = document.querySelector<HTMLStyleElement>(`.${ColorThemeService.DEFAULT_THEME_CLASS_NAME}`);
             if (!styleEle) {
                 const elStyle = document.createElement('style');
                 elStyle.type = 'text/css';
@@ -124,9 +122,7 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
     }
 
     // ===================== Subscriptions =====================
-    public onChange(
-        callback: (prev: IColorTheme, next: IColorTheme, themeMode: editor.BuiltinTheme) => void
-    ): void {
+    public onChange(callback: (prev: IColorTheme, next: IColorTheme, themeMode: editor.BuiltinTheme) => void): void {
         this.subscribe(ColorThemeEvent.onChange, callback);
     }
 }

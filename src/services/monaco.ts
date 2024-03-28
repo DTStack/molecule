@@ -1,5 +1,6 @@
 import {
     DynamicStandaloneServices,
+    type editor as MonacoEditor,
     IAccessibilityService,
     ICodeEditorService,
     ICommandService,
@@ -24,7 +25,6 @@ import {
     StandaloneEditor,
     StaticServices,
 } from 'mo/monaco';
-import type { editor as MonacoEditor } from 'monaco-editor';
 import { injectable } from 'tsyringe';
 
 type IEditorOverrideServices = MonacoEditor.IEditorOverrideServices;

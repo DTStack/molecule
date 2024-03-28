@@ -1,6 +1,6 @@
 import { BaseAction } from 'mo/glue/baseAction';
 import { ILocale } from 'mo/models/locale';
-import { IQuickInputService, localize, QuickPickInput, ServicesAccessor } from 'mo/monaco';
+import { CATEGORIES, IQuickInputService, localize, QuickPickInput, ServicesAccessor } from 'mo/monaco';
 import { IMoleculeContext } from 'mo/types';
 import { KeyCode, KeyMod } from 'monaco-editor';
 
@@ -10,9 +10,9 @@ export default class QuickSelectLocaleAction extends BaseAction {
     constructor(private molecule: IMoleculeContext) {
         super({
             id: QuickSelectLocaleAction.ID,
-            label: 'Select Display Language',
-            title: 'Select Display Language',
-            alias: 'Select Display Language',
+            label: molecule.locale.localize(QuickSelectLocaleAction.ID, 'Select Display Language'),
+            title: molecule.locale.localize(QuickSelectLocaleAction.ID, 'Select Display Language'),
+            category: CATEGORIES.Preferences,
             precondition: undefined,
             f1: true,
             keybinding: {

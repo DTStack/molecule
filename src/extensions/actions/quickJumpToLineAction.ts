@@ -1,16 +1,17 @@
 import { BaseAction } from 'mo/glue/baseAction';
-import { IQuickInputService, KeyChord, KeyCode, KeyMod, localize, type ServicesAccessor } from 'mo/monaco';
+import { CATEGORIES, IQuickInputService, KeyChord, KeyCode, KeyMod, type ServicesAccessor } from 'mo/monaco';
 import { type IMoleculeContext, KeybindingWeight } from 'mo/types';
 
 export default class QuickJumpToLineAction extends BaseAction {
     static readonly ID = 'workbench.action.jumpToLine';
     static PREFIX = ':';
 
-    constructor(private ctx: IMoleculeContext) {
+    constructor(private molecule: IMoleculeContext) {
         super({
             id: QuickJumpToLineAction.ID,
-            label: localize('jumpToLine.label', 'Jump To Line'),
-            title: localize('jumpToLine.label', 'Jump To Line'),
+            label: molecule.locale.localize(QuickJumpToLineAction.ID, 'Jump To Line'),
+            title: molecule.locale.localize(QuickJumpToLineAction.ID, 'Jump To Line'),
+            category: CATEGORIES.Developer,
             alias: 'Jump To Line',
             precondition: undefined,
             f1: true,

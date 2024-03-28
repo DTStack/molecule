@@ -1,5 +1,5 @@
 import { BaseAction } from 'mo/glue/baseAction';
-import { KeyChord, KeyCode, KeyMod } from 'mo/monaco';
+import { CATEGORIES, KeyChord, KeyCode, KeyMod } from 'mo/monaco';
 import { IMoleculeContext, KeybindingWeight } from 'mo/types';
 
 export class QuickAccessSettingsAction extends BaseAction {
@@ -10,6 +10,7 @@ export class QuickAccessSettingsAction extends BaseAction {
             id: QuickAccessSettingsAction.ID,
             label: molecule.locale.localize('activityBar.item.setting', 'Settings'),
             title: molecule.locale.localize('activityBar.item.setting', 'Settings'),
+            category: CATEGORIES.Preferences,
             alias: 'Open Settings (JSON)',
             precondition: undefined,
             f1: true,

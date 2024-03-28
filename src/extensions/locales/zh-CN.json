@@ -78,6 +78,8 @@
         "statusBar.item.notification": "通知",
         "statusBar.item.selection": "行 ${i}，列 ${i}",
         "cannotRunGotoLine": "先打开文本编辑器，然后跳转到行",
+        "workbench.action.selectLocale": "选择界面语言",
+        "workbench.action.jumpToLine": "跳转到行",
         "commandWithCategory": "${i}: ${i}"
     }
 }

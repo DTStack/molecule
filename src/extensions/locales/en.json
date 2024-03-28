@@ -77,6 +77,8 @@
         "statusBar.contextMenu.hide": "Hide Status Bar",
         "statusBar.item.lineInfo": "Editor Selection",
         "statusBar.item.selection": "Ln ${i},Col ${i}",
+        "workbench.action.selectLocale": "Select Display Language",
+        "workbench.action.jumpToLine": "Jump To Line",
         "cannotRunGotoLine": "Open a text editor first to go to a line.",
         "commandWithCategory": "${i}: ${i}"
     }

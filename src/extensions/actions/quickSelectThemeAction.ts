@@ -1,5 +1,6 @@
 import { BaseAction } from 'mo/glue/baseAction';
 import {
+    CATEGORIES,
     IQuickInputService,
     KeyChord,
     KeyCode,
@@ -18,6 +19,7 @@ export default class QuickSelectThemeAction extends BaseAction {
             id: QuickSelectThemeAction.ID,
             label: ctx.locale.localize('activityBar.item.colorTheme', 'Color Theme'),
             title: ctx.locale.localize('activityBar.item.colorTheme', 'Color Theme'),
+            category: CATEGORIES.Preferences,
             alias: 'Color Theme',
             precondition: undefined,
             f1: true,
@@ -60,10 +62,7 @@ export default class QuickSelectThemeAction extends BaseAction {
 
             quickPick.items = picks;
             // TODO: Better to use molecule's localize
-            quickPick.placeholder = localize(
-                'themes.selectTheme',
-                'Select Color Theme (Up/Down Keys to Preview)'
-            );
+            quickPick.placeholder = localize('themes.selectTheme', 'Select Color Theme (Up/Down Keys to Preview)');
             quickPick.activeItems = [picks[autoFocusIndex] as IColorTheme];
             quickPick.canSelectMany = false;
             quickPick.onDidAccept(() => {

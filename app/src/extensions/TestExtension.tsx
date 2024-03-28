@@ -220,6 +220,8 @@ export const TestExtension: IExtension = {
                         language: (() => {
                             const name = treeNode.name;
                             if (typeof name !== 'string') return 'plain';
+                            if (name.endsWith('.md')) return 'markdown';
+                            if (name.endsWith('.yml')) return 'yml';
                             if (name.endsWith('.js') || name.endsWith('.ts')) return 'typescript';
                             if (name.endsWith('.json')) return 'json';
                             if (name.endsWith('.scss')) return 'css';

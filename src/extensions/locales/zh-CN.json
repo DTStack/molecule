@@ -77,6 +77,7 @@
         "statusBar.item.lineInfo": "编辑器选择",
         "statusBar.item.notification": "通知",
         "statusBar.item.selection": "行 ${i}，列 ${i}",
-        "cannotRunGotoLine": "先打开文本编辑器，然后跳转到行"
+        "cannotRunGotoLine": "先打开文本编辑器，然后跳转到行",
+        "commandWithCategory": "${i}: ${i}"
     }
 }

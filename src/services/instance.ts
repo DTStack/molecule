@@ -4,7 +4,7 @@ import Container from 'mo/client/container';
 import { APP_PREFIX } from 'mo/const';
 import defaultExtensions from 'mo/extensions';
 import { GlobalEvent } from 'mo/glue';
-import { registerGotoLineQuickAccessProvider } from 'mo/monaco/override';
+import { registerCommandsQuickAccessProvider, registerGotoLineQuickAccessProvider } from 'mo/monaco/override';
 import type { IExtension } from 'mo/types';
 import { getValue } from 'mo/utils/storage';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
@@ -189,11 +189,14 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
 
     private overrideQuickAccessProviders() {
         registerGotoLineQuickAccessProvider(this.getServices());
+        registerCommandsQuickAccessProvider(this.getServices());
     }
 
     public render = (container?: HTMLElement | null) => {
         if (!container) return null;
         const services = this.getServices();
+        // override QuickAccess Providers
+        this.overrideQuickAccessProviders();
         services.monaco.initWorkspace(container);
         services.extension.add(this._config.extensions);
         // load contributes
@@ -206,9 +209,6 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
 
         // activate extensions
         services.extension.activate();
-
-        // override QuickAccess Providers
-        this.overrideQuickAccessProviders();
 
         const root = this.createRootElement();
 

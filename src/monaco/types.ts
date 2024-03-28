@@ -13,6 +13,7 @@ import { OpenerService as MonacoOpenerService } from 'monaco-editor/esm/vs/edito
 import { IModelService as MonacoIModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
 import { IModeService as MonacoIModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
 import { ITextModelService as MonacoITextModelService } from 'monaco-editor/esm/vs/editor/common/services/resolverService';
+import { AbstractEditorCommandsQuickAccessProvider as MonacoAbstractEditorCommandsQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/commandsQuickAccess';
 import { AbstractGotoLineQuickAccessProvider as MonacoAbstractGotoLineQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/gotoLineQuickAccess';
 import {
     SimpleEditorModelResolverService as MonacoSimpleEditorModelResolverService,
@@ -40,7 +41,11 @@ import {
     IContextKeyService as MonacoIContextKeyService,
 } from 'monaco-editor/esm/vs/platform/contextkey/common/contextkey';
 import { IContextViewService as MonacoIContextViewService } from 'monaco-editor/esm/vs/platform/contextview/browser/contextView';
-import { IInstantiationService as MonacoIInstantiationService } from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
+import { IDialogService as MonacoIDialogService } from 'monaco-editor/esm/vs/platform/dialogs/common/dialogs';
+import {
+    _util as _monacoUtil,
+    IInstantiationService as MonacoIInstantiationService,
+} from 'monaco-editor/esm/vs/platform/instantiation/common/instantiation';
 import { ServiceCollection as MonacoServiceCollection } from 'monaco-editor/esm/vs/platform/instantiation/common/serviceCollection';
 import { IKeybindingService as MonacoIKeybindingService } from 'monaco-editor/esm/vs/platform/keybinding/common/keybinding';
 import { KeybindingsRegistry as MonacoKeybindingsRegistry } from 'monaco-editor/esm/vs/platform/keybinding/common/keybindingsRegistry';
@@ -55,7 +60,35 @@ import {
 } from 'monaco-editor/esm/vs/platform/quickinput/common/quickAccess';
 import { IQuickInputService as MonacoIQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 import { Registry as MonacoRegistry } from 'monaco-editor/esm/vs/platform/registry/common/platform';
+import { ITelemetryService as MonacoITelemetryService } from 'monaco-editor/esm/vs/platform/telemetry/common/telemetry';
 
+export const _util: {
+    serviceIds: Map<string, ServiceIdentifier<any>>;
+    DI_TARGET: '$di$target';
+    DI_DEPENDENCIES: '$di$dependencies';
+} = _monacoUtil;
+
+// TODO
+type ICommandsQuickAccessOptions = any;
+type ITelemetryService = any;
+type IDialogService = any;
+
+interface AbstractEditorCommandsQuickAccessProvider {
+    PREFIX: string;
+    new (
+        options: ICommandsQuickAccessOptions,
+        instantiationService: IInstantiationService,
+        keybindingService: IKeybindingService,
+        commandService: ICommandService,
+        telemetryService: ITelemetryService,
+        dialogService: IDialogService
+    ): {
+        getCodeEditorCommandPicks(): ICommandQuickPick[];
+    };
+}
+
+export const AbstractEditorCommandsQuickAccessProvider: AbstractEditorCommandsQuickAccessProvider =
+    MonacoAbstractEditorCommandsQuickAccessProvider;
 export const AbstractGotoLineQuickAccessProvider = MonacoAbstractGotoLineQuickAccessProvider;
 
 export interface Disposable extends IDisposable {
@@ -199,6 +232,7 @@ const MenuRegistry: {
      */
     appendMenuItems(items: Iterable<{ id: MenuId; item: IMenuItem | ISubmenuItem }>): IDisposable;
     appendMenuItem(menu: MenuId, item: IMenuItem | ISubmenuItem): IDisposable;
+    getCommands(): Map<string, IMenuItem | ISubmenuItem>;
 } = MonacoMenuRegistry;
 
 interface MenuId {
@@ -338,6 +372,12 @@ const IInstantiationService: IInstantiationService = MonacoIInstantiationService
 type ICommandService = any;
 const ICommandService: ICommandService = MonacoICommandService;
 
+type ITelemetryService = any;
+export const ITelemetryService: ITelemetryService = MonacoITelemetryService;
+
+type IDialogService = any;
+export const IDialogService: IDialogService = MonacoIDialogService;
+
 type ServiceCollection = any;
 const ServiceCollection: ServiceCollection = MonacoServiceCollection;
 
@@ -354,6 +394,16 @@ const IOpenerService: ServiceIdentifier<IOpenerService> = MonacoIOpenerService;
 
 type QuickInputService = any;
 const QuickInputService: QuickInputService = MonacoQuickInputService;
+
+// TODO
+type IPickerQuickAccessItem = {
+    label: string;
+};
+
+export interface ICommandQuickPick extends IPickerQuickAccessItem {
+    commandId: string;
+    commandAlias?: string;
+}
 
 export {
     Color,

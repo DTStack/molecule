@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import { useConnector } from 'mo/client/hooks';
 import type { editor } from 'mo/monaco';
 
-import MonacoEditor from '../monaco';
+import Progress from '../progress';
 import variables from './index.scss';
+
+const MonacoEditor = lazy(() => import('../monaco'));
 
 export default function Output() {
     const output = useConnector('output');
@@ -18,22 +20,24 @@ export default function Output() {
     }, [output.value]);
 
     return (
-        <MonacoEditor
-            className={variables.output}
-            options={{
-                readOnly: true,
-                lineDecorationsWidth: 0,
-                lineNumbers: 'off',
-                minimap: {
-                    enabled: false,
-                },
-                automaticLayout: true,
-                scrollBeyondLastLine: false,
-                contextmenu: false,
-            }}
-            instance={instance.current}
-            value={output.value}
-            onMount={(editor) => (instance.current = editor)}
-        />
+        <Suspense fallback={<Progress active />}>
+            <MonacoEditor
+                className={variables.output}
+                options={{
+                    readOnly: true,
+                    lineDecorationsWidth: 0,
+                    lineNumbers: 'off',
+                    minimap: {
+                        enabled: false,
+                    },
+                    automaticLayout: true,
+                    scrollBeyondLastLine: false,
+                    contextmenu: false,
+                }}
+                instance={instance.current}
+                value={output.value}
+                onMount={(editor) => (instance.current = editor)}
+            />
+        </Suspense>
     );
 }

@@ -1,8 +1,7 @@
 import { BaseController } from 'mo/glue';
 import type { LayoutService } from 'mo/services/layout';
+import type { PosType } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
-
-import type { PosType } from '..';
 
 export interface ILayoutController {
     onSideChange: (pos: PosType[]) => void;

@@ -52,8 +52,10 @@ export class LocaleService extends BaseService<LocaleModel> {
             draft.current = id;
         });
         // ===================== effects =====================
-        this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
-        setValue(LocaleService.STORE_KEY, id.toString());
+        if (prev !== this.getCurrent()) {
+            this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
+            setValue(LocaleService.STORE_KEY, id.toString());
+        }
     }
 
     public add(locale: Arraylize<ILocale>): void {

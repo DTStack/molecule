@@ -15,7 +15,6 @@ export { default as Input, type IInputProps } from './input';
 export { default as LineInfo, type ILineInfoProps } from './lineInfo';
 export { default as LocaleNotification } from './localeNotification';
 export { default as Menu, type IMenuProps } from './menu';
-export { default as MonacoEditor, type IEditorProps } from './monaco';
 export { default as NotificationItem, type INotificationItemProps } from './notificationItem';
 export { default as Output } from './output';
 export { default as PanelItem, type IPanelItemProps } from './panelItem';

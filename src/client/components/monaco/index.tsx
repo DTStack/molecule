@@ -21,6 +21,9 @@ export interface IEditorProps {
     onModelMount?: (model: editor.ITextModel) => void;
 }
 
+/**
+ * Monaco Editor should used by dynamic import
+ */
 export default function MonacoEditor({
     className,
     style,
@@ -69,8 +72,10 @@ export default function MonacoEditor({
         if (instance) {
             if (!model || model.isDisposed()) {
                 const model = editor.createModel(value || '', language);
-                instance.setModel(model);
-                onModelMount?.(model);
+                if (model) {
+                    instance.setModel(model);
+                    onModelMount?.(model);
+                }
             } else {
                 const currentModel = instance.getModel();
                 if (model === currentModel) return;

@@ -3,6 +3,8 @@ import { defineConfig } from 'vite';
 import mockDevServerPlugin from 'vite-plugin-mock-dev-server';
 import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
+import { esbuildPluginMonacoEditorNls } from './plugin';
+
 export default defineConfig({
     plugins: [
         react({
@@ -16,6 +18,11 @@ export default defineConfig({
             include: 'app/mock/**/*.mock.{ts,js,cjs,mjs,json,json5}',
         }),
     ],
+    optimizeDeps: {
+        esbuildOptions: {
+            plugins: [esbuildPluginMonacoEditorNls()],
+        },
+    },
     server: {
         cors: false,
         proxy: {

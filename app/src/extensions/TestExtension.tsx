@@ -1,5 +1,4 @@
 import { FileTypes, IContributeType, IExtension, IMoleculeContext, tree } from '@dtinsight/molecule';
-import { QuickAccessCommandAction } from '@dtinsight/molecule/esm/extensions/actions/QuickAccessCommandAction';
 import { debounce } from 'lodash-es';
 
 import TestPane from '../components/testPane';
@@ -197,12 +196,11 @@ export const TestExtension: IExtension = {
         });
 
         molecule.menuBar.subscribe('APP_DEBUG_ICON', () => {
-            molecule.action.execute(QuickAccessCommandAction.ID);
+            molecule.action.execute('menuBar.item.commandPalette');
         });
 
         molecule.editor.onClose((tabs) => {
-            molecule.layout.setNotification(true);
-            molecule.notification.add({
+            molecule.notification.open({
                 id: `close_tab_${new Date().valueOf()}`,
                 value: `关闭了 ${tabs.length} 个 tab`,
             });

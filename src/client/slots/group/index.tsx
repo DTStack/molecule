@@ -1,9 +1,9 @@
-import { useRef } from 'react';
+import { lazy, Suspense, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
+import { Progress } from 'mo/client/components';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
 import Header from 'mo/client/components/header';
-import MonacoEditor from 'mo/client/components/monaco';
 import Tab from 'mo/client/components/tab';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type { editor } from 'mo/monaco';
@@ -33,6 +33,8 @@ export interface IGroupProps {
     onDragOver?: (from: TabGroup, to: TabGroup) => void;
     onDrop?: (from: TabGroup, to: TabGroup) => void;
 }
+
+const MonacoEditor = lazy(() => import('../../components/monaco'));
 
 export default function Group({
     group,
@@ -123,18 +125,20 @@ export default function Group({
                 {tab.render ? (
                     tab.render?.(tab)
                 ) : (
-                    <MonacoEditor
-                        options={{
-                            ...options,
-                            automaticLayout: true,
-                        }}
-                        instance={group.editorInstance}
-                        model={tab?.model}
-                        value={tab?.value}
-                        language={tab?.language}
-                        onMount={handleMount}
-                        onModelMount={handleModelMount}
-                    />
+                    <Suspense fallback={<Progress active />}>
+                        <MonacoEditor
+                            options={{
+                                ...options,
+                                automaticLayout: true,
+                            }}
+                            instance={group.editorInstance}
+                            model={tab?.model}
+                            value={tab?.value}
+                            language={tab?.language}
+                            onMount={handleMount}
+                            onModelMount={handleModelMount}
+                        />
+                    </Suspense>
                 )}
             </div>
         </div>

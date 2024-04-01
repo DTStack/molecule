@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Display, Split } from 'mo/client/components';
 import { useAutoPos, useConnector, useDynamic } from 'mo/client/hooks';
 import type { ILayoutController } from 'mo/controllers/layout';
@@ -19,14 +20,20 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
     const Editor = useDynamic('editor');
     const ContextMenu = useDynamic('contextMenu');
 
+    const ref = useRef<HTMLElement>(null);
+
     const [sideRef, sidePos, sideChange] = useAutoPos<HTMLDivElement>(layout.splitPanePos);
     const [editorRef, editorPos, editorChange] = useAutoPos<HTMLDivElement>(
         layout.panel.panelMaximized ? [0, 'auto'] : layout.horizontalSplitPanePos,
         'horizontal'
     );
 
+    useEffect(() => {
+        ref.current?.focus();
+    }, []);
+
     return (
-        <main className={variables.container} tabIndex={0}>
+        <main className={variables.container} tabIndex={0} ref={ref}>
             {ContextMenu}
             <Display visible={!layout.menuBar.hidden}>{MenuBar}</Display>
             <section className={variables.main}>

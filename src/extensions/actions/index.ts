@@ -1,5 +1,6 @@
 import { IBottomActivityBarItem, IContributeType, type IExtension, UniqueId } from 'mo/types';
 
+import CopyLineUpAction from './copyLineUp';
 import { QuickAccessCommandAction } from './quickAccessCommandAction';
 import { QuickAccessSettingsAction } from './quickAccessSettingsAction';
 import QuickJumpToLineAction from './quickJumpToLineAction';
@@ -7,12 +8,19 @@ import QuickSelectLocaleAction from './quickSelectLocaleAction';
 import QuickSelectThemeAction from './quickSelectThemeAction';
 import QuickTogglePanelAction from './quickTogglePanelAction';
 import QuickToggleSidebarAction from './quickToggleSideBarAction';
+import RedoAction from './redo';
+import SelectAllAction from './selectAll';
+import UndoAction from './undo';
 
 export const ExtendsActions: IExtension = {
     id: 'ExtendsActions',
     name: 'Extend The Default Actions',
     contributes: {
         [IContributeType.Commands]: [
+            UndoAction,
+            RedoAction,
+            SelectAllAction,
+            CopyLineUpAction,
             QuickSelectThemeAction,
             QuickTogglePanelAction,
             QuickToggleSidebarAction,
@@ -32,8 +40,10 @@ export const ExtendsActions: IExtension = {
         updateMenuKeybinding(QuickAccessCommandAction.ID);
         updateMenuKeybinding(QuickTogglePanelAction.ID);
         updateMenuKeybinding(QuickToggleSidebarAction.ID);
-
-        // updateContextMenuKeybinding(QuickTogglePanelAction.ID, 'panel');
+        updateMenuKeybinding(UndoAction.ID);
+        updateMenuKeybinding(RedoAction.ID);
+        updateMenuKeybinding(SelectAllAction.ID);
+        updateMenuKeybinding(CopyLineUpAction.ID);
 
         function appendActionToMenu(ctor: { ID: string }) {
             const keybinding = molecule.action.queryGlobalKeybinding(ctor.ID);

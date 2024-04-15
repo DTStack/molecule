@@ -19,6 +19,7 @@ export default defineConfig({
         }),
     ],
     optimizeDeps: {
+        force: true,
         esbuildOptions: {
             plugins: [esbuildPluginMonacoEditorNls()],
         },

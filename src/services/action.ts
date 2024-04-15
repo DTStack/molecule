@@ -135,9 +135,7 @@ export class ActionService extends BaseService<ActionModel> {
                 KeybindingsRegistry.registerKeybindingRule({
                     ...item,
                     id: command.id,
-                    when: command.precondition
-                        ? ContextKeyExpr.and(command.precondition, item.when)
-                        : item.when,
+                    when: command.precondition ? ContextKeyExpr.and(command.precondition, item.when) : item.when,
                 });
             }
         } else if (keybinding) {
@@ -151,13 +149,16 @@ export class ActionService extends BaseService<ActionModel> {
         }
 
         this.dispatch((draft) => {
-            draft.actions.push(disposables);
+            draft.actions.push(command.id);
         });
     }
 
+    public isAction(key: UniqueId) {
+        return this.state.actions.includes(key);
+    }
+
     public queryGlobalKeybinding(id: UniqueId) {
-        const defaultKeybindings: ResolvedKeybindingItem[] =
-            KeybindingsRegistry.getDefaultKeybindings();
+        const defaultKeybindings: ResolvedKeybindingItem[] = KeybindingsRegistry.getDefaultKeybindings();
         const globalKeybindings = defaultKeybindings.filter((key) => !key.when);
 
         // 'Cause one action can occupy multiply keybinding, so there should be filter rather than find

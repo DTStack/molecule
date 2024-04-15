@@ -1,5 +1,5 @@
-import type { IDisposable } from 'mo/monaco';
+import type { UniqueId } from '../types';
 
 export class ActionModel {
-    constructor(public actions: IDisposable[] = []) {}
+    constructor(public actions: UniqueId[] = []) {}
 }

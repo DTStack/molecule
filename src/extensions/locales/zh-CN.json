@@ -55,6 +55,8 @@
         "menuBar.item.undo": "撤销",
         "notification.item.empty": "无新通知",
         "menuBar.item.cut": "剪切",
+        "menuBar.item.copy": "复制",
+        "menuBar.item.paste": "粘贴",
         "notification.item.international": "要使显示语言更改生效, 需要重新加载页面。",
         "notification.item.internationalButton": "确认重新加载",
         "notification.item.internationalDescription": "按下确认按钮来重新加载页面并更改显示语言。",

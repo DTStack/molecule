@@ -55,6 +55,8 @@
         "menuBar.item.selection": "Selection",
         "menuBar.item.selectAll": "Select All",
         "menuBar.item.cut": "Cut",
+        "menuBar.item.copy": "Copy",
+        "menuBar.item.paste": "Paste",
         "notification.item.empty": "No New Notifications",
         "notification.item.international": "A reload is required for the change in display language to take effect.",
         "notification.item.internationalButton": "Confirm Reload",

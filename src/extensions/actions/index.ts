@@ -1,6 +1,10 @@
-import { IBottomActivityBarItem, IContributeType, type IExtension, UniqueId } from 'mo/types';
+import { IBottomActivityBarItem, IContributeType, type IExtension, IMenuItemProps, UniqueId } from 'mo/types';
+import { concatMenu } from 'mo/utils';
 
+import CopyAction from './copy';
 import CopyLineUpAction from './copyLineUp';
+import CutAction from './cut';
+import PasteAction from './paste';
 import { QuickAccessCommandAction } from './quickAccessCommandAction';
 import { QuickAccessSettingsAction } from './quickAccessSettingsAction';
 import QuickJumpToLineAction from './quickJumpToLineAction';
@@ -21,6 +25,9 @@ export const ExtendsActions: IExtension = {
             RedoAction,
             SelectAllAction,
             CopyLineUpAction,
+            CutAction,
+            CopyAction,
+            PasteAction,
             QuickSelectThemeAction,
             QuickTogglePanelAction,
             QuickToggleSidebarAction,
@@ -32,9 +39,15 @@ export const ExtendsActions: IExtension = {
     },
     activate: function (molecule): void {
         // append actions into settings' menu
-        appendActionToMenu(QuickAccessCommandAction);
-        appendActionToMenu(QuickAccessSettingsAction);
-        appendActionToMenu(QuickSelectThemeAction);
+        appendActionToSettingMenu(QuickAccessCommandAction);
+        appendActionToSettingMenu(QuickAccessSettingsAction);
+        appendActionToSettingMenu(QuickSelectThemeAction);
+
+        appendActionGroupBy(molecule.builtin.getConstants().MENUBAR_ITEM_EDIT)
+            .with(CutAction)
+            .with(CopyAction)
+            .with(PasteAction)
+            .exhaust();
 
         // update menu's keybinding
         updateMenuKeybinding(QuickAccessCommandAction.ID);
@@ -44,8 +57,9 @@ export const ExtendsActions: IExtension = {
         updateMenuKeybinding(RedoAction.ID);
         updateMenuKeybinding(SelectAllAction.ID);
         updateMenuKeybinding(CopyLineUpAction.ID);
+        updateMenuKeybinding(CutAction.ID);
 
-        function appendActionToMenu(ctor: { ID: string }) {
+        function appendActionToSettingMenu(ctor: { ID: string }) {
             const keybinding = molecule.action.queryGlobalKeybinding(ctor.ID);
             // Add Settings into setting's menus
             molecule.activityBar.update<IBottomActivityBarItem>(
@@ -80,6 +94,29 @@ export const ExtendsActions: IExtension = {
                     keybinding: molecule.action.convertSimpleKeybindingToString(keybinding),
                 });
             }
+        }
+
+        function appendActionGroupBy(parentId: UniqueId) {
+            const items: IMenuItemProps[] = [];
+            return new (class {
+                with = (ctor: { ID: string }) => {
+                    const keybinding = molecule.action.queryGlobalKeybinding(ctor.ID);
+                    items.push({
+                        id: ctor.ID,
+                        name: molecule.locale.localize(ctor.ID, ctor.ID),
+                        keybinding: keybinding
+                            ? molecule.action.convertSimpleKeybindingToString(keybinding)
+                            : undefined,
+                    });
+                    return this;
+                };
+                exhaust = () => {
+                    const menuItems = concatMenu(molecule.menuBar.get(parentId)?.children || [], items);
+                    molecule.menuBar.update(parentId, () => ({
+                        children: menuItems,
+                    }));
+                };
+            })();
         }
     },
 };

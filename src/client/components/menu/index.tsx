@@ -37,7 +37,15 @@ export default function Menu({ data, onClick }: IMenuProps) {
                 <span className={variables.label}>
                     {menuItem.render?.(menuItem) || menuItem.name || menuItem.title}
                 </span>
-                {menuItem.keybinding && <span className={variables.keybinding}>{menuItem.keybinding}</span>}
+                {menuItem.keybinding && (
+                    <span className={variables.keybinding}>
+                        {menuItem.keybinding.split('').map((item) => (
+                            <span key={item} className={variables.keybindingItem}>
+                                {item}
+                            </span>
+                        ))}
+                    </span>
+                )}
             </MenuItem>
         );
     }

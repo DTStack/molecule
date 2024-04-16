@@ -1,9 +1,17 @@
 import { IBottomActivityBarItem, IContributeType, type IExtension, IMenuItemProps, UniqueId } from 'mo/types';
 import { concatMenu } from 'mo/utils';
 
+import AddCursorAboveAction from './addCursorAbove';
+import AddCursorBelowAction from './addCursorBelow';
+import AddSelectionToNextFindMatchAction from './addSelectionToNextFindMatchAction';
 import CopyAction from './copy';
+import CopyLineDownAction from './copyLineDown';
 import CopyLineUpAction from './copyLineUp';
 import CutAction from './cut';
+import ExpandSelectionAction from './expandSelection';
+import FindAction from './find';
+import MoveLineDownAction from './moveLineDown';
+import MoveLineUpAction from './moveLineUp';
 import PasteAction from './paste';
 import { QuickAccessCommandAction } from './quickAccessCommandAction';
 import { QuickAccessSettingsAction } from './quickAccessSettingsAction';
@@ -13,7 +21,12 @@ import QuickSelectThemeAction from './quickSelectThemeAction';
 import QuickTogglePanelAction from './quickTogglePanelAction';
 import QuickToggleSidebarAction from './quickToggleSideBarAction';
 import RedoAction from './redo';
+import ReplaceAction from './replace';
 import SelectAllAction from './selectAll';
+import SelectHighlightsAction from './selectHighlightsAction';
+import ShrinkSelectionAction from './shrinkSelection';
+import ToggleBlockCommentAction from './toggleBlockComment';
+import ToggleLineCommentAction from './toggleLineComment';
 import UndoAction from './undo';
 
 export const ExtendsActions: IExtension = {
@@ -25,9 +38,22 @@ export const ExtendsActions: IExtension = {
             RedoAction,
             SelectAllAction,
             CopyLineUpAction,
+            CopyLineDownAction,
+            MoveLineUpAction,
+            MoveLineDownAction,
             CutAction,
             CopyAction,
             PasteAction,
+            FindAction,
+            ReplaceAction,
+            AddCursorAboveAction,
+            AddCursorBelowAction,
+            ExpandSelectionAction,
+            ShrinkSelectionAction,
+            ToggleLineCommentAction,
+            ToggleBlockCommentAction,
+            AddSelectionToNextFindMatchAction,
+            SelectHighlightsAction,
             QuickSelectThemeAction,
             QuickTogglePanelAction,
             QuickToggleSidebarAction,
@@ -49,14 +75,42 @@ export const ExtendsActions: IExtension = {
             .with(PasteAction)
             .exhaust();
 
+        appendActionGroupBy(molecule.builtin.getConstants().MENUBAR_ITEM_EDIT)
+            .with(FindAction)
+            .with(ReplaceAction)
+            .exhaust();
+
+        appendActionGroupBy(molecule.builtin.getConstants().MENUBAR_ITEM_EDIT)
+            .with(ToggleLineCommentAction)
+            .with(ToggleBlockCommentAction)
+            .exhaust();
+
+        appendActionGroupBy(molecule.builtin.getConstants().MENUBAR_ITEM_SELECTION)
+            .with(SelectAllAction)
+            .with(ExpandSelectionAction)
+            .with(ShrinkSelectionAction)
+            .exhaust();
+
+        appendActionGroupBy(molecule.builtin.getConstants().MENUBAR_ITEM_SELECTION)
+            .with(CopyLineUpAction)
+            .with(CopyLineDownAction)
+            .with(MoveLineUpAction)
+            .with(MoveLineDownAction)
+            .exhaust();
+
+        appendActionGroupBy(molecule.builtin.getConstants().MENUBAR_ITEM_SELECTION)
+            .with(AddCursorAboveAction)
+            .with(AddCursorBelowAction)
+            .with(AddSelectionToNextFindMatchAction)
+            .with(SelectHighlightsAction)
+            .exhaust();
+
         // update menu's keybinding
         updateMenuKeybinding(QuickAccessCommandAction.ID);
         updateMenuKeybinding(QuickTogglePanelAction.ID);
         updateMenuKeybinding(QuickToggleSidebarAction.ID);
         updateMenuKeybinding(UndoAction.ID);
         updateMenuKeybinding(RedoAction.ID);
-        updateMenuKeybinding(SelectAllAction.ID);
-        updateMenuKeybinding(CopyLineUpAction.ID);
         updateMenuKeybinding(CutAction.ID);
 
         function appendActionToSettingMenu(ctor: { ID: string }) {
@@ -101,6 +155,7 @@ export const ExtendsActions: IExtension = {
             return new (class {
                 with = (ctor: { ID: string }) => {
                     const keybinding = molecule.action.queryGlobalKeybinding(ctor.ID);
+
                     items.push({
                         id: ctor.ID,
                         name: molecule.locale.localize(ctor.ID, ctor.ID),

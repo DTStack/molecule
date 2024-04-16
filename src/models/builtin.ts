@@ -75,8 +75,6 @@ export class BuiltinModel {
         MENUBAR_ITEM_STATUSBAR: 'menuBar.item.statusBar',
         MENUBAR_ITEM_PANEL: 'menuBar.item.panel',
         MENUBAR_ITEM_SIDEBAR: 'menuBar.item.sidebar',
-        MENUBAR_ITEM_SELECT_ALL: 'menuBar.item.selectAll',
-        MENUBAR_ITEM_COPY_LINE_UP: 'menuBar.item.copyLineUp',
         MENUBAR_ITEM_UNDO: 'menuBar.item.undo',
         MENUBAR_ITEM_REDO: 'menuBar.item.redo',
         MENUBAR_ITEM_CREATE_FILE: 'menuBar.item.createFile',
@@ -127,10 +125,7 @@ export class BuiltinModel {
             <IMenuItemProps[]>[
                 {
                     id: this.constants.STATUSBAR_CONTEXTMENU_HIDE,
-                    name: this.localize(
-                        this.constants.STATUSBAR_CONTEXTMENU_HIDE,
-                        'Hide Status Bar'
-                    ),
+                    name: this.localize(this.constants.STATUSBAR_CONTEXTMENU_HIDE, 'Hide Status Bar'),
                 },
             ],
         MENUBAR_ITEMS: () =>
@@ -141,10 +136,7 @@ export class BuiltinModel {
                     children: [
                         {
                             id: this.constants.MENUBAR_ITEM_CREATE_FILE,
-                            name: this.localize(
-                                this.constants.MENUBAR_ITEM_CREATE_FILE,
-                                'New File'
-                            ),
+                            name: this.localize(this.constants.MENUBAR_ITEM_CREATE_FILE, 'New File'),
                         },
                         {
                             id: this.constants.MENUBAR_ITEM_OPEN,
@@ -169,22 +161,7 @@ export class BuiltinModel {
                 {
                     id: this.constants.MENUBAR_ITEM_SELECTION,
                     name: this.localize(this.constants.MENUBAR_ITEM_SELECTION, 'Selection'),
-                    children: [
-                        {
-                            id: this.constants.MENUBAR_ITEM_SELECT_ALL,
-                            name: this.localize(
-                                this.constants.MENUBAR_ITEM_SELECT_ALL,
-                                'Select All'
-                            ),
-                        },
-                        {
-                            id: this.constants.MENUBAR_ITEM_COPY_LINE_UP,
-                            name: this.localize(
-                                this.constants.MENUBAR_ITEM_COPY_LINE_UP,
-                                'Copy Line Up'
-                            ),
-                        },
-                    ],
+                    children: [],
                 },
                 {
                     id: this.constants.MENUBAR_ITEM_VIEW,
@@ -192,10 +169,7 @@ export class BuiltinModel {
                     children: [
                         {
                             id: this.constants.MENUBAR_ITEM_COMMAND_PALETTE,
-                            name: this.localize(
-                                this.constants.MENUBAR_ITEM_COMMAND_PALETTE,
-                                'Command Palette'
-                            ),
+                            name: this.localize(this.constants.MENUBAR_ITEM_COMMAND_PALETTE, 'Command Palette'),
                         },
                         {
                             id: this.constants.MENUBAR_ITEM_OPEN_VIEW,
@@ -203,52 +177,31 @@ export class BuiltinModel {
                         },
                         {
                             id: this.constants.MENUBAR_ITEM_APPEARANCE,
-                            name: this.localize(
-                                this.constants.MENUBAR_ITEM_APPEARANCE,
-                                'Appearance'
-                            ),
+                            name: this.localize(this.constants.MENUBAR_ITEM_APPEARANCE, 'Appearance'),
                             children: [
                                 {
                                     id: this.constants.MENUBAR_ITEM_MENU,
-                                    name: this.localize(
-                                        this.constants.MENUBAR_ITEM_MENU,
-                                        'Show Menu Bar'
-                                    ),
+                                    name: this.localize(this.constants.MENUBAR_ITEM_MENU, 'Show Menu Bar'),
                                 },
                                 {
                                     id: this.constants.MENUBAR_ITEM_SIDEBAR,
-                                    name: this.localize(
-                                        this.constants.MENUBAR_ITEM_SIDEBAR,
-                                        'Show Side Bar'
-                                    ),
+                                    name: this.localize(this.constants.MENUBAR_ITEM_SIDEBAR, 'Show Side Bar'),
                                 },
                                 {
                                     id: this.constants.MENUBAR_ITEM_AUXILIARY,
-                                    name: this.localize(
-                                        this.constants.MENUBAR_ITEM_AUXILIARY,
-                                        'Show Auxiliary Bar'
-                                    ),
+                                    name: this.localize(this.constants.MENUBAR_ITEM_AUXILIARY, 'Show Auxiliary Bar'),
                                 },
                                 {
                                     id: this.constants.MENUBAR_ITEM_STATUSBAR,
-                                    name: this.localize(
-                                        this.constants.MENUBAR_ITEM_STATUSBAR,
-                                        'Show Status Bar'
-                                    ),
+                                    name: this.localize(this.constants.MENUBAR_ITEM_STATUSBAR, 'Show Status Bar'),
                                 },
                                 {
                                     id: this.constants.MENUBAR_ITEM_ACTIVITYBAR,
-                                    name: this.localize(
-                                        this.constants.MENUBAR_ITEM_ACTIVITYBAR,
-                                        'Show Activity Bar'
-                                    ),
+                                    name: this.localize(this.constants.MENUBAR_ITEM_ACTIVITYBAR, 'Show Activity Bar'),
                                 },
                                 {
                                     id: this.constants.MENUBAR_ITEM_PANEL,
-                                    name: this.localize(
-                                        this.constants.MENUBAR_ITEM_PANEL,
-                                        'Show Panel'
-                                    ),
+                                    name: this.localize(this.constants.MENUBAR_ITEM_PANEL, 'Show Panel'),
                                 },
                             ],
                         },
@@ -294,10 +247,7 @@ export class BuiltinModel {
             <IMenuItemProps[]>[
                 {
                     id: this.constants.ACTIVITYBAR_CONTEXTMENU_HIDE,
-                    name: this.localize(
-                        this.constants.ACTIVITYBAR_CONTEXTMENU_HIDE,
-                        'Hide Activity Bar'
-                    ),
+                    name: this.localize(this.constants.ACTIVITYBAR_CONTEXTMENU_HIDE, 'Hide Activity Bar'),
                 },
             ],
         EXPLORER_ITEM: () =>
@@ -329,10 +279,7 @@ export class BuiltinModel {
                 {
                     id: this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
                     icon: 'clear-all',
-                    name: this.localize(
-                        this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
-                        'Clear Search Results'
-                    ),
+                    name: this.localize(this.constants.SEARCH_TOOLBAR_CLEAR_ALL, 'Clear Search Results'),
                     group: 'inline',
                     sortIndex: 6,
                 },
@@ -378,10 +325,7 @@ export class BuiltinModel {
             },
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER,
-                name: this.localize(
-                    this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER,
-                    'New Folder'
-                ),
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER, 'New Folder'),
             },
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_RENAME,
@@ -395,10 +339,7 @@ export class BuiltinModel {
         CONTEXTMENU_FILE: () => [
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE,
-                name: this.localize(
-                    this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE,
-                    'Open to the Side'
-                ),
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_OPEN_TO_SIDE, 'Open to the Side'),
             },
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_RENAME,
@@ -412,17 +353,11 @@ export class BuiltinModel {
         CONTEXTMENU_FOLDER_PANEL: () => [
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_ADD_TO_WORKSPACE,
-                name: this.localize(
-                    this.constants.EXPLORER_CONTEXTMENU_ADD_TO_WORKSPACE,
-                    'Add Folder to Workspace...'
-                ),
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_ADD_TO_WORKSPACE, 'Add Folder to Workspace...'),
             },
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_FIND_IN_WORKSPACE,
-                name: this.localize(
-                    this.constants.EXPLORER_CONTEXTMENU_FIND_IN_WORKSPACE,
-                    'Find in Workspace...'
-                ),
+                name: this.localize(this.constants.EXPLORER_CONTEXTMENU_FIND_IN_WORKSPACE, 'Find in Workspace...'),
             },
             {
                 id: this.constants.EXPLORER_CONTEXTMENU_DOWNLOAD,
@@ -440,19 +375,13 @@ export class BuiltinModel {
                 toolbar: [
                     {
                         id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE,
-                        name: this.localize(
-                            this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE,
-                            'New File'
-                        ),
+                        name: this.localize(this.constants.EXPLORER_CONTEXTMENU_CREATE_FILE, 'New File'),
                         group: 'inline',
                         icon: 'new-file',
                     },
                     {
                         id: this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER,
-                        name: this.localize(
-                            this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER,
-                            'New Folder'
-                        ),
+                        name: this.localize(this.constants.EXPLORER_CONTEXTMENU_CREATE_FOLDER, 'New Folder'),
                         group: 'inline',
                         icon: 'new-folder',
                     },
@@ -464,10 +393,7 @@ export class BuiltinModel {
                     },
                     {
                         id: this.constants.EXPLORER_TOOLBAR_COLLAPSE,
-                        name: this.localize(
-                            this.constants.EXPLORER_TOOLBAR_COLLAPSE,
-                            'Collapse all'
-                        ),
+                        name: this.localize(this.constants.EXPLORER_TOOLBAR_COLLAPSE, 'Collapse all'),
                         group: 'inline',
                         icon: 'collapse-all',
                     },
@@ -508,10 +434,7 @@ export class BuiltinModel {
                     },
                     {
                         id: this.constants.EXPLORER_TOOLBAR_CLOSE_ALL,
-                        name: this.localize(
-                            this.constants.EXPLORER_TOOLBAR_CLOSE_ALL,
-                            'Close All Editors'
-                        ),
+                        name: this.localize(this.constants.EXPLORER_TOOLBAR_CLOSE_ALL, 'Close All Editors'),
                         icon: 'close-all',
                         group: 'inline',
                     },
@@ -528,24 +451,15 @@ export class BuiltinModel {
                 },
                 {
                     id: this.constants.EDITOR_CONTEXTMENU_CLOSE_OTHERS,
-                    name: this.localize(
-                        this.constants.EDITOR_CONTEXTMENU_CLOSE_OTHERS,
-                        'Close Others'
-                    ),
+                    name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE_OTHERS, 'Close Others'),
                 },
                 {
                     id: this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT,
-                    name: this.localize(
-                        this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT,
-                        'Close To Right'
-                    ),
+                    name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_RIGHT, 'Close To Right'),
                 },
                 {
                     id: this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_LEFT,
-                    name: this.localize(
-                        this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_LEFT,
-                        'Close To Left'
-                    ),
+                    name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE_TO_LEFT, 'Close To Left'),
                 },
                 {
                     id: this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL,
@@ -562,20 +476,14 @@ export class BuiltinModel {
         NOTIFICATION_CLEAR_ALL: () =>
             <IMenuItemProps>{
                 id: this.constants.NOTIFICATION_TOOLBAR_CLEAR_ALL,
-                title: this.localize(
-                    this.constants.NOTIFICATION_TOOLBAR_CLEAR_ALL,
-                    'Clear All Notifications'
-                ),
+                title: this.localize(this.constants.NOTIFICATION_TOOLBAR_CLEAR_ALL, 'Clear All Notifications'),
                 icon: 'clear-all',
                 group: 'inline',
             },
         NOTIFICATION_HIDE: () =>
             <IMenuItemProps>{
                 id: this.constants.NOTIFICATION_TOOLBAR_HIDE,
-                title: this.localize(
-                    this.constants.NOTIFICATION_TOOLBAR_HIDE,
-                    'Hide Notifications'
-                ),
+                title: this.localize(this.constants.NOTIFICATION_TOOLBAR_HIDE, 'Hide Notifications'),
                 icon: 'chevron-down',
                 group: 'inline',
             },
@@ -583,10 +491,7 @@ export class BuiltinModel {
             <IMenuItemProps[]>[
                 {
                     id: this.constants.EDITOR_CONTEXTMENU_CLOSE_SAVED,
-                    name: this.localize(
-                        this.constants.EDITOR_CONTEXTMENU_CLOSE_SAVED,
-                        'Close Saved'
-                    ),
+                    name: this.localize(this.constants.EDITOR_CONTEXTMENU_CLOSE_SAVED, 'Close Saved'),
                 },
                 {
                     id: this.constants.EDITOR_CONTEXTMENU_CLOSE_ALL,
@@ -632,10 +537,7 @@ export class BuiltinModel {
                 },
                 {
                     id: this.constants.EDITORTREE_TOOLBAR_CLOSE_GROUP,
-                    name: this.localize(
-                        this.constants.EDITORTREE_TOOLBAR_CLOSE_GROUP,
-                        'Close Group Editors'
-                    ),
+                    name: this.localize(this.constants.EDITORTREE_TOOLBAR_CLOSE_GROUP, 'Close Group Editors'),
                     group: 'inline',
                     icon: 'close-all',
                 },

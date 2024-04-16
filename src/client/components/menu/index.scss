@@ -8,10 +8,10 @@ $label: BEMElement($menu, 'label');
 $divider: BEMElement($menu, 'divider');
 $icon: BEMElement($menu, 'icon');
 $keybinding: BEMElement($menu, 'keybinding');
+$keybindingItem: BEMElement($menu, 'keybindingItem');
 $indicator: BEMElement($menu, 'indicator');
 
 $disabled: BEMModifier($item, 'disabled');
-
 
 .#{$container} {
     background-color: var(--menu-background);
@@ -40,7 +40,6 @@ $disabled: BEMModifier($item, 'disabled');
         margin: 0 4px;
         border-radius: 4px;
         user-select: none;
-
 
         &:not(.#{$disabled}) {
             cursor: pointer;
@@ -84,6 +83,9 @@ $disabled: BEMModifier($item, 'disabled');
         flex: 2 1 auto;
         text-align: right;
         margin: 0 16px;
+        display: flex;
+        justify-content: end;
+        gap: 2px;
     }
 
     .#{$indicator} {
@@ -92,15 +94,14 @@ $disabled: BEMModifier($item, 'disabled');
         line-height: 12px;
     }
 
-    >ul {
+    > ul {
         margin: 0;
         padding: 0;
     }
 }
 
-
 .#{$subMenu} {
-    >.rc-menu-submenu-title:focus {
+    > .rc-menu-submenu-title:focus {
         // override global *[tabIndex=0]'s outline style
         outline: none;
         outline-offset: 0;
@@ -131,6 +132,7 @@ $disabled: BEMModifier($item, 'disabled');
     label: $label;
     icon: $icon;
     keybinding: $keybinding;
+    keybindingItem: $keybindingItem;
     indicator: $indicator;
     disabled: $disabled;
 }

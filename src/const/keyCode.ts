@@ -54,4 +54,8 @@ export const KeyCodeString: Partial<{ [key in KeyCode]: string }> = {
     [KeyCode.Backslash]: '\\',
     [KeyCode.BracketRight]: ']',
     [KeyCode.Quote]: '"',
+    [KeyCode.RightArrow]: '→',
+    [KeyCode.LeftArrow]: '←',
+    [KeyCode.UpArrow]: '↑',
+    [KeyCode.DownArrow]: '↓',
 };

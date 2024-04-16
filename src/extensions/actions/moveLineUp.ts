@@ -4,22 +4,22 @@ import { IMoleculeContext, KeybindingWeight } from 'mo/types';
 
 import { isInputEle, isNativeWidget } from '../utils';
 
-export default class CopyLineUpAction extends BaseAction {
-    static readonly ID = 'menuBar.item.copyLineUp';
+export default class MoveLineUpAction extends BaseAction {
+    static readonly ID = 'menuBar.item.moveLineUp';
 
     constructor(private molecule: IMoleculeContext) {
         super({
-            id: CopyLineUpAction.ID,
-            label: molecule.locale.localize('menuBar.item.copyLineUp', 'Copy Line Up'),
-            title: molecule.locale.localize('menuBar.item.copyLineUp', 'Copy Line Up'),
+            id: MoveLineUpAction.ID,
+            label: molecule.locale.localize('menuBar.item.moveLineUp', 'Move Line Up'),
+            title: molecule.locale.localize('menuBar.item.moveLineUp', 'Move Line Up'),
             category: CATEGORIES.Developer,
-            alias: 'Copy Line Up',
+            alias: 'Move Line Up',
             precondition: undefined,
             f1: true,
             keybinding: {
                 when: undefined,
                 weight: KeybindingWeight.WorkbenchContrib,
-                primary: KeyChord(KeyMod.Shift | KeyMod.Alt | KeyCode.UpArrow),
+                primary: KeyChord(KeyMod.Alt | KeyCode.UpArrow),
             },
         });
     }
@@ -28,7 +28,7 @@ export default class CopyLineUpAction extends BaseAction {
             // Proxy action to monaco-editor
             this.molecule.editor
                 .getCurrentGroup()
-                ?.editorInstance?.trigger('copyLineUp', 'editor.action.copyLinesUpAction', null);
+                ?.editorInstance?.trigger('copyLineUp', 'editor.action.moveLinesUpAction', null);
         }
     }
 }

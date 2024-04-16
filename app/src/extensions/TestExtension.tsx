@@ -196,6 +196,7 @@ export const TestExtension: IExtension = {
         });
 
         molecule.menuBar.subscribe('APP_DEBUG_ICON', () => {
+            console.log(molecule.editor.getCurrentGroup()?.editorInstance?.getSupportedActions());
             molecule.action.execute('menuBar.item.commandPalette');
         });
 

@@ -52,6 +52,7 @@ importers:
       immer: registry.npmmirror.com/immer/10.0.3
       lodash-es: 4.17.21
       monaco-editor: 0.31.1
+      monaco-editor-nls: 2.0.0
       normalize.css: 8.0.1
       rc-dropdown: 4.1.0_react-dom@18.2.0+react@18.2.0
       rc-menu: 9.11.1_react-dom@18.2.0+react@18.2.0
@@ -79,7 +80,6 @@ importers:
       esbuild: 0.18.17
       glob: 10.3.3
       ko-lint-config: 2.2.21_typescript@4.7.4
-      monaco-editor-nls: 2.0.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       rimraf: 5.0.1
@@ -3183,7 +3183,7 @@ packages:
 
   /monaco-editor-nls/2.0.0:
     resolution: {integrity: sha512-gQy0LxyUkvmGFRfjRaFHFDdv3UjCX2DfjoL4Dy6mhcq94r6pu2mzcCWIxJz+y7FCrQwpj+xXXUpy0ynOrmONoQ==}
-    dev: true
+    dev: false
 
   /monaco-editor/0.31.1:
     resolution: {integrity: sha512-FYPwxGZAeP6mRRyrr5XTGHD9gRXVjy7GUzF4IPChnyt3fS5WrNxIkS8DNujWf6EQy0Zlzpxw8oTVE+mWI2/D1Q==}

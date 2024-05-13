@@ -7,12 +7,16 @@ import { prefix } from 'mo/client/classNames';
 import { DefaultColor } from 'mo/const/theme';
 import { BaseService } from 'mo/glue';
 import { ColorThemeEvent, ColorThemeModel } from 'mo/models/colorTheme';
-import { editor } from 'mo/monaco';
-import type { Arraylize, IColorTheme, Predict, RequiredId, UniqueId } from 'mo/types';
-import { arraylize, colorsToString, convertToCSSVars, convertToToken, searchById } from 'mo/utils';
+import { editor, languages } from 'mo/monaco';
+import Textmate, { IGrammarTextMate } from 'mo/monaco/override/textmate';
+import type { Arraylize, IColorTheme, IContribute, Predict, RequiredId, UniqueId } from 'mo/types';
+import { arraylize, colorsToString, convertToCSSVars, convertToToken, normalizeColor, searchById } from 'mo/utils';
+import { IRawTheme } from 'vscode-textmate';
 
 export class ColorThemeService extends BaseService<ColorThemeModel> {
     static DEFAULT_THEME_CLASS_NAME = prefix('customize-theme');
+    private _grammarLock = false;
+    private textmateRegistry?: Textmate;
 
     protected state: ColorThemeModel;
 
@@ -37,7 +41,46 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
         }
     }
 
+    // Taken from https://github.com/eclipse-theia/theia/blob/38eb31945130bb68fc793d4291d8d9f416541cdb/packages/monaco/src/browser/textmate/monaco-theme-registry.ts#L98
+    private convertToRawTheme(theme: IColorTheme): IRawTheme {
+        const result: IRawTheme = {
+            name: theme.name,
+            settings: [],
+        };
+
+        const tokenColors = theme.tokenColors;
+        if (Array.isArray(tokenColors)) {
+            for (const tokenColor of tokenColors) {
+                if (tokenColor.scope && tokenColor.settings) {
+                    result.settings.push({
+                        scope: tokenColor.scope,
+                        settings: {
+                            foreground: normalizeColor(tokenColor.settings.foreground),
+                            background: normalizeColor(tokenColor.settings.background),
+                            fontStyle: tokenColor.settings.fontStyle,
+                        },
+                    });
+                }
+            }
+        }
+        const foreground = theme.colors?.['editor.foreground'] || '';
+        const background = theme.colors?.['editor.background'] || '';
+        result.settings.unshift({
+            settings: {
+                foreground: normalizeColor(foreground),
+                background: normalizeColor(background),
+            },
+        });
+
+        return result;
+    }
+
+    private predict: UniqueId | undefined = undefined;
     private applyColorTheme(id: UniqueId) {
+        if (this._grammarLock) {
+            this.predict = id;
+            return;
+        }
         const theme = this.get(id);
         if (!theme) return;
         const styleSheetContent = convertToCSSVars(theme.colors || {});
@@ -60,6 +103,8 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
             rules: convertToToken(theme.tokenColors) || [],
         });
         editor.setTheme(ColorThemeService.DEFAULT_THEME_CLASS_NAME);
+
+        this.textmateRegistry?.injectCSS();
     }
 
     public add(themes: Arraylize<IColorTheme>): void {
@@ -110,6 +155,8 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
         this.dispatch((draft) => {
             draft.current = id;
         });
+        const theme = this.get(id);
+        this.textmateRegistry?.setTheme(theme ? this.convertToRawTheme(theme) : { name: 'unknown', settings: [] });
         this.applyColorTheme(id);
     }
 
@@ -119,6 +166,44 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
 
     public reset() {
         this.setState(new ColorThemeModel());
+    }
+
+    /**
+     * Notice that you should NOT call this function.
+     * @internal
+     */
+    public async _activeGrammar(grammars: IContribute['grammars'], onigurumPath?: string) {
+        this._grammarLock = true;
+        try {
+            if (Array.isArray(grammars) && onigurumPath) {
+                const languages: languages.ILanguageExtensionPoint[] = [];
+                const _grammars: Record<string, IGrammarTextMate> = {};
+                for (let index = 0; index < grammars.length; index++) {
+                    const { scopeName, grammar, ...rest } = grammars[index];
+                    languages.push({
+                        ...rest,
+                    });
+                    _grammars[scopeName] = {
+                        path: grammar,
+                        language: rest.id,
+                    };
+                }
+                this.textmateRegistry = new Textmate(languages, _grammars, onigurumPath);
+                const monaco = await import('monaco-editor/esm/vs/editor/editor.api');
+
+                const theme = this.getCurrentTheme();
+                await this.textmateRegistry.register(
+                    monaco,
+                    theme ? this.convertToRawTheme(theme) : { name: 'unknown', settings: [] }
+                );
+            }
+        } finally {
+            this._grammarLock = false;
+            if (this.predict) {
+                this.applyColorTheme(this.predict);
+                this.predict = undefined;
+            }
+        }
     }
 
     // ===================== Subscriptions =====================

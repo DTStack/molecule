@@ -6,6 +6,7 @@ import { TestExtension } from './extensions/TestExtension';
 const instance = create({
     extensions: [TestExtension],
     defaultLocale: 'zh-CN',
+    onigurumPath: '/wasm/onig.wasm',
 });
 
 export default function App() {

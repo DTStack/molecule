@@ -43,6 +43,10 @@ export interface IConfigProps {
      * default locale Id is `en-US`.
      */
     defaultLocale?: 'zh-CN' | 'en-US' | 'ko-KR' | (string & {});
+    /**
+     * The Onigurum path for grammars
+     */
+    onigurumPath?: string;
 }
 
 interface IInstanceServiceProps {
@@ -62,6 +66,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     private _config: Required<IConfigProps> = {
         extensions: [],
         defaultLocale: 'en-US',
+        onigurumPath: '',
     };
 
     private loading = true;
@@ -97,6 +102,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
 
         this.emit(InstanceHookKind.beforeLoad);
         const module = this.resolve<ModuleService>('module');
+        const colorTheme = this.resolve<ColorThemeService>('colorTheme');
         const monaco = this.resolve<MonacoService>('monaco');
         const contextMenu = this.resolve<ContextMenuService>('contextMenu');
         const auxiliaryBar = this.resolve<AuxiliaryBarService>('auxiliaryBar');
@@ -110,7 +116,6 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
         const panel = this.resolve<PanelService>('panel');
         const output = this.resolve<OutputService>('output');
         const editor = this.resolve<EditorService>('editor');
-        const colorTheme = this.resolve<ColorThemeService>('colorTheme');
         const editorTree = this.resolve<EditorTreeService>('editorTree');
         const notification = this.resolve<NotificationService>('notification');
         const search = this.resolve<SearchService>('search');
@@ -259,6 +264,9 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
         super();
         this._config.defaultLocale = this.localeInit(config.defaultLocale);
         setValue(LocaleService.STORE_KEY, this._config.defaultLocale);
+        if (config.onigurumPath) {
+            this._config.onigurumPath = config.onigurumPath;
+        }
 
         this.loading = true;
         Promise.all([
@@ -311,7 +319,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
 
         services.extension.add(this._config.extensions);
         // load contributes
-        services.extension.load();
+        services.extension.load(this._config.onigurumPath);
         const controllers = Array.from(services.module.controllers).reduce<Record<string, any>>((acc, [key, value]) => {
             acc[key] = this.resolve(value);
             return acc;

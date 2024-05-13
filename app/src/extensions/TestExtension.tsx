@@ -3,6 +3,7 @@ import { debounce } from 'lodash-es';
 
 import TestPane from '../components/testPane';
 import { getFileContent, getFiles, getWorkspace, searchFileContents } from '../utils';
+import grammars from './grammars';
 
 export const TestExtension: IExtension = {
     id: 'TestExtension',
@@ -11,6 +12,7 @@ export const TestExtension: IExtension = {
         [IContributeType.Modules]: {
             menuBar: import('../components/menuBar'),
         },
+        [IContributeType.Grammar]: grammars,
     },
     activate(molecule: IMoleculeContext) {
         molecule.activityBar.add({
@@ -221,7 +223,9 @@ export const TestExtension: IExtension = {
                             if (typeof name !== 'string') return 'plain';
                             if (name.endsWith('.md')) return 'markdown';
                             if (name.endsWith('.yml')) return 'yml';
-                            if (name.endsWith('.js') || name.endsWith('.ts')) return 'typescript';
+                            if (name.endsWith('.js')) return 'javascript';
+                            if (name.endsWith('.ts')) return 'typescript';
+                            if (name.endsWith('.tsx')) return 'typescriptreact';
                             if (name.endsWith('.json')) return 'json';
                             if (name.endsWith('.scss')) return 'css';
                             if (name.endsWith('.html')) return 'html';

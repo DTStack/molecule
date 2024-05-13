@@ -25,7 +25,9 @@ import {
     StandaloneEditor,
     StaticServices,
 } from 'mo/monaco';
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
+
+import { ColorThemeService } from './colorTheme';
 
 type IEditorOverrideServices = MonacoEditor.IEditorOverrideServices;
 
@@ -35,7 +37,7 @@ export class MonacoService {
     private simpleEditorModelResolverService: SimpleEditorModelResolverService | null = null;
     private _container!: HTMLElement | null;
 
-    constructor() {}
+    constructor(@inject('colorTheme') private colorTheme: ColorThemeService) {}
 
     public initWorkspace(container: HTMLElement) {
         this._container = container;
@@ -104,6 +106,9 @@ export class MonacoService {
         if (this.simpleEditorModelResolverService) {
             this.simpleEditorModelResolverService.setEditor(standaloneEditor);
         }
+
+        // Should be called after the editor is created
+        this.colorTheme.setCurrent(this.colorTheme.getCurrent());
 
         return standaloneEditor;
     }

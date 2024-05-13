@@ -45,6 +45,8 @@ importers:
       vite: ^4.4.9
       vite-plugin-mock-dev-server: ^1.4.0
       vite-plugin-monaco-editor: ^1.1.0
+      vscode-oniguruma: ^2.0.1
+      vscode-textmate: 6.x
       yargs: ^17.7.2
     dependencies:
       '@dtinsight/dt-utils': 1.1.2
@@ -89,6 +91,8 @@ importers:
       vite: 4.4.9_@types+node@20.4.7+sass@1.65.1
       vite-plugin-mock-dev-server: registry.npmmirror.com/vite-plugin-mock-dev-server/1.4.0_vite@4.4.9
       vite-plugin-monaco-editor: 1.1.0_monaco-editor@0.31.1
+      vscode-oniguruma: 2.0.1
+      vscode-textmate: 6.0.0
       yargs: 17.7.2
 
   app:
@@ -4481,6 +4485,14 @@ packages:
       sass: 1.65.1
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /vscode-oniguruma/2.0.1:
+    resolution: {integrity: sha512-poJU8iHIWnC3vgphJnrLZyI3YdqRlR27xzqDmpPXYzA93R4Gk8z7T6oqDzDoHjoikA2aS82crdXFkjELCdJsjQ==}
+    dev: true
+
+  /vscode-textmate/6.0.0:
+    resolution: {integrity: sha512-gu73tuZfJgu+mvCSy4UZwd2JXykjK9zAZsfmDeut5dx/1a7FeTk0XwJsSuqQn+cuMCGVbIBfl+s53X4T19DnzQ==}
     dev: true
 
   /which-boxed-primitive/1.0.2:

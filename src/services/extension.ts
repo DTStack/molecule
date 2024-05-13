@@ -93,10 +93,7 @@ export class ExtensionService extends BaseService<ExtensionModel> {
 
     private isExtension(extension: any): extension is IExtension {
         if (!extension) return false;
-        return (
-            typeof extension === 'object' &&
-            ['activate', 'id', 'name'].every((property) => property in extension)
-        );
+        return typeof extension === 'object' && ['activate', 'id', 'name'].every((property) => property in extension);
     }
 
     public get(id: UniqueId) {
@@ -117,7 +114,7 @@ export class ExtensionService extends BaseService<ExtensionModel> {
         });
     }
 
-    public load() {
+    public load(onigurumPath?: string) {
         const extensions = this.getAll();
         if (!Array.isArray(extensions)) return;
 
@@ -125,7 +122,7 @@ export class ExtensionService extends BaseService<ExtensionModel> {
             if (!this.isExtension(extension)) return;
 
             if (extension.contributes) {
-                this.loadContributes(extension.contributes);
+                this.loadContributes(extension.contributes, onigurumPath);
             }
         });
     }
@@ -141,7 +138,7 @@ export class ExtensionService extends BaseService<ExtensionModel> {
         });
     }
 
-    private loadContributes(contributes: IContribute) {
+    private loadContributes(contributes: IContribute, onigurumPath?: string) {
         const contributeKeys = Object.keys(contributes);
         contributeKeys.forEach((type: string) => {
             switch (type) {
@@ -169,6 +166,12 @@ export class ExtensionService extends BaseService<ExtensionModel> {
                     Object.keys(modules).forEach((key) => {
                         this.module.update(key, modules[key]);
                     });
+                    break;
+                }
+                case IContributeType.Grammar: {
+                    const grammars = contributes[type];
+                    this.colorTheme._activeGrammar(grammars, onigurumPath);
+
                     break;
                 }
                 default:

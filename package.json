@@ -26,7 +26,17 @@
     "license": "MIT",
     "peerDependencies": {
         "react": ">=16.13.1",
-        "react-dom": ">=16.13.1"
+        "react-dom": ">=16.13.1",
+        "vscode-oniguruma": "^2.0.1",
+        "vscode-textmate": "6.x"
+    },
+    "peerDependenciesMeta": {
+        "vscode-oniguruma": {
+            "optional": true
+        },
+        "vscode-textmate": {
+            "optional": true
+        }
     },
     "repository": "https://github.com/DTStack/molecule",
     "publishConfig": {
@@ -57,7 +67,9 @@
         "vite": "^4.4.9",
         "vite-plugin-mock-dev-server": "^1.4.0",
         "vite-plugin-monaco-editor": "^1.1.0",
-        "yargs": "^17.7.2"
+        "vscode-oniguruma": "^2.0.1",
+        "yargs": "^17.7.2",
+        "vscode-textmate": "6.x"
     },
     "dependencies": {
         "@dtinsight/dt-utils": "^1.1.2",

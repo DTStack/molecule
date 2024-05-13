@@ -23,7 +23,7 @@ import type { SettingsService } from './services/setting';
 import type { SidebarService } from './services/sidebar';
 import type { StatusBarService } from './services/statusBar';
 import type { TreeNodeModel } from './utils/tree';
-import type { editor, KeyCode } from './monaco';
+import type { editor, KeyCode, languages } from './monaco';
 
 /**
  * Represents the type of a position.
@@ -318,7 +318,19 @@ export interface IContribute {
      */
     [IContributeType.Commands]?: any[];
     // [IContributeType.Configuration]?: any;
-    // [IContributeType.Grammar]?: any;
+    [IContributeType.Grammar]?: (languages.ILanguageExtensionPoint & {
+        scopeName: string;
+        /**
+         * The path of the grammar file.
+         */
+        grammar: string;
+        /**
+         * Scopes that are injected *into* this scope. For example, the
+         * `text.html.markdown` scope likely has a number of injections to support
+         * fenced code blocks.
+         */
+        injections?: string[];
+    })[];
     /**
      * Optional contribution for themes.
      */

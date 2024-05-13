@@ -10,6 +10,8 @@ import {
 } from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { ICodeEditorService as MonacoICodeEditorService } from 'monaco-editor/esm/vs/editor/browser/services/codeEditorService';
 import { OpenerService as MonacoOpenerService } from 'monaco-editor/esm/vs/editor/browser/services/openerService';
+import { TokenizationRegistry as MonacoTokenizationRegistry } from 'monaco-editor/esm/vs/editor/common/modes.js';
+import { generateTokensCSSForColorMap as MonacoGenerateTokensCSSForColorMap } from 'monaco-editor/esm/vs/editor/common/modes/supports/tokenization.js';
 import { IModelService as MonacoIModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
 import { IModeService as MonacoIModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
 import { ITextModelService as MonacoITextModelService } from 'monaco-editor/esm/vs/editor/common/services/resolverService';
@@ -86,6 +88,14 @@ interface AbstractEditorCommandsQuickAccessProvider {
         getCodeEditorCommandPicks(): ICommandQuickPick[];
     };
 }
+
+type TokenizationRegistry = {
+    setColorMap: (colorMap: ColorClass[]) => void;
+};
+export const TokenizationRegistry: TokenizationRegistry = MonacoTokenizationRegistry;
+
+type generateTokensCSSForColorMap = (colorMap: ColorClass[]) => string;
+export const generateTokensCSSForColorMap: generateTokensCSSForColorMap = MonacoGenerateTokensCSSForColorMap;
 
 export const AbstractEditorCommandsQuickAccessProvider: AbstractEditorCommandsQuickAccessProvider =
     MonacoAbstractEditorCommandsQuickAccessProvider;
@@ -302,6 +312,7 @@ interface Color {
     Format: {
         CSS: {
             formatHexA(hex: ColorClass, compact?: boolean): string;
+            parseHex(hex: string): ColorClass;
         };
     };
     new (): ColorClass;

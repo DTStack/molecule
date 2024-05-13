@@ -234,3 +234,17 @@ export function isElementInParentView(ele: HTMLElement, parent: HTMLElement) {
 export function getNameForTitle(name: IterableItem['name']) {
     return typeof name === 'string' ? name : undefined;
 }
+
+// Taken from https://github.com/eclipse-theia/theia/blob/38eb31945130bb68fc793d4291d8d9f416541cdb/packages/monaco/src/browser/textmate/monaco-theme-registry.ts#L157-L169
+export function normalizeColor(color: string | undefined): string | undefined {
+    if (!color) {
+        return undefined;
+    }
+    const normalized = String(color).replace(/^\#/, '').slice(0, 6);
+    if (normalized.length < 6 || !normalized.match(/^[0-9A-Fa-f]{6}$/)) {
+        // ignoring not normalized colors to avoid breaking token color indexes between monaco and vscode-textmate
+        console.error(`Color '${normalized}' is NOT normalized, it must have 6 positions.`);
+        return undefined;
+    }
+    return '#' + normalized;
+}

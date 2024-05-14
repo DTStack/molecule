@@ -9,17 +9,14 @@ export const ExtendsSidebar: IExtension = {
         molecule.sidebar.onToolbarClick((item, groupId) => {
             const { SIDEBAR_ITEM_EXPLORER, SIDEBAR_ITEM_SEARCH } = molecule.builtin.getConstants();
             if (groupId === SIDEBAR_ITEM_EXPLORER) {
-                const { EXPLORER_ITEM_OPEN_EDITOR, EXPLORER_ITEM_WORKSPACE } =
-                    molecule.builtin.getConstants();
+                const { EXPLORER_ITEM_OPEN_EDITOR, EXPLORER_ITEM_WORKSPACE } = molecule.builtin.getConstants();
                 switch (item.id) {
                     case EXPLORER_ITEM_OPEN_EDITOR:
                     case EXPLORER_ITEM_WORKSPACE: {
                         // Update Toolbar's icon
                         molecule.sidebar.updateToolbar(groupId, {
                             id: item.id,
-                            icon: toggleNextIcon(
-                                molecule.sidebar.getToolbar(groupId, item.id)?.icon
-                            ),
+                            icon: toggleNextIcon(molecule.sidebar.getToolbar(groupId, item.id)?.icon),
                         });
 
                         // Update Explorer's visibility
@@ -37,7 +34,8 @@ export const ExtendsSidebar: IExtension = {
                 const {
                     SEARCH_TOOLBAR_REFRESH,
                     SEARCH_TOOLBAR_CLEAR_ALL,
-                    SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
+                    SEARCH_TOOLBAR_VIEW_AS_LIST,
+                    SEARCH_TOOLBAR_VIEW_AS_TREE,
                     SEARCH_TOOLBAR_COLLAPSE_EXPAND,
                 } = molecule.builtin.getConstants();
                 const { value } = molecule.search.getState();
@@ -50,33 +48,25 @@ export const ExtendsSidebar: IExtension = {
                         molecule.search.reset();
                         break;
                     }
-                    case SEARCH_TOOLBAR_VIEW_AS_LIST_TREE: {
-                        const {
-                            SEARCH_TOOLBAR_VIEW_AS_LIST,
-                            SEARCH_TOOLBAR_VIEW_AS_TREE,
-                            SEARCH_TOOLBAR_COLLAPSE,
-                        } = molecule.builtin.getModules();
-                        if (molecule.search.getState().resultIsTree) {
-                            molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_VIEW_AS_TREE);
-                            molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_COLLAPSE);
-                        } else {
-                            molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_VIEW_AS_LIST);
-                            molecule.search.emit(SearchEvent.onSearch, value);
-                        }
+                    case SEARCH_TOOLBAR_VIEW_AS_TREE:
+                    case SEARCH_TOOLBAR_VIEW_AS_LIST: {
+                        const next =
+                            item.id === SEARCH_TOOLBAR_VIEW_AS_LIST
+                                ? molecule.builtin.getModules().SEARCH_TOOLBAR_VIEW_AS_TREE
+                                : molecule.builtin.getModules().SEARCH_TOOLBAR_VIEW_AS_LIST;
+                        molecule.sidebar.replaceToolbar(groupId, item.id, next);
+                        molecule.search.setExpandedKeys([]);
                         break;
                     }
                     case SEARCH_TOOLBAR_COLLAPSE_EXPAND: {
-                        const { SEARCH_TOOLBAR_COLLAPSE, SEARCH_TOOLBAR_EXPAND } =
-                            molecule.builtin.getModules();
+                        const { SEARCH_TOOLBAR_COLLAPSE, SEARCH_TOOLBAR_EXPAND } = molecule.builtin.getModules();
                         const { expandedKeys, result } = molecule.search.getState();
                         if (expandedKeys.length) {
                             molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_COLLAPSE);
                             molecule.search.setExpandedKeys([]);
                         } else {
                             molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_EXPAND);
-                            const next = result
-                                .filter((i) => i.fileType === FileTypes.Folder)
-                                .map((i) => i.id);
+                            const next = result.filter((i) => i.fileType === FileTypes.Folder).map((i) => i.id);
                             molecule.search.setExpandedKeys(next);
                         }
                         break;

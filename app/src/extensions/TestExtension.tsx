@@ -66,30 +66,43 @@ export const TestExtension: IExtension = {
             }
         });
 
-        molecule.search.onSearch(
-            debounce((value) => {
-                molecule.sidebar.setLoading(true);
-                searchFileContents(value)
-                    .then((data) => {
-                        molecule.search.setResult(
-                            data.map(
-                                (item) =>
-                                    new tree.TreeNodeModel(item.fileName, item.fileName, 'Folder', [
-                                        new tree.TreeNodeModel(
-                                            `${item.fileName}__${item.context}`,
-                                            item.context,
-                                            'File'
-                                        ),
-                                    ])
+        const searchByValue = (value: string) => {
+            molecule.sidebar.setLoading(true);
+            searchFileContents(value)
+                .then((data) => {
+                    const next: tree.TreeNodeModel<any>[] = [];
+                    for (let index = 0; index < data.length; index++) {
+                        const item = data[index];
+                        let node = next.find((i) => i.id === item.path);
+                        if (!node) {
+                            next.push(
+                                new tree.TreeNodeModel(item.path, item.path.split('/').pop() as string, 'Folder', [])
+                            );
+                        }
+
+                        node = next.find((i) => i.id === item.path)!;
+                        node.children!.push(
+                            new tree.TreeNodeModel(
+                                `${item.filename}_${item.startline}`,
+                                item.data,
+                                'File',
+                                [],
+                                item.path,
+                                undefined,
+                                item
                             )
                         );
-                        molecule.search.setExpandedKeys(data.map((i) => i.fileName));
-                    })
-                    .finally(() => {
-                        molecule.sidebar.setLoading(false);
-                    });
-            }, 1000)
-        );
+                    }
+                    molecule.search.setResult(next);
+                    molecule.search.setExpandedKeys(data.map((i) => i.filename));
+                })
+                .finally(() => {
+                    molecule.sidebar.setLoading(false);
+                });
+        };
+
+        molecule.search.onEnter(searchByValue);
+        molecule.search.onSearch(debounce(searchByValue, 1000));
 
         molecule.folderTree.onCreateRoot(() => {
             getWorkspace().then((tree) => {

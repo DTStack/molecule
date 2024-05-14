@@ -76,14 +76,18 @@ export class SidebarService extends BaseService<SidebarModel> {
     ) {
         this.dispatch((draft) => {
             const target = draft.data.find(searchById(paneId));
-            const targetToolbar = target?.toolbar?.find(
-                searchById(typeof item === 'object' ? item.id : item)
-            );
+            const targetToolbar = target?.toolbar?.find(searchById(typeof item === 'object' ? item.id : item));
             if (!targetToolbar) return;
-            Object.assign(
-                targetToolbar,
-                typeof item === 'object' ? item : predict?.(targetToolbar)
-            );
+            Object.assign(targetToolbar, typeof item === 'object' ? item : predict?.(targetToolbar));
+        });
+    }
+
+    public replaceToolbar(paneId: UniqueId, replacedId: UniqueId, toolbar: IMenuItemProps) {
+        this.dispatch((draft) => {
+            const target = draft.data.find(searchById(paneId));
+            const targetToolbar = target?.toolbar?.find(searchById(replacedId));
+            if (!targetToolbar) return;
+            Object.assign(targetToolbar, toolbar);
         });
     }
 

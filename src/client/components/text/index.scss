@@ -1,0 +1,16 @@
+@import '../../classNames/style.scss';
+
+$text: prefix('text');
+$active: BEMModifier($text, 'match');
+
+.#{$text} {
+    &.#{$active} {
+        background-color: var(--editor-findMatchHighlightBackground);
+        border: 1px solid var(--editor-findMatchHighlightBorder);
+    }
+}
+
+:export {
+    text: $text;
+    active: $active;
+}

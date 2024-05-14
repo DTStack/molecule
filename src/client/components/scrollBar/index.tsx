@@ -169,7 +169,7 @@ export default function ScrollBar({
         >
             {isShowShadow && scroll[xOrY] !== 0 && <div className={classNames(variables.shadow)} />}
             <div className={variables.viewport} ref={viewport}>
-                <div style={{ height: '100%', width: '100%', display: 'table' }}>{children}</div>
+                <div style={{ height: '100%', width: '100%' }}>{children}</div>
             </div>
             <div
                 className={classNames(

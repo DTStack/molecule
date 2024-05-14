@@ -179,6 +179,15 @@ export enum Alignment {
 export type AlignmentLiteral = keyof typeof Alignment;
 
 /**
+ * The SearchMode of search
+ */
+export enum SearchMode {
+    list = 'list',
+    tree = 'tree',
+}
+export type SearchModeLiteral = keyof typeof SearchMode;
+
+/**
  * The Direction of layout
  */
 export enum Direction {
@@ -466,24 +475,6 @@ export type InputValidateInfo = {
     status: ValidateStatusLiteral;
     message: string;
 };
-
-/**
- * Represents a search result item.
- */
-export type SearchResultItem = TreeNodeModel<{
-    /**
-     * The language of the search result item.
-     */
-    language: string;
-    /**
-     * The value of the search result item.
-     */
-    value: string;
-    /**
-     * The breadcrumb of the search result item.
-     */
-    breadcrumb: string[];
-}>;
 
 /**
  * Represents a keyboard event handler with extended parameters.

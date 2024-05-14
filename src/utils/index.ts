@@ -248,3 +248,43 @@ export function normalizeColor(color: string | undefined): string | undefined {
     }
     return '#' + normalized;
 }
+
+/**
+ * Given a string and a max length returns a shorted version. Shorting
+ * happens at favorable positions - such as whitespace or punctuation characters.
+ * The return value can be longer than the given value of `n`. Leading whitespace is always trimmed.
+ * @Taken [from](https://github.com/microsoft/vscode/blob/b2e6cd0212dd5751bc852591608036fa6d76adbd/src/vs/base/common/strings.ts#L742-L765)
+ */
+export function lcut(text: string, n: number, prefix = '') {
+    const trimmed = text.trimStart();
+
+    if (trimmed.length < n) {
+        return trimmed;
+    }
+
+    const re = /\b/g;
+    let i = 0;
+    while (re.test(trimmed)) {
+        if (trimmed.length - re.lastIndex < n) {
+            break;
+        }
+
+        i = re.lastIndex;
+        re.lastIndex += 1;
+    }
+
+    if (i === 0) {
+        return trimmed;
+    }
+
+    return prefix + trimmed.substring(i).trimStart();
+}
+
+export function matchKeyword(text: string, str: string) {
+    const trimmed = text.trimStart();
+    const startIdx = trimmed.toLocaleLowerCase().indexOf(str.toLocaleLowerCase());
+    if (startIdx === -1) return '';
+    const fullBefore = trimmed.substring(0, startIdx);
+    const before = lcut(fullBefore, 26, '...');
+    return before + trimmed.substring(startIdx);
+}

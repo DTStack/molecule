@@ -1,13 +1,14 @@
 import { classNames } from 'mo/client/classNames';
-import { Input, ScrollBar, Tree } from 'mo/client/components';
+import { Input, ScrollBar, Text, Tree } from 'mo/client/components';
 import { useConnector, useLocale } from 'mo/client/hooks';
 import type { ISearchController } from 'mo/controllers/search';
+import { matchKeyword } from 'mo/utils';
 
 import variables from './index.scss';
 
 export type ISearchProps = ISearchController;
 
-export default function Search({ onChange, onSearch, onSelect }: ISearchProps) {
+export default function Search({ onChange, onSearch, onEnter, onSelect }: ISearchProps) {
     const builtin = useConnector('builtin');
     const search = useConnector('search');
     const localize = useLocale();
@@ -24,12 +25,14 @@ export default function Search({ onChange, onSearch, onSelect }: ISearchProps) {
     return (
         <section className={variables.container}>
             <Input
+                autoFocus
+                defaultValue={search.value}
                 value={search.value}
                 className={classNames(variables.widget)}
                 info={search.validateInfo}
                 placeholder={placeholder}
                 onChange={handleChange}
-                onSubmit={handleChange}
+                onSubmit={onEnter}
             />
             {empty ? (
                 <span className={variables.notFound}>
@@ -43,7 +46,25 @@ export default function Search({ onChange, onSearch, onSelect }: ISearchProps) {
                         data={search.result}
                         onSelect={onSelect}
                         draggable={false}
-                        renderTitle={(node) => node.name}
+                        renderTitle={(node) => {
+                            if (node.fileType === 'File') {
+                                const val = search.value;
+
+                                const rows = node.name.split('\n');
+                                const curRow = rows.find((r) =>
+                                    r.toLocaleLowerCase().includes(val.toLocaleLowerCase())
+                                );
+
+                                if (!curRow) return node.name;
+
+                                return (
+                                    <span title={node.name}>
+                                        <Text highlight={val}>{matchKeyword(curRow, val)}</Text>
+                                    </span>
+                                );
+                            }
+                            return node.name;
+                        }}
                     />
                 </ScrollBar>
             )}

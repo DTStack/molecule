@@ -1,6 +1,8 @@
 import { BaseService } from 'mo/glue';
 import { SearchEvent, SearchModel } from 'mo/models/search';
-import type { InputValidateInfo, SearchResultItem, UniqueId } from 'mo/types';
+import { Arraylize, InputValidateInfo, SearchMode, SearchModeLiteral, UniqueId } from 'mo/types';
+import { arraylize } from 'mo/utils';
+import { TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
 
 @injectable()
@@ -20,6 +22,10 @@ export class SearchService extends BaseService<SearchModel> {
         return this.getState().expandedKeys;
     }
 
+    public getMode() {
+        return this.getState().mode;
+    }
+
     public setValue(value: string) {
         this.dispatch((draft) => {
             draft.value = value;
@@ -28,18 +34,22 @@ export class SearchService extends BaseService<SearchModel> {
 
     public setValidateInfo(message: string | InputValidateInfo) {
         this.dispatch((draft) => {
-            draft.validateInfo =
-                typeof message === 'string' ? { status: 'info', message } : message;
+            draft.validateInfo = typeof message === 'string' ? { status: 'info', message } : message;
         });
     }
 
-    public setResultIsTree(resultIsTree: boolean) {
+    public setMode(mode: SearchModeLiteral) {
         this.dispatch((draft) => {
-            draft.resultIsTree = resultIsTree;
+            draft.mode = mode;
         });
     }
 
-    public setResult(resultData?: SearchResultItem[]) {
+    public toggleMode(mode?: SearchModeLiteral) {
+        const next = mode || (this.getMode() === SearchMode.list ? SearchMode.tree : SearchMode.list);
+        this.setMode(next);
+    }
+
+    public setResult(resultData?: TreeNodeModel<any>[]) {
         this.dispatch((draft) => {
             draft.result = resultData || [];
         });
@@ -51,17 +61,19 @@ export class SearchService extends BaseService<SearchModel> {
         });
     }
 
-    public addExpandedKeys(expandedKeys: UniqueId[]) {
+    public addExpandedKeys(expandedKeys: Arraylize<UniqueId>) {
         this.dispatch((draft) => {
-            draft.expandedKeys.push(...expandedKeys);
+            draft.expandedKeys.push(...arraylize(expandedKeys));
         });
     }
 
-    public removeExpandedKeys(expandedKey: UniqueId) {
+    public removeExpandedKeys(expandedKey: Arraylize<UniqueId>) {
         this.dispatch((draft) => {
-            const idx = draft.expandedKeys.indexOf(expandedKey);
-            if (idx === -1) return;
-            draft.expandedKeys.splice(idx, 1);
+            arraylize(expandedKey).forEach((key) => {
+                const idx = draft.expandedKeys.indexOf(key);
+                if (idx === -1) return;
+                draft.expandedKeys.splice(idx, 1);
+            });
         });
     }
 
@@ -69,7 +81,7 @@ export class SearchService extends BaseService<SearchModel> {
         if (this.getExpandedKeys().includes(expandedKey)) {
             this.removeExpandedKeys(expandedKey);
         } else {
-            this.addExpandedKeys([expandedKey]);
+            this.addExpandedKeys(expandedKey);
         }
     }
 
@@ -86,7 +98,11 @@ export class SearchService extends BaseService<SearchModel> {
         this.subscribe(SearchEvent.onSearch, callback);
     }
 
-    public onSelect(callback: (treeNode: SearchResultItem) => void): void {
+    public onSelect(callback: (treeNode: TreeNodeModel<any>) => void): void {
         this.subscribe(SearchEvent.onSelect, callback);
+    }
+
+    public onEnter(callback: (value: string) => void): void {
+        this.subscribe(SearchEvent.onEnter, callback);
     }
 }

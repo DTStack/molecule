@@ -23,12 +23,15 @@ export function getFiles(path: string) {
     return fetch(`/api/getFiles/${encodeURIComponent(path.replaceAll(/\//g, '!'))}`)
         .then((res) => res.json())
         .then(({ data: { folders, files } }: { data: { folders: string[]; files: string[] } }) => {
-            return [folders.map((folder) => new tree.TreeNodeModel<void>(`${path}/${folder}`, folder, 'Folder')), files.map((file) => new tree.TreeNodeModel<void>(`${path}/${file}`, file, 'File'))];
+            return [
+                folders.map((folder) => new tree.TreeNodeModel<void>(`${path}/${folder}`, folder, 'Folder')),
+                files.map((file) => new tree.TreeNodeModel<void>(`${path}/${file}`, file, 'File')),
+            ];
         });
 }
 
 export function searchFileContents(value: string) {
     return fetch(`/api/search`, { method: 'post', body: JSON.stringify({ value }) })
         .then((res) => res.json())
-        .then(({ data }: { data: { context: string; fileName: string }[] }) => data);
+        .then(({ data }: { data: { filename: string; path: string; startline: number; data: string }[] }) => data);
 }

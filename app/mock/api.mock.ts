@@ -31,9 +31,10 @@ export default defineMock([
     {
         url: '/api/search',
         method: 'POST',
-        body(request) {
+        async body(request) {
             const { value } = JSON.parse(request.body as any);
-            return { data: search(value) };
+            const data = search(value);
+            return { data };
         },
     },
 ]);

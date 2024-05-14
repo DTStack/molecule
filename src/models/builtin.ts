@@ -54,8 +54,6 @@ export class BuiltinModel {
         SEARCH_ITEM_NOT_FOUND: 'search.item.notFound',
         SEARCH_TOOLBAR_REFRESH: 'search.toolbar.refresh',
         SEARCH_TOOLBAR_CLEAR_ALL: 'search.toolbar.clearAll',
-        SEARCH_TOOLBAR_VIEW_AS_LIST_TREE: 'search.toolbar.viewAsListTree',
-        // TODO
         SEARCH_TOOLBAR_VIEW_AS_LIST: 'search.toolbar.viewAsList',
         SEARCH_TOOLBAR_VIEW_AS_TREE: 'search.toolbar.viewAsTree',
         SEARCH_TOOLBAR_COLLAPSE_EXPAND: 'search.toolbar.collapseExpand',
@@ -274,7 +272,6 @@ export class BuiltinModel {
                     name: this.localize(this.constants.SEARCH_TOOLBAR_REFRESH, 'Refresh'),
                     group: 'inline',
                     sortIndex: 5,
-                    disabled: true,
                 },
                 {
                     id: this.constants.SEARCH_TOOLBAR_CLEAR_ALL,
@@ -291,7 +288,6 @@ export class BuiltinModel {
                 name: this.localize(this.constants.SEARCH_TOOLBAR_COLLAPSE, 'Collapse All'),
                 group: 'inline',
                 sortIndex: 8,
-                disabled: true,
             },
         SEARCH_TOOLBAR_EXPAND: () =>
             <IMenuItemProps>{
@@ -303,7 +299,7 @@ export class BuiltinModel {
             },
         SEARCH_TOOLBAR_VIEW_AS_LIST: () =>
             <IMenuItemProps>{
-                id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
+                id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST,
                 icon: 'list-flat',
                 name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST, 'View as List'),
                 group: 'inline',
@@ -311,12 +307,11 @@ export class BuiltinModel {
             },
         SEARCH_TOOLBAR_VIEW_AS_TREE: () =>
             <IMenuItemProps>{
-                id: this.constants.SEARCH_TOOLBAR_VIEW_AS_LIST_TREE,
+                id: this.constants.SEARCH_TOOLBAR_VIEW_AS_TREE,
                 icon: 'list-tree',
                 name: this.localize(this.constants.SEARCH_TOOLBAR_VIEW_AS_TREE, 'View as Tree'),
                 group: 'inline',
                 sortIndex: 7,
-                disabled: true,
             },
         CONTEXTMENU_FOLDER: () => [
             {

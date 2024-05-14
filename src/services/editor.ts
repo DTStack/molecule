@@ -135,21 +135,21 @@ export class EditorService extends BaseService<EditorModel> {
                 const group = draft.groups[groupIdx];
                 const idx = group.data.findIndex(searchById(tabId));
                 if (idx === -1) return;
-                const [tab] = group.data.splice(idx, 1);
-                closed.push(tab);
-                if (group.activeTab === tab.id) {
+                if (group.activeTab === tabId) {
                     group.activeTab = getPrevOrNext(group.data, idx)?.id;
                 }
+                const [tab] = group.data.splice(idx, 1);
+                closed.push(tab);
             });
             // Check if group is empty
             tabs.forEach(({ groupId }) => {
                 const idx = draft.groups.findIndex(searchById(groupId));
                 if (idx === -1 || draft.groups[idx].data.length) return;
-                const [group] = draft.groups.splice(idx, 1);
-                group.editorInstance?.dispose();
-                if (draft.current === group.id) {
+                if (draft.current === groupId) {
                     draft.current = getPrevOrNext(draft.groups, idx)?.id;
                 }
+                const [group] = draft.groups.splice(idx, 1);
+                group.editorInstance?.dispose();
             });
             // Dispose models
             closed.forEach((tab) => {
@@ -157,6 +157,7 @@ export class EditorService extends BaseService<EditorModel> {
                 if (!tab.model || draft.groups.find((group) => group.data.find((i) => i.model === tab.model))) return;
                 tab.model.dispose();
             });
+
             // Call onClose
             this.emit(EditorEvent.onClose, closed);
         });

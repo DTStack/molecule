@@ -26,7 +26,6 @@ export default function Search({ onChange, onSearch, onEnter, onSelect }: ISearc
         <section className={variables.container}>
             <Input
                 autoFocus
-                defaultValue={search.value}
                 value={search.value}
                 className={classNames(variables.widget)}
                 info={search.validateInfo}

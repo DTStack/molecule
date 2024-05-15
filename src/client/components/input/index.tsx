@@ -93,11 +93,12 @@ export default function Input({
         if (autoFocus) {
             if (textareaRef.current) {
                 textareaRef.current.focus();
-                const ext = ((defaultValue || '') as string).lastIndexOf('.');
+                const val = textareaRef.current.value;
+                const ext = val.lastIndexOf('.');
                 textareaRef.current.selectionStart = 0;
                 textareaRef.current.selectionEnd =
                     // if period at position of 0, then this period means hidden file
-                    ext > 0 ? ext : ((defaultValue || '') as string).length;
+                    ext > 0 ? ext : val.length;
             }
         }
     }, []);

@@ -52,10 +52,7 @@ export default function Tree({
         onSelect?.(node);
     };
 
-    const renderIcon = (icon: JSX.Element | undefined, isLeaf: boolean, isExpand: boolean, isLoading: boolean) => {
-        if (isLeaf) {
-            return icon || null;
-        }
+    const renderFolderIcon = (isExpand: boolean, isLoading: boolean) => {
         if (isLoading) {
             return <Icon type="loading~spin" />;
         }
@@ -78,7 +75,12 @@ export default function Tree({
                     data={item}
                     indent={indent}
                     className={classNames(variables.treeNode, isActive && variables.active)}
-                    renderIcon={() => renderIcon(IconComponent, item.fileType === FileTypes.File, isExpand, isLoading)}
+                    renderIcon={() => (
+                        <>
+                            {item.fileType === FileTypes.Folder && renderFolderIcon(isExpand, isLoading)}
+                            {IconComponent}
+                        </>
+                    )}
                     renderTitle={() => renderTitle?.(item, index, item.fileType === FileTypes.File) || item.name}
                     onClick={(e) => handleNodeClick(item, e)}
                     onKeyDown={(e) => onKeyDown?.(e, item)}

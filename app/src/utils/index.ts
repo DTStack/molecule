@@ -5,7 +5,9 @@ export function getWorkspace(): Promise<tree.TreeNodeModel<any>> {
         .then((res) => res.json())
         .then(({ data: { folders, files } }: { data: { folders: string[]; files: string[] } }) => {
             return new tree.TreeNodeModel<void>('molecule', 'molecule', 'RootFolder', [
-                ...folders.map((folder) => new tree.TreeNodeModel<void>(`/${folder}`, folder, 'Folder')),
+                ...folders.map(
+                    (folder) => new tree.TreeNodeModel<void>(`/${folder}`, folder, 'Folder', undefined, 'folder')
+                ),
                 ...files.map((file) => new tree.TreeNodeModel<void>(`/${file}`, file, 'File')),
             ]);
         });
@@ -24,7 +26,9 @@ export function getFiles(path: string) {
         .then((res) => res.json())
         .then(({ data: { folders, files } }: { data: { folders: string[]; files: string[] } }) => {
             return [
-                folders.map((folder) => new tree.TreeNodeModel<void>(`${path}/${folder}`, folder, 'Folder')),
+                folders.map(
+                    (folder) => new tree.TreeNodeModel<void>(`${path}/${folder}`, folder, 'Folder', undefined, 'folder')
+                ),
                 files.map((file) => new tree.TreeNodeModel<void>(`${path}/${file}`, file, 'File')),
             ];
         });

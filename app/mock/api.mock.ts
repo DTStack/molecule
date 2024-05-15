@@ -79,14 +79,16 @@ function getFiles(p: string) {
 function search(value: string) {
     const root = path.join(__dirname, '..', '..');
     const { folders, files } = getAllFoldersAndFile();
-    const res: { context: string; fileName: string }[] = [];
+    const res: { filename: string; path: string; startline: number; data: string }[] = [];
     files.forEach((file) => {
         const content = fs.readFileSync(path.join(root, file), 'utf-8');
         const idx = content.indexOf(value);
         if (idx !== -1) {
             res.push({
-                context: content.slice(idx - 10, idx + value.length + 10),
-                fileName: `${file}`,
+                filename: file,
+                path: file,
+                startline: idx,
+                data: content.slice(idx - 20, idx + value.length + 20),
             });
         }
     });
@@ -98,8 +100,10 @@ function search(value: string) {
             const idx = content.indexOf(value);
             if (idx !== -1) {
                 res.push({
-                    context: content.slice(idx - 10, idx + value.length + 10),
-                    fileName: `${folder}/${file}`,
+                    filename: path.join(folder, file),
+                    path: path.join(folder, file),
+                    startline: idx,
+                    data: content.slice(idx - 20, idx + value.length + 20),
                 });
             }
         });

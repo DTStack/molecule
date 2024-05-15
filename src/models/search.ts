@@ -1,5 +1,4 @@
-import { type InputValidateInfo, SearchMode, type SearchModeLiteral, type UniqueId } from 'mo/types';
-import type { TreeNodeModel } from 'mo/utils/tree';
+import { type InputValidateInfo, SearchMode, type SearchModeLiteral, SearchResult, type UniqueId } from 'mo/types';
 
 export enum SearchEvent {
     onChange = 'search.onChange',
@@ -12,7 +11,10 @@ export class SearchModel {
     constructor(
         public value: string = '',
         public mode: SearchModeLiteral = SearchMode.list,
-        public result: TreeNodeModel<any>[] = [],
+        public result: SearchResult = {
+            total: 0,
+            results: [],
+        },
         public expandedKeys: UniqueId[] = [],
         public validateInfo: InputValidateInfo = {
             status: 'info',

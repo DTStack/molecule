@@ -31,7 +31,7 @@ export class MenuBarController extends BaseController implements IMenuBarControl
         }
     }
 
-    private getCheck(hidden: boolean) {
+    private getCheck(hidden?: boolean) {
         return hidden ? undefined : 'check';
     }
 

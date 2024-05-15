@@ -54,7 +54,7 @@ export type Arraylize<T> = T[] | T;
  * If `T` is `void`, it will only have the `hidden` property.
  * Otherwise, it will have all properties of `T` and the `hidden` property.
  */
-export type WithHidden<T extends object | void> = T extends void ? { hidden: boolean } : T & { hidden: boolean };
+export type WithHidden<T extends object | void> = T extends void ? { hidden?: boolean } : T & { hidden?: boolean };
 
 /**
  * @refer: https://code.visualstudio.com/api/references/icons-in-labels#icon-listing
@@ -71,7 +71,7 @@ export type RequiredId<T extends { id: UniqueId }> = Partial<T> & Required<Pick<
  * Represents a record with an ID.
  * @template T - The type of additional properties in the record.
  */
-export type RecordWithId<T> = RequiredId<T & { id: UniqueId }>;
+export type RecordWithId<T> = T & { id: UniqueId };
 
 /**
  * Represents a tree model with generic type T.
@@ -610,3 +610,41 @@ export interface IEditorTab<T> extends Render<IEditorTab<T>>, Pick<IterableItem,
 }
 
 export type TabGroup = { tabId: UniqueId; groupId: UniqueId };
+
+/**
+ * Represents the result for search
+ */
+export interface SearchResult {
+    /**
+     * The total count of search result
+     */
+    total: number;
+    /**
+     * The results of search
+     */
+    results: RecordWithId<SearchResultItem>[];
+}
+
+/**
+ * Represents a search result item.
+ */
+export interface SearchResultItem {
+    /**
+     * The filename of the search result item.
+     */
+    filename: string;
+    /**
+     * The path of the search result item.
+     */
+    path?: string;
+    /**
+     * The text of the search result item.
+     */
+    data: string;
+    /**
+     * The line number of the search result item.
+     */
+    lineNumber: number;
+    icon?: TreeNodeModel<any>['icon'];
+    disabled?: TreeNodeModel<any>['disabled'];
+}

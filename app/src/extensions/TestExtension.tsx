@@ -1,4 +1,4 @@
-import { FileTypes, IContributeType, IExtension, IMoleculeContext, tree } from '@dtinsight/molecule';
+import { FileTypes, IContributeType, IExtension, IMoleculeContext } from '@dtinsight/molecule';
 import { debounce } from 'lodash-es';
 
 import TestPane from '../components/testPane';
@@ -59,42 +59,30 @@ export const TestExtension: IExtension = {
         });
 
         molecule.search.onSelect((treeNode) => {
-            if (treeNode.fileType === 'Folder') {
-                molecule.search.toggleExpandedKey(treeNode.id);
-            } else {
+            if (treeNode.fileType === 'File') {
                 openFile({ id: treeNode.id, name: treeNode.name });
             }
         });
 
         const searchByValue = (value: string) => {
+            if (!value) {
+                molecule.search.setResult([], 0);
+                return;
+            }
             molecule.sidebar.setLoading(true);
             searchFileContents(value)
                 .then((data) => {
-                    const next: tree.TreeNodeModel<any>[] = [];
-                    for (let index = 0; index < data.length; index++) {
-                        const item = data[index];
-                        let node = next.find((i) => i.id === item.path);
-                        if (!node) {
-                            next.push(
-                                new tree.TreeNodeModel(item.path, item.path.split('/').pop() as string, 'Folder', [])
-                            );
-                        }
-
-                        node = next.find((i) => i.id === item.path)!;
-                        node.children!.push(
-                            new tree.TreeNodeModel(
-                                `${item.filename}_${item.startline}`,
-                                item.data,
-                                'File',
-                                [],
-                                item.path,
-                                undefined,
-                                item
-                            )
-                        );
-                    }
-                    molecule.search.setResult(next);
-                    molecule.search.setExpandedKeys(data.map((i) => i.filename));
+                    molecule.search.setResult(
+                        data.map((item) => ({
+                            id: `${item.filename}_${item.startline}`,
+                            filename: item.filename,
+                            data: item.data,
+                            path: item.path,
+                            lineNumber: item.startline,
+                        })),
+                        data.length
+                    );
+                    molecule.search.expandAll();
                 })
                 .finally(() => {
                     molecule.sidebar.setLoading(false);

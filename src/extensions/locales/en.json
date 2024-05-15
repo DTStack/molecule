@@ -83,6 +83,7 @@
         "panel.toolbar.maximize": "Maximize Panel Size",
         "panel.toolbar.restore": "Restore Panel Size",
         "search.item.notFound": "No results found.",
+        "search.item.resultTip": "${i} results in ${i} files",
         "search.toolbar.clearAll": "Clear Search Results",
         "search.toolbar.collapse": "Collapse All",
         "search.toolbar.refresh": "Refresh",

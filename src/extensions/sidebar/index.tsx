@@ -1,5 +1,5 @@
 import { SearchEvent } from 'mo/models/search';
-import { FileTypes, IExtension } from 'mo/types';
+import { IExtension } from 'mo/types';
 import { concatMenu, toggleNextIcon } from 'mo/utils';
 
 export const ExtendsSidebar: IExtension = {
@@ -48,26 +48,25 @@ export const ExtendsSidebar: IExtension = {
                         molecule.search.reset();
                         break;
                     }
-                    case SEARCH_TOOLBAR_VIEW_AS_TREE:
-                    case SEARCH_TOOLBAR_VIEW_AS_LIST: {
+                    case SEARCH_TOOLBAR_VIEW_AS_LIST:
+                    case SEARCH_TOOLBAR_VIEW_AS_TREE: {
+                        molecule.search.toggleMode();
                         const next =
                             item.id === SEARCH_TOOLBAR_VIEW_AS_LIST
                                 ? molecule.builtin.getModules().SEARCH_TOOLBAR_VIEW_AS_TREE
                                 : molecule.builtin.getModules().SEARCH_TOOLBAR_VIEW_AS_LIST;
-                        molecule.sidebar.replaceToolbar(groupId, item.id, next);
-                        molecule.search.setExpandedKeys([]);
+                        molecule.sidebar.replaceToolbar(SIDEBAR_ITEM_SEARCH, item.id, next);
                         break;
                     }
                     case SEARCH_TOOLBAR_COLLAPSE_EXPAND: {
                         const { SEARCH_TOOLBAR_COLLAPSE, SEARCH_TOOLBAR_EXPAND } = molecule.builtin.getModules();
-                        const { expandedKeys, result } = molecule.search.getState();
+                        const { expandedKeys } = molecule.search.getState();
                         if (expandedKeys.length) {
                             molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_COLLAPSE);
                             molecule.search.setExpandedKeys([]);
                         } else {
                             molecule.sidebar.updateToolbar(groupId, SEARCH_TOOLBAR_EXPAND);
-                            const next = result.filter((i) => i.fileType === FileTypes.Folder).map((i) => i.id);
-                            molecule.search.setExpandedKeys(next);
+                            molecule.search.expandAll();
                         }
                         break;
                     }

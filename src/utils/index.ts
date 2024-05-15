@@ -288,3 +288,15 @@ export function matchKeyword(text: string, str: string) {
     const before = lcut(fullBefore, 26, '...');
     return before + trimmed.substring(startIdx);
 }
+
+/**
+ * As same as the Array.find, but if the target is not found, it will push the default value into the array and return it
+ */
+export function find<T>(arr: T[], predicate: (item: T) => boolean, defaultValue: T): T {
+    const target = arr.find(predicate);
+    if (!target) {
+        arr.push(defaultValue);
+        return defaultValue;
+    }
+    return target;
+}

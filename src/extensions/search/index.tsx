@@ -1,4 +1,4 @@
-import { IExtension, IMenuItemProps } from 'mo/types';
+import { FileTypes, IExtension } from 'mo/types';
 
 export const ExtendsSearch: IExtension = {
     id: 'ExtendsSearch',
@@ -8,17 +8,21 @@ export const ExtendsSearch: IExtension = {
             molecule.search.setValue(value);
         });
 
-        molecule.sidebar.onToolbarClick((item: IMenuItemProps) => {
-            const { SIDEBAR_ITEM_SEARCH, SEARCH_TOOLBAR_VIEW_AS_LIST, SEARCH_TOOLBAR_VIEW_AS_TREE } =
-                molecule.builtin.getState().constants;
-            if (item.id === SEARCH_TOOLBAR_VIEW_AS_LIST || item.id === SEARCH_TOOLBAR_VIEW_AS_TREE) {
-                molecule.search.toggleMode();
-                const next =
-                    item.id === SEARCH_TOOLBAR_VIEW_AS_LIST
-                        ? molecule.builtin.getModules().SEARCH_TOOLBAR_VIEW_AS_TREE
-                        : molecule.builtin.getModules().SEARCH_TOOLBAR_VIEW_AS_LIST;
-                molecule.sidebar.replaceToolbar(SIDEBAR_ITEM_SEARCH, item.id, next);
-                molecule.search.setExpandedKeys([]);
+        molecule.search.onSelect((treeNode) => {
+            if (treeNode.fileType === FileTypes.Folder) {
+                const path = treeNode.id;
+                const filenames = molecule.search
+                    .getState()
+                    .result.results.filter((item) => item.filename.startsWith(path as string))
+                    .map((item) => item.filename);
+                const isExpand = molecule.search
+                    .getExpandedKeys()
+                    .some((val) => (val as string).startsWith(path as string));
+                if (isExpand) {
+                    molecule.search.removeExpandedKeys(filenames);
+                } else {
+                    molecule.search.addExpandedKeys(filenames);
+                }
             }
         });
     },

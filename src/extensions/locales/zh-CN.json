@@ -83,6 +83,7 @@
         "panel.toolbar.maximize": "最大化面板",
         "panel.toolbar.restore": "恢复面板大小",
         "search.item.notFound": "未找到任何结果。",
+        "search.item.resultTip": "共有 ${i} 个结果在 ${i} 个文件中",
         "search.toolbar.clearAll": "清除搜索结果",
         "search.toolbar.collapse": "全部折叠",
         "search.toolbar.refresh": "刷新",

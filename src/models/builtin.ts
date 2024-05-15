@@ -52,6 +52,7 @@ export class BuiltinModel {
         PANEL_CONTEXTMENU_HIDE: 'panel.contextMenu.hide',
         SIDEBAR_ITEM_SEARCH: 'sidebar.item.search',
         SEARCH_ITEM_NOT_FOUND: 'search.item.notFound',
+        SEARCH_ITEM_RESULT_TIP: 'search.item.resultTip',
         SEARCH_TOOLBAR_REFRESH: 'search.toolbar.refresh',
         SEARCH_TOOLBAR_CLEAR_ALL: 'search.toolbar.clearAll',
         SEARCH_TOOLBAR_VIEW_AS_LIST: 'search.toolbar.viewAsList',

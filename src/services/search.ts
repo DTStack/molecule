@@ -1,6 +1,14 @@
 import { BaseService } from 'mo/glue';
 import { SearchEvent, SearchModel } from 'mo/models/search';
-import { Arraylize, InputValidateInfo, SearchMode, SearchModeLiteral, UniqueId } from 'mo/types';
+import {
+    Arraylize,
+    InputValidateInfo,
+    RecordWithId,
+    SearchMode,
+    SearchModeLiteral,
+    SearchResultItem,
+    UniqueId,
+} from 'mo/types';
 import { arraylize } from 'mo/utils';
 import { TreeNodeModel } from 'mo/utils/tree';
 import { injectable } from 'tsyringe';
@@ -49,14 +57,24 @@ export class SearchService extends BaseService<SearchModel> {
         this.setMode(next);
     }
 
-    public setResult(resultData?: TreeNodeModel<any>[]) {
+    public setResult(data: RecordWithId<SearchResultItem>[], total: number) {
         this.dispatch((draft) => {
-            draft.result = resultData || [];
+            draft.result = {
+                total,
+                results: data,
+            };
         });
     }
 
     public setExpandedKeys(expandedKeys: UniqueId[]) {
         this.dispatch((draft) => {
+            draft.expandedKeys = expandedKeys;
+        });
+    }
+
+    public expandAll() {
+        this.dispatch((draft) => {
+            const expandedKeys = draft.result.results.map((item) => item.filename);
             draft.expandedKeys = expandedKeys;
         });
     }
@@ -77,13 +95,13 @@ export class SearchService extends BaseService<SearchModel> {
         });
     }
 
-    public toggleExpandedKey(expandedKey: UniqueId) {
-        if (this.getExpandedKeys().includes(expandedKey)) {
-            this.removeExpandedKeys(expandedKey);
-        } else {
-            this.addExpandedKeys(expandedKey);
-        }
-    }
+    // public toggleExpandedKey(expandedKey: UniqueId) {
+    //     if (this.getExpandedKeys().includes(expandedKey)) {
+    //         this.removeExpandedKeys(expandedKey);
+    //     } else {
+    //         this.addExpandedKeys(expandedKey);
+    //     }
+    // }
 
     public reset() {
         this.setState(new SearchModel());

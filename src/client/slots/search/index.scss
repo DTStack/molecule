@@ -3,13 +3,14 @@
 $container: prefix('search');
 $widget: BEMElement($container, 'widget');
 $result: BEMElement($container, 'result');
-$notFound: BEMElement($container, 'notFound');
+$tip: BEMElement($container, 'tip');
 
 .#{$container} {
     height: 100%;
     display: flex;
     flex-direction: column;
     font-size: 13px;
+    padding: 6px 0;
 
     .#{$widget} {
         margin: 0 8px 5px;
@@ -20,7 +21,7 @@ $notFound: BEMElement($container, 'notFound');
         overflow: hidden;
     }
 
-    .#{$notFound} {
+    .#{$tip} {
         margin: 0 8px 5px;
         overflow-wrap: break-word;
         cursor: default;
@@ -32,5 +33,5 @@ $notFound: BEMElement($container, 'notFound');
     container: $container;
     widget: $widget;
     result: $result;
-    notFound: $notFound;
+    tip: $tip;
 }

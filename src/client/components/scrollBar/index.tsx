@@ -177,7 +177,7 @@ export default function ScrollBar({
             onMouseOver={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-            {isShowShadow && scroll[xOrY] !== 0 && <div className={classNames(variables.shadow)} />}
+            {isShowShadow && scroll[xOrY] !== 0 && <div className={classNames(variables.shadow, direction)} />}
             <div className={variables.viewport} ref={viewport}>
                 <div
                     style={{

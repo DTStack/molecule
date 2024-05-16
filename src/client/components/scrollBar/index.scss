@@ -71,11 +71,20 @@ $trackHidden: BEMModifier($track, 'hidden');
 }
 
 .#{$shadow} {
-    box-shadow: var(--widget-shadow) 0 6px 6px -6px inset;
-    height: 3px;
     position: absolute;
-    top: 0;
-    width: 100%;
+    &.vertical {
+        width: 100%;
+        top: 0;
+        height: 3px;
+        box-shadow: var(--widget-shadow) 0 6px 6px -6px inset;
+    }
+
+    &.horizontal {
+        width: 3px;
+        left: 0;
+        height: 100%;
+        box-shadow: var(--widget-shadow) 6px 0px 6px -6px inset;
+    }
 }
 
 :export {

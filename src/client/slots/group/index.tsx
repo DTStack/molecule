@@ -1,13 +1,13 @@
 import { lazy, Suspense, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
-import { Progress } from 'mo/client/components';
+import { Progress, ScrollBar } from 'mo/client/components';
 import ActionBar from 'mo/client/components/actionBar';
 import Breadcrumb from 'mo/client/components/breadcrumb';
 import Header from 'mo/client/components/header';
 import Tab from 'mo/client/components/tab';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type { editor } from 'mo/monaco';
-import type { ContextMenuHandler, GroupMenuHandler, IMenuItemProps, TabGroup, UniqueId } from 'mo/types';
+import { ContextMenuHandler, Direction, GroupMenuHandler, IMenuItemProps, TabGroup, UniqueId } from 'mo/types';
 import { searchById } from 'mo/utils';
 
 import variables from './index.scss';
@@ -120,7 +120,11 @@ export default function Group({
                     );
                 })}
             </Header>
-            <Breadcrumb className={variables.breadcrumb} routes={tab?.breadcrumb || []} />
+            <section className={variables.breadcrumb}>
+                <ScrollBar direction={Direction.horizontal} isShowShadow trackStyle={{ height: 3 }}>
+                    <Breadcrumb routes={tab?.breadcrumb || []} />
+                </ScrollBar>
+            </section>
             <div className={variables.content}>
                 {tab.render ? (
                     tab.render?.(tab)

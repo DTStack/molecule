@@ -58,7 +58,12 @@ export const ExtendsEditor: IExtension = {
             molecule.editor.open(tab);
         });
 
-        molecule.editor.onSelectTab((tabId, groupId) => molecule.editor.setCurrent(tabId, groupId));
+        molecule.editor.onSelectTab((tabId, groupId) => {
+            molecule.editor.setCurrent(tabId, groupId);
+            if (molecule.folderTree.get(tabId)) {
+                molecule.folderTree.setCurrent(tabId);
+            }
+        });
 
         molecule.editor.onToolbarClick((item, groupId) => {
             const { EDITOR_TOOLBAR_SPLIT: EDITOR_MENU_SPLIT, EDITOR_CONTEXTMENU_CLOSE_ALL: EDITOR_MENU_CLOSE_ALL } =

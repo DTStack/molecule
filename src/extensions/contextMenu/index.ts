@@ -1,7 +1,7 @@
 import { EditorEvent, EditorGroupModel } from 'mo/models/editor';
 import { EditorTreeEvent } from 'mo/models/editorTree';
 import { FolderTreeEvent } from 'mo/models/folderTree';
-import { ISidebarPane, SidebarEvent } from 'mo/models/sideBar';
+import { ISidebarPane, SidebarEvent } from 'mo/models/sidebar';
 import {
     Alignment,
     type IEditorTab,

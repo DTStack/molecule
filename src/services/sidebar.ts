@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash-es';
 import { BaseService } from 'mo/glue';
-import { type ISidebarPane, SidebarEvent, SidebarModel } from 'mo/models/sideBar';
+import { type ISidebarPane, SidebarEvent, SidebarModel } from 'mo/models/sidebar';
 import type {
     Arraylize,
     ContextMenuHandler,

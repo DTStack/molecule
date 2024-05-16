@@ -1,5 +1,5 @@
 import { BaseController } from 'mo/glue';
-import { ISidebarPane, SidebarEvent } from 'mo/models/sideBar';
+import { ISidebarPane, SidebarEvent } from 'mo/models/sidebar';
 import type { ContextMenuHandler,GroupMenuHandler } from 'mo/types';
 
 export interface ISideBarController extends BaseController {

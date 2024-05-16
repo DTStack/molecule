@@ -3,6 +3,7 @@
 $editor: prefix('editor');
 $group: BEMElement($editor, 'group');
 $header: BEMElement($group, 'header');
+$tab: BEMElement($header, 'tab');
 $content: BEMElement($group, 'content');
 $breadcrumb: BEMElement($group, 'breadcrumb');
 
@@ -18,7 +19,6 @@ $active: BEMModifier($editor, 'active');
         background: var(--editorGroupHeader-tabsBackground);
         border-bottom: 1px solid var(--editorGroupHeader-tabsBorder);
         position: relative;
-        height: 35px;
     }
 
     .#{$breadcrumb} {
@@ -33,12 +33,17 @@ $active: BEMModifier($editor, 'active');
     .#{$content} {
         height: calc(100% - 57px);
     }
+
+    .#{$tab} {
+        line-height: 35px;
+    }
 }
 
 :export {
     group: $group;
     active: $active;
     header: $header;
+    tab: $tab;
     breadcrumb: $breadcrumb;
     content: $content;
 }

@@ -105,7 +105,7 @@ export default function Group({
                             key={tab.id}
                             data={tab}
                             groupId={group.id}
-                            className={classNames(active && variables.active)}
+                            className={classNames(variables.tab, active && variables.active)}
                             active={active}
                             onContextMenu={onContextMenu}
                             onClose={onCloseTab}

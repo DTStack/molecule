@@ -4,7 +4,7 @@ import useScroll from 'react-use/esm/useScroll';
 import { upperFirst } from 'lodash-es';
 import { classNames } from 'mo/client/classNames';
 import { useSlide } from 'mo/client/hooks';
-import type { DirectionLiteral } from 'mo/types';
+import { Direction, DirectionLiteral } from 'mo/types';
 import { isElementInParentView } from 'mo/utils';
 
 import variables from './index.scss';
@@ -24,6 +24,7 @@ export interface IScrollbarProps {
     scrollIntoViewDeps?: {
         dep: any;
         activeClassName: string;
+        center?: boolean;
     };
     onScroll?: (evt: IScrollEvent, e: MouseEvent | React.MouseEvent) => void;
     onScrollStart?: (evt: IScrollEvent, e: MouseEvent | React.MouseEvent) => void;
@@ -126,20 +127,29 @@ export default function ScrollBar({
 
                 if (!inView) {
                     const offset = (() => {
+                        const { width, height } = parent.getBoundingClientRect();
+                        const half = {
+                            width: width / 2,
+                            height: height / 2,
+                        };
                         switch (isWhichSide) {
                             case 'left':
-                                return active.offsetLeft;
+                                return active.offsetLeft - (scrollIntoViewDeps.center ? half.width : 0);
                             case 'right':
                                 return (
                                     active.offsetLeft -
-                                    (parent.getBoundingClientRect().width - active.getBoundingClientRect().width)
+                                    (parent.getBoundingClientRect().width - active.getBoundingClientRect().width) +
+                                    // Scroll item into screen's center when center is true
+                                    (scrollIntoViewDeps.center ? half.width : 0)
                                 );
                             case 'top':
-                                return active.offsetTop;
+                                return active.offsetTop - (scrollIntoViewDeps.center ? half.height : 0);
                             case 'bottom':
                                 return (
                                     active.offsetTop -
-                                    (parent.getBoundingClientRect().height - active.getBoundingClientRect().height)
+                                    (parent.getBoundingClientRect().height - active.getBoundingClientRect().height) +
+                                    // Scroll item into screen's center when center is true
+                                    (scrollIntoViewDeps.center ? half.height : 0)
                                 );
                             default:
                                 return null;
@@ -169,7 +179,15 @@ export default function ScrollBar({
         >
             {isShowShadow && scroll[xOrY] !== 0 && <div className={classNames(variables.shadow)} />}
             <div className={variables.viewport} ref={viewport}>
-                <div style={{ height: '100%', width: '100%' }}>{children}</div>
+                <div
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                        display: direction === Direction.horizontal ? 'table' : 'block',
+                    }}
+                >
+                    {children}
+                </div>
             </div>
             <div
                 className={classNames(

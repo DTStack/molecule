@@ -18,6 +18,7 @@ export interface ITreeProps {
     expandedKeys?: UniqueId[];
     loadingKeys?: UniqueId[];
     activeKey?: UniqueId;
+    activeClassName?: string;
     contextMenu?: IMenuItemProps[];
     onSelect?: (node: ITreeNodeItemProps) => void;
     renderTitle?: (node: ITreeNodeItemProps, index: number, isLeaf: boolean) => JSX.Element | string;
@@ -35,6 +36,7 @@ export default function Tree({
     draggable = false,
     expandedKeys = [],
     activeKey,
+    activeClassName,
     loadingKeys = [],
     renderTitle,
     onSelect,
@@ -74,7 +76,11 @@ export default function Tree({
                     draggable={draggable}
                     data={item}
                     indent={indent}
-                    className={classNames(variables.treeNode, isActive && variables.active)}
+                    className={classNames(
+                        variables.treeNode,
+                        isActive && variables.active,
+                        isActive && activeClassName
+                    )}
                     renderIcon={() => (
                         <>
                             {item.fileType === FileTypes.Folder && renderFolderIcon(isExpand, isLoading)}

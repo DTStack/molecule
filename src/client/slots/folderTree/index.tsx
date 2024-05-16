@@ -43,7 +43,14 @@ export default function FolderTree({
 
     if (!folderTree.data.length) return welcomePage;
     return (
-        <ScrollBar isShowShadow>
+        <ScrollBar
+            isShowShadow
+            scrollIntoViewDeps={{
+                dep: folderTree.current,
+                activeClassName: variables.active,
+                center: true,
+            }}
+        >
             <Prevent
                 data-content={panel.id}
                 style={{ height: '100%' }}
@@ -56,6 +63,7 @@ export default function FolderTree({
                     loadingKeys={loadingKeys}
                     data={data[0]?.children || []}
                     className={variables.folderTree}
+                    activeClassName={variables.active}
                     draggable={!editing}
                     onSelect={onSelect}
                     onContextMenu={onContextMenu}

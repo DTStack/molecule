@@ -41,9 +41,6 @@ export const ExtendsActions: IExtension = {
             CopyLineDownAction,
             MoveLineUpAction,
             MoveLineDownAction,
-            CutAction,
-            CopyAction,
-            PasteAction,
             FindAction,
             ReplaceAction,
             AddCursorAboveAction,
@@ -111,7 +108,7 @@ export const ExtendsActions: IExtension = {
         updateMenuKeybinding(QuickToggleSidebarAction.ID);
         updateMenuKeybinding(UndoAction.ID);
         updateMenuKeybinding(RedoAction.ID);
-        updateMenuKeybinding(CutAction.ID);
+        // updateMenuKeybinding(CutAction.ID);
 
         function appendActionToSettingMenu(ctor: { ID: string }) {
             const keybinding = molecule.action.queryGlobalKeybinding(ctor.ID);

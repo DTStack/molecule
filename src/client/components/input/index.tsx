@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import { classNames } from 'mo/client/classNames';
 import { InputValidateInfo, ValidateStatus, ValidateStatusLiteral } from 'mo/types';
 
@@ -13,7 +14,6 @@ export interface IInputProps {
     defaultValue?: string;
     autoFocus?: boolean;
     size?: 'default' | 'small';
-    autoWrap?: boolean;
     onChange?: (value: string) => void;
     onClick?: React.MouseEventHandler<HTMLTextAreaElement>;
     onKeyDown?: React.KeyboardEventHandler<HTMLTextAreaElement>;
@@ -28,7 +28,6 @@ export default function Input({
     className,
     placeholder,
     autoFocus,
-    autoWrap,
     info,
     onChange,
     onSubmit,
@@ -60,21 +59,6 @@ export default function Input({
     };
 
     const handleInputChange = (e: any) => {
-        const widgetSize = size === 'small' ? variables.smallWidgetSize : variables.widgetSize;
-        const height = parseInt(widgetSize, 10);
-        if (textareaRef.current) {
-            // base height
-            textareaRef.current.style.height = widgetSize;
-            const currentScrollHeight = textareaRef.current.scrollHeight;
-            // count the lines
-            const lines = currentScrollHeight / height;
-            const maxLines = 5;
-            if (lines > maxLines) {
-                textareaRef.current.style.height = `${height * maxLines}px`;
-            } else {
-                textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-            }
-        }
         onChange?.(e?.target?.value || '');
     };
 
@@ -112,15 +96,16 @@ export default function Input({
                 className
             )}
         >
-            <textarea
+            <TextareaAutosize
                 defaultValue={defaultValue}
                 value={value}
                 ref={textareaRef}
                 spellCheck={false}
-                wrap={autoWrap ? 'soft' : 'off'}
                 autoCorrect="off"
                 autoComplete="off"
                 autoCapitalize="off"
+                minRows={1}
+                maxRows={4}
                 className={classNames(variables.widget)}
                 placeholder={placeholder}
                 title={placeholder}

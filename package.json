@@ -68,8 +68,8 @@
         "vite-plugin-mock-dev-server": "^1.4.0",
         "vite-plugin-monaco-editor": "^1.1.0",
         "vscode-oniguruma": "^2.0.1",
-        "yargs": "^17.7.2",
-        "vscode-textmate": "6.x"
+        "vscode-textmate": "6.x",
+        "yargs": "^17.7.2"
     },
     "dependencies": {
         "@dtinsight/dt-utils": "^1.1.2",
@@ -83,6 +83,7 @@
         "rc-menu": "^9.11.1",
         "react-dnd": "^16.0.1",
         "react-dnd-html5-backend": "^16.0.1",
+        "react-textarea-autosize": "^8.5.3",
         "react-use": "^17.4.2",
         "reflect-metadata": "^0.1.13",
         "sonner": "^1.4.0",

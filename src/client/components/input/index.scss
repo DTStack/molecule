@@ -44,7 +44,6 @@ $status-colors: (
 
         .#{$widget} {
             padding: 2px 0 2px 1px;
-            height: $small-widget-size;
             min-height: $small-widget-size;
             line-height: calc($small-widget-size - 4px);
         }
@@ -61,18 +60,12 @@ $status-colors: (
         color: var(--input-foreground);
         font-family: inherit;
         font-size: inherit;
-        height: $widget-size;
         min-height: $widget-size;
-        overflow: hidden;
         padding: 4px;
         resize: none;
         width: 100%;
-
-        // TODO: better to mock a scroll bar
-        // invisible scroll bar
-        &::-webkit-scrollbar {
-            opacity: 0;
-        }
+        word-wrap: break-word;
+        white-space: pre-wrap;
     }
 
     .#{$widget}:focus ~ .#{$validation} {

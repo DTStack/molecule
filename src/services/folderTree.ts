@@ -39,7 +39,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
         });
     }
 
-    public get(id: UniqueId) {
+    public get<T>(id: UniqueId): TreeNodeModel<T> | undefined {
         if (!this.getState().data.length) return;
         const treeHelper = new TreeHelper(this.getState().data);
         return treeHelper.getNode(id);
@@ -87,10 +87,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
 
     public update<T>(id: UniqueId, predict: Predict<TreeNodeModel<T>>): void;
     public update<T>(data: RequiredId<TreeNodeModel<T>>): void;
-    public update<T>(
-        item: UniqueId | RequiredId<TreeNodeModel<any>>,
-        predict?: Predict<TreeNodeModel<T>>
-    ) {
+    public update<T>(item: UniqueId | RequiredId<TreeNodeModel<any>>, predict?: Predict<TreeNodeModel<T>>) {
         this.dispatch((draft) => {
             const treeHelper = new TreeHelper(draft.data);
             const node = treeHelper.getNode(typeof item === 'object' ? item.id : item);
@@ -123,6 +120,10 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
         });
     }
 
+    public getCurrent() {
+        return this.getState().current;
+    }
+
     public getExpanded() {
         return this.getState().expandedKeys;
     }
@@ -151,8 +152,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
 
     public setValidateInfo(message?: string | InputValidateInfo) {
         this.dispatch((draft) => {
-            draft.validateInfo =
-                typeof message === 'string' ? { status: 'info', message } : message;
+            draft.validateInfo = typeof message === 'string' ? { status: 'info', message } : message;
         });
     }
 
@@ -173,7 +173,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
     }
 
     // ===================== Subscriptions =====================
-    public onRename(callback: (ele: HTMLTextAreaElement, treeNode: TreeNodeModel<any>) => void) {
+    public onRename<T = any>(callback: (ele: HTMLTextAreaElement, treeNode: TreeNodeModel<T>) => void) {
         this.subscribe(FolderTreeEvent.onRename, callback);
     }
 
@@ -181,24 +181,20 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
         this.subscribe(FolderTreeEvent.onDelete, callback);
     }
 
-    public onSelect(callback: (treeNode: TreeNodeModel<any>) => void) {
+    public onSelect<T = any>(callback: (treeNode: TreeNodeModel<T>) => void) {
         this.subscribe(FolderTreeEvent.onSelect, callback);
     }
 
-    public onContextMenu = (
-        callback: ContextMenuHandler<[treeNode: TreeNodeModel<any>]>
-    ) => {
+    public onContextMenu = <T = any>(callback: ContextMenuHandler<[treeNode: TreeNodeModel<T>]>) => {
         this.subscribe(FolderTreeEvent.onContextMenu, callback);
     };
 
-    public onContextMenuClick(
-        callback: (item: IMenuItemProps, treeNode: TreeNodeModel<any>) => void
-    ): void {
+    public onContextMenuClick<T = any>(callback: (item: IMenuItemProps, treeNode: TreeNodeModel<T>) => void): void {
         this.subscribe(FolderTreeEvent.onContextMenuClick, callback);
     }
 
-    public onExpand = (
-        callback: (expanded: boolean, expandKeys: UniqueId[], treeNode: TreeNodeModel<any>) => void
+    public onExpand = <T = any>(
+        callback: (expanded: boolean, expandKeys: UniqueId[], treeNode: TreeNodeModel<T>) => void
     ) => {
         this.subscribe(FolderTreeEvent.onExpand, callback);
     };
@@ -211,7 +207,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
         this.subscribe(FolderTreeEvent.onCreateRoot, callback);
     }
 
-    public onUpdate<T>(callback: (data: RequiredId<TreeNodeModel<T>>) => void): void {
+    public onUpdate<T = any>(callback: (data: RequiredId<TreeNodeModel<T>>) => void): void {
         this.subscribe(FolderTreeEvent.onUpdate, callback);
     }
 
@@ -223,23 +219,19 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
         this.subscribe(FolderTreeEvent.onLoad, callback);
     }
 
-    public onDragStart(callback: (source: TreeNodeModel<any>) => void): void {
+    public onDragStart<T = any>(callback: (source: TreeNodeModel<T>) => void): void {
         this.subscribe(FolderTreeEvent.onDragStart, callback);
     }
 
-    public onDragOver = (
-        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
-    ) => {
+    public onDragOver = <T = any>(callback: (source: TreeNodeModel<T>, target: TreeNodeModel<T>) => void) => {
         this.subscribe(FolderTreeEvent.onDragOver, callback);
     };
 
-    public onDragEnd(callback: (source: TreeNodeModel<any>) => void): void {
+    public onDragEnd<T = any>(callback: (source: TreeNodeModel<T>) => void): void {
         this.subscribe(FolderTreeEvent.onDragEnd, callback);
     }
 
-    public onDrop = (
-        callback: (source: TreeNodeModel<any>, target: TreeNodeModel<any>) => void
-    ) => {
+    public onDrop = <T = any>(callback: (source: TreeNodeModel<T>, target: TreeNodeModel<T>) => void) => {
         this.subscribe(FolderTreeEvent.onDrop, callback);
     };
 }

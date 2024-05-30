@@ -31,7 +31,7 @@ $transitionDelay: 150;
         &:hover,
         &:focus-within {
             .#{$extra} {
-                opacity: 1;
+                display: flex;
             }
         }
     }
@@ -85,7 +85,7 @@ $transitionDelay: 150;
     }
 
     .#{$extra} {
-        opacity: 0;
+        display: none;
     }
 }
 

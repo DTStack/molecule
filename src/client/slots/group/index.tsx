@@ -70,12 +70,15 @@ export default function Group({
             }
         });
 
-        editor.onDidBlurEditorText(() => {
+        const handleSaveViewState = () => {
             const model = editor.getModel();
             if (model) {
                 viewState.current.set(model, editor.saveViewState());
             }
-        });
+        };
+
+        editor.onDidBlurEditorText(handleSaveViewState);
+        editor.onDidScrollChange(handleSaveViewState);
     };
 
     const handleModelMount = (model: editor.ITextModel) => {

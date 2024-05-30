@@ -128,6 +128,7 @@ export class EditorService extends BaseService<EditorModel> {
 
     private _close(tabs: { tabId: UniqueId; groupId: UniqueId }[]) {
         this.dispatch((draft) => {
+            const currentChanged = { tabId: this.getCurrentGroup()?.activeTab, groupId: draft.current };
             const closed: IEditorTab<any>[] = [];
             // Remove tabs from state
             tabs.forEach(({ tabId, groupId }) => {
@@ -158,8 +159,15 @@ export class EditorService extends BaseService<EditorModel> {
                 tab.model.dispose();
             });
 
-            // Call onClose
+            // ===================== effects =====================
             this.emit(EditorEvent.onClose, closed);
+            const currentActiveTab = draft.groups.find(searchById(draft.current))?.activeTab;
+            if (draft.current !== currentChanged.groupId || currentActiveTab !== currentChanged.tabId) {
+                this.emit(EditorEvent.onCurrentChange, currentChanged, {
+                    tabId: currentActiveTab,
+                    groupId: draft.current,
+                });
+            }
         });
     }
 
@@ -244,12 +252,23 @@ export class EditorService extends BaseService<EditorModel> {
     }
 
     public setCurrentGroup(groupId: UniqueId) {
+        // ===================== effects =====================
+        const current = this.getCurrentGroup();
+        this.emit(
+            EditorEvent.onCurrentChange,
+            { tabId: current?.activeTab, groupId: current?.id },
+            { tabId: this.getGroup(groupId)?.activeTab, groupId }
+        );
         this.dispatch((draft) => {
             draft.current = groupId;
         });
     }
 
     public setCurrent(tabId: UniqueId, groupId: UniqueId) {
+        // ===================== effects =====================
+        const current = this.getCurrentGroup();
+        this.emit(EditorEvent.onCurrentChange, { tabId: current?.activeTab, groupId: current?.id }, { tabId, groupId });
+
         this.dispatch((draft) => {
             draft.current = groupId;
             const group = draft.groups.find(searchById(groupId));
@@ -259,6 +278,15 @@ export class EditorService extends BaseService<EditorModel> {
     }
 
     public updateGroup<T>(group: RequiredId<EditorGroupModel<T>>) {
+        // ===================== effects =====================
+        if (Object.hasOwn(group, 'activeTab')) {
+            const current = this.getCurrentGroup();
+            this.emit(
+                EditorEvent.onCurrentChange,
+                { tabId: current?.activeTab, groupId: current?.id },
+                { tabId: group.activeTab, groupId: group.id }
+            );
+        }
         this.dispatch((draft) => {
             const target = draft.groups.find(searchById(group.id));
             if (!target) return;
@@ -408,5 +436,9 @@ export class EditorService extends BaseService<EditorModel> {
 
     public onModelMount(callback: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void) {
         this.subscribe(EditorEvent.onModelMount, callback);
+    }
+
+    public onCurrentChange(callback: (prev: Partial<TabGroup>, next: Partial<TabGroup>) => void) {
+        this.subscribe(EditorEvent.onCurrentChange, callback);
     }
 }

@@ -210,6 +210,12 @@ export const TestExtension: IExtension = {
             });
         });
 
+        molecule.editor.onCurrentChange((_, next) => {
+            if (next.tabId) {
+                molecule.folderTree.setCurrent(next.tabId);
+            }
+        });
+
         function openFile(treeNode: any) {
             molecule.editor.setLoading(true);
             getFileContent(treeNode.id as string)

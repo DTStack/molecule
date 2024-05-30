@@ -26,6 +26,7 @@ export enum EditorEvent {
     onToolbarClick = 'editor.onToolbarClick',
     onMount = 'editor.onMount',
     onModelMount = 'editor.onModelMount',
+    onCurrentChange = 'editor.onCurrentChange',
 }
 
 export class EditorGroupModel<T = any> {

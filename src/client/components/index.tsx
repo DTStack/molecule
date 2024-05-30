@@ -23,7 +23,7 @@ export { default as Progress, type IProgressProps } from './progress';
 export { default as ScrollBar, type IScrollbarProps } from './scrollBar';
 export { default as Split, type IPaneConfigs, type ISashProps, type ISplitProps } from './split';
 export { default as StatusItem, type IStatusItemProps } from './statusItem';
-export { default as Tabs, type ITabsProps } from './tab';
+export { default as Tab, type ITabProps } from './tab';
 export { default as Text, type ITextProps } from './text';
 export { default as Tree, type ITreeProps } from './tree';
 export { default as ViewSuspense, type IViewSuspenseProps } from './viewSuspense';

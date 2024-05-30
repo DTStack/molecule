@@ -9,7 +9,7 @@ import Icon from '../icon';
 import Prevent from '../prevent';
 import variables from './index.scss';
 
-export interface ITabsProps {
+export interface ITabProps {
     data: IEditorTab<any>;
     groupId: UniqueId;
     className?: string;
@@ -25,7 +25,7 @@ export interface ITabsProps {
     onDrop?: (from: TabGroup, to: TabGroup) => void;
 }
 
-export default function Tabs({
+export default function Tab({
     data,
     groupId,
     className,
@@ -39,7 +39,7 @@ export default function Tabs({
     onDragLeave,
     onDragOver,
     onDrop,
-}: ITabsProps) {
+}: ITabProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     const [{ isDragging }, drag] = useDrag({

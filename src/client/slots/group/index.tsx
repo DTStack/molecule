@@ -1,13 +1,10 @@
 import { lazy, Suspense, useRef } from 'react';
 import { classNames } from 'mo/client/classNames';
-import { Progress, ScrollBar } from 'mo/client/components';
-import ActionBar from 'mo/client/components/actionBar';
-import Breadcrumb from 'mo/client/components/breadcrumb';
-import Header from 'mo/client/components/header';
-import Tab from 'mo/client/components/tab';
+import { ActionBar, Breadcrumb, Header, Progress, ScrollBar, Tab } from 'mo/client/components';
 import type { EditorGroupModel, EditorModel } from 'mo/models/editor';
 import type { editor } from 'mo/monaco';
-import { ContextMenuHandler, Direction, GroupMenuHandler, IMenuItemProps, TabGroup, UniqueId } from 'mo/types';
+import type { ContextMenuHandler, GroupMenuHandler, IMenuItemProps, TabGroup, UniqueId } from 'mo/types';
+import { Direction } from 'mo/types';
 import { searchById } from 'mo/utils';
 
 import variables from './index.scss';

@@ -31,8 +31,12 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
         });
     }
 
-    public removeLoading(id: UniqueId) {
+    public removeLoading(id?: UniqueId) {
         this.dispatch((draft) => {
+            if (isUndefined(id)) {
+                draft.loadingKeys = [];
+                return;
+            }
             const idx = draft.loadingKeys.indexOf(id);
             if (idx === -1) return;
             draft.loadingKeys.splice(idx, 1);
@@ -134,8 +138,12 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
         });
     }
 
-    public removeExpanded(id: UniqueId) {
+    public removeExpanded(id?: UniqueId) {
         this.dispatch((draft) => {
+            if (isUndefined(id)) {
+                draft.expandedKeys = [];
+                return;
+            }
             const idx = draft.expandedKeys.indexOf(id);
             if (idx === -1) return;
             draft.expandedKeys.splice(idx, 1);

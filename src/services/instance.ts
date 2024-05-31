@@ -37,7 +37,7 @@ export interface IConfigProps {
      * Molecule Extension instances, after the MoleculeProvider
      * did mount, then handle it.
      */
-    extensions?: IExtension[];
+    extensions?: IExtension[] | Promise<IExtension[]>;
     /**
      * Specify a default locale Id, the Molecule built-in `zh-CN`, `en-US` two languages, and
      * default locale Id is `en-US`.
@@ -48,6 +48,12 @@ export interface IConfigProps {
      */
     onigurumPath?: string;
 }
+
+type _IConfigProps = Required<
+    Omit<IConfigProps, 'extensions'> & {
+        extensions: IExtension[];
+    }
+>;
 
 interface IInstanceServiceProps {
     getConfig: () => IConfigProps;
@@ -63,7 +69,7 @@ enum InstanceHookKind {
 
 export class InstanceService extends GlobalEvent implements IInstanceServiceProps {
     private root: ReturnType<typeof createRoot> | undefined;
-    private _config: Required<IConfigProps> = {
+    private _config: _IConfigProps = {
         extensions: [],
         defaultLocale: 'en-US',
         onigurumPath: '',
@@ -271,10 +277,10 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
         this.loading = true;
         Promise.all([
             this.registerServices(),
-            import('../extensions').then((module) => {
+            Promise.all([import('../extensions'), Promise.resolve(config.extensions)]).then(([module, ext]) => {
                 this._config.extensions.push(...module.default);
-                if (Array.isArray(config.extensions)) {
-                    this._config.extensions.unshift(...config.extensions);
+                if (Array.isArray(ext)) {
+                    this._config.extensions.unshift(...ext);
                 }
             }),
             this.downloadNLS(),

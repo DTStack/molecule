@@ -1,10 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { create } from '@dtinsight/molecule';
 
-import { TestExtension } from './extensions/TestExtension';
-
 const instance = create({
-    extensions: [TestExtension],
+    extensions: import('./extensions/TestExtension').then(({ TestExtension }) => [TestExtension]),
     defaultLocale: 'zh-CN',
     onigurumPath: '/wasm/onig.wasm',
 });

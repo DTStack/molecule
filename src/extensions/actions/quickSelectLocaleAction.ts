@@ -1,6 +1,15 @@
 import { BaseAction } from 'mo/glue/baseAction';
 import { ILocale } from 'mo/models/locale';
-import { CATEGORIES, IQuickInputService, KeyCode, KeyMod, localize, QuickPickInput, ServicesAccessor } from 'mo/monaco';
+import {
+    CATEGORIES,
+    IQuickInputService,
+    IQuickPickItem,
+    KeyCode,
+    KeyMod,
+    localize,
+    QuickPickInput,
+    ServicesAccessor,
+} from 'mo/monaco';
 import { IMoleculeContext } from 'mo/types';
 
 export default class QuickSelectLocaleAction extends BaseAction {
@@ -29,7 +38,7 @@ export default class QuickSelectLocaleAction extends BaseAction {
         const picks = [...toEntries(data)];
         let timer: number | undefined;
 
-        const onSelect = (locale: ILocale | undefined, apply: boolean) => {
+        const onSelect = (locale: IQuickPickItem, apply: boolean) => {
             if (timer) {
                 clearTimeout(timer);
             }
@@ -45,13 +54,13 @@ export default class QuickSelectLocaleAction extends BaseAction {
         };
 
         return new Promise((resolve) => {
-            const autoFocusIndex = picks.findIndex((p) => p.id === current?.id);
-            const quickPick = quickInputService.createQuickPick<ILocale>();
+            const autoFocusIndex = picks.findIndex((p) => p.type === 'item' && p.id === current?.id);
+            const quickPick = quickInputService.createQuickPick<IQuickPickItem>();
             quickPick.items = picks;
 
             quickPick.placeholder = localize('locale.select', 'Select Display Language (Up/Down Keys to Preview)');
 
-            quickPick.activeItems = [picks[autoFocusIndex] as ILocale];
+            quickPick.activeItems = [picks[autoFocusIndex] as IQuickPickItem];
             quickPick.canSelectMany = false;
             quickPick.onDidAccept((_) => {
                 const item = quickPick.activeItems[0];
@@ -67,8 +76,8 @@ export default class QuickSelectLocaleAction extends BaseAction {
     }
 }
 
-function toEntries(locales: Array<ILocale>, label?: string): QuickPickInput<ILocale>[] {
-    const entries: QuickPickInput<ILocale>[] = locales
+function toEntries(locales: Array<ILocale>, label?: string): QuickPickInput[] {
+    const entries: QuickPickInput[] = locales
         .map((locale) => ({
             id: locale.id,
             label: locale.name,

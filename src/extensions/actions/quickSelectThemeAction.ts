@@ -2,6 +2,7 @@ import { BaseAction } from 'mo/glue/baseAction';
 import {
     CATEGORIES,
     IQuickInputService,
+    IQuickPickItem,
     KeyChord,
     KeyCode,
     KeyMod,
@@ -40,7 +41,7 @@ export default class QuickSelectThemeAction extends BaseAction {
 
         let selectThemeTimeout: number | undefined;
 
-        const selectTheme = (theme: IColorTheme | undefined, applyTheme: boolean) => {
+        const selectTheme = (theme: IQuickPickItem | undefined, applyTheme: boolean) => {
             if (selectThemeTimeout) {
                 clearTimeout(selectThemeTimeout);
             }
@@ -57,13 +58,13 @@ export default class QuickSelectThemeAction extends BaseAction {
         return new Promise((resolve) => {
             let isCompleted = false;
 
-            const autoFocusIndex = picks.findIndex((p) => p.id === currentTheme?.id);
-            const quickPick = quickInputService.createQuickPick<IColorTheme>();
+            const autoFocusIndex = picks.findIndex((p) => p.type === 'item' && p.id === currentTheme?.id);
+            const quickPick = quickInputService.createQuickPick();
 
             quickPick.items = picks;
             // TODO: Better to use molecule's localize
             quickPick.placeholder = localize('themes.selectTheme', 'Select Color Theme (Up/Down Keys to Preview)');
-            quickPick.activeItems = [picks[autoFocusIndex] as IColorTheme];
+            quickPick.activeItems = [picks[autoFocusIndex] as IQuickPickItem];
             quickPick.canSelectMany = false;
             quickPick.onDidAccept(() => {
                 const theme = quickPick.activeItems[0];
@@ -88,7 +89,7 @@ export default class QuickSelectThemeAction extends BaseAction {
     }
 }
 
-function toEntries(themes: Array<IColorTheme>, label?: string): QuickPickInput<IColorTheme>[] {
+function toEntries(themes: Array<IColorTheme>, label?: string): QuickPickInput[] {
     const toEntry = (theme: IColorTheme): IColorTheme => ({
         id: theme.id,
         label: theme.label,
@@ -96,7 +97,7 @@ function toEntries(themes: Array<IColorTheme>, label?: string): QuickPickInput<I
         uiTheme: theme.uiTheme,
     });
     const sorter = (t1: IColorTheme, t2: IColorTheme) => t1.label?.localeCompare(t2.label);
-    const entries: QuickPickInput<IColorTheme>[] = themes.map(toEntry).sort(sorter);
+    const entries: QuickPickInput[] = themes.map(toEntry).sort(sorter);
     if (entries.length > 0 && label) {
         entries.unshift({ type: 'separator', label });
     }

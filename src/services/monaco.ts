@@ -56,6 +56,10 @@ export class MonacoService {
         return this.services.get(ICommandService);
     }
 
+    get QuickInputService(): IQuickInputService {
+        return this.services.get(IQuickInputService);
+    }
+
     private mergeEditorServices(overrides?: IEditorOverrideServices) {
         if (overrides) {
             const services = this.services;

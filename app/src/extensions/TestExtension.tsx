@@ -14,7 +14,7 @@ export const TestExtension: IExtension = {
         },
         [IContributeType.Grammar]: grammars,
     },
-    activate(molecule: IMoleculeContext) {
+    activate(molecule: IMoleculeContext, monaco) {
         molecule.activityBar.add({
             id: 'testPane',
             name: 'testPane',
@@ -199,8 +199,10 @@ export const TestExtension: IExtension = {
         });
 
         molecule.menuBar.subscribe('APP_DEBUG_ICON', () => {
-            console.log(molecule.editor.getCurrentGroup()?.editorInstance?.getSupportedActions());
-            molecule.action.execute('menuBar.item.commandPalette');
+            const quickPick = monaco.QuickInputService.createQuickPick();
+            quickPick.busy = true;
+            quickPick.items = [];
+            quickPick.show();
         });
 
         molecule.editor.onClose((tabs) => {

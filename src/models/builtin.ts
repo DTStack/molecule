@@ -107,6 +107,7 @@ export class BuiltinModel {
         EDITORTREE_TOOLBAR_CLOSE_GROUP: 'editorTree.toolbar.closeGroup',
         FOLDERTREE_ITEM_EMPTY: 'folderTree.item.empty',
         FOLDERTREE_ITEM_ADD_ROOT_FOLDER: 'folderTree.item.addRootFolder',
+        AUXILIARYBAR_ITEM_TOOL:'auxiliaryBar.item.tab',
     } as const;
     public readonly modules = {
         STATUSBAR_LINE_INFO: () =>
@@ -545,6 +546,11 @@ export class BuiltinModel {
                     name: this.localize(this.constants.MENUBAR_CONTEXTMENU_HIDE, 'Hide Menu Bar'),
                 },
             ],
+        AUXILIARYBAR_ITEM_TOOL : () =>(
+            {
+                id: this.constants.AUXILIARYBAR_ITEM_TOOL,
+                name: this.localize(this.constants.AUXILIARYBAR_ITEM_TOOL,"auxiliaryBar tab"),
+            }),
     };
     public disabled: string[] = [];
     constructor(private localize: Localize) {}

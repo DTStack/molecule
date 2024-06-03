@@ -14,6 +14,7 @@ export class ModuleService {
             ['layout', import('../client/slots/workbench')],
             ['activityBar', import('../client/slots/activityBar')],
             ['auxiliaryBar', import('../client/slots/auxiliaryBar')],
+            ['auxiliaryBarTab', import('../client/slots/auxiliaryBar/auxiliaryBarTab')],
             ['contextMenu', import('../client/slots/contextMenu')],
             ['editor', import('../client/slots/editor')],
             ['editorTree', import('../client/slots/editorTree')],
@@ -30,6 +31,7 @@ export class ModuleService {
         this.controllers = new Map<string, BaseControllerCtor>([
             ['activityBar', controller.activityBar.ActivityBarController],
             ['auxiliaryBar', controller.auxiliaryBar.AuxiliaryController],
+            ['auxiliaryBarTab', controller.auxiliaryBar.AuxiliaryController],
             ['contextMenu', controller.contextMenu.ContextMenuController],
             ['editor', controller.editor.EditorController],
             ['explorer', controller.explorer.ExplorerController],

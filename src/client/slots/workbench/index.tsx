@@ -14,6 +14,8 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
     const layout = useConnector('layout');
     const StatusBar = useDynamic('statusBar');
     const MenuBar = useDynamic('menuBar');
+    const AuxiliaryBar  = useDynamic('auxiliaryBar');
+    const AuxiliaryBarTab = useDynamic('auxiliaryBarTab');
     const ActivityBar = useDynamic('activityBar');
     const Sidebar = useDynamic('sidebar');
     const Panel = useDynamic('panel');
@@ -49,13 +51,17 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                             split="horizontal"
                             onChange={editorChange(onEditorChange)}
                         >
-                            <Split.Pane minSize={150} maxSize={600}>
+                            <Split.Pane minSize={150} maxSize={300}>
                                 {Editor}
                             </Split.Pane>
                             <Split.Pane hidden={layout.panel.hidden}>{Panel}</Split.Pane>
                         </Split>
                     </Split.Pane>
+                    <Split.Pane minSize={100} maxSize={500} hidden={layout.auxiliaryBar.hidden}>
+                        {AuxiliaryBar}
+                    </Split.Pane>
                 </Split>
+                <Display visible>{AuxiliaryBarTab}</Display>
             </section>
             <Display visible={!layout.statusBar.hidden}>{StatusBar}</Display>
             <Toaster className={variables.toaster} expand hotkey={[]} />

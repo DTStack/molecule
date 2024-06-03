@@ -1,5 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { LayoutModel } from 'mo/models/layout';
+import { AuxiliaryBarService } from 'mo/services/auxiliaryBar';
 import type { DirectionLiteral, PosType, Variant } from 'mo/types';
 import { inject, injectable } from 'tsyringe';
 
@@ -11,6 +12,7 @@ export class LayoutService extends BaseService<LayoutModel> {
     protected state: LayoutModel;
     constructor(
         @inject('menuBar') private menuBar: MenuBarService,
+        @inject('auxiliaryBar') private  auxiliaryBar: AuxiliaryBarService,
         @inject('builtin') private builtin: BuiltinService
     ) {
         super('layout');
@@ -41,7 +43,7 @@ export class LayoutService extends BaseService<LayoutModel> {
             },
             () => {
                 // ===================== effects =====================
-                this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_PANEL);
+                this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_PANEL); // 控制台 menuBar 是否展示panel的check勾选
             }
         );
     }
@@ -121,6 +123,11 @@ export class LayoutService extends BaseService<LayoutModel> {
         this.dispatch((draft) => {
             draft.auxiliaryBar.hidden =
                 typeof visibility === 'function' ? !visibility(!draft.auxiliaryBar.hidden) : !visibility;
+        },
+        () => {
+             // ===================== effects =====================
+             this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_AUXILIARY);
+
         });
     }
 

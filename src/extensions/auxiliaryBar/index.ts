@@ -6,8 +6,6 @@ export const ExtendsAuxiliaryBar: IExtension = {
     activate: function (molecule): void {
         molecule.auxiliaryBar.onTabClick((id) => {
             molecule.auxiliaryBar.toggle(id);
-            const tab = molecule.auxiliaryBar.getCurrentBar();
-            molecule.layout.setAuxiliaryBar(!!tab);
         });
     },
 };

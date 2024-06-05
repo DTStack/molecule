@@ -43,7 +43,7 @@ export class LayoutService extends BaseService<LayoutModel> {
             },
             () => {
                 // ===================== effects =====================
-                this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_PANEL); // 控制台 menuBar 是否展示panel的check勾选
+                this.menuBar.toggleChecked(this.builtin.getState().constants.MENUBAR_ITEM_PANEL);
             }
         );
     }

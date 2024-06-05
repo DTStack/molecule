@@ -36,15 +36,7 @@ export const ExtendsMenuBar: IExtension = {
                     break;
                 }
                 case MENUBAR_ITEM_AUXILIARY: {
-                    molecule.layout.setAuxiliaryBar((prev) => {
-                        if(prev) {
-                            molecule.auxiliaryBar.setCurrent();
-                        } else {
-                            const defaultId = molecule.auxiliaryBar.getState()?.data?.[0]?.id;
-                            molecule.auxiliaryBar.setCurrent(defaultId);
-                        }
-                        return !prev;
-                    });
+                    molecule.layout.setAuxiliaryBar((prev) => !prev);
                     break;
                 }
 

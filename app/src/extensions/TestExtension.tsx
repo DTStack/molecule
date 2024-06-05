@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { FileTypes, IContributeType, IExtension, IMoleculeContext } from '@dtinsight/molecule';
 import { debounce } from 'lodash-es';
 
@@ -39,6 +40,15 @@ export const TestExtension: IExtension = {
                 { id: '2', type: 'divider' },
             ]);
         });
+
+        molecule.auxiliaryBar.add({
+            id: 'default auxiliaryBar',
+            name: 'default auxiliaryBar',
+            render() {
+                return React.createElement('pre', { style: { margin: 0 } }, " Default AuxiliaryBar Content");
+            },
+        });
+
 
         molecule.contextMenu.onClick((item) => {
             if (item.id === 'testPane__activityBar__molecule') {

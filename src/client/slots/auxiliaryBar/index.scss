@@ -21,66 +21,65 @@ $active: BEMModifier($item, 'active');
         flex: 1;
         background-color: var(--sideBar-background);
     }
-
-
-}
-
-.#{$tabs} {
-    margin: 0;
-    padding: 0;
-    width: 25px;
-    background: var(--activityBar-background);
-    border-left: 1px solid var(--activityBar-border);
-}
-
-.#{$tab} {
-    border-bottom: 1px solid var(--sideBarSectionHeader-border);
-    color: var(--tab-inactiveForeground);
-    cursor: pointer;
-    letter-spacing: 4px;
-    list-style: none;
-    padding: 4px;
-    writing-mode: vertical-rl;
-    font-size: 12px;
-
-    &:hover,
-    &.#{$active} {
-        background-color: var(--menubar-selectionBackground);
-    }
-}
-
-.#{$item} {
-    color: var(--activityBar-inactiveForeground);
-    cursor: pointer;
-    display: flex;
-    border-radius: 4px;
-
-    .codicon {
-        font-size: 18px;
+    .#{$tabs} {
+        position: fixed;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        width: 25px;
+        height: 100%;
+        background: var(--activityBar-background);
+        border-left: 1px solid var(--activityBar-border);
     }
 
-    &:hover,
-    &.#{$active} {
-        background-color: var(--menubar-selectionBackground);
+    .#{$tab} {
+        border-bottom: 1px solid var(--sideBarSectionHeader-border);
+        color: var(--tab-inactiveForeground);
+        cursor: pointer;
+        letter-spacing: 4px;
+        list-style: none;
+        padding: 4px;
+        writing-mode: vertical-rl;
+        font-size: 12px;
+
+        &:hover,
+        &.#{$active} {
+            background-color: var(--menubar-selectionBackground);
+        }
     }
 
-    &.#{$active} {
-        color: var(--menu-selectionForeground);
-        position: relative;
+    .#{$item} {
+        color: var(--activityBar-inactiveForeground);
+        cursor: pointer;
+        display: flex;
+        border-radius: 4px;
 
-        &::after {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 2px;
-            height: 100%;
-            background-color: #3f87ff;
-            content: "";
+        .codicon {
+            font-size: 18px;
+        }
+
+        &:hover,
+        &.#{$active} {
+            background-color: var(--menubar-selectionBackground);
+        }
+
+        &.#{$active} {
+            color: var(--menu-selectionForeground);
+            position: relative;
+
+            &::after {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 2px;
+                height: 100%;
+                background-color: #3f87ff;
+                content: "";
+            }
         }
     }
 }
-
 :export {
     container: $container;
     content: $content;

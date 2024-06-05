@@ -12,19 +12,18 @@ export type IWorkbenchProps = ILayoutController;
 
 export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchProps) {
     const layout = useConnector('layout');
+    const auxiliaryBar = useConnector('auxiliaryBar');
     const StatusBar = useDynamic('statusBar');
     const MenuBar = useDynamic('menuBar');
-    const AuxiliaryBar  = useDynamic('auxiliaryBar');
-    const AuxiliaryBarTab = useDynamic('auxiliaryBarTab');
+    const AuxiliaryBar = useDynamic('auxiliaryBar');
     const ActivityBar = useDynamic('activityBar');
     const Sidebar = useDynamic('sidebar');
     const Panel = useDynamic('panel');
     const Editor = useDynamic('editor');
     const ContextMenu = useDynamic('contextMenu');
-
     const ref = useRef<HTMLElement>(null);
 
-    const [sideRef, sidePos, sideChange] = useAutoPos<HTMLDivElement>(layout.splitPanePos);
+    const [sideRef, sidePos, sideChange] = useAutoPos<HTMLDivElement>(auxiliaryBar.current ? [300, 'auto', 300] : layout.splitPanePos);
     const [editorRef, editorPos, editorChange] = useAutoPos<HTMLDivElement>(
         layout.panel.panelMaximized ? [0, 'auto'] : layout.horizontalSplitPanePos,
         'horizontal'
@@ -61,7 +60,6 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                         {AuxiliaryBar}
                     </Split.Pane>
                 </Split>
-                <Display visible>{AuxiliaryBarTab}</Display>
             </section>
             <Display visible={!layout.statusBar.hidden}>{StatusBar}</Display>
             <Toaster className={variables.toaster} expand hotkey={[]} />

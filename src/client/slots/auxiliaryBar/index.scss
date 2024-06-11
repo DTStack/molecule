@@ -40,6 +40,7 @@ $active: BEMModifier($item, 'active');
         padding: 4px;
         writing-mode: vertical-rl;
         font-size: 12px;
+        user-select: none;
 
         &:hover,
         &.#{$active} {

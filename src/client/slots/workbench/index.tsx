@@ -23,7 +23,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
     const ContextMenu = useDynamic('contextMenu');
     const ref = useRef<HTMLElement>(null);
 
-    const [sideRef, sidePos, sideChange] = useAutoPos<HTMLDivElement>(auxiliaryBar.current ? [300, 'auto', 300] : layout.splitPanePos);
+    const [sideRef, sidePos, sideChange] = useAutoPos<HTMLDivElement>(layout.splitPanePos);
     const [editorRef, editorPos, editorChange] = useAutoPos<HTMLDivElement>(
         layout.panel.panelMaximized ? [0, 'auto'] : layout.horizontalSplitPanePos,
         'horizontal'
@@ -56,7 +56,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                             <Split.Pane hidden={layout.panel.hidden}>{Panel}</Split.Pane>
                         </Split>
                     </Split.Pane>
-                    <Split.Pane minSize={100} maxSize={500} hidden={layout.auxiliaryBar.hidden} resizable={!!auxiliaryBar.current}>
+                    <Split.Pane minSize={100} maxSize={300} hidden={layout.auxiliaryBar.hidden} resizable={!!auxiliaryBar.current}>
                         {AuxiliaryBar}
                     </Split.Pane>
                 </Split>

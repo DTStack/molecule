@@ -22,7 +22,6 @@ $active: BEMModifier($item, 'active');
         background-color: var(--sideBar-background);
     }
     .#{$tabs} {
-        position: fixed;
         right: 0;
         margin: 0;
         padding: 0;

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { classNames } from 'mo/client/classNames';
 import { ContextMenuHandler } from 'mo/types';
 import { TreeNodeModel } from 'mo/utils/tree';
 
@@ -13,6 +14,8 @@ export interface ITreeNodeProps {
     indent: number;
     className?: string;
     draggable?: boolean;
+    isAncestorActive?: boolean;
+    activeIndent?: number;
     renderIcon: () => JSX.Element | null;
     renderTitle: () => React.ReactNode;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
@@ -30,6 +33,8 @@ export default ({
     indent,
     className,
     draggable,
+    isAncestorActive,
+    activeIndent,
     renderIcon,
     renderTitle,
     onClick,
@@ -91,9 +96,12 @@ export default ({
             onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data)}
         >
             <div className={variables.indent} style={{ width: INDENT * indent }}>
-                {new Array(indent).fill('').map((_, index) => (
-                    <div key={index} className={variables.guide} />
-                ))}
+                {new Array(indent).fill('').map((_, index) => {
+                    const isActive = isAncestorActive && activeIndent === index + 1;
+                    return (
+                        <div key={index} className={classNames(variables.guide, isActive && variables.activeGuide)} />
+                    );
+                })}
             </div>
             {renderIcon()}
             <div className={variables.title}>{title}</div>

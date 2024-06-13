@@ -48,6 +48,37 @@ export default function Tree({
     onDrop,
 }: ITreeProps) {
     const wrapper = useRef<HTMLDivElement>(null);
+    const pathMap: Record<UniqueId, UniqueId[]> = {};
+
+    let activeFolderId: UniqueId;
+    let activeIndent: number;
+
+    const updatePathMap = (data: ITreeNodeItemProps[], paths: UniqueId[], indent: number) => {
+        data.forEach((item) => {
+            pathMap[item.id] = paths;
+            if (item.id === activeKey) {
+                activeIndent = indent;
+            }
+            if (item.children?.length) {
+                updatePathMap(item.children, [...paths, item.id], indent + 1);
+            }
+        });
+    };
+
+    const updateActiveFolderId = () => {
+        if (activeKey === undefined) return;
+        const paths = pathMap[activeKey] || [];
+
+        if (expandedKeys.includes(activeKey)) {
+            activeFolderId = activeKey;
+            activeIndent = activeIndent + 1;
+        } else {
+            activeFolderId = paths[paths.length - 1];
+        }
+    };
+
+    updatePathMap(data, [], 0);
+    updateActiveFolderId();
 
     const handleNodeClick = (node: ITreeNodeItemProps, e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
@@ -69,10 +100,15 @@ export default function Tree({
             const isActive = activeKey === uuid;
 
             const IconComponent = typeof item.icon === 'string' ? <Icon type={item.icon} /> : item.icon;
+            const nodeOffset = item.fileType === FileTypes.Folder ? 0 : 16;
+            const paths = pathMap[item.id] || [];
+            const isAncestorActive = paths.includes(activeFolderId);
 
             const currentNode = (
                 <TreeNode
                     key={`${uuid}-${indent}`}
+                    isAncestorActive={isAncestorActive}
+                    activeIndent={activeIndent}
                     draggable={draggable}
                     data={item}
                     indent={indent}
@@ -83,6 +119,7 @@ export default function Tree({
                     )}
                     renderIcon={() => (
                         <>
+                            {nodeOffset > 0 ? <span style={{ marginLeft: nodeOffset }}></span> : null}
                             {item.fileType === FileTypes.Folder && renderFolderIcon(isExpand, isLoading)}
                             {IconComponent}
                         </>

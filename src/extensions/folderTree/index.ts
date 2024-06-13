@@ -8,9 +8,10 @@ export const ExtendsFolderTree: IExtension = {
     name: 'Extend The Default Folder Tree',
     activate: function (molecule): void {
         molecule.folderTree.onSelect((treeNode) => {
+            molecule.folderTree.setCurrent(treeNode.id);
+
             if (treeNode.fileType === FileTypes.File) {
                 molecule.folderTree.setEditing();
-                molecule.folderTree.setCurrent(treeNode.id);
             } else {
                 molecule.folderTree.toggleExpanded(treeNode.id);
 

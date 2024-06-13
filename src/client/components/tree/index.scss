@@ -7,11 +7,18 @@ $indent: BEMElement($container, 'indent');
 $guide: BEMElement($indent, 'guide');
 
 $active: BEMModifier($treeNode, 'active');
+$activeGuide: BEMModifier($guide, 'active');
 
 $treenode-height: 22px;
 
 .#{$container} {
     font-size: 13px;
+
+    &:hover {
+        .#{$indent} .#{$guide} {
+            border-left-color: var(--tree-inactiveIndentGuidesStroke);
+        }
+    }
 
     .#{$treeNode} {
         align-items: center;
@@ -45,13 +52,18 @@ $treenode-height: 22px;
     .#{$indent} {
         display: flex;
         height: 100%;
-        margin-right: 2px;
+        margin-right: -4px;
 
         .#{$guide} {
-            border-left: 1px solid var(--tree-indentGuidesStroke);
+            border-left: 1px solid transparent;
             display: inline-block;
             height: 100%;
             margin-left: 7px;
+            transition: border-color 0.1s linear;
+
+            &.#{$activeGuide} {
+                border-left-color: var(--tree-indentGuidesStroke);
+            }
         }
     }
 
@@ -70,4 +82,5 @@ $treenode-height: 22px;
     title: $title;
     guide: $guide;
     active: $active;
+    activeGuide: $activeGuide;
 }

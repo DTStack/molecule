@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { classNames } from 'mo/client/classNames';
@@ -10,6 +10,8 @@ import TreeNode from './treeNode';
 import variables from './index.scss';
 
 type ITreeNodeItemProps = TreeNodeModel<any>;
+
+const INDENT = 8;
 
 export interface ITreeProps {
     data?: ITreeNodeItemProps[];
@@ -48,37 +50,37 @@ export default function Tree({
     onDrop,
 }: ITreeProps) {
     const wrapper = useRef<HTMLDivElement>(null);
-    const pathMap: Record<UniqueId, UniqueId[]> = {};
 
-    let activeFolderId: UniqueId;
-    let activeIndent: number;
+    const pathMap = useMemo(() => {
+        const map: Record<UniqueId, UniqueId[]> = {};
+        const updateMap = (nodes: ITreeNodeItemProps[], paths: UniqueId[]) => {
+            nodes.forEach((node) => {
+                map[node.id] = paths;
+                if (node.children) {
+                    updateMap(node.children, [...paths, node.id]);
+                }
+            });
+        };
+        updateMap(data, []);
+        return map;
+    }, [data]);
 
-    const updatePathMap = (data: ITreeNodeItemProps[], paths: UniqueId[], indent: number) => {
-        data.forEach((item) => {
-            pathMap[item.id] = paths;
-            if (item.id === activeKey) {
-                activeIndent = indent;
+    const { activeFolderId, activeIndent } = useMemo(() => {
+        let activeFolderId: UniqueId = '';
+        let activeIndent = 0;
+
+        if (activeKey !== undefined) {
+            const paths = pathMap[activeKey] || [];
+            if (expandedKeys.includes(activeKey)) {
+                activeFolderId = activeKey;
+                activeIndent = paths.length + 1;
+            } else {
+                activeFolderId = paths[paths.length - 1];
+                activeIndent = paths.length;
             }
-            if (item.children?.length) {
-                updatePathMap(item.children, [...paths, item.id], indent + 1);
-            }
-        });
-    };
-
-    const updateActiveFolderId = () => {
-        if (activeKey === undefined) return;
-        const paths = pathMap[activeKey] || [];
-
-        if (expandedKeys.includes(activeKey)) {
-            activeFolderId = activeKey;
-            activeIndent = activeIndent + 1;
-        } else {
-            activeFolderId = paths[paths.length - 1];
         }
-    };
-
-    updatePathMap(data, [], 0);
-    updateActiveFolderId();
+        return { activeFolderId, activeIndent };
+    }, [activeKey, expandedKeys, pathMap]);
 
     const handleNodeClick = (node: ITreeNodeItemProps, e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
@@ -92,6 +94,15 @@ export default function Tree({
         return <Icon type={isExpand ? 'chevron-down' : 'chevron-right'} />;
     };
 
+    const renderIndent = (indent: number, isAncestorActive: boolean) => (
+        <div className={variables.indent} style={{ width: INDENT * indent }}>
+            {new Array(indent).fill('').map((_, index) => {
+                const isActive = isAncestorActive && activeIndent === index + 1;
+                return <div key={index} className={classNames(variables.guide, isActive && variables.activeGuide)} />;
+            })}
+        </div>
+    );
+
     const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
         return data.map((item, index) => {
             const uuid = item.id;
@@ -100,15 +111,13 @@ export default function Tree({
             const isActive = activeKey === uuid;
 
             const IconComponent = typeof item.icon === 'string' ? <Icon type={item.icon} /> : item.icon;
-            const nodeOffset = item.fileType === FileTypes.Folder ? 0 : 16;
+            const nodeOffset = item.fileType === FileTypes.Folder ? 0 : INDENT * 2;
             const paths = pathMap[item.id] || [];
             const isAncestorActive = paths.includes(activeFolderId);
 
             const currentNode = (
                 <TreeNode
                     key={`${uuid}-${indent}`}
-                    isAncestorActive={isAncestorActive}
-                    activeIndent={activeIndent}
                     draggable={draggable}
                     data={item}
                     indent={indent}
@@ -125,6 +134,7 @@ export default function Tree({
                         </>
                     )}
                     renderTitle={() => renderTitle?.(item, index, item.fileType === FileTypes.File) || item.name}
+                    renderIndent={() => renderIndent(indent, isAncestorActive)}
                     onClick={(e) => handleNodeClick(item, e)}
                     onKeyDown={(e) => onKeyDown?.(e, item)}
                     onContextMenu={onContextMenu}

@@ -11,6 +11,7 @@ export const ExtendsMenuBar: IExtension = {
                 MENUBAR_ITEM_SIDEBAR,
                 MENUBAR_ITEM_STATUSBAR,
                 MENUBAR_ITEM_ACTIVITYBAR,
+                MENUBAR_ITEM_AUXILIARY,
             } = molecule.builtin.getState().constants;
 
             switch (menuId) {
@@ -32,6 +33,10 @@ export const ExtendsMenuBar: IExtension = {
                 }
                 case MENUBAR_ITEM_ACTIVITYBAR: {
                     molecule.layout.setActivityBar((prev) => !prev);
+                    break;
+                }
+                case MENUBAR_ITEM_AUXILIARY: {
+                    molecule.layout.setAuxiliaryBar((prev) => !prev);
                     break;
                 }
 

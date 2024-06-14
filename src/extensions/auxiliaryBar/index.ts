@@ -6,6 +6,12 @@ export const ExtendsAuxiliaryBar: IExtension = {
     activate: function (molecule): void {
         molecule.auxiliaryBar.onTabClick((id) => {
             molecule.auxiliaryBar.toggle(id);
+            const currentId = molecule.auxiliaryBar.getCurrent();
+            if (id !== currentId) {
+                molecule.layout.setPaneSize([300, 'auto', 25]);
+            } else {
+                molecule.layout.setPaneSize([300, 'auto', 300]);
+            }
         });
     },
 };

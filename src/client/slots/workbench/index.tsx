@@ -12,14 +12,15 @@ export type IWorkbenchProps = ILayoutController;
 
 export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchProps) {
     const layout = useConnector('layout');
+    const auxiliaryBar = useConnector('auxiliaryBar');
     const StatusBar = useDynamic('statusBar');
     const MenuBar = useDynamic('menuBar');
+    const AuxiliaryBar = useDynamic('auxiliaryBar');
     const ActivityBar = useDynamic('activityBar');
     const Sidebar = useDynamic('sidebar');
     const Panel = useDynamic('panel');
     const Editor = useDynamic('editor');
     const ContextMenu = useDynamic('contextMenu');
-
     const ref = useRef<HTMLElement>(null);
 
     const [sideRef, sidePos, sideChange] = useAutoPos<HTMLDivElement>(layout.splitPanePos);
@@ -49,11 +50,14 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                             split="horizontal"
                             onChange={editorChange(onEditorChange)}
                         >
-                            <Split.Pane minSize={150} maxSize={600}>
+                            <Split.Pane minSize={150} maxSize={300}>
                                 {Editor}
                             </Split.Pane>
                             <Split.Pane hidden={layout.panel.hidden}>{Panel}</Split.Pane>
                         </Split>
+                    </Split.Pane>
+                    <Split.Pane minSize={100} maxSize={300} hidden={layout.auxiliaryBar.hidden} resizable={!!auxiliaryBar.current}>
+                        {AuxiliaryBar}
                     </Split.Pane>
                 </Split>
             </section>

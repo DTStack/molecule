@@ -119,6 +119,7 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
     }
 
     public setCurrent(id?: UniqueId) {
+        this.emit(FolderTreeEvent.onCurrentChange, this.getCurrent(), id);
         this.dispatch((draft) => {
             draft.current = id;
         });
@@ -242,4 +243,8 @@ export class FolderTreeService extends BaseService<FolderTreeModel> {
     public onDrop = <T = any>(callback: (source: TreeNodeModel<T>, target: TreeNodeModel<T>) => void) => {
         this.subscribe(FolderTreeEvent.onDrop, callback);
     };
+
+    public onCurrentChange(callback: (prev: UniqueId, next: UniqueId) => void) {
+        this.subscribe(FolderTreeEvent.onCurrentChange, callback);
+    }
 }

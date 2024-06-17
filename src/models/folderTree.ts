@@ -17,6 +17,7 @@ export enum FolderTreeEvent {
     onDragStart = 'folderTree.onDragStart',
     onDragOver = 'folderTree.onDragOver',
     onDragEnd = 'folderTree.onDragEnd',
+    onCurrentChange = 'folderTree.onCurrentChange',
 }
 
 export class FolderTreeModel {

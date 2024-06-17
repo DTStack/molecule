@@ -15,6 +15,7 @@ export interface ITreeNodeProps {
     draggable?: boolean;
     renderIcon: () => JSX.Element | null;
     renderTitle: () => React.ReactNode;
+    renderIndent: () => JSX.Element;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
     onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
     onContextMenu?: ContextMenuHandler<[treeNode: ITreeNodeItemProps]>;
@@ -23,7 +24,6 @@ export interface ITreeNodeProps {
     onDragEnd?: (data: ITreeNodeItemProps) => void;
     onDrop?: (source: ITreeNodeItemProps, traget: ITreeNodeItemProps) => void;
 }
-const INDENT = 8;
 
 export default ({
     data,
@@ -32,6 +32,7 @@ export default ({
     draggable,
     renderIcon,
     renderTitle,
+    renderIndent,
     onClick,
     onDragStart,
     onDragOver,
@@ -90,11 +91,7 @@ export default ({
             onKeyDown={handleKeyDown}
             onContextMenu={(e) => onContextMenu?.({ x: e.pageX, y: e.pageY }, data)}
         >
-            <div className={variables.indent} style={{ width: INDENT * indent }}>
-                {new Array(indent).fill('').map((_, index) => (
-                    <div key={index} className={variables.guide} />
-                ))}
-            </div>
+            {renderIndent()}
             {renderIcon()}
             <div className={variables.title}>{title}</div>
         </Prevent>

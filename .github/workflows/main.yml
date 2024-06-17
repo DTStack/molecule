@@ -96,13 +96,13 @@ jobs:
               run: yarn test
 
             - name: Upload coverage to Codecov
-              uses: codecov/codecov-action@v2
+              uses: codecov/codecov-action@v4
               with:
                   token: ${{ secrets.CODECOV_TOKEN }}
                   fail_ci_if_error: true
                   directory: ./coverage/
                   name: codecov-umbrella
-                  flag: unittests, integration
+                  flags: unittests, integration
                   verbose: true
     build:
         runs-on: ubuntu-latest

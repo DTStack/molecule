@@ -4,13 +4,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.3.5](https://github.com/DTStack/molecule/compare/v1.3.4...v1.3.5) (2023-12-29)
 
-
 ### Bug Fixes
 
-* fix model's value not change and add onEditorInstanceMount event ([eb93979](https://github.com/DTStack/molecule/commit/eb939798a0dd09dd46a7c1d8966a744c5749b0ca))
-* fix stylelint ([f126404](https://github.com/DTStack/molecule/commit/f126404bfa0b631923c985bc6679f73800bb7182))
-* **scrollBar:** disable clickable when hide track ([e15b8b6](https://github.com/DTStack/molecule/commit/e15b8b68200654863bce5077d4b98b8682f37781))
-* update types ([c8d8a1f](https://github.com/DTStack/molecule/commit/c8d8a1fea19060ceb313986482d9fef8791ca124))
+-   fix model's value not change and add onEditorInstanceMount event ([eb93979](https://github.com/DTStack/molecule/commit/eb939798a0dd09dd46a7c1d8966a744c5749b0ca))
+-   fix stylelint ([f126404](https://github.com/DTStack/molecule/commit/f126404bfa0b631923c985bc6679f73800bb7182))
+-   **scrollBar:** disable clickable when hide track ([e15b8b6](https://github.com/DTStack/molecule/commit/e15b8b68200654863bce5077d4b98b8682f37781))
+-   update types ([c8d8a1f](https://github.com/DTStack/molecule/commit/c8d8a1fea19060ceb313986482d9fef8791ca124))
 
 ### [1.3.4](https://github.com/DTStack/molecule/compare/v1.3.3...v1.3.4) (2023-06-12)
 

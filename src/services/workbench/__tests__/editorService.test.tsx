@@ -208,9 +208,12 @@ describe('Test EditorService', () => {
         expect(groups?.length).toBe(1);
 
         const setValFn = jest.fn();
+        const getValFn = jest.fn();
         (MonacoEditor.getModel as jest.Mock).mockImplementation(() => ({
             setValue: setValFn,
+            getValue: getValFn,
         }));
+
         act(() => {
             editor.updateTab({
                 id: mockTab.id,

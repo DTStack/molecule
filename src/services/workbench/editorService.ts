@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { singleton, container } from 'tsyringe';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isString } from 'lodash';
 import { Component } from 'mo/react';
 import {
     EditorModel,
@@ -337,8 +337,13 @@ export class EditorService
                 const model = MonacoEditor.getModel(
                     Uri.parse(tab.id.toString())
                 );
-                if (model) {
-                    model.setValue(editorValue || '');
+                const currentValue = model?.getValue();
+                if (
+                    model &&
+                    isString(editorValue) &&
+                    currentValue !== editorValue
+                ) {
+                    model.setValue(editorValue);
                 }
                 this.updateGroup(groupId, group);
 
@@ -362,8 +367,13 @@ export class EditorService
                 const model = MonacoEditor.getModel(
                     Uri.parse(tab.id.toString())
                 );
-                if (model) {
-                    model.setValue(editorValue || '');
+                const currentValue = model?.getValue();
+                if (
+                    model &&
+                    isString(editorValue) &&
+                    currentValue !== editorValue
+                ) {
+                    model.setValue(editorValue);
                 }
             });
 

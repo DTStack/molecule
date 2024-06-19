@@ -23,6 +23,14 @@ export class LayoutService extends BaseService<LayoutModel> {
         return this.getState().menuBar;
     }
 
+    public getSplitPanePos() {
+        return this.getState().splitPanePos;
+    }
+
+    public getHistorySplitPanePos() {
+        return this.getState().historySplitPanePos;
+    }
+
     public setMenuBar(visibility: Variant<boolean>) {
         this.dispatch(
             (draft) => {
@@ -107,6 +115,12 @@ export class LayoutService extends BaseService<LayoutModel> {
         });
     }
 
+    public setHistorySplitPanePos(historySplitPanePos: PosType[]): void {
+        this.dispatch((draft) => {
+            draft.historySplitPanePos = historySplitPanePos;
+        });
+    }
+
     public setHorizontalPaneSize(horizontalSplitPanePos: PosType[]): void {
         this.dispatch((draft) => {
             draft.horizontalSplitPanePos = horizontalSplitPanePos;
@@ -117,6 +131,16 @@ export class LayoutService extends BaseService<LayoutModel> {
         this.dispatch((draft) => {
             draft.groupSplitPos = groupSplitPos;
         });
+    }
+
+    public backSplitPanePos() {
+        const historySplitPanePos = this.getHistorySplitPanePos()
+        this.setPaneSize([historySplitPanePos[0] ?? 300, 'auto', historySplitPanePos[2] ?? 300]);
+    }
+
+    public recordSplitPanePos() {
+        const splitPanePos = this.getSplitPanePos();
+        this.setHistorySplitPanePos(splitPanePos)
     }
 
     public setAuxiliaryBar(visibility: Variant<boolean>) {

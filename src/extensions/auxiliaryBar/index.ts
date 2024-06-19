@@ -8,9 +8,11 @@ export const ExtendsAuxiliaryBar: IExtension = {
             molecule.auxiliaryBar.toggle(id);
             const currentId = molecule.auxiliaryBar.getCurrent();
             if (id !== currentId) {
-                molecule.layout.setPaneSize([300, 'auto', 25]);
+                molecule.layout.recordSplitPanePos();
+                const splitPanePos = molecule.layout.getSplitPanePos();
+                molecule.layout.setPaneSize([splitPanePos[0], 'auto', 25]);
             } else {
-                molecule.layout.setPaneSize([300, 'auto', 300]);
+                molecule.layout.backSplitPanePos()
             }
         });
     },

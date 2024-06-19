@@ -7,6 +7,7 @@ export enum LayoutEvents {
 export class LayoutModel {
     constructor(
         public splitPanePos: PosType[] = [300, 'auto', 25],
+        public historySplitPanePos:PosType[]=[],
         public horizontalSplitPanePos: PosType[] = ['auto', 230],
         public groupSplitPos: number[] = [],
         public activityBar: WithHidden<void> = { hidden: false },

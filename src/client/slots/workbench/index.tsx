@@ -56,7 +56,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                             <Split.Pane hidden={layout.panel.hidden}>{Panel}</Split.Pane>
                         </Split>
                     </Split.Pane>
-                    <Split.Pane minSize={100} maxSize={300} hidden={layout.auxiliaryBar.hidden} resizable={!!auxiliaryBar.current}>
+                    <Split.Pane minSize={150} maxSize={300} hidden={layout.auxiliaryBar.hidden} resizable={!!auxiliaryBar.current}>
                         {AuxiliaryBar}
                     </Split.Pane>
                 </Split>

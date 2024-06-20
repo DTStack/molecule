@@ -152,6 +152,9 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
     }
 
     public setCurrent(id: UniqueId) {
+        if (id !== this.getCurrent()) {
+            this.emit(ColorThemeEvent.onChange, this.getCurrentTheme(), this.get(id));
+        }
         this.dispatch((draft) => {
             draft.current = id;
         });
@@ -207,7 +210,7 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
     }
 
     // ===================== Subscriptions =====================
-    public onChange(callback: (prev: IColorTheme, next: IColorTheme, themeMode: editor.BuiltinTheme) => void): void {
+    public onChange(callback: (prev: IColorTheme, next: IColorTheme) => void): void {
         this.subscribe(ColorThemeEvent.onChange, callback);
     }
 }

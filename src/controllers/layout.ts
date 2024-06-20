@@ -16,7 +16,6 @@ export class LayoutController extends BaseController implements ILayoutControlle
 
     public onSideChange = (pos: PosType[]) => {
         this.layout.setPaneSize(pos);
-        this.layout.setHistorySplitPanePos(pos)
     };
 
     public onEditorChange = (pos: PosType[]) => {

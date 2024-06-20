@@ -380,7 +380,6 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             },
         });
         molecule.auxiliaryBar.setCurrent(id);
-        molecule.layout.backSplitPanePos();
     };
 
     useEffect(() => {

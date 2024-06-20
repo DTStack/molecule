@@ -6,14 +6,6 @@ export const ExtendsAuxiliaryBar: IExtension = {
     activate: function (molecule): void {
         molecule.auxiliaryBar.onTabClick((id) => {
             molecule.auxiliaryBar.toggle(id);
-            const currentId = molecule.auxiliaryBar.getCurrent();
-            if (id !== currentId) {
-                molecule.layout.recordSplitPanePos();
-                const splitPanePos = molecule.layout.getSplitPanePos();
-                molecule.layout.setPaneSize([splitPanePos[0], 'auto', 25]);
-            } else {
-                molecule.layout.backSplitPanePos()
-            }
         });
     },
 };

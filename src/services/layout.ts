@@ -23,7 +23,6 @@ export class LayoutService extends BaseService<LayoutModel> {
         return this.getState().menuBar;
     }
 
-
     public setMenuBar(visibility: Variant<boolean>) {
         this.dispatch(
             (draft) => {

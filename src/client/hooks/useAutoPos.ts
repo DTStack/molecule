@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useMeasure from 'react-use/esm/useMeasure';
+import useDeepCompareEffect from 'react-use/esm/useDeepCompareEffect';
 import type { PosType } from 'mo/types';
 
 export default function useAutoPos<E extends HTMLElement>(
@@ -29,7 +30,7 @@ export default function useAutoPos<E extends HTMLElement>(
 
     const size = rect[split === 'vertical' ? 'width' : 'height'];
 
-    useEffect(() => {
+    useDeepCompareEffect(() => {
         setState(convertAutoToAbsolute(pos, size));
     }, [pos, size]);
 

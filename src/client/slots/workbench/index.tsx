@@ -50,7 +50,7 @@ export default function Workbench({ onSideChange, onEditorChange }: IWorkbenchPr
                             split="horizontal"
                             onChange={editorChange(onEditorChange)}
                         >
-                            <Split.Pane minSize={150} maxSize={300}>
+                            <Split.Pane minSize={150}>
                                 {Editor}
                             </Split.Pane>
                             <Split.Pane hidden={layout.panel.hidden}>{Panel}</Split.Pane>

@@ -14,7 +14,5 @@ export const ColorThemeExtension: IExtension = {
     },
     id: 'ExtendsThemes',
     name: 'Extends themes',
-    activate(molecule) {
-        molecule.colorTheme.setCurrent(darkDefault.id);
-    },
+    activate() {},
 };

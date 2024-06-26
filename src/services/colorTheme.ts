@@ -4,6 +4,7 @@
  */
 import { omitBy } from 'lodash-es';
 import { prefix } from 'mo/client/classNames';
+import { APP_PREFIX } from 'mo/const';
 import { DefaultColor } from 'mo/const/theme';
 import { BaseService } from 'mo/glue';
 import { ColorThemeEvent, ColorThemeModel } from 'mo/models/colorTheme';
@@ -11,9 +12,11 @@ import { editor, languages } from 'mo/monaco';
 import Textmate, { IGrammarTextMate } from 'mo/monaco/override/textmate';
 import type { Arraylize, IColorTheme, IContribute, Predict, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, colorsToString, convertToCSSVars, convertToToken, normalizeColor, searchById } from 'mo/utils';
+import { setValue } from 'mo/utils/storage';
 import { IRawTheme } from 'vscode-textmate';
 
 export class ColorThemeService extends BaseService<ColorThemeModel> {
+    public static STORE_KEY = `${APP_PREFIX}.colorThemeId`;
     static DEFAULT_THEME_CLASS_NAME = prefix('customize-theme');
     private _grammarLock = false;
     private textmateRegistry?: Textmate;
@@ -152,6 +155,10 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
     }
 
     public setCurrent(id: UniqueId) {
+        if (id !== this.getCurrent()) {
+            this.emit(ColorThemeEvent.onChange, this.getCurrentTheme(), this.get(id));
+            setValue(ColorThemeService.STORE_KEY, id.toString());
+        }
         this.dispatch((draft) => {
             draft.current = id;
         });
@@ -207,7 +214,7 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
     }
 
     // ===================== Subscriptions =====================
-    public onChange(callback: (prev: IColorTheme, next: IColorTheme, themeMode: editor.BuiltinTheme) => void): void {
+    public onChange(callback: (prev: IColorTheme, next: IColorTheme) => void): void {
         this.subscribe(ColorThemeEvent.onChange, callback);
     }
 }

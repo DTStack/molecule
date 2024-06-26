@@ -12,7 +12,7 @@ import type { ActionService } from './action';
 import type { ActivityBarService } from './activityBar';
 import type { AuxiliaryBarService } from './auxiliaryBar';
 import type { BuiltinService } from './builtin';
-import type { ColorThemeService } from './colorTheme';
+import { ColorThemeService } from './colorTheme';
 import type { ContextMenuService } from './contextMenu';
 import type { EditorService } from './editor';
 import type { EditorTreeService } from './editorTree';
@@ -44,6 +44,12 @@ export interface IConfigProps {
      */
     defaultLocale?: 'zh-CN' | 'en-US' | 'ko-KR' | (string & {});
     /**
+     * Specify a default color theme Id, the Molecule built-in
+     * `Default Dark+`, `Default High Contrast`, `Default Light+` three color theme, and
+     * default color theme id is `Default Dark+`.
+     */
+    defaultColorTheme?: 'Default Dark+' | 'Default High Contrast' | 'Default Light+' | (string & {});
+    /**
      * The Onigurum path for grammars
      */
     onigurumPath?: string;
@@ -72,6 +78,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     private _config: _IConfigProps = {
         extensions: [],
         defaultLocale: 'en-US',
+        defaultColorTheme: 'Default Dark+',
         onigurumPath: '',
     };
 
@@ -100,6 +107,11 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
         return storedLocale || defaultLocale || this._config.defaultLocale;
     }
 
+    private colorThemeInit(defaultColorTheme: IConfigProps['defaultColorTheme']) {
+        const storedColorTheme = getValue(ColorThemeService.STORE_KEY);
+        return storedColorTheme || defaultColorTheme || this._config.defaultColorTheme;
+    }
+
     private getServices() {
         const locale = this.resolve<LocaleService>('locale');
         locale.setCurrent(this._config.defaultLocale);
@@ -109,6 +121,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
         this.emit(InstanceHookKind.beforeLoad);
         const module = this.resolve<ModuleService>('module');
         const colorTheme = this.resolve<ColorThemeService>('colorTheme');
+        colorTheme.setCurrent(this._config.defaultColorTheme);
         const monaco = this.resolve<MonacoService>('monaco');
         const contextMenu = this.resolve<ContextMenuService>('contextMenu');
         const auxiliaryBar = this.resolve<AuxiliaryBarService>('auxiliaryBar');
@@ -269,7 +282,9 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     constructor(config: IConfigProps) {
         super();
         this._config.defaultLocale = this.localeInit(config.defaultLocale);
+        this._config.defaultColorTheme = this.colorThemeInit(config.defaultColorTheme);
         setValue(LocaleService.STORE_KEY, this._config.defaultLocale);
+        setValue(ColorThemeService.STORE_KEY, this._config.defaultColorTheme);
         if (config.onigurumPath) {
             this._config.onigurumPath = config.onigurumPath;
         }

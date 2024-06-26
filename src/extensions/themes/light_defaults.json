@@ -523,7 +523,7 @@
                 "variable.other.enummember"
             ],
             "settings": {
-                "foreground": "#328267"
+                "foreground": "#0070C1"
             }
         },
         {
@@ -588,7 +588,7 @@
                 "keyword.control.anchor.regexp"
             ],
             "settings": {
-                "foreground": "#ff0000"
+                "foreground": "#EE0000"
             }
         },
         {
@@ -600,7 +600,7 @@
         {
             "scope": "constant.character.escape",
             "settings": {
-                "foreground": "#ff0000"
+                "foreground": "#EE0000"
             }
         },
         {

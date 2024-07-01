@@ -170,6 +170,7 @@ export const SplitPane = forwardRef<HTMLDivElement, ISplitProps>(function (
                     if (resizing()) {
                         paneStyle.pointerEvents = 'none';
                         paneStyle.transition = 'none';
+						paneStyle.userSelect = 'none';
                     }
 
                     let sashChild: ReactNode = null;

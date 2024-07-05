@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import Container from 'mo/client/container';
 import { APP_PREFIX } from 'mo/const';
 import { GlobalEvent } from 'mo/glue';
-import type { IExtension } from 'mo/types';
+import type { IExtension, RenderFunction } from 'mo/types';
 import { getValue, setValue } from 'mo/utils/storage';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
@@ -63,7 +63,7 @@ type _IConfigProps = Required<
 
 interface IInstanceServiceProps {
     getConfig: () => IConfigProps;
-    render: (container?: HTMLElement | null) => void;
+    render: (container?: HTMLElement | null, wrapper?: RenderFunction<ReactNode>) => void;
     onBeforeInit: (callback: () => void) => void;
     onBeforeLoad: (callback: () => void) => void;
 }
@@ -85,6 +85,8 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     private loading = true;
 
     private childContainer = container.createChildContainer();
+
+    private wrapper?: RenderFunction<ReactNode>
 
     private register<T>(token: string, cto: constructor<T>) {
         this.childContainer.register(token, cto, {
@@ -306,7 +308,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
             .finally(() => {
                 this.loading = false;
                 if (this.predict) {
-                    this.render(this.predict);
+                    this.render(this.predict, this.wrapper);
                 }
             });
     }
@@ -325,13 +327,16 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     }
 
     private predict: Parameters<typeof this.render>[0] = undefined;
-    public render = (container?: HTMLElement | null) => {
+    public render = (container?: HTMLElement | null, wrapper?: RenderFunction<ReactNode>) => {
+        this.wrapper = wrapper;
+        
         if (this.loading) {
             this.predict = container;
             return;
         } else {
             this.predict = undefined;
         }
+
         if (!container) return null;
         const services = this.getServices();
         // override QuickAccess Providers
@@ -349,17 +354,21 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
         services.extension.activate();
         const root = this.createRootElement();
         this.root ||= createRoot(root);
-        this.root.render(
-            React.createElement(Container, {
-                value: {
-                    molecule: services,
-                    monaco: services.monaco,
-                    localize: services.locale.localize,
-                    modules: services.module.modules,
-                    controllers,
-                },
-            })
-        );
+
+        const child = React.createElement(Container, {
+            value: {
+                molecule: services,
+                monaco: services.monaco,
+                localize: services.locale.localize,
+                modules: services.module.modules,
+                controllers,
+            },
+        })
+        if (wrapper) {
+            this.root.render(wrapper(child))
+        } else {
+            this.root.render(child)
+        };
         container.appendChild(root);
     };
 

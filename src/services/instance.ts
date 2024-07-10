@@ -387,5 +387,6 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
         this.root?.unmount();
         this.root = undefined;
         this.predict = undefined;
+		this.wrapper = undefined;
     }
 }

@@ -1,13 +1,6 @@
 import { BaseService } from 'mo/glue';
 import { ExplorerEvent, ExplorerModel, IExplorerPanelItem } from 'mo/models/explorer';
-import {
-    Arraylize,
-    ContextMenuHandler,
-    IMenuItemProps,
-    Predict,
-    RequiredId,
-    UniqueId,
-} from 'mo/types';
+import { Arraylize, ContextMenuHandler, IMenuItemProps, Predict, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, searchById } from 'mo/utils';
 
 export class ExplorerService extends BaseService<ExplorerModel> {
@@ -45,10 +38,7 @@ export class ExplorerService extends BaseService<ExplorerModel> {
 
     public update(id: UniqueId, predict: Predict<IExplorerPanelItem>): void;
     public update(data: RequiredId<IExplorerPanelItem>): void;
-    public update(
-        item: UniqueId | RequiredId<IExplorerPanelItem>,
-        predict?: Predict<IExplorerPanelItem>
-    ) {
+    public update(item: UniqueId | RequiredId<IExplorerPanelItem>, predict?: Predict<IExplorerPanelItem>) {
         if (typeof item === 'object') {
             this.dispatch((draft) => {
                 const target = draft.data.find(searchById(item.id));
@@ -70,11 +60,34 @@ export class ExplorerService extends BaseService<ExplorerModel> {
         });
     }
 
+    public addToolbar(id: UniqueId, toolbars: Arraylize<IMenuItemProps>) {
+        this.dispatch((draft) => {
+            const idx = draft.data.findIndex(searchById(id));
+            if (idx === -1) return;
+            draft.data[idx].toolbar ??= [];
+            draft.data[idx].toolbar?.push(...arraylize(toolbars));
+        });
+    }
+
     public remove(id: UniqueId) {
         this.dispatch((draft) => {
             const idx = draft.data.findIndex(searchById(id));
             if (idx === -1) return;
             draft.data.splice(idx, 1);
+        });
+    }
+
+    public removeToolbar(id: UniqueId, toolbarIds: UniqueId[]): void;
+    public removeToolbar(id: UniqueId, predict: Predict<IMenuItemProps, boolean>): void;
+    public removeToolbar(id: UniqueId, itemOrFunc: UniqueId[] | Predict<IMenuItemProps, boolean>): void {
+        this.dispatch((draft) => {
+            const idx = draft.data.findIndex(searchById(id));
+            if (idx === -1) return;
+            if (typeof itemOrFunc === 'function') {
+                draft.data[idx].toolbar = draft.data[idx].toolbar?.filter(itemOrFunc);
+            } else {
+                draft.data[idx].toolbar = draft.data[idx].toolbar?.filter((item) => !itemOrFunc.includes(item.id));
+            }
         });
     }
 

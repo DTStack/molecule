@@ -510,7 +510,7 @@ export type ContextMenuHandler<T extends any[]> = ExtendParameters<PositionHandl
  * @param data The input data used for prediction.
  * @returns A partial value of type T predicted based on the input data.
  */
-export type Predict<T> = (data: T) => Partial<T>;
+export type Predict<T, R = Partial<T>> = (data: T) => R;
 
 // ========== ActivityBar Types ==========
 /**

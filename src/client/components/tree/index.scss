@@ -9,8 +9,6 @@ $guide: BEMElement($indent, 'guide');
 $active: BEMModifier($treeNode, 'active');
 $activeGuide: BEMModifier($guide, 'active');
 
-$treenode-height: 22px;
-
 .#{$container} {
     font-size: 13px;
 
@@ -25,8 +23,7 @@ $treenode-height: 22px;
         cursor: pointer;
         display: flex;
         gap: 6px;
-        height: $treenode-height;
-        padding-left: 10px;
+        padding: 3px 0 3px 10px;
         user-select: none;
 
         &:hover {
@@ -72,6 +69,7 @@ $treenode-height: 22px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        line-height: 16px;
     }
 }
 

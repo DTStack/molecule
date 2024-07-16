@@ -9,12 +9,10 @@ import Icon from '../icon';
 import TreeNode from './treeNode';
 import variables from './index.scss';
 
-type ITreeNodeItemProps = TreeNodeModel<any>;
-
 const INDENT = 8;
 
-export interface ITreeProps {
-    data?: ITreeNodeItemProps[];
+export interface ITreeProps<T = any> {
+    data?: TreeNodeModel<T>[];
     className?: string;
     draggable?: boolean;
     expandedKeys?: UniqueId[];
@@ -22,17 +20,17 @@ export interface ITreeProps {
     activeKey?: UniqueId;
     activeClassName?: string;
     contextMenu?: IMenuItemProps[];
-    onSelect?: (node: ITreeNodeItemProps) => void;
-    renderTitle?: (node: ITreeNodeItemProps, index: number, isLeaf: boolean) => JSX.Element | string;
-    onContextMenu?: ContextMenuHandler<[treeNode: ITreeNodeItemProps]>;
+    onSelect?: (node: TreeNodeModel<T>) => void;
+    renderTitle?: (node: TreeNodeModel<T>, index: number, isLeaf: boolean) => JSX.Element | string;
+    onContextMenu?: ContextMenuHandler<[treeNode: TreeNodeModel<T>]>;
     onKeyDown?: KeyboardEventHandler<HTMLElement>;
-    onDragStart?(source: ITreeNodeItemProps): void;
-    onDragOver?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;
-    onDragEnd?(source: ITreeNodeItemProps): void;
-    onDrop?(source: ITreeNodeItemProps, target: ITreeNodeItemProps): void;
+    onDragStart?(source: TreeNodeModel<T>): void;
+    onDragOver?(source: TreeNodeModel<T>, target: TreeNodeModel<T>): void;
+    onDragEnd?(source: TreeNodeModel<T>): void;
+    onDrop?(source: TreeNodeModel<T>, target: TreeNodeModel<T>): void;
 }
 
-export default function Tree({
+export default function Tree<T = any>({
     className,
     data = [],
     draggable = false,
@@ -48,12 +46,12 @@ export default function Tree({
     onDragOver,
     onDragEnd,
     onDrop,
-}: ITreeProps) {
+}: ITreeProps<T>) {
     const wrapper = useRef<HTMLDivElement>(null);
 
     const pathMap = useMemo(() => {
         const map: Record<UniqueId, UniqueId[]> = {};
-        const updateMap = (nodes: ITreeNodeItemProps[], paths: UniqueId[]) => {
+        const updateMap = (nodes: TreeNodeModel<T>[], paths: UniqueId[]) => {
             nodes.forEach((node) => {
                 map[node.id] = paths;
                 if (node.children) {
@@ -82,7 +80,7 @@ export default function Tree({
         return { activeFolderId, activeIndent };
     }, [activeKey, expandedKeys, pathMap]);
 
-    const handleNodeClick = (node: ITreeNodeItemProps, e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handleNodeClick = (node: TreeNodeModel<T>, e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
         onSelect?.(node);
     };
@@ -103,7 +101,7 @@ export default function Tree({
         </div>
     );
 
-    const renderTreeNode = (data: ITreeNodeItemProps[], indent: number) => {
+    const renderTreeNode = (data: TreeNodeModel<T>[], indent: number) => {
         return data.map((item, index) => {
             const uuid = item.id;
             const isExpand = expandedKeys.includes(item.id);

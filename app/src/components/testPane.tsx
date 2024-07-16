@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { components, type IEditorTab, type IMoleculeContext } from '@dtinsight/molecule';
+import { components, type IEditorTab, type IMenuItemProps, type IMoleculeContext } from '@dtinsight/molecule';
 
 import { getWorkspace } from '../utils';
 import './testPane.css';
@@ -131,6 +131,26 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             },
         ];
         molecule.explorer.add(panels);
+    };
+
+    const addExplorerToolbar = () => {
+        const id = randomId();
+        const toolbars: IMenuItemProps[] = [
+            {
+                id: `random-${id}`,
+                name: `toolbar-${id}`,
+                title: id.toString(),
+                icon: 'edit',
+            },
+        ];
+        molecule.explorer.addToolbar(molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE, toolbars);
+    };
+
+    const removeExplorerToolbar = () => {
+        molecule.explorer.removeToolbar(
+            molecule.builtin.getConstants().EXPLORER_ITEM_WORKSPACE,
+            (toolbar) => !toolbar.id.toString().startsWith('random')
+        );
     };
     // ====================================================================
 
@@ -496,6 +516,12 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <div style={{ gap: 5, display: 'grid' }}>
                     <components.Button block onClick={addExplorer}>
                         Add Explorer Panel
+                    </components.Button>
+                    <components.Button block onClick={addExplorerToolbar}>
+                        Add Explorer Toolbar
+                    </components.Button>
+                    <components.Button block onClick={removeExplorerToolbar}>
+                        Remove Explorer Toolbar
                     </components.Button>
                 </div>
                 <h2>FolderTree:</h2>

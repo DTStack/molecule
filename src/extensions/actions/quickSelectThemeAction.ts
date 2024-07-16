@@ -90,13 +90,14 @@ export default class QuickSelectThemeAction extends BaseAction {
 }
 
 function toEntries(themes: Array<IColorTheme>, label?: string): QuickPickInput[] {
-    const toEntry = (theme: IColorTheme): IColorTheme => ({
+    const toEntry = (theme: IColorTheme): IQuickPickItem & Record<string, any> => ({
         id: theme.id,
         label: theme.label,
         description: theme.description,
         uiTheme: theme.uiTheme,
+        type: 'item',
     });
-    const sorter = (t1: IColorTheme, t2: IColorTheme) => t1.label?.localeCompare(t2.label);
+    const sorter = (t1: IQuickPickItem, t2: IQuickPickItem) => t1.label?.localeCompare(t2.label);
     const entries: QuickPickInput[] = themes.map(toEntry).sort(sorter);
     if (entries.length > 0 && label) {
         entries.unshift({ type: 'separator', label });

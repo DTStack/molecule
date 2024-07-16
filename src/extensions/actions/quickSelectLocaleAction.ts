@@ -77,15 +77,16 @@ export default class QuickSelectLocaleAction extends BaseAction {
 }
 
 function toEntries(locales: Array<ILocale>, label?: string): QuickPickInput[] {
-    const entries: QuickPickInput[] = locales
-        .map((locale) => ({
+    const entries = locales
+        .map<IQuickPickItem>((locale) => ({
             id: locale.id,
             label: locale.name,
             description: locale.description,
+            type: 'item',
         }))
         .sort((t1, t2) => t1.label?.localeCompare(t2.label));
     if (entries.length > 0 && label) {
-        entries.unshift({ type: 'separator', label });
+        (entries as QuickPickInput[]).unshift({ type: 'separator', label });
     }
     return entries;
 }

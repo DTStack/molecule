@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import Container from 'mo/client/container';
-import { APP_PREFIX } from 'mo/const';
+import { APP_PREFIX, COLOR_THEME_STORE_KEY, LOCALE_STORE_KEY } from 'mo/const';
 import { GlobalEvent } from 'mo/glue';
 import type { IExtension, RenderFunction } from 'mo/types';
-import { getValue, setValue } from 'mo/utils/storage';
+import { getValue, setLocale, setValue } from 'mo/utils/storage';
 import { container, type InjectionToken, Lifecycle } from 'tsyringe';
 import type { constructor } from 'tsyringe/dist/typings/types';
 
@@ -12,7 +12,7 @@ import type { ActionService } from './action';
 import type { ActivityBarService } from './activityBar';
 import type { AuxiliaryBarService } from './auxiliaryBar';
 import type { BuiltinService } from './builtin';
-import { ColorThemeService } from './colorTheme';
+import type { ColorThemeService } from './colorTheme';
 import type { ContextMenuService } from './contextMenu';
 import type { EditorService } from './editor';
 import type { EditorTreeService } from './editorTree';
@@ -20,7 +20,7 @@ import type { ExplorerService } from './explorer';
 import type { ExtensionService } from './extension';
 import type { FolderTreeService } from './folderTree';
 import type { LayoutService } from './layout';
-import { LocaleService } from './locale';
+import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
 import type { ModuleService } from './module';
 import type { MonacoService } from './monaco';
@@ -105,12 +105,12 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     }
 
     private localeInit(defaultLocale: IConfigProps['defaultLocale']) {
-        const storedLocale = getValue(LocaleService.STORE_KEY);
+        const storedLocale = getValue(LOCALE_STORE_KEY);
         return storedLocale || defaultLocale || this._config.defaultLocale;
     }
 
     private colorThemeInit(defaultColorTheme: IConfigProps['defaultColorTheme']) {
-        const storedColorTheme = getValue(ColorThemeService.STORE_KEY);
+        const storedColorTheme = getValue(COLOR_THEME_STORE_KEY);
         return storedColorTheme || defaultColorTheme || this._config.defaultColorTheme;
     }
 
@@ -255,7 +255,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     }
 
     private async downloadNLS() {
-        const locale = getValue(LocaleService.STORE_KEY);
+        const locale = getValue(LOCALE_STORE_KEY);
         if (locale) {
             switch (locale) {
                 case 'zh-CN': {
@@ -285,8 +285,8 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
         super();
         this._config.defaultLocale = this.localeInit(config.defaultLocale);
         this._config.defaultColorTheme = this.colorThemeInit(config.defaultColorTheme);
-        setValue(LocaleService.STORE_KEY, this._config.defaultLocale);
-        setValue(ColorThemeService.STORE_KEY, this._config.defaultColorTheme);
+        setLocale(LOCALE_STORE_KEY, this._config.defaultLocale);
+        setValue(COLOR_THEME_STORE_KEY, this._config.defaultColorTheme);
         if (config.onigurumPath) {
             this._config.onigurumPath = config.onigurumPath;
         }

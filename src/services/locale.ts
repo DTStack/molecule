@@ -1,13 +1,12 @@
 import { isUndefined } from 'lodash-es';
-import { APP_PREFIX } from 'mo/const';
+import { LOCALE_STORE_KEY } from 'mo/const';
 import { BaseService } from 'mo/glue';
 import { type ILocale, LocaleModel, LocalizationEvent } from 'mo/models/locale';
 import type { Arraylize, Localize, UniqueId } from 'mo/types';
 import { arraylize, getPrevOrNext, searchById } from 'mo/utils';
-import { setValue } from 'mo/utils/storage';
+import { setLocale } from 'mo/utils/storage';
 
 export class LocaleService extends BaseService<LocaleModel> {
-    public static STORE_KEY = `${APP_PREFIX}.localeId`;
     private static LOCALIZE_REPLACED_WORD = '${i}';
     protected state: LocaleModel;
 
@@ -54,7 +53,7 @@ export class LocaleService extends BaseService<LocaleModel> {
         // ===================== effects =====================
         if (prev !== this.getCurrent()) {
             this.emit(LocalizationEvent.onChange, prev, this.getCurrent());
-            setValue(LocaleService.STORE_KEY, id.toString());
+            setLocale(LOCALE_STORE_KEY, id.toString());
         }
     }
 

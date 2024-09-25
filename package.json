@@ -45,7 +45,7 @@
     "devDependencies": {
         "@dtinsight/molecule": "./",
         "@types/lodash-es": "^4.17.8",
-        "@types/node": "^20.4.7",
+        "@types/node": "20.4.7",
         "@types/react": "^18.2.18",
         "@types/react-dom": "^18.2.7",
         "@types/use-sync-external-store": "^0.0.6",

@@ -438,6 +438,16 @@ export class EditorService extends BaseService<EditorModel> {
         this.subscribe(EditorEvent.onModelMount, callback);
     }
 
+    public onDiffEditorMount(callback: (groupId: UniqueId, diffEditorInstance: editor.IStandaloneDiffEditor) => void) {
+        this.subscribe(EditorEvent.onDiffEditorMount, callback);
+    }
+
+    public onDiffEditorModelMount(
+        callback: (tabId: UniqueId, groupId: UniqueId, model: editor.IDiffEditorModel) => void
+    ) {
+        this.subscribe(EditorEvent.onDiffEditorModelMount, callback);
+    }
+
     public onCurrentChange(callback: (prev: Partial<TabGroup>, next: Partial<TabGroup>) => void) {
         this.subscribe(EditorEvent.onCurrentChange, callback);
     }

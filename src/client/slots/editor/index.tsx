@@ -13,6 +13,8 @@ export type IEditorProps = IEditorController;
 export default function Editor({
     onMount,
     onModelMount,
+    onDiffEditorMount,
+    onDiffEditorModelMount,
     onSelectTab,
     onPaneSizeChange,
     onContextMenu,
@@ -55,6 +57,8 @@ export default function Editor({
                                 options={options}
                                 onMount={onMount}
                                 onModelMount={onModelMount}
+                                onDiffEditorMount={onDiffEditorMount}
+                                onDiffEditorModelMount={onDiffEditorModelMount}
                                 onSelectTab={onSelectTab}
                                 onContextMenu={onContextMenu}
                                 onToolbarClick={onToolbarClick}

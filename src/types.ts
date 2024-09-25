@@ -607,6 +607,10 @@ export interface IEditorTab<T> extends Render<IEditorTab<T>>, Pick<IterableItem,
     breadcrumb?: IBreadcrumbItemProps[];
     modified?: boolean;
     data?: T;
+    isDiff?: boolean;
+    originalValue?: string;
+    modifiedValue?: string;
+    diffEditorModel?: editor.IDiffEditorModel;
 }
 
 export type TabGroup = { tabId: UniqueId; groupId: UniqueId };

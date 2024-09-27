@@ -23,6 +23,19 @@ export default class FindAction extends BaseAction {
     }
     run() {
         // Proxy action to monaco-editor
-        this.molecule.editor.getCurrentGroup()?.editorInstance?.trigger('source', 'actions.find', null);
+        const currentTab = this.molecule.editor.getCurrentTab();
+        if (currentTab?.isDiff) {
+            const diffEditorInstance = this.molecule.editor.getCurrentGroup()?.diffEditorInstance;
+            const originalEditor = diffEditorInstance?.getOriginalEditor();
+            const modifiedEditor = diffEditorInstance?.getModifiedEditor();
+
+            if (originalEditor?.hasTextFocus()) {
+                originalEditor.trigger('source', 'actions.find', null);
+            } else if (modifiedEditor?.hasTextFocus()) {
+                modifiedEditor.trigger('source', 'actions.find', null);
+            }
+        } else {
+            this.molecule.editor.getCurrentGroup()?.editorInstance?.trigger('source', 'actions.find', null);
+        }
     }
 }

@@ -24,7 +24,7 @@ export default class FindAction extends BaseAction {
     run() {
         // Proxy action to monaco-editor
         const currentTab = this.molecule.editor.getCurrentTab();
-        if (currentTab?.isDiff) {
+        if (Array.isArray(currentTab?.value)) {
             const diffEditorInstance = this.molecule.editor.getCurrentGroup()?.diffEditorInstance;
             const originalEditor = diffEditorInstance?.getOriginalEditor();
             const modifiedEditor = diffEditorInstance?.getModifiedEditor();

@@ -181,7 +181,7 @@ export default function Group({
                     tab.render?.(tab)
                 ) : (
                     <Suspense fallback={<Progress active />}>
-                        {tab.isDiff ? (
+                        {Array.isArray(tab?.value) ? (
                             <MonacoDiffEditor
                                 options={{
                                     ...options,
@@ -190,8 +190,7 @@ export default function Group({
                                 instance={group.diffEditorInstance}
                                 model={tab?.diffEditorModel}
                                 language={tab?.language}
-                                original={tab?.originalValue}
-                                modified={tab?.modifiedValue}
+                                value={tab?.value}
                                 onMount={handleDiffEditorMount}
                                 onModelMount={handleDiffEditoModelMount}
                             />

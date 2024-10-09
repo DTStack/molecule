@@ -222,9 +222,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             name,
             icon: 'file',
             language: 'typescript',
-            isDiff: true,
-            originalValue: '// this is original content',
-            modifiedValue: '// this is modified content',
+            value: ['// this is original content', '// this is modified content'],
             breadcrumb: [
                 { id: 'app', name: 'app' },
                 { id: 'src', name: 'src' },

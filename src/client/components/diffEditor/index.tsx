@@ -13,11 +13,13 @@ export interface IDiffEditorProps {
     model?: editor.IDiffEditorModel;
     language?: string;
     /**
+     * The format is [original, modified]
+     */
+    value?: [string, string];
+    /**
      * The override for monaco diff editor
      */
     override?: editor.IEditorOverrideServices;
-    original?: string;
-    modified?: string;
     onMount?: (instance: editor.IStandaloneDiffEditor) => void;
     onModelMount?: (model: editor.IDiffEditorModel) => void;
 }
@@ -33,8 +35,7 @@ export default function MonacoDiffEditor({
     model,
     language,
     override,
-    original,
-    modified,
+    value,
     onMount,
     onModelMount,
 }: IDiffEditorProps) {
@@ -73,8 +74,8 @@ export default function MonacoDiffEditor({
     useEffect(() => {
         if (instance) {
             if (!model || model.original?.isDisposed() || model.modified?.isDisposed()) {
-                const originalModel = editor.createModel(original || '', language);
-                const modifiedModel = editor.createModel(modified || '', language);
+                const originalModel = editor.createModel(value?.[0] || '', language);
+                const modifiedModel = editor.createModel(value?.[1] || '', language);
                 const diffModel = { original: originalModel, modified: modifiedModel };
                 instance.setModel(diffModel);
                 onModelMount?.(diffModel);

@@ -97,8 +97,23 @@ export class EditorService extends BaseService<EditorModel> {
             if (!target) return;
             Object.assign(target, tab);
 
-            if (Object.hasOwn(tab, 'value') && target.model && target.model.getValue() !== tab.value) {
-                target.model.setValue(tab.value ?? '');
+            if (Object.hasOwn(tab, 'value')) {
+                if (Array.isArray(tab.value)) {
+                    // Update diffEditor
+                    if (target.diffEditorModel) {
+                        if (target.diffEditorModel.original.getValue() !== tab.value[0]) {
+                            target.diffEditorModel.original.setValue(tab.value[0] ?? '');
+                        }
+                        if (target.diffEditorModel.modified.getValue() !== tab.value[1]) {
+                            target.diffEditorModel.modified.setValue(tab.value[1] ?? '');
+                        }
+                    }
+                } else {
+                    // Update editor
+                    if (target.model && target.model.getValue() !== tab.value) {
+                        target.model.setValue(tab.value ?? '');
+                    }
+                }
             }
 
             // ===================== effects =====================

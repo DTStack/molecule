@@ -22,6 +22,10 @@
         "ui",
         "ide"
     ],
+    "engines": {
+		"node": ">=18"
+	},
+	"packageManager": "pnpm@9.7.0",
     "author": "DTStack Corporation",
     "license": "MIT",
     "peerDependencies": {
@@ -45,7 +49,7 @@
     "devDependencies": {
         "@dtinsight/molecule": "./",
         "@types/lodash-es": "^4.17.8",
-        "@types/node": "20.4.7",
+        "@types/node": "^20.4.7",
         "@types/react": "^18.2.18",
         "@types/react-dom": "^18.2.7",
         "@types/use-sync-external-store": "^0.0.6",

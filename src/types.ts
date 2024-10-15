@@ -602,11 +602,17 @@ export type IColorTheme = {
  */
 export interface IEditorTab<T> extends Render<IEditorTab<T>>, Pick<IterableItem, 'id' | 'name' | 'icon'> {
     model?: editor.ITextModel;
-    value?: string;
+    /**
+     * If value is a string, render the editor.
+     * If value is an array, render the diffEditor.
+     * The array format is [original, modified].
+     */
+    value?: string | [string, string];
     language?: string;
     breadcrumb?: IBreadcrumbItemProps[];
     modified?: boolean;
     data?: T;
+    diffEditorModel?: editor.IDiffEditorModel;
 }
 
 export type TabGroup = { tabId: UniqueId; groupId: UniqueId };

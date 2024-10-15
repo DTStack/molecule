@@ -26,6 +26,8 @@ export enum EditorEvent {
     onToolbarClick = 'editor.onToolbarClick',
     onMount = 'editor.onMount',
     onModelMount = 'editor.onModelMount',
+    onDiffEditorMount = 'editor.onDiffEditorMount',
+    onDiffEditorModelMount = 'editor.onDiffEditorModelMount',
     onCurrentChange = 'editor.onCurrentChange',
 }
 
@@ -34,7 +36,8 @@ export class EditorGroupModel<T = any> {
         public id: UniqueId,
         public data: IEditorTab<T>[] = [],
         public activeTab?: UniqueId,
-        public editorInstance?: editor.IStandaloneCodeEditor
+        public editorInstance?: editor.IStandaloneCodeEditor,
+        public diffEditorInstance?: editor.IStandaloneDiffEditor
     ) {}
 }
 

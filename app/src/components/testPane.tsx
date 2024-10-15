@@ -214,6 +214,25 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
     };
 
+    const newDiffEditor = function () {
+        const key = randomId();
+        const name = `editor-${key}.ts`;
+        const tabData: IEditorTab<any> = {
+            id: key,
+            name,
+            icon: 'file',
+            language: 'typescript',
+            value: ['// this is original content', '// this is modified content'],
+            breadcrumb: [
+                { id: 'app', name: 'app' },
+                { id: 'src', name: 'src' },
+                { id: 'components', name: 'components' },
+                { id: 'editor', name, icon: 'file' },
+            ],
+        };
+        molecule.editor.open(tabData, molecule.editor.getState().groups?.at(0)?.id);
+    };
+
     const newCustomEditor = function () {
         const key = randomId();
         const name = `editor-${key}.ts`;
@@ -417,6 +436,9 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <div style={{ gap: 5, display: 'grid' }}>
                     <components.Button block onClick={newEditor}>
                         New Editor
+                    </components.Button>
+                    <components.Button block onClick={newDiffEditor}>
+                        New Diff Editor
                     </components.Button>
                     <components.Button block onClick={newCustomEditor}>
                         New Custom Editor

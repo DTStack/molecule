@@ -13,6 +13,8 @@ type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]
 export interface IEditorController extends BaseController {
     onMount?: (groupId: UniqueId, editorInstance: editor.IStandaloneCodeEditor) => void;
     onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
+    onDiffEditorMount?: (groupId: UniqueId, editorInstance: editor.IStandaloneDiffEditor) => void;
+    onDiffEditorModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.IDiffEditorModel) => void;
     onPaneSizeChange?: (size: number[]) => void;
     onSelectTab?: (tabId: UniqueId, group: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
@@ -93,6 +95,25 @@ export class EditorController extends BaseController implements IEditorControlle
         );
         // [NOTE]: We don't want it to be stopped by user
         this.emit(EditorEvent.onModelMount, tabId, groupId, model);
+    };
+
+    public onDiffEditorMount = (groupId: UniqueId, diffEditorInstance: editor.IStandaloneDiffEditor) => {
+        this.editor.updateGroup({
+            id: groupId,
+            diffEditorInstance,
+        });
+        this.emit(EditorEvent.onDiffEditorMount, groupId, diffEditorInstance);
+    };
+
+    public onDiffEditorModelMount = (tabId: UniqueId, groupId: UniqueId, model: editor.IDiffEditorModel) => {
+        this.editor.updateTab(
+            {
+                id: tabId,
+                diffEditorModel: model,
+            },
+            groupId
+        );
+        this.emit(EditorEvent.onDiffEditorModelMount, tabId, groupId, model);
     };
 
     public onSelectTab = (tabId: UniqueId, groupId: UniqueId) => {

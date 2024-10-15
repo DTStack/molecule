@@ -16,6 +16,8 @@ export interface IGroupProps {
     toolbar?: IMenuItemProps[];
     onMount?: (groupId: UniqueId, editorInstance: editor.IStandaloneCodeEditor) => void;
     onModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.ITextModel) => void;
+    onDiffEditorMount?: (groupId: UniqueId, editorInstance: editor.IStandaloneDiffEditor) => void;
+    onDiffEditorModelMount?: (tabId: UniqueId, groupId: UniqueId, model: editor.IDiffEditorModel) => void;
     onChange?: (item: TabGroup & { value: string | undefined }, ev: editor.IModelContentChangedEvent) => void;
     onSelectTab?: (tabId: UniqueId, groupId: UniqueId) => void;
     onFocus?: (instance: editor.IStandaloneCodeEditor) => void;
@@ -32,6 +34,7 @@ export interface IGroupProps {
 }
 
 const MonacoEditor = lazy(() => import('../../components/monaco'));
+const MonacoDiffEditor = lazy(() => import('../../components/diffEditor'));
 
 export default function Group({
     group,
@@ -40,6 +43,8 @@ export default function Group({
     onSelectTab,
     onMount,
     onModelMount,
+    onDiffEditorMount,
+    onDiffEditorModelMount,
     onContextMenu,
     onToolbarClick,
     onCloseTab,
@@ -82,6 +87,52 @@ export default function Group({
         if (!tab) return;
         if (!tab.model) {
             onModelMount?.(tab.id, group.id, model);
+        }
+    };
+
+    const handleDiffEditorMount = (editor: editor.IStandaloneDiffEditor) => {
+        onDiffEditorMount?.(group.id, editor);
+
+        const originalEditor = editor.getOriginalEditor();
+        const modifiedEditor = editor.getModifiedEditor();
+
+        originalEditor.onDidChangeModel(() => {
+            const model = editor.getModel();
+            if (model) {
+                const state = viewState.current.get(model);
+                if (state) {
+                    editor.restoreViewState(state);
+                }
+            }
+        });
+
+        modifiedEditor.onDidChangeModel(() => {
+            const model = editor.getModel();
+            if (model) {
+                const state = viewState.current.get(model);
+                if (state) {
+                    editor.restoreViewState(state);
+                }
+            }
+        });
+
+        const handleSaveViewState = () => {
+            const model = editor.getModel();
+            if (model) {
+                viewState.current.set(model, editor.saveViewState());
+            }
+        };
+
+        originalEditor.onDidBlurEditorText(handleSaveViewState);
+        originalEditor.onDidScrollChange(handleSaveViewState);
+        modifiedEditor.onDidBlurEditorText(handleSaveViewState);
+        modifiedEditor.onDidScrollChange(handleSaveViewState);
+    };
+
+    const handleDiffEditoModelMount = (model: editor.IDiffEditorModel) => {
+        if (!tab) return;
+        if (!tab.model) {
+            onDiffEditorModelMount?.(tab.id, group.id, model);
         }
     };
 
@@ -130,18 +181,33 @@ export default function Group({
                     tab.render?.(tab)
                 ) : (
                     <Suspense fallback={<Progress active />}>
-                        <MonacoEditor
-                            options={{
-                                ...options,
-                                automaticLayout: true,
-                            }}
-                            instance={group.editorInstance}
-                            model={tab?.model}
-                            value={tab?.value}
-                            language={tab?.language}
-                            onMount={handleMount}
-                            onModelMount={handleModelMount}
-                        />
+                        {Array.isArray(tab?.value) ? (
+                            <MonacoDiffEditor
+                                options={{
+                                    ...options,
+                                    automaticLayout: true,
+                                }}
+                                instance={group.diffEditorInstance}
+                                model={tab?.diffEditorModel}
+                                language={tab?.language}
+                                value={tab?.value}
+                                onMount={handleDiffEditorMount}
+                                onModelMount={handleDiffEditoModelMount}
+                            />
+                        ) : (
+                            <MonacoEditor
+                                options={{
+                                    ...options,
+                                    automaticLayout: true,
+                                }}
+                                instance={group.editorInstance}
+                                model={tab?.model}
+                                value={tab?.value}
+                                language={tab?.language}
+                                onMount={handleMount}
+                                onModelMount={handleModelMount}
+                            />
+                        )}
                     </Suspense>
                 )}
             </div>

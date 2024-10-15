@@ -15,13 +15,17 @@ import { generateTokensCSSForColorMap as MonacoGenerateTokensCSSForColorMap } fr
 import { IModelService as MonacoIModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
 import { IModeService as MonacoIModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
 import { ITextModelService as MonacoITextModelService } from 'monaco-editor/esm/vs/editor/common/services/resolverService';
+import { IEditorWorkerService as MonacoIEditorWorkerService } from 'monaco-editor/esm/vs/editor/common/services/editorWorkerService';
 import { AbstractEditorCommandsQuickAccessProvider as MonacoAbstractEditorCommandsQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/commandsQuickAccess';
 import { AbstractGotoLineQuickAccessProvider as MonacoAbstractGotoLineQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/gotoLineQuickAccess';
 import {
     SimpleEditorModelResolverService as MonacoSimpleEditorModelResolverService,
     SimpleLayoutService as MonacoSimpleLayoutService,
 } from 'monaco-editor/esm/vs/editor/standalone/browser/simpleServices';
-import { StandaloneEditor as MonacoStandaloneEditor } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
+import {
+    StandaloneEditor as MonacoStandaloneEditor,
+    StandaloneDiffEditor as MonacoStandaloneDiffEditor,
+} from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
 import {
     DynamicStandaloneServices as MonacoDynamicStandaloneServices,
     StaticServices as MonacoStaticServices,
@@ -63,6 +67,9 @@ import {
 import { IQuickInputService as MonacoIQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 import { Registry as MonacoRegistry } from 'monaco-editor/esm/vs/platform/registry/common/platform';
 import { ITelemetryService as MonacoITelemetryService } from 'monaco-editor/esm/vs/platform/telemetry/common/telemetry';
+import { IContextMenuService as MonacoIContextMenuService } from 'monaco-editor/esm/vs/platform/contextview/browser/contextView';
+import { IEditorProgressService as MonacoIEditorProgressService } from 'monaco-editor/esm/vs/platform/progress/common/progress';
+import { IClipboardService as MonacoIClipboardService } from 'monaco-editor/esm/vs/platform/clipboard/common/clipboardService';
 
 export const _util: {
     serviceIds: Map<string, ServiceIdentifier<any>>;
@@ -507,7 +514,7 @@ interface Color {
 
 interface SimpleEditorModelResolverService {
     new (modelService: IModelService): SimpleEditorModelResolverService & IDisposable;
-    setEditor(editor: editor.IStandaloneCodeEditor): void;
+    setEditor(editor: editor.IStandaloneCodeEditor | editor.IStandaloneDiffEditor): void;
 }
 const SimpleEditorModelResolverService: SimpleEditorModelResolverService = MonacoSimpleEditorModelResolverService;
 
@@ -539,6 +546,25 @@ type StandaloneEditor = new (
     modeService: any
 ) => editor.IStandaloneCodeEditor;
 const StandaloneEditor: StandaloneEditor = MonacoStandaloneEditor;
+
+type StandaloneDiffEditor = new (
+    domElement: any,
+    _options: any,
+    toDispose: any,
+    instantiationService: any,
+    contextKeyService: any,
+    keybindingService: any,
+    contextViewService: any,
+    editorWorkerService: any,
+    codeEditorService: any,
+    themeService: any,
+    notificationService: any,
+    configurationService: any,
+    contextMenuService: any,
+    editorProgressService: any,
+    clipboardService: any
+) => editor.IStandaloneDiffEditor;
+const StandaloneDiffEditor: StandaloneDiffEditor = MonacoStandaloneDiffEditor;
 
 type DynamicStandaloneServices = new (
     domElement: HTMLElement | null,
@@ -593,6 +619,18 @@ const IOpenerService: ServiceIdentifier<IOpenerService> = MonacoIOpenerService;
 type QuickInputService = any;
 const QuickInputService: QuickInputService = MonacoQuickInputService;
 
+type IEditorWorkerService = any;
+const IEditorWorkerService: IEditorWorkerService = MonacoIEditorWorkerService;
+
+type IContextMenuService = any;
+const IContextMenuService: IContextMenuService = MonacoIContextMenuService;
+
+type IEditorProgressService = any;
+const IEditorProgressService: IEditorProgressService = MonacoIEditorProgressService;
+
+type IClipboardService = any;
+const IClipboardService: IClipboardService = MonacoIClipboardService;
+
 // TODO
 type IPickerQuickAccessItem = {
     label: string;
@@ -625,6 +663,10 @@ export {
     IQuickInputService,
     IStandaloneThemeService,
     ITextModelService,
+    IEditorWorkerService,
+    IContextMenuService,
+    IEditorProgressService,
+    IClipboardService,
     KeybindingsRegistry,
     KeyChord,
     localize,
@@ -637,5 +679,6 @@ export {
     SimpleEditorModelResolverService,
     SimpleLayoutService,
     StandaloneEditor,
+    StandaloneDiffEditor,
     StaticServices,
 };

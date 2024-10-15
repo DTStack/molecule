@@ -17,12 +17,17 @@ import {
     IQuickInputService,
     IStandaloneThemeService,
     ITextModelService,
+    IEditorWorkerService,
+    IContextMenuService,
+    IEditorProgressService,
+    IClipboardService,
     OpenerService,
     QuickInputService,
     ServiceCollection,
     SimpleEditorModelResolverService,
     SimpleLayoutService,
     StandaloneEditor,
+    StandaloneDiffEditor,
     StaticServices,
 } from 'mo/monaco';
 import { inject, injectable } from 'tsyringe';
@@ -115,6 +120,49 @@ export class MonacoService {
         this.colorTheme.setCurrent(this.colorTheme.getCurrent());
 
         return standaloneEditor;
+    }
+
+    public createDiffEditor(
+        domElement: HTMLElement,
+        options?: MonacoEditor.IStandaloneDiffEditorConstructionOptions,
+        overrides?: IEditorOverrideServices
+    ): MonacoEditor.IStandaloneDiffEditor {
+        const services = this.services;
+
+        this.mergeEditorServices(overrides);
+        if (!services.has(ITextModelService)) {
+            this.simpleEditorModelResolverService = new SimpleEditorModelResolverService(
+                StaticServices.modelService.get()
+            );
+            services.set(ITextModelService, this.simpleEditorModelResolverService);
+        }
+
+        const standaloneDiffEditor = new StandaloneDiffEditor(
+            domElement,
+            options,
+            services,
+            services.get(IInstantiationService),
+            services.get(IContextKeyService),
+            services.get(IKeybindingService),
+            services.get(IContextViewService),
+            services.get(IEditorWorkerService),
+            services.get(ICodeEditorService),
+            services.get(IStandaloneThemeService),
+            services.get(INotificationService),
+            services.get(IConfigurationService),
+            services.get(IContextMenuService),
+            services.get(IEditorProgressService),
+            services.get(IClipboardService)
+        );
+
+        if (this.simpleEditorModelResolverService) {
+            this.simpleEditorModelResolverService.setEditor(standaloneDiffEditor);
+        }
+
+        // Should be called after the editor is created
+        this.colorTheme.setCurrent(this.colorTheme.getCurrent());
+
+        return standaloneDiffEditor;
     }
 
     // When Application will unmount, call it

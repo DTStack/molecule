@@ -1,6 +1,6 @@
 {
     "name": "@dtinsight/molecule",
-    "version": "2.0.0-alpha.6",
+    "version": "2.0.0-alpha.7",
     "description": "A Web IDE UI Framework built with React.js, inspired by VSCode.",
     "module": "./esm/index.js",
     "typings": "./esm/index.d.ts",
@@ -23,9 +23,9 @@
         "ide"
     ],
     "engines": {
-		"node": ">=18"
-	},
-	"packageManager": "pnpm@9.7.0",
+        "node": ">=18"
+    },
+    "packageManager": "pnpm@9.7.0",
     "author": "DTStack Corporation",
     "license": "MIT",
     "peerDependencies": {

@@ -6,3 +6,13 @@ h2 {
     padding: 6px 0;
     user-select: none;
 }
+
+.test-pane {
+    padding: 0 16px 16px;
+}
+
+.test-pane .mo-btn {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

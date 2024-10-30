@@ -126,15 +126,32 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
             const target = draft.data.find(searchById(typeof item === 'object' ? item.id : item));
             if (target) {
                 Object.assign(target, typeof item === 'object' ? item : predict?.(target));
-                // If current theme be updated, then reload it
-                if (target.id === this.getState().current) {
-                    this.applyColorTheme(target.id);
-                }
             }
         });
+        // If current theme be updated, then reload it
         if (this.getCurrent() === (typeof item === 'object' ? item.id : item)) {
             this.applyColorTheme(this.getCurrent());
         }
+    }
+
+    public updateColors(colorItems: Arraylize<Required<Pick<IColorTheme, 'id' | 'colors'>>>): void;
+    public updateColors(id: UniqueId, colors: IColorTheme['colors']): void;
+    public updateColors(
+        items: UniqueId | Arraylize<Required<Pick<IColorTheme, 'id' | 'colors'>>>,
+        colors?: IColorTheme['colors']
+    ) {
+        arraylize(items).forEach((item) => {
+            this.dispatch((draft) => {
+                const target = draft.data.find(searchById(typeof item === 'object' ? item.id : item));
+                if (target) {
+                    target.colors = Object.assign({}, target.colors, typeof item === 'object' ? item.colors : colors);
+                }
+            });
+            // If current theme be updated, then reload it
+            if (this.getCurrent() === (typeof item === 'object' ? item.id : item)) {
+                this.applyColorTheme(this.getCurrent());
+            }
+        });
     }
 
     public get(id: UniqueId) {

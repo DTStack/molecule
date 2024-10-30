@@ -421,6 +421,32 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
         molecule.auxiliaryBar.setCurrent(id);
     };
 
+    const updateThemeColors = () => {
+        molecule.colorTheme.updateColors([
+            {
+                id: 'Default Dark+',
+                colors: {
+                    'sideBar.background': '#555555',
+                    'activityBar.background': '#666666',
+                },
+            },
+            {
+                id: 'Default Light+',
+                colors: {
+                    'sideBar.background': '#C3C3C3',
+                    'activityBar.background': '#5c5c5c',
+                },
+            },
+            {
+                id: 'Default High Contrast',
+                colors: {
+                    'sideBar.background': '#333333',
+                    'activityBar.background': '#333333',
+                },
+            },
+        ]);
+    };
+
     useEffect(() => {
         return () => {
             if (timeout) {
@@ -431,7 +457,7 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
 
     return (
         <components.ScrollBar isShowShadow>
-            <div style={{ padding: '0 16px' }}>
+            <div className="test-pane">
                 <h2>Editor:</h2>
                 <div style={{ gap: 5, display: 'grid' }}>
                     <components.Button block onClick={newEditor}>
@@ -586,6 +612,12 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
                 <div style={{ gap: 5, display: 'grid' }}>
                     <components.Button block onClick={updateLocale}>
                         Switch locale between English and Chinese
+                    </components.Button>
+                </div>
+                <h2>ColorTheme:</h2>
+                <div style={{ gap: 5, display: 'grid' }}>
+                    <components.Button block onClick={updateThemeColors}>
+                        Update theme colors
                     </components.Button>
                 </div>
             </div>

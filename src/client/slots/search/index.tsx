@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useTransition } from 'react';
 import { classNames } from 'mo/client/classNames';
 import { Input, ScrollBar, Text, Tree } from 'mo/client/components';
 import { useConnector, useLocale } from 'mo/client/hooks';
@@ -18,9 +18,15 @@ export default function Search({ onChange, onSearch, onEnter, onSelect }: ISearc
 
     const placeholder = localize(builtin.constants.SIDEBAR_ITEM_SEARCH, 'Search');
 
+    const [_, startTransition] = useTransition();
+
     const handleChange = (value: string) => {
-        onChange?.(value);
-        onSearch?.(value);
+        // Lower the priority of the update operation to prevent the input state from being interrupted
+        // and ensure that Chinese can be input.
+        startTransition(() => {
+            onChange?.(value);
+            onSearch?.(value);
+        });
     };
 
     const renderTip = () => {

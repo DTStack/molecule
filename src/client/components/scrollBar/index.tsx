@@ -173,7 +173,7 @@ export default function ScrollBar({
         <div
             className={classNames(variables.container, className)}
             ref={ref}
-            style={{ ...style, [`--radix-thumb-${direction}` as any]: `${getThumbSize()}px` }}
+            style={{ ...style, [`--radix-thumb-${direction}`]: `${getThumbSize()}px` }}
             onMouseOver={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
@@ -181,8 +181,6 @@ export default function ScrollBar({
             <div className={variables.viewport} ref={viewport}>
                 <div
                     style={{
-                        height: '100%',
-                        width: '100%',
                         display: direction === Direction.horizontal ? 'table' : 'block',
                     }}
                 >

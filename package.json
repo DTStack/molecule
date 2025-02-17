@@ -10,7 +10,7 @@
     "scripts": {
         "dev": "./bin/m.cjs dev",
         "build": "./bin/m.cjs build",
-        "web": "vite serve app/ -c app/vite.config.ts",
+        "web": "cd app && npm run dev",
         "lint": "npx eslint './src/**/*.ts' './src/**/*.tsx'",
         "prettier": "npx prettier --write src/",
         "prepublishOnly": "npm run build",
@@ -47,14 +47,12 @@
         "registry": "https://registry.npmjs.org/"
     },
     "devDependencies": {
-        "@dtinsight/molecule": "./",
         "@types/lodash-es": "^4.17.8",
         "@types/node": "^20.4.7",
         "@types/react": "^18.2.18",
         "@types/react-dom": "^18.2.7",
         "@types/use-sync-external-store": "^0.0.6",
         "@types/yargs": "^17.0.24",
-        "@vitejs/plugin-react": "^4.0.4",
         "bumpp": "^9.2.1",
         "chalk": "4.x",
         "chokidar": "^3.5.3",
@@ -68,9 +66,6 @@
         "sass": "^1.65.1",
         "tsc-alias": "^1.8.7",
         "typescript": "4.7.4",
-        "vite": "^4.4.9",
-        "vite-plugin-mock-dev-server": "^1.4.0",
-        "vite-plugin-monaco-editor": "^1.1.0",
         "vscode-oniguruma": "^2.0.1",
         "vscode-textmate": "6.x",
         "yargs": "^17.7.2"

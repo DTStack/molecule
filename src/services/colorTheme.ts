@@ -9,7 +9,8 @@ import { DefaultColor } from 'mo/const/theme';
 import { BaseService } from 'mo/glue';
 import { ColorThemeEvent, ColorThemeModel } from 'mo/models/colorTheme';
 import { editor, languages } from 'mo/monaco';
-import Textmate, { IGrammarTextMate } from 'mo/monaco/override/textmate';
+import type Textmate from 'mo/monaco/override/textmate';
+import type { IGrammarTextMate } from 'mo/monaco/override/textmate';
 import type { Arraylize, IColorTheme, IContribute, Predict, RequiredId, UniqueId } from 'mo/types';
 import { arraylize, colorsToString, convertToCSSVars, convertToToken, normalizeColor, searchById } from 'mo/utils';
 import { setValue } from 'mo/utils/storage';
@@ -211,6 +212,7 @@ export class ColorThemeService extends BaseService<ColorThemeModel> {
                         language: rest.id,
                     };
                 }
+                const Textmate = (await import('../monaco/override/textmate')).default;
                 this.textmateRegistry = new Textmate(languages, _grammars, onigurumPath);
                 const monaco = await import('monaco-editor/esm/vs/editor/editor.api');
 

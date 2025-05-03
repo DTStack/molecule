@@ -12,7 +12,6 @@ import { SelectColorThemeAction } from 'mo/monaco/selectColorThemeAction';
 import { QuickAccessSettings } from 'mo/monaco/quickAccessSettingsAction';
 import { SelectLocaleAction } from 'mo/i18n/selectLocaleAction';
 import { CommandQuickSideBarViewAction } from 'mo/monaco/quickToggleSideBarAction';
-import { ID_SIDE_BAR } from 'mo/common/id';
 import { QuickTogglePanelAction } from 'mo/monaco/quickTogglePanelAction';
 import { QuickSelectAllAction } from 'mo/monaco/quickSelectAllAction';
 import { QuickCopyLineUp } from 'mo/monaco/quickCopyLineUp';
@@ -48,6 +47,7 @@ export class ExtensionController
             quickUndoAction,
             quickRedoAction,
             quickCreateFileAction,
+            quickToggleSideBarAction,
         } = this.builtinService.getModules();
         (
             [
@@ -55,7 +55,7 @@ export class ExtensionController
                 [quickSelectColorThemeAction, SelectColorThemeAction],
                 [quickAccessSettingsAction, QuickAccessSettings],
                 [quickSelectLocaleAction, SelectLocaleAction],
-                [ID_SIDE_BAR, CommandQuickSideBarViewAction],
+                [quickToggleSideBarAction, CommandQuickSideBarViewAction],
                 [quickTogglePanelAction, QuickTogglePanelAction],
                 [quickSelectAllAction, QuickSelectAllAction],
                 [quickCopyLineUpAction, QuickCopyLineUp],

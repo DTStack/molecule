@@ -15,13 +15,13 @@ import {
     MenuBarService,
     SidebarService,
 } from 'mo/services';
-import { ID_SIDE_BAR } from 'mo/common/id';
 import type { UniqueId } from 'mo/common/types';
 import { Action2 } from 'mo/monaco/action';
 import { CATEGORIES, KeybindingWeight } from 'mo/monaco/common';
+import { constants } from 'mo/services/builtinService/const';
 
 export class CommandQuickSideBarViewAction extends Action2 {
-    static readonly ID = ID_SIDE_BAR;
+    static readonly ID = constants.ACTION_QUICK_TOGGLE_SIDE_BAR;
     static readonly LABEL = localize(
         'menu.showSideBar.label',
         'Toggle Side Bar Visibility'

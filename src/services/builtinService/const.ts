@@ -80,6 +80,7 @@ export const constants = {
     ACTION_QUICK_REDO: 'editor.action.redo',
     ACTION_QUICK_CREATE_FILE: 'workbench.action.quickCreateFile',
     ACTION_QUICK_CREATE_FOLDER: 'workbench.action.quickCreateFolder',
+    ACTION_QUICK_TOGGLE_SIDE_BAR: 'workbench.action.quickToggleSideBar',
     ACTION_QUICK_ACCESS_SETTINGS: 'workbench.action.quickAccessSettings',
     ACTION_SELECT_THEME: 'workbench.action.selectTheme',
     ACTION_SELECT_LOCALE: 'workbench.action.selectLocale',
@@ -696,6 +697,10 @@ export const modules = {
 
     quickTogglePanelAction: () => ({
         id: constants.MENU_VIEW_PANEL,
+    }),
+
+    quickToggleSideBarAction: () => ({
+        id: constants.ACTION_QUICK_ACCESS_SETTINGS,
     }),
 
     quickSelectAllAction: () => ({

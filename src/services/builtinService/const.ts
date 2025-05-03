@@ -700,7 +700,7 @@ export const modules = {
     }),
 
     quickToggleSideBarAction: () => ({
-        id: constants.ACTION_QUICK_ACCESS_SETTINGS,
+        id: constants.ACTION_QUICK_TOGGLE_SIDE_BAR,
     }),
 
     quickSelectAllAction: () => ({

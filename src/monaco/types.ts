@@ -10,33 +10,31 @@ import {
 } from 'monaco-editor/esm/vs/base/common/lifecycle';
 import { ICodeEditorService as MonacoICodeEditorService } from 'monaco-editor/esm/vs/editor/browser/services/codeEditorService';
 import { OpenerService as MonacoOpenerService } from 'monaco-editor/esm/vs/editor/browser/services/openerService';
-import { TokenizationRegistry as MonacoTokenizationRegistry } from 'monaco-editor/esm/vs/editor/common/modes.js';
-import { generateTokensCSSForColorMap as MonacoGenerateTokensCSSForColorMap } from 'monaco-editor/esm/vs/editor/common/modes/supports/tokenization.js';
-import { IModelService as MonacoIModelService } from 'monaco-editor/esm/vs/editor/common/services/modelService.js';
-import { IModeService as MonacoIModeService } from 'monaco-editor/esm/vs/editor/common/services/modeService.js';
+import { TokenizationRegistry as MonacoTokenizationRegistry } from 'monaco-editor/esm/vs/editor/common/languages';
+import { ILanguageService as MonacoILanguageService } from 'monaco-editor/esm/vs/editor/common/languages/language';
+import { ILanguageConfigurationService as MonacoILanguageConfigurationService } from 'monaco-editor/esm/vs/editor/common/languages/languageConfigurationRegistry';
+import { generateTokensCSSForColorMap as MonacoGenerateTokensCSSForColorMap } from 'monaco-editor/esm/vs/editor/common/languages/supports/tokenization';
+import { IEditorWorkerService as MonacoIEditorWorkerService } from 'monaco-editor/esm/vs/editor/common/services/editorWorker';
+import { ILanguageFeaturesService as MonacoILanguageFeaturesService } from 'monaco-editor/esm/vs/editor/common/services/languageFeatures';
+import { IModelService as MonacoIModelService } from 'monaco-editor/esm/vs/editor/common/services/model.js';
 import { ITextModelService as MonacoITextModelService } from 'monaco-editor/esm/vs/editor/common/services/resolverService';
-import { IEditorWorkerService as MonacoIEditorWorkerService } from 'monaco-editor/esm/vs/editor/common/services/editorWorkerService';
-import { AbstractEditorCommandsQuickAccessProvider as MonacoAbstractEditorCommandsQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/commandsQuickAccess';
-import { AbstractGotoLineQuickAccessProvider as MonacoAbstractGotoLineQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/gotoLineQuickAccess';
+import { AbstractEditorCommandsQuickAccessProvider as MonacoAbstractEditorCommandsQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/browser/commandsQuickAccess';
+import { AbstractGotoLineQuickAccessProvider as MonacoAbstractGotoLineQuickAccessProvider } from 'monaco-editor/esm/vs/editor/contrib/quickAccess/browser/gotoLineQuickAccess';
 import {
-    SimpleEditorModelResolverService as MonacoSimpleEditorModelResolverService,
-    SimpleLayoutService as MonacoSimpleLayoutService,
-} from 'monaco-editor/esm/vs/editor/standalone/browser/simpleServices';
-import {
+    StandaloneDiffEditor2 as MonacoStandaloneDiffEditor,
     StandaloneEditor as MonacoStandaloneEditor,
-    StandaloneDiffEditor as MonacoStandaloneDiffEditor,
 } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeEditor';
-import {
-    DynamicStandaloneServices as MonacoDynamicStandaloneServices,
-    StaticServices as MonacoStaticServices,
-} from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices';
-import { IStandaloneThemeService as MonacoIStandaloneThemeService } from 'monaco-editor/esm/vs/editor/standalone/common/standaloneThemeService';
+import { EditorScopedLayoutService as MonacoEditorScopedLayoutService } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneLayoutService';
+import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices';
+import { IStandaloneThemeService as MonacoIStandaloneThemeService } from 'monaco-editor/esm/vs/editor/standalone/common/standaloneTheme'; // no
 import { localize as MonacoLocalize } from 'monaco-editor/esm/vs/nls';
 import { IAccessibilityService as MonacoIAccessibilityService } from 'monaco-editor/esm/vs/platform/accessibility/common/accessibility';
+import { IAccessibilitySignalService as MonacoIAccessibilitySignalService } from 'monaco-editor/esm/vs/platform/accessibilitySignal/browser/accessibilitySignalService';
 import {
     MenuId as MonacoMenuId,
     MenuRegistry as MonacoMenuRegistry,
 } from 'monaco-editor/esm/vs/platform/actions/common/actions';
+import { IClipboardService as MonacoIClipboardService } from 'monaco-editor/esm/vs/platform/clipboard/common/clipboardService';
 import {
     CommandsRegistry as MonacoCommandsRegistry,
     ICommandService as MonacoICommandService,
@@ -46,8 +44,12 @@ import {
     ContextKeyExpr as MonacoContextKeyExpr,
     IContextKeyService as MonacoIContextKeyService,
 } from 'monaco-editor/esm/vs/platform/contextkey/common/contextkey';
-import { IContextViewService as MonacoIContextViewService } from 'monaco-editor/esm/vs/platform/contextview/browser/contextView';
+import {
+    IContextMenuService as MonacoIContextMenuService,
+    IContextViewService as MonacoIContextViewService,
+} from 'monaco-editor/esm/vs/platform/contextview/browser/contextView';
 import { IDialogService as MonacoIDialogService } from 'monaco-editor/esm/vs/platform/dialogs/common/dialogs';
+import { IHoverService as MonacoIHoverService } from 'monaco-editor/esm/vs/platform/hover/browser/hover';
 import {
     _util as _monacoUtil,
     IInstantiationService as MonacoIInstantiationService,
@@ -59,7 +61,8 @@ import { ResolvedKeybindingItem as MonacoResolvedKeybindingItem } from 'monaco-e
 import { ILayoutService as MonacoILayoutService } from 'monaco-editor/esm/vs/platform/layout/browser/layoutService';
 import { INotificationService as MonacoINotificationService } from 'monaco-editor/esm/vs/platform/notification/common/notification';
 import { IOpenerService as MonacoIOpenerService } from 'monaco-editor/esm/vs/platform/opener/common/opener';
-import { QuickInputService as MonacoQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/browser/quickInput';
+import { IEditorProgressService as MonacoIEditorProgressService } from 'monaco-editor/esm/vs/platform/progress/common/progress';
+import { QuickInputService as MonacoQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/browser/quickInputService';
 import {
     Extensions as MonacoExtensions,
     IQuickAccessRegistry,
@@ -67,9 +70,13 @@ import {
 import { IQuickInputService as MonacoIQuickInputService } from 'monaco-editor/esm/vs/platform/quickinput/common/quickInput';
 import { Registry as MonacoRegistry } from 'monaco-editor/esm/vs/platform/registry/common/platform';
 import { ITelemetryService as MonacoITelemetryService } from 'monaco-editor/esm/vs/platform/telemetry/common/telemetry';
-import { IContextMenuService as MonacoIContextMenuService } from 'monaco-editor/esm/vs/platform/contextview/browser/contextView';
-import { IEditorProgressService as MonacoIEditorProgressService } from 'monaco-editor/esm/vs/platform/progress/common/progress';
-import { IClipboardService as MonacoIClipboardService } from 'monaco-editor/esm/vs/platform/clipboard/common/clipboardService';
+
+// Lazy initialization to avoid circular dependency issues
+export const MonacoSimpleLayoutService = () => StandaloneServices.get(ILayoutService);
+
+// Export updated types
+export type IEditorOptions = editor.IStandaloneEditorConstructionOptions;
+export type IDiffEditorOptions = editor.IStandaloneDiffEditorConstructionOptions;
 
 export const _util: {
     serviceIds: Map<string, ServiceIdentifier<any>>;
@@ -401,7 +408,11 @@ interface IOpenerService {
     new (editorService: any, commandService: any): {} & IDisposable;
 }
 
-interface IModeService {}
+interface ILanguageService {}
+interface ILanguageConfigurationService {}
+interface ILanguageFeaturesService {}
+interface IHoverService {}
+interface IAccessibilitySignalService {}
 interface IModelService {}
 interface ITextModelService {}
 
@@ -410,7 +421,12 @@ const KeyChord: (firstPart: any, secondPart?: any) => number = MonacoKeyChord;
 const localize: (data: string, message: string, ...args: any[]) => string = MonacoLocalize;
 const ICodeEditorService: ServiceIdentifier<ICodeEditorService> = MonacoICodeEditorService;
 const IQuickInputService: ServiceIdentifier<IQuickInputService> = MonacoIQuickInputService;
-const IModeService: ServiceIdentifier<IModeService> = MonacoIModeService;
+const ILanguageService: ServiceIdentifier<ILanguageService> = MonacoILanguageService;
+const ILanguageConfigurationService: ServiceIdentifier<ILanguageConfigurationService> =
+    MonacoILanguageConfigurationService;
+const ILanguageFeaturesService: ServiceIdentifier<ILanguageFeaturesService> = MonacoILanguageFeaturesService;
+const IHoverService: ServiceIdentifier<IHoverService> = MonacoIHoverService;
+const IAccessibilitySignalService: ServiceIdentifier<IAccessibilitySignalService> = MonacoIAccessibilitySignalService;
 const IModelService: ServiceIdentifier<IModelService> = MonacoIModelService;
 const ITextModelService: ServiceIdentifier<ITextModelService> = MonacoITextModelService;
 const OpenerService: IOpenerService = MonacoOpenerService;
@@ -512,68 +528,84 @@ interface Color {
     new (): ColorClass;
 }
 
-interface SimpleEditorModelResolverService {
-    new (modelService: IModelService): SimpleEditorModelResolverService & IDisposable;
-    setEditor(editor: editor.IStandaloneCodeEditor | editor.IStandaloneDiffEditor): void;
-}
-const SimpleEditorModelResolverService: SimpleEditorModelResolverService = MonacoSimpleEditorModelResolverService;
-
 interface SimpleLayoutService {
     dimension: any;
     container: any;
     focus(): void;
 }
-const SimpleLayoutService: new (_codeEditorService: ICodeEditorService, _container: any) => SimpleLayoutService =
+const SimpleLayoutService: new (_codeEditorService: ICodeEditorService) => SimpleLayoutService =
     MonacoSimpleLayoutService;
+
+interface EditorScopedLayoutService extends SimpleLayoutService {
+    mainContainer: any;
+}
+const EditorScopedLayoutService: new (
+    _container: any,
+    _codeEditorService: ICodeEditorService
+) => EditorScopedLayoutService = MonacoEditorScopedLayoutService;
 
 const Color: Color = MonacoColor;
 
 type StandaloneEditor = new (
     domElement: any,
     _options: any,
-    toDispose: any,
     instantiationService: any,
     codeEditorService: any,
     commandService: any,
     contextKeyService: any,
+    hoverService: any,
     keybindingService: any,
-    contextViewService: any,
     themeService: any,
     notificationService: any,
     configurationService: any,
     accessibilityService: any,
     modelService: any,
-    modeService: any
+    languageService: any,
+    languageConfigurationService: any,
+    languageFeaturesService: any
 ) => editor.IStandaloneCodeEditor;
 const StandaloneEditor: StandaloneEditor = MonacoStandaloneEditor;
 
 type StandaloneDiffEditor = new (
     domElement: any,
     _options: any,
-    toDispose: any,
     instantiationService: any,
     contextKeyService: any,
-    keybindingService: any,
-    contextViewService: any,
-    editorWorkerService: any,
     codeEditorService: any,
     themeService: any,
     notificationService: any,
     configurationService: any,
     contextMenuService: any,
     editorProgressService: any,
-    clipboardService: any
+    clipboardService: any,
+    accessibilitySignalService: any
 ) => editor.IStandaloneDiffEditor;
 const StandaloneDiffEditor: StandaloneDiffEditor = MonacoStandaloneDiffEditor;
 
-type DynamicStandaloneServices = new (
-    domElement: HTMLElement | null,
-    overrides?: editor.IEditorOverrideServices
-) => ServicesAccessor;
-const DynamicStandaloneServices: DynamicStandaloneServices = MonacoDynamicStandaloneServices;
-
-type StaticServices = Record<string, any>;
-const StaticServices: StaticServices = MonacoStaticServices;
+type StaticServices = {
+    modelService: { get(): any };
+    codeEditorService: { get(serviceId: any): any };
+};
+const StaticServices: StaticServices = {
+    modelService: {
+        get: () => {
+            // Ensure services are initialized before accessing
+            if (!StandaloneServices.get(IModelService)) {
+                StandaloneServices.initialize({});
+            }
+            return StandaloneServices.get(IModelService);
+        },
+    },
+    codeEditorService: {
+        get: (serviceId: any) => {
+            // Ensure services are initialized before accessing
+            if (!StandaloneServices.get(serviceId)) {
+                StandaloneServices.initialize({});
+            }
+            return StandaloneServices.get(serviceId);
+        },
+    },
+};
 
 type IStandaloneThemeService = any;
 const IStandaloneThemeService: IStandaloneThemeService = MonacoIStandaloneThemeService;
@@ -646,27 +678,31 @@ export {
     CommandsRegistry,
     ContextKeyExpr,
     DisposableStore,
-    DynamicStandaloneServices,
+    EditorScopedLayoutService,
     IAccessibilityService,
+    IAccessibilitySignalService,
+    IClipboardService,
     ICodeEditorService,
     ICommandService,
     IConfigurationService,
     IContextKeyService,
+    IContextMenuService,
     IContextViewService,
+    IEditorProgressService,
+    IEditorWorkerService,
+    IHoverService,
     IInstantiationService,
     IKeybindingService,
+    ILanguageConfigurationService,
+    ILanguageFeaturesService,
+    ILanguageService,
     ILayoutService,
     IModelService,
-    IModeService,
     INotificationService,
     IOpenerService,
     IQuickInputService,
     IStandaloneThemeService,
     ITextModelService,
-    IEditorWorkerService,
-    IContextMenuService,
-    IEditorProgressService,
-    IClipboardService,
     KeybindingsRegistry,
     KeyChord,
     localize,
@@ -676,9 +712,9 @@ export {
     QuickInputService,
     ResolvedKeybindingItem,
     ServiceCollection,
-    SimpleEditorModelResolverService,
     SimpleLayoutService,
-    StandaloneEditor,
     StandaloneDiffEditor,
+    StandaloneEditor,
+    StandaloneServices,
     StaticServices,
 };

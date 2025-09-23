@@ -52,7 +52,7 @@ export default function MonacoDiffEditor({
 
     useEffect(() => {
         if (!parent.current) return;
-        const container = instance?.getDomNode();
+        const container = instance?.getContainerDomNode();
         if (container) {
             // performance
             if (parent.current.firstChild === container) return;

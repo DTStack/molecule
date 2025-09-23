@@ -81,7 +81,8 @@ export class EditorService extends BaseService<EditorModel> {
 
     public setOptions(options: IEditorOptions) {
         this.dispatch((draft) => {
-            draft.options = options;
+            // TODO: fix ts type
+            draft.options = options as any;
         });
     }
 

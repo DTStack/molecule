@@ -169,8 +169,19 @@ export class ActionService extends BaseService<ActionModel> {
             // Get lower priority keybinding
             const lowerPriorty = targetKeybinding[targetKeybinding.length - 1];
             // keybinding which is chord key[组合键] can get more than 1 parts
-            const keybindings: ISimpleKeybinding[] = lowerPriorty.keybinding;
-            return keybindings;
+            // The keybinding property is a Keybinding object with chords property
+            const keybindingObj = lowerPriorty.keybinding;
+            if (keybindingObj && keybindingObj.chords) {
+                // Convert KeyCodeChord[] to ISimpleKeybinding[]
+                const keybindings: ISimpleKeybinding[] = keybindingObj.chords.map((chord: any) => ({
+                    ctrlKey: chord.ctrlKey,
+                    shiftKey: chord.shiftKey,
+                    altKey: chord.altKey,
+                    metaKey: chord.metaKey,
+                    keyCode: chord.keyCode,
+                }));
+                return keybindings;
+            }
         }
         return null;
     }

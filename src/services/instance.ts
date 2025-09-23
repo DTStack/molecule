@@ -86,7 +86,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
 
     private childContainer = container.createChildContainer();
 
-    private wrapper?: RenderFunction<ReactNode>
+    private wrapper?: RenderFunction<ReactNode>;
 
     private register<T>(token: string, cto: constructor<T>) {
         this.childContainer.register(token, cto, {
@@ -329,7 +329,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     private predict: Parameters<typeof this.render>[0] = undefined;
     public render = (container?: HTMLElement | null, wrapper?: RenderFunction<ReactNode>) => {
         this.wrapper = wrapper;
-        
+
         if (this.loading) {
             this.predict = container;
             return;
@@ -363,12 +363,12 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
                 modules: services.module.modules,
                 controllers,
             },
-        })
+        });
         if (wrapper) {
-            this.root.render(wrapper(child))
+            this.root.render(wrapper(child));
         } else {
-            this.root.render(child)
-        };
+            this.root.render(child);
+        }
         container.appendChild(root);
     };
 

@@ -1,33 +1,35 @@
 import {
-    DynamicStandaloneServices,
     type editor as MonacoEditor,
+    EditorScopedLayoutService,
     IAccessibilityService,
+    IAccessibilitySignalService,
+    IClipboardService,
     ICodeEditorService,
     ICommandService,
     IConfigurationService,
     IContextKeyService,
+    IContextMenuService,
     IContextViewService,
+    IEditorProgressService,
+    IEditorWorkerService,
+    IHoverService,
     IInstantiationService,
     IKeybindingService,
+    ILanguageConfigurationService,
+    ILanguageFeaturesService,
+    ILanguageService,
     ILayoutService,
     IModelService,
-    IModeService,
     INotificationService,
     IOpenerService,
     IQuickInputService,
     IStandaloneThemeService,
-    ITextModelService,
-    IEditorWorkerService,
-    IContextMenuService,
-    IEditorProgressService,
-    IClipboardService,
     OpenerService,
     QuickInputService,
     ServiceCollection,
-    SimpleEditorModelResolverService,
-    SimpleLayoutService,
-    StandaloneEditor,
     StandaloneDiffEditor,
+    StandaloneEditor,
+    StandaloneServices,
     StaticServices,
 } from 'mo/monaco';
 import { inject, injectable } from 'tsyringe';
@@ -39,7 +41,6 @@ type IEditorOverrideServices = MonacoEditor.IEditorOverrideServices;
 @injectable()
 export class MonacoService {
     private _services: ServiceCollection;
-    private simpleEditorModelResolverService: SimpleEditorModelResolverService | null = null;
     private _container!: HTMLElement | null;
 
     constructor(@inject('colorTheme') private colorTheme: ColorThemeService) {}
@@ -87,34 +88,25 @@ export class MonacoService {
         const services = this.services;
 
         this.mergeEditorServices(overrides);
-        if (!services.has(ITextModelService)) {
-            this.simpleEditorModelResolverService = new SimpleEditorModelResolverService(
-                StaticServices.modelService.get()
-            );
-            services.set(ITextModelService, this.simpleEditorModelResolverService);
-        }
 
         const standaloneEditor = new StandaloneEditor(
             domElement,
             options,
-            services,
             services.get(IInstantiationService),
             services.get(ICodeEditorService),
             services.get(ICommandService),
             services.get(IContextKeyService),
+            services.get(IHoverService),
             services.get(IKeybindingService),
-            services.get(IContextViewService),
             services.get(IStandaloneThemeService),
             services.get(INotificationService),
             services.get(IConfigurationService),
             services.get(IAccessibilityService),
             services.get(IModelService),
-            services.get(IModeService)
+            services.get(ILanguageService),
+            services.get(ILanguageConfigurationService),
+            services.get(ILanguageFeaturesService)
         );
-
-        if (this.simpleEditorModelResolverService) {
-            this.simpleEditorModelResolverService.setEditor(standaloneEditor);
-        }
 
         // Should be called after the editor is created
         this.colorTheme.setCurrent(this.colorTheme.getCurrent());
@@ -130,34 +122,21 @@ export class MonacoService {
         const services = this.services;
 
         this.mergeEditorServices(overrides);
-        if (!services.has(ITextModelService)) {
-            this.simpleEditorModelResolverService = new SimpleEditorModelResolverService(
-                StaticServices.modelService.get()
-            );
-            services.set(ITextModelService, this.simpleEditorModelResolverService);
-        }
 
         const standaloneDiffEditor = new StandaloneDiffEditor(
             domElement,
             options,
-            services,
             services.get(IInstantiationService),
             services.get(IContextKeyService),
-            services.get(IKeybindingService),
-            services.get(IContextViewService),
-            services.get(IEditorWorkerService),
             services.get(ICodeEditorService),
             services.get(IStandaloneThemeService),
             services.get(INotificationService),
             services.get(IConfigurationService),
             services.get(IContextMenuService),
             services.get(IEditorProgressService),
-            services.get(IClipboardService)
+            services.get(IClipboardService),
+            services.get(IAccessibilitySignalService)
         );
-
-        if (this.simpleEditorModelResolverService) {
-            this.simpleEditorModelResolverService.setEditor(standaloneDiffEditor);
-        }
 
         // Should be called after the editor is created
         this.colorTheme.setCurrent(this.colorTheme.getCurrent());
@@ -169,11 +148,39 @@ export class MonacoService {
     public dispose() {}
 
     private createStandaloneServices(): ServiceCollection {
-        const services = new DynamicStandaloneServices(this.container);
+        const instantiationService = StandaloneServices.initialize({});
+        const services = new ServiceCollection();
+        const serviceIds = [
+            IInstantiationService,
+            ICodeEditorService,
+            ICommandService,
+            IConfigurationService,
+            IContextKeyService,
+            IKeybindingService,
+            IContextViewService,
+            IStandaloneThemeService,
+            INotificationService,
+            IAccessibilityService,
+            IAccessibilitySignalService,
+            IModelService,
+            ILanguageService,
+            ILanguageConfigurationService,
+            ILanguageFeaturesService,
+            IHoverService,
+            IEditorWorkerService,
+            IContextMenuService,
+            IEditorProgressService,
+            IClipboardService,
+        ];
 
-        const instantiationService = services.get<any>(IInstantiationService);
+        serviceIds.forEach(serviceId => {
+            const service = StandaloneServices.get(serviceId);
+            if (service) {
+                services.set(serviceId, service);
+            }
+        });
 
-        if (!services.has(IOpenerService)) {
+        if (!services.get(IOpenerService)) {
             services.set(
                 IOpenerService,
                 new OpenerService(services.get(ICodeEditorService), services.get(ICommandService))
@@ -181,9 +188,9 @@ export class MonacoService {
         }
 
         const quickInputService = instantiationService.createInstance(QuickInputService);
-        const layoutService = new SimpleLayoutService(
-            StaticServices.codeEditorService.get(ICodeEditorService),
-            this.container
+        const layoutService = new EditorScopedLayoutService(
+            this.container,
+            StaticServices.codeEditorService.get(ICodeEditorService)
         );
 
         // Override layoutService

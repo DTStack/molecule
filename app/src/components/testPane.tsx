@@ -201,8 +201,8 @@ export default function TestPane({ context: molecule }: { context: IMoleculeCont
             name,
             icon: 'file',
             value: `// editor-${key}
-        // export interface Type<T> { new (...args: any[]): T; }
-        // export type GenericClassDecorator<T> = (target: T) => void;`,
+export interface User { name: string; }
+export type Variable = string | number;`,
             language: 'typescript',
             breadcrumb: [
                 { id: 'app', name: 'app' },

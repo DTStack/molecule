@@ -124,8 +124,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       vscode-textmate:
-        specifier: 6.x
-        version: 6.0.0
+        specifier: 9.2.0
+        version: 9.2.0
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -163,8 +163,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       vscode-textmate:
-        specifier: 6.x
-        version: 6.0.0
+        specifier: 9.2.0
+        version: 9.2.0
 
 packages:
 
@@ -3218,8 +3218,8 @@ packages:
   vscode-oniguruma@2.0.1:
     resolution: {integrity: sha512-poJU8iHIWnC3vgphJnrLZyI3YdqRlR27xzqDmpPXYzA93R4Gk8z7T6oqDzDoHjoikA2aS82crdXFkjELCdJsjQ==}
 
-  vscode-textmate@6.0.0:
-    resolution: {integrity: sha512-gu73tuZfJgu+mvCSy4UZwd2JXykjK9zAZsfmDeut5dx/1a7FeTk0XwJsSuqQn+cuMCGVbIBfl+s53X4T19DnzQ==}
+  vscode-textmate@9.2.0:
+    resolution: {integrity: sha512-rkvG4SraZQaPSN/5XjwKswdU0OP9MF28QjrYzUBbhb8QyG3ljB1Ky996m++jiI7KdiAP2CkBiQZd9pqEDTClqA==}
 
   which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
@@ -6657,7 +6657,7 @@ snapshots:
 
   vscode-oniguruma@2.0.1: {}
 
-  vscode-textmate@6.0.0: {}
+  vscode-textmate@9.2.0: {}
 
   which-boxed-primitive@1.0.2:
     dependencies:

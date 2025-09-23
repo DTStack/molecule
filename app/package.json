@@ -17,7 +17,7 @@
     "vite-plugin-mock-dev-server": "^1.4.0",
     "vite-plugin-monaco-editor": "^1.1.0",
     "vscode-oniguruma": "^2.0.1",
-    "vscode-textmate": "6.x",
+    "vscode-textmate": "9.2.0",
     "@dtinsight/molecule": "workspace:*"
   }
 }

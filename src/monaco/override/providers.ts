@@ -1,5 +1,5 @@
 import type * as monaco from 'monaco-editor';
-import type { IGrammar, IGrammarConfiguration, IOnigLib, IRawGrammar, IRawTheme, StackElement } from 'vscode-textmate';
+import type { IGrammar, IGrammarConfiguration, IOnigLib, IRawGrammar, IRawTheme, StateStack } from 'vscode-textmate';
 import { INITIAL, parseRawGrammar, Registry } from 'vscode-textmate';
 
 import { Color, generateTokensCSSForColorMap, TokenizationRegistry } from '../types';
@@ -151,7 +151,7 @@ export class SimpleLanguageInfoProvider {
 }
 
 class TokenizerState implements monaco.languages.IState {
-    constructor(public readonly stateStack: StackElement) {}
+    constructor(public readonly stateStack: StateStack) {}
 
     clone(): monaco.languages.IState {
         return new TokenizerState(this.stateStack);

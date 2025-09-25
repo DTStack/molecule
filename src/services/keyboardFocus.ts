@@ -1,3 +1,4 @@
+import { BaseService } from 'mo/glue';
 import {
     type editor as MonacoEditor,
     IAccessibilityService,
@@ -19,35 +20,14 @@ import {
 } from 'mo/monaco';
 import { injectable } from 'tsyringe';
 
-export interface IKeyboardFocusService {
-    /**
-     * Initialize the keyboard focus service with Monaco services
-     */
-    initialize(services: ServiceCollection): void;
-
-    /**
-     * Dispose the keyboard focus service and clean up resources
-     */
-    dispose(): void;
-
-    /**
-     * Ensure the hidden editor has focus when QuickInputService operations are needed
-     */
-    ensureQuickInputContext(): void;
-
-    /**
-     * Register an editor for focus tracking
-     */
-    registerEditor(editor: MonacoEditor.IStandaloneCodeEditor): void;
-}
-
 /**
  * Service responsible for managing keyboard focus and global shortcut key functionality.
  * This service creates and manages a hidden editor to ensure Monaco Editor's shortcut keys
  * work even when no visible editor has focus.
  */
 @injectable()
-export class KeyboardFocusService implements IKeyboardFocusService {
+export class KeyboardFocusService extends BaseService {
+    protected state = null;
     private _hiddenEditor: MonacoEditor.IStandaloneCodeEditor | null = null;
     private _hiddenEditorContainer: HTMLElement | null = null;
     private _hiddenEditorStyle: HTMLStyleElement | null = null;
@@ -56,7 +36,9 @@ export class KeyboardFocusService implements IKeyboardFocusService {
     private _globalKeydownHandler: ((e: KeyboardEvent) => void) | null = null;
     private _services: ServiceCollection | null = null;
 
-    constructor() {}
+    constructor() {
+        super('keyboardFocus');
+    }
 
     public initialize(services: ServiceCollection): void {
         if (this._isInitialized) {
@@ -83,6 +65,9 @@ export class KeyboardFocusService implements IKeyboardFocusService {
         this._isInitialized = false;
     }
 
+    /**
+     * Ensure the hidden editor has focus when QuickInputService operations are needed
+     */
     public ensureQuickInputContext(): void {
         if (!this._isInitialized) {
             console.warn('KeyboardFocusService: Service not initialized');
@@ -185,9 +170,6 @@ export class KeyboardFocusService implements IKeyboardFocusService {
         }
     }
 
-    /**
-     * Dispose the hidden editor and clean up resources
-     */
     private disposeHiddenEditor(): void {
         if (this._hiddenEditor) {
             this._hiddenEditor.dispose();
@@ -212,9 +194,6 @@ export class KeyboardFocusService implements IKeyboardFocusService {
         this._focusedEditor = null;
     }
 
-    /**
-     * Setup focus tracking for a regular editor instance
-     */
     private setupEditorFocusTracking(editor: MonacoEditor.IStandaloneCodeEditor): void {
         editor.onDidFocusEditorText(() => {
             this._focusedEditor = editor;
@@ -227,9 +206,6 @@ export class KeyboardFocusService implements IKeyboardFocusService {
         });
     }
 
-    /**
-     * Handle global keydown events with smart focus management
-     */
     private handleGlobalKeydown(e: KeyboardEvent): void {
         // Only handle events with modifier keys
         if (!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey)) {

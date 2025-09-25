@@ -21,6 +21,7 @@ import type { EditorService } from './editor';
 import type { EditorTreeService } from './editorTree';
 import type { ExplorerService } from './explorer';
 import type { FolderTreeService } from './folderTree';
+import type { KeyboardFocusService } from './keyboardFocus';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
@@ -50,6 +51,7 @@ export class ExtensionService extends BaseService<ExtensionModel> {
         @inject('sidebar') private sidebar: SidebarService,
         @inject('explorer') private explorer: ExplorerService,
         @inject('folderTree') private folderTree: FolderTreeService,
+        @inject('keyboardFocus') private keyboardFocus: KeyboardFocusService,
         @inject('panel') private panel: PanelService,
         @inject('output') private output: OutputService,
         @inject('editor') private editor: EditorService,
@@ -79,6 +81,7 @@ export class ExtensionService extends BaseService<ExtensionModel> {
             sidebar: this.sidebar,
             explorer: this.explorer,
             folderTree: this.folderTree,
+            keyboardFocus: this.keyboardFocus,
             panel: this.panel,
             output: this.output,
             editor: this.editor,

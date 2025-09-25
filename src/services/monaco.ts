@@ -35,6 +35,7 @@ import {
 import { inject, injectable } from 'tsyringe';
 
 import { ColorThemeService } from './colorTheme';
+import { KeyboardFocusService } from './keyboardFocus';
 
 type IEditorOverrideServices = MonacoEditor.IEditorOverrideServices;
 
@@ -42,8 +43,13 @@ type IEditorOverrideServices = MonacoEditor.IEditorOverrideServices;
 export class MonacoService {
     private _services: ServiceCollection;
     private _container!: HTMLElement | null;
+    private _keyboardFocusService!: KeyboardFocusService | null;
 
     constructor(@inject('colorTheme') private colorTheme: ColorThemeService) {}
+
+    public setKeyboardFocusService(keyboardFocusService: KeyboardFocusService): void {
+        this._keyboardFocusService = keyboardFocusService;
+    }
 
     public initWorkspace(container: HTMLElement) {
         this._container = container;
@@ -111,6 +117,11 @@ export class MonacoService {
         // Should be called after the editor is created
         this.colorTheme.setCurrent(this.colorTheme.getCurrent());
 
+        // Register editor with keyboard focus service for focus tracking
+        if (this._keyboardFocusService) {
+            this._keyboardFocusService.registerEditor(standaloneEditor);
+        }
+
         return standaloneEditor;
     }
 
@@ -145,7 +156,21 @@ export class MonacoService {
     }
 
     // When Application will unmount, call it
-    public dispose() {}
+    public dispose() {
+        if (this._keyboardFocusService) {
+            this._keyboardFocusService.dispose();
+        }
+    }
+
+    /**
+     * Ensure the hidden editor has focus when QuickInputService operations are needed
+     * This method should be called before any QuickInputService operations
+     */
+    public ensureQuickInputContext(): void {
+        if (this._keyboardFocusService) {
+            this._keyboardFocusService.ensureQuickInputContext();
+        }
+    }
 
     private createStandaloneServices(): ServiceCollection {
         const instantiationService = StandaloneServices.initialize({});
@@ -173,7 +198,7 @@ export class MonacoService {
             IClipboardService,
         ];
 
-        serviceIds.forEach(serviceId => {
+        serviceIds.forEach((serviceId) => {
             const service = StandaloneServices.get(serviceId);
             if (service) {
                 services.set(serviceId, service);
@@ -202,6 +227,12 @@ export class MonacoService {
         // Override dispose for prevent disposed by instance
         this.dispose = services.dispose;
         services.dispose = () => {};
+
+        // Initialize keyboard focus service after services are set up
+        if (this._keyboardFocusService) {
+            this._keyboardFocusService.initialize(services);
+        }
+
         return services;
     }
 }

@@ -19,6 +19,7 @@ import type { EditorTreeService } from './editorTree';
 import type { ExplorerService } from './explorer';
 import type { ExtensionService } from './extension';
 import type { FolderTreeService } from './folderTree';
+import type { KeyboardFocusService } from './keyboardFocus';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
@@ -117,14 +118,19 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
     private getServices() {
         const locale = this.resolve<LocaleService>('locale');
         locale.setCurrent(this._config.defaultLocale);
+
         const builtin = this.resolve<BuiltinService>('builtin');
         this.emit(InstanceHookKind.beforeInit);
-
         this.emit(InstanceHookKind.beforeLoad);
+
         const module = this.resolve<ModuleService>('module');
         const colorTheme = this.resolve<ColorThemeService>('colorTheme');
         colorTheme.setCurrent(this._config.defaultColorTheme);
+
+        const keyboardFocus = this.resolve<KeyboardFocusService>('keyboardFocus');
         const monaco = this.resolve<MonacoService>('monaco');
+        monaco.setKeyboardFocusService(keyboardFocus);
+
         const contextMenu = this.resolve<ContextMenuService>('contextMenu');
         const auxiliaryBar = this.resolve<AuxiliaryBarService>('auxiliaryBar');
         const layout = this.resolve<LayoutService>('layout');
@@ -167,6 +173,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
             notification,
             search,
             settings,
+            keyboardFocus,
             monaco,
             module,
             extension,
@@ -188,6 +195,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
             import('./explorer'),
             import('./extension'),
             import('./folderTree'),
+            import('./keyboardFocus'),
             import('./layout'),
             import('./locale'),
             import('./menuBar'),
@@ -213,6 +221,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
                 { ExplorerService },
                 { ExtensionService },
                 { FolderTreeService },
+                { KeyboardFocusService },
                 { LayoutService },
                 { LocaleService },
                 { MenuBarService },
@@ -238,6 +247,7 @@ export class InstanceService extends GlobalEvent implements IInstanceServiceProp
                 this.register('explorer', ExplorerService);
                 this.register('extension', ExtensionService);
                 this.register('folderTree', FolderTreeService);
+                this.register('keyboardFocus', KeyboardFocusService);
                 this.register('layout', LayoutService);
                 this.register('locale', LocaleService);
                 this.register('menuBar', MenuBarService);

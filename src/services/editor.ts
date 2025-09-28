@@ -14,7 +14,9 @@ import type {
     Variant,
 } from 'mo/types';
 import { getPrevOrNext, randomId, searchById } from 'mo/utils';
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
+
+import { KeyboardFocusService } from './keyboardFocus';
 
 type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]>;
 
@@ -22,7 +24,7 @@ type EditorContextMenu = ContextMenuHandler<[tabId: UniqueId, groupId: UniqueId]
 export class EditorService extends BaseService<EditorModel> {
     protected state: EditorModel;
 
-    constructor() {
+    constructor(@inject('keyboardFocus') private keyboardFocus: KeyboardFocusService) {
         super('editor');
         this.state = new EditorModel();
     }
@@ -168,12 +170,21 @@ export class EditorService extends BaseService<EditorModel> {
                 const [group] = draft.groups.splice(idx, 1);
                 group.editorInstance?.dispose();
             });
+
+            let modelNumber = 0;
+
             // Dispose models
             closed.forEach((tab) => {
                 // Can't disposed model directly as model maybe shared by different group's tab
                 if (!tab.model || draft.groups.find((group) => group.data.find((i) => i.model === tab.model))) return;
                 tab.model.dispose();
+                modelNumber += 1;
             });
+
+            if (modelNumber > 0) {
+                // Recreate hidden editor to fix focus loss issue
+                this.keyboardFocus.recreateHiddenEditor();
+            }
 
             // ===================== effects =====================
             this.emit(EditorEvent.onClose, closed);

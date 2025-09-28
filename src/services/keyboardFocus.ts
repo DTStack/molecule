@@ -41,11 +41,7 @@ export class KeyboardFocusService extends BaseService {
     }
 
     public initialize(services: ServiceCollection): void {
-        if (this._isInitialized) {
-            console.warn('KeyboardFocusService is already initialized');
-            return;
-        }
-
+        if (this._isInitialized) return;
         this._services = services;
 
         // Create hidden editor after Monaco services are available
@@ -57,10 +53,7 @@ export class KeyboardFocusService extends BaseService {
     }
 
     public dispose(): void {
-        if (!this._isInitialized) {
-            return;
-        }
-
+        if (!this._isInitialized) return;
         this.disposeHiddenEditor();
         this._isInitialized = false;
     }
@@ -69,40 +62,53 @@ export class KeyboardFocusService extends BaseService {
      * Ensure the hidden editor has focus when QuickInputService operations are needed
      */
     public ensureQuickInputContext(): void {
-        if (!this._isInitialized) {
-            console.warn('KeyboardFocusService: Service not initialized');
-            return;
-        }
+        if (!this._isInitialized) return;
 
-        if (this._hiddenEditor && this._hiddenEditorContainer) {
-            try {
-                this._hiddenEditor.focus();
-            } catch (error) {
-                console.warn('Failed to focus hidden editor:', error);
+        // If there's a focused editor with text focus, use it
+        if (this._focusedEditor && this._focusedEditor.hasTextFocus()) return;
+
+        this.focusHiddenEditor();
+    }
+
+    /**
+     * Focus the hidden editor with retry mechanism and improved reliability
+     */
+    private focusHiddenEditor(): void {
+        if (!this._hiddenEditor || !this._hiddenEditorContainer) return;
+        this._hiddenEditor.focus();
+
+        // Check if the hidden editor has focus
+        const isFocused = this._hiddenEditor.hasTextFocus();
+
+        // If the hidden editor fails to focus, try to refocus it
+        window.requestAnimationFrame(() => {
+            if (!isFocused) {
+                this._hiddenEditor?.focus();
             }
-        } else {
-            console.warn('KeyboardFocusService: Hidden editor not available, QuickInputService may not work properly');
-        }
+        });
     }
 
     public registerEditor(editor: MonacoEditor.IStandaloneCodeEditor): void {
-        if (!this._isInitialized) {
-            console.warn('KeyboardFocusService: Service not initialized, cannot register editor');
-            return;
-        }
-
+        if (!this._isInitialized) return;
         this.setupEditorFocusTracking(editor);
+    }
+
+    /**
+     * Force recreation of the hidden editor (for debugging or recovery purposes)
+     */
+    public recreateHiddenEditor(): void {
+        if (!this._isInitialized) return;
+        this.disposeHiddenEditor();
+        window.requestAnimationFrame(() => {
+            this.createHiddenEditor();
+        });
     }
 
     /**
      * Create a hidden editor to ensure QuickInputService always has a focused editor context
      */
     private createHiddenEditor(): void {
-        if (!this._services) {
-            console.warn('KeyboardFocusService: Monaco services not available');
-            return;
-        }
-
+        if (!this._services) return;
         try {
             // Create a hidden container for the editor
             this._hiddenEditorContainer = document.createElement('div');
@@ -198,7 +204,6 @@ export class KeyboardFocusService extends BaseService {
         editor.onDidFocusEditorText(() => {
             this._focusedEditor = editor;
         });
-
         editor.onDidBlurEditorText(() => {
             if (this._focusedEditor === editor) {
                 this._focusedEditor = null;
@@ -208,13 +213,7 @@ export class KeyboardFocusService extends BaseService {
 
     private handleGlobalKeydown(e: KeyboardEvent): void {
         // Only handle events with modifier keys
-        if (!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey)) {
-            return;
-        }
-
-        // No regular editor has focus, ensure QuickInput context for all modifier key combinations
-        if (!this._focusedEditor || !this._focusedEditor.hasTextFocus()) {
-            this.ensureQuickInputContext();
-        }
+        if (!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey)) return;
+        this.ensureQuickInputContext();
     }
 }

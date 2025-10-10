@@ -24,6 +24,7 @@ import {
     IOpenerService,
     IQuickInputService,
     IStandaloneThemeService,
+    ITelemetryService,
     OpenerService,
     QuickInputService,
     ServiceCollection,
@@ -196,6 +197,7 @@ export class MonacoService {
             IContextMenuService,
             IEditorProgressService,
             IClipboardService,
+            ITelemetryService,
         ];
 
         serviceIds.forEach((serviceId) => {

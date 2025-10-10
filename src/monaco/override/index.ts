@@ -91,12 +91,22 @@ export function registerCommandsQuickAccessProvider(services: IMoleculeContext &
             );
         }
 
-        protected async getCommandPicks(_: IDisposable, token: CancellationToken): Promise<Array<ICommandQuickPick>> {
-            if (token.isCancellationRequested) {
+        protected async getCommandPicks(_: IDisposable, token?: CancellationToken): Promise<Array<ICommandQuickPick>> {
+            const cancellationToken = token || { isCancellationRequested: false };
+
+            if (cancellationToken.isCancellationRequested) {
                 return [];
             }
 
             return [...this.getCodeEditorCommandPicks(), ...this.getGlobalCommandPicks()];
+        }
+
+        protected hasAdditionalCommandPicks(): boolean {
+            return true;
+        }
+
+        protected async getAdditionalCommandPicks(): Promise<Array<ICommandQuickPick>> {
+            return this.getGlobalCommandPicks();
         }
 
         private getGlobalCommandPicks(): ICommandQuickPick[] {

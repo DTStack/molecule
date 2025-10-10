@@ -61,11 +61,16 @@ import { getNLSLanguage, getNLSMessages } from './nls.messages.js';
 const isPseudo = getNLSLanguage() === 'pseudo' || (typeof document !== 'undefined' && document.location && document.location.hash.indexOf('pseudo=true') >= 0);
 
 function _format(message, args) {
+    // Make sure message is a string
+    if (typeof message !== 'string') {
+        message = String(message || '');
+    }
+    
     let result;
     if (args.length === 0) {
         result = message;
     } else {
-        result = String(message).replace(/\{(\d+)\}/g, function (match, rest) {
+        result = message.replace(/\{(\d+)\}/g, function (match, rest) {
             const index = rest[0];
             const arg = args[index];
             let result = match;
@@ -96,6 +101,12 @@ export function localize(path, data, defaultMessage) {
     if (!message) {
         message = defaultMessage;
     }
+    
+    // Make sure message is a string
+    if (typeof message !== 'string') {
+        return defaultMessage || key || '';
+    }
+    
     const args = [];
     for (let _i = 3; _i < arguments.length; _i++) {
         args[_i - 3] = arguments[_i];
@@ -130,6 +141,15 @@ export function localize2(path, data, originalMessage) {
     if (!message) {
         message = originalMessage;
     }
+    
+    // Make sure message is a string
+    if (typeof message !== 'string') {
+        message = originalMessage || key || '';
+    }
+    if (typeof originalMessage !== 'string') {
+        originalMessage = key || '';
+    }
+    
     const args = [];
     for (let _i = 3; _i < arguments.length; _i++) {
         args[_i - 3] = arguments[_i];

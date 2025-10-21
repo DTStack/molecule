@@ -48,7 +48,7 @@ function transformLocalizeFuncCode(filepath: string) {
     if (re.exec(filepath)) {
         let path = RegExp.$1;
         path = path.replaceAll('\\', '/');
-        code = code.replace(/localize\(/g, `localize('${path}', `);
+        code = code.replace(/localize\(/g, `localize('${path}', `).replace(/localize2\(/g, `localize2('${path}', `);
     }
     return code;
 }
@@ -57,8 +57,6 @@ function getLocalizeCode() {
     return `
 // replace monaco-editor/esm/vs/nls.js
 import { getNLSLanguage, getNLSMessages } from './nls.messages.js';
-
-const isPseudo = getNLSLanguage() === 'pseudo' || (typeof document !== 'undefined' && document.location && document.location.hash.indexOf('pseudo=true') >= 0);
 
 function _format(message, args) {
     // Make sure message is a string
@@ -82,10 +80,6 @@ function _format(message, args) {
             }
             return result;
         });
-    }
-    if (isPseudo) {
-        // FF3B and FF3D is the Unicode zenkaku representation for [ and ]
-        result = '\\uFF3B' + result.replace(/[aouei]/g, '$&$&') + '\\uFF3D';
     }
     return result;
 }

@@ -18,6 +18,14 @@ export function esbuildPluginMonacoEditorNls(): EsbuildPlugin {
                 };
             });
 
+            // Handle nls.messages.js
+            build.onLoad({ filter: /esm[\\\/]vs[\\\/]nls\.messages\.js/ }, async () => {
+                return {
+                    contents: getNLSMessagesCode(),
+                    loader: 'js',
+                };
+            });
+
             build.onLoad({ filter: /monaco-editor[\\\/]esm[\\\/]vs.+\.js/ }, async (args) => {
                 return {
                     contents: transformLocalizeFuncCode(args.path),
@@ -40,29 +48,46 @@ function transformLocalizeFuncCode(filepath: string) {
     if (re.exec(filepath)) {
         let path = RegExp.$1;
         path = path.replaceAll('\\', '/');
-        code = code.replace(/localize\(/g, `localize('${path}', `);
+        code = code.replace(/localize\(/g, `localize('${path}', `).replace(/localize2\(/g, `localize2('${path}', `);
     }
     return code;
 }
 
 function getLocalizeCode() {
     return `
-// replace monaco-editor/esm/vs/nls.js _format
+// replace monaco-editor/esm/vs/nls.js
+import { getNLSLanguage, getNLSMessages } from './nls.messages.js';
+
 function _format(message, args) {
+    // Make sure message is a string
+    if (typeof message !== 'string') {
+        message = String(message || '');
+    }
+    
     let result;
     if (args.length === 0) {
         result = message;
     } else {
-        result = String(message).replace(/\{(\d+)\}/g, function (match, rest) {
+        result = message.replace(/\{(\d+)\}/g, function (match, rest) {
             const index = rest[0];
-            return typeof args[index] !== "undefined" ? args[index] : match;
+            const arg = args[index];
+            let result = match;
+            if (typeof arg === 'string') {
+                result = arg;
+            }
+            else if (typeof arg === 'number' || typeof arg === 'boolean' || arg === void 0 || arg === null) {
+                result = String(arg);
+            }
+            return result;
         });
     }
     return result;
 }
 
-// replace monaco-editor/esm/vs/nls.js localize
-function localize(path, data, defaultMessage) {
+/**
+ * @skipMangle
+ */
+export function localize(path, data, defaultMessage) {
     const key = typeof data === "object" ? data.key : data;
     const lang = document?.documentElement.getAttribute("lang") || "en";
     const _data = window.__locale__?.[lang] || {};
@@ -70,26 +95,80 @@ function localize(path, data, defaultMessage) {
     if (!message) {
         message = defaultMessage;
     }
+    
+    // Make sure message is a string
+    if (typeof message !== 'string') {
+        return defaultMessage || key || '';
+    }
+    
     const args = [];
     for (let _i = 3; _i < arguments.length; _i++) {
         args[_i - 3] = arguments[_i];
     }
     return _format(message, args);
 }
-module.exports["localize"] = localize;
 
-function loadMessageBundle(_file) {
-    return localize;
+/**
+ * Only used when built: Looks up the message in the global NLS table.
+ * This table is being made available as a global through bootstrapping
+ * depending on the target context.
+ */
+function lookupMessage(index, fallback) {
+    const message = getNLSMessages()?.[index];
+    if (typeof message !== 'string') {
+        if (typeof fallback === 'string') {
+            return fallback;
+        }
+        throw new Error(\`!!! NLS MISSING: \${index} !!!\`);
+    }
+    return message;
 }
-module.exports["loadMessageBundle"] = loadMessageBundle;
 
-function config(_opt) {
-    return loadMessageBundle;
+/**
+ * @skipMangle
+ */
+export function localize2(path, data, originalMessage) {
+    const key = typeof data === "object" ? data.key : data;
+    const lang = document?.documentElement.getAttribute("lang") || "en";
+    const _data = window.__locale__?.[lang] || {};
+    let message = (_data[path] || {})[key];
+    if (!message) {
+        message = originalMessage;
+    }
+    
+    // Make sure message is a string
+    if (typeof message !== 'string') {
+        message = originalMessage || key || '';
+    }
+    if (typeof originalMessage !== 'string') {
+        originalMessage = key || '';
+    }
+    
+    const args = [];
+    for (let _i = 3; _i < arguments.length; _i++) {
+        args[_i - 3] = arguments[_i];
+    }
+    const value = _format(message, args);
+    return {
+        value,
+        original: originalMessage === message ? value : _format(originalMessage, args)
+    };
 }
-module.exports["config"] = config;
 
-function getConfiguredDefaultLocale() {
-    return undefined;
+// Re-export from nls.messages.js for compatibility
+export { getNLSLanguage, getNLSMessages } from './nls.messages.js';
+`;
 }
-module.exports["getConfiguredDefaultLocale"] = getConfiguredDefaultLocale;`;
+
+function getNLSMessagesCode() {
+    return `
+// replace monaco-editor/esm/vs/nls.messages.js
+export function getNLSMessages() {
+    return globalThis._VSCODE_NLS_MESSAGES;
+}
+
+export function getNLSLanguage() {
+    return document?.documentElement.getAttribute("lang") || "en";
+}
+`;
 }

@@ -24,6 +24,7 @@ import type { EditorService } from './editor';
 import type { EditorTreeService } from './editorTree';
 import type { ExplorerService } from './explorer';
 import type { FolderTreeService } from './folderTree';
+import type { KeyboardFocusService } from './keyboardFocus';
 import type { LayoutService } from './layout';
 import type { LocaleService } from './locale';
 import type { MenuBarService } from './menuBar';
@@ -52,6 +53,7 @@ export class ActionService extends BaseService<ActionModel> {
         @inject('sidebar') private sidebar: SidebarService,
         @inject('explorer') private explorer: ExplorerService,
         @inject('folderTree') private folderTree: FolderTreeService,
+        @inject('keyboardFocus') private keyboardFocus: KeyboardFocusService,
         @inject('panel') private panel: PanelService,
         @inject('output') private output: OutputService,
         @inject('editor') private editor: EditorService,
@@ -78,6 +80,7 @@ export class ActionService extends BaseService<ActionModel> {
             sidebar: this.sidebar,
             explorer: this.explorer,
             folderTree: this.folderTree,
+            keyboardFocus: this.keyboardFocus,
             panel: this.panel,
             output: this.output,
             editor: this.editor,
@@ -101,7 +104,14 @@ export class ActionService extends BaseService<ActionModel> {
         disposables.add(
             CommandsRegistry.registerCommand({
                 id: command.id,
-                handler: (accessor: any, ...args: any) => action.run(accessor, ...args),
+                handler: (accessor: any, ...args: any) => {
+                    const ctx = this.getContext();
+
+                    // Ensure the hidden editor has focus when QuickInputService operations are needed
+                    ctx.keyboardFocus.ensureQuickInputContext();
+
+                    action.run(accessor, ...args);
+                },
                 description,
             })
         );
@@ -169,8 +179,19 @@ export class ActionService extends BaseService<ActionModel> {
             // Get lower priority keybinding
             const lowerPriorty = targetKeybinding[targetKeybinding.length - 1];
             // keybinding which is chord key[组合键] can get more than 1 parts
-            const keybindings: ISimpleKeybinding[] = lowerPriorty.keybinding;
-            return keybindings;
+            // The keybinding property is a Keybinding object with chords property
+            const keybindingObj = lowerPriorty.keybinding;
+            if (keybindingObj && keybindingObj.chords) {
+                // Convert KeyCodeChord[] to ISimpleKeybinding[]
+                const keybindings: ISimpleKeybinding[] = keybindingObj.chords.map((chord: any) => ({
+                    ctrlKey: chord.ctrlKey,
+                    shiftKey: chord.shiftKey,
+                    altKey: chord.altKey,
+                    metaKey: chord.metaKey,
+                    keyCode: chord.keyCode,
+                }));
+                return keybindings;
+            }
         }
         return null;
     }

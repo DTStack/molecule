@@ -7,7 +7,7 @@ export default {
     detectIndentation: true,
     trimAutoWhitespace: true,
     largeFileOptimizations: true,
-    wordBasedSuggestions: true,
+    wordBasedSuggestions: 'currentDocument',
     'semanticHighlighting.enabled': 'configuredByTheme',
     stablePeek: false,
     maxTokenizationLineLength: 20000,

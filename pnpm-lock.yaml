@@ -21,11 +21,11 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       monaco-editor:
-        specifier: ^0.31.0
-        version: 0.31.1
+        specifier: 0.52.2
+        version: 0.52.2
       monaco-editor-nls:
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: 3.1.0
+        version: 3.1.0
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1
@@ -124,8 +124,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       vscode-textmate:
-        specifier: 6.x
-        version: 6.0.0
+        specifier: 9.2.0
+        version: 9.2.0
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -158,13 +158,13 @@ importers:
         version: 1.8.4(esbuild@0.18.20)(rollup@3.29.5)(vite@4.5.9(@types/node@20.4.7)(sass@1.77.8))
       vite-plugin-monaco-editor:
         specifier: ^1.1.0
-        version: 1.1.0(monaco-editor@0.31.1)
+        version: 1.1.0(monaco-editor@0.52.2)
       vscode-oniguruma:
         specifier: ^2.0.1
         version: 2.0.1
       vscode-textmate:
-        specifier: 6.x
-        version: 6.0.0
+        specifier: 9.2.0
+        version: 9.2.0
 
 packages:
 
@@ -2156,11 +2156,11 @@ packages:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
 
-  monaco-editor-nls@2.0.0:
-    resolution: {integrity: sha512-gQy0LxyUkvmGFRfjRaFHFDdv3UjCX2DfjoL4Dy6mhcq94r6pu2mzcCWIxJz+y7FCrQwpj+xXXUpy0ynOrmONoQ==}
+  monaco-editor-nls@3.1.0:
+    resolution: {integrity: sha512-GdzgKRAiwXlGI/ude/HbzP8ukml28yUoZ7rx/xsSsmYf9W13jTyWjXjoMK/+pjL6JorAThH2WkCYaDoCnIX7Jg==}
 
-  monaco-editor@0.31.1:
-    resolution: {integrity: sha512-FYPwxGZAeP6mRRyrr5XTGHD9gRXVjy7GUzF4IPChnyt3fS5WrNxIkS8DNujWf6EQy0Zlzpxw8oTVE+mWI2/D1Q==}
+  monaco-editor@0.52.2:
+    resolution: {integrity: sha512-GEQWEZmfkOGLdd3XK8ryrfWz3AIP8YymVXiPHEdewrUq7mh0qrKrfHLNCXcbB6sTnMLnOZ3ztSiKcciFUkIJwQ==}
 
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -3218,8 +3218,8 @@ packages:
   vscode-oniguruma@2.0.1:
     resolution: {integrity: sha512-poJU8iHIWnC3vgphJnrLZyI3YdqRlR27xzqDmpPXYzA93R4Gk8z7T6oqDzDoHjoikA2aS82crdXFkjELCdJsjQ==}
 
-  vscode-textmate@6.0.0:
-    resolution: {integrity: sha512-gu73tuZfJgu+mvCSy4UZwd2JXykjK9zAZsfmDeut5dx/1a7FeTk0XwJsSuqQn+cuMCGVbIBfl+s53X4T19DnzQ==}
+  vscode-textmate@9.2.0:
+    resolution: {integrity: sha512-rkvG4SraZQaPSN/5XjwKswdU0OP9MF28QjrYzUBbhb8QyG3ljB1Ky996m++jiI7KdiAP2CkBiQZd9pqEDTClqA==}
 
   which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
@@ -5523,9 +5523,9 @@ snapshots:
 
   modify-values@1.0.1: {}
 
-  monaco-editor-nls@2.0.0: {}
+  monaco-editor-nls@3.1.0: {}
 
-  monaco-editor@0.31.1: {}
+  monaco-editor@0.52.2: {}
 
   ms@2.0.0: {}
 
@@ -6641,9 +6641,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  vite-plugin-monaco-editor@1.1.0(monaco-editor@0.31.1):
+  vite-plugin-monaco-editor@1.1.0(monaco-editor@0.52.2):
     dependencies:
-      monaco-editor: 0.31.1
+      monaco-editor: 0.52.2
 
   vite@4.5.9(@types/node@20.4.7)(sass@1.77.8):
     dependencies:
@@ -6657,7 +6657,7 @@ snapshots:
 
   vscode-oniguruma@2.0.1: {}
 
-  vscode-textmate@6.0.0: {}
+  vscode-textmate@9.2.0: {}
 
   which-boxed-primitive@1.0.2:
     dependencies:

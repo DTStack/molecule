@@ -37,6 +37,11 @@ body .monaco-list:focus {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
-        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji';
+}
+
+/* Display the quickInputWidget of monaco editor uniformly at the top of the page */
+.monaco-editor .overflow-guard .overlayWidgets > div[widgetid='editor.contrib.quickInputWidget'] {
+    position: fixed !important;
 }

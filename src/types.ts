@@ -11,6 +11,7 @@ import type { EditorService } from './services/editor';
 import type { EditorTreeService } from './services/editorTree';
 import type { ExplorerService } from './services/explorer';
 import type { FolderTreeService } from './services/folderTree';
+import type { KeyboardFocusService } from './services/keyboardFocus';
 import type { LayoutService } from './services/layout';
 import type { LocaleService } from './services/locale';
 import type { MenuBarService } from './services/menuBar';
@@ -224,6 +225,7 @@ export interface IContext {
         sidebar: SidebarService;
         explorer: ExplorerService;
         folderTree: FolderTreeService;
+        keyboardFocus: KeyboardFocusService;
         panel: PanelService;
         output: OutputService;
         editor: EditorService;

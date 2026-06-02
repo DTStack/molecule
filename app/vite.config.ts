@@ -15,7 +15,8 @@ export default defineConfig({
             languageWorkers: ['editorWorkerService'],
         }),
         mockDevServerPlugin({
-            include: 'app/mock/**/*.mock.{ts,js,cjs,mjs,json,json5}',
+            include: 'mock/**/*.mock.{ts,js,cjs,mjs,json,json5}',
+            prefix: '^/api',
         }),
     ],
     optimizeDeps: {
@@ -26,10 +27,5 @@ export default defineConfig({
     },
     server: {
         cors: false,
-        proxy: {
-            '^/api': {
-                target: '',
-            },
-        },
     },
 });
